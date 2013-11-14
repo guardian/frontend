@@ -5,7 +5,6 @@ var tests = [],
 for (var file in window.__karma__.files) {
     if (/discussion\/.*spec\.js$/.test(file)) {
         spec = file.replace(specUrl, '').replace('.js', '');
-        console.log(spec)
         tests.push(spec);
     }
 }
@@ -18,7 +17,7 @@ requirejs.config({
         'spec': '/base/common/test/assets/javascripts/spec',
         'fixtures': '/base/common/test/assets/javascripts/fixtures',
         'helpers': '/base/common/test/assets/javascripts/helpers',
-        'analytics':    'modules/analytics',
+        'analytics': 'modules/analytics',
 
         'bean': 'components/bean/bean',
         'bonzo': 'components/bonzo/src/bonzo',
@@ -30,6 +29,9 @@ requirejs.config({
         'swipe': 'components/swipe/swipe',
         'swipeview': 'components/swipeview/src/swipeview',
         'lodash': 'components/lodash-amd/modern'
-    },
-    callback: window.__karma__.start
+    }
+});
+
+require(tests, function() {
+    window.__karma__.start();
 });
