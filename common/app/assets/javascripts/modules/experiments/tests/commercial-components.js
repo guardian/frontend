@@ -61,8 +61,8 @@ define([
 
         var endpoints = [
             "/commercial/travel/offers.json?seg=repeat&" + opts.keywordsParams,
-            "/commercial/masterclasses.json?seg=repeat&" + opts.keywordsParams,
-            "/commercial/jobs.json?seg=repeat&k=Engineering"
+            //"/commercial/masterclasses.json?seg=repeat&" + opts.keywordsParams,
+            //"/commercial/jobs.json?seg=repeat&k=Engineering"
         ];
 
         var slots = [

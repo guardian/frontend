@@ -5,9 +5,12 @@
     margin-top: $gs-baseline;
     padding: $gs-baseline/2 $gs-gutter/2;
     overflow: hidden;
-    min-height: 250px;
     width: 100%;
     position: relative;
+
+    &.commercial--w300 {
+        min-height: 250px;
+    }
 }
 
 .commercial__title {

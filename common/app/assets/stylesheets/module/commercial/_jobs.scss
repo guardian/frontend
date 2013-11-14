@@ -7,6 +7,10 @@
     background-color: #7BBB00;
     color: #ffffff;
 
+    .commercial__title span {
+        color: #4A7801;
+    }
+
     .product {
         width: 100%;
         display: none;
@@ -14,6 +18,16 @@
 
     .product:first-child {
         display: block;
+    }
+
+    .product__description {
+        display: none;
+    }
+
+    &.commercial--w300 {
+        .product__description {
+            display: block;
+        }
     }
 
     &.commercial--w500 {

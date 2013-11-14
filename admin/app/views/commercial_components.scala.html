@@ -3,15 +3,21 @@
 
 <html>
     <head>
-        <title></title>
+        <title>Commercial Test Harness</title>
 
         <link rel="stylesheet" type="text/css" href="@Static("stylesheets/head.default.css")" />
         <link rel="stylesheet" type="text/css" href="@Static("stylesheets/global.css")" />
+        <link href='//fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>
 
         <style>
-            .components {
+            body {
                 max-width: 1300px;
                 margin: 0 auto;
+            }
+            h1 {
+                font-family: Merriweather, serif;
+            }
+            .components {
                 list-style-type: none;
             }
             .components li {
@@ -52,11 +58,13 @@
 
                     breakpoints: [300, 400, 500, 600],
 
-                    components: {
-                        masterclasses: '/commercial/masterclasses.json',
-                        travel:        '/commercial/travel/offers.json?k=canada&seg=repeat',
-                        jobs:          '/commercial/jobs.json?s=society',
-                        soulmates:     '/commercial/soulmates/mixed.json'
+                    components: function() {
+                        return {
+                            masterclasses: '/commercial/masterclasses.json',
+                            travel:        '/commercial/travel/offers.json?k='+document.querySelector('.travel-keywords').value+'&seg=repeat',
+                            jobs:          '/commercial/jobs.json?s='+document.querySelector('.jobs-keywords').value,
+                            soulmates:     '/commercial/soulmates/mixed.json'
+                        }
                     },
 
                     applyBreakpointClassnames: function() {
@@ -99,18 +107,30 @@
                         });
                     },
 
-                    init: function() {
-                        var self = this;
-                        Object.keys(this.components).forEach(function(key) {
+                    loadComponents: function() {
+                        var self = this,
+                            components = this.components();
+
+                        Object.keys(components).forEach(function(key) {
                             var componentType = key,
-                                endpoint      = self.components[key];
+                                endpoint      = components[key];
 
                             self.load(endpoint, '.'+componentType);
                         });
+                    },
+
+                    init: function() {
+                        var self = this;
 
                         bean.on(window, 'resize', this.debounce(function() {
                             self.applyBreakpointClassnames();
                         }, 100));
+
+                        bean.on(document, 'change', 'input', function(e) {
+                            self.loadComponents();
+                        });
+
+                        this.loadComponents();
                     }
                 };
 
@@ -120,15 +140,23 @@
     </head>
     <body>
 
+        <h1>Commercial Components Test Harness</h1>
+
 
         <ul class="components">
             <li>
-                <h2>Travel</h2>
+                <h2>
+                    Travel
+                    <input type="text" value="canada" class="travel-keywords">
+                </h2>
                 <div class="travel component component--small"></div>
                 <div class="travel component component--large"></div>
             </li>
             <li>
-                <h2>Jobs</h2>
+                <h2>
+                    Jobs
+                    <input type="text" value="society" class="jobs-keywords">
+                </h2>
                 <div class="jobs component component--small"></div>
                 <div class="jobs component component--large"></div>
             </li>
