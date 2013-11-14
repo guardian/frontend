@@ -32,7 +32,7 @@ define([
     }
 
     function getTrails() {
-        return toArray(qwery('.trailblock li', container));
+        return toArray(qwery('.trail', container));
     }
 
     function isInHistory(trailId) {
