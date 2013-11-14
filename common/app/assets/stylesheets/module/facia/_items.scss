@@ -134,6 +134,33 @@ $c-live: #e81818;
         border-left: 1px dotted $c-neutral5;
     }
 }
+.item--show-more {
+    @include mq($to: tablet) {
+        float: left;
+        width: 100%;
+        margin-top: $gs-baseline*(5/3);
+        padding-bottom: 0;
+
+        // i.e. not the first .item--show-more
+        & + & .item__link {
+            border-top: 1px dotted $c-neutral5;
+        }
+        .item__title {
+            @include fs-headline(1, $size-only: true);
+        }
+        .item__byline {
+            @include fs-header(2, $size-only: true);
+        }
+        .item__title .i,
+        .item__meta {
+            display: none;
+        }
+        .item__live-indicator {
+            @include fs-data(1, true);
+            top: -3px;
+        }
+    }
+}
 .item__link {
     display: block;
     border-top: $item-top-border-height solid $c-newsAccent;

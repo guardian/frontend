@@ -26,9 +26,6 @@
                 }
             }
         }
-        .item:nth-child(n+6) {
-            @include card-headline;
-        }
     }
     @include mq(tablet) {
         .item {
