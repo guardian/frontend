@@ -115,6 +115,14 @@ define(['modules/facia/collection-show-more', 'bonzo', '$', 'utils/mediator', 'b
             emitSpy.restore();
         });
 
+        it('should add "item--show-more" class to shown items', function() {
+            $style.html('body:after { content: "mobile"; }');
+            collectionShowMore.addShowMore();
+            expect($('.item.item--show-more', collection).length).toEqual(0);
+            bean.fire($('button', container)[0], 'click');
+            expect($('.item.item--show-more:nth-child(n+3)', collection).length).toEqual(5);
+        });
+
     });
 
 });
