@@ -113,7 +113,7 @@ function (
     }
 
     function hideAds() {
-        $('.ad-slot').addClass('u-h');
+        $('.ad-slot').addClass('is-invisible');
     }
 
     //Temporary middle slot needs better implementation in the future
