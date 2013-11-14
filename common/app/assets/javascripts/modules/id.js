@@ -138,7 +138,7 @@ define(['common',
 
     Id.setNextFbCheckTime = function(nextFbCheckDue) {
         Storage.local.set(Id.fbCheckKey, {}, {expires: nextFbCheckDue});
-    }
+    };
 
     return Id;
 });
