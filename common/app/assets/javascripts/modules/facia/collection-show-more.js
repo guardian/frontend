@@ -137,8 +137,9 @@ define([
             }
         };
 
-        this.addExtraItems = function(items) {
-            this._extraItems.concat(items);
+        this.prependExtraItems = function(items) {
+            this._extraItems = items.concat(this._extraItems);
+            console.log(this._extraItems);
         };
 
     };
