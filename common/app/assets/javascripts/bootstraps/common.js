@@ -261,13 +261,23 @@ define([
 
         loadAdverts: function () {
             if (!userPrefs.isOff('adverts')){
+                
                 mediator.on('page:common:deferred:loaded', function(config, context) {
                     if (config.switches && config.switches.adverts && !config.page.blockAds) {
                         Adverts.init(config, context);
                     }
                 });
+                
                 mediator.on('modules:adverts:docwrite:loaded', function(){
                     Adverts.loadAds();
+                });
+
+                mediator.on('window:resize', function () {
+                    Adverts.hideAds();
+                });
+                
+                mediator.on('window:orientationchange', function () {
+                    Adverts.hideAds();
                 });
             }
         },
