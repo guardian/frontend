@@ -1,9 +1,7 @@
 /*global Imager:true */
 define([
     //Commmon libraries
-    '$',
-    'utils/mediator',
-    'utils/deferToLoad',
+    'common',
     'ajax',
     'modules/userPrefs',
     //Vendor libraries
@@ -43,9 +41,7 @@ define([
     "modules/onward/history",
     "modules/onward/sequence"
 ], function (
-    $,
-    mediator,
-    deferToLoadEvent,
+    common,
     ajax,
     userPrefs,
 
@@ -90,21 +86,20 @@ define([
     var modules = {
 
         upgradeImages: function () {
-            // upgrade images, and add listeners on completion
-            faciaImages.upgrade(document, faciaImages.listen);
+            faciaImages.upgrade();
 
             var images = new Images();
-            mediator.on('page:common:ready', function(config, context) {
+            common.mediator.on('page:common:ready', function(config, context) {
                 images.upgrade(context);
             });
-            mediator.on('fragment:ready:images', function(context) {
+            common.mediator.on('fragment:ready:images', function(context) {
                 images.upgrade(context);
             });
-            mediator.on('modules:related:loaded', function(config, context) {
+            common.mediator.on('modules:related:loaded', function(config, context) {
                 images.upgrade(context);
             });
-            mediator.on('modules:images:upgrade', function() {
-                $('body').addClass('images-upgraded');
+            common.mediator.on('modules:images:upgrade', function() {
+                common.$g('body').addClass('images-upgraded');
             });
         },
 
@@ -127,21 +122,19 @@ define([
             search.init(header);
         },
 
-        transcludeRelated: function () {
-            mediator.on("page:common:ready", function(config, context){
-                related(config, context);
-            });
+        transcludeRelated: function (config, context) {
+            related(config, context);
         },
 
         transcludePopular: function () {
-            mediator.on('page:common:ready', function(config, context) {
+            common.mediator.on('page:common:ready', function(config, context) {
                 popular(config, context);
             });
         },
 
         showTabs: function() {
             var tabs = new Tabs();
-            mediator.on('modules:popular:loaded', function(el) {
+            common.mediator.on('modules:popular:loaded', function(el) {
                 tabs.init(el);
             });
         },
@@ -149,17 +142,17 @@ define([
         showToggles: function() {
             var toggles = new Toggles();
             toggles.init(document);
-            mediator.on('page:common:ready', function(config, context) {
+            common.mediator.on('page:common:ready', function(config, context) {
                 toggles.reset();
             });
         },
 
         showRelativeDates: function () {
             var dates = RelativeDates;
-            mediator.on('page:common:ready', function(config, context) {
+            common.mediator.on('page:common:ready', function(config, context) {
                 dates.init(context);
             });
-            mediator.on('fragment:ready:dates', function(el) {
+            common.mediator.on('fragment:ready:dates', function(el) {
                 dates.init(el);
             });
         },
@@ -169,37 +162,35 @@ define([
         },
 
         transcludeCommentCounts: function () {
-            mediator.on('page:common:ready', function(config, context) {
+            common.mediator.on('page:common:ready', function(config, context) {
                 CommentCount.init(context);
             });
         },
 
         initLightboxGalleries: function () {
             var thisPageId;
-            mediator.on('page:common:ready', function(config, context) {
+            common.mediator.on('page:common:ready', function(config, context) {
                 var galleries = new LightboxGallery(config, context);
                 thisPageId = config.page.pageId;
                 galleries.init();
             });
 
             // Register as a page view if invoked from elsewhere than its gallery page (like a trailblock)
-            mediator.on('module:lightbox-gallery:loaded', function(config, context) {
+            common.mediator.on('module:lightbox-gallery:loaded', function(config, context) {
                 if (thisPageId !== config.page.pageId) {
-                    mediator.emit('page:common:deferred:loaded', config, context);
+                    common.mediator.emit('page:common:deferred:loaded', config, context);
                 }
             });
         },
 
-        runAbTests: function () {
-            mediator.on('page:common:ready', function(config, context) {
-                ab.run(config, context);
-            });
+        runAbTests: function (config, context) {
+            ab.run(config, context);
         },
 
         loadAnalytics: function () {
             var omniture = new Omniture();
 
-            mediator.on('page:common:deferred:loaded:omniture', function(config, context) {
+            common.mediator.on('page:common:deferred:loaded:omniture', function(config, context) {
                 omniture.go(config, function(){
                     // callback:
 
@@ -219,9 +210,9 @@ define([
                 });
             });
 
-            mediator.on('page:common:deferred:loaded', function(config, context) {
+            common.mediator.on('page:common:deferred:loaded', function(config, context) {
 
-                mediator.emit('page:common:deferred:loaded:omniture', config, context);
+                common.mediator.emit('page:common:deferred:loaded:omniture', config, context);
 
                 require(config.page.ophanUrl, function (Ophan) {
 
@@ -261,29 +252,27 @@ define([
 
         loadAdverts: function () {
             if (!userPrefs.isOff('adverts')){
-                
-                mediator.on('page:common:deferred:loaded', function(config, context) {
+                common.mediator.on('page:common:deferred:loaded', function(config, context) {
                     if (config.switches && config.switches.adverts && !config.page.blockAds) {
                         Adverts.init(config, context);
                     }
                 });
-                
-                mediator.on('modules:adverts:docwrite:loaded', function(){
+                common.mediator.on('modules:adverts:docwrite:loaded', function(){
                     Adverts.loadAds();
                 });
 
-                mediator.on('window:resize', function () {
+                common.mediator.on('window:resize', function () {
                     Adverts.hideAds();
                 });
                 
-                mediator.on('window:orientationchange', function () {
+                common.mediator.on('window:orientationchange', function () {
                     Adverts.hideAds();
                 });
             }
         },
 
         loadVideoAdverts: function(config) {
-            mediator.on('page:common:ready', function(config, context) {
+            common.mediator.on('page:common:ready', function(config, context) {
                 if(config.switches.videoAdverts && !config.page.blockAds) {
                     Array.prototype.forEach.call(context.querySelectorAll('video'), function(el) {
                         var support = detect.getVideoFormatSupport();
@@ -295,7 +284,7 @@ define([
                         }).init(config.page);
                     });
                 } else {
-                    mediator.emit("video:ads:finished", config, context);
+                    common.mediator.emit("video:ads:finished", config, context);
                 }
             });
         },
@@ -318,13 +307,13 @@ define([
             var alreadyOptedIn = !!userPrefs.get('releaseMessage'),
                 releaseMessage = {
                     show: function () {
-                        $('#header').addClass('js-site-message');
-                        $('.site-message').removeClass('u-h');
+                        common.$g('#header').addClass('js-site-message');
+                        common.$g('.site-message').removeClass('u-h');
                     },
                     hide: function () {
                         userPrefs.set('releaseMessage', true);
-                        $('#header').removeClass('js-site-message');
-                        $('.site-message').addClass('u-h');
+                        common.$g('#header').removeClass('js-site-message');
+                        common.$g('.site-message').addClass('u-h');
                     }
                 };
 
@@ -345,15 +334,15 @@ define([
             if (config.switches.swipeNav && detect.canSwipe() && !userPrefs.isOff('swipe') || userPrefs.isOn('swipe-dev')) {
                 var swipe = swipeNav(config, contextHtml);
 
-                mediator.on('module:swipenav:navigate:next', function(){ swipe.gotoNext(); });
-                mediator.on('module:swipenav:navigate:prev', function(){ swipe.gotoPrev(); });
+                common.mediator.on('module:swipenav:navigate:next', function(){ swipe.gotoNext(); });
+                common.mediator.on('module:swipenav:navigate:prev', function(){ swipe.gotoPrev(); });
             } else {
                 delete this.contextHtml;
                 return;
             }
             if (config.switches.swipeNav && detect.canSwipe()) {
                 bonzo(document.body).addClass('can-swipe');
-                mediator.on('module:clickstream:click', function(clickSpec){
+                common.mediator.on('module:clickstream:click', function(clickSpec){
                     if (clickSpec.tag.indexOf('switch-swipe-on') > -1) {
                         userPrefs.switchOn('swipe');
                         window.location.reload();
@@ -367,7 +356,7 @@ define([
         },
 
         logReadingHistory : function() {
-            mediator.on('page:common:ready', function(config) {
+            common.mediator.on('page:common:ready', function(config) {
                  if(/Article|Video|Gallery|Interactive/.test(config.page.contentType)) {
                     new History().log({
                         id: '/' + config.page.pageId,
@@ -389,7 +378,7 @@ define([
                 },
                 emitEvent = function(eventName) {
                     return function(e) {
-                        mediator.emit(eventName, e);
+                        common.mediator.emit(eventName, e);
                     };
                 };
             for (var event in events) {
@@ -400,7 +389,7 @@ define([
 
     var deferrable = function (config, context) {
         var self = this;
-        deferToLoadEvent(function() {
+        common.deferToLoadEvent(function() {
             if (!self.initialisedDeferred) {
                 self.initialisedDeferred = true;
                 modules.loadAdverts();
@@ -411,21 +400,25 @@ define([
                 // TODO: make these run in event 'page:common:deferred:loaded'
                 modules.cleanupCookies(context);
             }
-            mediator.emit("page:common:deferred:loaded", config, context);
+            common.mediator.emit("page:common:deferred:loaded", config, context);
         });
     };
 
     var ready = function (config, context, contextHtml) {
         if (!this.initialised) {
             this.initialised = true;
+
+            common.mediator.on("page:common:ready", function(config, context){
+                modules.runAbTests(config, context);
+                modules.transcludeRelated(config, context);
+            });
+
             modules.windowEventListeners();
             modules.upgradeImages();
             modules.showTabs();
             modules.initialiseNavigation(config);
             modules.showToggles();
-            modules.runAbTests();
             modules.showRelativeDates();
-            modules.transcludeRelated();
             modules.transcludePopular();
             modules.loadVideoAdverts(config);
             modules.initClickstream();
@@ -439,7 +432,7 @@ define([
             modules.displayReleaseMessage(config);
             modules.logReadingHistory();
         }
-        mediator.emit("page:common:ready", config, context);
+        common.mediator.emit("page:common:ready", config, context);
     };
 
     var init = function (config, context, contextHtml) {
