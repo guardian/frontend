@@ -13,7 +13,7 @@ import com.gu.openplatform.contentapi.model.{Content => ApiContent,Element =>Api
 class Content protected (val delegate: ApiContent) extends Trail with Tags with MetaData {
 
   lazy val publication: String = fields.get("publication").getOrElse("")
-  lazy val lastModified: DateTime = fields("lastModified").parseISODateTimeNoMillis
+  lazy val lastModified: DateTime = fields("lastModified").parseISODateTime
   lazy val shortUrl: String = delegate.safeFields("shortUrl")
   lazy val shortUrlId: String = delegate.safeFields("shortUrl").replace("http://gu.com", "")
   lazy val webUrl: String = delegate.webUrl
@@ -47,7 +47,7 @@ class Content protected (val delegate: ApiContent) extends Trail with Tags with 
   override lazy val thumbnailPath: Option[String] = fields.get("thumbnail").map(ImgSrc(_, Naked))
   override lazy val isLive: Boolean = fields("liveBloggingNow").toBoolean
   override lazy val discussionId = Some(shortUrlPath)
-  override lazy val isClosedForComments: Boolean = !fields.get("commentCloseDate").exists(_.parseISODateTimeNoMillis.isAfterNow)
+  override lazy val isClosedForComments: Boolean = !fields.get("commentCloseDate").exists(_.parseISODateTime.isAfterNow)
   override lazy val leadingParagraphs: List[org.jsoup.nodes.Element] = {
     val body = delegate.safeFields.get("body")
     val souped = body flatMap { body =>
@@ -132,6 +132,13 @@ object Content {
       case video if delegate.isVideo => new Video(delegate)
       case picture if delegate.isImageContent => new ImageContent(delegate)
       case _ => new Content(delegate)
+    }
+  }
+
+  def apply(delegate: ApiContent, headline: Option[String]): Content = {
+    headline match {
+      case Some(title) => new ContentWithHeadline(delegate, title)
+      case _ => apply(delegate)
     }
   }
 }
@@ -257,4 +264,8 @@ class ImageContent(content: ApiContent) extends Content(content) {
   override def cards: List[(String, Any)] = super.cards ++ List(
     "twitter:card" -> "photo"
   ) ++ mainPicture.flatMap(_.largestImage.map( "twitter:image:src" -> _.path ))
+}
+
+class ContentWithHeadline(content: ApiContent, title: String) extends Content(content) {
+  override lazy val headline: String = title
 }

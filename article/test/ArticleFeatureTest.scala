@@ -5,8 +5,9 @@ import conf.Switches._
 import org.scalatest.Matchers
 import org.scalatest.{ GivenWhenThen, FeatureSpec }
 import collection.JavaConversions._
+import common.UsesElasticSearch
 
-class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
+class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  with UsesElasticSearch {
 
   implicit val config = Configuration
 
@@ -266,23 +267,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         $("[itemprop=relatedLink]").size() should be > 0
       }
 
-    }
-
-    scenario("Story package ordered by date published") {
-
-      Given("I'm on an article entitled 'Iraq war logs reveal 15,000 previously unlisted civilian deaths'")
-
-      HtmlUnit("/world/2010/oct/22/true-civilian-body-count-iraq") { browser =>
-        import browser._
-
-        Then("I should see the related content ordered")
-        val relatedContent = $("[itemprop=relatedLink]")
-        relatedContent.get(0).getText should be("Iraq war logs: experts' views")
-        relatedContent.get(1).getText should be("Iraq war logs: media reaction around the world")
-        relatedContent.get(2).getText should be("Iraq war logs: 'The US was part of the Wolf Brigade operation against us'")
-        relatedContent.get(3).getText should be("Iraq war logs: Prisoner beaten to death days after British handover to police")
-        relatedContent.get(4).getText should be("Iraq war logs: These crimes were not secret, they were tolerated")
-      }
     }
 
     scenario("Direct link to paragraph") {
