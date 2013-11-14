@@ -2,19 +2,16 @@ package controllers.commercial
 
 import play.api.mvc._
 import model.commercial.travel.OffersAgent
-import common.{JsonComponent, ExecutionContexts}
+import common.{JsonNotFound, JsonComponent}
+import model.Cached
 
-object TravelOffers extends Controller with ExecutionContexts with ExpectsSegmentInRequests {
+object TravelOffers extends Controller {
 
   def listOffers = Action {
     implicit request =>
-      val offers = OffersAgent.matchingAds(segment)
-      if (offers.isEmpty) {
-        noMatchingSegmentsResult
-      } else {
-        JsonComponent {
-          views.html.fragments.travelOffer(offers)
-        } withHeaders ("Cache-Control" -> "max-age=60")
+      OffersAgent.matchingAds(segment) match {
+        case Nil => JsonNotFound.apply()
+        case offers => Cached(60)(JsonComponent(views.html.fragments.travelOffer(offers)))
       }
   }
 

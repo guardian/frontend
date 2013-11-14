@@ -1,12 +1,11 @@
-package controllers.commercial
+package controllers
 
-import model.commercial.Context
-import model.commercial.Segment
+import model.commercial.{Context, Segment}
 import play.api.mvc._
 import common.JsonComponent
 import play.api.libs.json.JsObject
 
-trait ExpectsSegmentInRequests {
+package object commercial {
 
   def segment(implicit request: Request[AnyContent]) = {
     val params = request.queryString
