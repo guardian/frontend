@@ -12,7 +12,7 @@ import views.support._
 object ImageController extends Controller with Logging with Implicits with ExecutionContexts {
 
   // URL validation: We're only going to accept proxy paths that match...
-  val Path = """([/\w\.@~-]*)""".r
+  val Path = """([/\w\.,@~-]*)""".r
 
   def render(target: String, profile: String) = Action.async { implicit request: RequestHeader =>
     val dimensions = Profile.all find { _.prefix == profile }
