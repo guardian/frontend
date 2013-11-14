@@ -49,23 +49,20 @@ define([
                 mobile: 5
             }[detect.getBreakpoint()];
         },
-        showMore = function($collection, extraItems, count, upgradeImages, noClass) {
-            var $items = bonzo(extraItems.splice(0, count));
-            if (!$items.length) {
+        showMore = function($collection, extraItems, count, upgradeImages) {
+            var items = extraItems.splice(0, count);
+            if (!items.length) {
                 return;
             }
             // NOTE: wrapping in div so can be passed to commentCount, relativeDates, etc.
             var wrappedItems = bonzo(bonzo.create('<div></div>'))
-                                   .append($items)[0];
+                                   .append(items)[0];
             relativeDates.init(wrappedItems);
             commentCount.init(wrappedItems);
             if (upgradeImages === true) {
                 faciaImages.upgrade(wrappedItems);
             }
-            if (noClass !== true) {
-                $items.addClass('item--show-more');
-            }
-            $items.appendTo($collection);
+            $collection.append(items);
         };
 
     return function(collection) {
@@ -109,7 +106,7 @@ define([
             bonzo(excess).remove();
 
             // if we are showing less items than necessary, show more
-            showMore(this._$collection, this._extraItems, initalShowSize - qwery('.item',this._collection).length, true, true);
+            showMore(this._$collection, this._extraItems, initalShowSize - qwery('.item',this._collection).length, true);
 
             // add toggle button, if they are extra items left to show
             if (this._extraItems.length) {
@@ -141,7 +138,6 @@ define([
 
         this.prependExtraItems = function(items) {
             this._extraItems = items.concat(this._extraItems);
-            console.log(this._extraItems);
         };
 
     };

@@ -26,6 +26,9 @@
                 }
             }
         }
+        .item:nth-child(n+6) {
+            @extend %item-show-more;
+        }
     }
     @include mq(tablet) {
         .item {

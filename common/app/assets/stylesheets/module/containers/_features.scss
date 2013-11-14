@@ -4,17 +4,18 @@
         .item:first-child {
             @include card-mobile($with-image: true);
         }
-        .item:nth-child(2),
-        .item:nth-child(3) {
+        .item:nth-child(n+2):nth-child(-n+3) {
             @include card-half-width($with-image: true);
+        }
+        .item:nth-child(n+4) {
+            @extend %item-show-more;
         }
     }
     @include mq(tablet) {
         .item:nth-child(n+2) {
             @include card;
         }
-        .item:nth-child(2),
-        .item:nth-child(3) {
+        .item:nth-child(n+2):nth-child(-n+3) {
             @include card-image;
         }
     }
