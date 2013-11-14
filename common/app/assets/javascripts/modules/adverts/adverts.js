@@ -1,5 +1,5 @@
 define([
-    'common',
+    '$',
     'qwery',
     'bonzo',
     'ajax',
@@ -15,7 +15,7 @@ define([
 
 ],
 function (
-    common,
+    $,
     qwery,
     bonzo,
     ajax,
@@ -113,7 +113,7 @@ function (
     }
 
     function hideAds() {
-        common.$g('.ad-slot').addClass('u-h');
+        $('.ad-slot').addClass('u-h');
     }
 
     //Temporary middle slot needs better implementation in the future
