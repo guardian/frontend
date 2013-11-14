@@ -326,8 +326,14 @@ module.exports = function (grunt) {
          **********************************************************************/
 
         karma: {
-            unit: {
+            options: {
                 configFile: 'karma.conf.js'
+            },
+            continuous: {
+                singleRun: true
+            },
+            dev: {
+                reporters: 'dots'
             }
         },
 
@@ -636,6 +642,7 @@ module.exports = function (grunt) {
         grunt.task.run(['jasmine' + (app ? ':' + app : '')]);
     });
     grunt.registerTask('test', ['jshint:common', 'test:unit', 'test:integration']);
+    grunt.registerTask('runner', ['karma:'+ (isDev ? 'dev' : 'continuous')]);
 
     // Analyse tasks
     grunt.registerTask('analyse:css', ['compile:css', 'cssmetrics:common']);

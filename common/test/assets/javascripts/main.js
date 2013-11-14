@@ -3,8 +3,11 @@ var tests = [],
     spec;
 
 for (var file in window.__karma__.files) {
+    // We are only testing against discussion for now
     if (/discussion\/.*spec\.js$/.test(file)) {
-        spec = file.replace(specUrl, '').replace('.js', '');
+        spec = file
+                .replace(specUrl, '')
+                .replace('.js', '');
         tests.push(spec);
     }
 }
@@ -12,7 +15,6 @@ for (var file in window.__karma__.files) {
 requirejs.config({
     // Karma serves files from '/base'
     baseUrl: '/base/common/app/assets/javascripts',
-    deps: tests,
     paths: {
         'spec': '/base/common/test/assets/javascripts/spec',
         'fixtures': '/base/common/test/assets/javascripts/fixtures',
