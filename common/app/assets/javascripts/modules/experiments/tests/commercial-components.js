@@ -5,6 +5,8 @@ define([
     'qwery',
     'bonzo',
     'modules/detect',
+    'modules/storage',
+    'lodash/collections/find',
     'modules/commercial/commercial-components'
 ], function (
     common,
@@ -12,6 +14,8 @@ define([
     qwery,
     bonzo,
     detect,
+    storage,
+    find,
     CommercialComponents) {
 
     var CommercialComponentsTest = function () {
@@ -19,12 +23,17 @@ define([
         var _config;
 
         this.id = 'CommercialComponents';
-        this.expiry = '2013-11-30';
-        this.audience = 0; // Disabled for the initial trials
+        this.expiry = '2013-12-04';
+        this.audience = 0.1;
         this.description = 'Test new commercial components';
         this.canRun = function(config) {
             _config = config;
-            return config.page.contentType === 'Article';
+
+            var isTravelRepeatVisitor = find(storage.local.get('gu.history'), function(item) {
+                return item.section === 'travel';
+            });
+
+            return config.page.contentType === 'Article' && isTravelRepeatVisitor;
         };
         this.variants = [
             {
@@ -59,32 +68,13 @@ define([
 
     function loadComponents(opts) {
 
-        var endpoints = [
-            "/commercial/travel/offers.json?seg=repeat&" + opts.keywordsParams,
-            //"/commercial/masterclasses.json?seg=repeat&" + opts.keywordsParams,
-            //"/commercial/jobs.json?seg=repeat&k=Engineering"
-        ];
+        var containerMapping = {
+            ".js-mpu-ad-slot" : "/commercial/travel/offers.json?seg=repeat&" + opts.keywordsParams
+        };
 
-        var slots = [
-            ".article__main-column",
-            ".js-mpu-ad-slot"
-        ];
-
-        var slotTargets = {};
-        slots.forEach(function(slot, i) {
-            var rnd = Math.floor(Math.random() * (endpoints.length));
-            slotTargets[slots[i]] = endpoints[rnd];
-        });
-
-        /*
-        var slotTargets = {
-            ".article__main-column": "/commercial/travel/offers?" + opts.keywordsParams + "&" + opts.userSegments,
-            ".js-mpu-ad-slot":       "/commercial/masterclasses?" + opts.keywordsParams
-        };*/
-
-        Object.keys(slotTargets).forEach(function(selector) {
+        Object.keys(containerMapping).forEach(function(selector) {
             var $slot   = common.$g(selector, opts.context),
-                urlPath = slotTargets[selector];
+                urlPath = containerMapping[selector];
 
             if ($slot) {
                 ajax({
