@@ -2,23 +2,22 @@ package controllers.commercial
 
 import play.api.mvc._
 import scala.util.Random
-import common.{JsonComponent, ExecutionContexts}
+import common.{JsonNotFound, JsonComponent}
 import model.commercial.soulmates._
 import model.commercial.AdAgent
 import model.commercial.soulmates.Member
+import model.Cached
 
-object SoulmateAds extends Controller with ExecutionContexts with ExpectsSegmentInRequests {
+object SoulmateAds extends Controller {
 
   private def action(agent: AdAgent[Member]) = Action {
     implicit request =>
-      val matching = agent.matchingAds(segment)
-      if (matching.isEmpty) {
-        Ok("No members") withHeaders ("Cache-Control" -> "max-age=60")
-      } else {
-        val shuffled = Random.shuffle(matching)
-        JsonComponent {
-          "html" -> views.html.soulmates(shuffled take 5)
-        } withHeaders ("Cache-Control" -> "max-age=60")
+      agent.matchingAds(segment) match {
+        case Nil => JsonNotFound.apply()
+        case members => {
+          val shuffled = Random.shuffle(members)
+          Cached(60)(JsonComponent(views.html.soulmates(shuffled take 5)))
+        }
       }
   }
 

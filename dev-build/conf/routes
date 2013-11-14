@@ -137,14 +137,12 @@ GET         /commercial/soulmates/gay.json                                      
 GET         /commercial/soulmates/lesbian.json                                                               controllers.commercial.SoulmateAds.lesbian
 
 # Onward journeys
-GET        /onward/popular-onward/*path.json        controllers.MostPopularOnwardController.popularOnward(path)
-GET        /onward/card/*path.json                  controllers.OnwardCardController.renderCard(path)
-GET        /onward/trail/*path.json                 controllers.OnwardCardController.renderTrail(path)
-GET        /onward/most-read.json                   controllers.MostPopularOnwardController.mostRead()
-GET        /onward/latest.json                      controllers.LatestContentController.renderLatest()
-GET        /onward/recently-published               controllers.LatestContentController.recentlyPublished()
-
-
+GET         /onward/popular-onward/*path.json                                                                controllers.MostPopularOnwardController.popularOnward(path)
+GET         /onward/card/*path.json                                                                          controllers.OnwardCardController.renderCard(path)
+GET         /onward/trail/*path.json                                                                         controllers.OnwardCardController.renderTrail(path)
+GET         /onward/most-read.json                                                                           controllers.MostPopularOnwardController.mostRead()
+GET         /onward/latest.json                                                                              controllers.LatestContentController.renderLatest()
+GET         /onward/recently-published                                                                       controllers.LatestContentController.recentlyPublished()
 
 # Facia
 GET         /                                                                                                controllers.FaciaController.editionRedirect(path = "")

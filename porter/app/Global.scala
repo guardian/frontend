@@ -1,17 +1,19 @@
-import common.{PorterMetrics, Jobs}
+import common.{CloudWatchApplicationMetrics, Jobs}
+import conf.Management
 import jobs._
 import play.api.GlobalSettings
 
-object Global extends GlobalSettings {
+object Global extends GlobalSettings with CloudWatchApplicationMetrics {
+  override lazy val applicationName = Management.applicationName
 
   def scheduleJobs() {
-    Jobs.schedule("AnalyticsLoadJob", "0 0 7/24 * * ?", PorterMetrics.AnalyticsLoadTimingMetric) {
+    Jobs.schedule("AnalyticsLoadJob", "0 0 7/24 * * ?") {
       AnalyticsLoadJob.run()
     }
-    Jobs.schedule("ABTestResultsLoadJob", "0 0 7/24 * * ?", PorterMetrics.AnalyticsLoadTimingMetric) {
+    Jobs.schedule("ABTestResultsLoadJob", "0 0 7/24 * * ?") {
       ABTestResultsLoadJob.run()
     }
-    Jobs.schedule("FastlyCloudwatchLoadJob", "0 0/2 * * * ?", PorterMetrics.FastlyCloudwatchLoadTimingMetric) {
+    Jobs.schedule("FastlyCloudwatchLoadJob", "0 0/2 * * * ?") {
       FastlyCloudwatchLoadJob.run()
     }
   }

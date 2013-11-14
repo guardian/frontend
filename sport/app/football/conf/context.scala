@@ -22,24 +22,24 @@ class FootballStatsPlugin(app: PlayApp) extends Plugin {
       val minutes = index * 5 / 60 % 5
       val cron = s"$seconds $minutes/5 * * * ?"
 
-      Jobs.schedule(s"CompetitionAgentRefreshJob_$id", cron, FootballMetrics.CompetitionAgentLoadTimingMetric) {
+      Jobs.schedule(s"CompetitionAgentRefreshJob_$id", cron) {
         Competitions.refreshCompetitionAgent(id)
       }
     }
 
-    Jobs.schedule("MatchDayAgentRefreshJob", "0/5 * * * * ?", FootballMetrics.MatchDayLoadTimingMetric) {
+    Jobs.schedule("MatchDayAgentRefreshJob", "0/5 * * * * ?") {
       Competitions.refreshMatchDay()
     }
 
-    Jobs.schedule("CompetitionRefreshJob", "0 0/10 * * * ?", FootballMetrics.CompetitionLoadTimingMetric) {
+    Jobs.schedule("CompetitionRefreshJob", "0 0/10 * * * ?") {
       Competitions.refreshCompetitionData()
     }
 
-    Jobs.schedule("LiveBlogRefreshJob", "0 0/2 * * * ?", FootballMetrics.LiveBlogRefreshTimingMetric) {
+    Jobs.schedule("LiveBlogRefreshJob", "0 0/2 * * * ?") {
       LiveBlogAgent.refresh()
     }
 
-    Jobs.schedule("TeamMapRefreshJob", "0 0/10 * * * ?", FootballMetrics.TeamTagMappingsRefreshTimingMetric) {
+    Jobs.schedule("TeamMapRefreshJob", "0 0/10 * * * ?") {
       TeamMap.refresh()
     }
 
@@ -115,7 +115,7 @@ class SwitchBoardPlugin(app: PlayApp) extends SwitchBoardAgent(Configuration)
 
 object Management extends GuManagement {
   val applicationName = "frontend-sport"
-  val metrics = Metrics.contentApi ++ Metrics.common ++ Metrics.pa ++ Metrics.football
+  val metrics = Metrics.contentApi ++ Metrics.common ++ Metrics.pa
 
   lazy val pages = List(
     new ManifestPage,

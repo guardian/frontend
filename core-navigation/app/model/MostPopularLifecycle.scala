@@ -1,10 +1,7 @@
 package model
 
-import common.{ CoreNavigationMetrics, Jobs }
-import conf.RequestMeasurementMetrics
-import dev.DevParametersLifecycle
+import common.Jobs
 import feed.{MostPopularExpandableAgent, MostPopularAgent}
-import play.api.mvc.WithFilters
 import play.api.{ Application => PlayApp, Play, GlobalSettings }
 import play.api.Play.current
 import common.editions.Uk
@@ -19,7 +16,7 @@ trait MostPopularLifecycle extends GlobalSettings {
     Jobs.deschedule("MostPopularAgentRefreshJob")
 
     // fire every min
-    Jobs.schedule("MostPopularAgentRefreshJob",  "0 * * * * ?", CoreNavigationMetrics.MostPopularLoadTimingMetric) {
+    Jobs.schedule("MostPopularAgentRefreshJob",  "0 * * * * ?") {
       MostPopularAgent.refresh()
       MostPopularExpandableAgent.refresh()
     }

@@ -7,14 +7,14 @@ import com.gu.management.logback.LogbackLevelPage
 
 object Management extends GuManagement {
   val applicationName = "frontend-porter"
-  val metrics = Metrics.porter
+
 
   lazy val pages = List(
     new ManifestPage,
     new UrlPagesHealthcheckManagementPage(
       "/"
     ),
-    StatusPage(applicationName, metrics),
+    StatusPage(applicationName, Nil),
     new PropertiesPage(Configuration.toString),
     new LogbackLevelPage(applicationName)
   )
