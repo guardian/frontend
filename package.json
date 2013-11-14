@@ -22,7 +22,7 @@
     "grunt-webfontjson": "~0.0.3",
     "grunt-contrib-sass": "~0.4.0",
     "grunt-contrib-clean": "~0.4.0",
-    
+
     "phantomjs": "~1.9.1",
     "svgo": "~0.2.3",
     "casperjs": "git://github.com/smlgbl/casperjs.git#feature/makeUsableByNPM",
