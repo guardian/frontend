@@ -52,7 +52,7 @@ Loader.CONFIG = {
         commentBox: 'discussion__comment-box',
         commentBoxBottom: 'discussion__comment-box--bottom',
         show: 'd-show-cta',
-        topComments: 'discussion__comments__top'
+        topComments: 'discussion__comments__top__container'
     }
 };
 
@@ -119,7 +119,7 @@ Loader.prototype.ready = function() {
             user: this.user
         });
 
-        bonzo(topCommentsElem).addClass('u-h');
+        //bonzo(topCommentsElem).addClass('u-h');
         this.topComments
             .fetch(topCommentsElem)
             .then(function appendTopComments() {
@@ -129,7 +129,6 @@ Loader.prototype.ready = function() {
                 //         bonzo(self.topComments.topLevelComments[i]).removeClass('u-h')[0]
                 //     );
                 // }
-                bonzo(topCommentsElem).removeClass('u-h');
             });
 
     });

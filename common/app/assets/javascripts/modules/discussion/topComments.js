@@ -5,7 +5,8 @@ define([
     'modules/component',
     'modules/id',
     'modules/discussion/comment-box',
-    'modules/discussion/recommend-comments'
+    'modules/discussion/recommend-comments',
+    '$'
 ], function(
     ajax,
     bonzo,
@@ -13,7 +14,8 @@ define([
     Component,
     Id,
     CommentBox,
-    RecommendComments
+    RecommendComments,
+    $
 ) {
 
 /**
@@ -39,7 +41,7 @@ TopComments.CONFIG = {
     classes: {
         comments: 'd-thread--top-level',
         topLevelComment: 'd-comment--top-level',
-        showMore: 'js-show-more-comments',
+        showMore: 'js-show-more-top-comments',
         reply: 'd-comment--response',
         showReplies: 'js-show-more-replies',
 
@@ -47,7 +49,9 @@ TopComments.CONFIG = {
         commentActions: 'd-comment__actions__main',
         commentReply: 'd-comment__action--reply',
 
-        titleCounter: 'discussion__comments__top__counter'
+        topCommentHolder: 'discussion__comments__top',
+        titleCounter: 'discussion__comments__top__counter',
+        fadeOut: 'd-image-fade'
     }
 };
 
@@ -55,6 +59,7 @@ TopComments.CONFIG = {
 TopComments.prototype.defaultOptions = {
     discussionId: null,
     initialShow: 10,
+    heightLimit: 600, // max-height in _discussion.scss .discussion__comments__top
     showRepliesCount: 3,
     user: null
 };
@@ -90,8 +95,9 @@ TopComments.prototype.fetch = function(parent) {
         crossOrigin: true
     }).then(
         function render(resp) {
-            self.elem = bonzo.create(resp.html)[0];
-            bonzo(parent).append(self.elem);
+            self.elem = parent;
+            self.commentsElements = bonzo.create(resp.html);
+            $('.discussion__comments__top', self.elem).append(self.commentsElements); // refactor
             self.elems = {};
             self.prerender();
             self.ready();
@@ -108,6 +114,30 @@ TopComments.prototype.ready = function() {
     this.user = this.options.user;
     this.topLevelComments = qwery(this.getClass('topLevelComment'), this.elem);
     this.comments = qwery(this.getClass('comment'), this.elem);
+
+    var h = self.elem.offsetHeight;
+
+    if (h >= self.options.heightLimit) {
+
+        self.hasHiddenComments = true;
+
+        $('.d-image-fade', self.elem).removeClass('u-h'); // refactor
+
+        var showMoreButton = [];
+
+        showMoreButton.push('<a class="js-show-more-top-comments cta" data-link-name="Show more top comments" data-remove="true" href="/discussion');
+        showMoreButton.push(self.options.discussionId);
+        showMoreButton.push('?page=1">');
+        showMoreButton.push('Show more top comments');
+        showMoreButton.push('</a>');
+
+        if (!self.showMoreButton) {
+            self.showMoreButton = bonzo(showMoreButton.join(''));
+            bonzo(self.elem).append(self.showMoreButton[0]);
+            self.showMoreButton = qwery(self.getClass('showMore'))[0];
+        }
+        self.on('click', self.showMoreButton, self.showMore);
+    }
 
     // if (this.topLevelComments.length > 0) {
     //     // Hide excess topLevelComments
@@ -135,13 +165,9 @@ TopComments.prototype.ready = function() {
     // }
     
     // Append top comment count to section title
-    bonzo(
-        qwery(
-            self.getClass('titleCounter')
-            )
-        ).removeClass('u-h')[0].innerHTML = "(" + this.topLevelComments.length + ")";
+   $(self.getClass('titleCounter')).removeClass('u-h')[0].innerHTML = "(" + self.topLevelComments.length + ")";
 
-    this.emit('ready');
+    self.emit('ready');
 };
 
 TopComments.prototype.bindCommentEvents = function() {
@@ -171,97 +197,65 @@ TopComments.prototype.renderReplyButtons = function(comments) {
  * @param {Event} e
  */
 TopComments.prototype.showMore = function(e) {
+    var self = this;
     e.preventDefault();
-    var showMoreButton = this.getElem('showMore');
 
-    if (showMoreButton.getAttribute('data-disabled') === 'disabled') {
+    if (self.showMoreButton.getAttribute('data-disabled') === 'disabled') {
         return;
     }
 
     if (this.hasHiddenComments) {
         this.showHiddenComments();
-    } else {
-        showMoreButton.innerHTML = 'Loading…';
-        showMoreButton.setAttribute('data-disabled', 'disabled');
-        ajax({
-            url: '/discussion'+ this.options.discussionId +'.json?page='+ (this.currentPage+1),
-            type: 'json',
-            method: 'get',
-            crossOrigin: true
-        }).then(this.commentsLoaded.bind(this));
     }
+    // Still needed?
+    // else {
+    //     showMoreButton.innerHTML = 'Loading…';
+    //     showMoreButton.setAttribute('data-disabled', 'disabled');
+    //     ajax({
+    //         url: '/discussion'+ this.options.discussionId +'.json?page='+ (this.currentPage+1),
+    //         type: 'json',
+    //         method: 'get',
+    //         crossOrigin: true
+    //     }).then(this.commentsLoaded.bind(this));
+    // }
 };
 
 TopComments.prototype.showHiddenComments = function() {
-    qwery(this.getClass('topLevelComment'), this.elem).forEach(function(elem, i) {
-        bonzo(elem).removeClass('u-h');
-    });
+
+    $('.discussion__comments__top', self.elem).css("max-height", "none"); // refactor
+
     this.hasHiddenComments = false;
 
-    if (this.getElem('showMore').getAttribute('data-remove') === 'true') {
-        bonzo(this.getElem('showMore')).remove();
-    }
-    this.emit('first-load');
-};
+    this.showMoreButton.remove();
 
-/**
- * @param {Event}
- */
-TopComments.prototype.showMoreReplies = function(e) {
-    bonzo(qwery(this.getClass('reply'), bonzo(e.currentTarget).parent()[0])).removeAttr('hidden');
-    bonzo(e.currentTarget).remove();
-};
+    $('.d-image-fade', self.elem).remove(); // refactor
 
-/**
- * @param {Array.<Element>=} comments (optional)
- */
-TopComments.prototype.hideExcessReplies = function(comments) {
-    var replies, repliesToHide,
-        self = this;
-
-    comments = comments || this.topLevelComments;
-    comments.forEach(function(elem, i) {
-        replies = qwery(self.getClass('reply'), elem);
-
-        if (replies.length > self.options.showRepliesCount) {
-            repliesToHide = replies.slice(self.options.showRepliesCount, replies.length);
-            bonzo(repliesToHide).attr('hidden', 'hidden');
-
-            bonzo(qwery('.d-thread--responses', elem)).append(
-                '<li class="'+ self.getClass('showReplies', true) +' cta" data-link-name="Show more replies" data-is-ajax>Show '+
-                    repliesToHide.length + ' more ' + (repliesToHide.length === 1 ? 'reply' : 'replies') +
-                '</li>');
-        }
-    });
+    // this.emit('first-load'); ????
 };
 
 /**
  * @param {Object} resp
  */
-TopComments.prototype.commentsLoaded = function(resp) {
-    var comments = qwery(this.getClass('topLevelComment'), bonzo.create(resp.html)),
-        showMoreButton = this.getElem('showMore');
+// TopComments.prototype.commentsLoaded = function(resp) {
+//     var comments = qwery(this.getClass('topLevelComment'), bonzo.create(resp.html)),
+//         showMoreButton = this.getElem('showMore');
 
-    this.currentPage++;
-    if (!resp.hasMore) {
-        this.removeShowMoreButton();
-    }
+//     this.currentPage++;
+//     if (!resp.hasMore) {
+//         this.removeShowMoreButton();
+//     }
 
-    this.renderReplyButtons(qwery(this.getClass('comment'), bonzo(comments).parent()));
-    bonzo(this.getElem('comments')).append(comments);
+//     this.renderReplyButtons(qwery(this.getClass('comment'), bonzo(comments).parent()));
+//     bonzo(this.getElem('comments')).append(comments);
 
-    showMoreButton.innerHTML = 'Show more';
-    showMoreButton.removeAttribute('data-disabled');
+//     showMoreButton.innerHTML = 'Show more';
+//     showMoreButton.removeAttribute('data-disabled');
 
-    this.hideExcessReplies(comments);
+//     this.hideExcessReplies(comments);
 
-    RecommendComments.init(this.context);
-    this.emit('loaded');
-};
-
-TopComments.prototype.removeShowMoreButton = function() {
-    bonzo(this.getElem('showMore')).remove();
-};
+//     RecommendComments.init(this.context);
+//     this.emit('loaded');
+// };
 
 /**
  * @param {object.<string.*>} comment
