@@ -122,10 +122,8 @@ define([
             search.init(header);
         },
 
-        transcludeRelated: function () {
-            common.mediator.on("page:common:ready", function(config, context){
-                related(config, context);
-            });
+        transcludeRelated: function (config, context) {
+            related(config, context);
         },
 
         transcludePopular: function () {
@@ -185,10 +183,8 @@ define([
             });
         },
 
-        runAbTests: function () {
-            common.mediator.on('page:common:ready', function(config, context) {
-                ab.run(config, context);
-            });
+        runAbTests: function (config, context) {
+            ab.run(config, context);
         },
 
         loadAnalytics: function () {
