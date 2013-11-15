@@ -58,13 +58,16 @@ define(['modules/imager', 'helpers/fixtures', '$', 'bonzo', 'utils/mediator'], f
             $('html')
                 .removeClass(notLowClassName)
                 .addClass(lowClassName);
+            // add data-force-upgrade attrs
             ['desktop wide', 'tablet desktop', 'mobile'].forEach(function(breakpoints, i) {
                 $('.' + imgClass + ':nth-child(' + (i + 1) + ')').attr('data-force-upgrade', breakpoints);
             });
             imager.upgrade();
             var $upgradedImgs = $('.' + imgClass + ' img');
+            // first two should be forced to upgrade
             expect($('.' + imgClass + ':nth-child(1) img').length).toEqual(1);
             expect($('.' + imgClass + ':nth-child(2) img').length).toEqual(1);
+            // but not the third
             expect($('.' + imgClass + ':nth-child(3) img').length).toEqual(0);
             $style.remove();
 
