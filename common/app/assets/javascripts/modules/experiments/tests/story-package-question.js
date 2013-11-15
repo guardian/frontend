@@ -6,7 +6,8 @@ define([
     'common',
     'utils/to-array',
     'modules/detect',
-    'modules/onward/history'
+    'modules/onward/history',
+    'modules/relativedates'
 ], function (
     qwery,
     bonzo,
@@ -14,7 +15,8 @@ define([
     common,
     toArray,
     detect,
-    History
+    History,
+    dates
 ) {
 
     var mostPopularUrl = '/onward/popular-onward/',
@@ -132,6 +134,7 @@ define([
                             }
                         });
                         upgradeTrail(getTrailUrl(getTrails()[0]));
+                        dates.init(document);
                     });
                 }
             },
@@ -145,6 +148,7 @@ define([
                             }
                         });
                         upgradeTrail(getTrailUrl(getTrails()[0]));
+                        dates.init(document);
                     });
                 }
             },
@@ -162,6 +166,10 @@ define([
                                     resp.popularOnward.some(function(trail) {
                                         if(!isInHistory(trail.url)) {
                                             upgradeTrail(trail.url);
+                                            dates.init(document);
+                                            return true;
+                                        } else {
+                                            return false;
                                         }
                                     });
                                 }
