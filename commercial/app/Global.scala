@@ -43,7 +43,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging {
     // fire every 15 minutes
     val masterClassRefreshSchedule = randomStartSchedule
     log.info(s"Masterclass refresh on schedule $masterClassRefreshSchedule")
-    Jobs.schedule("MasterClassRefreshJob", jobsRefreshSchedule) {
+    Jobs.schedule("MasterClassRefreshJob", masterClassRefreshSchedule) {
       MasterClassAgent.refresh()
     }
 
