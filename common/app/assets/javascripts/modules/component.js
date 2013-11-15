@@ -211,7 +211,7 @@ Component.prototype.setOptions = function(options) {
     options = options || {};
     this.options = {};
     for (var prop in this.defaultOptions) {
-        this.options[prop] = options[prop] || this.defaultOptions[prop];
+        this.options[prop] = options.hasOwnProperty(prop) ? options[prop] : this.defaultOptions[prop];
     }
 };
 
