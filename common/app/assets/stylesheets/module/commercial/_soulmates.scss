@@ -1,0 +1,62 @@
+/* ==========================================================================
+   Soulmates component
+   ========================================================================== */
+
+.soulmates-component {
+
+    background-color: #CC0000;
+    color: #ffffff;
+
+    .commercial__title span {
+        color: #FF97DC;
+    }
+
+    .lineitem__title {
+        @include fs-header(1);
+
+        a {
+            color: #ffffff;
+        }
+    }
+
+    .lineitem {
+        width: 100%;
+        display: none;
+    }
+
+    .lineitem:nth-child(1) {
+        display: block;
+    }
+
+
+    &.commercial--w300 {
+        .lineitem {
+            width: 50%;
+        }
+
+        .lineitem:nth-child(2) {
+            display: block;
+        }
+    }
+
+    &.commercial--w400 {
+        .lineitem {
+            width: 25%;
+        }
+
+        .lineitem:nth-child(3),
+        .lineitem:nth-child(4) {
+            display: block;
+        }
+    }
+
+    &.commercial--w600 {
+        .lineitem {
+            width: 20%;
+        }
+
+        .lineitem:nth-child(5) {
+            display: block;
+        }
+    }
+}

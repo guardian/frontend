@@ -4,8 +4,11 @@ import com.gu.conf.ConfigurationFactory
 import org.joda.time.format.DateTimeFormat
 
 object CommercialConfiguration {
-
   val configuration = ConfigurationFactory.getConfiguration("frontend", "env")
+
+  object masterclasses {
+    lazy val apiKey = configuration.getStringProperty("masterclasses.api.key")
+  }
 
   object travelOffersApi {
     lazy val url = configuration.getStringProperty("traveloffers.api.url")
