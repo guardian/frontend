@@ -309,7 +309,7 @@ object Switches extends Collections {
     ABCommercialComponents,
     EditionRedirectLoggingSwitch,
     ABStoryPackageQuestion,
-    ABInitialShowMore
+    ABInitialShowMore,
     ABShowMoreLayout
   )
 
