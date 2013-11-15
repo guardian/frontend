@@ -49,7 +49,7 @@ define([
                 mobile: 5
             }[detect.getBreakpoint()];
         },
-        showMore = function($collection, extraItems, count, upgradeImages) {
+        showMore = function($collection, extraItems, count) {
             var items = extraItems.splice(0, count);
             if (!items.length) {
                 return;
@@ -59,9 +59,7 @@ define([
                                    .append(items)[0];
             relativeDates.init(wrappedItems);
             commentCount.init(wrappedItems);
-            if (upgradeImages === true) {
-                faciaImages.upgrade(wrappedItems);
-            }
+            faciaImages.upgrade(wrappedItems);
             $collection.append(items);
         };
 
@@ -106,7 +104,7 @@ define([
             bonzo(excess).remove();
 
             // if we are showing less items than necessary, show more
-            showMore(this._$collection, this._extraItems, initalShowSize - qwery('.item',this._collection).length, true);
+            showMore(this._$collection, this._extraItems, initalShowSize - qwery('.item',this._collection).length);
 
             // add toggle button, if they are extra items left to show
             if (this._extraItems.length) {
