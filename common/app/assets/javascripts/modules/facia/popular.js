@@ -2,7 +2,7 @@ define([
     'common',
     'ajax',
     'bonzo',
-    'modules/relativedates',
+    'modules/ui/relativedates',
     'modules/facia/collection-show-more',
     'modules/facia/images'
 ], function (common, ajax, bonzo, relativeDates, CollectionShowMore, faciaImages) {

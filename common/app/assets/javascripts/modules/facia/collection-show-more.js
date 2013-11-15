@@ -5,7 +5,7 @@ define([
     'bean',
     'qwery',
     'modules/detect',
-    'modules/relativedates',
+    'modules/ui/relativedates',
     'modules/facia/images',
     'modules/discussion/commentCount'
 ], function ($, mediator, bonzo, bean, qwery, detect, relativeDates, faciaImages, commentCount) {

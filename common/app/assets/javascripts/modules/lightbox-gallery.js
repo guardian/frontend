@@ -7,7 +7,7 @@ define(['$',
         "qwery",
         "modules/detect",
         "modules/url",
-        "modules/overlay"
+        "modules/ui/overlay"
         ],
     function (
         $,

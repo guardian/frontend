@@ -1,4 +1,4 @@
-define(['common', 'modules/lazyload', 'modules/expandable'], function (common, LazyLoad, Expandable) {
+define(['common', 'modules/lazyload', 'modules/ui/expandable'], function (common, LazyLoad, Expandable) {
 
     function related(config, context, url) {
         var container;

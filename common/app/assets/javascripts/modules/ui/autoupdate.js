@@ -10,7 +10,7 @@ define([
     'qwery',
     'modules/userPrefs',
     'modules/detect',
-    'modules/circular-progress'
+    'modules/ui/circular-progress'
 ], function (
     common,
     ajax,

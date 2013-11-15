@@ -5,12 +5,12 @@ define([
     "bonzo",
     //Modules
     "modules/router",
-    "modules/togglepanel",
-    "modules/expandable",
+    "modules/ui/togglepanel",
+    "modules/ui/expandable",
     "modules/sport/football/fixtures",
     "modules/sport/football/tables",
     "modules/sport/football/more-matches",
-    "modules/autoupdate",
+    "modules/ui/autoupdate",
     "modules/sport/football/matchnav"
 ], function (
     common,

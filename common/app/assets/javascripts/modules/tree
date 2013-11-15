@@ -1,0 +1,102 @@
+.
+├── adverts -- move to commercial
+│   ├── adverts.js
+│   ├── audience-science.js
+│   ├── dimensionMap.js
+│   ├── document-write.js
+│   ├── documentwriteslot.js
+│   ├── quantcast.js
+│   ├── sticky.js
+│   ├── userAdTargeting.js
+│   └── video.js
+├── analytics
+│   ├── adverts.js
+│   ├── clickstream.js
+│   ├── discussion.js
+│   ├── gallery.js
+│   ├── livestats.js
+│   ├── omniture.js
+│   ├── omnitureMedia.js
+│   ├── reading.js
+│   └── video.js
+├── asyncCallMerger.js -- util
+├── autoupdate.js -- ui
+├── circular-progress.js -- ui
+├── commercial
+│   └── commercial-components.js -- rename components
+├── component.js -- ?
+├── content-websocket.js -- experiments
+├── cookies.js -- util
+├── detect.js -- util
+├── discussion
+│   ├── api.js
+│   ├── comment-box.js
+│   ├── commentCount.js
+│   ├── comments.js
+│   ├── discussion.js
+│   ├── loader.js
+│   └── recommend-comments.js
+├── errors.js -- util
+├── expandable.js -- ui
+├── experiments
+│   ├── ab.js
+│   ├── inline-link-card.js -- move to ./tests
+│   ├── left-hand-card.js -- ""
+│   ├── live-blog-show-more.js -- ""
+│   └── tests
+│       ├── aa.js
+│       ├── alpha-adverts.js
+│       ├── commercial-components.js
+│       ├── initial-show-more.js
+│       ├── live-blog-show-more.js
+│       └── story-package-question.js
+├── facia
+│   ├── collection-show-more.js
+│   ├── container-toggle.js
+│   ├── images.js
+│   └── popular.js
+├── fonts.js -- ui
+├── id.js -- mkdir ./identity & move
+├── identity.js -- move to id
+├── images.js -- ui
+├── interactive.js -- ?
+├── inview.js -- adverts ?
+├── lazyload.js -- util
+├── lightbox-gallery.js -- gallery/lightbox
+├── live
+│   ├── filter.js
+│   └── summary.js
+├── navigation
+│   ├── profile.js
+│   ├── search.js
+│   ├── sections.js
+│   └── top-stories.js
+├── notification-counter.js -- ui
+├── onward
+│   ├── history.js
+│   └── sequence.js
+├── overlay.js -- ui
+├── pageconfig.js -- util
+├── password-strength.js -- identity
+├── popular.js -- 
+├── related.js
+├── relativedates.js -- ui
+├── router.js
+├── sport
+│   ├── cricket.js
+│   └── football
+│       ├── fixtures.js
+│       ├── matchnav.js
+│       ├── more-matches.js
+│       └── tables.js
+├── storage.js -- util
+├── tabs.js -- ui
+├── time.js -- util
+├── togglepanel.js -- ui
+├── toggles.js -- ui
+├── trailblock-show-more.js -- ui
+├── trailblocktoggle.js -- io
+├── url.js -- util
+└── userPrefs.js -- util
+
+12 directories, 88 files

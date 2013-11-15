@@ -1,6 +1,6 @@
 define([
     "common",
-    "modules/autoupdate",
+    "modules/ui/autoupdate",
     "modules/live/filter",
     "modules/live/summary",
     "modules/sport/football/matchnav",
@@ -8,7 +8,7 @@ define([
     "modules/discussion/loader",
     "modules/sport/cricket",
     "modules/experiments/live-blog-show-more",
-    "modules/notification-counter",
+    "modules/ui/notification-counter",
     "modules/detect",
     "modules/experiments/left-hand-card"
 ], function (

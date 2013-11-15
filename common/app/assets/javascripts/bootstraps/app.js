@@ -7,7 +7,7 @@ define('bootstraps/app', [
     'modules/detect',
     'modules/errors',
     'modules/analytics/livestats',
-    'modules/fonts',
+    'modules/ui/fonts',
     "modules/router",
     'modules/discussion/api',
     "bootstraps/common",
