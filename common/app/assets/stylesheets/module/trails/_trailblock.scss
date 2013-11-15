@@ -75,8 +75,8 @@
    ========================================================================== */
 
 @include mq(rightCol) {
-    .more-on-this-story {
-        .t1 {
+    .more-on-this-story ul:first-of-type {
+        .trail:first-child {
             display: none;
         }
     }

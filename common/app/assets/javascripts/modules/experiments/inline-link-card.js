@@ -3,15 +3,15 @@
     Description: Load in data from the linked page and display in sidebar
 */
 define([
-    'common',
+    '$',
+    'utils/mediator',
     'modules/detect',
-    'ajax',
-    'bean'
+    'ajax'
 ], function (
-    common,
+    $,
+    mediator,
     detect,
-    ajax,
-    bean
+    ajax
 ) {
     /**
      * @param {DOMElement} link        The link to transform
@@ -21,16 +21,16 @@ define([
     function InlineLinkCard(link, linkContext, title) {
         this.link = link;
         this.title = title || false;
-        this.$linkContext = common.$g(linkContext);
+        this.$linkContext = $(linkContext);
     }
 
     InlineLinkCard.prototype.init = function() {
         var self = this;
         self.loadCard();
 
-        bean.on(window, 'resize', common.debounce(function(e){
+        mediator.addListener('window:resize', function(e) {
             self.loadCard();
-        }, 200));
+        });
     };
 
     InlineLinkCard.prototype.loadCard = function() {
@@ -77,25 +77,24 @@ define([
             contentFragment += '<div class="card__appendix type-12">' + host + '</div>';
         }
 
-        tpl = '<div class="card-wrapper">' +
-                  '<div class="furniture furniture--left card card--left">' +
-                      titleFragment +
-                      '<div class="card__body u-text-hyphenate">' +
-                          '<a href="' + href + '" data-link-name="in card link" aria-hidden="true">' +
-                          contentFragment +
-                          '</a>' +
-                      '</div>' +
-                      '<div class="card__meta">' +
-                          publishedFragment +
-                      '</div>' +
-                      '<a href="' + href + '" data-link-name="in card link" aria-hidden="true">' +
-                         imageFragment +
-                      '</a>' +
-                  '</div>' +
-              '</div>';
+        tpl =   '<div class="card-wrapper">' +
+                    '<div class="furniture furniture--left card card--left">' +
+                        '<a href="' + href + '" data-link-name="in card link" aria-hidden="true">' +
+                            imageFragment +
+                        '</a>' +
+                        '<div class="card__body u-text-hyphenate">' +
+                            '<a href="' + href + '" data-link-name="in card link" aria-hidden="true">' +
+                                contentFragment +
+                            '</a>' +
+                        '</div>' +
+                        '<div class="card__meta">' +
+                            publishedFragment +
+                        '</div>' +
+                    '</div>' +
+                '</div>';
 
         self.$linkContext.before(tpl);
-        common.mediator.emit('fragment:ready:dates');
+        mediator.emit('fragment:ready:dates');
     };
 
     function stripHost(url) {
@@ -122,7 +121,7 @@ define([
                 self.prependCard(href, resp, self.title);
             },
             function(req) {
-                common.mediator.emit('module:error', 'Failed to cardify in body link: ' + req.statusText, 'modules/inline-link-card.js');
+                mediator.emit('module:error', 'Failed to cardify in body link: ' + req.statusText, 'modules/inline-link-card.js');
             }
         );
     };

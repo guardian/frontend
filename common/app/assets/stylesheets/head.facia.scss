@@ -24,13 +24,20 @@
 @import "module/facia/_mixins";
 @import "module/facia/_items";
 @import "module/containers/_sport";
+
+@import "module/containers/_news-v1";
+
+.news-container--v1,
+.news-container--v2 {
+    @include container--news-mobile;
+}
 .news-container--v1 {
-    @import "module/containers/_news-v1";
+    @include container--news-tablet-and-up;
 }
 .news-container--v2 {
     @import "module/containers/_news-v2";
-    @include news-container-mobile;
 }
+
 @import "module/containers/_features";
 @import "module/containers/_comment";
 @import "module/containers/_section";

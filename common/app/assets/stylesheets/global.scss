@@ -48,9 +48,6 @@
 @import "module/_lightbox-gallery";
 @import "module/facia/_mixins";
 @import "module/containers/_popular";
-@import "module/containers/_news-v2";
-    @include news-container-tablet-and-up;
-@import "module/_commercial-components";
 @import "module/trails/_trailblock";
 @import "module/trails/_trail";
 @import "module/_social";

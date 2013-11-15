@@ -1,108 +1,114 @@
-.container--news {
-    @include mq($to: tablet) {
-        @include first-row(1);
-        .item:first-child {
-            @include card-mobile($with-image: true);
-        }
-        .collection--without-sport-stats {
-            .item:nth-child(n+2):nth-child(-n+5) {
-                @include card-half-width;
+@mixin container--news-mobile {
+    .container--news {
+        @include mq($to: tablet) {
+            @include first-row(1);
+            .item:first-child {
+                @include card-mobile($with-image: true);
             }
-            .item:nth-child(2),
-            .item:nth-child(3){
-                @include card-half-width-image;
+            .collection--without-sport-stats {
+                .item:nth-child(n+2):nth-child(-n+5) {
+                    @include card-half-width;
+                }
+                .item:nth-child(2),
+                .item:nth-child(3){
+                    @include card-half-width-image;
+                }
+                .item:nth-child(n+6) {
+                    @include card-headline;
+                }
+                .item:nth-child(n+7) {
+                    .item__link {
+                        border-top: 1px dotted $c-neutral5;
+                    }
+                }
             }
-            .item:nth-child(n+6) {
-                @include card-headline;
-            }
-            .item:nth-child(n+7) {
-                .item__link {
-                    border-top: 1px dotted $c-neutral5;
+            .collection--with-sport-stats {
+                .item:nth-child(n+3):nth-child(-n+6) {
+                    @include card-half-width;
+                }
+                .item:nth-child(3),
+                .item:nth-child(4){
+                    @include card-half-width-image;
+                }
+                .item:nth-child(n+7) {
+                    @include card-headline;
+                }
+                .item:nth-child(n+8) {
+                    .item__link {
+                        border-top: 1px dotted $c-neutral5;
+                    }
                 }
             }
         }
-        .collection--with-sport-stats {
-            .item:nth-child(n+3):nth-child(-n+6) {
-                @include card-half-width;
+    }
+}
+@mixin container--news-tablet-and-up {
+    .container--news {
+        @include mq(tablet) {
+            .item:first-child {
+                @include card-double-width;
             }
-            .item:nth-child(3),
-            .item:nth-child(4){
-                @include card-half-width-image;
+            &:nth-of-type(even) .item:first-child {
+                float: right;
             }
-            .item:nth-child(n+7) {
-                @include card-headline;
+            .item:nth-child(n+2) {
+                @include card;
             }
-            .item:nth-child(n+8) {
-                .item__link {
-                    border-top: 1px dotted $c-neutral5;
+        }
+        @include mq(tablet, desktop) {
+            @include first-row(2);
+            .collection--without-sport-stats {
+                .item:nth-child(2),
+                .item:nth-child(n+4):nth-child(-n+6) {
+                    @include card-image;
+                }
+            }
+            .collection--with-sport-stats {
+                .item:nth-child(n+3):nth-child(-n+5) {
+                    @include card-image;
                 }
             }
         }
-    }
-    @include mq(tablet) {
-        .item:first-child {
-            @include card-double-width;
-        }
-        &:nth-of-type(even) .item:first-child {
-            float: right;
-        }
-        .item:nth-child(n+2) {
-            @include card;
-        }
-    }
-    @include mq(tablet, desktop) {
-        @include first-row(2);
-        .collection--without-sport-stats {
-            .item:nth-child(2),
-            .item:nth-child(n+4):nth-child(-n+6) {
+        @include mq(desktop) {
+            @include first-row(3);
+            .item:nth-child(3) {
                 @include card-image;
             }
-        }
-        .collection--with-sport-stats {
-            .item:nth-child(n+3):nth-child(-n+5) {
-                @include card-image;
+            .collection--without-sport-stats {
+                .item:nth-child(2) {
+                    @include card-image;
+                }
             }
         }
-    }
-    @include mq(desktop) {
-        @include first-row(3);
-        .item:nth-child(3) {
-            @include card-image;
-        }
-        .collection--without-sport-stats {
-            .item:nth-child(2) {
-                @include card-image;
-            }
-        }
-    }
 
-    .item--sport-stats {
-        padding-bottom: 0 !important;
-        .matches {
-            margin-bottom: 0;
+        .item--sport-stats {
+            padding-bottom: 0 !important;
+            .matches {
+                margin-bottom: 0;
+            }
+            .match-desc__result {
+                width: 20%;
+            }
+            .cta {
+                margin-bottom: 0;
+            }
+            .cta-small {
+                padding-bottom: 0;
+            }
         }
-        .match-desc__result {
-            width: 20%;
+        .item--sport-table {
+            width: 100% !important;
         }
-        .cta {
-            margin-bottom: 0;
+        .competition-table {
+            padding-top: 0;
+            border-bottom-style: none;
+            border-top: 2px solid $c-newsAccent;
         }
-        .cta-small {
-            padding-bottom: 0;
-        }
-    }
-    .item--sport-table {
-        width: 100% !important;
-    }
-    .competition-table {
-        padding-top: 0;
-        border-bottom-style: none;
-        border-top: 2px solid $c-newsAccent;
-    }
-    @include mq(tablet) {
-        .item--sport-stats-tall {
-            float: left;
-            min-height: gs-height(9) !important;
+        @include mq(tablet) {
+            .item--sport-stats-tall {
+                float: left;
+                min-height: gs-height(9) !important;
+            }
         }
     }
 }

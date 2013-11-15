@@ -40,20 +40,6 @@ class UrlsTest extends FlatSpec with Matchers {
     Content(content).url should be("/foo/gallery/2012/jan/07/bar")
   }
 
-  they should "be created absolute for unsupported content types" in {
-
-    val content = ApiContent("foo/2012/jan/07/bar", None, None, new DateTime, "Some article",
-      "http://www.guardian.co.uk/foo/2012/jan/07/bar",
-      "http://content.guardianapis.com/foo/2012/jan/07/bar",
-      tags = List(tag("type/interactive")),
-      elements = None
-    )
-
-    SupportedUrl(content) should be("http://www.guardian.co.uk/foo/2012/jan/07/bar")
-
-    Content(content).url should be("http://www.guardian.co.uk/foo/2012/jan/07/bar")
-  }
-
   they should "be created relative for tags" in {
     Tag(tag("foo/bar")).url should be("/foo/bar")
   }
