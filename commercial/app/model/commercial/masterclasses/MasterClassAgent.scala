@@ -28,4 +28,9 @@ object MasterClassAgent extends Logging with ExecutionContexts {
       }
     }
   }
+
+  def stop() {
+    agent.close()
+  }
+
 }

@@ -68,6 +68,13 @@ trait CommercialLifecycle extends GlobalSettings with Logging {
     Jobs.deschedule("JobsRefreshJob")
     Jobs.deschedule("MasterClassRefreshJob")
     Jobs.deschedule("SoulmatesRefreshJob")
+
+    OffersAgent.stop()
+    JobsAgent.stop()
+    SoulmatesAggregatingAgent.stop()
+    MasterClassAgent.stop()
+    LightJobsAgent.stop()
+
     super.onStop(app)
   }
 }
