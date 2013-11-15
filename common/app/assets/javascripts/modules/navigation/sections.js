@@ -1,13 +1,13 @@
 define([
     'common',
     'bonzo',
-    'bean',
+    'utils/mediator',
     'modules/detect',
     'modules/userPrefs'
 ], function (
     common,
     bonzo,
-    bean,
+    mediator,
     detect,
     userPrefs
 ) {
@@ -78,7 +78,7 @@ define([
                     return;
                 }
 
-                bean.on(window, 'resize', common.debounce(function(e){
+                mediator.addListener('window:resize', function(e) {
                     hasCrossedBreakpoint(function(layoutMode) {
 
                         bonzo(sectionsHeader).addClass(className);
@@ -92,7 +92,7 @@ define([
                             that.view.showColumns(sectionsHeader, sectionsNav);
                         }
                     });
-                }, 200));
+                });
 
                 if(detect.getLayoutMode() !== 'mobile') {
                     that.view.hideColumns(sectionsHeader, sectionsNav);

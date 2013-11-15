@@ -6,7 +6,7 @@ import model.diagnostics.DiagnosticsLoadJob
 trait DiagnosticsLifecycle extends GlobalSettings {
 
   def scheduleJobs() {
-    Jobs.schedule("DiagnosticsLoadJob", "0 * * * * ?", DiagnosticsMetrics.DiagnosticsLoadTimingMetric) {
+    Jobs.schedule("DiagnosticsLoadJob", "0 * * * * ?") {
       DiagnosticsLoadJob.run()
     }
   }

@@ -4,9 +4,12 @@ import common._
 import services.OphanApi
 import play.api.libs.json.{JsArray, JsValue}
 import java.net.URL
+import conf.SwitchingContentApi
+import model.Content
+import scala.concurrent.Future
 
 case class MostRead(url: String, count: Int)
-case class MostPopularOnward(url: String)
+case class MostPopularOnward(trail:Content)
 
 object OnwardJourneyAgent extends Logging with ExecutionContexts {
 
@@ -17,8 +20,11 @@ object OnwardJourneyAgent extends Logging with ExecutionContexts {
   def mostPopularOnward(): Map[String, Seq[MostPopularOnward]] = popularOnwardAgent()
 
   def update() {
-
     log.info("Adding onward journeys")
+    update(Edition.defaultEdition)
+  }
+
+  private def update(edition: Edition) {
 
     val ophanQuery = OphanApi.getMostRead(hours = 3, count = 50)
     ophanQuery.map { ophanResults =>
@@ -38,7 +44,7 @@ object OnwardJourneyAgent extends Logging with ExecutionContexts {
 
     // Find a list of content which appears in the most read, but hasn't got
     // an entry in the 'popular onward' map.
-   val remainingMostRead = mostRead.filterNot(id => mostPopularOnward.isDefinedAt(id.url))
+    val remainingMostRead = mostRead.filterNot(id => mostPopularOnward.isDefinedAt(id.url))
 
     remainingMostRead.take(3).map( id => {
 
@@ -46,17 +52,21 @@ object OnwardJourneyAgent extends Logging with ExecutionContexts {
       onwardQuery.map { ophanResults =>
 
         // Parse ophan results into a sequence, the Map value.
-        val mostPopularOnward: Seq[MostPopularOnward] = for {
-          parentArray: JsValue <- ophanResults.asOpt[JsArray].map(_.value).getOrElse(Nil)
-          item: JsValue <- parentArray.asOpt[JsArray].map(_.value).getOrElse(Nil)
-          url <- (item \ "url").asOpt[String]
+        val mostPopularOnward: Seq[Future[Option[MostPopularOnward]]] = for {
+          parentArray: JsValue     <- ophanResults.asOpt[JsArray].map(_.value).getOrElse(Nil)
+          ophanItem: JsValue       <- parentArray.asOpt[JsArray].map(_.value).getOrElse(Nil)
+          contentId: String        <- (ophanItem \ "url").asOpt[String].map {UrlToContentPath(_)}
         } yield {
-          MostPopularOnward(UrlToContentPath(url))
+          SwitchingContentApi().item(contentId, edition).response.map { response =>
+            response.content.map{content => MostPopularOnward(Content(content))}
+          }
         }
 
-        popularOnwardAgent send ( currentMap => {
-          currentMap + (id.url -> mostPopularOnward)
-        })
+        Future.sequence(mostPopularOnward).map { onwardTrails =>
+          popularOnwardAgent send ( currentMap => {
+            currentMap + (id.url -> onwardTrails.flatten)
+          })
+        }
       }
     })
   }

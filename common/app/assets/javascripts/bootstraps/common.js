@@ -8,6 +8,7 @@ define([
     'domReady',
     'bonzo',
     'bean',
+    'lodash/functions/debounce',
     //Modules
     'modules/storage',
     'modules/detect',
@@ -48,6 +49,7 @@ define([
     domReady,
     bonzo,
     bean,
+    debounce,
 
     storage,
     detect,
@@ -122,10 +124,8 @@ define([
             search.init(header);
         },
 
-        transcludeRelated: function () {
-            common.mediator.on("page:common:ready", function(config, context){
-                related(config, context);
-            });
+        transcludeRelated: function (config, context) {
+            related(config, context);
         },
 
         transcludePopular: function () {
@@ -185,10 +185,8 @@ define([
             });
         },
 
-        runAbTests: function () {
-            common.mediator.on('page:common:ready', function(config, context) {
-                ab.run(config, context);
-            });
+        runAbTests: function (config, context) {
+            ab.run(config, context);
         },
 
         loadAnalytics: function () {
@@ -263,6 +261,14 @@ define([
                 });
                 common.mediator.on('modules:adverts:docwrite:loaded', function(){
                     Adverts.loadAds();
+                });
+
+                common.mediator.on('window:resize', function () {
+                    Adverts.hideAds();
+                });
+                
+                common.mediator.on('window:orientationchange', function () {
+                    Adverts.hideAds();
                 });
             }
         },
@@ -372,6 +378,22 @@ define([
                     new AutoSignin(config).init();
                 }
             });
+        },
+
+        windowEventListeners: function() {
+            var events = {
+                    resize: 'window:resize',
+                    scroll: 'window:scroll',
+                    orientationchange: 'window:orientationchange'
+                },
+                emitEvent = function(eventName) {
+                    return function(e) {
+                        common.mediator.emit(eventName, e);
+                    };
+                };
+            for (var event in events) {
+                bean.on(window, event, debounce(emitEvent(events[event]), 200));
+            }
         }
     };
 
@@ -395,13 +417,18 @@ define([
     var ready = function (config, context, contextHtml) {
         if (!this.initialised) {
             this.initialised = true;
+
+            common.mediator.on("page:common:ready", function(config, context){
+                modules.runAbTests(config, context);
+                modules.transcludeRelated(config, context);
+            });
+
+            modules.windowEventListeners();
             modules.upgradeImages();
             modules.showTabs();
             modules.initialiseNavigation(config);
             modules.showToggles();
-            modules.runAbTests();
             modules.showRelativeDates();
-            modules.transcludeRelated();
             modules.transcludePopular();
             modules.loadVideoAdverts(config);
             modules.initClickstream();

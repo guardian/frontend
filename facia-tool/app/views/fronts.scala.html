@@ -133,14 +133,14 @@
                     <a class="draft-warning" data-bind="
                         click: $root.setModeDraft,
                         visible: $root.liveMode">
-                        <span class="tool draft-publish draft-warning">!</span> Show Unpublished Draft</a>
+                        <span class="tool draft-publish draft-warning">!</span> Unpublished edits exist</a>
 
                     <div data-bind="visible: !$root.liveMode()">
                         <a class="tool draft-publish" data-bind="
-                            click: publishDraft">Publish this Draft</a>
+                            click: publishDraft">Publish this container's edits</a>
                             
                         <a class="tool draft-discard" data-bind="
-                            click: discardDraft">Discard it</a>
+                            click: discardDraft">Discard edits</a>
                     </div>
                 </div>
             </div>
