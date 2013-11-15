@@ -7,6 +7,7 @@ define([
     'modules/experiments/tests/live-blog-show-more',
     'modules/experiments/tests/alpha-adverts',
     'modules/experiments/tests/commercial-components',
+    'modules/experiments/tests/story-package-question',
     'modules/experiments/tests/initial-show-more'
 ], function (
     common,
@@ -16,6 +17,7 @@ define([
     LiveBlogShowMore,
     AlphaAdverts,
     CommercialComponentsTest,
+    StoryPackageQuestion,
     InitialShowMore
     ) {
 
@@ -24,6 +26,7 @@ define([
             new LiveBlogShowMore(),
             new AlphaAdverts(),
             new CommercialComponentsTest(),
+            new StoryPackageQuestion(),
             new InitialShowMore()
         ],
         participationsKey = 'gu.ab.participations';
