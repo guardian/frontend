@@ -10,7 +10,7 @@
         }
         @return $result;
     } @else {
-        @if $value == 0 { @return 0; } // 0px => 0
+        @if $value == auto or $value == 0 { @return $value; }
         @return if(unit($value) == px, $value / $baseline * 1rem, $value);
     }
 }
