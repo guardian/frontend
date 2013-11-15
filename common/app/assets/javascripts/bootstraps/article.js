@@ -1,8 +1,8 @@
 define([
     "common",
     "modules/autoupdate",
-    "modules/live-filter",
-    "modules/live-summary",
+    "modules/live/filter",
+    "modules/live/summary",
     "modules/sport/football/matchnav",
     "modules/analytics/reading",
     "modules/discussion/loader",
