@@ -11,6 +11,7 @@ define([
     'bonzo',
     'bean',
     'lodash/functions/debounce',
+    'utils/deferToLoad',
     //Modules
     'utils/storage',
     'utils/detect',
@@ -33,9 +34,11 @@ define([
     'modules/analytics/adverts',
     'modules/experiments/ab',
     "modules/adverts/video",
-    "modules/discussion/comment-count",
-    "modules/gallery/lightbox",
-    "modules/facia/images",
+    "modules/discussion/commentCount",
+    "modules/lightbox-gallery",
+    "modules/swipe/ears",
+    "modules/swipe/bar",
+    "modules/imager",
     "modules/onward/history",
     "modules/onward/sequence"
 ], function (
@@ -49,6 +52,7 @@ define([
     bonzo,
     bean,
     debounce,
+    deferToLoadEvent,
 
     storage,
     detect,
@@ -74,7 +78,9 @@ define([
     VideoAdvert,
     CommentCount,
     LightboxGallery,
-    faciaImages,
+    ears,
+    SwipeBar,
+    imager,
     History,
     sequence
 ) {
@@ -82,7 +88,7 @@ define([
     var modules = {
 
         upgradeImages: function () {
-            faciaImages.upgrade();
+            imager.upgrade(document, imager.listen);
 
             var images = new Images();
             mediator.on('page:common:ready', function(config, context) {
@@ -260,7 +266,6 @@ define([
                 mediator.on('window:resize', function () {
                     Adverts.hideAds();
                 });
-                
                 mediator.on('window:orientationchange', function () {
                     Adverts.hideAds();
                 });
@@ -321,6 +326,31 @@ define([
 
                 bean.on(document, 'click', '.js-site-message-close', function(e) {
                     releaseMessage.hide();
+                });
+            }
+        },
+
+        initSwipe: function(config, contextHtml) {
+            if (config.switches.swipeNav && detect.canSwipe() && !userPrefs.isOff('swipe') || userPrefs.isOn('swipe-dev')) {
+                var swipe = swipeNav(config, contextHtml);
+
+                mediator.on('module:swipenav:navigate:next', function(){ swipe.gotoNext(); });
+                mediator.on('module:swipenav:navigate:prev', function(){ swipe.gotoPrev(); });
+            } else {
+                delete this.contextHtml;
+                return;
+            }
+            if (config.switches.swipeNav && detect.canSwipe()) {
+                bonzo(document.body).addClass('can-swipe');
+                mediator.on('module:clickstream:click', function(clickSpec){
+                    if (clickSpec.tag.indexOf('switch-swipe-on') > -1) {
+                        userPrefs.switchOn('swipe');
+                        window.location.reload();
+                    }
+                    else if (clickSpec.tag.indexOf('switch-swipe-off') > -1) {
+                        userPrefs.switchOff('swipe');
+                        window.location.reload();
+                    }
                 });
             }
         },

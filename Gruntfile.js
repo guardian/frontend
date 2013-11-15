@@ -331,11 +331,7 @@ module.exports = function (grunt) {
                 template: require('grunt-template-jasmine-requirejs'),
                 keepRunner: true,
                 vendor: [
-                    'common/test/assets/javascripts/components/sinon/lib/sinon.js',
-                    'common/test/assets/javascripts/components/sinon/lib/sinon/call.js',
-                    'common/test/assets/javascripts/components/sinon/lib/sinon/spy.js',
-                    'common/test/assets/javascripts/components/sinon/lib/sinon/stub.js',
-                    'common/test/assets/javascripts/components/sinon/lib/sinon/util/*.js',
+                    'common/test/assets/javascripts/components/sinonjs/sinon.js',
                     'common/test/assets/javascripts/components/jasmine-sinon/lib/jasmine-sinon.js',
                     'common/test/assets/javascripts/components/seedrandom/index.js'
                 ],
@@ -359,7 +355,14 @@ module.exports = function (grunt) {
                             lodash:       'components/lodash-amd/modern',
                             omniture:     '../../../app/public/javascripts/vendor/omniture',
                             fixtures:     '../../../test/assets/javascripts/fixtures',
-                            helpers:      '../../../test/assets/javascripts/helpers'
+                            helpers:      '../../../test/assets/javascripts/helpers',
+                            imager:       '../../../app/assets/javascripts/components/imager.js/src/strategies/container'
+                        },
+                        shim: {
+                            imager: {
+                                deps: ['../../../app/assets/javascripts/components/imager.js/src/imager'],
+                                exports: 'Imager'
+                            }
                         }
                     }
                 }
@@ -553,7 +556,7 @@ module.exports = function (grunt) {
                 files: ['common/app/{assets, public}/javascripts/**/*.js'],
                 tasks: ['compile:js'],
                 options: {
-                    spawn: false
+                    spawn: true
                 }
             },
             css: {
