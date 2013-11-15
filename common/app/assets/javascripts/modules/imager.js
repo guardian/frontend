@@ -1,13 +1,15 @@
-define(['$', 'utils/to-array', 'bonzo', 'utils/mediator', 'imager'], function ($, toArray, bonzo, mediator, imagerjs) {
+define(['$', 'utils/to-array', 'bonzo', 'utils/mediator', 'imager', 'modules/detect'], function ($, toArray, bonzo, mediator, imagerjs, detect) {
 
     var imager = {
 
         upgrade: function(context) {
-            if ($('html').hasClass('connection--low')) {
-                return;
-            }
             context = context || document;
+            var breakpoint = detect.getBreakpoint();
             var images = toArray(document.getElementsByClassName('item__image-container')).filter(function(img) {
+                    var forceUpdgradeBreakpoints = (bonzo(img).attr('data-force-upgrade') || '').split(' ');
+                    if ($('html').hasClass('connection--low') && forceUpdgradeBreakpoints.indexOf(breakpoint) === -1) {
+                        return;
+                    }
                     return bonzo(img).css('display') !== 'none';
                 }),
                 options = {
