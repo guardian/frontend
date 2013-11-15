@@ -58,7 +58,6 @@ TopComments.CONFIG = {
 /** @type {Object.<string.*>} */
 TopComments.prototype.defaultOptions = {
     discussionId: null,
-    initialShow: 10,
     heightLimit: 600, // max-height in _discussion.scss .discussion__comments__top
     showRepliesCount: 3,
     user: null
@@ -95,12 +94,28 @@ TopComments.prototype.fetch = function(parent) {
         crossOrigin: true
     }).then(
         function render(resp) {
-            self.elem = parent;
-            self.commentsElements = bonzo.create(resp.html);
-            $('.discussion__comments__top', self.elem).append(self.commentsElements); // refactor
-            self.elems = {};
-            self.prerender();
-            self.ready();
+
+            if (resp.commentCount > 0) {
+                
+                // Render Top Comments
+
+                self.elem = parent;
+                self.commentsElements = bonzo.create(resp.html);
+                $('.discussion__comments__top', self.elem).append(self.commentsElements); // refactor
+                self.elems = {};
+                self.prerender();
+                self.ready();
+
+                self.emit("loadComments");
+                
+            } else {
+
+                // Render Regular Comments
+                self.emit("loadComments");
+
+            }
+
+
         }
     );
 };
@@ -222,13 +237,13 @@ TopComments.prototype.showMore = function(e) {
 
 TopComments.prototype.showHiddenComments = function() {
 
-    $('.discussion__comments__top', self.elem).css("max-height", "none"); // refactor
+    $('.discussion__comments__top', this.elem).css("max-height", "none"); // refactor
 
     this.hasHiddenComments = false;
 
     this.showMoreButton.remove();
 
-    $('.d-image-fade', self.elem).remove(); // refactor
+    $('.d-image-fade', this.elem).remove(); // refactor
 
     // this.emit('first-load'); ????
 };

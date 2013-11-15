@@ -376,8 +376,8 @@
         max-height: 600px;
         overflow: hidden;
 
-        -moz-column-width: 290px;
-        -webkit-column-width: 290px;
+        -moz-column-width: 294px;
+        -webkit-column-width: 294px;
         -moz-column-gap: $gutter;
         -webkit-column-gap: $gutter; 
         -moz-column-count: 2;
@@ -395,15 +395,23 @@
             @include d-white-fade();
         }
 
+        ul {
+            margin: 0;
+        }
+
         .d-comment   { // Comment
             background-color: $c-neutral7;
             padding: $baseline*2 $gutter/2 $baseline*6 $gutter/2;
             border: none;
-            width: 290px;
+            width: 294-$gutter/2;
             //float: left;
             position: relative;
-            display: inline-block;
+            display: block;
             margin-bottom: $baseline*10;
+
+            .d-comment__inner {
+                display: inline-block;
+            }
 
             .d-comment__avatar-wrapper {
                 -webkit-border-radius: 50px;

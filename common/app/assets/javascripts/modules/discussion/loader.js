@@ -48,6 +48,7 @@ Loader.prototype.context = null;
 Loader.CONFIG = {
     componentClass: 'discussion',
     classes: {
+        commentsContainer: 'discussion__comments__container',
         comments: 'discussion__comments',
         commentBox: 'discussion__comment-box',
         commentBoxBottom: 'discussion__comment-box--bottom',
@@ -81,63 +82,73 @@ Loader.prototype.canComment = false;
  * 3. render comment bar
  */
 Loader.prototype.ready = function() {
-    var id = this.getDiscussionId(),
-        loadingElem = bonzo.create('<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>')[0],
-        topLoadingElem = bonzo.create('<div class="preload-msg">Loading top comments…<div class="is-updating"></div></div>')[0],
-        commentsElem = this.getElem('comments'),
+    var topLoadingElem = bonzo.create('<div class="preload-msg">Loading top comments…<div class="is-updating"></div></div>')[0],
         topCommentsElem = this.getElem('topComments'),
         self = this;
 
-    bonzo(loadingElem).insertAfter(commentsElem);
     bonzo(topLoadingElem).insertAfter(topCommentsElem);
 
     this.on('user:loaded', function(user) {
-        var self = this;
 
-        this.comments = new Comments(this.context, this.mediator, {
-            initialShow: 2,
-            discussionId: this.getDiscussionId(),
-            user: this.user
-        });
-
-        // Doing this makes sure there is only one redraw
-        // Within comments there is adding of reply buttons etc
-        bonzo(commentsElem).addClass('u-h');
-        this.comments
-            .fetch(commentsElem)
-            .then(function killLoadingMessage() {
-                bonzo(loadingElem).remove();
-                self.renderCommentBar(user);
-                bonzo(commentsElem).removeClass('u-h');
-            });
+        self.user = user;
 
         // Top comments =========================================== //
 
         this.topComments = new TopComments(this.context, this.mediator, {
-            initialShow: 2,
             discussionId: this.getDiscussionId(),
             user: this.user
         });
 
-        //bonzo(topCommentsElem).addClass('u-h');
         this.topComments
             .fetch(topCommentsElem)
             .then(function appendTopComments() {
                 bonzo(topLoadingElem).remove();
-                // for (var i = 0; i < 3; i++) { // first 4
-                //     bonzo(topCommentsElem).append(
-                //         bonzo(self.topComments.topLevelComments[i]).removeClass('u-h')[0]
-                //     );
-                // }
             });
+
+        self.on('loadComments', self.loadComments);
+
+        // !Top comments ========================================== //
 
     });
     this.getUser();
 
     this.renderCommentCount();
 
-    bonzo(this.getElem('show')).remove();
     DiscussionAnalytics.init();
+};
+
+Loader.prototype.loadComments = function () {
+
+    var self = this;
+
+    var commentsContainer   = this.getElem('commentsContainer'),
+        commentsElem        = this.getElem('comments'),
+        loadingElem         = bonzo.create('<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>')[0];
+    
+    bonzo(loadingElem).insertAfter(commentsElem);
+
+    this.comments = new Comments(this.context, this.mediator, {
+        initialShow: 0,
+        discussionId: this.getDiscussionId(),
+        user: this.user
+    });
+
+    // Doing this makes sure there is only one redraw
+    // Within comments there is adding of reply buttons etc
+    //bonzo(commentsContainer).addClass('u-h');
+    this.comments
+        .fetch(commentsElem)
+        .then(function killLoadingMessage() {
+            bonzo(loadingElem).remove();
+            self.renderCommentBar(self.user);
+            bonzo(self.comments.getElem('showMore')).addClass("u-h");
+            self.on("click", self.getElem('show'), function (event) {
+                bonzo(self.getElem('show')).remove();
+                self.comments.showMore(event);
+                bonzo([self.comments.getElem('showMore'), self.comments.getElem('header')]).removeClass("u-h");
+            });
+            bonzo(commentsContainer).removeClass('u-h');
+        });
 };
 
 /** @return {Reqwest|null} */

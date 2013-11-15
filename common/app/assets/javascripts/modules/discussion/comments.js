@@ -42,6 +42,7 @@ Comments.CONFIG = {
         showMore: 'js-show-more-comments',
         reply: 'd-comment--response',
         showReplies: 'js-show-more-replies',
+        header: 'd-discussion__header',
 
         comment: 'd-comment',
         commentActions: 'd-comment__actions__main',
@@ -333,6 +334,7 @@ Comments.prototype.replyToComment = function(e) {
             bonzo(parentCommentEl).append(responses);
         }
         self.addComment(comment, false, responses);
+        // SHOW MORE?
         this.destroy();
     });
 };
