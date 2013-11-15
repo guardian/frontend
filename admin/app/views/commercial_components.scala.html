@@ -59,11 +59,13 @@
                     breakpoints: [300, 400, 500, 600],
 
                     components: function() {
+
+                        // TODO: fix these hardcoded URLs
                         return {
-                            masterclasses: '/commercial/masterclasses.json',
-                            travel:        '/commercial/travel/offers.json?k='+document.querySelector('.travel-keywords').value+'&seg=repeat',
-                            jobs:          '/commercial/jobs.json?s='+document.querySelector('.jobs-keywords').value,
-                            soulmates:     '/commercial/soulmates/mixed.json'
+                            masterclasses: 'http://api.nextgen.guardianapps.co.uk/commercial/masterclasses.json',
+                            travel:        'http://api.nextgen.guardianapps.co.uk/commercial/travel/offers.json?k='+document.querySelector('.travel-keywords').value+'&seg=repeat',
+                            jobs:          'http://api.nextgen.guardianapps.co.uk/commercial/jobs.json?s='+document.querySelector('.jobs-keywords').value,
+                            soulmates:     'http://api.nextgen.guardianapps.co.uk/commercial/soulmates/mixed.json'
                         }
                     },
 
@@ -99,7 +101,7 @@
                         var self = this;
                         reqwest({
                             url:  endpoint,
-                            type: 'json',
+                            type: 'jsonp',
                             success: function(response) {
                                 bonzo(document.querySelectorAll(targetSelector)).html(response.html);
                                 self.applyBreakpointClassnames();
