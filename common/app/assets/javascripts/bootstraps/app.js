@@ -23,7 +23,7 @@ define('bootstraps/app', [
     "bootstraps/tag",
     "bootstraps/section",
     "bootstraps/imagecontent",
-    "modules/id",
+    "modules/identity/api",
     "modules/adverts/userAdTargeting"
 ], function (
     qwery,

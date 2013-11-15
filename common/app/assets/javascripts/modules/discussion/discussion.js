@@ -11,7 +11,7 @@ define([
     'modules/analytics/clickstream',
     'modules/inview',
     'modules/detect',
-    'modules/id'
+    'modules/identity/api'
 ], function (
     common,
     bonzo,

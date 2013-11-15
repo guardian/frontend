@@ -4,7 +4,7 @@ define([
     'modules/detect',
     'modules/experiments/ab',
     'modules/storage',
-    'modules/id',
+    'modules/identity/api',
     'modules/errors',
     'modules/cookies'
 ], function(

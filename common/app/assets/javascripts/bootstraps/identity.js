@@ -1,8 +1,8 @@
 define([
     "common",
-    "modules/identity",
-    "modules/password-strength",
-    "modules/id",
+    "modules/identity/forms",
+    "modules/identity/password-strength",
+    "modules/identity/api",
     "modules/adverts/userAdTargeting"
 ], function(
     common,

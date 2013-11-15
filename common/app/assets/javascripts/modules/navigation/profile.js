@@ -1,4 +1,4 @@
-define(['common', 'ajax', 'bonzo', 'modules/id'], function(common, ajax, bonzo, Id) {
+define(['common', 'ajax', 'bonzo', 'modules/identity/api'], function(common, ajax, bonzo, Id) {
 
     /**
      * @param {Object} config
