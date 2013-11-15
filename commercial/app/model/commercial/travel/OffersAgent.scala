@@ -60,7 +60,7 @@ object OffersAgent extends AdAgent[Offer] with Logging with ExecutionContexts {
           case countryTags =>
             val offers = tagOffers(untaggedOffers, countryTags)
             log info s"Tagged ${offers.size} travel offers"
-            agent send offers
+            updateCurrentAds(offers)
         }
     }
   }

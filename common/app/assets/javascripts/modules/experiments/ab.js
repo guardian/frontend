@@ -7,6 +7,8 @@ define([
     'modules/experiments/tests/live-blog-show-more',
     'modules/experiments/tests/alpha-adverts',
     'modules/experiments/tests/commercial-components',
+    'modules/experiments/tests/story-package-question',
+    'modules/experiments/tests/initial-show-more'
 ], function (
     common,
     store,
@@ -14,7 +16,9 @@ define([
     Aa,
     LiveBlogShowMore,
     AlphaAdverts,
-    CommercialComponentsTest
+    CommercialComponentsTest,
+    StoryPackageQuestion,
+    InitialShowMore
     ) {
 
     var TESTS = [
@@ -22,6 +26,8 @@ define([
             new LiveBlogShowMore(),
             new AlphaAdverts(),
             new CommercialComponentsTest(),
+            new StoryPackageQuestion(),
+            new InitialShowMore()
         ],
         participationsKey = 'gu.ab.participations';
 
@@ -50,6 +56,17 @@ define([
 
     function clearParticipations() {
         return store.local.remove(participationsKey);
+    }
+
+    function cleanParticipations(config) {
+        // Removes any tests from localstorage that have been
+        // renamed/deleted from the backend
+        var participations = getParticipations();
+        Object.keys(participations).forEach(function (k) {
+            if (typeof(config.switches['ab' + k]) === 'undefined') {
+                removeParticipation({ id: k });
+            }
+        });
     }
 
     function getActiveTests() {
@@ -159,6 +176,8 @@ define([
 
         run: function(config, context, options) {
             var opts = options || {};
+
+            cleanParticipations(config);
 
             getActiveTests().forEach(function(test) {
                 run(test, config, context);

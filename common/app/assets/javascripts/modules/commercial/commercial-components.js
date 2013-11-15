@@ -1,12 +1,16 @@
 define([
-    'common',
+    '$',
+    'utils/mediator',
+    'lodash/objects/assign',
     'qwery',
     'bonzo',
     'bean',
     'modules/adverts/document-write',
     'modules/storage'
 ], function (
-    common,
+    $,
+    mediator,
+    extend,
     qwery,
     bonzo,
     bean,
@@ -15,7 +19,7 @@ define([
 ) {
 
     var Commercial = function(options) {
-        this.options        = common.extend(this.DEFAULTS, options);
+        this.options        = extend(this.DEFAULTS, options);
         this.keywords       = this.options.config.page.keywords.split(',');
         this.keywordsParams = documentWrite.getKeywords(this.options.config.page);
         this.userSegments   = 'seg=' + (storage.local.get('gu.history').length <= 1 ? 'new' : 'repeat');
@@ -32,11 +36,11 @@ define([
     Commercial.prototype.init = function() {
         var self = this;
 
-        bean.on(window, 'resize', common.debounce(function() {
+        mediator.addListener('window:resize', function() {
             self.applyClassnames();
-        }, 250));
+        });
 
-        common.mediator.on('modules:commercial:loaded', function() {
+        mediator.on('modules:commercial:loaded', function() {
             self.applyClassnames();
         });
 
@@ -50,7 +54,7 @@ define([
         var self = this,
             classname = this.options.elCls;
 
-        common.$g('.' + classname, this.options.context).each(function() {
+        $('.' + classname, this.options.context).each(function() {
             var $node = bonzo(this),
                 width = $node.dim().width;
 

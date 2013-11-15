@@ -50,51 +50,9 @@ define(['bean', 'bonzo', 'ajax'], function (bean, bonzo, ajax) {
         }
     }
 
-    function usernameAvailable(config, context) {
-        var form = context.querySelector('.js-register-form');
-        if (form) {
-            var username = form.querySelector('.js-register-username'),
-                input = username.parentNode,
-                field = input.parentNode,
-                availableTmpl = '<div class="form-field__note form-field__note--right registration-username-check h">Enter username</div>',
-                $available = bonzo(bonzo.create(availableTmpl)).insertBefore(username);
-
-            $available.previous().addClass('form-field__note--left');
-            bean.on(username, 'blur', function(e) {
-                if (username.value.length < 6) {
-                    $available.text("Username too short");
-                } else if (username.value.length > 20) {
-                    $available.text("Username too long");
-                } else {
-                    $available.removeClass('h').text("Checking username");
-                    ajax({
-                        url: config.page.idApiUrl + '/user/is-username-valid-or-taken',
-                        type: 'jsonp',
-                        data: {
-                            accessToken: config.page.idApiJsClientToken,
-                            username: username.value
-                        },
-                        crossOrigin: true,
-                        success: function(response) {
-                            if (response.status === "ok") {
-                                $available.html('<span class="available">Username available</span>');
-                                bonzo(field).removeClass('form-field--error');
-                                bonzo(field.querySelector('.form-field__error')).remove();
-                            } else {
-                                $available.html('<span class="unavailable">Username unavailable</span>');
-                                bonzo(field).addClass('form-field--error');
-                            }
-                        }
-                    });
-                }
-            });
-        }
-    }
-
     return {
         forgottenEmail: forgottenEmail,
         forgottenPassword: forgottenPassword,
-        passwordToggle: passwordToggle,
-        usernameAvailable: usernameAvailable
+        passwordToggle: passwordToggle
     };
 });

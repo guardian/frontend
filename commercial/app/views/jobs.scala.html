@@ -15,7 +15,6 @@
                     <td>@job.salary</td>
                     <td><a href="@job.applyUrl">Apply</a></td>
                     <td>@(job.sectorTags.mkString("; "))</td>
-                    <td>@(job.keywords.map(_.name).mkString("; "))</td>
                 </tr>
             }
         </table>

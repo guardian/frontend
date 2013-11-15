@@ -11,7 +11,7 @@ object FindStyle {
     "epic-story" -> MastheadContainer(),
     "major-story" -> MastheadContainer(),
     "regular-stories" -> SectionContainer(),
-    "feature-stories" -> SectionContainer(tone = "feature"),
+    "feature-stories" -> FeaturesContainer(headerLink = false),
     "special-story" -> NewsContainer()
   )
 
@@ -49,7 +49,8 @@ object FindStyle {
       ("uk/commentisfree/regular-stories", CommentContainer()),
       ("uk/culture/regular-stories", FeaturesContainer()),
       ("uk/lifeandstyle/regular-stories", SectionContainer(tone = "feature")),
-      ("uk/travel/regular-stories", SectionContainer(tone = "feature"))
+      ("uk/travel/regular-stories", SectionContainer(tone = "feature")),
+      ("uk/contributors/feature-stories", CommentContainer())
     )),
     ("uk/business", Map(
       ("uk/business/regular-stories", NewsContainer(showMore = false))
@@ -76,7 +77,8 @@ object FindStyle {
       ("us/news/regular-stories", NewsContainer()),
       ("us/sport/regular-stories", NewsContainer()),
       ("us/commentisfree/regular-stories", CommentContainer()),
-      ("us/culture/regular-stories", FeaturesContainer())
+      ("us/culture/regular-stories", FeaturesContainer()),
+      ("us/contributors/feature-stories", CommentContainer())
     )),
     ("us/business", Map(
       ("us/business/regular-stories", NewsContainer(showMore = false))

@@ -4,16 +4,19 @@
 */
 define([
     'common',
-    'bean'
+    'bean',
+    'bonzo'
 ], function (
     common,
-    bean
+    bean,
+    bonzo
 ) {
     /*
         @param {Object} options hash of configuration options:
-            dom         : DOM element to convert
-            expanded    : {Boolean} Whether the component should init in an expanded state
-            showCount   : {Boolean} Whether to display the count in the CTA
+            dom           : DOM element to convert
+            expanded      : {Boolean} Whether the component should init in an expanded state
+            showCount     : {Boolean} Whether to display the count in the CTA
+            buttonAfterEl : {Element} Element to add the button after (defaults to last child of dom)
     */
     var Expandable = function (options) {
 
@@ -27,9 +30,9 @@ define([
             showCount = (opts.showCount === false) ? false : true;
 
         // View
-        
+
         var view = {
-           
+
             updateCallToAction: function () {
                 var text = 'Show ';
                 if (showCount) {
@@ -40,7 +43,7 @@ define([
                 cta.setAttribute('data-link-name', 'Show ' + ((expanded) ? 'more' : 'fewer'));
                 cta.setAttribute('data-is-ajax', '1');
             },
-            
+
             renderState: function () {
                 if(expanded) {
                     dom.removeClass('shut');
@@ -48,13 +51,17 @@ define([
                     dom.addClass('shut');
                 }
             },
-            
+
             renderCallToAction: function () {
                 bean.add(cta, 'click', function (e) {
                     model.toggleExpanded();
                 });
                 cta.className = 'cta';
-                dom[0].appendChild(cta);
+                if (opts.buttonAfterEl) {
+                    bonzo(opts.buttonAfterEl).after(cta);
+                } else {
+                    dom[0].appendChild(cta);
+                }
                 view.updateCallToAction();
             },
 
@@ -67,11 +74,11 @@ define([
                 }
             }
         };
-        
+
         // Model
 
         var model = {
-        
+
             toggleExpanded: function () {
                 expanded = (expanded) ? false : true;
                 view.renderState();
@@ -103,6 +110,6 @@ define([
     };
 
     return Expandable;
-   
+
 });
 

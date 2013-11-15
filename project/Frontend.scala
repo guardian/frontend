@@ -138,7 +138,8 @@ object Frontend extends Build with Prototypes {
       diagnostics,
       identity,
       admin,
-      commercial
+      commercial,
+      onward
     )
 
   val main = root().aggregate(

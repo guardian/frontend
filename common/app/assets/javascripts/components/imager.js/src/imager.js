@@ -38,7 +38,7 @@ function Imager (collection, options) {
 
     this.update(collection);
     options.strategy = options.strategy || 'replacer';
-    this.replacementDelay = options.replacementDelay || 200;
+    this.replacementDelay = (options.hasOwnProperty('replacementDelay')) ? options.replacementDelay : 200;
     this.availableWidths = options.availableWidths || [320, 480, 768];
     this.availableWidths = this.availableWidths.sort(function (a, b) {
         return b - a;
@@ -133,7 +133,12 @@ Imager.prototype.getBestWidth = function getBestWidth (image_width, default_widt
  * @param {Function} callback
  */
 Imager.prototype.nextTick = function nextTick (callback) {
-    setTimeout(callback, this.replacementDelay);
+    // if no delay, call callback immediately
+    if (this.replacementDelay === 0) {
+        callback();
+    } else {
+        setTimeout(callback, this.replacementDelay);
+    }
 };
 
 /**

@@ -17,7 +17,7 @@ object OffersApi extends ExecutionContexts with Logging {
         response => response.xml
       }
     } getOrElse {
-      log.error("No Travel Offers API config properties set")
+      log.warn("No Travel Offers API config properties set")
       Future(<offers/>)
     }
   }
