@@ -118,7 +118,7 @@ define(['common',
         return decodeURIComponent(escape(common.atob(str.replace(/-/g, '+').replace(/_/g, '/').replace(/,/g, '='))));
     };
 
-    Id._hasUserSignedOutInTheLast24Hours = function() {
+    Id.hasUserSignedOutInTheLast24Hours = function() {
         var cookieData = Cookies.get(Id.signOutCookieName);
 
         if(cookieData) {
@@ -133,7 +133,11 @@ define(['common',
     Id.shouldAutoSigninInUser = function() {
         var signedInUser = !!Cookies.get(Id.cookieName);
         var checkFacebook = !!Storage.local.get(Id.fbCheckKey);
-        return !signedInUser && !checkFacebook && !this._hasUserSignedOutInTheLast24Hours();
+        return !signedInUser && !checkFacebook && !this.hasUserSignedOutInTheLast24Hours();
+    };
+
+    Id.setNextFbCheckTime = function(nextFbCheckDue) {
+        Storage.local.set(Id.fbCheckKey, {}, {expires: nextFbCheckDue});
     };
 
     return Id;

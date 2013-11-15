@@ -29,8 +29,6 @@ function(
 
         this.init = function() {
 
-            var fbCheckKey = "gu.id.nextFbCheck";
-
             if( Id.shouldAutoSigninInUser() ) {
                 var appId = this.config.page.fbAppId;
 
@@ -47,14 +45,13 @@ function(
 
                 authorizer.onNotLoggedIn.then( function() {
                     var today = time.currentDate();
-                    Storage.local.set(fbCheckKey,{},{expires: today.setDate(today.getDate() + 1)});
+                    Id.setNextFbCheckTime(today.setDate(today.getDate() + 1));
                 });
 
                 authorizer.onNotAuthorized.then( function() {
                     var today = time.currentDate();
-                    Storage.local.set(fbCheckKey,{},{expires: today.setMonth(today.getMonth() + 1)});
+                    Id.setNextFbCheckTime(today.setMonth(today.getMonth() + 1));
                 });
-
             }
         };
 

@@ -5,6 +5,7 @@ import common.{Logging, ExecutionContexts}
 import scala.xml.{XML, Elem}
 import play.api.libs.ws.WS
 import conf.CommercialConfiguration
+import model.commercial.Utils.OptString
 
 object LightJobsApi extends ExecutionContexts with Logging {
 

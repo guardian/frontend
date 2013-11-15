@@ -224,6 +224,10 @@ object Switches extends Collections {
 
  val ABIdentityFacebookMobileAutoSignin = Switch("A/B Tests", "ab-mobile-facebook-autosignin",
     "If this is switched on an AB test runs to test facebook autosignin for facebook users",
+   safeState = Off)
+
+  val ABStoryPackageQuestion = Switch("A/B Tests", "ab-story-package-question",
+    "If this is switched on an AB test runs to test re-ordering story packages",
     safeState = Off)
 
   val ABInitialShowMore = Switch("A/B Tests", "ab-initial-show-more",
@@ -309,6 +313,7 @@ object Switches extends Collections {
     ABCommercialComponents,
     EditionRedirectLoggingSwitch,
     FacebookAutoSigninSwitch,
+    ABStoryPackageQuestion,
     ABInitialShowMore
   )
 
@@ -340,7 +345,7 @@ class SwitchBoardAgent(config: GuardianConfiguration) extends Plugin with Execut
 
   override def onStart() {
     Jobs.deschedule("SwitchBoardRefreshJob")
-    Jobs.schedule("SwitchBoardRefreshJob", "0 * * * * ?", CommonApplicationMetrics.SwitchBoardLoadTimingMetric) {
+    Jobs.schedule("SwitchBoardRefreshJob", "0 * * * * ?") {
       refresh()
     }
 

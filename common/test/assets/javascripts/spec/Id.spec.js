@@ -110,7 +110,15 @@ define([
             expect(ajax.reqwest.getCall(0).args[0]["crossOrigin"]).toBe(true)
         });
 
-        it("should attempt to autosigin an user who is not signed in and has not signed out", function(){
+        it("should attempt to autosigin an user who is not currently signed in and has not previously signed out", function(){
+            Cookies.get.withArgs("GU_U").returns(null);
+            Cookies.get.withArgs("GU_SO").returns(null);
+            Storage.local.set("gu.id.nextFbCheck","blah|blah");
+
+            expect(Id.shouldAutoSigninInUser()).toBe(false);
+        });
+
+        it("should not attempt to autosigin a user who is not currently signed in, has not previously signed out, before the facebook check overlaps", function() {
             Cookies.get.withArgs("GU_U").returns(null);
             Cookies.get.withArgs("GU_SO").returns(null);
 
@@ -153,4 +161,4 @@ define([
             expect(Id.shouldAutoSigninInUser()).toBe(false);
         });
     });
-})
+});

@@ -8,6 +8,7 @@ define([
     'domReady',
     'bonzo',
     'bean',
+    'lodash/functions/debounce',
     //Modules
     'modules/storage',
     'modules/detect',
@@ -38,6 +39,7 @@ define([
     "modules/swipe/bar",
     "modules/facia/images",
     "modules/onward/history",
+    "modules/onward/sequence",
     "modules/identity/autosignin"
 ], function (
     common,
@@ -47,6 +49,7 @@ define([
     domReady,
     bonzo,
     bean,
+    debounce,
 
     storage,
     detect,
@@ -78,6 +81,7 @@ define([
     SwipeBar,
     faciaImages,
     History,
+    sequence,
     AutoSignin
 ) {
 
@@ -120,10 +124,8 @@ define([
             search.init(header);
         },
 
-        transcludeRelated: function () {
-            common.mediator.on("page:common:ready", function(config, context){
-                related(config, context);
-            });
+        transcludeRelated: function (config, context) {
+            related(config, context);
         },
 
         transcludePopular: function () {
@@ -183,10 +185,8 @@ define([
             });
         },
 
-        runAbTests: function () {
-            common.mediator.on('page:common:ready', function(config, context) {
-                ab.run(config, context);
-            });
+        runAbTests: function (config, context) {
+            ab.run(config, context);
         },
 
         loadAnalytics: function () {
@@ -261,6 +261,14 @@ define([
                 });
                 common.mediator.on('modules:adverts:docwrite:loaded', function(){
                     Adverts.loadAds();
+                });
+
+                common.mediator.on('window:resize', function () {
+                    Adverts.hideAds();
+                });
+                
+                common.mediator.on('window:orientationchange', function () {
+                    Adverts.hideAds();
                 });
             }
         },
@@ -352,14 +360,15 @@ define([
         logReadingHistory : function() {
             common.mediator.on('page:common:ready', function(config) {
                  if(/Article|Video|Gallery|Interactive/.test(config.page.contentType)) {
-                    return new History().log({
-                        id: config.page.shortUrl.replace('http://gu.com', ''),
+                    new History().log({
+                        id: '/' + config.page.pageId,
                         meta: {
                             section: config.page.section,
                             keywords: config.page.keywordIds.split(',').slice(0, 5)
                         }
                     });
                 }
+                sequence.init();
             });
         },
 
@@ -369,6 +378,22 @@ define([
                     new AutoSignin(config).init();
                 }
             });
+        },
+
+        windowEventListeners: function() {
+            var events = {
+                    resize: 'window:resize',
+                    scroll: 'window:scroll',
+                    orientationchange: 'window:orientationchange'
+                },
+                emitEvent = function(eventName) {
+                    return function(e) {
+                        common.mediator.emit(eventName, e);
+                    };
+                };
+            for (var event in events) {
+                bean.on(window, event, debounce(emitEvent(events[event]), 200));
+            }
         }
     };
 
@@ -392,13 +417,18 @@ define([
     var ready = function (config, context, contextHtml) {
         if (!this.initialised) {
             this.initialised = true;
+
+            common.mediator.on("page:common:ready", function(config, context){
+                modules.runAbTests(config, context);
+                modules.transcludeRelated(config, context);
+            });
+
+            modules.windowEventListeners();
             modules.upgradeImages();
             modules.showTabs();
             modules.initialiseNavigation(config);
             modules.showToggles();
-            modules.runAbTests();
             modules.showRelativeDates();
-            modules.transcludeRelated();
             modules.transcludePopular();
             modules.loadVideoAdverts(config);
             modules.initClickstream();
