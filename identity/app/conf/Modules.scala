@@ -13,6 +13,14 @@ class ProdModule extends ScalaModule {
   def getKeys():IdentityKeys = new ProductionKeys
 }
 
+class PreProdModule extends ScalaModule {
+  def configure() {
+  }
+
+  @Provides()
+  def getKeys():IdentityKeys = new PreProductionKeys
+}
+
 class DevModule extends ScalaModule {
   def configure() {
   }
