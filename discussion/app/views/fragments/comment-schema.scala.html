@@ -1,0 +1,11 @@
+@(comment: Comment)(implicit request: RequestHeader)
+<article class="comment" itemscope itemtype="http://schema.org/Comment">
+    <div class="comment__body" itemprop="text">@comment.body</div>
+
+    <div class="comment__meta">
+        @fragments.person(comment.profile)
+        <time datetime="@comment.date.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")" data-timestamp="@comment.date.getMillis">
+            @Format(comment.date, "d MMM y")
+        </time>
+    </div>
+</article>

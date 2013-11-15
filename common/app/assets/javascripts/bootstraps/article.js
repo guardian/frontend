@@ -10,7 +10,8 @@ define([
     "modules/experiments/live-blog-show-more",
     "modules/notification-counter",
     "modules/detect",
-    "modules/experiments/left-hand-card"
+    "modules/experiments/left-hand-card",
+    "modules/open/cta"
 ], function (
     common,
     AutoUpdate,
@@ -23,7 +24,8 @@ define([
     LiveShowMore,
     NotificationCounter,
     detect,
-    LeftHandCard
+    LeftHandCard,
+    OpenCta
 ) {
 
     var modules = {
@@ -81,7 +83,6 @@ define([
         },
 
         initDiscussion: function() {
-
             common.mediator.on('page:article:ready', function(config, context) {
                 if (config.page.commentable) {
                     var discussionLoader = new DiscussionLoader(context, common.mediator);
@@ -134,6 +135,12 @@ define([
                     });
                 }
             });
+        },
+
+        initOpen: function() {
+            common.mediator.on('page:article:ready', function(config, context) {
+                var openCta = new OpenCta(context);
+            });
         }
     };
 
@@ -146,6 +153,7 @@ define([
             modules.initDiscussion();
             modules.initCricket();
             modules.externalLinksCards();
+            modules.initOpen();
         }
         common.mediator.emit("page:article:ready", config, context);
     };
@@ -155,3 +163,7 @@ define([
     };
 
 });
+
+
+
+
