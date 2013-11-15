@@ -22,7 +22,9 @@ class PubilcProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
   val form = Form(
     Forms.tuple(
       "publicFields.location" -> Forms.optional(Forms.text(maxLength = 255)),
-      "privateFields.gender" -> Forms.optional(Forms.text),
+      "privateFields.gender" -> Forms.optional(Forms.text).verifying { genderOpt =>
+        genderOpt.map(List("Male", "Female", "unknown", "").contains(_)).getOrElse(true)
+      },
       "publicFields.aboutMe" -> Forms.optional(Forms.text(maxLength = 1500)),
       "publicFields.interests" -> Forms.optional(Forms.text(maxLength = 255)),
       "publicFields.webPage" -> Forms.optional(Forms.text(maxLength = 255))
