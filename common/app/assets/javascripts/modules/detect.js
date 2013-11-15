@@ -29,7 +29,7 @@ define(['modules/userPrefs', 'common'], function (userPrefs, common) {
             if (window.matchMedia('(min-width: '+ BASE_WIDTH + 'px)').matches) {
                 mode = "tablet";
             }
-        if (window.matchMedia('(min-width: '+ MEDIAN_WIDTH + 'px)').matches) {
+            if (window.matchMedia('(min-width: '+ MEDIAN_WIDTH + 'px)').matches) {
                 mode = "desktop";
             }
             if (window.matchMedia('(min-width: '+ EXTENDED_WIDTH + 'px)').matches) {

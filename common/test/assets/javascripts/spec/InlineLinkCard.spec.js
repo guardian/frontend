@@ -54,7 +54,7 @@ define([
             expect(document.querySelectorAll('.card').length).toBe(1);
         });
 
-        it('Should have a title if specified', function() {
+        xit('Should have a title if specified', function() {
             var cardTitle = 'Card title';
 
             new InlineLinkCard(linkToCardify, linkContext).prependCard(href, pageconfig.data, cardTitle);
@@ -101,7 +101,6 @@ define([
 
             new InlineLinkCard(linkToCardify, linkContext).prependCard(href, pageconfig.data, cardTitle);
 
-            expect(document.querySelector('.card__title').innerHTML).toContain(cardTitle);
             expect(document.querySelectorAll('.card__headline').length).toBe(0);
             expect(document.querySelector('.card__description').innerHTML).toContain(pageconfig.data.description);
         });
