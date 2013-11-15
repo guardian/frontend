@@ -1,37 +1,21 @@
-/*global Imager:true */
-define([
-    '$',
-    'utils/to-array',
-    'bonzo',
-    'utils/mediator'
-], function (
-    $,
-    toArray,
-    bonzo,
-    mediator
-) {
+define(['$', 'utils/to-array', 'bonzo', 'utils/mediator', 'imager'], function ($, toArray, bonzo, mediator, imagerjs) {
 
     var imager = {
 
-        upgrade: function(context, callback) {
+        upgrade: function(context) {
             if ($('html').hasClass('connection--low')) {
                 return;
             }
-            require(['imager'], function(imager) {
-                context = context || document;
-                var images = toArray(document.getElementsByClassName('item__image-container')).filter(function(img) {
-                        return bonzo(img).css('display') !== 'none';
-                    }),
-                    options = {
-                        availableWidths: [ 140, 220, 300, 460, 620, 700 ],
-                        strategy: 'container',
-                        replacementDelay: 0
-                    };
-                imager.init(images, options);
-                if (callback) {
-                    callback(images);
-                }
-            });
+            context = context || document;
+            var images = toArray(document.getElementsByClassName('item__image-container')).filter(function(img) {
+                    return bonzo(img).css('display') !== 'none';
+                }),
+                options = {
+                    availableWidths: [ 140, 220, 300, 460, 620, 700 ],
+                    strategy: 'container',
+                    replacementDelay: 0
+                };
+            imagerjs.init(images, options);
         },
 
         listen: function() {

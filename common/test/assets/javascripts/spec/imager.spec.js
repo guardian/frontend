@@ -1,34 +1,39 @@
-define(['modules/imager', 'helpers/fixtures', '$'], function(imager, fixtures, $) {
+define(['modules/imager', 'helpers/fixtures', '$', 'bonzo'], function(imager, fixtures, $, bonzo) {
 
     describe('Imager', function() {
+
+        var lowClassName = 'connection--low',
+            notLowClassName = 'connection--not-low',
+            dataSrc = '/item-{width}/cat.jpg';
 
         beforeEach(function() {
             fixtures.render({
                 id: 'imager-fixtures',
-                fixtures: [
-                    '<div class="item__image-container one" data-src="http://i.guim.co.uk/item-{width}/sys-images/Guardian/Pix/pictures/2013/11/15/1384516091230/A-baby-is-carried-in-a-ba-010.jpg"></div>' +
-                    '<div class="item__image-container two" data-src="http://i.guim.co.uk/item-{width}/sys-images/Guardian/Pix/pictures/2013/11/15/1384516091230/A-baby-is-carried-in-a-ba-010.jpg"></div>'
-                ]
+                fixtures: [1, 2].map(function(value, i) {
+                    return '<div class="item__image-container img-' + i + '" data-src="' + dataSrc + '"></div>';
+                })
             });
         });
 
         afterEach(function() {
+            $('html').removeClass([lowClassName, notLowClassName].join(' '));
         });
 
         it('should upgrade images', function() {
-            var className = 'connection--not-low';
-            $('html').addClass(className);
+            $('html').addClass(notLowClassName);
             imager.upgrade();
-            expect($('.item__image-container img').length).toEqual(0);
-            $('html').removeClass(className);
+            var $imgs = $('.item__image-container img');
+            expect($imgs.length).toEqual(2);
+            $imgs.each(function(img) {
+                // should update src
+                expect(bonzo(img).attr('src')).not.toEqual(dataSrc);
+            })
         });
 
-        it('should not run connection low', function() {
-            var className = 'connection--low';
-            $('html').addClass(className);
+        it('should not upgrade when connection is low', function() {
+            $('html').addClass(lowClassName);
             imager.upgrade();
             expect($('.item__image-container img').length).toEqual(0);
-            $('html').removeClass(className);
         });
 
     });

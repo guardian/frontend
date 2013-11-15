@@ -58,11 +58,16 @@ module.exports = function (grunt) {
                         "postscribe": "components/postscribe/dist/postscribe",
                         "swipe": "components/swipe/swipe",
                         "swipeview": "components/swipeview/src/swipeview",
-                        "lodash": "components/lodash-amd/modern"
+                        "lodash": "components/lodash-amd/modern",
+                        imager:       '../../../app/assets/javascripts/components/imager.js/src/strategies/container'
                     },
                     shim: {
                         "postscribe": {
                             exports: "postscribe"
+                        },
+                        imager: {
+                            deps: ['../../../app/assets/javascripts/components/imager.js/src/imager'],
+                            exports: 'Imager'
                         }
                     },
                     wrap: {
@@ -297,16 +302,6 @@ module.exports = function (grunt) {
                     // remove .. when hash length is 0
                     return dest + src.split('/').slice(0, -1).join('/');
                 }
-            }
-        },
-
-        concat: {
-            imager: {
-                src: [
-                    'common/app/assets/javascripts/components/imager.js/src/imager.js',
-                    'common/app/assets/javascripts/components/imager.js/src/strategies/container.js'
-                ],
-                dest: staticTargetDir + 'javascripts/vendor/imager.js'
             }
         },
 
@@ -598,7 +593,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-hash');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
 
 
@@ -608,7 +602,7 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:images', ['clean:images', 'copy:images', 'shell:spriteGeneration', 'imagemin']);
     grunt.registerTask('compile:css', ['clean:css', 'sass:compile']);
     grunt.registerTask('compile:js', function() {
-        grunt.task.run(['clean:js', 'copy:js', 'concat:imager']);
+        grunt.task.run(['clean:js', 'copy:js']);
         if (!isDev) {
             grunt.task.run('uglify:vendor');
         }

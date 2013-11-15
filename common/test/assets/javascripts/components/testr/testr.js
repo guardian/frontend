@@ -93,9 +93,9 @@ var testr, define, require;
 			if (!cfg.context) {
 				delete cfg.baseUrl;
 			}
-			
+
 			requireCount++;
-			
+
 			var thisRequire = origRequire(cfg, cfg.deps, function() {
 				cfg.callback && cfg.callback();
 				if (++requireLoadedCount === requireCount) {
@@ -151,7 +151,7 @@ var testr, define, require;
 				extractedPaths.push(dep);
 			});
 		}
-		
+
 
 		// rewrite the function that requirejs executes when defining the module
 		function trojan(contextReq, module) {
@@ -222,7 +222,7 @@ var testr, define, require;
 					deps: autoDeps
 				});
 			}
-			
+
 			// define the module as its path name, used by dependants
 			return module.id;
 		}

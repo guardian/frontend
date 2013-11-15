@@ -88,7 +88,8 @@ define([
     var modules = {
 
         upgradeImages: function () {
-            imager.upgrade(document, imager.listen);
+            imager.upgrade();
+            imager.listen();
 
             var images = new Images();
             mediator.on('page:common:ready', function(config, context) {
