@@ -29,11 +29,11 @@
                 @inputField(Password(registrationForm("user.password"), '_label -> "Password", '_help -> "Between 6 and 20 characters", 'class -> "js-register-password js-password-strength"))
 
                 <li>
-                    <label class="check-label">
+                    <label class="check-label" for="@registrationForm("receive_gnm_marketing").id">
                         @checkbox(registrationForm("receive_gnm_marketing"))
                         Keep me up to date with offers and developments from the Guardian
                     </label>
-                    <label class="check-label">
+                    <label class="check-label" for="@registrationForm("receive_third_party_marketing").id">
                         @checkbox(registrationForm("receive_third_party_marketing"))
                         Send me messages from 3rd party organisations screened by the Guardian
                     </label>
