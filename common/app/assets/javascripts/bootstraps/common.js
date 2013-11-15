@@ -31,12 +31,9 @@ define([
     'modules/analytics/adverts',
     'modules/debug',
     'modules/experiments/ab',
-    'modules/swipe/swipenav',
     "modules/adverts/video",
     "modules/discussion/commentCount",
     "modules/lightbox-gallery",
-    "modules/swipe/ears",
-    "modules/swipe/bar",
     "modules/facia/images",
     "modules/onward/history",
     "modules/onward/sequence"
@@ -72,12 +69,9 @@ define([
     AdvertsAnalytics,
     Debug,
     ab,
-    swipeNav,
     VideoAdvert,
     CommentCount,
     LightboxGallery,
-    ears,
-    SwipeBar,
     faciaImages,
     History,
     sequence
@@ -329,32 +323,6 @@ define([
             }
         },
 
-
-        initSwipe: function(config, contextHtml) {
-            if (config.switches.swipeNav && detect.canSwipe() && !userPrefs.isOff('swipe') || userPrefs.isOn('swipe-dev')) {
-                var swipe = swipeNav(config, contextHtml);
-
-                common.mediator.on('module:swipenav:navigate:next', function(){ swipe.gotoNext(); });
-                common.mediator.on('module:swipenav:navigate:prev', function(){ swipe.gotoPrev(); });
-            } else {
-                delete this.contextHtml;
-                return;
-            }
-            if (config.switches.swipeNav && detect.canSwipe()) {
-                bonzo(document.body).addClass('can-swipe');
-                common.mediator.on('module:clickstream:click', function(clickSpec){
-                    if (clickSpec.tag.indexOf('switch-swipe-on') > -1) {
-                        userPrefs.switchOn('swipe');
-                        window.location.reload();
-                    }
-                    else if (clickSpec.tag.indexOf('switch-swipe-off') > -1) {
-                        userPrefs.switchOff('swipe');
-                        window.location.reload();
-                    }
-                });
-            }
-        },
-
         logReadingHistory : function() {
             common.mediator.on('page:common:ready', function(config) {
                  if(/Article|Video|Gallery|Interactive/.test(config.page.contentType)) {
@@ -425,7 +393,6 @@ define([
             if (config.switches.analyticsOnDomReady) {
                 modules.loadAnalytics();
             }
-            modules.initSwipe(config, contextHtml);
             modules.transcludeCommentCounts();
             modules.initLightboxGalleries();
             modules.optIn();

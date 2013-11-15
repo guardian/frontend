@@ -193,11 +193,6 @@ define([
                     s.events   = 'event37';
                 }
                 storage.session.remove('gu.analytics.referrerVars');
-            } else if (config.swipe) {
-                s.referrer = config.swipe.referrer;
-                s.eVar24   = config.swipe.referrerPageName;
-                s.eVar37   = config.swipe.initiatedBy;
-                s.events   = 'event37';
             }
         };
 
