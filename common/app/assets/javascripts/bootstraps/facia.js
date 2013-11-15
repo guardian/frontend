@@ -7,8 +7,8 @@ define([
     'modules/facia/popular',
     'modules/facia/collection-show-more',
     'modules/facia/container-toggle',
-    'modules/footballfixtures',
-    'modules/cricket'
+    'modules/sport/football/fixtures',
+    'modules/sport/cricket'
 ], function (
     common,
     bonzo,

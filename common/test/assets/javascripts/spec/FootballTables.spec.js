@@ -1,4 +1,4 @@
-define(['common', 'ajax',  'qwery', 'modules/footballtables', 'helpers/fixtures'], function(common, ajax, qwery, FootballTable, fixtures) {
+define(['common', 'ajax',  'qwery', 'modules/sport/football/tables', 'helpers/fixtures'], function(common, ajax, qwery, FootballTable, fixtures) {
 
    var fixuresConf = {
         id: 'football-tables-fixtures',

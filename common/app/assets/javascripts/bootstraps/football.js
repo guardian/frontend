@@ -7,12 +7,11 @@ define([
     "modules/router",
     "modules/togglepanel",
     "modules/expandable",
-    "modules/footballfixtures",
-    "modules/footballtables",
-    "modules/more-matches",
+    "modules/sport/football/fixtures",
+    "modules/sport/football/tables",
+    "modules/sport/football/more-matches",
     "modules/autoupdate",
-    "modules/pad",
-    "modules/matchnav"
+    "modules/sport/football/matchnav"
 ], function (
     common,
     bonzo,
@@ -23,7 +22,6 @@ define([
     FootballTable,
     MoreMatches,
     AutoUpdate,
-    Pad,
     MatchNav
 ) {
 

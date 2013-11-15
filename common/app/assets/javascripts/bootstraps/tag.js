@@ -1,7 +1,7 @@
 define([
     'common',
     'modules/facia/popular',
-    'modules/cricket'
+    'modules/sport/cricket'
 ], function (
     common,
     popular,
