@@ -1,0 +1,20 @@
+@(chart: tools.LineChart)
+
+<script type="text/javascript">
+    $(function () {
+        new google.visualization.LineChart(document.getElementById('@chart.id'))
+            .draw(google.visualization.arrayToDataTable(@Html(chart.asDataset)), {
+                title: '@chart.name',
+                colors: [@Html(chart.format.colours.map(c => s"'$c'").mkString(","))],
+                @if(chart.labels.size == 2){
+                    legend: "none",
+                    vAxis: {title: '@chart.labels(1)'},
+                } else {
+                    legend: { position: "in" },
+                }
+                fontName: 'Georgia'
+        });
+    });
+</script>
+    @* placeholder for chart *@
+<div id="@chart.id" class="@chart.format.cssClass"></div>

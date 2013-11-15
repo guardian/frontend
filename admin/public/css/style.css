@@ -51,7 +51,7 @@ fieldset#controls {
 
 #environment {
     line-height: 40px;
-    position: absolute;
+    float: left;
 }
 
 input[type=checkbox].status {
