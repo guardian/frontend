@@ -19,7 +19,7 @@ define([
     AlphaAdverts,
     CommercialComponentsTest,
     StoryPackageQuestion,
-    InitialShowMore
+    InitialShowMore,
     ShowMoreLayout
     ) {
 
