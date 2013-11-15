@@ -37,4 +37,5 @@ define(['modules/imager', 'helpers/fixtures', '$', 'bonzo'], function(imager, fi
         });
 
     });
+
 });
