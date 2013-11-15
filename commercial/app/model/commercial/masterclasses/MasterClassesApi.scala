@@ -1,6 +1,6 @@
 package model.commercial.masterclasses
 
-import common.{Logging, ExecutionContexts}
+import common.ExecutionContexts
 import play.api.libs.ws.WS
 import play.api.libs.json.{JsNull, JsValue}
 import scala.concurrent.Future
@@ -21,17 +21,15 @@ object MasterClassesApi extends ExecutionContexts {
   }
 
   def getMasterClassJson: Future[JsValue] = {
-    if (apiKeyOption.isDefined) {
-      val apiKey = apiKeyOption.get
-      WS.url(s"https://www.eventbrite.com/json/organizer_list_events?app_key=$apiKey&id=$apiId")
-        .withHeaders(("Cache-Control", "public, max-age=1"))
-        .withRequestTimeout(20000)
-        .get()
-        .map {
-        response => response.json
-      }
-    } else {
-      Future(JsNull)
+    apiKeyOption match {
+      case Some(apiKey) =>
+        WS.url(s"https://www.eventbrite.com/json/organizer_list_events?app_key=$apiKey&id=$apiId")
+          .withHeaders(("Cache-Control", "public, max-age=1"))
+          .withRequestTimeout(20000)
+          .get()
+          .map(_.json)
+      case None =>
+        Future(JsNull)
     }
   }
 }
