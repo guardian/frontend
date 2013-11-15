@@ -1,6 +1,10 @@
 @(comment: Comment)(implicit request: RequestHeader)
 <article class="comment" itemscope itemtype="http://schema.org/Comment">
-    <div class="comment__body" itemprop="text">@comment.body</div>
+    <div class="comment__body" itemprop="text">
+        @withJsoup(BulletCleaner(comment.body))(
+            InBodyLinkCleaner("in body link")(Edition(request))
+        )
+    </div>
 
     <div class="comment__meta">
         @fragments.person(comment.profile)

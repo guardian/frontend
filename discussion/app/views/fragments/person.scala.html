@@ -1,9 +1,10 @@
-@(person: Profile)(implicit request: RequestHeader)
+@(person: discussion.model.Profile)(implicit request: RequestHeader)
 <div class="comment__author person" itemscope itemtype="http://schema.org/Person" itemprop="author">
     <div class="person__avatar">
         <img src="@person.avatar" alt="@person.displayName's avatar" itemprop="image" />
     </div>
     <div class="person__name" itemprop="name">@person.displayName</div>
+
     @if(person.isContributor){<div class="person__type">Contributor</div>}
     @if(person.isStaff){<div class="person__type">Guardian staff</div>}
 </div>

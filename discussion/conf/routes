@@ -12,3 +12,5 @@ GET     /discussion/comment-counts.json           controllers.DiscussionApp.comm
 
 GET     /discussion/*shortUrl.json                controllers.DiscussionApp.commentPageJson(shortUrl)
 GET     /discussion/*shortUrl                     controllers.DiscussionApp.commentPage(shortUrl)
+
+GET     /open/cta.json                            controllers.DiscussionApp.cta()
