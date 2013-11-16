@@ -9,7 +9,6 @@ define([
     'modules/discussion/recommend-comments',
     'modules/userPrefs',
     'modules/analytics/clickstream',
-    'modules/inview',
     'modules/detect',
     'modules/identity/api'
 ], function (
@@ -23,7 +22,6 @@ define([
     RecommendComments,
     userPrefs,
     ClickStream,
-    Inview,
     Detect,
     Id
     ) {
