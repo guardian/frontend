@@ -5,7 +5,7 @@ define([
     'modules/experiments/ab',
     'modules/storage',
     'modules/identity/api',
-    'modules/errors',
+    'modules/analytics/errors',
     'modules/cookies'
 ], function(
     common,

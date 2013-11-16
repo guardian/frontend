@@ -5,7 +5,7 @@ define('bootstraps/app', [
     "domReady",
     "ajax",
     'modules/detect',
-    'modules/errors',
+    'modules/analytics/errors',
     'modules/analytics/livestats',
     'modules/ui/fonts',
     "modules/router",
