@@ -12,8 +12,8 @@ define([
     //Modules
     'modules/storage',
     'modules/detect',
-    'modules/popular',
-    'modules/related',
+    'modules/onward/popular',
+    'modules/onward/related',
     'modules/router',
     'modules/ui/images',
     'modules/navigation/top-stories',

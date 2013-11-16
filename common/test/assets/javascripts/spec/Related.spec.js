@@ -1,4 +1,4 @@
-define(['common', 'ajax', 'modules/related', 'helpers/fixtures'], function(common, ajax, Related, fixtures) {
+define(['common', 'ajax', 'modules/onward/related', 'helpers/fixtures'], function(common, ajax, Related, fixtures) {
 
     describe("Related", function() {
 
