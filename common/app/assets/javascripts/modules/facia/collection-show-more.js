@@ -4,7 +4,7 @@ define([
     'bonzo',
     'bean',
     'qwery',
-    'modules/detect',
+    'utils/detect',
     'modules/ui/relativedates',
     'modules/facia/images',
     'modules/discussion/commentCount'

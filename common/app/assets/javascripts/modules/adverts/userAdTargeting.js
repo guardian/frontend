@@ -1,4 +1,4 @@
-define(['modules/storage', 'modules/identity/api', 'utils/time' ], function(storage, id, time) {
+define(['utils/storage', 'modules/identity/api', 'utils/time' ], function(storage, id, time) {
     var userSegmentsKey = "gu.ads.userSegmentsData";
 
     function getUserSegments() {

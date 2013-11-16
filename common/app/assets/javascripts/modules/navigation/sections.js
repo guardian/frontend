@@ -2,7 +2,7 @@ define([
     'common',
     'bonzo',
     'utils/mediator',
-    'modules/detect',
+    'utils/detect',
     'modules/userPrefs'
 ], function (
     common,

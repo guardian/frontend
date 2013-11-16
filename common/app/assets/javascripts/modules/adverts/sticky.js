@@ -1,6 +1,6 @@
 define([
     'common',
-    'modules/detect',
+    'utils/detect',
     'bean',
     'bonzo'
 ], function(common, detect,  bean, bonzo) {

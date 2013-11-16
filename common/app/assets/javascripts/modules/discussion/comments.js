@@ -1,5 +1,5 @@
 define([
-    'ajax',
+    'utils/ajax',
     'bonzo',
     'qwery',
     'modules/component',

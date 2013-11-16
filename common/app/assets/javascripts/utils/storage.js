@@ -24,7 +24,7 @@ define(['utils/mediator'], function (mediator) {
             w[this.type].removeItem(testKey);
             return true;
         } catch (e) {
-            mediator.emit('module:error', 'Unable to save to local storage: ' + e.message, 'modules/storage.js');
+            mediator.emit('module:error', 'Unable to save to local storage: ' + e.message, 'utils/storage.js');
             return false;
         }
     };

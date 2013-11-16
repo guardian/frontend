@@ -1,12 +1,12 @@
 /*global s_i_guardian:true */
 define([
     'common',
-    'modules/detect',
+    'utils/detect',
     'modules/experiments/ab',
-    'modules/storage',
+    'utils/storage',
     'modules/identity/api',
     'modules/analytics/errors',
-    'modules/cookies'
+    'utils/cookies'
 ], function(
     common,
     detect,

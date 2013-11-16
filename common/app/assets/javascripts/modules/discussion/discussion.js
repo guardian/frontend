@@ -3,13 +3,13 @@ define([
     'bonzo',
     'qwery',
     'bean',
-    'ajax',
+    'utils/ajax',
     'modules/analytics/discussion',
     'modules/discussion/comment-box',
     'modules/discussion/recommend-comments',
     'modules/userPrefs',
     'modules/analytics/clickstream',
-    'modules/detect',
+    'utils/detect',
     'modules/identity/api'
 ], function (
     common,

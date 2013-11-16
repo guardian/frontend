@@ -3,7 +3,7 @@ define([
     'common',
     'bonzo',
     // Modules
-    'modules/detect',
+    'utils/detect',
     'modules/facia/popular',
     'modules/facia/collection-show-more',
     'modules/facia/container-toggle',

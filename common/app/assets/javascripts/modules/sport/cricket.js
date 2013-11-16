@@ -1,4 +1,4 @@
-define(['common', 'bonzo', 'ajax'], function (common, bonzo, ajax) {
+define(['common', 'bonzo', 'utils/ajax'], function (common, bonzo, ajax) {
 
     function cricketArticle(config, context, options) {
 

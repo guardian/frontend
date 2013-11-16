@@ -1,9 +1,8 @@
 /*global guardian */
 define([
     'common',
-    'ajax',
-
-    'modules/detect',
+    'utils/ajax',
+    'utils/detect',
     'modules/adverts/audience-science'
 ], function (
     common,

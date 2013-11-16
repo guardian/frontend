@@ -1,4 +1,4 @@
-define(['modules/cookies', 'modules/identity/api', 'ajax'], function(Cookies, Id, ajax) {
+define(['utils/cookies', 'modules/identity/api', 'utils/ajax'], function(Cookies, Id, ajax) {
     describe('Get user data', function() {
         var cookieData = 'WyIyMzEwOTU5IiwiamdvcnJpZUBnbWFpbC5jb20iLCJqYW1lc2dvcnJpZSIsIjUzNCIsMTM4Mjk1MzAzMTU5MSwxXQ.MC0CFBsFwIEITO91EGONK4puyO2ZgGQcAhUAqRa7PVDCoAjrbnJNYYvMFec4fAY';
         var config = {

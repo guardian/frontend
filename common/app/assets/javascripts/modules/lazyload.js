@@ -1,4 +1,4 @@
-define(['common', 'ajax', 'bonzo'], function (common, ajax, bonzo) {
+define(['common', 'utils/ajax', 'bonzo'], function (common, ajax, bonzo) {
 
     var LazyLoad = function(options) {
 

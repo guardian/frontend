@@ -4,7 +4,7 @@
 */
 define([
     'common',
-    'ajax',
+    'utils/ajax',
     'bonzo',
     'modules/ui/expandable'
 ], function (

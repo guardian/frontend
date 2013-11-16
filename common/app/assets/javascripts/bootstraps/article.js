@@ -9,7 +9,7 @@ define([
     "modules/sport/cricket",
     "modules/experiments/live-blog-show-more",
     "modules/ui/notification-counter",
-    "modules/detect",
+    "utils/detect",
     "modules/experiments/left-hand-card"
 ], function (
     common,

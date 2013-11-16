@@ -2,7 +2,7 @@
 define([
     //Commmon libraries
     'common',
-    'ajax',
+    'utils/ajax',
     'modules/userPrefs',
     //Vendor libraries
     'domReady',
@@ -10,8 +10,8 @@ define([
     'bean',
     'lodash/functions/debounce',
     //Modules
-    'modules/storage',
-    'modules/detect',
+    'utils/storage',
+    'utils/detect',
     'modules/onward/popular',
     'modules/onward/related',
     'modules/router',
@@ -26,13 +26,13 @@ define([
     'modules/analytics/clickstream',
     'modules/analytics/omniture',
     'modules/adverts/adverts',
-    'modules/cookies',
+    'utils/cookies',
     'modules/analytics/omnitureMedia',
     'modules/analytics/adverts',
     'modules/experiments/ab',
     "modules/adverts/video",
     "modules/discussion/commentCount",
-    "modules/lightbox-gallery",
+    "modules/gallery/lightbox",
     "modules/facia/images",
     "modules/onward/history",
     "modules/onward/sequence"

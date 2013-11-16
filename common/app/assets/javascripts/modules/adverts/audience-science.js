@@ -1,4 +1,4 @@
-define(['modules/cookies', 'modules/storage'], function(Cookies, storage) {
+define(['utils/cookies', 'utils/storage'], function(Cookies, storage) {
 
     var revenueScienceUrl = "js!http://js.revsci.net/gateway/gw.js?csid=E05516";
 

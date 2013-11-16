@@ -1,5 +1,5 @@
 /*global Event:true */
-define(['modules/cookies'], function (Cookies) {
+define(['utils/cookies'], function (Cookies) {
 
     var Session = function () {
         

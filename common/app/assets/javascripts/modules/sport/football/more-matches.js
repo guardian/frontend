@@ -1,4 +1,4 @@
-define(['common', 'ajax', 'bonzo', 'bean'], function (common, ajax, bonzo, bean) {
+define(['common', 'utils/ajax', 'bonzo', 'bean'], function (common, ajax, bonzo, bean) {
 
     return {
 

@@ -1,6 +1,6 @@
 define([
     "common",
-    "modules/detect",
+    "utils/detect",
     "modules/analytics/video"
 ], function(
     common,

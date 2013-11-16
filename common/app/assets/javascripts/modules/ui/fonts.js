@@ -1,5 +1,5 @@
 /*jshint loopfunc: true */
-define(['ajax', 'common', 'modules/storage'], function (ajax, common, storage) {
+define(['utils/ajax', 'common', 'utils/storage'], function (ajax, common, storage) {
 
     function Fonts(styleNodes, fileFormat) {
 

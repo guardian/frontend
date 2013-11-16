@@ -1,5 +1,5 @@
 /*global escape:true */
-define(['common', 'modules/cookies', 'modules/asyncCallMerger', 'ajax'], function(common, Cookies, asyncCallMerger, ajax) {
+define(['common', 'utils/cookies', 'modules/asyncCallMerger', 'utils/ajax'], function(common, Cookies, asyncCallMerger, ajax) {
     /**
      * Left this as an object as there are onlty static methods
      * We'll need to change this once there is some state change

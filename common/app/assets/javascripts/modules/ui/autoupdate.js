@@ -4,12 +4,12 @@
 */
 define([
     'common',
-    'ajax',
+    'utils/ajax',
     'bonzo',
     'bean',
     'qwery',
     'modules/userPrefs',
-    'modules/detect',
+    'utils/detect',
     'modules/ui/circular-progress'
 ], function (
     common,

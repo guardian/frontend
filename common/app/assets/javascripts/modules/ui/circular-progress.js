@@ -1,7 +1,7 @@
 define(["bean",
         "common",
         "bonzo",
-        "modules/detect"],
+        "utils/detect"],
     function (
         bean,
         common,

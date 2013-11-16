@@ -1,4 +1,4 @@
-define(['modules/detect', 'common'], function(detect, common){
+define(['utils/detect', 'common'], function(detect, common){
     
     var supportsPushState = detect.hasPushStateSupport();
 

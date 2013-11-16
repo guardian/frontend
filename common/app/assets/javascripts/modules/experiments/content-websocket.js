@@ -1,7 +1,7 @@
 define([
     'common',
     'bonzo',
-    'modules/detect'
+    'utils/detect'
 ], function (common, bonzo, detect) {
 
     function connect(config) {

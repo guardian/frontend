@@ -2,7 +2,7 @@
     Module: trailblock-show-more.js
     Description: Pull in more trailblocks dynamically
 */
-define(['common', 'ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bonzo, bean, qwery) {
+define(['common', 'utils/ajax', 'bonzo', 'bean', 'qwery'], function (common, ajax, bonzo, bean, qwery) {
 
     function TrailblockShowMore(options) {
 

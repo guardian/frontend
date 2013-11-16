@@ -1,7 +1,7 @@
 define([
     "common",
     "bean",
-    "ajax"
+    "utils/ajax"
 ], function(
    common,
    bean,

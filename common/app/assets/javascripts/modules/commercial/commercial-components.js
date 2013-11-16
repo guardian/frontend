@@ -7,7 +7,7 @@ define([
     'bonzo',
     'bean',
     'modules/adverts/document-write',
-    'modules/storage'
+    'utils/storage'
 ], function (
     $,
     mediator,
