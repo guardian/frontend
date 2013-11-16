@@ -7,7 +7,7 @@ define([
     'utils/detect',
     'modules/ui/relativedates',
     'modules/facia/images',
-    'modules/discussion/commentCount'
+    'modules/discussion/comment-count'
 ], function ($, mediator, bonzo, bean, qwery, detect, relativeDates, faciaImages, commentCount) {
 
     var buttonText = 'Show more',

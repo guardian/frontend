@@ -31,7 +31,7 @@ define([
     'modules/analytics/adverts',
     'modules/experiments/ab',
     "modules/adverts/video",
-    "modules/discussion/commentCount",
+    "modules/discussion/comment-count",
     "modules/gallery/lightbox",
     "modules/facia/images",
     "modules/onward/history",
