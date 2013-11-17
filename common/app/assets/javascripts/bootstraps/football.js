@@ -1,7 +1,9 @@
 /*global guardian:false */
 define([
     //Common libraries
-    "common",
+    "$",
+    "utils/mediator",
+    "utils/lazy-load-css",
     "bonzo",
     //Modules
     "modules/router",
@@ -13,7 +15,9 @@ define([
     "modules/ui/autoupdate",
     "modules/sport/football/matchnav"
 ], function (
-    common,
+    $,
+    mediator,
+    lazyLoadCss,
     bonzo,
     Router,
     TogglePanel,
@@ -37,9 +41,9 @@ define([
         showFrontFixtures: function(context) {
             // wrap the return sports stats component in an 'item'
             var prependTo = bonzo.create('<li class="item item--sport-stats item--sport-stats-tall"></li>');
-            common.mediator.on('modules:footballfixtures:render', function() {
-                var $collection = common.$g('.container--news .collection', context);
-                common.$g('.item:first-child', $collection[0])
+            mediator.on('modules:footballfixtures:render', function() {
+                var $collection = $('.container--news .collection', context);
+                $('.item:first-child', $collection[0])
                     .after(prependTo);
                 $collection.removeClass('collection--without-sport-stats')
                     .addClass('collection--with-sport-stats');
@@ -62,9 +66,9 @@ define([
             // wrap the return sports stats component in an 'item'
             var fixtures = bonzo.create('<li class="item item--sport-stats item--sport-stats-tall"></li>'),
                 table = bonzo.create('<li class="item item--sport-stats item--sport-table"></li>');
-            common.mediator.on('modules:footballfixtures:render', function() {
-                var $collection = common.$g('.container--news .collection', context);
-                common.$g('.item:first-child', $collection[0])
+            mediator.on('modules:footballfixtures:render', function() {
+                var $collection = $('.container--news .collection', context);
+                $('.item:first-child', $collection[0])
                     .after(fixtures);
                 $collection.removeClass('collection--without-sport-stats')
                     .addClass('collection--with-sport-stats')
@@ -88,15 +92,15 @@ define([
             // wrap the return sports stats component in an 'item'
             var fixtures = bonzo.create('<div></div>'),
                 table = bonzo.create('<li class="item item--sport-stats item--sport-table"></li>');
-            common.mediator.on('modules:footballfixtures:render', function() {
-                var $collection = common.$g('.container--news .collection', context),
-                    $thirdItem = common.$g('.item:nth-child(3)', $collection[0]);
+            mediator.on('modules:footballfixtures:render', function() {
+                var $collection = $('.container--news .collection', context),
+                    $thirdItem = $('.item:nth-child(3)', $collection[0]);
                 // pull fixtures out into two items
                 bonzo(bonzo.create('<li class="item item--sport-stats"></li>'))
-                    .append(common.$g('.team-fixtures, a:nth-child(2)', fixtures))
+                    .append($('.team-fixtures, a:nth-child(2)', fixtures))
                     .insertAfter($thirdItem);
                 bonzo(bonzo.create('<li class="item item--sport-stats"></li>'))
-                    .append(common.$g('.team-results, a:nth-child(4)', fixtures))
+                    .append($('.team-results, a:nth-child(4)', fixtures))
                     .insertAfter($thirdItem);
                 $collection.append(table);
             });
@@ -127,14 +131,14 @@ define([
     };
 
     var bindings = function() {
-        common.mediator.on('modules:footballfixtures:expand', function(id) {
+        mediator.on('modules:footballfixtures:expand', function(id) {
             var expandable = new Expandable({ id: id, expanded: false });
             expandable.initalise();
         });
     };
 
     var ready = function(req, config, context) {
-        common.lazyLoadCss('football', config);
+        lazyLoadCss('football', config);
 
         var page = req.params.action;
 

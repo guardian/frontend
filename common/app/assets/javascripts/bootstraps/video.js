@@ -1,17 +1,19 @@
 define([
-    "common",
+    "utils/mediator",
     "utils/detect",
+    "utils/lazy-load-css",
     "modules/analytics/video"
 ], function(
-    common,
+    mediator,
     detect,
+    lazyLoadCss,
     Videostream
 ) {
 
     var modules = {
 
         initAnalytics: function () {
-            common.mediator.on('video:ads:finished', function(config, context) {
+            mediator.on('video:ads:finished', function(config, context) {
                 var v = new Videostream({
                     id: config.page.pageId,
                     el: context.querySelector('.player video'),
@@ -27,10 +29,10 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
-            common.lazyLoadCss('video', config);
+            lazyLoadCss('video', config);
             modules.initAnalytics();
         }
-        common.mediator.emit("page:video:ready", config, context);
+        mediator.emit("page:video:ready", config, context);
     };
 
     return {

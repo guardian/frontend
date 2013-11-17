@@ -1,22 +1,22 @@
 define([
-    'common',
+    'utils/mediator',
     'modules/facia/popular',
     'modules/sport/cricket'
 ], function (
-    common,
+    mediator,
     popular,
     cricket
 ) {
     var modules = {
 
         showPopular: function () {
-            common.mediator.on('page:tag:ready', function(config, context) {
+            mediator.on('page:tag:ready', function(config, context) {
                 popular.render(config);
             });
         },
 
         showCricket: function() {
-            common.mediator.on('page:tag:ready', function(config, context) {
+            mediator.on('page:tag:ready', function(config, context) {
                 cricket.cricketTrail(config, context);
             });
         }
@@ -28,7 +28,7 @@ define([
             this.initialised = true;
             modules.showPopular();
         }
-        common.mediator.emit('page:tag:ready', config, context);
+        mediator.emit('page:tag:ready', config, context);
     };
 
     return {
