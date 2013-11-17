@@ -50,6 +50,31 @@ object SystemMetrics extends implicits.Numbers {
     () => ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getUsed / 1048576
   )
 
+  //  http://docs.oracle.com/javase/6/docs/api/java/lang/management/OperatingSystemMXBean.html()
+  object LoadAverageMetric extends GaugeMetric("system", "load-average", "Load average", "Load average",
+    () => ManagementFactory.getOperatingSystemMXBean.getSystemLoadAverage
+  )
+
+  object AvailableProcessorsMetric extends GaugeMetric("system", "available-processors", "Available processors", "Available processors",
+    () => ManagementFactory.getOperatingSystemMXBean.getAvailableProcessors
+  )
+
+  // yeah, casting to com.sun.. ain't too pretty
+  object TotalPhysicalMemoryMetric extends GaugeMetric("system", "total-physical-memory", "Total physical memory", "Total physical memory",
+    () => ManagementFactory.getOperatingSystemMXBean match {
+      case b: com.sun.management.OperatingSystemMXBean => b.getTotalPhysicalMemorySize
+      case _ => -1
+    }
+  )
+
+  object FreePhysicalMemoryMetric extends GaugeMetric("system", "free-physical-memory", "Free physical memory", "Free physical memory",
+    () => ManagementFactory.getOperatingSystemMXBean match {
+      case b: com.sun.management.OperatingSystemMXBean => b.getFreePhysicalMemorySize
+      case _ => -1
+    }
+  )
+
+
   private lazy val buildNumber = ManifestData.build match {
     case string if string.isInt => string.toInt
     case _ => -1 // dev machines do not have a build number
@@ -60,7 +85,9 @@ object SystemMetrics extends implicits.Numbers {
   )
 
   val all = Seq(MaxHeapMemoryMetric, UsedHeapMemoryMetric,
-    MaxNonHeapMemoryMetric, UsedNonHeapMemoryMetric, BuildNumberMetric)
+    MaxNonHeapMemoryMetric, UsedNonHeapMemoryMetric, BuildNumberMetric, LoadAverageMetric, AvailableProcessorsMetric,
+    TotalPhysicalMemoryMetric, FreePhysicalMemoryMetric
+  )
 }
 
 object ContentApiMetrics {
@@ -267,7 +294,16 @@ trait CloudWatchApplicationMetrics extends GlobalSettings {
 
     val metrics = Map(
       s"$applicationName-max-heap-memory" -> SystemMetrics.MaxHeapMemoryMetric.getValue().toDouble,
-      s"$applicationName-used-heap-memory" -> SystemMetrics.UsedHeapMemoryMetric.getValue().toDouble
+      s"$applicationName-used-heap-memory" -> SystemMetrics.UsedHeapMemoryMetric.getValue().toDouble,
+
+      s"$applicationName-total-physical-memory" -> SystemMetrics.TotalPhysicalMemoryMetric.getValue().toDouble,
+      s"$applicationName-free-physical-memory" -> SystemMetrics.FreePhysicalMemoryMetric.getValue().toDouble,
+
+      s"$applicationName-available-processors" -> SystemMetrics.AvailableProcessorsMetric.getValue().toDouble,
+
+      s"$applicationName-load-average" -> SystemMetrics.LoadAverageMetric.getValue().toDouble,
+
+      s"$applicationName-build-number" -> SystemMetrics.BuildNumberMetric.getValue().toDouble
     )
 
     CloudWatch.put("ApplicationSystemMetrics", metrics)
