@@ -2,7 +2,11 @@
     Module: storage.js
     Description: Wrapper around localStorage functionality
 */
-define(['utils/mediator'], function (mediator) {
+define([
+    'utils/mediator'
+], function (
+    mediator
+) {
     
     var w = window;
     

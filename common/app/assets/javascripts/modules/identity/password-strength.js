@@ -1,4 +1,12 @@
-define(["common", "bonzo", "bean"], function (common, bonzo, bean) {
+define([
+    "common",
+    "bonzo",
+    "bean"
+], function (
+    common,
+    bonzo,
+    bean
+) {
 
     function PasswordStrength(el, context, config) {
 

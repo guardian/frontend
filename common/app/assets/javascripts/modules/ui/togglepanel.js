@@ -1,4 +1,12 @@
-define(['common', 'bonzo', 'bean'], function (common, bonzo, bean) {
+define([
+    'common',
+    'bonzo',
+    'bean'
+], function (
+    common,
+    bonzo,
+    bean
+) {
 
     var view = {
         toggle: function (toggler) {

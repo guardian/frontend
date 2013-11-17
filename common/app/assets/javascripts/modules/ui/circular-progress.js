@@ -1,12 +1,14 @@
-define(["bean",
-        "common",
-        "bonzo",
-        "utils/detect"],
-    function (
-        bean,
-        common,
-        bonzo,
-        detect) {
+define([
+    "bean",
+    "common",
+    "bonzo",
+    "utils/detect"
+], function (
+    bean,
+    common,
+    bonzo,
+    detect
+) {
 
     function CircularProgress(opts) {
         this.$el = bonzo(opts.el);

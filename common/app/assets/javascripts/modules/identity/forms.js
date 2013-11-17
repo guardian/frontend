@@ -1,4 +1,12 @@
-define(['bean', 'bonzo', 'utils/ajax'], function (bean, bonzo, ajax) {
+define([
+    'bean',
+    'bonzo',
+    'utils/ajax'
+], function (
+    bean,
+    bonzo,
+    ajax
+) {
 
     function forgottenEmail(config, context) {
         var form = context.querySelector('.js-reset-form');

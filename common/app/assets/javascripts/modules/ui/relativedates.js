@@ -1,4 +1,10 @@
-define(['common', 'bonzo'], function (common, bonzo) {
+define([
+    'common',
+    'bonzo'
+], function (
+    common,
+    bonzo
+) {
 
     function dayOfWeek(day) {
         return ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][day];

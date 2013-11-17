@@ -1,4 +1,8 @@
-define(["reqwest"], function (reqwest) {
+define([
+    "reqwest"
+], function (
+    reqwest
+) {
 
     var makeAbsolute = function () {
         throw new Error("AJAX has not been initialised yet");

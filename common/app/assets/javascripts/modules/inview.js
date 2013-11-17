@@ -1,4 +1,14 @@
-define(["utils/mediator", 'utils/to-array', 'utils/request-animation-frame', "bean"], function (mediator, toArray, requestAnimationFrame, bean) {
+define([
+    "utils/mediator",
+    'utils/to-array',
+    'utils/request-animation-frame',
+    "bean"
+], function (
+    mediator,
+    toArray,
+    requestAnimationFrame,
+    bean
+) {
 
     function Inview(selector, context) {
         var self = this;

@@ -3,7 +3,11 @@
 /*
     Common functions to simplify access to page data
  */
-define(['common'], function (common) {
+define([
+    'common'
+], function (
+    common
+) {
 
     // thank you http://www.electrictoolbox.com/pad-number-zeroes-javascript/
     var pad = function (number, length) {

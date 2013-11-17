@@ -1,4 +1,14 @@
-define(['common', 'bean', 'bonzo', 'qwery'], function (common, bean, bonzo, qwery) {
+define([
+    'common',
+    'bean',
+    'bonzo',
+    'qwery'
+], function (
+    common,
+    bean,
+    bonzo,
+    qwery
+) {
 
     /*
         expects the following HTML structure

@@ -1,4 +1,10 @@
-define(['common', 'modules/lazyload'], function (common, LazyLoad) {
+define([
+    'common',
+    'modules/lazyload'
+], function (
+    common,
+    LazyLoad
+) {
 
     function popular(config, context, isExpandable, url, targetSelector) {
         targetSelector = targetSelector || '.js-popular';

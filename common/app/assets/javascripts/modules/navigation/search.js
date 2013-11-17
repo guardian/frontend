@@ -1,4 +1,12 @@
-define(['common', 'bean', 'bonzo'], function (common, bean, bonzo) {
+define([
+    'common',
+    'bean',
+    'bonzo'
+], function (
+    common,
+    bean,
+    bonzo
+) {
 
     var Search = function (config) {
 

@@ -1,10 +1,12 @@
-define(["bean",
-        "common",
-        "bonzo"],
-    function (
-        bean,
-        common,
-        bonzo) {
+define([
+    "bean",
+    "common",
+    "bonzo"
+], function (
+    bean,
+    common,
+    bonzo
+) {
 
     function Overlay(content) {
         this.loadingHtml = '<div class="preload-msg"><div class="is-updating is-updating--dark"></div></div>';

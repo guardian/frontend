@@ -1,5 +1,15 @@
 /*global Imager:true */
-define(['$', 'utils/to-array', 'bonzo', 'utils/mediator'], function ($, toArray, bonzo, mediator) {
+define([
+    '$',
+    'utils/to-array',
+    'bonzo',
+    'utils/mediator'
+], function (
+    $,
+    toArray,
+    bonzo,
+    mediator
+) {
 
     var images = {
 

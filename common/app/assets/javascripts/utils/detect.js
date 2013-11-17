@@ -6,7 +6,13 @@
 /*jshint strict: false */
 /*global DocumentTouch: true */
 
-define(['modules/userPrefs', 'common'], function (userPrefs, common) {
+define([
+    'modules/userPrefs',
+    'common'
+], function (
+    userPrefs,
+    common
+) {
 
     var BASE_WIDTH     = 740,
         MEDIAN_WIDTH   = 980,

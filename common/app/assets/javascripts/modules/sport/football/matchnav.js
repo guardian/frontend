@@ -1,4 +1,10 @@
-define(['common', 'utils/ajax'], function (common, ajax) {
+define([
+    'common',
+    'utils/ajax'
+], function (
+    common,
+    ajax
+) {
 
     function MatchNav() {
 

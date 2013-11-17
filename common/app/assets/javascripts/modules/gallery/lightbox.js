@@ -1,25 +1,26 @@
-define(['$',
-        "bean",
-        "utils/mediator",
-        'lodash/functions/debounce',
-        "utils/ajax",
-        "bonzo",
-        "qwery",
-        "utils/detect",
-        "utils/url",
-        "modules/ui/overlay"
-        ],
-    function (
-        $,
-        bean,
-        mediator,
-        debounce,
-        ajax,
-        bonzo,
-        qwery,
-        detect,
-        url,
-        Overlay) {
+define([
+    '$',
+    "bean",
+    "utils/mediator",
+    'lodash/functions/debounce',
+    "utils/ajax",
+    "bonzo",
+    "qwery",
+    "utils/detect",
+    "utils/url",
+    "modules/ui/overlay"
+], function (
+    $,
+    bean,
+    mediator,
+    debounce,
+    ajax,
+    bonzo,
+    qwery,
+    detect,
+    url,
+    Overlay
+) {
 
     function LightboxGallery(config, context) {
         var self = this,

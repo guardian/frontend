@@ -5,7 +5,14 @@ define([
     'modules/ui/relativedates',
     'modules/facia/collection-show-more',
     'modules/facia/images'
-], function (common, ajax, bonzo, relativeDates, CollectionShowMore, faciaImages) {
+], function (
+    common,
+    ajax,
+    bonzo,
+    relativeDates,
+    CollectionShowMore,
+    faciaImages
+) {
 
     var updateTmpl = function(tmpl, trail) {
             return tmpl.replace(/@trail\.([A-Za-z.]*)/g, function(match, props) {

@@ -1,4 +1,12 @@
-define(['common', 'utils/ajax', 'bonzo'], function (common, ajax, bonzo) {
+define([
+    'common',
+    'utils/ajax',
+    'bonzo'
+], function (
+    common,
+    ajax,
+    bonzo
+) {
 
     function FootballTables(options) {
 

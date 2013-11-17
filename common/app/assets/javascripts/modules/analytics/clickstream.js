@@ -1,4 +1,14 @@
-define(['common', 'utils/detect', 'bean', 'modules/experiments/ab'], function (common, detect, bean, ab) {
+define([
+    'common',
+    'utils/detect',
+    'bean',
+    'modules/experiments/ab'
+], function (
+    common,
+    detect,
+    bean,
+    ab
+) {
 
     var Clickstream = function (opts) {
 

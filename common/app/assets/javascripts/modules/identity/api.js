@@ -1,6 +1,17 @@
 /*global escape:true */
-define(['common', 'utils/cookies', 'modules/asyncCallMerger', 'utils/ajax'], function(common, Cookies, asyncCallMerger, ajax) {
-    /**
+define([
+    'common',
+    'utils/cookies',
+    'modules/asyncCallMerger',
+    'utils/ajax'
+], function(
+    common,
+    Cookies,
+    asyncCallMerger,
+    ajax
+) {
+
+/**
      * Left this as an object as there are onlty static methods
      * We'll need to change this once there is some state change
      * TODO(jamesgorrie): Allow this to show policies too (not needed yet)

@@ -1,4 +1,12 @@
-define(['common', 'utils/detect', 'bonzo'], function (common, detect, bonzo) {
+define([
+    'common',
+    'utils/detect',
+    'bonzo'
+], function (
+    common,
+    detect,
+    bonzo
+) {
 
     function Images(options) {
     
