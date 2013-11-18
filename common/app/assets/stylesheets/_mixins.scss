@@ -3,6 +3,7 @@
 // Transform a value into rem
 // Assuming baseline is set to 10px on :root/html
 @function rem($value, $baseline: 10px) {
+    @if $value == 0 { @return 0; } // 0rem -> 0
     @if type-of($value) == list {
         $result: ();
         @each $e in $value {
@@ -10,8 +11,7 @@
         }
         @return $result;
     } @else {
-        @if $value == 0 { @return 0; } // 0px => 0
-        @return if(unit($value) == px, $value / $baseline * 1rem, $value);
+        @return if(type-of($value) == number and unit($value) == px, $value / $baseline * 1rem, $value);
     }
 }
 
