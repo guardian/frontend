@@ -24,6 +24,11 @@ object OnwardJourneyAgent extends Logging with ExecutionContexts {
     update(Edition.defaultEdition)
   }
 
+  def stop() {
+    mostReadAgent.close()
+    popularOnwardAgent.close();
+  }
+
   private def update(edition: Edition) {
 
     val ophanQuery = OphanApi.getMostRead(hours = 3, count = 50)
