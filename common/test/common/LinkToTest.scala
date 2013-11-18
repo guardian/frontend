@@ -32,6 +32,10 @@ class LinkToTest extends FlatSpec with Matchers {
     TestLinkTo("/", edition) should be ("http://www.foo.com/uk")
   }
 
+  it should "not modify protocol relative paths" in {
+    TestLinkTo("//www.youtube.com/embed/jLoG-fNir0c?enablejsapi=1&version=3", edition) should be ("//www.youtube.com/embed/jLoG-fNir0c?enablejsapi=1&version=3")
+  }
+
   it should "strip leading and trailing whitespace" in {
     TestLinkTo("  http://www.foo.com/uk   ", edition) should be ("http://www.foo.com/uk")
   }

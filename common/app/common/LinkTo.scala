@@ -21,6 +21,7 @@ trait LinkTo extends Logging {
   def apply(url: String, edition: Edition): String = (url match {
     case "http://www.theguardian.com" => urlFor("", edition)
     case "/" => urlFor("", edition)
+    case protocolRelative if protocolRelative.startsWith("//") => protocolRelative
     case AbsoluteGuardianUrl(path) =>  urlFor(path, edition)
     case AbsolutePath(path) => urlFor(path, edition)
     case otherUrl => otherUrl
