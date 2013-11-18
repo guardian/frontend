@@ -103,7 +103,8 @@ define([
         } else {
             trailToHTML(url, 'card').then(function(resp) {
                 if('html' in resp) {
-                    bonzo(qwery('.u-table__cell--bottom')).prepend(resp.html);
+                    bonzo(qwery('.card-wrapper--right')).hide();
+                    bonzo(qwery('.u-table__cell--bottom')).append(resp.html);
                 }
             });
         }
@@ -149,6 +150,7 @@ define([
                             }
                         });
                         upgradeTrail(getTrailUrl(getTrails()[0]));
+                        dedupe(getTrailUrl(getTrails()[0]));
                         dates.init(document);
                     });
                 }
@@ -158,10 +160,14 @@ define([
                 test: function() {
                     common.mediator.on('modules:related:loaded', function() {
                         getTrails().some(function(trail) {
-                            return (isQuestion(trail)) ? prepend(trail) : false;
+                            if(isQuestion(trail)){
+                                prepend(trail);
+                                upgradeTrail(getTrailUrl(getTrails()[0]));
+                                dedupe(getTrailUrl(getTrails()[0]));
+                                dates.init(document);
+                                return true;
+                            } else { return false; }
                         });
-                        upgradeTrail(getTrailUrl(getTrails()[0]));
-                        dates.init(document);
                     });
                 }
             },
@@ -200,13 +206,14 @@ define([
                 test: function() {
                     common.mediator.on('modules:related:loaded', function() {
 
-                        if(getTrails().filter(function(trail) {
+                        if(getTrails().some(function(trail) {
                             if(isQuestion(trail)) {
                                 prepend(trail);
                                 return true;
                             } else { return false; }
                         }).length) {
                             upgradeTrail(getTrailUrl(getTrails()[0]));
+                            dedupe(getTrailUrl(getTrails()[0]));
                             dates.init(document);
                             return;
                         }
