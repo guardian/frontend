@@ -213,6 +213,7 @@ object ChartFormat {
   val SingleLineGreen = ChartFormat(colours = Seq("#00CC33"), cssClass =  "charts")
   val SingleLineRed = ChartFormat(colours = Seq("#FF0000"), cssClass =  "charts")
   val DoubleLineBlueRed = ChartFormat(colours = Seq("#0033CC", "#FF0000"), cssClass =  "charts")
+  val MultiLines = ChartFormat(colours: Seq, cssClass =  "charts")
 }
 
 class LineChart(val name: String, val labels: Seq[String], charts: Future[GetMetricStatisticsResult]*) extends Chart {
