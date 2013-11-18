@@ -56,7 +56,7 @@ define([
 
     function append(trail) {
         if(typeof trail === 'string') {
-            bonzo(qwery('ul:last-of-type', document.querySelector('.trailblock'))).html(trail);
+            bonzo(qwery('ul:last-of-type', getContainer())).html(trail);
         } else {
             bonzo(trail).detach().appendTo(bonzo(qwery('ul:last-of-type', getContainer())));
         }
@@ -93,7 +93,7 @@ define([
     }
 
     function upgradeTrail(url) {
-        if(detect.getLayoutMode() === 'mobile') {
+        if(detect.getBreakpoint() === 'mobile') {
             trailToHTML(url, 'trail').then(function(resp) {
                 if('html' in resp) {
                     prepend(resp.html);
@@ -114,7 +114,7 @@ define([
         var trails = getTrails().filter(function(trail){
             return getTrailUrl(trail) === id;
         });
-        bonzo((detect.getLayoutMode() === 'mobile' && trails.length > 1) ? trails[1] : trails).hide();
+        bonzo((detect.getBreakpoint() === 'mobile' && trails.length > 1) ? trails[1] : trails).hide();
     }
 
     var Question = function () {
