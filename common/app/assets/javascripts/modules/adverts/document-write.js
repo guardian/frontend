@@ -1,12 +1,11 @@
 /*global guardian */
 define([
-    'common',
-    'ajax',
-
-    'modules/detect',
+    'utils/mediator',
+    'utils/ajax',
+    'utils/detect',
     'modules/adverts/audience-science'
 ], function (
-    common,
+    mediator,
     ajax,
 
     detect,
@@ -91,7 +90,7 @@ define([
             }
             script.onload = script.onreadystatechange = null;
             loaded = true;
-            common.mediator.emit('modules:adverts:docwrite:loaded');
+            mediator.emit('modules:adverts:docwrite:loaded');
         };
     }
 

@@ -1,4 +1,4 @@
-define(['modules/togglepanel', 'common', 'bonzo', 'bean'], function(togglePanel, common, bonzo, bean) {
+define(['modules/ui/togglepanel', 'common', 'bonzo', 'bean'], function(togglePanel, common, bonzo, bean) {
 
     describe('Toggle Panel', function() {
         

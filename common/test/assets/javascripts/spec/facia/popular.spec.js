@@ -10,7 +10,7 @@ define('modules/facia/images', [], function(){
     }
 });
 
-define(['modules/facia/popular', 'bonzo', 'common', 'bean', 'helpers/fixtures', 'ajax'], function(popular, bonzo, common, bean, fixtures, ajax) {
+define(['modules/facia/popular', 'bonzo', 'common', 'bean', 'helpers/fixtures', 'utils/ajax'], function(popular, bonzo, common, bean, fixtures, ajax) {
 
     describe('Popular', function() {
 

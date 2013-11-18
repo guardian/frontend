@@ -1,4 +1,4 @@
-define(['modules/lazyload', 'bonzo', 'ajax'], function(LazyLoad, bonzo, ajax) {
+define(['modules/lazyload', 'bonzo', 'utils/ajax'], function(LazyLoad, bonzo, ajax) {
 
     describe('Lazy Load', function() {
         
