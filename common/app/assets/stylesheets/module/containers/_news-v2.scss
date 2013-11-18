@@ -116,22 +116,16 @@ $metaHeight: 20px;
                     display: none;
                 }
             }
-            @include when-image {
-                .item__image-container {
-                    display: block;
-                }
+            .item__image-container {
+                display: none;
             }
             @include when-no-image(':first-child') {
                 .item__title {
                     @include fs-headline(9, true);
-                    @include text-clamp(4, nth(nth($fs-headlines, 9), 2));
                 }
                 .item__standfirst {
                     @include fs-headline(3, true);
                     display: block;
-                }
-                .item__image-container {
-                    display: none;
                 }
             }
         }
@@ -143,18 +137,19 @@ $metaHeight: 20px;
             @include nc-collection($collection);
         }
         .item {
-            &:nth-child(1) {
+            & {
                 @include nc-item(6, 8, 0, 0, $collection);
 
                 .item__title {
                     @include fs-headline(4, true);
-
-                    @include when-image {
-                        @include text-clamp(2, nth(nth($fs-headlines, 4), 2));
-                    }
                 }
                 .item__standfirst {
                     display: none;
+                }
+            }
+            @include when-image(':first-child') {
+                .item__image-container {
+                    display: block;
                 }
             }
             &:nth-child(n+2) {
@@ -176,11 +171,16 @@ $metaHeight: 20px;
                 .item__title {
                     @include fs-headline(2, true);
                 }
-                @include when-no-image {
-                    .item__standfirst {
-                        display: block;
-                        padding-right: 0;
-                    }
+            }
+            @include when-image(':nth-child(2)') {
+                .item__image-container {
+                    display: block;
+                }
+            }
+            @include when-no-image(':nth-child(2)') {
+                .item__standfirst {
+                    display: block;
+                    padding-right: 0;
                 }
             }
             &:nth-child(3),
@@ -194,10 +194,15 @@ $metaHeight: 20px;
                 .item__title {
                     @include fs-headline(3, true);
                 }
-                @include when-no-image {
-                    .item__standfirst {
-                        display: none;
-                    }
+            }
+            @include when-no-image(':nth-child(3)') {
+                .item__standfirst {
+                    display: none;
+                }
+            }
+            @include when-no-image(':nth-child(4)') {
+                .item__standfirst {
+                    display: none;
                 }
             }
             &:nth-child(4) {
@@ -226,9 +231,6 @@ $metaHeight: 20px;
                     width: gs-span(3),
                     height: gs-height(2)
                 ));
-                .item__title {
-                    @include text-clamp(3);
-                }
             }
             &:nth-child(3n+8) {
                 clear: both;
@@ -257,19 +259,20 @@ $metaHeight: 20px;
             @include nc-collection($collection);
         }
         .item {
-            .item__standfirst {
-                display: block;
-            }
             .item__title {
                 @include fs-headline(4, true);
             }
-            @include when-no-image(':first-child') {
-                .item__title {
-                    @include text-clamp(5, nth(nth($fs-headlines, 9), 2));
-                }
-            }
             &:nth-child(1) {
                 @include nc-item(5, 10, 0, 0, $collection);
+
+                .item__standfirst {
+                    display: block;
+                }
+            }
+            @include when-image(':first-child') {
+                .item__image-container {
+                    display: block;
+                }
             }
             &:nth-child(n+2) {
                 &:before {
@@ -291,18 +294,19 @@ $metaHeight: 20px;
             }
             &:nth-child(2) {
                 @include nc-item(3, 6, 5, 0, $collection);
-
-                .item__standfirst {
-                    display: none;
-                }
-
-                @include when-no-image {
-                    .item__standfirst {
-                        display: block;
-                        padding-right: 0;
-                    }
+            }
+            @include when-image(':nth-child(2)') {
+                .item__image-container {
+                    display: block;
                 }
             }
+            @include when-no-image(':nth-child(2)') {
+                .item__standfirst {
+                    display: block;
+                    padding-right: 0;
+                }
+            }
+            
             &:nth-child(3) {
                 @include nc-item(3, 4, 5, 6, $collection);
 
@@ -311,13 +315,7 @@ $metaHeight: 20px;
                 }
             }
             &:nth-child(n+3) {
-                @include when-no-image {
-                    .item__standfirst {
-                        display: none;
-                    }
-                }
-                .item__standfirst,
-                .item__image-container {
+                .item__standfirst {
                     display: none;
                 }
             }
@@ -380,25 +378,7 @@ $metaHeight: 20px;
         }
         .item {
             @include nc-item(6, 10, 0, 0, $collection);
-            @include when-image(':first-child') {
-                .item__image-container {
-                    display: block;
-                }
-            }
-            @include when-no-image(':first-child') {
-                .item__title {
-                    @include text-clamp(5, nth(nth($fs-headlines, 9), 2));
-                }
-                .item__standfirst {
-                    display: block;
-                    @include rem((
-                        padding-right: gs-span(1)
-                    ));
-                }
-                .item__image-container {
-                    display: none;
-                }
-            }
+
             .item__title {
                 @include fs-headline(4);
             }
@@ -408,6 +388,19 @@ $metaHeight: 20px;
             &:first-child {
                 .item__title {
                     @include rem((margin-top: $baseline));
+                }
+            }
+            @include when-image(':first-child') {
+                .item__image-container {
+                    display: block;
+                }
+            }
+            @include when-no-image(':first-child') {
+                .item__standfirst {
+                    display: block;
+                    @include rem((
+                        padding-right: gs-span(1)
+                    ));
                 }
             }
             &:nth-child(n+2) {
@@ -435,11 +428,34 @@ $metaHeight: 20px;
                 .item__standfirst {
                     display: none;
                 }
-                @include when-no-image {
-                    .item__standfirst {
-                        display: block;
-                        padding-right: 0;
-                    }
+            }
+            @include when-image(':nth-child(2)') {
+                .item__image-container {
+                    display: block;
+                }
+            }
+            @include when-image(':nth-child(3)') {
+                .item__image-container {
+                    display: block;
+                }
+            }
+            @include when-no-image(':nth-child(2)') {
+                .item__standfirst {
+                    display: block;
+                    padding-right: 0;
+                }
+            }
+            @include when-no-image(':nth-child(3)') {
+                .item__standfirst {
+                    display: block;
+                    padding-right: 0;
+                }
+            }
+
+            @include when-no-image(':nth-child(4)') {
+                .item__standfirst {
+                    display: block;
+                    padding-right: 0;
                 }
             }
             &:nth-child(3) {
@@ -462,9 +478,6 @@ $metaHeight: 20px;
                         padding-right: gs-span(1)
                     ));
                 }
-                .item__image-container {
-                    display: none;
-                }
             }
             &:nth-child(n+5) {
                 position: relative;
@@ -481,14 +494,13 @@ $metaHeight: 20px;
                     padding-right: 0;
                     margin-bottom: 0;
                 }
-                .item__image-container,
                 .item__standfirst {
                     display: none;
                 }
-                @include when-no-image {
-                    .item__standfirst {
-                        display: none;
-                    }
+            }
+            @include when-no-image(':nth-child(n+5)') {
+                .item__standfirst {
+                    display: none;
                 }
             }
             &:nth-child(n+10) {
