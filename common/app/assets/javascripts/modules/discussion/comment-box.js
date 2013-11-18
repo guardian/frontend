@@ -97,7 +97,10 @@ CommentBox.prototype.ready = function() {
     this.setFormState();
 
     // TODO (jamesgorrie): Could definitely use the this.on and make the default context this
-    bean.on(this.context, 'submit', [this.elem], this.postComment.bind(this));
+    //bean.on(this.context, 'submit', [this.elem], this.postComment.bind(this));
+    
+    this.on('click', this.getClass('submit'), this.postComment);
+
     bean.on(this.context, 'change keyup', [commentBody], this.setFormState.bind(this));
     bean.on(commentBody, 'focus', this.setExpanded.bind(this)); // this isn't delegated as bean doesn't support it
     this.on('click', this.getClass('cancel'), this.destroy);

@@ -136,8 +136,8 @@ Comments.prototype.renderReplyButtons = function(comments) {
 /**
  * @param {Event} e
  */
-Comments.prototype.showMore = function(e) {
-    e.preventDefault();
+Comments.prototype.showMore = function(event) {
+    if (event) { event.preventDefault(); }
     var showMoreButton = this.getElem('showMore');
 
     if (showMoreButton.getAttribute('data-disabled') === 'disabled') {
@@ -256,6 +256,7 @@ Comments.prototype.addComment = function(comment, focus, parent) {
             }
         },
         commentElem = bonzo.create(document.getElementById('tmpl-comment').innerHTML)[0];
+        bonzo(commentElem).addClass('fade-in');
 
     for (key in map) {
         if (map.hasOwnProperty(key)) {
@@ -334,7 +335,6 @@ Comments.prototype.replyToComment = function(e) {
             bonzo(parentCommentEl).append(responses);
         }
         self.addComment(comment, false, responses);
-        // SHOW MORE?
         this.destroy();
     });
 };

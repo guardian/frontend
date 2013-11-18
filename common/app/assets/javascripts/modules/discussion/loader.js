@@ -225,9 +225,20 @@ Loader.prototype.renderCommentBox = function() {
             premod: this.user.privateFields.isPremoderated
         });
         this.commentBox.render(this.getElem('commentBox'));
-        this.commentBox.on('post:success', this.comments.addComment.bind(this.comments));
+        this.commentBox.on('post:success', this.commentPosted.bind(this));
         this.canComment = true;
     }
+};
+
+Loader.prototype.commentPosted = function () {
+    this.comments.addComment.apply(this.comments, arguments);
+
+    // Should more comments be shown?
+    if (!this.firstComment) {
+        this.firstComment = true;
+        this.comments.showMore();
+    }
+
 };
 
 Loader.prototype.renderUserBanned = function() {
