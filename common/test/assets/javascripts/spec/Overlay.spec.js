@@ -66,7 +66,7 @@ define(['common', 'modules/overlay', 'bean'], function(common, Overlay, bean) {
         });
 
         it("should return window to previous scroll pos after close", function() {
-            window.scrollTo(0,100);
+            window.scrollTo(100,100);
             overlay.show();
             bean.fire(document.querySelector('.js-overlay-close'), 'click');
             waits(200);

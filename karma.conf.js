@@ -1,5 +1,5 @@
-module.exports = function(config) {
-    config.set({
+module.exports = function() {
+    return {
         basePath: '',
         frameworks: ['jasmine', 'requirejs'],
 
@@ -15,12 +15,14 @@ module.exports = function(config) {
             { pattern: 'common/test/assets/javascripts/components/sinon/lib/sinon/util/fake_xml_http_request.js', included: true },
             { pattern: 'common/test/assets/javascripts/components/sinon/lib/sinon/util/timers_ie.js', included: true },
             { pattern: 'common/test/assets/javascripts/components/sinon/lib/sinon/util/xhr_ie.js', included: true },
+            { pattern: 'common/test/assets/javascripts/components/jasmine-sinon/lib/jasmine-sinon.js', included: true },
             { pattern: 'common/test/assets/javascripts/components/seedrandom/index.js', included: true },
             { pattern: 'common/test/assets/javascripts/setup.js', included: true },
+            // { pattern: 'common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js', include: true },
+            // { pattern: 'common/app/assets/javascripts/bootstraps/go.js', include: true },
             // { pattern: 'common/test/assets/javascripts/components/sinon/**/*.js', included: true },
             { pattern: 'common/test/assets/javascripts/main.js', included: true },
             { pattern: 'common/app/assets/javascripts/**/*.js', included: false },
-            { pattern: 'common/test/assets/javascripts/spec/**/*.spec.js', included: false },
             { pattern: 'common/test/assets/javascripts/fixtures/**/*', included: false },
             { pattern: 'common/test/assets/javascripts/helpers/**/*.js', included: false }
         ],
@@ -46,5 +48,5 @@ module.exports = function(config) {
         browsers: ['PhantomJS'],
         captureTimeout: 60000,
         singleRun: false
-    });
+    };
 };

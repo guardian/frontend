@@ -327,13 +327,16 @@ module.exports = function (grunt) {
 
         karma: {
             options: {
-                configFile: 'karma.conf.js'
+                configFile: 'karma/all.conf.js'
             },
             continuous: {
                 singleRun: true
             },
             dev: {
                 reporters: 'dots'
+            },
+            discussion: {
+                configFile: 'karma/discussion.conf.js'
             }
         },
 
@@ -642,7 +645,13 @@ module.exports = function (grunt) {
         grunt.task.run(['jasmine' + (app ? ':' + app : '')]);
     });
     grunt.registerTask('test', ['jshint:common', 'test:unit', 'test:integration']);
-    grunt.registerTask('runner', ['karma:'+ (isDev ? 'dev' : 'continuous')]);
+    grunt.registerTask('runner', function(app) {
+        var runner = 'continuous';
+        if (isDev) {
+            runner = app ? runner : 'dev';
+        }
+        grunt.task.run('karma:' + runner);
+    });
 
     // Analyse tasks
     grunt.registerTask('analyse:css', ['compile:css', 'cssmetrics:common']);

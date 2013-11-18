@@ -4,10 +4,11 @@ var tests = [],
 
 for (var file in window.__karma__.files) {
     // We are only testing against discussion for now
-    if (/discussion\/.*spec\.js$/.test(file)) {
+    if (/.spec\.js$/.test(file)) {
         spec = file
                 .replace(specUrl, '')
                 .replace('.js', '');
+        console.log(spec)
         tests.push(spec);
     }
 }
