@@ -95,27 +95,25 @@ TopComments.prototype.fetch = function(parent) {
     }).then(
         function render(resp) {
 
+            // self.elem = parent;
+            
             if (resp.commentCount > 0) {
-                
                 // Render Top Comments
-
-                self.elem = parent;
-                self.commentsElements = bonzo.create(resp.html);
-                $('.discussion__comments__top', self.elem).append(self.commentsElements); // refactor
+                self.elem = bonzo.create(resp.html);
+                $('.discussion__comments__top', parent).append(self.elem); // refactor
+                self.elem = self.elem[0];
                 self.elems = {};
                 self.prerender();
                 self.ready();
 
-                self.emit("loadComments");
-                
+                self.mediator.emit("loadComments", { amount: 0 });
             } else {
 
+                $('.discussion__comments__top__container').remove();
+
                 // Render Regular Comments
-                self.emit("loadComments");
-
+                self.mediator.emit("loadComments", { amount: 3 });
             }
-
-
         }
     );
 };

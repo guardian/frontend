@@ -103,7 +103,7 @@ Loader.prototype.ready = function() {
                 bonzo(topLoadingElem).remove();
             });
 
-        self.on('loadComments', self.loadComments);
+        self.mediator.on('loadComments', self.loadComments.bind(self));
 
         // !Top comments ========================================== //
 
@@ -115,7 +115,7 @@ Loader.prototype.ready = function() {
     DiscussionAnalytics.init();
 };
 
-Loader.prototype.loadComments = function () {
+Loader.prototype.loadComments = function (args) {
 
     var self = this;
 
@@ -126,7 +126,7 @@ Loader.prototype.loadComments = function () {
     bonzo(loadingElem).insertAfter(commentsElem);
 
     this.comments = new Comments(this.context, this.mediator, {
-        initialShow: 0,
+        initialShow: args.amount,
         discussionId: this.getDiscussionId(),
         user: this.user
     });
