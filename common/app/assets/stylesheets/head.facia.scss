@@ -9,15 +9,15 @@
 
 .facia-container {
     @include mq(tablet) {
-        width: gs-span(9);
+        @include rem((width: gs-span(9)));
         padding-left: 0;
         padding-right: 0;
     }
     @include mq(desktop) {
-        width: gs-span(12);
+        @include rem((width: gs-span(12)));
     }
     @include mq(wide) {
-        width: gs-span(16);
+        @include rem((width: gs-span(16)));
     }
 }
 

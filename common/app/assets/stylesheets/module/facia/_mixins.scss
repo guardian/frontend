@@ -225,9 +225,17 @@ $item-top-border-height: 2px;
     }
 }
 
-@mixin text-clamp($lines: 2) {
+@mixin text-clamp($lines: 2, $line-height: false) {
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: $lines;
+
+    // Fallback for non-webkit browsers
+    // (won't show `…` at the end of the block)
+    @if $line-height {
+        @include rem((
+            max-height: $line-height * $lines * 1px
+        ))
+    }
 }

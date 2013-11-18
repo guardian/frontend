@@ -53,12 +53,18 @@ $metaHeight: 20px;
 }
 
 @mixin align-separator-with-tone-border {
-    &:before { top: $gs-baseline / 2; }
+    &:before {
+        @include rem((
+            top: $gs-baseline / 2
+        ));
+    }
 }
 
 
 .item__image-container {
-    margin-top: 4px;
+    @include rem((
+        margin-top: $gs-baseline / 3
+    ));
 }
 .container--news {
     @include mq(tablet) {
@@ -74,7 +80,9 @@ $metaHeight: 20px;
         }
         .item__title {
             @include fs-headline(3);
-            @include rem((margin-bottom: $gs-baseline));
+            @include rem((
+                margin-bottom: $gs-baseline
+            ));
         }
         .item__standfirst {
             @include fs-headline(1);
@@ -96,7 +104,9 @@ $metaHeight: 20px;
             position: absolute;
             margin-top: 0;
             margin-bottom: 0;
-            @include rem((padding: $gs-baseline / 2 0));
+            @include rem((
+                padding: $gs-baseline / 2 0
+            ));
 
             &:first-child {
                 .item__link {
@@ -114,6 +124,7 @@ $metaHeight: 20px;
             @include when-no-image(':first-child') {
                 .item__title {
                     @include fs-headline(9, true);
+                    @include text-clamp(4, nth(nth($fs-headlines, 9), 2));
                 }
                 .item__standfirst {
                     @include fs-headline(3, true);
@@ -126,7 +137,6 @@ $metaHeight: 20px;
         }
     }
     @include mq(tablet, desktop) {
-
         $collection: (width: 9, height: 12, flow-offset-x: 6, flow-offset-y: 6);
 
         .collection {
@@ -138,13 +148,21 @@ $metaHeight: 20px;
 
                 .item__title {
                     @include fs-headline(4, true);
+
+                    @include when-image {
+                        @include text-clamp(2, nth(nth($fs-headlines, 4), 2));
+                    }
                 }
-
-                .item__standfirst { display: none; }
+                .item__standfirst {
+                    display: none;
+                }
             }
-
             &:nth-child(n+2) {
-                &:before { left: -1rem; }
+                &:before {
+                    @include rem((
+                        left: -10px
+                    ));
+                }
                 .item__title {
                     @include rem((
                         margin-bottom: $baseline*2
@@ -169,12 +187,17 @@ $metaHeight: 20px;
             &:nth-child(4) {
                 @include nc-item(3, 4, 0, 8, $collection);
                 @include align-separator-with-tone-border;
-                .item__image-container { display: none; }
+
+                .item__image-container {
+                    display: none;
+                }
                 .item__title {
                     @include fs-headline(3, true);
                 }
                 @include when-no-image {
-                    .item__standfirst { display: none; }
+                    .item__standfirst {
+                        display: none;
+                    }
                 }
             }
             &:nth-child(4) {
@@ -189,12 +212,14 @@ $metaHeight: 20px;
                     margin-left: $gs-gutter
                 ));
 
+                .item__image-container {
+                    display: none;
+                }
                 .item__title {
                     @include fs-headline(1, true);
                     padding-right: 0;
                     margin-bottom: 0;
                 }
-                .item__image-container { display: none; }
             }
             &:nth-child(n+8) {
                 @include rem((
@@ -232,15 +257,26 @@ $metaHeight: 20px;
             @include nc-collection($collection);
         }
         .item {
-            .item__standfirst { display: block; }
+            .item__standfirst {
+                display: block;
+            }
             .item__title {
                 @include fs-headline(4, true);
+            }
+            @include when-no-image(':first-child') {
+                .item__title {
+                    @include text-clamp(5, nth(nth($fs-headlines, 9), 2));
+                }
             }
             &:nth-child(1) {
                 @include nc-item(5, 10, 0, 0, $collection);
             }
             &:nth-child(n+2) {
-                &:before { left: -1rem; }
+                &:before {
+                    @include rem((
+                        left: -10px
+                    ));
+                }
             }
             &:nth-child(2),
             &:nth-child(3) {
@@ -255,7 +291,10 @@ $metaHeight: 20px;
             }
             &:nth-child(2) {
                 @include nc-item(3, 6, 5, 0, $collection);
-                .item__standfirst { display: none; }
+
+                .item__standfirst {
+                    display: none;
+                }
 
                 @include when-no-image {
                     .item__standfirst {
@@ -266,6 +305,7 @@ $metaHeight: 20px;
             }
             &:nth-child(3) {
                 @include nc-item(3, 4, 5, 6, $collection);
+
                 .item__title {
                     @include fs-headline(3, true);
                 }
@@ -276,8 +316,10 @@ $metaHeight: 20px;
                         display: none;
                     }
                 }
-                .item__standfirst { display: none; }
-                .item__image-container { display: none; }
+                .item__standfirst,
+                .item__image-container {
+                    display: none;
+                }
             }
             &:nth-child(n+4) {
                 position: relative;
@@ -296,7 +338,9 @@ $metaHeight: 20px;
             }
             &:nth-child(3),
             &:nth-child(8) {
-                &:before { height: auto; }
+                &:before {
+                    height: auto;
+                }
             }
             &:nth-child(n+9) {
                 clear: none;
@@ -343,12 +387,13 @@ $metaHeight: 20px;
             }
             @include when-no-image(':first-child') {
                 .item__title {
-                    @include fs-headline(9, true);
+                    @include text-clamp(5, nth(nth($fs-headlines, 9), 2));
                 }
                 .item__standfirst {
-                    @include fs-headline(3, true);
                     display: block;
-                    @include rem((padding-right: gs-span(1)));
+                    @include rem((
+                        padding-right: gs-span(1)
+                    ));
                 }
                 .item__image-container {
                     display: none;
@@ -366,7 +411,11 @@ $metaHeight: 20px;
                 }
             }
             &:nth-child(n+2) {
-                &:before { left: -1rem; }
+                &:before {
+                    @include rem((
+                        left: -10px
+                    ));
+                }
             }
             &:nth-child(2),
             &:nth-child(3),
@@ -376,6 +425,7 @@ $metaHeight: 20px;
             &:nth-child(2),
             &:nth-child(3) {
                 @include nc-item(3, 6, 6, 0, $collection);
+
                 .item__title {
                     @include fs-headline(2, true);
                     @include rem((
@@ -412,7 +462,9 @@ $metaHeight: 20px;
                         padding-right: gs-span(1)
                     ));
                 }
-                .item__image-container { display: none; }
+                .item__image-container {
+                    display: none;
+                }
             }
             &:nth-child(n+5) {
                 position: relative;
@@ -429,8 +481,10 @@ $metaHeight: 20px;
                     padding-right: 0;
                     margin-bottom: 0;
                 }
-                .item__image-container { display: none; }
-                .item__standfirst { display: none; }
+                .item__image-container,
+                .item__standfirst {
+                    display: none;
+                }
                 @include when-no-image {
                     .item__standfirst {
                         display: none;
@@ -440,7 +494,7 @@ $metaHeight: 20px;
             &:nth-child(n+10) {
                 clear: none;
 
-                &:before { top: .6rem; }
+                &:before { @include rem((top: 6px)); }
             }
             &:nth-child(4n+10) {
                 clear: both;
