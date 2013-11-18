@@ -551,7 +551,7 @@ module.exports = function (grunt) {
                 files: ['common/app/{assets, public}/javascripts/**/*.js'],
                 tasks: ['compile:js'],
                 options: {
-                    spawn: true
+                    spawn: false
                 }
             },
             css: {
