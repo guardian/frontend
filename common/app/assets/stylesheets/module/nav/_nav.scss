@@ -233,8 +233,9 @@
     @include mq(tablet) { display: none; }
 
     .localnav__cta {
+        overflow: hidden;
         width: $gs-column-width;
-        height: $gs-column-height - $baseline*1.5;
+        height: 25px;
         padding: 0;
         margin: $baseline*1.5 0;
         position: absolute;
