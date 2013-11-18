@@ -1,11 +1,11 @@
 /*global guardian */
 define([
     'common',
-    'ajax',
+    'utils/ajax',
     'qwery',
     'bonzo',
-    'modules/detect',
-    'modules/storage',
+    'utils/detect',
+    'utils/storage',
     'lodash/collections/find',
     'modules/commercial/commercial-components'
 ], function (

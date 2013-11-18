@@ -1,4 +1,10 @@
-define(['bonzo', 'qwery'], function(bonzo, qwery) {
+define([
+    'bonzo',
+    'qwery'
+], function(
+    bonzo,
+    qwery
+) {
 
 function $(selector, context) {
     return bonzo(qwery(selector, context));

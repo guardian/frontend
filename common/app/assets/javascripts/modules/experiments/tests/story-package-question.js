@@ -2,10 +2,10 @@
 define([
     'qwery',
     'bonzo',
-    'ajax',
+    'utils/ajax',
     'common',
     'utils/to-array',
-    'modules/detect',
+    'utils/detect',
     'modules/onward/history'
 ], function (
     qwery,

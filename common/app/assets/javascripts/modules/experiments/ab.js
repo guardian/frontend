@@ -1,6 +1,6 @@
 define([
     'common',
-    'modules/storage',
+    'utils/storage',
 
     //Current tests
     'modules/experiments/tests/aa',

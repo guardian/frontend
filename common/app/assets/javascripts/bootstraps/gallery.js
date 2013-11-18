@@ -1,14 +1,14 @@
 define([
-    "common"
+    "utils/mediator",
 ], function(
-    common
+    mediator
 ) {
 
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
         }
-        common.mediator.emit("page:gallery:ready", config, context);
+        mediator.emit("page:gallery:ready", config, context);
     };
 
     return {

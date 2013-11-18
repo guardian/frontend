@@ -3,15 +3,14 @@ define([
     'bonzo',
     'qwery',
     'bean',
-    'ajax',
+    'utils/ajax',
     'modules/analytics/discussion',
     'modules/discussion/comment-box',
     'modules/discussion/recommend-comments',
     'modules/userPrefs',
     'modules/analytics/clickstream',
-    'modules/inview',
-    'modules/detect',
-    'modules/id'
+    'utils/detect',
+    'modules/identity/api'
 ], function (
     common,
     bonzo,
@@ -23,7 +22,6 @@ define([
     RecommendComments,
     userPrefs,
     ClickStream,
-    Inview,
     Detect,
     Id
     ) {

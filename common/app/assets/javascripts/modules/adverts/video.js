@@ -1,11 +1,15 @@
 define([
-    "common",
+    "$",
+    "utils/mediator",
+    "utils/to-array",
     "bean",
-    "ajax"
+    "utils/ajax"
 ], function(
-   common,
-   bean,
-   ajax
+    $,
+    mediator,
+    toArray,
+    bean,
+    ajax
 ) {
 
     function Video(config) {
@@ -47,7 +51,7 @@ define([
 
         bean.on(this.video, "ended error", function() {
             //Init omniture tracking
-            common.mediator.emit("video:ads:finished", self.config, self.context);
+            mediator.emit("video:ads:finished", self.config, self.context);
 
             bean.off(self.video, "ended error");
             bean.off(self.video, "click.ct touchstart.ct");
@@ -56,7 +60,7 @@ define([
             self.video.src = source;
             self.video.play();
 
-            common.$g(self.video).removeClass("has-cursor");
+            $(self.video).removeClass("has-cursor");
 
             if(self.events.complete && !self.events.complete.hasFired) {
                 self.logEvent(self.events.complete);
@@ -98,7 +102,7 @@ define([
         if(this.events.oasImpression) { this.logEvent(this.events.oasImpression); }
         if(this.events.start) { this.logEvent(this.events.start); }
         if(this.events.clickThrough) {
-            common.$g(this.video).addClass("has-cursor");
+            $(this.video).addClass("has-cursor");
             bean.one(self.video, "click.ct touchstart.ct", function(){
                 if(self.events.oasClickThrough) { self.logEvent(self.events.oasClickThrough); }
                 window.open(self.events.clickThrough.url);
@@ -149,11 +153,11 @@ define([
 
             impressionList = (xml.querySelector("Impression URL")) ? xml.querySelectorAll("Impression URL") : xml.querySelectorAll("Impression");
 
-            this.vastData.impressionEvents = common.toArray(impressionList).map(function(el) {
+            this.vastData.impressionEvents = toArray(impressionList).map(function(el) {
                 return self.getNodeContent(el);
             });
 
-            common.toArray(xml.querySelectorAll("Tracking")).forEach(function(el) {
+            toArray(xml.querySelectorAll("Tracking")).forEach(function(el) {
                 self.vastData.trackingEvents[el.getAttribute("event")] = self.trimText(el.textContent);
             });
         }
@@ -218,7 +222,7 @@ define([
                 }
             });
         } else {
-            common.mediator.emit("video:ads:finished", self.config, self.context);
+            mediator.emit("video:ads:finished", self.config, self.context);
         }
     };
 
