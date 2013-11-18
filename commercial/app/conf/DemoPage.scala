@@ -16,6 +16,7 @@ class DemoPage(val applicationName: String) extends HtmlManagementPage {
         <link rel="stylesheet" type="text/css" href="http://aws-frontend-static.s3.amazonaws.com/CODE/frontend-static/stylesheets/head.default.610e3a410982a293a4573a1018691888.css"/>
         <link rel="stylesheet" type="text/css" href="http://aws-frontend-static.s3.amazonaws.com/CODE/frontend-static/stylesheets/global.a4a4e7fe5b05d4ea80d69dfdc2efa73b.css"/>
         <link href='//fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'/>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
         <style>
           <![CDATA[
@@ -49,107 +50,97 @@ class DemoPage(val applicationName: String) extends HtmlManagementPage {
         </style>
 
 
+
         <script>
           <![CDATA[
-    var curl = {
-    baseUrl: '/assets/javascripts',
-  paths: {
-    Reqwest: 'components/reqwest/reqwest',
-    bean: 'components/bean/bean',
-    bonzo: 'components/bonzo/bonzo'
-  }
-  }
-  ]]>
-        </script>
-        <script src="/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js" type="text/javascript"></script>
-        <script>
-          <![CDATA[
-      curl(['bonzo', 'bean', 'Reqwest'], function(bonzo, bean, reqwest) {
-      var guCommercial = {
+      jQuery(function() {
+          var guCommercial = {
 
-        className: 'commercial',
+            className: 'commercial',
 
-        breakpoints: [300, 400, 500, 600],
+            breakpoints: [300, 400, 500, 600],
 
-        components: function() {
+            components: function() {
 
-          // TODO: fix these hardcoded URLs
-          return {
-            masterclasses: 'http://api.nextgen.guardianapps.co.uk/commercial/masterclasses.json',
-            travel:        'http://api.nextgen.guardianapps.co.uk/commercial/travel/offers.json?k='+document.querySelector('.travel-keywords').value+'&amp;seg=repeat',
-            jobs:          'http://api.nextgen.guardianapps.co.uk/commercial/jobs.json?s='+document.querySelector('.jobs-keywords').value,
-            soulmates:     'http://api.nextgen.guardianapps.co.uk/commercial/soulmates/mixed.json'
-          }
-        },
-
-        applyBreakpointClassnames: function() {
-          var self = this,
-          $nodes = bonzo(document.getElementsByClassName(this.className));
-
-          $nodes.each(function(el) {
-            var width = el.offsetWidth;
-            el.className = el.className.replace(/(commercial--w\d{1,3})\s?/g, '');
-            self.breakpoints.forEach(function(breakpointWidth) {
-              if (width >= breakpointWidth) {
-                bonzo(el).addClass(self.className+'--w' + breakpointWidth);
+              // TODO: fix these hardcoded URLs
+              return {
+                masterclasses: 'http://api.nextgen.guardianapps.co.uk/commercial/masterclasses.json',
+                travel:        'http://api.nextgen.guardianapps.co.uk/commercial/travel/offers.json?k='+document.querySelector('.travel-keywords').value+'&amp;seg=repeat',
+                jobs:          'http://api.nextgen.guardianapps.co.uk/commercial/jobs.json?s='+document.querySelector('.jobs-keywords').value,
+                soulmates:     'http://api.nextgen.guardianapps.co.uk/commercial/soulmates/mixed.json'
               }
-            });
+            },
 
-            el.setAttribute('data-width', width);
-          });
-        },
+            applyBreakpointClassnames: function() {
+              var self = this,
+              $nodes = $(this.className);
 
-        debounce: function(fn, delay) {
-          var timer = null;
-          return function () {
-            var context = this, args = arguments;
-            clearTimeout(timer);
-            timer = setTimeout(function () {
-              fn.apply(context, args);
-            }, delay);
-          };
-        },
+              $nodes.each(function(el) {
+                var width = el.offsetWidth;
+                el.className = el.className.replace(/(commercial--w\d{1,3})\s?/g, '');
+                self.breakpoints.forEach(function(breakpointWidth) {
+                  if (width >= breakpointWidth) {
+                    bonzo(el).addClass(self.className+'--w' + breakpointWidth);
+                  }
+                });
 
-        load: function(endpoint, targetSelector) {
-          var self = this;
-          reqwest({
-            url:  endpoint,
-            type: 'jsonp',
-            success: function(response) {
-              bonzo(document.querySelectorAll(targetSelector)).html(response.html);
-              self.applyBreakpointClassnames();
+                el.setAttribute('data-width', width);
+              });
+            },
+
+            debounce: function(fn, delay) {
+              var timer = null;
+              return function () {
+                var context = this, args = arguments;
+                clearTimeout(timer);
+                timer = setTimeout(function () {
+                  fn.apply(context, args);
+                }, delay);
+              };
+            },
+
+            load: function(endpoint, targetSelector) {
+              var self = this;
+              $.ajax({
+                url:  endpoint,
+                dataType: 'jsonp',
+                success: function(response) {
+                  console.log(response);
+                  $(targetSelector).html(response.html);
+                  //bonzo(document.querySelectorAll(targetSelector)).html(response.html);
+                  self.applyBreakpointClassnames();
+                }
+              });
+            },
+
+            loadComponents: function() {
+              var self = this,
+              components = this.components();
+
+              Object.keys(components).forEach(function(key) {
+                var componentType = key,
+                endpoint      = components[key];
+
+                self.load(endpoint, '.'+componentType);
+              });
+            },
+
+            init: function() {
+              var self = this;
+
+              $(window).on('resize', this.debounce(function() {
+                self.applyBreakpointClassnames();
+              }, 100));
+
+              $(document).on('change', 'input', function(e) {
+                self.loadComponents();
+              });
+
+              this.loadComponents();
             }
-          });
-        },
+          };
 
-        loadComponents: function() {
-          var self = this,
-          components = this.components();
-
-          Object.keys(components).forEach(function(key) {
-            var componentType = key,
-            endpoint      = components[key];
-
-            self.load(endpoint, '.'+componentType);
-          });
-        },
-
-        init: function() {
-          var self = this;
-
-          bean.on(window, 'resize', this.debounce(function() {
-            self.applyBreakpointClassnames();
-          }, 100));
-
-          bean.on(document, 'change', 'input', function(e) {
-            self.loadComponents();
-          });
-
-          this.loadComponents();
-        }
-      };
-
-      guCommercial.init();
+          guCommercial.init();
       })
       ]]>
         </script>
