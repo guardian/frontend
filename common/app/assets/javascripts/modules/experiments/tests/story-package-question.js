@@ -201,15 +201,12 @@ define([
                 test: function() {
                     common.mediator.on('modules:related:loaded', function() {
 
-                        var promotedQuestion = false;
-                        getTrails().forEach(function(trail) {
+                        if(getTrails().filter(function(trail) {
                             if(isQuestion(trail)) {
                                 prepend(trail);
-                                promotedQuestion = true;
-                            }
-                        });
-
-                        if (promotedQuestion) {
+                                return true;
+                            } else { return false; }
+                        }).length) {
                             upgradeTrail(getTrailUrl(getTrails()[0]));
                             dates.init(document);
                             return;
