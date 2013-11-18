@@ -171,7 +171,7 @@ define([
                 test: function() {
                     common.mediator.on('modules:related:loaded', function() {
                         ajax({
-                            url: mostPopularUrl + guardian.config.page.pageId + '.json',
+                            url: guardian.config.page.ajaxUrl + mostPopularUrl + guardian.config.page.pageId + '.json',
                             type: 'json',
                             crossOrigin: true
                         }).then(
@@ -217,7 +217,7 @@ define([
                         }
 
                         ajax({
-                            url: mostPopularUrl + guardian.config.page.pageId + '.json',
+                            url: guardian.config.page.ajaxUrl + mostPopularUrl + guardian.config.page.pageId + '.json',
                             type: 'json',
                             crossOrigin: true
                         }).then(
