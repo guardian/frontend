@@ -39,7 +39,7 @@ class Content protected (val delegate: ApiContent) extends Trail with Tags with 
   // Inherited from Trail
   override lazy val webPublicationDate: DateTime = delegate.webPublicationDate
   override lazy val linkText: String = webTitle
-  override lazy val headline: String = fields("headline")
+  override def headline: String = fields("headline")
   override lazy val url: String = SupportedUrl(delegate)
   override lazy val trailText: Option[String] = fields.get("trailText")
   override lazy val section: String = delegate.sectionId.getOrElse("")
@@ -135,9 +135,9 @@ object Content {
     }
   }
 
-  def apply(delegate: ApiContent, headline: Option[String]): Content = {
-    headline match {
-      case Some(title) => new ContentWithHeadline(delegate, title)
+  def apply(delegate: ApiContent, metaData: Option[Map[String, String]]): Content = {
+    metaData match {
+      case Some(metaData) => new ContentWithMetaData(delegate, metaData)
       case _ => apply(delegate)
     }
   }
@@ -266,6 +266,7 @@ class ImageContent(content: ApiContent) extends Content(content) {
   ) ++ mainPicture.flatMap(_.largestImage.map( "twitter:image:src" -> _.path ))
 }
 
-class ContentWithHeadline(content: ApiContent, title: String) extends Content(content) {
-  override lazy val headline: String = title
+class ContentWithMetaData(content: ApiContent, metaData: Map[String, String]) extends Content(content) {
+  override lazy val headline: String = metaData.get("headline").getOrElse(super.headline)
+  override lazy val group: Option[String] = metaData.get("group")
 }
