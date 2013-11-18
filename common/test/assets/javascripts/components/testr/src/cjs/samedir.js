@@ -1,0 +1,3 @@
+define({
+	cjs: true
+});

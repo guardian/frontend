@@ -1,28 +1,54 @@
 # Jasmine matchers for Sinon.JS
 
+[![Build Status](https://travis-ci.org/froots/jasmine-sinon.png?branch=master)](https://travis-ci.org/froots/jasmine-sinon)
+
 _jasmine-sinon_ provides a set of custom matchers for using the [Sinon.JS](http://sinonjs.org/) spying, stubbing and mocking library with [Jasmine BDD](http://pivotal.github.com/jasmine/).
 
 Instead of:
 
     expect(mySinonSpy.calledWith('foo')).toBeTruthy();
-    
+
 you can say:
 
     expect(mySinonSpy).toHaveBeenCalledWith('foo');
-    
+
 This is not only nicerer to look at in your purdy specs, but you get more descriptive failure output in your Jasmine spec runner.
 
 Instead of:
 
     Expected false to be truthy.
-    
+
 you get:
 
     Expected Function to have been called.
 
 ## Installation
 
-Just include <code>jasmine-sinon.js</code> in your Jasmine test runner file, or add it to <code>jasmine.yml</code> if you are using [jasmine-gem](https://github.com/pivotal/jasmine-gem). Don't forget to include [sinon.js](https://github.com/cjohansen/Sinon.JS).
+### Direct include
+
+Just include <code>lib/jasmine-sinon.js</code> in your Jasmine test runner file.
+Don't forget to include [sinon.js](https://github.com/cjohansen/Sinon.JS).
+
+### With [jasmine-gem](https://github.com/pivotal/jasmine-gem)
+
+Add it to <code>jasmine.yml</code>. Don't forget to include [sinon.js](https://github.com/cjohansen/Sinon.JS).
+
+### Node.js / NPM
+
+`npm install jasmine-sinon --save-dev`
+
+Then, in your jasmine spec:
+
+```javascript
+var sinon = require('sinon');
+require('jasmine-sinon');
+```
+
+### Using Bower
+
+`bower install jasmine-sinon --save-dev`
+
+Then, include `components/jasmine-sinon/index.js` in your test runner.
 
 ## Sinon.JS matchers
 
@@ -82,6 +108,14 @@ In general, you should be able to translate a Sinon spy/stub/mock API method to 
         <td>toHaveBeenAlwaysCalledWithExactly()</td>
     </tr>
     <tr>
+        <td>calledWithMatch()</td>
+        <td>toHaveBeenCalledWithMatch()</td>
+    </tr>
+    <tr>
+        <td>alwaysCalledWithMatch()</td>
+        <td>toHaveBeenAlwaysCalledWithMatch()</td>
+    </tr>
+    <tr>
         <td>returned()</td>
         <td>toHaveReturned()</td>
     </tr>
@@ -89,18 +123,24 @@ In general, you should be able to translate a Sinon spy/stub/mock API method to 
         <td>alwaysReturned()</td>
         <td>toHaveAlwaysReturned()</td>
     </tr>
+    <tr>
+        <td>threw()</td>
+        <td>toHaveThrown()</td>
+    </tr>
+    <tr>
+        <td>alwaysThrew()</td>
+        <td>toHaveAlwaysThrown()</td>
+    </tr>
 </table>
 
 These matchers will work on spies, individual spy calls, stubs and mocks.
 
-As yet there are no matchers for Sinon's exception spying. You will have to match these using the standard Sinon API.
+You can also use Jasmine spies alongside your Sinon spies. _jasmine-sinon_ will detect which you're using and use the appropriate matcher.
 
-## Warning
+## Contributors
 
-_jasmine-sinon_ currently overwrites any Jasmine matchers of the same name used for its own spying features. I plan to allow these to be optionally retained in the future.
+Thanks to:
 
-The native Jasmine matchers that are overwritten are:
-
-* toHaveBeenCalled()
-* toHaveBeenCalledWith()
-
+* @aelesbao for Exception matchers
+* @theinterned for, er, match matchers
+* @milichev for graceful spy matchers

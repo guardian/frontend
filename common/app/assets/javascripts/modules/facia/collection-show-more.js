@@ -6,34 +6,38 @@ define([
     'qwery',
     'utils/detect',
     'modules/ui/relativedates',
-    'modules/facia/images',
+    'modules/imager',
     'modules/discussion/comment-count'
-], function ($, mediator, bonzo, bean, qwery, detect, relativeDates, faciaImages, commentCount) {
+], function ($, mediator, bonzo, bean, qwery, detect, relativeDates, imager, commentCount) {
 
     var buttonText = 'Show more',
         getInitialShowSize = function (collectionType) {
             var breakpointOptions = {
                 wide: {
                     default: 4,
-                    news: 5,
+                    news: 9,
+                    sport: 5,
                     comment: 5,
                     features: 3
                 },
                 desktop: {
                     default: 4,
-                    news: 5,
+                    news: 8,
+                    sport: 5,
                     comment: 5,
                     features: 3
                 },
                 tablet: {
                     default: 3,
-                    news: 6,
+                    news: 7,
+                    sport: 6,
                     comment: 4,
                     features: 4
                 },
                 mobile: {
                     default: 2,
                     news: 5,
+                    sport: 5,
                     comment: 3,
                     features: 3,
                     popular: 5
@@ -59,7 +63,7 @@ define([
                                    .append(items)[0];
             relativeDates.init(wrappedItems);
             commentCount.init(wrappedItems);
-            faciaImages.upgrade(wrappedItems);
+            imager.upgrade(wrappedItems);
             $collection.append(items);
         };
 

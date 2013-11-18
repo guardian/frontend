@@ -55,7 +55,7 @@ define([
                     // wrap the return sports stats component in an 'item'
                     var prependTo = bonzo(bonzo.create('<li class="item item--sport-stats item--sport-stats-tall"></li>'));
                     mediator.on('modules:footballfixtures:render', function() {
-                        var $container = $('.container--news[data-id$="/sport/regular-stories"]', context),
+                        var $container = $('.container--sport', context).first(),
                             $collection = $('.collection', $container[0]);
                         $('.item:first-child', $collection[0])
                             // add empty item
