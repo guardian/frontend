@@ -6,7 +6,8 @@
  * Discussion feature tests 
  *
  **/
-casper.start(host + 'help/insideguardian/2012/feb/29/threaded-comments?view=mobile');
+casper.start(host + '/science/grrlscientist/2012/aug/07/3?view=mobile');
+
 
 /**
  *   Scenario: Read top level comments
@@ -34,12 +35,12 @@ casper.test.begin('Read top level comments', function(test) {
     test.done();
 });
 
-/**
+/*
  *   Scenario: Read top level comments
  *     Given I am on an article with comments
  *     When I show more comments
  *     Then I can see 20 top level comments
- **/
+ */
 casper.test.begin('Show more comments', function(test) {
     casper.waitFor(
         function check() {
@@ -61,6 +62,5 @@ casper.test.begin('Show more comments', function(test) {
 });
 
 casper.run(function() {
-    this.test.renderResults(true, 0, this.cli.get('xunit') + 'discussion.xml');
+    this.test.renderResults(true, 0, this.cli.get('xunit'));
 });
-
