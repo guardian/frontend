@@ -36,7 +36,6 @@ tags
 
 local.sbt
 
-node_modules
 screenshots
 
 common/conf/assets
