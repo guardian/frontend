@@ -5,6 +5,8 @@ define([
     'qwery',
     'bonzo',
     'modules/detect',
+    'modules/storage',
+    'lodash/collections/find',
     'modules/commercial/commercial-components'
 ], function (
     common,
@@ -12,6 +14,8 @@ define([
     qwery,
     bonzo,
     detect,
+    storage,
+    find,
     CommercialComponents) {
 
     var CommercialComponentsTest = function () {
@@ -19,12 +23,17 @@ define([
         var _config;
 
         this.id = 'CommercialComponents';
-        this.expiry = '2013-11-30';
-        this.audience = 0; // Disabled for the initial trials
+        this.expiry = '2013-12-04';
+        this.audience = 0.1;
         this.description = 'Test new commercial components';
         this.canRun = function(config) {
             _config = config;
-            return config.page.contentType === 'Article';
+
+            var isTravelRepeatVisitor = find(storage.local.get('gu.history'), function(item) {
+                return item.section === 'travel';
+            });
+
+            return config.page.contentType === 'Article' && isTravelRepeatVisitor;
         };
         this.variants = [
             {
@@ -40,6 +49,8 @@ define([
                         userSegments: c.userSegments,
                         context: context
                     });
+
+                    common.$g('.ad-slot--mpu-banner-ad', context).hide();
 
                     return true;
                 }
@@ -57,23 +68,22 @@ define([
 
     function loadComponents(opts) {
 
-        var slotTargets = {
-            ".article__main-column": "/commercial/travel/offers?" + opts.keywordsParams + "&" + opts.userSegments,
-            ".js-mpu-ad-slot":       "/commercial/masterclasses?" + opts.keywordsParams
+        var containerMapping = {
+            ".js-mpu-ad-slot" : "/commercial/travel/offers.json?seg=repeat&" + opts.keywordsParams
         };
 
-        Object.keys(slotTargets).forEach(function(selector) {
+        Object.keys(containerMapping).forEach(function(selector) {
             var $slot   = common.$g(selector, opts.context),
-                urlPath = slotTargets[selector];
+                urlPath = containerMapping[selector];
 
             if ($slot) {
                 ajax({
                     url: urlPath,
-                    type: 'html',
+                    type: 'json',
                     method: 'get',
                     crossOrigin: true,
                     success: function(response) {
-                        $slot.append(response);
+                        $slot.append(response.html);
                         common.mediator.emit('modules:commercial:loaded');
                     }
                 });
