@@ -1,0 +1,39 @@
+{
+  "name": "jasmine-sinon",
+  "version": "0.2.1",
+  "description": "Jasmine BDD matchers for Sinon.JS",
+  "main": "lib/jasmine-sinon.js",
+  "scripts": {
+    "test": "grunt travis"
+  },
+  "homepage": "http://github.com/froots/jasmine-sinon",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/froots/jasmine-sinon.git"
+  },
+  "bugs": {
+    "url": "http://github.com/froots/jasmine-sinon/issues"
+  },
+  "keywords": [
+    "jasmine",
+    "sinon"
+  ],
+  "author": "Jim Newbery <james@tinnedfruit.com> (http://tinnedfruit.com)",
+  "license": {
+    "type": "BSD",
+    "url": "http://github.com/froots/jasmine-sinon/blob/master/LICENSE"
+  },
+  "readmeFilename": "README.md",
+  "engines": {
+    "node": ">=0.1.103"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.7.1",
+    "grunt-karma": "~0.6.2",
+    "grunt-jasmine-node": "~0.1.0"
+  },
+  "dependencies": {
+    "sinon": "~1.7.3"
+  }
+}

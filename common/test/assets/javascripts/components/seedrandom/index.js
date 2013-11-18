@@ -1,6 +1,6 @@
-// seedrandom.js version 2.1.
+// seedrandom.js version 2.2.
 // Author: David Bau
-// Date: 2013 Mar 16
+// Date: 2013 Jun 15
 //
 // Defines a method Math.seedrandom() that, when called, substitutes
 // an explicitly seeded RC4-based algorithm for Math.random().  Also
@@ -61,6 +61,7 @@
 // The random number sequence is the same as version 1.0 for string seeds.
 // Version 2.0 changed the sequence for non-string seeds.
 // Version 2.1 speeds seeding and uses window.crypto to autoseed if present.
+// Version 2.2 alters non-crypto autoseeding to sweep up entropy from plugins.
 //
 // The standard ARC4 key scheduler cycles short keys, which means that
 // seedrandom('ab') is equivalent to seedrandom('abab') and 'ababab'.
@@ -88,12 +89,11 @@
 // seedrandom('explicit.')       - avg less than 0.2 milliseconds per call
 // seedrandom('explicit.', true) - avg less than 0.2 milliseconds per call
 // seedrandom() with crypto      - avg less than 0.2 milliseconds per call
-// seedrandom() without crypto   - avg about 12 milliseconds per call
 //
-// On a 2012 windows 7 1.5ghz i5 laptop, Chrome, Firefox 19, IE 10, and
-// Opera have similarly fast timings.  Slowest numbers are on Opera, with
-// about 0.0005 milliseconds per seeded Math.random() and 15 milliseconds
-// for autoseeding.
+// Autoseeding without crypto is somewhat slower, about 20-30 milliseconds on
+// a 2012 windows 7 1.5ghz i5 laptop, as seen on Firefox 19, IE 10, and Opera.
+// Seeded rng calls themselves are fast across these browsers, with slowest
+// numbers on Opera at about 0.0005 ms per seeded Math.random().
 //
 // LICENSE (BSD):
 //
@@ -234,9 +234,7 @@ function flatten(obj, depth) {
   var result = [], typ = (typeof obj)[0], prop;
   if (depth && typ == 'o') {
     for (prop in obj) {
-      if (obj.hasOwnProperty(prop)) {
-        try { result.push(flatten(obj[prop], depth - 1)); } catch (e) {}
-      }
+      try { result.push(flatten(obj[prop], depth - 1)); } catch (e) {}
     }
   }
   return (result.length ? result : typ == 's' ? obj : obj + '\0');
@@ -266,8 +264,8 @@ function autoseed(seed) {
     global.crypto.getRandomValues(seed = new Uint8Array(width));
     return tostring(seed);
   } catch (e) {
-    return [+new Date, global.document, global.history,
-            global.navigator, global.screen, tostring(pool)];
+    return [+new Date, global, global.navigator.plugins,
+            global.screen, tostring(pool)];
   }
 }
 
