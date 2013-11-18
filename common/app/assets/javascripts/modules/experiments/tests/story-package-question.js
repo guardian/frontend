@@ -212,7 +212,6 @@ define([
                         if (promotedQuestion) {
                             upgradeTrail(getTrailUrl(getTrails()[0]));
                             dates.init(document);
-                        } else {
                             return;
                         }
 

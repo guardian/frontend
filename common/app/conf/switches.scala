@@ -218,7 +218,7 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to test the new commercial components",
     safeState = Off)
 
-  val ABStoryPackageQuestion = Switch("A/B Tests", "ab-story-package-question",
+  val ABImproveOnwardTrails = Switch("A/B Tests", "ab-improve-onward-trails",
     "If this is switched on an AB test runs to test re-ordering story packages",
     safeState = Off)
 
@@ -304,7 +304,7 @@ object Switches extends Collections {
     ABAlphaAdverts,
     ABCommercialComponents,
     EditionRedirectLoggingSwitch,
-    ABStoryPackageQuestion,
+    ABImproveOnwardTrails,
     ABInitialShowMore
   )
 

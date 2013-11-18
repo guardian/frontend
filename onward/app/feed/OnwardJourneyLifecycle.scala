@@ -24,6 +24,10 @@ trait OnwardJourneyLifecycle extends GlobalSettings {
 
   override def onStop(app: PlayApp) {
     Jobs.deschedule("OnwardJourneyAgentRefreshJob")
+
+    OnwardJourneyAgent.stop()
+    LatestContentAgent.stop()
+
     super.onStop(app)
   }
 }
