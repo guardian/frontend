@@ -52,11 +52,7 @@ object CloudWatch {
 
   private val jsErrorMetrics = List(
     ("JavaScript errors caused by adverts", "ads"),
-    ("JavaScript errors from iOS", "js.ios"),
-    ("JavaScript errors from Android", "js.android"),
-    ("JavaScript errors from Windows", "js.windows"),
-    ("JavaScript errors from OSX", "js.osx"),
-    ("JavaScript errors from unknown devices", "js.unknown")
+    ("JavaScript errors from iOS", "js.ios")
   )
 
   def shortStackLatency = latency(primaryLoadBalancers)
@@ -117,22 +113,23 @@ object CloudWatch {
     }.toSeq
   }
   
-  def jsErrors = jsErrorMetrics.map{ case (graphTitle, metric) =>
-    new LineChart( graphTitle, Seq("Time", metric),
-      cloudClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
-        .withStartTime(new DateTime().minusHours(6).toDate)
-        .withEndTime(new DateTime().toDate)
-        .withPeriod(60)
-        .withStatistics("Average")
-        .withNamespace("Fastly")
-        .withMetricName(metric)
-        .withDimensions(stage),
-        asyncHandler)
-    )
-  }.toSeq
+  def jsErrors = { 
+    val metrics = jsErrorMetrics.map{ case (graphTitle, metric) =>
+        cloudClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
+          .withStartTime(new DateTime().minusHours(6).toDate)
+          .withEndTime(new DateTime().toDate)
+          .withPeriod(120)
+          .withStatistics("Average")
+          .withNamespace("Diagnostics")
+          .withMetricName(metric)
+          .withDimensions(stage),
+          asyncHandler)
+        }
+    new LineChart("JavaScript Errors", Seq("Time") ++ jsErrorMetrics.map{ case(title, name) => name}.toSeq, metrics:_*)
+  }
 
   def fastlyErrors = fastlyMetrics.map{ case (graphTitle, metric, region, service) =>
-    new LineChart( graphTitle, Seq("Time", metric),
+    new LineChart(graphTitle, Seq("Time", metric),
       cloudClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
         .withStartTime(new DateTime().minusHours(6).toDate)
         .withEndTime(new DateTime().toDate)
