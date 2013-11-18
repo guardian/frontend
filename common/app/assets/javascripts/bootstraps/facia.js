@@ -3,6 +3,7 @@ define([
     '$',
     'utils/mediator',
     'bonzo',
+    'qwery',
     // Modules
     'utils/detect',
     'modules/facia/popular',
@@ -14,6 +15,7 @@ define([
     $,
     mediator,
     bonzo,
+    qwery,
     detect,
     popular,
     CollectionShowMore,
@@ -63,9 +65,10 @@ define([
                         // remove the last two items
                         var hiddenCollection = hiddenCollections[$container.attr('data-id')];
                         if (hiddenCollection) {
-                            var $items = $('.item:nth-last-child(-n+2)', $collection[0])
-                                            .remove();
-                            hiddenCollection.addExtraItems($items);
+                            var items = qwery('.item', $collection[0])
+                                            .slice(-2);
+                            hiddenCollection.prependExtraItems(items);
+                            bonzo(items).remove();
                         }
                     });
                     new FootballFixtures({

@@ -115,6 +115,15 @@ define(['modules/facia/collection-show-more', 'bonzo', '$', 'utils/mediator', 'b
             emitSpy.restore();
         });
 
+        it('should be able to prepend items to the show more stack', function() {
+            $style.html('body:after { content: "mobile"; }');
+            collectionShowMore.addShowMore();
+            var extraItem = bonzo.create('<li class="item">item</li>')[0];
+            collectionShowMore.prependExtraItems([extraItem]);
+            bean.fire($('button', container)[0], 'click');
+            expect($('.item:nth-child(3)', collection)[0]).toBe(extraItem);
+        });
+
     });
 
 });
