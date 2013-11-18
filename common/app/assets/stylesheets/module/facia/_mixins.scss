@@ -42,27 +42,6 @@ $item-top-border-height: 2px;
         margin-top: $gs-baseline*(2/3);
     }
 }
-@mixin card-headline {
-    float: left;
-    width: 100%;
-    margin-top: $gs-baseline*(5/3);
-    padding-bottom: 0;
-
-    .item__title {
-        @include fs-headline(1, $size-only: true);
-    }
-    .item__byline {
-        @include fs-header(2, $size-only: true);
-    }
-    .item__title .i,
-    .item__meta {
-        display: none;
-    }
-    .item__live-indicator {
-        @include fs-data(1, true);
-        top: -3px;
-    }
-}
 @mixin card-half-width($with-image: false) {
     width: 50%;
     min-height: gs-height(3);

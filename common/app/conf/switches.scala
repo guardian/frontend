@@ -226,6 +226,10 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to test how many items to initially show in news container",
     safeState = Off)
 
+  val ABShowMoreLayout = Switch("A/B Tests", "ab-show-more-layout",
+    "If this is switched on an AB test runs that's repeats initial layout of a collection when clicking 'show more'",
+    safeState = Off)
+
   // Sport Switch
 
   val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
@@ -305,7 +309,8 @@ object Switches extends Collections {
     ABCommercialComponents,
     EditionRedirectLoggingSwitch,
     ABStoryPackageQuestion,
-    ABInitialShowMore
+    ABInitialShowMore,
+    ABShowMoreLayout
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

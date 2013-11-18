@@ -49,20 +49,18 @@ define([
                 mobile: 5
             }[detect.getBreakpoint()];
         },
-        showMore = function($collection, $extraItems, count, upgradeImages) {
-            var $items = $extraItems.splice(0, count);
-            if (!$items.length) {
+        showMore = function($collection, extraItems, count) {
+            var items = extraItems.splice(0, count);
+            if (!items.length) {
                 return;
             }
             // NOTE: wrapping in div so can be passed to commentCount, relativeDates, etc.
             var wrappedItems = bonzo(bonzo.create('<div></div>'))
-                                   .append($items)[0];
+                                   .append(items)[0];
             relativeDates.init(wrappedItems);
             commentCount.init(wrappedItems);
-            if (upgradeImages === true) {
-                faciaImages.upgrade(wrappedItems);
-            }
-            $collection.append($items);
+            faciaImages.upgrade(wrappedItems);
+            $collection.append(items);
         };
 
     return function(collection) {
@@ -79,7 +77,7 @@ define([
             '</button>'
         ));
 
-        this._$extraItems = bonzo.create(
+        this._extraItems = bonzo.create(
             $('.collection--template', collection).html()
         );
 
@@ -89,7 +87,7 @@ define([
             bean.on(this._$button[0], 'click', function() {
                 that.showMore();
             });
-            mediator.emitEvent('modules:collectionShowMore:renderButton', [this]);
+            mediator.emit('modules:collectionShowMore:renderButton', this);
         };
 
         this.addShowMore = function() {
@@ -102,14 +100,14 @@ define([
 
             // if we are showing more items than necessary, store them
             var excess = qwery('.item:nth-child(n+' + (initalShowSize + 1) + ')', this._collection);
-            this._$extraItems = excess.concat(this._$extraItems);
+            this._extraItems = excess.concat(this._extraItems);
             bonzo(excess).remove();
 
             // if we are showing less items than necessary, show more
-            showMore(this._$collection, this._$extraItems, initalShowSize - qwery('.item',this._collection).length, true);
+            showMore(this._$collection, this._extraItems, initalShowSize - qwery('.item',this._collection).length);
 
             // add toggle button, if they are extra items left to show
-            if (this._$extraItems.length) {
+            if (this._extraItems.length) {
                 this._renderButton();
             }
         };
@@ -123,9 +121,9 @@ define([
             this._$button.attr('data-link-name', newDataAttr);
 
             // show x more, depending on current breakpoint
-            showMore(this._$collection, this._$extraItems, getShowMoreSize());
+            showMore(this._$collection, this._extraItems, getShowMoreSize());
 
-            if (this._$extraItems.length === 0) {
+            if (this._extraItems.length === 0) {
                 var that = this;
                 // listen to the clickstream, as happens later, before removing
                 mediator.on('module:clickstream:click', function(clickSpec) {
@@ -136,8 +134,8 @@ define([
             }
         };
 
-        this.addExtraItems = function($items) {
-            this._$extraItems.concat($items);
+        this.prependExtraItems = function(items) {
+            this._extraItems = items.concat(this._extraItems);
         };
 
     };
