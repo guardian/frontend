@@ -15,25 +15,29 @@ define([
             var breakpointOptions = {
                 wide: {
                     default: 4,
-                    news: 5,
+                    news: 9,
+                    sport: 5,
                     comment: 5,
                     features: 3
                 },
                 desktop: {
                     default: 4,
-                    news: 5,
+                    news: 8,
+                    sport: 5,
                     comment: 5,
                     features: 3
                 },
                 tablet: {
                     default: 3,
-                    news: 6,
+                    news: 7,
+                    sport: 6,
                     comment: 4,
                     features: 4
                 },
                 mobile: {
                     default: 2,
                     news: 5,
+                    sport: 5,
                     comment: 3,
                     features: 3,
                     popular: 5

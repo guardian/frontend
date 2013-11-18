@@ -8,8 +8,6 @@ object FindStyle {
    * Mapping of collection 'type' to Style - in general, this should suffice
    */
   val generalStyles: Map[String, Container] = Map(
-    "epic-story" -> MastheadContainer(),
-    "major-story" -> MastheadContainer(),
     "regular-stories" -> SectionContainer(),
     "feature-stories" -> FeaturesContainer(headerLink = false),
     "special-story" -> NewsContainer()
@@ -21,12 +19,12 @@ object FindStyle {
   val specificStyles: Map[String, Map[String, Container]] = Map(
     ("au", Map(
       ("au/news/regular-stories", NewsContainer()),
-      ("au/sport/regular-stories", NewsContainer()),
+      ("au/sport/regular-stories", SportContainer()),
       ("au/commentisfree/regular-stories", CommentContainer()),
       ("au/culture/regular-stories", FeaturesContainer())
     )),
     ("au/business", Map(
-      ("au/business/regular-stories", NewsContainer(showMore = false))
+      ("au/business/regular-stories", SportContainer(showMore = false))
     )),
     ("au/commentisfree", Map(
       ("au/commentisfree/regular-stories", CommentContainer())
@@ -38,14 +36,14 @@ object FindStyle {
       ("au/books/regular-stories", SectionContainer(tone = "feature"))
     )),
     ("au/money", Map(
-      ("au/money/regular-stories", NewsContainer(showMore = false))
+      ("au/money/regular-stories", SportContainer(showMore = false))
     )),
     ("au/sport", Map(
-      ("au/sport/regular-stories", NewsContainer())
+      ("au/sport/regular-stories", SportContainer())
     )),
     ("uk", Map(
       ("uk/news/regular-stories", NewsContainer()),
-      ("uk/sport/regular-stories", NewsContainer()),
+      ("uk/sport/regular-stories", SportContainer()),
       ("uk/commentisfree/regular-stories", CommentContainer()),
       ("uk/culture/regular-stories", FeaturesContainer()),
       ("uk/lifeandstyle/regular-stories", SectionContainer(tone = "feature")),
@@ -53,7 +51,7 @@ object FindStyle {
       ("uk/contributors/feature-stories", CommentContainer())
     )),
     ("uk/business", Map(
-      ("uk/business/regular-stories", NewsContainer(showMore = false))
+      ("uk/business/regular-stories", SportContainer(showMore = false))
     )),
     ("uk/commentisfree", Map(
       ("uk/commentisfree/regular-stories", CommentContainer())
@@ -68,20 +66,20 @@ object FindStyle {
       ("uk/artanddesign/regular-stories", SectionContainer(tone = "feature"))
     )),
     ("uk/money", Map(
-      ("uk/money/regular-stories", NewsContainer(showMore = false))
+      ("uk/money/regular-stories", SportContainer(showMore = false))
     )),
     ("uk/sport", Map(
-      ("uk/sport/regular-stories", NewsContainer())
+      ("uk/sport/regular-stories", SportContainer())
     )),
     ("us", Map(
       ("us/news/regular-stories", NewsContainer()),
-      ("us/sport/regular-stories", NewsContainer()),
+      ("us/sport/regular-stories", SportContainer()),
       ("us/commentisfree/regular-stories", CommentContainer()),
       ("us/culture/regular-stories", FeaturesContainer()),
       ("us/contributors/feature-stories", CommentContainer())
     )),
     ("us/business", Map(
-      ("us/business/regular-stories", NewsContainer(showMore = false))
+      ("us/business/regular-stories", SportContainer(showMore = false))
     )),
     ("us/commentisfree", Map(
       ("us/commentisfree/regular-stories", CommentContainer())
@@ -96,10 +94,10 @@ object FindStyle {
       ("us/tv-and-radio/regular-stories", SectionContainer(tone = "feature"))
     )),
     ("us/money", Map(
-      ("us/money/regular-stories", NewsContainer(showMore = false))
+      ("us/money/regular-stories", SportContainer(showMore = false))
     )),
     ("us/sport", Map(
-      ("us/sport/regular-stories", NewsContainer())
+      ("us/sport/regular-stories", SportContainer())
     ))
   )
 

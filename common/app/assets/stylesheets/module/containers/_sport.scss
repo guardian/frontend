@@ -1,4 +1,4 @@
-.container--news {
+.container--sport {
     @include mq($to: tablet) {
         @include first-row(1);
         .item:first-child {

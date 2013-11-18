@@ -32,7 +32,6 @@ $item-top-border-height: 2px;
         }
     }
 }
-
 @mixin card-mobile($with-image: false) {
     .item__title {
         @include fs-headline(3, $size-only: true);
@@ -180,5 +179,16 @@ $item-top-border-height: 2px;
     }
     .connection--not-low & .item__image-container {
         margin-top: 0;
+    }
+}
+@mixin when-image($pseudo-selector: '') {
+    .connection--not-low &.item--has-image#{$pseudo-selector} {
+        @content;
+    }
+}
+@mixin when-no-image($pseudo-selector: '') {
+    .connection--low &.item--has-image#{$pseudo-selector},
+    &.item--has-no-image#{$pseudo-selector} {
+        @content;
     }
 }
