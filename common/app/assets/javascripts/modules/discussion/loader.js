@@ -90,16 +90,14 @@ Loader.prototype.ready = function() {
 
     this.on('user:loaded', function(user) {
 
-        self.user = user;
-
         // Top comments =========================================== //
 
-        this.topComments = new TopComments(this.context, this.mediator, {
-            discussionId: this.getDiscussionId(),
-            user: this.user
+        self.topComments = new TopComments(self.context, self.mediator, {
+            discussionId: self.getDiscussionId(),
+            user: self.user
         });
 
-        this.topComments
+        self.topComments
             .fetch(topCommentsElem)
             .then(function appendTopComments() {
                 bonzo(topLoadingElem).remove();
