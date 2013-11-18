@@ -72,14 +72,13 @@
     overflow: auto;
 
     .dateline {
-        float: left;
         position: relative;
         padding: 0 $gs-gutter/2 0 18px;
         min-width: gs-span(1) - 16;
 
         i {
             position: absolute;
-            top: -1px;
+            top: 4px;
             left: 0;
         }
     }

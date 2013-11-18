@@ -20,10 +20,13 @@ define([
 ) {
 
     var mostPopularUrl = '/onward/popular-onward/',
-        container = document.querySelector('.trailblock'),
         history = new History().get().map(function(item) {
             return item.id;
         });
+    
+    function getContainer() {
+        return  document.querySelector('.trailblock');
+    }
 
     function cleanUrl(url) {
         return '/' + url.split('/').slice(3).join('/');
@@ -34,7 +37,7 @@ define([
     }
 
     function getTrails() {
-        return toArray(qwery('.trail', container));
+        return toArray(qwery('.trail', getContainer()));
     }
 
     function isInHistory(trailId) {
@@ -53,14 +56,18 @@ define([
 
     function append(trail) {
         if(typeof trail === 'string') {
-            bonzo(qwery('ul:last-of-type', container)).html(trail);
+            bonzo(qwery('ul:last-of-type', document.querySelector('.trailblock'))).html(trail);
         } else {
-            bonzo(trail).detach().appendTo(bonzo(qwery('ul:last-of-type', container)));
+            bonzo(trail).detach().appendTo(bonzo(qwery('ul:last-of-type', getContainer())));
         }
     }
 
     function prepend(trail) {
-        bonzo(trail).detach().prependTo(bonzo(qwery('ul:first-of-type', container)));
+        if(typeof trail === 'string') {
+            bonzo(qwery('ul:first-of-type', getContainer())).prepend(trail);
+        } else {
+            bonzo(trail).detach().prependTo(bonzo(qwery('ul:first-of-type', getContainer())));
+        }
     }
 
     function labelAsQuestion(trail) {
@@ -88,17 +95,24 @@ define([
         if(detect.getLayoutMode() === 'mobile') {
             trailToHTML(url, 'trail').then(function(resp) {
                 if('html' in resp) {
-                    append(resp.html);
+                    prepend(resp.html);
                 }
                 cloneHeader();
             });
         } else {
             trailToHTML(url, 'card').then(function(resp) {
                 if('html' in resp) {
-                    bonzo(qwery('.card--right')).html(resp.html);
+                    bonzo(qwery('.u-table__cell--bottom')).prepend(resp.html);
                 }
             });
         }
+    }
+
+    function dedupe(id) {
+        var trails = getTrails().filter(function(trail){
+            return getTrailUrl(trail) === id;
+        });
+        bonzo((detect.getLayoutMode() === 'mobile' && trails.length > 1) ? trails[1] : trails).hide();
     }
 
     var Question = function () {
@@ -166,6 +180,7 @@ define([
                                     resp.popularOnward.some(function(trail) {
                                         if(!isInHistory(trail.url)) {
                                             upgradeTrail(trail.url);
+                                            dedupe(trail.url);
                                             dates.init(document);
                                             return true;
                                         } else {
@@ -178,7 +193,6 @@ define([
                                 common.mediator.emit('module:error', 'Failed to load most popular onward journey' + req, 'modules/experiments/tests/story-question.js');
                             }
                         );
-                        cloneHeader();
                     });
                 }
             },
