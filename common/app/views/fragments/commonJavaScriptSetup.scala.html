@@ -119,7 +119,7 @@
 
         @* we want this to happen ASAP to avoid FOUC *@
         document.documentElement.className = document.documentElement.className.replace(/\bjs-off\b/g, '') + ' js-on ';
-        var connectionClass = 'connection--' + (isConnectionLow() ? '' : '') + 'low';
+        var connectionClass = 'connection--' + (isConnectionLow() ? '' : 'not-') + 'low';
         document.documentElement.className += connectionClass;
 
         guardian.platformsGettingHintedFonts = /Windows/;
