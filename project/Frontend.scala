@@ -20,7 +20,7 @@ object Frontend extends Build with Prototypes {
       "org.codehaus.jackson" % "jackson-core-asl" % "1.9.6",
       "org.codehaus.jackson" % "jackson-mapper-asl" % "1.9.6",
 
-      "com.amazonaws" % "aws-java-sdk" % "1.4.7",
+      "com.amazonaws" % "aws-java-sdk" % "1.6.6",
 
       "org.quartz-scheduler" % "quartz" % "2.2.0",
 
