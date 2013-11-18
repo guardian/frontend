@@ -122,7 +122,6 @@ $metaHeight: 20px;
             @include when-no-image(':first-child') {
                 .item__title {
                     @include fs-headline(9, true);
-                    @include text-clamp(4, nth(nth($fs-headlines, 9), 2));
                 }
                 .item__standfirst {
                     @include fs-headline(3, true);
@@ -151,9 +150,6 @@ $metaHeight: 20px;
             @include when-image(':first-child') {
                 .item__image-container {
                     display: block;
-                }
-                .item__title {
-                    @include text-clamp(2, nth(nth($fs-headlines, 4), 2));
                 }
             }
             &:nth-child(n+2) {
@@ -235,9 +231,6 @@ $metaHeight: 20px;
                     width: gs-span(3),
                     height: gs-height(2)
                 ));
-                .item__title {
-                    @include text-clamp(3);
-                }
             }
             &:nth-child(3n+8) {
                 clear: both;
@@ -279,11 +272,6 @@ $metaHeight: 20px;
             @include when-image(':first-child') {
                 .item__image-container {
                     display: block;
-                }
-            }
-            @include when-no-image(':first-child') {
-                .item__title {
-                    @include text-clamp(5, nth(nth($fs-headlines, 9), 2));
                 }
             }
             &:nth-child(n+2) {
@@ -408,9 +396,6 @@ $metaHeight: 20px;
                 }
             }
             @include when-no-image(':first-child') {
-                .item__title {
-                    @include text-clamp(5, nth(nth($fs-headlines, 9), 2));
-                }
                 .item__standfirst {
                     display: block;
                     @include rem((
