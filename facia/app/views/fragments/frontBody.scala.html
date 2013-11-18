@@ -1,15 +1,8 @@
 @(front: FrontPage, faciaTrailblock: FaciaPage)(implicit request: RequestHeader)
 @import conf.Switches._
 @if(faciaTrailblock.collections.nonEmpty) {
-    <div class="facia-container
-                monocolumn-wrapper
-                monocolumn-wrapper--no-limit
-                @if(NewsContainerSwitch.isSwitchedOn) {
-                    news-container--v2
-                } else {
-                    news-container--v1
-                }
-                "
+    <div class="facia-container monocolumn-wrapper monocolumn-wrapper--no-limit
+                @if(NewsContainerSwitch.isSwitchedOn){ news-container--v2 } else { news-container--v1 } "
         data-link-name="Front" role="main">
 
         @defining {TemplateDeduping()} { dedupe: TemplateDeduping =>
