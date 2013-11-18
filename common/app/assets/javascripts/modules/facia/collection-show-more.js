@@ -4,10 +4,10 @@ define([
     'bonzo',
     'bean',
     'qwery',
-    'modules/detect',
-    'modules/relativedates',
+    'utils/detect',
+    'modules/ui/relativedates',
     'modules/imager',
-    'modules/discussion/commentCount'
+    'modules/discussion/comment-count'
 ], function ($, mediator, bonzo, bean, qwery, detect, relativeDates, imager, commentCount) {
 
     var buttonText = 'Show more',

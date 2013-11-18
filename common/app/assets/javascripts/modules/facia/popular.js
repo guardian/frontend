@@ -1,7 +1,7 @@
 define([
     '$',
     'utils/mediator',
-    'ajax',
+    'utils/ajax',
     'bonzo',
     'modules/ui/relativedates',
     'modules/facia/collection-show-more',
