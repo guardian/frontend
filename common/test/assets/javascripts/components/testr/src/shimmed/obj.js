@@ -1,0 +1,3 @@
+window.ShimmedObj = {
+    isShimmed: true
+}
