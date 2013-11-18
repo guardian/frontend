@@ -107,6 +107,7 @@
     top: $baseline*4;
 
     &.is-affixed {
+        width: 300px; // Needed as it doesn't respect the container width when fixed
         position: fixed;
     }
 }

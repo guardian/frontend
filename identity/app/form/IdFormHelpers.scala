@@ -1,11 +1,13 @@
 package form
 
 import views.html.helper.FieldConstructor
-import views.html.fragments.form.identityFieldConstructor
+import views.html.fragments.form.fieldConstructors.{frontendFieldConstructor, multiInputFieldConstructor}
 import play.api.data.Field
 
 object IdFormHelpers {
-  implicit val fields = FieldConstructor(identityFieldConstructor.f)
+  implicit val fields = FieldConstructor(frontendFieldConstructor.f)
+
+  val nonInputFields = FieldConstructor(multiInputFieldConstructor.f)
 
   def Password(field: Field, args: (Symbol, Any)*): Input = {
     val updatedArgs = updateArgs(args, 'autocomplete -> "off", 'autocapitalize -> "off", 'autocorrect -> "off")
@@ -26,6 +28,14 @@ object IdFormHelpers {
     new Input("text", field, args:_*)
   }
 
+  def Checkbox(field: Field, args: (Symbol, Any)*): Input = {
+    new Input("checkbox", field, args:_*)
+  }
+
+  def Radio(field: Field, values: List[String], args: (Symbol, Any)*): Input = {
+    new Input("radio", field, ('_values -> values :: args.toList):_*)
+  }
+
   private def updateArgs(args: Seq[(Symbol, Any)], defaults: (Symbol, Any)*): Seq[(Symbol, Any)] = {
     val argsMap = collection.mutable.Map(args:_*)
     defaults.foreach { case (symbol, default) =>
@@ -44,7 +54,7 @@ class Input(val inputType: String, val field: Field, initialArgs: (Symbol, Any)*
   val autofocus = getArgOrElse('autofocus, false, initialArgs)
   val required = field.constraints.exists(constraint => constraint._1 == "constraint.required")
 
-  val args = initialArgs ++ Seq('_showConstraints -> false).filter(_._1 != 'type)
+  val args = initialArgs.filter(_._1 != 'type) ++ Seq('_showConstraints -> false)
 
   private def getArgOrElse[T](property: Symbol, default: T, args: Seq[(Symbol, Any)]): T =
     args.toMap.get(property).map(_.asInstanceOf[T]).getOrElse(default)

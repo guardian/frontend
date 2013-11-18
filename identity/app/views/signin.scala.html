@@ -1,7 +1,7 @@
 @(page: model.MetaData, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, signinForm: Form[(String, String, Boolean)])(implicit request: RequestHeader)
 
 @import form.IdFormHelpers._
-@import views.html.fragments.form.{idInput, idCheckbox}
+@import views.html.fragments.form.{inputField, checkbox}
 @import views.html.fragments.socialSignin
 
 @identityMain(page, conf.Switches.all){
@@ -24,8 +24,8 @@
 
             <ul class="form-fields">
 
-                @idInput(Email(signinForm("email"), '_label -> "Email address", 'class -> "js-signin-email"))
-                @idInput(Password(signinForm("password"), '_label -> "Password"))
+                @inputField(Email(signinForm("email"), '_label -> "Email address", 'class -> "js-signin-email"))
+                @inputField(Password(signinForm("password"), '_label -> "Password"))
 
                 <li>
                     <div class="form-field__note">
@@ -33,8 +33,8 @@
                     </div>
                     <button type="submit" class="submit-input" data-link-name="Sign in">Sign in</button>
 
-                    <label class="check-label check-label--helper">
-                        @idCheckbox(signinForm("keepMeSignedIn"))
+                    <label class="check-label check-label--helper" for="@signinForm("keepMeSignedIn").id">
+                        @checkbox(signinForm("keepMeSignedIn"))
                         Remember me
                     </label>
                 </li>

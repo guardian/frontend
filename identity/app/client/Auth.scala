@@ -2,11 +2,8 @@ package client
 
 
 trait Auth {
-  def parameters: Parameters
-  def headers: Parameters
+  def parameters: Parameters = Iterable.empty
+  def headers: Parameters = Iterable.empty
 }
 
-object Anonymous extends Auth {
-  override def parameters: Parameters = Iterable.empty
-  override def headers: Parameters = Iterable.empty
-}
+object Anonymous extends Auth

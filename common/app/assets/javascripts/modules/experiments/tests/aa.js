@@ -1,4 +1,8 @@
-define(['common'], function (common) {
+define([
+    'common'
+], function (
+    common
+) {
 
     // An AA test is like an AB test but with no difference between the A & B variants. It is useful to prove
     // that the bucketing of users is fair.

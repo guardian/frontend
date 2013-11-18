@@ -3,6 +3,7 @@
 @import views.support.MetadataJson
 @import views.support.JavaScriptVariableName
 @import common.Edition
+@import org.joda.time.DateTime
 
 {
     "page": {
@@ -17,7 +18,8 @@
         "oasUrl": "http://oas.theguardian.com/RealMedia/ads/",
         "oasSiteIdHost": "www.theguardian.com",
         "idUrl": "@Configuration.id.url",
-        "beaconUrl": "@Configuration.debug.beaconUrl"
+        "beaconUrl": "@Configuration.debug.beaconUrl",
+        "renderTime": "@{(new DateTime).toISODateTimeNoMillisString}"
     },
     "switches" : { @{Html(switches.map{ switch =>
             s""""${JavaScriptVariableName(switch.name)}":${switch.isSwitchedOn}"""

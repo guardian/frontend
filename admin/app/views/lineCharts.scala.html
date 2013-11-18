@@ -1,0 +1,13 @@
+@(env: String, charts: Seq[tools.LineChart])
+
+@admin_main("Dashboard", env, isAuthed = true, hasCharts = true) {
+
+    @* some servers have no data *@
+    @defining(charts.filterNot(_.hasData).map(_.name).mkString(", ")){ noData =>
+        @if(noData.nonEmpty){
+            <p>No data for: <strong>@noData</strong></p>
+        }
+    }
+
+    @charts.filter(_.hasData).map{ chart => @fragments.lineChart(chart) }
+}

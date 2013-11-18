@@ -85,7 +85,7 @@ object Switches extends Collections {
     "Enable the Quantcast audience segment tracking.",
     safeState = Off)
 
-  val OmnitureDomReadySwitch = Switch("Analytics", "omniture-dom-ready",
+  val OmnitureDomReadySwitch = Switch("Analytics", "analytics-dom-ready",
     "Initialise Omniture on dom-ready, rather than on page-load.",
     safeState = Off)
 
@@ -234,6 +234,10 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to test how many items to initially show in news container",
     safeState = Off)
 
+  val ABShowMoreLayout = Switch("A/B Tests", "ab-show-more-layout",
+    "If this is switched on an AB test runs that's repeats initial layout of a collection when clicking 'show more'",
+    safeState = Off)
+
   // Sport Switch
 
   val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
@@ -314,7 +318,8 @@ object Switches extends Collections {
     EditionRedirectLoggingSwitch,
     FacebookAutoSigninSwitch,
     ABStoryPackageQuestion,
-    ABInitialShowMore
+    ABInitialShowMore,
+    ABShowMoreLayout
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

@@ -1,0 +1,11 @@
+@(elements: views.html.helper.FieldElements)
+
+<div class="form-field @if(elements.errors.nonEmpty) {form-field--error}">
+    @if(elements.infos.nonEmpty) {
+        <div class="form-field__note">@Html(elements.infos.mkString(", "))</div>
+    }
+    @elements.input
+    @if(elements.errors.nonEmpty) {
+        <div class="form-field__note form-field__error">@elements.errors.mkString(", ")</div>
+    }
+</div>
