@@ -52,7 +52,10 @@ object CloudWatch {
 
   private val jsErrorMetrics = List(
     ("JavaScript errors caused by adverts", "ads"),
-    ("JavaScript errors from iOS", "js.ios")
+    ("JavaScript errors from iOS", "js.ios"),
+    ("JavaScript errors from iOS", "js.android"),
+    ("JavaScript errors from iOS", "js.unknown"),
+    ("JavaScript errors from iOS", "js.windows")
   )
 
   def shortStackLatency = latency(primaryLoadBalancers)
