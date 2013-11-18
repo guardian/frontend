@@ -9,9 +9,6 @@ class DemoPage(val applicationName: String) extends HtmlManagementPage {
   def title = "Commercial Test Harness"
 
   def body(request: HttpRequest) =
-    <html>
-      <head>
-        <title>Commercial Test Harness</title>
 
         <link rel="stylesheet" type="text/css" href="http://aws-frontend-static.s3.amazonaws.com/CODE/frontend-static/stylesheets/head.default.610e3a410982a293a4573a1018691888.css"/>
         <link rel="stylesheet" type="text/css" href="http://aws-frontend-static.s3.amazonaws.com/CODE/frontend-static/stylesheets/global.a4a4e7fe5b05d4ea80d69dfdc2efa73b.css"/>
@@ -64,7 +61,7 @@ class DemoPage(val applicationName: String) extends HtmlManagementPage {
 
               // TODO: fix these hardcoded URLs
               return {
-                masterclasses: 'http://api.nextgen.guardianapps.co.uk/commercial/masterclasses.json',
+                masterclasses: 'http://api.nextgen.guardianapps.co.uk/commercial/masterclasses.json', //'http://api.nextgen.guardianapps.co.uk/commercial/masterclasses.json',
                 travel:        'http://api.nextgen.guardianapps.co.uk/commercial/travel/offers.json?k='+document.querySelector('.travel-keywords').value+'&amp;seg=repeat',
                 jobs:          'http://api.nextgen.guardianapps.co.uk/commercial/jobs.json?s='+document.querySelector('.jobs-keywords').value,
                 soulmates:     'http://api.nextgen.guardianapps.co.uk/commercial/soulmates/mixed.json'
@@ -73,14 +70,14 @@ class DemoPage(val applicationName: String) extends HtmlManagementPage {
 
             applyBreakpointClassnames: function() {
               var self = this,
-              $nodes = $(this.className);
+              $nodes = $('.'+this.className);
 
-              $nodes.each(function(el) {
+              $nodes.each(function(i, el) {
                 var width = el.offsetWidth;
                 el.className = el.className.replace(/(commercial--w\d{1,3})\s?/g, '');
                 self.breakpoints.forEach(function(breakpointWidth) {
                   if (width >= breakpointWidth) {
-                    bonzo(el).addClass(self.className+'--w' + breakpointWidth);
+                    $(el).addClass(self.className+'--w' + breakpointWidth);
                   }
                 });
 
@@ -105,9 +102,7 @@ class DemoPage(val applicationName: String) extends HtmlManagementPage {
                 url:  endpoint,
                 dataType: 'jsonp',
                 success: function(response) {
-                  console.log(response);
                   $(targetSelector).html(response.html);
-                  //bonzo(document.querySelectorAll(targetSelector)).html(response.html);
                   self.applyBreakpointClassnames();
                 }
               });
@@ -144,8 +139,6 @@ class DemoPage(val applicationName: String) extends HtmlManagementPage {
       })
       ]]>
         </script>
-      </head>
-      <body>
 
         <h1>Commercial Components Test Harness</h1>
 
@@ -179,8 +172,5 @@ class DemoPage(val applicationName: String) extends HtmlManagementPage {
           </li>
         </ul>
 
-
-      </body>
-    </html>
 
 }
