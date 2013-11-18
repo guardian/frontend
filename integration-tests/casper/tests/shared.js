@@ -14,7 +14,8 @@ clearLocalStorage = function() {
 };
 
 casper.on('page.error', function(msg, trace) {
-    console.log('Error: '+ msg);
+    console.log('-----------------------------');
+    console.log('Casper Page Error: ' + msg);
     trace.forEach(function(item) {
         console.log('File:' + item.file + ' line:' + item.line + ' function: ' + item['function']);
     });
