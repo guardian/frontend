@@ -1,4 +1,4 @@
-define(['modules/relativedates',
+define(['modules/ui/relativedates',
         'bonzo',
         'helpers/fixtures',
         'qwery'], function(RelativeDates, bonzo, fixtures, qwery) {

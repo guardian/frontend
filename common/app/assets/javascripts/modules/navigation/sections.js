@@ -2,7 +2,7 @@ define([
     'common',
     'bonzo',
     'utils/mediator',
-    'modules/detect',
+    'utils/detect',
     'modules/userPrefs'
 ], function (
     common,
@@ -214,9 +214,7 @@ define([
 
         this.init = function (context) {
             this.view.bindings(context);
-
-            if (config.switches.localNav &&
-                (!config.switches.swipeNav || !detect.canSwipe() || userPrefs.isOff('swipe'))) {
+            if (config.switches.localNav) {
                     this.view.insertLocalNav(context);
             }
         };

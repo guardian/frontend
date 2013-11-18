@@ -85,7 +85,7 @@ object Switches extends Collections {
     "Enable the Quantcast audience segment tracking.",
     safeState = Off)
 
-  val OmnitureDomReadySwitch = Switch("Analytics", "omniture-dom-ready",
+  val OmnitureDomReadySwitch = Switch("Analytics", "analytics-dom-ready",
     "Initialise Omniture on dom-ready, rather than on page-load.",
     safeState = Off)
 
@@ -156,6 +156,10 @@ object Switches extends Collections {
     "If this switch is on the australia front will be available. Otherwise it will 404.",
     safeState = Off)
 
+  val NewsContainerSwitch = Switch("Feature Switches", "news-container",
+    "If this switch is on the news container will be on the network front. Otherwise fronts will display a normal facia container.",
+    safeState = Off)
+
   val LocalNavSwitch = Switch("Feature Switches", "local-nav",
     "If this switch is on, a secondary local nav is shown.",
     safeState = Off)
@@ -218,8 +222,16 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to test the new commercial components",
     safeState = Off)
 
+  val ABImproveOnwardTrails = Switch("A/B Tests", "ab-improve-onward-trails",
+    "If this is switched on an AB test runs to test re-ordering story packages",
+    safeState = Off)
+
   val ABInitialShowMore = Switch("A/B Tests", "ab-initial-show-more",
     "If this is switched on an AB test runs to test how many items to initially show in news container",
+    safeState = Off)
+
+  val ABShowMoreLayout = Switch("A/B Tests", "ab-show-more-layout",
+    "If this is switched on an AB test runs that's repeats initial layout of a collection when clicking 'show more'",
     safeState = Off)
 
   // Sport Switch
@@ -274,6 +286,7 @@ object Switches extends Collections {
     ImageServerSwitch,
     ReleaseMessageSwitch,
     AustraliaFrontSwitch,
+    NewsContainerSwitch,
     FontDelaySwitch,
     ABParagraphSpacingSwitch,
     ABInlineLinkCardSwitch,
@@ -300,7 +313,9 @@ object Switches extends Collections {
     ABAlphaAdverts,
     ABCommercialComponents,
     EditionRedirectLoggingSwitch,
-    ABInitialShowMore
+    ABImproveOnwardTrails,
+    ABInitialShowMore,
+    ABShowMoreLayout
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

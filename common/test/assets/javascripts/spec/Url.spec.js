@@ -1,4 +1,4 @@
-define(['modules/url'], function(url) {
+define(['utils/url'], function(url) {
 
     describe('Url', function() {
         

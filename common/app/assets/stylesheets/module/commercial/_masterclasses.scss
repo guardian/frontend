@@ -1,0 +1,38 @@
+/* ==========================================================================
+   Masterclass component
+   ========================================================================== */
+
+.masterclasses-component {
+
+    background-color: #A7006F;
+    color: #ffffff;
+
+    .commercial__title span {
+        color: #FF97DC;
+    }
+
+    .lineitem__title {
+        @include fs-header(1);
+
+        a {
+            color: #ffffff;
+        }
+    }
+
+    &.commercial--w600 {
+
+        .items {
+            width: 100%;
+        }
+
+        .lineitem {
+            width: 25%;
+            padding-right: $gs-gutter/2;
+            padding-bottom: $gs-baseline/2;
+        }
+
+        .commercial__promo {
+            display: none;
+        }
+    }
+}

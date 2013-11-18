@@ -5,8 +5,8 @@
 define([
     '$',
     'utils/mediator',
-    'modules/detect',
-    'ajax'
+    'utils/detect',
+    'utils/ajax'
 ], function (
     $,
     mediator,
@@ -77,22 +77,21 @@ define([
             contentFragment += '<div class="card__appendix type-12">' + host + '</div>';
         }
 
-        tpl = '<div class="card-wrapper">' +
-                  '<div class="furniture furniture--left card card--left">' +
-                      titleFragment +
-                      '<div class="card__body u-text-hyphenate">' +
-                          '<a href="' + href + '" data-link-name="in card link" aria-hidden="true">' +
-                          contentFragment +
-                          '</a>' +
-                      '</div>' +
-                      '<div class="card__meta">' +
-                          publishedFragment +
-                      '</div>' +
-                      '<a href="' + href + '" data-link-name="in card link" aria-hidden="true">' +
-                         imageFragment +
-                      '</a>' +
-                  '</div>' +
-              '</div>';
+        tpl =   '<div class="card-wrapper">' +
+                    '<div class="furniture furniture--left card card--left">' +
+                        '<a href="' + href + '" data-link-name="in card link" aria-hidden="true">' +
+                            imageFragment +
+                        '</a>' +
+                        '<div class="card__body u-text-hyphenate">' +
+                            '<a href="' + href + '" data-link-name="in card link" aria-hidden="true">' +
+                                contentFragment +
+                            '</a>' +
+                        '</div>' +
+                        '<div class="card__meta">' +
+                            publishedFragment +
+                        '</div>' +
+                    '</div>' +
+                '</div>';
 
         self.$linkContext.before(tpl);
         mediator.emit('fragment:ready:dates');

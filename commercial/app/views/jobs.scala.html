@@ -1,23 +1,22 @@
 @(jobs: Seq[model.commercial.jobs.Job])
 
-<div class="commercial commercial--masterclasses">
+<link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
+
+<div class="commercial jobs-component">
     <div class="commercial__head">
         <h3 class="commercial__title">guardian<span>jobs</span></h3>
     </div>
     <div class="commercial__body">
-        <table>
+        <ul class="items">
             @for(job <- jobs) {
-                <tr>
-                    <td>@job.recruiterLogoUrl.map{ url => <img src="@url" />}</td>
-                    <td>@job.employerLogoUrl.map{ url => <img src="@url" />}</td>
-                    <td>@job.id</td>
-                    <td><a href="@job.listingUrl">@job.title</a></td>
-                    <td>@job.salary</td>
-                    <td><a href="@job.applyUrl">Apply</a></td>
-                    <td>@(job.sectorTags.mkString("; "))</td>
-                </tr>
+                <li class="lineitem">
+                    @job.employerLogoUrl.map{ url => <img src="@url" />}
+                    <h4 class="lineitem__title"><a href="@job.listingUrl">@job.title</a></h4>
+                    <p class="lineitem__description">@Html(job.shortDescription)</p>
+                    <a href="@job.applyUrl" class="lineitem__link cta">Apply</a>
+                </li>
             }
-        </table>
+        </ul>
     </div>
     <div class="commercial__foot"></div>
 </div>

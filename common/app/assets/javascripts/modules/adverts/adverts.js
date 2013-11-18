@@ -2,10 +2,9 @@ define([
     '$',
     'qwery',
     'bonzo',
-    'ajax',
-
+    'utils/ajax',
     'modules/userPrefs',
-    'modules/detect',
+    'utils/detect',
     'modules/adverts/document-write',
     'modules/adverts/documentwriteslot',
     'modules/adverts/dimensionMap',

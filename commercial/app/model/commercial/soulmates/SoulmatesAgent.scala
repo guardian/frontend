@@ -13,6 +13,10 @@ object SoulmatesAggregatingAgent {
     soulmatesAgents foreach (_.refresh())
   }
 
+  def stop() {
+    soulmatesAgents foreach (_.stop())
+  }
+
 }
 
 trait SoulmatesAgent extends AdAgent[Member] with ExecutionContexts {

@@ -1,0 +1,27 @@
+@(page: model.MetaData, config: Config, collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader)
+
+@if(collection.items.nonEmpty) {
+    <section class="container container--@style.containerType @if(containerIndex > 0){js-container--toggle} tone-@style.tone"
+             data-link-name="block | @config.id"
+             data-id="@config.id"
+             data-link-context="@config.section"
+             data-type="@style.containerType">
+
+        @Seq(config.displayName, collection.displayName).find(_.nonEmpty).flatten.map { title =>
+            @if(title.nonEmpty) {
+                <h2 class="container__title tone-background tone-accent-border">
+                    @if(style.headerLink) {
+                        <a data-link-name="section heading" href="@LinkTo{/@config.section}">@Html(title)</a>
+                    } else {
+                        @Html(title)
+                    }
+                </h2>
+            }
+        }
+
+        @fragments.contributor(page)
+
+        @fragments.collections.standard(collection, style, containerIndex)
+
+    </section>
+}

@@ -8,6 +8,8 @@ import com.amazonaws.handlers.AsyncHandler
 import common.Logging
 import Configuration._
 
+case class LoadBalancer(id: String, name: String, project: String)
+
 object CloudWatch {
 
   val stage = new Dimension().withName("Stage").withValue(environment.stage)
@@ -19,22 +21,24 @@ object CloudWatch {
   }
 
   val primaryLoadBalancers = Seq(
-    ("frontend-RouterLo-1HHMP4C9L33QJ", "Router"),
-    ("frontend-ArticleL-T0BUR121RZIG", "Article"),
-    ("frontend-FaciaLoa-I92TZ7OEAX7W", "Front"),
-    ("frontend-Applicat-V36EHVHAEI15", "Applications")
+    LoadBalancer("frontend-RouterLo-1HHMP4C9L33QJ", "Router", "frontend-router"),
+    LoadBalancer("frontend-ArticleL-T0BUR121RZIG", "Article", "frontend-article"),
+    LoadBalancer("frontend-FaciaLoa-I92TZ7OEAX7W", "Front", "frontend-facia"),
+    LoadBalancer("frontend-Applicat-V36EHVHAEI15", "Applications", "frontend-applications")
   )
 
   val secondaryLoadBalancers = Seq(
-    ("frontend-CoreNavi-19L03IVT6RTL5", "CoreNav"),
-    ("frontend-Discussi-KC65SADEVHIE", "Discussion"),
-    ("frontend-Identity-1ITBJ706CLQIC", "Identity"),
-    ("frontend-ImageLoa-Y3FM3W6ZRJC1", "Image"),
-    ("frontend-SportLoa-GLJK02HUD48W", "Sport"),
-    ("frontend-Commerci-12ZQ79RIOLIYE", "Commercial"),
-    ("frontend-OnwardLo-14YIUHL6HIW63", "Onward"),
-    ("frontend-R2Footba-9BHU0R3R3DHV", "R2 Football")
+    LoadBalancer("frontend-CoreNavi-19L03IVT6RTL5", "CoreNav", "frontend-core-navigation"),
+    LoadBalancer("frontend-Discussi-KC65SADEVHIE", "Discussion", "frontend-discussion"),
+    LoadBalancer("frontend-Identity-1ITBJ706CLQIC", "Identity", "frontend-identity"),
+    LoadBalancer("frontend-ImageLoa-Y3FM3W6ZRJC1", "Image", "frontend-image"),
+    LoadBalancer("frontend-SportLoa-GLJK02HUD48W", "Sport", "frontend-sport"),
+    LoadBalancer("frontend-Commerci-12ZQ79RIOLIYE", "Commercial", "frontend-commercial"),
+    LoadBalancer("frontend-OnwardLo-14YIUHL6HIW63", "Onward", "frontend-onward"),
+    LoadBalancer("frontend-R2Footba-9BHU0R3R3DHV", "R2 Football", "frontend-r2football")
   )
+
+  val loadBalancers = primaryLoadBalancers ++ secondaryLoadBalancers
 
   private val fastlyMetrics = List(
     ("Fastly Errors (Europe) - errors per minute, average", "errors", "europe", "2eYr6Wx3ZCUoVPShlCM61l"),
@@ -47,8 +51,8 @@ object CloudWatch {
   )
 
 
-  def shortStack = latency(primaryLoadBalancers)
-  def fullStack = shortStack ++ latency(secondaryLoadBalancers)
+  def shortStackLatency = latency(primaryLoadBalancers)
+  def fullStackLatency = shortStackLatency ++ latency(secondaryLoadBalancers)
 
   object asyncHandler extends AsyncHandler[GetMetricStatisticsRequest, GetMetricStatisticsResult] with Logging
   {
@@ -71,9 +75,9 @@ object CloudWatch {
 
 
 
-  private def latency(loadBalancers: Seq[(String,String)]): Seq[LatencyGraph] = {
-    loadBalancers.map{ case (loadBalancer, name) =>
-      new LatencyGraph(name ,
+  private def latency(loadBalancers: Seq[LoadBalancer]) = {
+    loadBalancers.map{ loadBalancer =>
+      new LineChart(loadBalancer.name , Seq("Time", "latency (ms)"),
         cloudClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
           .withStartTime(new DateTime().minusHours(2).toDate)
           .withEndTime(new DateTime().toDate)
@@ -82,7 +86,7 @@ object CloudWatch {
           .withStatistics("Average")
           .withNamespace("AWS/ELB")
           .withMetricName("Latency")
-          .withDimensions(new Dimension().withName("LoadBalancerName").withValue(loadBalancer)),
+          .withDimensions(new Dimension().withName("LoadBalancerName").withValue(loadBalancer.id)),
           asyncHandler)
       )
     }.toSeq
@@ -91,9 +95,9 @@ object CloudWatch {
   def requestOkShortStack = requestOkCount(primaryLoadBalancers)
   def requestOkFullStack = requestOkShortStack ++ requestOkCount(secondaryLoadBalancers)
 
-  private def requestOkCount(loadBalancers: Seq[(String,String)]): Seq[Request2xxGraph] = {
-    loadBalancers.map{ case (loadBalancer, name) =>
-      new Request2xxGraph(name,
+  private def requestOkCount(loadBalancers: Seq[LoadBalancer]) = {
+    loadBalancers.map{ loadBalancer =>
+      new LineChart(loadBalancer.name, Seq("Time", "2xx/minute"),
         cloudClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
           .withStartTime(new DateTime().minusHours(2).toDate)
           .withEndTime(new DateTime().toDate)
@@ -101,14 +105,14 @@ object CloudWatch {
           .withStatistics("Sum")
           .withNamespace("AWS/ELB")
           .withMetricName("HTTPCode_Backend_2XX")
-          .withDimensions(new Dimension().withName("LoadBalancerName").withValue(loadBalancer)),
+          .withDimensions(new Dimension().withName("LoadBalancerName").withValue(loadBalancer.id)),
           asyncHandler)
       )
     }.toSeq
   }
 
-  def fastlyStatistics = fastlyMetrics.map{ case (graphTitle, metric, region, service) =>
-    new FastlyMetricGraph( graphTitle, metric,
+  def fastlyErrors = fastlyMetrics.map{ case (graphTitle, metric, region, service) =>
+    new LineChart( graphTitle, Seq("Time", metric),
       cloudClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
         .withStartTime(new DateTime().minusHours(6).toDate)
         .withEndTime(new DateTime().toDate)
@@ -122,7 +126,7 @@ object CloudWatch {
     )
   }.toSeq
   
-  def liveStats(statistic: String) = new LiveStatsGraph(
+  def liveStats(statistic: String) = new LineChart(statistic, Nil,
     cloudClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
       .withStartTime(new DateTime().minusHours(6).toDate)
       .withEndTime(new DateTime().toDate)
@@ -136,7 +140,7 @@ object CloudWatch {
 
   // charges are only available from the 'default' region
   private lazy val defaultCloudClient = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials)
-  def cost = new CostMetric(defaultCloudClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
+  def cost = new MaximumMetric(defaultCloudClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
     .withNamespace("AWS/Billing")
     .withMetricName("EstimatedCharges")
     .withStartTime(new DateTime().toLocalDate.toDate)
@@ -146,7 +150,7 @@ object CloudWatch {
     .withDimensions(new Dimension().withName("Currency").withValue("USD")), asyncHandler))
 
   def fastlyHitMissStatistics = fastlyHitMissMetrics.map{ case (graphTitle, region, service) =>
-    new FastlyHitMissGraph( graphTitle,
+    new LineChart( graphTitle, Seq("Time", "Hits", "Misses"),
 
       cloudClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
         .withStartTime(new DateTime().minusHours(6).toDate)

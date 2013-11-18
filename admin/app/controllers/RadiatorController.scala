@@ -3,7 +3,7 @@ package controllers.admin
 import play.api.mvc.Controller
 import common.Logging
 import controllers.AuthLogging
-import tools.CloudWatch
+import tools.{ChartFormat, CloudWatch}
 import play.api.libs.ws.WS
 import com.ning.http.client.Realm
 import play.api.libs.concurrent.Execution.Implicits._
@@ -32,8 +32,8 @@ object RadiatorController extends Controller with Logging with AuthLogging {
   }
 
   def renderRadiator() = Authenticated { implicit request =>
-    val graphs = CloudWatch.shortStack ++ CloudWatch.fastlyStatistics
-    val multilineGraphs = CloudWatch.fastlyHitMissStatistics
+    val graphs = (CloudWatch.shortStackLatency ++ CloudWatch.fastlyErrors).map(_.withFormat(ChartFormat.SingleLineBlack))
+    val multilineGraphs = CloudWatch.fastlyHitMissStatistics.map(_.withFormat(ChartFormat.DoubleLineBlueRed))
     NoCache(Ok(views.html.radiator(graphs, multilineGraphs, CloudWatch.cost, Configuration.environment.stage)))
   }
 

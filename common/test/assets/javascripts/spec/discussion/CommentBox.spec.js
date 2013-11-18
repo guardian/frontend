@@ -1,6 +1,6 @@
 define([
     'common',
-    'ajax',
+    'utils/ajax',
     'bean',
     'helpers/fixtures',
     'fixtures/discussion/discussion',

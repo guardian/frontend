@@ -1,0 +1,38 @@
+/* ==========================================================================
+   Travel component
+   ========================================================================== */
+
+.travel-component {
+
+    background-color: #004A83;
+    color: #ffffff;
+
+    .commercial__promo {
+        display: none;
+    }
+
+    &.commercial--w600 {
+        .items {
+            width: 50%;
+        }
+
+        .lineitem {
+            width: 50%;
+            padding-right: $gs-gutter/2;
+            padding-bottom: $gs-baseline/2;
+        }
+
+        .lineitem__title {
+            display: none;
+        }
+
+        .commercial__promo {
+            display: block;
+        }
+    }
+
+
+    .commercial__submit {
+        background-color: #64C5F8;
+    }
+}

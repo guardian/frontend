@@ -1,9 +1,29 @@
-@(path: String)
+@(events: List[model.commercial.masterclasses.MasterClass])
 
-<div class="commercial commercial--masterclasses">
+<link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
+
+<div class="commercial masterclasses-component">
     <div class="commercial__head">
         <h3 class="commercial__title">guardian<span>masterclasses</span></h3>
     </div>
-    <div class="commercial__body">hello masterclasses</div>
+
+    <div class="commercial__body">
+
+        <div class="commercial__promo">
+            <a href="#" class="product__image">
+                <img src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/25/1382691234022/hp-discover.jpg">
+            </a>
+        </div>
+
+        <ul class="items">
+            @for(event <- events) {
+                <li class="lineitem">
+                    <h4 class="lineitem__title"><a href="@event.url">@event.name</a></h4>
+                    <div class="lineitem__description">@event.firstParagraph</p>
+                </li>
+            }
+        </ul>
+    </div>
+
     <div class="commercial__foot"></div>
 </div>

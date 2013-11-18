@@ -4,7 +4,7 @@
  */
 define([
     'lodash/objects/assign',
-    'modules/storage'
+    'utils/storage'
 ], function(
     _assign,
     storage

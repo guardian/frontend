@@ -3,6 +3,7 @@ import conf.Management
 import common.{Logging, AkkaAsync, Jobs}
 import conf.RequestMeasurementMetrics
 import dev.DevParametersLifecycle
+import model.commercial.masterclasses.MasterClassAgent
 import model.commercial.jobs.{LightJobsAgent, JobsAgent}
 import model.commercial.soulmates.SoulmatesAggregatingAgent
 import model.commercial.travel.OffersAgent
@@ -22,6 +23,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging {
 
     Jobs.deschedule("TravelOffersRefreshJob")
     Jobs.deschedule("JobsRefreshJob")
+    Jobs.deschedule("MasterClassRefreshJob")
     Jobs.deschedule("SoulmatesRefreshJob")
 
     // fire every 15 mins
@@ -38,6 +40,13 @@ trait CommercialLifecycle extends GlobalSettings with Logging {
       JobsAgent.refresh()
     }
 
+    // fire every 15 minutes
+    val masterClassRefreshSchedule = randomStartSchedule
+    log.info(s"Masterclass refresh on schedule $masterClassRefreshSchedule")
+    Jobs.schedule("MasterClassRefreshJob", masterClassRefreshSchedule) {
+      MasterClassAgent.refresh()
+    }
+
     // fire every 15 mins
     val soulmatesRefreshSchedule = randomStartSchedule
     log.info(s"Soulmates refresh on schedule $soulmatesRefreshSchedule")
@@ -49,6 +58,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging {
       OffersAgent.refresh()
       JobsAgent.refresh()
       SoulmatesAggregatingAgent.refresh()
+      MasterClassAgent.refresh()
       if (Play.isDev) LightJobsAgent.refresh()
     }
   }
@@ -56,11 +66,18 @@ trait CommercialLifecycle extends GlobalSettings with Logging {
   override def onStop(app: PlayApp) {
     Jobs.deschedule("TravelOffersRefreshJob")
     Jobs.deschedule("JobsRefreshJob")
+    Jobs.deschedule("MasterClassRefreshJob")
     Jobs.deschedule("SoulmatesRefreshJob")
+
+    OffersAgent.stop()
+    JobsAgent.stop()
+    SoulmatesAggregatingAgent.stop()
+    MasterClassAgent.stop()
+    LightJobsAgent.stop()
+
     super.onStop(app)
   }
 }
-
 
 object Global
   extends WithFilters(RequestMeasurementMetrics.asFilters: _*) with CommercialLifecycle with DevParametersLifecycle

@@ -117,19 +117,20 @@ GET         /metrics/fastly                                                     
 GET         /metrics/errors                                                                                  controllers.admin.DashboardController.renderErrors()
 GET         /metrics/errors/4xx                                                                              controllers.admin.DashboardController.render4XX()
 GET         /metrics/errors/5xx                                                                              controllers.admin.DashboardController.render5XX()
+GET         /metrics/memory                                                                                  controllers.admin.DashboardController.renderMemory()
 GET         /radiator                                                                                        controllers.admin.RadiatorController.renderRadiator()
 GET         /radiator/pingdom                                                                                controllers.admin.RadiatorController.pingdom()
 GET         /radiator/commit/*hash                                                                           controllers.admin.RadiatorController.commitDetail(hash)
 GET         /radiator/livestats                                                                              controllers.admin.RadiatorController.liveStats()
 GET         /troubleshoot/football                                                                           controllers.admin.FootballTroubleshooterController.renderFootballTroubleshooter()
-
+GET         /admin/commercial                                                                                controllers.admin.CommercialComponentsController.renderCommercialComponents()
 
 # Commercial
 GET         /commercial/travel/offers.json                                                                   controllers.commercial.TravelOffers.listOffers
 GET         /commercial/jobs.json                                                                            controllers.commercial.JobAds.jobs
+GET         /commercial/masterclasses.json                                                                   controllers.commercial.MasterClasses.list
 # New light jobs feed available only in dev env
 GET         /commercial/lightjobs.json                                                                       controllers.commercial.JobAds.lightJobs
-GET         /commercial/$advert<(masterclasses)>.json                                                        controllers.commercial.SimpleAdvert.render(advert)
 GET         /commercial/soulmates/mixed.json                                                                 controllers.commercial.SoulmateAds.mixed
 GET         /commercial/soulmates/men.json                                                                   controllers.commercial.SoulmateAds.men
 GET         /commercial/soulmates/women.json                                                                 controllers.commercial.SoulmateAds.women

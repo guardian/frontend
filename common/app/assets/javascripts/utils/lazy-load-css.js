@@ -1,5 +1,9 @@
 /*global guardian:false*/
-define(['bonzo'], function(bonzo) {
+define([
+    'bonzo'
+], function(
+    bonzo
+) {
 
 function lazyLoadCss(name) {
     // append server specific css
