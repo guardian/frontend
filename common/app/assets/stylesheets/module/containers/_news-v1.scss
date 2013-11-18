@@ -14,12 +14,7 @@
                     @include card-half-width-image;
                 }
                 .item:nth-child(n+6) {
-                    @include card-headline;
-                }
-                .item:nth-child(n+7) {
-                    .item__link {
-                        border-top: 1px dotted $c-neutral5;
-                    }
+                    @extend %item-show-more;
                 }
             }
             .collection--with-sport-stats {
@@ -31,12 +26,7 @@
                     @include card-half-width-image;
                 }
                 .item:nth-child(n+7) {
-                    @include card-headline;
-                }
-                .item:nth-child(n+8) {
-                    .item__link {
-                        border-top: 1px dotted $c-neutral5;
-                    }
+                    @extend %item-show-more;
                 }
             }
         }

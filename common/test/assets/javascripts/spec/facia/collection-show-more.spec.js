@@ -98,7 +98,7 @@ define(['modules/facia/collection-show-more', 'bonzo', '$', 'utils/mediator', 'b
             $style.html('body:after { content: "mobile"; }');
             bonzo(container).attr('data-type', 'news');
             collectionShowMore.addShowMore();
-            expect($('.item', collection).length).toEqual(6);
+            expect($('.item', collection).length).toEqual(5);
         });
 
         it('should show 5 more at mobile breakpoint', function() {
