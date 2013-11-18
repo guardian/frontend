@@ -15,7 +15,6 @@ import org.mockito.ArgumentMatcher
 import org.joda.time.DateTime
 import client.connection.util.ExecutionContexts
 
-import org.hamcrest.core.IsNull
 import org.joda.time.format.ISODateTimeFormat
 import com.gu.identity.model.{LiftJsonConfig, StatusFields, PublicFields, User}
 import net.liftweb.json.Serialization.write
@@ -31,7 +30,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
   val http = mock[Http]
   val jsonParser = mock[JsonBodyParser]
   val clientAuth = ClientAuth("clientAccessToken")
-  val clientAuthHeaders = List("accessToken" -> "clientAccessToken")
+  val clientAuthHeaders = List("X-GU-ID-Client-Access-Token" -> "Bearer clientAccessToken")
   val api = new SynchronousIdApi(apiRoot, http, jsonParser, clientAuth)
   val errors = List(Error("Test error", "Error description", 500))
   val trackingParameters = mock[TrackingData]
@@ -52,22 +51,22 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
 
       "passes the auth parameters to the http lib's GET method" in {
         api.authApp(ParamAuth, trackingParameters)
-        verify(http).GET(Matchers.any[String], argThat(new ParamsIncludes(Iterable(("testParam", "value")))), argThat(EmptyParamMatcher))
+        verify(http).GET(Matchers.any[String], argThat(new ParamsIncludes(Iterable(("testParam", "value")))), Matchers.any[Parameters])
       }
 
       "passes the auth header to the http lib's GET method" in {
         api.authApp(HeaderAuth, trackingParameters)
-        verify(http).GET(Matchers.any[String], argThat(new ParamsIncludes(Iterable("tracking" -> "param"))), argThat(new ParamsMatcher(Iterable(("testHeader", "value")))))
+        verify(http).GET(Matchers.any[String], argThat(new ParamsIncludes(Iterable("tracking" -> "param"))), argThat(new ParamsIncludes(Iterable(("testHeader", "value")))))
       }
 
       "returns an access token response" in {
-        api.authApp(Anonymous, trackingParameters).map(_ match {
+        api.authApp(Anonymous, trackingParameters).map {
           case Left(result) => fail("Got Left(%s), instead of expected Right".format(result.toString()))
           case Right(accessTokenResponse) => {
             accessTokenResponse should have('accessToken("abc"))
             accessTokenResponse should have('expiresAt(new DateTime(2013, 10, 30, 12, 21)))
           }
-        })
+        }
       }
     }
 
@@ -76,12 +75,12 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
         .thenReturn(toFuture(Left(errors)))
 
       "returns the errors" in {
-        api.authApp(Anonymous, trackingParameters).map(_ match {
+        api.authApp(Anonymous, trackingParameters).map {
           case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString))
           case Left(responseErrors) => {
             responseErrors should equal(errors)
           }
-        })
+        }
       }
     }
   }
@@ -104,13 +103,13 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
 
       "adds the client access token parameter to the request" in {
         api.authBrowser(Anonymous, trackingParameters)
-        verify(http).POST(Matchers.eq("http://example.com/auth"), Matchers.any[Option[String]], argThat(new ParamsIncludes(Iterable(("accessToken", "clientAccessToken")))), Matchers.any[Parameters])
+        verify(http).POST(Matchers.eq("http://example.com/auth"), Matchers.any[Option[String]], Matchers.any[Parameters], argThat(new ParamsIncludes(clientAuthHeaders)))
       }
 
       "passes the auth parameters to the http lib's GET method" in {
         val auth = TestAuth(List(("testParam", "value")), Iterable.empty)
         api.authBrowser(auth, trackingParameters)
-        verify(http).POST(Matchers.any[String], Matchers.any[Option[String]], argThat(new ParamsIncludes(Iterable(("testParam", "value")))), argThat(EmptyParamMatcher))
+        verify(http).POST(Matchers.any[String], Matchers.any[Option[String]], Matchers.argThat(new ParamsIncludes(Iterable(("testParam", "value")))), Matchers.any[Parameters])
       }
 
       "passes the auth header to the http lib's GET method" in {
@@ -120,7 +119,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
       }
 
       "returns a cookies response" in {
-        api.authBrowser(Anonymous, trackingParameters).map(_ match {
+        api.authBrowser(Anonymous, trackingParameters).map {
           case Left(result) => fail("Got Left(%s), instead of expected Right".format(result.toString()))
           case Right(cookiesResponse) => {
             cookiesResponse.expiresAt should equal(ISODateTimeFormat.dateTimeNoMillis.parseDateTime("2013-10-30T12:21:00+00:00"))
@@ -129,7 +128,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
             cookies(0) should have('name("testName"))
             cookies(0) should have('value("testValue"))
           }
-        })
+        }
       }
     }
 
@@ -138,12 +137,12 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
         .thenReturn(toFuture(Left(errors)))
 
       "returns the errors" in {
-        api.authBrowser(Anonymous, trackingParameters).map(_ match {
+        api.authBrowser(Anonymous, trackingParameters).map {
           case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString))
           case Left(responseErrors) => {
             responseErrors should equal(errors)
           }
-        })
+        }
       }
     }
   }
@@ -216,11 +215,11 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
 
       "accesses the user endpoint with the user's id" in {
         api.user("123")
-        verify(http).GET("http://example.com/user/123", clientAuthHeaders, Iterable.empty)
+        verify(http).GET("http://example.com/user/123", Iterable.empty, clientAuthHeaders)
       }
 
       "returns the user object" in {
-        api.user("123").map(_ match {
+        api.user("123").map {
           case Left(result) => fail("Got Left(%s), instead of expected Right".format(result.toString()))
           case Right(user) => {
             user should have('id("123"))
@@ -230,18 +229,18 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
             user.publicFields should have('vanityUrl("vanityUrl"))
             user.primaryEmailAddress should have('priomaryEmailAddress("test@example.com"))
           }
-        })
+        }
       }
 
       "when providing authentication to the request" - {
         "adds the url parameters" in {
           api.user("123", ParamAuth)
-          verify(http).GET(Matchers.any[String], Matchers.argThat(new ParamsMatcher(Iterable(("testParam" -> "value")) ++ clientAuthHeaders)), argThat(EmptyParamMatcher))
+          verify(http).GET(Matchers.any[String], Matchers.argThat(new ParamsMatcher(Iterable("testParam" -> "value"))), Matchers.argThat(new ParamsMatcher(clientAuthHeaders)))
         }
 
         "adds the request headers" in {
           api.user("123", HeaderAuth)
-          verify(http).GET(Matchers.any[String], argThat(new ParamsMatcher(clientAuthHeaders)), argThat(new ParamsMatcher(Iterable(("testHeader", "value")))))
+          verify(http).GET(Matchers.any[String], Matchers.eq(Nil), argThat(new ParamsMatcher(Iterable("testHeader" -> "value") ++ clientAuthHeaders)))
         }
       }
     }
@@ -251,12 +250,12 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
         .thenReturn(toFuture(Left(errors)))
 
       "returns the errors" in {
-        api.user("123").map(_ match {
+        api.user("123").map {
           case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString))
           case Left(responseErrors) => {
             responseErrors should equal(errors)
           }
-        })
+        }
       }
     }
   }
@@ -269,11 +268,11 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
       when(http.GET(Matchers.any[String], Matchers.any[Parameters], Matchers.any[Parameters])).thenReturn(toFuture(Right(validUserResponse)))
       "accesses the get user for token with the token param" in {
           api.userForToken(token)
-          verify(http).GET(Matchers.eq("http://example.com/pwd-reset/user-for-token"), argThat(new ParamsIncludes(Iterable(("token", token)) ++ clientAuthHeaders)), Matchers.eq(Nil))
+          verify(http).GET(Matchers.eq("http://example.com/pwd-reset/user-for-token"), argThat(new ParamsIncludes(Iterable(("token", token)))), Matchers.argThat(new ParamsIncludes(clientAuthHeaders)))
       }
 
       "returns the user object" in {
-        api.userForToken(token).map(_ match {
+        api.userForToken(token).map {
           case Left(result) => fail("Got Left(%s), instead of expected Right".format(result.toString()))
           case Right(user) => {
             user should have('id("123"))
@@ -283,7 +282,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
             user.publicFields should have('vanityUrl("vanityUrl"))
             user.primaryEmailAddress should have('priomaryEmailAddress("test@example.com"))
           }
-        })
+        }
       }
    }
     "when receiving an error response" - {
@@ -291,12 +290,12 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
         .thenReturn(toFuture(Left(errors)))
 
       "returns the errors" in {
-        api.userForToken(token).map(_ match {
+        api.userForToken(token).map {
           case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString()))
           case Left(responseErrors) => {
             responseErrors should equal(errors)
           }
-        })
+        }
       }
     }
   }
@@ -313,27 +312,27 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
 
       "posts the the request json data to the endpoint" in {
          api.resetPassword(token, newPassword)
-         verify(http).POST(Matchers.eq("http://example.com/pwd-reset/reset-pwd-for-user"), Matchers.eq(Option(requestJson)), Matchers.eq(clientAuthHeaders), Matchers.eq(Nil))
+         verify(http).POST(Matchers.eq("http://example.com/pwd-reset/reset-pwd-for-user"), Matchers.eq(Option(requestJson)), Matchers.eq(Nil), Matchers.eq(clientAuthHeaders))
       }
 
       "returns a successful unit response" in {
-         api.resetPassword(token, newPassword).map( _ match {
-            case Left(result) => fail("Got Left(%s), instead of expected Right".format(result.toString()))
-            case Right(_: Unit) => {
-            }
-         })
+         api.resetPassword(token, newPassword).map {
+           case Left(result) => fail("Got Left(%s), instead of expected Right".format(result.toString()))
+           case Right(_: Unit) => {
+           }
+         }
       }
     }
 
     "when recieving an error response" - {
       when(http.POST(Matchers.any[String], Matchers.any[Option[String]], Matchers.any[Parameters], Matchers.any[Parameters])).thenReturn(toFuture(Left(errors)))
       "returns the errors" in {
-        api.resetPassword(token, newPassword).map( _ match {
+        api.resetPassword(token, newPassword).map {
           case Right(ok) => fail("Got right(%s) instead of expected left".format(ok.toString))
           case Left(responseErrors) => {
             responseErrors should equal(errors)
           }
-        })
+        }
       }
     }
   }
@@ -352,26 +351,26 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
 
       "adds the email address and type parameters" in {
         api.sendPasswordResetEmail(testEmail, trackingParameters)
-        verify(http).GET(Matchers.eq("http://example.com/pwd-reset/send-password-reset-email"), Matchers.argThat(new ParamsIncludes(Iterable(("email-address", testEmail), ("type", "reset")) ++ clientAuthHeaders)), Matchers.eq(Nil))
+        verify(http).GET(Matchers.eq("http://example.com/pwd-reset/send-password-reset-email"), Matchers.argThat(new ParamsIncludes(Iterable(("email-address", testEmail), ("type", "reset")))), Matchers.argThat(new ParamsIncludes(clientAuthHeaders)))
       }
 
       "returns an user object" in {
-        api.sendPasswordResetEmail(testEmail, trackingParameters).map( _ match {
+        api.sendPasswordResetEmail(testEmail, trackingParameters).map {
           case Left(error) => fail("Got left(%s), instead of expected Right".format(error.toString()))
           case Right(_: Unit) => {
           }
-        })
+        }
       }
 
       "when recieving an error response" - {
         when(http.POST(Matchers.any[String], Matchers.any[Option[String]], Matchers.any[Parameters], Matchers.any[Parameters])).thenReturn(toFuture(Left(errors)))
         "returns the errors" in {
-          api.sendPasswordResetEmail(testEmail, trackingParameters).map( _ match {
+          api.sendPasswordResetEmail(testEmail, trackingParameters).map {
             case Right(user) => fail("Got right(%s) instead of expected left".format(user.toString))
             case Left(responseErrors) => {
               responseErrors should equal(errors)
             }
-          })
+          }
         }
       }
 
@@ -392,11 +391,16 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
 
       "accesses the user endpoint with me in place of the user id" in {
         api.me(Anonymous)
-        verify(http).GET("http://example.com/user/me", clientAuthHeaders, Iterable.empty)
+        verify(http).GET(Matchers.eq("http://example.com/user/me"), Matchers.any[Parameters], Matchers.any[Parameters])
+      }
+
+      "passes the authentication to the API" in {
+        api.me(TestAuth(List("foo" -> "123"), List("bar" -> "456")))
+        verify(http).GET(Matchers.any[String], Matchers.argThat(new ParamsMatcher(List("foo" -> "123"))), Matchers.argThat(new ParamsMatcher(List("bar" -> "456") ++ clientAuthHeaders)))
       }
 
       "returns the user object" in {
-        api.me(Anonymous).map(_ match {
+        api.me(Anonymous).map {
           case Left(result) => fail("Got Left(%s), instead of expected Right".format(result.toString()))
           case Right(user) => {
             user should have('id("1234"))
@@ -406,7 +410,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
             user.publicFields should have('vanityUrl("vanityUrl"))
             user.primaryEmailAddress should have('priomaryEmailAddress("test@example.com"))
           }
-        })
+        }
       }
     }
 
@@ -415,12 +419,12 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
         .thenReturn(toFuture(Left(errors)))
 
       "returns the errors" in {
-        api.me(Anonymous).map(_ match {
+        api.me(Anonymous).map {
           case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString))
           case Left(responseErrors) => {
             responseErrors should equal(errors)
           }
-        })
+        }
       }
     }
   }
@@ -451,7 +455,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
 
       "adds the client access token parameter to the request" in {
         api.register(user, trackingParameters)
-        verify(http).POST(Matchers.eq("http://example.com/user"), Matchers.any[Option[String]], argThat(new ParamsIncludes(Iterable(("accessToken", "clientAccessToken")))), Matchers.any[Parameters])
+        verify(http).POST(Matchers.eq("http://example.com/user"), Matchers.any[Option[String]], Matchers.any[Parameters], argThat(new ParamsIncludes(clientAuthHeaders)))
       }
 
       "adds the the omniture tracking data to the request" in {
@@ -475,12 +479,12 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
       when(http.POST(Matchers.any[String], Matchers.any[Option[String]], Matchers.any[Parameters], Matchers.any[Parameters]))
         .thenReturn(toFuture(Left(errors)))
        "returns the errors" - {
-         api.register(user, trackingParameters).map(_ match {
+         api.register(user, trackingParameters).map {
            case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString))
            case Left(responseErrors) => {
              responseErrors should equal(errors)
            }
-         })
+         }
       }
     }
 
@@ -496,7 +500,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
 
   def toFuture(response: Response[HttpResponse]) = Promise.successful(response).future
 
-  case class TestAuth(parameters: Parameters, headers: Parameters) extends Auth
+  case class TestAuth(override val parameters: Parameters, override val headers: Parameters) extends Auth
   object ParamAuth extends TestAuth(Iterable(("testParam", "value")), Iterable.empty)
   object HeaderAuth extends TestAuth(Iterable.empty, Iterable(("testHeader", "value")))
 

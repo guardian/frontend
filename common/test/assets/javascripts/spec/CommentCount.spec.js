@@ -1,7 +1,7 @@
 define([
     'common',
-    'ajax',
-    'modules/discussion/commentCount',
+    'utils/ajax',
+    'modules/discussion/comment-count',
     'fixtures/commentcounts'], function(
     common,
     ajax,

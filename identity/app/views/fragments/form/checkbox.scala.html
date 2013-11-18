@@ -1,0 +1,6 @@
+@(field: play.api.data.Field, args: (Symbol, Any)*)
+
+@import play.api.templates.PlayMagic.toHtmlArgs
+
+<input type="checkbox" name="@field.name" id="@field.id" value="true"
+    @if(field.value.map(_ == "true").getOrElse(false)){ checked } @toHtmlArgs(args.toMap) />

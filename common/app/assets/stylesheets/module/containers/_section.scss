@@ -5,12 +5,7 @@
             @include card-half-width($with-image: true);
         }
         .item:nth-child(n+3) {
-            @include card-headline;
-        }
-        .item:nth-child(n+4) {
-            .item__link {
-                border-top: 1px dotted $c-neutral5;
-            }
+            @extend %item-show-more;
         }
     }
     @include mq(tablet) {

@@ -1,4 +1,4 @@
-define(['modules/cookies'], function(cookies) {
+define(['utils/cookies'], function(cookies) {
    
     describe("Cookie", function() {
 

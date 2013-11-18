@@ -1,3 +1,5 @@
+/*
+<<<<<<< HEAD
 define([
     'common',
     'modules/cookies',
@@ -11,6 +13,9 @@ define([
     Storage,
     ajax
 ) {
+=======
+*/
+define(['utils/cookies', 'modules/identity/api', 'utils/ajax', 'utils/storage'], function(Cookies, Id, ajax, Storage) {
     describe('Get user data', function() {
         var cookieData = 'WyIyMzEwOTU5IiwiamdvcnJpZUBnbWFpbC5jb20iLCJqYW1lc2dvcnJpZSIsIjUzNCIsMTM4Mjk1MzAzMTU5MSwxXQ.MC0CFBsFwIEITO91EGONK4puyO2ZgGQcAhUAqRa7PVDCoAjrbnJNYYvMFec4fAY';
         var config = {

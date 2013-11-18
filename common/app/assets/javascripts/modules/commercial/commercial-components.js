@@ -2,15 +2,17 @@ define([
     '$',
     'utils/mediator',
     'lodash/objects/assign',
+    'lodash/functions/debounce',
     'qwery',
     'bonzo',
     'bean',
     'modules/adverts/document-write',
-    'modules/storage'
+    'utils/storage'
 ], function (
     $,
     mediator,
     extend,
+    debounce,
     qwery,
     bonzo,
     bean,
@@ -27,48 +29,44 @@ define([
 
 
     Commercial.prototype.DEFAULTS = {
-        context: document,
-        elCls: 'commercial',
-        smallAdWidth:  300,  // Up to, but excluding
-        mediumAdWidth: 600
+        context:     document,
+        className:   'commercial',
+        breakpoints: [300, 400, 500, 600]
     };
 
     Commercial.prototype.init = function() {
         var self = this;
 
-        mediator.addListener('window:resize', function() {
-            self.applyClassnames();
-        });
+        bean.on(window, 'resize', debounce(function() {
+            self.applyBreakpointClassnames();
+        }, 250));
 
         mediator.on('modules:commercial:loaded', function() {
-            self.applyClassnames();
+            self.applyBreakpointClassnames();
         });
 
-        this.applyClassnames();
+        this.applyBreakpointClassnames();
 
         return this;
     };
 
 
-    Commercial.prototype.applyClassnames = function() {
+    Commercial.prototype.applyBreakpointClassnames = function() {
         var self = this,
-            classname = this.options.elCls;
+            $nodes = bonzo(document.getElementsByClassName(this.options.className)),
+            regex = new RegExp('('+self.options.className+'--w\\d{1,3})', 'g');
 
-        $('.' + classname, this.options.context).each(function() {
-            var $node = bonzo(this),
-                width = $node.dim().width;
+        $nodes.each(function(el) {
+            var width = el.offsetWidth;
+            el.className = el.className.replace(regex, '');
+            self.options.breakpoints.forEach(function(breakpointWidth) {
+                if (width >= breakpointWidth) {
+                    bonzo(el).addClass(self.options.className+'--w' + breakpointWidth);
+                }
+            });
 
-            $node.removeClass(classname + '--small ' + classname + '--medium');
-
-            if (width > self.options.smallAdWidth) {
-                $node.addClass(classname + '--medium');
-            } else {
-                $node.addClass(classname + '--small');
-            }
-
-            $node.attr('data-width', width);
+            el.setAttribute('data-width', width);
         });
-
     };
 
     return Commercial;
