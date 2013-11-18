@@ -59,12 +59,11 @@ casper.test.begin('Containers remember user\'s preference of state', function(te
 *    Then hidden items should be show
 **/
 casper.test.begin('Users can show more items in a collection', function(test) {
-    var firstContainerSelector = '.container:first-child',
-        firstShowMoreSelector = firstContainerSelector + ' .collection__show-more';
-    casper.waitForSelector(firstContainerSelector, function() {
-        var currentItemsShown = this.evaluate(function() { return document.querySelectorAll(firstContainerSelector + '.item').length; })
-        this.click(firstShowMoreSelector);
-        test.assertNotEquals(firstContainerSelector + ' .item', currentItemsShown, 'showing more items');
+    var showMoreButton = '.container .collection__show-more';
+    casper.waitForSelector(showMoreButton, function() {
+        var currentItemsShown = this.evaluate(function() { return document.querySelectorAll('.container .item').length; })
+        this.click(showMoreButton);
+        test.assertNotEquals('.container .item', currentItemsShown, 'showing more items');
     });
 
     casper.run(function() {

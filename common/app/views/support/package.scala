@@ -61,12 +61,12 @@ sealed trait Container {
   val headerLink: Boolean
 }
 
-case class MastheadContainer(val showMore: Boolean = false, val headerLink: Boolean = true) extends Container {
-  val containerType = "masthead"
-  val tone = "news"
-}
 case class NewsContainer(val showMore: Boolean = true, val headerLink: Boolean = true) extends Container {
   val containerType = "news"
+  val tone = "news"
+}
+case class SportContainer(val showMore: Boolean = true, val headerLink: Boolean = true) extends Container {
+  val containerType = "sport"
   val tone = "news"
 }
 case class CommentContainer(val showMore: Boolean = true, val headerLink: Boolean = true) extends Container {

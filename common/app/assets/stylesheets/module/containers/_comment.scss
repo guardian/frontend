@@ -1,11 +1,11 @@
 .container--comment {
     @include mq($to: tablet) {
         @include first-row(1);
-        .item:first-child {
-            @include card-mobile-image;
-        }
         .item:nth-child(-n+3) {
             @include card-mobile;
+        }
+        .item:first-child {
+            @include card-mobile-image;
         }
         .item:nth-child(n+2):nth-child(-n+3),{
             .item__title {
@@ -27,12 +27,7 @@
             }
         }
         .item:nth-child(n+4) {
-            @include card-headline;
-        }
-        .item:nth-child(n+5) {
-            .item__link {
-                border-top: 1px dotted $c-neutral5;
-            }
+            @extend %item-show-more;
         }
     }
     @include mq(tablet) {
