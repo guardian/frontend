@@ -68,6 +68,7 @@ define([
         } else {
             bonzo(trail).detach().prependTo(bonzo(qwery('ul:first-of-type', getContainer())));
         }
+        return true;
     }
 
     function labelAsQuestion(trail) {
@@ -156,10 +157,8 @@ define([
                 id: 'Question',
                 test: function() {
                     common.mediator.on('modules:related:loaded', function() {
-                        getTrails().forEach(function(trail) {
-                            if(isQuestion(trail)) {
-                                prepend(trail);
-                            }
+                        getTrails().some(function(trail) {
+                            return (isQuestion(trail)) ? prepend(trail) : false;
                         });
                         upgradeTrail(getTrailUrl(getTrails()[0]));
                         dates.init(document);
