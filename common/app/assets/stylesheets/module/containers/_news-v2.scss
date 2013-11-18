@@ -25,7 +25,7 @@ $metaHeight: 20px;
 
     $dimensions: (
         width: $flow-container-width,
-        min-height: $flow-container-height,
+        min-height: $flow-container-height
     );
 
     @if($flow-offset-x > 0) {
