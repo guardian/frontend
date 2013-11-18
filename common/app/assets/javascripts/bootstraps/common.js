@@ -343,7 +343,7 @@ define([
         },
 
         initAutoSignin : function() {
-            common.mediator.on('page:common:ready', function(config) {
+           mediator.on('page:common:ready', function(config) {
                 if (config.switches && config.switches.facebookAutosignin && detect.getLayoutMode() !== 'mobile') {
                     new AutoSignin(config).init();
                 }

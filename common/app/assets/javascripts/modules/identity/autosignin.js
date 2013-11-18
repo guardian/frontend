@@ -1,13 +1,13 @@
 define([
-    "ajax",
+    "utils/ajax",
     "bonzo",
     "common",
-    "modules/id",
+    "modules/identity/api",
     "modules/identity/facebook-authorizer",
     "modules/navigation/profile",
-    "modules/storage",
+    "utils/storage",
     "modules/userPrefs",
-    "modules/time"
+    "utils/time"
 ],
 function(
     ajax,
