@@ -388,12 +388,17 @@
             
             // Switch to 2-col layout for desktop
 
-            -moz-column-width: 294px;
             -webkit-column-width: 294px;
-            -moz-column-gap: $gutter;
             -webkit-column-gap: $gutter; 
-            -moz-column-count: 2;
             -webkit-column-count: 2;
+
+            -moz-column-width: 294px;
+            -moz-column-gap: $gutter;
+            -moz-column-count: 2;
+
+            column-width: 294px;
+            column-gap: $gutter; 
+            column-count: 2;
 
             .d-comment { width: auto; }
 
@@ -416,7 +421,6 @@
         }
 
         .d-comment { // Comment
-            background-color: $c-neutral7;
             border: none;
             //width: 294-$gutter/2;
             //float: left;
@@ -424,9 +428,47 @@
             display: block;
             padding: 0 0 $baseline*10 0;
 
+            /* Prevents breaking of elements in CSS3 column layout */
+            -webkit-column-break-inside:avoid;
+               -moz-column-break-inside:avoid;
+                -ms-column-break-inside:avoid;
+                 -o-column-break-inside:avoid;
+                    column-break-inside:avoid;
+
             .d-comment__inner {
+                background-color: $c-neutral7;
                 display: inline-block;
                 padding: $baseline*2 $gutter/2 $baseline*6 $gutter/2;                
+    
+                &:before { // Pointer (equilateral triangle)
+                    top: 100%;
+                    border: solid transparent;
+                    content: " ";
+                    height: 0;
+                    width: 0;
+                    position: absolute;
+                    pointer-events: none;
+                    border-color: rgba(136, 183, 213, 0);
+                    border-top-color: $c-neutral7;
+                    border-width: 30px;
+                    left: 23px ;
+                    margin-left: -30px;
+                }
+
+                &:after { // Mask (right-skewed parellelogram)
+                    top: 100%;
+                    content: " ";
+                    height: 24px;
+                    width: 24px;
+                    position: absolute;
+                    pointer-events: none;
+                    background-color: #ffffff;
+                    left: -5px;
+                    transform: skew(-10deg); 
+                    -o-transform: skew(-10deg); 
+                    -moz-transform: skew(-10deg); 
+                    -webkit-transform: skew(-10deg);                
+                }                
             }
 
             .d-comment__avatar-wrapper {
@@ -443,37 +485,6 @@
                 .d-comment__author {
                     //font-weight: bold;
                 }
-            }
-
-
-            &:before { // Pointer (equilateral triangle)
-                top: 100%;
-                border: solid transparent;
-                content: " ";
-                height: 0;
-                width: 0;
-                position: absolute;
-                pointer-events: none;
-                border-color: rgba(136, 183, 213, 0);
-                border-top-color: $c-neutral7;
-                border-width: 30px;
-                left: 23px ;
-                margin-left: -30px;
-            }
-
-            &:after { // Mask (right-skewed parellelogram)
-                top: 100%;
-                content: " ";
-                height: 24px;
-                width: 24px;
-                position: absolute;
-                pointer-events: none;
-                background-color: #ffffff;
-                left: -5px;
-                transform: skew(-10deg); 
-                -o-transform: skew(-10deg); 
-                -moz-transform: skew(-10deg); 
-                -webkit-transform: skew(-10deg);                
             }
 
         }
