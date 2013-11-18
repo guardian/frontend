@@ -226,7 +226,7 @@ define([
                                     resp.popularOnward.some(function(trail) {
                                         if(!isInHistory(trail.url)) {
                                             upgradeTrail(trail.url);
-                                            dedupe(trail);
+                                            dedupe(trail.url);
                                             dates.init(document);
                                             return true;
                                         } else {
