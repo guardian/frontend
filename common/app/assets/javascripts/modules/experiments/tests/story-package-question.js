@@ -119,10 +119,10 @@ define([
 
         var self = this;
 
-        this.id = 'StoryPackageQuestion';
+        this.id = 'ImproveOnwardTrails';
         this.expiry = '2013-11-30';
-        this.audience = 0.1;
-        this.description = 'Test effectiveness of question based trails in storypackages';
+        this.audience = 0.25;
+        this.description = 'Test effectiveness of various kinds of trails around story package';
         this.canRun = function(config) {
             if(config.page.contentType === 'Article'){
                 common.mediator.on('modules:related:loaded', function() {
@@ -181,6 +181,52 @@ define([
                                         if(!isInHistory(trail.url)) {
                                             upgradeTrail(trail.url);
                                             dedupe(trail.url);
+                                            dates.init(document);
+                                            return true;
+                                        } else {
+                                            return false;
+                                        }
+                                    });
+                                }
+                            },
+                            function(req) {
+                                common.mediator.emit('module:error', 'Failed to load most popular onward journey' + req, 'modules/experiments/tests/story-question.js');
+                            }
+                        );
+                    });
+                }
+            },
+            {
+                id: 'All',
+                test: function() {
+                    common.mediator.on('modules:related:loaded', function() {
+
+                        var promotedQuestion = false;
+                        getTrails().forEach(function(trail) {
+                            if(isQuestion(trail)) {
+                                prepend(trail);
+                                promotedQuestion = true;
+                            }
+                        });
+
+                        if (promotedQuestion) {
+                            upgradeTrail(getTrailUrl(getTrails()[0]));
+                            dates.init(document);
+                        } else {
+                            return;
+                        }
+
+                        ajax({
+                            url: mostPopularUrl + guardian.config.page.pageId + '.json',
+                            type: 'json',
+                            crossOrigin: true
+                        }).then(
+                            function(resp) {
+                                if(resp && 'popularOnward' in resp) {
+                                    resp.popularOnward.some(function(trail) {
+                                        if(!isInHistory(trail.url)) {
+                                            upgradeTrail(trail.url);
+                                            dedupe(trail);
                                             dates.init(document);
                                             return true;
                                         } else {
