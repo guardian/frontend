@@ -1,5 +1,6 @@
 define([
     "common",
+    "$",
     "modules/autoupdate",
     "modules/live-filter",
     "modules/live-summary",
@@ -14,6 +15,7 @@ define([
     "modules/open/cta"
 ], function (
     common,
+    $,
     AutoUpdate,
     LiveFilter,
     LiveSummary,
@@ -140,6 +142,7 @@ define([
         initOpen: function() {
             common.mediator.on('page:article:ready', function(config, context) {
                 var openCta = new OpenCta(context);
+                openCta.fetch($('.js-open-cta')[0]);
             });
         }
     };
