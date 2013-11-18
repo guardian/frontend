@@ -371,9 +371,23 @@
    ========================================================================== */
 
 .discussion__comments__top__container { // Section
-    
+
+    position: relative;
+        
     .discussion__comments__top__counter {
         color: $c-neutral3;
+    }
+
+    .d-image-fade {
+        background-color: #fff;
+        display: block;
+        position: absolute;
+        bottom: 49px;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 40px;
+        @include d-white-fade();
     }
 
     .discussion__comments__top { // Container
@@ -402,18 +416,6 @@
 
             .d-comment { width: auto; }
 
-        }
-
-        .d-image-fade {
-            background-color: #fff;
-            display: block;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            width: 100%;
-            height: 40px;
-            @include d-white-fade();
         }
 
         ul {
