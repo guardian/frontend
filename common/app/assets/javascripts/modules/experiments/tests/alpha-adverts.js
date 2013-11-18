@@ -43,7 +43,7 @@ define([
 
         We say can the Top slot has been viewed for 20 seconds by 4 instances, or an average of 5 seconds per
         instance.
-        
+
         The highest counter indicates the more viewed the advert.
     */
 
@@ -51,7 +51,7 @@ define([
 
         var startTime = new Date().getTime(),
             $trackedAdSlots = common.$g('.ad-slot');
-       
+
         // a timer to submit the data to diagnostics every nth second
         if (config.switches.liveStats) {
             var beaconInterval = setInterval(function() {
@@ -77,7 +77,8 @@ define([
 
         // a timer to monitor the pages for ad-slots inside the viewport
         var adTrackInterval = setInterval(function() {
-            var viewport = detect.getLayoutMode();
+            var viewport = detect.getBreakpoint();
+
             $trackedAdSlots.each(function(adEl) {
                 var adId = adEl.getAttribute('data-inview-name') || adEl.getAttribute('data-' + viewport) || '';
                 if (adId && isVisible(adEl)) {
@@ -150,7 +151,7 @@ define([
                 test: function(context, isBoth) {
                     variantName = 'Adhesive';
                     guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha2.com';
-                    var viewport = detect.getLayoutMode(),
+                    var viewport = detect.getBreakpoint(),
                         inviewName,
                         s;
                     if(viewport === 'mobile' || viewport === 'tablet' && detect.getOrientation() === 'portrait') {

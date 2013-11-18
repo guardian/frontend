@@ -51,7 +51,7 @@ define([
             common.mediator.on('page:article:ready', function(config, context) {
                 if (config.page.isLive) {
 
-                    var timerDelay = /desktop|extended/.test(detect.getLayoutMode()) ? 30000 : 60000,
+                    var timerDelay = /desktop|wide/.test(detect.getBreakpoint()) ? 30000 : 60000,
                         a = new AutoUpdate({
                         path: function() {
                             var id = context.querySelector('.article-body .block').id,
