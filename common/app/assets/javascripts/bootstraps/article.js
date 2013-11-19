@@ -15,7 +15,7 @@ define([
     "modules/open/cta"
 ], function (
     common,
-    $
+    $,
     AutoUpdate,
     LiveFilter,
     LiveSummary,
@@ -157,6 +157,7 @@ define([
             modules.initDiscussion();
             modules.initCricket();
             modules.externalLinksCards();
+            modules.initOpen();
         }
         common.mediator.emit("page:article:ready", config, context);
     };
