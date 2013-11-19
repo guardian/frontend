@@ -32,7 +32,7 @@ sudo apt-get install -y graphicsmagick
 
 sudo npm -g install grunt-cli
 
-sudo apt-get install -y openjdk-7-jdk
+sudo apt-get install -y  -o "Acquire::http::Timeout=900" openjdk-7-jdk
 
 sudo apt-get install -y ruby1.9.1-full
 
