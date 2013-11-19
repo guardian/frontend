@@ -22,5 +22,10 @@ object ErrorController extends Controller with Logging {
     Error.report(request.queryString, request.headers.get("user-agent").getOrElse("UNKNOWN USER AGENT"))
     NoCache(Ok(gif).as("image/gif"))
   } 
+  
+  def ads = Action { implicit request =>
+    Ads.report(request.queryString)
+    NoCache(Ok(gif).as("image/gif"))
+  } 
 
 }
