@@ -1,14 +1,14 @@
 define([
-    "common",
-    "modules/interactive",
+    "utils/mediator",
+    "modules/interactive/loader",
 ], function(
-    common,
+    mediator,
     Interactive
 ) {
 
     var modules = {
         augmentInteractive: function () {
-            common.mediator.on('page:interactive:ready', function(config, context) {
+            mediator.on('page:interactive:ready', function(config, context) {
                 var interactives = context.querySelectorAll('figure.interactive');
                 Array.prototype.forEach.call(interactives, function (i) {
                     new Interactive(i, context, config).init();
@@ -22,7 +22,7 @@ define([
             this.initialised = true;
             modules.augmentInteractive();
         }
-        common.mediator.emit("page:interactive:ready", config, context);
+        mediator.emit("page:interactive:ready", config, context);
     };
 
     return {

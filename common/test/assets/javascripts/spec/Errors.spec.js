@@ -1,4 +1,4 @@
-define(['common', 'bean', 'modules/errors'], function(common, bean, Errors) {
+define(['common', 'bean', 'modules/analytics/errors'], function(common, bean, Errors) {
 
     describe("Errors", function() {
        

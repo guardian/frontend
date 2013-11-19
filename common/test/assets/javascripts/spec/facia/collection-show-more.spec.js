@@ -94,7 +94,7 @@ define(['modules/facia/collection-show-more', 'bonzo', '$', 'utils/mediator', 'b
             expect($('.item', collection).length).toEqual(2);
         });
 
-        it('should initially 5 collection in the "news" container at mobile breakpoint', function() {
+        it('should initially show 5 collection in the "news" container at mobile breakpoint', function() {
             $style.html('body:after { content: "mobile"; }');
             bonzo(container).attr('data-type', 'news');
             collectionShowMore.addShowMore();
@@ -113,6 +113,15 @@ define(['modules/facia/collection-show-more', 'bonzo', '$', 'utils/mediator', 'b
             collectionShowMore.addShowMore();
             expect(emitSpy).toHaveBeenCalledWith('modules:collectionShowMore:renderButton', [collectionShowMore]);
             emitSpy.restore();
+        });
+
+        it('should be able to prepend items to the show more stack', function() {
+            $style.html('body:after { content: "mobile"; }');
+            collectionShowMore.addShowMore();
+            var extraItem = bonzo.create('<li class="item">item</li>')[0];
+            collectionShowMore.prependExtraItems([extraItem]);
+            bean.fire($('button', container)[0], 'click');
+            expect($('.item:nth-child(3)', collection)[0]).toBe(extraItem);
         });
 
     });

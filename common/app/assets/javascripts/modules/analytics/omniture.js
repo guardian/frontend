@@ -1,12 +1,12 @@
 /*global s_i_guardian:true */
 define([
     'common',
-    'modules/detect',
+    'utils/detect',
     'modules/experiments/ab',
-    'modules/storage',
-    'modules/id',
-    'modules/errors',
-    'modules/cookies'
+    'utils/storage',
+    'modules/identity/api',
+    'modules/analytics/errors',
+    'utils/cookies'
 ], function(
     common,
     detect,
@@ -193,11 +193,6 @@ define([
                     s.events   = 'event37';
                 }
                 storage.session.remove('gu.analytics.referrerVars');
-            } else if (config.swipe) {
-                s.referrer = config.swipe.referrer;
-                s.eVar24   = config.swipe.referrerPageName;
-                s.eVar37   = config.swipe.initiatedBy;
-                s.events   = 'event37';
             }
         };
 

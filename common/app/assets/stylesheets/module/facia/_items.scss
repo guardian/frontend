@@ -131,7 +131,7 @@ $c-live: #e81818;
         left: 0;
         width: 1px;
         height: 100%;
-        border-left: 1px dotted $c-neutral5;
+        border-left: 1px solid $c-neutral5;
     }
 }
 .item__link {
@@ -147,10 +147,7 @@ $c-live: #e81818;
     display: none;
     position: relative;
     margin-top: 2px;
-
-    .connection--not-low & {
-        padding-bottom: 60%;
-    }
+    padding-bottom: 60%;
 }
 .responsive-img {
     width: 100%;

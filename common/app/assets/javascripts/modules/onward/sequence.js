@@ -1,9 +1,9 @@
 define([
     'bean',
-    'ajax',
+    'utils/ajax',
     'utils/mediator',
     'lodash/arrays/difference',
-    'modules/storage',
+    'utils/storage',
     'modules/onward/history'
 ], function(
     bean,

@@ -5,8 +5,8 @@
 define([
     '$',
     'utils/mediator',
-    'modules/detect',
-    'ajax'
+    'utils/detect',
+    'utils/ajax'
 ], function (
     $,
     mediator,

@@ -1,6 +1,6 @@
 define([ 'common',
          'bean',
-         'modules/toggles',
+         'modules/ui/toggles',
          'helpers/fixtures'], function(common, bean, Toggles, fixtures) {
 
         describe("Controls", function() {
