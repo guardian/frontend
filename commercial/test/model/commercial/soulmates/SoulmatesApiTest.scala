@@ -9,8 +9,8 @@ import play.api.libs.json.Json
 
 class SoulmatesApiTest extends FlatSpec with Matchers with ExecutionContexts {
 
-  "getPopularMembers" should "load popular members from json feed" in {
-    val members = SoulmatesApi.getMixedMembers(Future {
+  "getMembers" should "load members from json feed" in {
+    val members = SoulmatesApi.getMembers(Future {
       Json.parse(Fixtures.Popular.json)
     })
 

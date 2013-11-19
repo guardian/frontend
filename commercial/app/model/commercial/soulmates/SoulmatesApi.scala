@@ -29,7 +29,15 @@ object SoulmatesApi extends ExecutionContexts with Logging {
     }
   }
 
-  private def getMembers(json: => Future[JsValue]): Future[Seq[Member]] = {
+  private def loadMenMembers(): Future[JsValue] = loadMembers {
+    CommercialConfiguration.soulmatesApi.menUrl
+  }
+
+  private def loadWomenMembers(): Future[JsValue] = loadMembers {
+    CommercialConfiguration.soulmatesApi.womenUrl
+  }
+
+  def getMembers(json: => Future[JsValue]): Future[Seq[Member]] = {
     json map {
       case JsArray(members) =>
         members map {
@@ -45,34 +53,8 @@ object SoulmatesApi extends ExecutionContexts with Logging {
     }
   }
 
-  private def loadMixedMembers(): Future[JsValue] = loadMembers {
-    CommercialConfiguration.soulmatesApi.mixedUrl
-  }
+  def getMenMembers: Future[Seq[Member]] = getMembers(loadMenMembers())
 
-  private def loadMenMembers(): Future[JsValue] = loadMembers {
-    CommercialConfiguration.soulmatesApi.menUrl
-  }
-
-  private def loadWomenMembers(): Future[JsValue] = loadMembers {
-    CommercialConfiguration.soulmatesApi.womenUrl
-  }
-
-  private def loadGayMembers(): Future[JsValue] = loadMembers {
-    CommercialConfiguration.soulmatesApi.gayUrl
-  }
-
-  private def loadLesbianMembers(): Future[JsValue] = loadMembers {
-    CommercialConfiguration.soulmatesApi.lesbianUrl
-  }
-
-  def getMixedMembers(json: => Future[JsValue] = loadMixedMembers()): Future[Seq[Member]] = getMembers(json)
-
-  def getMenMembers(json: => Future[JsValue] = loadMenMembers()): Future[Seq[Member]] = getMembers(json)
-
-  def getWomenMembers(json: => Future[JsValue] = loadWomenMembers()): Future[Seq[Member]] = getMembers(json)
-
-  def getGayMembers(json: => Future[JsValue] = loadGayMembers()): Future[Seq[Member]] = getMembers(json)
-
-  def getLesbianMembers(json: => Future[JsValue] = loadLesbianMembers()): Future[Seq[Member]] = getMembers(json)
+  def getWomenMembers: Future[Seq[Member]] = getMembers(loadWomenMembers())
 
 }
