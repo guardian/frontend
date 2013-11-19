@@ -1,10 +1,10 @@
 /*global OAS_RICH:true */
 define([
-    'common',
+    'utils/mediator',
     'bonzo',
     'postscribe'
 ], function (
-    common,
+    mediator,
     bonzo,
     postscribe
 ) {
@@ -28,7 +28,7 @@ define([
              //Hide slot to prevent layout bugs
              var node = (this.name === 'Top2') ? this.el.parentNode.parentNode : this.el.parentNode;
              bonzo(node).addClass('u-h');
-             common.mediator.emit('module:error', e, 'modules/adverts/documentwriteslot.js', 27);
+             mediator.emit('module:error', e, 'modules/adverts/documentwriteslot.js', 27);
         }
     };
 

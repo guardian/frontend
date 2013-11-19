@@ -48,6 +48,7 @@
 }
 
 .social-signin {
+    @include clearfix;
     margin: $baseline*6 0 $baseline*4;
     text-align: center;
 
@@ -55,6 +56,10 @@
         @include box-sizing(border-box);
         display: inline-block;
         margin-bottom: $baseline*2;
+
+        @include mq(tablet) {
+            float: left;
+        }
     }
 
     .social-signin__action {
@@ -75,7 +80,7 @@
 
         @include mq(tablet) {
             margin-right: $gs-gutter/2;
-            width: 218px;
+            width: gs-span(3);
         }
     }
 
@@ -84,7 +89,7 @@
 
         @include mq(tablet) {
             margin-left: $gs-gutter/2;
-            width: 218px;
+            width: gs-span(3);
         }
     }
 
@@ -129,14 +134,5 @@
         display: inline-block;
         height: 40px;
         margin-top: 14px;
-    }
-}
-
-.registration-username-check {
-    .available {
-        color: #00b334;
-    }
-    .unavailable {
-        color: $newsRed;
     }
 }

@@ -8,20 +8,15 @@ import controllers.ImageController
 
 class ImageControllerTest extends FlatSpec with Matchers {
 
-    /*
-  "Image Controller" should "return a transformed JPEG" in Fake {
-      val result = ImageController.render("sys-images/Guardian/Pix/pictures/2013/4/13/1365887611548/Danny-Shittu-of-Millwall--014.jpg", "im4java", "n")(TestRequest())
-      status(result) should be(200)
-      header("Cache-Control", result).get should include("public, max-age=86400")
-      header("Content-Type", result).get should be("image/jpeg")
-      contentAsString(result).getBytes.length should be(51400) // 
+  "ImageController" should "accept allowed characters in urls" in {
+    val ImageController.Path(clean) = "/Guardian/uk/gallery/2008/oct/15/1/GD9210779@Dream-Toys~2008,-the--950.jpg"
+    clean should be ("/Guardian/uk/gallery/2008/oct/15/1/GD9210779@Dream-Toys~2008,-the--950.jpg")
   }
-  
-  "Image Controller" should "return a transformed PNG" in Fake {
-    val result = ImageController.render("sys-images/Guardian/Pix/pictures/2012/7/16/1342432227090/-460.png", "im4java", "n")(TestRequest())
-    status(result) should be(200)
-    header("Content-Type", result).get should be("image/png")
+
+  it should "not allow unwanted characters" in {
+    evaluating {
+      val ImageController.Path(_) = "/Guardian/uk/gallery/200<script>8/oct/15/1/GD9210779@Dream-Toys-2008,-the--950.jpg"
+    } should produce [MatchError]
   }
-    */
 
 }

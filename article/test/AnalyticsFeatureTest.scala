@@ -1,14 +1,13 @@
 package test
 
 import org.scalatest.Matchers
-import org.scalatest.{ Informer, GivenWhenThen, FeatureSpec }
+import org.scalatest.{ GivenWhenThen, FeatureSpec }
 import collection.JavaConversions._
-import collection.JavaConverters._
-import org.fluentlenium.core.domain.{ FluentWebElement, FluentList }
+import org.fluentlenium.core.domain.FluentWebElement
 import conf.Configuration
-import conf.Switches._
+import common.UsesElasticSearch
 
-class AnalyticsFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
+class AnalyticsFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with UsesElasticSearch {
 
   implicit val config = Configuration
 

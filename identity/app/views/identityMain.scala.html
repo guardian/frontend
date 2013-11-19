@@ -1,4 +1,4 @@
-@(metaData: MetaData, switches: Seq[com.gu.management.Switchable], projectName: Option[String] = None)(head: Html)(body: Html)(implicit request: RequestHeader)
+@(metaData: MetaData, switches: Seq[com.gu.management.Switchable], projectName: Option[String] = Some(conf.Configuration.environment.projectName))(head: Html)(body: Html)(implicit request: RequestHeader)
 
 <!DOCTYPE html>
 <html class="js-off" lang="en-GB">

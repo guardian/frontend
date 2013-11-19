@@ -14,10 +14,11 @@ import akka.pattern.ask
 import play.api.Play.current
 import play.api.libs.concurrent.Execution.Implicits._
 import model.Content
+import common.Logging
 
 object RecentlyPublished {
   
-  implicit private val timeout = Timeout(1 second)
+  implicit private val timeout = Timeout(2 seconds)
   
   private lazy val default = {
     Akka.system.actorOf(Props[RecentlyPublished],"RecentlyPublished")
@@ -54,7 +55,7 @@ object RecentlyPublished {
   }
 }
 
-class RecentlyPublished extends Actor {
+class RecentlyPublished extends Actor with Logging {
   
   var members: Int = 0
   val (contentEnumerator, contentChannel) = Concurrent.broadcast[JsValue]
@@ -64,10 +65,12 @@ class RecentlyPublished extends Actor {
     
     case Subscribe => {
       if(members > 200) {
+        log.info("Cannot subscribe to recently published, connections exhausted.")
         sender ! CannotConnect("Max number of connections made")
       } else {
         members = members + 1
         sender ! Connected(contentEnumerator)
+        log.info(s"Subscribed to recently published success. Members = $members")
       }
     }
 
@@ -84,6 +87,7 @@ class RecentlyPublished extends Actor {
 
     case Quit => {
       members = members - 1
+      log.info(s"Unsubscribed from recently published. Members = $members")
     }
   }
 }

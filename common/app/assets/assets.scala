@@ -50,7 +50,7 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
       val suffix = project match {
         case "facia" => "facia.css"
         case "identity" => "identity.css"
-        case default => "css"
+        case default => "default.css"
       }
       val url = Play.classloader(Play.current).getResource(s"assets/head.$suffix")
 
@@ -65,8 +65,9 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
     }
 
     def oldIePath: String = Configuration.environment.projectName match {
+      case "facia" => "stylesheets/old-ie.head.facia.css"
       case "identity" => "stylesheets/old-ie.head.identity.css"
-      case _ => "stylesheets/old-ie.head.css"
+      case _ => "stylesheets/old-ie.head.default.css"
     }
   }
 }

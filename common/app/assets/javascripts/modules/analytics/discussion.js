@@ -1,4 +1,11 @@
-define(['common', 'modules/id'], function(common, Id) {
+define([
+    'common',
+    'modules/identity/api'
+], function(
+    common,
+    Id
+) {
+
     /**
      * event51: Comment
      * event72: Engagement event (e.g. recommendation)

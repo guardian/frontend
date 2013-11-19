@@ -1,10 +1,10 @@
 define([
-    'ajax',
+    'utils/ajax',
     'bonzo',
     'qwery',
     'modules/component',
     'modules/analytics/discussion',
-    'modules/id',
+    'modules/identity/api',
     'modules/discussion/api',
     'modules/discussion/comments',
     'modules/discussion/topComments',

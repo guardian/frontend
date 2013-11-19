@@ -7,10 +7,10 @@ define([
 ) {
     return {
         config: {
-            previewUrlBase: {
-                dev:  'http://localhost:9000/responsive-viewer#',
-                code: 'http://code.preview.guardianapps.co.uk/responsive-viewer#http://m.code.dev-theguardian.com',
-                prod: 'http://preview.guardianapps.co.uk/responsive-viewer#http://www.theguardian.com'
+            viewer: {
+                dev:  'http://localhost:9000',
+                code: 'http://code.preview.guardianapps.co.uk',
+                prod: 'http://preview.guardianapps.co.uk'
             },
             filterTypes: {
                 section: { display: 'in section:', param: "section", path: "sections", placeholder: "e.g. news" },

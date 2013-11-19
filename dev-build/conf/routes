@@ -119,17 +119,33 @@ GET         /metrics/fastly                                                     
 GET         /metrics/errors                                                                                  controllers.admin.DashboardController.renderErrors()
 GET         /metrics/errors/4xx                                                                              controllers.admin.DashboardController.render4XX()
 GET         /metrics/errors/5xx                                                                              controllers.admin.DashboardController.render5XX()
+GET         /metrics/memory                                                                                  controllers.admin.DashboardController.renderMemory()
 GET         /radiator                                                                                        controllers.admin.RadiatorController.renderRadiator()
 GET         /radiator/pingdom                                                                                controllers.admin.RadiatorController.pingdom()
 GET         /radiator/commit/*hash                                                                           controllers.admin.RadiatorController.commitDetail(hash)
 GET         /radiator/livestats                                                                              controllers.admin.RadiatorController.liveStats()
 GET         /troubleshoot/football                                                                           controllers.admin.FootballTroubleshooterController.renderFootballTroubleshooter()
-
+GET         /admin/commercial                                                                                controllers.admin.CommercialComponentsController.renderCommercialComponents()
 
 # Commercial
 GET         /commercial/travel/offers.json                                                                   controllers.commercial.TravelOffers.listOffers
 GET         /commercial/jobs.json                                                                            controllers.commercial.JobAds.jobs
-GET         /commercial/$advert<(soulmates|masterclasses)>.json                                              controllers.commercial.SimpleAdvert.render(advert)
+GET         /commercial/masterclasses.json                                                                   controllers.commercial.MasterClasses.list
+# New light jobs feed available only in dev env
+GET         /commercial/lightjobs.json                                                                       controllers.commercial.JobAds.lightJobs
+GET         /commercial/soulmates/mixed.json                                                                 controllers.commercial.SoulmateAds.mixed
+GET         /commercial/soulmates/men.json                                                                   controllers.commercial.SoulmateAds.men
+GET         /commercial/soulmates/women.json                                                                 controllers.commercial.SoulmateAds.women
+GET         /commercial/soulmates/gay.json                                                                   controllers.commercial.SoulmateAds.gay
+GET         /commercial/soulmates/lesbian.json                                                               controllers.commercial.SoulmateAds.lesbian
+
+# Onward journeys
+GET         /onward/popular-onward/*path.json                                                                controllers.MostPopularOnwardController.popularOnward(path)
+GET         /onward/card/*path.json                                                                          controllers.OnwardCardController.renderCard(path)
+GET         /onward/trail/*path.json                                                                         controllers.OnwardCardController.renderTrail(path)
+GET         /onward/most-read.json                                                                           controllers.MostPopularOnwardController.mostRead()
+GET         /onward/latest.json                                                                              controllers.LatestContentController.renderLatest()
+GET         /onward/recently-published                                                                       controllers.LatestContentController.recentlyPublished()
 
 # Facia
 GET         /                                                                                                controllers.FaciaController.editionRedirect(path = "")

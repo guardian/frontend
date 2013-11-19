@@ -134,7 +134,7 @@
     }
 
     .nav__link {
-        color: $c-neutral1; // This is here because the below selectors are too specific for zone-color to work
+        color: $c-neutral1;
         display: block;
         margin: 10px 0 $baseline*3;
         padding: 2px 9px 0 9px;
@@ -197,9 +197,8 @@
     .nav__item {
         float: left;
     }
-
     .nav__link {
-        color: #333333; // This is here because the below selectors are too specific for zone-color to work
+        color: $c-neutral2;
         display: block;
         margin: $baseline*4 0 $baseline*3 0;
         padding: 2px 9px 0;
@@ -207,15 +206,14 @@
         font-size: 14px;
         font-size: 1.4rem;
         font-weight: bold;
-    }
 
-    .nav__link,
-    .nav__link:focus,
-    .nav__link:active,
-    .nav__link:hover {
-        text-decoration: none;
+        &,
+        &:focus,
+        &:active,
+        &:hover {
+            text-decoration: none;
+        }
     }
-
     .is-active .nav__link {
         font-family: $serifheadline !important;
         line-height: 18px !important;
@@ -223,7 +221,7 @@
     }
 
     .nav__item:first-child .nav__link { padding-left: 0; }
-    .nav__item:last-child .nav__link { border-right: none; }
+    .nav__item:last-child  .nav__link { border-right: none; }
 }
 
 
@@ -235,8 +233,9 @@
     @include mq(tablet) { display: none; }
 
     .localnav__cta {
+        overflow: hidden;
         width: $gs-column-width;
-        height: $gs-column-height - $baseline*1.5;
+        height: 25px;
         padding: 0;
         margin: $baseline*1.5 0;
         position: absolute;

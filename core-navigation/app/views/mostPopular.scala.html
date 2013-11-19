@@ -6,7 +6,7 @@
         <h1 class="u-h">Most read</h1>
     @popular.zipWithRowInfo.map{ case (section, info) =>
         <section class="zone-@section.section">
-            <h2 class="article-zone article-zone--bleed-out tone-border">Most read: @Html(section.heading)</h2>
+            <h2 class="article-zone article-zone--bleed-out tone-news tone-border">Most read: @Html(section.heading)</h2>
             <div class="headline-list"
                  data-link-name="@section.heading">
                 <ul class="unstyled">

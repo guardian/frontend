@@ -2,12 +2,17 @@
 <html>
     <head>
         <script>
-            breakpoints = [
-                { width:  320,  height: 480,  name: "Mobile" },
-                { width:  1295, height: 1024, name: "Desktop" },
-                { width:  768,  height: 1024, name: "Tablet portrait" },
-                { width:  1024, height: 768,  name: "Tablet landscape" }
-            ]
+            var breakpoints = [
+                    { width:  320,  height: 480,  name: "Mobile" },
+                    { width:  1295, height: 1024, name: "Desktop" },
+                    { width:  768,  height: 1024, name: "Tablet portrait" },
+                    { width:  1024, height: 768,  name: "Tablet landscape" }
+                ],
+
+                base = {
+                    code: 'http://m.code.dev-theguardian.com',
+                    prod: 'http://www.theguardian.com'
+                };
         </script>
         <style>
             iframe {
@@ -26,20 +31,25 @@
     <body>
         <div class="frames"></div>
         <script>
+            function hashArgs() {
+                var obj = {};
+                window.location.hash.substring(1).split('&').forEach(function(kv) {
+                    obj[kv.split('=')[0]] = kv.split('=')[1] === undefined ? '' : decodeURIComponent(kv.split('=')[1]);
+                });
+                return obj;
+            }
+
             function init() {
-                var url = window.location.hash.substring(1),
-                    sbWidth = 15, // scrollbar width
+                var sbWidth = 15, // scrollbar width
                     html = '',
                     leftAcc = 0;
-
-                if (!url) { return; }
 
                 breakpoints.forEach(function(bp) {
                     html +=
                         '<div style="left:' + leftAcc + 'px">' +
                             '<h2>' + bp.name + '</h2>' +
                             '<iframe sandbox="allow-same-origin allow-forms allow-scripts" seamless ' +
-                                'src="' + url + '" ' +
+                                'src="' + (base[hashArgs().env] || '') + '/' + (hashArgs().url || '').replace(/^(\/|https?:\/\/)/, '') + '" ' +
                                 'width="' + (bp.width + sbWidth) + '" ' +
                                 'height="' + bp.height + '"></iframe>' +
                         '</div>';

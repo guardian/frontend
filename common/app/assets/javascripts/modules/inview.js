@@ -1,4 +1,14 @@
-define(["common", "bean"], function (common, bean) {
+define([
+    "utils/mediator",
+    'utils/to-array',
+    'utils/request-animation-frame',
+    "bean"
+], function (
+    mediator,
+    toArray,
+    requestAnimationFrame,
+    bean
+) {
 
     function Inview(selector, context) {
         var self = this;
@@ -8,15 +18,16 @@ define(["common", "bean"], function (common, bean) {
         this.refresh();
         this.checkForVisibleNodes();
 
-        bean.on(window, 'scroll', common.debounce(function() {
-            common.requestAnimationFrame(function(){
+        mediator.addListener('window:scroll', function() {
+            requestAnimationFrame(function(){
                 self.checkForVisibleNodes();
             });
-        }, 200));
+        });
     }
 
+
     Inview.prototype.refresh = function() {
-        this.inviewNodes = common.toArray(this.context.querySelectorAll(this.selector));
+        this.inviewNodes = toArray(this.context.querySelectorAll(this.selector));
     };
 
     Inview.prototype.checkForVisibleNodes = function() {
@@ -25,7 +36,7 @@ define(["common", "bean"], function (common, bean) {
             if (!el._inviewHasFired && self.isVisible(el)) {
                 // Element is visible
                 bean.fire(el, 'inview');
-                common.mediator.emit('modules:inview:visible', el);
+                mediator.emit('modules:inview:visible', el);
                 el._inviewHasFired = true;
             }
         });

@@ -9,7 +9,7 @@ import play.api.{ Application => PlayApp }
 class SwitchBoardPlugin(app: PlayApp) extends SwitchBoardAgent(Configuration)
 
 object Management extends GuManagement {
-  val applicationName = Configuration.application
+  val applicationName = "frontend-image"
   val metrics = Metrics.common
 
   lazy val pages = List(

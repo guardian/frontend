@@ -1,11 +1,6 @@
 package test
 
 import org.fluentlenium.core.domain.FluentWebElement
-import play.api.GlobalSettings
-import controllers.front.{Front, FrontLifecycle}
-import dev.DevParametersLifecycle
-import common.{AkkaAsync, FrontMetrics, Jobs}
-import concurrent.duration._
 
 object `package` {
 

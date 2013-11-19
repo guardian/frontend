@@ -1,7 +1,7 @@
 package model.commercial.jobs
 
 import org.joda.time.DateTime
-import model.commercial.{Ad, Segment, Keyword}
+import model.commercial.{Ad, Segment}
 import model.commercial.Utils._
 
 case class Job(id: Int,
@@ -19,8 +19,7 @@ case class Job(id: Int,
                listingUrl: String,
                applyUrl: String,
                sectorTags: Seq[String],
-               locationTags: Seq[String],
-               keywords: Set[Keyword] = Set())
+               locationTags: Seq[String])
   extends Ad {
 
   def isCurrent = adExpiryDate.isAfterNow
@@ -29,8 +28,7 @@ case class Job(id: Int,
     val sectionMatches = segment.context.section exists {
       section => intersects(sectorTags.toSet, Job.matchingSectorTags(section))
     }
-    val someKeywordsMatch = intersects(keywords.map(_.name), segment.context.keywords.toSet)
-    sectionMatches || someKeywordsMatch
+    sectionMatches
   }
 
 }

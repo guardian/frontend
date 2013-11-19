@@ -1,13 +1,13 @@
 define([
     'common',
     'bonzo',
-    'bean',
-    'modules/detect',
+    'utils/mediator',
+    'utils/detect',
     'modules/userPrefs'
 ], function (
     common,
     bonzo,
-    bean,
+    mediator,
     detect,
     userPrefs
 ) {
@@ -78,7 +78,7 @@ define([
                     return;
                 }
 
-                bean.on(window, 'resize', common.debounce(function(e){
+                mediator.addListener('window:resize', function(e) {
                     hasCrossedBreakpoint(function(layoutMode) {
 
                         bonzo(sectionsHeader).addClass(className);
@@ -92,7 +92,7 @@ define([
                             that.view.showColumns(sectionsHeader, sectionsNav);
                         }
                     });
-                }, 200));
+                });
 
                 if(detect.getLayoutMode() !== 'mobile') {
                     that.view.hideColumns(sectionsHeader, sectionsNav);
@@ -214,9 +214,7 @@ define([
 
         this.init = function (context) {
             this.view.bindings(context);
-
-            if (config.switches.localNav &&
-                (!config.switches.swipeNav || !detect.canSwipe() || userPrefs.isOff('swipe'))) {
+            if (config.switches.localNav) {
                     this.view.insertLocalNav(context);
             }
         };

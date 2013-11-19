@@ -13,7 +13,7 @@ import com.gu.openplatform.contentapi.model.{Content => ApiContent,Element =>Api
 class Content protected (val delegate: ApiContent) extends Trail with Tags with MetaData {
 
   lazy val publication: String = fields.get("publication").getOrElse("")
-  lazy val lastModified: DateTime = fields("lastModified").parseISODateTimeNoMillis
+  lazy val lastModified: DateTime = fields("lastModified").parseISODateTime
   lazy val shortUrl: String = delegate.safeFields("shortUrl")
   lazy val shortUrlId: String = delegate.safeFields("shortUrl").replace("http://gu.com", "")
   lazy val webUrl: String = delegate.webUrl
@@ -39,7 +39,7 @@ class Content protected (val delegate: ApiContent) extends Trail with Tags with 
   // Inherited from Trail
   override lazy val webPublicationDate: DateTime = delegate.webPublicationDate
   override lazy val linkText: String = webTitle
-  override lazy val headline: String = fields("headline")
+  override def headline: String = fields("headline")
   override lazy val url: String = SupportedUrl(delegate)
   override lazy val trailText: Option[String] = fields.get("trailText")
   override lazy val section: String = delegate.sectionId.getOrElse("")
@@ -47,7 +47,7 @@ class Content protected (val delegate: ApiContent) extends Trail with Tags with 
   override lazy val thumbnailPath: Option[String] = fields.get("thumbnail").map(ImgSrc(_, Naked))
   override lazy val isLive: Boolean = fields("liveBloggingNow").toBoolean
   override lazy val discussionId = Some(shortUrlPath)
-  override lazy val isClosedForComments: Boolean = !fields.get("commentCloseDate").exists(_.parseISODateTimeNoMillis.isAfterNow)
+  override lazy val isClosedForComments: Boolean = !fields.get("commentCloseDate").exists(_.parseISODateTime.isAfterNow)
   override lazy val leadingParagraphs: List[org.jsoup.nodes.Element] = {
     val body = delegate.safeFields.get("body")
     val souped = body flatMap { body =>
@@ -134,6 +134,13 @@ object Content {
       case _ => new Content(delegate)
     }
   }
+
+  def apply(delegate: ApiContent, metaData: Option[Map[String, String]]): Content = {
+    metaData match {
+      case Some(metaData) => new ContentWithMetaData(delegate, metaData)
+      case _ => apply(delegate)
+    }
+  }
 }
 
 class Article(content: ApiContent) extends Content(content) {
@@ -218,6 +225,7 @@ class Gallery(content: ApiContent) extends Content(content) {
 
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType, "gallerySize" -> size)
+  override lazy val openGraphImage: String = galleryImages.headOption.flatMap(_.largestImage.flatMap(_.url)).getOrElse(conf.Configuration.facebook.imageFallback)
 
   override def trailPicture: Option[ImageContainer] = thumbnail
 
@@ -257,4 +265,9 @@ class ImageContent(content: ApiContent) extends Content(content) {
   override def cards: List[(String, Any)] = super.cards ++ List(
     "twitter:card" -> "photo"
   ) ++ mainPicture.flatMap(_.largestImage.map( "twitter:image:src" -> _.path ))
+}
+
+class ContentWithMetaData(content: ApiContent, metaData: Map[String, String]) extends Content(content) {
+  override lazy val headline: String = metaData.get("headline").getOrElse(super.headline)
+  override lazy val group: Option[String] = metaData.get("group")
 }

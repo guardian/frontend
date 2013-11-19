@@ -1,15 +1,15 @@
 define([
     "common",
-    "modules/autoupdate",
-    "modules/live-filter",
-    "modules/live-summary",
-    "modules/matchnav",
+    "modules/ui/autoupdate",
+    "modules/live/filter",
+    "modules/live/summary",
+    "modules/sport/football/matchnav",
     "modules/analytics/reading",
     "modules/discussion/loader",
-    "modules/cricket",
+    "modules/sport/cricket",
     "modules/experiments/live-blog-show-more",
-    "modules/notification-counter",
-    "modules/detect",
+    "modules/ui/notification-counter",
+    "utils/detect",
     "modules/experiments/left-hand-card"
 ], function (
     common,

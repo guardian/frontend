@@ -1,6 +1,6 @@
 package feed
 
-import common.{ OnwardMetrics, Jobs }
+import common.Jobs
 import play.api.{ Application => PlayApp, Play, GlobalSettings }
 import play.api.Play.current
 
@@ -11,7 +11,7 @@ trait OnwardJourneyLifecycle extends GlobalSettings {
     Jobs.deschedule("OnwardJourneyAgentRefreshJob")
 
     // fire every min
-    Jobs.schedule("OnwardJourneyAgentRefreshJob",  "0 * * * * ?", OnwardMetrics.OnwardLoadTimingMetric) {
+    Jobs.schedule("OnwardJourneyAgentRefreshJob",  "0 * * * * ?") {
       OnwardJourneyAgent.update()
       LatestContentAgent.update()
     }
@@ -24,6 +24,10 @@ trait OnwardJourneyLifecycle extends GlobalSettings {
 
   override def onStop(app: PlayApp) {
     Jobs.deschedule("OnwardJourneyAgentRefreshJob")
+
+    OnwardJourneyAgent.stop()
+    LatestContentAgent.stop()
+
     super.onStop(app)
   }
 }

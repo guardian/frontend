@@ -4,7 +4,7 @@ $old-ie:        true;
 $mq-responsive: false;
 $svg-support:   false;
 
-@import "global.scss";
-@import "football.scss";
-@import "gallery.scss";
-@import "video.scss";
+@import "global";
+@import "football";
+@import "gallery";
+@import "video";

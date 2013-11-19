@@ -11,7 +11,7 @@ class AdAgentTest extends FlatSpec with Matchers with ExecutionContexts {
 
   private val adAgent = new AdAgent[Ad] {}
 
-  "matchingAds" should "not match any ads for a new visitor" in {
+  ignore should "not match any ads for a new visitor" in {
     val segment = Segment(Context(None, Nil), Seq("new"))
 
     val ads = adAgent.matchingAds(segment, Seq(ad))

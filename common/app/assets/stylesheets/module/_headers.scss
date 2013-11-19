@@ -61,12 +61,6 @@
         margin-right: $gs-gutter;
         padding-left: 0;
     }
-
-    &.zone-color {
-        @include mq(tablet) {
-            border-top: none;
-        }
-    }
 }
 
 /* Static pages and misc

@@ -5,16 +5,6 @@
     <div class="furniture furniture--@column card card--@column">
         <h2 class="card__title">@title</h2>
 
-        <div class="card__body u-text-hyphenate">
-            <h3 class="card__headline">
-                <a href="@trail.url" data-link-name="@linkName">@Html(trail.headline)</a>
-            </h3>
-        </div>
-
-        <div class="card__meta dateline">
-            <div class="dateline"><i class="i i-clock-grey relative-timestamp__icon"></i><time datetime="@trail.webPublicationDate" class="js-timestamp"></time></div>
-        </div>
-
         @trail.thumbnailPath.map{ thumbnailPath =>
             @trail.trailPicture.map { mainPicture =>
                 <a href="@trail.url" data-link-name="@linkName">
@@ -28,6 +18,20 @@
                 </a>
             }
         }
+
+        <div class="card__body u-text-hyphenate">
+            <h3 class="card__headline">
+                <a href="@trail.url" data-link-name="@linkName">@Html(trail.headline)</a>
+            </h3>
+        </div>
+
+        <div class="card__meta dateline">
+            <div class="dateline">
+                <i class="i i-clock-light-grey relative-timestamp__icon"></i>
+                <time datetime="@trail.webPublicationDate" class="js-timestamp">@Format(trail.webPublicationDate, "d MMM y")</time>
+            </div>
+        </div>
+
     </div>
 </div>
 

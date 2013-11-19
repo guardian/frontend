@@ -187,9 +187,12 @@ h1 span {
     border-radius: 3px;
 }
 
-.trail .webTitle {
+.web-title {
     margin: 0 190px 0 80px;
-    display: block;
+    display: block;    
+}
+
+.web-title a {
     text-decoration: none;
     font-size: 15px;
     line-height: 16px;
@@ -197,12 +200,38 @@ h1 span {
     cursor: move;
 }
 
-.trail .webTitle:hover {
+.web-title:hover a {
     color: #438835;
 }
 
-.trail .webTitle--override {
-    color: #0088cc;
+.web-title--editor {
+    display: none;
+}
+
+.latest-articles .web-title--editor {
+    display: none !important;
+}
+
+.web-title:hover .web-title--editor {
+    opacity: 0.5;
+    display: inline-block;
+}
+
+.web-title--editor:hover {
+    opacity: 1;
+}
+
+.web-title--edited {
+    opacity: 0.75;
+    display: inline-block;
+    background-color: #CCCCCC;
+    border: 2px solid #CCCCCC;
+    border-radius: 4px;
+    margin: 0;
+}
+
+.web-title--edited:hover {
+    opacity: 1;
 }
 
 .trail .trail__meta {

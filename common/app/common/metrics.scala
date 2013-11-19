@@ -1,8 +1,10 @@
 package common
 
+import play.api.{Application => PlayApp, Play, GlobalSettings}
 import com.gu.management._
 import conf.RequestMeasurementMetrics
 import java.lang.management.ManagementFactory
+import model.diagnostics.CloudWatch
 
 trait TimingMetricLogging extends Logging { self: TimingMetric =>
   override def measure[T](block: => T): T = {
@@ -48,6 +50,31 @@ object SystemMetrics extends implicits.Numbers {
     () => ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getUsed / 1048576
   )
 
+  //  http://docs.oracle.com/javase/6/docs/api/java/lang/management/OperatingSystemMXBean.html()
+  object LoadAverageMetric extends GaugeMetric("system", "load-average", "Load average", "Load average",
+    () => ManagementFactory.getOperatingSystemMXBean.getSystemLoadAverage
+  )
+
+  object AvailableProcessorsMetric extends GaugeMetric("system", "available-processors", "Available processors", "Available processors",
+    () => ManagementFactory.getOperatingSystemMXBean.getAvailableProcessors
+  )
+
+  // yeah, casting to com.sun.. ain't too pretty
+  object TotalPhysicalMemoryMetric extends GaugeMetric("system", "total-physical-memory", "Total physical memory", "Total physical memory",
+    () => ManagementFactory.getOperatingSystemMXBean match {
+      case b: com.sun.management.OperatingSystemMXBean => b.getTotalPhysicalMemorySize
+      case _ => -1
+    }
+  )
+
+  object FreePhysicalMemoryMetric extends GaugeMetric("system", "free-physical-memory", "Free physical memory", "Free physical memory",
+    () => ManagementFactory.getOperatingSystemMXBean match {
+      case b: com.sun.management.OperatingSystemMXBean => b.getFreePhysicalMemorySize
+      case _ => -1
+    }
+  )
+
+
   private lazy val buildNumber = ManifestData.build match {
     case string if string.isInt => string.toInt
     case _ => -1 // dev machines do not have a build number
@@ -58,19 +85,9 @@ object SystemMetrics extends implicits.Numbers {
   )
 
   val all = Seq(MaxHeapMemoryMetric, UsedHeapMemoryMetric,
-    MaxNonHeapMemoryMetric, UsedNonHeapMemoryMetric, BuildNumberMetric)
-}
-
-object CommonApplicationMetrics {
-  object SwitchBoardLoadTimingMetric extends TimingMetric(
-    "switchboard",
-    "switchboard-load",
-    "Switchboard load timing",
-    "Time spent running switchboard load jobs",
-    None
-  ) with TimingMetricLogging
-
-  val all: Seq[Metric] = Seq(SwitchBoardLoadTimingMetric)
+    MaxNonHeapMemoryMetric, UsedNonHeapMemoryMetric, BuildNumberMetric, LoadAverageMetric, AvailableProcessorsMetric,
+    TotalPhysicalMemoryMetric, FreePhysicalMemoryMetric
+  )
 }
 
 object ContentApiMetrics {
@@ -157,108 +174,6 @@ object AdminMetrics {
   val all = Seq(ConfigUpdateCounter, ConfigUpdateErrorCounter, SwitchesUpdateCounter, SwitchesUpdateErrorCounter)
 }
 
-object DiagnosticsMetrics {
-  object DiagnosticsLoadTimingMetric extends TimingMetric(
-    "diagnostics",
-    "diagnostics-load",
-    "Diagnostics load timing",
-    "Time spent running diagnostics load jobs",
-    None
-  ) with TimingMetricLogging
-}
-
-object PorterMetrics {
-  object AnalyticsLoadTimingMetric extends TimingMetric(
-    "porter",
-    "porter-analytics-load",
-    "Porter analytics load timing",
-    "Time spent running analytics load jobs",
-    None
-  ) with TimingMetricLogging
-
-  object FastlyCloudwatchLoadTimingMetric extends TimingMetric(
-    "porter",
-    "porter-fastly-cloudwatch-load",
-    "Porter Fastly to Cloudwatch load timing",
-    "Time spent running Fastly to Cloudwatch statistics load jobs",
-    None
-  ) with TimingMetricLogging
-
-  val all: Seq[Metric] = Seq(AnalyticsLoadTimingMetric, FastlyCloudwatchLoadTimingMetric)
-}
-
-object CoreNavigationMetrics {
-  object MostPopularLoadTimingMetric extends TimingMetric(
-    "core-nav",
-    "core-nav-most-popular-load",
-    "Core Navigation Most Popular load timing",
-    "Time spent running most popular data load jobs",
-    None
-  ) with TimingMetricLogging
-
-  val all: Seq[Metric] = Seq(MostPopularLoadTimingMetric)
-}
-
-object FrontMetrics {
-  object FrontLoadTimingMetric extends TimingMetric(
-    "front",
-    "front-load",
-    "Front load timing",
-    "Time spent running front data load jobs",
-    None
-  ) with TimingMetricLogging
-
-  val all: Seq[Metric] = Seq(FrontLoadTimingMetric)
-}
-
-object FootballMetrics {
-  object MatchDayLoadTimingMetric extends TimingMetric(
-    "football",
-    "football-matchday-load",
-    "Football match day load timing",
-    "Time spent running football match day data load jobs",
-    None
-  ) with TimingMetricLogging
-
-  object CompetitionLoadTimingMetric extends TimingMetric(
-    "football",
-    "football-competition-load",
-    "Football competition load timing",
-    "Time spent running competition data load jobs",
-    None
-  ) with TimingMetricLogging
-
-  object CompetitionAgentLoadTimingMetric extends TimingMetric(
-    "football",
-    "football-competition-agent-load",
-    "Football competition agent load timing",
-    "Time spent running competition agent data load jobs",
-    None
-  ) with TimingMetricLogging
-
-  object LiveBlogRefreshTimingMetric extends TimingMetric(
-    "football",
-    "football-live-blog-refresh",
-    "Football live blog refresh timing",
-    "Time spent running live blog refresh jobs",
-    None
-  ) with TimingMetricLogging
-
-  object TeamTagMappingsRefreshTimingMetric extends TimingMetric(
-    "football",
-    "football-team-tag-refresh",
-    "Football team tag mappings refresh timing",
-    "Time spent running team tag mapping refresh jobs",
-    None
-  ) with TimingMetricLogging
-
-  val all: Seq[Metric] = Seq(
-    MatchDayLoadTimingMetric, CompetitionLoadTimingMetric,
-    CompetitionAgentLoadTimingMetric, LiveBlogRefreshTimingMetric,
-    TeamTagMappingsRefreshTimingMetric
-  )
-}
-
 object FaciaMetrics {
 
   object JsonParsingErrorCount extends CountMetric(
@@ -319,6 +234,14 @@ object CommercialMetrics {
     None
   ) with TimingMetricLogging
 
+  object MasterClassesLoadTimingMetric extends TimingMetric(
+    "commercial",
+    "commercial-masterclasses-load",
+    "Commercial MasterClasses load timing",
+    "Time spent running MasterClasses load jobs",
+    None
+  ) with TimingMetricLogging
+
   object JobsLoadTimingMetric extends TimingMetric(
     "commercial",
     "commercial-jobs-load",
@@ -327,7 +250,15 @@ object CommercialMetrics {
     None
   ) with TimingMetricLogging
 
-  val all: Seq[Metric] = Seq(TravelOffersLoadTimingMetric, JobsLoadTimingMetric)
+  object SoulmatesLoadTimingMetric extends TimingMetric(
+    "commercial",
+    "commercial-soulmates-load",
+    "Commercial Soulmates load timing",
+    "Time spent running soulmates ad data load jobs",
+    None
+  ) with TimingMetricLogging
+
+  val all: Seq[Metric] = Seq(TravelOffersLoadTimingMetric, JobsLoadTimingMetric, MasterClassesLoadTimingMetric, SoulmatesLoadTimingMetric)
 }
 
 object OnwardMetrics {
@@ -342,8 +273,9 @@ object OnwardMetrics {
   val all: Seq[Metric] = Seq(OnwardLoadTimingMetric)
 }
 
+
 object Metrics {
-  lazy val common = RequestMeasurementMetrics.asMetrics ++ SystemMetrics.all ++ CommonApplicationMetrics.all
+  lazy val common = RequestMeasurementMetrics.asMetrics ++ SystemMetrics.all
 
   lazy val contentApi = ContentApiMetrics.all
   lazy val pa = PaMetrics.all
@@ -352,9 +284,46 @@ object Metrics {
   lazy val admin = AdminMetrics.all
   lazy val facia = FaciaMetrics.all
   lazy val faciaTool = FaciaToolMetrics.all
-  lazy val porter = PorterMetrics.all
-  lazy val coreNavigation = CoreNavigationMetrics.all
-  lazy val front = FrontMetrics.all
-  lazy val football = FootballMetrics.all
-  lazy val commercial = CommercialMetrics.all
+}
+
+trait CloudWatchApplicationMetrics extends GlobalSettings {
+
+  def applicationName: String
+
+  def report() {
+
+    val metrics = Map(
+      s"$applicationName-max-heap-memory" -> SystemMetrics.MaxHeapMemoryMetric.getValue().toDouble,
+      s"$applicationName-used-heap-memory" -> SystemMetrics.UsedHeapMemoryMetric.getValue().toDouble,
+
+      s"$applicationName-total-physical-memory" -> SystemMetrics.TotalPhysicalMemoryMetric.getValue().toDouble,
+      s"$applicationName-free-physical-memory" -> SystemMetrics.FreePhysicalMemoryMetric.getValue().toDouble,
+
+      s"$applicationName-available-processors" -> SystemMetrics.AvailableProcessorsMetric.getValue().toDouble,
+
+      s"$applicationName-load-average" -> SystemMetrics.LoadAverageMetric.getValue().toDouble,
+
+      s"$applicationName-build-number" -> SystemMetrics.BuildNumberMetric.getValue().toDouble
+    )
+
+    CloudWatch.put("ApplicationSystemMetrics", metrics)
+  }
+
+  override def onStart(app: PlayApp) {
+    Jobs.deschedule("ApplicationSystemMetricsJob")
+    super.onStart(app)
+
+    // don't fire off metrics during test runs
+    if (!Play.isTest(app)) {
+      Jobs.schedule("ApplicationSystemMetricsJob", "0 * * * * ?"){
+        report()
+      }
+    }
+  }
+
+  override def onStop(app: PlayApp) {
+    Jobs.deschedule("ApplicationSystemMetricsJob")
+    super.onStop(app)
+  }
+
 }

@@ -36,7 +36,7 @@ object Comment extends {
         body = (json \ "body").as[String],
         responses = responses,
         profile = Profile(json),
-        date = (json \ "isoDateTime").as[String].parseISODateTimeNoMillis,
+        date = (json \ "isoDateTime").as[String].parseISODateTime,
         isHighlighted = (json \ "isHighlighted").as[Boolean],
         isBlocked = (json \ "status").as[String].contains("blocked"),
         responseTo = (json \\ "responseTo").headOption.map(ResponseTo(_)),

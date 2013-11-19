@@ -1,12 +1,15 @@
 define([
     'common',
-    'modules/storage',
+    'utils/storage',
 
     //Current tests
     'modules/experiments/tests/aa',
     'modules/experiments/tests/live-blog-show-more',
     'modules/experiments/tests/alpha-adverts',
     'modules/experiments/tests/commercial-components',
+    'modules/experiments/tests/story-package-question',
+    'modules/experiments/tests/initial-show-more',
+    'modules/experiments/tests/show-more-layout'
 ], function (
     common,
     store,
@@ -14,7 +17,10 @@ define([
     Aa,
     LiveBlogShowMore,
     AlphaAdverts,
-    CommercialComponentsTest
+    CommercialComponentsTest,
+    StoryPackageQuestion,
+    InitialShowMore,
+    ShowMoreLayout
     ) {
 
     var TESTS = [
@@ -22,6 +28,9 @@ define([
             new LiveBlogShowMore(),
             new AlphaAdverts(),
             new CommercialComponentsTest(),
+            new StoryPackageQuestion(),
+            new InitialShowMore(),
+            new ShowMoreLayout()
         ],
         participationsKey = 'gu.ab.participations';
 

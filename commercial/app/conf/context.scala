@@ -10,12 +10,12 @@ class SwitchBoardPlugin(app: PlayApp) extends SwitchBoardAgent(Configuration)
 
 object Management extends GuManagement {
   val applicationName = "frontend-commercial"
-  val metrics = Metrics.contentApi ++ Metrics.common ++ Metrics.commercial
+  val metrics = Metrics.contentApi ++ Metrics.common
 
   lazy val pages = List(
     new ManifestPage,
     new UrlPagesHealthcheckManagementPage(
-      "/commercial/travel/offers.json"
+      "/commercial/travel/offers.json?k=france"
     ),
     StatusPage(applicationName, metrics),
     new PropertiesPage(Configuration.toString()),

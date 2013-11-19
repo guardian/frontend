@@ -1,11 +1,10 @@
 define([
-    'common',
+    '$',
     'qwery',
     'bonzo',
-    'ajax',
-
+    'utils/ajax',
     'modules/userPrefs',
-    'modules/detect',
+    'utils/detect',
     'modules/adverts/document-write',
     'modules/adverts/documentwriteslot',
     'modules/adverts/dimensionMap',
@@ -15,7 +14,7 @@ define([
 
 ],
 function (
-    common,
+    $,
     qwery,
     bonzo,
     ajax,
@@ -112,6 +111,10 @@ function (
         );
     }
 
+    function hideAds() {
+        $('.ad-slot').addClass('is-invisible');
+    }
+
     //Temporary middle slot needs better implementation in the future
     function generateMiddleSlot() {
         var slot,
@@ -132,6 +135,7 @@ function (
     }
 
     return {
+        hideAds: hideAds,
         init: init,
         loadAds: loadAds,
         isOnScreen: isOnScreen

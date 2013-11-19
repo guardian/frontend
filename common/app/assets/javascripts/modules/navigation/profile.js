@@ -1,4 +1,14 @@
-define(['common', 'ajax', 'bonzo', 'modules/id'], function(common, ajax, bonzo, Id) {
+define([
+    'common',
+    'utils/ajax',
+    'bonzo',
+    'modules/identity/api'
+], function(
+    common,
+    ajax,
+    bonzo,
+    Id
+) {
 
     /**
      * @param {Object} config
@@ -22,7 +32,8 @@ define(['common', 'ajax', 'bonzo', 'modules/id'], function(common, ajax, bonzo, 
             container: 'js-profile-nav',
             content: 'js-profile-info',
             popup: 'js-profile-nav-popup',
-            signout: 'js-nav-signout'
+            signout: 'js-nav-signout',
+            emailPrefs: 'js-nav-emailPrefs'
         }
     };
 
@@ -55,7 +66,11 @@ define(['common', 'ajax', 'bonzo', 'modules/id'], function(common, ajax, bonzo, 
 
         if (user) {
             $container.addClass('is-signed-in');
-            $popup.html('<a href="' + this.config.url + '/signout" class="pull-right box-indent ' + Profile.CONFIG.classes.signout + '">Sign out</a>');
+            $popup.html(
+                '<a href="' + this.config.url + '/email-prefs" class="pull-right box-indent ' + Profile.CONFIG.classes.emailPrefs + '">Email preferences</a>'
+                    +
+                '<a href="' + this.config.url + '/signout" class="pull-right box-indent ' + Profile.CONFIG.classes.signout + '">Sign out</a>'
+            );
         } else {
             $popup.remove();
         }

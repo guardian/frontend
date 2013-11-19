@@ -32,6 +32,10 @@
     padding: 0;
 }
 
+.form-fields-group .form-field {
+    margin-bottom: 0;
+}
+
 .form-fields > li,
 .form-field {
     list-style: none;
@@ -122,6 +126,7 @@
     font-size: 1.4rem;
     margin: 0 $gs-gutter 0 0;
     min-width: gs-span(2);
+    outline: none;
     padding: 11px 0;
 
     &:hover,
@@ -138,8 +143,9 @@
     background: $c-neutral5;
 }
 
-.check-label {
-    display: inline-block;
+.check-label,
+.radio-label {
+    display: block;
     font-family: $sans-serif;
     font-size: 13px;
     font-size: 1.3rem;
@@ -148,10 +154,12 @@
 }
 
 .check-label--helper {
+    display: inline-block;
     vertical-align: middle;
 }
 
-[type=checkbox] {
+[type=checkbox],
+[type=radio] {
     float: left;
     height: 13px;
     margin-left: -$gs-gutter;

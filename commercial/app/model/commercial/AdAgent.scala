@@ -17,7 +17,13 @@ trait AdAgent[T <: Ad] {
   protected def updateCurrentAds(ads: Seq[T]) = agent send ads
 
   def matchingAds(segment: Segment, adsToChooseFrom: Seq[T] = currentAds): Seq[T] = {
-    adsToChooseFrom filter (segment.isRepeatVisitor && _.matches(segment))
+    // TODO: reinstate repeatVisitor condition when the time is right
+    //adsToChooseFrom filter (segment.isRepeatVisitor && _.matches(segment))
+    adsToChooseFrom filter (_.matches(segment))
+  }
+
+  def stop() {
+    agent.close()
   }
 
 }

@@ -1,16 +1,11 @@
 .container--section {
     @include mq($to: tablet) {
-        @include row(2);
+        @include first-row(2);
         .item:nth-child(-n+2) {
             @include card-half-width($with-image: true);
         }
         .item:nth-child(n+3) {
-            @include card-headline;
-        }
-        .item:nth-child(n+4) {
-            .item__link {
-                border-top: 1px dotted $c-neutral5;
-            }
+            @extend %item-show-more;
         }
     }
     @include mq(tablet) {
@@ -19,13 +14,13 @@
         }
     }
     @include mq(tablet, desktop) {
-        @include row(3);
+        @include first-row(3);
         .item:nth-child(-n+3) {
             @include card-image;
         }
     }
     @include mq(desktop) {
-        @include row(4);
+        @include first-row(4);
         .item:nth-child(-n+4) {
             @include card-image;
         }

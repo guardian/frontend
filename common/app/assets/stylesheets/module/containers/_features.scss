@@ -4,51 +4,33 @@
         .item:first-child {
             @include card-mobile($with-image: true);
         }
-        .item:nth-child(2),
-        .item:nth-child(3) {
+        .item:nth-child(n+2):nth-child(-n+3) {
             @include card-half-width($with-image: true);
         }
-        .item:nth-child(2) {
-            @include row-start;
-        }
         .item:nth-child(n+4) {
-            @include card-headline;
+            @extend %item-show-more;
         }
-        .item:nth-child(n+5) {
-            .item__link {
-                border-top: 1px dotted $c-neutral5;
-            }
+    }
+    @include mq(tablet) {
+        .item:nth-child(n+2) {
+            @include card;
+        }
+        .item:nth-child(n+2):nth-child(-n+3) {
+            @include card-image;
         }
     }
     @include mq(tablet, desktop) {
         .item:first-child {
             @include card-full-width-feature;
         }
-        .item:nth-child(n+2) {
-            @include card;
-        }
-        .item:nth-child(n+2):nth-child(-n+4)  {
+        .item:nth-child(4)  {
             @include card-image;
-        }
-        @include first-row(1);
-        .item:nth-child(3n+2) {
-            @include row-start;
         }
     }
     @include mq(desktop) {
+        @include first-row(2);
         .item:first-child {
             @include card-triple-width;
-        }
-        .item:nth-child(n+2) {
-            @include card;
-        }
-        .item:nth-child(2),
-        .item:nth-child(3) {
-            @include card-image;
-        }
-        @include first-row(2);
-        .item:nth-child(4n+4) {
-            @include row-start;
         }
     }
 }

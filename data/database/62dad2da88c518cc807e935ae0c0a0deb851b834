@@ -1,0 +1,330 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"artanddesign/gallery/2013/nov/11/worlds-oddest-jobs-in-pictures",
+      "sectionId":"artanddesign",
+      "sectionName":"Art and design",
+      "webPublicationDate":"2013-11-11T12:39:00Z",
+      "webTitle":"The world's oddest jobs – in pictures",
+      "webUrl":"http://www.theguardian.com/artanddesign/gallery/2013/nov/11/worlds-oddest-jobs-in-pictures",
+      "apiUrl":"http://content.guardianapis.com/artanddesign/gallery/2013/nov/11/worlds-oddest-jobs-in-pictures",
+      "fields":{
+        "trailText":"<p>Nancy Rica Schiff is a professional photographer who spends her time hunting down people working in the world's most unusual occupations</p>",
+        "headline":"The world's oddest jobs – in pictures",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-11T15:55:03Z",
+        "hasStoryPackage":"false",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/online/2013/11/7/1383827021279/A-dog-food-tester---one-o-003.jpg",
+        "standfirst":"Nancy Rica Schiff is a professional photographer hunting down people working in the world's most unusual occupations, be it dog food tasters, armpit sniffers or dinosaur dusters",
+        "shortUrl":"http://gu.com/p/3k7gx",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/online/2013/11/7/1383827021279/A-dog-food-tester---one-o-003.jpg",
+        "commentable":"false",
+        "internalContentCode":"421907197",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "publication":"theguardian.com",
+        "internalPageCode":"1993519",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-14T12:39:55Z"
+      },
+      "tags":[{
+        "id":"artanddesign/photography",
+        "type":"keyword",
+        "webTitle":"Photography",
+        "webUrl":"http://www.theguardian.com/artanddesign/photography",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/photography",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"artanddesign/artanddesign",
+        "type":"keyword",
+        "webTitle":"Art and design",
+        "webUrl":"http://www.theguardian.com/artanddesign/artanddesign",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/artanddesign",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"money/work-and-careers",
+        "type":"keyword",
+        "webTitle":"Work & careers",
+        "webUrl":"http://www.theguardian.com/money/work-and-careers",
+        "apiUrl":"http://content.guardianapis.com/money/work-and-careers",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/money",
+        "type":"keyword",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/money/money",
+        "apiUrl":"http://content.guardianapis.com/money/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"type/gallery",
+        "type":"type",
+        "webTitle":"Gallery",
+        "webUrl":"http://www.theguardian.com/inpictures",
+        "apiUrl":"http://content.guardianapis.com/inpictures",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-422214171",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/online/2013/11/7/1383827021279/A-dog-food-tester---one-o-003.jpg",
+          "typeData":{
+            "source":"Caters News Agency",
+            "photographer":"Nancy Rica Schiff",
+            "altText":"A dog food tester - one of the world's oddest jobs",
+            "height":"84",
+            "credit":"Nancy Rica Schiff/Caters News Agency",
+            "caption":"A dog food tester - one of the world's oddest jobs Photograph: Nancy Rica Schiff/Caters News Agency",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-421907179",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":1,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/7/1383826489610/Odour-judge-002.jpg",
+          "typeData":{
+            "source":"Caters News Agency",
+            "photographer":"Nancy Rica Schiff",
+            "altText":"World's oddest jobs: Odour judge",
+            "height":"413",
+            "credit":"Nancy Rica Schiff/Caters News Agency",
+            "caption":"Odour judge<br/>\r\nCincinnati, Ohio<br/>\r\nAt 50-year-old Hilltop Labs in Cincinnati, odour tests are carried out daily on axillae (aka armpits), breath, feet, cat litter, and nappies. Here a test is being performed on a subject who has followed strict protocol for the deodorant efficacy study. Betty Lyons began her career 35 years ago as a subject herself. She then trained for almost a year and is still tested monthly to measure her acuity. Odours are judged on a scale of one to 10, and most odour judges are women: they are able to make finer distinctions, apparently.\r\n",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-421907519",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":2,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/7/1383826804812/Golf-ball-diver-009.jpg",
+          "typeData":{
+            "source":"Caters News Agency",
+            "photographer":"Nancy Rica Schiff",
+            "altText":"World's oddest jobs: Golf ball diver",
+            "height":"404",
+            "credit":"Nancy Rica Schiff/Caters News Agency",
+            "caption":"Golf ball diver<br/>\r\nKissimmee, Florida<br/>\r\nJeffrey Bleim says his work is always 'picking up'. Clad in three layers of wetsuits and towing 45lbs of scuba gear, 18lbs of weights at his waist, and 60lbs of golf balls in a net hanging from his neck, he glides through the waters of Orlando-area golf courses picking up after the mistakes of others. On a typical day like this one at Falcon’s Fire Golf Course, he scores 5,000 balls, making his weekly take 25,000. Last year he retrieved 800,000 balls, weighing in at 40 tonnes. He ships them off to a refinishing company, which in turn sells them for half price. Jeffrey’s take: somewhere between 5 and 10 cents a ball. \r\n",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-421907164",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":3,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/7/1383826486590/Dog-food-tester-001.jpg",
+          "typeData":{
+            "source":"Caters News Agency",
+            "photographer":"Nancy Rica Schiff",
+            "altText":"World's oddest jobs: Dog food tester",
+            "height":"403",
+            "credit":"Nancy Rica Schiff/Caters News Agency",
+            "caption":"Dog food tester<br/>\r\nManhattan, Kansas<br/>\r\nDog-food testing is not for the squeamish, because the best way to test it, claims Patricia Patterson, is to taste it. At the Sensory Analysis Center on the campus of Kansas State University, she analyses samples of dog food for flavour, of course, but also for texture. Typically, dog owners don’t like dog foods that make lots of crumbs. Patricia may conduct a test in which she compares the hard texture of a mini steak-shaped dog biscuit to seven very different human food samples: cream cheese, hard cheese, egg white, olives, frankfurters, nuts, and candy. Occasionally, she may be called on to test a competitor’s product. If, for example, another dog food manufacturer\r\nclaims that their product is beefier, Patricia will have the final word on where’s the beef.",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-421907166",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":4,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/7/1383826494368/Mens-underwear-designer-004.jpg",
+          "typeData":{
+            "source":"Caters News Agency",
+            "photographer":"Nancy Rica Schiff",
+            "altText":"World's oddest jobs: Men's underwear designer",
+            "height":"404",
+            "credit":"Nancy Rica Schiff/Caters News Agency",
+            "caption":"Men’s underwear designer<br/>\r\nNew York, New York<br/>\r\nOriginally a designer of men’s ties, Jennifer Fischetti spent 20 years working in various facets of menswear before getting down to their underwear. Once there, she quickly realised she had some serious design challenges ahead. With today’s men being so fashion conscious, the long-time favourite – 'tighty whiteys' – have some real competition. As vice-president of men’s underwear at Nautica, she designs new fits, such as the trunk, and works with new synthetic fabrics, but, as always, comfort takes top priority. Jennifer is forced to get up pretty\r\nclose and personal to some hunky models, making certain they’re comfortable, both fore and aft.",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-421907160",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":5,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/7/1383826492006/Crisp-inspector-003.jpg",
+          "typeData":{
+            "source":"Caters News Agency",
+            "photographer":"Nancy Rica Schiff",
+            "altText":"World's oddest jobs: Crisp inspector",
+            "height":"403",
+            "credit":"Nancy Rica Schiff/Caters News Agency",
+            "caption":"Potato chip inspector<br/>\r\nHyannis, Massachusetts<br/>\r\nOne potato, two potatoes, three potatoes, four – what can a potato chip inspector be looking for? According to Cindy Pina at the Cape Cod Potato Chip Factory in Hyannis, Massachusetts, she looks for over-cooked chips, but more importantly, for chips that are clumped together. Such clumps will ruin the whole bag. Cindy has been inspecting potato chips for 12 years and, she admits, eats far fewer chips today than when she began the job. She also reveals an occupational hazard: when she does eat chips, she can’t keep herself from inspecting them closely.",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-421907082",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":6,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/7/1383826503887/Artificial-inseminator-008.jpg",
+          "typeData":{
+            "source":"Caters News Agency",
+            "photographer":"Nancy Rica Schiff",
+            "altText":"World's oddest jobs: Artificial inseminator",
+            "height":"406",
+            "credit":"Nancy Rica Schiff/Caters News Agency",
+            "caption":"Artificial inseminator<br/>\r\nLa Sal, Utah<br/>\r\nAs a theriogenologist, Jim O’Neal is handy at his work, artificially inseminating hundreds of heifers a day. From late April through late June, Jim can be found visiting one of the many ranches he services in his custom-built trailer. He doesn’t roll up his sleeves but, as you can see, he unzips his specially designed work suit, dons a plastic glove that covers the entire length of his arm, and reaches deep inside the cow. As soon as he feels her cervix, he injects her with 6m to 10m live sperm contained in a vial he holds in his other hand. With a 65 to 70% pregnancy rate, his success is undeniable.",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-421907158",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":7,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/7/1383826499082/Crack-filler-006.jpg",
+          "typeData":{
+            "source":"Caters News Agency",
+            "photographer":"Nancy Rica Schiff",
+            "altText":"World's oddest jobs: Crack filler",
+            "height":"406",
+            "credit":"Nancy Rica Schiff/Caters News Agency",
+            "caption":"Crack filler<br/>\r\nKeystone, South Dakota<br/>\r\nHe looks like a fly on Thomas Jefferson’s nose, but Jeffrey Glanzer is doing the very important job of crack filling: repairing the wear and tear in the Black Hills of South Dakota since the sculpture on Mt Rushmore was begun in 1927. (It was completed in 1941.) The rangers who do this conservation work formerly used a mixture of granite dust, linseed oil, and white lead powder. However, since 1989 they’ve been using a silicone sealant. Maintenance is done on an annual schedule, and there’s no denying that it’s a monumental job.\r\n",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-421907521",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":8,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/7/1383826807333/Rubber-chicken-maker-010.jpg",
+          "typeData":{
+            "source":"Caters News Agency",
+            "photographer":"Nancy Rica Schiff",
+            "altText":"World's oddest jobs: Rubber chicken maker",
+            "height":"403",
+            "credit":"Nancy Rica Schiff/Caters News Agency",
+            "caption":"Rubber chicken maker<br/>\r\nSalt Lake City, Utah<br/>\r\nWith a catalogue of more than 1,000 joke items, Gene Rose can boast that rubber chickens have helped make him a millionaire. He’s been selling them all over the US for the past 25 years. No one can explain the rubber chicken’s great appeal – least of all Rose – but he gives credit to Johnny Carson and The Tonight Show for helping to popularise his prize poultry. Having launched his career as owner of a magic shop at 17, Rose, now an octogenarian, has demonstrated that with the right product, and a bit of luck, anyone can hit the jackpot.",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-421908098",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":9,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/7/1383827287820/Tampon-tester-012.jpg",
+          "typeData":{
+            "source":"Caters News Agency",
+            "photographer":"Nancy Rica Schiff",
+            "altText":"World's oddest jobs: Tampon tester",
+            "height":"407",
+            "credit":"Nancy Rica Schiff/Caters News Agency",
+            "caption":"Tampon tester<br/>\r\nMcElhattan, Pennsylvania<br/>\r\nDaniel Raudabaugh doesn’t mind telling women what he does for a living; in fact, he finds that it makes for interesting conversation. Working the second shift at First Quality, he spends eight hours, from 3pm to 11pm, testing tampons – regular, super, and plus sizes – for such traits as absorbency, head projection, and cord strength. First Quality turns out tampons 24 hours a day, five days a week,\r\nproducing some 1m to 2m a day. Raudabaugh himself is likely to spot test around 125 pieces out of 500,000 or more. ",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-421907162",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":10,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/7/1383826496860/Dinosaur-duster-005.jpg",
+          "typeData":{
+            "source":"Caters News Agency",
+            "photographer":"Nancy Rica Schiff",
+            "altText":"World's oddest jobs: Dinosaur duster",
+            "height":"407",
+            "credit":"Nancy Rica Schiff/Caters News Agency",
+            "caption":"Dinosaur duster<br/>\r\nWashington, D.C.<br/>\r\nFor more than 30 years, Frank Braisted has been dusting 145m-year-old bones. Frank is the one and only dinosaur duster at the Smithsonian Museum of Natural History in Washington DC. Five days a week in the early hours of the morning, he has the dinosaurs all to himself as he grooms them with a feather duster and a vacuum cleaner. One thing he never does, however, is touch the bones. Here Frank appears with the Stegosaurus. His favourite is the Allosaurus, a meat-eater with impressive teeth and claws. ",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-421907505",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":11,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/7/1383826809961/Fish-counter-011.jpg",
+          "typeData":{
+            "source":"Caters News Agency",
+            "photographer":"Nancy Rica Schiff ",
+            "altText":"World's oddest jobs: Fish counter",
+            "height":"404",
+            "credit":"Nancy Rica Schiff /Caters News Agency",
+            "caption":"Fish counter<br/>\r\nSeattle, Washington<br/>\r\nThere’s something decidedly fishy about Julie Booker’s job. Working only during spawning season, from June through October, she stays awake some nights until 1am, counting fish every 10 minutes. She works at the Ballard Locks, which separate Seattle’s Lake Washington from the Puget Sound, and her fish counting helps to regulate the fishing rights in the area. Often Julie is joined by a roomful of tourists. At\r\npeak spawning time, Julie records sockeye on one counter and chinook on another. The most sockeye she’s counted in a 10-minute period: 450. The most chinook: 75.",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-421907090",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":12,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/7/1383826501433/Coin-polisher-007.jpg",
+          "typeData":{
+            "source":"Caters News Agency",
+            "photographer":"Nancy Rica Schiff",
+            "altText":"World's oddest jobs: Coin polisher",
+            "height":"404",
+            "credit":"Nancy Rica Schiff/Caters News Agency",
+            "caption":"Coin polisher<br/>\r\nSan Francisco, California<br/>\r\nThe St. Francis Hotel in San Francisco has been laundering their money for more than 50 years; and for 20 of those years, Arnold Batliner was the man in charge. Every weekday morning, Arnold went to work shining all the quarters, dimes, nickels, and pennies by passing them through an old silverware polisher borrowed from the kitchen. Arnold passed away several years ago. All the old-timers at the hotel remember him as the real treasure.",
+            "width":"400"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[]
+  }
+}
