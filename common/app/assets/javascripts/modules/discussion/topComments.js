@@ -99,6 +99,7 @@ TopComments.prototype.fetch = function(parent) {
             
             if (resp.commentCount > 0) {
                 // Render Top Comments
+                self.parent = parent;
                 self.elem = bonzo.create(resp.html);
                 $('.discussion__comments__top', parent).append(self.elem); // refactor
                 self.elem = self.elem[0];
@@ -112,7 +113,7 @@ TopComments.prototype.fetch = function(parent) {
                 $('.discussion__comments__top__container').remove();
 
                 // Render Regular Comments
-                self.mediator.emit("loadComments", { amount: 3 });
+                self.mediator.emit("loadComments", { amount: 3, showLoader: true });
             }
         }
     );
@@ -134,7 +135,7 @@ TopComments.prototype.ready = function() {
 
         self.hasHiddenComments = true;
 
-        $('.d-image-fade', self.elem).removeClass('u-h'); // refactor
+        $('.d-image-fade', self.parent).removeClass('u-h'); // refactor
 
         var showMoreButton = [];
 
@@ -146,37 +147,11 @@ TopComments.prototype.ready = function() {
 
         if (!self.showMoreButton) {
             self.showMoreButton = bonzo(showMoreButton.join(''));
-            bonzo(self.elem).append(self.showMoreButton[0]);
+            bonzo(self.parent).after(self.showMoreButton[0]);
             self.showMoreButton = qwery(self.getClass('showMore'))[0];
         }
-        self.on('click', self.showMoreButton, self.showMore);
     }
 
-    // if (this.topLevelComments.length > 0) {
-    //     // Hide excess topLevelComments
-    //     qwery(this.getClass('topLevelComment'), this.elem).forEach(function(elem, i) {
-    //         if (i >= initialShow) {
-    //             self.hasHiddenComments = true;
-    //             bonzo(elem).addClass('u-h');
-    //         }
-    //     });
-
-    //     if (this.topLevelComments.length > initialShow) {
-    //         if (!this.getElem('showMore')) {
-    //             bonzo(this.getElem('comments')).append(
-    //                 '<a class="js-show-more-comments cta" data-link-name="Show more comments" data-remove="true" href="/discussion'+
-    //                     this.options.discussionId +'?page=1">'+
-    //                     'Show more comments'+
-    //                 '</a>');
-    //         }
-    //         this.on('click', this.getElem('showMore'), this.showMore);
-    //     }
-
-    //     this.hideExcessReplies();
-    //     this.bindCommentEvents();
-    //     this.on('click', this.getClass('showReplies'), this.showMoreReplies);
-    // }
-    
     // Append top comment count to section title
    $(self.getClass('titleCounter')).removeClass('u-h')[0].innerHTML = "(" + self.topLevelComments.length + ")";
 
@@ -220,30 +195,20 @@ TopComments.prototype.showMore = function(e) {
     if (this.hasHiddenComments) {
         this.showHiddenComments();
     }
-    // Still needed?
-    // else {
-    //     showMoreButton.innerHTML = 'Loading…';
-    //     showMoreButton.setAttribute('data-disabled', 'disabled');
-    //     ajax({
-    //         url: '/discussion'+ this.options.discussionId +'.json?page='+ (this.currentPage+1),
-    //         type: 'json',
-    //         method: 'get',
-    //         crossOrigin: true
-    //     }).then(this.commentsLoaded.bind(this));
-    // }
 };
 
 TopComments.prototype.showHiddenComments = function() {
 
-    $('.discussion__comments__top', this.elem).css("max-height", "none"); // refactor
+    /* ======================= REFACTOR ME ======================= */
+
+    $('.discussion__comments__top', this.parent).css("max-height", "none");
+    $('.d-discussion', this.parent).css("max-height", "none");
 
     this.hasHiddenComments = false;
 
-    this.showMoreButton.remove();
+    $(this.showMoreButton).addClass('u-h'); // Not removing because of ophan error...
 
-    $('.d-image-fade', this.elem).remove(); // refactor
-
-    // this.emit('first-load'); ????
+    $('.d-image-fade', this.parent).remove();
 };
 
 /**
@@ -269,63 +234,6 @@ TopComments.prototype.showHiddenComments = function() {
 //     RecommendComments.init(this.context);
 //     this.emit('loaded');
 // };
-
-/**
- * @param {object.<string.*>} comment
- * @param {Boolean=} focus (optional)
- * @param {Element=} parent (optional)
- */
-TopComments.prototype.addComment = function(comment, focus, parent) {
-    var key, val, selector, elem,
-        attr,
-        map = {
-            username: 'd-comment__author',
-            timestamp: 'js-timestamp',
-            body: 'd-comment__body',
-            report: 'd-comment__action--report',
-            avatar: 'd-comment__avatar'
-        },
-        values = {
-            username: this.user.displayName,
-            timestamp: 'Just now',
-            body: '<p>'+ comment.body.replace('\n', '</p><p>') +'</p>',
-            report: {
-                href: 'http://discussion.theguardian.com/components/report-abuse/'+ comment.id
-            },
-            avatar: {
-                src: this.user.avatar
-            }
-        },
-        commentElem = bonzo.create(document.getElementById('tmpl-comment').innerHTML)[0];
-
-    for (key in map) {
-        if (map.hasOwnProperty(key)) {
-            selector = map[key];
-            val = values[key];
-            elem = qwery('.'+ selector, commentElem)[0];
-            if (typeof val === 'string') {
-                elem.innerHTML = val;
-            } else {
-                for (attr in val) {
-                    elem.setAttribute(attr, val[attr]);
-                }
-            }
-        }
-    }
-    commentElem.id = 'comment-'+ comment.id;
-
-    // Stupid hack. Will rearchitect.
-    if (!parent) {
-        bonzo(this.getElem('comments')).prepend(commentElem);
-    } else {
-        bonzo(parent).append(commentElem);
-    }
-
-    window.location.hash = '#_';
-    if (focus) {
-        window.location.hash = '#comment-'+ comment.id;
-    }
-};
 
 /** @param {Event} e */
 TopComments.prototype.replyToComment = function(e) {

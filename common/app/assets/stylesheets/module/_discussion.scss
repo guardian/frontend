@@ -370,6 +370,8 @@
 /* Top Comments
    ========================================================================== */
 
+$topCommentsHeight: 600px;
+
 .discussion__comments__top__container { // Section
 
     position: relative;
@@ -382,7 +384,7 @@
         background-color: #fff;
         display: block;
         position: absolute;
-        bottom: 49px;
+        bottom: 0;
         left: 0;
         right: 0;
         width: 100%;
@@ -391,35 +393,46 @@
     }
 
     .discussion__comments__top { // Container
-        
-        position: relative;
 
-        max-height: 600px;
+        max-height: $topCommentsHeight;        
+        position: relative;
         overflow: hidden;
 
-        // Mobile First
-        @include mq($from: desktop) {
-            
-            // Switch to 2-col layout for desktop
-
-            -webkit-column-width: 294px;
-            -webkit-column-gap: $gutter; 
-            -webkit-column-count: 2;
-
-            -moz-column-width: 294px;
-            -moz-column-gap: $gutter;
-            -moz-column-count: 2;
-
-            column-width: 294px;
-            column-gap: $gutter; 
-            column-count: 2;
-
-            .d-comment { width: auto; }
-
+        > div {
+            max-height: $topCommentsHeight;
         }
 
         ul {
             margin: 0;
+            // Mobile First
+            @include mq($from: desktop) {
+                
+                // Switch to 2-col layout for desktop
+
+                -webkit-column-width: 294px;
+                -webkit-column-gap: $gutter; 
+                -webkit-column-count: 2;
+
+                -moz-column-width: 294px;
+                -moz-column-gap: $gutter;
+                -moz-column-count: 2;
+
+                column-width: 294px;
+                column-gap: $gutter; 
+                column-count: 2;
+
+                .d-comment {
+                    width: auto;
+                    overflow: hidden;
+                    /* Prevents breaking of elements in CSS3 column layout */
+                    -webkit-column-break-inside:avoid;
+                       -moz-column-break-inside:avoid;
+                        -ms-column-break-inside:avoid;
+                         -o-column-break-inside:avoid;
+                            column-break-inside:avoid;
+                }
+
+            }            
         }
 
         .d-comment { // Comment
@@ -427,13 +440,6 @@
             position: relative;
             display: block;
             padding: 0 0 $baseline*10 0;
-
-            /* Prevents breaking of elements in CSS3 column layout */
-            -webkit-column-break-inside:avoid;
-               -moz-column-break-inside:avoid;
-                -ms-column-break-inside:avoid;
-                 -o-column-break-inside:avoid;
-                    column-break-inside:avoid;
 
             .d-comment__inner {
                 background-color: $c-neutral7;

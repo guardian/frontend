@@ -8,7 +8,8 @@ define([
     'modules/discussion/api',
     'modules/discussion/comments',
     'modules/discussion/topComments',
-    'modules/discussion/comment-box'
+    'modules/discussion/comment-box',
+    '$'
 ], function(
     ajax,
     bonzo,
@@ -19,7 +20,8 @@ define([
     DiscussionApi,
     Comments,
     TopComments,
-    CommentBox
+    CommentBox,
+    $
 ) {
 
 /**
@@ -82,7 +84,7 @@ Loader.prototype.canComment = false;
  * 3. render comment bar
  */
 Loader.prototype.ready = function() {
-    var topLoadingElem = bonzo.create('<div class="preload-msg">Loading top comments…<div class="is-updating"></div></div>')[0],
+    var topLoadingElem = bonzo.create('<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>')[0],
         topCommentsElem = this.getElem('topComments'),
         self = this;
 
@@ -101,6 +103,7 @@ Loader.prototype.ready = function() {
             .fetch(topCommentsElem)
             .then(function appendTopComments() {
                 bonzo(topLoadingElem).remove();
+                self.on('click', $(self.topComments.showMoreButton), self.topComments.showMore.bind(self.topComments));
             });
 
         self.mediator.on('loadComments', self.loadComments.bind(self));
@@ -122,7 +125,11 @@ Loader.prototype.loadComments = function (args) {
     var commentsContainer   = this.getElem('commentsContainer'),
         commentsElem        = this.getElem('comments'),
         loadingElem         = bonzo.create('<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>')[0];
-    
+
+    if (args.showLoader) {
+        bonzo(commentsContainer).removeClass('u-h');
+    }
+   
     bonzo(loadingElem).insertAfter(commentsElem);
 
     this.comments = new Comments(this.context, this.mediator, {
