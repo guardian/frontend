@@ -1,27 +1,29 @@
+Requirements
+------------
+
+ * [Node.js](http://nodejs.org/)
+ * [CasperJS](http://casperjs.org/)
+
 Set-up
 ------
 
     $ npm install
 
-Running
--------
+Development
+-----------
+
+Run the script directly
 
     $ ENVIRONMENT=prod casperjs screenshot.js
 
-Running against a particular env
+Running
+-------
 
-    $ grunt snap --dev 
+Use the [Gruntfile.js](../../Gruntfile.js) in the root of this project
 
-or
+    $ ENVIRONMENT=prod grunt snap
 
-    $ export ENVIRONMENT=prod
+To upload to S3, export
 
-to run on prod
-
-
-To upload to S3 export:
-	
 	AWS_ACCESS_KEY_ID=XXXXXX
 	AWS_SECRET_ACCESS_KEY=XXXXXXX
-	
-
