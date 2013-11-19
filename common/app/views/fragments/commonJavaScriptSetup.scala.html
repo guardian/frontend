@@ -31,7 +31,6 @@
         apiName: 'require',
         paths: {
             facebook: '//connect.facebook.net/en_US/all.js',
-            omniture: '@Static("javascripts/vendor/omniture.js")',
             swipe: '@Static("javascripts/vendor/swipe.js")',
             zxcvbn: '@Static("javascripts/vendor/zxcvbn.js")'
         }
@@ -137,6 +136,9 @@
         }
 
         guardian.config = @fragments.javaScriptConfig(item);
+
+        // must be set before the Omniture file is parsed
+        window.s_account = guardian.config.page.omnitureAccount;
 
         var script = document.createElement('script');
         script.async = 'async';

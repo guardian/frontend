@@ -6,7 +6,8 @@ define([
     'utils/storage',
     'modules/identity/api',
     'modules/analytics/errors',
-    'utils/cookies'
+    'utils/cookies',
+    'omniture'
 ], function(
     common,
     detect,
@@ -14,7 +15,8 @@ define([
     storage,
     id,
     Errors,
-    Cookies
+    Cookies,
+    s
 ) {
 
     // https://developer.omniture.com/en_US/content_page/sitecatalyst-tagging/c-tagging-overview
@@ -145,7 +147,7 @@ define([
 
                 s.prop51  = mvt;
                 s.eVar51  = mvt;
-               
+
                 // prefix all the MVT tests with the alpha user tag if present
                 if (Cookies.get('GU_ALPHA') === "true") {
                     var alphaTag = 'r2alpha,';
@@ -209,20 +211,14 @@ define([
 
             config = c; // update the module-wide config
 
-            // must be set before the Omniture file is parsed
-            window.s_account = config.page.omnitureAccount;
-
             // if the omniture object was not injected in to the constructor
             // use the global 's' object
             if (window.s) {
                 s = window.s;
                 that.loaded(callback);
             } else {
-                var dependOn = ['js!omniture'];
-                require(dependOn, function(placeholder){
-                    s = window.s;
-                    that.loaded(callback);
-                });
+                s = window.s;
+                that.loaded(callback);
             }
         };
 
