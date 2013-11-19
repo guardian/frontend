@@ -208,7 +208,7 @@ TopComments.prototype.showHiddenComments = function() {
 
     $(this.showMoreButton).addClass('u-h'); // Not removing because of ophan error...
 
-    $('.d-image-fade', this.parent).remove();
+    $('.d-image-fade', this.parent).addClass('u-h');
 };
 
 /**

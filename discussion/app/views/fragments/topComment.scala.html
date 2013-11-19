@@ -9,21 +9,18 @@
            data-comment-author="@comment.profile.displayName"
            data-comment-author-id="@comment.profile.userId">
     <div class="d-comment__inner">
-        @if(comment.isHighlighted && !comment.isBlocked){
-            <div class="d-comment__pick i i-guardian-picks"><span class="u-h">Guardian pick</span></div>
-        }
-
-        @if(!(isClosedForRecommendation && comment.numRecommends == 0) && !comment.isBlocked){
-            <div
-                class="d-comment__recommend@if(!isClosedForRecommendation){ js-recommend-comment}@if(comment.isHighlighted){ d-comment__recommend--left}" 
-                data-comment-id="@comment.id"
-                data-user-id="@comment.profile.userId"
-                data-recommend-count="@comment.numRecommends"
-                title="@comment.numRecommends recommendations">
-                <i class="i i-recommend"></i><span class="d-comment__recommend-count js-recommend-count">@comment.numRecommends</span>
-            </div>
-        }
         <div class="d-comment-header">
+            @if(!(isClosedForRecommendation && comment.numRecommends == 0) && !comment.isBlocked){
+                <div
+                    class="d-comment__recommend@if(!isClosedForRecommendation){ js-recommend-comment}@if(comment.isHighlighted){ d-comment__recommend--left}" 
+                    data-comment-id="@comment.id"
+                    data-user-id="@comment.profile.userId"
+                    data-recommend-count="@comment.numRecommends"
+                    title="@comment.numRecommends recommendations">
+                    <span class="d-comment__recommend-caption">Recommend</span>
+                    <i class="i i-recommend"></i><span class="d-comment__recommend-count js-recommend-count">@comment.numRecommends</span>
+                </div>
+            }
         </div>
         <div class="d-comment__main">
             <div class="d-comment__body">
@@ -64,6 +61,11 @@
                     @Format(comment.date, "d MMM y")
                 </time>
             </div>
+    
+            @if(comment.isHighlighted && !comment.isBlocked){
+                <div class="d-comment__pick i i-guardian-picks"><span class="u-h">Guardian pick</span></div>
+            }
+
         </div>        
     </div>
 
