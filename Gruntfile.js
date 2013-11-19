@@ -323,13 +323,12 @@ module.exports = function (grunt) {
 
         karma: {
             options: {
-                configFile: testConfDir + 'all.js'
+                configFile: testConfDir + 'common.js',
+                singleRun: isDev ? false : true,
+                reporters: isDev ? ['dots'] : ['progress']
             },
-            continuous: {
-                singleRun: true
-            },
-            dev: {
-                reporters: 'dots'
+            common: {
+                configFile: testConfDir + 'common.js'
             },
             facia: {
                 configFile: testConfDir + 'facia.js'
@@ -650,10 +649,7 @@ module.exports = function (grunt) {
     });
     grunt.registerTask('test', ['jshint:common', 'test:unit', 'test:integration']);
     grunt.registerTask('runner', function(app) {
-        var runner = 'continuous';
-        if (isDev) {
-            runner = app ? app : 'dev';
-        }
+        runner = app || 'common';
         grunt.task.run('karma:' + runner);
     });
 

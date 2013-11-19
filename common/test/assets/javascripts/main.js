@@ -10,7 +10,6 @@ for (var file in window.__karma__.files) {
                 .replace(specUrl, 'spec')
                 .replace('.js', '');
         tests.push(spec);
-        console.log(spec);
     }
 }
 
