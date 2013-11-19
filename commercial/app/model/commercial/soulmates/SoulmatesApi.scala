@@ -36,7 +36,7 @@ object SoulmatesApi extends ExecutionContexts with Logging {
           member =>
             Member(
               (member \ "username").as[String],
-              (member \ "gender").as[String],
+              Gender((member \ "gender").as[String]),
               (member \ "age").as[Int],
               (member \ "profile_photo").as[String]
             )
