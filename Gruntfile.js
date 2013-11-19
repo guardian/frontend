@@ -4,7 +4,8 @@ module.exports = function (grunt) {
         jasmineSpec = grunt.option('spec') || '*',
         env = grunt.option('env') || 'code',
         screenshotsDir = './screenshots',
-        staticTargetDir = 'static/target/';
+        staticTargetDir = 'static/target/',
+        testConfDir = 'common/test/assets/javascripts/conf/';
 
     if (isDev) {
         grunt.log.subhead('Running Grunt in DEV mode');
@@ -322,7 +323,7 @@ module.exports = function (grunt) {
 
         karma: {
             options: {
-                configFile: './karma.all.conf.js'
+                configFile: testConfDir + 'all.js'
             },
             continuous: {
                 singleRun: true
@@ -330,8 +331,14 @@ module.exports = function (grunt) {
             dev: {
                 reporters: 'dots'
             },
+            facia: {
+                configFile: testConfDir + 'facia.js'
+            },
             discussion: {
-                configFile: 'karma/discussion.conf.js'
+                configFile: testConfDir + 'discussion.js'
+            },
+            admin: {
+                configFile: testConfDir + 'admin.js'
             }
         },
 
@@ -645,7 +652,7 @@ module.exports = function (grunt) {
     grunt.registerTask('runner', function(app) {
         var runner = 'continuous';
         if (isDev) {
-            runner = app ? runner : 'dev';
+            runner = app ? app : 'dev';
         }
         grunt.task.run('karma:' + runner);
     });
