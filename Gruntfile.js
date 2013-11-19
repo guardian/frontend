@@ -648,7 +648,7 @@ module.exports = function (grunt) {
         grunt.task.run(['jasmine' + (app ? ':' + app : '')]);
     });
     grunt.registerTask('test', ['jshint:common', 'test:unit', 'test:integration']);
-    grunt.registerTask('runner', function(app) {
+    grunt.registerTask('test:runner', function(app) {
         runner = app || 'common';
         grunt.task.run('karma:' + runner);
     });
