@@ -43,6 +43,7 @@ Comments.CONFIG = {
         reply: 'd-comment--response',
         showReplies: 'js-show-more-replies',
         header: 'd-discussion__header',
+        joinDiscussion: 'd-show-cta',
 
         comment: 'd-comment',
         commentActions: 'd-comment__actions__main',
@@ -138,6 +139,7 @@ Comments.prototype.renderReplyButtons = function(comments) {
  */
 Comments.prototype.showMore = function(event) {
     if (event) { event.preventDefault(); }
+
     var showMoreButton = this.getElem('showMore');
 
     if (showMoreButton.getAttribute('data-disabled') === 'disabled') {

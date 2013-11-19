@@ -127,6 +127,7 @@ Loader.prototype.loadComments = function (args) {
         loadingElem         = bonzo.create('<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>')[0];
 
     if (args.showLoader) {
+        // Comments are being loaded in the no-top-comments-available context
         bonzo(commentsContainer).removeClass('u-h');
     }
    
@@ -147,6 +148,13 @@ Loader.prototype.loadComments = function (args) {
             bonzo(loadingElem).remove();
             self.renderCommentBar(self.user);
             bonzo(self.comments.getElem('showMore')).addClass("u-h");
+
+            if (args.showLoader) {
+                // Comments are being loaded in the no-top-comments-available context
+                bonzo(self.getElem('show')).remove();
+                bonzo([self.comments.getElem('showMore'), self.comments.getElem('header')]).removeClass("u-h");
+            }
+
             self.on("click", self.getElem('show'), function (event) {
                 bonzo(self.getElem('show')).remove();
                 self.comments.showMore(event);
@@ -242,6 +250,8 @@ Loader.prototype.commentPosted = function () {
     if (!this.firstComment) {
         this.firstComment = true;
         this.comments.showMore();
+        bonzo([this.comments.getElem('showMore'), this.comments.getElem('header')]).removeClass("u-h");
+        bonzo(this.getElem('show')).remove();
     }
 
 };
