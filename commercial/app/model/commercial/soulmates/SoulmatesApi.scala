@@ -29,15 +29,7 @@ object SoulmatesApi extends ExecutionContexts with Logging {
     }
   }
 
-  private def loadMenMembers(): Future[JsValue] = loadMembers {
-    CommercialConfiguration.soulmatesApi.menUrl
-  }
-
-  private def loadWomenMembers(): Future[JsValue] = loadMembers {
-    CommercialConfiguration.soulmatesApi.womenUrl
-  }
-
-  def getMembers(json: => Future[JsValue]): Future[Seq[Member]] = {
+  def parse(json: => Future[JsValue]): Future[Seq[Member]] = {
     json map {
       case JsArray(members) =>
         members map {
@@ -53,8 +45,12 @@ object SoulmatesApi extends ExecutionContexts with Logging {
     }
   }
 
-  def getMenMembers: Future[Seq[Member]] = getMembers(loadMenMembers())
+  def getMenMembers: Future[Seq[Member]] = parse(loadMembers {
+    CommercialConfiguration.soulmatesApi.menUrl
+  })
 
-  def getWomenMembers: Future[Seq[Member]] = getMembers(loadWomenMembers())
+  def getWomenMembers: Future[Seq[Member]] = parse(loadMembers {
+    CommercialConfiguration.soulmatesApi.womenUrl
+  })
 
 }
