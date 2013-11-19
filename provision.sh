@@ -40,8 +40,4 @@ sudo apt-get -y install git
 
 sudo gem install bundler
 
-# do an initial compile
-cd /vagrant
-./sbt compile
-
 
