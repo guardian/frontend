@@ -68,7 +68,7 @@ trait DiscussionApi extends ExecutionContexts with Logging {
   }
 
   def topCommentsFor(key: String, page: String, pageSize: String = ""): Future[CommentPage] = {
-    getJsonForUri(key, s"$apiRoot/discussion/$key/highlights?pageSize=${getPageSize(pageSize)}&page=$page&orderBy=newest&showSwitches=true")
+    getJsonForUri(key, s"$apiRoot/discussion/$key/topcomments?pageSize=${getPageSize(pageSize)}&page=$page&orderBy=newest&showSwitches=true")
   }
 
   private def getPageSize(pageSize: String): String = {
