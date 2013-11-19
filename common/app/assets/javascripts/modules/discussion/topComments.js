@@ -45,6 +45,8 @@ TopComments.CONFIG = {
         reply: 'd-comment--response',
         showReplies: 'js-show-more-replies',
 
+        topCommentTitle: "page-sub-header",
+
         comment: 'd-comment',
         commentActions: 'd-comment__actions__main',
         commentReply: 'd-comment__action--reply',
@@ -98,7 +100,10 @@ TopComments.prototype.fetch = function(parent) {
             // self.elem = parent;
             
             if (resp.commentCount > 0) {
+                
                 // Render Top Comments
+                
+                self.topCommentsAmount = resp.commentCount;
                 self.parent = parent;
                 self.elem = bonzo.create(resp.html);
                 $('.discussion__comments__top', parent).append(self.elem); // refactor
@@ -152,8 +157,13 @@ TopComments.prototype.ready = function() {
         }
     }
 
-    // Append top comment count to section title
-   $(self.getClass('titleCounter')).removeClass('u-h')[0].innerHTML = "(" + self.topLevelComments.length + ")";
+    if (self.topCommentsAmount === 1) {
+        var s = document.getElementById('topComments');
+        s.childNodes[0].nodeValue = s.childNodes[0].nodeValue.replace(/s\b/, '');
+    } else {
+        // Append top comment count to section title
+       $(self.getClass('titleCounter')).removeClass('u-h')[0].innerHTML = "(" + self.topCommentsAmount + ")";
+    }
 
     self.emit('ready');
 };
