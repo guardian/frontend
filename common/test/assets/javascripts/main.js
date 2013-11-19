@@ -1,15 +1,16 @@
 var tests = [],
-    specUrl = '/base/common/test/assets/javascripts/',
+    specUrl = '/base/common/test/assets/javascripts/spec',
+    specRegExp = new RegExp(specUrl.replace(/\//g, '\\/') + '\/.*\\.spec\\.js'),
     spec;
 
 for (var file in window.__karma__.files) {
     // We are only testing against discussion for now
-    if (/.spec\.js$/.test(file)) {
+    if (file.match(specRegExp)) {
         spec = file
-                .replace(specUrl, '')
+                .replace(specUrl, 'spec')
                 .replace('.js', '');
-        console.log(spec)
         tests.push(spec);
+        console.log(spec);
     }
 }
 
@@ -17,7 +18,7 @@ requirejs.config({
     // Karma serves files from '/base'
     baseUrl: '/base/common/app/assets/javascripts',
     paths: {
-        'spec': '/base/common/test/assets/javascripts/spec',
+        'spec': specUrl,
         'fixtures': '/base/common/test/assets/javascripts/fixtures',
         'helpers': '/base/common/test/assets/javascripts/helpers',
         'analytics': 'modules/analytics',
@@ -31,7 +32,8 @@ requirejs.config({
         'postscribe': 'components/postscribe/dist/postscribe',
         'swipe': 'components/swipe/swipe',
         'swipeview': 'components/swipeview/src/swipeview',
-        'lodash': 'components/lodash-amd/modern'
+        'lodash': 'components/lodash-amd/modern',
+        'imager': 'components/imager.js/src/strategies/container'
     }
 });
 

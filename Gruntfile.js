@@ -322,7 +322,7 @@ module.exports = function (grunt) {
 
         karma: {
             options: {
-                configFile: 'karma/all.conf.js'
+                configFile: './karma.all.conf.js'
             },
             continuous: {
                 singleRun: true
