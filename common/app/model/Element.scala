@@ -40,8 +40,16 @@ object ImageContainer {
 
 trait VideoContainer extends Element {
 
-  lazy val videoAssets: List[VideoAsset] = delegate.assets.filter(_.assetType == "video").map(VideoAsset(_)).
-                                            sortBy(-_.width)
+  lazy val videoAssets: List[VideoAsset] = {
+
+    val images = delegate.assets.filter(_.assetType == "image").zipWithIndex.map{ case (asset, index) =>
+      ImageAsset(asset, index)
+    }
+
+    val container = images.headOption.map(img => ImageContainer(images, delegate, img.index))
+
+    delegate.assets.filter(_.assetType == "video").map( v => VideoAsset(v, container)).sortBy(-_.width)
+  }
 
   lazy val largestVideo: Option[VideoAsset] = videoAssets.headOption
 }
