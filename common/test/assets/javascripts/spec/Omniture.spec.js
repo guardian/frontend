@@ -112,20 +112,7 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
                 expect(s.t).toHaveBeenCalledOnce();
             });
         });
-
-        it("should log an ad impression event", function() {
-            var o = new Omniture(s).go(config);
-            waits(100);
-            runs(function() {
-                common.mediator.emit('module:analytics:adimpression', 'top banner');
-                expect(s.linkTrackVars).toBe('eVar53,events');
-                expect(s.linkTrackEvents).toBe('event29');
-                expect(s.events).toBe('event29');
-                expect(s.eVar53).toBe('top banner');
-            });
-        });
-
-
+        
         it("should send event46 when a page has comments", function(){
             config.page.contentType = 'Article';
             config.page.commentable = true;

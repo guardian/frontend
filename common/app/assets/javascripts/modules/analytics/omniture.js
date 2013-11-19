@@ -85,14 +85,6 @@ define([
             s.tl(true, 'o', tagStr);
         };
 
-        this.trackAdImpression = function(tagStr) {
-            s.linkTrackVars = 'eVar53,events';
-            s.linkTrackEvents = 'event29';
-            s.events = 'event29';
-            s.eVar53 = (config.page.contentType) ? config.page.contentType + ':' + tagStr : tagStr;
-            s.tl(true, 'o', tagStr);
-        };
-
         this.populatePageProperties = function() {
 
             // http://www.scribd.com/doc/42029685/15/cookieDomainPeriods
@@ -248,8 +240,6 @@ define([
                 clearInterval(checkForPageViewInterval);
             }, 10000);
         };
-
-        common.mediator.on('module:analytics:adimpression', that.trackAdImpression );
 
         common.mediator.on('module:clickstream:interaction', that.trackNonLinkEvent );
 
