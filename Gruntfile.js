@@ -456,32 +456,26 @@ module.exports = function (grunt) {
             all: {
                 src: ['integration-tests/casper/tests/**/*.spec.js']
             },
+            allexceptadmin: {
+                src: ['integration-tests/casper/tests/!(*admin)/*.spec.js']
+            },
             admin: {
                 src: ['integration-tests/casper/tests/admin/*.spec.js']
-            },
-            common : {
-                src: ['integration-tests/casper/tests/**/*.spec.js']
-            },
-            discussion: {
-                src: ['integration-tests/casper/tests/discussion/*.spec.js']
-            },
-            gallery: {
-                src: ['integration-tests/casper/tests/gallery/*.spec.js']
-            },
-            article: {
-                src: ['integration-tests/casper/tests/article/article.spec.js']
             },
             applications: {
                 src: ['integration-tests/casper/tests/applications/*.spec.js']
             },
+            article: {
+                src: ['integration-tests/casper/tests/article/article.spec.js']
+            },
+            common : {
+                src: ['integration-tests/casper/tests/common/*.spec.js']
+            },
+            discussion: {
+                src: ['integration-tests/casper/tests/discussion/*.spec.js']
+            },
             facia: {
                 src: ['integration-tests/casper/tests/facia/*.spec.js']
-            },
-            corenavigation: {
-                src: ['integration-tests/casper/tests/core-navigation/*.js']
-            },
-            allexceptadmin: {
-                src: ['integration-tests/casper/tests/!(*admin)/*.spec.js']
             }
         },
 
