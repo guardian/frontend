@@ -58,11 +58,16 @@ module.exports = function (grunt) {
                         "postscribe": "components/postscribe/dist/postscribe",
                         "swipe": "components/swipe/swipe",
                         "swipeview": "components/swipeview/src/swipeview",
-                        "lodash": "components/lodash-amd/modern"
+                        "lodash": "components/lodash-amd/modern",
+                        imager:       '../../../app/assets/javascripts/components/imager.js/src/strategies/container'
                     },
                     shim: {
                         "postscribe": {
                             exports: "postscribe"
+                        },
+                        imager: {
+                            deps: ['../../../app/assets/javascripts/components/imager.js/src/imager'],
+                            exports: 'Imager'
                         }
                     },
                     wrap: {
@@ -300,16 +305,6 @@ module.exports = function (grunt) {
             }
         },
 
-        concat: {
-            imager: {
-                src: [
-                    'common/app/assets/javascripts/components/imager.js/src/imager.js',
-                    'common/app/assets/javascripts/components/imager.js/src/strategies/container.js'
-                ],
-                dest: staticTargetDir + 'javascripts/vendor/imager.js'
-            }
-        },
-
         uglify: {
             vendor: {
                 files: [{
@@ -331,11 +326,7 @@ module.exports = function (grunt) {
                 template: require('grunt-template-jasmine-requirejs'),
                 keepRunner: true,
                 vendor: [
-                    'common/test/assets/javascripts/components/sinon/lib/sinon.js',
-                    'common/test/assets/javascripts/components/sinon/lib/sinon/call.js',
-                    'common/test/assets/javascripts/components/sinon/lib/sinon/spy.js',
-                    'common/test/assets/javascripts/components/sinon/lib/sinon/stub.js',
-                    'common/test/assets/javascripts/components/sinon/lib/sinon/util/*.js',
+                    'common/test/assets/javascripts/components/sinonjs/sinon.js',
                     'common/test/assets/javascripts/components/jasmine-sinon/lib/jasmine-sinon.js',
                     'common/test/assets/javascripts/components/seedrandom/index.js'
                 ],
@@ -359,7 +350,14 @@ module.exports = function (grunt) {
                             lodash:       'components/lodash-amd/modern',
                             omniture:     '../../../app/public/javascripts/vendor/omniture',
                             fixtures:     '../../../test/assets/javascripts/fixtures',
-                            helpers:      '../../../test/assets/javascripts/helpers'
+                            helpers:      '../../../test/assets/javascripts/helpers',
+                            imager:       '../../../app/assets/javascripts/components/imager.js/src/strategies/container'
+                        },
+                        shim: {
+                            imager: {
+                                deps: ['../../../app/assets/javascripts/components/imager.js/src/imager'],
+                                exports: 'Imager'
+                            }
                         }
                     }
                 }
@@ -458,32 +456,26 @@ module.exports = function (grunt) {
             all: {
                 src: ['integration-tests/casper/tests/**/*.spec.js']
             },
+            allexceptadmin: {
+                src: ['integration-tests/casper/tests/!(*admin)/*.spec.js']
+            },
             admin: {
                 src: ['integration-tests/casper/tests/admin/*.spec.js']
-            },
-            common : {
-                src: ['integration-tests/casper/tests/**/*.spec.js']
-            },
-            discussion: {
-                src: ['integration-tests/casper/tests/discussion/*.spec.js']
-            },
-            gallery: {
-                src: ['integration-tests/casper/tests/gallery/*.spec.js']
-            },
-            article: {
-                src: ['integration-tests/casper/tests/article/article.spec.js']
             },
             applications: {
                 src: ['integration-tests/casper/tests/applications/*.spec.js']
             },
+            article: {
+                src: ['integration-tests/casper/tests/article/article.spec.js']
+            },
+            common : {
+                src: ['integration-tests/casper/tests/common/*.spec.js']
+            },
+            discussion: {
+                src: ['integration-tests/casper/tests/discussion/*.spec.js']
+            },
             facia: {
                 src: ['integration-tests/casper/tests/facia/*.spec.js']
-            },
-            corenavigation: {
-                src: ['integration-tests/casper/tests/core-navigation/*.js']
-            },
-            allexceptadmin: {
-                src: ['integration-tests/casper/tests/!(*admin)/*.spec.js']
             }
         },
 
@@ -595,7 +587,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-hash');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
 
 
@@ -605,7 +596,7 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:images', ['clean:images', 'copy:images', 'shell:spriteGeneration', 'imagemin']);
     grunt.registerTask('compile:css', ['clean:css', 'sass:compile']);
     grunt.registerTask('compile:js', function() {
-        grunt.task.run(['clean:js', 'copy:js', 'concat:imager']);
+        grunt.task.run(['clean:js', 'copy:js']);
         if (!isDev) {
             grunt.task.run('uglify:vendor');
         }

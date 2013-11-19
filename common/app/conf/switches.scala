@@ -156,6 +156,10 @@ object Switches extends Collections {
     "If this switch is on the australia front will be available. Otherwise it will 404.",
     safeState = Off)
 
+  val NewsContainerSwitch = Switch("Feature Switches", "news-container",
+    "If this switch is on the news container will be on the network front. Otherwise fronts will display a normal facia container.",
+    safeState = Off)
+
   val LocalNavSwitch = Switch("Feature Switches", "local-nav",
     "If this switch is on, a secondary local nav is shown.",
     safeState = Off)
@@ -222,7 +226,7 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to test the new commercial components",
     safeState = Off)
 
-  val ABStoryPackageQuestion = Switch("A/B Tests", "ab-story-package-question",
+  val ABImproveOnwardTrails = Switch("A/B Tests", "ab-improve-onward-trails",
     "If this is switched on an AB test runs to test re-ordering story packages",
     safeState = Off)
 
@@ -286,6 +290,7 @@ object Switches extends Collections {
     ImageServerSwitch,
     ReleaseMessageSwitch,
     AustraliaFrontSwitch,
+    NewsContainerSwitch,
     FontDelaySwitch,
     ABParagraphSpacingSwitch,
     ABInlineLinkCardSwitch,
@@ -313,7 +318,7 @@ object Switches extends Collections {
     ABCommercialComponents,
     EditionRedirectLoggingSwitch,
     FacebookAutoSigninSwitch,
-    ABStoryPackageQuestion,
+    ABImproveOnwardTrails,
     ABInitialShowMore,
     ABShowMoreLayout
   )

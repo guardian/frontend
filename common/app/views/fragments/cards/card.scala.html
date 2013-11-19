@@ -26,7 +26,10 @@
         </div>
 
         <div class="card__meta dateline">
-            <div class="dateline"><i class="i i-clock-light-grey relative-timestamp__icon"></i><time datetime="@trail.webPublicationDate" class="js-timestamp"></time></div>
+            <div class="dateline">
+                <i class="i i-clock-light-grey relative-timestamp__icon"></i>
+                <time datetime="@trail.webPublicationDate" class="js-timestamp">@Format(trail.webPublicationDate, "d MMM y")</time>
+            </div>
         </div>
 
     </div>

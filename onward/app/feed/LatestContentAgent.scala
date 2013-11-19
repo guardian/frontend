@@ -17,6 +17,10 @@ object LatestContentAgent extends Logging with ExecutionContexts {
     update(Edition.defaultEdition)
   }
 
+  def stop() {
+    agent.close()
+  }
+
   private def update(edition: Edition) {
     val newFetchedContent = ContentApi.search(edition).response.map(_.results.headOption.map(Content(_)))
 

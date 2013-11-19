@@ -9,22 +9,35 @@
 
 .facia-container {
     @include mq(tablet) {
-        width: gs-span(9);
+        @include rem((width: gs-span(9)));
         padding-left: 0;
         padding-right: 0;
     }
     @include mq(desktop) {
-        width: gs-span(12);
+        @include rem((width: gs-span(12)));
     }
     @include mq(wide) {
-        width: gs-span(16);
+        @include rem((width: gs-span(16)));
     }
 }
 
 @import "module/facia/_extends";
 @import "module/facia/_mixins";
 @import "module/facia/_items";
-@import "module/containers/_news";
+
+@import "module/containers/_news-v1";
+.news-container--v1,
+.news-container--v2 {
+    @include container--news-mobile;
+}
+.news-container--v1 {
+    @include container--news-tablet-and-up;
+}
+.news-container--v2 {
+    @import "module/containers/_news-v2";
+}
+
+@import "module/containers/_sport";
 @import "module/containers/_features";
 @import "module/containers/_comment";
 @import "module/containers/_section";
