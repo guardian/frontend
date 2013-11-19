@@ -554,13 +554,7 @@ module.exports = function (grunt) {
     });
     grunt.registerTask('test', ['jshint:common', 'test:unit', 'test:integration']);
     grunt.registerTask('test:unit', function(app) {
-        if (app === 'all') {
-            grunt.task.run('karma:common');
-            grunt.task.run('karma:admin');
-        } else {
-            app = app || 'common';
-            grunt.task.run('karma:' + app);
-        }
+        grunt.task.run('karma' + (app ? ':' + app : ''));
     });
 
     // Analyse tasks
