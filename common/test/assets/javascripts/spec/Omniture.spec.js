@@ -10,7 +10,7 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
         }
 
         beforeEach(function(){
-            config.page = { omnitureAccount: 'the_account', analyticsName: 'the_page_name' };
+            config.page = { analyticsName: 'the_page_name' };
             config.switches = {};
 
             s = { t: function(){}, tl: function(){}, apl: function(){} };
@@ -21,11 +21,6 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
 
         afterEach(function(){
             sessionStorage.removeItem('gu.analytics.referrerVars')
-        });
-
-        it("should correctly set the Omniture account", function(){
-            var o = new Omniture(s).go(config);
-            expect(s_account).toBe("the_account");
         });
 
         it("should record clicks with correct analytics name", function(){
