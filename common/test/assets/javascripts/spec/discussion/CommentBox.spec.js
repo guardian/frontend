@@ -40,7 +40,10 @@ define([
             server = sinon.fakeServer.create();
             fixtures.render(fixture);
             context = document.getElementById(fixturesId);
-            commentBox = new CommentBox(context, common.mediator, { apiRoot: '/discussion', maxLength: maxCommentLength });
+            commentBox = new CommentBox(context, common.mediator, {
+                discussionId: discussionId,
+                maxLength: maxCommentLength
+            });
             commentBox.attachTo();
         });
 
@@ -51,7 +54,7 @@ define([
 
         describe('Post comment', function() {
             it('should only disable button when there is no comment body', function() {
-                var button = commentBox.getElem('submitButton'),
+                var button = commentBox.getElem('submit'),
                     commentBody = commentBox.getElem('body');
 
                 commentBody.value = '';
