@@ -1,13 +1,14 @@
 package model.commercial.soulmates
 
-import model.commercial.AdAgent
+import model.commercial.{Segment, AdAgent}
 import scala.concurrent.Future
 import common.ExecutionContexts
+import scala.util.Random
 
 object SoulmatesAggregatingAgent {
 
   private val soulmatesAgents =
-    Seq(SoulmatesMixedAgent, SoulmatesMenAgent, SoulmatesWomenAgent, SoulmatesGayAgent, SoulmatesLesbianAgent)
+    Seq(SoulmatesMenAgent, SoulmatesWomenAgent)
 
   def refresh() {
     soulmatesAgents foreach (_.refresh())
@@ -17,11 +18,18 @@ object SoulmatesAggregatingAgent {
     soulmatesAgents foreach (_.stop())
   }
 
+  def sampleMembers(segment:Segment): Seq[Member] = {
+    Seq(
+      Random.shuffle(SoulmatesMenAgent.matchingAds(segment)).head,
+      Random.shuffle(SoulmatesWomenAgent.matchingAds(segment)).head
+    )
+  }
+
 }
 
 trait SoulmatesAgent extends AdAgent[Member] with ExecutionContexts {
 
-  def getMembers: Future[Seq[Member]]
+  protected def getMembers: Future[Seq[Member]]
 
   def refresh() {
     for {
