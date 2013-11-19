@@ -644,13 +644,15 @@ module.exports = function (grunt) {
         grunt.config('casperjsLogFile', app + '.xml');
         grunt.task.run(['env:casperjs', 'casperjs:' + app]);
     });
-    grunt.registerTask('test:unit', function(app) {
-        grunt.task.run(['jasmine' + (app ? ':' + app : '')]);
-    });
     grunt.registerTask('test', ['jshint:common', 'test:unit', 'test:integration']);
-    grunt.registerTask('test:runner', function(app) {
-        runner = app || 'common';
-        grunt.task.run('karma:' + runner);
+    grunt.registerTask('test:unit', function(app) {
+        if (app === 'all') {
+            grunt.task.run('karma:common');
+            grunt.task.run('karma:admin');
+        } else {
+            app = app || 'common';
+            grunt.task.run('karma:' + app);
+        }
     });
 
     // Analyse tasks
