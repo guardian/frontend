@@ -1,0 +1,3 @@
+define({
+	siblingPathTarget: true
+});

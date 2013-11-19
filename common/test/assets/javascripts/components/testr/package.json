@@ -1,0 +1,21 @@
+{
+  "name": "testrjs",
+  "version": "1.3.2",
+  "author": "Matt Fysh <mattfysh@gmail.com>",
+  "description": "Unit testing require.js modules, with both stubbed and script-loaded dependencies.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mattfysh/testr.js"
+  },
+  "devDependencies": {
+    "buster": "0.6.x"
+  },
+  "license": "MIT",
+  "volo": {
+    "baseDir": "lib",
+    "dependencies": {
+      "require": "github:jrburke/requirejs/2.0.5"
+    },
+    "url": "https://raw.github.com/mattfysh/testr.js/v{version}/testr.js"
+  }
+}

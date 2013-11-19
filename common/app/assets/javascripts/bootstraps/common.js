@@ -35,7 +35,7 @@ define([
     "modules/adverts/video",
     "modules/discussion/comment-count",
     "modules/gallery/lightbox",
-    "modules/facia/images",
+    "modules/imager",
     "modules/onward/history",
     "modules/onward/sequence",
     "modules/identity/autosignin"
@@ -75,7 +75,7 @@ define([
     VideoAdvert,
     CommentCount,
     LightboxGallery,
-    faciaImages,
+    imager,
     History,
     sequence,
     AutoSignin
@@ -84,7 +84,8 @@ define([
     var modules = {
 
         upgradeImages: function () {
-            faciaImages.upgrade();
+            imager.upgrade();
+            imager.listen();
 
             var images = new Images();
             mediator.on('page:common:ready', function(config, context) {
@@ -262,7 +263,6 @@ define([
                 mediator.on('window:resize', function () {
                     Adverts.hideAds();
                 });
-                
                 mediator.on('window:orientationchange', function () {
                     Adverts.hideAds();
                 });

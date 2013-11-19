@@ -94,7 +94,7 @@ define(['modules/facia/collection-show-more', 'bonzo', '$', 'utils/mediator', 'b
             expect($('.item', collection).length).toEqual(2);
         });
 
-        it('should initially 5 collection in the "news" container at mobile breakpoint', function() {
+        it('should initially show 5 collection in the "news" container at mobile breakpoint', function() {
             $style.html('body:after { content: "mobile"; }');
             bonzo(container).attr('data-type', 'news');
             collectionShowMore.addShowMore();

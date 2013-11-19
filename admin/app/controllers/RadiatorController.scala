@@ -34,7 +34,8 @@ object RadiatorController extends Controller with Logging with AuthLogging {
   def renderRadiator() = Authenticated { implicit request =>
     val graphs = (CloudWatch.shortStackLatency ++ CloudWatch.fastlyErrors).map(_.withFormat(ChartFormat.SingleLineBlack))
     val multilineGraphs = CloudWatch.fastlyHitMissStatistics.map(_.withFormat(ChartFormat.DoubleLineBlueRed))
-    NoCache(Ok(views.html.radiator(graphs, multilineGraphs, CloudWatch.cost, Configuration.environment.stage)))
+    val jsErrors = CloudWatch.jsErrors.withFormat(ChartFormat.MultiLine)
+    NoCache(Ok(views.html.radiator(graphs, multilineGraphs, jsErrors, CloudWatch.cost, Configuration.environment.stage)))
   }
 
   def pingdom() = Authenticated.async { implicit request =>
