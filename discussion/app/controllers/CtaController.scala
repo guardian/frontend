@@ -11,6 +11,7 @@ import play.api.libs.ws.{WS, Response}
 import java.lang.System._
 import common.DiscussionMetrics.DiscussionHttpTimingMetric
 import ExecutionContext.Implicits.global
+import conf.Configuration
 
 trait CtaController extends DiscussionController {
 
@@ -37,7 +38,8 @@ trait OpenCtaApi extends Logging {
 
 
   def getTopComment(): Future[JsValue] = {
-    getJsonOrError("url to open cta", onError) map {
+    val url:String = Configuration.open.ctaApiRoot  + "/ctasforarticle/123"
+    getJsonOrError(url, onError) map {
       json =>   ((json \\ "components")(0) \\ "comments")(0)(0)
     }
   }
@@ -60,5 +62,7 @@ trait OpenCtaApi extends Logging {
   }
 
   protected def GET(url: String): Future[Response] =
-    WS.url(url).withRequestTimeout(2000).get() // TODO: make this a property. --IKenna
+    WS.url(url)
+      .withHeaders("Host" -> "opencontent.guardianapis.com") //TODO: set this correctly  --ikenna
+      .withRequestTimeout(2000).get() // TODO: make this a property. --IKenna
 }
