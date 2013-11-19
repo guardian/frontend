@@ -18,10 +18,12 @@ object SoulmatesAggregatingAgent {
   }
 
   def sampleMembers(segment: Segment): Seq[Member] = {
-    Seq(
-      Random.shuffle(SoulmatesMenAgent.matchingAds(segment)).head,
-      Random.shuffle(SoulmatesWomenAgent.matchingAds(segment)).head
-    )
+    {
+      for {
+        man <- Random.shuffle(SoulmatesMenAgent.matchingAds(segment)).headOption
+        woman <- Random.shuffle(SoulmatesWomenAgent.matchingAds(segment)).headOption
+      } yield Random.shuffle(Seq(man, woman))
+    } getOrElse Nil
   }
 
 }
