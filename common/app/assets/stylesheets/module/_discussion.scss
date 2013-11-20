@@ -106,6 +106,7 @@
 
 .comment__datecreated {
     @extend %type-12;
+    display: block;
 }
 
 .comment--speechy {
@@ -158,8 +159,10 @@
 .person__avatar {
     border-radius: 50px;
     float: left;
+    height: 36px;
     margin-right: 15px;
     overflow: hidden;
+    width: 36px;
 
     webkit-border-radius: 50px;
     -moz-border-radius: 50px;

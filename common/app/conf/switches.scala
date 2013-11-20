@@ -115,6 +115,12 @@ object Switches extends Collections {
     "If this switch is on, users will be able to post comments",
     safeState = Off)
 
+  // Open
+
+  val OpenCtaSwitch = Switch("Open", "open-cta",
+    "If this switch is on, will see a CTA to comments on the right hand side",
+    safeState = Off)
+
   // Swipe Switches
 
   val SwipeNav = Switch("Swipe Navigation", "swipe-nav",
@@ -275,6 +281,7 @@ object Switches extends Collections {
     OmnitureDomReadySwitch,
     DiscussionSwitch,
     DiscussionPostCommentSwitch,
+    OpenCtaSwitch,
     ShortDiscussionSwitch,
     SwipeNav,
     SwipeNavOnClick,

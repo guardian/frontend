@@ -142,8 +142,10 @@ define([
 
         initOpen: function() {
             common.mediator.on('page:article:ready', function(config, context) {
-                var openCta = new OpenCta(context);
-                openCta.fetch($('.js-open-cta')[0]);
+                if (config.switches.openCta) {
+                    var openCta = new OpenCta(context);
+                    openCta.fetch($('.js-open-cta')[0]);
+                }
             });
         }
     };
