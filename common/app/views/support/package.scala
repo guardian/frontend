@@ -502,12 +502,11 @@ object VisualTone {
   )
 
 
+  // tones are all considered to be 'News' it is the default so we do not list news tones explicitly
   def apply(tags: Tags) = tags.tones.headOption.flatMap(tone => toneMappings.get(tone.id)).getOrElse(News)
 
-  // these tones are all considered to be 'News' it is the default so we do not list them explicitly
 }
 
-// TODO - you can name me better that this
 object RenderOtherStatus {
   def gonePage(implicit request: RequestHeader) = model.Page(request.path, "news", "Gone", "GFE:Gone")
   def apply(result: SimpleResult)(implicit request: RequestHeader) = result.header.status match {
