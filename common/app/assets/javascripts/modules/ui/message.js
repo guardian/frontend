@@ -34,12 +34,12 @@ define([
         return !!userPrefs.get(this.prefs);
     };
 
-    Message.prototype.seen = function() {
+    Message.prototype.remember = function() {
         userPrefs.set(this.prefs, true);
     };
     
     Message.prototype.acknowledge = function() {
-        this.seen();
+        this.remember();
         this.hide();
     };
    
