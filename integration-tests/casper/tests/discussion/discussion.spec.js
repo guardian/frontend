@@ -10,7 +10,15 @@ casper.start(host + 'science/grrlscientist/2012/aug/07/3?view=mobile');
 
 casper.options.waitTimeout = 10000; // Discussion API can be slow..
 
-//casper.options.logLevel = 'debug';
+casper.options.logLevel = 'debug';
+
+casper.on('page.initialized', function() {
+    this.evaluate(function (casper) {
+        casper.echo(window);
+        guardian.config.switches.discussionTopComments = true;
+        return guardian.config.switches.discussionTopComments;
+    });
+});
 
 /**
  *   Scenario: Read top level comments
@@ -51,10 +59,10 @@ casper.test.begin('Read top level comments', function(test) {
 
     casper.test.begin("Loads in >=1 comment <li>'s", function (test) {
 
-        casper.waitForSelector('li.d-comment--top-level',
+        casper.waitForSelector('.discussion__comments__top li.d-comment--top-level',
             function then() {
-                test.assertExists('li.d-comment--top-level');
-                test.assertVisible('li.d-comment--top-level');
+                test.assertExists('.discussion__comments__top li.d-comment--top-level');
+                test.assertVisible('.discussion__comments__top li.d-comment--top-level');
                 test.done();
             },
             function timeout() {

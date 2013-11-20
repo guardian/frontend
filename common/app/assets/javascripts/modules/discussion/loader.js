@@ -36,10 +36,11 @@ define([
  * @param {Object} mediator
  * @param {Object=} options
  */
-var Loader = function(context, mediator, options) {
+var Loader = function(context, mediator, options, topCommentsSwitch) {
     this.context = context || document;
     this.mediator = mediator;
     this.setOptions(options);
+    this.topCommentsSwitch = topCommentsSwitch;
 };
 Component.define(Loader);
 
@@ -97,7 +98,7 @@ Loader.prototype.ready = function() {
         self.topComments = new TopComments(self.context, self.mediator, {
             discussionId: self.getDiscussionId(),
             user: self.user
-        });
+        }, self.topCommentsSwitch);
 
         self.topComments
             .fetch(topCommentsElem)

@@ -28,10 +28,11 @@ define([
  * @param {Object} mediator
  * @param {Object=} options
  */
-var TopComments = function(context, mediator, options) {
+var TopComments = function(context, mediator, options, topCommentsSwitch) {
     this.context = context || document;
     this.mediator = mediator;
     this.setOptions(options);
+    this.topCommentsSwitch = topCommentsSwitch;
 };
 Component.define(TopComments);
 
@@ -62,7 +63,8 @@ TopComments.prototype.defaultOptions = {
     discussionId: null,
     heightLimit: 600, // max-height in _discussion.scss .discussion__comments__top
     showRepliesCount: 3,
-    user: null
+    user: null,
+    sectionHeading: 'Top Comments '
 };
 
 /** @type {Boolean} */
@@ -97,9 +99,7 @@ TopComments.prototype.fetch = function(parent) {
     }).then(
         function render(resp) {
 
-            // self.elem = parent;
-            
-            if (resp.commentCount > 0) {
+            if (resp.commentCount > 0 && self.topCommentsSwitch) {
                 
                 // Render Top Comments
                 
@@ -157,9 +157,12 @@ TopComments.prototype.ready = function() {
         }
     }
 
+    var heading = document.getElementById('topComments');
+
+    heading.childNodes[0].nodeValue = self.options.sectionHeading;
+
     if (self.topCommentsAmount === 1) {
-        var s = document.getElementById('topComments');
-        s.childNodes[0].nodeValue = s.childNodes[0].nodeValue.replace(/s\b/, '');
+        heading.childNodes[0].nodeValue = heading.childNodes[0].nodeValue.replace(/s\b/, '');
     } else {
         // Append top comment count to section title
        $(self.getClass('titleCounter')).removeClass('u-h')[0].innerHTML = "(" + self.topCommentsAmount + ")";
