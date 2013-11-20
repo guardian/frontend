@@ -1,9 +1,9 @@
 define([
-    'ajax',
+    'utils/ajax',
     'bonzo',
     'qwery',
     'modules/component',
-    'modules/id',
+    'modules/identity/api',
     'modules/discussion/comment-box',
     'modules/discussion/recommend-comments',
     '$'
