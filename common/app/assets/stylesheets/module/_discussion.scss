@@ -116,7 +116,7 @@
     .comment__inner {
         background-color: $c-neutral7;
         display: inline-block;
-        padding: $baseline*2 $gutter/2 $baseline*6 $gutter/2;
+        padding: $baseline*2 $gutter/2 $baseline*3 $gutter/2;
         position: relative;
 
         &:before { // Pointer (equilateral triangle)
@@ -148,6 +148,18 @@
             -moz-transform: skew(-10deg);
             -webkit-transform: skew(-10deg);
         }
+    }
+}
+
+.comments-link {
+    @extend %type-11;
+    display: block;
+    float: right;
+
+    .i {
+        margin-left: 4px;
+        position: relative;
+        top: 2px;
     }
 }
 

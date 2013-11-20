@@ -24,7 +24,7 @@ trait CtaController extends DiscussionController {
       openCtaApi.getTopComment map {
         ctaJson => {
           Cached(60) {
-            JsonComponent("html" -> views.html.fragments.commentCta(Comment(ctaJson)))
+            JsonComponent("html" -> views.html.fragments.commentCta(Comment(ctaJson), true))
           }
         }
       }
