@@ -16,15 +16,16 @@ define([
 
         this.prefs = 'message.' + id;
         this.header = $('#header');
+        this.copy = $('.js-site-message-copy');
         this.container = $('.site-message');
-        
+
         bean.on(document, 'click', '.js-site-message-close', function(e) {
             self.acknowledge();
         });
     }
 
     Message.prototype.show = function(message) {
-        $('.site-message__message').html(message);
+        this.copy.prepend(message);
         this.header.addClass('js-site-message');
         this.container.removeClass('u-h');
     };

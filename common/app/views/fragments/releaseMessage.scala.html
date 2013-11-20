@@ -6,21 +6,8 @@
 @if(ReleaseMessageSwitch.isSwitchedOn) {
     <div class="site-message u-h" data-link-name="release message">
         <div class="site-message__inner">
-            <p class="site-message__message"></p>
-
-            <ul class="site-message__actions unstyled">
-                <li class="site-message__actions__item">
-                    <i class="i i-comment-grey"></i>
-                    <a href="http://survey.omniture.com/d1/hosted/815f9cfba1" data-link-name="feedback" target="_blank">We’d love to hear your feedback</a>
-                </li>
-                <li class="site-message__actions__item">
-                    <i class="i i-back"></i>
-                        <a class="js-main-site-link" rel="nofollow" href="@DesktopLink(page)"
-                            data-link-name="opt-out">Opt-out and return to standard desktop site </a>
-
-                </li>
-            </ul>
-
+            <div class="js-site-message-copy">
+            </div>
             <button class="site-message__close js-site-message-close" data-link-name="hide release message">
                 <i class="i i-message-close"></i>
                 <span class="u-h">Hide this message</span>

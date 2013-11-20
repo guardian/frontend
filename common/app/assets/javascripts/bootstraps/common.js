@@ -302,7 +302,21 @@ define([
         // display a flash message to devices over 600px who don't have the mobile cookie
         displayReleaseMessage: function (config) {
 
-            var msg = 'You’re viewing an alpha release of the Guardian’s responsive website. <a href="/help/2013/oct/04/alpha-testing-and-evolution-of-our-mobile-site">Find out more</a>';
+            var msg = '<p class="site-message__message">' +
+                            'You’re viewing an alpha release of the Guardian’s responsive website. <a href="/help/2013/oct/04/alpha-testing-and-evolution-of-our-mobile-site">Find out more</a>' +
+                      '</p>' +
+                      '<ul class="site-message__actions unstyled">' +
+                           '<li class="site-message__actions__item">' +
+                               '<i class="i i-comment-grey"></i>' +
+                               '<a href="http://survey.omniture.com/d1/hosted/815f9cfba1" data-link-name="feedback" target="_blank">We’d love to hear your feedback</a>' +
+                           '</li>' +
+                           '<li class="site-message__actions__item">' +
+                               '<i class="i i-back"></i>' +
+                                   '<a class="js-main-site-link" rel="nofollow" href="@DesktopLink(page)"' +
+                                       'data-link-name="opt-out">Opt-out and return to standard desktop site </a>' +
+                           '</li>' +
+                      '</ul>';
+
             var releaseMessage = new Message('alpha');
             var alreadyOptedIn = !!releaseMessage.hasSeen('releaseMessage');
 
