@@ -85,7 +85,7 @@ function(
                           'Welcome ' + name + ", you're signed into the Guardian using Facebook, or " +
                           '<a href="' + self.config.page.idUrl + '/signout"/>sign out</a>.' +
                       '</p>',
-                fbMessage = new Message('fbauto').show(msg);
+                fbMessage = new Message('fbauto', { important: true }).show(msg);
         };
     }
     return AutoSignin;

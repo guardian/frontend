@@ -10,17 +10,28 @@ define([
     userPrefs
 ) {
 
-    var Message = function(id) {
-            
-        var self = this;
+   /**
+    * Message provides a common means of flash messaging a user in the UI.
+    *
+    * @constructor
+    * @param {String} id Identifier of the message
+    * @param {Object=} options
+    */
+    var Message = function(id, options) {
+        var self = this,
+            opts = options || {};
+        this.important = opts.important || false;
         this.prefs = 'message.' + id;
-
         bean.on(document, 'click', '.js-site-message-close', function(e) {
             self.acknowledge();
         });
     };
 
     Message.prototype.show = function(message) {
+        // don't let messages unknowingly overwrite each other
+        if (!$('.site-message').hasClass('u-h') && !this.important) {
+            return false;
+        }
         $('.js-site-message-copy').html(message);
         $('#header').addClass('js-site-message');
         $('.site-message').removeClass('u-h');

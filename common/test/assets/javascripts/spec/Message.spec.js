@@ -11,11 +11,11 @@ define([
     describe("Message", function() {
 
         var conf = {
-                        id: 'message',
-                        fixtures: [
-                            '<div id="header"></div><div class="site-message"></div><div class="js-site-message-copy">...</div>'
-                        ]
-                  }
+                     id: 'message',
+                     fixtures: [
+                        '<div id="header"></div><div class="site-message u-h"></div><div class="js-site-message-copy">...</div>'
+                     ]
+                   }
         
         beforeEach(function() {
             fixtures.render(conf);
@@ -28,6 +28,7 @@ define([
         it("Show a message", function(){
             new Message('foo').show('hello world');
             expect($('.js-site-message-copy').text()).toContain('hello world');
+            expect($('.site-message').hasClass('u-h')).toBeFalsy();
         });
         
         it("Hide a message", function(){
@@ -45,7 +46,23 @@ define([
             expect(m.hasSeen()).toBeTruthy();
         })
     
-        xit("Priority", function(){ })
+        it("Block messages from overwriting each other", function(){
+            var m1 = new Message('foo');
+            var m2 = new Message('bar');
+            m1.show('message one');
+            m2.show('message two');
+            expect($('.js-site-message-copy').text()).toContain('message one');
+        })
+        
+        it("Allow 'important' messages from overwriting each other", function(){
+            var m1 = new Message('a');
+            var m2 = new Message('b', { important: true });
+            var m3 = new Message('c');
+            m1.show('message one');
+            m2.show('message two');
+            m3.show('message three');
+            expect($('.js-site-message-copy').text()).toContain('message two');
+        })
         
     })
 });
