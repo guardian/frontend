@@ -1,12 +1,12 @@
 define([
     "$",
-    "utils/storage",
     "bean",
+    "utils/storage",
     "modules/userPrefs"
 ], function (
     $,
-    storage,
     bean,
+    storage,
     userPrefs
 ) {
 
