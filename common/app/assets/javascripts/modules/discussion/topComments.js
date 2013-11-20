@@ -53,7 +53,7 @@ TopComments.CONFIG = {
         commentReply: 'd-comment__action--reply',
 
         topCommentHolder: 'discussion__comments__top',
-        titleCounter: 'discussion__comments__top__counter',
+        titleCounter: 'discussion__comments--top-counter',
         fadeOut: 'd-image-fade'
     }
 };

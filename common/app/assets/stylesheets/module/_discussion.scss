@@ -29,11 +29,10 @@
     border-top: 1px solid $c-neutral6;
     color: $c-neutral1;
     font-family: $sans-serif;
-    &.fade-in {
 
+    &.fade-in {
         opacity: 0;
         background-color: $c-neutral6;
-
         @include commentFadeInAnimation();
     }
 }
@@ -376,7 +375,7 @@ $topCommentsHeight: 600px;
 
     position: relative;
         
-    .discussion__comments__top__counter {
+    .discussion__comments--top-counter {
         color: $c-neutral3;
     }
 
@@ -409,16 +408,16 @@ $topCommentsHeight: 600px;
                 
                 // Switch to 2-col layout for desktop
 
-                -webkit-column-width: 294px;
-                -webkit-column-gap: $gutter; 
+                -webkit-column-width: 290px;
+                -webkit-column-gap: $gs-gutter; 
                 -webkit-column-count: 2;
 
-                -moz-column-width: 294px;
-                -moz-column-gap: $gutter;
+                -moz-column-width: 290px;
+                -moz-column-gap: $gs-gutter;
                 -moz-column-count: 2;
 
-                column-width: 294px;
-                column-gap: $gutter; 
+                column-width: 290px;
+                column-gap: $gs-gutter; 
                 column-count: 2;
 
                 .d-comment {
@@ -454,7 +453,7 @@ $topCommentsHeight: 600px;
                     width: 0;
                     position: absolute;
                     pointer-events: none;
-                    border-color: rgba(136, 183, 213, 0);
+                    border-color: transparent;
                     border-top-color: $c-neutral7;
                     border-width: 30px;
                     left: 23px ;
@@ -470,10 +469,10 @@ $topCommentsHeight: 600px;
                     pointer-events: none;
                     background-color: #ffffff;
                     left: -5px;
-                    transform: skew(-10deg); 
-                    -o-transform: skew(-10deg); 
-                    -moz-transform: skew(-10deg); 
-                    -webkit-transform: skew(-10deg);                
+                    -webkit-transform: skew(-10deg);
+                       -moz-transform: skew(-10deg); 
+                         -o-transform: skew(-10deg); 
+                            transform: skew(-10deg); 
                 }
 
                 .d-comment__main {
@@ -507,9 +506,7 @@ $topCommentsHeight: 600px;
                     .i-recommend {
                         background-color: #4490ce;
                         padding: 4px;
-                        -webkit-border-radius: 50px;
-                        -moz-border-radius: 50px;
-                        border-radius: 50px;
+                        @include rounded-corners(50px);
                         background-position: 4px 4px;
                     }
 
@@ -523,7 +520,8 @@ $topCommentsHeight: 600px;
                     }
 
                     &:hover {
-                        .d-comment__recommend-count, .d-comment__recommend-caption {
+                        .d-comment__recommend-count,
+                        .d-comment__recommend-caption {
                             text-decoration: underline;
                         }
                     }
