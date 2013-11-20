@@ -14,6 +14,6 @@
     "swipeview": "git@github.com:guardian/SwipeView.git",
     "imager.js": "git@github.com:oncletom/Imager.js.git#feature-separation",
     "lodash-amd": "2.2.1",
-    "component": "0.0.1"
+    "component": "git://github.com/guardian/component.git#0.0.1"
   }
 }
