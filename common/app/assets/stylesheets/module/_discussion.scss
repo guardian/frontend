@@ -439,102 +439,103 @@ $topCommentsHeight: 600px;
             position: relative;
             display: block;
             padding: 0 0 $baseline*10 0;
+        }
 
-            .d-comment__inner {
-                background-color: $c-neutral7;
-                display: inline-block;
-                padding: $baseline*2 $gutter/2 $baseline*6 $gutter/2;                
-    
-                &:before { // Pointer (equilateral triangle)
-                    top: 100%;
-                    border: solid transparent;
-                    content: " ";
-                    height: 0;
-                    width: 0;
-                    position: absolute;
-                    pointer-events: none;
-                    border-color: transparent;
-                    border-top-color: $c-neutral7;
-                    border-width: 30px;
-                    left: 23px ;
-                    margin-left: -30px;
-                }
+        .d-comment__inner {
+            background-color: $c-neutral7;
+            display: inline-block;
+            padding: $baseline*2 $gutter/2 $baseline*6 $gutter/2;                
 
-                &:after { // Mask (right-skewed parellelogram)
-                    top: 100%;
-                    content: " ";
-                    height: 24px;
-                    width: 24px;
-                    position: absolute;
-                    pointer-events: none;
-                    background-color: #ffffff;
-                    left: -5px;
-                    -webkit-transform: skew(-10deg);
-                       -moz-transform: skew(-10deg); 
-                         -o-transform: skew(-10deg); 
-                            transform: skew(-10deg); 
-                }
-
-                .d-comment__main {
-                    padding-top: 36px;
-                }
-
-                .d-comment__pick {
-                    bottom: 24px;
-                    right: 8px;
-                    top: auto;
-                }
-
-                .d-comment__recommend {
-                    background-color: transparent;
-                    padding: 0;
-                    margin: 0;
-                    display: block;
-                    height: 20px;
-                    top: 12px;
-                    right: 6px;
-
-                    .d-comment__recommend-caption {
-                        color: #4490ce;
-                        display: inline-block;
-                        padding: 0 8px 0 0;
-                        position: relative;
-                        top: -5px;                                    
-                        font-size: 0.9em;
-                    }
-
-                    .i-recommend {
-                        background-color: #4490ce;
-                        padding: 4px;
-                        @include rounded-corners(50px);
-                        background-position: 4px 4px;
-                    }
-
-                    .d-comment__recommend-count {
-                        color: #4490ce;
-                        display: inline-block;
-                        padding: 0 0 0 8px;
-                        position: relative;
-                        top: -5px;
-                        font-size: 0.9em;
-                    }
-
-                    &:hover {
-                        .d-comment__recommend-count,
-                        .d-comment__recommend-caption {
-                            text-decoration: underline;
-                        }
-                    }
-                }
+            &:before { // Pointer (equilateral triangle)
+                top: 100%;
+                border: solid transparent;
+                content: " ";
+                height: 0;
+                width: 0;
+                position: absolute;
+                pointer-events: none;
+                border-color: rgba(255, 255, 255, 0);
+                border-top-color: $c-neutral7;
+                border-width: 30px;
+                left: 23px ;
+                margin-left: -30px;
             }
 
-            .d-comment__avatar-wrapper {
-                @include rounded-corners(50px);
-                overflow: hidden;
-                .d-comment__avatar {
-                    padding: 0;
+            &:after { // Mask (right-skewed parellelogram)
+                top: 100%;
+                content: " ";
+                height: 24px;
+                width: 24px;
+                position: absolute;
+                pointer-events: none;
+                background-color: #ffffff;
+                left: -5px;
+                -webkit-transform: skew(-10deg);
+                   -moz-transform: skew(-10deg); 
+                     -o-transform: skew(-10deg); 
+                        transform: skew(-10deg); 
+            }
+
+            .d-comment__main {
+                padding-top: 36px;
+            }
+
+            .d-comment__pick {
+                bottom: 24px;
+                right: 8px;
+                top: auto;
+            }
+
+            .d-comment__recommend {
+                background-color: transparent;
+                padding: 0;
+                margin: 0;
+                display: block;
+                height: 20px;
+                top: 12px;
+                right: 6px;
+
+                .d-comment__recommend-caption {
+                    color: #4490ce;
+                    display: inline-block;
+                    padding: 0 8px 0 0;
+                    position: relative;
+                    top: -5px;                                    
+                    font-size: 0.9em;
+                }
+
+                .i-recommend {
+                    background-color: #4490ce;
+                    padding: 4px;
+                    @include rounded-corners(50px);
+                    background-position: 4px 4px;
+                }
+
+                .d-comment__recommend-count {
+                    color: #4490ce;
+                    display: inline-block;
+                    padding: 0 0 0 8px;
+                    position: relative;
+                    top: -5px;
+                    font-size: 0.9em;
+                }
+
+                &:hover {
+                    .d-comment__recommend-count,
+                    .d-comment__recommend-caption {
+                        text-decoration: underline;
+                    }
                 }
             }
         }
+
+        .d-comment__avatar-wrapper {
+            @include rounded-corners(50px);
+            overflow: hidden;
+            .d-comment__avatar {
+                padding: 0;
+            }
+        }
+        
     }
 }
