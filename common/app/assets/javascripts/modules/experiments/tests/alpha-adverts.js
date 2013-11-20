@@ -6,7 +6,7 @@ define([
     'bean',
     'utils/detect',
     'modules/analytics/adverts',
-    'modules/analytics/livestats',
+    'modules/analytics/livestats-ads',
     'modules/adverts/sticky',
     'lodash/objects/transform',
     'lodash/arrays/findLastIndex',
@@ -18,7 +18,7 @@ define([
     bean,
     detect,
     inview,
-    LiveStats,
+    LiveStatsAds,
     Sticky,
     transform,
     findLastIndex,
@@ -55,9 +55,8 @@ define([
         // a timer to submit the data to diagnostics every nth second
         if (config.switches.liveStats) {
             var beaconInterval = setInterval(function() {
-                new LiveStats({
-                    beaconUrl: config.page.beaconUrl,
-                    beaconName: '/ad.gif'
+                new LiveStatsAds({
+                    beaconUrl: config.page.beaconUrl
                 }).log(adDwellTimes);
 
                 adDwellTimes = {}; // reset
