@@ -5,18 +5,22 @@ define([
 ) {
 
 /** @constructor */
-var Cta = function() {
-
+var Cta = function(context, mediator, options) {
+    this.contex = context;
+    this.mediator = mediator;
+    this.setOptions(options);
 };
 Component.define(Cta);
 
 /** @type {Object.<string.*>} */
 Cta.CONFIG = {
-    endpoint: '/open/cta.json'
+    endpoint: '/open/article/cta/:discussionKey.json'
 };
 
 /** @type {Object.<string.*>} */
-Cta.prototype.defaultOptions = {};
+Cta.prototype.defaultOptions = {
+    discussionKey: null
+};
 
 /** @override */
 Cta.prototype.ready = function() {};
