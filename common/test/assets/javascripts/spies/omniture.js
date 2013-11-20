@@ -1,4 +1,4 @@
-define('omniture', function() {
+require([], function() {
 
     return {};
 
