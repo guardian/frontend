@@ -301,8 +301,10 @@ define([
 
         // display a flash message to devices over 600px who don't have the mobile cookie
         displayReleaseMessage: function (config) {
-
-            var msg = '<p class="site-message__message">' +
+            
+            var path = (document.location.pathname) ? document.location.pathname : '/',
+                exitLink = '/preference/platform/desktop?page=' + encodeURIComponent(path + '?view=desktop'),
+                msg = '<p class="site-message__message">' +
                             'You’re viewing an alpha release of the Guardian’s responsive website. <a href="/help/2013/oct/04/alpha-testing-and-evolution-of-our-mobile-site">Find out more</a>' +
                       '</p>' +
                       '<ul class="site-message__actions unstyled">' +
@@ -312,7 +314,7 @@ define([
                            '</li>' +
                            '<li class="site-message__actions__item">' +
                                '<i class="i i-back"></i>' +
-                                   '<a class="js-main-site-link" rel="nofollow" href="@DesktopLink(page)"' +
+                                   '<a class="js-main-site-link" rel="nofollow" href="' + exitLink + '"' +
                                        'data-link-name="opt-out">Opt-out and return to standard desktop site </a>' +
                            '</li>' +
                       '</ul>';
