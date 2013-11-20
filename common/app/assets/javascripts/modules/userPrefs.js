@@ -1,4 +1,8 @@
-define(['modules/storage'], function(storage) {
+define([
+    'utils/storage'
+], function(
+    storage
+) {
 
     var storagePrefix = 'gu.prefs.',
         store = storage.local;

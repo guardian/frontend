@@ -115,6 +115,10 @@ a {
         width: 50%;
         float: left;
     }
+    
+    .charts-full {
+        width: 100%;
+    }
 
     .monitoring-wrapper,
     .pageviews-wrapper {

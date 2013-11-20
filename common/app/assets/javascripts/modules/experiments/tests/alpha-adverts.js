@@ -4,7 +4,7 @@ define([
     'qwery',
     'bonzo',
     'bean',
-    'modules/detect',
+    'utils/detect',
     'modules/analytics/adverts',
     'modules/adverts/sticky',
     'lodash/objects/transform',

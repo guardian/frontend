@@ -1,19 +1,21 @@
 define([
     "common",
-    "modules/autoupdate",
-    "modules/live-filter",
-    "modules/live-summary",
-    "modules/matchnav",
+    "$",
+    "modules/ui/autoupdate",
+    "modules/live/filter",
+    "modules/live/summary",
+    "modules/sport/football/matchnav",
     "modules/analytics/reading",
     "modules/discussion/loader",
-    "modules/cricket",
+    "modules/sport/cricket",
     "modules/experiments/live-blog-show-more",
-    "modules/notification-counter",
-    "modules/detect",
+    "modules/ui/notification-counter",
+    "utils/detect",
     "modules/experiments/left-hand-card",
     "modules/open/cta"
 ], function (
     common,
+    $,
     AutoUpdate,
     LiveFilter,
     LiveSummary,
@@ -83,6 +85,7 @@ define([
         },
 
         initDiscussion: function() {
+
             common.mediator.on('page:article:ready', function(config, context) {
                 if (config.page.commentable) {
                     var discussionLoader = new DiscussionLoader(context, common.mediator);
@@ -139,7 +142,10 @@ define([
 
         initOpen: function() {
             common.mediator.on('page:article:ready', function(config, context) {
-                var openCta = new OpenCta(context);
+                if (config.switches.openCta) {
+                    var openCta = new OpenCta(context);
+                    openCta.fetch($('.js-open-cta')[0]);
+                }
             });
         }
     };
@@ -163,7 +169,3 @@ define([
     };
 
 });
-
-
-
-

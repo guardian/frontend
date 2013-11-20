@@ -81,7 +81,8 @@
                         <div class="js-sticky-upper" data-id="mpu-ad-slot"></div>
                         <div class="u-table">
                             <div class="u-table__row">
-                                <div class="u-table__cell u-table__cell">
+                                <div class="u-table__cell">
+                                    <div class="js-open-cta"></div>
                                     <div class="mpu-context">
                                         <div class="mpu-container js-mpu-ad-slot">
                                             <h2 class="article__meta-heading tone-colour">Share this article</h2>
@@ -96,7 +97,7 @@
                                 <div class="u-table__cell u-table__cell--collapse u-table__cell--bottom">
                                     <div class="js-sticky-lower" data-id="mpu-ad-slot"></div>
                                     @if(storyPackage.nonEmpty) {
-                                        @fragments.cards.card(storyPackage.head, "right", "Read next", "Story package card", "visible")
+                                        @fragments.cards.card(storyPackage.head, "right", "More on this story", "Story package card", "visible")
                                     }
                                 </div>
                             </div>

@@ -1,22 +1,20 @@
 @(collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader)
 
-@if(style.showMore) {
-    <ul class="unstyled collection collection--without-sport-stats @if(style.showMore){js-collection--show-more}">
+<ul class="unstyled collection collection--without-sport-stats collection--show-more-standard @if(style.showMore){js-collection--show-more}">
+    @if(style.showMore) {
         @collection.items.take(5).zipWithIndex.map{ case (trail, index) =>
-            @fragments.items.standard(trail, index, mainItem = containerIndex == 0 && index == 0)
+            @fragments.items.standard(trail, index, containerIndex)
         }
         @if(collection.items.size > 5) {
             <script type="text/x-template" class="collection--template">
                 @collection.items.drop(5).zipWithIndex.map{ case (trail, index) =>
-                    @fragments.items.standard(trail, index + 5)
+                    @fragments.items.standard(trail, index + 5, containerIndex)
                 }
             </script>
         }
-    </ul>
-}else{
-    <ul class="unstyled collection collection--without-sport-stats @if(style.showMore){js-collection--show-more}">
+    } else {
         @collection.items.zipWithIndex.map{ case (trail, index) =>
-            @fragments.items.standard(trail, index, mainItem = containerIndex == 0 && index == 0)
+            @fragments.items.standard(trail, index, containerIndex)
         }
-    </ul>
-}
+    }
+</ul>

@@ -1,20 +1,25 @@
-@(charts: Seq[tools.Chart], hitMissCharts: Seq[tools.Chart], cost: tools.CostMetric, env: String)
+@(charts: Seq[tools.LineChart], hitMissCharts: Seq[tools.LineChart], jsErrors: tools.LineChart, cost: tools.MaximumMetric, env: String)
 
 <!DOCTYPE html>
 <html>
-  <head>
+    <head>
         <meta http-equiv="refresh" content="60">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>theguardian.com radiator</title>
         <link rel="stylesheet" type="text/css" href="/assets/css/radiator.css">
+        <script src="@routes.Assets.at("javascripts/components/jquery/jquery.js")"></script>
+        <script src="@routes.Assets.at("javascripts/components/underscore/underscore.js")"></script>
         <script src="https://www.google.com/jsapi"></script>
-  </head>
+        <script type="text/javascript">
+            google.load("visualization", "1", {packages:["corechart"]});
+        </script>
+    </head>
   <body>
 
         <header>
             <span id="logo">the<span class="white">guardian</span>.com dashboard</span>
-            <div class="cost"><strong>$@cost.cost</strong> this month</div>
+            <div class="cost"><strong>$@cost.max.toLong</strong> this month</div>
         </header>
 
         <div class="pingdom-wrapper">
@@ -40,51 +45,10 @@
             </div>
         </div>
 
-        <h2>Cloudwatch</h2>
-        
-        <script type="text/javascript">
-            google.load("visualization", "1", {packages:["corechart"]});
-            google.setOnLoadCallback(drawCharts);
+        @charts.map{ chart => @fragments.lineChart(chart)  }
+        @hitMissCharts.map{ chart => @fragments.lineChart(chart) }
+        @fragments.lineChart(jsErrors)
 
-            function drawCharts() {
-                @charts.map{ chart =>
-                    new google.visualization.LineChart(document.getElementById('@chart.id'))
-                        .draw(google.visualization.arrayToDataTable(@Html(chart.asDataset)), {
-                        backgroundColor: '#fff',
-                        colors: ['#333'],
-                        height: 120,
-                        fontName: 'Georgia',
-                        titleTextStyle: {color: '#999'},
-                        title: '@chart.name',
-                        hAxis: { textStyle: {color: '#ccc'}, gridlines: { count: 0 }, showTextEvery: 15, baselineColor: '#fff' },
-                        legend: 'none' @chart.yAxis.map{ title =>, vAxis: {title: "@title", textStyle: {color: '#ccc'}, gridlines: { count: 3, color: '#ccc' }} }
-                    });
-                }
-
-                @hitMissCharts.map{ chart =>
-                    new google.visualization.LineChart(document.getElementById('@chart.id'))
-                        .draw(google.visualization.arrayToDataTable(@Html(chart.asDataset)), {
-                        title: '@chart.name',
-                        backgroundColor: '#fff',
-                        height: 175,
-                        legend: 'in',
-                        fontName: 'Georgia',
-                        titleTextStyle: {color: '#999'},
-                        hAxis: { textStyle: {color: '#ccc'}, gridlines: { count: 0 }, showTextEvery: 15, baselineColor: '#fff' },
-                        vAxis: { textStyle: {color: '#ccc'}, gridlines: { count: 3, color: '#ccc' } }
-                    });
-                }
-            }
-        </script>
-
-        @charts.map{ chart => <div id="@chart.id" class="charts"></div> }
-        @hitMissCharts.map{ chart => <div id="@chart.id" class="charts"></div> }
-
-        <!-- TODO - add team city & pager duty -->
-
-        <script src="https://www.google.com/jsapi"></script>
-        <script src="/assets/javascripts/components/underscore/underscore.js"></script>
-        <script src="/assets/javascripts/components/jquery/jquery.js"></script>
-        <script src="/assets/javascripts/radiator/bootstrap.js"></script>
+        <script src="/assets/javascripts/radiator/bootstrap.js" defer></script>
   </body>
 </html>

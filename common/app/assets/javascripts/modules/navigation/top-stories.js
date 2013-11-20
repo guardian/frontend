@@ -1,4 +1,14 @@
-define(['common', 'ajax', 'bonzo', 'modules/lazyload'], function (common, ajax, bonzo, LazyLoad) {
+define([
+    'common',
+    'utils/ajax',
+    'bonzo',
+    'modules/lazyload'
+], function (
+    common,
+    ajax,
+    bonzo,
+    LazyLoad
+) {
 
     function TopStories() {
 

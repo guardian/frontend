@@ -1,4 +1,14 @@
-define(['common', 'bonzo', 'bean', 'modules/userPrefs'], function (common, bonzo, bean, userPrefs) {
+define([
+    'common',
+    'bonzo',
+    'bean',
+    'modules/userPrefs'
+], function (
+    common,
+    bonzo,
+    bean,
+    userPrefs
+) {
 
     return function(container) {
 

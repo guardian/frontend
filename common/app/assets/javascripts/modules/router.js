@@ -1,7 +1,11 @@
 //Client-side routing module
 //Heavily inspired by https://github.com/PaulKinlan/leviroutes/blob/master/routes.js
 /*jshint boss:true, curly:false */
-define(['common'], function (common) {
+define([
+    'common'
+], function (
+    common
+) {
 
     function Router() {
     
