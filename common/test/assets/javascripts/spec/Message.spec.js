@@ -11,11 +11,13 @@ define([
     describe("Message", function() {
 
         var conf = {
-                     id: 'message',
-                     fixtures: [
-                        '<div id="header"></div><div class="site-message u-h"></div><div class="js-site-message-copy">...</div>'
-                     ]
-                   }
+                id: 'message',
+                fixtures: [
+                    '<div id="header"></div>' +
+                    '<div class="site-message u-h"></div>' + 
+                    '<div class="js-site-message-copy">...</div>'
+                ]
+        }
         
         beforeEach(function() {
             fixtures.render(conf);
@@ -54,7 +56,7 @@ define([
             expect($('.js-site-message-copy').text()).toContain('message one');
         })
         
-        it("Allow 'important' messages from overwriting each other", function(){
+        it("Allow 'important' messages to overwrite an existing message", function(){
             var m1 = new Message('a');
             var m2 = new Message('b', { important: true });
             var m3 = new Message('c');
