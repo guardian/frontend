@@ -1,25 +1,35 @@
-define(['$', 'utils/to-array', 'bonzo', 'utils/mediator', 'imager', 'utils/detect'], function ($, toArray, bonzo, mediator, imagerjs, detect) {
+define(['$', 'utils/to-array', 'bonzo', 'utils/mediator', 'imager', 'utils/detect', 'lodash/objects/clone'], function ($, toArray, bonzo, mediator, imagerjs, detect, clone) {
 
     var imager = {
 
         upgrade: function(context) {
             context = context || document;
             var breakpoint = detect.getBreakpoint(),
-                images = toArray(context.getElementsByClassName('item__image-container')).filter(function(img) {
-                    var forceUpdgradeBreakpoints = (bonzo(img).attr('data-force-upgrade') || '').split(' ');
-                    if ($('html').hasClass('connection--low') && forceUpdgradeBreakpoints.indexOf(breakpoint) === -1) {
-                        return;
-                    }
-                    return bonzo(img).css('display') !== 'none';
-                }),
-                options = {
+                optionDefaults = {
                     availableWidths: [ 140, 220, 300, 460, 620, 700 ],
                     strategy: 'container',
-                    replacementDelay: 0
+                    replacementDelay: 0,
+                    placeholder: {
+                        matchingClassName: 'item__image'
+                    }
                 };
-            // clear out containers
-            bonzo(images).html('');
-            imagerjs.init(images, options);
+
+            toArray(context.getElementsByClassName('item__image-container')).forEach(function(container) {
+                var $container = bonzo(container),
+                    forceUpdgradeBreakpoints = ($container.attr('data-force-upgrade') || '').split(' ');
+                if (($('html').hasClass('connection--low') && forceUpdgradeBreakpoints.indexOf(breakpoint) === -1) || $container.css('display') === 'none') {
+                    return;
+                }
+                // clear out container
+                $container.html('');
+                var options = clone(optionDefaults, true),
+                    classes = $container.attr('data-img-class');
+                // add any defined classes
+                if (classes) {
+                    options.placeholder.matchingClassName += ' ' + classes;
+                }
+                imagerjs.init([container], options);
+            });
         },
 
         listen: function() {

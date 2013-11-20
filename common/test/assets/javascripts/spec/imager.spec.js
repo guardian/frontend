@@ -84,6 +84,25 @@ define(['modules/imager', 'helpers/fixtures', '$', 'bonzo', 'utils/mediator'], f
 
         });
 
+        describe('created img element', function() {
+
+            it('should always add "item__image" class to img element', function() {
+                imager.upgrade();
+                expect($('.' + imgClass + ' img.item__image').length).toEqual(3);
+            });
+
+            var classDataAttr = 'data-img-class';
+            it('should add "' + classDataAttr + '" as classes to img element', function() {
+                var classes = 'a-class another-class';
+                // add data attribute to first image container
+                $('#' + fixturesId + ' .' + imgClass + ':first-child').attr(classDataAttr, classes);
+                imager.upgrade();
+                expect($('.' + imgClass + ' img.item__image').length).toEqual(3);
+                expect($('.' + imgClass + ' img.' + classes.split(' ').join('.')).length).toEqual(1);
+            });
+
+        });
+
         describe('window events', function() {
 
             ['resize', 'orientationchange'].forEach(function(event) {

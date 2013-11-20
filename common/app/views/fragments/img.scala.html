@@ -6,7 +6,7 @@
 @image.map{ picture =>
 
     <figure itemprop="associatedMedia primaryImageOfPage" itemscope itemtype="http://schema.org/ImageObject" class="media-primary media-content">
-        <div class="item__image-container" data-force-upgrade="desktop wide" data-src="@ImgSrc.imager(picture)">
+        <div class="item__image-container" data-force-upgrade="desktop wide" data-src="@ImgSrc.imager(picture)" data-img-class="maxed main-image">
             <img class="maxed main-image" src="@LargeThumbnail.bestFor(picture)" />
         </div>
 
