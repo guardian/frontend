@@ -38,6 +38,7 @@ requirejs.config({
     map: {
         '*': {
             // mock out omniture script
+            // TODO - better way of mocking dependencies?
             omniture: '/base/common/test/assets/javascripts/spies/omniture.js'
         }
     },
