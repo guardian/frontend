@@ -43,7 +43,7 @@
 }
 .trail__headline a:visited,
 .trail h2 a:visited {
-    color: lighten($c-neutral1, 20%);
+    color: $c-neutral2;
 }
 .trail__headline a:active {
     text-decoration: underline;
