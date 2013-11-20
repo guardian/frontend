@@ -1,10 +1,7 @@
 package discussion
 
 import common.{ExecutionContexts, Logging}
-import common.DiscussionMetrics.DiscussionHttpTimingMetric
 import conf.Switches.ShortDiscussionSwitch
-import play.api.libs.json._
-import System.currentTimeMillis
 import scala.concurrent.Future
 import play.api.libs.json.JsArray
 import play.api.libs.ws.Response
@@ -12,10 +9,12 @@ import play.api.libs.json.JsObject
 import play.api.libs.json.JsNumber
 import discussion.model.{Profile, Comment, CommentCount}
 import play.api.mvc.Headers
+import discussion.util.Http
 
-trait DiscussionApi extends ExecutionContexts with Logging {
+trait DiscussionApi extends Http with ExecutionContexts with Logging {
 
   protected def GET(url: String, headers: (String, String)*): Future[Response]
+
   protected val apiRoot: String
   protected val clientHeaderValue: String
 
@@ -26,10 +25,10 @@ trait DiscussionApi extends ExecutionContexts with Logging {
 
     getJsonOrError(apiUrl, onError) map {
       json =>
-          json.asInstanceOf[JsObject].fieldSet.toSeq map{
-            case (id, JsNumber(i)) => CommentCount(id , i.toInt)
-            case bad => throw new RuntimeException(s"never understood $bad")
-          }
+        json.asInstanceOf[JsObject].fieldSet.toSeq map {
+          case (id, JsNumber(i)) => CommentCount(id, i.toInt)
+          case bad => throw new RuntimeException(s"never understood $bad")
+        }
     }
   }
 
@@ -66,7 +65,7 @@ trait DiscussionApi extends ExecutionContexts with Logging {
     }
   }
 
-  def myProfile(headers: Headers): Future[Profile] ={
+  def myProfile(headers: Headers): Future[Profile] = {
     def onError(r: Response) =
       s"Error loading profile, status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
     val apiUrl = s"$apiRoot/profile/me"
@@ -79,23 +78,8 @@ trait DiscussionApi extends ExecutionContexts with Logging {
     }
   }
 
-  protected def getJsonOrError(url: String, onError: (Response) => String, headers: (String, String)*):Future[JsValue] = {
-    val start = currentTimeMillis()
-    val allHeaders = headers :+ guClientHeader
-    GET(url, allHeaders:_*) map {
-      response =>
-        DiscussionHttpTimingMetric.recordTimeSpent(currentTimeMillis - start)
-
-        response.status match {
-          case 200 =>
-            Json.parse(response.body)
-
-          case _ =>
-            log.error(onError(response))
-            throw new RuntimeException("Error from Discussion API, "+onError(response))
-        }
-    }
-  }
+  override protected def getJsonOrError(url: String, onError: (Response) => String, headers: (String, String)*) =
+    super.getJsonOrError(url, onError, headers :+ guClientHeader: _*)
 
   private def guClientHeader = ("GU-Client", clientHeaderValue)
 }
@@ -105,5 +89,7 @@ object AuthHeaders {
   val cookie = "Cookie"
   val all = Set(guIdToken, cookie)
 
-  def filterHeaders(headers: Headers): Map[String, String] = headers.toSimpleMap filterKeys { all.contains }
+  def filterHeaders(headers: Headers): Map[String, String] = headers.toSimpleMap filterKeys {
+    all.contains
+  }
 }

@@ -10,7 +10,7 @@ import scala.concurrent._
 import ExecutionContext.Implicits.global
 import conf.Configuration
 import play.api.libs.ws.Response
-import http.Http
+import discussion.util.Http
 
 trait CtaController extends DiscussionController with OpenCtaApi {
 

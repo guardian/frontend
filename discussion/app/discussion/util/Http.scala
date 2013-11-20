@@ -1,4 +1,4 @@
-package http
+package discussion.util
 
 import play.api.libs.ws.{WS, Response}
 import play.api.libs.json.{Json, JsValue}
