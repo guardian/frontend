@@ -22,8 +22,9 @@ object ArticleController extends Controller with Logging with ExecutionContexts 
 
   def renderArticle(path: String) = Action.async { implicit request =>
     lookup(path) map {
+      case Left(model) if model.article.isExpired => renderExpired(model)
       case Left(model) => render(model)
-      case Right(status) => status
+      case Right(notFound) => notFound
     }
   }
 
