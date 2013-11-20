@@ -13,11 +13,7 @@ define([
     var Message = function(id) {
             
         var self = this;
-
         this.prefs = 'message.' + id;
-        this.header = $('#header');
-        this.copy = $('.js-site-message-copy');
-        this.container = $('.site-message');
 
         bean.on(document, 'click', '.js-site-message-close', function(e) {
             self.acknowledge();
@@ -25,14 +21,14 @@ define([
     };
 
     Message.prototype.show = function(message) {
-        this.copy.html(message);
-        this.header.addClass('js-site-message');
-        this.container.removeClass('u-h');
+        $('.js-site-message-copy').html(message);
+        $('#header').addClass('js-site-message');
+        $('.site-message').removeClass('u-h');
     };
     
     Message.prototype.hide = function() {
-        this.header.removeClass('js-site-message');
-        this.container.addClass('u-h');
+        $('#header').removeClass('js-site-message');
+        $('.site-message').addClass('u-h');
     };
     
     Message.prototype.hasSeen = function() {
