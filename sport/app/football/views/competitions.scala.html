@@ -1,6 +1,6 @@
 @(competitions: Map[String, Seq[CompetitionFilter]], page: Page, competitionList: List[String])(implicit request: RequestHeader)
 
-@main(page, Switches.all){  }{
+@main(page){  }{
 
     @fragments.competitionsBody(competitions, page, competitionList)
 
