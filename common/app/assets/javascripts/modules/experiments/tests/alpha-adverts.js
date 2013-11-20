@@ -24,10 +24,12 @@ define([
     findLastIndex,
     map) {
 
-    var variantName,
+    var _config,
+        variantName,
         adDwellTimes = {},
         flushInterval = 5000, // every 5 seconds
-        trackInterval = 1000;
+        trackInterval = 1000,
+        maxTrackTime  = 80000; // stop tracking after this time
 
     /*
         This idea here is that we have two timers. One to monitor whether an advert is in the viewport
@@ -47,21 +49,30 @@ define([
 
     function initAdDwellTracking(config) {
 
-        var $trackedAdSlots = common.$g('.ad-slot');
+        var startTime = new Date().getTime(),
+            $trackedAdSlots = common.$g('.ad-slot');
        
         // a timer to submit the data to diagnostics every nth second
         if (config.switches.liveStats) {
-            setInterval(function() {
-                new LiveStats({ beaconUrl: config.page.beaconUrl, beaconName: 'ads.px' }).log();
-                
-                // TODO - need to rewrite LiveStats to take params - ?sticky=2&top=5...
+            var beaconInterval = setInterval(function() {
+                new LiveStats({
+                    beaconUrl: config.page.beaconUrl,
+                    beaconName: 'ads.px'
+                }).log(adDwellTimes);
 
                 adDwellTimes = {}; // reset
+
+                // Stop timer if we've gone past the max running time
+                var now = new Date().getTime();
+                if (now >= startTime + maxTrackTime) {
+                    clearInterval(beaconInterval);
+                    clearInterval(adTrackInterval);
+                }
             }, flushInterval);
         }
 
         // a timer to monitor the pages for ad-slots inside the viewport
-        setInterval(function() {
+        var adTrackInterval = setInterval(function() {
             var viewport = detect.getLayoutMode();
             $trackedAdSlots.each(function(adEl) {
                 var adId = adEl.getAttribute('data-inview-name') || adEl.getAttribute('data-' + viewport) || '';
@@ -96,6 +107,7 @@ define([
         this.audience = 1;
         this.description = 'Test new advert formats for alpha release';
         this.canRun = function(config) {
+            _config = config;
             if(config.page.contentType === 'Article') {
                 return true;
             } else {
@@ -123,7 +135,7 @@ define([
 
                     // The timer for the 'Both' variant is setup only once in the variant itself
                     if (!isBoth) {
-                        initAdDwellTracking();
+                        initAdDwellTracking(_config);
                     }
 
                     return true;
@@ -161,7 +173,7 @@ define([
 
                     // The timer for the 'Both' variant is setup only once in the variant itself
                     if (!isBoth) {
-                        initAdDwellTracking();
+                        initAdDwellTracking(_config);
                     }
 
                     return true;
@@ -182,7 +194,7 @@ define([
                     guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha3.com';
                     variantName = 'Both';
 
-                    initAdDwellTracking();
+                    initAdDwellTracking(_config);
 
                     return true;
                 }
@@ -193,7 +205,7 @@ define([
                     variantName = 'Control';
                     guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha.com';
 
-                    initAdDwellTracking();
+                    initAdDwellTracking(_config);
 
                     return true;
                 }
