@@ -20,7 +20,7 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
         });
 
         afterEach(function(){
-            sessionStorage.removeItem('gu.analytics.referrerVars')
+            sessionStorage.removeItem('gu.analytics.referrerVars');
         });
 
         it("should record clicks with correct analytics name", function(){

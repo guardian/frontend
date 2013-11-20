@@ -13,8 +13,6 @@ for (var file in window.__karma__.files) {
     }
 }
 
-window.s_account = 'guardiangu-frontend';
-
 requirejs.config({
     // Karma serves files from '/base'
     baseUrl: '/base/common/app/assets/javascripts',
@@ -38,13 +36,15 @@ requirejs.config({
         'component': 'components/component/component',
         omniture:     '../../public/javascripts/vendor/omniture'
     },
+    map: {
+        '*': {
+            omniture: '/base/common/test/assets/javascripts/spies/omniture'
+        }
+    },
     shim: {
         imager: {
             deps: ['components/imager.js/src/imager'],
             exports: 'Imager'
-        },
-        omniture: {
-            exports: 's'
         }
     }
 });

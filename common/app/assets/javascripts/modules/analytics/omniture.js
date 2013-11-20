@@ -17,7 +17,7 @@ define([
     Errors,
     Cookies,
     s
-) {
+    ) {
 
     // https://developer.omniture.com/en_US/content_page/sitecatalyst-tagging/c-tagging-overview
 
@@ -211,15 +211,11 @@ define([
 
             config = c; // update the module-wide config
 
-            // if the omniture object was not injected in to the constructor
-            // use the global 's' object
-            if (window.s) {
-                s = window.s;
-                that.loaded(callback);
-            } else {
-                s = window.s;
-                that.loaded(callback);
-            }
+            // must be set before the Omniture file is parsed
+            window.s_account = config.page.omnitureAccount;
+
+            s = window.s;
+            that.loaded(callback);
         };
 
         this.confirmPageView = function() {
@@ -261,4 +257,3 @@ define([
     return Omniture;
 
 });
-
