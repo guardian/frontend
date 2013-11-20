@@ -12,7 +12,7 @@
                 <li class="lineitem">
                     @job.employerLogoUrl.map{ url => <img src="@url" />}
                     <h4 class="lineitem__title"><a href="@job.listingUrl">@job.title</a></h4>
-                    <p class="lineitem__description">@Html(job.shortDescription)</p>
+                    <p class="lineitem__description">@job.shortDescription</p>
                     <a href="@job.applyUrl" class="lineitem__link cta">Apply</a>
                 </li>
             }
