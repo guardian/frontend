@@ -12,14 +12,6 @@ casper.options.waitTimeout = 10000; // Discussion API can be slow..
 
 casper.options.logLevel = 'debug';
 
-casper.on('page.initialized', function() {
-    this.evaluate(function (casper) {
-        casper.echo(window);
-        guardian.config.switches.discussionTopComments = true;
-        return guardian.config.switches.discussionTopComments;
-    });
-});
-
 /**
  *   Scenario: Read top level comments
  *     Given I am on an article with comments
