@@ -66,7 +66,7 @@ casper.test.begin('Read top level comments', function(test) {
 
     casper.test.begin("Test top comments expand functionality", function (test) {
 
-        casper.waitForSelector('.discussion__comments__top__container',
+        casper.waitForSelector('.discussion__comments--top-comments',
             function then() {
 
                 var startHeight = casper.getElementInfo('.discussion__comments__top').height,
