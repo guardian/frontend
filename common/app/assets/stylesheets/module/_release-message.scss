@@ -1,9 +1,7 @@
 .site-message {
   display: none;
   background: $c-neutral6;
-  @include mq(tablet) {
-      display: block;
-  }
+  display: block;
 }
 
 .site-message__inner {

@@ -37,7 +37,8 @@ define([
     "modules/gallery/lightbox",
     "modules/imager",
     "modules/onward/history",
-    "modules/onward/sequence"
+    "modules/onward/sequence",
+    "modules/ui/message"
 ], function (
     $,
     mediator,
@@ -76,7 +77,8 @@ define([
     LightboxGallery,
     imager,
     History,
-    sequence
+    sequence,
+    Message
 ) {
 
     var modules = {
@@ -300,28 +302,14 @@ define([
         // display a flash message to devices over 600px who don't have the mobile cookie
         displayReleaseMessage: function (config) {
 
-            var alreadyOptedIn = !!userPrefs.get('releaseMessage'),
-                releaseMessage = {
-                    show: function () {
-                        $('#header').addClass('js-site-message');
-                        $('.site-message').removeClass('u-h');
-                    },
-                    hide: function () {
-                        userPrefs.set('releaseMessage', true);
-                        $('#header').removeClass('js-site-message');
-                        $('.site-message').addClass('u-h');
-                    }
-                };
+            var msg = 'You’re viewing an alpha release of the Guardian’s responsive website. <a href="/help/2013/oct/04/alpha-testing-and-evolution-of-our-mobile-site">Find out more</a>';
+            var releaseMessage = new Message('alpha');
+            var alreadyOptedIn = !!releaseMessage.hasSeen('releaseMessage');
 
             if (config.switches.releaseMessage && !alreadyOptedIn && (detect.getBreakpoint() !== 'mobile')) {
                 // force the visitor in to the alpha release for subsequent visits
                 Cookies.add("GU_VIEW", "mobile", 365);
-
-                releaseMessage.show();
-
-                bean.on(document, 'click', '.js-site-message-close', function(e) {
-                    releaseMessage.hide();
-                });
+                releaseMessage.show(msg);
             }
         },
 
