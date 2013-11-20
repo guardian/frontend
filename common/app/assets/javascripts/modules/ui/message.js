@@ -10,7 +10,7 @@ define([
     userPrefs
 ) {
 
-    function Message(id) {
+    var Message = function(id) {
             
         var self = this;
 
@@ -22,12 +22,17 @@ define([
         bean.on(document, 'click', '.js-site-message-close', function(e) {
             self.acknowledge();
         });
-    }
+    };
 
     Message.prototype.show = function(message) {
         this.copy.html(message);
         this.header.addClass('js-site-message');
         this.container.removeClass('u-h');
+    };
+    
+    Message.prototype.hide = function() {
+        this.header.removeClass('js-site-message');
+        this.container.addClass('u-h');
     };
     
     Message.prototype.hasSeen = function() {
@@ -41,11 +46,6 @@ define([
     Message.prototype.acknowledge = function() {
         this.remember();
         this.hide();
-    };
-   
-    Message.prototype.hide = function() {
-        this.header.removeClass('js-site-message');
-        this.container.addClass('u-h');
     };
     
     return Message;
