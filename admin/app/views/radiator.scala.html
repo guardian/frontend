@@ -1,4 +1,4 @@
-@(charts: Seq[tools.LineChart], hitMissCharts: Seq[tools.LineChart], cost: tools.MaximumMetric, env: String)
+@(charts: Seq[tools.LineChart], hitMissCharts: Seq[tools.LineChart], jsErrors: tools.LineChart, cost: tools.MaximumMetric, env: String)
 
 <!DOCTYPE html>
 <html>
@@ -47,6 +47,7 @@
 
         @charts.map{ chart => @fragments.lineChart(chart)  }
         @hitMissCharts.map{ chart => @fragments.lineChart(chart) }
+        @fragments.lineChart(jsErrors)
 
         <script src="/assets/javascripts/radiator/bootstrap.js" defer></script>
   </body>

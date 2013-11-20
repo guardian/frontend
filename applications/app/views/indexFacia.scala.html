@@ -1,6 +1,6 @@
 @(index: services.IndexPage)(implicit request: RequestHeader)
 @import conf.Switches._
-@main(index.page, Switches.all, projectName = Option("facia")){ }{
+@main(index.page, projectName = Option("facia")){ }{
     <div class="facia-container
                 monocolumn-wrapper
                 monocolumn-wrapper--no-limit
@@ -11,7 +11,7 @@
                 }"
          data-link-name="Front" role="main">
 
-        @fragments.containers.sport(index.page, Config("uk/" + index.page.id + "/regular-stories", None, Some(index.page.webTitle)), Collection(index.trails, None), NewsContainer(showMore = false), containerIndex = 0)
+        @fragments.containers.sport(index.page, Config("uk/" + index.page.id + "/regular-stories", None, Some(index.page.webTitle)), Collection(index.trails, None), SportContainer(showMore = false), containerIndex = 0)
 
         <section class="article-zone-no-indent">
             @fragments.footballNav(index.page)

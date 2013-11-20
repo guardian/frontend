@@ -55,20 +55,22 @@ define([
                     // wrap the return sports stats component in an 'item'
                     var prependTo = bonzo(bonzo.create('<li class="item item--sport-stats item--sport-stats-tall"></li>'));
                     mediator.on('modules:footballfixtures:render', function() {
-                        var $container = $('.container--sport', context).first(),
-                            $collection = $('.collection', $container[0]);
-                        $('.item:first-child', $collection[0])
-                            // add empty item
-                            .after(prependTo);
-                        $collection.removeClass('collection--without-sport-stats')
-                            .addClass('collection--with-sport-stats');
-                        // remove the last two items
-                        var hiddenCollection = hiddenCollections[$container.attr('data-id')];
-                        if (hiddenCollection) {
-                            var items = qwery('.item', $collection[0])
-                                            .slice(-2);
-                            hiddenCollection.prependExtraItems(items);
-                            bonzo(items).remove();
+                        var $container = $('.container--sport', context).first();
+                        if ($container[0]) {
+                            var $collection = $('.collection', $container[0]);
+                            $('.item:first-child', $collection[0])
+                                // add empty item
+                                .after(prependTo);
+                            $collection.removeClass('collection--without-sport-stats')
+                                .addClass('collection--with-sport-stats');
+                            // remove the last two items
+                            var hiddenCollection = hiddenCollections[$container.attr('data-id')];
+                            if (hiddenCollection) {
+                                var items = qwery('.item', $collection[0])
+                                                .slice(-2);
+                                hiddenCollection.prependExtraItems(items);
+                                bonzo(items).remove();
+                            }
                         }
                     });
                     new FootballFixtures({

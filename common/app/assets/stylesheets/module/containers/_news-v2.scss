@@ -99,6 +99,9 @@ $metaHeight: 20px;
                 height: $metaHeight
             ));
         }
+        .item__byline {
+            display: none !important; // Todo: support for cif pieces
+        }
         .item {
             @include box-sizing(content-box);
             position: absolute;

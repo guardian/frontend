@@ -1,10 +1,11 @@
 /* global module: false */
 module.exports = function (grunt) {
     var isDev = grunt.option('dev') || process.env.GRUNT_ISDEV === '1',
-        jasmineSpec = grunt.option('spec') || '*',
+        singleRun = grunt.option('single-run') !== false,
         env = grunt.option('env') || 'code',
         screenshotsDir = './screenshots',
-        staticTargetDir = 'static/target/';
+        staticTargetDir = 'static/target/',
+        testConfDir = 'common/test/assets/javascripts/conf/';
 
     if (isDev) {
         grunt.log.subhead('Running Grunt in DEV mode');
@@ -16,7 +17,6 @@ module.exports = function (grunt) {
         /***********************************************************************
          * Compile
          **********************************************************************/
-
         sass: {
             compile: {
                 files: [{
@@ -321,93 +321,23 @@ module.exports = function (grunt) {
          * Test
          **********************************************************************/
 
-        jasmine: {
+        karma: {
             options: {
-                template: require('grunt-template-jasmine-requirejs'),
-                keepRunner: true,
-                vendor: [
-                    'common/test/assets/javascripts/components/sinonjs/sinon.js',
-                    'common/test/assets/javascripts/components/jasmine-sinon/lib/jasmine-sinon.js',
-                    'common/test/assets/javascripts/components/seedrandom/index.js'
-                ],
-                helpers: 'common/test/assets/javascripts/setup.js',
-                outfile: 'common-spec-runner.html',
-                templateOptions: {
-                    requireConfig: {
-                        baseUrl: 'common/app/assets/javascripts/',
-                        paths: {
-                            common:       'common',
-                            analytics:    'modules/analytics',
-                            bonzo:        'components/bonzo/src/bonzo',
-                            qwery:        'components/qwery/mobile/qwery-mobile',
-                            bean:         'components/bean/bean',
-                            reqwest:      'components/reqwest/src/reqwest',
-                            domwrite:     'components/dom-write/dom-write',
-                            EventEmitter: 'components/eventEmitter/EventEmitter',
-                            swipe:        'components/swipe/swipe',
-                            swipeview:    'components/swipeview/src/swipeview',
-                            moment:       'components/moment/moment',
-                            lodash:       'components/lodash-amd/modern',
-                            omniture:     '../../../app/public/javascripts/vendor/omniture',
-                            fixtures:     '../../../test/assets/javascripts/fixtures',
-                            helpers:      '../../../test/assets/javascripts/helpers',
-                            imager:       '../../../app/assets/javascripts/components/imager.js/src/strategies/container'
-                        },
-                        shim: {
-                            imager: {
-                                deps: ['../../../app/assets/javascripts/components/imager.js/src/imager'],
-                                exports: 'Imager'
-                            }
-                        }
-                    }
-                }
+                configFile: testConfDir + 'common.js',
+                reporters: isDev ? ['dots'] : ['progress'],
+                singleRun: singleRun
             },
             common: {
-                options: {
-                    specs: 'common/test/assets/javascripts/spec/' + jasmineSpec + '.spec.js'
-                }
+                configFile: testConfDir + 'common.js'
             },
             facia: {
-                options: {
-                    specs: [
-                        'common/test/assets/javascripts/spec/facia/' + jasmineSpec + '.spec.js'
-                    ]
-                }
+                configFile: testConfDir + 'facia.js'
             },
             discussion: {
-                options: {
-                    specs: grunt.file.expand(
-                        'common/test/assets/javascripts/spec/discussion/' + jasmineSpec + '.spec.js', [
-                            '!common/test/assets/javascripts/spec/discussion/CommentBox.spec.js'
-                        ]
-                    )
-                }
+                configFile: testConfDir + 'discussion.js'
             },
             admin: {
-                options: {
-                    specs: 'admin/public/javascripts/spec/**/' + jasmineSpec + 'Spec.js',
-                    vendor: [
-                        'admin/public/javascripts/components/jquery/jquery.js',
-                        'admin/public/javascripts/components/js_humanized_time_span/humanized_time_span.js'
-                    ],
-                    helpers: 'admin/public/javascripts/spec/setup.js',
-                    outfile: 'admin-spec-runner.html',
-                    templateOptions: {
-                        requireConfig: {
-                            baseUrl: 'admin/public/javascripts/',
-                            paths: {
-                                Common:       'common',
-                                TagSearch:    'modules/TagSearch',
-                                AutoComplete: 'modules/AutoComplete',
-                                tagEntry:     'modules/tagEntry',
-                                ItemSearch:   'modules/ItemSearch',
-                                EventEmitter: 'components/eventEmitter/EventEmitter',
-                                Reqwest:      'components/reqwest/reqwest',
-                                knockout:     'components/knockout/build/output/knockout-latest'
-                            }
-                        }
-                    }
-                }
+                configFile: testConfDir + 'admin.js'
             }
         },
 
@@ -456,32 +386,26 @@ module.exports = function (grunt) {
             all: {
                 src: ['integration-tests/casper/tests/**/*.spec.js']
             },
+            allexceptadmin: {
+                src: ['integration-tests/casper/tests/!(*admin)/*.spec.js']
+            },
             admin: {
                 src: ['integration-tests/casper/tests/admin/*.spec.js']
-            },
-            common : {
-                src: ['integration-tests/casper/tests/**/*.spec.js']
-            },
-            discussion: {
-                src: ['integration-tests/casper/tests/discussion/*.spec.js']
-            },
-            gallery: {
-                src: ['integration-tests/casper/tests/gallery/*.spec.js']
-            },
-            article: {
-                src: ['integration-tests/casper/tests/article/article.spec.js']
             },
             applications: {
                 src: ['integration-tests/casper/tests/applications/*.spec.js']
             },
+            article: {
+                src: ['integration-tests/casper/tests/article/article.spec.js']
+            },
+            common : {
+                src: ['integration-tests/casper/tests/common/*.spec.js']
+            },
+            discussion: {
+                src: ['integration-tests/casper/tests/discussion/*.spec.js']
+            },
             facia: {
                 src: ['integration-tests/casper/tests/facia/*.spec.js']
-            },
-            corenavigation: {
-                src: ['integration-tests/casper/tests/core-navigation/*.js']
-            },
-            allexceptadmin: {
-                src: ['integration-tests/casper/tests/!(*admin)/*.spec.js']
             }
         },
 
@@ -520,6 +444,7 @@ module.exports = function (grunt) {
             options: {
                 bucket: 'aws-frontend-store',
                 access: 'public-read',
+                encodePaths: true,
                 gzip: true
             },
             screenshots: {
@@ -577,6 +502,7 @@ module.exports = function (grunt) {
     });
 
     // Load the plugins
+    grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-css-metrics');
     grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -588,7 +514,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-env');
     grunt.loadNpmTasks('grunt-mkdir');
     grunt.loadNpmTasks('grunt-s3');
-    grunt.loadNpmTasks('grunt-contrib-jasmine');
     grunt.loadNpmTasks('grunt-contrib-imagemin');
     grunt.loadNpmTasks('grunt-hash');
     grunt.loadNpmTasks('grunt-contrib-copy');
@@ -623,10 +548,11 @@ module.exports = function (grunt) {
         grunt.config('casperjsLogFile', app + '.xml');
         grunt.task.run(['env:casperjs', 'casperjs:' + app]);
     });
-    grunt.registerTask('test:unit', function(app) {
-        grunt.task.run(['jasmine' + (app ? ':' + app : '')]);
-    });
     grunt.registerTask('test', ['jshint:common', 'test:unit', 'test:integration']);
+    grunt.registerTask('test:unit', function(app) {
+        grunt.config.set('karma.options.singleRun', (singleRun === false) && app ? false : true);
+        grunt.task.run('karma' + (app ? ':' + app : ''));
+    });
 
     // Analyse tasks
     grunt.registerTask('analyse:css', ['compile:css', 'cssmetrics:common']);

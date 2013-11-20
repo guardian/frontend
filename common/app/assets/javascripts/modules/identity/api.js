@@ -1,29 +1,33 @@
 /*global escape:true */
+
 define([
     'common',
     'utils/cookies',
     'modules/asyncCallMerger',
+    'utils/storage',
     'utils/ajax'
 ], function(
     common,
     Cookies,
     asyncCallMerger,
-    ajax
-) {
+    Storage,
+    ajax) {
 
 /**
+>>>>>>> origin/master:common/app/assets/javascripts/modules/identity/api.js
      * Left this as an object as there are onlty static methods
      * We'll need to change this once there is some state change
      * TODO(jamesgorrie): Allow this to show policies too (not needed yet)
      */
     var Id = {},
-        userFromCookieCache = "empty";
+        userFromCookieCache = null;
 
     Id.cookieName = 'GU_U';
+    Id.signOutCookieName = 'GU_SO',
+    Id.fbCheckKey = "gu.id.nextFbCheck";
 
     var idApiRoot = null,
         idUrl = null;
-
 
     Id.init = function(conf) {
         idApiRoot = conf.page.idApiUrl;
@@ -36,7 +40,7 @@ define([
      */
     Id.reset = function() {
         Id.getUserFromApi.reset();
-        userFromCookieCache = "empty";
+        userFromCookieCache = null;
     };
 
     /**
@@ -45,7 +49,7 @@ define([
      * @return {?Object} the user information
      */
     Id.getUserFromCookie = function() {
-        if(userFromCookieCache === "empty") {
+        if(userFromCookieCache === null ) {
             var cookieData = Cookies.get(Id.cookieName),
             userData = cookieData ? JSON.parse(Id.decodeBase64(cookieData.split('.')[0])) : null;
             if (userData) {
@@ -55,8 +59,6 @@ define([
                     displayName: userData[2],
                     rawResponse: cookieData
                 };
-            } else {
-                userFromCookieCache = null;
             }
         }
 
@@ -83,6 +85,7 @@ define([
     Id.getUrl = function() {
         return idUrl;
     };
+
 
     /**
      * Gets the currently logged in user data from the identity api
@@ -117,6 +120,28 @@ define([
      */
     Id.decodeBase64 = function(str) {
         return decodeURIComponent(escape(common.atob(str.replace(/-/g, '+').replace(/_/g, '/').replace(/,/g, '='))));
+    };
+
+    Id.hasUserSignedOutInTheLast24Hours = function() {
+        var cookieData = Cookies.get(Id.signOutCookieName);
+
+        if(cookieData) {
+            return((Math.round(new Date().getTime() / 1000)) < (parseInt(cookieData, 10) + 86400));
+        }
+        return false;
+    };
+
+    /**
+     * Returns true if a there is no signed in user and the user has not signed in the last 24 hous
+     */
+    Id.shouldAutoSigninInUser = function() {
+        var signedInUser = !!Cookies.get(Id.cookieName);
+        var checkFacebook = !!Storage.local.get(Id.fbCheckKey);
+        return !signedInUser && !checkFacebook && !this.hasUserSignedOutInTheLast24Hours();
+    };
+
+    Id.setNextFbCheckTime = function(nextFbCheckDue) {
+        Storage.local.set(Id.fbCheckKey, {}, {expires: nextFbCheckDue});
     };
 
     return Id;

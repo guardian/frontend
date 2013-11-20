@@ -50,6 +50,13 @@ object CloudWatch {
     ("Fastly Hits and Misses (USA) - per minute, average", "usa", "2eYr6Wx3ZCUoVPShlCM61l")
   )
 
+  private val jsErrorMetrics = List(
+    ("JavaScript errors caused by adverts", "ads"),
+    ("JavaScript errors from iOS", "js.ios"),
+    ("JavaScript errors from iOS", "js.android"),
+    ("JavaScript errors from iOS", "js.unknown"),
+    ("JavaScript errors from iOS", "js.windows")
+  )
 
   def shortStackLatency = latency(primaryLoadBalancers)
   def fullStackLatency = shortStackLatency ++ latency(secondaryLoadBalancers)
@@ -72,8 +79,6 @@ object CloudWatch {
 
 
   // TODO - this file is getting a bit long/ complicated. It needs to be split up a bit
-
-
 
   private def latency(loadBalancers: Seq[LoadBalancer]) = {
     loadBalancers.map{ loadBalancer =>
@@ -110,9 +115,24 @@ object CloudWatch {
       )
     }.toSeq
   }
+  
+  def jsErrors = { 
+    val metrics = jsErrorMetrics.map{ case (graphTitle, metric) =>
+        cloudClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
+          .withStartTime(new DateTime().minusHours(6).toDate)
+          .withEndTime(new DateTime().toDate)
+          .withPeriod(120)
+          .withStatistics("Average")
+          .withNamespace("Diagnostics")
+          .withMetricName(metric)
+          .withDimensions(stage),
+          asyncHandler)
+        }
+    new LineChart("JavaScript Errors", Seq("Time") ++ jsErrorMetrics.map{ case(title, name) => name}.toSeq, metrics:_*)
+  }
 
   def fastlyErrors = fastlyMetrics.map{ case (graphTitle, metric, region, service) =>
-    new LineChart( graphTitle, Seq("Time", metric),
+    new LineChart(graphTitle, Seq("Time", metric),
       cloudClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
         .withStartTime(new DateTime().minusHours(6).toDate)
         .withEndTime(new DateTime().toDate)
@@ -136,7 +156,6 @@ object CloudWatch {
       .withMetricName(statistic)
       .withDimensions(stage),
       asyncHandler))
-
 
   // charges are only available from the 'default' region
   private lazy val defaultCloudClient = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials)

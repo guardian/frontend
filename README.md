@@ -21,12 +21,25 @@ New developers quick-start
 ===========================
 Frontend is a set of Play Framework 2 Scala applications.
 
+Vagrant
+-------
 
-Requirements
-------------
+You can run the project with the supplied Vagrantfile - make sure you understand what vagrant is http://www.vagrantup.com/
+
+* You need Virtualbox and Vagrant - on Ubuntu `sudo apt-get install virtualbox vagrant` otherwise see http://docs.vagrantup.com/v2/installation/index.html
+* you need a frontend.properties file in you .gu folder (inside your home directory e.g. `/home/YOUR_NAME/.gu/frontend.properties`)
+* change directory into the folder where this README is located
+* `vagrant up` - this will take a while, make some coffee
+* You can now get onto the box by `vagrant ssh`
+* the project is located in /vagrant so `cd /vagrant`
+* `./sbt`
+
+
+Local Install Requirements
+--------------------------
 * A Mac or Linux pc
 * Installed Node.js (https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager)
-* Installed npm (Node package manager - you quite possibly already have this) `sudo apt-get install npm`
+* Installed npm (Node package manager - you quite possibly already have this)
 * Installed GraphicsMagick
 * Installed Grunt (build tool) `sudo npm -g install grunt-cli`
 * Installed Ruby >= v1.9.x & [bundler](http://gembundler.com/) (You may already have this installed, but run `ruby -v` to check version number)

@@ -1,4 +1,4 @@
-@(item: model.MetaData, bootstrapJsModule: String, switches: Seq[com.gu.management.Switchable])(implicit request: RequestHeader)
+@(item: model.MetaData, bootstrapJsModule: String)(implicit request: RequestHeader)
 
 @import conf.Switches._
 @import conf.Static
@@ -30,6 +30,7 @@
         baseUrl: '@{Configuration.assets.path}javascripts',
         apiName: 'require',
         paths: {
+            facebook: '//connect.facebook.net/en_US/all.js',
             omniture: '@Static("javascripts/vendor/omniture.js")',
             swipe: '@Static("javascripts/vendor/swipe.js")',
             zxcvbn: '@Static("javascripts/vendor/zxcvbn.js")'
@@ -135,7 +136,7 @@
             loadCssFromStorage();
         }
 
-        guardian.config = @fragments.javaScriptConfig(item, switches);
+        guardian.config = @fragments.javaScriptConfig(item);
 
         var script = document.createElement('script');
         script.async = 'async';

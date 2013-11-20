@@ -213,6 +213,7 @@ object ChartFormat {
   val SingleLineGreen = ChartFormat(colours = Seq("#00CC33"), cssClass =  "charts")
   val SingleLineRed = ChartFormat(colours = Seq("#FF0000"), cssClass =  "charts")
   val DoubleLineBlueRed = ChartFormat(colours = Seq("#0033CC", "#FF0000"), cssClass =  "charts")
+  val MultiLine = ChartFormat(colours = Seq("#FF6600", "#99CC33", "#CC0066", "#660099", "#0099FF"), cssClass =  "charts charts-full")
 }
 
 class LineChart(val name: String, val labels: Seq[String], charts: Future[GetMetricStatisticsResult]*) extends Chart {
@@ -220,12 +221,12 @@ class LineChart(val name: String, val labels: Seq[String], charts: Future[GetMet
   override lazy val dataset = {
     val allPoints: List[List[(String, Double)]] = charts.toList.map(_.get())
       .map(_.getDatapoints.toList.sortBy(_.getTimestamp.getTime))
-      .map(p => p.map(d => toLabel(d) -> toValue(d)))
+      .map((p : List[Datapoint]) => p.map(d => toLabel(d) -> toValue(d)))
 
     allPoints match {
       case head :: Nil => head.map{ case (key, value) => DataPoint(key, Seq(value)) }
       // yeah, this assumes all keys match up
-      case head :: tail => head.map{ case (key, value) => DataPoint(key, Seq(value) ++ tail.flatten.find(_._1 == key).map(_._2)) }
+      case head :: tail => head.map{ case (key, value) => DataPoint(key, Seq(value) ++ tail.flatten.filter(_._1 == key).map(_._2)) }
       case _ => Nil
     }
   }
