@@ -1,7 +1,7 @@
 @(person: discussion.model.Profile)(implicit request: RequestHeader)
 <div class="comment__author person" itemscope itemtype="http://schema.org/Person" itemprop="author">
     <div class="person__avatar">
-        <img src="@person.avatar" alt="@person.displayName's avatar" itemprop="image" />
+        <img src="@person.avatar" alt="@person.displayName's avatar" width="36" height="36" itemprop="image" />
     </div>
     <div class="person__name" itemprop="name">@person.displayName</div>
 

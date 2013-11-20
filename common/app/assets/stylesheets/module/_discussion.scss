@@ -96,6 +96,75 @@
 }
 
 
+/* New Comment
+   ===========================================================================*/
+.comment {
+    display: block;
+    font-family: $sans-serif;
+    position: relative;
+}
+
+.comment__datecreated {
+    @extend %type-12;
+}
+
+.comment--speechy {
+    border: none;
+    padding: 0 0 $baseline*10 0;
+
+    .comment__inner {
+        background-color: $c-neutral7;
+        display: inline-block;
+        padding: $baseline*2 $gutter/2 $baseline*6 $gutter/2;
+        position: relative;
+
+        &:before { // Pointer (equilateral triangle)
+            top: 100%;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+            border-color: rgba(136, 183, 213, 0);
+            border-top-color: $c-neutral7;
+            border-width: 30px;
+            left: 23px ;
+            margin-left: -30px;
+        }
+
+        &:after { // Mask (right-skewed parellelogram)
+            top: 100%;
+            content: " ";
+            height: 24px;
+            width: 24px;
+            position: absolute;
+            pointer-events: none;
+            background-color: #ffffff;
+            left: -5px;
+            transform: skew(-10deg);
+            -o-transform: skew(-10deg);
+            -moz-transform: skew(-10deg);
+            -webkit-transform: skew(-10deg);
+        }
+    }
+}
+
+/* Person
+   ========================================================================== */
+.person {
+    @extend %type-8;
+}
+.person__avatar {
+    border-radius: 50px;
+    float: left;
+    margin-right: 15px;
+    overflow: hidden;
+
+    webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+}
+
 /* Header
    ========================================================================== */
 /**
