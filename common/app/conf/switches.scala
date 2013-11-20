@@ -115,6 +115,10 @@ object Switches extends Collections {
     "If this switch is on, users will be able to post comments",
     safeState = Off)
 
+  val DiscussionTopCommentsSwitch = Switch("Discussion", "discussion-top-comments",
+    "If this switch is on, users will see top comments if there are any",
+    safeState = Off)
+
   // Swipe Switches
 
   val SwipeNav = Switch("Swipe Navigation", "swipe-nav",
@@ -279,6 +283,7 @@ object Switches extends Collections {
     OmnitureDomReadySwitch,
     DiscussionSwitch,
     DiscussionPostCommentSwitch,
+    DiscussionTopCommentsSwitch,
     ShortDiscussionSwitch,
     SwipeNav,
     SwipeNavOnClick,
