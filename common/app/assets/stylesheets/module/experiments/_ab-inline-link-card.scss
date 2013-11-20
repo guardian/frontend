@@ -40,6 +40,10 @@
     a {
         color: $c-neutral1;
     }
+
+    .item__image-container {
+        display: block;
+    }
 }
 .card__media {
     display: block;
