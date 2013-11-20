@@ -192,6 +192,10 @@ object Switches extends Collections {
     "If this is switch on the the browser will log JavaScript errors to the server (via a beacon)",
     safeState = Off)
 
+  val FacebookAutoSigninSwitch = Switch("Feature Switches", "facebook-autosignin",
+    "If this switch is on then users who have previously authorized the guardian app in facebook and who have not recently signed out are automatically signed in.",
+    safeState = Off)
+
   // A/B Test Switches
 
   val FontDelaySwitch = Switch("A/B Tests", "web-fonts-delay",
@@ -313,6 +317,7 @@ object Switches extends Collections {
     ABAlphaAdverts,
     ABCommercialComponents,
     EditionRedirectLoggingSwitch,
+    FacebookAutoSigninSwitch,
     ABImproveOnwardTrails,
     ABInitialShowMore,
     ABShowMoreLayout

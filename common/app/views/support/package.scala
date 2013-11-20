@@ -192,6 +192,12 @@ case class VideoEmbedCleaner(contentVideos: List[VideoElement]) extends HtmlClea
 
       val mediaId = element.attr("data-media-id")
       val asset = findVideoFromId(mediaId)
+
+      // add the poster url
+      asset.flatMap(_.image).flatMap(ArticleMainPicture.bestFor).foreach{ url =>
+        element.attr("poster", url)
+      }
+
       asset.foreach( video => {
         element.append(
           s"""<object type="application/x-shockwave-flash" data="$flashMediaElement" width="620" height="350">

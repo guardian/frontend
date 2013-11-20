@@ -1,6 +1,7 @@
 /* global module: false */
 module.exports = function (grunt) {
     var isDev = grunt.option('dev') || process.env.GRUNT_ISDEV === '1',
+        singleRun = grunt.option('single-run') !== false,
         env = grunt.option('env') || 'code',
         screenshotsDir = './screenshots',
         staticTargetDir = 'static/target/',
@@ -323,8 +324,8 @@ module.exports = function (grunt) {
         karma: {
             options: {
                 configFile: testConfDir + 'common.js',
-                singleRun: isDev ? false : true,
-                reporters: isDev ? ['dots'] : ['progress']
+                reporters: isDev ? ['dots'] : ['progress'],
+                singleRun: singleRun
             },
             common: {
                 configFile: testConfDir + 'common.js'
@@ -549,6 +550,7 @@ module.exports = function (grunt) {
     });
     grunt.registerTask('test', ['jshint:common', 'test:unit', 'test:integration']);
     grunt.registerTask('test:unit', function(app) {
+        grunt.config.set('karma.options.singleRun', (singleRun === false) && app ? false : true);
         grunt.task.run('karma' + (app ? ':' + app : ''));
     });
 
