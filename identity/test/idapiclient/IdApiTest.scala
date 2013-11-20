@@ -160,12 +160,12 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
 
       "adds the client access token parameter to the request" in {
         api.unauth(Anonymous, trackingParameters)
-        verify(http).POST(Matchers.eq("http://example.com/unauth"), Matchers.any[Option[String]], argThat(new ParamsIncludes(Iterable(("accessToken", "clientAccessToken")))), Matchers.any[Parameters])
+        verify(http).POST(Matchers.eq("http://example.com/unauth"), Matchers.any[Option[String]], Matchers.any[Parameters], argThat(new ParamsIncludes(Iterable(("X-GU-ID-Client-Access-Token","Bearer clientAccessToken")))))
       }
       "passes the auth parameters to the http lib's GET method" in {
         val auth = TestAuth(List(("testParam", "value")), Iterable.empty)
         api.unauth(auth, trackingParameters)
-        verify(http).POST(Matchers.any[String], Matchers.any[Option[String]], argThat(new ParamsIncludes(Iterable(("testParam", "value")))), argThat(EmptyParamMatcher))
+        verify(http).POST(Matchers.any[String], Matchers.any[Option[String]], Matchers.any[Parameters], argThat(new ParamsIncludes(Iterable(("X-GU-ID-Client-Access-Token","Bearer clientAccessToken")))))
       }
 
       "passes the auth header to the http lib's GET method" in {
