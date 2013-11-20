@@ -55,6 +55,11 @@ define([
         // a timer to submit the data to diagnostics every nth second
         if (config.switches.liveStats) {
             var beaconInterval = setInterval(function() {
+                // if there's nothing to report, don't generate the request
+                if (Object.keys(adDwellTimes).length === 0) {
+                    return false;
+                }
+
                 new LiveStatsAds({
                     beaconUrl: config.page.beaconUrl
                 }).log(adDwellTimes);
