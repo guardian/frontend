@@ -37,7 +37,8 @@ define([
     "modules/gallery/lightbox",
     "modules/imager",
     "modules/onward/history",
-    "modules/onward/sequence"
+    "modules/onward/sequence",
+    "modules/identity/autosignin"
 ], function (
     $,
     mediator,
@@ -76,7 +77,8 @@ define([
     LightboxGallery,
     imager,
     History,
-    sequence
+    sequence,
+    AutoSignin
 ) {
 
     var modules = {
@@ -340,6 +342,14 @@ define([
             });
         },
 
+        initAutoSignin : function() {
+           mediator.on('page:common:ready', function(config) {
+                if (config.switches && config.switches.facebookAutosignin && detect.getLayoutMode() !== 'mobile') {
+                    new AutoSignin(config).init();
+                }
+            });
+        },
+
         windowEventListeners: function() {
             var events = {
                     resize: 'window:resize',
@@ -399,6 +409,7 @@ define([
             modules.optIn();
             modules.displayReleaseMessage(config);
             modules.logReadingHistory();
+            modules.initAutoSignin(config);
         }
         mediator.emit("page:common:ready", config, context);
     };

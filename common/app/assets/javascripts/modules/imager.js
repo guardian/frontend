@@ -4,8 +4,8 @@ define(['$', 'utils/to-array', 'bonzo', 'utils/mediator', 'imager', 'utils/detec
 
         upgrade: function(context) {
             context = context || document;
-            var breakpoint = detect.getBreakpoint();
-            var images = toArray(document.getElementsByClassName('item__image-container')).filter(function(img) {
+            var breakpoint = detect.getBreakpoint(),
+                images = toArray(context.getElementsByClassName('item__image-container')).filter(function(img) {
                     var forceUpdgradeBreakpoints = (bonzo(img).attr('data-force-upgrade') || '').split(' ');
                     if ($('html').hasClass('connection--low') && forceUpdgradeBreakpoints.indexOf(breakpoint) === -1) {
                         return;
