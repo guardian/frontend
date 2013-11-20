@@ -56,7 +56,7 @@ Loader.CONFIG = {
         commentBox: 'discussion__comment-box',
         commentBoxBottom: 'discussion__comment-box--bottom',
         joinDiscussion: 'd-show-cta',
-        topComments: 'discussion__comments__top__container'
+        topComments: 'discussion__comments--top-comments'
     }
 };
 

@@ -115,7 +115,7 @@ TopComments.prototype.fetch = function(parent) {
                 self.mediator.emit("loadComments", { amount: 0 });
             } else {
 
-                $('.discussion__comments__top__container').remove();
+                $('.discussion__comments--top-comments').remove();
 
                 // Render Regular Comments
                 self.mediator.emit("loadComments", { amount: 2, showLoader: true });
