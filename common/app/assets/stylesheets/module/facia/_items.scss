@@ -142,6 +142,9 @@ $c-live: #e81818;
     .item:first-child & {
         border-top-style: none;
     }
+    &:visited .item__title {
+        color: lighten($c-neutral1, 20%);
+    }
 }
 .item__image-container {
     display: none;
