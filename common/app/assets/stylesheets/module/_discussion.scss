@@ -529,9 +529,7 @@ $topCommentsHeight: 600px;
             }
 
             .d-comment__avatar-wrapper {
-                -webkit-border-radius: 50px;
-                -moz-border-radius: 50px;
-                border-radius: 50px;
+                @include rounded-corners(50px);
                 overflow: hidden;
                 .d-comment__avatar {
                     padding: 0;
