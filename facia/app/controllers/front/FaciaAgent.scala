@@ -52,8 +52,8 @@ trait ParseConfig extends ExecutionContexts with Logging {
     }
   }
 
-  def getConfig(id: String): Future[Seq[Config]] = getConfigMap(id) map { configMap =>
-    configMap.map(parseConfig)
+  def getConfig(id: String): Future[List[Config]] = getConfigMap(id) map { configMap =>
+    configMap.map(parseConfig).toList
   }
 
   def parseConfig(json: JsValue): Config =
@@ -77,17 +77,17 @@ trait ParseCollection extends ExecutionContexts with Logging {
     WS.url(collectionUrl).withRequestTimeout(2000).get()
   }
 
-  def getCollection(id: String, config: Config, edition: Edition, isWarmedUp: Boolean): Future[Collection] = {
+  def updateCollection(id: String, config: Config, edition: Edition, isWarmedUp: Boolean): Unit = {
     // get the running order from the apiwith
     val response = requestCollection(id)
     for {
       collectionList <- getCuratedList(response, edition, id, isWarmedUp)
       displayName    <- parseDisplayName(response).fallbackTo(Future.successful(None))
       contentApiList <- executeContentApiQuery(config.contentApiQuery, edition)
-    } yield {
+    }
+    {
       val collection = Collection(collectionList ++ contentApiList, displayName)
       CollectionCache.updateCollection(id, collection)
-      collection
     }
   }
 
@@ -186,40 +186,24 @@ trait ParseCollection extends ExecutionContexts with Logging {
 class Query(id: String, edition: Edition) extends ParseConfig with ParseCollection with Logging {
   val queryAgent = AkkaAgent[Option[List[Config]]](Option(List(FaciaDefaults.configTuple(id))))
 
-  def getItems: Future[List[(Config, Either[Throwable, Collection])]] = {
+  def getItems: Future[List[Config]] = {
     val futureConfig = getConfig(id) fallbackTo {
       log.warn("Error getting config from S3: %s".format(id))
       val result: List[Config] = queryAgent().getOrElse(Nil)
-      Future.successful(result.toSeq)
-    } map {config =>
-      val isWarmedUp = items.isDefined
-      config map {c => c -> getCollection(c.id, c, edition, isWarmedUp)}
+      Future.successful(result)
     }
 
-    futureConfig.map(_.toVector).flatMap{ configMapping =>
-        configMapping.foldRight(Future(List[(Config, Either[Throwable, Collection])]()))((configMap, foldList) =>
-          for {
-            newList <- foldList
-            collection <- {configMap._2.map(Right(_)).recover{case t: Throwable => Left(t)}}
-          }
-          yield (configMap._1, collection) +: newList)
+    futureConfig map {config =>
+      val isWarmedUp = items.isDefined
+      config map {c => c -> updateCollection(c.id, c, edition, isWarmedUp)}
     }
+
+    futureConfig
   }
 
   def refresh(): Unit =
     getItems map { newConfigList =>
-      queryAgent.send { oldConfigList =>
-        lazy val oldConfigMap = oldConfigList.map{_.map{config => config.id }}
-        Option {
-          newConfigList flatMap {
-            case (config, Left(exception)) => {
-              log.warn("Updating ID %s failed".format(config.id))
-              oldConfigMap.flatMap{_.find(_==config.id).map(oldCollection => config) }
-            }
-            case (config, Right(newCollection)) => Some(config)
-          }
-        }
-      }
+      queryAgent send Some(newConfigList)
     }
 
 
