@@ -1,6 +1,7 @@
 /* global module: false */
 module.exports = function (grunt) {
     var isDev = grunt.option('dev') || process.env.GRUNT_ISDEV === '1',
+        singleRun = grunt.option('single-run') !== false || process.env.GRUNT_SINGLERUN === '1',
         env = grunt.option('env') || 'code',
         screenshotsDir = './screenshots',
         staticTargetDir = 'static/target/',
@@ -323,7 +324,7 @@ module.exports = function (grunt) {
         karma: {
             options: {
                 configFile: testConfDir + 'common.js',
-                singleRun: isDev ? false : true,
+                singleRun: singleRun ? false : true,
                 reporters: isDev ? ['dots'] : ['progress']
             },
             common: {
