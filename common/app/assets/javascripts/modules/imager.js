@@ -17,6 +17,8 @@ define(['$', 'utils/to-array', 'bonzo', 'utils/mediator', 'imager', 'utils/detec
                     strategy: 'container',
                     replacementDelay: 0
                 };
+            // clear out containers
+            bonzo(images).html('');
             imagerjs.init(images, options);
         },
 

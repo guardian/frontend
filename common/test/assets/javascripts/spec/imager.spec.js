@@ -51,6 +51,17 @@ define(['modules/imager', 'helpers/fixtures', '$', 'bonzo', 'utils/mediator'], f
 
         });
 
+        it('should remove existing content in container', function() {
+            var id = 'empty-container-fixture';
+            fixtures.render({
+                id: id,
+                fixtures: ['<div class="' + imgClass + '" data-src="src.jpg"><img class="existing-img" src="low-res.jpg" /></div>']
+            });
+            imager.upgrade(document.getElementById(id));
+            expect($('#' + id + ' .existing-img').length).toEqual(0);
+            fixtures.clean(id);
+        });
+
         it('should be able to force upgrade', function() {
             var $style = bonzo(bonzo.create('<style></style>'))
                 .html('body:after { content: "desktop"; }')
