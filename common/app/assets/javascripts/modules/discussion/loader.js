@@ -40,7 +40,7 @@ var Loader = function(context, mediator, options, topCommentsSwitch) {
     this.context = context || document;
     this.mediator = mediator;
     this.setOptions(options);
-    this.topCommentsSwitch = topCommentsSwitch;
+    this.topCommentsSwitch = topCommentsSwitch; // Pass through topComments switch
 };
 Component.define(Loader);
 
@@ -55,7 +55,7 @@ Loader.CONFIG = {
         comments: 'discussion__comments',
         commentBox: 'discussion__comment-box',
         commentBoxBottom: 'discussion__comment-box--bottom',
-        show: 'd-show-cta',
+        joinDiscussion: 'd-show-cta',
         topComments: 'discussion__comments__top__container'
     }
 };
@@ -104,7 +104,7 @@ Loader.prototype.ready = function() {
             .fetch(topCommentsElem)
             .then(function appendTopComments() {
                 bonzo(topLoadingElem).remove();
-                self.on('click', $(self.topComments.showMoreButton), self.topComments.showMore.bind(self.topComments));
+                self.on('click', $(self.topComments.showMoreButton), self.topComments.showMore.bind(self.topComments)); // Module-hopping calls - refactor needed
             });
 
         self.mediator.on('loadComments', self.loadComments.bind(self));
@@ -142,7 +142,6 @@ Loader.prototype.loadComments = function (args) {
 
     // Doing this makes sure there is only one redraw
     // Within comments there is adding of reply buttons etc
-    //bonzo(commentsContainer).addClass('u-h');
     this.comments
         .fetch(commentsElem)
         .then(function killLoadingMessage() {
@@ -152,14 +151,13 @@ Loader.prototype.loadComments = function (args) {
 
             if (args.showLoader) {
                 // Comments are being loaded in the no-top-comments-available context
-                bonzo(self.getElem('show')).remove();
+                bonzo(self.getElem('joinDiscussion')).remove();
                 bonzo([self.comments.getElem('showMore'), self.comments.getElem('header')]).removeClass("u-h");
             }
 
-            self.on("click", self.getElem('show'), function (event) {
-                bonzo(self.getElem('show')).remove();
+            self.on("click", self.getElem('joinDiscussion'), function (event) {
                 self.comments.showMore(event);
-                bonzo([self.comments.getElem('showMore'), self.comments.getElem('header')]).removeClass("u-h");
+                self.cleanUpOnShowComments();
             });
             bonzo(commentsContainer).removeClass('u-h');
         });
@@ -244,6 +242,7 @@ Loader.prototype.renderCommentBox = function() {
     }
 };
 
+/* Logic determining if extra comments should be shown along with the posted comment to ensure context */
 Loader.prototype.commentPosted = function () {
     this.comments.addComment.apply(this.comments, arguments);
 
@@ -251,10 +250,15 @@ Loader.prototype.commentPosted = function () {
     if (!this.firstComment) {
         this.firstComment = true;
         this.comments.showMore();
-        bonzo([this.comments.getElem('showMore'), this.comments.getElem('header')]).removeClass("u-h");
-        bonzo(this.getElem('show')).remove();
+        this.cleanUpOnShowComments();
     }
 
+};
+
+/* Configure DOM for viewing of comments once some have been shown */
+Loader.prototype.cleanUpOnShowComments = function () {
+    bonzo([this.comments.getElem('showMore'), this.comments.getElem('header')]).removeClass("u-h");
+    bonzo(this.getElem('joinDiscussion')).remove();
 };
 
 Loader.prototype.renderUserBanned = function() {

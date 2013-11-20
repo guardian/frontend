@@ -18,16 +18,16 @@ define([
     $
 ) {
 
-/**
- * TODO (jamesgorrie):
- * * Move recommending into this, it has no need for it's own module.
- * * Get the selectors up to date with BEM
- * @constructor
- * @extends Component
- * @param {Element=} context
- * @param {Object} mediator
- * @param {Object=} options
- */
+/* =================================================================
+
+    This module requires refactoring pending an architecture change for the
+    discussion system based on designs for the Top Comments functionality
+    being signed off.
+
+     - chrisfinch
+
+   ================================================================= */
+
 var TopComments = function(context, mediator, options, topCommentsSwitch) {
     this.context = context || document;
     this.mediator = mediator;

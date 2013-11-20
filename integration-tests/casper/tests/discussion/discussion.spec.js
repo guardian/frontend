@@ -10,7 +10,7 @@ casper.start(host + 'science/grrlscientist/2012/aug/07/3?view=mobile');
 
 casper.options.waitTimeout = 10000; // Discussion API can be slow..
 
-casper.options.logLevel = 'debug';
+//casper.options.logLevel = 'debug';
 
 /**
  *   Scenario: Read top level comments

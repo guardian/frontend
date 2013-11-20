@@ -43,7 +43,6 @@ Comments.CONFIG = {
         reply: 'd-comment--response',
         showReplies: 'js-show-more-replies',
         header: 'd-discussion__header',
-        joinDiscussion: 'd-show-cta',
 
         comment: 'd-comment',
         commentActions: 'd-comment__actions__main',
@@ -258,7 +257,7 @@ Comments.prototype.addComment = function(comment, focus, parent) {
             }
         },
         commentElem = bonzo.create(document.getElementById('tmpl-comment').innerHTML)[0];
-        bonzo(commentElem).addClass('fade-in');
+        bonzo(commentElem).addClass('fade-in'); // Comments now appear with CSS Keyframe animation
 
     for (key in map) {
         if (map.hasOwnProperty(key)) {
