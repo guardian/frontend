@@ -106,10 +106,6 @@ object Switches extends Collections {
     "If this switch is on, users will be able to post comments",
     safeState = Off)
 
-  val DiscussionTopCommentsSwitch = Switch("Discussion", "discussion-top-comments",
-    "If this switch is on, users will see top comments if there are any",
-    safeState = Off)
-
   // Swipe Switches
 
   val SwipeNav = Switch("Swipe Navigation", "swipe-nav",
@@ -183,10 +179,6 @@ object Switches extends Collections {
     "If this is switch on the the browser will log JavaScript errors to the server (via a beacon)",
     safeState = Off)
 
-  val FacebookAutoSigninSwitch = Switch("Feature Switches", "facebook-autosignin",
-    "If this switch is on then users who have previously authorized the guardian app in facebook and who have not recently signed out are automatically signed in.",
-    safeState = Off)
-
   // A/B Test Switches
 
   val FontDelaySwitch = Switch("A/B Tests", "web-fonts-delay",
@@ -258,7 +250,6 @@ object Switches extends Collections {
     OmnitureDomReadySwitch,
     DiscussionSwitch,
     DiscussionPostCommentSwitch,
-    DiscussionTopCommentsSwitch,
     ShortDiscussionSwitch,
     SwipeNav,
     SwipeNavOnClick,
@@ -295,11 +286,7 @@ object Switches extends Collections {
     ArticleKeywordsSwitch,
     ABAlphaAdverts,
     ABCommercialComponents,
-    EditionRedirectLoggingSwitch,
-    FacebookAutoSigninSwitch,
-    ABImproveOnwardTrails,
-    ABInitialShowMore,
-    ABShowMoreLayout
+    EditionRedirectLoggingSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
