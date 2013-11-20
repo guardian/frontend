@@ -172,10 +172,12 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       "ophanUrl" -> "http://s.ophan.co.uk/js/ophan.min",
       "googleSearchUrl" -> "http://www.google.co.uk/cse/cse.js",
       "interactiveUrl" -> "http://interactive.guim.co.uk/next-gen/",
+      "idWebAppUrl" -> id.webappUrl,
       "idApiUrl" -> id.apiRoot,
       "discussionApiRoot" -> discussion.apiRoot,
       "discussionApiClientHeader" -> discussion.apiClientHeader
     )
+
     lazy val pageData: Map[String, String] = {
       val keys = configuration.getPropertyNames.filter(_.startsWith("guardian.page."))
       keys.foldLeft(Map.empty[String, String]) {
