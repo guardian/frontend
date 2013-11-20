@@ -18,13 +18,13 @@
 
 
 @thumbItem(image: ImageAsset, info: RowInfo, orientation: String) = {
-    <li class="gallerythumbs__item">
-        <a href="@LinkTo{@gallery.url?index=@image.index}" data-link-name="@info.rowNum | gallery thumb">
-            <img class="gallerythumbs__img"
-                data-lowsrc="@image.url.map(ImgSrc(_, GalleryLargeTrail))"
-                data-thumb-width="480"
-                alt="@image.altText.getOrElse("")"
-            />
-        </a>
-    </li>
+    @image.url.map{ url =>
+        <li class="gallerythumbs__item">
+            <a href="@LinkTo{@gallery.url?index=@image.index}"
+               class="item__image-container"
+               data-link-name="@info.rowNum | gallery thumb"
+               data-img-class="gallerythumbs__img"
+               data-src="@ImgSrc(url, Profile("item-{width}"))"></a>
+        </li>
+    }
 }

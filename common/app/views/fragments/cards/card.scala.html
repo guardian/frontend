@@ -7,7 +7,9 @@
 
         @trail.trailPicture.map { imgContainer =>
             @ImgSrc.imager(imgContainer).map{ imgSrc =>
-                <a href="@trail.url" class="item__image-container" data-link-name="@linkName" data-img-class="card__media" data-src="@imgSrc"></a>
+                <a href="@trail.url" class="item__image-container" data-link-name="@linkName" data-img-class="card__media" data-src="@imgSrc">
+                    <img src="@LargeThumbnail.bestFor(imgContainer)" class="card__media" />
+                </a>
             }
         }
 
