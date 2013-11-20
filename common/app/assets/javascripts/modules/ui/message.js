@@ -25,7 +25,7 @@ define([
     }
 
     Message.prototype.show = function(message) {
-        this.copy.prepend(message);
+        this.copy.html(message);
         this.header.addClass('js-site-message');
         this.container.removeClass('u-h');
     };
