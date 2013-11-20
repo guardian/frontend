@@ -129,3 +129,12 @@
     height: 250px;
     overflow: hidden;
 }
+
+// Some scripts insert an image that 404s and may create a gap below
+// the footer or on top of gallery overlays
+// List the domains here to prevent pixel trackers from messing with the layout
+img[src*=betrad\.com] {
+    height: 0;
+    position: absolute;
+    width: 0;
+}
