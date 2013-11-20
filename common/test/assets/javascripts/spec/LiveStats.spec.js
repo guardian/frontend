@@ -26,5 +26,14 @@ define(['common', 'modules/analytics/livestats', 'utils/cookies'], function(comm
             );
         });
 
+        it("should accept parameters and serialize them in the request", function(){
+            ls.log({ foo:'bar', lorem:'ipsum' });
+            expect(document.getElementById('js-livestats').getAttribute('src')).toContain(
+                'beacon.gu.com/px.gif?foo=bar&lorem=ipsum&type=session&platform=responsive'
+            );
+        });
+
+
+
     });
 })

@@ -45,14 +45,19 @@ define([
                 }
                 return path + '?' + query.join('&');
             },
-            log = function() {
+            log = function(params) {
+                params = params || {};
                 if (!inAlphaTest) {
                     return false;
                 }
                 if (new Session().isNewSession()) {
-                    url += makeUrl({ type: 'session', platform: platform });
+                    params.type = 'session';
+                    params.platform = platform;
+                    url += makeUrl(params);
                 } else {
-                    url += makeUrl({ type: 'view', platform: platform });
+                    params.type = 'view';
+                    params.platform = platform;
+                    url += makeUrl(params);
                 }
                 createImage(url);
             };
