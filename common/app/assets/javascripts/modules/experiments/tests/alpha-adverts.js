@@ -57,7 +57,7 @@ define([
             var beaconInterval = setInterval(function() {
                 new LiveStats({
                     beaconUrl: config.page.beaconUrl,
-                    beaconName: 'ads.px'
+                    beaconName: '/ad.gif'
                 }).log(adDwellTimes);
 
                 adDwellTimes = {}; // reset
