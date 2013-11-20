@@ -15,8 +15,17 @@ case class Switch(group: String, name: String, description: String, safeState: S
   val delegate = DefaultSwitch(name, description, initiallyOn = safeState == On)
 
   def isSwitchedOn: Boolean = delegate.isSwitchedOn
-  def switchOn() { delegate.switchOn() }
-  def switchOff() { delegate.switchOff() }
+
+  def switchOn() {
+    if (isSwitchedOff) {
+      delegate.switchOn()
+    }
+  }
+  def switchOff() {
+    if (isSwitchedOn) {
+      delegate.switchOff()
+    }
+  }
 }
 
 object Switches extends Collections {
@@ -76,14 +85,14 @@ object Switches extends Collections {
     "Enable the Quantcast audience segment tracking.",
     safeState = Off)
 
-  val OmnitureDomReadySwitch = Switch("Analytics", "omniture-dom-ready",
+  val OmnitureDomReadySwitch = Switch("Analytics", "analytics-dom-ready",
     "Initialise Omniture on dom-ready, rather than on page-load.",
     safeState = Off)
 
   val AdSlotImpressionStatsSwitch = Switch("Analytics", "adslot-impression-stats",
     "Track when adslots (and possible ad slots) are scrolled into view.",
     safeState = Off)
-  
+
   val LiveStatsSwitch = Switch("Analytics", "live-stats",
     "Turns on our real-time KPIs",
     safeState = On)
@@ -106,6 +115,10 @@ object Switches extends Collections {
     "If this switch is on, users will be able to post comments",
     safeState = Off)
 
+  val DiscussionTopCommentsSwitch = Switch("Discussion", "discussion-top-comments",
+    "If this switch is on, users will see top comments if there are any",
+    safeState = Off)
+
   // Swipe Switches
 
   val SwipeNav = Switch("Swipe Navigation", "swipe-nav",
@@ -117,7 +130,7 @@ object Switches extends Collections {
     safeState = Off)
 
   // Feature Switches
-  
+
   val ReleaseMessageSwitch = Switch("Feature Switches", "release-message",
     "If this is switched on users will be messaged that they are inside the alpha/beta/whatever release",
     safeState = Off)
@@ -147,6 +160,10 @@ object Switches extends Collections {
     "If this switch is on the australia front will be available. Otherwise it will 404.",
     safeState = Off)
 
+  val NewsContainerSwitch = Switch("Feature Switches", "news-container",
+    "If this switch is on the news container will be on the network front. Otherwise fronts will display a normal facia container.",
+    safeState = Off)
+
   val LocalNavSwitch = Switch("Feature Switches", "local-nav",
     "If this switch is on, a secondary local nav is shown.",
     safeState = Off)
@@ -174,9 +191,13 @@ object Switches extends Collections {
   val ArticleKeywordsSwitch = Switch("Feature Switches", "article-keywords",
     "If this is switched on then keywords will be shown at the end of articles.",
     safeState = Off)
-  
+
   val ClientSideErrorSwitch = Switch("Feature Switches", "client-side-errors",
     "If this is switch on the the browser will log JavaScript errors to the server (via a beacon)",
+    safeState = Off)
+
+  val FacebookAutoSigninSwitch = Switch("Feature Switches", "facebook-autosignin",
+    "If this switch is on then users who have previously authorized the guardian app in facebook and who have not recently signed out are automatically signed in.",
     safeState = Off)
 
   // A/B Test Switches
@@ -207,6 +228,18 @@ object Switches extends Collections {
 
   val ABCommercialComponents = Switch("A/B Tests", "ab-commercial-components",
     "If this is switched on an AB test runs to test the new commercial components",
+    safeState = Off)
+
+  val ABImproveOnwardTrails = Switch("A/B Tests", "ab-improve-onward-trails",
+    "If this is switched on an AB test runs to test re-ordering story packages",
+    safeState = Off)
+
+  val ABInitialShowMore = Switch("A/B Tests", "ab-initial-show-more",
+    "If this is switched on an AB test runs to test how many items to initially show in news container",
+    safeState = Off)
+
+  val ABShowMoreLayout = Switch("A/B Tests", "ab-show-more-layout",
+    "If this is switched on an AB test runs that's repeats initial layout of a collection when clicking 'show more'",
     safeState = Off)
 
   // Sport Switch
@@ -250,6 +283,7 @@ object Switches extends Collections {
     OmnitureDomReadySwitch,
     DiscussionSwitch,
     DiscussionPostCommentSwitch,
+    DiscussionTopCommentsSwitch,
     ShortDiscussionSwitch,
     SwipeNav,
     SwipeNavOnClick,
@@ -261,6 +295,7 @@ object Switches extends Collections {
     ImageServerSwitch,
     ReleaseMessageSwitch,
     AustraliaFrontSwitch,
+    NewsContainerSwitch,
     FontDelaySwitch,
     ABParagraphSpacingSwitch,
     ABInlineLinkCardSwitch,
@@ -286,7 +321,11 @@ object Switches extends Collections {
     ArticleKeywordsSwitch,
     ABAlphaAdverts,
     ABCommercialComponents,
-    EditionRedirectLoggingSwitch
+    EditionRedirectLoggingSwitch,
+    FacebookAutoSigninSwitch,
+    ABImproveOnwardTrails,
+    ABInitialShowMore,
+    ABShowMoreLayout
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
@@ -317,7 +356,7 @@ class SwitchBoardAgent(config: GuardianConfiguration) extends Plugin with Execut
 
   override def onStart() {
     Jobs.deschedule("SwitchBoardRefreshJob")
-    Jobs.schedule("SwitchBoardRefreshJob", "0 * * * * ?", CommonApplicationMetrics.SwitchBoardLoadTimingMetric) {
+    Jobs.schedule("SwitchBoardRefreshJob", "0 * * * * ?") {
       refresh()
     }
 
