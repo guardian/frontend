@@ -22,6 +22,27 @@ casper.on('page.error', function(msg, trace) {
     console.log('-----------------------------');
 });
 
+casper.on('http.status.404', function(resource) {
+    console.log('-----------------------------');
+    console.log('Request returned a 404 status, page does not exist');
+    console.log('URL: ' + resource.url);
+    console.log('-----------------------------');
+});
+
+casper.on('http.status.500', function(resource) {
+    console.log('-----------------------------');
+    console.log('Request returned a 500 status, internal server error');
+    console.log('URL: ' + resource.url);
+    console.log('-----------------------------');
+});
+
+casper.on('http.status.504', function(resource) {
+    console.log('-----------------------------');
+    console.log('Request returned a 504 status, gateway timeout');
+    console.log('URL: ' + resource.url);
+    console.log('-----------------------------');
+});
+
 casper.on('page.initialized', function() {
     casper.evaluate(function() {
         if (typeof Function.prototype.bind !== "function") {

@@ -6,8 +6,10 @@
  * Discussion feature tests 
  *
  **/
-casper.start(host + '/science/grrlscientist/2012/aug/07/3?view=mobile');
 
+casper.test.setUp(function() {
+    casper.start(host + '/science/grrlscientist/2012/aug/07/3?view=mobile');
+});
 
 /**
  *   Scenario: Read top level comments
@@ -17,16 +19,14 @@ casper.start(host + '/science/grrlscientist/2012/aug/07/3?view=mobile');
  **/
 // Check the correct login/out buttons are present
 casper.test.begin('Read top level comments', function(test) {
-    casper.waitForSelector('.d-discussion',
-        function then() {
-            test.assertExists('.d-discussion');
-            test.assertVisible('.d-discussion');
-            test.done();
-        },
-        function timeout() {
-            test.fail('Comments failed to load');
-        }
-    );
+    casper.waitForSelector('.d-discussion', function then() {
+        test.assertExists('.d-discussion');
+        test.assertVisible('.d-discussion');
+        test.done();
+    }, function timeout() {
+        casper.capture('discussion-fail.png');
+        test.fail('Comments failed to load');
+    });
 });
 
 
