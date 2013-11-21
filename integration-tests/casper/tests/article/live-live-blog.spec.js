@@ -12,6 +12,7 @@ var livePageUri;
 
 casper.test.setUp(function() {
     casper.start(host + "tone/minutebyminute?view=mobile");
+    casper.options.waitTimeout = 10000;
 });
 
 casper.test.begin("Auto update toggle on / off", function(test) {
@@ -54,7 +55,7 @@ casper.test.begin("Auto update toggle on / off", function(test) {
         }, function timeout(){
             casper.capture('live-blog-live-trail-fail.png');
             casper.echo('Failed to find trail for currently live content');
-        }, 10000);
+        });
     });
 });
 
