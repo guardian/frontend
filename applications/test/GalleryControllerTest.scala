@@ -41,7 +41,7 @@ class GalleryControllerTest extends FlatSpec with Matchers {
   it should "display an expired message for expired content" in Fake {
     val result = controllers.GalleryController.render("theobserver/gallery/2012/jul/29/1")(TestRequest("/theobserver/gallery/2012/jul/29/1"))
     status(result) should be(410)
-    contentAsString(result) should include("This content has been removed as our copyright has expired.")
+    contentAsString(result) should include("This page has been removed")
   }
 
   it should "return the lightbox JSON when /lightbox.json endpoint is hit" in Fake {

@@ -45,7 +45,7 @@ class VideoControllerTest extends FlatSpec with Matchers {
   it should "display an expired message for expired content" in Fake {
     val result = controllers.VideoController.render("world/video/2008/dec/11/guantanamo-bay")(TestRequest("/world/video/2008/dec/11/guantanamo-bay"))
     status(result) should be(410)
-    contentAsString(result) should include("This content has been removed as our copyright has expired.")
+    contentAsString(result) should include("This page has been removed")
   }
 
 }
