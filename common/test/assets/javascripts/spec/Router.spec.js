@@ -23,7 +23,6 @@ define(['common', 'modules/router'], function(common, Router) {
 
         it("should parse / and add endmarker", function() {
             r.get("/", function() { });
-            console.log(r.getRoutes()[0].regex);
             expect(r.getRoutes()[0].regex.regexp).toEqual(new RegExp('/$'));
         });
 

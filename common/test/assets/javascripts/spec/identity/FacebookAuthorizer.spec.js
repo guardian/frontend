@@ -16,7 +16,6 @@ define([
             authorizer = new FacebookAuthorizer("123");
 
             authorizer._loadFacebookScript = function () {
-                console.log("++ Load scripts " + window);
                 window.FB = {
                     api: sinon.spy(function (path, callback) {
                         callback(userData);
@@ -49,7 +48,6 @@ define([
         describe("Get Login Status", function() {
             it('Should call facebook init after loading the facebook script', function() {
                 authorizer.getLoginStatus();
-                console.log(window.FB);
                 whenTheScriptLoads();
                 expect(FB.init.callCount).toBe(1);
             });
