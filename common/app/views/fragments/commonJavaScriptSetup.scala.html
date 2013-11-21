@@ -1,4 +1,4 @@
-@(item: model.MetaData, bootstrapJsModule: String, switches: Seq[com.gu.management.Switchable])(implicit request: RequestHeader)
+@(item: model.MetaData, bootstrapJsModule: String)(implicit request: RequestHeader)
 
 @import conf.Switches._
 @import conf.Static
@@ -136,7 +136,7 @@
             loadCssFromStorage();
         }
 
-        guardian.config = @fragments.javaScriptConfig(item, switches);
+        guardian.config = @fragments.javaScriptConfig(item);
 
         var script = document.createElement('script');
         script.async = 'async';

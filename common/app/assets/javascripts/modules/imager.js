@@ -22,8 +22,12 @@ define(['$', 'utils/to-array', 'bonzo', 'utils/mediator', 'imager', 'utils/detec
 
         listen: function() {
             mediator.addListeners({
-                'window:resize': imager.upgrade,
-                'window:orientationchange': imager.upgrade
+                'window:resize': function(e) {
+                    imager.upgrade();
+                },
+                'window:orientationchange': function(e) {
+                    imager.upgrade();
+                }
             });
         }
 
