@@ -62,25 +62,40 @@ define(['modules/ui/images', 'helpers/fixtures', '$', 'bonzo', 'utils/mediator']
             fixtures.clean(id);
         });
 
-        it('should be able to force upgrade', function() {
-            var $style = bonzo(bonzo.create('<style></style>'))
-                .html('body:after { content: "desktop"; }')
-                .appendTo('head');
-            $('html')
-                .removeClass(notLowClassName)
-                .addClass(lowClassName);
-            // add data-force-upgrade attrs
-            ['desktop wide', 'tablet desktop', 'mobile'].forEach(function(breakpoints, i) {
-                $('.' + imgClass + ':nth-child(' + (i + 1) + ')').attr('data-force-upgrade', breakpoints);
+        describe('force upgrade', function() {
+
+            var forceUpgradeAttr = 'data-force-upgrade';
+            it('should force upgrade if "' + forceUpgradeAttr + '" attribute exists', function() {
+                $('html')
+                    .removeClass(notLowClassName)
+                    .addClass(lowClassName);
+                // add data-force-upgrade attrs
+                ['desktop wide', 'tablet desktop', 'mobile'].forEach(function(breakpoints, i) {
+                    $('.' + imgClass + ':nth-child(' + (i + 1) + ')').attr(forceUpgradeAttr, '');
+                });
+                images.upgrade();
+                expect($('.' + imgClass + ' img').length).toEqual(3);
             });
-            images.upgrade();
-            var $upgradedImgs = $('.' + imgClass + ' img');
-            // first two should be forced to upgrade
-            expect($('.' + imgClass + ':nth-child(1) img').length).toEqual(1);
-            expect($('.' + imgClass + ':nth-child(2) img').length).toEqual(1);
-            // but not the third
-            expect($('.' + imgClass + ':nth-child(3) img').length).toEqual(0);
-            $style.remove();
+
+            it('should force upgrade at certain breakpoints if set in attribute', function() {
+                var $style = bonzo(bonzo.create('<style></style>'))
+                    .html('body:after { content: "desktop"; }')
+                    .appendTo('head');
+                $('html')
+                    .removeClass(notLowClassName)
+                    .addClass(lowClassName);
+                // add data-force-upgrade attrs
+                ['desktop wide', 'tablet desktop', 'mobile'].forEach(function(breakpoints, i) {
+                    $('.' + imgClass + ':nth-child(' + (i + 1) + ')').attr(forceUpgradeAttr, breakpoints);
+                });
+                images.upgrade();
+                // first two should be forced to upgrade
+                expect($('.' + imgClass + ':nth-child(1) img').length).toEqual(1);
+                expect($('.' + imgClass + ':nth-child(2) img').length).toEqual(1);
+                // but not the third
+                expect($('.' + imgClass + ':nth-child(3) img').length).toEqual(0);
+                $style.remove();
+            });
 
         });
 

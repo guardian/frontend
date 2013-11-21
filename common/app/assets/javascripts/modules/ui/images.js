@@ -16,8 +16,10 @@ define(['$', 'utils/to-array', 'bonzo', 'utils/mediator', 'imager', 'utils/detec
 
             toArray(context.getElementsByClassName('item__image-container')).forEach(function(container) {
                 var $container = bonzo(container),
-                    forceUpdgradeBreakpoints = ($container.attr('data-force-upgrade') || '').split(' ');
-                if (($('html').hasClass('connection--low') && forceUpdgradeBreakpoints.indexOf(breakpoint) === -1) || $container.css('display') === 'none') {
+                    forceUpgradeAttr = $container.attr('data-force-upgrade'),
+                    forceUpdgradeBreakpoints = forceUpgradeAttr !== null ? forceUpgradeAttr.split(' ') : [],
+                    isForceUpgrade = forceUpdgradeBreakpoints.indexOf(breakpoint) !== -1 || forceUpgradeAttr === '';
+                if (($('html').hasClass('connection--low') && !isForceUpgrade) || $container.css('display') === 'none') {
                     return;
                 }
                 // clear out container
