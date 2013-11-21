@@ -112,13 +112,13 @@ TopComments.prototype.fetch = function(parent) {
                 self.prerender();
                 self.ready();
 
-                self.mediator.emit("loadComments", { amount: 0 });
+                self.mediator.emit("module:topcomments:loadcomments", { amount: 0 });
             } else {
 
                 $('.discussion__comments--top-comments').remove();
 
                 // Render Regular Comments
-                self.mediator.emit("loadComments", { amount: 2, showLoader: true });
+                self.mediator.emit("module:topcomments:loadcomments", { amount: 2, showLoader: true });
             }
         }
     );
@@ -157,7 +157,7 @@ TopComments.prototype.ready = function() {
         }
     }
 
-    var heading = document.getElementById('topComments');
+    var heading = document.querySelector('.js-top-comments');
 
     heading.childNodes[0].nodeValue = self.options.sectionHeading;
 

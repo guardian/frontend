@@ -107,7 +107,7 @@ Loader.prototype.ready = function() {
                 self.on('click', $(self.topComments.showMoreButton), self.topComments.showMore.bind(self.topComments)); // Module-hopping calls - refactor needed
             });
 
-        self.mediator.on('loadComments', self.loadComments.bind(self));
+        self.mediator.on("module:topcomments:loadcomments", self.loadComments.bind(self));
 
         // !Top comments ========================================== //
 
