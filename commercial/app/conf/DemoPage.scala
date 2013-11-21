@@ -8,14 +8,6 @@ class DemoPage(val applicationName: String) extends HtmlManagementPage {
 
   def title = "Commercial Test Harness"
 
-  private def jsonDomain = {
-    Configuration.environment.stage match {
-      case "dev" => "localhost:9000"
-      case "code" => "code.api.nextgen.guardianapps.co.uk"
-      case _ => "api.nextgen.guardianapps.co.uk"
-    }
-  }
-
   def body(request: HttpRequest) =
 
         <link rel="stylesheet" type="text/css" href="http://aws-frontend-static.s3.amazonaws.com/CODE/frontend-static/stylesheets/head.default.610e3a410982a293a4573a1018691888.css"/>
@@ -68,10 +60,10 @@ class DemoPage(val applicationName: String) extends HtmlManagementPage {
             components: function() {
 
               return {
-                masterclasses: 'http://%s/commercial/masterclasses.json',
-                travel:        'http://%s/commercial/travel/offers.json?k='+document.querySelector('.travel-keywords').value+'&amp;seg=repeat',
-                jobs:          'http://%s/commercial/jobs.json?s='+document.querySelector('.jobs-keywords').value,
-                soulmates:     'http://%s/commercial/soulmates/mixed.json'
+                masterclasses: '%s/commercial/masterclasses.json',
+                travel:        '%s/commercial/travel/offers.json?k='+document.querySelector('.travel-keywords').value+'&amp;seg=repeat',
+                jobs:          '%s/commercial/jobs.json?s='+document.querySelector('.jobs-keywords').value,
+                soulmates:     '%s/commercial/soulmates/mixed.json'
               }
             },
 
@@ -144,7 +136,7 @@ class DemoPage(val applicationName: String) extends HtmlManagementPage {
 
           guCommercial.init();
       })"""
-      .format(jsonDomain, jsonDomain, jsonDomain, jsonDomain))}
+      .format(Configuration.ajax.url, Configuration.ajax.url, Configuration.ajax.url, Configuration.ajax.url))}
         </script>
 
         <h1>Commercial Components Test Harness</h1>
