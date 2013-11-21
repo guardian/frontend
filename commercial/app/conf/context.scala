@@ -19,7 +19,6 @@ object Management extends GuManagement {
     ),
     StatusPage(applicationName, metrics),
     new PropertiesPage(Configuration.toString()),
-    new LogbackLevelPage(applicationName),
-    new DemoPage(applicationName)
+    new LogbackLevelPage(applicationName)
   )
 }
