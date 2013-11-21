@@ -7,6 +7,7 @@ import play.api.mvc._
 import scala.concurrent.Future
 import com.gu.openplatform.contentapi.model.ItemResponse
 import model.Content
+import views.support.RenderOtherStatus
 
 case class InteractivePage(
   interactive: Interactive,
@@ -22,9 +23,9 @@ object InteractiveController extends Controller with Logging with ExecutionConte
     val isTrail = request.getQueryString("trail") map (_.toBoolean) getOrElse false
 
     lookup(path, index, isTrail) map {
-      case Left(model) if model.interactive.isExpired => Gone(views.html.expired(model.interactive))
+      case Left(model) if model.interactive.isExpired => RenderOtherStatus(Gone) // TODO - delete this line after switching to new content api
       case Left(model) => render(model)
-      case Right(notFound) => notFound
+      case Right(other) => RenderOtherStatus(other)
     }
   }
 
