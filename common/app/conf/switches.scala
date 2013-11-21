@@ -117,7 +117,7 @@ object Switches extends Collections {
 
   val DiscussionTopCommentsSwitch = Switch("Discussion", "discussion-top-comments",
     "If this switch is on, users will see top comments if there are any",
-    safeState = Off)
+    safeState = On)
 
   // Swipe Switches
 
