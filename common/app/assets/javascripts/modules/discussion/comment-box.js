@@ -2,7 +2,7 @@ define([
     'bean',
     'bonzo',
     'modules/discussion/api',
-    'modules/component'
+    'component'
 ], function(
     bean,
     bonzo,
