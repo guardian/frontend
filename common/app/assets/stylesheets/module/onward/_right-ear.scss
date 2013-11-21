@@ -1,0 +1,52 @@
+/* ==========================================================================
+   Onward Right-Ear
+   ========================================================================== */
+.d-right-ear {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    opacity: 0.75;
+    padding: 6px;
+    height: 84px;
+    width: 288px;
+
+    background: $c-neutral1;
+    background:
+      -webkit-linear-gradient(45deg,  transparent 6px, $c-neutral1 6px),
+      -webkit-linear-gradient(135deg,  transparent 6px, $c-neutral1 6px);
+    background:
+      -moz-linear-gradient(45deg,  transparent 6px, $c-neutral1 6px),
+      -moz-linear-gradient(135deg,  transparent 6px, $c-neutral1 6px);
+    background:
+      linear-gradient(45deg,  transparent 6px, $c-neutral1 6px),
+      linear-gradient(135deg,  transparent 6px, $c-neutral1 6px);
+
+    background-position: bottom left, top left;
+    background-repeat: no-repeat;
+    @include background-size(100% 50%);
+
+    @include transition(-webkit-transform 0.75s ease-out, opacity 1s ease-out);
+    @include transition(-moz-transform 0.75s ease-out, opacity 1s ease-out);
+    @include transition(-o-transform 0.75s ease-out, opacity 1s ease-out);
+    @include transition(-ms-transform 0.75s ease-out, opacity 1s ease-out);
+    @include transition(transform 0.75s ease-out, opacity 1s ease-out);
+
+    @include transform(translateX(220px));
+}
+
+.d-right-ear__arrow {
+    margin-right: 44px;
+    margin-bottom: 54px;
+    float: left;
+}
+
+.d-right-ear__headline {
+    color: white;
+    margin-left: $baseline *2;
+    width: 220px;
+}
+
+.d-right-ear--expanded {
+    @include transform(translateX(0));
+    opacity: 1;
+}

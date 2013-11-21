@@ -10,6 +10,8 @@ define([
     "modules/experiments/live-blog-show-more",
     "modules/ui/notification-counter",
     "utils/detect",
+    "modules/onward/sequence",
+    "modules/onward/right-ear",
     "modules/experiments/left-hand-card"
 ], function (
     common,
@@ -23,6 +25,8 @@ define([
     LiveShowMore,
     NotificationCounter,
     detect,
+    sequence,
+    RightEar,
     LeftHandCard
 ) {
 
@@ -90,6 +94,17 @@ define([
             });
         },
 
+        initOnwardRightEar: function(config) {
+            common.mediator.on('modules:sequence:loaded', function(sequence) {
+                if (config.switches && config.switches.abOnwardRightEar) {
+                    var rightEar = new RightEar(sequence, common.mediator, {});
+                    rightEar.render();
+                }
+            });
+
+            sequence.init();
+        },
+
         logReading: function() {
             common.mediator.on('page:article:ready', function(config, context) {
                 var wordCount = config.page.wordCount;
@@ -145,6 +160,7 @@ define([
             modules.logReading();
             modules.initDiscussion();
             modules.initCricket();
+            modules.initOnwardRightEar(config);
             modules.externalLinksCards();
         }
         common.mediator.emit("page:article:ready", config, context);
