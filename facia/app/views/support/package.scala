@@ -27,7 +27,7 @@ object FindStyle {
       ("au/business/regular-stories", SportContainer(showMore = false))
     )),
     ("au/commentisfree", Map(
-      ("au/commentisfree/regular-stories", CommentContainer())
+      ("au/commentisfree/regular-stories", CommentContainer(showMore = false))
     )),
     ("au/culture", Map(
       ("au/culture/regular-stories", FeaturesContainer()),
@@ -54,7 +54,7 @@ object FindStyle {
       ("uk/business/regular-stories", SportContainer(showMore = false))
     )),
     ("uk/commentisfree", Map(
-      ("uk/commentisfree/regular-stories", CommentContainer())
+      ("uk/commentisfree/regular-stories", CommentContainer(showMore = false))
     )),
     ("uk/culture", Map(
       ("uk/culture/regular-stories", FeaturesContainer()),
@@ -82,7 +82,7 @@ object FindStyle {
       ("us/business/regular-stories", SportContainer(showMore = false))
     )),
     ("us/commentisfree", Map(
-      ("us/commentisfree/regular-stories", CommentContainer())
+      ("us/commentisfree/regular-stories", CommentContainer(showMore = false))
     )),
     ("us/culture", Map(
       ("us/culture/regular-stories", FeaturesContainer()),

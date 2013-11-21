@@ -6,9 +6,9 @@ define([
     'qwery',
     'utils/detect',
     'modules/ui/relativedates',
-    'modules/imager',
+    'modules/ui/images',
     'modules/discussion/comment-count'
-], function ($, mediator, bonzo, bean, qwery, detect, relativeDates, imager, commentCount) {
+], function ($, mediator, bonzo, bean, qwery, detect, relativeDates, images, commentCount) {
 
     var buttonText = 'Show more',
         getInitialShowSize = function (collectionType) {
@@ -63,7 +63,7 @@ define([
                                    .append(items)[0];
             relativeDates.init(wrappedItems);
             commentCount.init(wrappedItems);
-            imager.upgrade(wrappedItems);
+            images.upgrade(wrappedItems);
             $collection.append(items);
         };
 
