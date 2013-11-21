@@ -14,7 +14,9 @@
     list-style: none;
     margin: 0 0 1em;
 }
-
+.discussion__comment-count {
+    color: $c-neutral3;
+}
 .d-thread--responses,
 .d-comment-box--response {
     padding-left: 28px; /* aligns with top level comment's body */
@@ -372,12 +374,7 @@
 $topCommentsHeight: 600px;
 
 .discussion__comments--top-comments { // Section
-
     position: relative;
-        
-    .discussion__comments--top-counter {
-        color: $c-neutral3;
-    }
 
     .d-image-fade {
         background-color: #fff;
@@ -393,7 +390,7 @@ $topCommentsHeight: 600px;
 
     .discussion__comments__top { // Container
 
-        max-height: $topCommentsHeight;        
+        max-height: $topCommentsHeight;
         position: relative;
         overflow: hidden;
 
@@ -405,7 +402,7 @@ $topCommentsHeight: 600px;
             margin: 0;
             // Mobile First
             @include mq($from: desktop) {
-                
+
                 // Switch to 2-col layout for desktop
 
                 -webkit-column-width: 290px;
@@ -431,7 +428,7 @@ $topCommentsHeight: 600px;
                             column-break-inside:avoid;
                 }
 
-            }            
+            }
         }
 
         .d-comment { // Comment
@@ -444,7 +441,7 @@ $topCommentsHeight: 600px;
         .d-comment__inner {
             background-color: $c-neutral7;
             display: inline-block;
-            padding: $baseline*2 $gutter/2 $baseline*6 $gutter/2;                
+            padding: $baseline*2 $gutter/2 $baseline*6 $gutter/2;
 
             &:before { // Pointer (equilateral triangle)
                 top: 100%;
@@ -500,7 +497,7 @@ $topCommentsHeight: 600px;
                     display: inline-block;
                     padding: 0 8px 0 0;
                     position: relative;
-                    top: -5px;                                    
+                    top: -5px;
                     font-size: 0.9em;
                 }
 
@@ -536,6 +533,6 @@ $topCommentsHeight: 600px;
                 padding: 0;
             }
         }
-        
+
     }
 }
