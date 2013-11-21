@@ -124,13 +124,14 @@ Loader.prototype.loadComments = function (args) {
 
     var self = this;
 
-    var commentsContainer   = this.getElem('commentsContainer'),
-        commentsElem        = this.getElem('comments'),
+    var commentsElem        = this.getElem('comments'),
         loadingElem         = bonzo.create('<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>')[0];
+
+    self.commentsContainer   = this.getElem('commentsContainer'); // Set on the context to allow AJAX error hadnling
 
     if (args.showLoader) {
         // Comments are being loaded in the no-top-comments-available context
-        bonzo(commentsContainer).removeClass('u-h');
+        bonzo(self.commentsContainer).removeClass('u-h');
     }
 
     bonzo(self.topLoadingElem).addClass('u-h');
@@ -161,8 +162,8 @@ Loader.prototype.loadComments = function (args) {
                 self.comments.showMore(event);
                 self.cleanUpOnShowComments();
             });
-            bonzo(commentsContainer).removeClass('u-h');
-        });
+            bonzo(self.commentsContainer).removeClass('u-h');
+        }).fail(self.loadingError.bind(self));
 };
 
 /** @return {Reqwest|null} */
@@ -187,7 +188,7 @@ Loader.prototype.getUser = function() {
  * often is on code due to syncing problems
  */
 Loader.prototype.loadingError = function() {
-    bonzo(this.elem).remove();
+    bonzo(this.commentsContainer).remove();
 };
 
 /** TODO: This logic will be moved to the Play app renderer */
