@@ -13,14 +13,16 @@
         </a>
     </h@headingLevel>
 
-    @trail.trailPicture.map { imgContainer =>
-        @ImgSrc.imager(imgContainer).map{ imgSrc =>
+    @trail.trailPicture.map { imageContainer =>
+        @ImgSrc.imager(imageContainer).map{ imgSrc =>
             <a href="@LinkTo{@trail.url}"
                class="trail__img item__image-container"
                data-link-name="@rowNum | image"
                aria-hidden="true"
                data-src="@imgSrc"
-               data-img-class="maxed"></a>
+               data-img-class="maxed">
+                <img class="maxed responsive-img" alt="" itemprop="contentURL" />
+            </a>
         }
     }
     @trail.trailText.map { text => <div class="trail__text">@cleanTrailText(text)(Edition(request))</div> }

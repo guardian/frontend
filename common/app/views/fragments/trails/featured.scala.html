@@ -22,10 +22,8 @@
                class="trail__img item__image-container"
                aria-hidden="true"
                data-src="@imgSrc"
-               data-img-class="maxed"
-               data-force-upgrade
                @if(related){itemprop="relatedLink"} data-link-name="@rowNum | image" >
-                <img class="maxed" src="@LargeThumbnail.bestFor(imageContainer)" />
+                <img class="maxed responsive-img" alt="" itemprop="contentURL" />
             </a>
         }
     }

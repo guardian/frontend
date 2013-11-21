@@ -51,17 +51,6 @@ define(['modules/ui/images', 'helpers/fixtures', '$', 'bonzo', 'utils/mediator']
 
         });
 
-        it('should remove existing content in container', function() {
-            var id = 'empty-container-fixture';
-            fixtures.render({
-                id: id,
-                fixtures: ['<div class="' + imgClass + '" data-src="src.jpg"><img class="existing-img" src="low-res.jpg" /></div>']
-            });
-            images.upgrade(document.getElementById(id));
-            expect($('#' + id + ' .existing-img').length).toEqual(0);
-            fixtures.clean(id);
-        });
-
         describe('force upgrade', function() {
 
             var forceUpgradeAttr = 'data-force-upgrade';
@@ -95,25 +84,6 @@ define(['modules/ui/images', 'helpers/fixtures', '$', 'bonzo', 'utils/mediator']
                 // but not the third
                 expect($('.' + imgClass + ':nth-child(3) img').length).toEqual(0);
                 $style.remove();
-            });
-
-        });
-
-        describe('created img element', function() {
-
-            it('should always add "item__image" class to img element', function() {
-                images.upgrade();
-                expect($('.' + imgClass + ' img.item__image').length).toEqual(3);
-            });
-
-            var classDataAttr = 'data-img-class';
-            it('should add "' + classDataAttr + '" as classes to img element', function() {
-                var classes = 'a-class another-class';
-                // add data attribute to first image container
-                $('#' + fixturesId + ' .' + imgClass + ':first-child').attr(classDataAttr, classes);
-                images.upgrade();
-                expect($('.' + imgClass + ' img.item__image').length).toEqual(3);
-                expect($('.' + imgClass + ' img.' + classes.split(' ').join('.')).length).toEqual(1);
             });
 
         });

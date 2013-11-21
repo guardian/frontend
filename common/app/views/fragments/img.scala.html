@@ -6,8 +6,12 @@
 @image.map{ picture =>
 
     <figure itemprop="associatedMedia primaryImageOfPage" itemscope itemtype="http://schema.org/ImageObject" class="media-primary media-content">
-        <div class="item__image-container" data-force-upgrade="desktop wide" data-src="@ImgSrc.imager(picture)" data-img-class="maxed main-image" data-force-upgrade>
-            <img class="maxed main-image" src="@LargeThumbnail.bestFor(picture)" />
+        <div class="item__image-container" data-src="@ImgSrc.imager(picture)" data-force-upgrade>
+            <img src="@LargeThumbnail.bestFor(picture)"
+                 class="maxed main-image responsive-img"
+                 itemprop="contentURL"
+                 title="@ArticleMainPicture.altTextFor(picture).getOrElse("")"
+                 alt="@ArticleMainPicture.altTextFor(picture).getOrElse("")" />
         </div>
 
         @LargeThumbnail.captionFor(picture).map{ caption =>
