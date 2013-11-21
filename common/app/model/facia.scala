@@ -1,7 +1,5 @@
 package model
 
-import views.support.Style
-
 case class Config(
                    id: String,
                    contentApiQuery: Option[String],
