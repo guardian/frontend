@@ -10,7 +10,7 @@ GET     /discussion/comment-box.json              controllers.DiscussionApp.comm
 GET     /discussion/comment-counts                controllers.DiscussionApp.commentCount(shortUrls: String)
 GET     /discussion/comment-counts.json           controllers.DiscussionApp.commentCountJson(shortUrls: String)
 
-GET     /discussion/*shortUrl.json                controllers.DiscussionApp.commentPageJson(shortUrl)
-GET     /discussion/*shortUrl                     controllers.DiscussionApp.commentPage(shortUrl)
+GET     /discussion/*discussionKey.json           controllers.DiscussionApp.commentPageJson(discussionKey: discussion.model.DiscussionKey)
+GET     /discussion/*discussionKey                controllers.DiscussionApp.commentPage(discussionKey: discussion.model.DiscussionKey)
 
 GET     /open/cta/article/*discussionKey.json     controllers.CtaController.cta(discussionKey: discussion.model.DiscussionKey)

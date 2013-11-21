@@ -7,7 +7,7 @@ import play.api.libs.json.JsArray
 import play.api.libs.ws.Response
 import play.api.libs.json.JsObject
 import play.api.libs.json.JsNumber
-import discussion.model.{Profile, Comment, CommentCount}
+import discussion.model.{DiscussionKey, Profile, Comment, CommentCount}
 import play.api.mvc.Headers
 import discussion.util.Http
 
@@ -32,7 +32,7 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
     }
   }
 
-  def commentsFor(key: String, page: String, pageSize: String = ""): Future[CommentPage] = {
+  def commentsFor(key: DiscussionKey, page: String, pageSize: String = ""): Future[CommentPage] = {
     val size = if (pageSize != "") pageSize else if (ShortDiscussionSwitch.isSwitchedOn) 10 else 50
     val apiUrl = s"$apiRoot/discussion/$key?pageSize=$size&page=$page&orderBy=newest&showSwitches=true"
 
