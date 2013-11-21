@@ -33,7 +33,7 @@ casper.test.begin("Show key events only / all posts", function(test) {
 
             test.done();
         }, function timeout(){
-            casper.capture('live-blog-key-events-fail.png');
+            casper.capture(screens + 'live-blog-key-events-fail.png');
             test.fail("Failed to find toggling buttons");
         });
     });
@@ -66,10 +66,9 @@ casper.test.begin("Display latest summary before events on small viewports", fun
             '[data-link-name="summary before content"]',
             "Inline summary block visible on small viewports"
         );
-        casper.capture('live-mobile.png');
         test.done();
     } else {
-        casper.capture('live-blog-summary-1-fail.png');
+        casper.capture(screens + 'live-blog-summary-1-fail.png');
         test.fail("Summary block not present");
     }
 });
@@ -85,10 +84,9 @@ casper.test.begin("Display latest summary on the right side of article on wide v
             '[data-link-name="summary before content"]',
             "Inline summary block not visible on wide viewports"
         );
-        casper.capture('live-desktop.png');
         test.done();
     } else {
-        casper.capture('live-blog-summary-2-fail.png');
+        casper.capture(screens + 'live-blog-summary-2-fail.png');
         test.fail("Summary block not present");
     }
 });

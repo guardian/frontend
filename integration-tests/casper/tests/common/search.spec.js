@@ -19,11 +19,11 @@ casper.test.begin("Load search", function(test){
                 test.assertVisible('.nav-popup-search','Then I see the search bar when I click on the search icon');
                 test.done();
             }, function timeout() {
-                casper.capture('search-component-fail.png');
+                casper.capture(screens + 'search-component-fail.png');
                 test.fail('Failed to transclude search component');
             });
         }, function timeout() {
-            casper.capture('search-button-fail.png');
+            casper.capture(screens + 'search-button-fail.png');
             test.fail('No search icon found on page');
         });
     });

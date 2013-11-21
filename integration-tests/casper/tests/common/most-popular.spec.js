@@ -23,7 +23,7 @@ casper.test.begin("Load Most Read", function(test){
             test.assertVisible("#tabs-popular-2", "Then the global most popular list is visible after clicking the tab");
             test.done();
         }, function timeout() {
-            casper.capture('most-popular-fail.png');
+            casper.capture(screens + 'most-popular-fail.png');
             test.fail('Failed to transclude most read component');
         });
     });

@@ -48,12 +48,12 @@ casper.test.begin("Auto update toggle on / off", function(test) {
                 );
                 test.done();
                 }, function timeout(){
-                    casper.capture('live-blog-auto-update-fail.png');
+                    casper.capture(screens + 'live-blog-auto-update-fail.png');
                     test.fail("Failed to find auto update toggle");
                 }, 10000);
             });
         }, function timeout(){
-            casper.capture('live-blog-live-trail-fail.png');
+            casper.capture(screens + 'live-blog-live-trail-fail.png');
             casper.echo('Failed to find trail for currently live content');
         });
     });

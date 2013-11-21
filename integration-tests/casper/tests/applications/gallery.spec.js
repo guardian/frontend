@@ -20,7 +20,7 @@ casper.test.begin("Display gallery contact sheet", function(test) {
             }, 3, '3 items should be available');
             test.done();
         }, function timeout() {
-            casper.capture('gallery-thumbs-fail.png');
+            casper.capture(screens + 'gallery-thumbs-fail.png');
             test.fail('Thumbnails not visible');
         });
     });
@@ -34,7 +34,7 @@ casper.test.begin("Display lhe lightbox when clicking an image", function(test) 
             test.assertSelectorHasText('.js-image-index', '1', 'Image counter is at 1');
             test.done();
         }, function timeout() {
-            casper.capture('gallery-lightbox-fail.png');
+            casper.capture(screens + 'gallery-lightbox-fail.png');
             test.fail('Lightbox did not open');
         });
     });

@@ -25,7 +25,7 @@ casper.test.begin('Read top level comments', function(test) {
         test.assertVisible('.d-discussion');
         test.done();
     }, function timeout() {
-        casper.capture('discussion-fail.png');
+        casper.capture(screens + 'discussion-fail.png');
         test.fail('Comments failed to load');
     });
 });

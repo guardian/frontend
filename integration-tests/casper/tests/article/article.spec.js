@@ -21,7 +21,7 @@ casper.test.begin("Related content", function(test) {
             test.assertDoesntExist('.js-related .related-trails.shut', 'Button shows more related trails');
             test.done();
         }, function timeout(){
-            casper.capture('article-related-fail.png');
+            casper.capture(screens + 'article-related-fail.png');
             test.fail("Failed to find toggling buttons");
         });
     });

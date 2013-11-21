@@ -21,7 +21,7 @@ casper.test.begin('Popular container appears at the bottom of the page', functio
             test.assertElementCount(popContainerSelector, 1, 'exactly one popular container should be displayed');
             test.done();
         }, function timeout() {
-            casper.capture('tag-popular-container-fail.png');
+            casper.capture(screens + 'tag-popular-container-fail.png');
             test.fail('Tag popular container not present');
         });
     });

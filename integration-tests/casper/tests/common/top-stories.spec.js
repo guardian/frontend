@@ -21,7 +21,7 @@ casper.test.begin('Load top stories', function(test) {
         }, 10, 'Then I can see 10 top stories');
         test.done();
     }, function timeout(){
-        casper.capture('top-stories-nav-fail.png');
+        casper.capture(screens + 'top-stories-nav-fail.png');
         test.fail('Top stories failed to load');
     });
 
@@ -34,7 +34,7 @@ casper.test.begin('Top stories title is inserted', function(test) {
         }, 'Top stories', 'Then the top stories title is inserted');
     test.done();
     }, function timeout(){
-        casper.capture('top-stories-title-fail.png');
+        casper.capture(screens + 'top-stories-title-fail.png');
         test.fail('Top stories title is not in');
     });
 
@@ -46,7 +46,7 @@ casper.test.begin('Top stories is not visible before I click it',function(test) 
         test.assertNotVisible('.nav-popup-topstories', 'The top stories are not visible at page load');
         test.done();
     }, function timeout() {
-        casper.capture('top-stories-page-load-fail.png');
+        casper.capture(screens + 'top-stories-page-load-fail.png');
         test.fail('Top stories nav not loaded on page load');
     });
 });
