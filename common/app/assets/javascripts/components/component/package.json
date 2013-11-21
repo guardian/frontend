@@ -1,0 +1,16 @@
+{
+    "name": "component",
+    "description": "Bringing structure to your JS applications.",
+    "version": "0.0.1",
+    "homepage": "https://github.com/guardian/component",
+    "authors": [
+        "Guardian frontend <https://github.com/guardian/frontend/graphs/contributors>"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/guardian/component.git"
+    },
+    "keywords": [ "Web Components", "Guardian", "event", "dom", "ajax" ],
+    "main": "./component.js",
+    "devDependencies": {}
+}

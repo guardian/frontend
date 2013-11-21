@@ -1,4 +1,4 @@
-define(['modules/detect', 'bonzo'], function(detect, bonzo) {
+define(['utils/detect', 'bonzo'], function(detect, bonzo) {
 
     var windowWidth = window.innerWidth,
         windowHeight = window.innerHeight;

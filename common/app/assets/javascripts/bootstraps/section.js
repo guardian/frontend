@@ -1,14 +1,14 @@
 define([
-    'common',
+    'utils/mediator',
     'modules/facia/popular'
 ], function (
-    common,
+    mediator,
     popular
 ) {
     var modules = {
 
         showPopular: function () {
-            common.mediator.on('page:section:ready', function(config, context) {
+            mediator.on('page:section:ready', function(config, context) {
                 popular.render(config);
             });
         }
@@ -20,7 +20,7 @@ define([
             this.initialised = true;
             modules.showPopular();
         }
-        common.mediator.emit('page:section:ready', config, context);
+        mediator.emit('page:section:ready', config, context);
     };
 
     return {

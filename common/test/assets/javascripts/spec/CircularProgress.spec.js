@@ -1,6 +1,6 @@
 define([ 'common',
          'bean',
-         'modules/circular-progress',
+         'modules/ui/circular-progress',
          'helpers/fixtures'
        ], function(common, bean, CircularProgress, fixtures) {
 

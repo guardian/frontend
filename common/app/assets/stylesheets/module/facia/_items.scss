@@ -30,6 +30,7 @@ $c-live: #e81818;
     background-color: $c-newsDefault;
     min-height: gs-height(1) - $gs-baseline*(2/3);
     color: #ffffff;
+
     @include mq(tablet) {
         min-height: 0;
         padding: 0;
@@ -131,7 +132,7 @@ $c-live: #e81818;
         left: 0;
         width: 1px;
         height: 100%;
-        border-left: 1px dotted $c-neutral5;
+        border-left: 1px solid $c-neutral5;
     }
 }
 .item__link {
@@ -142,22 +143,26 @@ $c-live: #e81818;
     .item:first-child & {
         border-top-style: none;
     }
+    &:visited {
+        &,
+        .item__title {
+            color: $c-neutral2;
+        }
+    }
 }
 .item__image-container {
     display: none;
     position: relative;
     margin-top: 2px;
+    padding-bottom: 60%;
 
-    .connection--not-low & {
-        padding-bottom: 60%;
+    .responsive-img {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
     }
-}
-.responsive-img {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
 }
 .item__live-indicator {
     color: #ffffff;
@@ -197,6 +202,11 @@ $c-live: #e81818;
     position: absolute;
     bottom: 0;
     @include fs-data(2, $size-only: true);
+
+    @include mq(tablet) {
+        @include fs-data(3, $size-only: true);
+    }
+
     .item__timestamp,
     .trail__count {
         position: relative;

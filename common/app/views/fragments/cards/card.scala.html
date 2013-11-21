@@ -5,6 +5,14 @@
     <div class="furniture furniture--@column card card--@column">
         <h2 class="card__title">@title</h2>
 
+        @trail.trailPicture.map { imgContainer =>
+            @ImgSrc.imager(imgContainer).map{ imgSrc =>
+                <a href="@trail.url" class="item__image-container" data-link-name="@linkName" data-src="@imgSrc" data-force-upgrade>
+                    <img src="@LargeThumbnail.bestFor(imgContainer)" class="card__media responsive-img" alt="" itemprop="contentURL" />
+                </a>
+            }
+        }
+
         <div class="card__body u-text-hyphenate">
             <h3 class="card__headline">
                 <a href="@trail.url" data-link-name="@linkName">@Html(trail.headline)</a>
@@ -12,22 +20,12 @@
         </div>
 
         <div class="card__meta dateline">
-            <div class="dateline"><i class="i i-clock-grey relative-timestamp__icon"></i><time datetime="@trail.webPublicationDate" class="js-timestamp"></time></div>
+            <div class="dateline">
+                <i class="i i-clock-light-grey relative-timestamp__icon"></i>
+                <time datetime="@trail.webPublicationDate" class="js-timestamp">@Format(trail.webPublicationDate, "d MMM y")</time>
+            </div>
         </div>
 
-        @trail.thumbnailPath.map{ thumbnailPath =>
-            @trail.trailPicture.map { mainPicture =>
-                <a href="@trail.url" data-link-name="@linkName">
-                    <img class="card__media" src="@thumbnailPath"
-                    data-thumb-width="140"
-                    data-fullsrc="@LargeThumbnail.bestFor(mainPicture)"
-                    @LargeThumbnail.width.map{ w => data-full-width="@w" }
-                    alt=""
-                    itemprop="contentURL"
-                    />
-                </a>
-            }
-        }
     </div>
 </div>
 

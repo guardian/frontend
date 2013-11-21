@@ -1,6 +1,5 @@
 package tools
 
-import collection.immutable.LongMap
 import com.amazonaws.services.cloudwatch.model.{GetMetricStatisticsResult, Datapoint}
 import java.util.concurrent.Future
 import java.util.{UUID, Date}
@@ -35,36 +34,6 @@ trait Chart {
     s"['${point.name}', $data]"
   }
   private def dataString = dataset.map(datapointString).mkString(",")
-}
-
-case class LatencyGraph(name: String, private val metrics: Future[GetMetricStatisticsResult]) extends Chart {
-
-  lazy val labels = Seq("Time", "avg. ms")
-
-  override lazy val yAxis = Some("latency (ms)")
-
-  private lazy val datapoints = metrics.get().getDatapoints.sortBy(_.getTimestamp.getTime).toSeq
-
-  lazy val dataset = datapoints.map(d => DataPoint(
-    new DateTime(d.getTimestamp.getTime).toString("HH:mm"),
-    Seq(d.getAverage * 1000)
-    )
-  )
-}
-
-case class Request2xxGraph(name: String, private val metrics: Future[GetMetricStatisticsResult]) extends Chart {
-
-  lazy val labels = Seq("Time", "count")
-
-  override lazy val yAxis = Some("2xx requests/min")
-
-  private lazy val datapoints = metrics.get().getDatapoints.sortBy(_.getTimestamp.getTime).toSeq
-
-  lazy val dataset = datapoints.map(d => DataPoint(
-    new DateTime(d.getTimestamp.getTime).toString("HH:mm"),
-    Seq(d.getSum)
-  )
-  )
 }
 
 object PageviewsByDayGraph extends Chart with implicits.Tuples with implicits.Dates {
@@ -232,63 +201,48 @@ object ActiveUserProportionGraph extends Chart with implicits.Tuples with implic
   }
 }
 
-case class FastlyMetricGraph(
-  name: String,
-  metric: String,
-  metricResults: Future[GetMetricStatisticsResult]) extends Chart {
-
-  override lazy val labels = Seq("Time", metric)
-
-  override lazy val yAxis = Some(metric)
-
-  private lazy val datapoints = metricResults.get().getDatapoints.sortBy(_.getTimestamp.getTime).toSeq
-
-  override lazy val dataset = datapoints.map(d => DataPoint(
-    new DateTime(d.getTimestamp.getTime).toString("HH:mm"), Seq(d.getAverage))
-  )
+case class MaximumMetric(metric: Future[GetMetricStatisticsResult]) {
+  lazy val max: Double = metric.get().getDatapoints.headOption.map(_.getMaximum.doubleValue()).getOrElse(0.0)
 }
 
-case class LiveStatsGraph(metricResults: Future[GetMetricStatisticsResult]) {
-    private lazy val dataPoints = metricResults.get().getDatapoints.sortBy(_.getTimestamp.getTime).toSeq
-    lazy val dataset = dataPoints.map(d => DataPoint(
-      new DateTime(d.getTimestamp.getTime).toString("HH:mm"), Seq(d.getAverage))
-    )
-    lazy val latest = dataset.lastOption.flatMap(_.values.headOption).getOrElse(0.1)
+case class ChartFormat(colours: Seq[String], cssClass: String)
+
+object ChartFormat {
+  val SingleLineBlack = ChartFormat(colours = Seq("#000000"), cssClass = "charts")
+  val SingleLineBlue = ChartFormat(colours = Seq("#0033CC"), cssClass = "charts")
+  val SingleLineGreen = ChartFormat(colours = Seq("#00CC33"), cssClass =  "charts")
+  val SingleLineRed = ChartFormat(colours = Seq("#FF0000"), cssClass =  "charts")
+  val DoubleLineBlueRed = ChartFormat(colours = Seq("#0033CC", "#FF0000"), cssClass =  "charts")
+  val MultiLine = ChartFormat(colours = Seq("#FF6600", "#99CC33", "#CC0066", "#660099", "#0099FF"), cssClass =  "charts charts-full")
 }
 
-case class CostMetric(costMetric: Future[GetMetricStatisticsResult]) {
-  lazy val cost = costMetric.get().getDatapoints.headOption.map(_.getMaximum.toInt).getOrElse(0)
-}
+class LineChart(val name: String, val labels: Seq[String], charts: Future[GetMetricStatisticsResult]*) extends Chart {
 
-case class FastlyHitMissGraph(
-   name: String,
-   hitResults: Future[GetMetricStatisticsResult],
-   missResults: Future[GetMetricStatisticsResult]) extends Chart {
+  override lazy val dataset = {
+    val allPoints: List[List[(String, Double)]] = charts.toList.map(_.get())
+      .map(_.getDatapoints.toList.sortBy(_.getTimestamp.getTime))
+      .map((p : List[Datapoint]) => p.map(d => toLabel(d) -> toValue(d)))
 
-  override lazy val labels = Seq("'Time'", "'Hits'", "'Misses'")
-  override lazy val yAxis = None
-  override val dataset = Nil
-  override def asDataset = s"[[$labelString], $dataString]"
+    allPoints match {
+      case head :: Nil => head.map{ case (key, value) => DataPoint(key, Seq(value)) }
+      // yeah, this assumes all keys match up
+      case head :: tail => head.map{ case (key, value) => DataPoint(key, Seq(value) ++ tail.flatten.filter(_._1 == key).map(_._2)) }
+      case _ => Nil
+    }
+  }
+    
+  def toValue(dataPoint: Datapoint): Double = Option(dataPoint.getAverage).orElse(Option(dataPoint.getSum))
+      .getOrElse(throw new IllegalStateException(s"Don't know how to get a value for $dataPoint"))
 
-  private def labelString = labels.mkString(",")
-  private def dataString =  datapoints.keys.toList.sorted map { key:Long =>
-    val points = datapoints(key)
-    val data = points._1.values ++ points._2.values mkString(",")
-    s"['${points._1.name}', $data]" } mkString(",")
+  def toLabel(dataPoint: Datapoint): String = new DateTime(dataPoint.getTimestamp.getTime).toString("HH:mm")
 
-  private lazy val datapoints:LongMap[(DataPoint, DataPoint)] = {
-    val hitmap:LongMap[Datapoint] = LongMap(hitResults.get().getDatapoints.map {
-      point => (point.getTimestamp.getTime, point)
-    }.toSeq:_*)
+  lazy val hasData = dataset.nonEmpty
 
-    val missMap:LongMap[Datapoint] = LongMap(missResults.get().getDatapoints.map {
-      point => (point.getTimestamp.getTime, point)
-    }.toSeq:_*)
+  lazy val latest = dataset.lastOption.flatMap(_.values.headOption).getOrElse(0.0)
 
-    // Merge both queries into a single Map, indexed by timestamp.
-    hitmap.intersectionWith(missMap, (_, valueA:Datapoint, valueB:Datapoint) => {
-      (new DataPoint(valueA.getTimestamp, Seq[Double](valueA.getAverage)),
-       new DataPoint(valueB.getTimestamp, Seq[Double](valueB.getAverage)))
-    })
+  lazy val format = ChartFormat.SingleLineBlue
+
+  def withFormat(f: ChartFormat) = new LineChart(name, labels, charts:_*) {
+    override lazy val format = f
   }
 }

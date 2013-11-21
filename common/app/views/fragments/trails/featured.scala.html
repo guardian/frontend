@@ -16,17 +16,16 @@
 
     @trail.trailText.map { text => <div class="trail__text">@cleanTrailText(text)(Edition(request))</div> }
 
-    @trail.trailPicture.map{ mainPicture =>
-        <a href="@LinkTo{@trail.url}" class="trail__img" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | image" aria-hidden="true">
-            <img class="maxed" src="@LargeThumbnail.bestFor(mainPicture)"
-                data-force-upgrade="true"
-                data-thumb-width="@LargeThumbnail.bestFor(mainPicture)"
-                data-fullsrc="@FeaturedTrail.bestFor(mainPicture)"
-                @FeaturedTrail.width.map{w => data-full-width="@w" }
-                itemprop="contentURL"
-                alt=""
-            />
-        </a>
+    @trail.trailPicture.map{ imageContainer =>
+        @ImgSrc.imager(imageContainer).map { imgSrc =>
+            <a href="@LinkTo{@trail.url}"
+               class="trail__img item__image-container"
+               aria-hidden="true"
+               data-src="@imgSrc"
+               @if(related){itemprop="relatedLink"} data-link-name="@rowNum | image" >
+                <img class="maxed responsive-img" alt="" itemprop="contentURL" />
+            </a>
+        }
     }
 
 </@element>

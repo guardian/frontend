@@ -13,18 +13,15 @@
         </a>
     </h@headingLevel>
 
-    @if(showThumbnail) {
-        @trail.thumbnailPath.map{ thumbnailPath =>
-            <a href="@LinkTo{@trail.url}" class="trail__img" data-link-name="@rowNum | image" aria-hidden="true">
-                <img class="maxed" data-lowsrc="@thumbnailPath"
-                    data-thumb-width="140"
-                    @trail.trailPicture.map { largeCrop =>
-                        data-fullsrc="@LargeThumbnail.bestFor(largeCrop)"
-                        @LargeThumbnail.width.map{ w => data-full-width="@w" }
-                        alt=""
-                    }
-                    itemprop="contentURL"
-                />
+    @trail.trailPicture.map { imageContainer =>
+        @ImgSrc.imager(imageContainer).map{ imgSrc =>
+            <a href="@LinkTo{@trail.url}"
+               class="trail__img item__image-container"
+               data-link-name="@rowNum | image"
+               aria-hidden="true"
+               data-src="@imgSrc"
+               data-img-class="maxed">
+                <img class="maxed responsive-img" alt="" itemprop="contentURL" />
             </a>
         }
     }

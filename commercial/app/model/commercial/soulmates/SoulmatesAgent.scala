@@ -1,48 +1,42 @@
 package model.commercial.soulmates
 
-import model.commercial.AdAgent
-import scala.concurrent.Future
+import model.commercial.{Segment, AdAgent}
+import scala.util.Random
 import common.ExecutionContexts
+import scala.concurrent.Future
 
 object SoulmatesAggregatingAgent {
 
-  private val soulmatesAgents =
-    Seq(SoulmatesMixedAgent, SoulmatesMenAgent, SoulmatesWomenAgent, SoulmatesGayAgent, SoulmatesLesbianAgent)
+  private val soulmatesAgents = Seq(SoulmatesMenAgent, SoulmatesWomenAgent)
 
   def refresh() {
     soulmatesAgents foreach (_.refresh())
   }
 
-}
+  def stop() {
+    soulmatesAgents foreach (_.stop())
+  }
 
-trait SoulmatesAgent extends AdAgent[Member] with ExecutionContexts {
-
-  def getMembers: Future[Seq[Member]]
-
-  def refresh() {
-    for {
-      members <- getMembers
-    } updateCurrentAds(members)
+  def sampleMembers(segment: Segment): Seq[Member] = {
+    {
+      for {
+        man <- Random.shuffle(SoulmatesMenAgent.matchingAds(segment)).headOption
+        woman <- Random.shuffle(SoulmatesWomenAgent.matchingAds(segment)).headOption
+      } yield Random.shuffle(Seq(man, woman))
+    } getOrElse Nil
   }
 
 }
 
-object SoulmatesMixedAgent extends SoulmatesAgent {
-  def getMembers = SoulmatesApi.getMixedMembers()
+abstract class SoulmatesAgent(protected val membersLoaded: Future[Seq[Member]])
+  extends AdAgent[Member] with ExecutionContexts {
+  def refresh() {
+    for {
+      members <- membersLoaded
+    } updateCurrentAds(members)
+  }
 }
 
-object SoulmatesMenAgent extends SoulmatesAgent {
-  def getMembers = SoulmatesApi.getMenMembers()
-}
+object SoulmatesMenAgent extends SoulmatesAgent(SoulmatesApi.getMenMembers)
 
-object SoulmatesWomenAgent extends SoulmatesAgent {
-  def getMembers = SoulmatesApi.getWomenMembers()
-}
-
-object SoulmatesGayAgent extends SoulmatesAgent {
-  def getMembers = SoulmatesApi.getGayMembers()
-}
-
-object SoulmatesLesbianAgent extends SoulmatesAgent {
-  def getMembers = SoulmatesApi.getLesbianMembers()
-}
+object SoulmatesWomenAgent extends SoulmatesAgent(SoulmatesApi.getWomenMembers)

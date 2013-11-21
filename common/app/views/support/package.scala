@@ -16,6 +16,11 @@ import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import org.apache.commons.lang.StringEscapeUtils
 import conf.Switches.ShowUnsupportedEmbedsSwitch
+import model.ImageAsset
+import scala.Some
+import play.api.mvc.SimpleResult
+import model.Tag
+import model.VideoAsset
 
 sealed trait Style {
   val className: String
@@ -61,12 +66,12 @@ sealed trait Container {
   val headerLink: Boolean
 }
 
-case class MastheadContainer(val showMore: Boolean = false, val headerLink: Boolean = true) extends Container {
-  val containerType = "masthead"
-  val tone = "news"
-}
 case class NewsContainer(val showMore: Boolean = true, val headerLink: Boolean = true) extends Container {
   val containerType = "news"
+  val tone = "news"
+}
+case class SportContainer(val showMore: Boolean = true, val headerLink: Boolean = true) extends Container {
+  val containerType = "sport"
   val tone = "news"
 }
 case class CommentContainer(val showMore: Boolean = true, val headerLink: Boolean = true) extends Container {
@@ -192,6 +197,12 @@ case class VideoEmbedCleaner(contentVideos: List[VideoElement]) extends HtmlClea
 
       val mediaId = element.attr("data-media-id")
       val asset = findVideoFromId(mediaId)
+
+      // add the poster url
+      asset.flatMap(_.image).flatMap(ArticleMainPicture.bestFor).foreach{ url =>
+        element.attr("poster", url)
+      }
+
       asset.foreach( video => {
         element.append(
           s"""<object type="application/x-shockwave-flash" data="$flashMediaElement" width="620" height="350">
@@ -491,7 +502,17 @@ object VisualTone {
   )
 
 
+  // tones are all considered to be 'News' it is the default so we do not list news tones explicitly
   def apply(tags: Tags) = tags.tones.headOption.flatMap(tone => toneMappings.get(tone.id)).getOrElse(News)
 
-  // these tones are all considered to be 'News' it is the default so we do not list them explicitly
+}
+
+object RenderOtherStatus {
+  def gonePage(implicit request: RequestHeader) = model.Page(request.path, "news", "Gone", "GFE:Gone")
+  def apply(result: SimpleResult)(implicit request: RequestHeader) = result.header.status match {
+    case 404 => NoCache(NotFound)
+    case 410 if request.isJson => Cached(60)(JsonComponent(gonePage, "status" -> "GONE"))
+    case 410 => Cached(60)(Gone(views.html.expired(gonePage)))
+    case _ => result
+  }
 }

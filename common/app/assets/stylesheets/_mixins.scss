@@ -1,11 +1,41 @@
 @import "_mq";
 
-//Output based on body font-size being 10px
+// Transform a value into rem
+// Assuming baseline is set to 10px on :root/html
+@function rem($value, $baseline: 10px) {
+    @if $value == 0 { @return 0; } // 0rem -> 0
+    @if type-of($value) == list {
+        $result: ();
+        @each $e in $value {
+            $result: append($result, rem($e));
+        }
+        @return $result;
+    } @else {
+        @return if(type-of($value) == number and unit($value) == px, $value / $baseline * 1rem, $value);
+    }
+}
+
+// Output rem units with px fallback
+// Expects $properties to be a Sass map
+// Usage: see font-size mixin below
+// or http://sassmeister.com/gist/7451284
+@mixin rem($properties) {
+    @each $property, $value in $properties {
+        @if (type-of($value) == number and $value != 0) {
+            // Turn any value into pixels
+            $value: if(unitless($value), $value * 1px, $value);
+        }
+
+        #{$property}: $value;
+        #{$property}: rem($value);
+    }
+}
+
 @mixin font-size($size, $line-height: $size) {
-    font-size: $size*1px;
-    font-size: ($size / 10)*1rem;
-    line-height: $line-height*1px;
-    line-height: ($line-height / 10)*1rem;
+    @include rem((
+        font-size: $size,
+        line-height: $line-height
+    ));
 }
 
 @mixin font($family, $weight, $size, $line-height: $size) {

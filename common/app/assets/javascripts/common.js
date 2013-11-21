@@ -7,7 +7,6 @@ define([
     'lodash/functions/throttle',
     'utils/to-array',
     'utils/lazy-load-css',
-    'utils/hard-refresh',
     'utils/atob',
     'utils/request-animation-frame'
 ], function (
@@ -19,7 +18,6 @@ define([
     rateLimit,
     toArray,
     lazyLoadCss,
-    hardRefresh,
     atob,
     requestAnimationFrame
 ) {
@@ -32,7 +30,6 @@ define([
         rateLimit: rateLimit,
         toArray: toArray,
         lazyLoadCss: lazyLoadCss,
-        hardRefresh: hardRefresh,
         atob: atob,
         requestAnimationFrame: requestAnimationFrame
     };

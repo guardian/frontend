@@ -1,16 +1,4 @@
-/**
- * Dependency inject Images
- *
- * TODO: need to clean up after
- */
-var imagesUpgradeStub = sinon.stub();
-define('modules/facia/images', [], function(){
-    return {
-        upgrade: imagesUpgradeStub
-    }
-});
-
-define(['modules/facia/popular', 'bonzo', 'common', 'bean', 'helpers/fixtures', 'ajax'], function(popular, bonzo, common, bean, fixtures, ajax) {
+define(['modules/facia/popular', 'bonzo', '$', 'bean', 'helpers/fixtures', 'utils/ajax'], function(popular, bonzo, $, bean, fixtures, ajax) {
 
     describe('Popular', function() {
 
@@ -23,12 +11,7 @@ define(['modules/facia/popular', 'bonzo', 'common', 'bean', 'helpers/fixtures', 
                         webPublicationDate: {
                             timestamp: '1'
                         },
-                        mainPicture: {
-                            item: 'item.jpg',
-                            itemMain: 'item-main.jpg',
-                            itemMobile: 'item-mobile.jpg',
-                            itemMainMobile: 'item-main-mobile.jpg'
-                        }
+                        itemPicture: 'item-{width}.jpg'
                     }
                 })
             });
@@ -62,7 +45,7 @@ define(['modules/facia/popular', 'bonzo', 'common', 'bean', 'helpers/fixtures', 
             popular.render({});
 
             waitsFor(function() {
-                return common.$g('.container--popular').length;
+                return $('.container--popular').length;
             }, 'popular container to be rendered', 100);
         });
 
@@ -70,10 +53,10 @@ define(['modules/facia/popular', 'bonzo', 'common', 'bean', 'helpers/fixtures', 
             popular.render({});
 
             waitsFor(function() {
-                return common.$g('.container--popular').length;
+                return $('.container--popular').length;
             }, 'popular container to be rendered', 100);
             runs(function() {
-                expect(common.$g('.container--popular').attr('data-link-name')).toEqual('block | popular');
+                expect($('.container--popular').attr('data-link-name')).toEqual('block | popular');
             });
         });
 
@@ -81,10 +64,10 @@ define(['modules/facia/popular', 'bonzo', 'common', 'bean', 'helpers/fixtures', 
             popular.render({});
 
             waitsFor(function() {
-                return common.$g('.container--popular').length;
+                return $('.container--popular').length;
             }, 'popular container to be rendered', 100);
             runs(function() {
-                expect(common.$g('.container--popular').attr('data-type')).toEqual('popular');
+                expect($('.container--popular').attr('data-type')).toEqual('popular');
             });
         });
 
@@ -98,7 +81,7 @@ define(['modules/facia/popular', 'bonzo', 'common', 'bean', 'helpers/fixtures', 
             });
 
             waitsFor(function() {
-                return common.$g('.container--popular').length;
+                return $('.container--popular').length;
             }, 'popular container to be rendered', 100);
         });
 
@@ -106,10 +89,10 @@ define(['modules/facia/popular', 'bonzo', 'common', 'bean', 'helpers/fixtures', 
             popular.render({});
 
             waitsFor(function() {
-                return common.$g('.container--popular').length;
+                return $('.container--popular').length;
             }, 'popular container to be rendered', 100);
             runs(function() {
-                expect(imagesUpgradeStub).toHaveBeenCalledWith(document.querySelector('.container--popular .collection'));
+                expect($('.container--popular img').length).toEqual(4);
             });
         });
 
@@ -117,10 +100,10 @@ define(['modules/facia/popular', 'bonzo', 'common', 'bean', 'helpers/fixtures', 
             popular.render({});
 
             waitsFor(function() {
-                return common.$g('.container--popular').length;
+                return $('.container--popular').length;
             }, 'popular container to be rendered', 100);
             runs(function() {
-                common.$g('.timestamp__text').each(function(item) {
+                $('.timestamp__text').each(function(item) {
                     expect(bonzo(item).text()).toEqual('1 Jan 1970');
                 });
             });

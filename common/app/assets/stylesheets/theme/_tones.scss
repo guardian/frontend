@@ -1,4 +1,5 @@
-@mixin tone($tone, $colour, $accentColour) {
+// Styles for elements available for painting at initial load
+@mixin tone-head($tone, $colour, $accentColour) {
     .tone-#{$tone} {
         .tone-colour,
         &.tone-colour {
@@ -21,34 +22,23 @@
         .is-summary > .block-title {
             color: $colour;
         }
+    }
+}
 
+// Styles with global dependencies
+// or for elements which painting can be delayed
+@mixin tone-global($tone, $colour, $accentColour) {
+    .tone-#{$tone} {
         .commentcount {
             i {
                 @extend .i-comment-#{$tone};
+
                 @if $svg-support {
                     .svg & {
-                        @extend .svg-i-comment-#{$tone} !optional;
+                        @extend .svg-i-comment-#{$tone};
                     }
                 }
             }
         }
     }
 }
-
-
-/* News
-   ========================================================================== */
-
-@include tone(news, $c-newsDefault, $c-newsAccent);
-
-
-/* Comment
-   ========================================================================== */
-
-@include tone(comment, $c-commentDefault, $c-commentAccent);
-
-
-/* Feature
-   ========================================================================== */
-
-@include tone(feature, $c-featureDefault, $c-featureAccent);

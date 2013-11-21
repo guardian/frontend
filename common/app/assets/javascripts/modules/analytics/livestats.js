@@ -1,5 +1,9 @@
 /*global Event:true */
-define(['modules/cookies'], function (Cookies) {
+define([
+    'utils/cookies'
+], function (
+    Cookies
+) {
 
     var Session = function () {
         
@@ -22,7 +26,7 @@ define(['modules/cookies'], function (Cookies) {
 
         var c = config || {},
             url = config.beaconUrl,
-            path = '/px.gif',
+            path = config.beaconName || '/px.gif',
             inAlphaTest = !!Cookies.get('GU_ALPHA'),
             body = document.body,
             platform = 'responsive',

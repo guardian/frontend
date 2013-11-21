@@ -1,10 +1,9 @@
-/*global Imager:true */
 define([
     //Commmon libraries
     '$',
     'utils/mediator',
     'utils/deferToLoad',
-    'ajax',
+    'utils/ajax',
     'modules/userPrefs',
     //Vendor libraries
     'domReady',
@@ -12,36 +11,33 @@ define([
     'bean',
     'lodash/functions/debounce',
     //Modules
-    'modules/storage',
-    'modules/detect',
-    'modules/popular',
-    'modules/related',
+    'utils/storage',
+    'utils/detect',
+    'modules/onward/popular',
+    'modules/onward/related',
     'modules/router',
-    'modules/images',
+    'modules/ui/images',
     'modules/navigation/top-stories',
     'modules/navigation/profile',
     'modules/navigation/sections',
     'modules/navigation/search',
-    'modules/tabs',
-    'modules/toggles',
-    'modules/relativedates',
+    'modules/ui/tabs',
+    'modules/ui/toggles',
+    'modules/ui/relativedates',
     'modules/analytics/clickstream',
     'modules/analytics/omniture',
     'modules/adverts/adverts',
-    'modules/cookies',
+    'utils/cookies',
     'modules/analytics/omnitureMedia',
     'modules/analytics/adverts',
-    'modules/debug',
     'modules/experiments/ab',
-    'modules/swipe/swipenav',
     "modules/adverts/video",
-    "modules/discussion/commentCount",
-    "modules/lightbox-gallery",
-    "modules/swipe/ears",
-    "modules/swipe/bar",
-    "modules/facia/images",
+    "modules/discussion/comment-count",
+    "modules/gallery/lightbox",
     "modules/onward/history",
-    "modules/onward/sequence"
+    "modules/onward/sequence",
+    "modules/ui/message",
+    "modules/identity/autosignin"
 ], function (
     $,
     mediator,
@@ -59,7 +55,7 @@ define([
     popular,
     related,
     Router,
-    Images,
+    images,
     TopStories,
     Profile,
     Sections,
@@ -74,38 +70,21 @@ define([
     Cookies,
     OmnitureMedia,
     AdvertsAnalytics,
-    Debug,
     ab,
-    swipeNav,
     VideoAdvert,
     CommentCount,
     LightboxGallery,
-    ears,
-    SwipeBar,
-    faciaImages,
     History,
-    sequence
+    sequence,
+    Message,
+    AutoSignin
 ) {
 
     var modules = {
 
         upgradeImages: function () {
-            // upgrade images, and add listeners on completion
-            faciaImages.upgrade(document, faciaImages.listen);
-
-            var images = new Images();
-            mediator.on('page:common:ready', function(config, context) {
-                images.upgrade(context);
-            });
-            mediator.on('fragment:ready:images', function(context) {
-                images.upgrade(context);
-            });
-            mediator.on('modules:related:loaded', function(config, context) {
-                images.upgrade(context);
-            });
-            mediator.on('modules:images:upgrade', function() {
-                $('body').addClass('images-upgraded');
-            });
+            images.upgrade();
+            images.listen();
         },
 
         initialiseNavigation: function (config) {
@@ -127,10 +106,8 @@ define([
             search.init(header);
         },
 
-        transcludeRelated: function () {
-            mediator.on("page:common:ready", function(config, context){
-                related(config, context);
-            });
+        transcludeRelated: function (config, context) {
+            related(config, context);
         },
 
         transcludePopular: function () {
@@ -190,10 +167,8 @@ define([
             });
         },
 
-        runAbTests: function () {
-            mediator.on('page:common:ready', function(config, context) {
-                ab.run(config, context);
-            });
+        runAbTests: function (config, context) {
+            ab.run(config, context);
         },
 
         loadAnalytics: function () {
@@ -261,13 +236,11 @@ define([
 
         loadAdverts: function () {
             if (!userPrefs.isOff('adverts')){
-                
                 mediator.on('page:common:deferred:loaded', function(config, context) {
                     if (config.switches && config.switches.adverts && !config.page.blockAds) {
                         Adverts.init(config, context);
                     }
                 });
-                
                 mediator.on('modules:adverts:docwrite:loaded', function(){
                     Adverts.loadAds();
                 });
@@ -275,7 +248,6 @@ define([
                 mediator.on('window:resize', function () {
                     Adverts.hideAds();
                 });
-                
                 mediator.on('window:orientationchange', function () {
                     Adverts.hideAds();
                 });
@@ -314,60 +286,37 @@ define([
 
         // display a flash message to devices over 600px who don't have the mobile cookie
         displayReleaseMessage: function (config) {
+            
+            var path = (document.location.pathname) ? document.location.pathname : '/',
+                exitLink = '/preference/platform/desktop?page=' + encodeURIComponent(path + '?view=desktop'),
+                msg = '<p class="site-message__message">' +
+                            'You’re viewing an alpha release of the Guardian’s responsive website. <a href="/help/2013/oct/04/alpha-testing-and-evolution-of-our-mobile-site">Find out more</a>' +
+                      '</p>' +
+                      '<ul class="site-message__actions unstyled">' +
+                           '<li class="site-message__actions__item">' +
+                               '<i class="i i-comment-grey"></i>' +
+                               '<a href="http://survey.omniture.com/d1/hosted/815f9cfba1" data-link-name="feedback" target="_blank">We’d love to hear your feedback</a>' +
+                           '</li>' +
+                           '<li class="site-message__actions__item">' +
+                               '<i class="i i-back"></i>' +
+                                   '<a class="js-main-site-link" rel="nofollow" href="' + exitLink + '"' +
+                                       'data-link-name="opt-out">Opt-out and return to standard desktop site </a>' +
+                           '</li>' +
+                      '</ul>';
 
-            var alreadyOptedIn = !!userPrefs.get('releaseMessage'),
-                releaseMessage = {
-                    show: function () {
-                        $('#header').addClass('js-site-message');
-                        $('.site-message').removeClass('u-h');
-                    },
-                    hide: function () {
-                        userPrefs.set('releaseMessage', true);
-                        $('#header').removeClass('js-site-message');
-                        $('.site-message').addClass('u-h');
-                    }
-                };
+            var releaseMessage = new Message('alpha');
+            var alreadyOptedIn = !!releaseMessage.hasSeen('releaseMessage');
 
             if (config.switches.releaseMessage && !alreadyOptedIn && (detect.getBreakpoint() !== 'mobile')) {
                 // force the visitor in to the alpha release for subsequent visits
                 Cookies.add("GU_VIEW", "mobile", 365);
-
-                releaseMessage.show();
-
-                bean.on(document, 'click', '.js-site-message-close', function(e) {
-                    releaseMessage.hide();
-                });
+                releaseMessage.show(msg);
             }
         },
 
         unshackleParagraphs: function (config, context) {
             if (userPrefs.isOff('para-indents')) {
                 $('.paragraph-spacing--indents', context).removeClass('paragraph-spacing--indents');
-            }
-        },
-
-        initSwipe: function(config, contextHtml) {
-            if (config.switches.swipeNav && detect.canSwipe() && !userPrefs.isOff('swipe') || userPrefs.isOn('swipe-dev')) {
-                var swipe = swipeNav(config, contextHtml);
-
-                mediator.on('module:swipenav:navigate:next', function(){ swipe.gotoNext(); });
-                mediator.on('module:swipenav:navigate:prev', function(){ swipe.gotoPrev(); });
-            } else {
-                delete this.contextHtml;
-                return;
-            }
-            if (config.switches.swipeNav && detect.canSwipe()) {
-                bonzo(document.body).addClass('can-swipe');
-                mediator.on('module:clickstream:click', function(clickSpec){
-                    if (clickSpec.tag.indexOf('switch-swipe-on') > -1) {
-                        userPrefs.switchOn('swipe');
-                        window.location.reload();
-                    }
-                    else if (clickSpec.tag.indexOf('switch-swipe-off') > -1) {
-                        userPrefs.switchOff('swipe');
-                        window.location.reload();
-                    }
-                });
             }
         },
 
@@ -386,10 +335,17 @@ define([
             });
         },
 
+        initAutoSignin : function() {
+           mediator.on('page:common:ready', function(config) {
+                if (config.switches && config.switches.facebookAutosignin && detect.getLayoutMode() !== 'mobile') {
+                    new AutoSignin(config).init();
+                }
+            });
+        },
+
         windowEventListeners: function() {
             var events = {
                     resize: 'window:resize',
-                    scroll: 'window:scroll',
                     orientationchange: 'window:orientationchange'
                 },
                 emitEvent = function(eventName) {
@@ -423,27 +379,31 @@ define([
     var ready = function (config, context, contextHtml) {
         if (!this.initialised) {
             this.initialised = true;
+
+            mediator.on("page:common:ready", function(config, context){
+                modules.runAbTests(config, context);
+                modules.transcludeRelated(config, context);
+            });
+
             modules.windowEventListeners();
             modules.upgradeImages();
             modules.showTabs();
             modules.initialiseNavigation(config);
             modules.showToggles();
-            modules.runAbTests();
             modules.showRelativeDates();
-            modules.transcludeRelated();
             modules.transcludePopular();
             modules.loadVideoAdverts(config);
             modules.initClickstream();
             if (config.switches.analyticsOnDomReady) {
                 modules.loadAnalytics();
             }
-            modules.initSwipe(config, contextHtml);
             modules.transcludeCommentCounts();
             modules.initLightboxGalleries();
             modules.optIn();
             modules.displayReleaseMessage(config);
             modules.logReadingHistory();
             modules.unshackleParagraphs(config, context);
+            modules.initAutoSignin(config);
         }
         mediator.emit("page:common:ready", config, context);
     };

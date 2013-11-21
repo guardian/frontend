@@ -1,4 +1,4 @@
-define(['common','ajax', 'bean', 'bonzo', 'modules/trailblock-show-more', 'fixtures/trails'], function(common, ajax, bean, bonzo, TrailblockShowMore, testData) {
+define(['common','utils/ajax', 'bean', 'bonzo', 'modules/ui/trailblock-show-more', 'fixtures/trails'], function(common, ajax, bean, bonzo, TrailblockShowMore, testData) {
 
     describe("TrailblockShowMore", function() {
 

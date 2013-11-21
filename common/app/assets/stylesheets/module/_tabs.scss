@@ -59,6 +59,10 @@
             padding: $baseline $gs-gutter/2 0;
         }
     }
+    & + & a {
+        border-left: 1px solid rgba(255, 255, 255, 0.5);
+        padding-left: 7px;
+    }
 }
 
 .tabs__content {
@@ -75,12 +79,15 @@
 }
 
 .tabs__tab--selected {
+    @include mq(tablet) {
+        border-bottom-color: #ffffff !important;
+    }
     a {
         background: #ffffff;
     }
-
-    @include mq(tablet) {
-        border-bottom-color: #ffffff !important;
+    & + .tabs__tab a {
+        border-left: 0;
+        padding-left: 8px;
     }
 }
 
@@ -89,6 +96,7 @@
  * used for cases where more than 2 tabs are wanted (eg not two 50% width tabs)
  *
    ========================================================================== */
+
 .tabs__continer--multiple {
     display: table;
     table-layout: fixed;
@@ -100,10 +108,6 @@
         display: table-cell;
         width: auto;
         float: none;
-
-        &:first-child {
-            border-left: none;
-        }
     }
 }
 

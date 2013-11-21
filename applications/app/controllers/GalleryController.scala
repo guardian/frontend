@@ -4,6 +4,7 @@ import common._
 import conf._
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
+import views.support.RenderOtherStatus
 
 case class GalleryPage(
   gallery: Gallery,
@@ -19,9 +20,9 @@ object GalleryController extends Controller with Logging with ExecutionContexts 
     val isTrail = request.getQueryString("trail") map (_.toBoolean) getOrElse false
 
     lookup(path, index, isTrail) map {
-      case Left(model) if model.gallery.isExpired => Gone(views.html.expired(model.gallery))
+      case Left(model) if model.gallery.isExpired => RenderOtherStatus(Gone) // TODO - delete this line after switching to new content api
       case Left(model) => renderGallery(model)
-      case Right(notFound) => notFound
+      case Right(other) => RenderOtherStatus(other)
     }
   }
 
@@ -30,9 +31,9 @@ object GalleryController extends Controller with Logging with ExecutionContexts 
     val isTrail = request.getQueryString("trail") map (_.toBoolean) getOrElse false
 
     lookup(path, index, isTrail) map {
-      case Left(model) if model.gallery.isExpired => Gone(views.html.expired(model.gallery))
+      case Left(model) if model.gallery.isExpired => RenderOtherStatus(Gone) // TODO - delete this line after switching to new content api
       case Left(model) => renderLightboxGallery(model)
-      case Right(notFound) => notFound
+      case Right(other) => RenderOtherStatus(other)
     }
   }
 

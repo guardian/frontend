@@ -1,7 +1,30 @@
-@(content: model.Content)(implicit request: RequestHeader)
+@(page: model.Page)(implicit request: RequestHeader)
 
-@main(content, Switches.all){ }{
-	
-	@fragments.expiredBody(content)
-	
+@main(page){ }{
+   <h2 class="article-zone left-col-deport tone-news tone-accent-border">
+        <span class="left-col-deport__body">
+            Gone
+        </span>
+    </h2>
+    <div class="article-wrapper monocolumn-wrapper tone-news">
+        <article id="article" class="article" itemprop="mainContentOfPage" role="main">
+            <div class="article__inner article__inner--head">
+            </div>
+            <div class="article__columning-wrapper">
+                <div class="article__main-column">
+                    <div class="js-article__container article__container u-cf">
+                        <div class="article-body from-content-api" itemprop="articleBody">
+                            <div class="from-content-api">
+                                <p>This page has been removed.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="article__secondary-column" aria-hidden="true"></div>
+            </div>
+            <div class="article__inner">
+            @fragments.mostPopularPlaceholder("/")
+            </div>
+        </article>
+    </div>
 }

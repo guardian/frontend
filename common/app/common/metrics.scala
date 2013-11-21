@@ -50,6 +50,31 @@ object SystemMetrics extends implicits.Numbers {
     () => ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getUsed / 1048576
   )
 
+  //  http://docs.oracle.com/javase/6/docs/api/java/lang/management/OperatingSystemMXBean.html()
+  object LoadAverageMetric extends GaugeMetric("system", "load-average", "Load average", "Load average",
+    () => ManagementFactory.getOperatingSystemMXBean.getSystemLoadAverage
+  )
+
+  object AvailableProcessorsMetric extends GaugeMetric("system", "available-processors", "Available processors", "Available processors",
+    () => ManagementFactory.getOperatingSystemMXBean.getAvailableProcessors
+  )
+
+  // yeah, casting to com.sun.. ain't too pretty
+  object TotalPhysicalMemoryMetric extends GaugeMetric("system", "total-physical-memory", "Total physical memory", "Total physical memory",
+    () => ManagementFactory.getOperatingSystemMXBean match {
+      case b: com.sun.management.OperatingSystemMXBean => b.getTotalPhysicalMemorySize
+      case _ => -1
+    }
+  )
+
+  object FreePhysicalMemoryMetric extends GaugeMetric("system", "free-physical-memory", "Free physical memory", "Free physical memory",
+    () => ManagementFactory.getOperatingSystemMXBean match {
+      case b: com.sun.management.OperatingSystemMXBean => b.getFreePhysicalMemorySize
+      case _ => -1
+    }
+  )
+
+
   private lazy val buildNumber = ManifestData.build match {
     case string if string.isInt => string.toInt
     case _ => -1 // dev machines do not have a build number
@@ -60,7 +85,9 @@ object SystemMetrics extends implicits.Numbers {
   )
 
   val all = Seq(MaxHeapMemoryMetric, UsedHeapMemoryMetric,
-    MaxNonHeapMemoryMetric, UsedNonHeapMemoryMetric, BuildNumberMetric)
+    MaxNonHeapMemoryMetric, UsedNonHeapMemoryMetric, BuildNumberMetric, LoadAverageMetric, AvailableProcessorsMetric,
+    TotalPhysicalMemoryMetric, FreePhysicalMemoryMetric
+  )
 }
 
 object ContentApiMetrics {
@@ -197,6 +224,56 @@ object FaciaToolMetrics {
   )
 }
 
+object CommercialMetrics {
+
+  object TravelOffersLoadTimingMetric extends TimingMetric(
+    "commercial",
+    "commercial-travel-offers-load",
+    "Commercial Travel Offers load timing",
+    "Time spent running travel offers data load jobs",
+    None
+  ) with TimingMetricLogging
+
+  object MasterClassesLoadTimingMetric extends TimingMetric(
+    "commercial",
+    "commercial-masterclasses-load",
+    "Commercial MasterClasses load timing",
+    "Time spent running MasterClasses load jobs",
+    None
+  ) with TimingMetricLogging
+
+  object JobsLoadTimingMetric extends TimingMetric(
+    "commercial",
+    "commercial-jobs-load",
+    "Commercial Jobs load timing",
+    "Time spent running job ad data load jobs",
+    None
+  ) with TimingMetricLogging
+
+  object SoulmatesLoadTimingMetric extends TimingMetric(
+    "commercial",
+    "commercial-soulmates-load",
+    "Commercial Soulmates load timing",
+    "Time spent running soulmates ad data load jobs",
+    None
+  ) with TimingMetricLogging
+
+  val all: Seq[Metric] = Seq(TravelOffersLoadTimingMetric, JobsLoadTimingMetric, MasterClassesLoadTimingMetric, SoulmatesLoadTimingMetric)
+}
+
+object OnwardMetrics {
+  object OnwardLoadTimingMetric extends TimingMetric(
+    "onward",
+    "onward-most-popular-load",
+    "Onward Journey load timing",
+    "Time spent running onward journey data load jobs",
+    None
+  ) with TimingMetricLogging
+
+  val all: Seq[Metric] = Seq(OnwardLoadTimingMetric)
+}
+
+
 object Metrics {
   lazy val common = RequestMeasurementMetrics.asMetrics ++ SystemMetrics.all
 
@@ -217,7 +294,16 @@ trait CloudWatchApplicationMetrics extends GlobalSettings {
 
     val metrics = Map(
       s"$applicationName-max-heap-memory" -> SystemMetrics.MaxHeapMemoryMetric.getValue().toDouble,
-      s"$applicationName-used-heap-memory" -> SystemMetrics.UsedHeapMemoryMetric.getValue().toDouble
+      s"$applicationName-used-heap-memory" -> SystemMetrics.UsedHeapMemoryMetric.getValue().toDouble,
+
+      s"$applicationName-total-physical-memory" -> SystemMetrics.TotalPhysicalMemoryMetric.getValue().toDouble,
+      s"$applicationName-free-physical-memory" -> SystemMetrics.FreePhysicalMemoryMetric.getValue().toDouble,
+
+      s"$applicationName-available-processors" -> SystemMetrics.AvailableProcessorsMetric.getValue().toDouble,
+
+      s"$applicationName-load-average" -> SystemMetrics.LoadAverageMetric.getValue().toDouble,
+
+      s"$applicationName-build-number" -> SystemMetrics.BuildNumberMetric.getValue().toDouble
     )
 
     CloudWatch.put("ApplicationSystemMetrics", metrics)

@@ -18,9 +18,7 @@
    ========================================================================== */
 
 #header.js-site-message {
-    @include mq(tablet) {
-        top: auto
-    }
+    top: auto
 }
 
 #header {

@@ -41,6 +41,10 @@
 .trail h2 a {
     color: $c-neutral1;
 }
+.trail__headline a:visited,
+.trail h2 a:visited {
+    color: $c-neutral2;
+}
 .trail__headline a:active {
     text-decoration: underline;
 }
@@ -51,7 +55,7 @@
 .trail__img {
     display: none;
 
-    .images-upgraded & {
+    .connection--not-low & {
         display: block;
     }
 }
@@ -101,6 +105,7 @@
     a:focus,
     a:active {
         color: inherit;
+        line-height: inherit;
     }
 }
 .trail__count--imagecount {
