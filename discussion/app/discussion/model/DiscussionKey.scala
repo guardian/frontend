@@ -8,7 +8,7 @@ case class DiscussionKey(val keyAsString: String) {
   override def toString(): String = keyAsString
 }
 
-// For binding to DiscussionKey in the routes file
+// Used by the PlayFramework to bind DiscussionKey in the routes file
 object DiscussionKey {
   implicit def pathBinder(implicit stringBinder: PathBindable[String]) = new PathBindable[DiscussionKey] {
     override def bind(key: String, value: String): Either[String, DiscussionKey] = {
