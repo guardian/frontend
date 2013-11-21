@@ -4,7 +4,9 @@ import common._
 
 object DiagnosticsLoadJob extends Logging {
   def run() {
+
     log.info("Loading diagnostics data in to CloudWatch")
+    
     CloudWatch.put( "Diagnostics", Metric.averages ++ Map(
                     ("views.desktop", DesktopView.count),
                     ("viewsOverSessions.desktop", DesktopView.count / DesktopSession.count),
@@ -22,6 +24,8 @@ object DiagnosticsLoadJob extends Logging {
     ResponsiveSession.reset()
     DesktopView.reset()
     DesktopSession.reset()
+    Top.reset()
+    Bottom.reset()
   }
 
 }
