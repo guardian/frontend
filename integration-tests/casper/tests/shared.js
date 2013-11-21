@@ -6,6 +6,13 @@ host = {
     prod:   'http://www.theguardian.com/'
 }[environment];
 
+viewports = {
+	mobile:  {width: 320, height: 480},
+	tablet:  {width: 768, height: 1024}
+	desktop: {width: 1024, height: 768}
+	wide:    {width: 1366, height: 768}
+};
+
 casper.echo('Running tests against ' + environment + ' environment');
 casper.echo('Environment host is ' + host);
 

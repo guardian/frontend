@@ -57,7 +57,7 @@ casper.test.begin("Display embedded tweet", function(test) {
 
 casper.test.begin("Display latest summary before events on small viewports", function(test) {
     if (casper.exists('.js-article__summary')) {
-        casper.viewport(320, 480);
+        casper.viewport(viewports.mobile.width, viewports.mobile.height);
         test.assertNotVisible(
             '[data-link-name="summary after content"]',
             "RHS summary block not visible on small viewports"
@@ -66,6 +66,7 @@ casper.test.begin("Display latest summary before events on small viewports", fun
             '[data-link-name="summary before content"]',
             "Inline summary block visible on small viewports"
         );
+        casper.capture('live-mobile.png');
         test.done();
     } else {
         casper.capture('live-blog-summary-1-fail.png');
@@ -75,7 +76,7 @@ casper.test.begin("Display latest summary before events on small viewports", fun
 
 casper.test.begin("Display latest summary on the right side of article on wide viewports", function(test) {
     if (casper.exists('.js-article__summary')) {
-        casper.viewport(1024, 768);
+        casper.viewport(viewports.desktop.width, viewports.desktop.height);
         test.assertVisible(
             '[data-link-name="summary after content"]',
             "RHS summary block visible on wide viewports"
@@ -84,6 +85,7 @@ casper.test.begin("Display latest summary on the right side of article on wide v
             '[data-link-name="summary before content"]',
             "Inline summary block not visible on wide viewports"
         );
+        casper.capture('live-desktop.png');
         test.done();
     } else {
         casper.capture('live-blog-summary-2-fail.png');

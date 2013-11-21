@@ -13,7 +13,6 @@ casper.test.setUp(function() {
 
 casper.test.begin("Display gallery contact sheet", function(test) {
     casper.then(function testGalleryThumbs() {
-        casper.viewport(1024, 768);
         casper.waitForSelector('.gallery-page .gallerythumbs', function() {
             test.assertVisible('.gallery-page .gallerythumbs', 'Thumbnails are visible');
             test.assertEvalEquals(function() {
