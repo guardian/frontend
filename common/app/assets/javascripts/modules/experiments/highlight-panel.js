@@ -36,7 +36,7 @@ define([
             new Item(item).render(container);
         });
         this.bindListeners();
-        //this.setState('is-hidden');
+        this.setState('is-hidden');
     };
 
     HighlightPanel.prototype.bindListeners = function() {
@@ -44,9 +44,13 @@ define([
             pos;
 
         this.mediator.on('window:scroll', function(e) {
-            if(pos > bonzo(document.body).scrollTop()) {
-                self.setState();
+            var scrollTop = bonzo(document.body).scrollTop();
+            if(pos > scrollTop) {
+                self.setState('is-open');
+            } else {
+                self.removeState('is-open');
             }
+            pos = scrollTop;
         }) ;
     };
 

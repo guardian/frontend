@@ -4,10 +4,18 @@
     width: 100%;
     background-color: $c-neutral6;
     height: gs-height(3);
+
+    @include transition(-webkit-transform 0.3s ease-out);
+    @include transition(-moz-transform 0.3s ease-out);
+    @include transition(-o-transform 0.3s ease-out);
+    @include transition(-ms-transform 0.3s ease-out);
+    @include transition(transform 0.3s ease-out);
+
+    @include transform(translateY(132px));
 }
 
-.highlight-panel--is-hidden {
-    display: none;
+.highlight-panel--is-open {
+    @include transform(translateX(0));
 }
 
 .highlight-panel__title {
