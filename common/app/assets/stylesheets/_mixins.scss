@@ -144,6 +144,7 @@
 @mixin transform($args) {
     -webkit-transform: $args;
     -moz-transform: $args;
+    -o-transform: $args;
     -ms-transform: $args;
     transform: $args;
 }
@@ -173,13 +174,13 @@
     border-radius: $radius;
 }
 
-@mixin box-shadow($args) {
+@mixin box-shadow($args...) {
     -webkit-box-shadow: $args;
     -moz-box-shadow: $args;
     box-shadow: $args;
 }
 
-@mixin background-size($args) {
+@mixin background-size($args... ) {
     -webkit-background-size: $args;
     -moz-background-size: $args;
     background-size: $args;
