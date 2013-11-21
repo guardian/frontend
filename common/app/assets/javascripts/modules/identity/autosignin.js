@@ -12,7 +12,6 @@ define([
 ],
 function(
     ajax,
-    bean,
     bonzo,
     common,
     Id,
