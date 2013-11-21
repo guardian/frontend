@@ -28,7 +28,9 @@ trait Http extends Logging {
     }
   }
 
-  protected def GET(url: String, headers: (String, String)*): Future[Response] =
+  protected def GET(url: String, headers: (String, String)*): Future[Response] = {
+    log.debug(s"GET $url")
     WS.url(url).withHeaders(headers: _*).withRequestTimeout(2000).get()
+  }
 
 }
