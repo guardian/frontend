@@ -1,0 +1,47 @@
+.highlight-panel {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: $c-neutral6;
+    height: gs-height(4);
+}
+
+.highlight-panel--is-hidden {
+    display: none;
+}
+
+.highlight-panel__title {
+    float: left;
+    width: 20%;
+    margin-top: $baseline*3;
+    @include fs-header(3);
+    @include box-sizing(border-box);
+}
+
+.highlight-panel__items {
+    float: left;
+    width: 65%;
+    margin-left: 5%;
+}
+
+.highlight-item {
+    width: 33.3%;
+    padding: $baseline*3 $gs-gutter;
+    border-right: 1px dotted $c-neutral4;
+}
+
+.highlight-item:last-child {
+    border-right: none;
+}
+
+.highlight-item__img {
+    float: left;
+    width: 30%;
+    margin-right: $gs-gutter;
+}
+
+.highlight-item__headline {
+    @include fs-headline(2);
+}
+
+

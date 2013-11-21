@@ -19,6 +19,7 @@ define([
     Component.define(HighlightPanel);
 
     HighlightPanel.CONFIG = {
+        maxTrails: 3,
         templateName: 'highlight-panel',
         componentClass: 'highlight-panel',
         classes: {
@@ -29,7 +30,7 @@ define([
 
     HighlightPanel.prototype.prerender = function() {
         var container = this.getElem(this.conf().classes.items);
-        this.data.forEach(function(item) {
+        this.data.slice(0, this.conf().maxTrails).forEach(function(item) {
             new Item(item).render(container);
         });
         this.setState('is-hidden');
