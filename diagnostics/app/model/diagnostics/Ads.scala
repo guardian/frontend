@@ -4,6 +4,7 @@ import common._
 import conf._
 import model.diagnostics._
 import play.api.mvc.{ Content => _, _ }
+import conf.Switches._
 
 object Ads extends Logging {
 
@@ -13,7 +14,11 @@ object Ads extends Logging {
   }
 
   def report(queryString: Map[String, Seq[String]]) {
-      
+    
+    if (AdDwellTimeLoggerSwitch.isSwitchedOn) {
+      log.info(s"${queryString}")
+    }
+
     val params = queryString.map { case (k,v) => k -> v.mkString }
     
     safeStringToInt(params.get("Top")) match {
