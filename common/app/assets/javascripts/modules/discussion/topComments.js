@@ -98,7 +98,7 @@ TopComments.prototype.fetch = function(parent) {
         crossOrigin: true
     }).then(
         function render(resp) {
-
+            // Success: Render Top or Regular comments
             if (resp.commentCount > 0 && self.topCommentsSwitch) {
                 
                 // Render Top Comments
@@ -120,6 +120,11 @@ TopComments.prototype.fetch = function(parent) {
                 // Render Regular Comments
                 self.mediator.emit("module:topcomments:loadcomments", { amount: 2, showLoader: true });
             }
+        },
+        function () {
+            // Error: Render Regular Comments
+            $('.discussion__comments--top-comments').remove();
+            self.mediator.emit("module:topcomments:loadcomments", { amount: 2, showLoader: true });
         }
     );
 };
