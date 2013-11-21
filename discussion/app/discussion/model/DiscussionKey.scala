@@ -2,7 +2,9 @@ package discussion.model
 
 import play.api.mvc.PathBindable
 
-case class DiscussionKey(val keyAsString: String)
+case class DiscussionKey(val keyAsString: String){
+  require(keyAsString != null && keyAsString.matches("/p/[\\d\\w]*"), "Invalid discussion key")
+}
 
 // For binding to DiscussionKey in the routes file
 object DiscussionKey {
