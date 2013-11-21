@@ -22,14 +22,6 @@ object Seg {
   }
 }
 
-object CollectionCache {
-  private val collectionCache = AkkaAgent[Map[String, Collection]](Map.empty)
-
-  def getCollection(id: String): Option[Collection] = collectionCache.get().get(id)
-
-  def updateCollection(id: String, collection: Collection): Unit = collectionCache.send { _.updated(id, collection) }
-}
-
 trait ParseConfig extends ExecutionContexts with Logging {
 
   def requestConfig(id: String): Future[Response] = {
@@ -67,8 +59,6 @@ trait ParseConfig extends ExecutionContexts with Logging {
 
 trait ParseCollection extends ExecutionContexts with Logging {
 
-  val collectionCache = AkkaAgent[Map[String, Collection]](Map.empty)
-
   case class CollectionItem(id: String, metaData: Option[Map[String, String]])
 
   def requestCollection(id: String): Future[Response] = {
@@ -77,18 +67,14 @@ trait ParseCollection extends ExecutionContexts with Logging {
     WS.url(collectionUrl).withRequestTimeout(2000).get()
   }
 
-  def updateCollection(id: String, config: Config, edition: Edition, isWarmedUp: Boolean): Unit = {
+  def getCollection(id: String, config: Config, edition: Edition, isWarmedUp: Boolean): Future[Collection] = {
     // get the running order from the apiwith
     val response = requestCollection(id)
     for {
       collectionList <- getCuratedList(response, edition, id, isWarmedUp)
       displayName    <- parseDisplayName(response).fallbackTo(Future.successful(None))
       contentApiList <- executeContentApiQuery(config.contentApiQuery, edition)
-    }
-    {
-      val collection = Collection(collectionList ++ contentApiList, displayName)
-      CollectionCache.updateCollection(id, collection)
-    }
+    } yield Collection(collectionList ++ contentApiList, displayName)
   }
 
   def getCuratedList(response: Future[Response], edition: Edition, id: String, isWarmedUp: Boolean): Future[List[Content]] = {
@@ -183,27 +169,34 @@ trait ParseCollection extends ExecutionContexts with Logging {
 
 }
 
-class Query(id: String, edition: Edition) extends ParseConfig with ParseCollection with Logging {
+object CollectionCache extends ParseCollection {
+  private val collectionCache = AkkaAgent[Map[String, Collection]](Map.empty)
+
+  def getCollection(id: String): Option[Collection] = collectionCache.get().get(id)
+
+  def updateCollection(id: String, config: Config, edition: Edition, isWarmedUp: Boolean): Unit = {
+    getCollection(id, config, edition, isWarmedUp) map { collection => updateCollection(id, collection) }
+  }
+
+  def updateCollection(id: String, collection: Collection): Unit = collectionCache.send { _.updated(id, collection) }
+
+}
+
+class Query(id: String, edition: Edition) extends ParseConfig with Logging {
   val queryAgent = AkkaAgent[Option[List[Config]]](Option(List(FaciaDefaults.configTuple(id))))
 
-  def getItems: Future[List[Config]] = {
-    val futureConfig = getConfig(id) fallbackTo {
+  def getItems: Future[List[Config]] =
+    getConfig(id) fallbackTo {
       log.warn("Error getting config from S3: %s".format(id))
       val result: List[Config] = queryAgent().getOrElse(Nil)
       Future.successful(result)
     }
 
-    futureConfig map {config =>
-      val isWarmedUp = items.isDefined
-      config map {c => c -> updateCollection(c.id, c, edition, isWarmedUp)}
-    }
-
-    futureConfig
-  }
-
   def refresh(): Unit =
     getItems map { newConfigList =>
       queryAgent send Some(newConfigList)
+      val isWarmedUp = items.isDefined
+      newConfigList map {c => c -> CollectionCache.updateCollection(c.id, c, edition, isWarmedUp)}
     }
 
 
