@@ -85,11 +85,12 @@ Loader.prototype.canComment = false;
  * 3. render comment bar
  */
 Loader.prototype.ready = function() {
-    var topLoadingElem = bonzo.create('<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>')[0],
-        topCommentsElem = this.getElem('topComments'),
+    var topCommentsElem = this.getElem('topComments'),
         self = this;
 
-    bonzo(topLoadingElem).insertAfter(topCommentsElem);
+    self.topLoadingElem = bonzo.create('<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>')[0];
+
+    bonzo(self.topLoadingElem).insertAfter(topCommentsElem);
 
     this.on('user:loaded', function(user) {
 
@@ -103,7 +104,7 @@ Loader.prototype.ready = function() {
         self.topComments
             .fetch(topCommentsElem)
             .then(function appendTopComments() {
-                bonzo(topLoadingElem).addClass('u-h');
+                bonzo(self.topLoadingElem).addClass('u-h');
                 self.on('click', $(self.topComments.showMoreButton), self.topComments.showMore.bind(self.topComments)); // Module-hopping calls - refactor needed
             });
 
@@ -131,7 +132,8 @@ Loader.prototype.loadComments = function (args) {
         // Comments are being loaded in the no-top-comments-available context
         bonzo(commentsContainer).removeClass('u-h');
     }
-   
+
+    bonzo(self.topLoadingElem).addClass('u-h');
     bonzo(loadingElem).insertAfter(commentsElem);
 
     this.comments = new Comments(this.context, this.mediator, {
