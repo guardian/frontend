@@ -1,5 +1,6 @@
 define(['component'], function(component) {
 
-return component;
+    return component;
 
 }); // define
+

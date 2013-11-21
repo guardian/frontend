@@ -7,7 +7,9 @@ define([
     'modules/identity/api',
     'modules/discussion/api',
     'modules/discussion/comments',
-    'modules/discussion/comment-box'
+    'modules/discussion/topComments',
+    'modules/discussion/comment-box',
+    '$'
 ], function(
     ajax,
     bonzo,
@@ -17,7 +19,9 @@ define([
     Id,
     DiscussionApi,
     Comments,
-    CommentBox
+    TopComments,
+    CommentBox,
+    $
 ) {
 
 /**
@@ -32,10 +36,11 @@ define([
  * @param {Object} mediator
  * @param {Object=} options
  */
-var Loader = function(context, mediator, options) {
+var Loader = function(context, mediator, options, topCommentsSwitch) {
     this.context = context || document;
     this.mediator = mediator;
     this.setOptions(options);
+    this.topCommentsSwitch = topCommentsSwitch; // Pass through topComments switch
 };
 Component.define(Loader);
 
@@ -46,10 +51,12 @@ Loader.prototype.context = null;
 Loader.CONFIG = {
     componentClass: 'discussion',
     classes: {
+        commentsContainer: 'discussion__comments__container',
         comments: 'discussion__comments',
         commentBox: 'discussion__comment-box',
         commentBoxBottom: 'discussion__comment-box--bottom',
-        show: 'd-show-cta'
+        joinDiscussion: 'd-show-cta',
+        topComments: 'discussion__comments--top-comments'
     }
 };
 
@@ -78,39 +85,82 @@ Loader.prototype.canComment = false;
  * 3. render comment bar
  */
 Loader.prototype.ready = function() {
-    var id = this.getDiscussionId(),
-        loadingElem = bonzo.create('<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>')[0],
-        commentsElem = this.getElem('comments'),
+    var topLoadingElem = bonzo.create('<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>')[0],
+        topCommentsElem = this.getElem('topComments'),
         self = this;
 
-    bonzo(loadingElem).insertAfter(commentsElem);
+    bonzo(topLoadingElem).insertAfter(topCommentsElem);
 
     this.on('user:loaded', function(user) {
-        var self = this;
 
-        this.comments = new Comments(this.context, this.mediator, {
-            initialShow: 2,
-            discussionId: this.getDiscussionId(),
-            user: this.user
-        });
+        // Top comments =========================================== //
 
-        // Doing this makes sure there is only one redraw
-        // Within comments there is adding of reply buttons etc
-        bonzo(commentsElem).addClass('u-h');
-        this.comments
-            .fetch(commentsElem)
-            .then(function killLoadingMessage() {
-                bonzo(loadingElem).remove();
-                self.renderCommentBar(user);
-                bonzo(commentsElem).removeClass('u-h');
+        self.topComments = new TopComments(self.context, self.mediator, {
+            discussionId: self.getDiscussionId(),
+            user: self.user
+        }, self.topCommentsSwitch);
+
+        self.topComments
+            .fetch(topCommentsElem)
+            .then(function appendTopComments() {
+                bonzo(topLoadingElem).addClass('u-h');
+                self.on('click', $(self.topComments.showMoreButton), self.topComments.showMore.bind(self.topComments)); // Module-hopping calls - refactor needed
             });
+
+        self.mediator.on("module:topcomments:loadcomments", self.loadComments.bind(self));
+
+        // !Top comments ========================================== //
+
     });
     this.getUser();
 
     this.renderCommentCount();
 
-    bonzo(this.getElem('show')).remove();
     DiscussionAnalytics.init();
+};
+
+Loader.prototype.loadComments = function (args) {
+
+    var self = this;
+
+    var commentsContainer   = this.getElem('commentsContainer'),
+        commentsElem        = this.getElem('comments'),
+        loadingElem         = bonzo.create('<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>')[0];
+
+    if (args.showLoader) {
+        // Comments are being loaded in the no-top-comments-available context
+        bonzo(commentsContainer).removeClass('u-h');
+    }
+   
+    bonzo(loadingElem).insertAfter(commentsElem);
+
+    this.comments = new Comments(this.context, this.mediator, {
+        initialShow: args.amount,
+        discussionId: this.getDiscussionId(),
+        user: this.user
+    });
+
+    // Doing this makes sure there is only one redraw
+    // Within comments there is adding of reply buttons etc
+    this.comments
+        .fetch(commentsElem)
+        .then(function killLoadingMessage() {
+            bonzo(loadingElem).remove();
+            self.renderCommentBar(self.user);
+            bonzo(self.comments.getElem('showMore')).addClass("u-h");
+
+            if (args.showLoader) {
+                // Comments are being loaded in the no-top-comments-available context
+                bonzo(self.getElem('joinDiscussion')).remove();
+                bonzo([self.comments.getElem('showMore'), self.comments.getElem('header')]).removeClass("u-h");
+            }
+
+            self.on("click", self.getElem('joinDiscussion'), function (event) {
+                self.comments.showMore(event);
+                self.cleanUpOnShowComments();
+            });
+            bonzo(commentsContainer).removeClass('u-h');
+        });
 };
 
 /** @return {Reqwest|null} */
@@ -187,9 +237,28 @@ Loader.prototype.renderCommentBox = function() {
             premod: this.user.privateFields.isPremoderated
         });
         this.commentBox.render(this.getElem('commentBox'));
-        this.commentBox.on('post:success', this.comments.addComment.bind(this.comments));
+        this.commentBox.on('post:success', this.commentPosted.bind(this));
         this.canComment = true;
     }
+};
+
+/* Logic determining if extra comments should be shown along with the posted comment to ensure context */
+Loader.prototype.commentPosted = function () {
+    this.comments.addComment.apply(this.comments, arguments);
+
+    // Should more comments be shown?
+    if (!this.firstComment) {
+        this.firstComment = true;
+        this.comments.showMore();
+        this.cleanUpOnShowComments();
+    }
+
+};
+
+/* Configure DOM for viewing of comments once some have been shown */
+Loader.prototype.cleanUpOnShowComments = function () {
+    bonzo([this.comments.getElem('showMore'), this.comments.getElem('header')]).removeClass("u-h");
+    bonzo(this.getElem('joinDiscussion')).remove();
 };
 
 Loader.prototype.renderUserBanned = function() {
