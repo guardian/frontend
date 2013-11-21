@@ -16,6 +16,11 @@ import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import org.apache.commons.lang.StringEscapeUtils
 import conf.Switches.ShowUnsupportedEmbedsSwitch
+import model.ImageAsset
+import scala.Some
+import play.api.mvc.SimpleResult
+import model.Tag
+import model.VideoAsset
 
 sealed trait Style {
   val className: String
@@ -497,7 +502,17 @@ object VisualTone {
   )
 
 
+  // tones are all considered to be 'News' it is the default so we do not list news tones explicitly
   def apply(tags: Tags) = tags.tones.headOption.flatMap(tone => toneMappings.get(tone.id)).getOrElse(News)
 
-  // these tones are all considered to be 'News' it is the default so we do not list them explicitly
+}
+
+object RenderOtherStatus {
+  def gonePage(implicit request: RequestHeader) = model.Page(request.path, "news", "Gone", "GFE:Gone")
+  def apply(result: SimpleResult)(implicit request: RequestHeader) = result.header.status match {
+    case 404 => NoCache(NotFound)
+    case 410 if request.isJson => Cached(60)(JsonComponent(gonePage, "status" -> "GONE"))
+    case 410 => Cached(60)(Gone(views.html.expired(gonePage)))
+    case _ => result
+  }
 }

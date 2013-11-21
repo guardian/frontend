@@ -17,23 +17,30 @@ requirejs.config({
     // Karma serves files from '/base'
     baseUrl: '/base/common/app/assets/javascripts',
     paths: {
-        'spec': specUrl,
-        'fixtures': '/base/common/test/assets/javascripts/fixtures',
-        'helpers': '/base/common/test/assets/javascripts/helpers',
-        'analytics': 'modules/analytics',
+        spec:         specUrl,
+        fixtures:     '/base/common/test/assets/javascripts/fixtures',
+        helpers:      '/base/common/test/assets/javascripts/helpers',
+        analytics:    'modules/analytics',
 
-        'bean': 'components/bean/bean',
-        'bonzo': 'components/bonzo/src/bonzo',
-        'domReady': 'components/domready/ready',
-        'EventEmitter': 'components/eventEmitter/EventEmitter',
-        'qwery': 'components/qwery/mobile/qwery-mobile',
-        'reqwest': 'components/reqwest/src/reqwest',
-        'postscribe': 'components/postscribe/dist/postscribe',
-        'swipe': 'components/swipe/swipe',
-        'swipeview': 'components/swipeview/src/swipeview',
-        'lodash': 'components/lodash-amd/modern',
-        'imager': 'components/imager.js/src/strategies/container',
-        'component': 'components/component/component'
+        bean:         'components/bean/bean',
+        bonzo:        'components/bonzo/src/bonzo',
+        domReady:     'components/domready/ready',
+        EventEmitter: 'components/eventEmitter/EventEmitter',
+        qwery:        'components/qwery/mobile/qwery-mobile',
+        reqwest:      'components/reqwest/src/reqwest',
+        postscribe:   'components/postscribe/dist/postscribe',
+        swipe:        'components/swipe/swipe',
+        swipeview:    'components/swipeview/src/swipeview',
+        lodash:       'components/lodash-amd/modern',
+        imager:       'components/imager.js/src/strategies/container',
+        component:    'components/component/component'
+    },
+    map: {
+        '*': {
+            // mock out omniture script
+            // TODO - better way of mocking dependencies?
+            omniture: '/base/common/test/assets/javascripts/spies/omniture.js'
+        }
     },
     shim: {
         imager: {

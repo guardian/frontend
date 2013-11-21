@@ -12,7 +12,8 @@ module.exports = function(config) {
             { pattern: 'common/app/assets/javascripts/**/*.js', included: false },
             { pattern: 'common/test/assets/javascripts/components/**/*', included: false },
             { pattern: 'common/test/assets/javascripts/fixtures/**/*', included: false },
-            { pattern: 'common/test/assets/javascripts/helpers/**/*.js', included: false }
+            { pattern: 'common/test/assets/javascripts/helpers/**/*.js', included: false },
+            { pattern: 'common/test/assets/javascripts/spies/**/*.js', included: false }
         ],
 
         exclude: [],

@@ -25,6 +25,7 @@ define(['utils/mediator', 'utils/ajax', 'modules/onward/sequence'], function(med
             }});
             sequenceLoadedCallback = sinon.stub();
             mediator.on('modules:sequence:sequence:loaded', sequenceLoadedCallback);
+
             //Set up fake server
             server = sinon.fakeServer.create();
             server.autoRespond = true;

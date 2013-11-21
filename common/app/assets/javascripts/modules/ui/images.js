@@ -1,64 +1,41 @@
-define([
-    'common',
-    'utils/detect',
-    'bonzo'
-], function (
-    common,
-    detect,
-    bonzo
-) {
+define(['$', 'utils/to-array', 'bonzo', 'utils/mediator', 'imager', 'utils/detect'], function ($, toArray, bonzo, mediator, imager, detect) {
 
-    function Images(options) {
-    
-        var opts = options || {},
-            connectionSpeed = detect.getConnectionSpeed(opts.connection),
-            layoutMode = detect.getLayoutMode(opts.viewportWidth),
-            self = this;
+    var images = {
 
-        // View
+        upgrade: function(context) {
+            context = context || document;
+            var breakpoint = detect.getBreakpoint(),
+                options = {
+                    availableWidths: [ 140, 220, 300, 460, 620, 700 ],
+                    strategy: 'container',
+                    replacementDelay: 0
+                };
 
-        this.view = {
-            upgrade: function (context) {
-
-                // upgrade svg images
-                if (detect.hasSvgSupport()) {
-                    common.$g('body').addClass('svg');
+            toArray(context.getElementsByClassName('item__image-container')).forEach(function(container) {
+                var $container = bonzo(container),
+                    forceUpgradeAttr = $container.attr('data-force-upgrade'),
+                    forceUpdgradeBreakpoints = forceUpgradeAttr !== null ? forceUpgradeAttr.split(' ') : [],
+                    isForceUpgrade = forceUpdgradeBreakpoints.indexOf(breakpoint) !== -1 || forceUpgradeAttr === '';
+                if (($('html').hasClass('connection--low') && !isForceUpgrade) || $container.css('display') === 'none') {
+                    return;
                 }
+                imager.init([container], options);
+            });
+        },
 
-                //upgrade other images;
-                Array.prototype.forEach.call(context.getElementsByTagName('img'), function(image) {
-                    image = bonzo(image);
+        listen: function() {
+            mediator.addListeners({
+                'window:resize': function(e) {
+                    images.upgrade();
+                },
+                'window:orientationchange': function(e) {
+                    images.upgrade();
+                }
+            });
+        }
 
-                    var thumbWidth = parseFloat(image.attr('data-thumb-width'));
-                    var fullWidth = parseFloat(image.attr('data-full-width'));
-                    var lowsrc = image.attr('data-lowsrc');
-                    var fullsrc = image.attr('data-fullsrc');
-                    var forceUpgrade = image.attr('data-force-upgrade');
+    };
 
-                    if (fullWidth && fullWidth >= thumbWidth && fullsrc) {
-                        if (forceUpgrade || layoutMode === 'desktop' || layoutMode === 'extended') {
-                            image.attr('src', fullsrc);
-                            image.addClass('image-high');
-                            return;
-                        }
-                    }
-                    if (lowsrc) {
-                        image.attr('src', lowsrc);
-                    }
-                });
-            }
-        };
-
-        // Model
-        
-        this.upgrade = function (context) {
-            if (connectionSpeed !== 'low') {
-                self.view.upgrade(context);
-                common.mediator.emit('modules:images:upgrade');
-            }
-        };
-    }
-    
-    return Images;
+    return images;
 
 });

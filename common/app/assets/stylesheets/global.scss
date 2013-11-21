@@ -81,3 +81,13 @@
 @import "theme/_global-icons-sprite";
 @import "theme/_global-icons-svg";
 @import "theme/_icons";
+
+
+/* ==========================================================================
+   Colours
+   ========================================================================== */
+
+@import "theme/_tones";
+@include tone-global(news, $c-newsDefault, $c-newsAccent);
+@include tone-global(comment, $c-commentDefault, $c-commentAccent);
+@include tone-global(feature, $c-featureDefault, $c-featureAccent);
