@@ -13,10 +13,17 @@ object Ads extends Logging {
       
     val params = queryString.map { case (k,v) => k -> v.mkString }
     
-    params.get("top").getOrElse(0) match {
+    params.get("Top").getOrElse(0) match {
       case Some(x:Int) =>
         Top.increment(x)
       case _ => {}
     }
+
+    params.get("Bottom").getOrElse(0) match {
+      case Some(x:Int) =>
+        Bottom.increment(x)
+      case _ => {}
+    }
+
   }
 }
