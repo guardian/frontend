@@ -99,7 +99,7 @@ class DemoPage(val applicationName: String) extends HtmlManagementPage {
               var self = this;
               $.ajax({
                 url:  endpoint,
-                dataType: 'jsonp',
+                dataType: 'json',
                 success: function(response) {
                   $(targetSelector).html(response.html);
                   self.applyBreakpointClassnames();
