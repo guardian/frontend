@@ -78,6 +78,8 @@ define([
         // a timer to monitor the pages for ad-slots inside the viewport
         var adTrackInterval = setInterval(function() {
             var viewport = detect.getBreakpoint();
+            // NOTE:  getLayoutMode used to return 'extended' for 'wide'; this makes it backwards compatible
+            viewport = (viewport === 'wide') ? 'extended' : viewport;
 
             $trackedAdSlots.each(function(adEl) {
                 var adId = adEl.getAttribute('data-inview-name') || adEl.getAttribute('data-' + viewport) || '';
