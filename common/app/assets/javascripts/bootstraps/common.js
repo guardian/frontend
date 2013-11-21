@@ -352,7 +352,8 @@ define([
         windowEventListeners: function() {
             var events = {
                     resize: 'window:resize',
-                    orientationchange: 'window:orientationchange'
+                    orientationchange: 'window:orientationchange',
+                    scroll: 'window:scroll'
                 },
                 emitEvent = function(eventName) {
                     return function(e) {

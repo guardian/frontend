@@ -3,9 +3,11 @@
     Description: Display experimental highlights panel
 */
 define([
+    'bonzo',
     'modules/component',
     'modules/experiments/highlight-item'
 ], function (
+    bonzo,
     Component,
     Item
 ) {
@@ -33,7 +35,19 @@ define([
         this.data.slice(0, this.conf().maxTrails).forEach(function(item) {
             new Item(item).render(container);
         });
-        this.setState('is-hidden');
+        this.bindListeners();
+        //this.setState('is-hidden');
+    };
+
+    HighlightPanel.prototype.bindListeners = function() {
+        var self = this,
+            pos;
+
+        this.mediator.on('window:scroll', function(e) {
+            if(pos > bonzo(document.body).scrollTop()) {
+                self.setState();
+            }
+        }) ;
     };
 
     return HighlightPanel;
