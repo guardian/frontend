@@ -30,7 +30,6 @@ RightEar.prototype.errors = [];
 RightEar.prototype.ready = function() {
     bean.on(this.elem, 'mouseenter', this.setExpanded.bind(this));
     bean.on(this.elem, 'mouseleave', this.setContracted.bind(this));
-    bean.on(this.elem, 'webkitAnimationStart', this.onAnimationStart.bind(this));
 };
 
 RightEar.prototype.prerender = function() {
@@ -45,10 +44,6 @@ RightEar.prototype.setContracted = function(e) {
     if (this.hasState('expanded')) {
         this.removeState('expanded');
     }
-};
-
-RightEar.prototype.onAnimationStart = function(e) {
-    window.console.log("anim  started.");
 };
 
 return RightEar;
