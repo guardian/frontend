@@ -162,7 +162,7 @@ Loader.prototype.loadComments = function (args) {
                 self.cleanUpOnShowComments();
             });
             bonzo(commentsContainer).removeClass('u-h');
-        });
+        }).fail(self.loadingError.bind(self));
 };
 
 /** @return {Reqwest|null} */
@@ -187,7 +187,7 @@ Loader.prototype.getUser = function() {
  * often is on code due to syncing problems
  */
 Loader.prototype.loadingError = function() {
-    bonzo(this.elem).remove();
+    bonzo(this.getElem('commentsContainer')).remove();
 };
 
 /** TODO: This logic will be moved to the Play app renderer */
