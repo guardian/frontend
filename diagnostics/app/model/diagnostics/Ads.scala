@@ -8,28 +8,22 @@ import conf.Switches._
 
 object Ads extends Logging {
 
-  def safeStringToInt(str: Option[String]): Option[Int] = {
-      import scala.util.control.Exception._
-          catching(classOf[NumberFormatException]) opt str.getOrElse("0").toInt
-  }
-
-  def report(queryString: Map[String, Seq[String]]) {
+  def report(top: Option[Int], bottom: Option[Int]) {
     
     if (AdDwellTimeLoggerSwitch.isSwitchedOn) {
-      log.info(s"${queryString}")
+      log.info(s"Top -> ${top}, Bottom -> ${bottom}")
     }
 
-    val params = queryString.map { case (k,v) => k -> v.mkString }
-    
-    safeStringToInt(params.get("Top")) match {
+    top match {
       case Some(x:Int) =>
         Top.increment(x)
       case _ => {}
     }
 
-    safeStringToInt(params.get("Bottom")) match {
-      case Some(x:Int) =>
+    bottom match {
+      case Some(x:Int) => {
         Bottom.increment(x)
+      }
       case _ => {}
     }
 
