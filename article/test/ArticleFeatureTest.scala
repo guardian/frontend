@@ -13,13 +13,13 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
 
   feature("Article") {
 
-    // Feature 
+    // Feature
 
     info("In order to experience all the wonderful words the Guardian write")
     info("As a Guardian reader")
     info("I want to read a version of the article optimised for my mobile devices")
 
-    // Metrics 
+    // Metrics
 
     info("Page views should *not* decrease.")
     info("Retain people on mobile (by reducing % of mobile traffic to www and clicks to the desktop site)")
@@ -295,7 +295,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
         import browser._
 
         Then("the primary image's 'data-force-upgrade' attribute should be 'true'")
-        findFirst("#article figure img").getAttribute("data-force-upgrade") should be("true")
+        findFirst("#article figure .item__image-container").getAttribute("data-force-upgrade") should be("")
       }
     }
 
@@ -355,9 +355,9 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
     scenario("Easily share an article via popular social media sites") {
 
       Given("I read an article and want to share it with my friends")
-      
+
       SocialSwitch.switchOn
-      
+
       HtmlUnit("/film/2012/nov/11/margin-call-cosmopolis-friends-with-kids-dvd-review") { browser =>
         import browser._
 
@@ -372,9 +372,9 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
         findFirst(".social__action[data-link-name=social-twitter]").getAttribute("href") should be(twitterShareUrl)
         findFirst(".social__action[data-link-name=social-gplus]").getAttribute("href") should be(gplusShareUrl)
       }
-      
+
       Given("I want to track the responsive share buttons using Facebook Insights")
-      
+
       SocialSwitch.switchOn
 
       HtmlUnit("/film/2012/nov/11/margin-call-cosmopolis-friends-with-kids-dvd-review") { browser =>
@@ -388,15 +388,15 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
 
 
     }
-    
+
     // http://www.w3.org/WAI/intro/aria
     scenario("Make the document accessible with ARIA support") {
 
       Given("I read an article")
-      
+
       SocialSwitch.switchOn
       SearchSwitch.switchOn
-      
+
       HtmlUnit("/world/2013/jan/27/brazil-nightclub-blaze-high-death-toll") { browser =>
         import browser._
 
@@ -410,7 +410,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
         findFirst("#article").getAttribute("role") should be("main")
         findFirst(".trailblock").getAttribute("role") should be("complementary")
         findFirst(".trailblock").getAttribute("aria-labelledby") should be("related-content-head")
-        
+
       }
     }
 
@@ -468,7 +468,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
         $(".article__keywords *").size should be (0)
       }
     }
-    
+
     scenario("Twitter cards"){
       Given("I am on an article entitled 'Iran's Rouhani may meet Obama at UN after American president reaches out'")
       HtmlUnit("/world/2013/sep/15/obama-rouhani-united-nations-meeting") { browser =>
