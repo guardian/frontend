@@ -30,6 +30,13 @@ $c-live: #e81818;
     background-color: $c-newsDefault;
     min-height: gs-height(1) - $gs-baseline*(2/3);
     color: #ffffff;
+    
+    @include mq($to:tablet) {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        z-index: 2;
+    }
     @include mq(tablet) {
         min-height: 0;
         padding: 0;
