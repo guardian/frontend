@@ -137,6 +137,8 @@ define([
                         }).addClass(cls).insertAfter(this);
                     });
 
+                    bonzo(qwery('.ad-slot--bottom-banner-ad')).attr('data-inview-name', 'Bottom');
+
                     // The timer for the 'Both' variant is setup only once in the variant itself
                     if (!isBoth) {
                         initAdDwellTracking(_config);
@@ -154,7 +156,7 @@ define([
                         inviewName,
                         s;
                     if(viewport === 'mobile' || viewport === 'tablet' && detect.getOrientation() === 'portrait') {
-                        inviewName = 'Top banner';
+                        inviewName = 'Top';
                         bonzo(qwery('.ad-slot--top-banner-ad')).attr('data-inview-name', inviewName);
                         bonzo(qwery('.parts__head')).addClass('is-sticky');
                         if(!supportsSticky && supportsFixed) {
@@ -174,6 +176,8 @@ define([
                             });
                         }
                     }
+
+                    bonzo(qwery('.ad-slot--bottom-banner-ad')).attr('data-inview-name', 'Bottom');
 
                     // The timer for the 'Both' variant is setup only once in the variant itself
                     if (!isBoth) {
@@ -208,6 +212,7 @@ define([
                 test: function() {
                     variantName = 'Control';
                     guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha.com';
+                    bonzo(qwery('.ad-slot--bottom-banner-ad')).attr('data-inview-name', 'Bottom');
 
                     initAdDwellTracking(_config);
 
