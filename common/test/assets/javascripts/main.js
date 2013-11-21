@@ -17,7 +17,7 @@ requirejs.config({
     // Karma serves files from '/base'
     baseUrl: '/base/common/app/assets/javascripts',
     paths: {
-        spec: specUrl,
+        spec:         specUrl,
         fixtures:     '/base/common/test/assets/javascripts/fixtures',
         helpers:      '/base/common/test/assets/javascripts/helpers',
         analytics:    'modules/analytics',
