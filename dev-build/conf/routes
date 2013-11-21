@@ -133,10 +133,6 @@ GET         /commercial/masterclasses.json                                      
 # New light jobs feed available only in dev env
 GET         /commercial/lightjobs.json                                                                       controllers.commercial.JobAds.lightJobs
 GET         /commercial/soulmates/mixed.json                                                                 controllers.commercial.SoulmateAds.mixed
-GET         /commercial/soulmates/men.json                                                                   controllers.commercial.SoulmateAds.men
-GET         /commercial/soulmates/women.json                                                                 controllers.commercial.SoulmateAds.women
-GET         /commercial/soulmates/gay.json                                                                   controllers.commercial.SoulmateAds.gay
-GET         /commercial/soulmates/lesbian.json                                                               controllers.commercial.SoulmateAds.lesbian
 
 # Onward journeys
 GET         /onward/popular-onward/*path.json                                                                controllers.MostPopularOnwardController.popularOnward(path)
