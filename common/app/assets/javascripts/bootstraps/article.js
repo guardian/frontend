@@ -95,10 +95,13 @@ define([
         },
 
         initOnwardRightEar: function(config) {
+            var spawned = false;
             common.mediator.on('modules:sequence:loaded', function(sequence) {
-                if (config.switches && config.switches.abOnwardRightEar) {
+                if (config.switches && config.switches.abOnwardRightEar &&
+                    sequence && sequence.length > 0 && !spawned) {
                     var rightEar = new RightEar(sequence, common.mediator, {});
                     rightEar.render();
+                    spawned = true;
                 }
             });
 

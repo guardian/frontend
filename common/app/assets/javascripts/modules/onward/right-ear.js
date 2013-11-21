@@ -11,7 +11,7 @@ define([
 function RightEar(sequence, mediator, options) {
     this.context = document;
     this.mediator = mediator;
-    this.sequence = sequence;
+    this.sequenceItem = sequence[0];
     this.setOptions(options);
 }
 
@@ -33,7 +33,8 @@ RightEar.prototype.ready = function() {
 };
 
 RightEar.prototype.prerender = function() {
-    // Update the headline here.
+    // Update the headline.
+    bonzo(this.getElem('headline')).text(this.sequenceItem.headline);
 };
 
 RightEar.prototype.setExpanded = function(e) {

@@ -25,25 +25,30 @@
     background-repeat: no-repeat;
     @include background-size(100% 50%);
 
-    @include transition(-webkit-transform 0.75s ease-out, opacity 1s ease-out);
-    @include transition(-moz-transform 0.75s ease-out, opacity 1s ease-out);
-    @include transition(-o-transform 0.75s ease-out, opacity 1s ease-out);
-    @include transition(-ms-transform 0.75s ease-out, opacity 1s ease-out);
-    @include transition(transform 0.75s ease-out, opacity 1s ease-out);
+    @include transition(-webkit-transform 0.3s ease-out, opacity 0.5s ease-out);
+    @include transition(-moz-transform 0.3s ease-out, opacity 0.5s ease-out);
+    @include transition(-o-transform 0.3s ease-out, opacity 0.5s ease-out);
+    @include transition(-ms-transform 0.3s ease-out, opacity 0.5s ease-out);
+    @include transition(transform 0.3s ease-out, opacity 0.5s ease-out);
 
     @include transform(translateX(220px));
 }
 
 .d-right-ear__arrow {
-    margin-right: 44px;
+    margin-right: 42px;
     margin-bottom: 54px;
     float: left;
 }
 
+.d-right-ear__link {
+    float: left;
+    width: 214px;
+    height: 84px;
+    color: white;
+}
+
 .d-right-ear__headline {
     color: white;
-    margin-left: $baseline *2;
-    width: 220px;
 }
 
 .d-right-ear--expanded {
