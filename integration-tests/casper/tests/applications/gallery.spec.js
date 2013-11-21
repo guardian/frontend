@@ -42,23 +42,23 @@ casper.test.begin("Display lhe lightbox when clicking an image", function(test) 
 });
 
 casper.test.begin("Navigation", function(test) {
-        casper.click('.js-gallery-next');
-        test.assertVisible('.js-gallery-item-2');
-        test.assertSelectorHasText('.js-image-index', '2', 'Image counter is at 2');
-        casper.click('.js-gallery-next');
-        test.assertVisible('.js-gallery-item-3');
-        test.assertSelectorHasText('.js-image-index', '3', 'Image counter is at 3');
-        casper.click('.js-gallery-prev');
-        test.assertVisible('.js-gallery-item-2');
-        test.assertSelectorHasText('.js-image-index', '2', 'Image counter is at 2');
-        test.done();
+    casper.click('.js-gallery-next');
+    test.assertVisible('.js-gallery-item-2');
+    test.assertSelectorHasText('.js-image-index', '2', 'Image counter is at 2');
+    casper.click('.js-gallery-next');
+    test.assertVisible('.js-gallery-item-3');
+    test.assertSelectorHasText('.js-image-index', '3', 'Image counter is at 3');
+    casper.click('.js-gallery-prev');
+    test.assertVisible('.js-gallery-item-2');
+    test.assertSelectorHasText('.js-image-index', '2', 'Image counter is at 2');
+    test.done();
 });
 
 casper.test.begin("Caption control", function(test) {
-        test.assertVisible('.gallerycaption', 'Caption starts off visible');
-        casper.click('.captioncontrol--hide');
-        test.assertNotVisible('.gallerycaption', 'Caption has been hidden');
-        test.done();    
+    test.assertVisible('.gallerycaption', 'Caption starts off visible');
+    casper.click('.captioncontrol--hide');
+    test.assertNotVisible('.gallerycaption', 'Caption has been hidden');
+    test.done();    
 });
 
 casper.run(function() {
