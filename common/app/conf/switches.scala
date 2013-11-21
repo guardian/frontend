@@ -80,6 +80,10 @@ object Switches extends Collections {
   val AudienceScienceSwitch = Switch("Analytics", "audience-science",
     "If this switch is on the Audience Science will be enabled.",
     safeState = Off)
+  
+  val AdDwellTimeLoggerSwitch = Switch("Analytics", "ad-dwell-times-logging",
+    "If this is on the in-view advert tracker will log some data to the Play logs",
+    safeState = On)
 
   val QuantcastSwitch = Switch("Analytics", "quantcast",
     "Enable the Quantcast audience segment tracking.",
@@ -325,6 +329,7 @@ object Switches extends Collections {
     FacebookAutoSigninSwitch,
     ABImproveOnwardTrails,
     ABInitialShowMore,
+    AdDwellTimeLoggerSwitch,
     ABShowMoreLayout
   )
 
