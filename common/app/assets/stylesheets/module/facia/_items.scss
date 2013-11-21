@@ -2,7 +2,6 @@ $c-live: #e81818;
 
 .container {
     position: relative;
-    overflow: hidden;
     margin-top: $gs-baseline;
     @include mq(tablet) {
         margin-top: $gs-baseline*2;
