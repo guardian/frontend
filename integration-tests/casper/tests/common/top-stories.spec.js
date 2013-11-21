@@ -45,6 +45,9 @@ casper.test.begin('Top stories is not visible before I click it',function(test) 
     casper.waitForSelector('.nav-popup-topstories.lazyloaded',function(){
         test.assertNotVisible('.nav-popup-topstories', 'The top stories are not visible at page load');
         test.done();
+    }, function timeout() {
+        casper.capture('top-stories-page-load-fail.png');
+        test.fail('Top stories nav not loaded on page load');
     });
 });
 

@@ -20,6 +20,9 @@ casper.test.begin("Display gallery contact sheet", function(test) {
                 return document.querySelectorAll('.gallery-page .gallerythumbs__item').length;
             }, 3, '3 items should be available');
             test.done();
+        }, function timeout() {
+            casper.capture('gallery-thumbs-fail.png');
+            test.fail('Thumbnails not visible');
         });
     });
 });
@@ -30,16 +33,15 @@ casper.test.begin("Display lhe lightbox when clicking an image", function(test) 
         casper.waitForSelector('.gallery--lightbox', function() {
             test.assertVisible('.overlay', 'Lightbox did open');
             test.assertSelectorHasText('.js-image-index', '1', 'Image counter is at 1');
-            casper.capture('lightbox.png');
             test.done();
-        }, function() {
+        }, function timeout() {
+            casper.capture('gallery-lightbox-fail.png');
             test.fail('Lightbox did not open');
         });
     });
 });
 
 casper.test.begin("Navigation", function(test) {
-        casper.capture('navigation.png');
         casper.click('.js-gallery-next');
         test.assertVisible('.js-gallery-item-2');
         test.assertSelectorHasText('.js-image-index', '2', 'Image counter is at 2');
