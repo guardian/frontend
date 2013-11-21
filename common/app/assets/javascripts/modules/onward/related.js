@@ -1,11 +1,13 @@
 define([
     'common',
     'modules/lazyload',
-    'modules/ui/expandable'
+    'modules/ui/expandable',
+    'modules/ui/images'
 ], function (
     common,
     LazyLoad,
-    Expandable
+    Expandable,
+    images
 ) {
 
     function related(config, context, url) {
@@ -28,7 +30,10 @@ define([
                     url: url || '/related/' + config.page.pageId + '.json',
                     container: container,
                     success: function () {
-                        new Expandable({dom: container.querySelector('.related-trails'), expanded: false, showCount: false}).init();
+                        var relatedTrails = container.querySelector('.related-trails');
+                        new Expandable({dom: relatedTrails, expanded: false, showCount: false}).init();
+                        // upgrade images
+                        images.upgrade(relatedTrails);
                         common.mediator.emit('modules:related:loaded', config, context);
                     },
                     error: function(req) {
