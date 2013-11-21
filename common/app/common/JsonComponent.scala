@@ -44,7 +44,7 @@ object JsonComponent extends Results {
 
 
   private def jsonFor(metaData: MetaData, switches: Seq[Switchable], items: (String, Any)*)(implicit request: RequestHeader): String = {
-    jsonFor(("config" -> Json.parse(views.html.fragments.javaScriptConfig(metaData, switches).body)) +: items: _*)
+    jsonFor(("config" -> Json.parse(views.html.fragments.javaScriptConfig(metaData).body)) +: items: _*)
   }
   
   private def jsonFor(items: (String, Any)*) = {

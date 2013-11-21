@@ -194,6 +194,11 @@ $c-live: #e81818;
     position: absolute;
     bottom: 0;
     @include fs-data(2, $size-only: true);
+
+    @include mq(tablet) {
+        @include fs-data(3, $size-only: true);
+    }
+
     .item__timestamp,
     .trail__count {
         position: relative;
