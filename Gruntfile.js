@@ -1,6 +1,7 @@
 /* global module: false */
 module.exports = function (grunt) {
     var isDev = grunt.option('dev') || process.env.GRUNT_ISDEV === '1',
+        singleRun = grunt.option('single-run') !== false,
         env = grunt.option('env') || 'code',
         screenshotsDir = './screenshots',
         staticTargetDir = 'static/target/',
@@ -48,30 +49,35 @@ module.exports = function (grunt) {
                     name: "bootstraps/app",
                     out: staticTargetDir + "javascripts/bootstraps/app.js",
                     paths: {
-                        "bean": "components/bean/bean",
-                        "bonzo": "components/bonzo/src/bonzo",
-                        "domReady": "components/domready/ready",
-                        "EventEmitter": "components/eventEmitter/EventEmitter",
-                        "qwery": "components/qwery/mobile/qwery-mobile",
-                        "reqwest": "components/reqwest/src/reqwest",
-                        "postscribe": "components/postscribe/dist/postscribe",
-                        "swipe": "components/swipe/swipe",
-                        "swipeview": "components/swipeview/src/swipeview",
-                        "lodash": "components/lodash-amd/modern",
-                        imager:       '../../../app/assets/javascripts/components/imager.js/src/strategies/container'
+                        bean:         "components/bean/bean",
+                        bonzo:        "components/bonzo/src/bonzo",
+                        domReady:     "components/domready/ready",
+                        EventEmitter: "components/eventEmitter/EventEmitter",
+                        qwery:        "components/qwery/mobile/qwery-mobile",
+                        reqwest:      "components/reqwest/src/reqwest",
+                        postscribe:   "components/postscribe/dist/postscribe",
+                        swipe:        "components/swipe/swipe",
+                        swipeview:    "components/swipeview/src/swipeview",
+                        lodash:       "components/lodash-amd/modern",
+                        imager:       'components/imager.js/src/strategies/container',
+                        component:    "components/component/component",
+                        omniture:     '../../public/javascripts/vendor/omniture'
                     },
                     shim: {
-                        "postscribe": {
+                        postscribe: {
                             exports: "postscribe"
                         },
                         imager: {
-                            deps: ['../../../app/assets/javascripts/components/imager.js/src/imager'],
+                            deps: ['components/imager.js/src/imager'],
                             exports: 'Imager'
+                        },
+                        omniture: {
+                            exports: 's'
                         }
                     },
                     wrap: {
-                        "startFile": "common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js",
-                        "endFile": "common/app/assets/javascripts/bootstraps/go.js"
+                        startFile: "common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js",
+                        endFile: "common/app/assets/javascripts/bootstraps/go.js"
                     },
                     optimize: (isDev) ? 'none' : 'uglify2',
                     useSourceUrl: (isDev) ? true : false,
@@ -323,8 +329,8 @@ module.exports = function (grunt) {
         karma: {
             options: {
                 configFile: testConfDir + 'common.js',
-                singleRun: isDev ? false : true,
-                reporters: isDev ? ['dots'] : ['progress']
+                reporters: isDev ? ['dots'] : ['progress'],
+                singleRun: singleRun
             },
             common: {
                 configFile: testConfDir + 'common.js'
@@ -549,6 +555,7 @@ module.exports = function (grunt) {
     });
     grunt.registerTask('test', ['jshint:common', 'test:unit', 'test:integration']);
     grunt.registerTask('test:unit', function(app) {
+        grunt.config.set('karma.options.singleRun', (singleRun === false) && app ? false : true);
         grunt.task.run('karma' + (app ? ':' + app : ''));
     });
 
