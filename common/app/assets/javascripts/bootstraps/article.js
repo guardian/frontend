@@ -85,7 +85,7 @@ define([
             common.mediator.on('page:article:ready', function(config, context) {
                 if (config.page.commentable) {
                     var discussionLoader = new DiscussionLoader(context, common.mediator, {}, config.switches.discussionTopComments);
-                    discussionLoader.attachTo();
+                    discussionLoader.attachToDefault();
                 }
             });
         },

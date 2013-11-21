@@ -59,7 +59,8 @@ module.exports = function (grunt) {
                         "swipe": "components/swipe/swipe",
                         "swipeview": "components/swipeview/src/swipeview",
                         "lodash": "components/lodash-amd/modern",
-                        imager:       '../../../app/assets/javascripts/components/imager.js/src/strategies/container'
+                        "imager":       '../../../app/assets/javascripts/components/imager.js/src/strategies/container',
+                        "component": "components/component/component"
                     },
                     shim: {
                         "postscribe": {

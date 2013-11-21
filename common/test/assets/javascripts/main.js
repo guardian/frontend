@@ -32,7 +32,8 @@ requirejs.config({
         'swipe': 'components/swipe/swipe',
         'swipeview': 'components/swipeview/src/swipeview',
         'lodash': 'components/lodash-amd/modern',
-        'imager': 'components/imager.js/src/strategies/container'
+        'imager': 'components/imager.js/src/strategies/container',
+        'component': 'components/component/component'
     },
     shim: {
         imager: {
