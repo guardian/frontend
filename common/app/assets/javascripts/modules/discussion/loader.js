@@ -2,7 +2,7 @@ define([
     'utils/ajax',
     'bonzo',
     'qwery',
-    'component',
+    'modules/component',
     'modules/analytics/discussion',
     'modules/identity/api',
     'modules/discussion/api',
