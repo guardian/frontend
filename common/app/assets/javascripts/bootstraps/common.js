@@ -36,8 +36,7 @@ define([
     "modules/discussion/comment-count",
     "modules/gallery/lightbox",
     "modules/imager",
-    "modules/onward/history",
-    "modules/onward/sequence"
+    "modules/onward/history"
 ], function (
     $,
     mediator,
@@ -75,8 +74,7 @@ define([
     CommentCount,
     LightboxGallery,
     imager,
-    History,
-    sequence
+    History
 ) {
 
     var modules = {
@@ -336,7 +334,6 @@ define([
                         }
                     });
                 }
-                sequence.init();
             });
         },
 

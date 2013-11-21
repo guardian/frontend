@@ -122,4 +122,19 @@
             @fragments.mostPopularPlaceholder(article.section)
         </div>
     </div>
+
+    <script type="text/template" id="tmpl-highlight-panel">
+        <div class="highlight-panel">
+            <h4 class="highlight-panel__title">Today's highlights</h4>
+            <ul class="highlight-panel__items">
+
+            </ul>
+        </div>
+    </script>
+    <script type="text/template" id="tmpl-highlight-item">
+        <li class="highlight-item">
+            <img class="highlight-item__img" src="{{ img }}" alt=""/>
+            <a class="highlight-item__headline" href="{{ url }}">{{ headline }}</a>
+        </li>
+    </script>
 }

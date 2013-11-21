@@ -1,5 +1,7 @@
 define([
     "common",
+    "utils/mediator",
+    "utils/detect",
     "modules/ui/autoupdate",
     "modules/live/filter",
     "modules/live/summary",
@@ -9,10 +11,13 @@ define([
     "modules/sport/cricket",
     "modules/experiments/live-blog-show-more",
     "modules/ui/notification-counter",
-    "utils/detect",
-    "modules/experiments/left-hand-card"
+    "modules/onward/sequence",
+    "modules/experiments/left-hand-card",
+    "modules/experiments/highlight-panel"
 ], function (
     common,
+    mediator,
+    detect,
     AutoUpdate,
     LiveFilter,
     LiveSummary,
@@ -22,8 +27,9 @@ define([
     Cricket,
     LiveShowMore,
     NotificationCounter,
-    detect,
-    LeftHandCard
+    sequence,
+    LeftHandCard,
+    HighlightPanel
 ) {
 
     var modules = {
@@ -134,6 +140,13 @@ define([
                     });
                 }
             });
+        },
+
+        initHighlightsPanel: function() {
+            mediator.on('modules:sequence:loaded', function(data){
+                var h = new HighlightPanel(data, mediator);
+            });
+            sequence.init();
         }
     };
 
@@ -146,6 +159,7 @@ define([
             modules.initDiscussion();
             modules.initCricket();
             modules.externalLinksCards();
+            modules.initHighlightsPanel();
         }
         common.mediator.emit("page:article:ready", config, context);
     };

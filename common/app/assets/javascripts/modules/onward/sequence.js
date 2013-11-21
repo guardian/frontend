@@ -2,14 +2,14 @@ define([
     'bean',
     'utils/ajax',
     'utils/mediator',
-    'lodash/arrays/difference',
+    'lodash/collections/filter',
     'utils/storage',
     'modules/onward/history'
 ], function(
     bean,
     ajax,
     mediator,
-    _difference,
+    _filter,
     storage,
     History
     ){
@@ -36,9 +36,12 @@ define([
     function removeContext() { return store.remove(prefixes.context); }
 
     function dedupeSequence(sequence) {
-        return _difference(sequence, new History({}).get().map(function(i){
+        var history = new History({}).get().map(function(i){
             return i.id;
-        }));
+        });
+        return _filter(sequence, function(item) {
+            return history.indexOf(item.url) < 0;
+        });
     }
 
     function loadSequence(context) {
@@ -47,8 +50,9 @@ define([
             crossOrigin: true
         }).then(function (json) {
             if(json && 'trails' in json) {
-                set('sequence', dedupeSequence(json.trails.map(function(t){ return t.url; })));
+                set('sequence', dedupeSequence(json.trails));
                 removeContext();
+                mediator.emit('modules:sequence:loaded', getSequence());
             }
         }).fail(function(req) {
             mediator.emit('modules:error', 'Failed to load sequence: ' + req.statusText, 'modules/onwards/sequence.js');
@@ -67,6 +71,8 @@ define([
         var context = getContext();
         if(context !== null) {
             loadSequence(context);
+        } else {
+            mediator.emit('modules:sequence:loaded', getSequence());
         }
         bindListeners();
     }
