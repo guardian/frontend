@@ -27,7 +27,7 @@ object LoadJob extends Logging {
                     ("ads.mpu.secondsInView", MPU.secondsInView),
                     ("ads.inline.count", Inline.count),
                     ("ads.inline.secondsInView", Inline.secondsInView),
-                    ("ads.firstView", firstView.count)
+                    ("ads.views", firstView.count)
                   ))
     
     Top.reset()
