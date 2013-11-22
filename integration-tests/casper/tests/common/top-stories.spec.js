@@ -55,6 +55,7 @@ casper.test.begin('Top stories control can be toggled on and off',function(test)
     casper.then(function() {
         casper.click('[data-toggle="nav-popup-topstories"]');
         test.assertVisible('.nav-popup-topstories', 'The top stories are visible after clicking top stories button');
+        casper.capture(screens + 'top-stories-test.png');
         test.assertEvalEquals(function() {
             return document.querySelectorAll('[data-link-name="top-stories"] > ul >li').length;
         }, 10, 'Then I can see 10 headlines');
