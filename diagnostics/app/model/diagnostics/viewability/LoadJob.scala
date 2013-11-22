@@ -15,6 +15,7 @@ object LoadJob extends Logging {
       log.info(s"ads.bottom.count:${Bottom.count}")
       log.info(s"ads.mpu.secondsInView:${MPU.secondsInView}")
       log.info(s"ads.inline.secondsInView:${Inline.secondsInView}")
+      log.info(s"ads.firstView:${firstView.count}")
     }
 
     CloudWatch.put("Diagnostics", Map(
@@ -25,13 +26,15 @@ object LoadJob extends Logging {
                     ("ads.mpu.count", MPU.count),
                     ("ads.mpu.secondsInView", MPU.secondsInView),
                     ("ads.inline.count", Inline.count),
-                    ("ads.inline.secondsInView", Inline.secondsInView)
+                    ("ads.inline.secondsInView", Inline.secondsInView),
+                    ("ads.firstView", firstView.count)
                   ))
     
     Top.reset()
     Bottom.reset()
     MPU.reset()
     Inline.reset()
+    firstView.reset()
 
   }
 
