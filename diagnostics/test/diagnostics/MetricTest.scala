@@ -1,7 +1,7 @@
 package diagnostics
 
 import org.scalatest.{BeforeAndAfterEach, Matchers, FlatSpec}
-import model.diagnostics.Metric
+import model.diagnostics.javascript.Metric
 
 class MetricTest extends FlatSpec with Matchers with BeforeAndAfterEach {
 

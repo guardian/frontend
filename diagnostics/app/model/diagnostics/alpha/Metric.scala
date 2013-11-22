@@ -1,8 +1,8 @@
-package model.diagnostics
+package model.diagnostics.alpha
 
 import com.google.common.util.concurrent.AtomicDouble
 
-abstract class User {
+abstract class Metric {
   
   private lazy val metric = new AtomicDouble()
 
@@ -23,8 +23,7 @@ abstract class User {
 
 }
 
-object DesktopView extends User 
-object DesktopSession extends User
-object ResponsiveSession extends User
-object ResponsiveView extends User
-
+object DesktopView extends model.diagnostics.alpha.Metric
+object DesktopSession extends model.diagnostics.alpha.Metric
+object ResponsiveSession extends model.diagnostics.alpha.Metric
+object ResponsiveView extends model.diagnostics.alpha.Metric

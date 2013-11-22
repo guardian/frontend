@@ -1,7 +1,7 @@
 package diagnostics
 
 import org.scalatest.{BeforeAndAfterEach, Matchers, FlatSpec}
-import model.diagnostics.{ResponsiveView, ResponsiveSession}
+import model.diagnostics.alpha.{ResponsiveView, ResponsiveSession}
 
 class ViewTest extends FlatSpec with Matchers with BeforeAndAfterEach {
 

@@ -1,12 +1,13 @@
-package model.diagnostics
+package model.diagnostics.viewability
 
 import common._
 import conf.Switches._
+import model.diagnostics.CloudWatch
 
-object DiagnosticsLoadJob extends Logging {
+object LoadJob extends Logging {
   def run() {
 
-    log.info("Loading diagnostics data in to CloudWatch")
+    log.info("Loading viewability diagnostics data in to CloudWatch")
 
     if (AdDwellTimeLoggerSwitch.isSwitchedOn) {
       log.info(s"ads.top.count:${Top.count}")
@@ -15,23 +16,12 @@ object DiagnosticsLoadJob extends Logging {
       log.info(s"ads.bottom.secondsInView:${Bottom.secondsInView}")
     }
 
-    CloudWatch.put( "Diagnostics", Metric.averages ++ Map(
-                    ("views.desktop", DesktopView.count),
-                    ("viewsOverSessions.desktop", DesktopView.count / DesktopSession.count),
-                    ("views.responsive", ResponsiveView.count),
-                    ("viewsOverSessions.responsive", ResponsiveView.count / ResponsiveSession.count),
+    CloudWatch.put("Diagnostics", Map(
                     ("ads.top.count", Top.count),
                     ("ads.top.secondsInView", Top.secondsInView),
                     ("ads.bottom.count", Bottom.count),
                     ("ads.bottom.secondsInView", Bottom.secondsInView)
                   ))
-
-
-    Metric.reset()
-    ResponsiveView.reset()
-    ResponsiveSession.reset()
-    DesktopView.reset()
-    DesktopSession.reset()
     Top.reset()
     Bottom.reset()
   }

@@ -5,6 +5,5 @@
 # For dev machines
 GET     /   controllers.Application.front
 
-GET     /px.gif         controllers.ErrorController.px
-GET     /ad.gif         controllers.ErrorController.ads(Top: Option[Int] ?= None, Bottom: Option[Int] ?= None)
-
+GET     /px.gif         controllers.DiagnosticsController.px
+GET     /ad.gif         controllers.DiagnosticsController.ads(Top: Option[Int] ?= None, Bottom: Option[Int] ?= None)

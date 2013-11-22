@@ -6,10 +6,12 @@ import play.api.mvc.{ Content => _, _ }
 import play.api.libs.iteratee.Enumerator
 import play.api.Play.current
 import play.api.libs.concurrent.Execution.Implicits._
-import model.diagnostics._
+import model.diagnostics.javascript._
+import model.diagnostics.viewability._
+import model.diagnostics.alpha._
 import model.NoCache
 
-object ErrorController extends Controller with Logging {
+object DiagnosticsController extends Controller with Logging {
  
   import org.apache.commons.codec.binary.Base64
   
@@ -19,12 +21,17 @@ object ErrorController extends Controller with Logging {
   }
 
   def px = Action { implicit request =>
-    Error.report(request.queryString, request.headers.get("user-agent").getOrElse("UNKNOWN USER AGENT"))
+    JavaScript.report(request.queryString, request.headers.get("user-agent").getOrElse("UNKNOWN USER AGENT"))
+    NoCache(Ok(gif).as("image/gif"))
+  } 
+  
+  def alpha = Action { implicit request =>
+    Alpha.report(request.queryString)
     NoCache(Ok(gif).as("image/gif"))
   } 
   
   def ads(top: Option[Int], bottom: Option[Int]) = Action { implicit request =>
-    Ads.report(top, bottom)
+    Viewability.report(top, bottom)
     NoCache(Ok(gif).as("image/gif"))
   } 
 

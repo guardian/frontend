@@ -1,4 +1,4 @@
-package model.diagnostics 
+package model.diagnostics.javascript 
 
 import common._
 import conf._
@@ -6,7 +6,7 @@ import net.sf.uadetector.service.UADetectorServiceFactory
 import model.diagnostics._
 import play.api.mvc.{ Content => _, _ }
 
-object Error extends Logging {
+object JavaScript extends Logging {
   
   val agent = UADetectorServiceFactory.getResourceModuleParser()
   
@@ -37,26 +37,9 @@ object Error extends Logging {
         qs.get("type") match {
           case Some("js") => Metric.increment(s"js.${osFamily}") 
           case Some("ads") => Metric.increment("ads") 
-          case Some("session") => {
-            platform match {
-              case Some("desktop") =>
-                DesktopSession.increment
-                DesktopView.increment
-              case Some("responsive") =>
-                ResponsiveSession.increment
-                ResponsiveView.increment
-              case _ => {}
-            }
-          }
-          case Some("view") => {
-            platform match {
-              case Some("desktop") => DesktopView.increment
-              case Some("responsive") => ResponsiveView.increment
-              case _ => {}
-            }
-          }
           case _ => {}
         }
+      
       }
     }
 } 
