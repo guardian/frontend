@@ -8,10 +8,10 @@ import conf.Switches._
 
 object Viewability extends Logging {
 
-  def report(top: Option[Int], bottom: Option[Int]) {
+  def report(top: Option[Int], bottom: Option[Int], inline: Option[Int], mpu: Option[Int]) {
     
     if (AdDwellTimeLoggerSwitch.isSwitchedOn) {
-      log.info(s"Top -> ${top}, Bottom -> ${bottom}")
+      log.info(s"Top -> ${top}, Bottom -> ${bottom}, Inline -> ${inline}, Mpu -> ${mpu}")
     }
 
     top match {
@@ -24,6 +24,18 @@ object Viewability extends Logging {
       case Some(x:Int) => {
         Bottom.increment(x)
       }
+      case _ => {}
+    }
+    
+    inline match {
+      case Some(x:Int) =>
+        Inline.increment(x)
+      case _ => {}
+    }
+    
+    mpu match {
+      case Some(x:Int) =>
+        MPU.increment(x)
       case _ => {}
     }
 

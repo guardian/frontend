@@ -35,3 +35,5 @@ abstract class Metric extends Logging {
 
 object Top extends model.diagnostics.viewability.Metric
 object Bottom extends model.diagnostics.viewability.Metric
+object Inline extends model.diagnostics.viewability.Metric
+object MPU extends model.diagnostics.viewability.Metric
