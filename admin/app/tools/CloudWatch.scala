@@ -12,7 +12,7 @@ case class LoadBalancer(id: String, name: String, project: String)
 
 object CloudWatch {
 
-  val stage = new Dimension().withName("Stage").withValue(environment.stage)
+  val stage = new Dimension().withName("Stage").withValue("prod")
 
   lazy val cloudClient = {
     val c = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials)
@@ -130,6 +130,17 @@ object CloudWatch {
         }
     new LineChart("JavaScript Errors", Seq("Time") ++ jsErrorMetrics.map{ case(title, name) => name}.toSeq, metrics:_*)
   }
+  
+  def adsInView(statistic: String) = new LineChart(statistic, Nil,
+    cloudClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
+      .withStartTime(new DateTime().minusHours(1).toDate)
+      .withEndTime(new DateTime().toDate)
+      .withPeriod(120)
+      .withStatistics("Sum")
+      .withNamespace("Diagnostics")
+      .withMetricName(statistic)
+      .withDimensions(stage),
+      asyncHandler))
 
   def fastlyErrors = fastlyMetrics.map{ case (graphTitle, metric, region, service) =>
     new LineChart(graphTitle, Seq("Time", metric),
