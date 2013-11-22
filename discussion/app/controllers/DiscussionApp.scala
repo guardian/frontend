@@ -11,7 +11,6 @@ trait DiscussionDispatcher
   with CommentPageController
   with CommentBoxController
   with TopCommentsController
-  with CtaController
 
 object DiscussionApp extends DiscussionDispatcher {
   protected val discussionApi = current.plugin(classOf[DiscussionApi]) getOrElse {
