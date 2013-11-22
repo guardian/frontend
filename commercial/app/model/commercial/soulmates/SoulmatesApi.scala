@@ -11,7 +11,7 @@ object SoulmatesApi extends ExecutionContexts with Logging {
   private def loadMembers(url: => Option[String]): Future[JsValue] = {
     url map {
       u =>
-        val json = WS.url(u) withRequestTimeout 5000 get() map {
+        val json = WS.url(u) withRequestTimeout 10000 get() map {
           response => response.json
         }
 
