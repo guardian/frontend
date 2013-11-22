@@ -14,7 +14,7 @@ Component.define(Cta);
 
 /** @type {Object.<string.*>} */
 Cta.CONFIG = {
-    endpoint: '/open/article/cta/:discussionKey.json'
+    endpoint: '/open/cta/article/:discussionKey.json'
 };
 
 /** @type {Object.<string.*>} */
