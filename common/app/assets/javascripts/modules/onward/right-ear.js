@@ -35,6 +35,7 @@ RightEar.prototype.ready = function() {
 RightEar.prototype.prerender = function() {
     // Update the headline.
     bonzo(this.getElem('headline')).text(this.sequenceItem.headline);
+    this.getElem('link').href = this.sequenceItem.url;
 };
 
 RightEar.prototype.setExpanded = function(e) {
