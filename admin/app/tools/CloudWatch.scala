@@ -12,7 +12,7 @@ case class LoadBalancer(id: String, name: String, project: String)
 
 object CloudWatch {
 
-  val stage = new Dimension().withName("Stage").withValue("prod")
+  val stage = new Dimension().withName("Stage").withValue(environment.stage)
 
   lazy val cloudClient = {
     val c = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials)
