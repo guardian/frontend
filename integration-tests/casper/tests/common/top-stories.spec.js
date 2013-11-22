@@ -56,9 +56,12 @@ casper.test.begin('Top stories control can be toggled on and off',function(test)
         casper.click('[data-toggle="nav-popup-topstories"]');
         test.assertVisible('.nav-popup-topstories', 'The top stories are visible after clicking top stories button');
         casper.capture(screens + 'top-stories-test.png');
-        test.assertEvalEquals(function() {
-            return document.querySelectorAll('[data-link-name="top-stories"] > ul >li').length;
-        }, 10, 'Then I can see 10 headlines');
+        casper.waitForSelector('div[data-link-name="top-stories"] ul li.headline-list__item', function() {
+            casper.capture(screens + 'top-stories-test2.png');
+            test.assertEvalEquals(function() {
+                return document.querySelectorAll('[data-link-name="top-stories"] > ul >li').length;
+            }, 10, 'Then I can see 10 headlines');
+        });
         casper.waitForSelector('.nav-popup-topstories.lazyloaded',function(){
             casper.click('[data-toggle="nav-popup-topstories"]');
             test.assertNotVisible('.nav-popup-topstories', 'The top stories are hidden after clicking top stories button');
