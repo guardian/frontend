@@ -5,10 +5,11 @@
     position: fixed;
     top: 50%;
     right: 0;
-    opacity: 0.75;
-    padding: 6px;
-    height: 84px;
-    width: 288px;
+    opacity: 0.7;
+    padding: 6px 6px 6px 80px;
+    height: 96px;
+    width: 300px;
+    @include box-sizing(border-box);
 
     background: $c-neutral1;
     background:
@@ -35,13 +36,13 @@
 }
 
 .d-right-ear__arrow {
-    margin-right: 42px;
-    margin-bottom: 54px;
-    float: left;
+    margin: $baseline*3 0 0 $baseline*3;
+    position: absolute;
+    left: 0;
+    top: 0;
 }
 
 .d-right-ear__link {
-    float: left;
     width: 214px;
     height: 84px;
     color: white;
