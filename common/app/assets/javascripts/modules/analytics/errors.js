@@ -12,7 +12,7 @@ define([
         var c = config || {},
             isDev = (c.isDev !== undefined) ? c.isDev : false,
             url = config.beaconUrl,
-            path = '/px.gif',
+            path = '/js.gif',
             cons = c.console || window.console,
             win = c.window || window,
             body = document.body,
