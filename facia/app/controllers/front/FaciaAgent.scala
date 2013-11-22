@@ -205,7 +205,7 @@ class Query(id: String, edition: Edition) extends ParseConfig with Logging {
   def items = queryAgent().map { configList => configList flatMap { config =>
       CollectionCache.getCollection(config.id) map { (config, _) }
     }
-  } filter { _.nonEmpty}
+  } filter(_.exists(_._2.items.nonEmpty))
 }
 
 object Query {
