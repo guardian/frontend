@@ -14,36 +14,11 @@ object Viewability extends Logging {
       log.info(s"Top -> ${top}, Bottom -> ${bottom}, Inline -> ${inline}, Mpu -> ${mpu}, Views -> ${view}")
     }
 
-    top match {
-      case Some(x:Int) =>
-        Top.increment(x)
-      case _ => {}
-    }
-
-    bottom match {
-      case Some(x:Int) => {
-        Bottom.increment(x)
-      }
-      case _ => {}
-    }
-    
-    inline match {
-      case Some(x:Int) =>
-        Inline.increment(x)
-      case _ => {}
-    }
-    
-    mpu match {
-      case Some(x:Int) =>
-        MPU.increment(x)
-      case _ => {}
-    }
-    
-    view match {
-      case Some(x:Int) =>
-        firstView.increment(1.0)
-      case _ => {}
-    }
+    top.foreach(Top.increment(_))
+    bottom.foreach(Bottom.increment(_))
+    mpu.foreach(MPU.increment(_))
+    inline.foreach(Inline.increment(_))
+    view.foreach(firstView.increment(_))
 
   }
 }
