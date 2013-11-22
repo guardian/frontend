@@ -77,5 +77,14 @@ object ImgSrc {
       s"$imageHost/${imageType.prefix}${uri.getPath}"
     } else s"${url}"
   }
+
+  def imager(imageContainer: ImageContainer): Option[String] = {
+    imageContainer.largestImage.flatMap { largestImage =>
+      largestImage.url.map { url =>
+        ImgSrc(url, Profile("item-{width}"))
+      }
+    }
+  }
+
 }
 

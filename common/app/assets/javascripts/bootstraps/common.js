@@ -1,4 +1,3 @@
-/*global Imager:true */
 define([
     //Commmon libraries
     '$',
@@ -35,7 +34,6 @@ define([
     "modules/adverts/video",
     "modules/discussion/comment-count",
     "modules/gallery/lightbox",
-    "modules/imager",
     "modules/onward/history",
     "modules/onward/sequence",
     "modules/ui/message",
@@ -57,7 +55,7 @@ define([
     popular,
     related,
     Router,
-    Images,
+    images,
     TopStories,
     Profile,
     Sections,
@@ -76,7 +74,6 @@ define([
     VideoAdvert,
     CommentCount,
     LightboxGallery,
-    imager,
     History,
     sequence,
     Message,
@@ -86,22 +83,8 @@ define([
     var modules = {
 
         upgradeImages: function () {
-            imager.upgrade();
-            imager.listen();
-
-            var images = new Images();
-            mediator.on('page:common:ready', function(config, context) {
-                images.upgrade(context);
-            });
-            mediator.on('fragment:ready:images', function(context) {
-                images.upgrade(context);
-            });
-            mediator.on('modules:related:loaded', function(config, context) {
-                images.upgrade(context);
-            });
-            mediator.on('modules:images:upgrade', function() {
-                $('body').addClass('images-upgraded');
-            });
+            images.upgrade();
+            images.listen();
         },
 
         initialiseNavigation: function (config) {

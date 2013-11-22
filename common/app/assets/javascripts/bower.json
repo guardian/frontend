@@ -1,19 +1,18 @@
 {
-  "name": "frontend-common-js",
-  "version": "0.1.0 ",
-  "dependencies": {
-    "bean": "1.0",
-    "bonzo": "1.3",
-    "curl": "0.8",
-    "domready": "*",
-    "postscribe": "git@github.com:krux/postscribe.git",
-    "eventEmitter": "4.2",
-    "qwery": "3.4",
-    "reqwest": "git@github.com:ironsidevsquincy/reqwest.git",
-    "swipe": "git://github.com/guardian/Swipe.git",
-    "swipeview": "git@github.com:guardian/SwipeView.git",
-    "imager.js": "git@github.com:oncletom/Imager.js.git#feature-separation",
-    "lodash-amd": "2.2.1",
-    "component": "git://github.com/guardian/component.git#0.0.1"
-  }
+    "name": "frontend-common-js",
+    "version": "0.1.0 ",
+    "dependencies": {
+        "bean": "1.0",
+        "bonzo": "1.3",
+        "curl": "0.8",
+        "domready": "*",
+        "postscribe": "krux/postscribe",
+        "eventEmitter": "4.2",
+        "qwery": "3.4",
+        "reqwest": "ironsidevsquincy/reqwest",
+        "swipe": "guardian/Swipe",
+        "swipeview": "guardian/SwipeView",
+        "imager.js": "oncletom/Imager.js#feature-separation",
+        "lodash-amd": "2.2.1"
+    }
 }
