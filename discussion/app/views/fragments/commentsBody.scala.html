@@ -1,19 +1,27 @@
 @(page: CommentPage, blankComment: Comment = null)(implicit request: RequestHeader)
 
 <div class="d-discussion"
-     data-page-count="@page.pages">
-	<div class="d-discussion__header u-h">
-		<span class="d-discussion__disclaimer d-meta-item">Comments sorted by newest first</span>
-	</div>
-	<ul class="d-thread d-thread--top-level">
-	    @page.comments.map{ comment =>
-	        @fragments.comment(comment, page.isClosedForRecommendation)
-	    }
-	</ul>
+     data-page-count="@page.pages"
+     data-comment-count="@page.commentCount">
+    <div class="d-discussion__header">
+        @if(page.commentCount > 0){
+        <div class="d-discussion__meta d-meta-item">
+            @page.commenterCount @if(page.commenterCount == 1){person}else{people}
+            in 
+            @page.topLevelCommentCount thread@if(page.topLevelCommentCount > 1){s}.
+        </div>
+        }
+        <div class="d-discussion__meta d-meta-item">Sorted by newest first.</div>
+    </div>
+    <ul class="d-thread d-thread--top-level">
+        @page.comments.map{ comment =>
+            @fragments.comment(comment, page.isClosedForRecommendation)
+        }
+    </ul>
     @if(page.currentPage + 1 <= page.pages){
         <a class="js-show-more-comments cta" data-link-name="Show more comments" href="@LinkTo{/@page.id?page=@(page.currentPage + 1)}">Show more comments</a>
     }
-    
+
     <script type="text/template" id="tmpl-comment-box">@fragments.commentBox()</script>
     <script type="text/template" id="tmpl-banned-user">@fragments.cannotComment()</script>
     @if(blankComment != null){<script type="text/template" id="tmpl-comment">@fragments.comment(blankComment)</script>}

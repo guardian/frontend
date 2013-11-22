@@ -7,7 +7,7 @@ define([
     'modules/identity/api',
     'modules/discussion/api',
     'modules/discussion/comments',
-    'modules/discussion/topComments',
+    'modules/discussion/top-comments',
     'modules/discussion/comment-box',
     '$'
 ], function(
