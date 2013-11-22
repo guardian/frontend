@@ -69,6 +69,7 @@ define([
             throw new ComponentError('Need element to attach to');
         } else {
             this.elem = elem;
+            this._prerender();
             this._ready();
         }
     };
@@ -83,6 +84,7 @@ define([
             throw new ComponentError('No element of type "'+ '.'+ this.conf().componentName +'" to attach to.');
         }
         this.elem = elem[0];
+        this._prerender();
         this._ready();
     };
 
@@ -96,7 +98,8 @@ define([
             container = parent || document.body;
 
         this.elem = template;
-        bonzo(container).append(template);
+        this.prerender();
+        bonzo(container).append(this.elem);
         this._ready();
     };
 
@@ -121,6 +124,7 @@ define([
         }).then(
             function render(resp) {
                 self.elem = bonzo.create(resp.html)[0];
+                self._prerender();
                 bonzo(parent).append(self.elem);
                 self._ready();
             }
@@ -140,10 +144,16 @@ define([
      * This is just used to set up the component internally
      */
     Component.prototype._ready = function() {
-        this.elems = {};
-        this.prerender();
         this.rendered = true;
         this.ready();
+    };
+
+    /**
+     * Used as we need for pre-prerendering
+     */
+    Component.prototype._prerender = function() {
+        this.elems = {};
+        this.prerender();
     };
 
     /**

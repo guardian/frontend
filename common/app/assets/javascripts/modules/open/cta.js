@@ -1,6 +1,8 @@
 define([
+    '$',
     'modules/component'
 ], function(
+    $,
     Component
 ) {
 
@@ -20,6 +22,14 @@ Cta.CONFIG = {
 /** @type {Object.<string.*>} */
 Cta.prototype.defaultOptions = {
     discussionKey: null
+};
+
+/** @override */
+Cta.prototype.prerender = function() {
+    var comments = $('.comment', this.elem),
+        comment = comments[Math.floor(Math.random() * comments.length) + 0];
+
+    this.elem = comment;
 };
 
 /** @override */

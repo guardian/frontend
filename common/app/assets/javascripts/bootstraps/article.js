@@ -146,7 +146,7 @@ define([
                     var openCta = new OpenCta(context, common.mediator, {
                         discussionKey: config.page.shortUrl.replace('http://gu.com/', '')
                     });
-                    openCta.fetch($('.js-open-cta')[0]);
+                    openCta.fetch($('.open-cta')[0]);
                 }
             });
         }
