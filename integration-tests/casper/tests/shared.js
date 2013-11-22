@@ -6,6 +6,15 @@ host = {
     prod:   'http://www.theguardian.com/'
 }[environment];
 
+viewports = {
+	mobile:  {width: 320, height: 480},
+	tablet:  {width: 768, height: 1024},
+	desktop: {width: 1024, height: 768},
+	wide:    {width: 1366, height: 768}
+};
+
+screens = 'integration-tests/target/casper/fail-screenshots/';
+
 casper.echo('Running tests against ' + environment + ' environment');
 casper.echo('Environment host is ' + host);
 
@@ -19,6 +28,27 @@ casper.on('page.error', function(msg, trace) {
     trace.forEach(function(item) {
         console.log('File:' + item.file + ' line:' + item.line + ' function: ' + item['function']);
     });
+    console.log('-----------------------------');
+});
+
+casper.on('http.status.404', function(resource) {
+    console.log('-----------------------------');
+    console.log('Request returned a 404 status, page does not exist');
+    console.log('URL: ' + resource.url);
+    console.log('-----------------------------');
+});
+
+casper.on('http.status.500', function(resource) {
+    console.log('-----------------------------');
+    console.log('Request returned a 500 status, internal server error');
+    console.log('URL: ' + resource.url);
+    console.log('-----------------------------');
+});
+
+casper.on('http.status.504', function(resource) {
+    console.log('-----------------------------');
+    console.log('Request returned a 504 status, gateway timeout');
+    console.log('URL: ' + resource.url);
     console.log('-----------------------------');
 });
 

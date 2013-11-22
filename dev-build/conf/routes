@@ -13,6 +13,8 @@ GET         /px.gif                                                             
 GET         /discussion/comment-box.json                                                                     controllers.DiscussionApp.commentBox()
 GET         /discussion/comment-counts                                                                       controllers.DiscussionApp.commentCount(shortUrls: String)
 GET         /discussion/comment-counts.json                                                                  controllers.DiscussionApp.commentCountJson(shortUrls: String)
+GET         /discussion/top/*shortUrl.json                                                                   controllers.DiscussionApp.topCommentsPageJson(shortUrl)
+GET         /discussion/top/*shortUrl                                                                        controllers.DiscussionApp.topCommentsPage(shortUrl)
 GET         /discussion/*shortUrl.json                                                                       controllers.DiscussionApp.commentPageJson(shortUrl)
 GET         /discussion/*shortUrl                                                                            controllers.DiscussionApp.commentPage(shortUrl)
 GET         /open/article/cta/*shortUrl.json                                                                 controllers.DiscussionApp.cta(shortUrl)
@@ -124,7 +126,6 @@ GET         /radiator/pingdom                                                   
 GET         /radiator/commit/*hash                                                                           controllers.admin.RadiatorController.commitDetail(hash)
 GET         /radiator/livestats                                                                              controllers.admin.RadiatorController.liveStats()
 GET         /troubleshoot/football                                                                           controllers.admin.FootballTroubleshooterController.renderFootballTroubleshooter()
-GET         /admin/commercial                                                                                controllers.admin.CommercialComponentsController.renderCommercialComponents()
 
 # Commercial
 GET         /commercial/travel/offers.json                                                                   controllers.commercial.TravelOffers.listOffers
@@ -133,10 +134,6 @@ GET         /commercial/masterclasses.json                                      
 # New light jobs feed available only in dev env
 GET         /commercial/lightjobs.json                                                                       controllers.commercial.JobAds.lightJobs
 GET         /commercial/soulmates/mixed.json                                                                 controllers.commercial.SoulmateAds.mixed
-GET         /commercial/soulmates/men.json                                                                   controllers.commercial.SoulmateAds.men
-GET         /commercial/soulmates/women.json                                                                 controllers.commercial.SoulmateAds.women
-GET         /commercial/soulmates/gay.json                                                                   controllers.commercial.SoulmateAds.gay
-GET         /commercial/soulmates/lesbian.json                                                               controllers.commercial.SoulmateAds.lesbian
 
 # Onward journeys
 GET         /onward/popular-onward/*path.json                                                                controllers.MostPopularOnwardController.popularOnward(path)

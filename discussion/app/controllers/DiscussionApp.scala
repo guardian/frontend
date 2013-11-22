@@ -12,6 +12,7 @@ trait DiscussionDispatcher
   extends CommentCountController
   with CommentPageController
   with CommentBoxController
+  with TopCommentsController
   with CtaController
 
 object DiscussionApp extends DiscussionDispatcher {

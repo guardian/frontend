@@ -26,7 +26,7 @@ define([
 
         var c = config || {},
             url = config.beaconUrl,
-            path = '/px.gif',
+            path = config.beaconName || '/px.gif',
             inAlphaTest = !!Cookies.get('GU_ALPHA'),
             body = document.body,
             platform = 'responsive',

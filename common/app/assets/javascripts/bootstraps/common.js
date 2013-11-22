@@ -1,4 +1,3 @@
-/*global Imager:true */
 define([
     //Commmon libraries
     '$',
@@ -35,9 +34,10 @@ define([
     "modules/adverts/video",
     "modules/discussion/comment-count",
     "modules/gallery/lightbox",
-    "modules/imager",
     "modules/onward/history",
-    "modules/onward/sequence"
+    "modules/onward/sequence",
+    "modules/ui/message",
+    "modules/identity/autosignin"
 ], function (
     $,
     mediator,
@@ -55,7 +55,7 @@ define([
     popular,
     related,
     Router,
-    Images,
+    images,
     TopStories,
     Profile,
     Sections,
@@ -74,30 +74,17 @@ define([
     VideoAdvert,
     CommentCount,
     LightboxGallery,
-    imager,
     History,
-    sequence
+    sequence,
+    Message,
+    AutoSignin
 ) {
 
     var modules = {
 
         upgradeImages: function () {
-            imager.upgrade();
-            imager.listen();
-
-            var images = new Images();
-            mediator.on('page:common:ready', function(config, context) {
-                images.upgrade(context);
-            });
-            mediator.on('fragment:ready:images', function(context) {
-                images.upgrade(context);
-            });
-            mediator.on('modules:related:loaded', function(config, context) {
-                images.upgrade(context);
-            });
-            mediator.on('modules:images:upgrade', function() {
-                $('body').addClass('images-upgraded');
-            });
+            images.upgrade();
+            images.listen();
         },
 
         initialiseNavigation: function (config) {
@@ -299,29 +286,31 @@ define([
 
         // display a flash message to devices over 600px who don't have the mobile cookie
         displayReleaseMessage: function (config) {
+            
+            var path = (document.location.pathname) ? document.location.pathname : '/',
+                exitLink = '/preference/platform/desktop?page=' + encodeURIComponent(path + '?view=desktop'),
+                msg = '<p class="site-message__message">' +
+                            'You’re viewing an alpha release of the Guardian’s responsive website. <a href="/help/2013/oct/04/alpha-testing-and-evolution-of-our-mobile-site">Find out more</a>' +
+                      '</p>' +
+                      '<ul class="site-message__actions unstyled">' +
+                           '<li class="site-message__actions__item">' +
+                               '<i class="i i-comment-grey"></i>' +
+                               '<a href="http://survey.omniture.com/d1/hosted/815f9cfba1" data-link-name="feedback" target="_blank">We’d love to hear your feedback</a>' +
+                           '</li>' +
+                           '<li class="site-message__actions__item">' +
+                               '<i class="i i-back"></i>' +
+                                   '<a class="js-main-site-link" rel="nofollow" href="' + exitLink + '"' +
+                                       'data-link-name="opt-out">Opt-out and return to standard desktop site </a>' +
+                           '</li>' +
+                      '</ul>';
 
-            var alreadyOptedIn = !!userPrefs.get('releaseMessage'),
-                releaseMessage = {
-                    show: function () {
-                        $('#header').addClass('js-site-message');
-                        $('.site-message').removeClass('u-h');
-                    },
-                    hide: function () {
-                        userPrefs.set('releaseMessage', true);
-                        $('#header').removeClass('js-site-message');
-                        $('.site-message').addClass('u-h');
-                    }
-                };
+            var releaseMessage = new Message('alpha');
+            var alreadyOptedIn = !!releaseMessage.hasSeen('releaseMessage');
 
             if (config.switches.releaseMessage && !alreadyOptedIn && (detect.getBreakpoint() !== 'mobile')) {
                 // force the visitor in to the alpha release for subsequent visits
                 Cookies.add("GU_VIEW", "mobile", 365);
-
-                releaseMessage.show();
-
-                bean.on(document, 'click', '.js-site-message-close', function(e) {
-                    releaseMessage.hide();
-                });
+                releaseMessage.show(msg);
             }
         },
 
@@ -337,6 +326,14 @@ define([
                     });
                 }
                 sequence.init();
+            });
+        },
+
+        initAutoSignin : function() {
+           mediator.on('page:common:ready', function(config) {
+                if (config.switches && config.switches.facebookAutosignin && detect.getLayoutMode() !== 'mobile') {
+                    new AutoSignin(config).init();
+                }
             });
         },
 
@@ -399,6 +396,7 @@ define([
             modules.optIn();
             modules.displayReleaseMessage(config);
             modules.logReadingHistory();
+            modules.initAutoSignin(config);
         }
         mediator.emit("page:common:ready", config, context);
     };

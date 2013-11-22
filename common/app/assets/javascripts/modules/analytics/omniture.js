@@ -6,7 +6,8 @@ define([
     'utils/storage',
     'modules/identity/api',
     'modules/analytics/errors',
-    'utils/cookies'
+    'utils/cookies',
+    'omniture'
 ], function(
     common,
     detect,
@@ -14,8 +15,9 @@ define([
     storage,
     id,
     Errors,
-    Cookies
-) {
+    Cookies,
+    s
+    ) {
 
     // https://developer.omniture.com/en_US/content_page/sitecatalyst-tagging/c-tagging-overview
 
@@ -85,14 +87,6 @@ define([
             s.tl(true, 'o', tagStr);
         };
 
-        this.trackAdImpression = function(tagStr) {
-            s.linkTrackVars = 'eVar53,events';
-            s.linkTrackEvents = 'event29';
-            s.events = 'event29';
-            s.eVar53 = (config.page.contentType) ? config.page.contentType + ':' + tagStr : tagStr;
-            s.tl(true, 'o', tagStr);
-        };
-
         this.populatePageProperties = function() {
 
             // http://www.scribd.com/doc/42029685/15/cookieDomainPeriods
@@ -145,7 +139,7 @@ define([
 
                 s.prop51  = mvt;
                 s.eVar51  = mvt;
-               
+
                 // prefix all the MVT tests with the alpha user tag if present
                 if (Cookies.get('GU_ALPHA') === "true") {
                     var alphaTag = 'r2alpha,';
@@ -212,18 +206,8 @@ define([
             // must be set before the Omniture file is parsed
             window.s_account = config.page.omnitureAccount;
 
-            // if the omniture object was not injected in to the constructor
-            // use the global 's' object
-            if (window.s) {
-                s = window.s;
-                that.loaded(callback);
-            } else {
-                var dependOn = ['js!omniture'];
-                require(dependOn, function(placeholder){
-                    s = window.s;
-                    that.loaded(callback);
-                });
-            }
+            s = window.s;
+            that.loaded(callback);
         };
 
         this.confirmPageView = function() {
@@ -249,8 +233,6 @@ define([
             }, 10000);
         };
 
-        common.mediator.on('module:analytics:adimpression', that.trackAdImpression );
-
         common.mediator.on('module:clickstream:interaction', that.trackNonLinkEvent );
 
         common.mediator.on('module:clickstream:click', that.logTag );
@@ -265,4 +247,3 @@ define([
     return Omniture;
 
 });
-

@@ -1,0 +1,1980 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"science/2013/nov/13/men-stroked-pants-chemistry-relationships-opioid",
+      "sectionId":"science",
+      "sectionName":"Science",
+      "webPublicationDate":"2013-11-13T17:05:42Z",
+      "webTitle":"Men stroked in their pants to shed light on chemistry that bonds relationships",
+      "webUrl":"http://www.theguardian.com/science/2013/nov/13/men-stroked-pants-chemistry-relationships-opioid",
+      "apiUrl":"http://content.guardianapis.com/science/2013/nov/13/men-stroked-pants-chemistry-relationships-opioid",
+      "fields":{
+        "trailText":"Finnish study finds that gentle stroking changes opioid levels, which helps form lasting bonds",
+        "headline":"Men stroked in their pants to shed light on chemistry that bonds relationships",
+        "body":"<p>Researchers have shed light on the chemistry that bonds one person to another by taking brain scans of men being stroked while in their underpants.</p><p>The Finnish study found that gentle stroking – which was not in sexually arousing areas – changed levels of opioid brain chemicals which work behind the scenes to form lasting bonds in animals.</p><p>The findings suggest that opioids might be the critical chemicals that enables human brains to distinguish between strangers and people who are closer to us, such as friends, families and lovers.</p><p>\"We know this is hugely important for humans because we have these strong, lasting bondings with friends and relatives and so on. But what kind of system maintains these bonds, and makes them last?\" said Lauri Nummenmaa who studies the neural circuitry of emotions at Aalto University in Finland.</p><p>Studies in animals have shown that opioids can play a crucial role in pairing up. Prairie voles are monogamous in the wild, but when given a drug that blocks opioid in their brains, they seek out other partners. If opioids are blocked in monkeys, they groom others less and neglect their babies.</p><p>To see whether opioids were important in human bonding, the researchers invited nine couples into the lab. The men stripped off to their underpants and lay under a blanket in a PET scanner. The first scan was taken while the men were alone. For the second, their partners touched them gently all over, but avoided anywhere likely to arouse them sexually.</p><p>\"I'm really proud of the Finnish general public,\" said Nummenmaa. \"We had no problem whatsoever in recruiting people for the experiment.\"</p><p>When the researchers compared the men's scans, they noticed that gentle stroking caused a drop in natural opioids in brain areas called the ventral striatum and the anterior cingulate cortex, which are mainstays of the brain's reward circuitry. This was counter to expectations: they had expected levels to rise.</p><p>Nummenmaa said that opioid might work in a similar way to a painkiller, with the body needing less the more comfortable it was. \"The opioid system is typically engaged during pain, so you get a boost in painful situations. The social touching might be doing exactly the opposite. You can think of it as pain alleviation. That might be the underlying mechanism for why hooking up with others makes us feel so good in the first place,\" said Nummenmaa. Details of the study were given at the <a href=\"http://www.sfn.org/annual-meeting/neuroscience-2013\" title=\"\">Society for Neuroscience meeting in San Diego</a>.</p><p>Opiate drugs have the same effect as the body's natural opioids, and just as people build up tolerances to drugs, develop cravings, and suffer withdrawal symptoms, similar processes play out with relationships.</p><p>\"If something similar happens when you are establishing social bonds that would make perfect sense. You would need your daily fix, or at least a fix now and then, and unless you got that you would start to feel pain,\" said Nummenmaa.</p><!-- Guardian Watermark: internal-code/content/422406271|2013-11-21T11:27:41Z|466934a6f16ba6e830137c83486192d406ada50a -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-13T17:05:42Z",
+        "hasStoryPackage":"true",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/13/1384360024366/A-couple-cuddling-in-bed-006.jpg",
+        "standfirst":"Finnish study finds that gentle stroking changes opioid levels, which helps form lasting bonds",
+        "shortUrl":"http://gu.com/p/3kc5c",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/13/1384360024366/A-couple-cuddling-in-bed-006.jpg",
+        "wordcount":"479",
+        "commentable":"true",
+        "internalContentCode":"422406271",
+        "allowUgc":"false",
+        "internalOctopusCode":"8316742",
+        "isPremoderated":"false",
+        "byline":"Ian Sample, science correspondent, in San Diego",
+        "publication":"theguardian.com",
+        "internalPageCode":"1996878",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-16T17:05:42Z"
+      },
+      "tags":[{
+        "id":"science/society-neuroscience-annual-meeting",
+        "type":"keyword",
+        "webTitle":"Society for Neuroscience annual meeting",
+        "webUrl":"http://www.theguardian.com/science/society-neuroscience-annual-meeting",
+        "apiUrl":"http://content.guardianapis.com/science/society-neuroscience-annual-meeting",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/neuroscience",
+        "type":"keyword",
+        "webTitle":"Neuroscience",
+        "webUrl":"http://www.theguardian.com/science/neuroscience",
+        "apiUrl":"http://content.guardianapis.com/science/neuroscience",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/science",
+        "type":"keyword",
+        "webTitle":"Science",
+        "webUrl":"http://www.theguardian.com/science/science",
+        "apiUrl":"http://content.guardianapis.com/science/science",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/chemistry",
+        "type":"keyword",
+        "webTitle":"Chemistry",
+        "webUrl":"http://www.theguardian.com/science/chemistry",
+        "apiUrl":"http://content.guardianapis.com/science/chemistry",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"lifeandstyle/relationships",
+        "type":"keyword",
+        "webTitle":"Relationships",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/relationships",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/relationships",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"world/finland",
+        "type":"keyword",
+        "webTitle":"Finland",
+        "webUrl":"http://www.theguardian.com/world/finland",
+        "apiUrl":"http://content.guardianapis.com/world/finland",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"world/europe-news",
+        "type":"keyword",
+        "webTitle":"Europe",
+        "webUrl":"http://www.theguardian.com/world/europe-news",
+        "apiUrl":"http://content.guardianapis.com/world/europe-news",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/iansample",
+        "type":"contributor",
+        "webTitle":"Ian Sample",
+        "webUrl":"http://www.theguardian.com/profile/iansample",
+        "apiUrl":"http://content.guardianapis.com/profile/iansample",
+        "bio":"<p>Ian Sample has been a <a href=\"http://www.guardian.co.uk/science\">science</a> correspondent for the Guardian since 2003. Before that, he was a journalist at New Scientist and worked at the Institute of Physics as a journal editor. He has a PhD in biomedical materials from Queen Mary's, University of London</p>",
+        "rcsId":"GNL006496",
+        "r2ContributorId":"15749",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/ian_sample_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"science/human-biology",
+        "type":"keyword",
+        "webTitle":"Human biology",
+        "webUrl":"http://www.theguardian.com/science/human-biology",
+        "apiUrl":"http://content.guardianapis.com/science/human-biology",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/biology",
+        "type":"keyword",
+        "webTitle":"Biology",
+        "webUrl":"http://www.theguardian.com/science/biology",
+        "apiUrl":"http://content.guardianapis.com/science/biology",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/biochemistrymolecularbiology",
+        "type":"keyword",
+        "webTitle":"Biochemistry and molecular biology",
+        "webUrl":"http://www.theguardian.com/science/biochemistrymolecularbiology",
+        "apiUrl":"http://content.guardianapis.com/science/biochemistrymolecularbiology",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-422411922",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/13/1384360020660/A-couple-cuddling-in-bed-003.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "altText":"A couple cuddling in bed",
+            "height":"54",
+            "credit":"Rex Features",
+            "caption":"Studies show that opioid can play a crucial role in pairing up. Photograph: Rex Features",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/13/1384360021898/A-couple-cuddling-in-bed-004.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "altText":"A couple cuddling in bed",
+            "height":"340",
+            "credit":"Rex Features",
+            "caption":"Studies show that opioid can play a crucial role in pairing up. Photograph: Rex Features",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/13/1384360023121/A-couple-cuddling-in-bed-005.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "altText":"A couple cuddling in bed",
+            "height":"130",
+            "credit":"Rex Features",
+            "caption":"Studies show that opioid can play a crucial role in pairing up. Photograph: Rex Features",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/13/1384360024366/A-couple-cuddling-in-bed-006.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "altText":"A couple cuddling in bed",
+            "height":"84",
+            "credit":"Rex Features",
+            "caption":"Studies show that opioid can play a crucial role in pairing up. Photograph: Rex Features",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/13/1384360025603/A-couple-cuddling-in-bed-007.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "altText":"A couple cuddling in bed",
+            "height":"132",
+            "credit":"Rex Features",
+            "caption":"Studies show that opioid can play a crucial role in pairing up. Photograph: Rex Features",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/13/1384360026884/A-couple-cuddling-in-bed-008.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "altText":"A couple cuddling in bed",
+            "height":"168",
+            "credit":"Rex Features",
+            "caption":"Studies show that opioid can play a crucial role in pairing up. Photograph: Rex Features",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/13/1384360028184/A-couple-cuddling-in-bed-009.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "altText":"A couple cuddling in bed",
+            "height":"180",
+            "credit":"Rex Features",
+            "caption":"Studies show that opioid can play a crucial role in pairing up. Photograph: Rex Features",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/13/1384360029471/A-couple-cuddling-in-bed-010.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "altText":"A couple cuddling in bed",
+            "height":"228",
+            "credit":"Rex Features",
+            "caption":"Studies show that opioid can play a crucial role in pairing up. Photograph: Rex Features",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/13/1384360030738/A-couple-cuddling-in-bed-011.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "altText":"A couple cuddling in bed",
+            "height":"276",
+            "credit":"Rex Features",
+            "caption":"Studies show that opioid can play a crucial role in pairing up. Photograph: Rex Features",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/13/1384360032633/A-couple-cuddling-in-bed-012.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "altText":"A couple cuddling in bed",
+            "height":"372",
+            "credit":"Rex Features",
+            "caption":"Studies show that opioid can play a crucial role in pairing up. Photograph: Rex Features",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/13/1384360030738/A-couple-cuddling-in-bed-011.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "altText":"A couple cuddling in bed",
+            "height":"276",
+            "credit":"Rex Features",
+            "caption":"Studies show that opioids can play a crucial role in pairing up. Photograph: Rex Features",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-422411923",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/13/1384360024366/A-couple-cuddling-in-bed-006.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "altText":"A couple cuddling in bed",
+            "height":"84",
+            "credit":"Rex Features",
+            "caption":"Studies show that opioid can play a crucial role in pairing up. Photograph: Rex Features",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"technology/2013/nov/14/workers-burned-tesla-car-plant",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-11-14T06:25:48Z",
+      "webTitle":"Workers burned at Tesla car plant",
+      "webUrl":"http://www.theguardian.com/technology/2013/nov/14/workers-burned-tesla-car-plant",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/nov/14/workers-burned-tesla-car-plant",
+      "fields":{
+        "trailText":"<p>Hot aluminium spills from casting press at Elon Musk's electric car factory, leaving three employees with injuries</p>",
+        "headline":"Workers burned at Tesla car plant",
+        "body":"<p>Three Tesla Motors employees were injured when a casting press containing hot  aluminium failed at its San Francisco Bay area factory, officials said.</p><p>One employee was seriously hurt and two other sustained minor injuries when the low-pressure machine spilled hot metal shortly before noon on Wednesday, said Greg Siggins, a spokesman for the California Occupational Safety and Health Adminstration (OSHA).</p><p>\"Hot metal somehow burned the workers,\" said Siggins, who added there had been no fire inside the plant.</p><p>The most seriously injured worker received chest and upper-body burns, OSHA spokesman Peter Melton said. The three workers were taken to hospital with second-degree burns, Siggins said.</p><p>The high-profile Tesla chief executive Elon Musk, who also runs the private SpaceX consortium building spacecraft, said in an email that he would visit the workers and \"personally ensure that they receive the best possible care\".</p><p>The incident was being treated as an industrial accident, Siggins said. \"We will be talking to any witnesses, reviewing training documents and manuals to see if they are in accordance with specifications as part of finding out what happened,\" Siggins said.</p><p>Tesla Motors, which is headquartered in Palo Alto, makes its all-electric Model S sedan at the Fremont factory. Tesla took ownership four years ago of the plant formerly jointly owned by General Motors and Toyota.</p><p>Wednesday's accident follows recent Tesla car fires in Washington state, Tennessee and Mexico. Two Model S sedans caught fire after hitting a metal object in the road and a third caught fire after a high-speed chase. None of the drivers were injured.</p><p>Musk said on Tuesday that there were no plans for a recall and described the Model S as one of the safest cars on the road.</p><!-- Guardian Watermark: internal-code/content/422449912|2013-11-21T11:27:41Z|3d00c59542aecb2c3d19f9c434d1dcc556e80225 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-14T06:31:29Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/14/1384410184192/Tesla-Model-S-005.jpg",
+        "standfirst":"Hot aluminium spills from casting press at Elon Musk's electric car factory, leaving three employees with injuries",
+        "shortUrl":"http://gu.com/p/3kcft",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/14/1384410184192/Tesla-Model-S-005.jpg",
+        "wordcount":"277",
+        "commentable":"false",
+        "internalContentCode":"422449912",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Associated Press in Fremont",
+        "publication":"theguardian.com",
+        "internalPageCode":"1997154",
+        "productionOffice":"AUS",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-17T06:25:48Z"
+      },
+      "tags":[{
+        "id":"technology/elon-musk",
+        "type":"keyword",
+        "webTitle":"Elon Musk",
+        "webUrl":"http://www.theguardian.com/technology/elon-musk",
+        "apiUrl":"http://content.guardianapis.com/technology/elon-musk",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"environment/electric-cars",
+        "type":"keyword",
+        "webTitle":"Electric, hybrid and low-emission cars",
+        "webUrl":"http://www.theguardian.com/environment/electric-cars",
+        "apiUrl":"http://content.guardianapis.com/environment/electric-cars",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"world/california",
+        "type":"keyword",
+        "webTitle":"California",
+        "webUrl":"http://www.theguardian.com/world/california",
+        "apiUrl":"http://content.guardianapis.com/world/california",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/automotive-industry",
+        "type":"keyword",
+        "webTitle":"Automotive industry",
+        "webUrl":"http://www.theguardian.com/business/automotive-industry",
+        "apiUrl":"http://content.guardianapis.com/business/automotive-industry",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"environment/environment",
+        "type":"keyword",
+        "webTitle":"Environment",
+        "webUrl":"http://www.theguardian.com/environment/environment",
+        "apiUrl":"http://content.guardianapis.com/environment/environment",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-422449916",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/14/1384410192144/Tesla-Model-S-009.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Paul Sakuma",
+            "altText":"Tesla Model S",
+            "height":"228",
+            "credit":"Paul Sakuma/AP",
+            "caption":"A Tesla Model S outside the electric car company's factor in Fremont, California, where three workers have been injured in a spill of hot aluminium. Photograph: Paul Sakuma/AP",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/14/1384410194362/Tesla-Model-S-010.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Paul Sakuma",
+            "altText":"Tesla Model S",
+            "height":"276",
+            "credit":"Paul Sakuma/AP",
+            "caption":"A Tesla Model S outside the electric car company's factor in Fremont, California, where three workers have been injured in a spill of hot aluminium. Photograph: Paul Sakuma/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-422449917",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/14/1384410184192/Tesla-Model-S-005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Paul Sakuma",
+            "altText":"Tesla Model S",
+            "height":"84",
+            "credit":"Paul Sakuma/AP",
+            "caption":"A Tesla Model S outside the electric car company's factor in Fremont, California, where three workers have been injured in a spill of hot aluminium. Photograph: Paul Sakuma/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"science/2013/nov/13/big-cats-oldest-ancestor-found-tibet",
+      "sectionId":"science",
+      "sectionName":"Science",
+      "webPublicationDate":"2013-11-13T00:05:00Z",
+      "webTitle":"Big cats' oldest ancestor found in Tibet",
+      "webUrl":"http://www.theguardian.com/science/2013/nov/13/big-cats-oldest-ancestor-found-tibet",
+      "apiUrl":"http://content.guardianapis.com/science/2013/nov/13/big-cats-oldest-ancestor-found-tibet",
+      "fields":{
+        "newspaperPageNumber":"14",
+        "trailText":"<p>The fossil skull of the <em>Panthera blytheae, the </em>precursor to all modern lions, tigers and leopards was found in the Himalayas</p>",
+        "headline":"Big cats' oldest ancestor found in Tibet",
+        "body":"<p>Scientists have found in the Tibetan Himalayas the fossil skull of the oldest known big cat, the precursor to all modern lions, tigers and leopards, pushing back the fossil record of these animals by at least 2m years and lending weight to the idea that they evolved in Asia, rather than Africa, where the previous oldest fossil was found.</p><p>The species, named <em>Panthera blytheae</em>, would have lived between 4-6m years ago in cold regions of the Himalayas.</p><p>\"In terms of the overall size it would be a little bit smaller than a snow leopard– the size of a clouded leopard and those living cats grow up to around 20kg [44lb],\" said Jack Tseng, a postdoctoral fellow at the American Museum of Natural History in New York, who led the team that discovered the fossil. \"You would most likely recognise it as a big cat.\"</p><p>Based on the wear of the teeth in the skull, the animal probably hunted like modern snow leopards do, said Tseng. \"They used their front teeth to pick at a hide or hunt in very gritty areas where they get heavy wear on the front teeth. They used their back teeth, which remain very sharp, to cut through soft tissue. You can imagine [them] hunting among the cliffs of the Himalayas, ambushing the sheep or antelopes or smaller mammals.\"</p><p>Tseng's team found the fossilised skull under a mound of bones, which included antelope and horse limbs, in the summer of 2010 when driving in a remote area near the China-Pakistan border.</p><p>He said the cat would have had a broad forehead, associated with an expanded sinus cavity in the head, an adaptation suiting cold environments since it helped the animal warm up the air it breathed in.</p><p>The fossil is described in detail in <a href=\"http://rspb.royalsocietypublishing.org/lookup/doi/10.1098/rspb.2013.2686\" title=\"\">Wednesday's edition of the Proceedings of the Royal Society B: Biological Sciences</a>.</p><p>Studies of the genomes of modern big cats suggest they diverged from a common ancestor about 6.37m years ago, but till now the oldest known fossil from this group of animals amounted to some teeth found in Tanzania, dated to 3.6m years ago. Tseng dated <em>Panthera blytheae</em> to 4.10m-5.95m years.</p><p>Anjali Goswami, a palaeobiologist at University College London, who was not involved in the research, said: \"This age has the result of pushing back the origin and evolution of Pantherinae by several million years, which is more consistent with molecular estimates.</p><p>\"Divergence estimates for pantherines have been based in large part on very fragmentary material, so having a beautifully preserved specimen to accurately place in the big cat family tree means that we can have a lot more confidence in the result.</p><p>\"This is also potentially the biggest weakness with the study, as the locality is not very well constrained in terms of age, meaning that there is a nearly 2 million year window on when this organism lived. Any part of this window still places it as the oldest pantherine, but constraining that to a more specific date between 4-6m years ago will be essential to furthering our understanding of pantherine evolution and indeed the evolution of this new species.\"</p><p>The new fossil suggests central Asia, rather than Africa, was where the panthera sub family, including lions, jaguars, tigers, leopards, snow leopards, and clouded leopards, diverged from the rest of the cat family tree, felinae, which includes cougars, lynxes, and domestic cats.</p><p>Goswami said that the geographic origin of pantherines was perplexing, because the distribution of living species suggested an Asian origin for the group, but the oldest fossils were from Africa, suggesting an African origin.</p><p>\"This beautiful fossil supports the Asian origin for the group, bringing together molecular, living and fossil data into a unified view of pantherine evolution.</p><p>\"It also supports the idea that the Tibetan plateau was, and remains, an important biogeographic region for large mammals and is the centre of origin for many important groups. Nailing down the place of origin for pantherines also means that we can better understand the environmental and ecological context in which this group evolved.\"</p><!-- Guardian Watermark: internal-code/content/422343276|2013-11-21T11:27:41Z|ff4184be06e2d2a6b459488e74e85783e5f2a54f -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-13T15:44:00Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/12/1384297326803/Worlds-oldest-big-cat--004.jpg",
+        "standfirst":"The fossil skull of the <em>Panthera blytheae, the </em>precursor to all modern lions, tigers and leopards was found in the Himalayas",
+        "shortUrl":"http://gu.com/p/3kbeh",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/12/1384297326803/Worlds-oldest-big-cat--004.jpg",
+        "wordcount":"661",
+        "commentable":"true",
+        "internalContentCode":"422343276",
+        "allowUgc":"false",
+        "internalOctopusCode":"8313800",
+        "isPremoderated":"false",
+        "byline":"Alok Jha, science correspondent",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-11-13",
+        "internalPageCode":"1996397",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-16T00:05:00Z"
+      },
+      "tags":[{
+        "id":"science/fossils",
+        "type":"keyword",
+        "webTitle":"Fossils",
+        "webUrl":"http://www.theguardian.com/science/fossils",
+        "apiUrl":"http://content.guardianapis.com/science/fossils",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/evolution",
+        "type":"keyword",
+        "webTitle":"Evolution",
+        "webUrl":"http://www.theguardian.com/science/evolution",
+        "apiUrl":"http://content.guardianapis.com/science/evolution",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"world/animals",
+        "type":"keyword",
+        "webTitle":"Animals",
+        "webUrl":"http://www.theguardian.com/world/animals",
+        "apiUrl":"http://content.guardianapis.com/world/animals",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"science/biology",
+        "type":"keyword",
+        "webTitle":"Biology",
+        "webUrl":"http://www.theguardian.com/science/biology",
+        "apiUrl":"http://content.guardianapis.com/science/biology",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/science",
+        "type":"keyword",
+        "webTitle":"Science",
+        "webUrl":"http://www.theguardian.com/science/science",
+        "apiUrl":"http://content.guardianapis.com/science/science",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"profile/alokjha",
+        "type":"contributor",
+        "webTitle":"Alok Jha",
+        "webUrl":"http://www.theguardian.com/profile/alokjha",
+        "apiUrl":"http://content.guardianapis.com/profile/alokjha",
+        "bio":"<p>Alok Jha is a science correspondent at the Guardian. In addition to writing news and comment, he presents the <a href=\"http://www.theguardian.com/science/series/science\">Science Weekly podcast</a>. A physics graduate from Imperial College London, he has been at the Guardian since the launch of the science supplement, Life, in 2003. He is the author of <a href=\"http://www.guardianbookshop.co.uk/BerteShopWeb/viewProduct.do?ISBN=9780857386120\">The Doomsday Handbook: 50 Ways to the End of the World </a> and <a href=\"http://www.amazon.co.uk/How-Live-Forever-Interesting-Science/dp/1849164827\">How To Live Forever And 34 Other Really Interesting Uses for Science</a>, both published by Quercus. You can find him on Twitter at  <a href=\"https://twitter.com/alokjha\">@alokjha</a> and his personal website is at <a href=\"http://www.alokjha.com\">alokjha.com </a></p>",
+        "rcsId":"GNL006494",
+        "r2ContributorId":"15338",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/26/alok_jha_140x140.jpg",
+        "references":[]
+      },{
+        "id":"world/tibet",
+        "type":"keyword",
+        "webTitle":"Tibet",
+        "webUrl":"http://www.theguardian.com/world/tibet",
+        "apiUrl":"http://content.guardianapis.com/world/tibet",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-422402718",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/12/1384297321795/Worlds-oldest-big-cat--001.jpg",
+          "typeData":{
+            "source":"National News and Pictures",
+            "photographer":" ",
+            "altText":"World's oldest big cat ",
+            "height":"54",
+            "credit":" /National News and Pictures",
+            "caption":"The world's oldest big cat has been dug up in Tibet – it could date back almost six million years. Photograph:  /National News and Pictures",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/12/1384297323965/Worlds-oldest-big-cat--002.jpg",
+          "typeData":{
+            "source":"National News and Pictures",
+            "photographer":" ",
+            "altText":"World's oldest big cat ",
+            "height":"340",
+            "credit":" /National News and Pictures",
+            "caption":"The world's oldest big cat has been dug up in Tibet – it could date back almost six million years. Photograph:  /National News and Pictures",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/12/1384297325477/Worlds-oldest-big-cat--003.jpg",
+          "typeData":{
+            "source":"National News and Pictures",
+            "photographer":" ",
+            "altText":"World's oldest big cat ",
+            "height":"130",
+            "credit":" /National News and Pictures",
+            "caption":"The world's oldest big cat has been dug up in Tibet – it could date back almost six million years. Photograph:  /National News and Pictures",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/12/1384297326803/Worlds-oldest-big-cat--004.jpg",
+          "typeData":{
+            "source":"National News and Pictures",
+            "photographer":" ",
+            "altText":"World's oldest big cat ",
+            "height":"84",
+            "credit":" /National News and Pictures",
+            "caption":"The world's oldest big cat has been dug up in Tibet – it could date back almost six million years. Photograph:  /National News and Pictures",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/12/1384297328272/Worlds-oldest-big-cat--005.jpg",
+          "typeData":{
+            "source":"National News and Pictures",
+            "photographer":" ",
+            "altText":"World's oldest big cat ",
+            "height":"132",
+            "credit":" /National News and Pictures",
+            "caption":"The world's oldest big cat has been dug up in Tibet – it could date back almost six million years. Photograph:  /National News and Pictures",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/12/1384297329745/Worlds-oldest-big-cat--006.jpg",
+          "typeData":{
+            "source":"National News and Pictures",
+            "photographer":" ",
+            "altText":"World's oldest big cat ",
+            "height":"168",
+            "credit":" /National News and Pictures",
+            "caption":"The world's oldest big cat has been dug up in Tibet – it could date back almost six million years. Photograph:  /National News and Pictures",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/12/1384297331266/Worlds-oldest-big-cat--007.jpg",
+          "typeData":{
+            "source":"National News and Pictures",
+            "photographer":" ",
+            "altText":"World's oldest big cat ",
+            "height":"180",
+            "credit":" /National News and Pictures",
+            "caption":"The world's oldest big cat has been dug up in Tibet – it could date back almost six million years. Photograph:  /National News and Pictures",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/12/1384297332656/Worlds-oldest-big-cat--008.jpg",
+          "typeData":{
+            "source":"National News and Pictures",
+            "photographer":" ",
+            "altText":"World's oldest big cat ",
+            "height":"228",
+            "credit":" /National News and Pictures",
+            "caption":"The world's oldest big cat has been dug up in Tibet – it could date back almost six million years. Photograph:  /National News and Pictures",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/12/1384297334218/Worlds-oldest-big-cat--009.jpg",
+          "typeData":{
+            "source":"National News and Pictures",
+            "photographer":" ",
+            "altText":"World's oldest big cat ",
+            "height":"276",
+            "credit":" /National News and Pictures",
+            "caption":"The world's oldest big cat has been dug up in Tibet – it could date back almost six million years. Photograph:  /National News and Pictures",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/12/1384297335753/Worlds-oldest-big-cat--010.jpg",
+          "typeData":{
+            "source":"National News and Pictures",
+            "photographer":" ",
+            "altText":"World's oldest big cat ",
+            "height":"372",
+            "credit":" /National News and Pictures",
+            "caption":"The world's oldest big cat has been dug up in Tibet – it could date back almost six million years. Photograph:  /National News and Pictures",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/12/1384297334218/Worlds-oldest-big-cat--009.jpg",
+          "typeData":{
+            "source":"National News and Pictures",
+            "photographer":" ",
+            "altText":"World's oldest big cat ",
+            "height":"276",
+            "credit":" /National News and Pictures",
+            "caption":"The world's oldest big cat has been dug up in Tibet – it could date back almost six million years. Photograph: National News and Pictures",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-422402719",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/12/1384297326803/Worlds-oldest-big-cat--004.jpg",
+          "typeData":{
+            "source":"National News and Pictures",
+            "photographer":" ",
+            "altText":"World's oldest big cat ",
+            "height":"84",
+            "credit":" /National News and Pictures",
+            "caption":"The world's oldest big cat has been dug up in Tibet – it could date back almost six million years. Photograph:  /National News and Pictures",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/nov/06/rjukan-sun-norway-town-mirrors",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-11-06T17:19:00Z",
+      "webTitle":"Rjukan sun: the Norwegian town that does it with mirrors",
+      "webUrl":"http://www.theguardian.com/world/2013/nov/06/rjukan-sun-norway-town-mirrors",
+      "apiUrl":"http://content.guardianapis.com/world/2013/nov/06/rjukan-sun-norway-town-mirrors",
+      "fields":{
+        "newspaperPageNumber":"6",
+        "trailText":"<p>Last week for the first time ever, the winter sun shone on the Norwegian town of Rjukan. <strong>Jon Henley</strong> meets the inhabitants whose lives have been transformed – and the man who brought them sunshine</p>",
+        "headline":"Rjukan sun: the Norwegian town that does it with mirrors",
+        "body":"<p>On the market square in <a href=\"http://www.theguardian.com/world/2013/oct/30/giant-mirrors-first-winter-sun-norway-rjukan\" title=\"\">Rjukan</a> stands a statue of the town's founder, a noted Norwegian engineer and industrialist called Sam Eyde, sporting a particularly fine moustache. One hand thrust in trouser pocket, the other grasping a tightly rolled drawing, the great man stares northwards across the square at an almost sheer mountainside in front of him.</p><p>Behind him, to the south, rises the equally sheer 1,800-metre peak known as Gaustatoppen. Between the mountains, strung out along the narrow Vestfjord valley, lies the small but once mighty town that Eyde built in the early years of the last century, to house the workers for his factories.</p><p>He was plainly a smart guy, Eyde. He harnessed the power of the 100-metre Rjukanfossen waterfall to generate hydro-electricity in what was, at the time, the world's biggest power plant. <a href=\"http://www.ovguide.com/birkeland-eyde-process-9202a8c04000641f800000000558ac0b\" title=\"\">He pioneered new technologies – one of which bears his name</a> – to produce saltpetre by oxidising nitrogen from air, and made industrial quantities of hydrogen by water electrolysis.</p><p>But there was one thing he couldn't do: change the elevation of the sun. Deep in its east-west valley, surrounded by high mountains, Rjukan and its 3,400 inhabitants are in shadow for half the year. During the day, from late September to mid-March, the town, three hours north-west of Oslo, is not dark (well, it is almost, in December and January, but then so is most of Norway), but it's certainly not bright either. A bit ... flat. A bit subdued, a bit muted, a bit mono.</p><video data-media-id=\"gu-video-421227976\" class=\"gu-video\" controls=\"controls\" poster=\"\">\n        <source src=\"http://cdn.theguardian.tv/mainwebsite/2013/10/29/131029Norwaysun-16x9.mp4\"></source><source src=\"http://cdn.theguardian.tv/3gp/large/2013/10/29/131029Norwaysun_3gpLg16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/3gp/small/2013/10/29/131029Norwaysun_3gpSml16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/ad/2013/10/29/131029Norwaysun/131029Norwaysun.m3u8\"></source>\n      </video><p>Since last week, however, Eyde's statue has gazed out upon a sight that even the eminent engineer might have found startling. High on the mountain opposite, 450 metres above the town, three large, solar-powered, computer-controlled mirrors steadily track the movement of the sun across the sky, reflecting its rays down on to the square and bathing it in bright sunlight. Rjukan – or at least, a small but vital part of Rjukan – is no longer stuck where the sun don't shine.</p><p>\"It's the sun!\" grins Ingrid Sparbo, disbelievingly, lifting her face to the light and closing her eyes against the glare. A retired secretary, Sparbo has lived all her life in Rjukan and says people \"do sort of get used to the shade. You end up not thinking about it, really. But this ... This is so warming. Not just physically, but mentally. It's mentally warming.\"</p><p>Two young mothers wheel their children into the square, turn, and briefly bask: a quick hit. On a freezing day, an elderly couple sit wide-eyed on one of the half-dozen newly installed benches, smiling at the warmth on their faces. Children beam. Lots of people take photographs. A shop assistant, Silje Johansen, says it's \"awesome. Just awesome.\"</p><p>Pushing his child's buggy, electrical engineer Eivind Toreid is more cautious. \"It's a funny thing,\" he says. \"Not real sunlight, but very like it. Like a spotlight. I'll go if I'm free and in town, yes. Especially in autumn and in the weeks before the sun comes back. Those are the worst: you look just a short way up the mountainside and the sun is right there, so close you can almost touch it. But not here.\"</p><p>Pensioners Valborg and Eigil Lima have driven from Stavanger – five long hours on the road – specially to see it. Heidi Fieldheim, who lives in Oslo now but spent six years in Rjukan with her husband, a local man, says she heard all about it on the radio. \"But it's far more than I expected,\" she says. \"This will bring much happiness.\"</p><p>Across the road in the Nyetider cafe, sporting – by happy coincidence – a particularly fine set of mutton chops, sits the man responsible for this unexpected access to happiness. Martin Andersen is a 40-year-old artist and lifeguard at the municipal baths who, after spells in Berlin, Paris, Mali and Oslo, pitched up in Rjukan in the summer of 2001.</p><p>The first inkling of an artwork Andersen dubbed the Solspeil, or sun mirror, came to him as the month of September began to fade: \"Every day, we would take our young child for a walk in the buggy,\" he says, \"and every day I realised we were having to go a little further down the valley to find the sun.\" By 28 September, Andersen realised, the sun completely disappears from Rjukan's market square. The occasion of its annual reappearance, lighting up the bridge across the river by the old fire station, is a date indelibly engraved in the minds of all Rjukan residents: 12 March.</p><p>And throughout the seemingly endless intervening months, Andersen says: \"We'd look up and see blue sky above, and the  sun high on the mountain slopes, but the only way we could get to it was to go out of town. The brighter the day, the darker it was down here. And it's sad, a town that people have to leave in order to feel the sun.\"</p><figure data-media-id='gu-image-421888146'><img src='http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/6/1383757776300/Sunlight-reflects-off-the-001.jpg' alt='Sunlight reflects off the three giant mirrors.' width='460' height='690' class='gu-image'/><figcaption>Sunlight reflects off the three giant mirrors. Photograph: David Levene for the Guardian</figcaption></figure><p>A hundred years ago, Eyde had already grasped the gravity of the problem. Researching his own plan, Andersen discovered that, as early as 1913, Eyde was considering a suggestion by one of his factory workers for a system of mountain-top mirrors to redirect sunlight into the valley below.</p><p>The industrialist eventually abandoned the plan for want of adequate technology, but soon afterwards his company, Norsk Hydro, paid for the construction of a cable car to carry the long-suffering townsfolk, for a modest sum, nearly 500m higher up the mountain and into the sunlight. (Built in 1928, the <a href=\"http://www.krossobanen.no/\" title=\"\">Krossobanen</a> is still running, incidentally; £10 for the return trip. The view is majestic and the coffee at the top excellent. A brass plaque in the ticket office declares the facility a gift from the company \"to the people of Rjukan, because for six months of the year, the sun does not shine in the bottom of the valley\".)</p><p>Andersen unearthed a partially covered sports stadium in Arizona that was successfully using small mirrors to keep its grass growing. He learned that in the Middle East and other sun-baked regions of the world, vast banks of hi-tech tracking mirrors called heliostats concentrate sufficient reflected sunlight to heat steam turbines and drive whole power plants. He persuaded the town hall to come up with the cash to allow him to develop his project further. He contacted an expert in the field, Jonny Nersveen, who did the maths and told him it could probably work. He visited Viganella, an Italian village that installed a similar sun mirror in 2006.</p><p>And 12 years after he first dreamed of his Solspeil, a German company specialising in so-called CSP – concentrated solar power – helicoptered in the three 17 sq m glass mirrors that now stand high above the market square in Rjukan. \"It took,\" he says, \"a bit longer than we'd imagined.\" First, the municipality wasn't used to dealing with this kind of project: \"There's no rubber stamp for a sun mirror.\" But Andersen also wanted to be sure it was right – that Rjukan's sun mirror would do what it was intended to do.</p><p>Viganella's single polished steel mirror, he says, lights a much larger area, but with a far weaker, more diffuse light. \"I wanted a smaller, concentrated patch of sunlight: a special sunlit spot in the middle of town where people could come for a quick five minutes in the sun.\" The result, you would have to say, is pretty much exactly that: bordered on one side by the library and town hall, and on the other by the tourist office, the 600 sq ms of Rjukan's market square, to be comprehensively remodelled next year in celebration, now bathes in a focused beam of bright sunlight fully 80-90% as intense as the original.</p><p>Their efforts monitored by webcams up on the mountain and down in the square, their movement dictated by computer in a Bavarian town outside Munich, the heliostats generate the solar power they need to gradually tilt and rotate, following the sun on its brief winter dash across the sky.</p><p>It really works. Even the objectors – and there were, in town, plenty of them; petitions and letter-writing campaigns and a Facebook page organised against what a large number of locals saw initially as a vanity project and, above all, a criminal waste of money – now seem largely won over.</p><figure data-media-id='gu-image-421888147'><img src='http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/6/1383757703313/A-man-holds-his-baby-up-t-001.jpg' alt='A man holds his baby up to the light reflected by the mirrors.' width='460' height='690' class='gu-image'/><figcaption>A man holds his baby up to the light reflected by the mirrors. Photograph: David Levene for the Guardian</figcaption></figure><p>\"I was strongly against it,\" admits Nils Eggerud, a Norsk Hydro employee for 50 years and now retired. Like many others, he felt the money could have been better spent elsewhere – on a couple of extra carers to look after Rjukan's old people, perhaps, or improved school facilities, cycle paths, a bit of rural road resurfacing.</p><p>\"And I still have my doubts about the ongoing maintenance costs,\" he cautions. \"What will they be, who will pay them? But ... Well, it does feel nice, standing here. And really, you just have to look at the people's faces.\"</p><p>Anette Oien, too, was \"deeply sceptical\" to start with. Today, though, she marches cheerily across Sam Eyde Street for all the world as if heading for the beach, sits on a bench, lights up a cigarette, and lifts her face to the light. \"I miss the sun here in winter terribly,\" she says. \"It can be so hard. This is the light I long for.\"</p><p>Odd, though, the strength of that initial opposition. Beyond the valley, in Oslo and much further afield, Rjukan's hi-tech sun mirror has kindled nothing but enthusiasm; the project's official opening last week, complete with shades, sun-loungers, cocktails and beach volleyball, made newspaper headlines and news bulletins around the world. But Rjukan itself, until then, was stolidly unimpressed. Andersen's theory, which he readily admits \"may not prove very popular\", is that it wasn't about money at all. (In any case, he points out, helped by assorted government grants and a lump sum from Norsk Hydro, the municipality needed to find just 1m krone – £100,000 – of the mirror's total 5m krone cost.)</p><p>\"What it was, I think,\" he says, \"is that living in the shade must make you afraid to dream of the sun. That's the only way I can explain the resistance: like the valley walls, minds without sun become somehow a little bit narrower.\"</p><p>In his office overlooking the square, Rjukan's energetic young mayor, Steinar Bergsland, is interested not so much in the cost but in the benefits the mirror might bring to the town. Thanks to sound planning and government investment, Rjukan has survived the loss of much of its original heavy industry relatively unscathed. But the small town could do with the money.</p><p>Already, Bergsland says, visitor numbers are up for the time of year and last weekend Rjukan's shopkeepers reported their takings following suit. Only this morning, the mayor took a call from a hi-tech company interested in relocating to Rjukkan, attracted by the cutting-edge technology on view at the top of the mountain and the publicity it has attracted.</p><p>\"This is a powerful symbol for Rjukan,\" Bergsland says. \"The whole history of this town is about new and crazy ideas; about Sam Eyde saying: 'OK, I'm going to tame the water and generate power and build a town and make a product from air and water that the whole world will buy.' This fits.\"</p><p>And seen against the municipality's 650m krone annual budget, he points out, 1m krone really wasn't very much to pay for something that \"gives us a far, far better chance of raising the money we need for better schools and more nursing care. And just look out of the window. Look at those happy faces. Now it's actually here, people love it.\"</p><p>Few on the streets seem to dissent (although Tarjei Steffensen Stortland, a 16-year-old student, still reckons the roads round where he lives could do with some attention). And Rjukan, best known for the wartime heroics of 12 SOE-trained Norwegian commandos who in 1943 destroyed a Nazi-occupied Norsk Hydro heavy water plant at nearby Vermok, thwarting Hitler's atomic bomb ambitions, undeniably has a new claim to fame.</p><p>But is the Solspeil, as it was at least originally conceived, art? \"The people here don't see it that way,\" says Daniel Paida Larsen, a Rjukan-born, Berlin-based artist and close friend of Andersen's. \"They see it – and, thankfully, now welcome it – as a technical project. Or a marketing tool.\"</p><p>But the sun mirror, nonetheless, is art, he says. \"I don't know how exactly I'd define it,\" Larsen says. \"An installation? A sculpture? It makes me think about how we need the sun, what happens to light when you reflect it. But what's really special is that it goes so deep into the public sphere. It touches something absolutely fundamental in this town.\"</p><p>At high school in Rjukan, Larsen remembers \"walking down the street and looking up and seeing sunshine and blue sky and thinking: why can't I be there?\" In the end, he says, \"the only way to cope is to ignore that. To survive here in winter, you have to ignore the possibility of the sun.\"</p><p>But no longer. Now there's the Solspeil. \"A work of art,\" Larsen says, \"with a real, vital function, fulfilling a basic need in people's lives.\" Down on the square, Ingunn Sparbo might not put it in quite those terms, but she can't agree more.</p><p>\"Look at this!\" she says, almost beside herself. \"Who'd have thought it? I've stepped out to get a bit of sun.\"</p><!-- Guardian Watermark: internal-code/content/421832827|2013-11-21T11:27:41Z|decc901dff24518c78288e5b2d2b3f7d48dedab9 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-07T09:54:17Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/6/1383757066127/Rjukans-market-square-bas-002.jpg",
+        "standfirst":"Last week for the first time ever, the winter sun shone on the Norwegian town of Rjukan. Jon Henley meets the inhabitants whose lives have been transformed – and the man who brought them sunshine",
+        "shortUrl":"http://gu.com/p/3k6qx",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/6/1383757066127/Rjukans-market-square-bas-002.jpg",
+        "wordcount":"2218",
+        "commentable":"true",
+        "internalContentCode":"421832827",
+        "allowUgc":"false",
+        "internalOctopusCode":"8287293",
+        "isPremoderated":"false",
+        "byline":"Jon Henley",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-11-07",
+        "internalPageCode":"1993060",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-09T17:19:00Z"
+      },
+      "tags":[{
+        "id":"world/norway",
+        "type":"keyword",
+        "webTitle":"Norway",
+        "webUrl":"http://www.theguardian.com/world/norway",
+        "apiUrl":"http://content.guardianapis.com/world/norway",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/europe-news",
+        "type":"keyword",
+        "webTitle":"Europe",
+        "webUrl":"http://www.theguardian.com/world/europe-news",
+        "apiUrl":"http://content.guardianapis.com/world/europe-news",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"science/sun",
+        "type":"keyword",
+        "webTitle":"The sun",
+        "webUrl":"http://www.theguardian.com/science/sun",
+        "apiUrl":"http://content.guardianapis.com/science/sun",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/science",
+        "type":"keyword",
+        "webTitle":"Science",
+        "webUrl":"http://www.theguardian.com/science/science",
+        "apiUrl":"http://content.guardianapis.com/science/science",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"artanddesign/artanddesign",
+        "type":"keyword",
+        "webTitle":"Art and design",
+        "webUrl":"http://www.theguardian.com/artanddesign/artanddesign",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/artanddesign",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"theguardian/g2/features",
+        "type":"newspaper-book-section",
+        "webTitle":"Comment & features",
+        "webUrl":"http://www.theguardian.com/theguardian/g2/features",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2/features",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/g2",
+        "type":"newspaper-book",
+        "webTitle":"G2",
+        "webUrl":"http://www.theguardian.com/theguardian/g2",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"profile/jonhenley",
+        "type":"contributor",
+        "webTitle":"Jon Henley",
+        "webUrl":"http://www.theguardian.com/profile/jonhenley",
+        "apiUrl":"http://content.guardianapis.com/profile/jonhenley",
+        "bio":"<p>Jon Henley is a Guardian feature writer. He formerly wrote the paper's Diary column. He joined the paper in Amsterdam and has written from Brussels, Scandinavia and most recently Paris, where he was chief correspondent for nearly nine years until spring 2006</p>",
+        "rcsId":"GNL004678",
+        "r2ContributorId":"15894",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jon_henley_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421888144",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/6/1383757063635/Rjukans-market-square-bas-001.jpg",
+          "typeData":{
+            "source":"David Levene for the Guardian",
+            "altText":"Rjukan's market square basks in the light beamed down by the three mirrors.",
+            "height":"130",
+            "credit":"David Levene for the Guardian",
+            "caption":"Rjukan's market square basks in the light beamed down by the three mirrors. Photograph: David Levene for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/6/1383757066127/Rjukans-market-square-bas-002.jpg",
+          "typeData":{
+            "source":"David Levene for the Guardian",
+            "altText":"Rjukan's market square basks in the light beamed down by the three mirrors.",
+            "height":"84",
+            "credit":"David Levene for the Guardian",
+            "caption":"Rjukan's market square basks in the light beamed down by the three mirrors. Photograph: David Levene for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/6/1383757067476/Rjukans-market-square-bas-003.jpg",
+          "typeData":{
+            "source":"David Levene for the Guardian",
+            "altText":"Rjukan's market square basks in the light beamed down by the three mirrors.",
+            "height":"132",
+            "credit":"David Levene for the Guardian",
+            "caption":"Rjukan's market square basks in the light beamed down by the three mirrors. Photograph: David Levene for the Guardian",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/6/1383757069288/Rjukans-market-square-bas-004.jpg",
+          "typeData":{
+            "source":"David Levene for the Guardian",
+            "altText":"Rjukan's market square basks in the light beamed down by the three mirrors.",
+            "height":"168",
+            "credit":"David Levene for the Guardian",
+            "caption":"Rjukan's market square basks in the light beamed down by the three mirrors. Photograph: David Levene for the Guardian",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/6/1383757070848/Rjukans-market-square-bas-005.jpg",
+          "typeData":{
+            "source":"David Levene for the Guardian",
+            "altText":"Rjukan's market square basks in the light beamed down by the three mirrors.",
+            "height":"180",
+            "credit":"David Levene for the Guardian",
+            "caption":"Rjukan's market square basks in the light beamed down by the three mirrors. Photograph: David Levene for the Guardian",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/6/1383757072466/Rjukans-market-square-bas-006.jpg",
+          "typeData":{
+            "source":"David Levene for the Guardian",
+            "altText":"Rjukan's market square basks in the light beamed down by the three mirrors.",
+            "height":"228",
+            "credit":"David Levene for the Guardian",
+            "caption":"Rjukan's market square basks in the light beamed down by the three mirrors. Photograph: David Levene for the Guardian",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/6/1383757074531/Rjukans-market-square-bas-007.jpg",
+          "typeData":{
+            "source":"David Levene for the Guardian",
+            "altText":"Rjukan's market square basks in the light beamed down by the three mirrors.",
+            "height":"276",
+            "credit":"David Levene for the Guardian",
+            "caption":"Rjukan's market square basks in the light beamed down by the three mirrors. Photograph: David Levene for the Guardian",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/6/1383757075921/Rjukans-market-square-bas-008.jpg",
+          "typeData":{
+            "source":"David Levene for the Guardian",
+            "altText":"Rjukan's market square basks in the light beamed down by the three mirrors.",
+            "height":"372",
+            "credit":"David Levene for the Guardian",
+            "caption":"Rjukan's market square basks in the light beamed down by the three mirrors. Photograph: David Levene for the Guardian",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/6/1383757074531/Rjukans-market-square-bas-007.jpg",
+          "typeData":{
+            "source":"David Levene for the Guardian",
+            "altText":"Rjukan's market square basks in the light beamed down by the three mirrors.",
+            "height":"276",
+            "credit":"David Levene for the Guardian",
+            "caption":"Rjukan's market square basks in the light beamed down by the three mirrors. Photograph: David Levene for the Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421888145",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/6/1383757066127/Rjukans-market-square-bas-002.jpg",
+          "typeData":{
+            "source":"David Levene for the Guardian",
+            "altText":"Rjukan's market square basks in the light beamed down by the three mirrors.",
+            "height":"84",
+            "credit":"David Levene for the Guardian",
+            "caption":"Rjukan's market square basks in the light beamed down by the three mirrors. Photograph: David Levene for the Guardian",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-421888146",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/6/1383757776300/Sunlight-reflects-off-the-001.jpg",
+          "typeData":{
+            "source":"David Levene for the Guardian",
+            "altText":"Sunlight reflects off the three giant mirrors.",
+            "height":"690",
+            "credit":"David Levene for the Guardian",
+            "caption":"Sunlight reflects off the three giant mirrors. Photograph: David Levene for the Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421888147",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/6/1383757703313/A-man-holds-his-baby-up-t-001.jpg",
+          "typeData":{
+            "source":"David Levene for the Guardian",
+            "altText":"A man holds his baby up to the light reflected by the mirrors.",
+            "height":"690",
+            "credit":"David Levene for the Guardian",
+            "caption":"A man holds his baby up to the light reflected by the mirrors. Photograph: David Levene for the Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-video-421227976",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/29/1383070612416/Norwegian-town-reflects-s-001.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Afp",
+            "altText":"Norwegian town reflects sun into town using mirrors",
+            "height":"230",
+            "credit":"Afp/AFP/Getty Images",
+            "caption":"The Norwegian town of Rjukan has constructed three giant mirrors on a mountain to beam sunlight into the town's square\r Photograph: Afp/AFP/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/29/1383070613911/Norwegian-town-reflects-s-002.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Afp",
+            "altText":"Norwegian town reflects sun into town using mirrors",
+            "height":"90",
+            "credit":"Afp/AFP/Getty Images",
+            "caption":"The Norwegian town of Rjukan has constructed three giant mirrors on a mountain to beam sunlight into the town's square\r Photograph: Afp/AFP/Getty Images",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/29/1383070615111/Norwegian-town-reflects-s-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Afp",
+            "altText":"Norwegian town reflects sun into town using mirrors",
+            "height":"225",
+            "credit":"Afp/AFP/Getty Images",
+            "caption":"The Norwegian town of Rjukan has constructed three giant mirrors on a mountain to beam sunlight into the town's square\r Photograph: Afp/AFP/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/29/1383070616298/Norwegian-town-reflects-s-004.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Afp",
+            "altText":"Norwegian town reflects sun into town using mirrors",
+            "height":"360",
+            "credit":"Afp/AFP/Getty Images",
+            "caption":"The Norwegian town of Rjukan has constructed three giant mirrors on a mountain to beam sunlight into the town's square\r Photograph: Afp/AFP/Getty Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/29/1383070618745/Norwegian-town-reflects-s-006.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Afp",
+            "altText":"Norwegian town reflects sun into town using mirrors",
+            "height":"54",
+            "credit":"Afp/AFP/Getty Images",
+            "caption":"The Norwegian town of Rjukan has constructed three giant mirrors on a mountain to beam sunlight into the town's square\r Photograph: Afp/AFP/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/29/1383070619890/Norwegian-town-reflects-s-007.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Afp",
+            "altText":"Norwegian town reflects sun into town using mirrors",
+            "height":"340",
+            "credit":"Afp/AFP/Getty Images",
+            "caption":"The Norwegian town of Rjukan has constructed three giant mirrors on a mountain to beam sunlight into the town's square\r Photograph: Afp/AFP/Getty Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/29/1383070621067/Norwegian-town-reflects-s-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Afp",
+            "altText":"Norwegian town reflects sun into town using mirrors",
+            "height":"130",
+            "credit":"Afp/AFP/Getty Images",
+            "caption":"The Norwegian town of Rjukan has constructed three giant mirrors on a mountain to beam sunlight into the town's square\r Photograph: Afp/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/29/1383070622210/Norwegian-town-reflects-s-009.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Afp",
+            "altText":"Norwegian town reflects sun into town using mirrors",
+            "height":"84",
+            "credit":"Afp/AFP/Getty Images",
+            "caption":"The Norwegian town of Rjukan has constructed three giant mirrors on a mountain to beam sunlight into the town's square\r Photograph: Afp/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/29/1383070623650/Norwegian-town-reflects-s-010.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Afp",
+            "altText":"Norwegian town reflects sun into town using mirrors",
+            "height":"132",
+            "credit":"Afp/AFP/Getty Images",
+            "caption":"The Norwegian town of Rjukan has constructed three giant mirrors on a mountain to beam sunlight into the town's square\r Photograph: Afp/AFP/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/29/1383070624794/Norwegian-town-reflects-s-011.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Afp",
+            "altText":"Norwegian town reflects sun into town using mirrors",
+            "height":"168",
+            "credit":"Afp/AFP/Getty Images",
+            "caption":"The Norwegian town of Rjukan has constructed three giant mirrors on a mountain to beam sunlight into the town's square\r Photograph: Afp/AFP/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/29/1383070625936/Norwegian-town-reflects-s-012.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Afp",
+            "altText":"Norwegian town reflects sun into town using mirrors",
+            "height":"180",
+            "credit":"Afp/AFP/Getty Images",
+            "caption":"The Norwegian town of Rjukan has constructed three giant mirrors on a mountain to beam sunlight into the town's square\r Photograph: Afp/AFP/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/29/1383070627180/Norwegian-town-reflects-s-013.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Afp",
+            "altText":"Norwegian town reflects sun into town using mirrors",
+            "height":"228",
+            "credit":"Afp/AFP/Getty Images",
+            "caption":"The Norwegian town of Rjukan has constructed three giant mirrors on a mountain to beam sunlight into the town's square\r Photograph: Afp/AFP/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/29/1383070628504/Norwegian-town-reflects-s-014.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Afp",
+            "altText":"Norwegian town reflects sun into town using mirrors",
+            "height":"276",
+            "credit":"Afp/AFP/Getty Images",
+            "caption":"The Norwegian town of Rjukan has constructed three giant mirrors on a mountain to beam sunlight into the town's square\r Photograph: Afp/AFP/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/29/1383070629676/Norwegian-town-reflects-s-015.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Afp",
+            "altText":"Norwegian town reflects sun into town using mirrors",
+            "height":"372",
+            "credit":"Afp/AFP/Getty Images",
+            "caption":"The Norwegian town of Rjukan has constructed three giant mirrors on a mountain to beam sunlight into the town's square\r Photograph: Afp/AFP/Getty Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/29/1383070630904/Norwegian-town-reflects-s-016.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Afp",
+            "altText":"Norwegian town reflects sun into town using mirrors",
+            "height":"360",
+            "credit":"Afp/AFP/Getty Images",
+            "caption":"The Norwegian town of Rjukan has constructed three giant mirrors on a mountain to beam sunlight into the town's square\r Photograph: Afp/AFP/Getty Images",
+            "width":"640"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/29/131029Norwaysun-16x9.mp4",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/29/131029Norwaysun_8256536.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/29/131029Norwaysun_8256536.jpg",
+            "width":"480",
+            "durationSeconds":"19"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/10/29/131029Norwaysun_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/29/131029Norwaysun_8256536.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/29/131029Norwaysun_8256536.jpg",
+            "width":"480",
+            "durationSeconds":"19"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/29/131029Norwaysun_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/29/131029Norwaysun_8256536.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/29/131029Norwaysun_8256536.jpg",
+            "width":"480",
+            "durationSeconds":"19"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/29/131029Norwaysun/131029Norwaysun.m3u8",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/29/131029Norwaysun_8256536.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/29/131029Norwaysun_8256536.jpg",
+            "width":"480",
+            "durationSeconds":"19"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"science/2013/nov/13/men-stroked-pants-chemistry-relationships-opioid",
+      "sectionId":"science",
+      "sectionName":"Science",
+      "webPublicationDate":"2013-11-13T17:05:42Z",
+      "webTitle":"Men stroked in their pants to shed light on chemistry that bonds relationships",
+      "webUrl":"http://www.theguardian.com/science/2013/nov/13/men-stroked-pants-chemistry-relationships-opioid",
+      "apiUrl":"http://content.guardianapis.com/science/2013/nov/13/men-stroked-pants-chemistry-relationships-opioid",
+      "fields":{
+        "trailText":"Finnish study finds that gentle stroking changes opioid levels, which helps form lasting bonds",
+        "headline":"Men stroked in their pants to shed light on chemistry that bonds relationships",
+        "body":"<p>Researchers have shed light on the chemistry that bonds one person to another by taking brain scans of men being stroked while in their underpants.</p><p>The Finnish study found that gentle stroking – which was not in sexually arousing areas – changed levels of opioid brain chemicals which work behind the scenes to form lasting bonds in animals.</p><p>The findings suggest that opioids might be the critical chemicals that enables human brains to distinguish between strangers and people who are closer to us, such as friends, families and lovers.</p><p>\"We know this is hugely important for humans because we have these strong, lasting bondings with friends and relatives and so on. But what kind of system maintains these bonds, and makes them last?\" said Lauri Nummenmaa who studies the neural circuitry of emotions at Aalto University in Finland.</p><p>Studies in animals have shown that opioids can play a crucial role in pairing up. Prairie voles are monogamous in the wild, but when given a drug that blocks opioid in their brains, they seek out other partners. If opioids are blocked in monkeys, they groom others less and neglect their babies.</p><p>To see whether opioids were important in human bonding, the researchers invited nine couples into the lab. The men stripped off to their underpants and lay under a blanket in a PET scanner. The first scan was taken while the men were alone. For the second, their partners touched them gently all over, but avoided anywhere likely to arouse them sexually.</p><p>\"I'm really proud of the Finnish general public,\" said Nummenmaa. \"We had no problem whatsoever in recruiting people for the experiment.\"</p><p>When the researchers compared the men's scans, they noticed that gentle stroking caused a drop in natural opioids in brain areas called the ventral striatum and the anterior cingulate cortex, which are mainstays of the brain's reward circuitry. This was counter to expectations: they had expected levels to rise.</p><p>Nummenmaa said that opioid might work in a similar way to a painkiller, with the body needing less the more comfortable it was. \"The opioid system is typically engaged during pain, so you get a boost in painful situations. The social touching might be doing exactly the opposite. You can think of it as pain alleviation. That might be the underlying mechanism for why hooking up with others makes us feel so good in the first place,\" said Nummenmaa. Details of the study were given at the <a href=\"http://www.sfn.org/annual-meeting/neuroscience-2013\" title=\"\">Society for Neuroscience meeting in San Diego</a>.</p><p>Opiate drugs have the same effect as the body's natural opioids, and just as people build up tolerances to drugs, develop cravings, and suffer withdrawal symptoms, similar processes play out with relationships.</p><p>\"If something similar happens when you are establishing social bonds that would make perfect sense. You would need your daily fix, or at least a fix now and then, and unless you got that you would start to feel pain,\" said Nummenmaa.</p><!-- Guardian Watermark: internal-code/content/422406271|2013-11-21T11:27:41Z|466934a6f16ba6e830137c83486192d406ada50a -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-13T17:05:42Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/13/1384360024366/A-couple-cuddling-in-bed-006.jpg",
+        "standfirst":"Finnish study finds that gentle stroking changes opioid levels, which helps form lasting bonds",
+        "shortUrl":"http://gu.com/p/3kc5c",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/13/1384360024366/A-couple-cuddling-in-bed-006.jpg",
+        "wordcount":"479",
+        "commentable":"true",
+        "internalContentCode":"422406271",
+        "allowUgc":"false",
+        "internalOctopusCode":"8316742",
+        "isPremoderated":"false",
+        "byline":"Ian Sample, science correspondent, in San Diego",
+        "publication":"theguardian.com",
+        "internalPageCode":"1996878",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-16T17:05:42Z"
+      },
+      "tags":[{
+        "id":"science/society-neuroscience-annual-meeting",
+        "type":"keyword",
+        "webTitle":"Society for Neuroscience annual meeting",
+        "webUrl":"http://www.theguardian.com/science/society-neuroscience-annual-meeting",
+        "apiUrl":"http://content.guardianapis.com/science/society-neuroscience-annual-meeting",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/neuroscience",
+        "type":"keyword",
+        "webTitle":"Neuroscience",
+        "webUrl":"http://www.theguardian.com/science/neuroscience",
+        "apiUrl":"http://content.guardianapis.com/science/neuroscience",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/science",
+        "type":"keyword",
+        "webTitle":"Science",
+        "webUrl":"http://www.theguardian.com/science/science",
+        "apiUrl":"http://content.guardianapis.com/science/science",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/chemistry",
+        "type":"keyword",
+        "webTitle":"Chemistry",
+        "webUrl":"http://www.theguardian.com/science/chemistry",
+        "apiUrl":"http://content.guardianapis.com/science/chemistry",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"lifeandstyle/relationships",
+        "type":"keyword",
+        "webTitle":"Relationships",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/relationships",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/relationships",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"world/finland",
+        "type":"keyword",
+        "webTitle":"Finland",
+        "webUrl":"http://www.theguardian.com/world/finland",
+        "apiUrl":"http://content.guardianapis.com/world/finland",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"world/europe-news",
+        "type":"keyword",
+        "webTitle":"Europe",
+        "webUrl":"http://www.theguardian.com/world/europe-news",
+        "apiUrl":"http://content.guardianapis.com/world/europe-news",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/iansample",
+        "type":"contributor",
+        "webTitle":"Ian Sample",
+        "webUrl":"http://www.theguardian.com/profile/iansample",
+        "apiUrl":"http://content.guardianapis.com/profile/iansample",
+        "bio":"<p>Ian Sample has been a <a href=\"http://www.guardian.co.uk/science\">science</a> correspondent for the Guardian since 2003. Before that, he was a journalist at New Scientist and worked at the Institute of Physics as a journal editor. He has a PhD in biomedical materials from Queen Mary's, University of London</p>",
+        "rcsId":"GNL006496",
+        "r2ContributorId":"15749",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/ian_sample_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"science/human-biology",
+        "type":"keyword",
+        "webTitle":"Human biology",
+        "webUrl":"http://www.theguardian.com/science/human-biology",
+        "apiUrl":"http://content.guardianapis.com/science/human-biology",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/biology",
+        "type":"keyword",
+        "webTitle":"Biology",
+        "webUrl":"http://www.theguardian.com/science/biology",
+        "apiUrl":"http://content.guardianapis.com/science/biology",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/biochemistrymolecularbiology",
+        "type":"keyword",
+        "webTitle":"Biochemistry and molecular biology",
+        "webUrl":"http://www.theguardian.com/science/biochemistrymolecularbiology",
+        "apiUrl":"http://content.guardianapis.com/science/biochemistrymolecularbiology",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-422411922",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/13/1384360020660/A-couple-cuddling-in-bed-003.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "altText":"A couple cuddling in bed",
+            "height":"54",
+            "credit":"Rex Features",
+            "caption":"Studies show that opioid can play a crucial role in pairing up. Photograph: Rex Features",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/13/1384360021898/A-couple-cuddling-in-bed-004.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "altText":"A couple cuddling in bed",
+            "height":"340",
+            "credit":"Rex Features",
+            "caption":"Studies show that opioid can play a crucial role in pairing up. Photograph: Rex Features",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/13/1384360023121/A-couple-cuddling-in-bed-005.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "altText":"A couple cuddling in bed",
+            "height":"130",
+            "credit":"Rex Features",
+            "caption":"Studies show that opioid can play a crucial role in pairing up. Photograph: Rex Features",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/13/1384360024366/A-couple-cuddling-in-bed-006.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "altText":"A couple cuddling in bed",
+            "height":"84",
+            "credit":"Rex Features",
+            "caption":"Studies show that opioid can play a crucial role in pairing up. Photograph: Rex Features",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/13/1384360025603/A-couple-cuddling-in-bed-007.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "altText":"A couple cuddling in bed",
+            "height":"132",
+            "credit":"Rex Features",
+            "caption":"Studies show that opioid can play a crucial role in pairing up. Photograph: Rex Features",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/13/1384360026884/A-couple-cuddling-in-bed-008.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "altText":"A couple cuddling in bed",
+            "height":"168",
+            "credit":"Rex Features",
+            "caption":"Studies show that opioid can play a crucial role in pairing up. Photograph: Rex Features",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/13/1384360028184/A-couple-cuddling-in-bed-009.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "altText":"A couple cuddling in bed",
+            "height":"180",
+            "credit":"Rex Features",
+            "caption":"Studies show that opioid can play a crucial role in pairing up. Photograph: Rex Features",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/13/1384360029471/A-couple-cuddling-in-bed-010.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "altText":"A couple cuddling in bed",
+            "height":"228",
+            "credit":"Rex Features",
+            "caption":"Studies show that opioid can play a crucial role in pairing up. Photograph: Rex Features",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/13/1384360030738/A-couple-cuddling-in-bed-011.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "altText":"A couple cuddling in bed",
+            "height":"276",
+            "credit":"Rex Features",
+            "caption":"Studies show that opioid can play a crucial role in pairing up. Photograph: Rex Features",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/13/1384360032633/A-couple-cuddling-in-bed-012.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "altText":"A couple cuddling in bed",
+            "height":"372",
+            "credit":"Rex Features",
+            "caption":"Studies show that opioid can play a crucial role in pairing up. Photograph: Rex Features",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/13/1384360030738/A-couple-cuddling-in-bed-011.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "altText":"A couple cuddling in bed",
+            "height":"276",
+            "credit":"Rex Features",
+            "caption":"Studies show that opioids can play a crucial role in pairing up. Photograph: Rex Features",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-422411923",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/13/1384360024366/A-couple-cuddling-in-bed-006.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "altText":"A couple cuddling in bed",
+            "height":"84",
+            "credit":"Rex Features",
+            "caption":"Studies show that opioid can play a crucial role in pairing up. Photograph: Rex Features",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2011/aug/03/atom-splitting-attempt-swedish-kitchen",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2011-08-03T15:59:51Z",
+      "webTitle":"Atom splitting in my kitchen was a hobby, man tells Swedish police",
+      "webUrl":"http://www.theguardian.com/world/2011/aug/03/atom-splitting-attempt-swedish-kitchen",
+      "apiUrl":"http://content.guardianapis.com/world/2011/aug/03/atom-splitting-attempt-swedish-kitchen",
+      "fields":{
+        "newspaperPageNumber":"22",
+        "trailText":"Richard Handl claims he had radium, americium and uranium in his flat because he wanted to see if experiment was possible",
+        "headline":"Atom splitting in my kitchen was a hobby, man tells Swedish police",
+        "body":"<p>A Swedish man arrested on charges of unauthorised possession of nuclear material after trying to split atoms in his kitchen says he was only doing it as a hobby.</p><p>Richard Handl said he had the radioactive elements radium, americium and uranium in his flat in southern Sweden when the police showed up.</p><p>He said on Wednesday he had always been interested in physics and chemistry and &quot;just wanted to see if it was possible to split atoms at home&quot;.</p><p>Handl kept a blog about his experiments, describing how he created a small meltdown on his stove.</p><p>Only later did he realise it might not be legal and sent a question to Sweden's radiation authority, which sent the police.</p><p>Detectives have declined to comment on the raid, which took place in late July. If convicted Handl could face fines or up to two years in prison.</p><!-- Guardian Watermark: internal-code/content/377545166|2013-11-21T11:27:41Z|99e21161b27c7338cd25dbeadb12917e061a86d8 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2011-08-03T23:07:08Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/8/3/1312385698495/Blue-drums-displaying-rad-003.jpg",
+        "standfirst":"Richard Handl claims he had radium, americium and uranium in his flat because he wanted to see if experiment was possible",
+        "shortUrl":"http://gu.com/p/3x22f",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/8/3/1312385698495/Blue-drums-displaying-rad-003.jpg",
+        "wordcount":"140",
+        "commentable":"false",
+        "internalContentCode":"377545166",
+        "allowUgc":"false",
+        "internalOctopusCode":"5023188",
+        "isPremoderated":"false",
+        "byline":"Associated Press in Stockholm",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2011-08-04",
+        "internalPageCode":"1615533",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2011-08-06T15:59:51Z"
+      },
+      "tags":[{
+        "id":"world/sweden",
+        "type":"keyword",
+        "webTitle":"Sweden",
+        "webUrl":"http://www.theguardian.com/world/sweden",
+        "apiUrl":"http://content.guardianapis.com/world/sweden",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"science/science",
+        "type":"keyword",
+        "webTitle":"Science",
+        "webUrl":"http://www.theguardian.com/science/science",
+        "apiUrl":"http://content.guardianapis.com/science/science",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/physics",
+        "type":"keyword",
+        "webTitle":"Physics",
+        "webUrl":"http://www.theguardian.com/science/physics",
+        "apiUrl":"http://content.guardianapis.com/science/physics",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/chemistry",
+        "type":"keyword",
+        "webTitle":"Chemistry",
+        "webUrl":"http://www.theguardian.com/science/chemistry",
+        "apiUrl":"http://content.guardianapis.com/science/chemistry",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"environment/nuclearpower",
+        "type":"keyword",
+        "webTitle":"Nuclear power",
+        "webUrl":"http://www.theguardian.com/environment/nuclearpower",
+        "apiUrl":"http://content.guardianapis.com/environment/nuclearpower",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"world/nuclear-weapons",
+        "type":"keyword",
+        "webTitle":"Nuclear weapons",
+        "webUrl":"http://www.theguardian.com/world/nuclear-weapons",
+        "apiUrl":"http://content.guardianapis.com/world/nuclear-weapons",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/europe-news",
+        "type":"keyword",
+        "webTitle":"Europe",
+        "webUrl":"http://www.theguardian.com/world/europe-news",
+        "apiUrl":"http://content.guardianapis.com/world/europe-news",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/international",
+        "type":"newspaper-book-section",
+        "webTitle":"International",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/international",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/international",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-377545510",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/8/3/1312385696595/Blue-drums-displaying-rad-001.jpg",
+          "typeData":{
+            "source":"Getty",
+            "photographer":"David Woodfall",
+            "altText":"Blue drums displaying radioactive sign",
+            "height":"54",
+            "credit":"David Woodfall/Getty",
+            "caption":"Richard Handl, who has been arrested on charges of unauthorised possession of nuclear material, said he 'wanted to see if it was possible to split atoms at home'. Photograph: David Woodfall/Getty",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/8/3/1312385697606/Blue-drums-displaying-rad-002.jpg",
+          "typeData":{
+            "source":"Getty",
+            "photographer":"David Woodfall",
+            "altText":"Blue drums displaying radioactive sign",
+            "height":"130",
+            "credit":"David Woodfall/Getty",
+            "caption":"Richard Handl, who has been arrested on charges of unauthorised possession of nuclear material, said he 'wanted to see if it was possible to split atoms at home'. Photograph: David Woodfall/Getty",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/8/3/1312385699325/Blue-drums-displaying-rad-004.jpg",
+          "typeData":{
+            "source":"Getty",
+            "photographer":"David Woodfall",
+            "altText":"Blue drums displaying radioactive sign",
+            "height":"132",
+            "credit":"David Woodfall/Getty",
+            "caption":"Richard Handl, who has been arrested on charges of unauthorised possession of nuclear material, said he 'wanted to see if it was possible to split atoms at home'. Photograph: David Woodfall/Getty",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/8/3/1312385700153/Blue-drums-displaying-rad-005.jpg",
+          "typeData":{
+            "source":"Getty",
+            "photographer":"David Woodfall",
+            "altText":"Blue drums displaying radioactive sign",
+            "height":"180",
+            "credit":"David Woodfall/Getty",
+            "caption":"Richard Handl, who has been arrested on charges of unauthorised possession of nuclear material, said he 'wanted to see if it was possible to split atoms at home'. Photograph: David Woodfall/Getty",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/8/3/1312385701108/Blue-drums-displaying-rad-006.jpg",
+          "typeData":{
+            "source":"Getty",
+            "photographer":"David Woodfall",
+            "altText":"Blue drums displaying radioactive sign",
+            "height":"228",
+            "credit":"David Woodfall/Getty",
+            "caption":"Richard Handl, who has been arrested on charges of unauthorised possession of nuclear material, said he 'wanted to see if it was possible to split atoms at home'. Photograph: David Woodfall/Getty",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/8/3/1312385702005/Blue-drums-displaying-rad-007.jpg",
+          "typeData":{
+            "source":"Getty",
+            "photographer":"David Woodfall",
+            "altText":"Blue drums displaying radioactive sign",
+            "height":"276",
+            "credit":"David Woodfall/Getty",
+            "caption":"A Swedish man has been arrested on charges of unauthorised possession of nuclear material after trying to split atoms in his flat. Photograph: David Woodfall/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-377545511",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/8/3/1312385698495/Blue-drums-displaying-rad-003.jpg",
+          "typeData":{
+            "source":"Getty",
+            "photographer":"David Woodfall",
+            "altText":"Blue drums displaying radioactive sign",
+            "height":"84",
+            "credit":"David Woodfall/Getty",
+            "caption":"Richard Handl, who has been arrested on charges of unauthorised possession of nuclear material, said he 'wanted to see if it was possible to split atoms at home'. Photograph: David Woodfall/Getty",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

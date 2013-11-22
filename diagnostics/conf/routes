@@ -6,3 +6,5 @@
 GET     /   controllers.Application.front
 
 GET     /px.gif         controllers.ErrorController.px
+GET     /ad.gif         controllers.ErrorController.ads(Top: Option[Int] ?= None, Bottom: Option[Int] ?= None)
+

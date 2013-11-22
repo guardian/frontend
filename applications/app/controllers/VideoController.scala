@@ -6,6 +6,7 @@ import common._
 import model._
 import play.api.mvc.{ Content => _, _ }
 import scala.concurrent.Future
+import views.support.RenderOtherStatus
 
 
 case class VideoPage(video: Video, storyPackage: List[Trail])
@@ -15,9 +16,9 @@ object VideoController extends Controller with Logging with ExecutionContexts {
   def renderJson(path: String) = render(path)
   def render(path: String) = Action.async { implicit request =>
     lookup(path) map {
-      case Left(model) if model.video.isExpired => Gone(views.html.expired(model.video))
+      case Left(model) if model.video.isExpired => RenderOtherStatus(Gone) // TODO - delete this line after switching to new content api
       case Left(model) => renderVideo(model)
-      case Right(notFound) => notFound
+      case Right(other) => RenderOtherStatus(other)
     }
   }
 
