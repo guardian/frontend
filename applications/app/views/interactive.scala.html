@@ -1,6 +1,6 @@
 @(interactive: Interactive, storyPackage: List[Trail], index: Int, trail: Boolean)(implicit request: RequestHeader)
 
-@main(interactive, Switches.all){ }{
+@main(interactive){ }{
 
     @fragments.interactiveBody(interactive, storyPackage, index, trail)
 

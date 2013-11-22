@@ -42,7 +42,7 @@ define([
             // wrap the return sports stats component in an 'item'
             var prependTo = bonzo.create('<li class="item item--sport-stats item--sport-stats-tall"></li>');
             mediator.on('modules:footballfixtures:render', function() {
-                var $collection = $('.container--news .collection', context);
+                var $collection = $('.container--sport .collection', context);
                 $('.item:first-child', $collection[0])
                     .after(prependTo);
                 $collection.removeClass('collection--without-sport-stats')
@@ -67,7 +67,7 @@ define([
             var fixtures = bonzo.create('<li class="item item--sport-stats item--sport-stats-tall"></li>'),
                 table = bonzo.create('<li class="item item--sport-stats item--sport-table"></li>');
             mediator.on('modules:footballfixtures:render', function() {
-                var $collection = $('.container--news .collection', context);
+                var $collection = $('.container--sport .collection', context);
                 $('.item:first-child', $collection[0])
                     .after(fixtures);
                 $collection.removeClass('collection--without-sport-stats')
@@ -93,7 +93,7 @@ define([
             var fixtures = bonzo.create('<div></div>'),
                 table = bonzo.create('<li class="item item--sport-stats item--sport-table"></li>');
             mediator.on('modules:footballfixtures:render', function() {
-                var $collection = $('.container--news .collection', context),
+                var $collection = $('.container--sport .collection', context),
                     $thirdItem = $('.item:nth-child(3)', $collection[0]);
                 // pull fixtures out into two items
                 bonzo(bonzo.create('<li class="item item--sport-stats"></li>'))

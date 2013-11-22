@@ -27,7 +27,6 @@ define(["tagEntry", 'Common'], function(tagEntry, common) {
 
        it("should listen for keystrokes on a given input field", function () {
             simulateKeyPress('hello', i);
-            console.log(common.mediator.emitEvent.mostRecentCall);
             expect(common.mediator.emitEvent.mostRecentCall.args[0]).toEqual('ui:autocomplete:keydown');
             expect(common.mediator.emitEvent.mostRecentCall.args[1].toString()).toBe('hello');
             jasmine.Clock.tick(701);

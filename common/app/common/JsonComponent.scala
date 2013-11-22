@@ -19,12 +19,12 @@ object JsonComponent extends Results {
   private val ValidCallback = """([a-zA-Z0-9_]+)""".r
 
   def apply(html: Html)(implicit request: RequestHeader) = {
-    val json = jsonFor(("html" -> html))
+    val json = jsonFor("html" -> html)
     resultFor(request, json)
   }
 
-  def apply(metaData: MetaData, switches: Seq[Switchable], html: Html)(implicit request: RequestHeader) = {
-    val json = jsonFor(metaData, switches, ("html" -> html))
+  def apply(metaData: MetaData, html: Html)(implicit request: RequestHeader) = {
+    val json = jsonFor(metaData, "html" -> html)
     resultFor(request, json)
   }
 
@@ -33,8 +33,8 @@ object JsonComponent extends Results {
     resultFor(request, json)
   }
   
-  def apply(metaData: MetaData, switches: Seq[Switchable], items: (String, Any)*)(implicit request: RequestHeader) = {
-    val json = jsonFor(metaData, switches, items: _*)
+  def apply(metaData: MetaData, items: (String, Any)*)(implicit request: RequestHeader) = {
+    val json = jsonFor(metaData, items: _*)
     resultFor(request, json)
   }
 
@@ -43,8 +43,8 @@ object JsonComponent extends Results {
 
 
 
-  private def jsonFor(metaData: MetaData, switches: Seq[Switchable], items: (String, Any)*)(implicit request: RequestHeader): String = {
-    jsonFor(("config" -> Json.parse(views.html.fragments.javaScriptConfig(metaData, switches).body)) +: items: _*)
+  private def jsonFor(metaData: MetaData, items: (String, Any)*)(implicit request: RequestHeader): String = {
+    jsonFor(("config" -> Json.parse(views.html.fragments.javaScriptConfig(metaData).body)) +: items: _*)
   }
   
   private def jsonFor(items: (String, Any)*) = {

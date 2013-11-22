@@ -14,9 +14,9 @@ object Fixtures {
         | """.stripMargin
 
     val members = List(
-      Member("rose29", "Woman", 59, "https://members/a/small.png"),
-      Member("Hanabi", "Man", 57, "https://members/b/small.png"),
-      Member("shelovessea", "Woman", 54, "https://members/c/small.png")
+      Member("rose29", Woman, 59, "https://members/a/small.png"),
+      Member("Hanabi", Man, 57, "https://members/b/small.png"),
+      Member("shelovessea", Woman, 54, "https://members/c/small.png")
     )
   }
 

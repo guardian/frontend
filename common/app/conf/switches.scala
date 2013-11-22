@@ -80,6 +80,10 @@ object Switches extends Collections {
   val AudienceScienceSwitch = Switch("Analytics", "audience-science",
     "If this switch is on the Audience Science will be enabled.",
     safeState = Off)
+  
+  val AdDwellTimeLoggerSwitch = Switch("Analytics", "ad-dwell-times-logging",
+    "If this is on the in-view advert tracker will log some data to the Play logs",
+    safeState = On)
 
   val QuantcastSwitch = Switch("Analytics", "quantcast",
     "Enable the Quantcast audience segment tracking.",
@@ -113,6 +117,10 @@ object Switches extends Collections {
 
   val DiscussionPostCommentSwitch = Switch("Discussion", "discussion-post-comment",
     "If this switch is on, users will be able to post comments",
+    safeState = Off)
+
+  val DiscussionTopCommentsSwitch = Switch("Discussion", "discussion-top-comments",
+    "If this switch is on, users will see top comments if there are any",
     safeState = Off)
 
   // Swipe Switches
@@ -190,6 +198,10 @@ object Switches extends Collections {
 
   val ClientSideErrorSwitch = Switch("Feature Switches", "client-side-errors",
     "If this is switch on the the browser will log JavaScript errors to the server (via a beacon)",
+    safeState = Off)
+
+  val FacebookAutoSigninSwitch = Switch("Feature Switches", "facebook-autosignin",
+    "If this switch is on then users who have previously authorized the guardian app in facebook and who have not recently signed out are automatically signed in.",
     safeState = Off)
 
   // A/B Test Switches
@@ -275,6 +287,7 @@ object Switches extends Collections {
     OmnitureDomReadySwitch,
     DiscussionSwitch,
     DiscussionPostCommentSwitch,
+    DiscussionTopCommentsSwitch,
     ShortDiscussionSwitch,
     SwipeNav,
     SwipeNavOnClick,
@@ -313,8 +326,10 @@ object Switches extends Collections {
     ABAlphaAdverts,
     ABCommercialComponents,
     EditionRedirectLoggingSwitch,
+    FacebookAutoSigninSwitch,
     ABImproveOnwardTrails,
     ABInitialShowMore,
+    AdDwellTimeLoggerSwitch,
     ABShowMoreLayout
   )
 

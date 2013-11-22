@@ -14,13 +14,11 @@ define([], function () {
             {
                 id: 'control',
                 test: function (context) {
-                    console.log('Control ran', context);
                 }
             },
             {
                 id: 'hide',
                 test: function (context) {
-                    console.log('Hide ran', context);
                 }
             }
         ];

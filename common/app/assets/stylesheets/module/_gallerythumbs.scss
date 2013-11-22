@@ -30,6 +30,10 @@
     .gallerythumbs__item {
         @include fix-aspect-ratio(5, 3, 50%); // 5:3 aspect - works around thumbs being slightly different in size
         margin-bottom: 3px;
+
+        .item__image-container {
+            display: block;
+        }
     }
 
     .gallerythumbs__item:nth-child(odd) {

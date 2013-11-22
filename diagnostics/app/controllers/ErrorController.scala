@@ -23,8 +23,8 @@ object ErrorController extends Controller with Logging {
     NoCache(Ok(gif).as("image/gif"))
   } 
   
-  def ads = Action { implicit request =>
-    Ads.report(request.queryString)
+  def ads(top: Option[Int], bottom: Option[Int]) = Action { implicit request =>
+    Ads.report(top, bottom)
     NoCache(Ok(gif).as("image/gif"))
   } 
 

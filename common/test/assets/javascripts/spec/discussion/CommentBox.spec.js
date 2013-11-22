@@ -25,7 +25,15 @@ define([
             fixture = {
                 id: fixturesId,
                 fixtures: [
-                    '<form class="js-comment-box d-comment-box component" data-discussion-id="'+ discussionId +'"><div class="d-comment-box__messages"></div><label for="body" class="cta">Add your comment</label><textarea name="body" class="d-comment-box__body" placeholder="Join the discussion…"></textarea><button type="submit" class="submit-input d-comment-box__submit">Submit</button></form>'
+                    '<form class="component js-comment-box d-comment-box">'+
+                        '<label for="body" class="d-comment-box__add-comment cta">Add your comment</label>'+
+                        '<div class="d-comment-box__content">'+
+                            '<div class="d-comment-box__messages"></div>'+
+                            '<div class="d-comment-box__error d-comment-box__premod">Your comments are currently being pre-moderated (<a href="/community-faqs#311" target="_blank">why?</a>)</div>'+
+                            '<textarea name="body" class="textarea d-comment-box__body" placeholder="Join the discussion…"></textarea>'+
+                            '<button type="submit" class="submit-input d-comment-box__submit">Post comment</button>'+
+                        '</div>'+
+                    '</form>'
                 ]
             };
 
@@ -40,8 +48,11 @@ define([
             server = sinon.fakeServer.create();
             fixtures.render(fixture);
             context = document.getElementById(fixturesId);
-            commentBox = new CommentBox(context, common.mediator, { apiRoot: '/discussion', maxLength: maxCommentLength });
-            commentBox.attachTo();
+            commentBox = new CommentBox(context, common.mediator, {
+                discussionId: discussionId,
+                maxLength: maxCommentLength
+            });
+            commentBox.attachToDefault();
         });
 
         afterEach(function() {
@@ -51,7 +62,7 @@ define([
 
         describe('Post comment', function() {
             it('should only disable button when there is no comment body', function() {
-                var button = commentBox.getElem('submitButton'),
+                var button = commentBox.getElem('submit'),
                     commentBody = commentBox.getElem('body');
 
                 commentBody.value = '';

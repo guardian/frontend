@@ -1,4 +1,4 @@
-@(metaData: MetaData, switches: Seq[com.gu.management.Switchable], projectName: Option[String] = None)(head: Html)(body: Html)(implicit request: RequestHeader)
+@(metaData: MetaData, projectName: Option[String] = None)(head: Html)(body: Html)(implicit request: RequestHeader)
 
 @*<!--
 Identity pages use identityMain.scala.html, most of which is shared fragments,
@@ -8,11 +8,11 @@ be sure to apply any necessary changes to non-shared code there too.
 <!DOCTYPE html>
 <html class="js-off" lang="en-GB">
 <head>
-    @fragments.head(metaData, switches, projectName, head)
+    @fragments.head(metaData, projectName, head)
 </head>
 <body id="top" itemscope itemtype="http://schema.org/WebPage" itemref="schema-WebPage">
 
-    @fragments.releaseMessage(metaData)
+    @fragments.message(metaData)
     @fragments.header(metaData)
 
     <div id="preloads">

@@ -5,8 +5,8 @@ define([
     'bonzo',
     'modules/ui/relativedates',
     'modules/facia/collection-show-more',
-    'modules/imager'
-], function ($, mediator, ajax, bonzo, relativeDates, CollectionShowMore, imager) {
+    'modules/ui/images'
+], function ($, mediator, ajax, bonzo, relativeDates, CollectionShowMore, images) {
 
     var updateTmpl = function(tmpl, trail) {
             return tmpl.replace(/@trail\.([A-Za-z.]*)/g, function(match, props) {
@@ -78,7 +78,7 @@ define([
                     // relativise timestamps
                     relativeDates.init($collection[0]);
                     // upgrade image
-                    imager.upgrade($collection[0]);
+                    images.upgrade($collection[0]);
                 },
                 function(req) {
                     mediator.emit(
