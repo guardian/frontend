@@ -8,6 +8,9 @@ object LoadJob extends Logging {
   def run() {
 
     log.info("Loading alpha diagnostics data in to CloudWatch")
+      
+    //log.info(s"views.desktop:${DesktopView.count}")
+    //log.info(s"views.desktop:${DesktopSession.count}")
     
     CloudWatch.put( "Diagnostics", Map(
                     ("views.desktop", DesktopView.count),

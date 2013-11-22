@@ -20,12 +20,12 @@ object DiagnosticsController extends Controller with Logging {
     Base64.decodeBase64(data.getBytes("utf-8")).toArray
   }
 
-  def px = Action { implicit request =>
+  def js = Action { implicit request =>
     JavaScript.report(request.queryString, request.headers.get("user-agent").getOrElse("UNKNOWN USER AGENT"))
     NoCache(Ok(gif).as("image/gif"))
   } 
   
-  def alpha = Action { implicit request =>
+  def px = Action { implicit request =>
     Alpha.report(request.queryString)
     NoCache(Ok(gif).as("image/gif"))
   } 

@@ -9,7 +9,7 @@ trait DiagnosticsLifecycle extends GlobalSettings {
 
   def scheduleJobs() {
     
-    Jobs.schedule("DiagnosticsLoadJob", "0/30 * * * * ?") {
+    Jobs.schedule("DiagnosticsLoadJob", "0 * * * * ?") {
       model.diagnostics.alpha.LoadJob.run()
       model.diagnostics.javascript.LoadJob.run()
       model.diagnostics.viewability.LoadJob.run()
