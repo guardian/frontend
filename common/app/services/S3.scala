@@ -98,6 +98,7 @@ object S3FrontsApi extends S3 {
 
   def getSchema = get(s"${location}/schema.json")
   def getConfig(id: String) = get(s"${location}/config/${id}/config.json")
+  def getMasterConfig: Option[String] = get(s"$location/config/config.json")
   def getBlock(id: String) = get(s"${location}/collection/${id}/collection.json")
   def listConfigsIds: List[String] = getConfigIds(s"$location/config/")
   def listCollectionIds: List[String] = getCollectionIds(s"$location/collection/")

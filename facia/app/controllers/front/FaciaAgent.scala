@@ -222,13 +222,31 @@ class PageFront(val id: String, edition: Edition) {
 }
 
 trait ConfigAgent extends ExecutionContexts {
-  private val configAgent = AkkaAgent[List[String]](Nil)
+  private val configAgent = AkkaAgent[JsValue](JsNull)
 
-  def refresh() = configAgent.send(S3FrontsApi.listConfigsIds)
+  def refresh() = S3FrontsApi.getMasterConfig map {s => configAgent.send(Json.parse(s))}
+
+  def getConfigForId(id: String): List[Config] = {
+    val json = configAgent.get()
+    (json \ "fronts" \ id \ "collections").asOpt[List[String]] map { configList =>
+      configList flatMap getConfig
+    } getOrElse Nil
+  }
+
+  def getConfig(id: String): Option[Config] = {
+    val json = configAgent.get()
+    (json \ "collections" \ id).asOpt[Map[String, String]] map { collectionMap =>
+      Config(
+        id,
+        collectionMap.get("apiQuery"),
+        collectionMap.get("displayName")
+      )
+    }
+  }
 
   def close() = configAgent.close()
 
-  def apply(): List[String] = configAgent()
+  def apply(): List[String] = Nil
 }
 
 object ConfigAgent extends ConfigAgent
