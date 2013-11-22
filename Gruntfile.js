@@ -60,7 +60,6 @@ module.exports = function (grunt) {
                         swipeview:    "components/swipeview/src/swipeview",
                         lodash:       "components/lodash-amd/modern",
                         imager:       'components/imager.js/src/strategies/container',
-                        component:    "components/component/component",
                         omniture:     '../../public/javascripts/vendor/omniture'
                     },
                     shim: {
