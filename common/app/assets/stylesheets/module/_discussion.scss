@@ -500,15 +500,22 @@ $topCommentsHeight: 600px;
                     display: inline-block;
                     padding: 0 8px 0 0;
                     position: relative;
-                    top: -5px;                                    
+                    top: -5px;
                     font-size: 0.9em;
                 }
 
-                .i-recommend {
-                    background-color: #4490ce;
-                    padding: 4px;
+                .i-reccomend-container {
+                    display: inline-block;
+                    width: 12px;
+                    height: 14px;
+                    padding: 2px 4px 4px 4px;
                     @include rounded-corners(50px);
-                    background-position: 4px 4px;
+                    background-color: #4490ce;
+                    position: relative;
+                    top: -4px;
+                    .i-recommend {
+                        background-color: #4490ce;
+                    }
                 }
 
                 .d-comment__recommend-count {
