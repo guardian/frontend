@@ -47,10 +47,11 @@ define([
         The highest counter indicates the more viewed the advert.
     */
 
-    function initAdDwellTracking(config) {
+    function initAdDwellTracking(config, variant) {
 
         var startTime = new Date().getTime(),
-            $trackedAdSlots = common.$g('.ad-slot');
+            $trackedAdSlots = common.$g('.ad-slot'),
+            firstRun = true;
        
         // a timer to submit the data to diagnostics every nth second
         if (config.switches.liveStats) {
@@ -60,11 +61,18 @@ define([
                     return false;
                 }
 
+                if (firstRun) {
+                    adDwellTimes.first = 1;
+                }
+
+                adDwellTimes.variant = variant;
+
                 new LiveStatsAds({
                     beaconUrl: config.page.beaconUrl
                 }).log(adDwellTimes);
 
                 adDwellTimes = {}; // reset
+                firstRun = false;
 
                 // Stop timer if we've gone past the max running time
                 var now = new Date().getTime();
@@ -139,7 +147,7 @@ define([
 
                     // The timer for the 'Both' variant is setup only once in the variant itself
                     if (!isBoth) {
-                        initAdDwellTracking(_config);
+                        initAdDwellTracking(_config, this.id);
                     }
 
                     return true;
@@ -177,7 +185,7 @@ define([
 
                     // The timer for the 'Both' variant is setup only once in the variant itself
                     if (!isBoth) {
-                        initAdDwellTracking(_config);
+                        initAdDwellTracking(_config, this.id);
                     }
 
                     return true;
@@ -198,7 +206,7 @@ define([
                     guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha3.com';
                     variantName = 'Both';
 
-                    initAdDwellTracking(_config);
+                    initAdDwellTracking(_config, this.id);
 
                     return true;
                 }
@@ -209,7 +217,7 @@ define([
                     variantName = 'Control';
                     guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha.com';
 
-                    initAdDwellTracking(_config);
+                    initAdDwellTracking(_config, this.id);
 
                     return true;
                 }
