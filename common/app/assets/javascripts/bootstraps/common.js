@@ -314,6 +314,12 @@ define([
             }
         },
 
+        unshackleParagraphs: function (config, context) {
+            if (userPrefs.isOff('para-indents')) {
+                $('.paragraph-spacing--indents', context).removeClass('paragraph-spacing--indents');
+            }
+        },
+
         logReadingHistory : function() {
             mediator.on('page:common:ready', function(config) {
                  if(/Article|Video|Gallery|Interactive/.test(config.page.contentType)) {
@@ -396,6 +402,7 @@ define([
             modules.optIn();
             modules.displayReleaseMessage(config);
             modules.logReadingHistory();
+            modules.unshackleParagraphs(config, context);
             modules.initAutoSignin(config);
         }
         mediator.emit("page:common:ready", config, context);
