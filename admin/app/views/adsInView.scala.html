@@ -1,4 +1,4 @@
-@(topSeconds: tools.LineChart, bottomSeconds: tools.LineChart, env: String)
+@(top: tools.LineChart, bottom: tools.LineChart, inline: tools.LineChart, mpu: tools.LineChart, views: tools.LineChart, env: String)
 
 <!DOCTYPE html>
 <html>
@@ -20,7 +20,7 @@
             .slots {
                 display: table;
                 width: 100%;
-                min-height: 50vh;
+                min-height: 25vh;
                 font-size: 100px;
                 text-shadow: #000 2px 2px;
             }
@@ -32,11 +32,11 @@
             .slots span small {
                font-size: 50px; 
             }
-            #top {
+            #top, #mpu {
                 xbackground-color: #ff3;
                 color: #08d;
             }
-            #bottom {
+            #bottom, #inline {
                 xbackground-color: #08d;
                 color: #ff3;
             }
@@ -57,12 +57,22 @@
         </div>
         <div id="top" class="slots">
             <span>
-                Top <small>advert seen for</small> @{"%.0f".format(topSeconds.latest)}  <small>seconds</small>
+                Top <small>advert seen for</small> @{"%.0f".format(top.latest)} <small>seconds (@{"%.0f".format(views.latest)} users)</small>
+            </span>
+        </div>
+        <div id="inline" class="slots">
+            <span>
+                Inline <small>advert seen for</small> @{"%.0f".format(inline.latest)} <small>seconds (@{"%.0f".format(views.latest)} users)</small>
+            </span>
+        </div>
+        <div id="mpu" class="slots">
+            <span>
+                MPU <small>advert seen for</small> @{"%.0f".format(mpu.latest)} <small>seconds (@{"%.0f".format(views.latest)} users)</small>
             </span>
         </div>
         <div id="bottom" class="slots">
             <span>
-                Bottom <small>advert seen for</small> @{"%.0f".format(bottomSeconds.latest)}  <small>seconds</small>
+                Bottom <small>advert seen for</small> @{"%.0f".format(bottom.latest)} <small>seconds (@{"%.0f".format(views.latest)} users)</small>
             </span>
         </div>
   </body>
