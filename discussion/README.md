@@ -4,10 +4,17 @@ Discussion is currently running under the generic [dev-build project](https://gi
 
 To have the have it up and running however, you will need a few things setup for ease of use.
 
+## Play
+    ./sbt
+    project discussion
+    disrun
+
 ## Nginx
 You will need to be running your stack on [Nginx](http://wiki.nginx.org/Main). [See our documentation for more information](https://github.com/guardian/frontend/blob/master/nginx/README.md).
 
-If you are unsure if you are or aren't, just make sure you are viewing the site from `http://m.thegulocal.com`.
+If you are unsure if you are or aren't, just make sure you are viewing the site from `http://m.thegulocal.com`. See above README for more info.
+
+You will need to add `comments.thegulocal.com` to you hosts file too. See [README](https://github.com/guardian/frontend/blob/master/nginx/README.md) above for more info.
 
 ## API locations
 As we have dependancies on both the Content API and Identity API, this can be a little precarious. Never fear, once you're up and running, it's pretty smooth sailing.
@@ -22,7 +29,7 @@ In your local settings file, you should have the following:
 
     # Discussion
     discussion.apiRoot=http://discussion.code.dev-guardianapis.com/discussion-api
-    
+
     # Generic
     guardian.page.host=http://m.thegulocal.com
 
