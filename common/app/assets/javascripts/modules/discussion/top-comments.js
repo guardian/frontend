@@ -53,7 +53,7 @@ TopComments.CONFIG = {
         commentReply: 'd-comment__action--reply',
 
         topCommentHolder: 'discussion__comments__top',
-        titleCounter: 'discussion__comments--top-counter',
+        titleCounter: 'discussion__comment-count',
         fadeOut: 'd-image-fade'
     }
 };
@@ -100,9 +100,9 @@ TopComments.prototype.fetch = function(parent) {
         function render(resp) {
             // Success: Render Top or Regular comments
             if (resp.commentCount > 0 && self.topCommentsSwitch) {
-                
+
                 // Render Top Comments
-                
+
                 self.topCommentsAmount = resp.commentCount;
                 self.parent = parent;
                 self.elem = bonzo.create(resp.html);

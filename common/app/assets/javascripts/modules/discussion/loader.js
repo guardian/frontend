@@ -2,12 +2,12 @@ define([
     'utils/ajax',
     'bonzo',
     'qwery',
-    'component',
+    'modules/component',
     'modules/analytics/discussion',
     'modules/identity/api',
     'modules/discussion/api',
     'modules/discussion/comments',
-    'modules/discussion/topComments',
+    'modules/discussion/top-comments',
     'modules/discussion/comment-box',
     '$'
 ], function(

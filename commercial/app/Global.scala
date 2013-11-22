@@ -17,7 +17,8 @@ trait CommercialLifecycle extends GlobalSettings with Logging {
 
   override def onStart(app: PlayApp) {
 
-    def randomStartSchedule = s"0 ${Random.nextInt(15)}/15 * * * ?"
+    val randomFactor = Random.nextInt(15)
+    def randomStartSchedule(minsLater: Int = 0) = s"0 ${randomFactor + minsLater}/15 * * * ?"
 
     super.onStart(app)
 
@@ -27,38 +28,38 @@ trait CommercialLifecycle extends GlobalSettings with Logging {
     Jobs.deschedule("SoulmatesRefreshJob")
 
     // fire every 15 mins
-    val travelRefreshSchedule = randomStartSchedule
-    log.info(s"Travel offers refresh on schedule $travelRefreshSchedule")
-    Jobs.schedule("TravelOffersRefreshJob", travelRefreshSchedule) {
-      OffersAgent.refresh()
-    }
-
-    // fire every 15 mins
-    val jobsRefreshSchedule = randomStartSchedule
-    log.info(s"Jobs refresh on schedule $jobsRefreshSchedule")
-    Jobs.schedule("JobsRefreshJob", jobsRefreshSchedule) {
-      JobsAgent.refresh()
+    val soulmatesRefreshSchedule = randomStartSchedule()
+    log.info(s"Soulmates refresh on schedule $soulmatesRefreshSchedule")
+    Jobs.schedule("SoulmatesRefreshJob", soulmatesRefreshSchedule) {
+      SoulmatesAggregatingAgent.refresh()
     }
 
     // fire every 15 minutes
-    val masterClassRefreshSchedule = randomStartSchedule
+    val masterClassRefreshSchedule = randomStartSchedule(minsLater = 1)
     log.info(s"Masterclass refresh on schedule $masterClassRefreshSchedule")
     Jobs.schedule("MasterClassRefreshJob", masterClassRefreshSchedule) {
       MasterClassAgent.refresh()
     }
 
     // fire every 15 mins
-    val soulmatesRefreshSchedule = randomStartSchedule
-    log.info(s"Soulmates refresh on schedule $soulmatesRefreshSchedule")
-    Jobs.schedule("SoulmatesRefreshJob", soulmatesRefreshSchedule) {
-      SoulmatesAggregatingAgent.refresh()
+    val travelRefreshSchedule = randomStartSchedule(minsLater = 2)
+    log.info(s"Travel offers refresh on schedule $travelRefreshSchedule")
+    Jobs.schedule("TravelOffersRefreshJob", travelRefreshSchedule) {
+      OffersAgent.refresh()
+    }
+
+    // fire every 15 mins
+    val jobsRefreshSchedule = randomStartSchedule(minsLater = 3)
+    log.info(s"Jobs refresh on schedule $jobsRefreshSchedule")
+    Jobs.schedule("JobsRefreshJob", jobsRefreshSchedule) {
+      JobsAgent.refresh()
     }
 
     AkkaAsync {
-      OffersAgent.refresh()
-      JobsAgent.refresh()
       SoulmatesAggregatingAgent.refresh()
       MasterClassAgent.refresh()
+      OffersAgent.refresh()
+      JobsAgent.refresh()
       if (Play.isDev) LightJobsAgent.refresh()
     }
   }
@@ -81,6 +82,6 @@ trait CommercialLifecycle extends GlobalSettings with Logging {
 
 object Global
   extends WithFilters(RequestMeasurementMetrics.asFilters: _*) with CommercialLifecycle with DevParametersLifecycle
-                                                                                    with CloudWatchApplicationMetrics {
+  with CloudWatchApplicationMetrics {
   override lazy val applicationName = Management.applicationName
 }
