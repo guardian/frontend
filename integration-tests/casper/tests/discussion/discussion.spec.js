@@ -6,11 +6,11 @@
  * Discussion feature tests 
  *
  **/
-casper.start(host + 'science/grrlscientist/2012/aug/07/3?view=mobile');
 
-casper.options.waitTimeout = 10000; // Discussion API can be slow..
-
-//casper.options.logLevel = 'debug';
+casper.test.setUp(function() {
+    casper.start(host + '/science/grrlscientist/2012/aug/07/3?view=mobile');
+    casper.options.waitTimeout = 10000;
+});
 
 /**
  *   Scenario: Read top level comments
@@ -20,16 +20,14 @@ casper.options.waitTimeout = 10000; // Discussion API can be slow..
  **/
 // Check the correct login/out buttons are present
 casper.test.begin('Read top level comments', function(test) {
-    casper.waitForSelector('.d-discussion',
-        function then() {
-            test.assertExists('.d-discussion');
-            test.assertVisible('.d-discussion');
-            test.done();
-        },
-        function timeout() {
-            test.fail('Comments failed to load');
-        }
-    );
+    casper.waitForSelector('.d-discussion', function then() {
+        test.assertExists('.d-discussion');
+        test.assertVisible('.d-discussion');
+        test.done();
+    }, function timeout() {
+        casper.capture(screens + 'discussion-fail.png');
+        test.fail('Comments failed to load');
+    });
 });
 
     /* ===================== Top Comments ===================== */

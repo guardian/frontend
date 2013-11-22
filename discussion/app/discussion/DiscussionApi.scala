@@ -56,6 +56,9 @@ trait DiscussionApi extends ExecutionContexts with Logging {
           title = (json \ "discussion" \ "title").as[String],
           contentUrl = (json \ "discussion" \ "webUrl").as[String],
           comments = comments,
+          commentCount = (json \ "discussion" \ "commentCount").as[Int],
+          topLevelCommentCount = (json \ "discussion" \ "topLevelCommentCount").as[Option[Int]].getOrElse(0),
+          commenterCount =  (json \ "discussion" \ "commenterCount").as[Option[Int]].getOrElse(0),
           currentPage = (json \ "currentPage").as[Int],
           pages = (json \ "pages").as[Int],
           isClosedForRecommendation = (json \ "discussion" \ "isClosedForRecommendation").as[Boolean]
