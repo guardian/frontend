@@ -54,14 +54,6 @@ h3 {
     @extend %type-6;
 }
 
-h4 {
-    @extend %type-6;
-    margin: 0;
-    padding: 8px 10px 7px;
-    background-color: #ededed;
-    border-top: 1px solid #cccccc;
-}
-
 th,
 td {
     @extend %type-10;
