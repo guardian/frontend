@@ -14,7 +14,7 @@ object RequestLog {
     r.host,
     r.headers.safe("X-Gu-Edition"),
     r.headers.safe("X-GU-GeoLocation"),
-    s"${r.headers.safe("User-Agent")}"
+    s""" "${r.headers.safe("User-Agent")}" """.trim
   ).mkString(", ")
 
 }
