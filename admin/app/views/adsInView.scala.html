@@ -1,4 +1,4 @@
-@(top: tools.LineChart, bottom: tools.LineChart, inline: tools.LineChart, mpu: tools.LineChart, views: tools.LineChart, env: String)
+@(top: tools.LineChart, topCount: tools.LineChart, bottom: tools.LineChart, inline: tools.LineChart, mpu: tools.LineChart, views: tools.LineChart, env: String)
 
 <!DOCTYPE html>
 <html>
@@ -57,7 +57,8 @@
         </div>
         <div id="top" class="slots">
             <span>
-                Top <small>advert seen for</small> @{"%.0f".format(top.latest)} <small>seconds (@{"%.0f".format(views.latest)} users)</small>
+                Top <small>advert seen for</small> @{"%.0f".format(top.latest)} <small>seconds (@{"%.0f".format(views.latest)} users,
+                    @{"%.0f".format(topCount.latest)})</small>
             </span>
         </div>
         <div id="inline" class="slots">
