@@ -36,7 +36,6 @@ define([
             new Item(item).render(container);
         });
         this.bindListeners();
-        this.setState('is-hidden');
     };
 
     HighlightPanel.prototype.bindListeners = function() {

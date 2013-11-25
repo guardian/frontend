@@ -18,6 +18,7 @@ define([
         templateName: 'highlight-item',
         componentClass: 'highlight-item',
         classes: {
+            link: 'url',
             image: 'img',
             headline: 'headline'
         },
@@ -26,7 +27,7 @@ define([
 
     Highlight.prototype.prerender = function() {
         if(this.data.itemPicture) { this.getElem(this.conf().classes.image).src = this.data.itemPicture; }
-        this.getElem(this.conf().classes.headline).href = this.data.url;
+        this.getElem(this.conf().classes.link).href = this.data.url;
         this.getElem(this.conf().classes.headline).innerHTML = this.data.headline;
     };
 

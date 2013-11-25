@@ -135,8 +135,10 @@
     </script>
     <script type="text/template" id="tmpl-highlight-item">
         <li class="highlight-item">
-            <img class="highlight-item__img" src="{{ img }}" alt=""/>
-            <a class="highlight-item__headline" href="{{ url }}">{{ headline }}</a>
+            <a class="highlight-item__url media" href="{{ url }}">
+                <img class="highlight-item__img media__img" src="{{ img }}" alt=""/>
+                <h3 class="highlight-item__headline media__body">{{ headline }}</h3>
+            </a>
         </li>
     </script>
 }

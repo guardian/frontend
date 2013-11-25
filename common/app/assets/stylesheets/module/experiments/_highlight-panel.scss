@@ -2,23 +2,30 @@
     position: fixed;
     bottom: 0;
     width: 100%;
-    background-color: $c-neutral6;
-    height: gs-height(3);
+    background-color: #ffffff;
+    border-top: 2px solid $c-neutral5;
+    height: gs-height(2);
 
-    @include transition(-webkit-transform 0.3s ease-out);
-    @include transition(-moz-transform 0.3s ease-out);
-    @include transition(-o-transform 0.3s ease-out);
-    @include transition(-ms-transform 0.3s ease-out);
-    @include transition(transform 0.3s ease-out);
+    @include transition(-webkit-transform 0.6s ease-out);
+    @include transition(-moz-transform 0.6s ease-out);
+    @include transition(-o-transform 0.6s ease-out);
+    @include transition(-ms-transform 0.6s ease-out);
+    @include transition(transform 0.6s ease-out);
 
     @include transform(translateY(132px));
 }
 
 .highlight-panel--is-open {
+    @include transition(-webkit-transform 0.3s ease-out);
+    @include transition(-moz-transform 0.3s ease-out);
+    @include transition(-o-transform 0.3s ease-out);
+    @include transition(-ms-transform 0.3s ease-out);
+    @include transition(transform 0.3s ease-out);
     @include transform(translateX(0));
 }
 
 .highlight-panel__title {
+    float: left;
     padding: $baseline*3 0 0 $gs-gutter;
     @include fs-header(1);
     @include box-sizing(border-box);
@@ -32,31 +39,31 @@
 
 .highlight-panel__items {
     float: left;
+    margin-top: $baseline*3;
 }
 
 .highlight-item {
     float: left;
-    width: gs-span(5);
-    padding: $baseline*3 $gs-gutter;
-    border-right: 1px dotted $c-neutral3;
+    padding: 0 $gutter/2 $baseline*3 $gutter/2;
+    border-right: 1px dotted $c-neutral5;
     @include box-sizing(border-box);
-
-    &:hover {
-        background-color: $c-neutral5;
-    }
 
     &:last-child {
         border-right: none;
     }
 }
 
+.highlight-item__url { float: left; }
+
 .highlight-item__img {
-    float: left;
-    width: 30%;
-    margin-right: $gs-gutter;
+    width: 94px;
+    margin-right: $gs-gutter/2;
 }
 
 .highlight-item__headline {
+    display: block;
+    position: relative;
+    width: gs-span(3);
     color: $c-neutral1;
     @include fs-headline(1);
 }
