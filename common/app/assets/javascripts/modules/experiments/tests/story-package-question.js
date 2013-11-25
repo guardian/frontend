@@ -71,8 +71,8 @@ define([
         return true;
     }
 
-    function labelAsQuestion(trail) {
-        trail.setAttribute('data-link-name', trail.getAttribute('data-link-name') + ' | question');
+    function labelAs(trail, label) {
+        trail.setAttribute('data-link-name', trail.getAttribute('data-link-name') + ' | ' + label);
     }
 
     function cloneHeader()  {
@@ -92,19 +92,22 @@ define([
         });
     }
 
-    function upgradeTrail(url) {
+    function upgradeTrail(url, isQuestion) {
+        var dataLink = (isQuestion) ? 'read next | is question' : 'read next';
         if(detect.getBreakpoint() === 'mobile') {
             trailToHTML(url, 'trail').then(function(resp) {
                 if('html' in resp) {
                     prepend(resp.html);
                 }
                 cloneHeader();
+                labelAs(getTrails()[0], dataLink);
             });
         } else {
             trailToHTML(url, 'card').then(function(resp) {
                 if('html' in resp) {
-                    bonzo(qwery('.card-wrapper--right')).hide();
+                    bonzo(qwery('.card-wrapper--right')).removeClass('is-visible');
                     bonzo(qwery('.u-table__cell--bottom')).append(resp.html);
+                    labelAs(qwery('.card-wrapper.is-visible .item__image-container')[0], dataLink);
                 }
             });
         }
@@ -130,7 +133,7 @@ define([
                 common.mediator.on('modules:related:loaded', function() {
                     getTrails().forEach(function(trail) {
                         if(isQuestion(trail)) {
-                            labelAsQuestion(trail);
+                            labelAs(trail, 'question');
                         }
                     });
                 });
@@ -162,7 +165,7 @@ define([
                         getTrails().some(function(trail) {
                             if(isQuestion(trail)){
                                 prepend(trail);
-                                upgradeTrail(getTrailUrl(getTrails()[0]));
+                                upgradeTrail(getTrailUrl(getTrails()[0]), true);
                                 dedupe(getTrailUrl(getTrails()[0]));
                                 dates.init(document);
                                 return true;
@@ -212,7 +215,7 @@ define([
                                 return true;
                             } else { return false; }
                         }).length) {
-                            upgradeTrail(getTrailUrl(getTrails()[0]));
+                            upgradeTrail(getTrailUrl(getTrails()[0]), true);
                             dedupe(getTrailUrl(getTrails()[0]));
                             dates.init(document);
                             return;
@@ -232,6 +235,14 @@ define([
                                             dates.init(document);
                                             return true;
                                         } else {
+                                            getTrails().forEach(function(trail) {
+                                                if(isInHistory(getTrailUrl(trail))) {
+                                                    append(trail);
+                                                }
+                                            });
+                                            upgradeTrail(getTrailUrl(getTrails()[0]));
+                                            dedupe(getTrailUrl(getTrails()[0]));
+                                            dates.init(document);
                                             return false;
                                         }
                                     });
