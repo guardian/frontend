@@ -3,12 +3,15 @@ package model.commercial.travel
 import scala.concurrent.Future
 import org.joda.time.format.DateTimeFormat
 import scala.xml.{Elem, Node}
-import conf.CommercialConfiguration
 import model.commercial.XmlAdsApi
+import conf.CommercialConfiguration
 
 object OffersApi extends XmlAdsApi[Offer] {
 
-  val adTypeName = "Travel Offers"
+  protected val adTypeName = "Travel Offers"
+
+  private lazy val allUrl = CommercialConfiguration.getProperty("traveloffers.api.url")
+  private lazy val popularUrl = CommercialConfiguration.getProperty("traveloffers.api.popular.url")
 
   override protected val loadTimeout = 20000
 
@@ -33,7 +36,7 @@ object OffersApi extends XmlAdsApi[Offer] {
     }
   }
 
-  def getAllOffers: Future[List[Offer]] = loadAds {
-    CommercialConfiguration.travelOffersApi.url
-  } map (_.toList)
+  def getAllOffers: Future[List[Offer]] = loadAds(allUrl) map (_.toList)
+
+  def getMostPopularOffers: Future[List[Offer]] = loadAds(popularUrl) map (_.toList)
 }
