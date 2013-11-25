@@ -5,7 +5,8 @@ define([
     'modules/component',
     'modules/identity/api',
     'modules/discussion/comment-box',
-    'modules/discussion/recommend-comments'
+    'modules/discussion/recommend-comments',
+    '$'
 ], function(
     ajax,
     bonzo,
@@ -13,7 +14,8 @@ define([
     Component,
     Id,
     CommentBox,
-    RecommendComments
+    RecommendComments,
+    $
 ) {
 
 /**
@@ -258,7 +260,7 @@ Comments.prototype.addComment = function(comment, focus, parent) {
         values = {
             username: this.user.displayName,
             timestamp: 'Just now',
-            body: '<p>'+ comment.body.replace('\n', '</p><p>') +'</p>',
+            body: '<p>'+ comment.body.replace(/\n+/g, '</p><p>') +'</p>',
             report: {
                 href: 'http://discussion.theguardian.com/components/report-abuse/'+ comment.id
             },
@@ -284,6 +286,16 @@ Comments.prototype.addComment = function(comment, focus, parent) {
         }
     }
     commentElem.id = 'comment-'+ comment.id;
+
+    var is_staff = this.user.badge.some(function (e) { // Returns true if any element in array satisfies function
+        return e.name === "Staff";
+    });
+
+    if (is_staff) {
+        // Hack to allow staff badge to appear
+        var staffBadge = bonzo.create(document.getElementById('tmpl-staff-badge').innerHTML);
+        $('.d-comment__meta div', commentElem).first().append(staffBadge);
+    }
 
     // Stupid hack. Will rearchitect.
     if (!parent) {

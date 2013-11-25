@@ -7,7 +7,4 @@
             @fragments.topComment(comment, page.isClosedForRecommendation)
         }
     </ul>
-    @if(page.currentPage + 1 <= page.pages){
-        <a class="js-show-more-comments cta" data-link-name="Show more comments" href="@LinkTo{/@page.id?page=@(page.currentPage + 1)}">Show more comments</a>
-    }
 </div>

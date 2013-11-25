@@ -25,4 +25,7 @@
     <script type="text/template" id="tmpl-comment-box">@fragments.commentBox()</script>
     <script type="text/template" id="tmpl-banned-user">@fragments.cannotComment()</script>
     @if(blankComment != null){<script type="text/template" id="tmpl-comment">@fragments.comment(blankComment)</script>}
+    <script type="text/template" id="tmpl-staff-badge">
+        <i class="d-badge d-badge--guardian-staff d-comment__author-status" title="Guardian staff"><span class="d-badge__label">Guardian Staff</span></i>
+    </script>
 </div>
