@@ -234,3 +234,19 @@
         top: .2rem;
     }
 }
+
+// Clamps a block of text to a certain number of lines,
+// followed by an ellipsis in Webkit and Blink based browsers
+// Reference: http://dropshado.ws/post/1015351370/webkit-line-clamp
+@mixin text-clamp($lines: 2, $line-height: false) {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: $lines;
+
+// Fallback for non-Webkit browsers
+// (won't show `…` at the end of the block)
+    @if $line-height {
+        @include rem((max-height: $line-height * $lines));
+    }
+}

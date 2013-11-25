@@ -5,6 +5,7 @@
     background-color: #ffffff;
     border-top: 2px solid $c-neutral5;
     height: gs-height(2);
+    white-space: nowrap;
 
     @include transition(-webkit-transform 0.6s ease-out);
     @include transition(-moz-transform 0.6s ease-out);
@@ -25,31 +26,48 @@
 }
 
 .highlight-panel__title {
+    display: none;
     float: left;
     padding: $baseline*3 0 0 $gs-gutter;
     @include fs-header(1);
-    @include box-sizing(border-box);
 
-    @include mq(tablet) {
-        @include fs-header(3, true);
-        width: gs-span(3);
+    @include mq(leftCol) {
+        display: block;
+        width: $a-leftCol-width;
         float: left;
+    }
+
+    @include mq(wide) {
+        width: $a-leftColWide-width;
     }
 }
 
 .highlight-panel__items {
-    float: left;
-    margin-top: $baseline*3;
+    margin-left: $gs-gutter/2;
+    white-space: normal;
+
+    @include mq(tablet, rightCol) {
+        width: gs-span(8) + $gs-gutter*1.5;
+        margin: 0 auto;
+    }
+
+    @include mq(leftCol) { margin-left: $a-leftCol-width + $gs-gutter*1.5; }
+    @include mq(wide) { margin-left: $a-leftColWide-width + $gs-gutter*1.5; }
 }
 
 .highlight-item {
     float: left;
-    padding: 0 $gutter/2 $baseline*3 $gutter/2;
-    border-right: 1px dotted $c-neutral5;
+    margin-top: $baseline*3;
+    padding-bottom: $baseline*3;
     @include box-sizing(border-box);
 
-    &:last-child {
-        border-right: none;
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter/2;
+        padding-right: $gs-gutter/2;
+    }
+
+    & + & {
+        border-left: 1px dotted $c-neutral5;
     }
 }
 
@@ -63,9 +81,15 @@
 .highlight-item__headline {
     display: block;
     position: relative;
-    width: gs-span(3);
     color: $c-neutral1;
     @include fs-headline(1);
+    @include text-clamp(3, 20);
+
+    @include mq(tablet) {
+        width: 196px;
+    }
+
+
 }
 
 
