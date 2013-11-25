@@ -486,9 +486,9 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
 
     scenario("Health check"){
       HtmlUnit("/world/2013/sep/15/obama-rouhani-united-nations-meeting") { browser =>
-        Await.result(WS.url("http://localhost:9000/_article_health").get(), 10.seconds).status should be (503)
+        Await.result(WS.url("http://localhost:9000/_cdn_healthcheck").get(), 10.seconds).status should be (503)
         HealthcheckPage.get(com.gu.management.HttpRequest(com.gu.management.GET, "/management/healthcheck", "http://localhost:10808", Map.empty))
-        Await.result(WS.url("http://localhost:9000/_article_health").get(), 10.seconds).status should be (200)
+        Await.result(WS.url("http://localhost:9000/_cdn_healthcheck").get(), 10.seconds).status should be (200)
       }
     }
 
