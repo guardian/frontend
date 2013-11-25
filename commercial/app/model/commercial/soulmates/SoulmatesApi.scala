@@ -11,15 +11,15 @@ object SoulmatesApi extends ExecutionContexts with Logging {
   private def loadMembers(url: => Option[String]): Future[JsValue] = {
     url map {
       u =>
-        val json = WS.url(u) withRequestTimeout 2000 get() map {
+        val json = WS.url(u) withRequestTimeout 10000 get() map {
           response => response.json
         }
 
         json onSuccess {
-          case JsArray(ads) => log.info(s"Loaded ${ads.size} soulmates ads")
+          case JsArray(ads) => log.info(s"Loaded ${ads.size} soulmates ads from $u")
         }
         json onFailure {
-          case e: Exception => log.error(s"Loading soulmates ads failed: ${e.getMessage}")
+          case e: Exception => log.error(s"Loading soulmates ads from $u failed: ${e.getMessage}")
         }
 
         json

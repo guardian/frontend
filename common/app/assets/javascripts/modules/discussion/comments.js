@@ -20,6 +20,7 @@ define([
  * TODO (jamesgorrie):
  * * Move recommending into this, it has no need for it's own module.
  * * Get the selectors up to date with BEM
+ * * Move over to $ instead of qwery & bonzo
  * @constructor
  * @extends Component
  * @param {Element=} context
@@ -72,6 +73,15 @@ Comments.prototype.topLevelComments = null;
 
 /** @type {Object=} */
 Comments.prototype.user = null;
+
+/** @override */
+Comments.prototype.prerender = function() {
+    // Set the heading to the correct text
+    var heading = qwery('#comments')[0],
+        commentCount = this.elem.getAttribute('data-comment-count');
+
+    heading.innerHTML += ' <span class="discussion__comment-count">('+ commentCount +')</span>';
+};
 
 /** @override */
 Comments.prototype.ready = function() {
