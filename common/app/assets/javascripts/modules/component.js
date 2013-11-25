@@ -98,7 +98,7 @@ define([
             container = parent || document.body;
 
         this.elem = template;
-        this.prerender();
+        this._prerender();
         bonzo(container).append(this.elem);
         this._ready();
     };
