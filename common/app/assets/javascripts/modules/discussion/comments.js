@@ -5,7 +5,8 @@ define([
     'modules/component',
     'modules/identity/api',
     'modules/discussion/comment-box',
-    'modules/discussion/recommend-comments'
+    'modules/discussion/recommend-comments',
+    '$'
 ], function(
     ajax,
     bonzo,
@@ -13,13 +14,15 @@ define([
     Component,
     Id,
     CommentBox,
-    RecommendComments
+    RecommendComments,
+    $
 ) {
 
 /**
  * TODO (jamesgorrie):
  * * Move recommending into this, it has no need for it's own module.
  * * Get the selectors up to date with BEM
+ * * Move over to $ instead of qwery & bonzo
  * @constructor
  * @extends Component
  * @param {Element=} context
@@ -42,6 +45,7 @@ Comments.CONFIG = {
         showMore: 'js-show-more-comments',
         reply: 'd-comment--response',
         showReplies: 'js-show-more-replies',
+        header: 'd-discussion__header',
 
         comment: 'd-comment',
         commentActions: 'd-comment__actions__main',
@@ -71,6 +75,15 @@ Comments.prototype.topLevelComments = null;
 
 /** @type {Object=} */
 Comments.prototype.user = null;
+
+/** @override */
+Comments.prototype.prerender = function() {
+    // Set the heading to the correct text
+    var heading = qwery('#comments')[0],
+        commentCount = this.elem.getAttribute('data-comment-count');
+
+    heading.innerHTML += ' <span class="discussion__comment-count">('+ commentCount +')</span>';
+};
 
 /** @override */
 Comments.prototype.ready = function() {
@@ -135,8 +148,9 @@ Comments.prototype.renderReplyButtons = function(comments) {
 /**
  * @param {Event} e
  */
-Comments.prototype.showMore = function(e) {
-    e.preventDefault();
+Comments.prototype.showMore = function(event) {
+    if (event) { event.preventDefault(); }
+
     var showMoreButton = this.getElem('showMore');
 
     if (showMoreButton.getAttribute('data-disabled') === 'disabled') {
@@ -255,6 +269,7 @@ Comments.prototype.addComment = function(comment, focus, parent) {
             }
         },
         commentElem = bonzo.create(document.getElementById('tmpl-comment').innerHTML)[0];
+        bonzo(commentElem).addClass('fade-in'); // Comments now appear with CSS Keyframe animation
 
     for (key in map) {
         if (map.hasOwnProperty(key)) {
@@ -271,6 +286,16 @@ Comments.prototype.addComment = function(comment, focus, parent) {
         }
     }
     commentElem.id = 'comment-'+ comment.id;
+
+    var is_staff = this.user.badge.some(function (e) { // Returns true if any element in array satisfies function
+        return e.name === "Staff";
+    });
+
+    if (is_staff) {
+        // Hack to allow staff badge to appear
+        var staffBadge = bonzo.create(document.getElementById('tmpl-staff-badge').innerHTML);
+        $('.d-comment__meta div', commentElem).first().append(staffBadge);
+    }
 
     // Stupid hack. Will rearchitect.
     if (!parent) {

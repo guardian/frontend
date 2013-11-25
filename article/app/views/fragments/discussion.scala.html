@@ -2,17 +2,27 @@
 <div class="discussion"
     data-discussion-key="@discussionId"
     data-discussion-closed="@discussionClosed">
-    <h2 id="comments" class="page-sub-header tone-colour">Comments</h2>
 
-    <div class="discussion__comment-box discussion__comment-box--top"></div>
-    <div class="discussion__comments"></div>
-    <div class="discussion__comment-box discussion__comment-box--bottom"></div>
-    <a class="d-show-cta js-show-discussion" href="@LinkTo{/discussion@discussionId}"
-        data-is-ajax data-link-name="View all comments" rel="nofollow">
-        Join the discussion…
-        <span class="d-commentcount speech-bubble tone-background tone-border">
-            <span class="js-commentcount__number"></span>
-        </span>
-        <i class="i i-arrow-grey-down"></i>
-    </a>
+    <div class="discussion__comments--top-comments">
+        <h2 id="top-comments" class="js-top-comments page-sub-header tone-colour">Comments <span class="u-h discussion__comment-count"></span></h2>
+        <div class="discussion__comments__top">
+        </div>
+        <div class="d-image-fade u-h"></div>@* nasty but required to be outside here as firefox column rendering is strange (chrisfinch) *@
+    </div>
+
+    <div class="discussion__comments__container u-h">
+        <h2 id="comments" class="page-sub-header tone-colour">All Comments</h2>
+
+        <div class="discussion__comment-box discussion__comment-box--top"></div>
+        <div class="discussion__comments"></div>
+        <div class="discussion__comment-box discussion__comment-box--bottom"></div>
+        <a class="d-show-cta js-show-discussion" href="@LinkTo{/discussion@discussionId}"
+            data-is-ajax data-link-name="View all comments" rel="nofollow">
+            Show all comments…
+            <span class="d-commentcount speech-bubble tone-background tone-border">
+                <span class="js-commentcount__number"></span>
+            </span>
+            <i class="i i-arrow-grey-down"></i>
+        </a>
+    </div>
 </div>

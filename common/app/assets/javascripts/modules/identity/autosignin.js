@@ -7,7 +7,8 @@ define([
     "modules/navigation/profile",
     "utils/storage",
     "modules/userPrefs",
-    "utils/time"
+    "utils/time",
+    "modules/ui/message"
 ],
 function(
     ajax,
@@ -18,7 +19,8 @@ function(
     Profile,
     Storage,
     UserPrefs,
-    time
+    time,
+    Message
 ) {
 
     function AutoSignin(config, context) {
@@ -66,7 +68,7 @@ function(
                     accessToken : authResponse.accessToken
                 },
                 success: function(response) {
-                    self.writeFacebookWelcome(name);
+                    self.welcome(name);
                     if(response.status === "ok") {
                         var profile = new Profile(
                             self.header,{
@@ -78,30 +80,12 @@ function(
             });
         };
 
-        this.writeFacebookWelcome = function(name) {
-
-            var showReleaseMessage = !!UserPrefs.get('releaseMessage');
-
-            if ( !showReleaseMessage ) {
-                var alphaMessage = bonzo(common.$g('.site-message__message')).remove(),
-                    p_message = bonzo(bonzo.create('<p class="site-message__message site-message__message--tall">' +
-                    'Welcome ' + name + ', you\'re signed into the Guardian using Facebook, or' +
-                    '<a href="' + self.config.page.idUrl + '/signout"/> sign out</a>.</p>'));
-
-                bonzo(common.$g('.site-message__inner')).prepend(p_message);
-                bonzo(common.$g('.site-message__actions')).remove();
-            } else {
-                var element = document.body,
-                    html = '<div class="site-message" data-link-name="facebook autosign message">' +
-                    '<div class="site-message__inner">' +
-                    '<p class="site-message__message">' +
-                    'Welcome ' + name + ', you\'re signed into the Guardian using Facebook, or' +
-                    '<a href="' + self.config.page.idUrl + '/signout"/> sign out</a>.' +
-                    '</p></div></div>';
-
-                bonzo(element).prepend(bonzo.create(html));
-            }
-            common.$g('#header').addClass('js-site-message');
+        this.welcome = function(name) {
+            var msg = '<p class="site-message__message">' +
+                          'Welcome ' + name + ", you're signed into the Guardian using Facebook, or " +
+                          '<a href="' + self.config.page.idUrl + '/signout"/>sign out</a>.' +
+                      '</p>',
+                fbMessage = new Message('fbauto', { important: true }).show(msg);
         };
     }
     return AutoSignin;

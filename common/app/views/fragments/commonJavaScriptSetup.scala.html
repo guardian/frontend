@@ -1,4 +1,4 @@
-@(item: model.MetaData, bootstrapJsModule: String, switches: Seq[com.gu.management.Switchable])(implicit request: RequestHeader)
+@(item: model.MetaData, bootstrapJsModule: String)(implicit request: RequestHeader)
 
 @import conf.Switches._
 @import conf.Static
@@ -31,7 +31,6 @@
         apiName: 'require',
         paths: {
             facebook: '//connect.facebook.net/en_US/all.js',
-            omniture: '@Static("javascripts/vendor/omniture.js")',
             swipe: '@Static("javascripts/vendor/swipe.js")',
             zxcvbn: '@Static("javascripts/vendor/zxcvbn.js")'
         }
@@ -118,9 +117,18 @@
         }
 
         @* we want this to happen ASAP to avoid FOUC *@
-        document.documentElement.className = document.documentElement.className.replace(/\bjs-off\b/g, '') + ' js-on ';
         var connectionClass = 'connection--' + (isConnectionLow() ? '' : 'not-') + 'low';
-        document.documentElement.className += connectionClass;
+        var htmlClassNames = connectionClass;
+		
+	    @* http://modernizr.com/download/#-svg *@
+	    function hasSvgSupport() {
+	        var ns = {'svg': 'http://www.w3.org/2000/svg'};
+	        return !!document.createElementNS && !!document.createElementNS(ns.svg, 'svg').createSVGRect;
+	    }
+		if (hasSvgSupport()) {
+			htmlClassNames += " svg";
+		}
+		document.documentElement.className = document.documentElement.className.replace(/\bjs-off\b/g, '') + ' js-on ' + htmlClassNames;
 
         guardian.platformsGettingHintedFonts = /Windows/;
         guardian.platformsNotGettingHintedFonts = /W(indows Phone|PDesktop)/; // exceptions
@@ -136,7 +144,10 @@
             loadCssFromStorage();
         }
 
-        guardian.config = @fragments.javaScriptConfig(item, switches);
+        guardian.config = @fragments.javaScriptConfig(item);
+
+        // must be set before the Omniture file is parsed
+        window.s_account = guardian.config.page.omnitureAccount;
 
         var script = document.createElement('script');
         script.async = 'async';

@@ -1,9 +1,7 @@
 .site-message {
   display: none;
   background: $c-neutral6;
-  @include mq(tablet) {
-      display: block;
-  }
+  display: block;
 }
 
 .site-message__inner {
@@ -17,6 +15,7 @@
     @include fs-headline(2);
     color: $c-neutral2;
     padding-bottom: $baseline*6;
+    padding-right: $baseline*6;
 }
 
 .site-message__message--tall { padding-bottom: $baseline*11; }

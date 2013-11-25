@@ -3,20 +3,16 @@
 # ~~~~
 
 # For dev machines
-GET    /assets/*path                                            dev.DevAssetsController.at(path)
+GET        /assets/*path                           dev.DevAssetsController.at(path)
 
 # Travel offers
-GET    /commercial/travel/offers.json                           controllers.commercial.TravelOffers.listOffers
+GET        /commercial/travel/offers.json          controllers.commercial.TravelOffers.listOffers
 
 # Jobs
-GET    /commercial/jobs.json                                    controllers.commercial.JobAds.jobs
+GET        /commercial/jobs.json                   controllers.commercial.JobAds.jobs
 
 # Masterclasses
-GET     /commercial/masterclasses.json                          controllers.commercial.MasterClasses.list
+GET        /commercial/masterclasses.json          controllers.commercial.MasterClasses.list
 
 # Soulmates
-GET    /commercial/soulmates/mixed.json                         controllers.commercial.SoulmateAds.mixed
-GET    /commercial/soulmates/men.json                           controllers.commercial.SoulmateAds.men
-GET    /commercial/soulmates/women.json                         controllers.commercial.SoulmateAds.women
-GET    /commercial/soulmates/gay.json                           controllers.commercial.SoulmateAds.gay
-GET    /commercial/soulmates/lesbian.json                       controllers.commercial.SoulmateAds.lesbian
+GET        /commercial/soulmates/mixed.json        controllers.commercial.SoulmateAds.mixed

@@ -49,7 +49,6 @@ sealed trait ResultsRenderer extends Controller with Logging with CompetitionRes
       if (request.isJson)
         JsonComponent(
           resultsPage.page, 
-          Switches.all, 
           "html" -> football.views.html.fragments.matchesBody(resultsPage),
           "more" -> Html(previousPage.getOrElse(""))
         )

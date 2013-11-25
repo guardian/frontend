@@ -1,11 +1,14 @@
 package test
 
-import conf.Configuration
+import conf.{HealthcheckPage, Configuration}
 import conf.Switches._
 import org.scalatest.Matchers
 import org.scalatest.{ GivenWhenThen, FeatureSpec }
 import collection.JavaConversions._
 import common.UsesElasticSearch
+import play.api.libs.ws.WS
+import scala.concurrent.duration._
+import scala.concurrent.Await
 
 class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  with UsesElasticSearch {
 
@@ -13,13 +16,13 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
 
   feature("Article") {
 
-    // Feature 
+    // Feature
 
     info("In order to experience all the wonderful words the Guardian write")
     info("As a Guardian reader")
     info("I want to read a version of the article optimised for my mobile devices")
 
-    // Metrics 
+    // Metrics
 
     info("Page views should *not* decrease.")
     info("Retain people on mobile (by reducing % of mobile traffic to www and clicks to the desktop site)")
@@ -85,6 +88,13 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
         And("I should see the image caption")
         findFirst("[itemprop='associatedMedia primaryImageOfPage'] [itemprop=description]").getText should
           be("Our rivers and natural resources are to be valued and commodified, a move that will benefit only the rich, argues Goegr Monbiot. Photograph: Alamy")
+      }
+    }
+
+    scenario("Poster image on embedded video", ArticleComponents) {
+      HtmlUnit("/world/2013/sep/25/kenya-mall-attack-bodies") { browser =>
+        import browser._
+        findFirst("video").getAttribute("poster") should endWith ("Westgate-shopping-centre--016.jpg")
       }
     }
 
@@ -288,7 +298,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
         import browser._
 
         Then("the primary image's 'data-force-upgrade' attribute should be 'true'")
-        findFirst("#article figure img").getAttribute("data-force-upgrade") should be("true")
+        findFirst("#article figure .item__image-container").getAttribute("data-force-upgrade") should be("")
       }
     }
 
@@ -348,14 +358,14 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
     scenario("Easily share an article via popular social media sites") {
 
       Given("I read an article and want to share it with my friends")
-      
+
       SocialSwitch.switchOn
-      
+
       HtmlUnit("/film/2012/nov/11/margin-call-cosmopolis-friends-with-kids-dvd-review") { browser =>
         import browser._
 
         val mailShareUrl = "mailto:?subject=Mark%20Kermode%27s%20DVD%20round-up&body=http%3A%2F%2Flocalhost%3A9000%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review"
-        val fbShareUrl = "https://www.facebook.com/dialog/feed?app_id=180444840287&redirect_uri=http%3A%2F%2Flocalhost%3A9000%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review&link=http%3A%2F%2Flocalhost%3A9000%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review&ref=responsive"
+        val fbShareUrl = "https://www.facebook.com/dialog/feed?app_id=232588266837342&redirect_uri=http%3A%2F%2Flocalhost%3A9000%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review&link=http%3A%2F%2Flocalhost%3A9000%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review&ref=responsive"
         val twitterShareUrl = "https://twitter.com/intent/tweet?text=Mark+Kermode%27s+DVD+round-up&url=http%3A%2F%2Flocalhost%3A9000%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review"
         val gplusShareUrl = "https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A9000%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review&hl=en-GB&wwc=1"
 
@@ -365,9 +375,9 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
         findFirst(".social__action[data-link-name=social-twitter]").getAttribute("href") should be(twitterShareUrl)
         findFirst(".social__action[data-link-name=social-gplus]").getAttribute("href") should be(gplusShareUrl)
       }
-      
+
       Given("I want to track the responsive share buttons using Facebook Insights")
-      
+
       SocialSwitch.switchOn
 
       HtmlUnit("/film/2012/nov/11/margin-call-cosmopolis-friends-with-kids-dvd-review") { browser =>
@@ -381,15 +391,15 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
 
 
     }
-    
+
     // http://www.w3.org/WAI/intro/aria
     scenario("Make the document accessible with ARIA support") {
 
       Given("I read an article")
-      
+
       SocialSwitch.switchOn
       SearchSwitch.switchOn
-      
+
       HtmlUnit("/world/2013/jan/27/brazil-nightclub-blaze-high-death-toll") { browser =>
         import browser._
 
@@ -403,7 +413,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
         findFirst("#article").getAttribute("role") should be("main")
         findFirst(".trailblock").getAttribute("role") should be("complementary")
         findFirst(".trailblock").getAttribute("aria-labelledby") should be("related-content-head")
-        
+
       }
     }
 
@@ -461,7 +471,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
         $(".article__keywords *").size should be (0)
       }
     }
-    
+
     scenario("Twitter cards"){
       Given("I am on an article entitled 'Iran's Rouhani may meet Obama at UN after American president reaches out'")
       HtmlUnit("/world/2013/sep/15/obama-rouhani-united-nations-meeting") { browser =>
@@ -471,6 +481,14 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
         $("meta[property='twitter:card']").getAttributes("content").head  should be ("summary_large_image")
         $("meta[property='twitter:app:url:googleplay']").getAttributes("content").head should startWith ("guardian://www.theguardian.com/world")
         $("meta[property='twitter:image:src']").getAttributes("content").head should startWith ("http://i.gucode.co.uk/n/")
+      }
+    }
+
+    scenario("Health check"){
+      HtmlUnit("/world/2013/sep/15/obama-rouhani-united-nations-meeting") { browser =>
+        Await.result(WS.url("http://localhost:9000/_cdn_healthcheck").get(), 10.seconds).status should be (503)
+        HealthcheckPage.get(com.gu.management.HttpRequest(com.gu.management.GET, "/management/healthcheck", "http://localhost:10808", Map.empty))
+        Await.result(WS.url("http://localhost:9000/_cdn_healthcheck").get(), 10.seconds).status should be (200)
       }
     }
 

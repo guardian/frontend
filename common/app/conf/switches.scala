@@ -80,6 +80,10 @@ object Switches extends Collections {
   val AudienceScienceSwitch = Switch("Analytics", "audience-science",
     "If this switch is on the Audience Science will be enabled.",
     safeState = Off)
+  
+  val AdDwellTimeLoggerSwitch = Switch("Analytics", "ad-dwell-times-logging",
+    "If this is on the in-view advert tracker will log some data to the Play logs",
+    safeState = On)
 
   val QuantcastSwitch = Switch("Analytics", "quantcast",
     "Enable the Quantcast audience segment tracking.",
@@ -113,6 +117,10 @@ object Switches extends Collections {
 
   val DiscussionPostCommentSwitch = Switch("Discussion", "discussion-post-comment",
     "If this switch is on, users will be able to post comments",
+    safeState = Off)
+
+  val DiscussionTopCommentsSwitch = Switch("Discussion", "discussion-top-comments",
+    "If this switch is on, users will see top comments if there are any",
     safeState = Off)
 
   // Swipe Switches
@@ -210,7 +218,7 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to measure the impact of cardifying inline links on number of linked stories read.",
     safeState = Off)
 
-  val ABAa = Switch("A/B Tests", "ab-aa",
+  val ABAa = Switch("A/B Tests", "ab-abcd",
     "If this is switched on an AA test runs to prove the assignment of users in to segments is working reliably.",
     safeState = Off)
 
@@ -283,6 +291,7 @@ object Switches extends Collections {
     OmnitureDomReadySwitch,
     DiscussionSwitch,
     DiscussionPostCommentSwitch,
+    DiscussionTopCommentsSwitch,
     ShortDiscussionSwitch,
     SwipeNav,
     SwipeNavOnClick,
@@ -324,6 +333,7 @@ object Switches extends Collections {
     FacebookAutoSigninSwitch,
     ABImproveOnwardTrails,
     ABInitialShowMore,
+    AdDwellTimeLoggerSwitch,
     ABShowMoreLayout
   )
 

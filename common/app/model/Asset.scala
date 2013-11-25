@@ -37,7 +37,7 @@ case class ImageAsset(private val delegate: Asset, index: Int) {
   lazy val aspectRatioHeight: Int = aspectRatio.getDenominator
 }
 
-case class VideoAsset(private val delegate: Asset) {
+case class VideoAsset(private val delegate: Asset, image: Option[ImageContainer]) {
 
   private lazy val fields: Map[String,String] = delegate.typeData
 

@@ -49,7 +49,6 @@ trait FixtureRenderer extends Controller with CompetitionFixtureFilters {
       if (request.isJson)
         JsonComponent(
           fixturesPage.page, 
-          Switches.all, 
           "html" -> football.views.html.fragments.matchesBody(fixturesPage),
           "more" -> Html(nextPage.getOrElse(""))
         )

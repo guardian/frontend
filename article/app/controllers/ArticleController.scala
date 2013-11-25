@@ -10,6 +10,7 @@ import views.support._
 import views.BodyCleaner
 import scala.concurrent.Future
 import scala.collection.JavaConversions._
+import play.api.templates.Html
 
 trait ArticleWithStoryPackage {
   def article: Article
@@ -22,15 +23,14 @@ object ArticleController extends Controller with Logging with ExecutionContexts 
 
   def renderArticle(path: String) = Action.async { implicit request =>
     lookup(path) map {
-      case Left(model) if model.article.isExpired => renderExpired(model)
       case Left(model) => render(model)
-      case Right(notFound) => notFound
+      case Right(other) => RenderOtherStatus(other)
     }
   }
 
   def renderLatestFrom(path: String, lastUpdateBlockId: String) = Action.async { implicit request =>
     lookup(path) map {
-      case Left(model) if model.article.isExpired => renderExpired(model)
+      case Right(other) => RenderOtherStatus(other)
       case Left(model) =>
         val html = withJsoup(BodyCleaner(model.article, model.article.body)) {
           new HtmlCleaner {
@@ -44,8 +44,6 @@ object ArticleController extends Controller with Logging with ExecutionContexts 
           }
         }
         Cached(model.article)(JsonComponent(html))
-
-      case Right(notFound) => notFound
     }
   }
 
@@ -53,7 +51,7 @@ object ArticleController extends Controller with Logging with ExecutionContexts 
 
   private def lookup(path: String)(implicit request: RequestHeader): Future[Either[ArticleWithStoryPackage, SimpleResult]] = {
     val edition = Edition(request)
-    log.info(s"Fetching article: $path for edition ${edition.id}")
+    log.info(s"Fetching article: $path for edition ${edition.id}: ${RequestLog(request)}")
     val response: Future[ItemResponse] = SwitchingContentApi().item(path, edition)
       .showExpired(true)
       .showTags("all")
@@ -73,14 +71,6 @@ object ArticleController extends Controller with Logging with ExecutionContexts 
     }
 
     result recover suppressApiNotFound
-  }
-
-  private def renderExpired(model: ArticleWithStoryPackage)(implicit request: RequestHeader) = Cached(model.article) {
-    if (request.isJson) {
-      JsonComponent(model.article, Switches.all, views.html.fragments.expiredBody(model.article))
-    } else {
-      Gone(views.html.expired(model.article))
-    }
   }
 
   private def render(model: ArticleWithStoryPackage)(implicit request: RequestHeader) = model match {

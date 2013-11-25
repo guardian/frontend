@@ -40,6 +40,10 @@
     a {
         color: $c-neutral1;
     }
+
+    .item__image-container {
+        display: block;
+    }
 }
 .card__media {
     display: block;
@@ -127,6 +131,7 @@
     padding-top: 6px; // Aligns border with top of text
 }
 .card--right {
+
     margin-top: $baseline*4;
 
     .card__title {
@@ -137,5 +142,13 @@
         padding-bottom: 0;
         margin-bottom: $gs-baseline;
         @include fs-header(2);
+    }
+}
+
+.card-wrapper--right {
+    display: none;
+
+    &.is-visible {
+        display: block;
     }
 }
