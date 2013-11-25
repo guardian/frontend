@@ -287,7 +287,7 @@ Comments.prototype.addComment = function(comment, focus, parent) {
     }
     commentElem.id = 'comment-'+ comment.id;
 
-    var is_staff = this.user.badge.some(function (e, i, a) { // Returns true if any element in array satisfies function
+    var is_staff = this.user.badge.some(function (e) { // Returns true if any element in array satisfies function
         return e.name === "Staff";
     });
 
