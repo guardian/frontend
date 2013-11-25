@@ -7,7 +7,7 @@ object LightJobsAgent extends AdAgent[LightJob] with ExecutionContexts with Logg
 
   def refresh() {
     for {
-      jobs <- LightJobsApi.getCurrentJobs()
+      jobs <- LightJobsApi.getCurrentJobs
     } updateCurrentAds(jobs)
   }
 
