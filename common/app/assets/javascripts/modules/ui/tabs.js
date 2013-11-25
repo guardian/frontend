@@ -14,14 +14,14 @@ define([
         expects the following HTML structure
 
         <div class="tabs">
-            <ol class="tabs__container js-tabs">
-                <li class="tabs__tab tabs__tab--selected"><a href="#foo">Foo</a></li>
-                <li class="tabs__tab"><a href="#bar">Bar</a></li>
+            <ol class="tabs__container js-tabs" role="tablist">
+                <li class="tabs__tab tabs__tab--selected" role="tab" aria-selected="true"><a href="#foo">Foo</a></li>
+                <li class="tabs__tab" role="tab" aria-selected="false"><a href="#bar">Bar</a></li>
             </ol>
 
             <div class="tabs__content">
-                 <div class="tabs__pane" id="foo">foo</div>
-                 <div class="tabs__pane js-hidden" id="bar">bar</div>
+                 <div class="tabs__pane" id="foo" role="tabpanel">foo</div>
+                 <div class="tabs__pane js-hidden" id="bar" role="tabpanel">bar</div>
             </div>
         </div>
     */
@@ -44,6 +44,8 @@ define([
                 // show hide stuff
                 bonzo(currentTab.parentNode).removeClass(classes);
                 bonzo(clickedTab.parentNode).addClass(classes);
+                bonzo(currentTab.parentNode).attr('aria-selected', false);
+                bonzo(clickedTab.parentNode).attr('aria-selected', true);
                 bonzo(paneToHide).hide();
                 bonzo(paneToShow).removeClass('js-hidden').show().focus();
 
