@@ -6,6 +6,7 @@ define([
     'modules/identity/api',
     'modules/discussion/comment-box',
     'modules/discussion/recommend-comments',
+    'modules/discussion/api',
     '$'
 ], function(
     ajax,
@@ -15,6 +16,7 @@ define([
     Id,
     CommentBox,
     RecommendComments,
+    DiscussionApi,
     $
 ) {
 
@@ -78,22 +80,53 @@ Comments.prototype.user = null;
 
 /** @override */
 Comments.prototype.prerender = function() {
+    var self = this;
+
     // Set the heading to the correct text
     var heading = qwery('#comments')[0],
-        commentCount = this.elem.getAttribute('data-comment-count');
+        commentCount = self.elem.getAttribute('data-comment-count');
 
     heading.innerHTML += ' <span class="discussion__comment-count">('+ commentCount +')</span>';
+
+    // Ease of use
+    self.topLevelComments = qwery(self.getClass('topLevelComment'), self.elem);
+    self.comments = qwery(self.getClass('comment'), self.elem);
+    self.user = self.options.user;
+
+    // Determine user staff status
+    if (self.user) {
+        self.user.is_staff = self.user.badge.some(function (e) { // Returns true if any element in array satisfies function
+            return e.name === "Staff";
+        });
+        // Add Pick buttons if needed
+        if (self.user.is_staff) {
+            self.comments.forEach(function (e) {
+                if (!!e.getAttribute("data-comment-highlighted")) { // Nasty cast
+                    var pickButton = bonzo.create(document.getElementById("tmpl-staff-pick-button").innerHTML);
+                    pickButton[0].setAttribute("data-comment-id", e.getAttribute("data-comment-id"));
+                    self.on('click', pickButton, self.pickComment.bind(self));
+                    $('.d-comment__actions__main', e).append(pickButton);
+                }
+            });
+        }
+    }
+
+};
+
+Comments.prototype.pickComment = function (event) {
+    event.preventDefault();
+    DiscussionApi
+        .pickComment(event.target.getAttribute("data-comment-id"))
+        .then(function () {
+        })
+        .fail(function () {
+        });
 };
 
 /** @override */
 Comments.prototype.ready = function() {
     var initialShow = this.options.initialShow,
         self = this;
-
-    // Ease of use
-    this.user = this.options.user;
-    this.topLevelComments = qwery(this.getClass('topLevelComment'), this.elem);
-    this.comments = qwery(this.getClass('comment'), this.elem);
 
     if (this.topLevelComments.length > 0) {
         // Hide excess topLevelComments
@@ -287,11 +320,7 @@ Comments.prototype.addComment = function(comment, focus, parent) {
     }
     commentElem.id = 'comment-'+ comment.id;
 
-    var is_staff = this.user.badge.some(function (e) { // Returns true if any element in array satisfies function
-        return e.name === "Staff";
-    });
-
-    if (is_staff) {
+    if (this.user.is_staff) {
         // Hack to allow staff badge to appear
         var staffBadge = bonzo.create(document.getElementById('tmpl-staff-badge').innerHTML);
         $('.d-comment__meta div', commentElem).first().append(staffBadge);
