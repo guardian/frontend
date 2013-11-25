@@ -31,7 +31,7 @@ trait JsonAdsApi[T <: Ad] extends AdsApi with ExecutionContexts with Logging {
           case ads => log.info(s"Loaded ${ads.size} $adTypeName from $u")
         }
         fads onFailure {
-          case e: Exception => log.error(s"Loading $adTypeName ads from $u failed: ${e.getMessage}")
+          case e: Exception => log.error(s"Loading $adTypeName from $u failed: ${e.getMessage}")
         }
 
         fads
@@ -63,7 +63,7 @@ trait XmlAdsApi[T <: Ad] extends AdsApi with ExecutionContexts with Logging {
           case ads => log.info(s"Loaded ${ads.size} $adTypeName from $u")
         }
         fads onFailure {
-          case e: Exception => log.error(s"Loading $adTypeName ads from $u failed: ${e.getMessage}")
+          case e: Exception => log.error(s"Loading $adTypeName from $u failed: ${e.getMessage}")
         }
 
         fads
