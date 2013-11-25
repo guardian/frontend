@@ -10,8 +10,9 @@ object OffersApi extends XmlAdsApi[Offer] {
 
   protected val adTypeName = "Travel Offers"
 
-  private lazy val allUrl = CommercialConfiguration.getProperty("traveloffers.api.url")
-  private lazy val popularUrl = CommercialConfiguration.getProperty("traveloffers.api.popular.url")
+  private lazy val url = CommercialConfiguration.getProperty("traveloffers.api.url")
+  private lazy val allUrl = url map (u => s"$u/xmloffers")
+  private lazy val mostPopularUrl = url map (u => s"$u/xmlmostpopular")
 
   override protected val loadTimeout = 20000
 
@@ -38,5 +39,5 @@ object OffersApi extends XmlAdsApi[Offer] {
 
   def getAllOffers: Future[List[Offer]] = loadAds(allUrl) map (_.toList)
 
-  def getMostPopularOffers: Future[List[Offer]] = loadAds(popularUrl) map (_.toList)
+  def getMostPopularOffers: Future[List[Offer]] = loadAds(mostPopularUrl) map (_.toList)
 }
