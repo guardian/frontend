@@ -37,12 +37,19 @@
 .card {
     position: relative;
 
-    a {
-        color: $c-neutral1;
-    }
-
     .item__image-container {
         display: block;
+    }
+}
+.card__action {
+    display: block;
+    color: $c-neutral1;
+
+    &:visited {
+        &,
+        .card__headline {
+            color: $c-neutral2;
+        }
     }
 }
 .card__media {
@@ -78,12 +85,12 @@
     .dateline {
         float: left;
         position: relative;
-        padding: 0 $gs-gutter/2 0 18px;
+        padding: 0 $gs-gutter/2 0 14px;
         min-width: gs-span(1) - 16;
 
         i {
             position: absolute;
-            top: 4px;
+            top: 3px;
             left: 0;
         }
     }

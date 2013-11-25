@@ -4,21 +4,21 @@
 >
     <div class="furniture furniture--@column card card--@column">
         <h2 class="card__title">@title</h2>
-
-        @trail.trailPicture.map { imgContainer =>
-            @ImgSrc.imager(imgContainer).map{ imgSrc =>
-                <a href="@trail.url" class="item__image-container" data-link-name="@linkName" data-src="@imgSrc" data-force-upgrade>
-                    <img src="@LargeThumbnail.bestFor(imgContainer)" class="card__media responsive-img" alt="" itemprop="contentURL" />
-                </a>
+        <a href="@trail.url" data-link-name="@linkName" class="card__action">
+            @trail.trailPicture.map { imgContainer =>
+                @ImgSrc.imager(imgContainer).map{ imgSrc =>
+                    <div class="item__image-container" data-src="@imgSrc" data-force-upgrade>
+                        <img src="@LargeThumbnail.bestFor(imgContainer)" class="card__media responsive-img" alt="" itemprop="contentURL" />
+                    </div>
+                }
             }
-        }
 
-        <div class="card__body u-text-hyphenate">
-            <h3 class="card__headline">
-                <a href="@trail.url" data-link-name="@linkName">@Html(trail.headline)</a>
-            </h3>
-        </div>
-
+            <div class="card__body u-text-hyphenate">
+                <h3 class="card__headline">
+                    @Html(trail.headline)
+                </h3>
+            </div>
+        </a>
         <div class="card__meta dateline">
             <div class="dateline">
                 <i class="i i-clock-light-grey relative-timestamp__icon"></i>
