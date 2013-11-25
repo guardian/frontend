@@ -260,7 +260,7 @@ Comments.prototype.addComment = function(comment, focus, parent) {
         values = {
             username: this.user.displayName,
             timestamp: 'Just now',
-            body: '<p>'+ comment.body.replace('\n', '</p><p>') +'</p>',
+            body: '<p>'+ comment.body.replace(/\n+/g, '</p><p>') +'</p>',
             report: {
                 href: 'http://discussion.theguardian.com/components/report-abuse/'+ comment.id
             },
