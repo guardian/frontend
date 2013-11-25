@@ -1,7 +1,8 @@
 package discussion
 
 import _root_.model.Page
-import model.Comment
+import model.{Comment, Switch}
+import play.api.libs.json.JsObject
 
 case class CommentPage(
                         override val id: String,
@@ -13,7 +14,8 @@ case class CommentPage(
                         contentUrl: String,
                         currentPage: Int,
                         pages: Int,
-                        isClosedForRecommendation: Boolean
+                        isClosedForRecommendation: Boolean,
+                        switches: Seq[Switch]
                         ) extends Page(id = id, section = "Global", webTitle = title, analyticsName = s"GFE:Article:Comment discussion page $currentPage") {
 
   lazy val hasMore: Boolean = currentPage < pages
