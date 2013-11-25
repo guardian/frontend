@@ -225,7 +225,7 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to measure the impact of cardifying inline links on number of linked stories read.",
     safeState = Off)
 
-  val ABAa = Switch("A/B Tests", "ab-aa",
+  val ABAa = Switch("A/B Tests", "ab-abcd",
     "If this is switched on an AA test runs to prove the assignment of users in to segments is working reliably.",
     safeState = Off)
 

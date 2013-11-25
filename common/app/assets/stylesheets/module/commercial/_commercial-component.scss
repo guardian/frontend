@@ -95,9 +95,6 @@ input.commercial__submit {
 
 .lineitem__title {
     @include fs-bodyHeading(1);
-    padding: 0;
-    background-color: transparent;
-    border-top: 0;
 
     a {
         color: #FFFFFF;

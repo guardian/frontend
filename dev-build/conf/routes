@@ -7,7 +7,7 @@ GET         /assets/internal/*file                                              
 GET         /assets/*path                                                                                    dev.DevAssetsController.at(path)
 
 # Diagnostics
-GET         /px.gif                                                                                          controllers.ErrorController.px
+GET         /px.gif                                                                                          controllers.DiagnosticsController.px
 
 # Discussion
 GET         /discussion/comment-box.json                                                                     controllers.DiscussionApp.commentBox()

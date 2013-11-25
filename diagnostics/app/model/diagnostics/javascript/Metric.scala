@@ -1,4 +1,4 @@
-package model.diagnostics
+package model.diagnostics.javascript
 
 import common.Logging
 import java.util.concurrent.ConcurrentHashMap
