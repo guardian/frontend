@@ -1,13 +1,12 @@
 package model.commercial.travel
 
 import scala.concurrent.Future
-import common.Logging
 import org.joda.time.format.DateTimeFormat
 import scala.xml.{Elem, Node}
 import conf.CommercialConfiguration
 import model.commercial.XmlAdsApi
 
-object OffersApi extends XmlAdsApi[Offer] with Logging {
+object OffersApi extends XmlAdsApi[Offer] {
 
   val adTypeName = "Travel Offers"
 
