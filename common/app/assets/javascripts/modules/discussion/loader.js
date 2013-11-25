@@ -192,7 +192,7 @@ Loader.prototype.loadingError = function() {
 Loader.prototype.renderReadOnly = function() {
     this.getElem('commentBox').innerHTML =
         '<div class="d-bar d-bar--closed">'+
-            'We\'re doing some maintenance right now.'+
+            '<b>We\'re doing some maintenance right now.</b>'+
             ' You can still read comments, but please come back later to add your own.'+
         '</div>';
 };
