@@ -94,11 +94,11 @@ define(['modules/facia/collection-show-more', 'bonzo', '$', 'utils/mediator', 'b
             expect($('.item', collection).length).toEqual(2);
         });
 
-        it('should initially show 5 collection in the "news" container at mobile breakpoint', function() {
+        it('should initially show 6 collection in the "news" container at mobile breakpoint', function() {
             $style.html('body:after { content: "mobile"; }');
             bonzo(container).attr('data-type', 'news');
             collectionShowMore.addShowMore();
-            expect($('.item', collection).length).toEqual(5);
+            expect($('.item', collection).length).toEqual(6);
         });
 
         it('should show 5 more at mobile breakpoint', function() {
