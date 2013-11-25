@@ -55,7 +55,7 @@ define([
             }
 
             if (elName === 'body') {
-                if (spec.validTarget && spec.tag.length) {
+                if (spec.validTarget && spec.tag && spec.tag.length) {
                     spec.tag = [].concat(spec.tag).reverse().join(' | ');
                     if(el.getAttribute('data-link-test')) {
                         spec.tag = el.getAttribute('data-link-test') + ' | ' + spec.tag;
