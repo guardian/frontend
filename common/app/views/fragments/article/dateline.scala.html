@@ -3,7 +3,7 @@
     @if(isLive){ <i class="is-live-icon">LIVE</i> } else { <i class="i i-clock-grey relative-timestamp__icon"></i> }
     <time itemprop="datePublished" datetime='@webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")'
         data-timestamp="@webPublicationDate.getMillis">
-        @Format(webPublicationDate, "EEEE d MMMM y") <span class="article__dateline-time">@Format(webPublicationDate, "HH.mm z")</span>
+        @Format(webPublicationDate, "EEEE d MMMM y") <span class="article__dateline-time">@Format(webPublicationDate, "HH.mm z")</span>
     </time>
     @if(!secondary){<span class="js-comment-count"></span>}
 </p>
