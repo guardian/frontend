@@ -18,8 +18,8 @@ define(['common', 'modules/ui/tabs', 'bean', 'helpers/fixtures'], function(commo
                     '<p id="tabs-test">' +
                         '<div class="tabs">' +
                             '<ol class="tabs__container js-tabs" role="tablist">' +
-                                '<li class="tabs__tab tabs__tab--selected" id="tab-1-tab" role="tab" aria-selected="true"><a id="tab1" href="#tab1panel">Foo</a></li>' +
-                                '<li class="tabs__tab" id="tab-2-tab" role="tab" aria-selected="false"><a id="tab2" href="#tab2panel">Bar</a></li>' +
+                                '<li class="tabs__tab tabs__tab--selected" id="tab-1-tab" role="tab" aria-selected="true" aria-controls="tab1panel"><a id="tab1" href="#tab1panel">Foo</a></li>' +
+                                '<li class="tabs__tab" id="tab-2-tab" role="tab" aria-selected="false" aria-controls="tab2panel"><a id="tab2" href="#tab2panel">Bar</a></li>' +
                             '</ol>' +
                             '<div class="tabs__content">' +
                                 '<div class="tabs__pane" id="tab1panel" role="tabpanel">foo</div>' +
@@ -28,8 +28,8 @@ define(['common', 'modules/ui/tabs', 'bean', 'helpers/fixtures'], function(commo
                         '</div>' +
                         '<div class="tabs-container">' +
                             '<ol class="tabs" role="tablist">' +
-                                '<li class="tabs-selected" role="tab" aria-selected="true" id="tab1_2-tab"><a id="tab1_2" href="#tab1panel_2">Foo</a></li>' +
-                                '<li id="tab2_2-tab" role="tab" aria-selected="false"><a id="tab2_2" href="#tab2panel_2">Bar</a></li>' +
+                                '<li class="tabs-selected" role="tab" aria-selected="true" id="tab1_2-tab" aria-controls="tab1panel_2"><a id="tab1_2" href="#tab1panel_2">Foo</a></li>' +
+                                '<li id="tab2_2-tab" role="tab" aria-selected="false" aria-controls="tab2panel_2"><a id="tab2_2" href="#tab2panel_2">Bar</a></li>' +
                                 '<li><a id="fake-tab" href="http://www.google.com">Google (fake tab)</a></li>' +
                             '</ol>' +
                             '<div class="tabs-content">' +
@@ -71,7 +71,7 @@ define(['common', 'modules/ui/tabs', 'bean', 'helpers/fixtures'], function(commo
             var li = tab2.parentNode;
             bean.fire(tab2, 'click');
             expect(li.getAttribute('class')).toContain('tabs__tab tabs__tab--selected');
-			expect(li.getAttribute('aria-selected')).toBe('true');
+            expect(li.getAttribute('aria-selected')).toBe('true');
         });
 
         it("should remove a CSS class and set the correct ARIA state on the previously-selected tab when clicked", function(){

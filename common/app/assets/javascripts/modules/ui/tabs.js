@@ -15,13 +15,13 @@ define([
 
         <div class="tabs">
             <ol class="tabs__container js-tabs" role="tablist">
-                <li class="tabs__tab tabs__tab--selected" role="tab" aria-selected="true"><a href="#foo">Foo</a></li>
-                <li class="tabs__tab" role="tab" aria-selected="false"><a href="#bar">Bar</a></li>
+                <li id="foo-tab" class="tabs__tab tabs__tab--selected" role="tab" aria-selected="true" aria-controls="foo"><a href="#foo">Foo</a></li>
+                <li id="bar-tab" class="tabs__tab" role="tab" aria-selected="false" aria-controls="bar"><a href="#bar">Bar</a></li>
             </ol>
 
             <div class="tabs__content">
-                 <div class="tabs__pane" id="foo" role="tabpanel">foo</div>
-                 <div class="tabs__pane js-hidden" id="bar" role="tabpanel">bar</div>
+                 <div class="tabs__pane" id="foo" role="tabpanel" aria-labelledby="foo-tab">foo</div>
+                 <div class="tabs__pane js-hidden" id="bar" role="tabpanel" aria-labelledby="bar-tab">bar</div>
             </div>
         </div>
     */
