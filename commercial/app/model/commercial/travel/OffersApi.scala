@@ -1,48 +1,40 @@
 package model.commercial.travel
 
 import scala.concurrent.Future
-import play.api.libs.ws.WS
-import common.{Logging, ExecutionContexts}
+import common.Logging
 import org.joda.time.format.DateTimeFormat
 import scala.xml.{Elem, Node}
 import conf.CommercialConfiguration
+import model.commercial.XmlAdsApi
 
-object OffersApi extends ExecutionContexts with Logging {
+object OffersApi extends XmlAdsApi[Offer] with Logging {
+
+  val adTypeName = "Travel Offers"
+
+  override protected val loadTimeout = 20000
 
   private val dateFormat = DateTimeFormat.forPattern("dd-MMM-yyyy")
 
-  private def loadXml: Future[Elem] = {
-    CommercialConfiguration.travelOffersApi.url map {
-      WS.url(_) withHeaders (("Cache-Control", "public, max-age=1")) withRequestTimeout 20000 get() map {
-        response => response.xml
-      }
-    } getOrElse {
-      log.warn("No Travel Offers API config properties set")
-      Future(<offers/>)
+  private def buildOffer(id: Int, node: Node): Offer = {
+    Offer(
+      id,
+      Some((node \\ "title").text),
+      (node \\ "offerurl").text,
+      (node \\ "imageurl").text,
+      (node \ "@fromprice").text.replace(".00", ""),
+      dateFormat.parseDateTime((node \ "@earliestdeparture").text),
+      Nil,
+      (node \\ "country").map(_.text).toList
+    )
+  }
+
+  def parse(xml: Elem): Seq[Offer] = {
+    (xml \\ "offer").zipWithIndex map {
+      case (offerXml, idx) => buildOffer(idx, offerXml)
     }
   }
 
-  def getAllOffers(xml: => Future[Elem] = loadXml): Future[List[Offer]] = {
-
-    def buildOffer(id: Int, node: Node): Offer = {
-      Offer(
-        id,
-        Some((node \\ "title").text),
-        (node \\ "offerurl").text,
-        (node \\ "imageurl").text,
-        (node \ "@fromprice").text.replace(".00", ""),
-        dateFormat.parseDateTime((node \ "@earliestdeparture").text),
-        Nil,
-        (node \\ "country").map(_.text).toList
-      )
-    }
-
-    xml map {
-      offers =>
-        ((offers \\ "offer").zipWithIndex map {
-          case (offerXml, idx) => buildOffer(idx, offerXml)
-        }).toList
-    }
-  }
-
+  def getAllOffers: Future[List[Offer]] = loadAds {
+    CommercialConfiguration.travelOffersApi.url
+  } map (_.toList)
 }
