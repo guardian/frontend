@@ -144,9 +144,14 @@ define([
             common.mediator.on('page:article:ready', function(config, context) {
                 if (config.switches.openCta || true) {
                     var openCta = new OpenCta(context, common.mediator, {
-                        discussionKey: config.page.shortUrl.replace('http://gu.com/', '')
-                    });
-                    openCta.fetch($('.open-cta')[0]);
+                            discussionKey: config.page.shortUrl.replace('http://gu.com/', '')
+                        }),
+                        $openCtaElem = $('.open-cta');
+
+                    if ($('.main-image').length === 0) {
+                        $openCtaElem.addClass('open-cta--no-image');
+                    }
+                    openCta.fetch($openCtaElem[0]);
                 }
             });
         }
