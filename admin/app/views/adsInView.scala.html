@@ -13,29 +13,38 @@
                padding: 0;
                font-family: Georgia, serif;
             }
-            .slots {
+            table {
                 display: table;
                 width: 100%;
-                xmin-height: 25vh;
                 font-size: 100px;
                 text-shadow: #000 2px 2px;
-                line-height: 250%;
+                line-height: 200%;
+                border-collapse: separate;
+                border-spacing: 0;
             }
-            .slots span {
-                text-align: center;
-                vertical-align: middle;
-                display: table-cell;
+            small {
+                font-size: 30px;
             }
-            .slots span small {
-               font-size: 50px; 
+            tr.data td {
+                width: 50%;
+                padding: 0px 50px;
             }
-            #top, #mpu {
+            tr.data td:nth-child(1) {
+                text-align: right;     
+            }
+            .top, .mpu {
                 background-color: #ff3;
                 color: #08d;
             }
-            #bottom, #inline {
+            .summary, .bottom, .inline {
                 background-color: #08d;
                 color: #ff3;
+            }
+            .summary {
+                font-size: 50px; 
+            } 
+            .summary td {
+                text-align: center;
             }
             #nb {
                 position: absolute;
@@ -46,32 +55,35 @@
                 color: #000;
                 background-color: #fff;
             }
+
         </style>
   </head>
   <body>
         <div id="nb">
             Nb. analysis period is the last 2 minutes, 10% sample size.
         </div>
-        <div id="top" class="slots">
-            <span>
-                Top <small>advert seen for</small> @{"%.0f".format(top.latest)} <small>seconds (@{"%.0f".format(views.latest)} users,
-                    @{"%.0f".format(topCount.latest)})</small>
-            </span>
-        </div>
-        <div id="inline" class="slots">
-            <span>
-                Inline <small>advert seen for</small> @{"%.0f".format(inline.latest)} <small>seconds (@{"%.0f".format(views.latest)} users)</small>
-            </span>
-        </div>
-        <div id="mpu" class="slots">
-            <span>
-                MPU <small>advert seen for</small> @{"%.0f".format(mpu.latest)} <small>seconds (@{"%.0f".format(views.latest)} users)</small>
-            </span>
-        </div>
-        <div id="bottom" class="slots">
-            <span>
-                Bottom <small>advert seen for</small> @{"%.0f".format(bottom.latest)} <small>seconds (@{"%.0f".format(views.latest)} users)</small>
-            </span>
-        </div>
+        <table>
+            <tr class="summary">
+                <td colspan="2">
+                    @{"%.0f".format(views.latest * 10)} users have seen an advert in the last 2 minutes.
+                </td>
+            </tr>
+            <tr class="top data">
+                <td>Top</td>
+                <td>@{"%.0f".format(top.latest)} <small>(viewed for seconds)</small></td>
+            </tr>
+            <tr class="inline data">
+                <td>Inline</td>
+                <td>@{"%.0f".format(inline.latest)}</td>
+            </tr>
+            <tr class="mpu data">
+                <td>MPU</td>
+                <td>@{"%.0f".format(mpu.latest)}</td>
+            </tr>
+            <tr class="bottom data">
+                <td>Bottom</td>
+                <td>@{"%.0f".format(bottom.latest)}</td>
+            </tr>
+        </table>
   </body>
 </html>
