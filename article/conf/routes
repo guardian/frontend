@@ -5,5 +5,7 @@
 # For dev machines
 GET     /assets/*path               dev.DevAssetsController.at(path)
 
+GET     /_cdn_healthcheck            controllers.ArticleHealthcheckController.healthcheck()
+
 GET     /*path.json                 controllers.ArticleController.renderLatest(path, lastUpdate: Option[String])
 GET     /*path                      controllers.ArticleController.renderArticle(path)
