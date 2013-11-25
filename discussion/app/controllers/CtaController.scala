@@ -12,7 +12,7 @@ trait CtaController extends CtaApi with Controller with ExecutionContexts with i
 
   def cta(key: DiscussionKey): Action[AnyContent] = Action.async {
     implicit request => {
-      def renderCtaJson = (comments: List[Comment]) => Cached(60)(JsonComponent("html" -> views.html.fragments.ctaTopComments(comments)))
+      def renderCtaJson = (comments: List[Comment]) => Cached(60)(JsonComponent("html" -> views.html.fragments.ctaTopComments(comments, true)))
       getTopComments(key) map renderCtaJson
     }
   }

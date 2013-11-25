@@ -163,6 +163,7 @@
     @extend %type-11;
     display: block;
     float: right;
+    margin-top: -$baseline*4+2;
 
     .i {
         margin-left: 4px;
@@ -626,4 +627,9 @@ $topCommentsHeight: 600px;
         }
 
     }
+}
+
+
+.open-cta {
+    margin-top: $baseline*8;
 }
