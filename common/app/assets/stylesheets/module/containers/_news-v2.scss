@@ -605,9 +605,6 @@ $metaHeight: 20px;
                     ));
                 }
             }
-            .item__link {
-            
-            }
             .item__title {
                 @include mq(tablet) {
                     @include fs-headline(6, true);
