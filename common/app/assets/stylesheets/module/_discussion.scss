@@ -145,18 +145,15 @@
         }
 
         &:after { // Mask (right-skewed parellelogram)
-            top: 100%;
+            @include transform(skew(-10deg));
+            background-color: #ffffff;
             content: " ";
             height: 24px;
-            width: 24px;
+            left: -5px;
             position: absolute;
             pointer-events: none;
-            background-color: #ffffff;
-            left: -5px;
-            transform: skew(-10deg);
-            -o-transform: skew(-10deg);
-            -moz-transform: skew(-10deg);
-            -webkit-transform: skew(-10deg);
+            top: 100%;
+            width: 24px;
         }
     }
 }
@@ -543,6 +540,7 @@ $topCommentsHeight: 600px;
             }
 
             &:after { // Mask (right-skewed parellelogram)
+                @include transform(skew(-10deg));
                 top: 100%;
                 content: " ";
                 height: 24px;
@@ -551,10 +549,6 @@ $topCommentsHeight: 600px;
                 pointer-events: none;
                 background-color: #ffffff;
                 left: -5px;
-                -webkit-transform: skew(-10deg);
-                   -moz-transform: skew(-10deg); 
-                     -o-transform: skew(-10deg); 
-                        transform: skew(-10deg); 
             }
 
             .d-comment__main {
