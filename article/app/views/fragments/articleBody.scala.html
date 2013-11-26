@@ -84,8 +84,10 @@
                                 <div class="u-table__cell u-table__cell--top">
                                     <div class="mpu-context">
                                         <div class="mpu-container js-mpu-ad-slot">
-                                            <h2 class="article__meta-heading tone-colour">Share this article</h2>
-                                            @fragments.social(article, "next to content")
+                                            <div class="social-wrapper">
+                                                <h2 class="article__meta-heading tone-colour">Share this article</h2>
+                                                @fragments.social(article, "next to content")
+                                            </div>
 
                                             <div class="open-cta"></div>
                                         </div>
