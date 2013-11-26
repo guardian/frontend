@@ -180,7 +180,6 @@ TopComments.prototype.bindCommentEvents = function() {
     RecommendComments.init(this.context);
 
     if (this.user && this.user.privateFields.canPostComment) {
-        this.renderReplyButtons();
         this.on('click', this.getClass('commentReply'), this.replyToComment);
     }
 };
@@ -227,7 +226,6 @@ TopComments.prototype.showHiddenComments = function() {
 //         this.removeShowMoreButton();
 //     }
 
-//     this.renderReplyButtons(qwery(this.getClass('comment'), bonzo(comments).parent()));
 //     bonzo(this.getElem('comments')).append(comments);
 
 //     showMoreButton.innerHTML = 'Show more';
