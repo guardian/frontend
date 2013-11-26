@@ -16,5 +16,3 @@ GET        /$path<(us|uk|au)?>                                                  
 GET        /$path<(us|uk|au)?>.json                                                                  controllers.FaciaController.renderEditionFrontJson(path)
 GET        /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>                    controllers.FaciaController.renderEditionSectionFront(path)
 GET        /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>.json               controllers.FaciaController.renderEditionSectionFrontJson(path)
-
-GET        /responsive-viewer                                                                        controllers.FaciaController.renderResponsiveViewer()
