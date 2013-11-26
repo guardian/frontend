@@ -43,7 +43,7 @@ define([
 
         We say can the Top slot has been viewed for 20 seconds by 4 instances, or an average of 5 seconds per
         instance.
-
+        
         The highest counter indicates the more viewed the advert.
     */
 
@@ -89,7 +89,6 @@ define([
             var viewport = detect.getBreakpoint();
             // NOTE:  getLayoutMode used to return 'extended' for 'wide'; this makes it backwards compatible
             viewport = (viewport === 'wide') ? 'extended' : viewport;
-
             $trackedAdSlots.each(function(adEl) {
                 var adId = adEl.getAttribute('data-inview-name') || adEl.getAttribute('data-' + viewport) || '';
                 if (adId && isVisible(adEl)) {
