@@ -7,7 +7,7 @@ import model.commercial.JsonAdsApi
 
 object MasterClassesApi extends JsonAdsApi[MasterClass] {
 
-  lazy val apiId = "3497465071"
+  lazy val organiserId = "684756979"
   lazy val apiKeyOption = CommercialConfiguration.getProperty("masterclasses.api.key")
 
   val adTypeName = "Masterclasses"
@@ -22,6 +22,6 @@ object MasterClassesApi extends JsonAdsApi[MasterClass] {
   }
 
   def getAll: Future[Seq[MasterClass]] = loadAds {
-    apiKeyOption map (apiKey => s"https://www.eventbrite.com/json/organizer_list_events?app_key=$apiKey&id=$apiId")
+    apiKeyOption map (apiKey => s"https://www.eventbrite.com/json/organizer_list_events?app_key=$apiKey&id=$organiserId")
   }
 }
