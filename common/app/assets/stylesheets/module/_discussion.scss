@@ -180,15 +180,12 @@
     @include fs-data(4);
 }
 .person__avatar {
-    border-radius: 50px;
+    @include rounded-corners(50px);
     float: left;
     height: 36px;
     margin-right: 15px;
     overflow: hidden;
     width: 36px;
-
-    webkit-border-radius: 50px;
-    -moz-border-radius: 50px;
 }
 
 /* Header
@@ -318,13 +315,13 @@
 
 .speech-bubble {
     @include fs-data(4);
+    @include rounded-corners(4px);
     position: relative;
     display: inline-block;
     min-height: 14px;
     min-width: 17px;
     padding: .275em .6em .375em;
     border: 0;
-    border-radius: 4px;
     text-align: center;
     color: white;
 
