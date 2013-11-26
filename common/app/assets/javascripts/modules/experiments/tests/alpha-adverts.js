@@ -176,7 +176,7 @@ define([
                         }
                     } else {
                         inviewName = 'MPU';
-                        document.getElementsByClassName('js-mpu-ad-slot')[0].appendChild(bonzo.create(mpuTemp)[0]);
+                        bonzo(qwery('.js-mpu-ad-slot .social-wrapper')).after(bonzo.create(mpuTemp)[0]);
                         bonzo(qwery('.ad-slot--mpu-banner-ad')).attr('data-inview-name', inviewName);
                         if(!supportsSticky && supportsFixed) {
                             s = new Sticky({
