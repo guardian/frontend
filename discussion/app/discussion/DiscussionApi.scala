@@ -10,7 +10,7 @@ import play.api.libs.json.JsArray
 import play.api.libs.ws.Response
 import play.api.libs.json.JsObject
 import play.api.libs.json.JsNumber
-import discussion.model.{Profile, Comment, CommentCount}
+import discussion.model.{Profile, Comment, CommentCount, Switch}
 import play.api.mvc.Headers
 
 trait DiscussionApi extends ExecutionContexts with Logging {
@@ -61,7 +61,8 @@ trait DiscussionApi extends ExecutionContexts with Logging {
           commenterCount =  (json \ "discussion" \ "commenterCount").as[Option[Int]].getOrElse(0),
           currentPage = (json \ "currentPage").as[Int],
           pages = (json \ "pages").as[Int],
-          isClosedForRecommendation = (json \ "discussion" \ "isClosedForRecommendation").as[Boolean]
+          isClosedForRecommendation = (json \ "discussion" \ "isClosedForRecommendation").as[Boolean],
+          switches = (json \ "switches").as[Seq[JsObject]] map { json => Switch(json) }
         )
     }
   }

@@ -1,8 +1,12 @@
 @(page: CommentPage, blankComment: Comment = null)(implicit request: RequestHeader)
 
-<div class="d-discussion"
-     data-page-count="@page.pages"
-     data-comment-count="@page.commentCount">
+<div
+    class="d-discussion"
+    data-page-count="@page.pages"
+    data-comment-count="@page.commentCount"
+    @page.switches.map{ switch =>
+        data-@switch.name="@switch.state"
+    }>
     <div class="d-discussion__header">
         @if(page.commentCount > 0){
         <div class="d-discussion__meta d-meta-item">
