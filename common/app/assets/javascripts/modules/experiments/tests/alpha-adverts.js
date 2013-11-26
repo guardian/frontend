@@ -43,15 +43,16 @@ define([
 
         We say can the Top slot has been viewed for 20 seconds by 4 instances, or an average of 5 seconds per
         instance.
-
+        
         The highest counter indicates the more viewed the advert.
     */
 
-    function initAdDwellTracking(config) {
+    function initAdDwellTracking(config, variant) {
 
         var startTime = new Date().getTime(),
-            $trackedAdSlots = common.$g('.ad-slot');
-
+            $trackedAdSlots = common.$g('.ad-slot'),
+            firstRun = true;
+       
         // a timer to submit the data to diagnostics every nth second
         if (config.switches.liveStats) {
             var beaconInterval = setInterval(function() {
@@ -60,11 +61,18 @@ define([
                     return false;
                 }
 
+                if (firstRun) {
+                    adDwellTimes.first = 1;
+                }
+
+                adDwellTimes.variant = variant;
+
                 new LiveStatsAds({
                     beaconUrl: config.page.beaconUrl
                 }).log(adDwellTimes);
 
                 adDwellTimes = {}; // reset
+                firstRun = false;
 
                 // Stop timer if we've gone past the max running time
                 var now = new Date().getTime();
@@ -80,7 +88,6 @@ define([
             var viewport = detect.getBreakpoint();
             // NOTE:  getLayoutMode used to return 'extended' for 'wide'; this makes it backwards compatible
             viewport = (viewport === 'wide') ? 'extended' : viewport;
-
             $trackedAdSlots.each(function(adEl) {
                 var adId = adEl.getAttribute('data-inview-name') || adEl.getAttribute('data-' + viewport) || '';
                 if (adId && isVisible(adEl)) {
@@ -140,9 +147,11 @@ define([
                         }).addClass(cls).insertAfter(this);
                     });
 
+                    bonzo(qwery('.ad-slot--bottom-banner-ad')).attr('data-inview-name', 'Bottom');
+
                     // The timer for the 'Both' variant is setup only once in the variant itself
                     if (!isBoth) {
-                        initAdDwellTracking(_config);
+                        initAdDwellTracking(_config, this.id);
                     }
 
                     return true;
@@ -157,7 +166,7 @@ define([
                         inviewName,
                         s;
                     if(viewport === 'mobile' || viewport === 'tablet' && detect.getOrientation() === 'portrait') {
-                        inviewName = 'Top banner';
+                        inviewName = 'Top';
                         bonzo(qwery('.ad-slot--top-banner-ad')).attr('data-inview-name', inviewName);
                         bonzo(qwery('.parts__head')).addClass('is-sticky');
                         if(!supportsSticky && supportsFixed) {
@@ -178,9 +187,11 @@ define([
                         }
                     }
 
+                    bonzo(qwery('.ad-slot--bottom-banner-ad')).attr('data-inview-name', 'Bottom');
+
                     // The timer for the 'Both' variant is setup only once in the variant itself
                     if (!isBoth) {
-                        initAdDwellTracking(_config);
+                        initAdDwellTracking(_config, this.id);
                     }
 
                     return true;
@@ -201,7 +212,7 @@ define([
                     guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha3.com';
                     variantName = 'Both';
 
-                    initAdDwellTracking(_config);
+                    initAdDwellTracking(_config, this.id);
 
                     return true;
                 }
@@ -211,8 +222,9 @@ define([
                 test: function() {
                     variantName = 'Control';
                     guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha.com';
+                    bonzo(qwery('.ad-slot--bottom-banner-ad')).attr('data-inview-name', 'Bottom');
 
-                    initAdDwellTracking(_config);
+                    initAdDwellTracking(_config, this.id);
 
                     return true;
                 }

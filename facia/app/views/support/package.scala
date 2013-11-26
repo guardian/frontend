@@ -21,7 +21,8 @@ object FindStyle {
       ("au/news/regular-stories", NewsContainer()),
       ("au/sport/regular-stories", SportContainer()),
       ("au/commentisfree/regular-stories", CommentContainer()),
-      ("au/culture/regular-stories", FeaturesContainer())
+      ("au/culture/regular-stories", FeaturesContainer()),
+      ("au/contributors/feature-stories", CommentContainer())
     )),
     ("au/business", Map(
       ("au/business/regular-stories", SportContainer(showMore = false))

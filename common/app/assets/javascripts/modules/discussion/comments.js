@@ -2,10 +2,11 @@ define([
     'utils/ajax',
     'bonzo',
     'qwery',
-    'component',
+    'modules/component',
     'modules/identity/api',
     'modules/discussion/comment-box',
-    'modules/discussion/recommend-comments'
+    'modules/discussion/recommend-comments',
+    '$'
 ], function(
     ajax,
     bonzo,
@@ -13,13 +14,15 @@ define([
     Component,
     Id,
     CommentBox,
-    RecommendComments
+    RecommendComments,
+    $
 ) {
 
 /**
  * TODO (jamesgorrie):
  * * Move recommending into this, it has no need for it's own module.
  * * Get the selectors up to date with BEM
+ * * Move over to $ instead of qwery & bonzo
  * @constructor
  * @extends Component
  * @param {Element=} context
@@ -74,6 +77,15 @@ Comments.prototype.topLevelComments = null;
 Comments.prototype.user = null;
 
 /** @override */
+Comments.prototype.prerender = function() {
+    // Set the heading to the correct text
+    var heading = qwery('#comments')[0],
+        commentCount = this.elem.getAttribute('data-comment-count');
+
+    heading.innerHTML += ' <span class="discussion__comment-count">('+ commentCount +')</span>';
+};
+
+/** @override */
 Comments.prototype.ready = function() {
     var initialShow = this.options.initialShow,
         self = this;
@@ -104,7 +116,9 @@ Comments.prototype.ready = function() {
         }
 
         this.hideExcessReplies();
-        this.bindCommentEvents();
+        if (!this.isReadOnly()) {
+            this.bindCommentEvents();
+        }
         this.on('click', this.getClass('showReplies'), this.showMoreReplies);
     }
     this.emit('ready');
@@ -203,6 +217,13 @@ Comments.prototype.hideExcessReplies = function(comments) {
 };
 
 /**
+ * @return {Boolean}
+ */
+Comments.prototype.isReadOnly = function() {
+    return this.elem.getAttribute('data-read-only') === 'true';
+};
+
+/**
  * @param {Object} resp
  */
 Comments.prototype.commentsLoaded = function(resp) {
@@ -214,7 +235,9 @@ Comments.prototype.commentsLoaded = function(resp) {
         this.removeShowMoreButton();
     }
 
-    this.renderReplyButtons(qwery(this.getClass('comment'), bonzo(comments).parent()));
+    if (!this.isReadOnly()) {
+        this.renderReplyButtons(qwery(this.getClass('comment'), bonzo(comments).parent()));
+    }
     bonzo(this.getElem('comments')).append(comments);
 
     showMoreButton.innerHTML = 'Show more';
@@ -222,7 +245,10 @@ Comments.prototype.commentsLoaded = function(resp) {
 
     this.hideExcessReplies(comments);
 
-    RecommendComments.init(this.context);
+    if (!this.isReadOnly()) {
+        RecommendComments.init(this.context);
+
+    }
     this.emit('loaded');
 };
 
@@ -248,7 +274,7 @@ Comments.prototype.addComment = function(comment, focus, parent) {
         values = {
             username: this.user.displayName,
             timestamp: 'Just now',
-            body: '<p>'+ comment.body.replace('\n', '</p><p>') +'</p>',
+            body: '<p>'+ comment.body.replace(/\n+/g, '</p><p>') +'</p>',
             report: {
                 href: 'http://discussion.theguardian.com/components/report-abuse/'+ comment.id
             },
@@ -274,6 +300,16 @@ Comments.prototype.addComment = function(comment, focus, parent) {
         }
     }
     commentElem.id = 'comment-'+ comment.id;
+
+    var is_staff = this.user.badge.some(function (e) { // Returns true if any element in array satisfies function
+        return e.name === "Staff";
+    });
+
+    if (is_staff) {
+        // Hack to allow staff badge to appear
+        var staffBadge = bonzo.create(document.getElementById('tmpl-staff-badge').innerHTML);
+        $('.d-comment__meta div', commentElem).first().append(staffBadge);
+    }
 
     // Stupid hack. Will rearchitect.
     if (!parent) {
