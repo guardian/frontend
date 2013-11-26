@@ -80,7 +80,7 @@ Api.recommendComment = function(id) {
  */
 Api.pickComment = function(id) {
     var endpoint = '/comment/'+ id +'/highlight';
-    return Api.send(endpoint, 'post', {}, true);
+    return Api.send(endpoint, 'post', {});
 };
 
 /**

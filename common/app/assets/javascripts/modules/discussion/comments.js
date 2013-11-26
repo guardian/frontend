@@ -98,29 +98,8 @@ Comments.prototype.prerender = function() {
         self.user.is_staff = self.user.badge.some(function (e) { // Returns true if any element in array satisfies function
             return e.name === "Staff";
         });
-        // Add Pick buttons if needed
-        if (self.user.is_staff) {
-            self.comments.forEach(function (e) {
-                if (!!e.getAttribute("data-comment-highlighted")) { // Nasty cast
-                    var pickButton = bonzo.create(document.getElementById("tmpl-staff-pick-button").innerHTML);
-                    pickButton[0].setAttribute("data-comment-id", e.getAttribute("data-comment-id"));
-                    self.on('click', pickButton, self.pickComment.bind(self));
-                    $('.d-comment__actions__main', e).append(pickButton);
-                }
-            });
-        }
     }
 
-};
-
-Comments.prototype.pickComment = function (event) {
-    event.preventDefault();
-    DiscussionApi
-        .pickComment(event.target.getAttribute("data-comment-id"))
-        .then(function () {
-        })
-        .fail(function () {
-        });
 };
 
 /** @override */
@@ -160,6 +139,7 @@ Comments.prototype.bindCommentEvents = function() {
 
     if (this.user && this.user.privateFields.canPostComment) {
         this.renderReplyButtons();
+        this.renderPickButtons();
         this.on('click', this.getClass('commentReply'), this.replyToComment);
     }
 };
@@ -176,6 +156,42 @@ Comments.prototype.renderReplyButtons = function(comments) {
             '<div class="u-fauxlink d-comment__action '+ self.getClass('commentReply', true) +'" '+
             'role="button" data-link-name="reply to comment" data-comment-id="'+ elem.getAttribute('data-comment-id') +'">Reply</div>');
     });
+};
+
+Comments.prototype.renderPickButtons = function (comments) {
+    var actions,
+        self = this;
+
+    comments = comments || self.comments;
+
+    if (self.user.is_staff) {
+        comments.forEach(function (e) {
+            if (!!e.getAttribute("data-comment-highlighted") && e.getAttribute("data-comment-author-id") !== self.user.userId) { // Nasty cast
+                actions = qwery(self.getClass('commentActions'), e)[0];
+                var pickButton = bonzo.create(document.getElementById("tmpl-staff-pick-button").innerHTML);
+                self.on('click', pickButton, self.pickComment.bind(e));
+                $(actions).append(pickButton);
+            }
+        });
+    }
+};
+
+Comments.prototype.pickComment = function (event) {
+    event.preventDefault();
+    
+    var thisComment = this,
+        pickLabel   = bonzo.create("<div class='d-comment__pick i i-guardian-picks'><span class='u-h'>Guardian pick</span></div>");
+
+    DiscussionApi
+        .pickComment(thisComment.getAttribute("data-comment-id"))
+        .then(function () {
+            $('.d-comment__inner', thisComment).prepend(pickLabel); // add label
+            $('.d-comment__recommend', thisComment).addClass('d-comment__recommend--left'); // shift recommends
+            $(event.target).addClass('u-h'); // hide pick button
+        })
+        .fail(function (resp) {
+            $(event.target).text(JSON.parse(resp.response).message);
+        });
 };
 
 /**
@@ -260,6 +276,7 @@ Comments.prototype.commentsLoaded = function(resp) {
     }
 
     this.renderReplyButtons(qwery(this.getClass('comment'), bonzo(comments).parent()));
+    this.renderPickButtons(qwery(this.getClass('comment'), bonzo(comments).parent()));
     bonzo(this.getElem('comments')).append(comments);
 
     showMoreButton.innerHTML = 'Show more';
