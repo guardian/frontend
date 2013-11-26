@@ -1,5 +1,6 @@
 package discussion
 
+import discussion.model.DiscussionKey
 import org.scalatest.FreeSpec
 import play.api.libs.ws.Response
 import scala.concurrent._
@@ -13,7 +14,7 @@ class DiscussionApiTest extends FreeSpec {
     val expectedUrl: String = "/discussion/p/3tycg/topcomments?pageSize=50&page=1&orderBy=newest&showSwitches=true"
 
     val discussionApi = new DiscussionApi {
-      protected def GET(url: String, headers: (String, String)*): Future[Response] = {
+      override protected def GET(url: String, headers: (String, String)*): Future[Response] = {
         assert(expectedUrl === url)
         future {null} // Don't care what is returned for this test
       }
@@ -21,14 +22,14 @@ class DiscussionApiTest extends FreeSpec {
       protected val apiRoot: String = ""
     }
 
-    Await.ready(discussionApi.topCommentsFor("p/3tycg", "1"), 2 seconds)
+    Await.ready(discussionApi.topCommentsFor(DiscussionKey("p/3tycg"), "1"), 2 seconds)
   }
 
   "Should do GET request on correct URL for comments " in {
     val expectedUrl: String = "/discussion/p/3tycg?pageSize=50&page=1&orderBy=newest&showSwitches=true"
 
     val discussionApi = new DiscussionApi {
-      protected def GET(url: String, headers: (String, String)*): Future[Response] = {
+      override protected def GET(url: String, headers: (String, String)*): Future[Response] = {
         assert(expectedUrl === url)
         future {null}
       }
@@ -36,7 +37,7 @@ class DiscussionApiTest extends FreeSpec {
       protected val apiRoot: String = ""
     }
 
-    Await.ready(discussionApi.commentsFor("p/3tycg", "1"), 2 seconds)
+    Await.ready(discussionApi.commentsFor(DiscussionKey("p/3tycg"), "1"), 2 seconds)
   }
 
 

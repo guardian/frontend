@@ -14,7 +14,7 @@ class CtaApiTest extends CtaApi with FlatSpecLike with ShouldMatchers {
 
   "CtaController" should "respond to request for callouts for a given discussion key" in {
     running(TestServer(availablePort)) {
-      val Some(response) = route(FakeRequest("GET", "/open/cta/article/p/k123.json"))
+      val Some(response) = route(FakeRequest("GET", "/open/cta/article/p/3tycg.json"))
 
       status(response) should be(OK)
       contentAsString(response) should include("html")
