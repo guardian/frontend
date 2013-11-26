@@ -84,7 +84,7 @@ class ArticleControllerTest extends FlatSpec with Matchers  with UsesElasticSear
   ignore should "display an expired message for expired content" in Fake {
     val result = controllers.ArticleController.renderArticle(expiredArticle)(TestRequest(s"/$expiredArticle"))
     status(result) should be(410)
-    contentAsString(result) should include("This page has been removed")
+    contentAsString(result) should include("Sorry - the page you are looking for has been removed")
   }
 
   // content api has stopped doing this, am finding out what is happening

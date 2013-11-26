@@ -12,7 +12,9 @@ class Front extends Logging {
     if (editions.contains(sectionId)) "" else sectionId
   }
 
-  def configList: List[(Edition, String)] = Edition.all.map(e => (e, e.id)).toList ++ ConfigAgent().map(c => (Edition.defaultEdition, c))
+  def configList: List[(Edition, String)] =
+    Edition.all.map(e => (e, e.id)).toList ++
+    ConfigAgent().map(c => (Edition.byId(c.take(2)).getOrElse(Edition.defaultEdition), c))
 
   def faciaFronts: Map[String, PageFront] = configList.map {case (e, id) =>
     id.toLowerCase -> new PageFront(id.toLowerCase, e)

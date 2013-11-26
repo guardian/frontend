@@ -2,12 +2,12 @@ define([
     'utils/ajax',
     'bonzo',
     'qwery',
-    'component',
+    'modules/component',
     'modules/analytics/discussion',
     'modules/identity/api',
     'modules/discussion/api',
     'modules/discussion/comments',
-    'modules/discussion/topComments',
+    'modules/discussion/top-comments',
     'modules/discussion/comment-box',
     '$'
 ], function(
@@ -113,10 +113,9 @@ Loader.prototype.ready = function() {
         // !Top comments ========================================== //
 
     });
+
     this.getUser();
-
     this.renderCommentCount();
-
     DiscussionAnalytics.init();
 };
 
@@ -190,6 +189,14 @@ Loader.prototype.loadingError = function() {
     bonzo(this.getElem('commentsContainer')).remove();
 };
 
+Loader.prototype.renderReadOnly = function() {
+    this.getElem('commentBox').innerHTML =
+        '<div class="d-bar d-bar--closed">'+
+            '<b>We\'re doing some maintenance right now.</b>'+
+            ' You can still read comments, but please come back later to add your own.'+
+        '</div>';
+};
+
 /** TODO: This logic will be moved to the Play app renderer */
 Loader.prototype.renderDiscussionClosedMessage = function() {
     this.getElem('commentBox').innerHTML = '<div class="d-bar d-bar--closed">This discussion is closed for comments.</div>';
@@ -212,7 +219,9 @@ Loader.prototype.renderSignin = function() {
  * Else render comment box
  */
 Loader.prototype.renderCommentBar = function() {
-    if (this.getDiscussionClosed()) {
+    if (this.comments.isReadOnly()) {
+        this.renderReadOnly();
+    } else if (this.getDiscussionClosed()) {
         this.renderDiscussionClosedMessage();
     } else if (!Id.getUserFromCookie()) {
         this.renderSignin();
