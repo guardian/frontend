@@ -16,11 +16,13 @@ object JobsAgent extends AdAgent[Job] with ExecutionContexts with Logging {
     val currentJobs =
       if (Play.isDev) {
         val jobAdData = Try(S3.get("DEV/commercial/job-ads.xml")) getOrElse None
-        jobAdData.map {
-          content =>
-            val xml = Future(XML.loadString(content))
-            JobsApi.getCurrentJobs(xml)
-        }.getOrElse(Future(Nil))
+        Future {
+          jobAdData.map {
+            content =>
+              val xml = XML.loadString(content)
+              JobsApi.parse(xml)
+          }.getOrElse(Nil)
+        }
       }
       else JobsApi.getCurrentJobs()
 

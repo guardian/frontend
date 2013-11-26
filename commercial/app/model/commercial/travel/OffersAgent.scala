@@ -53,9 +53,8 @@ object OffersAgent extends AdAgent[Offer] with Logging with ExecutionContexts {
       }
     }
 
-    OffersApi.getAllOffers() onSuccess {
+    OffersApi.getAllOffers onSuccess {
       case untaggedOffers =>
-        log info s"Loaded ${untaggedOffers.size} travel offers"
         tagAssociatedCountries(untaggedOffers) onSuccess {
           case countryTags =>
             val offers = tagOffers(untaggedOffers, countryTags)
