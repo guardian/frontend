@@ -4,16 +4,16 @@ import model.Cached
 import common.JsonComponent
 import play.api.mvc.Action
 import play.api.libs.json.Json
-import discussion.model.Comment
+import discussion.model.{DiscussionKey, Comment}
 
 trait TopCommentsController extends DiscussionController {
 
-  def topCommentsPageJson(shortUrl: String) = topCommentsPage(shortUrl)
+  def topCommentsPageJson(key: DiscussionKey) = topCommentsPage(key)
 
-  def topCommentsPage(shortUrl: String) = Action.async {
+  def topCommentsPage(key: DiscussionKey) = Action.async {
     implicit request =>
       val page = request.getQueryString("page").getOrElse("1")
-      val commentPage = discussionApi.topCommentsFor(shortUrl, page)
+      val commentPage = discussionApi.topCommentsFor(key, page)
       val blankComment = Comment(Json.parse("""{
         "id": 5,
         "body": "",

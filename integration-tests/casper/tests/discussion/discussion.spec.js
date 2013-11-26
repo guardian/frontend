@@ -8,7 +8,7 @@
  **/
 
 casper.test.setUp(function() {
-    casper.start(host + '/science/grrlscientist/2012/aug/07/3?view=mobile');
+    casper.start(host + 'science/grrlscientist/2012/aug/07/3?view=mobile');
     casper.options.waitTimeout = 10000;
 });
 

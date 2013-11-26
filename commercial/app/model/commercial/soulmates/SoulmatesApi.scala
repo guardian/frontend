@@ -7,7 +7,11 @@ import model.commercial.JsonAdsApi
 
 object SoulmatesApi extends JsonAdsApi[Member] {
 
-  val adTypeName = "Soulmates"
+  protected val adTypeName = "Soulmates"
+
+  private lazy val apiUrl: Option[String] = CommercialConfiguration.getProperty("soulmates.api.url")
+  private lazy val menUrl = apiUrl map (url => s"$url/popular/men")
+  private lazy val womenUrl = apiUrl map (url => s"$url/popular/women")
 
   override protected val loadTimeout = 10000
 
@@ -26,12 +30,7 @@ object SoulmatesApi extends JsonAdsApi[Member] {
     }
   }
 
-  def getMenMembers: Future[Seq[Member]] = loadAds {
-    CommercialConfiguration.soulmatesApi.menUrl
-  }
+  def getMenMembers: Future[Seq[Member]] = loadAds(menUrl)
 
-  def getWomenMembers: Future[Seq[Member]] = loadAds {
-    CommercialConfiguration.soulmatesApi.womenUrl
-  }
-
+  def getWomenMembers: Future[Seq[Member]] = loadAds(womenUrl)
 }
