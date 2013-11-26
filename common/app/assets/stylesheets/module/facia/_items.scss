@@ -211,28 +211,31 @@ $c-live: #e81818;
     .trail__count {
         position: relative;
         float: left;
+
         i {
             margin: 0;
             position: absolute;
-            top: 2px;
         }
     }
     .item__timestamp {
         min-width: gs-span(1) - 16;
         padding-right: $gs-gutter/2;
-        padding-left: 13px;
+        padding-left: 14px;
+
         i {
+            top: 3px;
             left: 0;
         }
     }
     .trail__count {
         padding-left: 28px;
-        top: 0;
+
         a {
             line-height: inherit;
             color: inherit;
         }
         i {
+            top: 2px;
             left: $gs-gutter/2 - 1;
         }
     }

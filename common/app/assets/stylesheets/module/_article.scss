@@ -157,13 +157,12 @@
 
     i {
         vertical-align: top;
+        position: relative;
+        top: 3px;
     }
 
     @include mq(tablet) {
         padding-right: 0;
-    }
-
-    @include mq(desktop) {
         @include fs-data(3, true);
     }
 
