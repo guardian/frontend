@@ -30,8 +30,8 @@ object DiagnosticsController extends Controller with Logging {
     NoCache(Ok(gif).as("image/gif"))
   } 
   
-  def ads(top: Option[Int], bottom: Option[Int], inline: Option[Int], mpu: Option[Int], first: Option[Int]) = Action { implicit request =>
-    Viewability.report(top, bottom, inline, mpu, first)
+  def ads(top: Option[Int], bottom: Option[Int], inline: Option[Int], mpu: Option[Int], first: Option[Int], layout: Option[String], variant: Option[String]) = Action { implicit request =>
+    Viewability.report(top, bottom, inline, mpu, first, layout, variant)
     NoCache(Ok(gif).as("image/gif"))
   } 
 

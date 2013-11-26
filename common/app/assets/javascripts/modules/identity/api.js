@@ -1,20 +1,21 @@
 /*global escape:true */
-
 define([
-    'common',
+    '$',
+    'utils/atob',
     'utils/cookies',
-    'modules/asyncCallMerger',
     'utils/storage',
-    'utils/ajax'
+    'utils/ajax',
+    'modules/asyncCallMerger',
 ], function(
-    common,
-    Cookies,
-    asyncCallMerger,
-    Storage,
-    ajax) {
+    $,
+    utilAtob,
+    cookies,
+    storage,
+    ajax,
+    asyncCallMerger
+) {
 
-/**
->>>>>>> origin/master:common/app/assets/javascripts/modules/identity/api.js
+    /**
      * Left this as an object as there are onlty static methods
      * We'll need to change this once there is some state change
      * TODO(jamesgorrie): Allow this to show policies too (not needed yet)
@@ -23,15 +24,20 @@ define([
         userFromCookieCache = null;
 
     Id.cookieName = 'GU_U';
-    Id.signOutCookieName = 'GU_SO',
+    Id.signOutCookieName = 'GU_SO';
     Id.fbCheckKey = "gu.id.nextFbCheck";
-
-    var idApiRoot = null,
-        idUrl = null;
+    Id.idApiRoot = null;
+    Id.idUrl = null;
 
     Id.init = function(conf) {
-        idApiRoot = conf.page.idApiUrl;
-        idUrl = conf.page.idUrl;
+        Id.idApiRoot = conf.page.idApiUrl;
+        Id.idUrl = conf.page.idUrl;
+        // Small DOM init for elements that need to be signed in
+        if (Id.isUserLoggedIn()) {
+            $('html').addClass('id--signed-in');
+        } else {
+            $('html').addClass('id--signed-out');
+        }
     };
 
 
@@ -49,8 +55,8 @@ define([
      * @return {?Object} the user information
      */
     Id.getUserFromCookie = function() {
-        if(userFromCookieCache === null ) {
-            var cookieData = Cookies.get(Id.cookieName),
+        if (userFromCookieCache === null) {
+            var cookieData = cookies.get(Id.cookieName),
             userData = cookieData ? JSON.parse(Id.decodeBase64(cookieData.split('.')[0])) : null;
             if (userData) {
                 userFromCookieCache = {
@@ -69,7 +75,7 @@ define([
      * @return {string}
      */
     Id.getCookie = function() {
-        return Cookies.get(Id.cookieName);
+        return cookies.get(Id.cookieName);
     };
 
     /**
@@ -83,7 +89,7 @@ define([
      * @return {string}
      */
     Id.getUrl = function() {
-        return idUrl;
+        return Id.idUrl;
     };
 
 
@@ -95,7 +101,7 @@ define([
         function(mergingCallback) {
             if(Id.isUserLoggedIn()) {
                 ajax({
-                    url: idApiRoot + "/user/me",
+                    url: Id.idApiRoot + "/user/me",
                     type: 'jsonp',
                     crossOrigin: true
                 }).then(
@@ -119,11 +125,14 @@ define([
      * @return {string}
      */
     Id.decodeBase64 = function(str) {
-        return decodeURIComponent(escape(common.atob(str.replace(/-/g, '+').replace(/_/g, '/').replace(/,/g, '='))));
+        return decodeURIComponent(escape(utilAtob(str.replace(/-/g, '+').replace(/_/g, '/').replace(/,/g, '='))));
     };
 
+    /**
+     * @return {Boolean}
+     */
     Id.hasUserSignedOutInTheLast24Hours = function() {
-        var cookieData = Cookies.get(Id.signOutCookieName);
+        var cookieData = cookies.get(Id.signOutCookieName);
 
         if(cookieData) {
             return((Math.round(new Date().getTime() / 1000)) < (parseInt(cookieData, 10) + 86400));
@@ -135,13 +144,13 @@ define([
      * Returns true if a there is no signed in user and the user has not signed in the last 24 hous
      */
     Id.shouldAutoSigninInUser = function() {
-        var signedInUser = !!Cookies.get(Id.cookieName);
-        var checkFacebook = !!Storage.local.get(Id.fbCheckKey);
+        var signedInUser = !!cookies.get(Id.cookieName);
+        var checkFacebook = !!storage.local.get(Id.fbCheckKey);
         return !signedInUser && !checkFacebook && !this.hasUserSignedOutInTheLast24Hours();
     };
 
     Id.setNextFbCheckTime = function(nextFbCheckDue) {
-        Storage.local.set(Id.fbCheckKey, {}, {expires: nextFbCheckDue});
+        storage.local.set(Id.fbCheckKey, {}, {expires: nextFbCheckDue});
     };
 
     return Id;

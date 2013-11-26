@@ -65,6 +65,7 @@ define([
                     adDwellTimes.first = 1;
                 }
 
+                adDwellTimes.layout = detect.getLayoutMode();
                 adDwellTimes.variant = variant;
 
                 new LiveStatsAds({
