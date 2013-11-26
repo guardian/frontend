@@ -94,7 +94,7 @@ Comments.prototype.prerender = function() {
     self.user = self.options.user;
 
     // Determine user staff status
-    if (self.user) {
+    if (self.user && self.user.badge) {
         self.user.is_staff = self.user.badge.some(function (e) { // Returns true if any element in array satisfies function
             return e.name === "Staff";
         });
@@ -190,6 +190,7 @@ Comments.prototype.pickComment = function (event) {
             $('.d-comment__inner', thisComment).prepend(pickLabel); // add label
             $('.d-comment__recommend', thisComment).addClass('d-comment__recommend--left'); // shift recommends
             $(event.target).addClass('u-h'); // hide pick button
+            $(thisComment).setAttribute("data-comment-highlighted", true);
         })
         .fail(function (resp) {
             $(event.target).text(JSON.parse(resp.response).message);
