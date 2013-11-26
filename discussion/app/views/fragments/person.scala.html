@@ -3,8 +3,9 @@
     <div class="person__avatar">
         <img src="@person.avatar" alt="@person.displayName's avatar" width="36" height="36" itemprop="image" />
     </div>
-    <div class="person__name" itemprop="name">@person.displayName</div>
-
-    @if(person.isContributor){<div class="person__type">Contributor</div>}
-    @if(person.isStaff){<div class="person__type">Guardian staff</div>}
+    <div class="person__name" itemprop="name">
+        @person.displayName
+        @if(person.isContributor){<i class="d-badge d-badge--contributor d-comment__author-status" title="Guardian contributor"><span class="d-badge__label">Guardian contributor</span></i>}
+        @if(person.isStaff){<i class="d-badge d-badge--guardian-staff d-comment__author-status" title="Guardian staff"><span class="d-badge__label">Guardian staff</span></i>}
+    </div>
 </div>
