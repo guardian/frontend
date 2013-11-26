@@ -93,6 +93,9 @@
     @include d-comment__body;
 }
 
+.d-discussion[data-read-only="true"] .sign-in-required {
+    display: none; /* Not the most performant, but it happens so rarely */
+}
 
 /* New Comment
    ===========================================================================*/
