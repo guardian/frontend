@@ -102,6 +102,9 @@ $metaHeight: 20px;
         .item__byline {
             display: none !important; // Todo: support for cif pieces
         }
+        .item__image-container {
+            display: none;
+        }
         .item {
             @include box-sizing(content-box);
             position: absolute;
@@ -110,8 +113,7 @@ $metaHeight: 20px;
             @include rem((
                 padding: $gs-baseline / 2 0
             ));
-
-            &:nth-child(1) {
+            &:nth-child(2) {
                 .item__link {
                     border-top-style: solid;
                 }
@@ -119,10 +121,7 @@ $metaHeight: 20px;
                     display: none;
                 }
             }
-            .item__image-container {
-                display: none;
-            }
-            @include when-no-image(':nth-child(1)') {
+            @include when-no-image(':nth-child(2)') {
                 .item__title {
                     @include fs-headline(9, true);
                 }
@@ -532,6 +531,125 @@ $metaHeight: 20px;
                 @include rem((
                     margin-left: $gs-gutter
                 ));
+            }
+        }
+    }
+
+
+    // Top story
+    // =========================================================================
+
+    .collection {
+        @include mq(tablet)  {
+            overflow: visible;
+        }
+
+        @include mq(tablet)  { @include rem((margin-top: gs-height(5) + $gs-baseline*2)); }
+        @include mq(desktop) { @include rem((margin-top: gs-height(6) + $gs-baseline*2)); }
+        @include mq(wide)    { @include rem((margin-top: gs-height(7) + $gs-baseline*2)); }
+    }
+    .item {
+        &:nth-child(1) {
+            @include mq(tablet) {
+                @include rem((
+                    height: gs-height(5),
+                    margin-top: (gs-height(5) + $gs-baseline*2) * -1
+                ));
+            }
+            @include mq(desktop) {
+                @include rem((
+                    height: gs-height(6),
+                    margin-top: (gs-height(6) + $gs-baseline*2) * -1
+                ));
+            }
+            @include mq(wide) {
+                @include rem((
+                    height: gs-height(7),
+                    margin-top: (gs-height(7) + $gs-baseline*2) * -1
+                ));
+            }
+            @include mq(tablet) {
+                left: 0;
+                width: 100%;
+
+                &:before {
+                    display: none;
+                }
+            }
+            .item__image-container {
+                @include mq(tablet) {
+                    display: block;
+                    padding-bottom: 0;
+                    height: auto;
+                    position: relative;
+                    float: right;
+                    width: 50%;
+                    @include rem((
+                        margin-left: $gs-gutter
+                    ));
+
+                    img {
+                        position: relative;
+                    }
+                }
+                @include mq(desktop) {
+                    @include rem((
+                        margin-left: gs-span(1) + $gs-gutter,
+                        width: gs-span(6)
+                    ));
+                }
+                @include mq(wide) {
+                    @include rem((
+                        width: gs-span(7)
+                    ));
+                }
+            }
+            .item__link {
+            
+            }
+            .item__title {
+                @include mq(tablet) {
+                    @include fs-headline(6, true);
+                }
+                @include mq(desktop) {
+                    @include fs-headline(7, true);
+                }
+                @include mq(wide) {
+                    @include fs-headline(8, true);
+                    margin-bottom: $baseline*3;
+                }
+            }
+            .item__standfirst {
+                @include mq(tablet)  {
+                    @include fs-headline(2, true);
+                    display: block;
+                }
+                @include mq(wide) {
+                    @include fs-headline(3, true);
+                }
+            }
+        }
+        @include when-no-image(':nth-child(1)') {
+            @include mq(tablet) {
+                .item__image-container {
+                    display: none;
+                }
+                .item__title {
+                    @include fs-headline(8, true);
+                }
+                .item__standfirst {
+                    @include fs-headline(3, true);
+                }
+            }
+            @include mq(desktop) {
+                .item__title {
+                    @include fs-headline(9, true);
+                    max-width: 80%;
+                }
+                .item__standfirst {
+                    @include fs-headline(4, true);
+                    max-width: 60%;
+                }
             }
         }
     }
