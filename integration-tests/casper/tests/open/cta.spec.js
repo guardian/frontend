@@ -19,7 +19,7 @@ casper.test.setUp(function() {
 casper.test.begin('Read a top comment in Open CTA', function(test) {
     casper.evaluate(function() {
         guardian.config.switches.openCta = true;
-    })
+    });
     casper.waitForSelector('.open-cta .comment',
         function then() {
             test.assertElementCount('.open-cta .comment', 1);
