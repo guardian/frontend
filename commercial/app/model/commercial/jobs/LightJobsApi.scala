@@ -5,10 +5,16 @@ import scala.xml.Elem
 import conf.CommercialConfiguration
 import model.commercial.Utils.OptString
 import model.commercial.XmlAdsApi
+import org.joda.time.format.DateTimeFormat
 
 object LightJobsApi extends XmlAdsApi[LightJob] {
 
-  val adTypeName = "Jobs"
+  protected val adTypeName = "Jobs"
+
+  val feedDate = DateTimeFormat.forPattern("yyyy-MM-dd").print(System.currentTimeMillis)
+  lazy val lightFeedUrl = CommercialConfiguration.getProperty("jobs.api.lightfeedurl.template") map {
+    _ replace("${feedDate}", feedDate)
+  }
 
   override protected val loadTimeout = 10000
 
@@ -29,6 +35,6 @@ object LightJobsApi extends XmlAdsApi[LightJob] {
   }
 
   def getCurrentJobs: Future[Seq[LightJob]] = loadAds {
-    for {url <- CommercialConfiguration.jobsApi.lightFeedUrl} yield s"$url"
+    for {url <- lightFeedUrl} yield s"$url"
   }
 }
