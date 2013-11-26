@@ -125,7 +125,7 @@
         @include box-sizing(border-box);
         background-color: $c-neutral7;
         display: inline-block;
-        padding: $baseline*2 $gutter/2 $baseline*3 $gutter/2;
+        padding: $baseline*2 $gs-gutter/2 $baseline*3 $gs-gutter/2;
         position: relative;
         width: 100%;
 
