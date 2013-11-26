@@ -8,7 +8,7 @@ import model.commercial.JsonAdsApi
 object MasterClassesApi extends JsonAdsApi[MasterClass] {
 
   lazy val apiId = "3497465071"
-  lazy val apiKeyOption = CommercialConfiguration.masterclasses.apiKey
+  lazy val apiKeyOption = CommercialConfiguration.getProperty("masterclasses.api.key")
 
   val adTypeName = "Masterclasses"
 
