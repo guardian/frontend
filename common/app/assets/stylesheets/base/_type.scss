@@ -1,15 +1,14 @@
-//Set's baseline font size to 10px
-//This is used for all em's
+// Set baseline font size to 10px
+// This is used as a baseline for rem (root ems) values
 html {
     font-size: 62.5%;
     font-size: (10/16)*1em;
     font-family: $serif;
 }
 
-//Bump font-size back upto 16px
+// Bump font-size back up to 16px
 body {
     color: #545454;
-    font-size: 100%;
     font-size: 1.6em;
     line-height: 1.4;
 }
@@ -24,12 +23,12 @@ h1, h2, h3, h4, h5, h6 {
 
 .type-2 { @extend %type-2; }
 
-//SerifText
+// SerifText
 .type-5 { @extend %type-5; }
 .type-6 { @extend %type-6; }
 .type-7 { @extend %type-7; }
 
-//Sans-serif's
+// Sans-serif
 .type-8  { @extend %type-8; }
 .type-10 { @extend %type-10; }
 .type-11 { @extend %type-11; }
@@ -39,7 +38,7 @@ blockquote {
     margin: 0;
 }
 
-//Default type elements
+// Default type elements
 p {
     margin-top: 0;
     margin-bottom: $baseline*2;
