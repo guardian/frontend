@@ -11,6 +11,9 @@ object JobsApi extends XmlAdsApi[Job] {
 
   protected val adTypeName = "Jobs"
 
+  private lazy val optUrl = CommercialConfiguration.getProperty("jobs.api.url")
+  private lazy val optKey = CommercialConfiguration.getProperty("jobs.api.key")
+
   override protected val loadTimeout = 60000
 
   private val dateFormat = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss")
@@ -19,8 +22,8 @@ object JobsApi extends XmlAdsApi[Job] {
 
   private def loadJobs: Future[Seq[Job]] = loadAds {
     for {
-      url <- CommercialConfiguration.jobsApi.url
-      key <- CommercialConfiguration.jobsApi.key
+      url <- optUrl
+      key <- optKey
     } yield s"$url?login=$key"
   }
 
