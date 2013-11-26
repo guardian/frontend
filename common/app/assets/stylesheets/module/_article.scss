@@ -189,7 +189,6 @@
 
 .article__standfirst {
     @include fs-headline(1, true);
-    text-rendering: optimizeLegibility;
     margin-bottom: $baseline*3;
     color: $c-neutral2;
 
