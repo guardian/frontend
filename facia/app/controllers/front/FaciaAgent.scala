@@ -180,6 +180,7 @@ object CollectionCache extends ParseCollection {
 
   def updateCollection(id: String, collection: Collection): Unit = collectionCache.send { _.updated(id, collection) }
 
+  def close(): Unit = collectionCache.close()
 }
 
 class Query(id: String, edition: Edition) extends ParseConfig with Logging {
