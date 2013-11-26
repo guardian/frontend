@@ -50,7 +50,7 @@ class QueryTest extends FlatSpec with Matchers with ScalaFutures {
   implicit val defaultPatience =
     PatienceConfig(timeout = Span(10, Seconds), interval = Span(500, Millis))
 
-  it should "start with minimal contents depending on id" in Fake {
+  ignore should "start with minimal contents depending on id" in Fake {
     def defaultTuple(id: String): (Config, Collection) =
       (Config("%s/%s".format(id, "regular-stories"), Some(ContentApi.FaciaDefaults.generateContentApiQuery(id)), None), Collection(Nil))
 
