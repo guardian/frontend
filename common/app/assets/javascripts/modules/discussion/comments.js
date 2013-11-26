@@ -116,7 +116,9 @@ Comments.prototype.ready = function() {
         }
 
         this.hideExcessReplies();
-        this.bindCommentEvents();
+        if (!this.isReadOnly()) {
+            this.bindCommentEvents();
+        }
         this.on('click', this.getClass('showReplies'), this.showMoreReplies);
     }
     this.emit('ready');
@@ -215,6 +217,13 @@ Comments.prototype.hideExcessReplies = function(comments) {
 };
 
 /**
+ * @return {Boolean}
+ */
+Comments.prototype.isReadOnly = function() {
+    return this.elem.getAttribute('data-read-only') === 'true';
+};
+
+/**
  * @param {Object} resp
  */
 Comments.prototype.commentsLoaded = function(resp) {
@@ -226,7 +235,9 @@ Comments.prototype.commentsLoaded = function(resp) {
         this.removeShowMoreButton();
     }
 
-    this.renderReplyButtons(qwery(this.getClass('comment'), bonzo(comments).parent()));
+    if (!this.isReadOnly()) {
+        this.renderReplyButtons(qwery(this.getClass('comment'), bonzo(comments).parent()));
+    }
     bonzo(this.getElem('comments')).append(comments);
 
     showMoreButton.innerHTML = 'Show more';
@@ -234,7 +245,10 @@ Comments.prototype.commentsLoaded = function(resp) {
 
     this.hideExcessReplies(comments);
 
-    RecommendComments.init(this.context);
+    if (!this.isReadOnly()) {
+        RecommendComments.init(this.context);
+
+    }
     this.emit('loaded');
 };
 

@@ -72,7 +72,9 @@ define([
     }
 
     function labelAs(trail, label) {
-        trail.setAttribute('data-link-name', trail.getAttribute('data-link-name') + ' | ' + label);
+        if (trail) {
+            trail.setAttribute('data-link-name', trail.getAttribute('data-link-name') + ' | ' + label);
+        }
     }
 
     function cloneHeader()  {

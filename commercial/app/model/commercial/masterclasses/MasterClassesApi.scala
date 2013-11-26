@@ -14,6 +14,10 @@ object MasterClassesApi extends JsonAdsApi[MasterClass] {
 
   override protected val loadTimeout = 20000
 
+  val adTypeName = "Masterclasses"
+
+  override protected val loadTimeout = 20000
+
   def extractEventsFromFeed(jsValue: JsValue) = jsValue \\ "event"
 
   def parse(json: JsValue) = {
