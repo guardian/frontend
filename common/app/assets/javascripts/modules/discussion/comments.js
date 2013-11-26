@@ -170,8 +170,9 @@ Comments.prototype.renderReplyButtons = function(comments) {
  */
 Comments.prototype.renderPickButtons = function (comments) {
     var actions,
-        self = this,
-        buttonText = "<div class='u-fauxlink d-comment__action d-comment__action--pick' 'role='button'></div>";
+        self        = this,
+        buttonText  = "<div class='u-fauxlink d-comment__action d-comment__action--pick' 'role='button'></div>",
+        sepText     = "<span class='d-comment__sep'>|</span>";
 
     comments = comments || self.comments;
 
@@ -181,7 +182,8 @@ Comments.prototype.renderPickButtons = function (comments) {
                 var button = bonzo(bonzo.create(buttonText))
                                 .text(e.getAttribute("data-comment-highlighted") !== "true" ? "Pick" : "Un-Pick");
                 button.data("thisComment", e);
-                $(self.getClass('commentActions'), e).append(button);
+                var sep = bonzo.create(sepText);
+                $(self.getClass('commentActions'), e).append([sep[0],button[0]]);
                 self.on('click', button, self.handlePickClick.bind(self));
             }
         });

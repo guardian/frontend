@@ -265,7 +265,14 @@
 .d-comment__recommend--user-recommended {
     background-color: #931c55;
 }
-
+.d-comment__sep {
+    display: inline-block;
+    color: $c-neutral2;
+    display: inline-block;
+    font-size: .85714285714em;
+    margin: 0 9px 0 6px;
+    cursor: normal;
+}
 
 /* Badges
    ========================================================================== */
