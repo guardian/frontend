@@ -169,7 +169,7 @@ Comments.prototype.renderPickButtons = function (comments) {
 
     if (self.user.is_staff) {
         comments.forEach(function (e) {
-            if (e.getAttribute("data-comment-highlighted") !== "true" && e.getAttribute("data-comment-author-id") !== self.user.userId) { // Nasty cast
+            if (e.getAttribute("data-comment-highlighted") !== "true" && e.getAttribute("data-comment-author-id") !== self.user.userId) {
                 actions = qwery(self.getClass('commentActions'), e)[0];
                 var pickButton = bonzo.create(pickButtonString);
                 self.on('click', pickButton, self.pickComment.bind(e));
