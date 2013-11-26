@@ -378,10 +378,10 @@ define([
                 try {
                     modules.runAbTests(config, context);
                     modules.transcludeRelated(config, context);
-                }
-                catch(error) {
+                } catch(error) {
                     // This catch ensures errors in AbTests and Related do not
                     // affect the likelihood of reaching the analytics load.
+                    mediator.emit('module:error', 'Failed to run ab tests or transclude related: ' + error, 'bootstraps/common');
                 }
             });
 
