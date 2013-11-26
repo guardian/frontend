@@ -36,7 +36,7 @@ define([
                 },
                 mobile: {
                     default: 2,
-                    news: 5,
+                    news: 6,
                     sport: 5,
                     comment: 3,
                     features: 3,

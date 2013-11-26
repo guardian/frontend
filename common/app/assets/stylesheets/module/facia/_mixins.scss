@@ -32,6 +32,37 @@ $item-top-border-height: 2px;
         }
     }
 }
+@mixin top-story-mobile {
+    .item__title {
+        @include fs-headline(3, $size-only: true);
+    }
+    .item__standfirst {
+        @include fs-headline(1, $size-only: true);
+        display: block;
+        margin-top: $baseline;
+        margin-bottom: 1em;
+    }
+    @include mq(mobileLandscape) {
+        .item__title {
+            @include fs-headline(4, $size-only: true);
+        }
+        .item__standfirst {
+            @include fs-headline(2, $size-only: true);
+        }
+    }
+    @include card-mobile-image;
+}
+@mixin first-story-mobile {
+    .item__title {
+        @include fs-headline(2, $size-only: true);
+        margin-bottom: 1em;
+    }
+    @include mq(mobileLandscape) {
+        .item__title {
+            @include fs-headline(3, $size-only: true);
+        }
+    }
+}
 @mixin card-mobile($with-image: false) {
     .item__title {
         @include fs-headline(3, $size-only: true);
