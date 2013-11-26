@@ -148,6 +148,9 @@ Comments.prototype.bindCommentEvents = function() {
     }
 };
 
+/**
+ * @param {NodeList} comments
+ */
 Comments.prototype.renderReplyButtons = function(comments) {
     var actions,
         self = this;
@@ -162,6 +165,9 @@ Comments.prototype.renderReplyButtons = function(comments) {
     });
 };
 
+/**
+ * @param {NodeList} comments
+ */
 Comments.prototype.renderPickButtons = function (comments) {
     var actions,
         self = this,
@@ -182,6 +188,9 @@ Comments.prototype.renderPickButtons = function (comments) {
     }
 };
 
+/**
+ * @param {Event} event
+ */
 Comments.prototype.handlePickClick = function (event) {
     event.preventDefault();
 
@@ -196,6 +205,11 @@ Comments.prototype.handlePickClick = function (event) {
         });
 };
 
+/**
+ * @param   {DOM Node}      thisComment
+ * @param   {Bonzo Node}    $thisButton
+ * @return  {Reqwest}       AJAX Promise
+ */
 Comments.prototype.pickComment = function (thisComment, $thisButton) {
     var self = this;
     return DiscussionApi
@@ -208,6 +222,11 @@ Comments.prototype.pickComment = function (thisComment, $thisButton) {
         });
 };
 
+/**
+ * @param   {DOM Node}      thisComment
+ * @param   {Bonzo Node}    $thisButton
+ * @return  {Reqwest}       AJAX Promise
+ */
 Comments.prototype.unPickComment = function (thisComment, $thisButton) {
     var self = this;
     return DiscussionApi
