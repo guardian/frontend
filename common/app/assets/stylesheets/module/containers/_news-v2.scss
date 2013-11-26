@@ -111,7 +111,7 @@ $metaHeight: 20px;
                 padding: $gs-baseline / 2 0
             ));
 
-            &:first-child {
+            &:nth-child(1) {
                 .item__link {
                     border-top-style: solid;
                 }
@@ -122,7 +122,7 @@ $metaHeight: 20px;
             .item__image-container {
                 display: none;
             }
-            @include when-no-image(':first-child') {
+            @include when-no-image(':nth-child(1)') {
                 .item__title {
                     @include fs-headline(9, true);
                 }
@@ -150,12 +150,12 @@ $metaHeight: 20px;
                     display: none;
                 }
             }
-            @include when-image(':first-child') {
+            @include when-image(':nth-child(2)') {
                 .item__image-container {
                     display: block;
                 }
             }
-            &:nth-child(n+2) {
+            &:nth-child(n+3) {
                 &:before {
                     @include rem((
                         left: -10px
@@ -167,7 +167,7 @@ $metaHeight: 20px;
                     ));
                 }
             }
-            &:nth-child(2) {
+            &:nth-child(3) {
                 @include nc-item(3, 6, 6, 0, $collection);
                 @include align-separator-with-tone-border;
 
@@ -175,19 +175,19 @@ $metaHeight: 20px;
                     @include fs-headline(2, true);
                 }
             }
-            @include when-image(':nth-child(2)') {
+            @include when-image(':nth-child(3)') {
                 .item__image-container {
                     display: block;
                 }
             }
-            @include when-no-image(':nth-child(2)') {
+            @include when-no-image(':nth-child(3)') {
                 .item__standfirst {
                     display: block;
                     padding-right: 0;
                 }
             }
-            &:nth-child(3),
-            &:nth-child(4) {
+            &:nth-child(4),
+            &:nth-child(5) {
                 @include nc-item(3, 4, 0, 8, $collection);
                 @include align-separator-with-tone-border;
 
@@ -198,20 +198,20 @@ $metaHeight: 20px;
                     @include fs-headline(3, true);
                 }
             }
-            @include when-no-image(':nth-child(3)') {
-                .item__standfirst {
-                    display: none;
-                }
-            }
             @include when-no-image(':nth-child(4)') {
                 .item__standfirst {
                     display: none;
                 }
             }
-            &:nth-child(4) {
+            @include when-no-image(':nth-child(5)') {
+                .item__standfirst {
+                    display: none;
+                }
+            }
+            &:nth-child(5) {
                 @include nc-position(3, 8);
             }
-            &:nth-child(n+5) {
+            &:nth-child(n+6) {
                 position: relative;
                 float: left;
                 @include rem((
@@ -229,25 +229,25 @@ $metaHeight: 20px;
                     margin-bottom: 0;
                 }
             }
-            &:nth-child(n+8) {
+            &:nth-child(n+9) {
                 @include rem((
                     width: gs-span(3),
                     height: gs-height(2)
                 ));
             }
-            &:nth-child(3n+8) {
+            &:nth-child(3n+9) {
                 clear: both;
                 @include rem((
                     margin-left: gs-span(6) * -1
                 ));
             }
-            &:nth-child(3n+9) {
+            &:nth-child(3n+10) {
                 clear: none;
                 @include rem((
                     margin-left: gs-span(3) * -1
                 ));
             }
-            &:nth-child(3n+10) {
+            &:nth-child(3n+11) {
                 clear: none;
                 @include rem((
                     margin-left: $gs-gutter
@@ -265,27 +265,27 @@ $metaHeight: 20px;
             .item__title {
                 @include fs-headline(4, true);
             }
-            &:nth-child(1) {
+            &:nth-child(2) {
                 @include nc-item(5, 10, 0, 0, $collection);
 
                 .item__standfirst {
                     display: block;
                 }
             }
-            @include when-image(':first-child') {
+            @include when-image(':nth-child(2)') {
                 .item__image-container {
                     display: block;
                 }
             }
-            &:nth-child(n+2) {
+            &:nth-child(n+3) {
                 &:before {
                     @include rem((
                         left: -10px
                     ));
                 }
             }
-            &:nth-child(2),
-            &:nth-child(3) {
+            &:nth-child(3),
+            &:nth-child(4) {
                 @include align-separator-with-tone-border;
 
                 .item__title {
@@ -295,34 +295,34 @@ $metaHeight: 20px;
                     ));
                 }
             }
-            &:nth-child(2) {
+            &:nth-child(3) {
                 @include nc-item(3, 6, 5, 0, $collection);
             }
-            @include when-image(':nth-child(2)') {
+            @include when-image(':nth-child(3)') {
                 .item__image-container {
                     display: block;
                 }
             }
-            @include when-no-image(':nth-child(2)') {
+            @include when-no-image(':nth-child(3)') {
                 .item__standfirst {
                     display: block;
                     padding-right: 0;
                 }
             }
             
-            &:nth-child(3) {
+            &:nth-child(4) {
                 @include nc-item(3, 4, 5, 6, $collection);
 
                 .item__title {
                     @include fs-headline(3, true);
                 }
             }
-            &:nth-child(n+3) {
+            &:nth-child(n+4) {
                 .item__standfirst {
                     display: none;
                 }
             }
-            &:nth-child(n+4) {
+            &:nth-child(n+5) {
                 position: relative;
                 float: left;
                 @include rem((
@@ -337,36 +337,36 @@ $metaHeight: 20px;
                     padding-right: 0;
                 }
             }
-            &:nth-child(3),
-            &:nth-child(8) {
+            &:nth-child(4),
+            &:nth-child(9) {
                 &:before {
                     height: auto;
                 }
             }
-            &:nth-child(n+9) {
+            &:nth-child(n+10) {
                 clear: none;
                 @include rem((
                     width: gs-span(3),
                     height: gs-height(3)
                 ));
             }
-            &:nth-child(4n+9) {
+            &:nth-child(4n+10) {
                 clear: both;
                 @include rem((
                     margin-left: gs-span(8) * -1
                 ));
             }
-            &:nth-child(4n+10) {
+            &:nth-child(4n+11) {
                 @include rem((
                     margin-left: gs-span(5) * -1
                 ));
             }
-            &:nth-child(4n+11) {
+            &:nth-child(4n+12) {
                 @include rem((
                     margin-left: gs-span(2) * -1
                 ));
             }
-            &:nth-child(4n+12) {
+            &:nth-child(4n+13) {
                 @include rem((
                     margin-left: $gs-gutter
                 ));
@@ -388,17 +388,17 @@ $metaHeight: 20px;
             .item__standfirst {
                 display: block;
             }
-            &:first-child {
+            &:nth-child(2) {
                 .item__title {
                     @include rem((margin-top: $baseline));
                 }
             }
-            @include when-image(':first-child') {
+            @include when-image(':nth-child(2)') {
                 .item__image-container {
                     display: block;
                 }
             }
-            @include when-no-image(':first-child') {
+            @include when-no-image(':nth-child(2)') {
                 .item__standfirst {
                     display: block;
                     @include rem((
@@ -406,20 +406,20 @@ $metaHeight: 20px;
                     ));
                 }
             }
-            &:nth-child(n+2) {
+            &:nth-child(n+3) {
                 &:before {
                     @include rem((
                         left: -10px
                     ));
                 }
             }
-            &:nth-child(2),
             &:nth-child(3),
-            &:nth-child(5) {
+            &:nth-child(4),
+            &:nth-child(6) {
                 @include align-separator-with-tone-border;
             }
-            &:nth-child(2),
-            &:nth-child(3) {
+            &:nth-child(3),
+            &:nth-child(4) {
                 @include nc-item(3, 6, 6, 0, $collection);
 
                 .item__title {
@@ -432,20 +432,14 @@ $metaHeight: 20px;
                     display: none;
                 }
             }
-            @include when-image(':nth-child(2)') {
-                .item__image-container {
-                    display: block;
-                }
-            }
             @include when-image(':nth-child(3)') {
                 .item__image-container {
                     display: block;
                 }
             }
-            @include when-no-image(':nth-child(2)') {
-                .item__standfirst {
+            @include when-image(':nth-child(4)') {
+                .item__image-container {
                     display: block;
-                    padding-right: 0;
                 }
             }
             @include when-no-image(':nth-child(3)') {
@@ -454,18 +448,24 @@ $metaHeight: 20px;
                     padding-right: 0;
                 }
             }
-
             @include when-no-image(':nth-child(4)') {
                 .item__standfirst {
                     display: block;
                     padding-right: 0;
                 }
             }
-            &:nth-child(3) {
+
+            @include when-no-image(':nth-child(5)') {
+                .item__standfirst {
+                    display: block;
+                    padding-right: 0;
+                }
+            }
+            &:nth-child(4) {
                 @include nc-position(9, 0);
             }
 
-            &:nth-child(4) {
+            &:nth-child(5) {
                 @include nc-item(6, 4, 6, 6, $collection);
 
                 .item__title {
@@ -482,7 +482,7 @@ $metaHeight: 20px;
                     ));
                 }
             }
-            &:nth-child(n+5) {
+            &:nth-child(n+6) {
                 position: relative;
                 float: left;
                 margin-top: 0;
@@ -501,34 +501,34 @@ $metaHeight: 20px;
                     display: none;
                 }
             }
-            @include when-no-image(':nth-child(n+5)') {
+            @include when-no-image(':nth-child(n+6)') {
                 .item__standfirst {
                     display: none;
                 }
             }
-            &:nth-child(n+10) {
+            &:nth-child(n+11) {
                 clear: none;
 
                 &:before { @include rem((top: 6px)); }
             }
-            &:nth-child(4n+10) {
+            &:nth-child(4n+11) {
                 clear: both;
 
                 @include rem((
                     margin-left: gs-span(12) * -1
                 ));
             }
-            &:nth-child(4n+11) {
+            &:nth-child(4n+12) {
                 @include rem((
                     margin-left: gs-span(8) * -1
                 ));
             }
-            &:nth-child(4n+12) {
+            &:nth-child(4n+13) {
                 @include rem((
                     margin-left: gs-span(4) * -1
                 ));
             }
-            &:nth-child(4n+13) {
+            &:nth-child(4n+14) {
                 @include rem((
                     margin-left: $gs-gutter
                 ));
