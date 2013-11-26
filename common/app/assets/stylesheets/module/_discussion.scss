@@ -107,13 +107,13 @@
 /* New Comment
    ===========================================================================*/
 .comment {
+    @include fs-data(5);
     display: block;
-    font-family: $sans-serif;
     position: relative;
 }
 
 .comment__datecreated {
-    @extend %type-12;
+    @include fs-data(2);
     display: block;
 }
 
@@ -162,7 +162,7 @@
 }
 
 .comments-link {
-    @extend %type-11;
+    @include fs-data(3);
     display: block;
     float: right;
     margin-top: -$baseline*4+2;
@@ -177,7 +177,7 @@
 /* Person
    ========================================================================== */
 .person {
-    @extend %type-8;
+    @include fs-data(4);
 }
 .person__avatar {
     border-radius: 50px;
@@ -317,7 +317,7 @@
 }
 
 .speech-bubble {
-    @include font($sans-serif, normal, 14, 14);
+    @include fs-data(4);
     position: relative;
     display: inline-block;
     min-height: 14px;
@@ -353,7 +353,7 @@
 .d-actions__link,
 .d-actions__link:hover,
 .d-actions__link:focus {
-    @extend %type-11;
+    @include fs-data(3);
     padding-right: $gutter*2;
     color: #808080;
     display: block;
@@ -372,7 +372,7 @@
 .d-show-cta,
 .d-show-cta:hover,
 .d-show-cta:focus {
-    @extend %type-6;
+    @include fs-data(5);
 
     background-color: $c-neutral7;
     color: $c-neutral1;
