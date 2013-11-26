@@ -251,8 +251,6 @@ trait ConfigAgent extends ExecutionContexts {
   }
 
   def close() = configAgent.close()
-
-  def apply(): List[String] = Nil
 }
 
 object ConfigAgent extends ConfigAgent
