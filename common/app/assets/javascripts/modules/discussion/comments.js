@@ -162,7 +162,8 @@ Comments.prototype.renderReplyButtons = function(comments) {
 
 Comments.prototype.renderPickButtons = function (comments) {
     var actions,
-        self = this;
+        self = this,
+        pickButtonString = "<a href='#' class='d-comment__action d-comment__action--pick' target='_blank'>Pick</a>";
 
     comments = comments || self.comments;
 
@@ -170,7 +171,7 @@ Comments.prototype.renderPickButtons = function (comments) {
         comments.forEach(function (e) {
             if (!!e.getAttribute("data-comment-highlighted") && e.getAttribute("data-comment-author-id") !== self.user.userId) { // Nasty cast
                 actions = qwery(self.getClass('commentActions'), e)[0];
-                var pickButton = bonzo.create(document.getElementById("tmpl-staff-pick-button").innerHTML);
+                var pickButton = bonzo.create(pickButtonString);
                 self.on('click', pickButton, self.pickComment.bind(e));
                 $(actions).append(pickButton);
             }
@@ -190,7 +191,7 @@ Comments.prototype.pickComment = function (event) {
             $('.d-comment__inner', thisComment).prepend(pickLabel); // add label
             $('.d-comment__recommend', thisComment).addClass('d-comment__recommend--left'); // shift recommends
             $(event.target).addClass('u-h'); // hide pick button
-            $(thisComment).setAttribute("data-comment-highlighted", true);
+            thisComment.setAttribute("data-comment-highlighted", true);
         })
         .fail(function (resp) {
             $(event.target).text(JSON.parse(resp.response).message);
