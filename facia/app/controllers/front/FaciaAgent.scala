@@ -186,18 +186,12 @@ object CollectionCache extends ParseCollection {
 class Query(id: String, edition: Edition) extends ParseConfig with Logging {
   val queryAgent = AkkaAgent[Option[List[Config]]](Option(List(FaciaDefaults.configTuple(id))))
 
-  def getItems: Future[List[Config]] =
-    getConfig(id) fallbackTo {
-      log.warn("Error getting config from S3: %s".format(id))
-      val result: List[Config] = queryAgent().getOrElse(Nil)
-      Future.successful(result)
-    }
-
-  def refresh(): Unit =
-    getItems map { newConfigList =>
-      queryAgent send Some(newConfigList)
-      val isWarmedUp = items.isDefined
-      newConfigList map {c => c -> CollectionCache.updateCollection(c.id, c, edition, isWarmedUp)}
+  def refresh(): Unit = {
+    ConfigAgent.getConfigForId(id) map { configList =>
+      configList map { config =>
+        val isWarmedUp = items.isDefined
+        CollectionCache.updateCollection(config.id, config, edition, isWarmedUp)
+      }
     }
 
 
