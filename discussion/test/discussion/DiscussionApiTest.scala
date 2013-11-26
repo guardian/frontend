@@ -10,7 +10,7 @@ class DiscussionApiTest extends FreeSpec {
 
 
   "Should do GET request on correct URL for topComments " in {
-    val expectedUrl: String = "/discussion/aKey/topcomments?pageSize=50&page=1&orderBy=newest&showSwitches=true"
+    val expectedUrl: String = "/discussion/p/3tycg/topcomments?pageSize=50&page=1&orderBy=newest&showSwitches=true"
 
     val discussionApi = new DiscussionApi {
       protected def GET(url: String, headers: (String, String)*): Future[Response] = {
@@ -21,11 +21,11 @@ class DiscussionApiTest extends FreeSpec {
       protected val apiRoot: String = ""
     }
 
-    Await.ready(discussionApi.topCommentsFor("aKey", "1"), 2 seconds)
+    Await.ready(discussionApi.topCommentsFor("p/3tycg", "1"), 2 seconds)
   }
 
   "Should do GET request on correct URL for comments " in {
-    val expectedUrl: String = "/discussion/aKey?pageSize=50&page=1&orderBy=newest&showSwitches=true"
+    val expectedUrl: String = "/discussion/p/3tycg?pageSize=50&page=1&orderBy=newest&showSwitches=true"
 
     val discussionApi = new DiscussionApi {
       protected def GET(url: String, headers: (String, String)*): Future[Response] = {
@@ -36,7 +36,7 @@ class DiscussionApiTest extends FreeSpec {
       protected val apiRoot: String = ""
     }
 
-    Await.ready(discussionApi.commentsFor("aKey", "1"), 2 seconds)
+    Await.ready(discussionApi.commentsFor("p/3tycg", "1"), 2 seconds)
   }
 
 

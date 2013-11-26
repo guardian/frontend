@@ -12,17 +12,14 @@ class WsHttp(val httpTimingMetric: TimingMetric, val httpTimeoutMetric: CountMet
                                                                                               with ExecutionContexts {
 
   import System.currentTimeMillis
-  import Configuration.hostMachine
-  import java.net.URLEncoder.encode
 
   override def GET(url: String, headers: Iterable[(String, String)]) = {
-    val urlWithHost = url + s"&host-name=${encode(hostMachine.name, "UTF-8")}"
 
     val contentApiTimeout = Configuration.contentApi.timeout
 
     val start = currentTimeMillis
 
-    val response = WS.url(urlWithHost).withHeaders(headers.toSeq: _*).withRequestTimeout(contentApiTimeout).get()
+    val response = WS.url(url).withHeaders(headers.toSeq: _*).withRequestTimeout(contentApiTimeout).get()
 
     // record metrics
     response.onSuccess {
