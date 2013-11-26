@@ -322,6 +322,10 @@ $metaHeight: 20px;
                     display: none;
                 }
             }
+            &:nth-child(3),
+            &:nth-child(5) {
+                @include align-separator-with-tone-border;
+            }
             &:nth-child(n+5) {
                 position: relative;
                 float: left;
@@ -334,12 +338,6 @@ $metaHeight: 20px;
                 .item__title {
                     @include fs-headline(10, true);
                     padding-right: 0;
-                }
-            }
-            &:nth-child(4),
-            &:nth-child(9) {
-                &:before {
-                    height: auto;
                 }
             }
             &:nth-child(n+10) {
@@ -455,7 +453,6 @@ $metaHeight: 20px;
                     padding-right: 0;
                 }
             }
-
             @include when-no-image(':nth-child(5)') {
                 .item__standfirst {
                     display: block;
@@ -465,7 +462,6 @@ $metaHeight: 20px;
             &:nth-child(4) {
                 @include nc-position(9, 0);
             }
-
             &:nth-child(5) {
                 @include nc-item(6, 4, 6, 6, $collection);
 
