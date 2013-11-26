@@ -29,7 +29,11 @@ Cta.prototype.prerender = function() {
     var comments = $('.comment', this.elem),
         comment = comments[Math.floor(Math.random() * comments.length) + 0];
 
-    this.elem = comment;
+    if (comments.length === 0) {
+        this.destroy();
+    } else {
+        this.elem = comment;
+    }
 };
 
 /** @override */

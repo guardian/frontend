@@ -51,7 +51,7 @@ object ArticleController extends Controller with Logging with ExecutionContexts 
 
   private def lookup(path: String)(implicit request: RequestHeader): Future[Either[ArticleWithStoryPackage, SimpleResult]] = {
     val edition = Edition(request)
-    log.info(s"Fetching article: $path for edition ${edition.id}")
+    log.info(s"Fetching article: $path for edition ${edition.id}: ${RequestLog(request)}")
     val response: Future[ItemResponse] = SwitchingContentApi().item(path, edition)
       .showExpired(true)
       .showTags("all")

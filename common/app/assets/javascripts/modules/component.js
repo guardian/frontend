@@ -49,6 +49,9 @@ define([
     /** @type {boolean} */
     Component.prototype.rendered = false;
 
+    /** @type {boolean} */
+    Component.prototype.destroyed = false;
+
     /** @type {Object.<string.Element>} */
     Component.prototype.elems = null;
 
@@ -125,8 +128,11 @@ define([
             function render(resp) {
                 self.elem = bonzo.create(resp.html)[0];
                 self._prerender();
-                bonzo(parent).append(self.elem);
-                self._ready();
+
+                if (!self.destroyed) {
+                    bonzo(parent).append(self.elem);
+                    self._ready();
+                }
             }
         );
     };
@@ -144,8 +150,10 @@ define([
      * This is just used to set up the component internally
      */
     Component.prototype._ready = function() {
-        this.rendered = true;
-        this.ready();
+        if (!this.destroyed) {
+            this.rendered = true;
+            this.ready();
+        }
     };
 
     /**
@@ -283,7 +291,10 @@ define([
      */
     Component.prototype.destroy = function() {
         this.detach();
-        bonzo(this.elem).remove();
+        if (this.elem) {
+            bonzo(this.elem).remove();
+        }
+        this.destroyed = true;
     };
 
     /**

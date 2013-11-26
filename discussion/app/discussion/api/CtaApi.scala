@@ -14,13 +14,11 @@ trait CtaApi extends Http {
   def getTopComments(key: DiscussionKey): Future[List[Comment]] = {
     val ctaUrl: String = s"$ctaApiRoot/cta/article/${key.keyAsString}"
     def onError(r: Response) = s"Error loading CallToAction, status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
-    def getFirstComment = (ctaJson: JsValue) => ((ctaJson \\ "components")(0) \\ "comments")(0)(0)
-
-
-
     def getComments(json: JsValue): List[Comment] = {
-      val commentListJson: List[JsValue] = (((json \ "components")(0) \\ "comments")(0)).as[List[JsValue]]
-      commentListJson.map(json => Comment(json))
+      for {
+        component <- (json \ "components").as[List[JsValue]]
+        comment <- (component \ "comments").as[List[JsValue]]
+      } yield Comment(comment)
     }
 
     getJsonOrError(ctaUrl, onError) map getComments
