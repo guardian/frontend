@@ -184,7 +184,6 @@ object CollectionCache extends ParseCollection {
 }
 
 class Query(id: String, edition: Edition) extends ParseConfig with Logging {
-  val queryAgent = AkkaAgent[Option[List[Config]]](Option(List(FaciaDefaults.configTuple(id))))
 
   def refresh(): Unit = {
     ConfigAgent.getConfigForId(id) map { configList =>
@@ -193,6 +192,7 @@ class Query(id: String, edition: Edition) extends ParseConfig with Logging {
         CollectionCache.updateCollection(config.id, config, edition, isWarmedUp)
       }
     }
+  }
 
   def items = ConfigAgent.getConfigForId(id).map { configList => configList flatMap { config =>
       CollectionCache.getCollection(config.id) map { (config, _) }
