@@ -148,10 +148,9 @@ define([
                         }),
                         $openCtaElem = $('.open-cta');
 
-                    if ($('.main-image').length === 0) {
-                        $openCtaElem.addClass('open-cta--no-image');
+                    if ($openCtaElem[0]) {
+                        openCta.fetch($openCtaElem[0]);
                     }
-                    openCta.fetch($openCtaElem[0]);
                 }
             });
         }
