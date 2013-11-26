@@ -410,6 +410,9 @@ module.exports = function (grunt) {
             },
             facia: {
                 src: ['integration-tests/casper/tests/facia/*.spec.js']
+            },
+            open: {
+                src: ['integration-tests/casper/tests/open/*.spec.js']
             }
         },
 

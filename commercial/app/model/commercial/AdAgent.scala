@@ -12,7 +12,7 @@ trait AdAgent[T <: Ad] {
 
   private lazy val agent = AkkaAgent[Seq[T]](Nil)
 
-  protected def currentAds: Seq[T] = agent()
+  def currentAds: Seq[T] = agent()
 
   protected def updateCurrentAds(ads: Seq[T]) = agent send ads
 

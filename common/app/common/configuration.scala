@@ -165,6 +165,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val apiClientHeader = configuration.getMandatoryStringProperty("discussion.apiClientHeader")
   }
 
+  object open {
+    lazy val ctaApiRoot = configuration.getMandatoryStringProperty("open.cta.apiRoot")
+  }
+
   object javascript {
     // This is config that is avaliable to both Javascript and Scala
     // But does not change across environments

@@ -28,8 +28,10 @@ object SoulmatesAggregatingAgent {
 
 }
 
-abstract class SoulmatesAgent(protected val membersLoaded: Future[Seq[Member]])
-  extends AdAgent[Member] with ExecutionContexts {
+trait SoulmatesAgent extends AdAgent[Member] with ExecutionContexts {
+
+  protected def membersLoaded: Future[Seq[Member]]
+
   def refresh() {
     for {
       members <- membersLoaded
@@ -37,6 +39,10 @@ abstract class SoulmatesAgent(protected val membersLoaded: Future[Seq[Member]])
   }
 }
 
-object SoulmatesMenAgent extends SoulmatesAgent(SoulmatesApi.getMenMembers)
+object SoulmatesMenAgent extends SoulmatesAgent {
+  protected def membersLoaded = SoulmatesApi.getMenMembers
+}
 
-object SoulmatesWomenAgent extends SoulmatesAgent(SoulmatesApi.getWomenMembers)
+object SoulmatesWomenAgent extends SoulmatesAgent {
+  protected def membersLoaded = SoulmatesApi.getWomenMembers
+}

@@ -20,9 +20,11 @@ object Cached extends Results {
     val expiresTime = now + seconds.seconds
     val maxAge = if (DoubleCacheTimesSwitch.isSwitchedOn) seconds * 2 else seconds
 
+    // NOTE, if you change these headers make sure they are compatible with our Edge Cache
+
     // see http://tools.ietf.org/html/rfc5861 for definitions of these headers
     result.withHeaders(
-      "Cache-Control" -> s"max-age=$maxAge, s-maxage=$maxAge, stale-while-revalidate=$maxAge, stale-if-error=345600",
+      "Cache-Control" -> s"max-age=$maxAge",
       "Expires" -> expiresTime.toHttpDateTimeString,
       "Date" -> now.toHttpDateTimeString
     )
