@@ -51,7 +51,9 @@ Comments.CONFIG = {
 
         comment: 'd-comment',
         commentActions: 'd-comment__actions__main',
-        commentReply: 'd-comment__action--reply'
+        commentReply: 'd-comment__action--reply',
+        commentPick: 'd-comment__pick',
+        commentRecommend: 'd-comment__recommend'
     }
 };
 
@@ -163,38 +165,58 @@ Comments.prototype.renderReplyButtons = function(comments) {
 Comments.prototype.renderPickButtons = function (comments) {
     var actions,
         self = this,
-        pickButtonString = "<a href='#' class='d-comment__action d-comment__action--pick' target='_blank'>Pick</a>";
+        buttonText = "<div class='u-fauxlink d-comment__action d-comment__action--pick' 'role='button'></div>";
 
     comments = comments || self.comments;
 
     if (self.user.is_staff) {
         comments.forEach(function (e) {
-            if (e.getAttribute("data-comment-highlighted") !== "true" && e.getAttribute("data-comment-author-id") !== self.user.userId) {
-                actions = qwery(self.getClass('commentActions'), e)[0];
-                var pickButton = bonzo.create(pickButtonString);
-                self.on('click', pickButton, self.pickComment.bind(e));
-                $(actions).append(pickButton);
+            if (e.getAttribute("data-comment-author-id") !== self.user.userId) {
+                var button = bonzo(bonzo.create(buttonText))
+                                .text(e.getAttribute("data-comment-highlighted") !== "true" ? "Pick" : "Un-Pick");
+                button.data("thisComment", e);
+                $(self.getClass('commentActions'), e).append(button);
+                self.on('click', button, self.handlePickClick.bind(self));
             }
         });
     }
 };
 
-Comments.prototype.pickComment = function (event) {
+Comments.prototype.handlePickClick = function (event) {
     event.preventDefault();
-    
-    var thisComment = this,
-        pickLabel   = bonzo.create("<div class='d-comment__pick i i-guardian-picks'><span class='u-h'>Guardian pick</span></div>");
 
-    DiscussionApi
+    var thisComment = bonzo(event.target).data("thisComment"),
+        $thisButton = $(event.target),
+        promise = thisComment.getAttribute("data-comment-highlighted") === "true" ? this.unPickComment.bind(this) : this.pickComment.bind(this);
+
+    promise(thisComment, $thisButton)
+        .fail(function (resp) {
+            var t = resp.response.length > 0 ? JSON.parse(resp.response).message : resp.statusText;
+            $(event.target).text(t);
+        });
+};
+
+Comments.prototype.pickComment = function (thisComment, $thisButton) {
+    var self = this;
+    return DiscussionApi
         .pickComment(thisComment.getAttribute("data-comment-id"))
         .then(function () {
-            $('.d-comment__inner', thisComment).prepend(pickLabel); // add label
-            $('.d-comment__recommend', thisComment).addClass('d-comment__recommend--left'); // shift recommends
-            $(event.target).addClass('u-h'); // hide pick button
+            $(self.getClass('commentPick'), thisComment).removeClass('u-h');
+            $(self.getClass('commentRecommend'), thisComment).addClass("d-comment__recommend--left");
+            $thisButton.text('Un-pick');
             thisComment.setAttribute("data-comment-highlighted", true);
-        })
-        .fail(function (resp) {
-            $(event.target).text(JSON.parse(resp.response).message);
+        });
+};
+
+Comments.prototype.unPickComment = function (thisComment, $thisButton) {
+    var self = this;
+    return DiscussionApi
+        .unPickComment(thisComment.getAttribute("data-comment-id"))
+        .then(function () {
+            $(self.getClass('commentPick'), thisComment).addClass('u-h');
+            $(self.getClass('commentRecommend'), thisComment).removeClass("d-comment__recommend--left");
+            $thisButton.text('Pick');
+            thisComment.setAttribute("data-comment-highlighted", false);
         });
 };
 
