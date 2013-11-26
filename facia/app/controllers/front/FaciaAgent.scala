@@ -227,11 +227,16 @@ trait ConfigAgent extends ExecutionContexts {
 
   def refresh() = S3FrontsApi.getMasterConfig map {s => configAgent.send(Json.parse(s))}
 
-  def getConfigForId(id: String): List[Config] = {
+  def getPathIds: List[String] = {
+    val json = configAgent.get()
+    (json \ "fronts").asOpt[Map[String, JsValue]].map { _.keys.toList } getOrElse Nil
+  }
+
+  def getConfigForId(id: String): Option[List[Config]] = {
     val json = configAgent.get()
     (json \ "fronts" \ id \ "collections").asOpt[List[String]] map { configList =>
       configList flatMap getConfig
-    } getOrElse Nil
+    }
   }
 
   def getConfig(id: String): Option[Config] = {
