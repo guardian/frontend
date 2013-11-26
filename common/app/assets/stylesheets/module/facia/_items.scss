@@ -223,8 +223,11 @@ $c-live: #e81818;
         padding-left: 14px;
 
         i {
-            top: 3px;
             left: 0;
+            top: 3px;
+            @include mq(tablet) {
+                top: 2px;
+            }
         }
     }
     .trail__count {
