@@ -203,7 +203,7 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
         faciaPageOption map { faciaPage =>
           Cached(frontPage) {
             if (request.isJson) {
-              val collection = faciaPage.copy(collections = faciaPage.collections.filter(t => t._1.id == id.dropRight(5)))
+              val collection = faciaPage.copy(collections = faciaPage.collections.filter(t => t._1.id == id))
               val html = views.html.fragments.frontBody(frontPage, collection)
               JsonComponent(
                 "html" -> html,
