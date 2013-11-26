@@ -142,13 +142,13 @@ define([
             });
         },
 
-        initHighlightsPanel: function() {
+        initHighlightsPanel: function(config) {
             mediator.on('modules:sequence:loaded', function(data){
                 if(data !== null) {
                     var h = new HighlightPanel(data, mediator);
                 }
             });
-            sequence.init();
+            sequence.init('/' + config.page.pageId);
         }
     };
 
@@ -161,7 +161,7 @@ define([
             modules.initDiscussion();
             modules.initCricket();
             modules.externalLinksCards();
-            modules.initHighlightsPanel();
+            modules.initHighlightsPanel(config);
         }
         common.mediator.emit("page:article:ready", config, context);
     };

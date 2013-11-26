@@ -66,5 +66,17 @@ define(['utils/mediator', 'utils/ajax', 'modules/onward/sequence'], function(med
 
         });
 
+        it("should remove current page from sequence", function(){
+
+            runs(function() {
+                sequence.init("/p/3k44f");
+            });
+
+            waitsFor(function () {
+                return sequenceLoadedCallback.calledWith([{url: "/p/3k4vt"},{url: "/p/3k44b"}]);
+            }, 'sequence did not remove current page from sequence', 500);
+
+        });
+
     });
 });

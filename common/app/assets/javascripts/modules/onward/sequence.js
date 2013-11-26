@@ -15,6 +15,7 @@ define([
     ){
 
     var context,
+        currentPageId,
         store = storage.session,
         sequence = [],
         prefixes = {
@@ -40,7 +41,7 @@ define([
             return i.id;
         });
         return _filter(sequence, function(item) {
-            return history.indexOf(item.url) < 0;
+            return history.indexOf(item.url) < 0 && item.url !== currentPageId;
         });
     }
 
@@ -67,12 +68,14 @@ define([
         });
     }
 
-    function init() {
+    function init(id) {
         var context = getContext();
+        currentPageId = id;
+
         if(context !== null) {
             loadSequence(context);
         } else {
-            mediator.emit('modules:sequence:loaded', getSequence());
+            mediator.emit('modules:sequence:loaded', dedupeSequence(getSequence()));
         }
         bindListeners();
     }
