@@ -83,10 +83,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val connection = configuration.getMandatoryStringProperty("mongo.connection.readonly.password")
   }
 
-  object hostMachine {
-    lazy val name = InetAddress.getLocalHost.getHostName
-  }
-
   object site {
     lazy val host = configuration.getStringProperty("guardian.page.host").getOrElse("")
   }
@@ -163,6 +159,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   object discussion {
     lazy val apiRoot = configuration.getMandatoryStringProperty("discussion.apiRoot")
     lazy val apiClientHeader = configuration.getMandatoryStringProperty("discussion.apiClientHeader")
+  }
+
+  object open {
+    lazy val ctaApiRoot = configuration.getMandatoryStringProperty("open.cta.apiRoot")
   }
 
   object javascript {
