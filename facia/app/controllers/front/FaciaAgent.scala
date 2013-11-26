@@ -194,10 +194,7 @@ class Query(id: String, edition: Edition) extends ParseConfig with Logging {
       }
     }
 
-
-  def close() = queryAgent.close()
-
-  def items = queryAgent().map { configList => configList flatMap { config =>
+  def items = ConfigAgent.getConfigForId(id).map { configList => configList flatMap { config =>
       CollectionCache.getCollection(config.id) map { (config, _) }
     }
   } filter(_.exists(_._2.items.nonEmpty))
@@ -211,8 +208,6 @@ class PageFront(val id: String, edition: Edition) {
   val query = Query(id, edition)
 
   def refresh() = query.refresh()
-  def close() = query.close()
-
   def apply(): Option[FaciaPage] = query.items.map(FaciaPage(id, _))
 }
 
