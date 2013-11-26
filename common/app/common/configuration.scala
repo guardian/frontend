@@ -3,7 +3,6 @@ package common
 import com.gu.conf.ConfigurationFactory
 import com.gu.management.{ Manifest => ManifestFile }
 import com.amazonaws.auth.{ BasicAWSCredentials, AWSCredentials }
-import java.net.InetAddress
 import play.api.Play
 import play.api.Play.current
 import java.io.{FileInputStream, File}
@@ -144,6 +143,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object oas {
     lazy val siteIdHost = configuration.getStringProperty("oas.siteId.host").getOrElse(".guardian.co.uk")
+    lazy val url = configuration.getStringProperty("oas.url").getOrElse("http://oas.theguardian.com/RealMedia/ads/")
   }
 
   object facebook {
