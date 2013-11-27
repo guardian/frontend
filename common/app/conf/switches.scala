@@ -246,11 +246,11 @@ object Switches extends Collections {
     safeState = Off)
 
   val ABShowMoreLayout = Switch("A/B Tests", "ab-show-more-layout",
-    "If this is switched on an AB test runs that's repeats initial layout of a collection when clicking 'show more'",
+    "If this is switched on an AB test runs that presents the 'show more' layout of a collection",
     safeState = Off)
 
   val ABOnwardIntrusive = Switch("A/B Tests", "ab-onward-intrusive",
-    "If this is switched on an AB test runs that's repeats initial layout of a collection when clicking 'show more'",
+    "If this is switched on an AB test runs to test intrusive onward components",
     safeState = Off)
 
   // Sport Switch
