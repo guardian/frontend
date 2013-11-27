@@ -175,7 +175,7 @@ object CollectionCache extends ParseCollection {
   def getCollection(id: String): Option[Collection] = collectionCache.get().get(id)
 
   def updateCollection(id: String, config: Config, edition: Edition, isWarmedUp: Boolean): Unit = {
-    getCollection(id, config, edition, isWarmedUp) map { collection => updateCollection(id, collection) }
+    getCollection(id, config, edition, isWarmedUp) foreach { collection => updateCollection(id, collection) }
   }
 
   def updateCollection(id: String, collection: Collection): Unit = collectionCache.send { _.updated(id, collection) }
