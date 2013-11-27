@@ -60,7 +60,6 @@ module.exports = function (grunt) {
                         swipeview:    "components/swipeview/src/swipeview",
                         lodash:       "components/lodash-amd/modern",
                         imager:       'components/imager.js/src/strategies/container',
-                        component:    "components/component/component",
                         omniture:     '../../public/javascripts/vendor/omniture'
                     },
                     shim: {
@@ -411,6 +410,9 @@ module.exports = function (grunt) {
             },
             facia: {
                 src: ['integration-tests/casper/tests/facia/*.spec.js']
+            },
+            open: {
+                src: ['integration-tests/casper/tests/open/*.spec.js']
             }
         },
 
@@ -449,7 +451,7 @@ module.exports = function (grunt) {
             options: {
                 bucket: 'aws-frontend-store',
                 access: 'public-read',
-                encodePaths: true,
+                //encodePaths: true,
                 gzip: true
             },
             screenshots: {

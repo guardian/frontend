@@ -13,7 +13,6 @@
         "swipe": "guardian/Swipe",
         "swipeview": "guardian/SwipeView",
         "imager.js": "oncletom/Imager.js#feature-separation",
-        "lodash-amd": "2.2.1",
-        "component": "guardian/component#0.0.1"
+        "lodash-amd": "2.2.1"
     }
 }

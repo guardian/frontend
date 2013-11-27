@@ -1,9 +1,9 @@
-package model.diagnostics
+package model.diagnostics.viewability
 
 import common.Logging
 import com.google.common.util.concurrent.AtomicDouble
 
-abstract class Advert extends Logging {
+abstract class Metric extends Logging {
 
   private lazy val seconds = new AtomicDouble()  
   private lazy val counter = new AtomicDouble()  
@@ -33,5 +33,9 @@ abstract class Advert extends Logging {
   }
 }
 
-object Top extends Advert
-object Bottom extends Advert
+object Top extends model.diagnostics.viewability.Metric
+object Bottom extends model.diagnostics.viewability.Metric
+object Inline extends model.diagnostics.viewability.Metric
+object MPU extends model.diagnostics.viewability.Metric
+object firstView extends model.diagnostics.viewability.Metric
+

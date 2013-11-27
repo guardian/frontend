@@ -15,7 +15,7 @@ define([
 ) {
 
     var Sticky = function (options) {
-        var offset = (detect.getLayoutMode() === 'extended') ? '400' : 0;
+        var offset = (detect.getBreakpoint() === 'wide') ? '400' : 0;
         this.options = extend(this.DEFAULTS, options);
         this.el = this.options.context.getElementsByClassName(this.options.elCls)[0];
         this.$el = bonzo(this.el);

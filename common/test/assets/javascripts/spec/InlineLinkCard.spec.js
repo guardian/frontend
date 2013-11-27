@@ -78,7 +78,7 @@ define([
         it('Should include passed data into placeholders', function() {
             new InlineLinkCard(linkToCardify, linkContext).prependCard(href, pageconfig.data);
 
-            expect(document.querySelector('.card__body a').getAttribute('href')).toBe(href);
+            expect(document.querySelector('.card__action').getAttribute('href')).toBe(href);
             expect(document.querySelector('.card__media').src).toBe(pageconfig.data.image);
             expect(document.querySelector('.card__headline').innerHTML).toContain(pageconfig.data.title);
             expect(document.querySelector('.card .dateline').innerHTML).toContain(pageconfig.data.published_time);

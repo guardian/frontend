@@ -1,15 +1,13 @@
 package model.commercial.travel
 
 import org.scalatest.Matchers
-import scala.concurrent.{Await, Future}
 import common.ExecutionContexts
-import scala.concurrent.duration._
 import org.scalatest.FlatSpec
 import scala.xml.XML
 
 class OffersApiTest extends FlatSpec with Matchers with ExecutionContexts {
 
-  val xml = Future(XML.loadString {
+  val xml = XML.loadString {
     """
       |<guardianholidayoffers>
       |<offers count="273" generated="15-Oct-2013 13:59:37">
@@ -184,10 +182,10 @@ class OffersApiTest extends FlatSpec with Matchers with ExecutionContexts {
       |</offers>
       |</guardianholidayoffers>
     """.stripMargin
-  })
+  }
 
   "OffersApi" should "build Offers from XML" in {
-    val offers = Await.result(OffersApi.getAllOffers(xml), atMost = 1.seconds)
+    val offers = OffersApi.parse(xml)
     offers should be(Fixtures.untaggedOffers)
   }
 
