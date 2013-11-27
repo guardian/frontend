@@ -451,7 +451,7 @@ module.exports = function (grunt) {
             options: {
                 bucket: 'aws-frontend-store',
                 access: 'public-read',
-                encodePaths: true,
+                //encodePaths: true,
                 gzip: true
             },
             screenshots: {

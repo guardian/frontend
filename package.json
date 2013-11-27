@@ -7,7 +7,7 @@
     "grunt-css-metrics": "~0.1.1",
     "grunt-env": "git://github.com/smlgbl/grunt-env.git",
     "grunt-casperjs": "git://github.com/guardian/grunt-casperjs.git#upgrade",
-    "grunt-s3": "~0.2.0-alpha.2",
+    "grunt-s3": "~0.2.0-alpha.3",
     "grunt-mkdir": "~0.1.1",
     "grunt-hash": "git://github.com/guardian/grunt-hash.git#master",
     "grunt-webfontjson": "~0.0.3",
