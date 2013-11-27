@@ -23,9 +23,8 @@ function(
     Message
 ) {
 
-    function AutoSignin(config, context) {
+    function AutoSignin(config) {
         this.config = config;
-        this.context = context;
         var self = this;
         self.header = document.body;
 
