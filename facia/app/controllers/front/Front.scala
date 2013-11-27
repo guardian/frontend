@@ -14,11 +14,11 @@ class Front extends Logging {
 
   def configList: List[(Edition, String)] = Edition.all.map(e => (e, e.id)).toList ++ ConfigAgent.getPathIds.map(c => (Edition.defaultEdition, c))
 
-  def faciaFronts: Map[String, PageFront] = configList.map {case (e, id) =>
-    id.toLowerCase -> new PageFront(id.toLowerCase, e)
+  def faciaFronts: Map[String, Query] = configList.map {case (e, id) =>
+    id.toLowerCase -> new Query(id.toLowerCase, e)
   }.toMap
 
-  val pageFrontAgent = AkkaAgent[Map[String, PageFront]](FaciaDefaults.getDefaultPageFront)
+  val pageFrontAgent = AkkaAgent[Map[String, Query]](FaciaDefaults.getDefaultPageFront)
 
   def refreshPageFrontAgent() = {
     val newFronts = faciaFronts
@@ -39,8 +39,8 @@ class Front extends Logging {
 
   def apply(path: String): Option[FaciaPage] = pageFrontAgent().get(path).flatMap(pageFront => pageFront())
 
-  def hasItems(pageFronts: Iterable[PageFront]): Boolean = pageFronts.exists( pageFront =>
-    pageFront.apply().exists( faciaPage =>
+  def hasItems(pageFronts: Iterable[Query]): Boolean = pageFronts.exists( query =>
+    query.apply().exists( faciaPage =>
       faciaPage.collections.map(_._2).exists( collection =>
         collection.items.nonEmpty
       )

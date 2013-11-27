@@ -26,7 +26,7 @@ trait FaciaDefaults {
 
   def getDefaultSetup: List[(Config, Collection)] = defaultIds.map (id => (createConfig(id), emptyCollection))
 
-  def getDefaultPageFront: Map[String, PageFront] = defaultIds.map(id => (id, new PageFront(id, getEdition(id)))).toMap
+  def getDefaultPageFront: Map[String, Query] = defaultIds.map(id => (id, Query(id, getEdition(id)))).toMap
 
 }
 

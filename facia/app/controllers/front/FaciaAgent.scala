@@ -189,7 +189,7 @@ object CollectionCache extends ParseCollection {
   def close(): Unit = collectionCache.close()
 }
 
-class Query(id: String, edition: Edition) extends ParseConfig with Logging {
+class Query(val id: String, edition: Edition) extends ParseConfig with Logging {
 
   def refresh(): Unit = {
     ConfigAgent.getConfigForId(id) map { configList =>
@@ -204,17 +204,12 @@ class Query(id: String, edition: Edition) extends ParseConfig with Logging {
       CollectionCache.getCollection(config.id) map { (config, _) }
     }
   } filter(_.exists(_._2.items.nonEmpty))
+
+  def apply(): Option[FaciaPage] = items.map(FaciaPage(id, _))
 }
 
 object Query {
   def apply(id: String, edition: Edition): Query = new Query(id, edition)
-}
-
-class PageFront(val id: String, edition: Edition) {
-  val query = Query(id, edition)
-
-  def refresh() = query.refresh()
-  def apply(): Option[FaciaPage] = query.items.map(FaciaPage(id, _))
 }
 
 trait ConfigAgent extends ExecutionContexts {
