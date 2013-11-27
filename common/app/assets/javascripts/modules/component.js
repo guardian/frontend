@@ -259,13 +259,6 @@ define([
     };
 
     /**
-     * @return {Object}
-     */
-    Component.prototype.conf = function() {
-        return this.constructor.CONFIG;
-    };
-
-    /**
      * @param {Object} options
      */
     Component.prototype.setOptions = function(options) {
