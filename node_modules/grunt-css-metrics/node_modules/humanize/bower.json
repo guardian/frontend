@@ -1,0 +1,8 @@
+{
+  "name": "humanize",
+  "version": "0.0.9",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/taijinlee/humanize"
+  }
+}

@@ -36,7 +36,6 @@ tags
 
 local.sbt
 
-node_modules
 screenshots
 
 common/conf/assets
@@ -48,3 +47,6 @@ integration-tests/target/*
 developer.properties
 
 *-spec-runner.html
+
+node_modules/grunt-casperjs
+node_modules/grunt-contrib-imagemin
