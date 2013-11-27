@@ -183,6 +183,7 @@ object CollectionCache extends ParseCollection {
   def updateCollectionById(id: String): Unit = {
     val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(id, None, None))
     val edition = Edition.byId(id.take(2)).getOrElse(Edition.defaultEdition)
+    //TODO: Refactor isWarmedUp into method by ID
     updateCollection(id, config, edition, isWarmedUp=true)
   }
 
@@ -191,7 +192,7 @@ object CollectionCache extends ParseCollection {
 
 object QueryAgents {
 
-  def items(id: String) = ConfigAgent.getConfigForId(id).map { configList => configList flatMap { config =>
+  def items(id: String): Option[List[(Config, Collection)]] = ConfigAgent.getConfigForId(id).map { configList => configList flatMap { config =>
       CollectionCache.getCollection(config.id) map { (config, _) }
     }
   } filter(_.exists(_._2.items.nonEmpty))
