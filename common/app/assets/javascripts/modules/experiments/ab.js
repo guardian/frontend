@@ -9,7 +9,9 @@ define([
     'modules/experiments/tests/commercial-components',
     'modules/experiments/tests/story-package-question',
     'modules/experiments/tests/initial-show-more',
-    'modules/experiments/tests/show-more-layout'
+    'modules/experiments/tests/show-more-layout',
+    'modules/experiments/tests/mobile-facebook-autosignin'
+
 ], function (
     common,
     store,
@@ -20,7 +22,8 @@ define([
     CommercialComponentsTest,
     StoryPackageQuestion,
     InitialShowMore,
-    ShowMoreLayout
+    ShowMoreLayout,
+    MobileFacebookAutosignin
     ) {
 
     var TESTS = [
@@ -30,7 +33,8 @@ define([
             new CommercialComponentsTest(),
             new StoryPackageQuestion(),
             new InitialShowMore(),
-            new ShowMoreLayout()
+            new ShowMoreLayout(),
+            new MobileFacebookAutosignin()
         ],
         participationsKey = 'gu.ab.participations';
 
