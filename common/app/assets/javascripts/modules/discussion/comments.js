@@ -184,8 +184,8 @@ Comments.prototype.handlePickClick = function (event) {
 
     promise(thisComment, $thisButton)
         .fail(function (resp) {
-            var t = resp.response.length > 0 ? JSON.parse(resp.response).message : resp.statusText;
-            $(event.target).text(t);
+            var responseText = resp.response.length > 0 ? JSON.parse(resp.response).message : resp.statusText;
+            $(event.target).text(responseText);
         });
 };
 
