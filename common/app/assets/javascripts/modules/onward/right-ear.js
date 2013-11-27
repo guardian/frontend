@@ -8,9 +8,8 @@ define([
     Component
 ) {
 
-function RightEar(sequence, mediator, options) {
+function RightEar(sequence, options) {
     this.context = document;
-    this.mediator = mediator;
     this.sequenceItem = sequence[0];
     this.setOptions(options);
 }

@@ -241,15 +241,15 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to test re-ordering story packages",
     safeState = Off)
 
-  val ABOnwardRightEar= Switch("A/B Tests", "ab-onward-right-ear",
-    "If this is switched on an AB test runs to test right-ear onward component",
-    safeState = Off)
-
   val ABInitialShowMore = Switch("A/B Tests", "ab-initial-show-more",
     "If this is switched on an AB test runs to test how many items to initially show in news container",
     safeState = Off)
 
   val ABShowMoreLayout = Switch("A/B Tests", "ab-show-more-layout",
+    "If this is switched on an AB test runs that's repeats initial layout of a collection when clicking 'show more'",
+    safeState = Off)
+
+  val ABOnwardIntrusive = Switch("A/B Tests", "ab-onward-intrusive",
     "If this is switched on an AB test runs that's repeats initial layout of a collection when clicking 'show more'",
     safeState = Off)
 
@@ -335,7 +335,7 @@ object Switches extends Collections {
     EditionRedirectLoggingSwitch,
     FacebookAutoSigninSwitch,
     ABImproveOnwardTrails,
-    ABOnwardRightEar,
+    ABOnwardIntrusive,
     ABInitialShowMore,
     AdDwellTimeLoggerSwitch,
     ABShowMoreLayout
