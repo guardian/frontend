@@ -410,6 +410,9 @@ module.exports = function (grunt) {
             },
             facia: {
                 src: ['integration-tests/casper/tests/facia/*.spec.js']
+            },
+            open: {
+                src: ['integration-tests/casper/tests/open/*.spec.js']
             }
         },
 
@@ -448,7 +451,7 @@ module.exports = function (grunt) {
             options: {
                 bucket: 'aws-frontend-store',
                 access: 'public-read',
-                encodePaths: true,
+                //encodePaths: true,
                 gzip: true
             },
             screenshots: {

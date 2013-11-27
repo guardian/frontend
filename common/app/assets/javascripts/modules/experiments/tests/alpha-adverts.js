@@ -52,7 +52,7 @@ define([
         var startTime = new Date().getTime(),
             $trackedAdSlots = common.$g('.ad-slot'),
             firstRun = true;
-       
+        
         // a timer to submit the data to diagnostics every nth second
         if (config.switches.liveStats) {
             var beaconInterval = setInterval(function() {
@@ -65,7 +65,7 @@ define([
                     adDwellTimes.first = 1;
                 }
 
-                adDwellTimes.layout = detect.getLayoutMode();
+                adDwellTimes.layout = detect.getBreakpoint();
                 adDwellTimes.variant = variant;
 
                 new LiveStatsAds({
@@ -86,7 +86,9 @@ define([
 
         // a timer to monitor the pages for ad-slots inside the viewport
         var adTrackInterval = setInterval(function() {
-            var viewport = detect.getLayoutMode();
+            var viewport = detect.getBreakpoint();
+            // NOTE:  getLayoutMode used to return 'extended' for 'wide'; this makes it backwards compatible
+            viewport = (viewport === 'wide') ? 'extended' : viewport;
             $trackedAdSlots.each(function(adEl) {
                 var adId = adEl.getAttribute('data-inview-name') || adEl.getAttribute('data-' + viewport) || '';
                 if (adId && isVisible(adEl)) {
@@ -161,7 +163,7 @@ define([
                 test: function(context, isBoth) {
                     variantName = 'Adhesive';
                     guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha2.com';
-                    var viewport = detect.getLayoutMode(),
+                    var viewport = detect.getBreakpoint(),
                         inviewName,
                         s;
                     if(viewport === 'mobile' || viewport === 'tablet' && detect.getOrientation() === 'portrait') {
@@ -176,7 +178,7 @@ define([
                         }
                     } else {
                         inviewName = 'MPU';
-                        document.getElementsByClassName('js-mpu-ad-slot')[0].appendChild(bonzo.create(mpuTemp)[0]);
+                        bonzo(qwery('.js-mpu-ad-slot .social-wrapper')).after(bonzo.create(mpuTemp)[0]);
                         bonzo(qwery('.ad-slot--mpu-banner-ad')).attr('data-inview-name', inviewName);
                         if(!supportsSticky && supportsFixed) {
                             s = new Sticky({

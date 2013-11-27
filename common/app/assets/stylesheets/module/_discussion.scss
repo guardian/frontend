@@ -93,6 +93,90 @@
     @include d-comment__body;
 }
 
+.d-discussion[data-read-only="true"] .sign-in-required {
+    display: none; /* Not the most performant, but it happens so rarely */
+}
+
+/* New Comment
+   ===========================================================================*/
+.comment {
+    @include fs-data(5);
+    display: block;
+    position: relative;
+}
+
+.comment__datecreated {
+    @include fs-data(2);
+    display: block;
+}
+
+.comment--speechy {
+    border: none;
+    padding: 0 0 $baseline*10 0;
+
+    .comment__inner {
+        @include box-sizing(border-box);
+        background-color: $c-neutral7;
+        display: inline-block;
+        padding: $baseline*2 $gs-gutter/2 $baseline*3 $gs-gutter/2;
+        position: relative;
+        width: 100%;
+
+        &:before { // Pointer (equilateral triangle)
+            top: 100%;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+            border-color: rgba($c-neutral7, 0);
+            border-top-color: $c-neutral7;
+            border-width: 30px;
+            left: 23px ;
+            margin-left: -30px;
+        }
+
+        &:after { // Mask (right-skewed parellelogram)
+            @include transform(skew(-10deg));
+            background-color: #ffffff;
+            content: " ";
+            height: 24px;
+            left: -5px;
+            position: absolute;
+            pointer-events: none;
+            top: 100%;
+            width: 24px;
+        }
+    }
+}
+
+.comments-link {
+    @include fs-data(3);
+    display: block;
+    float: right;
+    margin-top: -$baseline*4+2;
+
+    .i {
+        margin-left: 4px;
+        position: relative;
+        top: 2px;
+    }
+}
+
+/* Person
+   ========================================================================== */
+.person {
+    @include fs-data(4);
+}
+.person__avatar {
+    @include rounded-corners(50px);
+    float: left;
+    height: 36px;
+    margin-right: 15px;
+    overflow: hidden;
+    width: 36px;
+}
 
 /* Header
    ========================================================================== */
@@ -212,14 +296,14 @@
     width: 1px;
 }
 .speech-bubble {
-    @include font($sans-serif, normal, 14, 14);
+    @include fs-data(4);
+    @include rounded-corners(4px);
     position: relative;
     display: inline-block;
     min-height: 14px;
     min-width: 17px;
     padding: .275em .6em .375em;
     border: 0;
-    border-radius: 4px;
     text-align: center;
     color: white;
 
@@ -248,7 +332,7 @@
 .d-actions__link,
 .d-actions__link:hover,
 .d-actions__link:focus {
-    @extend %type-11;
+    @include fs-data(3);
     padding-right: $gutter*2;
     color: #808080;
     display: block;
@@ -266,7 +350,8 @@
 .d-show-cta,
 .d-show-cta:hover,
 .d-show-cta:focus {
-    @extend %type-6;
+    @include fs-data(5);
+
     background-color: $c-neutral7;
     color: $c-neutral1;
     display: block;
@@ -425,7 +510,9 @@ $topCommentsHeight: 600px;
                 left: 23px ;
                 margin-left: -30px;
             }
-            &:after { // Mask (right-skewed parallelogram)
+
+            &:after { // Mask (right-skewed parellelogram)
+                @include transform(skew(-10deg));
                 top: 100%;
                 content: " ";
                 height: 24px;
@@ -434,10 +521,6 @@ $topCommentsHeight: 600px;
                 pointer-events: none;
                 background-color: #ffffff;
                 left: -5px;
-                -webkit-transform: skew(-10deg);
-                   -moz-transform: skew(-10deg); 
-                     -o-transform: skew(-10deg); 
-                        transform: skew(-10deg); 
             }
             .d-comment__main {
                 padding-top: 36px;
@@ -504,4 +587,8 @@ $topCommentsHeight: 600px;
             }
         }
     }
+}
+
+.open-cta {
+    margin-top: $baseline*8;
 }

@@ -1,10 +1,18 @@
-// Helpers
+// =============================================================================
+// Grid system
+// =============================================================================
+// gs- prefixes stand for Grid System
+
+// Configuration
 $gs-gutter: 20px;
 $gs-baseline: 12px;
 $gs-column-width: 60px;
 $gs-column-height: 36px;
 $gs-max-columns: 16;
 
+
+// Helpers
+// =============================================================================
 
 @function gs-span($n-columns) {
     @return $n-columns * $gs-column-width + $gs-gutter * ($n-columns - 1);
@@ -22,7 +30,10 @@ $gs-max-columns: 16;
     }
 }
 
-// Output grid system
+
+// Output grid system helper classes
+// =============================================================================
+
 @mixin grid-system {
     .gs-container {
         @include gs-container;

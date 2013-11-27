@@ -111,7 +111,7 @@ class CommentBoxControllerTest extends FlatSpec with Matchers {
   }
 
   object FakeApi extends DiscussionApi {
-    protected def GET(url: String, headers: (String, String)*): Future[Response] = null
+    override protected def GET(url: String, headers: (String, String)*): Future[Response] = null
     protected val apiRoot: String = ""
     protected val clientHeaderValue: String = ""
 
