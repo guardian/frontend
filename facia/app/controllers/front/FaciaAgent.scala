@@ -182,7 +182,7 @@ object CollectionCache extends ParseCollection {
 
   def updateCollectionById(id: String): Unit = {
     val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(id, None, None))
-    val edition = Edition.byId(id).getOrElse(Edition.defaultEdition)
+    val edition = Edition.byId(id.take(2)).getOrElse(Edition.defaultEdition)
     updateCollection(id, config, edition, isWarmedUp=true)
   }
 
