@@ -7,7 +7,7 @@ Requirements
 Set-up
 ------
 
-    $ npm install -g grunt-cli
+    $ npm install
 
 Development
 -----------
