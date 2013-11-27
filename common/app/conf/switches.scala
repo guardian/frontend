@@ -238,7 +238,7 @@ object Switches extends Collections {
     safeState = Off)
 
   val ABMobileFacebookIdentityAutoSignin = Switch("A/B Tests", "ab-mobile-facebook-autosignin",
-    "If this is switched on an AB test runs to test facebook autosignin for facebook users",
+    "If this is switched on an AB test runs to test facebook autosignin for mobile users",
    safeState = Off)
 
   val ABImproveOnwardTrails = Switch("A/B Tests", "ab-improve-onward-trails",
