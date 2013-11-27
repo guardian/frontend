@@ -24,7 +24,7 @@ npm install karma-firefox-launcher --save-dev
 // karma.conf.js
 module.exports = function(config) {
   config.set({
-    browsers: ['Firefox'],
+    browsers: ['Firefox', 'FirefoxAurora', 'FirefoxNightly'],
   });
 };
 ```

@@ -37,7 +37,8 @@ module.exports = function(config) {
           settings: {
             webSecurityEnabled: false
           }
-        }
+        },
+        flags: ['--remote-debugger-port=9000']
       }
     }
   });

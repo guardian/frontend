@@ -34,12 +34,12 @@ Default: `∞`
 
 Maximum CSS file size in bytes
 
-### maxRules
+### maxSelectors
 
-Type: `Boolean`
+Type: `Number`
 Default: `∞`
 
-Maximum number of rules within CSS file. (Note: IE selector limit is 4096)
+Maximum number of selectors within CSS file. (Note: IE selector limit is 4096)
 
 ## Examples
 
@@ -89,7 +89,7 @@ cssmetrics: {
         ],
         options: {
             quiet: false,
-            maxRules: 4096,
+            maxSelectors: 4096,
             maxFileSize: 10240000
         }
     }

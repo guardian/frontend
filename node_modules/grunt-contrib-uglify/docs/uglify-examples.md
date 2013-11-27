@@ -191,3 +191,22 @@ grunt.initConfig({
   }
 });
 ```
+## Compiling all files in a folder dynamically
+
+This configuration will compress and mangle the files dynamically.
+
+```js
+// Project configuration.
+grunt.initConfig({
+  uglify: {
+    my_target: {
+      files: [{
+          expand: true,
+          cwd: 'src/js',
+          src: '**/*.js',
+          dest: 'dest/js'
+      }]
+    }
+  }
+});
+```

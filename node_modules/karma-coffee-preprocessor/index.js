@@ -28,7 +28,7 @@ var createCoffeePreprocessor = function(args, config, logger, helper) {
     try {
       result = coffee.compile(content, opts);
     } catch (e) {
-      log.error('%s\n  at %s', e.message, file.originalPath);
+      log.error('%s\n  at %s:%d', e.message, file.originalPath, e.location.first_line);
       return;
     }
 

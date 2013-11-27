@@ -11,7 +11,7 @@ module.exports = function(grunt) {
                 ],
                 options: {
                     quiet: false,
-                    maxRules: 4000,
+                    maxSelectors: 4000,
                     maxFileSize: 1024000000
                 }
             }

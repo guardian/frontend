@@ -83,7 +83,7 @@ function removeLeadingSlash(filename) {
 function encodeSpecialCharacters(filename) {
   // Note: these characters are valid in URIs, but S3 does not like them for
   // some reason.
-  return filename.replace(/[!'()* ]/g, function (char) {
+  return encodeURI(filename).replace(/[!'()* ]/g, function (char) {
     return '%' + char.charCodeAt(0).toString(16);
   });
 }
@@ -170,7 +170,7 @@ function autoDetermineStyle(options) {
  */
 
 function getCopyHeaders(sourceBucket, sourceFilename, headers) {
-  sourceFilename = ensureLeadingSlash(sourceFilename);
+  sourceFilename = encodeSpecialCharacters(ensureLeadingSlash(sourceFilename));
   headers = utils.merge({
     Expect: '100-continue'
   }, headers || {});
@@ -682,13 +682,14 @@ function xmlEscape(string) {
     .replace(/"/g, '&quot;');
 }
 
-function makeDeleteXmlString(keys) {
+function makeDeleteXmlBuffer(keys) {
     var tags = keys.map(function(key){
       return '<Object><Key>' +
         xmlEscape(removeLeadingSlash(key)) +
         '</Key></Object>';
     });
-    return '<Delete>' + tags.join('') + '</Delete>';
+    return new Buffer('<?xml version="1.0" encoding="UTF-8"?>' +
+      '<Delete>' + tags.join('') + '</Delete>', 'utf8');
 }
 
 /**
@@ -712,7 +713,7 @@ Client.prototype.deleteMultiple = function(filenames, headers, fn){
     headers = {};
   }
 
-  var xml = makeDeleteXmlString(filenames);
+  var xml = makeDeleteXmlBuffer(filenames);
 
   headers['Content-Length'] = xml.length;
   headers['Content-MD5'] = crypto.createHash('md5').update(xml).digest('base64');

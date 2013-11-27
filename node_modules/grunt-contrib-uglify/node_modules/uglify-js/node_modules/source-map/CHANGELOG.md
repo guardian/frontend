@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.1.31
+
+* Delay parsing the mappings in SourceMapConsumer until queried for a source
+  location.
+
+* Support Sass source maps (which at the time of writing deviate from the spec
+  in small ways) in SourceMapConsumer.
+
 ## 0.1.30
 
 * Do not join source root with a source, when the source is a data URI.
