@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <style>
+        .MyriadPro {
+            font-family: "WebFont-MyriadPro", monospace;
+        }
+        .MyriadProBold {
+            font-family: "WebFont-MyriadPro", monospace;
+            font-weight: bold;
+        }
+
+        </style>
+
+        <script>
+
+        function requestFonts() {
+            var script = document.createElement('script');
+            script.src = 'MyriadPro.otf.json';
+            document.head.appendChild(script);
+        }
+
+        function myCallback(fonts) {
+            var style = document.createElement('style');
+            style.innerHTML = fonts.css;
+            document.head.appendChild(style);
+        }
+
+        window.addEventListener('load', function() {
+            requestFonts();
+        }, false);
+            
+        </script>
+
+    </head>
+    <body>
+    
+        <p class="MyriadPro">Hello, sample text.</p>
+        <p class="MyriadProBold">Hello, in bold</p>
+
+    </body>
+</html>

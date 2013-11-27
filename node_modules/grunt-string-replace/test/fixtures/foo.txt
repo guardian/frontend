@@ -1,0 +1,19 @@
+Replace string
+[test:string] === replaced!
+[test:string] === not replaced!
+
+Replace RegEx, not global
+[test a:regex 001] === replaced!
+[test a:regex 002] === not replaced!
+
+Replace RegEx, global
+[test b:regex 003] === replaced!
+[test b:regex 004] === replaced!
+
+Replace RegEx, case sensitive
+[test c:regex 005] === replaced!
+[test C:regex 006] === not replaced!
+
+Replace RegEx, case insensitive
+[test d:regex 005] === replaced!
+[test D:regex 006] === replaced!

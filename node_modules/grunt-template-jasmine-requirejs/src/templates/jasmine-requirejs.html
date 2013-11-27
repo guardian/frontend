@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Jasmine Spec Runner</title>
+
+  <% css.forEach(function(style){ %>
+  <link rel="stylesheet" type="text/css" href="<%= style %>">
+  <% }) %>
+
+  <script src="<%= temp %>/require.js"></script>
+  <script>
+    require.onError = function(error) {
+      var message = error.requireType + ': ';
+      if (error.requireType === 'scripterror' || error.requireType === 'notloaded' && error.requireModules) {
+        message += 'Illegal path or script error: ' + '[\'' + error.requireModules.join("', '") + '\']';
+      } else {
+        message += error.message;
+      }
+
+      throw Error(message);
+    };
+  </script>
+
+  <% with (scripts) { %>
+  <% [].concat(jasmine, vendor, helpers).forEach(function(script){ %>
+  <script src="<%= script %>"></script>
+  <% }) %>
+  <% }; %>
+
+  <script>
+    <% if (options.mainRequireConfig) { %>
+      require.config(<%= serializeRequireConfig(options.mainRequireConfig) %>);
+    <% } %>
+
+    <% var hasCallback = false;
+       if (options.requireConfig) {
+        if ('callback' in options.requireConfig) {
+            /* Inserting launchTest() as the last statement in callback function
+               to make sure spec is called after all initialization stuffs */
+
+            // capture the arguments and body fo callback function
+            options.requireConfig['callback'].toString().replace(/^function\s+\w*\(([^\)]*)\)\s*\{((?:.|[\n\r])*)}/m, function(match, args, body) {
+                var being_recreated_function = [];
+                if (args.length > 0) {
+                    args = args.split(/,\s*/);
+                    being_recreated_function = being_recreated_function.concat(args);
+                }
+                // append launchTest() to the end of function body
+                body += '\nlaunchTest();';
+
+                being_recreated_function = being_recreated_function.concat(body);
+
+                // recreate an anonymouse function with modified body
+                // re-assign callback property by just created new function
+                // (return value dosen't matter)
+                options.requireConfig['callback'] = Function.apply(this, being_recreated_function);
+                hasCallback = true;
+            });
+        }
+    %>
+      require.config(<%= serializeRequireConfig(options.requireConfig) %>);
+    <% } %>
+  </script>
+
+  <script>
+    function launchTest() {
+    require([
+      <% scripts.src.forEach(function(script, i){ %>
+        <% script = script.replace(/\\/g, '/') // replace all backward slashes to forward slash %>
+        '<%= script %>' <%= i < scripts.src.length-1 ? ',' : '' %>
+      <% }) %>
+    ],
+    function(){
+      require(['<%= [].concat(scripts.specs,scripts.reporters).join("','") %>'], function(){
+        require(['<%= scripts.start.join("','") %>'], function(){
+          // good to go! Our tests should already be running.
+        })
+      })
+    }
+    )
+  }
+  </script>
+
+  <% if (!hasCallback) { %>
+  <script>
+  launchTest();
+  </script>
+  <% } %>
+</head>
+<body>
+</body>
+</html>
