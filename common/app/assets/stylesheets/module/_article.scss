@@ -154,10 +154,12 @@
         display: inline-block;
         width: 80%;
     }
-
     i {
-        vertical-align: top;
         position: relative;
+        top: 1px;
+    }
+    .relative-timestamp__icon {
+        vertical-align: top;
         top: 3px;
     }
 
@@ -321,7 +323,7 @@ video {
         top: 0;
         width: $gs-column-width - 1px;
         height: $gs-column-height - 1px;
-        padding: $baseline 0 0 $gutter/4;
+        padding: $baseline - 1px 0 0 $gutter/4;
         border-left: 1px dotted $c-neutral5;
     }
 }
