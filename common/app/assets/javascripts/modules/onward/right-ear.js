@@ -16,7 +16,7 @@ Component.define(RightEar);
 
 RightEar.CONFIG = {
     templateName: 'right-ear',
-    componentClass: 'd-right-ear',
+    componentClass: 'right-ear',
     useBem: true
 };
 

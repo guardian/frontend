@@ -1,58 +1,60 @@
 /* ==========================================================================
    Onward Right-Ear
    ========================================================================== */
-.d-right-ear {
+.right-ear {
     position: fixed;
     top: 50%;
     right: 0;
     opacity: 0.7;
-    padding: 6px 6px 6px 80px;
-    height: 96px;
-    width: 300px;
+    padding: 6px 6px 6px gs-span(1) + $gs-gutter;
+    height: gs-height(2) + $gs-baseline;
+    width: gs-span(4);
     @include box-sizing(border-box);
 
     background: $c-neutral1;
     background:
       -webkit-linear-gradient(45deg,  transparent 6px, $c-neutral1 6px),
-      -webkit-linear-gradient(135deg,  transparent 6px, $c-neutral1 6px);
+      -webkit-linear-gradient(135deg, transparent 6px, $c-neutral1 6px);
     background:
       -moz-linear-gradient(45deg,  transparent 6px, $c-neutral1 6px),
-      -moz-linear-gradient(135deg,  transparent 6px, $c-neutral1 6px);
+      -moz-linear-gradient(135deg, transparent 6px, $c-neutral1 6px);
     background:
       linear-gradient(45deg,  transparent 6px, $c-neutral1 6px),
-      linear-gradient(135deg,  transparent 6px, $c-neutral1 6px);
+      linear-gradient(135deg, transparent 6px, $c-neutral1 6px);
 
     background-position: bottom left, top left;
     background-repeat: no-repeat;
     @include background-size(100% 50%);
 
-    -webkit-transition: -webkit-transform 0.3s ease-out, opacity 0.5s ease-out;
-    -moz-transition: -moz-transform 0.3s ease-out, opacity 0.5s ease-out;
-    transition: -ms-transform 0.3s ease-out, opacity 0.5s ease-out;
-    transition: transform 0.3s ease-out, opacity 0.5s ease-out;
+    $transition-timing: .3s ease-out, opacity .2s linear .2s;
 
-    @include transform(translateX(220px));
+    -webkit-transition: -webkit-transform $transition-timing;
+    -moz-transition: -moz-transform $transition-timing;
+    transition: -ms-transform $transition-timing;
+    transition: transform $transition-timing;
+
+    @include transform(translateX(gs-span(3)));
 }
 
-.d-right-ear__arrow {
-    margin: $baseline*3 0 0 $baseline*3;
+.right-ear__arrow {
+    margin: 12px 0 0 12px;
     position: absolute;
     left: 0;
     top: 0;
 }
 
-.d-right-ear__link {
-    width: 214px;
-    height: 84px;
-    color: white;
+.right-ear__link {
+    width: gs-span(3) - 6px;
+    height: gs-height(2);
     display: block;
 }
 
-.d-right-ear__headline {
+.right-ear__link,
+.right-ear__headline {
     color: white;
 }
 
-.d-right-ear--expanded {
+.right-ear--expanded {
     @include transform(translateX(0));
     opacity: 1;
 }
