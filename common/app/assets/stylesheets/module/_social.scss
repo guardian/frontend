@@ -5,6 +5,9 @@
         max-width: gs-span(4);
         overflow: hidden;
     }
+    .social-wrapper--aside {
+        padding-top: 0;
+    }
     .social__item {
         float: left;
         width: 60px;
@@ -15,6 +18,10 @@
         i {
             display: block;
         }
+    }
+    .sticky-upper--social {
+        position: relative;
+        top: $baseline * -4;
     }
 }
 @mixin socialDelayed {
