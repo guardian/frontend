@@ -1,25 +1,40 @@
-// Set baseline font size to 10px
-// This is used as a baseline for rem (root ems) values
-html {
-    font-size: 62.5%;
-    font-size: (10/16)*1em;
-    font-family: $serif;
-}
+/* ==========================================================================
+   Global typography settings
+   ========================================================================== */
 
-// Bump font-size back up to 16px
+/* Root base
+   ========================================================================== */
+
+html {
+    font-family: $serif;
+    font-size: 62.5%; // Set baseline font size to 10px
+                      // This is used as a baseline for rem (root ems) values
+}
 body {
     color: #545454;
-    font-size: 1.6em;
+    font-size: 1.6em; // Bump font-size back up to 16px
     line-height: 1.4;
 }
 
-// Base headings
+
+/* Base headings
+   ========================================================================== */
+
 h1, h2, h3, h4, h5, h6 {
     color: #333333;
     font-family: $serif;
     margin: 0;
     text-rendering: optimizeLegibility;
 }
+
+
+/* Type helpers
+   ========================================================================== */
+
+/**
+ * DEPRECATED:
+ * Use font-scale mixins instead
+ */
 
 .type-2 { @extend %type-2; }
 
@@ -34,25 +49,24 @@ h1, h2, h3, h4, h5, h6 {
 .type-11 { @extend %type-11; }
 .type-12 { @extend %type-12; }
 
+
+/* Default type elements
+   ========================================================================== */
+
 blockquote {
     margin: 0;
 }
-
-// Default type elements
 p {
     margin-top: 0;
     margin-bottom: $baseline*2;
 }
-
 h1 {
     @extend %type-1;
 }
-
 h3 {
     margin-bottom: 7px;
     @extend %type-6;
 }
-
 th,
 td {
     @extend %type-10;
