@@ -12,32 +12,13 @@ class Front extends Logging {
     if (editions.contains(sectionId)) "" else sectionId
   }
 
-  def configList: List[(Edition, String)] = Edition.all.map(e => (e, e.id)).toList ++ ConfigAgent.getPathIds.map(c => (Edition.defaultEdition, c))
-
-  def faciaFronts: Map[String, Query] = configList.map {case (e, id) =>
-    id.toLowerCase -> new Query(id.toLowerCase, e)
-  }.toMap
-
-  val pageFrontAgent = AkkaAgent[Map[String, Query]](FaciaDefaults.getDefaultPageFront)
-
-  def refreshPageFrontAgent() = {
-    val newFronts = faciaFronts
-    pageFrontAgent.send{ oldValue =>
-      val newFrontsFiltered = newFronts.filterNot {
-        case (id, pageFront) => oldValue.contains(id)
-      }
-      oldValue ++ newFrontsFiltered
-    }
-  }
-
   def refresh() = refreshJobs().foreach(_())
 
   def refreshJobs() = Seq(() => {
-      ConfigAgent.refresh()
-      refreshPageFrontAgent()}
+      ConfigAgent.refresh()}
   ) ++ ConfigAgent.getAllCollectionIds.map{ collectionId => () => CollectionCache.updateCollectionById(collectionId) }
 
-  def apply(path: String): Option[FaciaPage] = pageFrontAgent().get(path).flatMap(pageFront => pageFront())
+  def apply(path: String): Option[FaciaPage] = QueryAgents(path)
 
 }
 

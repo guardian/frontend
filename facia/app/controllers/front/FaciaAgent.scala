@@ -189,18 +189,14 @@ object CollectionCache extends ParseCollection {
   def close(): Unit = collectionCache.close()
 }
 
-class Query(val id: String, edition: Edition) extends Logging {
+object QueryAgents {
 
-  def items = ConfigAgent.getConfigForId(id).map { configList => configList flatMap { config =>
+  def items(id: String) = ConfigAgent.getConfigForId(id).map { configList => configList flatMap { config =>
       CollectionCache.getCollection(config.id) map { (config, _) }
     }
   } filter(_.exists(_._2.items.nonEmpty))
 
-  def apply(): Option[FaciaPage] = items.map(FaciaPage(id, _))
-}
-
-object Query {
-  def apply(id: String, edition: Edition): Query = new Query(id, edition)
+  def apply(id: String): Option[FaciaPage] = items(id).map(FaciaPage(id, _))
 }
 
 trait ConfigAgent extends ExecutionContexts {
