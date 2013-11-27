@@ -31,6 +31,10 @@
     }
 }
 
+
+// Font Helpers
+// =============================================================================
+
 @mixin font-size($size, $line-height: $size) {
     @include rem((
         font-size: $size,
@@ -45,8 +49,9 @@
     @include font-size($size, $line-height);
 }
 
-// -----------------------------------------------------------------------------
+
 // Font Scale
+// =============================================================================
 
 // Prefixes:
 // f- stands for Font: use to set a font-family only
