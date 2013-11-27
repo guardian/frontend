@@ -1,5 +1,5 @@
 define([
-    "modules/utils/detect",
+    "utils/detect",
     "modules/identity/autosignin"],
  function(
    Detect,
@@ -13,7 +13,7 @@ define([
          this.audience = 0.2;
          this.description = 'Performs an facebook autosignin on mobile where the user has alreadyg accepted the guardian facebook app';
          this.canRun = function(config) {
-             return config.switches && config.switches.facebookAutosignin && Detect.getLa0youtMode() === 'mobile';
+             return config.switches && config.switches.facebookAutosignin && Detect.getBreakpoint() === 'mobile';
          };
          this.variants = [
              {
