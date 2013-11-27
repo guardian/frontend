@@ -20,7 +20,7 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
 
   def commentCounts(ids: String): Future[Seq[CommentCount]] = {
     def onError(response: Response) =
-      s"Error loading comment count ids: $ids status: ${response.status} message: ${response.statusText}"
+      s"Discussion API: Error loading comment count ids: $ids status: ${response.status} message: ${response.statusText}"
     val apiUrl = s"$apiRoot/getCommentCounts?short-urls=$ids"
 
     getJsonOrError(apiUrl, onError) map {
@@ -34,7 +34,7 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
 
   private def getJsonForUri(key: DiscussionKey, apiUrl: String): Future[CommentPage] = {
     def onError(r: Response) =
-      s"Error loading comments id: $key status: ${r.status} message: ${r.statusText}"
+      s"Discussion API: Error loading comments id: $key status: ${r.status} message: ${r.statusText}"
 
     getJsonOrError(apiUrl, onError) map {
       json =>
@@ -74,13 +74,25 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
     getJsonForUri(key, s"$apiRoot/discussion/$key/topcomments?pageSize=${getPageSize(pageSize)}&page=$page&orderBy=newest&showSwitches=true")
   }
 
+  def commentContext(id: Int, pageSize: String = ""): Future[(DiscussionKey, Int)] = {
+    def onError(r: Response) =
+      s"Discussion API: Cannot load comment context, status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
+
+    val apiUrl = s"$apiRoot/comment/$id/context?pageSize=${getPageSize(pageSize)}"
+
+    getJsonOrError(apiUrl, onError) map {
+      json =>
+        (DiscussionKey((json \ "discussionKey").as[String]), (json \ "page").as[Int])
+    }
+  }
+
   private def getPageSize(pageSize: String): String = {
     if (pageSize != "") pageSize else if (ShortDiscussionSwitch.isSwitchedOn) "10" else "50"
   }
 
   def myProfile(headers: Headers): Future[Profile] = {
     def onError(r: Response) =
-      s"Error loading profile, status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
+      s"Discussion API: Error loading profile, status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
     val apiUrl = s"$apiRoot/profile/me"
 
     val authHeader = AuthHeaders.filterHeaders(headers).toSeq

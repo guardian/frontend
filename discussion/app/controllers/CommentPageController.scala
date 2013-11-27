@@ -5,10 +5,20 @@ import common.JsonComponent
 import play.api.mvc.Action
 import play.api.libs.json.Json
 import discussion.model.{DiscussionKey, Comment}
+import scala.concurrent.Future
+import play.api.mvc.Results.Redirect
 
 trait CommentPageController extends DiscussionController {
 
   def commentPageJson(key: DiscussionKey) = commentPage(key)
+
+  def comment(id: Int) = Action.async {
+    implicit request =>
+      discussionApi.commentContext(id) map {
+        page =>
+          Redirect("/discussion"+ page._1 +"?page="+ page._2)
+      }
+  }
 
   def commentPage(key: DiscussionKey) = Action.async {
     implicit request =>
