@@ -48,5 +48,5 @@ developer.properties
 
 *-spec-runner.html
 
-node_modules/phantomjs
 node_modules/grunt-casperjs
+node_modules/grunt-contrib-imagemin
