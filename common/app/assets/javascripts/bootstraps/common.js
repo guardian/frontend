@@ -282,7 +282,7 @@ define([
 
         // display a flash message to devices over 600px who don't have the mobile cookie
         displayReleaseMessage: function (config) {
-            
+
             var path = (document.location.pathname) ? document.location.pathname : '/',
                 exitLink = '/preference/platform/desktop?page=' + encodeURIComponent(path + '?view=desktop'),
                 msg = '<p class="site-message__message">' +
@@ -333,7 +333,7 @@ define([
 
         initAutoSignin : function() {
            mediator.on('page:common:ready', function(config) {
-                if (config.switches && config.switches.facebookAutosignin && detect.getLayoutMode() !== 'mobile') {
+                if (config.switches && config.switches.facebookAutosignin && detect.getBreakpoint() !== 'mobile') {
                     new AutoSignin(config).init();
                 }
             });
