@@ -154,7 +154,7 @@ Comments.prototype.renderPickButtons = function (comments) {
     var actions,
         self        = this,
         buttonText  = "<div class='u-fauxlink d-comment__action d-comment__action--pick' 'role='button'></div>",
-        sepText     = "<span class='d-comment__sep'>|</span>";
+        sepText     = "<span class='d-comment__seperator d-comment__action'>|</span>";
 
     comments = comments || self.comments;
 
