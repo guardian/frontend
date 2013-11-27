@@ -1,16 +1,20 @@
 @(trail: Trail, index: Int, containerIndex: Int)(implicit request: RequestHeader)
 
-@defining(VisualTone(trail)) { tone =>
-    <li class="item item--has-@{if(trail.trailPicture(5,3).isEmpty){"no-"}}image tone-@tone @if(containerIndex == 0){ item--force-image-upgrade}" data-link-name="trail | @{index + 1}"
+@defining((VisualTone(trail), containerIndex == 0)) { case (tone, isFirstContainer) =>
+    <li class="item item--has-@{if(trail.trailPicture(5,3).isEmpty){"no-"}}image tone-@tone @if(isFirstContainer){ item--force-image-upgrade}" data-link-name="trail | @{index + 1}"
         @trail.discussionId.map{ id => data-discussion-id="@id" }
         data-discussion-closed="@trail.isClosedForComments">
-        <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border">
+<a href="@LinkTo{@trail.url}" class="item__link tone-accent-border">
             @trail.trailPicture(5,3).map{ imageContainer =>
                 @ImgSrc.imager(imageContainer).map { imgSrc =>
-                    <div class="item__image-container" data-src="@imgSrc" @if(containerIndex == 0){ data-force-upgrade="desktop wide"}></div>
+                    <div class="item__image-container" data-src="@imgSrc" @if(isFirstContainer){ data-force-upgrade="desktop wide"}>
+                        @if(isFirstContainer){
+                            <img src="@imgSrc" class="responsive-img"/>
+                        }
+                    </div>
                 }
             }
-            <h@if(containerIndex == 0 && index == 0){1}else{2} class="item__title">
+            <h@if(isFirstContainer && index == 0){1}else{2} class="item__title">
                 @if(trail.isLive){
                     <span class="item__live-indicator">Live</span>
                 }
@@ -18,7 +22,7 @@
                     <span class="i i-quote-light-grey"></span>
                 }
                 @RemoveOuterParaHtml(trail.headline)
-            </h@if(containerIndex == 0 && index == 0){1}else{2}>
+            </h@if(isFirstContainer && index == 0){1}else{2}>
         </a>
         @if(tone == "comment") {
             @trail.byline.map { byLine =>
