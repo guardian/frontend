@@ -4,7 +4,7 @@ import model.commercial.{Ad, Segment}
 
 case class Member(username: String, gender: Gender, age: Int, profilePhoto: String) extends Ad {
 
-  def matches(segment: Segment) = true
+  def isTargetedAt(segment: Segment) = true
 
 }
 

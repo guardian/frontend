@@ -62,7 +62,7 @@ case class MasterClass(id: String,
     } else "%1.2f".format(priceList.head)
   }
 
-  def matches(segment: Segment) = true
+  def isTargetedAt(segment: Segment) = true
 }
 
 case class Ticket(price: Double)
