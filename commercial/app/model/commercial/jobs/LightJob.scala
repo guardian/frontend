@@ -13,7 +13,7 @@ case class LightJob(id: Int,
 
   def listingUrl = s"http://guardianv3-web.madgexjbtest.com/job/$id"
 
-  def matches(segment: Segment): Boolean = {
+  def isTargetedAt(segment: Segment): Boolean = {
     val sectionMatches = segment.context.section exists {
       section => intersects(sectorIds.toSet, LightJob.matchingSectorIds(section))
     }

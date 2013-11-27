@@ -95,3 +95,7 @@
     background-color: #ec1c1c;
     display: inline-block;
 }
+
+.id--signed-out .sign-in-required {
+    display: none;
+}

@@ -128,23 +128,8 @@ Comments.prototype.bindCommentEvents = function() {
     RecommendComments.init(this.context);
 
     if (this.user && this.user.privateFields.canPostComment) {
-        this.renderReplyButtons();
         this.on('click', this.getClass('commentReply'), this.replyToComment);
     }
-};
-
-Comments.prototype.renderReplyButtons = function(comments) {
-    var actions,
-        self = this;
-
-    comments = comments || this.comments;
-
-    comments.forEach(function(elem, i) {
-        actions = qwery(self.getClass('commentActions'), elem)[0];
-        bonzo(actions).prepend(
-            '<div class="u-fauxlink d-comment__action '+ self.getClass('commentReply', true) +'" '+
-            'role="button" data-link-name="reply to comment" data-comment-id="'+ elem.getAttribute('data-comment-id') +'">Reply</div>');
-    });
 };
 
 /**
@@ -235,9 +220,6 @@ Comments.prototype.commentsLoaded = function(resp) {
         this.removeShowMoreButton();
     }
 
-    if (!this.isReadOnly()) {
-        this.renderReplyButtons(qwery(this.getClass('comment'), bonzo(comments).parent()));
-    }
     bonzo(this.getElem('comments')).append(comments);
 
     showMoreButton.innerHTML = 'Show more';

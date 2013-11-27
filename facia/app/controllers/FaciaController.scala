@@ -162,6 +162,9 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
   def renderEditionSectionFront(path: String) = renderFront(path)
   def renderFrontJson(path: String) = renderFront(path)
 
+  def renderEditionCollection(id: String) = renderCollection(id)
+  def renderEditionCollectionJson(id: String) = renderCollection(id)
+
   def renderFront(path: String) = Action { implicit request =>
       val editionalisedPath = editionPath(path, Edition(request))
 
@@ -184,6 +187,36 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
           }
         }
       }.getOrElse(NotFound) //TODO is 404 the right thing here
+  }
+
+  def renderCollection(id: String) = Action { implicit request =>
+    val pathOption = request.queryString("path").headOption
+
+    pathOption.map { path =>
+
+      val editionalisedPath = editionPath(path, Edition(request))
+
+      FrontPage(editionalisedPath).flatMap { frontPage =>
+
+      // get the trailblocks
+        val faciaPageOption: Option[FaciaPage] = front(editionalisedPath)
+        faciaPageOption map { faciaPage =>
+          Cached(frontPage) {
+            if (request.isJson) {
+              val collection = faciaPage.copy(collections = faciaPage.collections.filter(t => t._1.id == id))
+              val html = views.html.fragments.frontBody(frontPage, collection)
+              JsonComponent(
+                "html" -> html,
+                "trails" -> JsArray(collection.collections.flatMap(_._2.items.map(TrailToJson(_))))
+              )
+            }
+            else
+              Ok(views.html.front(frontPage, faciaPage))
+          }
+        }
+      }.getOrElse(NotFound) //TODO is 404 the right thing here
+
+    }.getOrElse(NotFound)
   }
 
   def renderResponsiveViewer() = Action {

@@ -89,10 +89,6 @@ object Switches extends Collections {
     "Enable the Quantcast audience segment tracking.",
     safeState = Off)
 
-  val OmnitureDomReadySwitch = Switch("Analytics", "analytics-dom-ready",
-    "Initialise Omniture on dom-ready, rather than on page-load.",
-    safeState = Off)
-
   val AdSlotImpressionStatsSwitch = Switch("Analytics", "adslot-impression-stats",
     "Track when adslots (and possible ad slots) are scrolled into view.",
     safeState = Off)
@@ -122,6 +118,13 @@ object Switches extends Collections {
   val DiscussionTopCommentsSwitch = Switch("Discussion", "discussion-top-comments",
     "If this switch is on, users will see top comments if there are any",
     safeState = Off)
+
+  // Open
+
+  val OpenCtaSwitch = Switch("Open", "open-cta",
+    "If this switch is on, will see a CTA to comments on the right hand side",
+    safeState = Off)
+
 
   // Swipe Switches
 
@@ -284,10 +287,10 @@ object Switches extends Collections {
     VideoAdvertSwitch,
     AudienceScienceSwitch,
     QuantcastSwitch,
-    OmnitureDomReadySwitch,
     DiscussionSwitch,
     DiscussionPostCommentSwitch,
     DiscussionTopCommentsSwitch,
+    OpenCtaSwitch,
     ShortDiscussionSwitch,
     SwipeNav,
     SwipeNavOnClick,

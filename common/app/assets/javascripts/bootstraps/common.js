@@ -174,7 +174,8 @@ define([
         loadAnalytics: function () {
             var omniture = new Omniture();
 
-            mediator.on('page:common:deferred:loaded:omniture', function(config, context) {
+            mediator.on('page:common:deferred:loaded', function(config, context) {
+
                 omniture.go(config, function(){
                     // callback:
 
@@ -192,11 +193,6 @@ define([
                         var advertsAnalytics = new AdvertsAnalytics(config, context);
                     }
                 });
-            });
-
-            mediator.on('page:common:deferred:loaded', function(config, context) {
-
-                mediator.emit('page:common:deferred:loaded:omniture', config, context);
 
                 require(config.page.ophanUrl, function (Ophan) {
 
@@ -286,7 +282,7 @@ define([
 
         // display a flash message to devices over 600px who don't have the mobile cookie
         displayReleaseMessage: function (config) {
-            
+
             var path = (document.location.pathname) ? document.location.pathname : '/',
                 exitLink = '/preference/platform/desktop?page=' + encodeURIComponent(path + '?view=desktop'),
                 msg = '<p class="site-message__message">' +
@@ -337,7 +333,7 @@ define([
 
         initAutoSignin : function() {
            mediator.on('page:common:ready', function(config) {
-                if (config.switches && config.switches.facebookAutosignin && detect.getLayoutMode() !== 'mobile') {
+                if (config.switches && config.switches.facebookAutosignin && detect.getBreakpoint() !== 'mobile') {
                     new AutoSignin(config).init();
                 }
             });
@@ -365,9 +361,7 @@ define([
             if (!self.initialisedDeferred) {
                 self.initialisedDeferred = true;
                 modules.loadAdverts();
-                if (!config.switches.analyticsOnDomReady) {
-                    modules.loadAnalytics();
-                }
+                modules.loadAnalytics();
 
                 // TODO: make these run in event 'page:common:deferred:loaded'
                 modules.cleanupCookies(context);
@@ -381,8 +375,14 @@ define([
             this.initialised = true;
 
             mediator.on("page:common:ready", function(config, context){
-                modules.runAbTests(config, context);
-                modules.transcludeRelated(config, context);
+                try {
+                    modules.runAbTests(config, context);
+                    modules.transcludeRelated(config, context);
+                } catch(error) {
+                    // This catch ensures errors in AbTests and Related do not
+                    // affect the likelihood of reaching the analytics load.
+                    mediator.emit('module:error', 'Failed to run ab tests or transclude related: ' + error, 'bootstraps/common');
+                }
             });
 
             modules.windowEventListeners();
@@ -394,9 +394,6 @@ define([
             modules.transcludePopular();
             modules.loadVideoAdverts(config);
             modules.initClickstream();
-            if (config.switches.analyticsOnDomReady) {
-                modules.loadAnalytics();
-            }
             modules.transcludeCommentCounts();
             modules.initLightboxGalleries();
             modules.optIn();

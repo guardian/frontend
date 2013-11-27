@@ -49,6 +49,9 @@ define([
     /** @type {boolean} */
     Component.prototype.rendered = false;
 
+    /** @type {boolean} */
+    Component.prototype.destroyed = false;
+
     /** @type {Object.<string.Element>} */
     Component.prototype.elems = null;
 
@@ -69,6 +72,7 @@ define([
             throw new ComponentError('Need element to attach to');
         } else {
             this.elem = elem;
+            this._prerender();
             this._ready();
         }
     };
@@ -83,6 +87,7 @@ define([
             throw new ComponentError('No element of type "'+ '.'+ this.conf().componentName +'" to attach to.');
         }
         this.elem = elem[0];
+        this._prerender();
         this._ready();
     };
 
@@ -96,7 +101,8 @@ define([
             container = parent || document.body;
 
         this.elem = template;
-        bonzo(container).append(template);
+        this._prerender();
+        bonzo(container).append(this.elem);
         this._ready();
     };
 
@@ -121,8 +127,12 @@ define([
         }).then(
             function render(resp) {
                 self.elem = bonzo.create(resp.html)[0];
-                bonzo(parent).append(self.elem);
-                self._ready();
+                self._prerender();
+
+                if (!self.destroyed) {
+                    bonzo(parent).append(self.elem);
+                    self._ready();
+                }
             }
         );
     };
@@ -140,10 +150,18 @@ define([
      * This is just used to set up the component internally
      */
     Component.prototype._ready = function() {
+        if (!this.destroyed) {
+            this.rendered = true;
+            this.ready();
+        }
+    };
+
+    /**
+     * Used as we need for pre-prerendering
+     */
+    Component.prototype._prerender = function() {
         this.elems = {};
         this.prerender();
-        this.rendered = true;
-        this.ready();
     };
 
     /**
@@ -273,7 +291,10 @@ define([
      */
     Component.prototype.destroy = function() {
         this.detach();
-        bonzo(this.elem).remove();
+        if (this.elem) {
+            bonzo(this.elem).remove();
+        }
+        this.destroyed = true;
     };
 
     /**
