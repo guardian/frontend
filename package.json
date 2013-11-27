@@ -2,7 +2,8 @@
   "name": "frontend",
   "version": "0.1.0",
   "devDependencies": {
-    "phantomjs": "~1.9.1"
+    "phantomjs": "~1.9.1",
+    "grunt-casperjs": "~1.4.0"
   },
   "scripts": {
     "postinstall": "grunt hookmeup"
