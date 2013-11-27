@@ -14,51 +14,13 @@ define([
     common
 ) {
 
-    var BASE_WIDTH     = 740,
-        MEDIAN_WIDTH   = 980,
-        EXTENDED_WIDTH = 1060,  // Breakpoint where we see the left column in article pages
-        mobileOS,
+    var mobileOS,
         supportsPushState,
         pageVisibility = document.visibilityState ||
                          document.webkitVisibilityState ||
                          document.mozVisibilityState ||
                          document.msVisibilityState ||
                          'visible';
-
-    /**
-     * @param Number width Allow passing in of width, for testing (innerWidth read only
-     * in firefox
-     */
-    function getLayoutMode(width) {
-        var mode = "mobile";
-        if ("matchMedia" in window && width === undefined) {
-            if (window.matchMedia('(min-width: '+ BASE_WIDTH + 'px)').matches) {
-                mode = "tablet";
-            }
-            if (window.matchMedia('(min-width: '+ MEDIAN_WIDTH + 'px)').matches) {
-                mode = "desktop";
-            }
-            if (window.matchMedia('(min-width: '+ EXTENDED_WIDTH + 'px)').matches) {
-                mode = "extended";
-            }
-        } else {
-            width = (width !== undefined) ? width : (typeof document.body.clientWidth === 'number' ? document.body.clientWidth : window.innerWidth);
-
-            if (width >= BASE_WIDTH) {
-                mode = "tablet";
-            }
-
-            if (width >= MEDIAN_WIDTH) {
-                mode = "desktop";
-            }
-
-            if (width >= EXTENDED_WIDTH) {
-                mode = "extended";
-            }
-        }
-
-        return mode;
-    }
 
     /**
      *     Util: returns a function that:
@@ -70,9 +32,9 @@ define([
      *       hasCrossedTheMagicLines(function(){ do stuff })
      */
     function hasCrossedBreakpoint(){
-        var was = getLayoutMode();
+        var was = getBreakpoint();
         return function(callback){
-            var is = getLayoutMode();
+            var is = getBreakpoint();
             if ( is !== was ) {
                 was = is;
                 callback(is);
@@ -321,7 +283,6 @@ define([
     }
 
     return {
-        getLayoutMode: getLayoutMode,
         getMobileOS: getMobileOS,
         canSwipe: canSwipe,
         hasCrossedBreakpoint: hasCrossedBreakpoint,

@@ -8,7 +8,7 @@ case class Offer(id: Int, title: Option[String], offerUrl: String, imageUrl: Str
                  earliestDeparture: DateTime, keywords: List[Keyword], countries: List[String])
   extends Ad {
 
-  def matches(segment: Segment): Boolean = {
+  def isTargetedAt(segment: Segment): Boolean = {
     val someKeywordsMatch = intersects(keywords.map(_.name).toSet, segment.context.keywords.toSet)
     someKeywordsMatch
   }

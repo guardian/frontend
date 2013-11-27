@@ -123,17 +123,19 @@
             @include fs-headline(1);
             line-height: inherit;
 
+            @include mq(tablet) {
+                @include fs-headline(2, true);
+                line-height: inherit;
+            }
+        }
+        p,
+        h2 {
             &:first-child {
                 text-indent: 40px;
 
                 @include mq(tablet) {
                     text-indent: 44px;
                 }
-            }
-
-            @include mq(tablet) {
-                @include fs-headline(2, true);
-                line-height: inherit;
             }
         }
         > ul:first-child {
