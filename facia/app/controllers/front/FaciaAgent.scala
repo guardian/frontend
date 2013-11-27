@@ -77,13 +77,6 @@ trait ParseCollection extends ExecutionContexts with Logging {
     } yield Collection(collectionList ++ contentApiList, displayName)
   }
 
-  def getCollection(id: String, edition: Edition): Future[Collection] = {
-    val response = requestCollection(id)
-    for {
-      collectionList <- getCuratedList(response, edition, id, isWarmedUp=true)
-    } yield Collection(collectionList)
-  }
-
   def getCuratedList(response: Future[Response], edition: Edition, id: String, isWarmedUp: Boolean): Future[List[Content]] = {
     val curatedList: Future[List[Content]] = parseResponse(response, edition, id)
     //Potential to fail the chain if we are warmed up
@@ -187,8 +180,11 @@ object CollectionCache extends ParseCollection {
 
   def updateCollection(id: String, collection: Collection): Unit = collectionCache.send { _.updated(id, collection) }
 
-  def updateCollectionByConfig(config: Config): Unit =
-    updateCollection(config.id, config, Edition.byId(config.id).getOrElse(Edition.defaultEdition), isWarmedUp=true)
+  def updateCollectionById(id: String): Unit = {
+    val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(id, None, None))
+    val edition = Edition.byId(id).getOrElse(Edition.defaultEdition)
+    updateCollection(id, config, edition, isWarmedUp=true)
+  }
 
   def close(): Unit = collectionCache.close()
 }
@@ -249,10 +245,10 @@ trait ConfigAgent extends ExecutionContexts {
     }
   }
 
-  def getAllCollectionIds: List[Config] = {
+  def getAllCollectionIds: List[String] = {
     val json = configAgent.get()
     (json \ "collections").asOpt[Map[String, JsValue]] map { collectionMap =>
-      collectionMap.keys.toList.map(collectionId => getConfig(collectionId).getOrElse(Config(collectionId, None, None)))
+      collectionMap.keys.toList
     } getOrElse Nil
   }
 
