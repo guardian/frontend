@@ -17,19 +17,21 @@ object SoulmatesAggregatingAgent {
     soulmatesAgents foreach (_.stop())
   }
 
-  def sampleMembers(segment: Segment): Seq[Member] = {
-    {
-      for {
-        man <- Random.shuffle(SoulmatesMenAgent.matchingAds(segment)).headOption
-        woman <- Random.shuffle(SoulmatesWomenAgent.matchingAds(segment)).headOption
-      } yield Random.shuffle(Seq(man, woman))
-    } getOrElse Nil
+  def sampleMembers(segment: Segment): List[Member] = {
+    val women = Random.shuffle(SoulmatesWomenAgent.matchingAds(segment))
+    val men = Random.shuffle(SoulmatesMenAgent.matchingAds(segment))
+    if (women.isEmpty || men.isEmpty) {
+      Nil
+    } else {
+      Random.shuffle(List(women.head, men.head)) ++ Random.shuffle(men.tail.take(2) ++ women.tail.take(2)).take(3)
+    }
   }
-
 }
 
-abstract class SoulmatesAgent(protected val membersLoaded: Future[Seq[Member]])
-  extends AdAgent[Member] with ExecutionContexts {
+trait SoulmatesAgent extends AdAgent[Member] with ExecutionContexts {
+
+  protected def membersLoaded: Future[Seq[Member]]
+
   def refresh() {
     for {
       members <- membersLoaded
@@ -37,6 +39,10 @@ abstract class SoulmatesAgent(protected val membersLoaded: Future[Seq[Member]])
   }
 }
 
-object SoulmatesMenAgent extends SoulmatesAgent(SoulmatesApi.getMenMembers)
+object SoulmatesMenAgent extends SoulmatesAgent {
+  protected def membersLoaded = SoulmatesApi.getMenMembers
+}
 
-object SoulmatesWomenAgent extends SoulmatesAgent(SoulmatesApi.getWomenMembers)
+object SoulmatesWomenAgent extends SoulmatesAgent {
+  protected def membersLoaded = SoulmatesApi.getWomenMembers
+}

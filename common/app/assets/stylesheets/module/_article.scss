@@ -154,16 +154,17 @@
         display: inline-block;
         width: 80%;
     }
-
     i {
+        position: relative;
+        top: 1px;
+    }
+    .relative-timestamp__icon {
         vertical-align: top;
+        top: 3px;
     }
 
     @include mq(tablet) {
         padding-right: 0;
-    }
-
-    @include mq(desktop) {
         @include fs-data(3, true);
     }
 
@@ -190,7 +191,6 @@
 
 .article__standfirst {
     @include fs-headline(1, true);
-    text-rendering: optimizeLegibility;
     margin-bottom: $baseline*3;
     color: $c-neutral2;
 
@@ -323,7 +323,7 @@ video {
         top: 0;
         width: $gs-column-width - 1px;
         height: $gs-column-height - 1px;
-        padding: $baseline 0 0 $gutter/4;
+        padding: $baseline - 1px 0 0 $gutter/4;
         border-left: 1px dotted $c-neutral5;
     }
 }

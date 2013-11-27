@@ -4,16 +4,16 @@ import model.Cached
 import common.JsonComponent
 import play.api.mvc.Action
 import play.api.libs.json.Json
-import discussion.model.Comment
+import discussion.model.{DiscussionKey, Comment}
 
 trait CommentPageController extends DiscussionController {
 
-  def commentPageJson(shortUrl: String) = commentPage(shortUrl)
+  def commentPageJson(key: DiscussionKey) = commentPage(key)
 
-  def commentPage(shortUrl: String) = Action.async {
+  def commentPage(key: DiscussionKey) = Action.async {
     implicit request =>
       val page = request.getQueryString("page").getOrElse("1")
-      val commentPage = discussionApi.commentsFor(shortUrl, page)
+      val commentPage = discussionApi.commentsFor(key, page)
       val blankComment = Comment(Json.parse("""{
         "id": 5,
         "body": "",

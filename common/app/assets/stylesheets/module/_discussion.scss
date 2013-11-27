@@ -1,15 +1,13 @@
 /* ==========================================================================
    Discussion
    ========================================================================== */
-.d-discussion {
-    font-size: 14px;
-    font-size: 1.4rem;
-}
 
+.d-discussion {
+    @include rem((font-size: 14px));
+}
 .d-discussion__header {
     margin-bottom: $baseline*3;
 }
-
 .d-thread {
     list-style: none;
     margin: 0 0 1em;
@@ -41,7 +39,6 @@
 .d-comment--has-replies + .d-comment {
     border-top: 2px solid $c-neutral5;
 }
-
 .d-comment--blocked > .d-comment__inner {
     opacity: .5;
 }
@@ -61,13 +58,11 @@
     margin-left: $highlightBleedingOffset * -1;
     margin-right: $highlightBleedingOffset * -1;
 }
-
 .d-comment__pick {
     position: absolute;
     top: 0;
     right: 0;
 }
-
 .d-comment__header {
     margin-top: -2px;
 }
@@ -77,35 +72,115 @@
 .d-comment__avatar {
     padding-top: 2px; /* align avatar with body text */
 }
-
 .d-comment__meta {
     line-height: 1.3;
     word-wrap: break-word;
 }
-
 @include mq(768px) {
     .d-comment__author + .d-badge {
         top: -.15em;
     }
 }
-
 .d-meta-separator {
     color: #aaa;
     font-size: .85714285714em;
 }
-
 .d-comment__main {
     padding-top: $baseline * 3;
     padding-bottom: $baseline * 3;
 }
-
 .d-comment__body {
     @include d-comment__body;
 }
 
+.d-discussion[data-read-only="true"] .sign-in-required {
+    display: none; /* Not the most performant, but it happens so rarely */
+}
+
+/* New Comment
+   ===========================================================================*/
+.comment {
+    @include fs-data(5);
+    display: block;
+    position: relative;
+}
+
+.comment__datecreated {
+    @include fs-data(2);
+    display: block;
+}
+
+.comment--speechy {
+    border: none;
+    padding: 0 0 $baseline*10 0;
+
+    .comment__inner {
+        @include box-sizing(border-box);
+        background-color: $c-neutral7;
+        display: inline-block;
+        padding: $baseline*2 $gs-gutter/2 $baseline*3 $gs-gutter/2;
+        position: relative;
+        width: 100%;
+
+        &:before { // Pointer (equilateral triangle)
+            top: 100%;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+            border-color: rgba($c-neutral7, 0);
+            border-top-color: $c-neutral7;
+            border-width: 30px;
+            left: 23px ;
+            margin-left: -30px;
+        }
+
+        &:after { // Mask (right-skewed parellelogram)
+            @include transform(skew(-10deg));
+            background-color: #ffffff;
+            content: " ";
+            height: 24px;
+            left: -5px;
+            position: absolute;
+            pointer-events: none;
+            top: 100%;
+            width: 24px;
+        }
+    }
+}
+
+.comments-link {
+    @include fs-data(3);
+    display: block;
+    float: right;
+    margin-top: -$baseline*4+2;
+
+    .i {
+        margin-left: 4px;
+        position: relative;
+        top: 2px;
+    }
+}
+
+/* Person
+   ========================================================================== */
+.person {
+    @include fs-data(4);
+}
+.person__avatar {
+    @include rounded-corners(50px);
+    float: left;
+    height: 36px;
+    margin-right: 15px;
+    overflow: hidden;
+    width: 36px;
+}
 
 /* Header
    ========================================================================== */
+
 /**
  * Simulate Media object on Comments header
  * To have an image or a media on the left,
@@ -114,6 +189,7 @@
  * - www.stubbornella.org/content/2010/06/25/the-media-object-saves-hundreds-of-lines-of-code/
  * - http://jsfiddle.net/necolas/rZvEF/
  */
+
 .d-comment-header {
     zoom: 1;
 
@@ -132,7 +208,6 @@
         clear: both;
     }
 }
-
 .d-comment__media {
     float: left;
     margin-right: 15px;
@@ -156,52 +231,44 @@
     *width: auto; /* 3 */
     *zoom:1; /* 4 */
 }
-
 .d-meta-item {
     color: $c-neutral2;
     font-size: .85714285714em;
     font-family: $sans-serif; // Force font when used outside of comment context
 }
-
 .d-comment__actions {
     margin-top: $baseline * 3; /* Compensate missing space in case the comment does not end with a paragraph */
     margin-bottom: $baseline;
 }
-
 .d-comment__action {
     color: $c-neutral2;
     display: inline-block;
     font-size: .85714285714em;
 }
-
 .d-comment__action--report {
     float: right;
 }
-
 .d-comment__recommend {
-    background-color: #929497;
-    color: #fff;
-    font-size: 14px;
-    font-size: 1.4rem;
-    padding: $baseline $gutter/2;
     position: absolute;
     right: 0;
     top: $baseline * 4;
+    padding: $baseline $gutter/2;
+    background-color: #929497;
+    color: #ffffff;
+    @include rem((font-size: 14px));
 }
-
 .d-comment__recommend--left {
     right: $gutter * 1.5;
 }
-
 .d-comment__recommend--active {
     background-color: #4490ce;
     color: #fff;
     cursor: pointer;
 }
-
 .d-comment__recommend--user-recommended {
     background-color: #931c55;
 }
+
 
 /* Badges
    ========================================================================== */
@@ -228,16 +295,15 @@
     position: absolute;
     width: 1px;
 }
-
 .speech-bubble {
-    @include font($sans-serif, normal, 14, 14);
+    @include fs-data(4);
+    @include rounded-corners(4px);
     position: relative;
     display: inline-block;
     min-height: 14px;
     min-width: 17px;
     padding: .275em .6em .375em;
     border: 0;
-    border-radius: 4px;
     text-align: center;
     color: white;
 
@@ -266,13 +332,12 @@
 .d-actions__link,
 .d-actions__link:hover,
 .d-actions__link:focus {
-    @extend %type-11;
+    @include fs-data(3);
     padding-right: $gutter*2;
     color: #808080;
     display: block;
     margin: $baseline*4 0;
 }
-
 .d-actions__link:after {
     margin: 0 0 -3px 20px;
     content: ' ';
@@ -285,7 +350,7 @@
 .d-show-cta,
 .d-show-cta:hover,
 .d-show-cta:focus {
-    @extend %type-6;
+    @include fs-data(5);
 
     background-color: $c-neutral7;
     color: $c-neutral1;
@@ -303,32 +368,29 @@
         top: 13px;
         right: 10px;
     }
-
     i {
         position: absolute;
         left: 6px;
         bottom: 6px;
     }
 }
-
 .d-show-cta:hover,
 .d-show-cta:focus {
     background-color: $c-neutral5;
 }
 
+
 /* Comment Box
    ========================================================================== */
+
 .d-bar {
     background-color: $c-neutral5;
     padding: $baseline*3 $gutter $baseline*3 $gutter;
     margin-bottom: $baseline*3;
 }
-
 .d-comment-box {}
-
 .d-comment-box__body {
     @include box-sizing(border-box);
-
     border: 1px solid $c-neutral3;
     height: 50px;
     margin: $baseline*2 0;
@@ -336,37 +398,32 @@
     resize: vertical;
     width: 100%;
 }
-
 .d-comment-box__body--expanded {
     height: 150px;
 }
-
 .d-comment-box__error {
     background: #ffcc66;
     padding: $baseline*2 $gutter;
 }
-
 .d-comment-box__add-comment {
     display: none;
 }
-
 .d-comment-box__submit {
     display: inline-block;
     margin-right: $gutter;
 }
-
 .d-comment-box__reply-to,
 .d-comment-box__cancel {
     @include fs-data(2);
     color: $c-neutral1;
     display: inline-block;
 }
-
 .d-comment-box__cancel {
     color: $c-neutral2;
     float: right;
     margin-top: $baseline*3;
 }
+
 
 /* Top Comments
    ========================================================================== */
@@ -387,7 +444,6 @@ $topCommentsHeight: 600px;
         height: 40px;
         @include d-white-fade();
     }
-
     .discussion__comments__top { // Container
 
         max-height: $topCommentsHeight;
@@ -397,7 +453,6 @@ $topCommentsHeight: 600px;
         > div {
             max-height: $topCommentsHeight;
         }
-
         ul {
             margin: 0;
             // Mobile First
@@ -430,14 +485,12 @@ $topCommentsHeight: 600px;
 
             }
         }
-
         .d-comment { // Comment
             border: none;
             position: relative;
             display: block;
             padding: 0 0 $baseline*10 0;
         }
-
         .d-comment__inner {
             background-color: $c-neutral7;
             display: inline-block;
@@ -459,6 +512,7 @@ $topCommentsHeight: 600px;
             }
 
             &:after { // Mask (right-skewed parellelogram)
+                @include transform(skew(-10deg));
                 top: 100%;
                 content: " ";
                 height: 24px;
@@ -467,22 +521,15 @@ $topCommentsHeight: 600px;
                 pointer-events: none;
                 background-color: #ffffff;
                 left: -5px;
-                -webkit-transform: skew(-10deg);
-                   -moz-transform: skew(-10deg); 
-                     -o-transform: skew(-10deg); 
-                        transform: skew(-10deg); 
             }
-
             .d-comment__main {
                 padding-top: 36px;
             }
-
             .d-comment__pick {
                 bottom: 24px;
                 right: 8px;
                 top: auto;
             }
-
             .d-comment__recommend {
                 background-color: transparent;
                 padding: 0;
@@ -500,7 +547,6 @@ $topCommentsHeight: 600px;
                     top: -5px;
                     font-size: 0.9em;
                 }
-
                 .i-reccomend-container {
                     display: inline-block;
                     width: 12px;
@@ -510,11 +556,11 @@ $topCommentsHeight: 600px;
                     background-color: #4490ce;
                     position: relative;
                     top: -4px;
+
                     .i-recommend {
                         background-color: #4490ce;
                     }
                 }
-
                 .d-comment__recommend-count {
                     color: #4490ce;
                     display: inline-block;
@@ -532,14 +578,17 @@ $topCommentsHeight: 600px;
                 }
             }
         }
-
         .d-comment__avatar-wrapper {
             @include rounded-corners(50px);
             overflow: hidden;
+
             .d-comment__avatar {
                 padding: 0;
             }
         }
-
     }
+}
+
+.open-cta {
+    margin-top: $baseline*8;
 }

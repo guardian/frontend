@@ -19,22 +19,17 @@ h1, h2, h3, h4, h5, h6 {
     color: #333333;
     font-family: $serif;
     margin: 0;
-    text-rendering: optimizeLegibility;
 }
 
-.type-1 { @extend %type-1; }
 .type-2 { @extend %type-2; }
 
 //SerifText
-.type-3 { @extend %type-3; }
-.type-4 { @extend %type-4; }
 .type-5 { @extend %type-5; }
 .type-6 { @extend %type-6; }
 .type-7 { @extend %type-7; }
 
 //Sans-serif's
 .type-8  { @extend %type-8; }
-.type-9  { @extend %type-9; }
 .type-10 { @extend %type-10; }
 .type-11 { @extend %type-11; }
 .type-12 { @extend %type-12; }
@@ -56,14 +51,6 @@ h1 {
 h3 {
     margin-bottom: 7px;
     @extend %type-6;
-}
-
-h4 {
-    @extend %type-6;
-    margin: 0;
-    padding: 8px 10px 7px;
-    background-color: #ededed;
-    border-top: 1px solid #cccccc;
 }
 
 th,

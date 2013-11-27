@@ -1,5 +1,6 @@
 define([
     "common",
+    "$",
     "modules/ui/autoupdate",
     "modules/live/filter",
     "modules/live/summary",
@@ -12,9 +13,11 @@ define([
     "utils/detect",
     "modules/onward/sequence",
     "modules/onward/right-ear",
-    "modules/experiments/left-hand-card"
+    "modules/experiments/left-hand-card",
+    "modules/open/cta"
 ], function (
     common,
+    $,
     AutoUpdate,
     LiveFilter,
     LiveSummary,
@@ -27,7 +30,8 @@ define([
     detect,
     sequence,
     RightEar,
-    LeftHandCard
+    LeftHandCard,
+    OpenCta
 ) {
 
     var modules = {
@@ -55,7 +59,7 @@ define([
             common.mediator.on('page:article:ready', function(config, context) {
                 if (config.page.isLive) {
 
-                    var timerDelay = /desktop|extended/.test(detect.getLayoutMode()) ? 30000 : 60000,
+                    var timerDelay = /desktop|wide/.test(detect.getBreakpoint()) ? 30000 : 60000,
                         a = new AutoUpdate({
                         path: function() {
                             var id = context.querySelector('.article-body .block').id,
@@ -152,6 +156,21 @@ define([
                     });
                 }
             });
+        },
+
+        initOpen: function() {
+            common.mediator.on('page:article:ready', function(config, context) {
+                if (config.switches.openCta) {
+                    var openCta = new OpenCta(context, common.mediator, {
+                            discussionKey: config.page.shortUrl.replace('http://gu.com/', '')
+                        }),
+                        $openCtaElem = $('.open-cta');
+
+                    if ($openCtaElem[0]) {
+                        openCta.fetch($openCtaElem[0]);
+                    }
+                }
+            });
         }
     };
 
@@ -165,6 +184,7 @@ define([
             modules.initCricket();
             modules.initOnwardRightEar(config);
             modules.externalLinksCards();
+            modules.initOpen();
         }
         common.mediator.emit("page:article:ready", config, context);
     };
