@@ -44,8 +44,8 @@ trait ParseConfig extends ExecutionContexts with Logging {
     }
   }
 
-  def getConfig(id: String): Future[List[Config]] = getConfigMap(id) map { configMap =>
-    configMap.map(parseConfig).toList
+  def getConfig(id: String): Future[Seq[Config]] = getConfigMap(id) map { configMap =>
+    configMap.map(parseConfig)
   }
 
   def parseConfig(json: JsValue): Config =
