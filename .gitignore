@@ -47,3 +47,5 @@ integration-tests/target/*
 developer.properties
 
 *-spec-runner.html
+
+node_modules/phantomjs
