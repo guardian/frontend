@@ -13,7 +13,7 @@ class OffersAgentTest extends FlatSpec with Matchers {
     val keywords = List("france")
     val allOffers = Fixtures.offers
 
-    val offers = OffersAgent.matchingAds(segment(keywords), allOffers)
+    val offers = OffersAgent.adsTargetedAt(segment(keywords), allOffers)
 
     offers should be(List(Fixtures.offers(2)))
   }
@@ -22,7 +22,7 @@ class OffersAgentTest extends FlatSpec with Matchers {
     val keywords = List("argentina")
     val allOffers = Fixtures.offers
 
-    val offers = Try(OffersAgent.matchingAds(segment(keywords), allOffers)).getOrElse(Nil)
+    val offers = Try(OffersAgent.adsTargetedAt(segment(keywords), allOffers)).getOrElse(Nil)
 
     offers should be(Nil)
   }
@@ -31,7 +31,7 @@ class OffersAgentTest extends FlatSpec with Matchers {
     val keywords = List("france")
     val allOffers = Nil
 
-    val offers = Try(OffersAgent.matchingAds(segment(keywords), allOffers)).getOrElse(Nil)
+    val offers = Try(OffersAgent.adsTargetedAt(segment(keywords), allOffers)).getOrElse(Nil)
 
     offers should be(Nil)
   }

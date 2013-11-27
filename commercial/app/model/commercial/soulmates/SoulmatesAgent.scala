@@ -18,8 +18,8 @@ object SoulmatesAggregatingAgent {
   }
 
   def sampleMembers(segment: Segment): List[Member] = {
-    val women = Random.shuffle(SoulmatesWomenAgent.matchingAds(segment))
-    val men = Random.shuffle(SoulmatesMenAgent.matchingAds(segment))
+    val women = Random.shuffle(SoulmatesWomenAgent.adsTargetedAt(segment))
+    val men = Random.shuffle(SoulmatesMenAgent.adsTargetedAt(segment))
     if (women.isEmpty || men.isEmpty) {
       Nil
     } else {
