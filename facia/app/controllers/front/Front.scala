@@ -34,8 +34,8 @@ class Front extends Logging {
 
   def refreshJobs() = Seq(() => {
       ConfigAgent.refresh()
-      refreshPageFrontAgent()
-    }) ++ pageFrontAgent().values.map{ agent => () => agent.refresh() }
+      refreshPageFrontAgent()}
+  ) ++ ConfigAgent.getAllCollectionIds.map{ config => () => CollectionCache.updateCollectionByConfig(config) }
 
   def apply(path: String): Option[FaciaPage] = pageFrontAgent().get(path).flatMap(pageFront => pageFront())
 
