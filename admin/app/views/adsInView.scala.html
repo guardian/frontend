@@ -1,4 +1,4 @@
-@(topSeconds: tools.LineChart, bottomSeconds: tools.LineChart, env: String)
+@(top: tools.LineChart, topCount: tools.LineChart, bottom: tools.LineChart, inline: tools.LineChart, mpu: tools.LineChart, views: tools.LineChart, env: String)
 
 <!DOCTYPE html>
 <html>
@@ -12,33 +12,39 @@
                margin: 0;
                padding: 0;
                font-family: Georgia, serif;
-               background-image: url('/assets/images/johnny-eyeballs.jpg');
-               background-position: center;
-               background-size: 100%;
-               background-repeat: no-repeat;
             }
-            .slots {
+            table {
                 display: table;
                 width: 100%;
-                min-height: 50vh;
                 font-size: 100px;
                 text-shadow: #000 2px 2px;
+                line-height: 200%;
+                border-collapse: separate;
+                border-spacing: 0;
             }
-            .slots span {
-                text-align: center;
-                vertical-align: middle;
-                display: table-cell;
+            small {
+                font-size: 30px;
             }
-            .slots span small {
-               font-size: 50px; 
+            tr.data td {
+                width: 50%;
+                padding: 0px 50px;
             }
-            #top {
-                xbackground-color: #ff3;
+            tr.data td:nth-child(1) {
+                text-align: right;     
+            }
+            .top, .mpu {
+                background-color: #ff3;
                 color: #08d;
             }
-            #bottom {
-                xbackground-color: #08d;
+            .summary, .bottom, .inline {
+                background-color: #08d;
                 color: #ff3;
+            }
+            .summary {
+                font-size: 50px; 
+            } 
+            .summary td {
+                text-align: center;
             }
             #nb {
                 position: absolute;
@@ -49,21 +55,35 @@
                 color: #000;
                 background-color: #fff;
             }
+
         </style>
   </head>
   <body>
         <div id="nb">
             Nb. analysis period is the last 2 minutes, 10% sample size.
         </div>
-        <div id="top" class="slots">
-            <span>
-                Top <small>advert seen for</small> @{"%.0f".format(topSeconds.latest)}  <small>seconds</small>
-            </span>
-        </div>
-        <div id="bottom" class="slots">
-            <span>
-                Bottom <small>advert seen for</small> @{"%.0f".format(bottomSeconds.latest)}  <small>seconds</small>
-            </span>
-        </div>
+        <table>
+            <tr class="summary">
+                <td colspan="2">
+                    @{"%.0f".format(views.latest)} users have seen an advert in the last 2 minutes.
+                </td>
+            </tr>
+            <tr class="top data">
+                <td>Top</td>
+                <td>@{"%.0f".format(top.latest)} <small>(viewed for seconds)</small></td>
+            </tr>
+            <tr class="inline data">
+                <td>Inline</td>
+                <td>@{"%.0f".format(inline.latest)}</td>
+            </tr>
+            <tr class="mpu data">
+                <td>MPU</td>
+                <td>@{"%.0f".format(mpu.latest)}</td>
+            </tr>
+            <tr class="bottom data">
+                <td>Bottom</td>
+                <td>@{"%.0f".format(bottom.latest)}</td>
+            </tr>
+        </table>
   </body>
 </html>

@@ -24,7 +24,7 @@ case class Job(id: Int,
 
   def isCurrent = adExpiryDate.isAfterNow
 
-  def matches(segment: Segment): Boolean = {
+  def isTargetedAt(segment: Segment): Boolean = {
     val sectionMatches = segment.context.section exists {
       section => intersects(sectorTags.toSet, Job.matchingSectorTags(section))
     }

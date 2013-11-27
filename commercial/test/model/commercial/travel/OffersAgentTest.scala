@@ -3,6 +3,7 @@ package model.commercial.travel
 import org.scalatest.Matchers
 import org.scalatest.FlatSpec
 import model.commercial.{Context, Segment}
+import scala.util.Try
 
 class OffersAgentTest extends FlatSpec with Matchers {
 
@@ -21,7 +22,7 @@ class OffersAgentTest extends FlatSpec with Matchers {
     val keywords = List("argentina")
     val allOffers = Fixtures.offers
 
-    val offers = OffersAgent.matchingAds(segment(keywords), allOffers)
+    val offers = Try(OffersAgent.matchingAds(segment(keywords), allOffers)).getOrElse(Nil)
 
     offers should be(Nil)
   }
@@ -30,7 +31,7 @@ class OffersAgentTest extends FlatSpec with Matchers {
     val keywords = List("france")
     val allOffers = Nil
 
-    val offers = OffersAgent.matchingAds(segment(keywords), allOffers)
+    val offers = Try(OffersAgent.matchingAds(segment(keywords), allOffers)).getOrElse(Nil)
 
     offers should be(Nil)
   }

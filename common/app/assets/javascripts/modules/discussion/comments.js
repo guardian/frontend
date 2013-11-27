@@ -116,7 +116,9 @@ Comments.prototype.ready = function() {
         }
 
         this.hideExcessReplies();
-        this.bindCommentEvents();
+        if (!this.isReadOnly()) {
+            this.bindCommentEvents();
+        }
         this.on('click', this.getClass('showReplies'), this.showMoreReplies);
     }
     this.emit('ready');
@@ -126,23 +128,8 @@ Comments.prototype.bindCommentEvents = function() {
     RecommendComments.init(this.context);
 
     if (this.user && this.user.privateFields.canPostComment) {
-        this.renderReplyButtons();
         this.on('click', this.getClass('commentReply'), this.replyToComment);
     }
-};
-
-Comments.prototype.renderReplyButtons = function(comments) {
-    var actions,
-        self = this;
-
-    comments = comments || this.comments;
-
-    comments.forEach(function(elem, i) {
-        actions = qwery(self.getClass('commentActions'), elem)[0];
-        bonzo(actions).prepend(
-            '<div class="u-fauxlink d-comment__action '+ self.getClass('commentReply', true) +'" '+
-            'role="button" data-link-name="reply to comment" data-comment-id="'+ elem.getAttribute('data-comment-id') +'">Reply</div>');
-    });
 };
 
 /**
@@ -215,6 +202,13 @@ Comments.prototype.hideExcessReplies = function(comments) {
 };
 
 /**
+ * @return {Boolean}
+ */
+Comments.prototype.isReadOnly = function() {
+    return this.elem.getAttribute('data-read-only') === 'true';
+};
+
+/**
  * @param {Object} resp
  */
 Comments.prototype.commentsLoaded = function(resp) {
@@ -226,7 +220,6 @@ Comments.prototype.commentsLoaded = function(resp) {
         this.removeShowMoreButton();
     }
 
-    this.renderReplyButtons(qwery(this.getClass('comment'), bonzo(comments).parent()));
     bonzo(this.getElem('comments')).append(comments);
 
     showMoreButton.innerHTML = 'Show more';
@@ -234,7 +227,10 @@ Comments.prototype.commentsLoaded = function(resp) {
 
     this.hideExcessReplies(comments);
 
-    RecommendComments.init(this.context);
+    if (!this.isReadOnly()) {
+        RecommendComments.init(this.context);
+
+    }
     this.emit('loaded');
 };
 
@@ -260,7 +256,7 @@ Comments.prototype.addComment = function(comment, focus, parent) {
         values = {
             username: this.user.displayName,
             timestamp: 'Just now',
-            body: '<p>'+ comment.body.replace('\n', '</p><p>') +'</p>',
+            body: '<p>'+ comment.body.replace(/\n+/g, '</p><p>') +'</p>',
             report: {
                 href: 'http://discussion.theguardian.com/components/report-abuse/'+ comment.id
             },

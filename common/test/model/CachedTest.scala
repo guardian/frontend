@@ -11,7 +11,7 @@ import org.scala_tools.time.Imports._
 
 class CachedTest extends FlatSpec with Matchers with Results {
 
-  "Cached" should "cache live content for 5 seconds" in {
+  "Cached" should "cache live content for 30 seconds" in {
     Switches.DoubleCacheTimesSwitch.switchOff()
 
     val modified = new DateTime(2001, 5, 20, 12, 3, 4, 555)
@@ -20,7 +20,7 @@ class CachedTest extends FlatSpec with Matchers with Results {
     val result = Cached(liveContent)(Ok("foo"))
     val headers = result.header.headers
 
-    headers("Cache-Control") should be("max-age=30, s-maxage=30, stale-while-revalidate=30, stale-if-error=345600")
+    headers("Cache-Control") should be("max-age=30")
   }
 
   it should "cache content less than 1 hour old for 1 minute" in {
@@ -32,7 +32,7 @@ class CachedTest extends FlatSpec with Matchers with Results {
     val result = Cached(liveContent)(Ok("foo"))
     val headers = result.header.headers
 
-    headers("Cache-Control") should be("max-age=60, s-maxage=60, stale-while-revalidate=60, stale-if-error=345600")
+    headers("Cache-Control") should be("max-age=60")
   }
 
   it should "cache older content for 15 minutes" in {
@@ -44,7 +44,7 @@ class CachedTest extends FlatSpec with Matchers with Results {
     val result = Cached(liveContent)(Ok("foo"))
     val headers = result.header.headers
 
-    headers("Cache-Control") should be("max-age=900, s-maxage=900, stale-while-revalidate=900, stale-if-error=345600")
+    headers("Cache-Control") should be("max-age=900")
   }
 
   it should "cache other things for 1 minute" in {
@@ -63,7 +63,7 @@ class CachedTest extends FlatSpec with Matchers with Results {
     val result = Cached(page)(Ok("foo"))
     val headers = result.header.headers
 
-    headers("Cache-Control") should be("max-age=60, s-maxage=60, stale-while-revalidate=60, stale-if-error=345600")
+    headers("Cache-Control") should be("max-age=60")
   }
 
   it should "double the cache time if DoubleCacheTimesSwitch is switched on" in {
@@ -75,7 +75,7 @@ class CachedTest extends FlatSpec with Matchers with Results {
     val result = Cached(liveContent)(Ok("foo"))
     val headers = result.header.headers
 
-    headers("Cache-Control") should be("max-age=120, s-maxage=120, stale-while-revalidate=120, stale-if-error=345600")
+    headers("Cache-Control") should be("max-age=120")
   }
 
   private def content(lastModified: DateTime, live: Boolean): Content = {

@@ -6,7 +6,7 @@ import common.ExecutionContexts
 class AdAgentTest extends FlatSpec with Matchers with ExecutionContexts {
 
   private val ad = new Ad {
-    def matches(segment: Segment) = segment.context.section.isEmpty
+    def isTargetedAt(segment: Segment) = segment.context.section.isEmpty
   }
 
   private val adAgent = new AdAgent[Ad] {}

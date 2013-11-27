@@ -94,7 +94,7 @@ define([
                     });
                 });
 
-                if(detect.getLayoutMode() !== 'mobile') {
+                if(detect.getBreakpoint() !== 'mobile') {
                     that.view.hideColumns(sectionsHeader, sectionsNav);
                 }
             },

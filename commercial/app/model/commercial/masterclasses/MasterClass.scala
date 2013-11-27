@@ -5,6 +5,7 @@ import org.joda.time.DateTime
 import play.api.libs.json.JsValue
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Element, Document}
+import model.commercial.{Segment, Ad}
 
 object MasterClass {
   private val datePattern: DateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss")
@@ -37,7 +38,7 @@ object MasterClass {
       new MasterClass(id.toString, title, startDate, url, description, status, tickets.toList, capacity, element.attr("href"), paragraphs.head.text)
     }
 
-    return result.headOption
+    result.headOption
   }
 }
 
@@ -50,7 +51,7 @@ case class MasterClass(id: String,
                        tickets: List[Ticket],
                        capacity: Int,
                        guardianUrl: String,
-                       firstParagraph: String = "") {
+                       firstParagraph: String = "") extends Ad {
   def isOpen = {status == "Live"}
 
   lazy val displayPrice = {
@@ -60,6 +61,8 @@ case class MasterClass(id: String,
       "%1.2f to %1.2f".format(low, high)
     } else "%1.2f".format(priceList.head)
   }
+
+  def isTargetedAt(segment: Segment) = true
 }
 
 case class Ticket(price: Double)

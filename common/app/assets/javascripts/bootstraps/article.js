@@ -1,5 +1,6 @@
 define([
     "common",
+    "$",
     "modules/ui/autoupdate",
     "modules/live/filter",
     "modules/live/summary",
@@ -10,9 +11,11 @@ define([
     "modules/experiments/live-blog-show-more",
     "modules/ui/notification-counter",
     "utils/detect",
-    "modules/experiments/left-hand-card"
+    "modules/experiments/left-hand-card",
+    "modules/open/cta"
 ], function (
     common,
+    $,
     AutoUpdate,
     LiveFilter,
     LiveSummary,
@@ -23,7 +26,8 @@ define([
     LiveShowMore,
     NotificationCounter,
     detect,
-    LeftHandCard
+    LeftHandCard,
+    OpenCta
 ) {
 
     var modules = {
@@ -51,7 +55,7 @@ define([
             common.mediator.on('page:article:ready', function(config, context) {
                 if (config.page.isLive) {
 
-                    var timerDelay = /desktop|extended/.test(detect.getLayoutMode()) ? 30000 : 60000,
+                    var timerDelay = /desktop|wide/.test(detect.getBreakpoint()) ? 30000 : 60000,
                         a = new AutoUpdate({
                         path: function() {
                             var id = context.querySelector('.article-body .block').id,
@@ -134,6 +138,21 @@ define([
                     });
                 }
             });
+        },
+
+        initOpen: function() {
+            common.mediator.on('page:article:ready', function(config, context) {
+                if (config.switches.openCta) {
+                    var openCta = new OpenCta(context, common.mediator, {
+                            discussionKey: config.page.shortUrl.replace('http://gu.com/', '')
+                        }),
+                        $openCtaElem = $('.open-cta');
+
+                    if ($openCtaElem[0]) {
+                        openCta.fetch($openCtaElem[0]);
+                    }
+                }
+            });
         }
     };
 
@@ -146,6 +165,7 @@ define([
             modules.initDiscussion();
             modules.initCricket();
             modules.externalLinksCards();
+            modules.initOpen();
         }
         common.mediator.emit("page:article:ready", config, context);
     };

@@ -3,9 +3,25 @@ package model.commercial.travel
 import common.{ExecutionContexts, Logging}
 import scala.concurrent.Future
 import conf.ContentApi
-import model.commercial.{AdAgent, Keyword}
+import model.commercial.{Segment, AdAgent, Keyword}
 
-object OffersAgent extends AdAgent[Offer] with Logging with ExecutionContexts {
+object OffersAgent extends AdAgent[Offer] {
+
+  def refresh() {
+    AllOffersAgent.refresh()
+    MostPopularOffersAgent.refresh()
+  }
+
+  override def matchingAds(segment: Segment, adsToChooseFrom: Seq[Offer] = AllOffersAgent.currentAds): Seq[Offer] = {
+    val matchingOffers = AllOffersAgent.matchingAds(segment, adsToChooseFrom)
+    if (matchingOffers.isEmpty) {
+      MostPopularOffersAgent.currentAds
+    }
+    else matchingOffers
+  }
+}
+
+object AllOffersAgent extends AdAgent[Offer] with Logging with ExecutionContexts {
 
   def refresh() {
 
@@ -53,9 +69,8 @@ object OffersAgent extends AdAgent[Offer] with Logging with ExecutionContexts {
       }
     }
 
-    OffersApi.getAllOffers() onSuccess {
+    OffersApi.getAllOffers onSuccess {
       case untaggedOffers =>
-        log info s"Loaded ${untaggedOffers.size} travel offers"
         tagAssociatedCountries(untaggedOffers) onSuccess {
           case countryTags =>
             val offers = tagOffers(untaggedOffers, countryTags)
@@ -65,4 +80,11 @@ object OffersAgent extends AdAgent[Offer] with Logging with ExecutionContexts {
     }
   }
 
+}
+
+object MostPopularOffersAgent extends AdAgent[Offer] with ExecutionContexts {
+
+  def refresh() {
+    OffersApi.getMostPopularOffers map updateCurrentAds
+  }
 }
