@@ -11,9 +11,11 @@ object JobsApi extends XmlAdsApi[Job] {
 
   protected val adTypeName = "Jobs"
 
-  private val feedDate = DateTimeFormat.forPattern("yyyy-MM-dd").print(System.currentTimeMillis)
-  private lazy val urlTemplate = CommercialConfiguration.getProperty("jobs.api.url.template")
-  private lazy val url = urlTemplate map (_ replace("yyyy-MM-dd", feedDate))
+  private lazy val url = {
+    val feedDate = DateTimeFormat.forPattern("yyyy-MM-dd").print(System.currentTimeMillis)
+    val urlTemplate = CommercialConfiguration.getProperty("jobs.api.url.template")
+    urlTemplate map (_ replace("yyyy-MM-dd", feedDate))
+  }
 
   override protected val loadTimeout = 20000
 
