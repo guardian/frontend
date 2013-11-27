@@ -5,7 +5,6 @@ set -o errexit
 #Node package management for Grunt build steps
 
 bundle install --system
-npm install
 
 NPM_EXIT=$?
 
