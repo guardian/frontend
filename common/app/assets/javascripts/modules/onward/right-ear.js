@@ -1,9 +1,7 @@
 define([
-    'bean',
     'bonzo',
     'modules/component'
 ], function(
-    bean,
     bonzo,
     Component
 ) {
@@ -27,8 +25,8 @@ RightEar.prototype.defaultOptions = {};
 RightEar.prototype.errors = [];
 
 RightEar.prototype.ready = function() {
-    bean.on(this.elem, 'mouseenter', this.setExpanded.bind(this));
-    bean.on(this.elem, 'mouseleave', this.setContracted.bind(this));
+    this.on('mouseenter', this.setExpanded.bind(this));
+    this.on('mouseleave', this.setContracted.bind(this));
 };
 
 RightEar.prototype.prerender = function() {
