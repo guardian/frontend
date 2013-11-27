@@ -11,8 +11,6 @@ define([
     "modules/experiments/live-blog-show-more",
     "modules/ui/notification-counter",
     "utils/detect",
-    "modules/onward/sequence",
-    "modules/onward/right-ear",
     "modules/experiments/left-hand-card",
     "modules/open/cta"
 ], function (
@@ -28,8 +26,6 @@ define([
     LiveShowMore,
     NotificationCounter,
     detect,
-    sequence,
-    RightEar,
     LeftHandCard,
     OpenCta
 ) {
@@ -96,20 +92,6 @@ define([
                     discussionLoader.attachToDefault();
                 }
             });
-        },
-
-        initOnwardRightEar: function(config) {
-            var spawned = false;
-            common.mediator.on('modules:sequence:loaded', function(sequence) {
-                if (config.switches && config.switches.abOnwardRightEar &&
-                    sequence && sequence.length > 0 && !spawned) {
-                    var rightEar = new RightEar(sequence, common.mediator, {});
-                    rightEar.render();
-                    spawned = true;
-                }
-            });
-
-            sequence.init();
         },
 
         logReading: function() {
@@ -182,7 +164,6 @@ define([
             modules.logReading();
             modules.initDiscussion();
             modules.initCricket();
-            modules.initOnwardRightEar(config);
             modules.externalLinksCards();
             modules.initOpen();
         }
