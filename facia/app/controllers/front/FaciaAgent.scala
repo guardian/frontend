@@ -189,16 +189,7 @@ object CollectionCache extends ParseCollection {
   def close(): Unit = collectionCache.close()
 }
 
-class Query(val id: String, edition: Edition) extends ParseConfig with Logging {
-
-  def refresh(): Unit = {
-    ConfigAgent.getConfigForId(id) map { configList =>
-      configList map { config =>
-        val isWarmedUp = items.isDefined
-        CollectionCache.updateCollection(config.id, config, edition, isWarmedUp)
-      }
-    }
-  }
+class Query(val id: String, edition: Edition) extends Logging {
 
   def items = ConfigAgent.getConfigForId(id).map { configList => configList flatMap { config =>
       CollectionCache.getCollection(config.id) map { (config, _) }
