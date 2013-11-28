@@ -3,7 +3,6 @@ package model.commercial.masterclasses
 import org.scalatest.Matchers
 import org.scalatest.FlatSpec
 import play.api.libs.json._
-import org.jsoup.nodes.{Element, Document}
 
 
 class SingleMasterClassParsingTest extends FlatSpec with Matchers {
@@ -45,7 +44,7 @@ class SingleMasterClassParsingTest extends FlatSpec with Matchers {
 
     result.name should be("Travel writing weekend")
     result.isOpen should be (true)
-    result.displayPrice should be ("400.00 to 600.00")
+    result.displayPrice should be ("400.00 to 2,600.00")
   }
 
 
@@ -157,7 +156,7 @@ class SingleMasterClassParsingTest extends FlatSpec with Matchers {
                |            "visible" : "true"
                |          } }, { "ticket" : { "currency" : "GBP",
                |            "description" : "",
-               |            "display_price" : "600.00",
+               |            "display_price" : "2,600.00",
                |            "end_date" : "2013-04-20 09:30:00",
                |            "id" : 12319,
                |            "max" : 36,
