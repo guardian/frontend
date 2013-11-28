@@ -67,7 +67,6 @@ trait S3 extends Logging {
     val request = new PutObjectRequest(bucket, key, new StringInputStream(value), metadata).withCannedAcl(accessControlList)
 
     client.putObject(request)
-    client.shutdown()
   }
 
   private def getListing(prefix: String, dropText: String): List[String] = {
