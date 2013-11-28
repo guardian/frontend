@@ -43,7 +43,7 @@ function (
 
         // Computeds
         this.humanDate = ko.computed(function(){
-            return this.props.webPublicationDate() ? humanizedTimeSpan(this.props.webPublicationDate()) : '&nbsp;';
+            return this.props.webPublicationDate() ? humanizedTimeSpan(this.props.webPublicationDate()) : '';
         }, this);
         
         this.totalHitsFormatted = ko.computed(function(){
