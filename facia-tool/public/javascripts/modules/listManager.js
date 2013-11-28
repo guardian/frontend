@@ -161,7 +161,8 @@ define([
             if (Config.env.toLowerCase() === 'prod'
                 &&  next
                 && !next.match(/sandbox/) 
-                &&(!previous || previous.match(/sandbox/))) {
+                &&(!previous || previous.match(/sandbox/)) 
+                && !window.confirm("BEWARE! You are about to edit a LIVE page")) {
                 
                 model.config(previous);
                 return;
