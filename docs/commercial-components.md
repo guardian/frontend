@@ -22,11 +22,11 @@ The division of labour looks like this.
 
 ### API 
 
-Each commercial component should provide an API.
+Each commercial product should provide an API.
 
 The API should :-
 
-- Contain any business logic required to generate the data for the component. 
+- Contain any business logic required to generate the data required for the component. 
 - Provide an endpoint as JSON or XML over HTTP, authenticated or otherwise.
 - Maintain a reasonable level of service - uptime, response time etc.
 
@@ -40,4 +40,4 @@ The next-gen project will :-
 - Render that component in a standard template (Ie. manage the html/css/js)
 - Target that component at an audience.
 
-This allows the commercial teams to specialise in the data the drives the component and the frontend team to specialise in the delivery of that to the user.
+This allows the commercial teams to specialise in the data that drives the component and the frontend team to specialise in the delivery of that to the user.
