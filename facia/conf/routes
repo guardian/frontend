@@ -19,5 +19,6 @@ GET        /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)
 
 GET        /responsive-viewer                                                                 controllers.FaciaController.renderResponsiveViewer()
 
+GET        /collection/$id<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/rss                              controllers.FaciaController.renderCollectionRss(id)
 GET        /collection/$id<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>                                  controllers.FaciaController.renderEditionCollection(id)
 GET        /collection/$id<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>.json                             controllers.FaciaController.renderEditionCollectionJson(id)

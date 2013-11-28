@@ -7,8 +7,11 @@ import conf._
 import play.api.mvc._
 import play.api.libs.json.{JsArray, Json}
 import Switches.EditionRedirectLoggingSwitch
-
-
+import com.sun.syndication.feed.synd._;
+import com.sun.syndication.io.{FeedException, SyndFeedOutput}
+import java.io.IOException;
+import java.io.StringWriter;
+ 
 abstract class FrontPage(val isNetworkFront: Boolean) extends MetaData
 
 object FrontPage {
@@ -154,6 +157,23 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
   
     NoCache(Redirect(redirectPath))
   }
+  
+  def renderCollectionRss(path: String) = Action { implicit request =>
+
+    val feed = new SyndFeedImpl();
+    feed.setFeedType("rss_2.0");
+    feed.setTitle("rss_2.0");
+    feed.setDescription("Updates for Hike Uber Tracks - ");
+    feed.setLink("...");
+
+    val writer = new StringWriter();
+    val output = new SyndFeedOutput()
+    output.output(feed, writer);
+    writer.close
+
+    Ok(writer.toString).as("application/rss+xml");
+  }
+
 
   // Needed as aliases for reverse routing
   def renderEditionFrontJson(path: String) = renderFront(path)

@@ -35,7 +35,9 @@ object Frontend extends Build with Prototypes {
 
   val commonWithTests = withTests(common)
 
-  val facia = application("facia").dependsOn(commonWithTests).aggregate(common)
+  val facia = application("facia").dependsOn(commonWithTests).aggregate(common).settings(
+    libraryDependencies ++= Seq("rome" % "rome" % "1.0")
+  )
   val article = application("article").dependsOn(commonWithTests).aggregate(common)
   val applications = application("applications").dependsOn(commonWithTests).aggregate(common)
   val sport = application("sport").dependsOn(commonWithTests).aggregate(common).settings(
