@@ -11,7 +11,7 @@
            data-comment-highlighted="@comment.isHighlighted">
     <div class="d-comment__inner">
         
-        <div class="d-comment__pick i i-guardian-picks @if(!comment.isHighlighted || comment.isBlocked){u-h}"><span class="u-h">Guardian pick</span></div>
+        <div class="d-comment__pick i i-guardian-picks @if(!comment.isHighlighted || comment.isBlocked){u-h}" title="Guardian pick"></div>
         
         @if(!(isClosedForRecommendation && comment.numRecommends == 0) && !comment.isBlocked){
             <div
