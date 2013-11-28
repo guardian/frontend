@@ -157,16 +157,6 @@ define([
         model.config.subscribe(function(next) {
             var previous = getConfig(), // previous config is still in queryStr
                 section;
-
-            if (Config.env.toLowerCase() === 'prod'
-                &&  next
-                && !next.match(/sandbox/) 
-                &&(!previous || previous.match(/sandbox/))) {
-                
-                model.config(previous);
-                return;
-            }
-
             setConfig(next);
         });
 
