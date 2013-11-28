@@ -6,9 +6,8 @@ import play.api.libs.json.Json.toJson
 import conf.Switches.AutoRefreshSwitch
 import play.api.mvc.{ RequestHeader, Results, SimpleResult }
 import play.api.templates.Html
-import com.gu.management.Switchable
 import conf.Configuration
-import play.api.Play.current
+import play.api.http.ContentTypes._
 
 object JsonComponent extends Results {
 
@@ -67,12 +66,12 @@ object JsonComponent extends Results {
   private def resultFor(request: RequestHeader, json: String): SimpleResult = {
     // JSONP if it has a callback
     request.getQueryString("callback").map {
-      case ValidCallback(callback) => Ok(s"$callback($json);").as("application/javascript")
+      case ValidCallback(callback) => Ok(s"$callback($json);").as(JAVASCRIPT)
       case badCallback => Forbidden("bad callback name")
 
     // Crossdomain if it has an origin header
     }.orElse{ request.headers.get("Origin").map{ origin =>
-      val response = Ok(json).as("application/json")
+      val response = Ok(json).as(JSON)
         .withHeaders("Access-Control-Allow-Headers" -> "GET,POST,X-Requested-With")
 
       resolveOrigin(request) match {
@@ -81,7 +80,7 @@ object JsonComponent extends Results {
       }
 
     // Same domain
-    }}.getOrElse(Ok(json).as("application/json")).withHeaders("Vary" -> "Accept, Origin")
+    }}.getOrElse(Ok(json).as(JSON)).withHeaders("Vary" -> "Accept, Origin")
   }
 
   // http://stackoverflow.com/questions/1653308/access-control-allow-origin-multiple-origin-domains
@@ -100,7 +99,7 @@ object JsonNotFound {
   private val ValidCallback = """([a-zA-Z0-9_]+)""".r
 
   def apply()(implicit request: RequestHeader) = request.getQueryString("callback").map {
-    case ValidCallback(callback) => Ok("""%s({"status":404});""" format (callback)).as("application/javascript")
+    case ValidCallback(callback) => Ok("""%s({"status":404});""" format (callback)).as(JAVASCRIPT)
     case badCallback => Forbidden("bad callback name")
   }.getOrElse(NotFound)
 }
