@@ -14,7 +14,7 @@ trait S3 extends Logging {
 
   lazy val bucket = Configuration.aws.bucket
 
-  def client = {
+  val client = {
     val client = new AmazonS3Client(Configuration.aws.credentials)
     client.setEndpoint("s3-eu-west-1.amazonaws.com")
     client
@@ -28,8 +28,6 @@ trait S3 extends Logging {
     case e: AmazonS3Exception if e.getStatusCode == 404 =>
       log.warn("not found at %s - %s" format(bucket, key))
       None
-  } finally {
-    client.shutdown()
   }
 
   def get(key: String): Option[String] = try {
