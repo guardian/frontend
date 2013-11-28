@@ -11,6 +11,8 @@ object JobsApi extends XmlAdsApi[Job] {
 
   protected val adTypeName = "Jobs"
 
+  override protected val characterEncoding = "utf-8"
+
   // url changes daily so cannot be val
   private def url = {
     val feedDate = DateTimeFormat.forPattern("yyyy-MM-dd").print(System.currentTimeMillis)
