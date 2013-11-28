@@ -28,8 +28,8 @@ define([
         var self = this,
             model = {
                 collections: ko.observableArray(),
-                configs: ko.observableArray(),
-                config: ko.observable(),
+                fronts: ko.observableArray(),
+                front:  ko.observable(),
 
                 latestArticles: new LatestArticles({
                     filterTypes: common.config.filterTypes
@@ -68,50 +68,56 @@ define([
         }
 
         model.previewUrl = ko.computed(function() {
-            return common.config.viewer[Config.env] + '/responsive-viewer#env=' + Config.env + '&url=' + model.config() + encodeURIComponent('?view=mobile');
+            return common.config.viewer[Config.env] + '/responsive-viewer#env=' + Config.env + '&url=' + model.front() + encodeURIComponent('?view=mobile');
         })
 
-        function fetchConfigsList() {
+        function fetchFronts() {
             return authedAjax.request({
                 url: common.config.apiBase + '/config'
             }).then(function(resp) {
-                if (!(_.isArray(resp) && resp.length > 0)) {
+
+                if (!(_.isObject(resp.fronts) && _.isObject(resp.collections))) {
                     window.alert("Oops, no page definitions were found! Please contact support.");
                     return;
                 }
-                model.configs(resp.sort());
+
+                common.state.fronts = resp.fronts;
+                common.state.collections = resp.collections;
+
+                model.fronts(_.keys(resp.fronts).sort());;
             });
         };
 
-        function getConfig() {
+        function getFront() {
             return common.util.queryParams().front;
         }
 
-        function setConfig(id) {
+        function setFront(id) {
             history.pushState({}, "", window.location.pathname + '?' + common.util.ammendedQueryStr('front', id));
             renderCollections();
         }
 
-        function renderConfig() {
-            model.config(getConfig());
+        function renderFront() {
+            model.front(getFront());
         }
 
         function renderCollections() {
+            var ids;
+
+            ids = (common.state.fronts[getFront()] || {}).collections;
+
+            if (!_.isArray(ids)) { return; }
+
             model.collections.removeAll();
-
-            if (!getConfig()) { return; }
-
-            authedAjax.request({
-                url: common.config.apiBase + '/config/' + getConfig()
-            })
-            .then(function(collections){
-                model.collections(
-                    (collections || []).map(function(collection){
+            model.collections(
+                ids.map(function(id){
+                    var collection = common.state.collections[id];
+                    if (collection) {
+                        collection.id = id;
                         return new Collection(collection);
-                    })
-                );
-                //connectSortableLists();
-            });
+                    }
+                })
+            );
         }
 
         function startPoller() {
@@ -154,21 +160,8 @@ define([
             }
         };
 
-        model.config.subscribe(function(next) {
-            var previous = getConfig(), // previous config is still in queryStr
-                section;
-
-            if (Config.env.toLowerCase() === 'prod'
-                &&  next
-                && !next.match(/sandbox/) 
-                &&(!previous || previous.match(/sandbox/)) 
-                && !window.confirm("BEWARE! You are about to edit a LIVE page")) {
-                
-                model.config(previous);
-                return;
-            }
-
-            setConfig(next);
+        model.front.subscribe(function(front) {
+            setFront(front);
         });
 
         model.liveMode.subscribe(function() {
@@ -187,10 +180,10 @@ define([
         this.init = function() {
             droppable.init();
 
-            fetchConfigsList()
+            fetchFronts()
             .then(function(){
-                renderConfig();
-                window.onpopstate = renderConfig;
+                renderFront();
+                window.onpopstate = renderFront;
 
                 ko.applyBindings(model);
 

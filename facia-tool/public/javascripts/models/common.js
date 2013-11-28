@@ -32,7 +32,10 @@ define([
         },
 
         state: {
-            liveMode: ko.observable(true) // default to live mode?
+            fronts: null,                 // loaded on bootstrap
+            collections: null,            // loaded on bootstrap
+
+            liveMode: ko.observable(false) // default to live mode?
         },
 
         util: {
