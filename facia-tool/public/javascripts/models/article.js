@@ -27,6 +27,8 @@ function (
             'trailText',
             'shortId']);
 
+        this.fields.headline('...'); 
+
         this.meta = common.util.asObservableProps([
             'headline',
             'group']);
