@@ -33,6 +33,10 @@ var Comments = function(context, mediator, options) {
     this.context = context || document;
     this.mediator = mediator;
     this.setOptions(options);
+
+    if (this.options.commentId) {
+        this.endpoint = '/discussion/comment/'+ this.options.commentId;
+    }
 };
 Component.define(Comments);
 
