@@ -131,8 +131,6 @@ GET         /troubleshoot/football                                              
 GET         /commercial/travel/offers.json                                                                   controllers.commercial.TravelOffers.listOffers
 GET         /commercial/jobs.json                                                                            controllers.commercial.JobAds.jobs
 GET         /commercial/masterclasses.json                                                                   controllers.commercial.MasterClasses.list
-# New light jobs feed available only in dev env
-GET         /commercial/lightjobs.json                                                                       controllers.commercial.JobAds.lightJobs
 GET         /commercial/soulmates/mixed.json                                                                 controllers.commercial.SoulmateAds.mixed
 
 # Onward journeys

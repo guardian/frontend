@@ -10,10 +10,10 @@
         <ul class="items">
             @for(job <- jobs) {
                 <li class="lineitem">
-                    @job.employerLogoUrl.map{ url => <img src="@url" />}
+                    @job.recruiterLogoUrl.map{ url => <img src="@url" />}
                     <h4 class="lineitem__title"><a href="@job.listingUrl">@job.title</a></h4>
                     <p class="lineitem__description">@job.shortDescription</p>
-                    <a href="@job.applyUrl" class="lineitem__link cta">Apply</a>
+                    <a href="@job.listingUrl" class="lineitem__link cta">Apply</a>
                 </li>
             }
         </ul>

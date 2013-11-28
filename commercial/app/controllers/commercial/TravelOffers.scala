@@ -9,9 +9,9 @@ object TravelOffers extends Controller {
 
   def listOffers = Action {
     implicit request =>
-      OffersAgent.matchingAds(segment) match {
+      OffersAgent.adsTargetedAt(segment) match {
         case Nil => JsonNotFound.apply()
-        case offers => Cached(60)(JsonComponent(views.html.fragments.travelOffer(offers)))
+        case offers => Cached(60)(JsonComponent(views.html.travelOffers(offers take 4)))
       }
   }
 
