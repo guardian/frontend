@@ -75,6 +75,24 @@ Api.recommendComment = function(id) {
 };
 
 /**
+ * @param {number} id the comment ID
+ * @return {Reqwest} a promise
+ */
+Api.pickComment = function(id) {
+    var endpoint = '/comment/'+ id +'/highlight';
+    return Api.send(endpoint, 'post', {});
+};
+
+/**
+ * @param {number} id the comment ID
+ * @return {Reqwest} a promise
+ */
+Api.unPickComment = function(id) {
+    var endpoint = '/comment/'+ id +'/unhighlight';
+    return Api.send(endpoint, 'post', {});
+};
+
+/**
  * The id here is optional, but you shoudl try to specify it
  * If it isn't we use profile/me, which isn't as cachable
  * @param {number=} id (optional)

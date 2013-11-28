@@ -279,7 +279,7 @@ object BulletCleaner {
 object UnindentBulletParents extends HtmlCleaner with implicits.JSoup {
   def clean(body: Document): Document = {
     val bullets = body.getElementsByClass("bullet")
-    bullets flatMap { _.parentTag("p") } foreach { _.addClass("no-indent") }
+    bullets flatMap { _.parentTag("p") } foreach { _.addClass("bullet-container") }
     body
   }
 }
