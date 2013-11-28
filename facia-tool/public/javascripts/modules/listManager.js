@@ -49,22 +49,12 @@ define([
                 liveMode: common.state.liveMode
             };
 
-        if (window.localStorage && window.localStorage.getItem(prefKeyDefaultMode)) {
-            model.liveMode(window.localStorage.getItem(prefKeyDefaultMode) === '1');
-        }
-
         model.setModeLive = function() {
             model.liveMode(true);
-            if (window.localStorage) { 
-                window.localStorage.setItem(prefKeyDefaultMode, '1');
-            }
         }
 
         model.setModeDraft = function() {
             model.liveMode(false);
-            if (window.localStorage) { 
-                window.localStorage.setItem(prefKeyDefaultMode, '0');
-            }
         }
 
         model.previewUrl = ko.computed(function() {
