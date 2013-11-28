@@ -17,6 +17,7 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
 
   protected val apiRoot: String
   protected val clientHeaderValue: String
+  protected val orderBy: String = "newest"
 
   def commentCounts(ids: String): Future[Seq[CommentCount]] = {
     def onError(response: Response) =
@@ -67,18 +68,18 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
   }
 
   def commentsFor(key: DiscussionKey, page: String, pageSize: String = ""): Future[CommentPage] = {
-    getJsonForUri(key, s"$apiRoot/discussion/$key?pageSize=${getPageSize(pageSize)}&page=$page&orderBy=newest&showSwitches=true")
+    getJsonForUri(key, s"$apiRoot/discussion/$key?pageSize=${getPageSize(pageSize)}&page=$page&orderBy=$orderBy&showSwitches=true")
   }
 
   def topCommentsFor(key: DiscussionKey, page: String, pageSize: String = ""): Future[CommentPage] = {
-    getJsonForUri(key, s"$apiRoot/discussion/$key/topcomments?pageSize=${getPageSize(pageSize)}&page=$page&orderBy=newest&showSwitches=true")
+    getJsonForUri(key, s"$apiRoot/discussion/$key/topcomments?pageSize=${getPageSize(pageSize)}&page=$page&orderBy=$orderBy&showSwitches=true")
   }
 
   def commentContext(id: Int, pageSize: String = ""): Future[(DiscussionKey, Int)] = {
     def onError(r: Response) =
       s"Discussion API: Cannot load comment context, status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
 
-    val apiUrl = s"$apiRoot/comment/$id/context?pageSize=${getPageSize(pageSize)}"
+    val apiUrl = s"$apiRoot/comment/$id/context?pageSize=${getPageSize(pageSize)}&orderBy=$orderBy"
 
     getJsonOrError(apiUrl, onError) map {
       json =>

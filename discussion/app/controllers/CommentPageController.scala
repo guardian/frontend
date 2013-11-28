@@ -16,7 +16,7 @@ trait CommentPageController extends DiscussionController {
     implicit request =>
       discussionApi.commentContext(id) map {
         page =>
-          Redirect("/discussion"+ page._1 +"?page="+ page._2)
+          Redirect("/discussion"+ page._1 +"?page="+ page._2 +"#comment-"+ id)
       }
   }
 
