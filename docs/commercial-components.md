@@ -6,7 +6,7 @@ This informally outlines our expectations of the integration of commercial compo
 
 R2, the system that runs the current Guardian site, used a combination of micro-apps and XHR to insert blobs of HTML/CSS/JS in to every webpage.
 
-This makes is hard to main an coherent direction over the code as each of these components generated it's own code and loaded what libraries it needed.
+This makes is hard to main an coherent direction over the code as each of these components generated its own code and loaded what libraries it needed.
 
 This fragments the codebase/ux/design, raises the cost of maintenance, can degrade the performance of the website, and slows the speed at which the team can operate.
 
