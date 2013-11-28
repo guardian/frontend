@@ -32,8 +32,8 @@ define([
         },
 
         state: {
-            fronts: null,                 // loaded on bootstrap
-            collections: null,            // loaded on bootstrap
+            fronts: {},                    // loaded on bootstrap
+            collections: {},               // loaded on bootstrap
 
             liveMode: ko.observable(false) // default to live mode?
         },

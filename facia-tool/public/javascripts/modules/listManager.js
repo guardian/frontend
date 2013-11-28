@@ -64,10 +64,15 @@ define([
         function fetchFronts() {
             return authedAjax.request({
                 url: common.config.apiBase + '/config'
-            }).then(function(resp) {
+            })
+            .fail(function () {
+                window.alert("Oops, the fronts configuration was not available! Please contact support.");
+                return;                                
+            })
+            .done(function(resp) {
 
                 if (!(_.isObject(resp.fronts) && _.isObject(resp.collections))) {
-                    window.alert("Oops, no page definitions were found! Please contact support.");
+                    window.alert("Oops, the fronts configuration is invalid! Please contact support.");
                     return;
                 }
 
@@ -171,7 +176,7 @@ define([
             droppable.init();
 
             fetchFronts()
-            .then(function(){
+            .done(function(){
                 renderFront();
                 window.onpopstate = renderFront;
 
