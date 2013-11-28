@@ -219,11 +219,11 @@ trait ConfigAgent extends ExecutionContexts {
 
   def getConfig(id: String): Option[Config] = {
     val json = configAgent.get()
-    (json \ "collections" \ id).asOpt[Map[String, String]] map { collectionMap =>
+    (json \ "collections" \ id).asOpt[JsValue] map { collectionJson =>
       Config(
         id,
-        collectionMap.get("apiQuery"),
-        collectionMap.get("displayName")
+        (collectionJson \ "apiQuery").asOpt[String],
+        (collectionJson \ "displayName").asOpt[String]
       )
     }
   }
