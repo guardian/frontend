@@ -17,15 +17,15 @@ object SoulmatesAggregatingAgent {
     soulmatesAgents foreach (_.stop())
   }
 
-  def sampleMembers(segment: Segment): Seq[Member] = {
-    {
-      for {
-        man <- Random.shuffle(SoulmatesMenAgent.matchingAds(segment)).headOption
-        woman <- Random.shuffle(SoulmatesWomenAgent.matchingAds(segment)).headOption
-      } yield Random.shuffle(Seq(man, woman))
-    } getOrElse Nil
+  def sampleMembers(segment: Segment): List[Member] = {
+    val women = Random.shuffle(SoulmatesWomenAgent.adsTargetedAt(segment))
+    val men = Random.shuffle(SoulmatesMenAgent.adsTargetedAt(segment))
+    if (women.isEmpty || men.isEmpty) {
+      Nil
+    } else {
+      Random.shuffle(List(women.head, men.head)) ++ Random.shuffle(men.tail.take(2) ++ women.tail.take(2)).take(3)
+    }
   }
-
 }
 
 trait SoulmatesAgent extends AdAgent[Member] with ExecutionContexts {

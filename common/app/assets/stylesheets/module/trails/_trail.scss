@@ -61,7 +61,6 @@
 }
 .trail__text {
     @include fs-bodyCopy(1);
-    text-rendering: optimizeLegibility;
 
     @include mq(tablet) {
         @include fs-bodyCopy(3, true);

@@ -12,8 +12,8 @@ object OffersAgent extends AdAgent[Offer] {
     MostPopularOffersAgent.refresh()
   }
 
-  override def matchingAds(segment: Segment, adsToChooseFrom: Seq[Offer] = AllOffersAgent.currentAds): Seq[Offer] = {
-    val matchingOffers = AllOffersAgent.matchingAds(segment, adsToChooseFrom)
+  override def adsTargetedAt(segment: Segment, adsToChooseFrom: Seq[Offer] = AllOffersAgent.currentAds): Seq[Offer] = {
+    val matchingOffers = AllOffersAgent.adsTargetedAt(segment, adsToChooseFrom)
     if (matchingOffers.isEmpty) {
       MostPopularOffersAgent.currentAds
     }

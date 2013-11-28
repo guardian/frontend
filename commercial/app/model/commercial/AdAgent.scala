@@ -1,12 +1,7 @@
 package model.commercial
 
 import common.AkkaAgent
-
-trait Ad {
-
-  def matches(segment: Segment): Boolean
-
-}
+import scala.util.Random
 
 trait AdAgent[T <: Ad] {
 
@@ -16,10 +11,10 @@ trait AdAgent[T <: Ad] {
 
   protected def updateCurrentAds(ads: Seq[T]) = agent send ads
 
-  def matchingAds(segment: Segment, adsToChooseFrom: Seq[T] = currentAds): Seq[T] = {
+  def adsTargetedAt(segment: Segment, adsToChooseFrom: Seq[T] = currentAds): Seq[T] = {
     // TODO: reinstate repeatVisitor condition when the time is right
     //adsToChooseFrom filter (segment.isRepeatVisitor && _.matches(segment))
-    adsToChooseFrom filter (_.matches(segment))
+    Random.shuffle(adsToChooseFrom filter (_.isTargetedAt(segment)))
   }
 
   def stop() {

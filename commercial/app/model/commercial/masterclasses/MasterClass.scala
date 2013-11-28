@@ -25,7 +25,7 @@ object MasterClass {
 
     val tickets = (block \\ "ticket") map {
       ticket =>
-        val price = (ticket \ "display_price").as[String].toDouble
+        val price = (ticket \ "display_price").as[String].replace(",", "").toDouble
         new Ticket(price)
     }
 
@@ -58,11 +58,11 @@ case class MasterClass(id: String,
     val priceList = tickets.map(_.price).sorted.distinct
     if (priceList.size > 1) {
       val (low, high) = (priceList.head, priceList.last)
-      "%1.2f to %1.2f".format(low, high)
-    } else "%1.2f".format(priceList.head)
+      f"$low%,.2f to $high%,.2f"
+    } else f"${priceList.head}%,.2f"
   }
 
-  def matches(segment: Segment) = true
+  def isTargetedAt(segment: Segment) = true
 }
 
 case class Ticket(price: Double)

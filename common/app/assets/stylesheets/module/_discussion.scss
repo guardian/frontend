@@ -93,6 +93,9 @@
     @include d-comment__body;
 }
 
+.d-discussion[data-read-only="true"] .sign-in-required {
+    display: none; /* Not the most performant, but it happens so rarely */
+}
 
 /* New Comment
    ===========================================================================*/
@@ -265,7 +268,10 @@
 .d-comment__recommend--user-recommended {
     background-color: #931c55;
 }
-
+.d-comment__seperator {
+    margin: 0 9px 0 6px;
+    cursor: normal;
+}
 
 /* Badges
    ========================================================================== */

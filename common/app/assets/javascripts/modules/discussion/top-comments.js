@@ -1,32 +1,32 @@
 define([
-    'utils/ajax',
-    'bonzo',
-    'qwery',
-    'modules/component',
-    'modules/identity/api',
-    'modules/discussion/comment-box',
-    'modules/discussion/recommend-comments',
-    '$'
+'utils/ajax',
+'bonzo',
+'qwery',
+'modules/component',
+'modules/identity/api',
+'modules/discussion/comment-box',
+'modules/discussion/recommend-comments',
+'$'
 ], function(
-    ajax,
-    bonzo,
-    qwery,
-    Component,
-    Id,
-    CommentBox,
-    RecommendComments,
-    $
+ajax,
+bonzo,
+qwery,
+Component,
+Id,
+CommentBox,
+RecommendComments,
+$
 ) {
 
 /* =================================================================
 
-    This module requires refactoring pending an architecture change for the
-    discussion system based on designs for the Top Comments functionality
-    being signed off.
+This module requires refactoring pending an architecture change for the
+discussion system based on designs for the Top Comments functionality
+being signed off.
 
-     - chrisfinch
+ - chrisfinch
 
-   ================================================================= */
+================================================================= */
 
 var TopComments = function(context, mediator, options, topCommentsSwitch) {
     this.context = context || document;
@@ -36,27 +36,33 @@ var TopComments = function(context, mediator, options, topCommentsSwitch) {
 };
 Component.define(TopComments);
 
-/** @type {Object.<string.*>} */
-TopComments.CONFIG = {
-    endpoint: '/discussion/top:discussionId.json',
-    classes: {
-        comments: 'd-thread--top-level',
-        topLevelComment: 'd-comment--top-level',
-        showMore: 'js-show-more-top-comments',
-        reply: 'd-comment--response',
-        showReplies: 'js-show-more-replies',
+/**
+ * @type {Object.<string.string>}
+ * @override
+ */
+TopComments.prototype.classes = {
+    comments: 'd-thread--top-level',
+    topLevelComment: 'd-comment--top-level',
+    showMore: 'js-show-more-top-comments',
+    reply: 'd-comment--response',
+    showReplies: 'js-show-more-replies',
 
-        topCommentTitle: "page-sub-header",
+    topCommentTitle: "page-sub-header",
 
-        comment: 'd-comment',
-        commentActions: 'd-comment__actions__main',
-        commentReply: 'd-comment__action--reply',
+    comment: 'd-comment',
+    commentActions: 'd-comment__actions__main',
+    commentReply: 'd-comment__action--reply',
 
-        topCommentHolder: 'discussion__comments__top',
-        titleCounter: 'discussion__comment-count',
-        fadeOut: 'd-image-fade'
-    }
+    topCommentHolder: 'discussion__comments__top',
+    titleCounter: 'discussion__comment-count',
+    fadeOut: 'd-image-fade'
 };
+
+/**
+ * @type {string}
+ * @override
+ */
+TopComments.prototype.endpoint = '/discussion/top:discussionId.json';
 
 /** @type {Object.<string.*>} */
 TopComments.prototype.defaultOptions = {
@@ -84,7 +90,7 @@ TopComments.prototype.user = null;
 
 TopComments.prototype.fetch = function(parent) {
     var self = this,
-        endpoint = this.conf().endpoint,
+        endpoint = this.endpoint,
         opt;
 
     for (opt in this.options) {
@@ -180,28 +186,13 @@ TopComments.prototype.bindCommentEvents = function() {
     RecommendComments.init(this.context);
 
     if (this.user && this.user.privateFields.canPostComment) {
-        this.renderReplyButtons();
         this.on('click', this.getClass('commentReply'), this.replyToComment);
     }
 };
 
-TopComments.prototype.renderReplyButtons = function(comments) {
-    var actions,
-        self = this;
-
-    comments = comments || this.comments;
-
-    comments.forEach(function(elem, i) {
-        actions = qwery(self.getClass('commentActions'), elem)[0];
-        bonzo(actions).prepend(
-            '<div class="u-fauxlink d-comment__action '+ self.getClass('commentReply', true) +'" '+
-            'role="button" data-link-name="reply to comment" data-comment-id="'+ elem.getAttribute('data-comment-id') +'">Reply</div>');
-    });
-};
-
 /**
- * @param {Event} e
- */
+* @param {Event} e
+*/
 TopComments.prototype.showMore = function(e) {
     var self = this;
     e.preventDefault();
@@ -230,8 +221,8 @@ TopComments.prototype.showHiddenComments = function() {
 };
 
 /**
- * @param {Object} resp
- */
+* @param {Object} resp
+*/
 // TopComments.prototype.commentsLoaded = function(resp) {
 //     var comments = qwery(this.getClass('topLevelComment'), bonzo.create(resp.html)),
 //         showMoreButton = this.getElem('showMore');
@@ -241,7 +232,6 @@ TopComments.prototype.showHiddenComments = function() {
 //         this.removeShowMoreButton();
 //     }
 
-//     this.renderReplyButtons(qwery(this.getClass('comment'), bonzo(comments).parent()));
 //     bonzo(this.getElem('comments')).append(comments);
 
 //     showMoreButton.innerHTML = 'Show more';

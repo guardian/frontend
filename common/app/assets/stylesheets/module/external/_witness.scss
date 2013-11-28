@@ -137,7 +137,6 @@
     @include font($serif, 700, 16, 16);
     letter-spacing: -.04em;
     text-transform: lowercase;
-    text-rendering: optimizeLegibility;
 }
 .witness-logo__witness {
     color: $c-neutral2;
