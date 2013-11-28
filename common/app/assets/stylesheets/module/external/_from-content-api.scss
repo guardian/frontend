@@ -153,18 +153,20 @@
 /* Bullet points
    ========================================================================== */
 
-.no-indent {
+.bullet-container {
     text-indent: 0 !important;
+    margin-bottom: .8em !important;
 }
 .bullet {
-    font-size: 13px;
     display: inline-block;
     color: $c-neutral3;
-    margin: $baseline/2 4px $baseline/-2 0;
+    vertical-align: bottom;
 
-    &:first-of-type {
-        margin-top: $baseline;
-    }
+    @include rem((
+        font-size: 48px,
+        margin-top: 15px,
+        margin-bottom: -2px
+    ));
 }
 
 
@@ -234,7 +236,6 @@ p + figure,
 p + video {
     margin-top: $baseline;
 }
-
 
 
 /* Video embeds
@@ -342,6 +343,9 @@ p + video {
                     text-indent: 2.8rem;
                 }
             }
+        }
+        > p.bullet-container + p {
+            text-indent: 0;
         }
     }
     .from-content-api blockquote.quoted {
