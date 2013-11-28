@@ -38,24 +38,30 @@ var Comments = function(context, mediator, options) {
 };
 Component.define(Comments);
 
-/** @type {Object.<string.*>} */
-Comments.CONFIG = {
-    endpoint: '/discussion:discussionId.json',
-    classes: {
-        comments: 'd-thread--top-level',
-        topLevelComment: 'd-comment--top-level',
-        showMore: 'js-show-more-comments',
-        reply: 'd-comment--response',
-        showReplies: 'js-show-more-replies',
-        header: 'd-discussion__header',
+/**
+ * @type {Object.<string.*>}
+ * @override
+ */
+Comments.prototype.classes = {
+    comments: 'd-thread--top-level',
+    topLevelComment: 'd-comment--top-level',
+    showMore: 'js-show-more-comments',
+    reply: 'd-comment--response',
+    showReplies: 'js-show-more-replies',
+    header: 'd-discussion__header',
 
-        comment: 'd-comment',
-        commentActions: 'd-comment__actions__main',
-        commentReply: 'd-comment__action--reply',
-        commentPick: 'd-comment__pick',
-        commentRecommend: 'd-comment__recommend'
-    }
+    comment: 'd-comment',
+    commentActions: 'd-comment__actions__main',
+    commentReply: 'd-comment__action--reply',
+    commentPick: 'd-comment__pick',
+    commentRecommend: 'd-comment__recommend'
 };
+
+/**
+ * @type {string}
+ * @override
+ */
+Comments.prototype.endpoint = '/discussion:discussionId.json';
 
 /** @type {Object.<string.*>} */
 Comments.prototype.defaultOptions = {

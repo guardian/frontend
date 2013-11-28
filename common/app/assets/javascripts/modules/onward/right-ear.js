@@ -11,14 +11,13 @@ function RightEar(sequence, options) {
     this.sequenceItem = sequence[0];
     this.setOptions(options);
 }
-
 Component.define(RightEar);
 
-RightEar.CONFIG = {
-    templateName: 'right-ear',
-    componentClass: 'right-ear',
-    useBem: true
-};
+RightEar.prototype.templateName = 'right-ear';
+
+RightEar.prototype.componentClass = 'right-ear';
+
+RightEar.prototype.useBem = true;
 
 RightEar.prototype.defaultOptions = {};
 

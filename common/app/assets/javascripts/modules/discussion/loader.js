@@ -47,18 +47,24 @@ Component.define(Loader);
 /** @type {Element} */
 Loader.prototype.context = null;
 
-/** @type {Object.<string.*>} */
-Loader.CONFIG = {
-    componentClass: 'discussion',
-    classes: {
-        commentsContainer: 'discussion__comments__container',
-        comments: 'discussion__comments',
-        commentBox: 'discussion__comment-box',
-        commentBoxBottom: 'discussion__comment-box--bottom',
-        joinDiscussion: 'd-show-cta',
-        topComments: 'discussion__comments--top-comments'
-    }
+/**
+ * @type {Object.<string.string>}
+ * @override
+ */
+Loader.prototype.classes = {
+    commentsContainer: 'discussion__comments__container',
+    comments: 'discussion__comments',
+    commentBox: 'discussion__comment-box',
+    commentBoxBottom: 'discussion__comment-box--bottom',
+    joinDiscussion: 'd-show-cta',
+    topComments: 'discussion__comments--top-comments'
 };
+
+/**
+ * @type {string}
+ * @override
+ */
+Loader.prototype.componentClass = 'discussion';
 
 /** @type {Comments} */
 Loader.prototype.comments = null;
