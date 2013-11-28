@@ -99,7 +99,7 @@ object JsonNotFound {
   private val ValidCallback = """([a-zA-Z0-9_]+)""".r
 
   def apply()(implicit request: RequestHeader) = request.getQueryString("callback").map {
-    case ValidCallback(callback) => Ok("""%s({"status":404});""" format (callback)).as(JAVASCRIPT)
+    case ValidCallback(callback) => Ok("""%s({"status":404});""" format (callback)).as(withCharset("application/javascript"))
     case badCallback => Forbidden("bad callback name")
   }.getOrElse(NotFound)
 }
