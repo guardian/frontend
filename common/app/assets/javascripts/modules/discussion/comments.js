@@ -64,7 +64,8 @@ Comments.prototype.defaultOptions = {
     discussionId: null,
     initialShow: 10,
     showRepliesCount: 3,
-    user: null
+    user: null,
+    commentId: null
 };
 
 /** @type {Boolean} */

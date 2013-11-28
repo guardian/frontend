@@ -99,9 +99,6 @@ Loader.prototype.ready = function() {
     bonzo(self.topLoadingElem).insertAfter(topCommentsElem);
 
     this.on('user:loaded', function(user) {
-
-        // Top comments =========================================== //
-
         self.topComments = new TopComments(self.context, self.mediator, {
             discussionId: self.getDiscussionId(),
             user: self.user
@@ -114,10 +111,7 @@ Loader.prototype.ready = function() {
                 self.on('click', $(self.topComments.showMoreButton), self.topComments.showMore.bind(self.topComments)); // Module-hopping calls - refactor needed
             });
 
-        self.mediator.on("module:topcomments:loadcomments", self.loadComments.bind(self));
-
-        // !Top comments ========================================== //
-
+        self.mediator.on('module:topcomments:loadcomments', self.loadComments.bind(self));
     });
 
     this.getUser();
@@ -131,7 +125,8 @@ Loader.prototype.loadComments = function (args) {
 
     var commentsContainer   = this.getElem('commentsContainer'),
         commentsElem        = this.getElem('comments'),
-        loadingElem         = bonzo.create('<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>')[0];
+        loadingElem         = bonzo.create('<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>')[0],
+        hash = window.location.hash;
 
     if (args.showLoader) {
         // Comments are being loaded in the no-top-comments-available context
@@ -141,10 +136,13 @@ Loader.prototype.loadComments = function (args) {
     bonzo(self.topLoadingElem).addClass('u-h');
     bonzo(loadingElem).insertAfter(commentsElem);
 
+
+
     this.comments = new Comments(this.context, this.mediator, {
         initialShow: args.amount,
         discussionId: this.getDiscussionId(),
-        user: this.user
+        user: this.user,
+        commentId: /$#comment-\d^/.test(hash) ? parseInt(hash.replace('#comment-', ''), 10) : null
     });
 
     // Doing this makes sure there is only one redraw
@@ -154,7 +152,7 @@ Loader.prototype.loadComments = function (args) {
         .then(function killLoadingMessage() {
             bonzo(loadingElem).remove();
             self.renderCommentBar(self.user);
-            bonzo(self.comments.getElem('showMore')).addClass("u-h");
+            bonzo(self.comments.getElem('showMore')).addClass('u-h');
 
             if (args.showLoader) {
                 // Comments are being loaded in the no-top-comments-available context
@@ -274,7 +272,7 @@ Loader.prototype.commentPosted = function () {
 
 /* Configure DOM for viewing of comments once some have been shown */
 Loader.prototype.cleanUpOnShowComments = function () {
-    bonzo([this.comments.getElem('showMore'), this.comments.getElem('header')]).removeClass("u-h");
+    bonzo([this.comments.getElem('showMore'), this.comments.getElem('header')]).removeClass('u-h');
     bonzo(this.getElem('joinDiscussion')).remove();
 };
 
