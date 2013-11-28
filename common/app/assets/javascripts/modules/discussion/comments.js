@@ -190,8 +190,8 @@ Comments.prototype.handlePickClick = function (event) {
 };
 
 /**
- * @param   {DOM Node}      thisComment
- * @param   {Bonzo Node}    $thisButton
+ * @param   {Element}      thisComment
+ * @param   {Bonzo}    $thisButton
  * @return  {Reqwest}       AJAX Promise
  */
 Comments.prototype.pickComment = function (thisComment, $thisButton) {
@@ -207,8 +207,8 @@ Comments.prototype.pickComment = function (thisComment, $thisButton) {
 };
 
 /**
- * @param   {DOM Node}      thisComment
- * @param   {Bonzo Node}    $thisButton
+ * @param   {Element}      thisComment
+ * @param   {Bonzo}    $thisButton
  * @return  {Reqwest}       AJAX Promise
  */
 Comments.prototype.unPickComment = function (thisComment, $thisButton) {
