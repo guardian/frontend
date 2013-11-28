@@ -66,7 +66,7 @@ object JsonComponent extends Results {
   private def resultFor(request: RequestHeader, json: String): SimpleResult = {
     // JSONP if it has a callback
     request.getQueryString("callback").map {
-      case ValidCallback(callback) => Ok(s"$callback($json);").as(JAVASCRIPT)
+      case ValidCallback(callback) => Ok(s"$callback($json);").as(withCharset("application/javascript"))
       case badCallback => Forbidden("bad callback name")
 
     // Crossdomain if it has an origin header
