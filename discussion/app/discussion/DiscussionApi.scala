@@ -47,7 +47,11 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
                     Comment(responseJson)
                 }
             } getOrElse Nil
-            Comment(commentJson, responses)
+            val metaData = (commentJson \\ "metaData").headOption map {
+              metaDataJson =>
+                metaDataJson.asInstanceOf[JsArray].value
+            } getOrElse Nil
+            Comment(commentJson, responses, metaData)
         }
 
         CommentPage(
@@ -66,8 +70,8 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
     }
   }
 
-  def commentsFor(key: DiscussionKey, page: String, pageSize: String = ""): Future[CommentPage] = {
-    getJsonForUri(key, s"$apiRoot/discussion/$key?pageSize=${getPageSize(pageSize)}&page=$page&orderBy=newest&showSwitches=true")
+  def commentsFor(key: DiscussionKey, page: String, pageSize: String = "", maxResponses: String = "1"): Future[CommentPage] = {
+    getJsonForUri(key, s"$apiRoot/discussion/$key?pageSize=${getPageSize(pageSize)}&page=$page&orderBy=newest&showSwitches=true&maxResponses=$maxResponses")
   }
 
   def topCommentsFor(key: DiscussionKey, page: String, pageSize: String = ""): Future[CommentPage] = {

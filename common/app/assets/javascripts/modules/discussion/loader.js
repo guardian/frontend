@@ -159,7 +159,8 @@ Loader.prototype.loadComments = function (args) {
             if (args.showLoader) {
                 // Comments are being loaded in the no-top-comments-available context
                 bonzo(self.getElem('joinDiscussion')).remove();
-                bonzo([self.comments.getElem('showMore'), self.comments.getElem('header')]).removeClass("u-h");
+                bonzo(self.comments.getElem('showMore')).removeClass("u-h");
+                bonzo(self.comments.getElem('header')).removeClass("u-h");
             }
 
             self.on("click", self.getElem('joinDiscussion'), function (event) {

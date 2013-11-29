@@ -61,7 +61,7 @@ Comments.prototype.classes = {
  * @type {string}
  * @override
  */
-Comments.prototype.endpoint = '/discussion:discussionId.json';
+Comments.prototype.endpoint = '/discussion:discussionId.json?maxResponses=3';
 
 /** @type {Object.<string.*>} */
 Comments.prototype.defaultOptions = {
@@ -135,7 +135,9 @@ Comments.prototype.ready = function() {
             this.on('click', this.getElem('showMore'), this.showMore);
         }
 
-        this.hideExcessReplies();
+        this.bindMoreReplies();
+
+        //this.hideExcessReplies();
         if (!this.isReadOnly()) {
             this.bindCommentEvents();
         }
@@ -247,7 +249,7 @@ Comments.prototype.showMore = function(event) {
         showMoreButton.innerHTML = 'Loading…';
         showMoreButton.setAttribute('data-disabled', 'disabled');
         ajax({
-            url: '/discussion'+ this.options.discussionId +'.json?page='+ (this.currentPage+1),
+            url: '/discussion'+ this.options.discussionId +'.json?page='+ (this.currentPage+1) + '&maxResponses=3',
             type: 'json',
             method: 'get',
             crossOrigin: true
@@ -285,7 +287,6 @@ Comments.prototype.hideExcessReplies = function(comments) {
     comments = comments || this.topLevelComments;
     comments.forEach(function(elem, i) {
         replies = qwery(self.getClass('reply'), elem);
-
         if (replies.length > self.options.showRepliesCount) {
             repliesToHide = replies.slice(self.options.showRepliesCount, replies.length);
             bonzo(repliesToHide).attr('hidden', 'hidden');

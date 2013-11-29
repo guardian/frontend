@@ -23,14 +23,16 @@ case class Comment(
   isHighlighted: Boolean,
   isBlocked: Boolean,
   responseTo: Option[ResponseTo] = None,
-  numRecommends: Int
+  numRecommends: Int,
+  numResponses: Int
 )
 
 object Comment extends {
 
   def apply(json: JsValue): Comment = Comment(json, Nil)
 
-  def apply(json: JsValue, responses: Seq[Comment]): Comment = {
+  def apply(json: JsValue, responses: Seq[Comment], metaData: JsValue): Comment = {
+      print (json)
       Comment(
         id = (json \ "id").as[Int],
         body = (json \ "body").as[String],
@@ -40,7 +42,8 @@ object Comment extends {
         isHighlighted = (json \ "isHighlighted").as[Boolean],
         isBlocked = (json \ "status").as[String].contains("blocked"),
         responseTo = (json \\ "responseTo").headOption.map(ResponseTo(_)),
-        numRecommends = (json \ "numRecommends").as[Int]
+        numRecommends = (json \ "numRecommends").as[Int],
+        numResponses = (metaData \ "responseCount").as[Int]
     )
   }
 }
