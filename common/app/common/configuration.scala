@@ -78,10 +78,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val store = configuration.getMandatoryStringProperty("frontend.store")
   }
 
-  object mongo {
-    lazy val connection = configuration.getMandatoryStringProperty("mongo.connection.readonly.password")
-  }
-
   object site {
     lazy val host = configuration.getStringProperty("guardian.page.host").getOrElse("")
   }
