@@ -123,10 +123,11 @@ Loader.prototype.loadComments = function (args) {
 
     var self = this;
 
-    var commentsContainer   = this.getElem('commentsContainer'),
-        commentsElem        = this.getElem('comments'),
-        loadingElem         = bonzo.create('<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>')[0],
-        hash = window.location.hash;
+    var commentsContainer = this.getElem('commentsContainer'),
+        commentsElem = this.getElem('comments'),
+        loadingElem = bonzo.create('<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>')[0],
+        hash = window.location.hash,
+        isAnchor = /#comment-\d/.test(hash);
 
     if (args.showLoader) {
         // Comments are being loaded in the no-top-comments-available context
@@ -136,19 +137,16 @@ Loader.prototype.loadComments = function (args) {
     bonzo(self.topLoadingElem).addClass('u-h');
     bonzo(loadingElem).insertAfter(commentsElem);
 
-
-
     this.comments = new Comments(this.context, this.mediator, {
-        initialShow: args.amount,
+        initialShow: isAnchor ? 10 : args.amount,
         discussionId: this.getDiscussionId(),
         user: this.user,
-        commentId: /$#comment-\d^/.test(hash) ? parseInt(hash.replace('#comment-', ''), 10) : null
+        commentId: isAnchor ? parseInt(hash.replace('#comment-', ''), 10) : null
     });
 
     // Doing this makes sure there is only one redraw
     // Within comments there is adding of reply buttons etc
-    this.comments
-        .fetch(commentsElem)
+    this.comments.fetch(commentsElem)
         .then(function killLoadingMessage() {
             bonzo(loadingElem).remove();
             self.renderCommentBar(self.user);

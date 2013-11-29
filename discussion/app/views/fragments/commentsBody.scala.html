@@ -4,6 +4,7 @@
     class="d-discussion"
     data-page-count="@page.pages"
     data-comment-count="@page.commentCount"
+    data-current-page="@page.currentPage"
     @page.switches.map{ switch =>
         data-@switch.name="@switch.state"
     }>
@@ -21,7 +22,7 @@
         }
     </ul>
     @if(page.currentPage + 1 <= page.pages){
-        <a class="js-show-more-comments cta" data-link-name="Show more comments" href="@LinkTo{/@page.id?page=@(page.currentPage + 1)}">Show more comments</a>
+        <a class="js-show-more-comments cta" data-next-page="@(page.currentPage + 1)" data-link-name="Show more comments" href="@LinkTo{/@page.id?page=@(page.currentPage + 1)}">Show more comments</a>
     }
 
     <script type="text/template" id="tmpl-comment-box">@fragments.commentBox()</script>

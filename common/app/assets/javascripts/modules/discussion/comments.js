@@ -35,7 +35,7 @@ var Comments = function(context, mediator, options) {
     this.setOptions(options);
 
     if (this.options.commentId) {
-        this.endpoint = '/discussion/comment/'+ this.options.commentId;
+        this.endpoint = '/discussion/comment/'+ this.options.commentId +'.json';
     }
 };
 Component.define(Comments);
@@ -75,9 +75,6 @@ Comments.prototype.defaultOptions = {
 /** @type {Boolean} */
 Comments.prototype.hasHiddenComments = false;
 
-/** @type {number} */
-Comments.prototype.currentPage = 1;
-
 /** @type {NodeList=} */
 Comments.prototype.comments = null;
 
@@ -89,17 +86,12 @@ Comments.prototype.user = null;
 
 /** @override */
 Comments.prototype.prerender = function() {
-    // Set the heading to the correct text
-    var heading = qwery('#comments')[0],
-        commentCount = this.elem.getAttribute('data-comment-count');
+    var self = this,
+        heading = qwery('#comments')[0],
+        commentCount = this.elem.getAttribute('data-comment-count'),
+        initialShow = this.options.initialShow;
 
     heading.innerHTML += ' <span class="discussion__comment-count">('+ commentCount +')</span>';
-};
-
-/** @override */
-Comments.prototype.ready = function() {
-    var initialShow = this.options.initialShow,
-        self = this;
 
     // Ease of use
     this.user = this.options.user;
@@ -123,14 +115,18 @@ Comments.prototype.ready = function() {
                         'Show more comments'+
                     '</a>');
             }
-            this.on('click', this.getElem('showMore'), this.showMore);
         }
 
         this.hideExcessReplies();
-        if (!this.isReadOnly()) {
-            this.bindCommentEvents();
-        }
-        this.on('click', this.getClass('showReplies'), this.showMoreReplies);
+    }
+};
+
+/** @override */
+Comments.prototype.ready = function() {
+    this.on('click', this.getClass('showReplies'), this.showMoreReplies);
+    this.on('click', this.getElem('showMore'), this.showMore);
+    if (!this.isReadOnly()) {
+        this.bindCommentEvents();
     }
     this.emit('ready');
 };
@@ -146,8 +142,8 @@ Comments.prototype.bindCommentEvents = function() {
 /**
  * @param {Event} e
  */
-Comments.prototype.showMore = function(event) {
-    if (event) { event.preventDefault(); }
+Comments.prototype.showMore = function(e) {
+    if (e) { e.preventDefault(); }
 
     var showMoreButton = this.getElem('showMore');
 
@@ -158,10 +154,11 @@ Comments.prototype.showMore = function(event) {
     if (this.hasHiddenComments) {
         this.showHiddenComments();
     } else {
+
         showMoreButton.innerHTML = 'Loading…';
         showMoreButton.setAttribute('data-disabled', 'disabled');
         ajax({
-            url: '/discussion'+ this.options.discussionId +'.json?page='+ (this.currentPage+1),
+            url: '/discussion'+ this.options.discussionId +'.json?page='+ (this.getCurrentPage() + 1),
             type: 'json',
             method: 'get',
             crossOrigin: true
@@ -226,7 +223,7 @@ Comments.prototype.commentsLoaded = function(resp) {
     var comments = qwery(this.getClass('topLevelComment'), bonzo.create(resp.html)),
         showMoreButton = this.getElem('showMore');
 
-    this.currentPage++;
+    this.incrementPage();
     if (!resp.hasMore) {
         this.removeShowMoreButton();
     }
@@ -367,6 +364,30 @@ Comments.prototype.replyToComment = function(e) {
         self.addComment(comment, false, responses);
         this.destroy();
     });
+};
+
+/**
+ * @return {number}
+ */
+Comments.prototype.getCurrentPage = function() {
+    return parseInt(this.elem.getAttribute('data-current-page'), 10);
+};
+
+/**
+ * @param {number} page
+ */
+Comments.prototype.setCurrentPage = function(page) {
+    return this.elem.setAttribute('data-current-page', page);
+};
+
+/**
+ * @return {number}
+ */
+Comments.prototype.incrementPage = function(direction) {
+    direction = direction || 'up';
+    var page = direction === 'down' ? this.getCurrentPage() - 1 : this.getCurrentPage + 1;
+    this.setCurrentPage(page);
+    return page;
 };
 
 return Comments;
