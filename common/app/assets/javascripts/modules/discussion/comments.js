@@ -3,6 +3,7 @@ define([
     'utils/ajax',
     'bonzo',
     'qwery',
+    'bean',
     'modules/component',
     'modules/identity/api',
     'modules/discussion/comment-box',
@@ -12,6 +13,7 @@ define([
     ajax,
     bonzo,
     qwery,
+    bean,
     Component,
     Id,
     CommentBox,
@@ -128,13 +130,22 @@ Comments.prototype.prerender = function() {
 Comments.prototype.ready = function() {
     this.on('click', this.getClass('showReplies'), this.showMoreReplies);
     this.on('click', this.getClass('showMore'), this.showMore);
+    
     if (!this.isReadOnly()) {
         this.bindCommentEvents();
     }
+
     if (this.options.commentId) {
+        var comment = $('#comment-'+ this.options.commentId);
+
+        if (comment.attr('hidden')) {
+            bean.fire($(this.getClass('showReplies'), comment.parent())[0], 'click');
+        }
+
         window.location.hash = '#_';
         window.location.hash = '#comment-'+ this.options.commentId;
     }
+
     this.emit('ready');
 };
 
