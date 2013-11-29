@@ -6,15 +6,13 @@
         data-link-name="Front" role="main">
 
         @defining {TemplateDeduping()} { dedupe: TemplateDeduping =>
-            @faciaTrailblock.collections.zipWithIndex.map{ case(block, index) =>
-                @if(block._2.items.nonEmpty){
-                    @FindStyle(faciaTrailblock.id, block._1) match {
-                        case style: NewsContainer     => { @containers.news(block._1,  dedupe(5, block._2), style, index) }
-                        case style: SportContainer    => { @containers.sport(front, block._1, dedupe(5, block._2), style, index) }
-                        case style: CommentContainer  => { @containers.comment(block._1,  dedupe(5, block._2), style, index) }
-                        case style: FeaturesContainer => { @containers.features(block._1,  dedupe(5, block._2), style, index) }
-                        case style                    => { @containers.section(block._1,  dedupe(5, block._2), style, index) }
-                    }
+            @faciaTrailblock.collections.filter(_._2.items.nonEmpty).zipWithIndex.map{ case(block, index) =>
+                @FindStyle(faciaTrailblock.id, block._1) match {
+                    case style: NewsContainer     => { @containers.news(block._1,  dedupe(5, block._2), style, index) }
+                    case style: SportContainer    => { @containers.sport(front, block._1, dedupe(5, block._2), style, index) }
+                    case style: CommentContainer  => { @containers.comment(block._1,  dedupe(5, block._2), style, index) }
+                    case style: FeaturesContainer => { @containers.features(block._1,  dedupe(5, block._2), style, index) }
+                    case style                    => { @containers.section(block._1,  dedupe(5, block._2), style, index) }
                 }
             }
         }
