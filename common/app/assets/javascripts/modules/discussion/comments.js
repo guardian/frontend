@@ -131,6 +131,10 @@ Comments.prototype.ready = function() {
     if (!this.isReadOnly()) {
         this.bindCommentEvents();
     }
+    if (this.options.commentId) {
+        window.location.hash = '#_';
+        window.location.hash = '#comment-'+ this.options.commentId;
+    }
     this.emit('ready');
 };
 
@@ -215,6 +219,7 @@ Comments.prototype.commentsLoaded = function(resp, age) {
     if (!this.isReadOnly()) {
         RecommendComments.init(this.context);
     }
+
     this.emit('loaded');
 };
 
