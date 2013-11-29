@@ -80,13 +80,13 @@ object Switches extends Collections {
   val AudienceScienceSwitch = Switch("Analytics", "audience-science",
     "If this switch is on the Audience Science will be enabled.",
     safeState = Off)
+  
+  val AdDwellTimeLoggerSwitch = Switch("Analytics", "ad-dwell-times-logging",
+    "If this is on the in-view advert tracker will log some data to the Play logs",
+    safeState = On)
 
   val QuantcastSwitch = Switch("Analytics", "quantcast",
     "Enable the Quantcast audience segment tracking.",
-    safeState = Off)
-
-  val OmnitureDomReadySwitch = Switch("Analytics", "omniture-dom-ready",
-    "Initialise Omniture on dom-ready, rather than on page-load.",
     safeState = Off)
 
   val AdSlotImpressionStatsSwitch = Switch("Analytics", "adslot-impression-stats",
@@ -114,6 +114,17 @@ object Switches extends Collections {
   val DiscussionPostCommentSwitch = Switch("Discussion", "discussion-post-comment",
     "If this switch is on, users will be able to post comments",
     safeState = Off)
+
+  val DiscussionTopCommentsSwitch = Switch("Discussion", "discussion-top-comments",
+    "If this switch is on, users will see top comments if there are any",
+    safeState = Off)
+
+  // Open
+
+  val OpenCtaSwitch = Switch("Open", "open-cta",
+    "If this switch is on, will see a CTA to comments on the right hand side",
+    safeState = Off)
+
 
   // Swipe Switches
 
@@ -156,6 +167,10 @@ object Switches extends Collections {
     "If this switch is on the australia front will be available. Otherwise it will 404.",
     safeState = Off)
 
+  val NewsContainerSwitch = Switch("Feature Switches", "news-container",
+    "If this switch is on the news container will be on the network front. Otherwise fronts will display a normal facia container.",
+    safeState = Off)
+
   val LocalNavSwitch = Switch("Feature Switches", "local-nav",
     "If this switch is on, a secondary local nav is shown.",
     safeState = Off)
@@ -188,6 +203,10 @@ object Switches extends Collections {
     "If this is switch on the the browser will log JavaScript errors to the server (via a beacon)",
     safeState = Off)
 
+  val FacebookAutoSigninSwitch = Switch("Feature Switches", "facebook-autosignin",
+    "If this switch is on then users who have previously authorized the guardian app in facebook and who have not recently signed out are automatically signed in.",
+    safeState = Off)
+
   // A/B Test Switches
 
   val FontDelaySwitch = Switch("A/B Tests", "web-fonts-delay",
@@ -202,7 +221,7 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to measure the impact of cardifying inline links on number of linked stories read.",
     safeState = Off)
 
-  val ABAa = Switch("A/B Tests", "ab-aa",
+  val ABAa = Switch("A/B Tests", "ab-abcd",
     "If this is switched on an AA test runs to prove the assignment of users in to segments is working reliably.",
     safeState = Off)
 
@@ -218,12 +237,20 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to test the new commercial components",
     safeState = Off)
 
-  val ABStoryPackageQuestion = Switch("A/B Tests", "ab-story-package-question",
+  val ABImproveOnwardTrails = Switch("A/B Tests", "ab-improve-onward-trails",
     "If this is switched on an AB test runs to test re-ordering story packages",
     safeState = Off)
 
   val ABInitialShowMore = Switch("A/B Tests", "ab-initial-show-more",
     "If this is switched on an AB test runs to test how many items to initially show in news container",
+    safeState = Off)
+
+  val ABShowMoreLayout = Switch("A/B Tests", "ab-show-more-layout",
+    "If this is switched on an AB test runs that presents the 'show more' layout of a collection",
+    safeState = Off)
+
+  val ABOnwardIntrusive = Switch("A/B Tests", "ab-onward-intrusive",
+    "If this is switched on an AB test runs to test intrusive onward components",
     safeState = Off)
 
   // Sport Switch
@@ -254,7 +281,7 @@ object Switches extends Collections {
 
   val ImageServerSwitch = Switch("Image Server", "image-server",
     "If this switch is on images will be served off i.guim.co.uk (dynamic image host).",
-    safeState = Off)
+    safeState = On)
 
   val all: List[Switch] = List(
     AutoRefreshSwitch,
@@ -264,9 +291,10 @@ object Switches extends Collections {
     VideoAdvertSwitch,
     AudienceScienceSwitch,
     QuantcastSwitch,
-    OmnitureDomReadySwitch,
     DiscussionSwitch,
     DiscussionPostCommentSwitch,
+    DiscussionTopCommentsSwitch,
+    OpenCtaSwitch,
     ShortDiscussionSwitch,
     SwipeNav,
     SwipeNavOnClick,
@@ -278,6 +306,7 @@ object Switches extends Collections {
     ImageServerSwitch,
     ReleaseMessageSwitch,
     AustraliaFrontSwitch,
+    NewsContainerSwitch,
     FontDelaySwitch,
     ABParagraphSpacingSwitch,
     ABInlineLinkCardSwitch,
@@ -304,8 +333,12 @@ object Switches extends Collections {
     ABAlphaAdverts,
     ABCommercialComponents,
     EditionRedirectLoggingSwitch,
-    ABStoryPackageQuestion,
-    ABInitialShowMore
+    FacebookAutoSigninSwitch,
+    ABImproveOnwardTrails,
+    ABOnwardIntrusive,
+    ABInitialShowMore,
+    AdDwellTimeLoggerSwitch,
+    ABShowMoreLayout
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

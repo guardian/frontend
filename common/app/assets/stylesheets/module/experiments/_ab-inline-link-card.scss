@@ -37,8 +37,19 @@
 .card {
     position: relative;
 
-    a {
-        color: $c-neutral1;
+    .item__image-container {
+        display: block;
+    }
+}
+.card__action {
+    display: block;
+    color: $c-neutral1;
+
+    &:visited {
+        &,
+        .card__headline {
+            color: $c-neutral2;
+        }
     }
 }
 .card__media {
@@ -70,32 +81,30 @@
     padding-bottom: $baseline*2;
     border-bottom: 1px solid $c-neutral4;
     overflow: auto;
+    @include fs-data(3, true);
 
     .dateline {
         float: left;
         position: relative;
-        padding: 0 $gs-gutter/2 0 18px;
+        padding: 0 $gs-gutter/2 0 14px;
         min-width: gs-span(1) - 16;
 
         i {
             position: absolute;
-            top: -1px;
+            top: 3px;
             left: 0;
         }
     }
     .trail__count {
         position: relative;
-        top: -1px;
-        float: left;
-        color: $c-neutral2;
+        top: 0;
         margin-left: 4px;
 
         a {
-            color: $c-neutral2;
             margin-left: $gs-gutter/2 - 1;
         }
         i {
-            @extend .i-comment-grey;
+            @extend .i-comment-light-grey;
         }
     }
 }
@@ -127,6 +136,7 @@
     padding-top: 6px; // Aligns border with top of text
 }
 .card--right {
+
     margin-top: $baseline*4;
 
     .card__title {
@@ -137,5 +147,13 @@
         padding-bottom: 0;
         margin-bottom: $gs-baseline;
         @include fs-header(2);
+    }
+}
+
+.card-wrapper--right {
+    display: none;
+
+    &.is-visible {
+        display: block;
     }
 }

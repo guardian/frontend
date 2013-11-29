@@ -1,4 +1,4 @@
-define(['common', 'bean', 'modules/errors'], function(common, bean, Errors) {
+define(['common', 'bean', 'modules/analytics/errors'], function(common, bean, Errors) {
 
     describe("Errors", function() {
        
@@ -22,7 +22,7 @@ define(['common', 'bean', 'modules/errors'], function(common, bean, Errors) {
 
         it("should log javascript errors with the error message, line number, build number, and file", function(){
             expect(e.log(fakeError.message, fakeError.filename, fakeError.lineno)).toBeTruthy();
-            expect(document.getElementById('js-err').getAttribute('src')).toContain('beacon.gu.com/px.gif?message=foo&filename=foo.js&lineno=1&type=js&build=643');
+            expect(document.getElementById('js-err').getAttribute('src')).toContain('beacon.gu.com/js.gif?message=foo&filename=foo.js&lineno=1&type=js&build=643');
         });
 
         it("after logging, should let browser handle error if user pref switch 'showErrors is on", function(){
@@ -58,14 +58,14 @@ define(['common', 'bean', 'modules/errors'], function(common, bean, Errors) {
             it("it should log 'documentwriteslot.js' errors as advert errors", function(){
                 e.log(fakeError.message, 'modules/adverts/documentwriteslot.js', fakeError.lineno);
                 expect(document.getElementById('js-err').getAttribute('src')).toContain(
-                    'beacon.gu.com/px.gif?message=foo&filename=modules%2Fadverts%2Fdocumentwriteslot.js&lineno=1&type=ads'
+                    'beacon.gu.com/js.gif?message=foo&filename=modules%2Fadverts%2Fdocumentwriteslot.js&lineno=1&type=ads'
                 );
             });
             
             it("it should log 'Script error.' errors as advert errors", function(){
                 e.log('Script error.', fakeError.filename, fakeError.lineno);
                 expect(document.getElementById('js-err').getAttribute('src')).toContain(
-                    'beacon.gu.com/px.gif?message=Script%20error.&filename=foo.js&lineno=1&type=ads'
+                    'beacon.gu.com/js.gif?message=Script%20error.&filename=foo.js&lineno=1&type=ads'
                 );
             });
             

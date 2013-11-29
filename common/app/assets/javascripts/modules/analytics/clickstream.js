@@ -1,4 +1,14 @@
-define(['common', 'modules/detect', 'bean', 'modules/experiments/ab'], function (common, detect, bean, ab) {
+define([
+    'common',
+    'utils/detect',
+    'bean',
+    'modules/experiments/ab'
+], function (
+    common,
+    detect,
+    bean,
+    ab
+) {
 
     var Clickstream = function (opts) {
 
@@ -45,7 +55,7 @@ define(['common', 'modules/detect', 'bean', 'modules/experiments/ab'], function 
             }
 
             if (elName === 'body') {
-                if (spec.validTarget && spec.tag.length) {
+                if (spec.validTarget && spec.tag && spec.tag.length) {
                     spec.tag = [].concat(spec.tag).reverse().join(' | ');
                     if(el.getAttribute('data-link-test')) {
                         spec.tag = el.getAttribute('data-link-test') + ' | ' + spec.tag;

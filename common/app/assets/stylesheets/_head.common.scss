@@ -60,6 +60,9 @@
    ========================================================================== */
 
 @import "theme/_tones";
+@include tone-head(news, $c-newsDefault, $c-newsAccent);
+@include tone-head(comment, $c-commentDefault, $c-commentAccent);
+@include tone-head(feature, $c-featureDefault, $c-featureAccent);
 @import "theme/_colours";
 
 

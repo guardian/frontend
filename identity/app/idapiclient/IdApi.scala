@@ -37,12 +37,11 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
     response map jsonBodyParser.extract(jsonField("cookies"))
   }
 
-  def unauth(trackingData: TrackingData, auth: Auth): Future[Response[Unit]] = {
-    val response = http.POST(apiUrl("unauth"), None,
-      clientAuth.parameters ++ trackingData.parameters ++ auth.parameters,
-      clientAuth.headers ++ trackingData.parameters ++ auth.headers
-    )
-    response map jsonBodyParser.extractUnit
+  def unauth(auth: Auth, trackingData: TrackingData): Future[Response[CookiesResponse]] = {
+    val params = buildParams(Some(auth), Some(trackingData) )
+    val headers = buildHeaders(Some(auth))
+    val response = http.POST(apiUrl("unauth"), None, params, headers)
+    response map jsonBodyParser.extract[CookiesResponse](jsonField("cookies"))
   }
 
   // USERS

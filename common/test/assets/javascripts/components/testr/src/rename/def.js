@@ -1,0 +1,3 @@
+define('newdefname', {
+	redefined: true
+});

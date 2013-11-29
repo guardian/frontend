@@ -1,12 +1,12 @@
-define(['common'], function (common) {
+define([], function () {
 
     // An AA test is like an AB test but with no difference between the A & B variants. It is useful to prove
     // that the bucketing of users is fair.
     var Aa = function () {
 
-        this.id = 'Aa';
-        this.expiry = '2013-07-19';
-        this.audience = 0.1;
+        this.id = 'Abcd';
+        this.expiry = '2013-12-31';
+        this.audience = 0.25;
         this.description = 'A/A test to prove we bucket users evenly';
         this.canRun = function(config) {
             return true;
@@ -19,7 +19,25 @@ define(['common'], function (common) {
                 }
             },
             {
-                id: 'bucketa',
+                id: 'bucketA',
+                test: function () {
+                    return true;
+                }
+            },
+            {
+                id: 'bucketB',
+                test: function () {
+                    return true;
+                }
+            },
+            {
+                id: 'bucketC',
+                test: function () {
+                    return true;
+                }
+            },
+            {
+                id: 'bucketD',
                 test: function () {
                     return true;
                 }

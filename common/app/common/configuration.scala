@@ -3,7 +3,6 @@ package common
 import com.gu.conf.ConfigurationFactory
 import com.gu.management.{ Manifest => ManifestFile }
 import com.amazonaws.auth.{ BasicAWSCredentials, AWSCredentials }
-import java.net.InetAddress
 import play.api.Play
 import play.api.Play.current
 import java.io.{FileInputStream, File}
@@ -83,10 +82,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val connection = configuration.getMandatoryStringProperty("mongo.connection.readonly.password")
   }
 
-  object hostMachine {
-    lazy val name = InetAddress.getLocalHost.getHostName
-  }
-
   object site {
     lazy val host = configuration.getStringProperty("guardian.page.host").getOrElse("")
   }
@@ -148,6 +143,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object oas {
     lazy val siteIdHost = configuration.getStringProperty("oas.siteId.host").getOrElse(".guardian.co.uk")
+    lazy val url = configuration.getStringProperty("oas.url").getOrElse("http://oas.theguardian.com/RealMedia/ads/")
   }
 
   object facebook {
@@ -165,6 +161,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val apiClientHeader = configuration.getMandatoryStringProperty("discussion.apiClientHeader")
   }
 
+  object open {
+    lazy val ctaApiRoot = configuration.getMandatoryStringProperty("open.cta.apiRoot")
+  }
+
   object javascript {
     // This is config that is avaliable to both Javascript and Scala
     // But does not change across environments
@@ -172,10 +172,12 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       "ophanUrl" -> "http://s.ophan.co.uk/js/ophan.min",
       "googleSearchUrl" -> "http://www.google.co.uk/cse/cse.js",
       "interactiveUrl" -> "http://interactive.guim.co.uk/next-gen/",
+      "idWebAppUrl" -> id.webappUrl,
       "idApiUrl" -> id.apiRoot,
       "discussionApiRoot" -> discussion.apiRoot,
       "discussionApiClientHeader" -> discussion.apiClientHeader
     )
+
     lazy val pageData: Map[String, String] = {
       val keys = configuration.getPropertyNames.filter(_.startsWith("guardian.page."))
       keys.foldLeft(Map.empty[String, String]) {

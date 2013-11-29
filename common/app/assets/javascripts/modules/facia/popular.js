@@ -1,11 +1,12 @@
 define([
-    'common',
-    'ajax',
+    '$',
+    'utils/mediator',
+    'utils/ajax',
     'bonzo',
-    'modules/relativedates',
+    'modules/ui/relativedates',
     'modules/facia/collection-show-more',
-    'modules/facia/images'
-], function (common, ajax, bonzo, relativeDates, CollectionShowMore, faciaImages) {
+    'modules/ui/images'
+], function ($, mediator, ajax, bonzo, relativeDates, CollectionShowMore, images) {
 
     var updateTmpl = function(tmpl, trail) {
             return tmpl.replace(/@trail\.([A-Za-z.]*)/g, function(match, props) {
@@ -59,7 +60,7 @@ define([
                         ));
 
                         if (trail.itemPicture) {
-                            common.$g('.item__link', $item).prepend(imageTmpl(trail));
+                            $('.item__link', $item).prepend(imageTmpl(trail));
                             $item.addClass('item--has-image');
                         } else {
                             $item.addClass('item--has-no-image');
@@ -70,17 +71,17 @@ define([
                     });
                     bonzo(bonzo.create(containerTmpl))
                         .append($collection)
-                        .insertAfter(common.$g('.container').last());
+                        .insertAfter($('.container').last());
                     // add show more button
                     new CollectionShowMore($collection[0])
                         .addShowMore();
                     // relativise timestamps
                     relativeDates.init($collection[0]);
                     // upgrade image
-                    faciaImages.upgrade($collection[0]);
+                    images.upgrade($collection[0]);
                 },
                 function(req) {
-                    common.mediator.emit(
+                    mediator.emit(
                         'module:error',
                         'Failed to load facia popular: ' + req.statusText,
                         'modules/facia-popular.js'

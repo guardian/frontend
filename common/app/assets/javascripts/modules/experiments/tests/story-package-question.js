@@ -2,11 +2,12 @@
 define([
     'qwery',
     'bonzo',
-    'ajax',
+    'utils/ajax',
     'common',
     'utils/to-array',
-    'modules/detect',
-    'modules/onward/history'
+    'utils/detect',
+    'modules/onward/history',
+    'modules/ui/relativedates'
 ], function (
     qwery,
     bonzo,
@@ -14,14 +15,18 @@ define([
     common,
     toArray,
     detect,
-    History
+    History,
+    dates
 ) {
 
     var mostPopularUrl = '/onward/popular-onward/',
-        container = document.querySelector('.trailblock'),
         history = new History().get().map(function(item) {
             return item.id;
         });
+    
+    function getContainer() {
+        return  document.querySelector('.trailblock');
+    }
 
     function cleanUrl(url) {
         return '/' + url.split('/').slice(3).join('/');
@@ -32,7 +37,7 @@ define([
     }
 
     function getTrails() {
-        return toArray(qwery('.trail', container));
+        return toArray(qwery('.trail', getContainer()));
     }
 
     function isInHistory(trailId) {
@@ -51,18 +56,25 @@ define([
 
     function append(trail) {
         if(typeof trail === 'string') {
-            bonzo(qwery('ul:last-of-type', container)).html(trail);
+            bonzo(qwery('ul:last-of-type', getContainer())).html(trail);
         } else {
-            bonzo(trail).detach().appendTo(bonzo(qwery('ul:last-of-type', container)));
+            bonzo(trail).detach().appendTo(bonzo(qwery('ul:last-of-type', getContainer())));
         }
     }
 
     function prepend(trail) {
-        bonzo(trail).detach().prependTo(bonzo(qwery('ul:first-of-type', container)));
+        if(typeof trail === 'string') {
+            bonzo(qwery('ul:first-of-type', getContainer())).prepend(trail);
+        } else {
+            bonzo(trail).detach().prependTo(bonzo(qwery('ul:first-of-type', getContainer())));
+        }
+        return true;
     }
 
-    function labelAsQuestion(trail) {
-        trail.setAttribute('data-link-name', trail.getAttribute('data-link-name') + ' | question');
+    function labelAs(trail, label) {
+        if (trail) {
+            trail.setAttribute('data-link-name', trail.getAttribute('data-link-name') + ' | ' + label);
+        }
     }
 
     function cloneHeader()  {
@@ -82,37 +94,48 @@ define([
         });
     }
 
-    function upgradeTrail(url) {
-        if(detect.getLayoutMode() === 'mobile') {
+    function upgradeTrail(url, isQuestion) {
+        var dataLink = (isQuestion) ? 'read next | is question' : 'read next';
+        if(detect.getBreakpoint() === 'mobile') {
             trailToHTML(url, 'trail').then(function(resp) {
                 if('html' in resp) {
-                    append(resp.html);
+                    prepend(resp.html);
                 }
                 cloneHeader();
+                labelAs(getTrails()[0], dataLink);
             });
         } else {
             trailToHTML(url, 'card').then(function(resp) {
                 if('html' in resp) {
-                    bonzo(qwery('.card--right')).html(resp.html);
+                    bonzo(qwery('.card-wrapper--right')).removeClass('is-visible');
+                    bonzo(qwery('.u-table__cell--bottom')).append(resp.html);
+                    labelAs(qwery('.card-wrapper.is-visible .item__image-container')[0], dataLink);
                 }
             });
         }
+    }
+
+    function dedupe(id) {
+        var trails = getTrails().filter(function(trail){
+            return getTrailUrl(trail) === id;
+        });
+        bonzo((detect.getBreakpoint() === 'mobile' && trails.length > 1) ? trails[1] : trails).hide();
     }
 
     var Question = function () {
 
         var self = this;
 
-        this.id = 'StoryPackageQuestion';
+        this.id = 'ImproveOnwardTrails';
         this.expiry = '2013-11-30';
-        this.audience = 0.1;
-        this.description = 'Test effectiveness of question based trails in storypackages';
+        this.audience = 0.25;
+        this.description = 'Test effectiveness of various kinds of trails around story package';
         this.canRun = function(config) {
             if(config.page.contentType === 'Article'){
                 common.mediator.on('modules:related:loaded', function() {
                     getTrails().forEach(function(trail) {
                         if(isQuestion(trail)) {
-                            labelAsQuestion(trail);
+                            labelAs(trail, 'question');
                         }
                     });
                 });
@@ -132,6 +155,8 @@ define([
                             }
                         });
                         upgradeTrail(getTrailUrl(getTrails()[0]));
+                        dedupe(getTrailUrl(getTrails()[0]));
+                        dates.init(document);
                     });
                 }
             },
@@ -139,12 +164,15 @@ define([
                 id: 'Question',
                 test: function() {
                     common.mediator.on('modules:related:loaded', function() {
-                        getTrails().forEach(function(trail) {
-                            if(isQuestion(trail)) {
+                        getTrails().some(function(trail) {
+                            if(isQuestion(trail)){
                                 prepend(trail);
-                            }
+                                upgradeTrail(getTrailUrl(getTrails()[0]), true);
+                                dedupe(getTrailUrl(getTrails()[0]));
+                                dates.init(document);
+                                return true;
+                            } else { return false; }
                         });
-                        upgradeTrail(getTrailUrl(getTrails()[0]));
                     });
                 }
             },
@@ -153,7 +181,7 @@ define([
                 test: function() {
                     common.mediator.on('modules:related:loaded', function() {
                         ajax({
-                            url: mostPopularUrl + guardian.config.page.pageId + '.json',
+                            url: guardian.config.page.ajaxUrl + mostPopularUrl + guardian.config.page.pageId + '.json',
                             type: 'json',
                             crossOrigin: true
                         }).then(
@@ -162,6 +190,11 @@ define([
                                     resp.popularOnward.some(function(trail) {
                                         if(!isInHistory(trail.url)) {
                                             upgradeTrail(trail.url);
+                                            dedupe(trail.url);
+                                            dates.init(document);
+                                            return true;
+                                        } else {
+                                            return false;
                                         }
                                     });
                                 }
@@ -170,7 +203,57 @@ define([
                                 common.mediator.emit('module:error', 'Failed to load most popular onward journey' + req, 'modules/experiments/tests/story-question.js');
                             }
                         );
-                        cloneHeader();
+                    });
+                }
+            },
+            {
+                id: 'All',
+                test: function() {
+                    common.mediator.on('modules:related:loaded', function() {
+
+                        if(getTrails().some(function(trail) {
+                            if(isQuestion(trail)) {
+                                prepend(trail);
+                                return true;
+                            } else { return false; }
+                        }).length) {
+                            upgradeTrail(getTrailUrl(getTrails()[0]), true);
+                            dedupe(getTrailUrl(getTrails()[0]));
+                            dates.init(document);
+                            return;
+                        }
+
+                        ajax({
+                            url: guardian.config.page.ajaxUrl + mostPopularUrl + guardian.config.page.pageId + '.json',
+                            type: 'json',
+                            crossOrigin: true
+                        }).then(
+                            function(resp) {
+                                if(resp && 'popularOnward' in resp) {
+                                    resp.popularOnward.some(function(trail) {
+                                        if(!isInHistory(trail.url)) {
+                                            upgradeTrail(trail.url);
+                                            dedupe(trail.url);
+                                            dates.init(document);
+                                            return true;
+                                        } else {
+                                            getTrails().forEach(function(trail) {
+                                                if(isInHistory(getTrailUrl(trail))) {
+                                                    append(trail);
+                                                }
+                                            });
+                                            upgradeTrail(getTrailUrl(getTrails()[0]));
+                                            dedupe(getTrailUrl(getTrails()[0]));
+                                            dates.init(document);
+                                            return false;
+                                        }
+                                    });
+                                }
+                            },
+                            function(req) {
+                                common.mediator.emit('module:error', 'Failed to load most popular onward journey' + req, 'modules/experiments/tests/story-question.js');
+                            }
+                        );
                     });
                 }
             },

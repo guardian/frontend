@@ -4,17 +4,20 @@
 
 
 # For dev machines
-GET        /assets/*path                                                                             dev.DevAssetsController.at(path)
+GET        /assets/*path                                                                      dev.DevAssetsController.at(path)
 
 # Editionalised redirects
-GET        /                                                                                         controllers.FaciaController.editionRedirect(path = "")
-GET        /$path<(culture|sport|australia|commentisfree|business|money)>                            controllers.FaciaController.editionRedirect(path)
+GET        /                                                                                  controllers.FaciaController.editionRedirect(path = "")
+GET        /$path<(culture|sport|australia|commentisfree|business|money)>                     controllers.FaciaController.editionRedirect(path)
 
 
 # Editionalised pages
-GET        /$path<(us|uk|au)?>                                                                       controllers.FaciaController.renderEditionFront(path)
-GET        /$path<(us|uk|au)?>.json                                                                  controllers.FaciaController.renderEditionFrontJson(path)
-GET        /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>                    controllers.FaciaController.renderEditionSectionFront(path)
-GET        /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>.json               controllers.FaciaController.renderEditionSectionFrontJson(path)
+GET        /$path<(us|uk|au)?>                                                                controllers.FaciaController.renderEditionFront(path)
+GET        /$path<(us|uk|au)?>.json                                                           controllers.FaciaController.renderEditionFrontJson(path)
+GET        /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>             controllers.FaciaController.renderEditionSectionFront(path)
+GET        /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>.json        controllers.FaciaController.renderEditionSectionFrontJson(path)
 
-GET        /responsive-viewer                                                                        controllers.FaciaController.renderResponsiveViewer()
+GET        /responsive-viewer                                                                 controllers.FaciaController.renderResponsiveViewer()
+
+GET        /collection/$id<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>                                  controllers.FaciaController.renderEditionCollection(id)
+GET        /collection/$id<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>.json                             controllers.FaciaController.renderEditionCollectionJson(id)

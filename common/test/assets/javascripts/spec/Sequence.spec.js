@@ -1,4 +1,4 @@
-define(['utils/mediator', 'ajax', 'modules/onward/sequence'], function(mediator, ajax, sequence) {
+define(['utils/mediator', 'utils/ajax', 'modules/onward/sequence'], function(mediator, ajax, sequence) {
 
     describe("Sequence", function() {
         var sequenceLoadedCallback,
@@ -25,7 +25,7 @@ define(['utils/mediator', 'ajax', 'modules/onward/sequence'], function(mediator,
             }});
             sequenceLoadedCallback = sinon.stub();
             mediator.on('modules:sequence:sequence:loaded', sequenceLoadedCallback);
-            mediator.on('modules:sequence:sequence:loaded', function() { console.log(Array.prototype.slice.call(arguments)); });
+            
             //Set up fake server
             server = sinon.fakeServer.create();
             server.autoRespond = true;
@@ -61,7 +61,7 @@ define(['utils/mediator', 'ajax', 'modules/onward/sequence'], function(mediator,
             });
 
             waitsFor(function () {
-                return sequenceLoadedCallback.calledWith(["/p/3k4vt", "/p/3k44f", "/p/3k44b"]);
+                return sequenceLoadedCallback.calledWith([{url: "/p/3k4vt"},{url: "/p/3k44f"},{url: "/p/3k44b"}]);
             }, 'sequence was not deduped', 500);
 
         });

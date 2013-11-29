@@ -5,8 +5,8 @@
 define([
     '$',
     'utils/mediator',
-    'modules/detect',
-    'ajax'
+    'utils/detect',
+    'utils/ajax'
 ], function (
     $,
     mediator,
@@ -34,9 +34,9 @@ define([
     };
 
     InlineLinkCard.prototype.loadCard = function() {
-        var layoutMode = detect.getLayoutMode();
+        var breakpoint = detect.getBreakpoint();
 
-        if (layoutMode === 'extended' && !this.link.getAttribute('data-hasbeencardified')) {
+        if (breakpoint === 'wide' && !this.link.getAttribute('data-hasbeencardified')) {
             this.link.setAttribute('data-hasbeencardified', true);
             this.fetchData();
         }
@@ -51,7 +51,6 @@ define([
             host = data.host || false,
             tpl,
             imageFragment = '',
-            titleFragment = '',
             publishedFragment = '',
             contentFragment = '';
 
@@ -59,14 +58,11 @@ define([
             return false;
         }
 
-        if (title) {
-            titleFragment = '<h2 class="card__title">' + title + '</h2>';
-        }
         if (image) {
             imageFragment = '<img src="' + image + '" alt="" class="card__media" />';
         }
         if (datePublished) {
-            publishedFragment = '<div class="dateline"><i class="i i-clock-grey relative-timestamp__icon"></i><time datetime="' + datePublished + '" class="js-timestamp"></time></div>';
+            publishedFragment = '<div class="dateline"><i class="i i-clock-light-grey relative-timestamp__icon"></i><time datetime="' + datePublished + '" class="js-timestamp"></time></div>';
         }
         if (title === 'Wikipedia') {
             contentFragment = '<div class="card__description type-11">' + description + '</div>';
@@ -79,14 +75,12 @@ define([
 
         tpl =   '<div class="card-wrapper">' +
                     '<div class="furniture furniture--left card card--left">' +
-                        '<a href="' + href + '" data-link-name="in card link" aria-hidden="true">' +
+                        '<a class="card__action" href="' + href + '" data-link-name="in card link" aria-hidden="true">' +
                             imageFragment +
-                        '</a>' +
-                        '<div class="card__body u-text-hyphenate">' +
-                            '<a href="' + href + '" data-link-name="in card link" aria-hidden="true">' +
+                            '<div class="card__body u-text-hyphenate">' +
                                 contentFragment +
-                            '</a>' +
-                        '</div>' +
+                            '</div>' +
+                        '</a>' +
                         '<div class="card__meta">' +
                             publishedFragment +
                         '</div>' +

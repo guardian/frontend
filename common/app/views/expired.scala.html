@@ -1,7 +1,33 @@
-@(content: model.Content)(implicit request: RequestHeader)
+@(page: model.Page)(implicit request: RequestHeader)
 
-@main(content, Switches.all){ }{
-	
-	@fragments.expiredBody(content)
-	
+@main(page){ }{
+    <div class="article-wrapper monocolumn-wrapper tone-news">
+        <article id="article" class="article" itemprop="mainContentOfPage" role="main">
+            <div class="article__inner article__inner--head">
+                <header class="article__head">
+                    <h1 class="article__headline ">Sorry - the page you are looking for has been removed</h1>
+                </header>
+            </div>
+            <div class="article__columning-wrapper">
+                <div class="article__main-column">
+                    <div class="js-article__container article__container u-cf">
+                        <div class="article-body from-content-api" itemprop="articleBody">
+                            <div class="from-content-api">
+                                <p>This may be because of a legal objection, a rights consideration or for another reason. If you would like to contact someone about the page, you could email:
+                                    <ul>
+                                        <li>The reader&apos;s editor: <a  href="mailto:reader@@theguardian.com">reader@@theguardian.com</a> </li>
+                                        <li>User help: <a  href="mailto:userhelp@@theguardian.com">userhelp@@theguardian.com</a> </li>
+                                    </ul>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="article__secondary-column" aria-hidden="true"></div>
+            </div>
+            <div class="article__inner">
+            @fragments.mostPopularPlaceholder("/")
+            </div>
+        </article>
+    </div>
 }

@@ -49,12 +49,15 @@ GET         /metrics/fastly                  controllers.admin.FastlyController.
 GET         /metrics/errors                  controllers.admin.DashboardController.renderErrors()
 GET         /metrics/errors/4xx              controllers.admin.DashboardController.render4XX()
 GET         /metrics/errors/5xx              controllers.admin.DashboardController.render5XX()
+GET         /metrics/memory                  controllers.admin.DashboardController.renderMemory()
 
 # Radiator
 GET         /radiator                        controllers.admin.RadiatorController.renderRadiator()
 GET         /radiator/pingdom                controllers.admin.RadiatorController.pingdom()
 GET         /radiator/commit/*hash           controllers.admin.RadiatorController.commitDetail(hash)
 GET         /radiator/livestats              controllers.admin.RadiatorController.liveStats()
+GET         /radiator/eyeballs               controllers.admin.RadiatorController.adsInView()
+
 
 # Football Troubleshooter
 GET         /troubleshoot/football           controllers.admin.FootballTroubleshooterController.renderFootballTroubleshooter()

@@ -1,24 +1,33 @@
-//Base font-sizes
-//Mixin uses arguments: (family, weight, size, line-height);
+// Base font-sizes
+// Mixin uses arguments: font(family, weight, size, line-height);
 
+// Type extends
+// =============================================================================
 
-//SerifHeadline
+// DEPRECATED:
+// Use font-scale mixins instead
+
+// Serif Headline
 %type-1 { @include font($serifheadline, normal, 20, 28); }
 %type-2 { @include font($serifheadline, normal, 18, 28); }
 
-//SerifText
+// Serif Text
 %type-3 { @include font($serifheadline, normal, 26, 30); }
 %type-4 { @include font($serif, 700, 18, 24); }
 %type-5 { @include font($serifheadline, normal, 18, 24); }
 %type-6 { @include font($serif, normal, 16, 24); }
 %type-7 { @include font($serif, normal, 14, 20); }
 
-//Sans-serif's
+// Sans-serif
 %type-8  { @include font($sans-serif, normal, 14, 20); }
 %type-9  { @include font($sans-serif, bold, 13, 20); }
 %type-10 { @include font($sans-serif, normal, 13, 20); }
 %type-11 { @include font($sans-serif, normal, 13, 16); }
 %type-12 { @include font($sans-serif, normal, 11, 16); }
+
+
+// Misc
+// =============================================================================
 
 %d-badge-icon {
     display: inline-block;

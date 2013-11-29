@@ -1,6 +1,6 @@
 @(pageModel: TablesPage, comps: Seq[model.Competition])(implicit request: RequestHeader)
 
-@main(pageModel.page, Switches.all){ } {
+@main(pageModel.page){ } {
 
     @fragments.teamlistBody(pageModel, comps)
 

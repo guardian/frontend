@@ -4,8 +4,9 @@ define([
     'qwery',
     'bonzo',
     'bean',
-    'modules/detect',
+    'utils/detect',
     'modules/analytics/adverts',
+    'modules/analytics/livestats-ads',
     'modules/adverts/sticky',
     'lodash/objects/transform',
     'lodash/arrays/findLastIndex',
@@ -17,63 +18,84 @@ define([
     bean,
     detect,
     inview,
+    LiveStatsAds,
     Sticky,
     transform,
     findLastIndex,
     map) {
 
-    var variantName,
-        adViewTimings = [1, 2, 4, 6, 8, 10, 15, 20, 25, 30, 40, 50, 60],
-        adDwellTimes = {};
+    var _config,
+        variantName,
+        adDwellTimes = {},
+        flushInterval = 5000, // every 5 seconds
+        trackInterval = 1000,
+        maxTrackTime  = 80000; // stop tracking after this time
 
+    /*
+        This idea here is that we have two timers. One to monitor whether an advert is in the viewport
+        every 1 second, and a second to flush the data to the server every 5 seconds.
 
-    function initAdDwellTracking() {
-        startAdViewTimer();
+        As the user scrolls down the page and views adverts they increment the collective counter on
+        the server by one each time they view an advert.
 
-        // Listen for unload event
-        bean.on(window, 'beforeunload', function() {
-            common.mediator.emit('module:analytics:adimpression', getAdTimesReport());
-        });
-    }
+        For example, a user that sticks at the top of the page for 20 seconds will increment the 'Top' slot
+        counter by '20' and the server count by '4'.
 
+        We say can the Top slot has been viewed for 20 seconds by 4 instances, or an average of 5 seconds per
+        instance.
+        
+        The highest counter indicates the more viewed the advert.
+    */
 
-    function startAdViewTimer() {
-        var $trackedAdSlots = common.$g('.ad-slot');
+    function initAdDwellTracking(config, variant) {
 
-        setInterval(function() {
-            var viewport = detect.getLayoutMode();
+        var startTime = new Date().getTime(),
+            $trackedAdSlots = common.$g('.ad-slot'),
+            firstRun = true;
+        
+        // a timer to submit the data to diagnostics every nth second
+        if (config.switches.liveStats) {
+            var beaconInterval = setInterval(function() {
+                // if there's nothing to report, don't generate the request
+                if (Object.keys(adDwellTimes).length === 0) {
+                    return false;
+                }
 
+                if (firstRun) {
+                    adDwellTimes.first = 1;
+                }
+
+                adDwellTimes.layout = detect.getBreakpoint();
+                adDwellTimes.variant = variant;
+
+                new LiveStatsAds({
+                    beaconUrl: config.page.beaconUrl
+                }).log(adDwellTimes);
+
+                adDwellTimes = {}; // reset
+                firstRun = false;
+
+                // Stop timer if we've gone past the max running time
+                var now = new Date().getTime();
+                if (now >= startTime + maxTrackTime) {
+                    clearInterval(beaconInterval);
+                    clearInterval(adTrackInterval);
+                }
+            }, flushInterval);
+        }
+
+        // a timer to monitor the pages for ad-slots inside the viewport
+        var adTrackInterval = setInterval(function() {
+            var viewport = detect.getBreakpoint();
+            // NOTE:  getLayoutMode used to return 'extended' for 'wide'; this makes it backwards compatible
+            viewport = (viewport === 'wide') ? 'extended' : viewport;
             $trackedAdSlots.each(function(adEl) {
                 var adId = adEl.getAttribute('data-inview-name') || adEl.getAttribute('data-' + viewport) || '';
                 if (adId && isVisible(adEl)) {
-                    adDwellTimes[adId] = (adDwellTimes[adId]) ? adDwellTimes[adId] += 1 : 1;
+                    adDwellTimes[adId] = (adDwellTimes[adId]) ? adDwellTimes[adId] += 1 : 1; // has been seen inside this 1 second window
                 }
             });
-        }, 1000);
-    }
-
-    function getAdTimesReport() {
-        // This mental piece of code maps the actual advert dwell times to the
-        // predefined dwell times in adViewTimings. Pretty sure there's a better
-        // way, but it's late, and everyone is gone
-        // ex: {MPU: 17, Top: 29}  becomes {MPU: 15, Top: 25}
-        var mappedDwellTimes = transform(adDwellTimes, function(result, time, adId) {
-            var slottedTimeIndex = findLastIndex(adViewTimings, function(timeSlot) {
-                return timeSlot < time;
-            });
-            result[adId] = adViewTimings[slottedTimeIndex];
-        });
-
-        // Convert to string friendly format
-        var reportArray = map(mappedDwellTimes, function(val, key) {
-            return key+':'+val;
-        });
-
-        // Stick the variant name in front
-        reportArray.unshift(variantName);
-
-        // Dinner is served with a sprinkling of commas
-        return reportArray.join(',');
+        }, trackInterval);
     }
 
     function isVisible(el) {
@@ -85,7 +107,6 @@ define([
             rect.left < (window.innerWidth || document.body.clientWidth)
         );
     }
-
 
     var AlphaAdverts = function () {
 
@@ -101,6 +122,7 @@ define([
         this.audience = 0.1;
         this.description = 'Test new advert formats for alpha release';
         this.canRun = function(config) {
+            _config = config;
             if(config.page.contentType === 'Article') {
                 return true;
             } else {
@@ -126,9 +148,11 @@ define([
                         }).addClass(cls).insertAfter(this);
                     });
 
+                    bonzo(qwery('.ad-slot--bottom-banner-ad')).attr('data-inview-name', 'Bottom');
+
                     // The timer for the 'Both' variant is setup only once in the variant itself
                     if (!isBoth) {
-                        initAdDwellTracking();
+                        initAdDwellTracking(_config, this.id);
                     }
 
                     return true;
@@ -139,11 +163,11 @@ define([
                 test: function(context, isBoth) {
                     variantName = 'Adhesive';
                     guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha2.com';
-                    var viewport = detect.getLayoutMode(),
+                    var viewport = detect.getBreakpoint(),
                         inviewName,
                         s;
                     if(viewport === 'mobile' || viewport === 'tablet' && detect.getOrientation() === 'portrait') {
-                        inviewName = 'Top banner';
+                        inviewName = 'Top';
                         bonzo(qwery('.ad-slot--top-banner-ad')).attr('data-inview-name', inviewName);
                         bonzo(qwery('.parts__head')).addClass('is-sticky');
                         if(!supportsSticky && supportsFixed) {
@@ -154,7 +178,7 @@ define([
                         }
                     } else {
                         inviewName = 'MPU';
-                        document.getElementsByClassName('js-mpu-ad-slot')[0].appendChild(bonzo.create(mpuTemp)[0]);
+                        bonzo(qwery('.js-mpu-ad-slot .social-wrapper')).after(bonzo.create(mpuTemp)[0]);
                         bonzo(qwery('.ad-slot--mpu-banner-ad')).attr('data-inview-name', inviewName);
                         if(!supportsSticky && supportsFixed) {
                             s = new Sticky({
@@ -164,9 +188,11 @@ define([
                         }
                     }
 
+                    bonzo(qwery('.ad-slot--bottom-banner-ad')).attr('data-inview-name', 'Bottom');
+
                     // The timer for the 'Both' variant is setup only once in the variant itself
                     if (!isBoth) {
-                        initAdDwellTracking();
+                        initAdDwellTracking(_config, this.id);
                     }
 
                     return true;
@@ -187,7 +213,7 @@ define([
                     guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha3.com';
                     variantName = 'Both';
 
-                    initAdDwellTracking();
+                    initAdDwellTracking(_config, this.id);
 
                     return true;
                 }
@@ -197,8 +223,9 @@ define([
                 test: function() {
                     variantName = 'Control';
                     guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha.com';
+                    bonzo(qwery('.ad-slot--bottom-banner-ad')).attr('data-inview-name', 'Bottom');
 
-                    initAdDwellTracking();
+                    initAdDwellTracking(_config, this.id);
 
                     return true;
                 }

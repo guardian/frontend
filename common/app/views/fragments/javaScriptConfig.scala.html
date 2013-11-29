@@ -1,8 +1,9 @@
-@(item: model.MetaData, switches: Seq[com.gu.management.Switchable])(implicit request: RequestHeader)
+@(item: model.MetaData)(implicit request: RequestHeader)
 @import conf.Configuration
 @import views.support.MetadataJson
 @import views.support.JavaScriptVariableName
 @import common.Edition
+@import org.joda.time.DateTime
 
 {
     "page": {
@@ -14,12 +15,13 @@
         "ajaxUrl": "@Configuration.ajax.url",
         "isDev": @play.Play.isDev(),
         "oasHost": "oas.theguardian.com",
-        "oasUrl": "http://oas.theguardian.com/RealMedia/ads/",
+        "oasUrl": "@Configuration.oas.url",
         "oasSiteIdHost": "www.theguardian.com",
         "idUrl": "@Configuration.id.url",
-        "beaconUrl": "@Configuration.debug.beaconUrl"
+        "beaconUrl": "@Configuration.debug.beaconUrl",
+        "renderTime": "@{(new DateTime).toISODateTimeNoMillisString}"
     },
-    "switches" : { @{Html(switches.map{ switch =>
+    "switches" : { @{Html(conf.Switches.all.map{ switch =>
             s""""${JavaScriptVariableName(switch.name)}":${switch.isSwitchedOn}"""
         }.mkString(","))}
     },

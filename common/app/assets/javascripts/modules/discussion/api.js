@@ -1,7 +1,7 @@
 define([
     'common',
-    'ajax',
-    'modules/cookies'
+    'utils/ajax',
+    'utils/cookies'
 ], function(
     common,
     ajax,
@@ -72,6 +72,24 @@ Api.postComment = function(discussionId, comment) {
 Api.recommendComment = function(id) {
     var endpoint = '/comment/'+ id +'/recommend';
     return Api.send(endpoint, 'post', {}, true);
+};
+
+/**
+ * @param {number} id the comment ID
+ * @return {Reqwest} a promise
+ */
+Api.pickComment = function(id) {
+    var endpoint = '/comment/'+ id +'/highlight';
+    return Api.send(endpoint, 'post', {});
+};
+
+/**
+ * @param {number} id the comment ID
+ * @return {Reqwest} a promise
+ */
+Api.unPickComment = function(id) {
+    var endpoint = '/comment/'+ id +'/unhighlight';
+    return Api.send(endpoint, 'post', {});
 };
 
 /**

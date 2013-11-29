@@ -3,7 +3,7 @@ package controllers.admin
 import play.api.mvc.Controller
 import common.Logging
 import controllers.AuthLogging
-import tools.CloudWatch
+import tools.{ChartFormat, CloudWatch}
 import play.api.libs.ws.WS
 import com.ning.http.client.Realm
 import play.api.libs.concurrent.Execution.Implicits._
@@ -32,9 +32,10 @@ object RadiatorController extends Controller with Logging with AuthLogging {
   }
 
   def renderRadiator() = Authenticated { implicit request =>
-    val graphs = CloudWatch.shortStack ++ CloudWatch.fastlyStatistics
-    val multilineGraphs = CloudWatch.fastlyHitMissStatistics
-    NoCache(Ok(views.html.radiator(graphs, multilineGraphs, CloudWatch.cost, Configuration.environment.stage)))
+    val graphs = (CloudWatch.shortStackLatency ++ CloudWatch.fastlyErrors).map(_.withFormat(ChartFormat.SingleLineBlack))
+    val multilineGraphs = CloudWatch.fastlyHitMissStatistics.map(_.withFormat(ChartFormat.DoubleLineBlueRed))
+    val jsErrors = CloudWatch.jsErrors.withFormat(ChartFormat.MultiLine)
+    NoCache(Ok(views.html.radiator(graphs, multilineGraphs, jsErrors, CloudWatch.cost, Configuration.environment.stage)))
   }
 
   def pingdom() = Authenticated.async { implicit request =>
@@ -56,5 +57,15 @@ object RadiatorController extends Controller with Logging with AuthLogging {
     val responsive = CloudWatch.liveStats("viewsOverSessions.responsive")
     val desktop = CloudWatch.liveStats("viewsOverSessions.desktop")
     NoCache(Ok(views.html.liveStats(responsive, desktop, Configuration.environment.stage)))
+  }
+  
+  def adsInView() = Authenticated { implicit request =>
+    val topSeconds = CloudWatch.adsInView("ads.top.secondsInView")
+    val topCount = CloudWatch.adsInView("ads.top.count")
+    val bottomSeconds = CloudWatch.adsInView("ads.bottom.secondsInView")
+    val inlineSeconds = CloudWatch.adsInView("ads.inline.secondsInView")
+    val mpuSeconds = CloudWatch.adsInView("ads.mpu.secondsInView")
+    val pageviews = CloudWatch.adsInView("ads.views")
+    NoCache(Ok(views.html.adsInView(topSeconds, topCount, bottomSeconds, inlineSeconds, mpuSeconds, pageviews, Configuration.environment.stage)))
   }
 }

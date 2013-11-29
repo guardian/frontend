@@ -1,4 +1,4 @@
-@(title: String, env: String, isAuthed: Boolean = false, identity: String = "{}")(content: Html)
+@(title: String, env: String, isAuthed: Boolean = false, identity: String = "{}", hasCharts: Boolean = false)(content: Html)
 
 <!DOCTYPE html>
 
@@ -59,15 +59,23 @@
             });
         </script>
 
+        @if(hasCharts){
+            <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+            <script type="text/javascript">
+                google.load("visualization", "1", {packages:["corechart"]});
+            </script>
+        }
+
 
     </head>
     <body>
         
     <div class="navbar">
         <div class="navbar-inner">
-            <div id="environment">
-                <span class="label label-warning">Environment: @env.toLowerCase</span>
-            </div>
+            <div id="environment"><span class="label label-warning">Environment: @env.toLowerCase</span></div>
+            <ul class="nav">
+                <li><a id="home" href="/admin">Home</a></li>
+            </ul>
             @if(isAuthed){
                 <ul class="nav pull-right">
                     <li><a href="/logout" id="logout-button">Logout</a></li>

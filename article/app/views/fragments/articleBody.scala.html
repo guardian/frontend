@@ -78,15 +78,18 @@
                 </div>
                 <div class="article__secondary-column" aria-hidden="true">
                     <div class="article__secondary-column__inner">
-                        <div class="js-sticky-upper" data-id="mpu-ad-slot"></div>
+                        <div class="js-sticky-upper sticky-upper--social" data-id="mpu-ad-slot"></div>
                         <div class="u-table">
                             <div class="u-table__row">
                                 <div class="u-table__cell u-table__cell--top">
                                     <div class="mpu-context">
                                         <div class="mpu-container js-mpu-ad-slot">
-                                            <h2 class="article__meta-heading tone-colour">Share this article</h2>
-                                            @fragments.social(article, "next to content")
+                                            <div class="social-wrapper social-wrapper--aside">
+                                                <h2 class="article__meta-heading tone-colour">Share this article</h2>
+                                                @fragments.social(article, "next to content")
+                                            </div>
 
+                                            <div class="open-cta"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -96,7 +99,7 @@
                                 <div class="u-table__cell u-table__cell--collapse u-table__cell--bottom">
                                     <div class="js-sticky-lower" data-id="mpu-ad-slot"></div>
                                     @if(storyPackage.nonEmpty) {
-                                        @fragments.cards.card(storyPackage.head, "right", "Read next", "Story package card", "visible")
+                                        @fragments.cards.card(storyPackage.head, "right", "More on this story", "Story package card", "visible")
                                     }
                                 </div>
                             </div>
@@ -122,4 +125,6 @@
             @fragments.mostPopularPlaceholder(article.section)
         </div>
     </div>
+
+    <script type="text/template" id="tmpl-right-ear">@fragments.onwardRightEar()</script>
 }

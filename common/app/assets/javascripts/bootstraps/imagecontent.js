@@ -1,14 +1,14 @@
 define([
-    "common",
+    "utils/mediator",
     "modules/discussion/discussion"
 ], function(
-    common,
+    mediator,
     Discussion
 ) {
     var modules = {
 
         initDiscussion: function() {
-            common.mediator.on('page:imagecontent:ready', function(config, context) {
+            mediator.on('page:imagecontent:ready', function(config, context) {
                 if (config.page.commentable) {
                     var discussionArticle = new Discussion({
                         id: config.page.shortUrl,
@@ -25,7 +25,7 @@ define([
             this.initialised = true;
             modules.initDiscussion();
         }
-        common.mediator.emit("page:imagecontent:ready", config, context);
+        mediator.emit("page:imagecontent:ready", config, context);
     };
 
     return {

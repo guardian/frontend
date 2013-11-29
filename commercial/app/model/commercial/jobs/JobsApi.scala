@@ -1,80 +1,42 @@
 package model.commercial.jobs
 
 import scala.concurrent.Future
-import common.{Logging, ExecutionContexts}
-import org.joda.time.format.DateTimeFormat
-import scala.xml.{XML, Elem}
-import play.api.libs.ws.WS
+import scala.xml.Elem
 import conf.CommercialConfiguration
 import model.commercial.Utils.OptString
+import model.commercial.XmlAdsApi
+import org.joda.time.format.DateTimeFormat
 
-object JobsApi extends ExecutionContexts with Logging {
+object JobsApi extends XmlAdsApi[Job] {
 
-  private val dateFormat = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss")
+  protected val adTypeName = "Jobs"
 
-  private def loadXml: Future[Elem] = {
+  override protected val characterEncoding = "utf-8"
 
-    def buildUrl: Option[String] = {
-      for {
-        url <- CommercialConfiguration.jobsApi.url
-        key <- CommercialConfiguration.jobsApi.key
-      } yield s"$url?login=$key"
-    }
+  // url changes daily so cannot be val
+  private def url = {
+    val feedDate = DateTimeFormat.forPattern("yyyy-MM-dd").print(System.currentTimeMillis)
+    val urlTemplate = CommercialConfiguration.getProperty("jobs.api.url.template")
+    urlTemplate map (_ replace("yyyy-MM-dd", feedDate))
+  }
 
-    buildUrl map {
-      url =>
-        val xml = WS.url(url) withRequestTimeout 60000 get() map {
-          response =>
-            val body = response.body.replace(0x001b.toChar, ' ')
-            XML.loadString(body)
-        }
+  override protected val loadTimeout = 20000
 
-        xml onFailure {
-          case e: Exception => log.error(s"Loading job ads failed: ${e.getMessage}")
-        }
+  override def cleanResponseBody(body: String) = body.dropWhile(_ != '<')
 
-        xml
-    } getOrElse {
-      log.warn("No Jobs API config properties set")
-      Future(<jobs/>)
+  def parse(xml: Elem): Seq[Job] = {
+    (xml \ "Job") map {
+      job =>
+        Job(
+          (job \ "JobID").text.toInt,
+          (job \ "JobTitle").text,
+          (job \ "ShortJobDescription").text,
+          (job \ "RecruiterName").text,
+          OptString((job \ "RecruiterLogoURL").text),
+          ((job \ "Sectors" \ "Sector") map (_.text.toInt)).toSet
+        )
     }
   }
 
-  private def getAllJobs(xml: => Future[Elem] = loadXml): Future[Seq[Job]] = {
-
-    log.info("Loading job ads...")
-
-    val jobs = xml map {
-      jobs => (jobs \ "Job") map {
-        job =>
-          Job(
-            (job \ "JobID").text.toInt,
-            (job \ "AdType").text,
-            dateFormat.parseDateTime((job \ "StartDateTime").text),
-            dateFormat.parseDateTime((job \ "EndDateTime").text),
-            (job \ "IsPremium").text.toBoolean,
-            (job \ "PositionType").text,
-            (job \ "JobTitle").text,
-            (job \ "ShortJobDescription").text,
-            (job \ "SalaryDescription").text,
-            OptString((job \ "LocationDescription").text),
-            OptString((job \ "RecruiterLogoURL").text),
-            OptString((job \ "EmployerLogoURL").text),
-            (job \ "JobListingURL").text,
-            (job \ "ApplyURL").text,
-            ((job \ "Sector" \ "Description") map (_.text)).distinct,
-            (job \ "Location" \ "Description") map (_.text)
-          )
-      }
-    }
-
-    for (loadedJobs <- jobs) log.info(s"Loaded ${loadedJobs.size} job ads")
-
-    jobs
-  }
-
-  def getCurrentJobs(xml: => Future[Elem] = loadXml): Future[Seq[Job]] = {
-    getAllJobs(xml) map (_ filter (_.isCurrent))
-  }
-
+  def getJobs: Future[Seq[Job]] = loadAds(url)
 }

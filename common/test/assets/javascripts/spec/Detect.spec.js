@@ -1,21 +1,21 @@
-define(['modules/detect', 'bonzo'], function(detect, bonzo) {
+define(['utils/detect', 'bonzo'], function(detect, bonzo) {
 
     var windowWidth = window.innerWidth,
         windowHeight = window.innerHeight;
 
-    describe("Layout", function() {
+    describe("Breakpoint", function() {
 
-        it("should default to 'mobile' layout mode", function(){
-            expect(detect.getLayoutMode(null)).toBe('mobile');
+        it("should default to 'mobile' breakpoint", function(){
+            expect(detect.getBreakpoint()).toBe('mobile');
         });
 
-        it("should return the correct layout mode for the device resolution", function(){
-
-            expect(detect.getLayoutMode(100)).toBe('mobile');
-
-            expect(detect.getLayoutMode(768)).toBe('tablet');
-
-            expect(detect.getLayoutMode(2000)).toBe('extended');
+        it("should return the correct breakpoint mode for the device width", function(){
+            var breakpoint = 'desktop',
+                $style = bonzo(bonzo.create('<style></style>'))
+                    .html('body:after { content: "' + breakpoint + '"; }')
+                    .appendTo('head');
+            expect(detect.getBreakpoint()).toBe(breakpoint);
+            $style.remove();
         });
 
         it("should return a function to test layout dimension changes", function(){

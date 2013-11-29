@@ -3,12 +3,11 @@ define('bootstraps/app', [
     "qwery",
     "common",
     "domReady",
-    "ajax",
-    'modules/detect',
-    'modules/errors',
+    "utils/ajax",
+    'utils/detect',
+    'modules/analytics/errors',
     'modules/analytics/livestats',
-    'modules/fonts',
-    'modules/debug',
+    'modules/ui/fonts',
     "modules/router",
     'modules/discussion/api',
     "bootstraps/common",
@@ -24,7 +23,7 @@ define('bootstraps/app', [
     "bootstraps/tag",
     "bootstraps/section",
     "bootstraps/imagecontent",
-    "modules/id",
+    "modules/identity/api",
     "modules/adverts/userAdTargeting"
 ], function (
     qwery,
@@ -35,7 +34,6 @@ define('bootstraps/app', [
     Errors,
     LiveStats,
     Fonts,
-    Debug,
     Router,
     DiscussionApi,
     bootstrapCommon,
@@ -51,7 +49,7 @@ define('bootstraps/app', [
     Tag,
     Section,
     ImageContent,
-    Id,
+    IdApi,
     UserAdTargeting
 ) {
 
@@ -105,12 +103,8 @@ define('bootstraps/app', [
             }
         },
 
-        showDebug: function () {
-            new Debug().show();
-        },
-
         initId : function (config) {
-            Id.init(config);
+            IdApi.init(config);
         },
 
         initUserAdTargeting : function () {
@@ -130,7 +124,6 @@ define('bootstraps/app', [
             modules.initialiseAbTest(config);
             modules.attachGlobalErrorHandler(config);
             modules.loadFonts(config, navigator.userAgent);
-            modules.showDebug();
             modules.initId(config);
             modules.initUserAdTargeting();
             modules.liveStats(config);

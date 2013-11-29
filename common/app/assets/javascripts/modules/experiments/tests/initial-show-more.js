@@ -1,4 +1,8 @@
-define(['utils/mediator'], function(mediator) {
+define([
+    'utils/mediator'
+], function(
+    mediator
+) {
 
     return function() {
 

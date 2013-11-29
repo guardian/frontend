@@ -1,22 +1,21 @@
-/* ==========================================================================
-   Global variables
-   ========================================================================== */
+// =============================================================================
+// Global variables
+// =============================================================================
 
-/**
- * Be careful of Sass variable scope:
- * http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#variables_
- */
+// Be careful of Sass variable scope
+// Note: Sass 3.3.0 adds Local and local vars
+// http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#variables
 
 
-/* Support
-   ========================================================================== */
+// Support
+// =============================================================================
 
 $old-ie:      false !default;
 $svg-support: true !default;
 
 
-/* Layout dimensions
-   ========================================================================== */
+// Layout dimensions
+// =============================================================================
 
 $baseline: 4px;
 $gutter: 16px;
@@ -27,8 +26,8 @@ $trailblockImgWidthLarge: 140px;
 $headerHeight: 58px;
 
 
-/* Breakpoints
-   ========================================================================== */
+// Breakpoints
+// =============================================================================
 
 // Name your breakpoints in a way that creates a ubiquitous language
 // across team members. It will improve communication between
@@ -60,8 +59,8 @@ $mq-breakpoints: (
 );
 
 
-/* Fonts
-   ========================================================================== */
+// Fonts
+// =============================================================================
 
 $sans-serif: "AgateSans", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 $serif: "EgyptianText", georgia, serif;
@@ -87,7 +86,8 @@ $fs-headlines: (
     36 40, // 6
     40 44, // 7
     44 48, // 8
-    48 52  // 9
+    48 52, // 9
+    18 22  // 10
 );
 
 $fs-bodyHeadings: (
@@ -113,12 +113,11 @@ $fs-data: (
     18 22  // 6
 );
 
-/* Colours
-   ========================================================================== */
+// Colours
+// =============================================================================
 
-/**
- * @todo: Blues need comments to associate with brand/logo colours
- */
+// @todo: Blues need comments to associate with brand/logo colours
+
 $c-brandBlue: #214583;
 
 $c-neutral1: #333333;
@@ -130,8 +129,8 @@ $c-neutral6: #edede7;
 $c-neutral7: #f4f4ee;
 
 
-/* Tones
-   ========================================================================== */
+// Tones
+// =============================================================================
 
 $c-newsDefault: #005689;
 $c-newsAccent: #4BC6DF;
@@ -143,12 +142,11 @@ $c-commentDefault: #E6711B;
 $c-commentAccent: #FFBB00;
 
 
-/* Zones
-   ========================================================================== */
+// Zones
+// =============================================================================
 
-/**
- * note: try to at least alphabetise these within sections
- */
+// Note: try to at least alphabetise these within sections
+
 $articleOrange: #e47a39; //Used for live-blogging
 $businessBlue: #004179;
 $commentBlue: #004179;
@@ -161,8 +159,8 @@ $newsRed: #D61D00;
 $travelBlue: #066EC9;
 
 
-/* Football
-   ========================================================================== */
+// Football
+// =============================================================================
 
 $c-sportBright: #70d2e6;
 $c-sportMid: #005689;

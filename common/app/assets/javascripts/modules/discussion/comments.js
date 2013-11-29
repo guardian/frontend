@@ -1,11 +1,13 @@
 define([
-    'ajax',
+    'utils/ajax',
     'bonzo',
     'qwery',
     'modules/component',
-    'modules/id',
+    'modules/identity/api',
     'modules/discussion/comment-box',
-    'modules/discussion/recommend-comments'
+    'modules/discussion/recommend-comments',
+    'modules/discussion/api',
+    '$'
 ], function(
     ajax,
     bonzo,
@@ -13,13 +15,16 @@ define([
     Component,
     Id,
     CommentBox,
-    RecommendComments
+    RecommendComments,
+    DiscussionApi,
+    $
 ) {
 
 /**
  * TODO (jamesgorrie):
  * * Move recommending into this, it has no need for it's own module.
  * * Get the selectors up to date with BEM
+ * * Move over to $ instead of qwery & bonzo
  * @constructor
  * @extends Component
  * @param {Element=} context
@@ -33,21 +38,30 @@ var Comments = function(context, mediator, options) {
 };
 Component.define(Comments);
 
-/** @type {Object.<string.*>} */
-Comments.CONFIG = {
-    endpoint: '/discussion:discussionId.json',
-    classes: {
-        comments: 'd-thread--top-level',
-        topLevelComment: 'd-comment--top-level',
-        showMore: 'js-show-more-comments',
-        reply: 'd-comment--response',
-        showReplies: 'js-show-more-replies',
+/**
+ * @type {Object.<string.*>}
+ * @override
+ */
+Comments.prototype.classes = {
+    comments: 'd-thread--top-level',
+    topLevelComment: 'd-comment--top-level',
+    showMore: 'js-show-more-comments',
+    reply: 'd-comment--response',
+    showReplies: 'js-show-more-replies',
+    header: 'd-discussion__header',
 
-        comment: 'd-comment',
-        commentActions: 'd-comment__actions__main',
-        commentReply: 'd-comment__action--reply'
-    }
+    comment: 'd-comment',
+    commentActions: 'd-comment__actions__main',
+    commentReply: 'd-comment__action--reply',
+    commentPick: 'd-comment__pick',
+    commentRecommend: 'd-comment__recommend'
 };
+
+/**
+ * @type {string}
+ * @override
+ */
+Comments.prototype.endpoint = '/discussion:discussionId.json';
 
 /** @type {Object.<string.*>} */
 Comments.prototype.defaultOptions = {
@@ -73,14 +87,33 @@ Comments.prototype.topLevelComments = null;
 Comments.prototype.user = null;
 
 /** @override */
+Comments.prototype.prerender = function() {
+    var self = this;
+
+    // Set the heading to the correct text
+    var heading = qwery('#comments')[0],
+        commentCount = self.elem.getAttribute('data-comment-count');
+
+    heading.innerHTML += ' <span class="discussion__comment-count">('+ commentCount +')</span>';
+
+    // Ease of use
+    self.topLevelComments = qwery(self.getClass('topLevelComment'), self.elem);
+    self.comments = qwery(self.getClass('comment'), self.elem);
+    self.user = self.options.user;
+
+    // Determine user staff status
+    if (self.user && self.user.badge) {
+        self.user.is_staff = self.user.badge.some(function (e) { // Returns true if any element in array satisfies function
+            return e.name === "Staff";
+        });
+    }
+
+};
+
+/** @override */
 Comments.prototype.ready = function() {
     var initialShow = this.options.initialShow,
         self = this;
-
-    // Ease of use
-    this.user = this.options.user;
-    this.topLevelComments = qwery(this.getClass('topLevelComment'), this.elem);
-    this.comments = qwery(this.getClass('comment'), this.elem);
 
     if (this.topLevelComments.length > 0) {
         // Hide excess topLevelComments
@@ -103,7 +136,9 @@ Comments.prototype.ready = function() {
         }
 
         this.hideExcessReplies();
-        this.bindCommentEvents();
+        if (!this.isReadOnly()) {
+            this.bindCommentEvents();
+        }
         this.on('click', this.getClass('showReplies'), this.showMoreReplies);
     }
     this.emit('ready');
@@ -113,30 +148,93 @@ Comments.prototype.bindCommentEvents = function() {
     RecommendComments.init(this.context);
 
     if (this.user && this.user.privateFields.canPostComment) {
-        this.renderReplyButtons();
+        this.renderPickButtons();
         this.on('click', this.getClass('commentReply'), this.replyToComment);
     }
 };
 
-Comments.prototype.renderReplyButtons = function(comments) {
+/**
+ * @param {NodeList} comments
+ */
+Comments.prototype.renderPickButtons = function (comments) {
     var actions,
-        self = this;
+        self        = this,
+        buttonText  = "<div class='u-fauxlink d-comment__action d-comment__action--pick' 'role='button'></div>",
+        sepText     = "<span class='d-comment__seperator d-comment__action'>|</span>";
 
-    comments = comments || this.comments;
+    comments = comments || self.comments;
 
-    comments.forEach(function(elem, i) {
-        actions = qwery(self.getClass('commentActions'), elem)[0];
-        bonzo(actions).prepend(
-            '<div class="u-fauxlink d-comment__action '+ self.getClass('commentReply', true) +'" '+
-            'role="button" data-link-name="reply to comment" data-comment-id="'+ elem.getAttribute('data-comment-id') +'">Reply</div>');
-    });
+    if (self.user.is_staff) {
+        comments.forEach(function (e) {
+            if (e.getAttribute("data-comment-author-id") !== self.user.userId) {
+                var button = bonzo(bonzo.create(buttonText))
+                                .text(e.getAttribute("data-comment-highlighted") !== "true" ? "Pick" : "Un-Pick");
+                button.data("thisComment", e);
+                var sep = bonzo.create(sepText);
+                $(self.getClass('commentActions'), e).append([sep[0],button[0]]);
+                self.on('click', button, self.handlePickClick.bind(self));
+            }
+        });
+    }
+};
+
+/**
+ * @param {Event} event
+ */
+Comments.prototype.handlePickClick = function (event) {
+    event.preventDefault();
+
+    var thisComment = bonzo(event.target).data("thisComment"),
+        $thisButton = $(event.target),
+        promise = thisComment.getAttribute("data-comment-highlighted") === "true" ? this.unPickComment.bind(this) : this.pickComment.bind(this);
+
+    promise(thisComment, $thisButton)
+        .fail(function (resp) {
+            var responseText = resp.response.length > 0 ? JSON.parse(resp.response).message : resp.statusText;
+            $(event.target).text(responseText);
+        });
+};
+
+/**
+ * @param   {Element}      thisComment
+ * @param   {Bonzo}    $thisButton
+ * @return  {Reqwest}       AJAX Promise
+ */
+Comments.prototype.pickComment = function (thisComment, $thisButton) {
+    var self = this;
+    return DiscussionApi
+        .pickComment(thisComment.getAttribute("data-comment-id"))
+        .then(function () {
+            $(self.getClass('commentPick'), thisComment).removeClass('u-h');
+            $(self.getClass('commentRecommend'), thisComment).addClass("d-comment__recommend--left");
+            $thisButton.text('Un-pick');
+            thisComment.setAttribute("data-comment-highlighted", true);
+        });
+};
+
+/**
+ * @param   {Element}      thisComment
+ * @param   {Bonzo}    $thisButton
+ * @return  {Reqwest}       AJAX Promise
+ */
+Comments.prototype.unPickComment = function (thisComment, $thisButton) {
+    var self = this;
+    return DiscussionApi
+        .unPickComment(thisComment.getAttribute("data-comment-id"))
+        .then(function () {
+            $(self.getClass('commentPick'), thisComment).addClass('u-h');
+            $(self.getClass('commentRecommend'), thisComment).removeClass("d-comment__recommend--left");
+            $thisButton.text('Pick');
+            thisComment.setAttribute("data-comment-highlighted", false);
+        });
 };
 
 /**
  * @param {Event} e
  */
-Comments.prototype.showMore = function(e) {
-    e.preventDefault();
+Comments.prototype.showMore = function(event) {
+    if (event) { event.preventDefault(); }
+
     var showMoreButton = this.getElem('showMore');
 
     if (showMoreButton.getAttribute('data-disabled') === 'disabled') {
@@ -201,6 +299,13 @@ Comments.prototype.hideExcessReplies = function(comments) {
 };
 
 /**
+ * @return {Boolean}
+ */
+Comments.prototype.isReadOnly = function() {
+    return this.elem.getAttribute('data-read-only') === 'true';
+};
+
+/**
  * @param {Object} resp
  */
 Comments.prototype.commentsLoaded = function(resp) {
@@ -212,7 +317,10 @@ Comments.prototype.commentsLoaded = function(resp) {
         this.removeShowMoreButton();
     }
 
-    this.renderReplyButtons(qwery(this.getClass('comment'), bonzo(comments).parent()));
+    if (!this.isReadOnly()) {
+        this.renderPickButtons(qwery(this.getClass('comment'), bonzo(comments).parent()));
+    }
+
     bonzo(this.getElem('comments')).append(comments);
 
     showMoreButton.innerHTML = 'Show more';
@@ -220,7 +328,10 @@ Comments.prototype.commentsLoaded = function(resp) {
 
     this.hideExcessReplies(comments);
 
-    RecommendComments.init(this.context);
+    if (!this.isReadOnly()) {
+        RecommendComments.init(this.context);
+
+    }
     this.emit('loaded');
 };
 
@@ -246,7 +357,7 @@ Comments.prototype.addComment = function(comment, focus, parent) {
         values = {
             username: this.user.displayName,
             timestamp: 'Just now',
-            body: '<p>'+ comment.body.replace('\n', '</p><p>') +'</p>',
+            body: '<p>'+ comment.body.replace(/\n+/g, '</p><p>') +'</p>',
             report: {
                 href: 'http://discussion.theguardian.com/components/report-abuse/'+ comment.id
             },
@@ -255,6 +366,7 @@ Comments.prototype.addComment = function(comment, focus, parent) {
             }
         },
         commentElem = bonzo.create(document.getElementById('tmpl-comment').innerHTML)[0];
+        bonzo(commentElem).addClass('fade-in'); // Comments now appear with CSS Keyframe animation
 
     for (key in map) {
         if (map.hasOwnProperty(key)) {
@@ -271,6 +383,12 @@ Comments.prototype.addComment = function(comment, focus, parent) {
         }
     }
     commentElem.id = 'comment-'+ comment.id;
+
+    if (this.user.is_staff) {
+        // Hack to allow staff badge to appear
+        var staffBadge = bonzo.create(document.getElementById('tmpl-staff-badge').innerHTML);
+        $('.d-comment__meta div', commentElem).first().append(staffBadge);
+    }
 
     // Stupid hack. Will rearchitect.
     if (!parent) {

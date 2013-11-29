@@ -1,13 +1,15 @@
 define([
-    'ajax',
+    'utils/ajax',
     'bonzo',
     'qwery',
     'modules/component',
     'modules/analytics/discussion',
-    'modules/id',
+    'modules/identity/api',
     'modules/discussion/api',
     'modules/discussion/comments',
-    'modules/discussion/comment-box'
+    'modules/discussion/top-comments',
+    'modules/discussion/comment-box',
+    '$'
 ], function(
     ajax,
     bonzo,
@@ -17,7 +19,9 @@ define([
     Id,
     DiscussionApi,
     Comments,
-    CommentBox
+    TopComments,
+    CommentBox,
+    $
 ) {
 
 /**
@@ -32,26 +36,35 @@ define([
  * @param {Object} mediator
  * @param {Object=} options
  */
-var Loader = function(context, mediator, options) {
+var Loader = function(context, mediator, options, topCommentsSwitch) {
     this.context = context || document;
     this.mediator = mediator;
     this.setOptions(options);
+    this.topCommentsSwitch = topCommentsSwitch; // Pass through topComments switch
 };
 Component.define(Loader);
 
 /** @type {Element} */
 Loader.prototype.context = null;
 
-/** @type {Object.<string.*>} */
-Loader.CONFIG = {
-    componentClass: 'discussion',
-    classes: {
-        comments: 'discussion__comments',
-        commentBox: 'discussion__comment-box',
-        commentBoxBottom: 'discussion__comment-box--bottom',
-        show: 'd-show-cta'
-    }
+/**
+ * @type {Object.<string.string>}
+ * @override
+ */
+Loader.prototype.classes = {
+    commentsContainer: 'discussion__comments__container',
+    comments: 'discussion__comments',
+    commentBox: 'discussion__comment-box',
+    commentBoxBottom: 'discussion__comment-box--bottom',
+    joinDiscussion: 'd-show-cta',
+    topComments: 'discussion__comments--top-comments'
 };
+
+/**
+ * @type {string}
+ * @override
+ */
+Loader.prototype.componentClass = 'discussion';
 
 /** @type {Comments} */
 Loader.prototype.comments = null;
@@ -78,39 +91,83 @@ Loader.prototype.canComment = false;
  * 3. render comment bar
  */
 Loader.prototype.ready = function() {
-    var id = this.getDiscussionId(),
-        loadingElem = bonzo.create('<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>')[0],
-        commentsElem = this.getElem('comments'),
+    var topCommentsElem = this.getElem('topComments'),
         self = this;
 
-    bonzo(loadingElem).insertAfter(commentsElem);
+    self.topLoadingElem = bonzo.create('<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>')[0];
+
+    bonzo(self.topLoadingElem).insertAfter(topCommentsElem);
 
     this.on('user:loaded', function(user) {
-        var self = this;
 
-        this.comments = new Comments(this.context, this.mediator, {
-            initialShow: 2,
-            discussionId: this.getDiscussionId(),
-            user: this.user
-        });
+        // Top comments =========================================== //
 
-        // Doing this makes sure there is only one redraw
-        // Within comments there is adding of reply buttons etc
-        bonzo(commentsElem).addClass('u-h');
-        this.comments
-            .fetch(commentsElem)
-            .then(function killLoadingMessage() {
-                bonzo(loadingElem).remove();
-                self.renderCommentBar(user);
-                bonzo(commentsElem).removeClass('u-h');
+        self.topComments = new TopComments(self.context, self.mediator, {
+            discussionId: self.getDiscussionId(),
+            user: self.user
+        }, self.topCommentsSwitch);
+
+        self.topComments
+            .fetch(topCommentsElem)
+            .then(function appendTopComments() {
+                bonzo(self.topLoadingElem).addClass('u-h');
+                self.on('click', $(self.topComments.showMoreButton), self.topComments.showMore.bind(self.topComments)); // Module-hopping calls - refactor needed
             });
+
+        self.mediator.on("module:topcomments:loadcomments", self.loadComments.bind(self));
+
+        // !Top comments ========================================== //
+
     });
+
     this.getUser();
-
     this.renderCommentCount();
-
-    bonzo(this.getElem('show')).remove();
     DiscussionAnalytics.init();
+};
+
+Loader.prototype.loadComments = function (args) {
+
+    var self = this;
+
+    var commentsContainer   = this.getElem('commentsContainer'),
+        commentsElem        = this.getElem('comments'),
+        loadingElem         = bonzo.create('<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>')[0];
+
+    if (args.showLoader) {
+        // Comments are being loaded in the no-top-comments-available context
+        bonzo(commentsContainer).removeClass('u-h');
+    }
+
+    bonzo(self.topLoadingElem).addClass('u-h');
+    bonzo(loadingElem).insertAfter(commentsElem);
+
+    this.comments = new Comments(this.context, this.mediator, {
+        initialShow: args.amount,
+        discussionId: this.getDiscussionId(),
+        user: this.user
+    });
+
+    // Doing this makes sure there is only one redraw
+    // Within comments there is adding of reply buttons etc
+    this.comments
+        .fetch(commentsElem)
+        .then(function killLoadingMessage() {
+            bonzo(loadingElem).remove();
+            self.renderCommentBar(self.user);
+            bonzo(self.comments.getElem('showMore')).addClass("u-h");
+
+            if (args.showLoader) {
+                // Comments are being loaded in the no-top-comments-available context
+                bonzo(self.getElem('joinDiscussion')).remove();
+                bonzo([self.comments.getElem('showMore'), self.comments.getElem('header')]).removeClass("u-h");
+            }
+
+            self.on("click", self.getElem('joinDiscussion'), function (event) {
+                self.comments.showMore(event);
+                self.cleanUpOnShowComments();
+            });
+            bonzo(commentsContainer).removeClass('u-h');
+        }).fail(self.loadingError.bind(self));
 };
 
 /** @return {Reqwest|null} */
@@ -135,7 +192,15 @@ Loader.prototype.getUser = function() {
  * often is on code due to syncing problems
  */
 Loader.prototype.loadingError = function() {
-    bonzo(this.elem).remove();
+    bonzo(this.getElem('commentsContainer')).remove();
+};
+
+Loader.prototype.renderReadOnly = function() {
+    this.getElem('commentBox').innerHTML =
+        '<div class="d-bar d-bar--closed">'+
+            '<b>We\'re doing some maintenance right now.</b>'+
+            ' You can still read comments, but please come back later to add your own.'+
+        '</div>';
 };
 
 /** TODO: This logic will be moved to the Play app renderer */
@@ -160,7 +225,9 @@ Loader.prototype.renderSignin = function() {
  * Else render comment box
  */
 Loader.prototype.renderCommentBar = function() {
-    if (this.getDiscussionClosed()) {
+    if (this.comments.isReadOnly()) {
+        this.renderReadOnly();
+    } else if (this.getDiscussionClosed()) {
         this.renderDiscussionClosedMessage();
     } else if (!Id.getUserFromCookie()) {
         this.renderSignin();
@@ -187,9 +254,28 @@ Loader.prototype.renderCommentBox = function() {
             premod: this.user.privateFields.isPremoderated
         });
         this.commentBox.render(this.getElem('commentBox'));
-        this.commentBox.on('post:success', this.comments.addComment.bind(this.comments));
+        this.commentBox.on('post:success', this.commentPosted.bind(this));
         this.canComment = true;
     }
+};
+
+/* Logic determining if extra comments should be shown along with the posted comment to ensure context */
+Loader.prototype.commentPosted = function () {
+    this.comments.addComment.apply(this.comments, arguments);
+
+    // Should more comments be shown?
+    if (!this.firstComment) {
+        this.firstComment = true;
+        this.comments.showMore();
+        this.cleanUpOnShowComments();
+    }
+
+};
+
+/* Configure DOM for viewing of comments once some have been shown */
+Loader.prototype.cleanUpOnShowComments = function () {
+    bonzo([this.comments.getElem('showMore'), this.comments.getElem('header')]).removeClass("u-h");
+    bonzo(this.getElem('joinDiscussion')).addClass("u-h");
 };
 
 Loader.prototype.renderUserBanned = function() {

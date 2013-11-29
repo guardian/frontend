@@ -1,7 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    ffi (1.9.0)
+    ffi (1.9.3)
     listen (1.1.6)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
@@ -11,11 +11,11 @@ GEM
       ffi (>= 0.5.0)
     rb-kqueue (0.2.0)
       ffi (>= 0.5.0)
-    sass (3.3.0.rc.1)
+    sass (3.3.0.rc.2)
       listen (~> 1.1.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  sass (~> 3.3.0.rc.1)
+  sass (~> 3.3.0.rc.2)

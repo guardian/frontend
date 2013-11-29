@@ -1,34 +1,21 @@
 package controllers.commercial
 
 import play.api.mvc._
-import scala.util.Random
-import model.commercial.jobs.{LightJobsAgent, JobsAgent}
+import model.commercial.jobs.JobsAgent
 import common.{JsonNotFound, JsonComponent}
 import model.Cached
 
 object JobAds extends Controller {
 
+  implicit val codec = Codec.utf_8
+
   def jobs = Action {
     implicit request =>
-      JobsAgent.matchingAds(segment) match {
+      JobsAgent.adsTargetedAt(segment) match {
         case Nil => JsonNotFound.apply()
         case jobs => {
-          val shuffled = Random.shuffle(jobs)
-          Cached(60)(JsonComponent(views.html.jobs(shuffled take 5)))
+          Cached(60)(JsonComponent(views.html.jobs(jobs take 5)).as(JSON))
         }
       }
   }
-
-  // New light jobs feed available only in dev env
-  def lightJobs = Action {
-    implicit request =>
-      LightJobsAgent.matchingAds(segment) match {
-        case Nil => JsonNotFound.apply()
-        case jobs => {
-          val shuffled = Random.shuffle(jobs)
-          Cached(60)(JsonComponent(views.html.lightjobs(shuffled take 5)))
-        }
-      }
-  }
-
 }
