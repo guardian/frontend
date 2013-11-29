@@ -1,6 +1,7 @@
 define([
     'common',
     'utils/storage',
+    'analytics/mvt-cookie',
 
     //Current tests
     'modules/experiments/tests/aa',
@@ -14,6 +15,7 @@ define([
 ], function (
     common,
     store,
+    mvtCookie,
 
     Aa,
     LiveBlogShowMore,
@@ -86,7 +88,7 @@ define([
         });
     }
 
-    function testCanBeRun (test, config) {
+    function testCanBeRun(test, config) {
         var expired = (new Date() - new Date(test.expiry)) > 0;
         return (test.canRun(config) && !expired && config.switches['ab' + test.id]);
     }
@@ -128,30 +130,42 @@ define([
         });
     }
 
-    function bucket(test, config) {
+    function allocateUserToTest(test, config) {
 
-        // if user not in test, bucket them
+        // Skip allocation if the user is already participating, or the test is invalid.
         if (isParticipating(test) || !testCanBeRun(test, config)) {
-            return false;
+            return;
         }
 
-        // always at least place in a notintest control
-        var testVariantId = 'notintest';
+        // Determine whether the user is in the test or not.
+        // First find, the number of possible mvt ids and scale by the desired proportion to test.
+        var testPopulation = mvtCookie.getMvtNumValues() * test.audience;
 
-        //Only run on test required audience segment
-        if (Math.random() < test.audience) {
+        // The testPopulation is just a subset of mvt ids, starting from 1. However,
+        // a test may begin from a specific value to avoid tests overlapping.
+        var smallestTestId = 1;
+        if ("audienceOffset" in test) {
+            smallestTestId = test.audienceOffset;
+        }
+        var largestTestId = smallestTestId + testPopulation;
+
+        // Get this browser's mvt test id.
+        var mvtCookieId = mvtCookie.getMvtValue();
+
+        if (smallestTestId <= mvtCookieId &&
+            largestTestId > mvtCookieId) {
+
+            // This mvt test id is in the test range, so allocate it to a test variant.
             var variantIds = test.variants.map(function(variant) {
                 return variant.id;
             });
+            var testVariantId = mvtCookieId % variantIds.length;
 
-            //Place user in variant pool
-            testVariantId = variantIds[Math.floor(Math.random() * variantIds.length)];
+            addParticipation(test, variantIds[testVariantId]);
+
+        } else {
+            addParticipation(test, "notintest");
         }
-
-        // store
-        addParticipation(test, testVariantId);
-
-        return true;
     }
 
     var ab = {
@@ -167,7 +181,7 @@ define([
         segment: function(config, options) {
             var opts = options || {};
             getActiveTests().forEach(function(test) {
-                bucket(test, config);
+                allocateUserToTest(test, config);
             });
         },
 
@@ -180,8 +194,16 @@ define([
             });
         },
 
-        run: function(config, context, options) {
-            var opts = options || {};
+        run: function(config, context) {
+
+            var forceUserIntoTest = /^#ab/.test(window.location.hash);
+            if (forceUserIntoTest) {
+                var tokens = window.location.hash.replace('#ab-','').split('=');
+                var test = tokens[0], variant = tokens[1];
+                forceSegment(test, variant);
+            } else {
+                segment(config);
+            }
 
             cleanParticipations(config);
 

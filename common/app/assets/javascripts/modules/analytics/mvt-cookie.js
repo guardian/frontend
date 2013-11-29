@@ -15,22 +15,29 @@ define([
         mvtidCookie = cookies.get(MULTIVARIATE_ID_COOKIE);
 
         // Add an mvt cookie if there isn't one to complement the Ophan browser id.
-        if (bwidCookie && !mvtidCookie) {
+        // It is unecssary to halt if Ophan failed to make a browser id cookie.
+        if (!mvtidCookie) {
             var mvtId = generateRandomInteger(MAX_INT, 1);
             cookies.add(MULTIVARIATE_ID_COOKIE, mvtId, 365);
         }
     }
 
     function getMvtFullId() {
+        var fullId = "";
         if (bwidCookie && mvtidCookie) {
-            return bwidCookie + " " + mvtidCookie;
-        } else {
-            return "";
+            fullId = bwidCookie + " " + mvtidCookie;
+        } else if (mvtidCookie) {
+            fullId = "unknown-browser-id " + mvtidCookie;
         }
+        return fullId;
     }
 
     function getMvtValue() {
         return mvtidCookie;
+    }
+
+    function getMvtNumValues() {
+        return MAX_INT;
     }
 
     function generateRandomInteger(min, max) {
@@ -40,6 +47,7 @@ define([
     return {
         init: init,
         getMvtFullId: getMvtFullId,
-        getMvtValue: getMvtValue
+        getMvtValue: getMvtValue,
+        getMvtNumValues: getMvtNumValues
     };
 });

@@ -18,7 +18,6 @@ define('bootstraps/app', [
     "bootstraps/gallery",
     "bootstraps/interactive",
     "bootstraps/identity",
-    "modules/experiments/ab",
     "modules/pageconfig",
     "bootstraps/tag",
     "bootstraps/section",
@@ -44,7 +43,6 @@ define('bootstraps/app', [
     Gallery,
     Interactive,
     Identity,
-    ab,
     pageConfig,
     Tag,
     Section,
@@ -82,17 +80,6 @@ define('bootstraps/app', [
             }
             new LiveStats({ beaconUrl: config.page.beaconUrl }).log();
         },
-        
-        initialiseAbTest: function (config) {
-            var forceUserIntoTest = /^#ab/.test(window.location.hash);
-            if (forceUserIntoTest) {
-                var tokens = window.location.hash.replace('#ab-','').split('=');
-                var test = tokens[0], variant = tokens[1];
-                ab.forceSegment(test, variant);
-            } else {
-                ab.segment(config);
-            }
-        },
 
         loadFonts: function(config, ua) {
             if (config.switches.webFonts && !guardian.platformsGettingHintedFonts.test(ua)) {
@@ -121,7 +108,6 @@ define('bootstraps/app', [
 
             modules.initialiseAjax(config);
             modules.initialiseDiscussionApi(config);
-            modules.initialiseAbTest(config);
             modules.attachGlobalErrorHandler(config);
             modules.loadFonts(config, navigator.userAgent);
             modules.initId(config);
