@@ -149,7 +149,7 @@ Comments.prototype.ready = function() {
         var comment = $('#comment-'+ this.options.commentId);
 
         if (comment.attr('hidden')) {
-            bean.fire($(this.getClass('showReplies'), comment.parent())[0], 'click');
+            bean.fire($(this.getClass('showReplies'), comment.parent())[0], 'click'); // Bonzo can be rubbish (without Ender)
         }
 
         window.location.hash = '#_';
@@ -174,20 +174,20 @@ Comments.prototype.bindCommentEvents = function() {
 /**
  * @param {NodeList} comments
  */
-Comments.prototype.renderPickButtons = function (comments) {
+Comments.prototype.renderPickButtons = function(comments) {
     var actions,
-        self        = this,
-        buttonText  = "<div class='u-fauxlink d-comment__action d-comment__action--pick' 'role='button'></div>",
-        sepText     = "<span class='d-comment__seperator d-comment__action'>|</span>";
+        self = this,
+        buttonText = '<div class="u-fauxlink d-comment__action d-comment__action--pick" role="button"></div>',
+        sepText = '<span class="d-comment__seperator d-comment__action">|</span>';
 
     comments = comments || self.comments;
 
     if (self.user.is_staff) {
         comments.forEach(function (e) {
-            if (e.getAttribute("data-comment-author-id") !== self.user.userId) {
+            if (e.getAttribute('data-comment-author-id') !== self.user.userId) {
                 var button = bonzo(bonzo.create(buttonText))
-                                .text(e.getAttribute("data-comment-highlighted") !== "true" ? "Pick" : "Un-Pick");
-                button.data("thisComment", e);
+                                .text(e.getAttribute('data-comment-highlighted') !== 'true' ? 'Pick' : 'Un-Pick');
+                button.data('thisComment', e);
                 var sep = bonzo.create(sepText);
                 $(self.getClass('commentActions'), e).append([sep[0],button[0]]);
                 self.on('click', button, self.handlePickClick.bind(self));
@@ -199,12 +199,12 @@ Comments.prototype.renderPickButtons = function (comments) {
 /**
  * @param {Event} event
  */
-Comments.prototype.handlePickClick = function (event) {
+Comments.prototype.handlePickClick = function(event) {
     event.preventDefault();
 
-    var thisComment = bonzo(event.target).data("thisComment"),
+    var thisComment = bonzo(event.target).data('thisComment'),
         $thisButton = $(event.target),
-        promise = thisComment.getAttribute("data-comment-highlighted") === "true" ? this.unPickComment.bind(this) : this.pickComment.bind(this);
+        promise = thisComment.getAttribute('data-comment-highlighted') === 'true' ? this.unPickComment.bind(this) : this.pickComment.bind(this);
 
     promise(thisComment, $thisButton)
         .fail(function (resp) {
@@ -214,19 +214,19 @@ Comments.prototype.handlePickClick = function (event) {
 };
 
 /**
- * @param   {Element}      thisComment
- * @param   {Bonzo}    $thisButton
- * @return  {Reqwest}       AJAX Promise
+ * @param {Element} thisComment
+ * @param {Bonzo} $thisButton
+ * @return {Reqwest} AJAX Promise
  */
-Comments.prototype.pickComment = function (thisComment, $thisButton) {
+Comments.prototype.pickComment = function(thisComment, $thisButton) {
     var self = this;
     return DiscussionApi
-        .pickComment(thisComment.getAttribute("data-comment-id"))
+        .pickComment(thisComment.getAttribute('data-comment-id'))
         .then(function () {
             $(self.getClass('commentPick'), thisComment).removeClass('u-h');
-            $(self.getClass('commentRecommend'), thisComment).addClass("d-comment__recommend--left");
+            $(self.getClass('commentRecommend'), thisComment).addClass('d-comment__recommend--left');
             $thisButton.text('Un-pick');
-            thisComment.setAttribute("data-comment-highlighted", true);
+            thisComment.setAttribute('data-comment-highlighted', true);
         });
 };
 
@@ -235,15 +235,15 @@ Comments.prototype.pickComment = function (thisComment, $thisButton) {
  * @param   {Bonzo}    $thisButton
  * @return  {Reqwest}       AJAX Promise
  */
-Comments.prototype.unPickComment = function (thisComment, $thisButton) {
+Comments.prototype.unPickComment = function(thisComment, $thisButton) {
     var self = this;
     return DiscussionApi
-        .unPickComment(thisComment.getAttribute("data-comment-id"))
+        .unPickComment(thisComment.getAttribute('data-comment-id'))
         .then(function () {
             $(self.getClass('commentPick'), thisComment).addClass('u-h');
-            $(self.getClass('commentRecommend'), thisComment).removeClass("d-comment__recommend--left");
+            $(self.getClass('commentRecommend'), thisComment).removeClass('d-comment__recommend--left');
             $thisButton.text('Pick');
-            thisComment.setAttribute("data-comment-highlighted", false);
+            thisComment.setAttribute('data-comment-highlighted', false);
         });
 };
 
