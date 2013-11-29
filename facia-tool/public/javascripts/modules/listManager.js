@@ -27,6 +27,8 @@ define([
 
         var self = this,
             model = {
+                config: null,
+
                 collections: ko.observableArray(),
                 fronts: ko.observableArray(),
                 front:  ko.observable(),
@@ -76,9 +78,7 @@ define([
                     return;
                 }
 
-                common.state.fronts = resp.fronts;
-                common.state.collections = resp.collections;
-
+                model.config = resp;
                 model.fronts(_.keys(resp.fronts).sort());;
             });
         };
@@ -97,16 +97,14 @@ define([
         }
 
         function renderCollections() {
-            var ids;
-
-            ids = (common.state.fronts[getFront()] || {}).collections;
+            var ids = (model.config.fronts[getFront()] || {}).collections;
 
             if (!_.isArray(ids)) { return; }
 
             model.collections.removeAll();
             model.collections(
                 ids.map(function(id){
-                    var collection = common.state.collections[id];
+                    var collection = model.config.collections[id];
                     if (collection) {
                         collection.id = id;
                         return new Collection(collection);
