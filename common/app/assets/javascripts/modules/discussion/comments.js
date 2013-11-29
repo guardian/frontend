@@ -1,21 +1,21 @@
 define([
+    '$',
     'utils/ajax',
     'bonzo',
     'qwery',
     'modules/component',
     'modules/identity/api',
     'modules/discussion/comment-box',
-    'modules/discussion/recommend-comments',
-    '$'
+    'modules/discussion/recommend-comments'
 ], function(
+    $,
     ajax,
     bonzo,
     qwery,
     Component,
     Id,
     CommentBox,
-    RecommendComments,
-    $
+    RecommendComments
 ) {
 
 /**
@@ -47,7 +47,9 @@ Component.define(Comments);
 Comments.prototype.classes = {
     comments: 'd-thread--top-level',
     topLevelComment: 'd-comment--top-level',
-    showMore: 'js-show-more-comments',
+    showMore: 'd-discussion__show-more',
+    showMoreNewer: 'd-discussion__show-more--newer',
+    showMoreOlder: 'd-discussion__show-more--older',
     reply: 'd-comment--response',
     showReplies: 'js-show-more-replies',
     header: 'd-discussion__header',
@@ -98,8 +100,8 @@ Comments.prototype.prerender = function() {
     this.topLevelComments = qwery(this.getClass('topLevelComment'), this.elem);
     this.comments = qwery(this.getClass('comment'), this.elem);
 
+    // Hide excess topLevelComments
     if (this.topLevelComments.length > 0) {
-        // Hide excess topLevelComments
         qwery(this.getClass('topLevelComment'), this.elem).forEach(function(elem, i) {
             if (i >= initialShow) {
                 self.hasHiddenComments = true;
@@ -110,27 +112,31 @@ Comments.prototype.prerender = function() {
         if (this.topLevelComments.length > initialShow) {
             if (!this.getElem('showMore')) {
                 bonzo(this.getElem('comments')).append(
-                    '<a class="js-show-more-comments cta" data-link-name="Show more comments" data-remove="true" href="/discussion'+
+                    '<a class="d-discussion__show-more cta" data-age="older" data-link-name="Show more comments" data-remove="true" href="/discussion'+
                         this.options.discussionId +'?page=1">'+
-                        'Show more comments'+
+                        'Show older comments'+
                     '</a>');
             }
         }
-
-        this.hideExcessReplies();
     }
+
+    // Hide excessive replies
+    this.hideExcessReplies();
 };
 
 /** @override */
 Comments.prototype.ready = function() {
     this.on('click', this.getClass('showReplies'), this.showMoreReplies);
-    this.on('click', this.getElem('showMore'), this.showMore);
+    this.on('click', this.getClass('showMore'), this.showMore);
     if (!this.isReadOnly()) {
         this.bindCommentEvents();
     }
     this.emit('ready');
 };
 
+/**
+ * This is here as we don't want to create a comment Component
+ */
 Comments.prototype.bindCommentEvents = function() {
     RecommendComments.init(this.context);
 
@@ -145,7 +151,10 @@ Comments.prototype.bindCommentEvents = function() {
 Comments.prototype.showMore = function(e) {
     if (e) { e.preventDefault(); }
 
-    var showMoreButton = this.getElem('showMore');
+    var showMoreButton = e.currentTarget,
+        age = showMoreButton.getAttribute('data-age'),
+        toPage = parseInt(showMoreButton.getAttribute('data-page'), 10),
+        callback = age === 'older' ? this.showOlder.bind(this) : this.showNewer.bind(this);
 
     if (showMoreButton.getAttribute('data-disabled') === 'disabled') {
         return;
@@ -154,16 +163,59 @@ Comments.prototype.showMore = function(e) {
     if (this.hasHiddenComments) {
         this.showHiddenComments();
     } else {
-
         showMoreButton.innerHTML = 'Loading…';
         showMoreButton.setAttribute('data-disabled', 'disabled');
         ajax({
-            url: '/discussion'+ this.options.discussionId +'.json?page='+ (this.getCurrentPage() + 1),
+            url: '/discussion'+ this.options.discussionId +'.json?page='+ toPage,
             type: 'json',
             method: 'get',
             crossOrigin: true
-        }).then(this.commentsLoaded.bind(this));
+        }).then(callback);
     }
+};
+
+/**
+ * @param {Object} resp
+ */
+Comments.prototype.showNewer = function(resp) {
+    this.commentsLoaded(resp, 'newer');
+};
+
+/**
+ * @param {Object} resp
+ */
+Comments.prototype.showOlder = function(resp) {
+    this.commentsLoaded(resp, 'older');
+};
+
+/**
+ * @param {Object} resp
+ * @param {String} age (optional)
+ */
+Comments.prototype.commentsLoaded = function(resp, age) {
+    age = age || 'older';
+    var html = bonzo.create(resp.html),
+        comments = qwery(this.getClass('topLevelComment'), html),
+        showMoreButton = this.getElem('showMore');
+
+    if (!resp.hasMore) {
+        this.removeShowMoreButton();
+    }
+
+    $(this.getClass('showMoreOlder'), this.elem).replaceWith($(this.getClass('showMoreOlder'), html));
+    $(this.getClass('showMoreNewer'), this.elem).replaceWith($(this.getClass('showMoreNewer'), html));
+    
+    bonzo(this.getElem('comments'))[age === 'older' ? 'append' : 'prepend'](comments);
+
+    showMoreButton.innerHTML = 'Show '+ age +' comments';
+    showMoreButton.removeAttribute('data-disabled');
+
+    this.hideExcessReplies(comments);
+
+    if (!this.isReadOnly()) {
+        RecommendComments.init(this.context);
+    }
+    this.emit('loaded');
 };
 
 Comments.prototype.showHiddenComments = function() {
@@ -216,32 +268,6 @@ Comments.prototype.isReadOnly = function() {
     return this.elem.getAttribute('data-read-only') === 'true';
 };
 
-/**
- * @param {Object} resp
- */
-Comments.prototype.commentsLoaded = function(resp) {
-    var comments = qwery(this.getClass('topLevelComment'), bonzo.create(resp.html)),
-        showMoreButton = this.getElem('showMore');
-
-    this.incrementPage();
-    if (!resp.hasMore) {
-        this.removeShowMoreButton();
-    }
-
-    bonzo(this.getElem('comments')).append(comments);
-
-    showMoreButton.innerHTML = 'Show more';
-    showMoreButton.removeAttribute('data-disabled');
-
-    this.hideExcessReplies(comments);
-
-    if (!this.isReadOnly()) {
-        RecommendComments.init(this.context);
-
-    }
-    this.emit('loaded');
-};
-
 Comments.prototype.removeShowMoreButton = function() {
     bonzo(this.getElem('showMore')).remove();
 };
@@ -292,7 +318,7 @@ Comments.prototype.addComment = function(comment, focus, parent) {
     commentElem.id = 'comment-'+ comment.id;
 
     var is_staff = this.user.badge.some(function (e) { // Returns true if any element in array satisfies function
-        return e.name === "Staff";
+        return e.name === 'Staff';
     });
 
     if (is_staff) {
@@ -364,30 +390,6 @@ Comments.prototype.replyToComment = function(e) {
         self.addComment(comment, false, responses);
         this.destroy();
     });
-};
-
-/**
- * @return {number}
- */
-Comments.prototype.getCurrentPage = function() {
-    return parseInt(this.elem.getAttribute('data-current-page'), 10);
-};
-
-/**
- * @param {number} page
- */
-Comments.prototype.setCurrentPage = function(page) {
-    return this.elem.setAttribute('data-current-page', page);
-};
-
-/**
- * @return {number}
- */
-Comments.prototype.incrementPage = function(direction) {
-    direction = direction || 'up';
-    var page = direction === 'down' ? this.getCurrentPage() - 1 : this.getCurrentPage + 1;
-    this.setCurrentPage(page);
-    return page;
 };
 
 return Comments;

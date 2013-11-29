@@ -8,7 +8,7 @@ define([
     qwery,
     bonzo,
     ajax
-    ) {
+) {
 
     /**
      * TODO (jamesgorrie):
