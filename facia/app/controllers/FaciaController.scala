@@ -161,6 +161,7 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
   def renderEditionFront(path: String) = renderFront(path)
   def renderEditionSectionFrontJson(path: String) = renderFront(path)
   def renderEditionSectionFront(path: String) = renderFront(path)
+  def renderArbitraryFront(path: String) = renderFront(path)
   def renderFrontJson(path: String) = renderFront(path)
 
   def renderEditionCollection(id: String) = renderCollection(id)
