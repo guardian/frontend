@@ -275,6 +275,10 @@ object Switches extends Collections {
     "If this is switched on the Image server will use the webp format when requested.",
     safeState = Off)
 
+  val ServeJpegViaImageService = Switch("Jpeg Image Service", "jpeg-image-service",
+    "If this is switched on then Image server will use the image service for Jpegs.",
+    safeState = Off)
+
   val AddVaryAcceptHeader = Switch("Image Server", "add-vary-accept-header",
     "If this is switched on the Image server will add vary-accept to responses.",
     safeState = Off)
@@ -304,6 +308,7 @@ object Switches extends Collections {
     SocialSwitch,
     SearchSwitch,
     ImageServerSwitch,
+    ServeJpegViaImageService,
     ReleaseMessageSwitch,
     AustraliaFrontSwitch,
     NewsContainerSwitch,

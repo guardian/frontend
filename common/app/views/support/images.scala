@@ -24,7 +24,9 @@ case class Profile(prefix: String, width: Option[Int] = None, height: Option[Int
     elementFor(image).flatMap(_.altText)
 }
 
-// Configuration of our different image profiles
+/**********************************************************************************************************
+ NOTE - if you change any of these profiles you need to make a corresponding change in the image service
+***********************************************************************************************************/
 object Contributor extends Profile("c", Some(140), Some(140), 70) {}
 object GalleryLargeImage extends Profile("gli", Some(1024), None, 70) {}
 object GalleryLargeTrail extends Profile("glt", Some(480), Some(288), 70) {}

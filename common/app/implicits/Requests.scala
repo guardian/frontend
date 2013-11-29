@@ -1,6 +1,7 @@
 package implicits
 
 import play.api.mvc.RequestHeader
+import play.api.http.MediaRange
 
 trait Requests {
   implicit class Request2rich(r: RequestHeader) {
@@ -18,5 +19,11 @@ trait Requests {
     } || r.path.endsWith(".json")
 
     lazy val hasParameters = !r.queryString.isEmpty
+
+    lazy val isWebp = {
+      val requestedContentType = r.acceptedTypes.sorted(MediaRange.ordering)
+      val imageMimeType = requestedContentType.find(media => media.accepts("image/jpeg")|| media.accepts("image/webp"))
+      imageMimeType.exists(_.mediaSubType == "webp")
+    }
   }
 }

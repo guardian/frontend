@@ -7,11 +7,13 @@ import views.support._
 import javax.imageio.ImageIO
 import org.apache.commons.io.{IOUtils, FilenameUtils}
 import java.io.File
-import play.api.libs.ws.Response
+import play.api.libs.ws.{WS, Response}
 import play.api.mvc._
-import common.Logging
+import common.{ExecutionContexts, Logging}
+import play.api.libs.iteratee.Enumerator
+import scala.collection.JavaConversions._
 
-object ImageResizer extends Logging with Results with controllers.Implicits{
+object ImageResizer extends Logging with Results with controllers.Implicits with ExecutionContexts {
 
   def renderWebp(path: String, cacheTime: Int, profile: Profile)(response: Response): SimpleResult =  {
     response.status match {
@@ -83,6 +85,18 @@ object ImageResizer extends Logging with Results with controllers.Implicits{
 
       case _ => NotFound
     }
+  }
+
+  import conf.Configuration.images.resizeService
+  def renderImageService(profile: Profile, path: String, request: RequestHeader) = {
+      val url = s"$resizeService/${profile.prefix}/$path"
+      WS.url(url).withHeaders("Accept" -> request.headers("Accept")).get().map{ r =>
+        val headers = r.ahcResponse.getHeaders.entrySet().toSeq.map(header => header.getKey -> header.getValue.mkString(","))
+        SimpleResult(
+          header = ResponseHeader(r.status),
+          body = Enumerator.fromStream(r.getAHCResponse.getResponseBodyAsStream)
+        ).withHeaders(headers:_*)
+      }
   }
 
   private def addResponseHeaders(result: SimpleResult): SimpleResult = {
