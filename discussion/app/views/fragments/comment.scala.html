@@ -35,10 +35,11 @@
                 </div>
 
                 <div>
-                    <time class="d-meta-item d-comment__meta-item js-timestamp"
-                          datetime="@comment.date.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")" data-timestamp="@comment.date.getMillis">
-                        @Format(comment.date, "d MMM y")
-                    </time>
+                    <a href="#comment-@comment.id" class="d-meta-item d-comment__meta-item">
+                        <time class="js-timestamp" datetime="@comment.date.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")" data-timestamp="@comment.date.getMillis">
+                            @Format(comment.date, "d MMM y")
+                        </time>
+                    </a>
                 </div>
             </div>
         </div>
