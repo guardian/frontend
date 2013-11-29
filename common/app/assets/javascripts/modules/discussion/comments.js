@@ -7,7 +7,8 @@ define([
     'modules/component',
     'modules/identity/api',
     'modules/discussion/comment-box',
-    'modules/discussion/recommend-comments'
+    'modules/discussion/recommend-comments',
+    'modules/discussion/api'
 ], function(
     $,
     ajax,
@@ -17,7 +18,8 @@ define([
     Component,
     Id,
     CommentBox,
-    RecommendComments
+    RecommendComments,
+    DiscussionApi
 ) {
 
 /**
@@ -58,7 +60,9 @@ Comments.prototype.classes = {
 
     comment: 'd-comment',
     commentActions: 'd-comment__actions__main',
-    commentReply: 'd-comment__action--reply'
+    commentReply: 'd-comment__action--reply',
+    commentPick: 'd-comment__pick',
+    commentRecommend: 'd-comment__recommend'
 };
 
 /**
@@ -102,7 +106,13 @@ Comments.prototype.prerender = function() {
     this.topLevelComments = qwery(this.getClass('topLevelComment'), this.elem);
     this.comments = qwery(this.getClass('comment'), this.elem);
 
-    // Hide excess topLevelComments
+    // Determine user staff status
+    if (this.user && this.user.badge) {
+        this.user.is_staff = this.user.badge.some(function (e) { // Returns true if any element in array satisfies function
+            return e.name === 'Staff';
+        });
+    }
+
     if (this.topLevelComments.length > 0) {
         qwery(this.getClass('topLevelComment'), this.elem).forEach(function(elem, i) {
             if (i >= initialShow) {
@@ -156,8 +166,85 @@ Comments.prototype.bindCommentEvents = function() {
     RecommendComments.init(this.context);
 
     if (this.user && this.user.privateFields.canPostComment) {
+        this.renderPickButtons();
         this.on('click', this.getClass('commentReply'), this.replyToComment);
     }
+};
+
+/**
+ * @param {NodeList} comments
+ */
+Comments.prototype.renderPickButtons = function (comments) {
+    var actions,
+        self        = this,
+        buttonText  = "<div class='u-fauxlink d-comment__action d-comment__action--pick' 'role='button'></div>",
+        sepText     = "<span class='d-comment__seperator d-comment__action'>|</span>";
+
+    comments = comments || self.comments;
+
+    if (self.user.is_staff) {
+        comments.forEach(function (e) {
+            if (e.getAttribute("data-comment-author-id") !== self.user.userId) {
+                var button = bonzo(bonzo.create(buttonText))
+                                .text(e.getAttribute("data-comment-highlighted") !== "true" ? "Pick" : "Un-Pick");
+                button.data("thisComment", e);
+                var sep = bonzo.create(sepText);
+                $(self.getClass('commentActions'), e).append([sep[0],button[0]]);
+                self.on('click', button, self.handlePickClick.bind(self));
+            }
+        });
+    }
+};
+
+/**
+ * @param {Event} event
+ */
+Comments.prototype.handlePickClick = function (event) {
+    event.preventDefault();
+
+    var thisComment = bonzo(event.target).data("thisComment"),
+        $thisButton = $(event.target),
+        promise = thisComment.getAttribute("data-comment-highlighted") === "true" ? this.unPickComment.bind(this) : this.pickComment.bind(this);
+
+    promise(thisComment, $thisButton)
+        .fail(function (resp) {
+            var responseText = resp.response.length > 0 ? JSON.parse(resp.response).message : resp.statusText;
+            $(event.target).text(responseText);
+        });
+};
+
+/**
+ * @param   {Element}      thisComment
+ * @param   {Bonzo}    $thisButton
+ * @return  {Reqwest}       AJAX Promise
+ */
+Comments.prototype.pickComment = function (thisComment, $thisButton) {
+    var self = this;
+    return DiscussionApi
+        .pickComment(thisComment.getAttribute("data-comment-id"))
+        .then(function () {
+            $(self.getClass('commentPick'), thisComment).removeClass('u-h');
+            $(self.getClass('commentRecommend'), thisComment).addClass("d-comment__recommend--left");
+            $thisButton.text('Un-pick');
+            thisComment.setAttribute("data-comment-highlighted", true);
+        });
+};
+
+/**
+ * @param   {Element}      thisComment
+ * @param   {Bonzo}    $thisButton
+ * @return  {Reqwest}       AJAX Promise
+ */
+Comments.prototype.unPickComment = function (thisComment, $thisButton) {
+    var self = this;
+    return DiscussionApi
+        .unPickComment(thisComment.getAttribute("data-comment-id"))
+        .then(function () {
+            $(self.getClass('commentPick'), thisComment).addClass('u-h');
+            $(self.getClass('commentRecommend'), thisComment).removeClass("d-comment__recommend--left");
+            $thisButton.text('Pick');
+            thisComment.setAttribute("data-comment-highlighted", false);
+        });
 };
 
 /**
@@ -284,6 +371,36 @@ Comments.prototype.isReadOnly = function() {
     return this.elem.getAttribute('data-read-only') === 'true';
 };
 
+/**
+ * @param {Object} resp
+ */
+Comments.prototype.commentsLoaded = function(resp) {
+    var comments = qwery(this.getClass('topLevelComment'), bonzo.create(resp.html)),
+        showMoreButton = this.getElem('showMore');
+
+    this.currentPage++;
+    if (!resp.hasMore) {
+        this.removeShowMoreButton();
+    }
+
+    if (!this.isReadOnly()) {
+        this.renderPickButtons(qwery(this.getClass('comment'), bonzo(comments).parent()));
+    }
+
+    bonzo(this.getElem('comments')).append(comments);
+
+    showMoreButton.innerHTML = 'Show more';
+    showMoreButton.removeAttribute('data-disabled');
+
+    this.hideExcessReplies(comments);
+
+    if (!this.isReadOnly()) {
+        RecommendComments.init(this.context);
+
+    }
+    this.emit('loaded');
+};
+
 Comments.prototype.removeShowMoreButton = function() {
     bonzo(this.getElem('showMore')).remove();
 };
@@ -333,11 +450,7 @@ Comments.prototype.addComment = function(comment, focus, parent) {
     }
     commentElem.id = 'comment-'+ comment.id;
 
-    var is_staff = this.user.badge.some(function (e) { // Returns true if any element in array satisfies function
-        return e.name === 'Staff';
-    });
-
-    if (is_staff) {
+    if (this.user.is_staff) {
         // Hack to allow staff badge to appear
         var staffBadge = bonzo.create(document.getElementById('tmpl-staff-badge').innerHTML);
         $('.d-comment__meta div', commentElem).first().append(staffBadge);

@@ -164,6 +164,11 @@ $c-live: #e81818;
         left: 0;
     }
 }
+
+.item__image-container.inlined-image {
+  display: block !important;
+}
+
 .item__live-indicator {
     color: #ffffff;
     background-color: $c-live;
