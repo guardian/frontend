@@ -18,11 +18,13 @@
         <div class="d-discussion__meta d-meta-item">Sorted by newest first.</div>
     </div>
     @if(page.currentPage != 1){
-        <a class="d-discussion__show-more d-discussion__show-more--newer cta"
+        <a class="d-discussion__show-more d-discussion__show-more--newer tone-background"
             href="@LinkTo{/@page.id?page=@(page.currentPage - 1)}"
             data-link-name="Show more comments"
             data-age="newer"
-            data-page="@(page.currentPage - 1)">Show newer comments</a>
+            data-page="@(page.currentPage - 1)">
+            <span class="i i-arrow-white-up">Show newer comments</span>
+        </a>
     }
 
     <ul class="d-thread d-thread--top-level">
@@ -32,11 +34,13 @@
     </ul>
     
     @if(page.currentPage + 1 <= page.pages){
-        <a class="d-discussion__show-more d-discussion__show-more--older cta"
+        <a class="d-discussion__show-more d-discussion__show-more--older tone-background"
             href="@LinkTo{/@page.id?page=@(page.currentPage + 1)}"
             data-link-name="Show more comments"
             data-age="older"
-            data-page="@(page.currentPage + 1)">Show older comments</a>
+            data-page="@(page.currentPage + 1)">
+            <span class="i i-arrow-white-down">Show older comments</span>
+        </a>
     }
 
     <script type="text/template" id="tmpl-comment-box">@fragments.commentBox()</script>
