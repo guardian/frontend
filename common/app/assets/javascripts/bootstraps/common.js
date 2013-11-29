@@ -26,6 +26,7 @@ define([
     'modules/ui/relativedates',
     'modules/analytics/clickstream',
     'modules/analytics/omniture',
+    'modules/analytics/mvt-cookie',
     'modules/adverts/adverts',
     'utils/cookies',
     'modules/analytics/omnitureMedia',
@@ -66,6 +67,7 @@ define([
     RelativeDates,
     Clickstream,
     Omniture,
+    mvtCookie,
     Adverts,
     Cookies,
     OmnitureMedia,
@@ -226,6 +228,7 @@ define([
                     Ophan.sendLog(config.swipe ? config.swipe.referrer : undefined, true);
                 });
 
+                mvtCookie.init();
             });
 
         },
