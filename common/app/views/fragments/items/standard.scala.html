@@ -9,7 +9,7 @@
                 @ImgSrc.imager(imageContainer).map { imgSrc =>
                     <div class="item__image-container @if(inlineImages){ inlined-image}" data-src="@imgSrc" @if(isFirstContainer){ data-force-upgrade="desktop wide"}>
                         @if(inlineImages){
-                            @Item300.bestFor(imageContainer).map{ url => <img src="@url" class="responsive-img" style="display: block"/> }
+                            @Item300.bestFor(imageContainer).map{ url => <img src="@url" class="responsive-img"/> }
                         }
                     </div>
                 }
