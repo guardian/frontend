@@ -5,14 +5,16 @@ define([
     bonzo,
     FacebookAuthorizer
 ) {
-    describe('Facebook Authorizer', function(){
-
-        var authorizer, userDetailsCallBack,userData = {},loginResponse = {status: 'unknown'};
+    describe('Facebook Authorizer', function() {
+        var authorizer,
+            loginResponse = {
+                status: 'unknown'
+            },
+            userData = {},
+            userDetailsCallBack;
 
         beforeEach(function() {
-
             userDetailsCallBack = sinon.stub();
-
             authorizer = new FacebookAuthorizer("123");
 
             authorizer._loadFacebookScript = function () {
@@ -35,33 +37,34 @@ define([
         });
 
         afterEach(function() {
-           delete window.FB;
-           authorizer.destroy();
-           bonzo('meta').remove();
-           bonzo('.facebook-jssdk').remove();
+            delete window.FB;
+            authorizer.destroy();
+            bonzo('meta').remove();
+            bonzo('.facebook-jssdk').remove();
         });
 
         function whenTheScriptLoads() {
-           authorizer._handleScriptLoaded();
-        }
+            authorizer._handleScriptLoaded();
+        };
 
         describe("Get Login Status", function() {
-            it('Should call facebook init after loading the facebook script', function() {
+            it('should call facebook init after loading the facebook script', function() {
                 authorizer.getLoginStatus();
                 whenTheScriptLoads();
+
                 expect(FB.init.callCount).toBe(1);
             });
 
-            it('Does not load the facebook script or call FB.init more than once', function() {
+            it('does not load the facebook script or call FB.init more than once', function() {
                 authorizer.getLoginStatus();
                 whenTheScriptLoads();
+
                 expect(FB.init.callCount).toEqual(1);
                 authorizer.getLoginStatus();
                 expect(FB.init.callCount).toEqual(1);
             });
 
-            it('Should queue calls to get login status', function() {
-
+            it('should queue calls to get login status', function() {
                 var callback1 = sinon.stub(), callback2 = sinon.stub();
                 loginResponse = {
                     status: 'connected',
@@ -72,9 +75,7 @@ define([
                 };
 
                 authorizer.getLoginStatus().then(callback1);
-
                 authorizer.getLoginStatus().then(callback2);
-
                 whenTheScriptLoads();
 
                 expect(callback1.callCount).toEqual(1);
@@ -86,8 +87,7 @@ define([
                 expect(callback1.getCall(0).args[1]).toBe(loginResponse.authResponse);
             });
 
-            it("Should load facebook api if requested to auth the user", function() {
-
+            it("should load facebook api if requested to auth the user", function() {
                 loginResponse = {
                     status: 'connected',
                     authResponse: {
@@ -107,35 +107,39 @@ define([
             it("should not try to login to facebook more than once", function() {
                 authorizer.login();
                 authorizer.login();
-
                 whenTheScriptLoads();
+
                 expect(FB.login.callCount).toEqual(1);
             });
 
-            it("Should get the user data from facebook", function() {
-                loginResponse = { status : 'not_authorized'};
+            it("should get the user data from facebook", function() {
+                loginResponse = {
+                    status : 'not_authorized'
+                };
 
-                userData = {"name" : "Scala refugee"};
+                userData = {
+                    "name" : "Scala refugee"
+                };
 
                 authorizer.getLoginStatus();
-
                 whenTheScriptLoads();
 
                 expect(userDetailsCallBack.callCount).toEqual(1);
                 expect(userDetailsCallBack.getCall(0).args[0]).toBe(userData);
             });
 
-            it("Should not get the user data user when an error occurs", function() {
-                loginResponse = { status : 'not_authorized'};
+            it("should not get the user data user when an error occurs", function() {
+                loginResponse = {
+                    status : 'not_authorized'
+                };
 
-                userData = {"error" : "badness happened"};
+                userData = {
+                    "error" : "badness happened"
+                };
 
                 authorizer.getLoginStatus();
-
                 expect(userDetailsCallBack.callCount).toEqual(0);
-
             });
         });
-
     });
 });
