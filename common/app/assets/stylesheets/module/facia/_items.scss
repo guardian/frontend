@@ -166,7 +166,7 @@ $c-live: #e81818;
 }
 
 .item__image-container.inlined-image {
-  display: block;
+  display: block !important;
 }
 
 .item__live-indicator {
