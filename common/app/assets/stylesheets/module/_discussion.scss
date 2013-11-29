@@ -595,30 +595,3 @@ $topCommentsHeight: 600px;
 .open-cta {
     margin-top: $baseline*8;
 }
-
-
-
-
-
-.d-discussion__show-more {
-    display: block;
-    border-style: none;
-    width: 30px;
-    height: 30px;
-    @include rounded-corners(50%);
-    color: #ffffff;
-    @include fs-data(4, $size-only: true);
-    position: relative;
-    left: 50%;
-    margin: $gs-baseline 0 $gs-baseline -15px;
-    padding: 0;
-
-    .i {
-        position: absolute;
-        text-indent: -9999px;
-        top: 50%;
-        left: 50%;
-        margin-top: -3px;
-        margin-left: -8px;
-    }
-}
