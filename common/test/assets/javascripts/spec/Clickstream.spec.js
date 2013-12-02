@@ -27,7 +27,7 @@ define(['analytics/clickstream', 'bean', 'common', 'helpers/fixtures'], function
                                 '<a href="/foo" id="click-me-internal" data-link-name="internal link">Same-host link</a>' +
                                 '<a href="http://google.com/foo" id="click-me-external" data-link-name="external link">Other-host link</a>' +
                                 '<span data-link-context="the outer context">' +
-                                    '<span data-link-context="the inner context">' +
+                                    '<span data-link-context-path="the inner context path" data-link-context-name="the inner context name">' +
                                         '<button href="/foo" id="click-me-link-context" data-link-name="the contextual link">The link</button>' +
                                     '</span>' +
                                 '</span>' +
@@ -216,7 +216,8 @@ define(['analytics/clickstream', 'bean', 'common', 'helpers/fixtures'], function
                     samePage: true,
                     sameHost: true,
                     tag: 'outer div | the contextual link',
-                    linkContext: 'the inner context'
+                    linkContextPath: 'the inner context path',
+                    linkContextName: 'the inner context name'
                 };
 
             common.mediator.on('module:clickstream:click', spy);

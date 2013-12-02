@@ -190,7 +190,7 @@
 }
 
 .article__standfirst {
-    @include fs-headline(1, true);
+    @include fs-headline(1);
     margin-bottom: $baseline*3;
     color: $c-neutral2;
 
