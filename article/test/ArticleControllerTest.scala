@@ -94,7 +94,7 @@ class ArticleControllerTest extends FlatSpec with Matchers  with UsesElasticSear
 
     val result = controllers.ArticleController.renderArticle(expiredArticle)(fakeRequest)
     status(result) should be(200)
-    contentType(result).get should be("application/javascript")
+    contentType(result).get should be("application/javascript; charset=utf-8")
     contentAsString(result) should startWith(s"""${callbackName}({\"config\"""") // the callback
   }
 

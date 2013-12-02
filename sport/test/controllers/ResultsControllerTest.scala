@@ -16,7 +16,7 @@ class ResultsControllerTest extends FlatSpec with Matchers {
     val fakeRequest = FakeRequest(GET, "/football/results?callback=foo").withHeaders("host" -> "localhost:9000")
     val result = football.controllers.ResultsController.render()(fakeRequest)
     status(result) should be(200)
-    header("Content-Type", result).get should be("application/javascript")
+    header("Content-Type", result).get should be("application/javascript; charset=utf-8")
   }
 
   it should "return JSON when .json format is supplied to results" in Fake {
@@ -26,7 +26,7 @@ class ResultsControllerTest extends FlatSpec with Matchers {
       
     val result = football.controllers.ResultsController.render()(fakeRequest)
     status(result) should be(200)
-    header("Content-Type", result).get should be("application/json")
+    header("Content-Type", result).get should be("application/json; charset=utf-8")
     contentAsString(result) should startWith("{\"config\"")
   }
   
@@ -41,7 +41,7 @@ class ResultsControllerTest extends FlatSpec with Matchers {
     val fakeRequest = FakeRequest(GET, "/football/" + tag + "/results?callback=foo").withHeaders("host" -> "localhost:9000")
     val result = football.controllers.ResultsController.renderTag(tag)(fakeRequest)
     status(result) should be(200)
-    header("Content-Type", result).get should be("application/javascript")
+    header("Content-Type", result).get should be("application/javascript; charset=utf-8")
   }
 
   it should "return JSON when .json format is supplied to tag results" in Fake {
@@ -51,7 +51,7 @@ class ResultsControllerTest extends FlatSpec with Matchers {
       
     val result = football.controllers.ResultsController.renderTag(tag)(fakeRequest)
     status(result) should be(200)
-    header("Content-Type", result).get should be("application/json")
+    header("Content-Type", result).get should be("application/json; charset=utf-8")
     contentAsString(result) should startWith("{\"config\"")
   }
   
@@ -64,7 +64,7 @@ class ResultsControllerTest extends FlatSpec with Matchers {
     val fakeRequest = FakeRequest(GET, "/football/results/2012/oct/20?callback=foo").withHeaders("host" -> "localhost:9000")
     val result = football.controllers.ResultsController.renderFor("2012", "oct", "20")(fakeRequest)
     status(result) should be(200)
-    header("Content-Type", result).get should be("application/javascript")
+    header("Content-Type", result).get should be("application/javascript; charset=utf-8")
   }
 
   it should "return JSON when .json format is supplied to for results" in Fake {
@@ -74,7 +74,7 @@ class ResultsControllerTest extends FlatSpec with Matchers {
       
     val result = football.controllers.ResultsController.renderFor("2012", "oct", "20")(fakeRequest)
     status(result) should be(200)
-    header("Content-Type", result).get should be("application/json")
+    header("Content-Type", result).get should be("application/json; charset=utf-8")
     contentAsString(result) should startWith("{\"config\"")
   }
   
