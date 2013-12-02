@@ -87,30 +87,21 @@ define([
             return common.util.queryParams().front;
         }
 
-        function setFront(id) {
+        function renderFront(id) {
             history.pushState({}, "", window.location.pathname + '?' + common.util.ammendedQueryStr('front', id));
-            renderCollections();
-        }
-
-        function renderFront() {
-            model.front(getFront());
-        }
-
-        function renderCollections() {
-            var ids = (model.config.fronts[getFront()] || {}).collections;
-
-            if (!_.isArray(ids)) { return; }
-
-            model.collections.removeAll();
             model.collections(
-                ids.map(function(id){
-                    var collection = model.config.collections[id];
-                    if (collection) {
-                        collection.id = id;
-                        return new Collection(collection);
-                    }
+                (model.config.fronts[getFront()] || {}).collections
+                .filter(function(id){ return !!model.config.collections[id]; })
+                .map(function(id){
+                    return new Collection(
+                        _.extend(model.config.collections[id], {id: id})
+                    );
                 })
             );
+        }
+
+        function setfront() {
+            model.front(getFront());
         }
 
         function startPoller() {
@@ -154,7 +145,7 @@ define([
         };
 
         model.front.subscribe(function(front) {
-            setFront(front);
+            renderFront(front);
         });
 
         model.liveMode.subscribe(function() {
@@ -175,8 +166,8 @@ define([
 
             fetchFronts()
             .done(function(){
-                renderFront();
-                window.onpopstate = renderFront;
+                setfront();
+                window.onpopstate = setfront;
 
                 ko.applyBindings(model);
 
