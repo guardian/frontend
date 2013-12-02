@@ -7,11 +7,8 @@ import conf._
 import play.api.mvc._
 import play.api.libs.json.{JsArray, Json}
 import Switches.EditionRedirectLoggingSwitch
-import com.sun.syndication.feed.synd._;
-import com.sun.syndication.io.{FeedException, SyndFeedOutput}
-import java.io.IOException;
-import java.io.StringWriter;
- 
+import views.support.NewsContainer
+
 abstract class FrontPage(val isNetworkFront: Boolean) extends MetaData
 
 object FrontPage {
@@ -193,33 +190,19 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
   }
 
   def renderCollection(id: String) = Action { implicit request =>
-    val pathOption = request.queryString("path").headOption
-
-    pathOption.map { path =>
-
-      val editionalisedPath = editionPath(path, Edition(request))
-
-      FrontPage(editionalisedPath).flatMap { frontPage =>
-
-      // get the trailblocks
-        val faciaPageOption: Option[FaciaPage] = front(editionalisedPath)
-        faciaPageOption map { faciaPage =>
-          Cached(frontPage) {
-            if (request.isJson) {
-              val collection = faciaPage.copy(collections = faciaPage.collections.filter(t => t._1.id == id))
-              val html = views.html.fragments.frontBody(frontPage, collection)
-              JsonComponent(
-                "html" -> html,
-                "trails" -> JsArray(collection.collections.flatMap(_._2.items.map(TrailToJson(_))))
-              )
-            }
-            else
-              Ok(views.html.front(frontPage, faciaPage))
-          }
+    CollectionAgent.getCollection(id) map { collection =>
+      val html = views.html.fragments.collections.standard(Config(id, None, None), collection, NewsContainer(true, true), 1)
+      Cached(60) {
+        if (request.isJson) {
+            JsonComponent(
+              "html" -> html,
+              "trails" -> JsArray(collection.items.map(TrailToJson(_)))
+            )
+        } else {
+          Ok(html)
         }
-      }.getOrElse(NotFound) //TODO is 404 the right thing here
-
-    }.getOrElse(NotFound)
+      }
+    } getOrElse(NotFound)
   }
   
   def renderCollectionRss(id: String) = Action { implicit request =>

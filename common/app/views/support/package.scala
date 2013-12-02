@@ -357,7 +357,7 @@ object ContributorLinks {
     tags.foldLeft(text) {
       case (t, tag) =>
         t.replaceFirst(tag.name,
-          <span itemscope="" itemtype="http://schema.org/Person" itemprop="author"><a rel="author" class="tone-colour" itemprop="url name" data-link-name="auto tag link" href={ s"/${tag.id}" } data-link-context={ s"${tag.id}" }>{ tag.name }</a></span>.toString)
+          <span itemscope="" itemtype="http://schema.org/Person" itemprop="author"><a rel="author" class="tone-colour" itemprop="url name" data-link-name="auto tag link" href={ s"/${tag.id}" }>{ tag.name }</a></span>.toString)
     }
   }
   def apply(html: Html, tags: Seq[Tag]): Html = apply(html.body, tags)
