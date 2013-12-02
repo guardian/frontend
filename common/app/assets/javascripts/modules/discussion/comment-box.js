@@ -24,21 +24,42 @@ function CommentBox(context, mediator, options) {
 }
 Component.define(CommentBox);
 
-/** @type {Object.<string.*>} */
-CommentBox.CONFIG = {
-    templateName: 'comment-box',
-    componentClass: 'd-comment-box',
-    classes: {
-        bodyExpanded: 'd-comment-box__body--expanded'
-    },
-    useBem: true,
-    errors: {
-        EMPTY_COMMENT_BODY: 'Please write a comment.',
-        COMMENT_TOO_LONG: 'Your comment must be fewer than 5000 characters long.',
-        ENHANCE_YOUR_CALM: 'You can only post one comment every minute. Please try again in a moment.',
-        USER_BANNED: 'Commenting has been disabled for this account (<a href="/community-faqs#321a">why?</a>).',
-        API_ERROR: 'Sorry, there was a problem posting your comment.'
-    }
+/**
+ * @type {boolean}
+ * @override
+ */
+CommentBox.prototype.useBem = true;
+
+/**
+ * @type {string}
+ * @override
+ */
+CommentBox.prototype.templateName = 'comment-box';
+
+/**
+ * @type {string}
+ * @override
+ */
+CommentBox.prototype.componentClass = 'd-comment-box';
+
+/**
+ * @type {Object.<string.string>}
+ * @override
+ */
+CommentBox.prototype.classes = {
+    bodyExpanded: 'd-comment-box__body--expanded'
+};
+
+/**
+ * @type {Object.<string.string>}
+ * @override
+ */
+CommentBox.prototype.errorMessages = {
+    EMPTY_COMMENT_BODY: 'Please write a comment.',
+    COMMENT_TOO_LONG: 'Your comment must be fewer than 5000 characters long.',
+    ENHANCE_YOUR_CALM: 'You can only post one comment every minute. Please try again in a moment.',
+    USER_BANNED: 'Commenting has been disabled for this account (<a href="/community-faqs#321a">why?</a>).',
+    API_ERROR: 'Sorry, there was a problem posting your comment.'
 };
 
 /**
@@ -150,7 +171,7 @@ CommentBox.prototype.postComment = function(e) {
 CommentBox.prototype.error = function(type, message) {
     var error = document.createElement('div');
     error.className = this.getClass('error', true);
-    error.innerHTML = message || this.conf().errors[type];
+    error.innerHTML = message || this.errorMessages[type];
     this.getElem('messages').appendChild(error);
     this.errors.push(type);
 };
@@ -182,7 +203,7 @@ CommentBox.prototype.fail = function(xhr) {
 
     if (xhr.status === 420) {
         this.error('ENHANCE_YOUR_CALM');
-    } else if (this.conf().errors[response.errorCode]) {
+    } else if (this.errorMessages[response.errorCode]) {
         this.error(response.errorCode);
     } else {
         this.error('API_ERROR');

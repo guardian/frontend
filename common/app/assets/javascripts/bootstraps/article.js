@@ -2,6 +2,7 @@ define([
     "common",
     "utils/mediator",
     "utils/detect",
+    "$",
     "modules/ui/autoupdate",
     "modules/live/filter",
     "modules/live/summary",
@@ -13,11 +14,13 @@ define([
     "modules/ui/notification-counter",
     "modules/onward/sequence",
     "modules/experiments/left-hand-card",
-    "modules/experiments/highlight-panel"
+    "modules/experiments/highlight-panel",
+    "modules/open/cta"
 ], function (
     common,
     mediator,
     detect,
+    $,
     AutoUpdate,
     LiveFilter,
     LiveSummary,
@@ -29,7 +32,8 @@ define([
     NotificationCounter,
     sequence,
     LeftHandCard,
-    HighlightPanel
+    HighlightPanel,
+    OpenCta
 ) {
 
     var modules = {
@@ -57,7 +61,7 @@ define([
             common.mediator.on('page:article:ready', function(config, context) {
                 if (config.page.isLive) {
 
-                    var timerDelay = /desktop|extended/.test(detect.getLayoutMode()) ? 30000 : 60000,
+                    var timerDelay = /desktop|wide/.test(detect.getBreakpoint()) ? 30000 : 60000,
                         a = new AutoUpdate({
                         path: function() {
                             var id = context.querySelector('.article-body .block').id,
@@ -149,6 +153,21 @@ define([
                 }
             });
             sequence.init('/' + config.page.pageId);
+        },
+
+        initOpen: function() {
+            common.mediator.on('page:article:ready', function(config, context) {
+                if (config.switches.openCta) {
+                    var openCta = new OpenCta(context, common.mediator, {
+                            discussionKey: config.page.shortUrl.replace('http://gu.com/', '')
+                        }),
+                        $openCtaElem = $('.open-cta');
+
+                    if ($openCtaElem[0]) {
+                        openCta.fetch($openCtaElem[0]);
+                    }
+                }
+            });
         }
     };
 
@@ -162,6 +181,7 @@ define([
             modules.initCricket();
             modules.externalLinksCards();
             modules.initHighlightsPanel(config);
+            modules.initOpen();
         }
         common.mediator.emit("page:article:ready", config, context);
     };

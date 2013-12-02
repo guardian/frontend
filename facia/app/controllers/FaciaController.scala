@@ -7,6 +7,7 @@ import conf._
 import play.api.mvc._
 import play.api.libs.json.{JsArray, Json}
 import Switches.EditionRedirectLoggingSwitch
+import views.support.NewsContainer
 
 
 abstract class FrontPage(val isNetworkFront: Boolean) extends MetaData
@@ -162,6 +163,9 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
   def renderEditionSectionFront(path: String) = renderFront(path)
   def renderFrontJson(path: String) = renderFront(path)
 
+  def renderEditionCollection(id: String) = renderCollection(id)
+  def renderEditionCollectionJson(id: String) = renderCollection(id)
+
   def renderFront(path: String) = Action { implicit request =>
       val editionalisedPath = editionPath(path, Edition(request))
 
@@ -184,6 +188,22 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
           }
         }
       }.getOrElse(NotFound) //TODO is 404 the right thing here
+  }
+
+  def renderCollection(id: String) = Action { implicit request =>
+    CollectionAgent.getCollection(id) map { collection =>
+      val html = views.html.fragments.collections.standard(Config(id, None, None), collection, NewsContainer(true, true), 1)
+      Cached(60) {
+        if (request.isJson) {
+            JsonComponent(
+              "html" -> html,
+              "trails" -> JsArray(collection.items.map(TrailToJson(_)))
+            )
+        } else {
+          Ok(html)
+        }
+      }
+    } getOrElse(NotFound)
   }
 
   def renderResponsiveViewer() = Action {

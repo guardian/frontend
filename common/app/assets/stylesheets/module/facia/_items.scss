@@ -164,6 +164,11 @@ $c-live: #e81818;
         left: 0;
     }
 }
+
+.item__image-container.inlined-image {
+  display: block !important;
+}
+
 .item__live-indicator {
     color: #ffffff;
     background-color: $c-live;
@@ -211,28 +216,35 @@ $c-live: #e81818;
     .trail__count {
         position: relative;
         float: left;
+
         i {
             margin: 0;
             position: absolute;
-            top: 2px;
         }
     }
     .item__timestamp {
         min-width: gs-span(1) - 16;
         padding-right: $gs-gutter/2;
-        padding-left: 13px;
+        padding-left: 14px;
+
         i {
             left: 0;
+            top: 3px;
+            @include mq(tablet) {
+                top: 2px;
+            }
         }
     }
     .trail__count {
         padding-left: 28px;
         top: 0;
+
         a {
             line-height: inherit;
             color: inherit;
         }
         i {
+            top: 3px;
             left: $gs-gutter/2 - 1;
         }
     }

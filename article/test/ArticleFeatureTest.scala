@@ -1,11 +1,14 @@
 package test
 
-import conf.Configuration
+import conf.{HealthcheckPage, Configuration}
 import conf.Switches._
 import org.scalatest.Matchers
 import org.scalatest.{ GivenWhenThen, FeatureSpec }
 import collection.JavaConversions._
 import common.UsesElasticSearch
+import play.api.libs.ws.WS
+import scala.concurrent.duration._
+import scala.concurrent.Await
 
 class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  with UsesElasticSearch {
 
@@ -478,6 +481,14 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
         $("meta[property='twitter:card']").getAttributes("content").head  should be ("summary_large_image")
         $("meta[property='twitter:app:url:googleplay']").getAttributes("content").head should startWith ("guardian://www.theguardian.com/world")
         $("meta[property='twitter:image:src']").getAttributes("content").head should startWith ("http://i.gucode.co.uk/n/")
+      }
+    }
+
+    scenario("Health check"){
+      HtmlUnit("/world/2013/sep/15/obama-rouhani-united-nations-meeting") { browser =>
+        Await.result(WS.url("http://localhost:9000/_cdn_healthcheck").get(), 10.seconds).status should be (503)
+        HealthcheckPage.get(com.gu.management.HttpRequest(com.gu.management.GET, "/management/healthcheck", "http://localhost:10808", Map.empty))
+        Await.result(WS.url("http://localhost:9000/_cdn_healthcheck").get(), 10.seconds).status should be (200)
       }
     }
 

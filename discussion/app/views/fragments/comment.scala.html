@@ -7,12 +7,12 @@
            id="comment-@comment.id"
            data-comment-id="@comment.id"
            data-comment-author="@comment.profile.displayName"
-           data-comment-author-id="@comment.profile.userId">
+           data-comment-author-id="@comment.profile.userId"
+           data-comment-highlighted="@comment.isHighlighted">
     <div class="d-comment__inner">
-        @if(comment.isHighlighted && !comment.isBlocked){
-            <div class="d-comment__pick i i-guardian-picks"><span class="u-h">Guardian pick</span></div>
-        }
-
+        
+        <div class="d-comment__pick i i-guardian-picks @if(!comment.isHighlighted || comment.isBlocked){u-h}" title="Guardian pick"></div>
+        
         @if(!(isClosedForRecommendation && comment.numRecommends == 0) && !comment.isBlocked){
             <div
                 class="d-comment__recommend@if(!isClosedForRecommendation){ js-recommend-comment}@if(comment.isHighlighted){ d-comment__recommend--left}" 
@@ -56,6 +56,7 @@
             @if(!comment.isBlocked){
                 <div class="d-comment__actions">
                     <div class="d-comment__actions__main u-cf">
+                        <div class="u-fauxlink d-comment__action d-comment__action--reply sign-in-required" role="button" data-link-name="reply to comment" data-comment-id="@comment.id">Reply</div>
                         <a href="http://discussion.theguardian.com/components/report-abuse/@comment.id" class="d-comment__action d-comment__action--report" target="_blank">Report</a>
                     </div>
                 </div>

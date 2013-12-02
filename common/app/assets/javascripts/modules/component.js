@@ -19,20 +19,20 @@ define([
      */
     var Component = function() {};
 
-    /**
-     * This object is an interface and meant to be overridden
-     * mostly used for absttracting CSS classes.
-     * This makes for easy testing, less duplication of string variables,
-     * and hopefully, one day, in string compilation
-     * @type {Object.<string.*>}
-     */
-    Component.CONFIG = {
-        templateName: '{{ TEMPLATE_NAME }}',
-        componentClass: '{{ COMPONENT_CLASS }}',
-        endpoint: '{{ ENDPOINT }}',
-        classes: {},
-        elements: {}
-    };
+    /** @type {boolean} */
+    Component.prototype.useBem = false;
+
+    /** @type {string} */
+    Component.prototype.templateName = null;
+
+    /** @type {string} */
+    Component.prototype.componentClass = null;
+
+    /** @type {string} */
+    Component.prototype.endpoint = null;
+
+    /** @type {Object.<string.string>} */
+    Component.prototype.classes = null;
 
     /** @type {Element|null} */
     Component.prototype.context = null;
@@ -49,6 +49,9 @@ define([
     /** @type {boolean} */
     Component.prototype.rendered = false;
 
+    /** @type {boolean} */
+    Component.prototype.destroyed = false;
+
     /** @type {Object.<string.Element>} */
     Component.prototype.elems = null;
 
@@ -59,7 +62,7 @@ define([
     Component.prototype.defaultOptions = {};
 
     /**
-     * Uses the CONFIG.componentClass
+     * Uses the this.componentClass
      * TODO (jamesgorrie): accept strings etc Also what to do with multiple objects?
      * @param {Element|string=} elem (optional)
      */
@@ -69,6 +72,7 @@ define([
             throw new ComponentError('Need element to attach to');
         } else {
             this.elem = elem;
+            this._prerender();
             this._ready();
         }
     };
@@ -78,11 +82,12 @@ define([
      */
     Component.prototype.attachToDefault = function() {
         this.checkAttached();
-        var elem = qwery('.'+ this.conf().componentClass, this.context);
+        var elem = qwery('.'+ this.componentClass, this.context);
         if (elem.length === 0) {
-            throw new ComponentError('No element of type "'+ '.'+ this.conf().componentName +'" to attach to.');
+            throw new ComponentError('No element of type "'+ '.'+ this.componentName +'" to attach to.');
         }
         this.elem = elem[0];
+        this._prerender();
         this._ready();
     };
 
@@ -91,12 +96,12 @@ define([
      */
     Component.prototype.render = function(parent) {
         this.checkAttached();
-        var conf = this.conf(),
-            template = bonzo.create(document.getElementById('tmpl-'+ conf.templateName).innerHTML)[0],
+        var template = bonzo.create(document.getElementById('tmpl-'+ this.templateName).innerHTML)[0],
             container = parent || document.body;
 
         this.elem = template;
-        bonzo(container).append(template);
+        this._prerender();
+        bonzo(container).append(this.elem);
         this._ready();
     };
 
@@ -106,7 +111,7 @@ define([
     Component.prototype.fetch = function(parent) {
         this.checkAttached();
         var self = this,
-            endpoint = this.conf().endpoint,
+            endpoint = this.endpoint,
             opt;
 
         for (opt in this.options) {
@@ -121,8 +126,12 @@ define([
         }).then(
             function render(resp) {
                 self.elem = bonzo.create(resp.html)[0];
-                bonzo(parent).append(self.elem);
-                self._ready();
+                self._prerender();
+
+                if (!self.destroyed) {
+                    bonzo(parent).append(self.elem);
+                    self._ready();
+                }
             }
         );
     };
@@ -140,10 +149,18 @@ define([
      * This is just used to set up the component internally
      */
     Component.prototype._ready = function() {
+        if (!this.destroyed) {
+            this.rendered = true;
+            this.ready();
+        }
+    };
+
+    /**
+     * Used as we need for pre-prerendering
+     */
+    Component.prototype._prerender = function() {
         this.elems = {};
         this.prerender();
-        this.rendered = true;
-        this.ready();
     };
 
     /**
@@ -190,7 +207,7 @@ define([
 
     /**
      * TODO: After working on comments, wondering if this should support NodeLists
-     * @param {string} elemName this corresponds to CONFIG.classes
+     * @param {string} elemName this corresponds to this.classes
      */
     Component.prototype.getElem = function(elemName) {
         if (this.elems[elemName]) { return this.elems[elemName]; }
@@ -207,8 +224,7 @@ define([
      * @return {string}
      */
     Component.prototype.getClass = function(elemName, sansDot) {
-        var config = this.conf(),
-            className = this.conf().useBem ? this.conf().componentClass +'__'+ elemName : config.classes[elemName];
+        var className = this.useBem ? this.componentClass +'__'+ elemName : this.classes[elemName];
 
         return (sansDot ? '' : '.') + className;
     };
@@ -219,7 +235,7 @@ define([
      */
     Component.prototype.setState = function(state, elemName) {
         var elem = elemName ? this.getElem(elemName) : this.elem;
-        bonzo(elem).addClass(this.conf().componentClass + (elemName ? '__'+ elemName : '') +'--'+ state);
+        bonzo(elem).addClass(this.componentClass + (elemName ? '__'+ elemName : '') +'--'+ state);
     };
 
     /**
@@ -229,7 +245,7 @@ define([
      */
     Component.prototype.removeState = function(state, elemName) {
         var elem = elemName ? this.getElem(elemName) : this.elem;
-        return bonzo(elem).removeClass(this.conf().componentClass + (elemName ? '__'+ elemName : '') +'--'+ state);
+        return bonzo(elem).removeClass(this.componentClass + (elemName ? '__'+ elemName : '') +'--'+ state);
     };
 
     /**
@@ -239,14 +255,7 @@ define([
      */
     Component.prototype.hasState = function(state, elemName) {
         var elem = elemName ? this.getElem(elemName) : this.elem;
-        return bonzo(elem).hasClass(this.conf().componentClass + (elemName ? '__'+ elemName : '') +'--'+ state);
-    };
-
-    /**
-     * @return {Object}
-     */
-    Component.prototype.conf = function() {
-        return this.constructor.CONFIG;
+        return bonzo(elem).hasClass(this.componentClass + (elemName ? '__'+ elemName : '') +'--'+ state);
     };
 
     /**
@@ -273,7 +282,10 @@ define([
      */
     Component.prototype.destroy = function() {
         this.detach();
-        bonzo(this.elem).remove();
+        if (this.elem) {
+            bonzo(this.elem).remove();
+        }
+        this.destroyed = true;
     };
 
     /**

@@ -31,6 +31,10 @@
     }
 }
 
+
+// Font Helpers
+// =============================================================================
+
 @mixin font-size($size, $line-height: $size) {
     @include rem((
         font-size: $size,
@@ -38,16 +42,24 @@
     ));
 }
 
+// Use only if necessary, prefer usage of the font-scale
 @mixin font($family, $weight, $size, $line-height: $size) {
     font-family: $family;
     font-weight: $weight;
     @include font-size($size, $line-height);
 }
 
+
+// Font Scale
+// =============================================================================
+
+// Prefixes:
+// f- stands for Font: use to set a font-family only
+// fs- for Font Scale: see documentation in docs/design/font-scale.jpg
+
 @mixin f-header {
     font-family: $serifheadline;
     font-weight: 900;
-    text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
 }
 @mixin fs-header($level, $size-only: false) {
@@ -63,7 +75,6 @@
 @mixin f-headline {
     font-family: $serifheadline;
     font-weight: normal;
-    text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
 }
 @mixin fs-headline($level, $size-only: false) {
@@ -79,7 +90,6 @@
 @mixin f-bodyHeading {
     font-family: $serif;
     font-weight: bold;
-    text-rendering: optimizeLegibility;
     -webkit-font-smoothing: subpixel-antialiased;
 }
 @mixin fs-bodyHeading($level, $size-only: false) {
@@ -95,7 +105,6 @@
 @mixin f-bodyCopy {
     font-family: $serif;
     -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeSpeed;
 }
 @mixin fs-bodyCopy($level, $size-only: false) {
     $bodycopy: nth($fs-bodyCopy, $level);
@@ -110,7 +119,6 @@
 @mixin f-data {
     font-family: $sans-serif;
     -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeSpeed;
 }
 @mixin fs-data($level, $size-only: false) {
     $data: nth($fs-data, $level);
@@ -121,6 +129,9 @@
         @include f-data;
     }
 }
+
+// CSS3 helpers
+// =============================================================================
 
 @mixin sticky {
     position: -webkit-sticky;
@@ -144,6 +155,7 @@
 @mixin transform($args) {
     -webkit-transform: $args;
     -moz-transform: $args;
+    -o-transform: $args;
     -ms-transform: $args;
     transform: $args;
 }
@@ -173,13 +185,13 @@
     border-radius: $radius;
 }
 
-@mixin box-shadow($args) {
+@mixin box-shadow($args...) {
     -webkit-box-shadow: $args;
     -moz-box-shadow: $args;
     box-shadow: $args;
 }
 
-@mixin background-size($args) {
+@mixin background-size($args... ) {
     -webkit-background-size: $args;
     -moz-background-size: $args;
     background-size: $args;
@@ -200,6 +212,9 @@
     user-select: none;
 }
 
+// Misc
+// =============================================================================
+
 @mixin fix-aspect-ratio($width, $height, $startingWidth: 100%) {
     // To get this working, position the child element
     // to 'absolute' in the top left corner
@@ -211,27 +226,24 @@
 }
 
 @mixin old-ie {
-    // Only use this content if we're dealing with old IE
-    @if $old-ie {
+    @if $old-ie { // Only use this content if we're dealing with old IE
         @content;
     }
 }
 
 @mixin faux-bullet-point {
     position: relative;
-    text-indent: 20px;
-    text-indent: 2.2rem;
+    @include rem((text-indent: 20px));
 
     &:before {
-        font-size: 48px;
-        font-size: 4.8rem;
-        content: "\2022";
-        color: $c-neutral3;
         position: absolute;
-        left: -22px;
-        left: -2.2rem;
-        top: 2px;
-        top: .2rem;
+        content: "\2022";
+        @include rem((
+            left: -22px,
+            top: 2px,
+            font-size: 48px
+        ));
+        color: $c-neutral3;
     }
 }
 

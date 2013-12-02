@@ -78,15 +78,18 @@
                 </div>
                 <div class="article__secondary-column" aria-hidden="true">
                     <div class="article__secondary-column__inner">
-                        <div class="js-sticky-upper" data-id="mpu-ad-slot"></div>
+                        <div class="js-sticky-upper sticky-upper--social" data-id="mpu-ad-slot"></div>
                         <div class="u-table">
                             <div class="u-table__row">
                                 <div class="u-table__cell u-table__cell--top">
                                     <div class="mpu-context">
                                         <div class="mpu-container js-mpu-ad-slot">
-                                            <h2 class="article__meta-heading tone-colour">Share this article</h2>
-                                            @fragments.social(article, "next to content")
+                                            <div class="social-wrapper social-wrapper--aside">
+                                                <h2 class="article__meta-heading tone-colour">Share this article</h2>
+                                                @fragments.social(article, "next to content")
+                                            </div>
 
+                                            <div class="open-cta"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -112,11 +115,11 @@
                 @fragments.discussion(article.isClosedForComments, article.shortUrlId)
             }
             @if(storyPackage.nonEmpty) {
-                <aside role="complementary" class="more-on-this-story@if(storyPackage.size == 1){ more-on-this-story--one-item}" data-link-context="@article.section">
+                <aside role="complementary" class="more-on-this-story@if(storyPackage.size == 1){ more-on-this-story--one-item}">
                     @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
                 </aside>
             } else {
-                <aside class="js-related" role="complementary" data-link-context="related@article.url"></aside>
+                <aside class="js-related" role="complementary"></aside>
             }
 
             @fragments.mostPopularPlaceholder(article.section)
@@ -141,4 +144,5 @@
             </a>
         </li>
     </script>
+    <script type="text/template" id="tmpl-right-ear">@fragments.onwardRightEar()</script>
 }

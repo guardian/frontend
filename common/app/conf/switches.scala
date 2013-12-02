@@ -89,10 +89,6 @@ object Switches extends Collections {
     "Enable the Quantcast audience segment tracking.",
     safeState = Off)
 
-  val OmnitureDomReadySwitch = Switch("Analytics", "analytics-dom-ready",
-    "Initialise Omniture on dom-ready, rather than on page-load.",
-    safeState = Off)
-
   val AdSlotImpressionStatsSwitch = Switch("Analytics", "adslot-impression-stats",
     "Track when adslots (and possible ad slots) are scrolled into view.",
     safeState = Off)
@@ -122,6 +118,13 @@ object Switches extends Collections {
   val DiscussionTopCommentsSwitch = Switch("Discussion", "discussion-top-comments",
     "If this switch is on, users will see top comments if there are any",
     safeState = Off)
+
+  // Open
+
+  val OpenCtaSwitch = Switch("Open", "open-cta",
+    "If this switch is on, will see a CTA to comments on the right hand side",
+    safeState = Off)
+
 
   // Swipe Switches
 
@@ -243,7 +246,11 @@ object Switches extends Collections {
     safeState = Off)
 
   val ABShowMoreLayout = Switch("A/B Tests", "ab-show-more-layout",
-    "If this is switched on an AB test runs that's repeats initial layout of a collection when clicking 'show more'",
+    "If this is switched on an AB test runs that presents the 'show more' layout of a collection",
+    safeState = Off)
+
+  val ABOnwardIntrusive = Switch("A/B Tests", "ab-onward-intrusive",
+    "If this is switched on an AB test runs to test intrusive onward components",
     safeState = Off)
 
   // Sport Switch
@@ -274,7 +281,7 @@ object Switches extends Collections {
 
   val ImageServerSwitch = Switch("Image Server", "image-server",
     "If this switch is on images will be served off i.guim.co.uk (dynamic image host).",
-    safeState = Off)
+    safeState = On)
 
   val all: List[Switch] = List(
     AutoRefreshSwitch,
@@ -284,10 +291,10 @@ object Switches extends Collections {
     VideoAdvertSwitch,
     AudienceScienceSwitch,
     QuantcastSwitch,
-    OmnitureDomReadySwitch,
     DiscussionSwitch,
     DiscussionPostCommentSwitch,
     DiscussionTopCommentsSwitch,
+    OpenCtaSwitch,
     ShortDiscussionSwitch,
     SwipeNav,
     SwipeNavOnClick,
@@ -328,6 +335,7 @@ object Switches extends Collections {
     EditionRedirectLoggingSwitch,
     FacebookAutoSigninSwitch,
     ABImproveOnwardTrails,
+    ABOnwardIntrusive,
     ABInitialShowMore,
     AdDwellTimeLoggerSwitch,
     ABShowMoreLayout

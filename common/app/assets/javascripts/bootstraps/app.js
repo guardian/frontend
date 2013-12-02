@@ -49,7 +49,7 @@ define('bootstraps/app', [
     Tag,
     Section,
     ImageContent,
-    Id,
+    IdApi,
     UserAdTargeting
 ) {
 
@@ -104,7 +104,7 @@ define('bootstraps/app', [
         },
 
         initId : function (config) {
-            Id.init(config);
+            IdApi.init(config);
         },
 
         initUserAdTargeting : function () {

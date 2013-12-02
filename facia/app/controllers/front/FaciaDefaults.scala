@@ -22,11 +22,9 @@ trait FaciaDefaults {
 
   def getEdition(id: String): Edition = Edition.all.find(edition => id.toLowerCase.startsWith(edition.id.toLowerCase)).getOrElse(Edition.defaultEdition)
 
-  def configTuple(id: String): (Config, Collection) = (createConfig(id), emptyCollection)
+  def configTuple(id: String): Config = createConfig(id)
 
   def getDefaultSetup: List[(Config, Collection)] = defaultIds.map (id => (createConfig(id), emptyCollection))
-
-  def getDefaultPageFront: Map[String, PageFront] = defaultIds.map(id => (id, new PageFront(id, getEdition(id)))).toMap
 
 }
 

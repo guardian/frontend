@@ -8,9 +8,9 @@
 
         @if(isTabbed) {
             <div class="tabs">
-                <ol class="tabs__container js-tabs" id="js-popular-tabs">
+                <ol class="tabs__container js-tabs" id="js-popular-tabs" role="tablist">
                     @popular.zipWithRowInfo.map{ case (section, info) =>
-                        <li class="tabs__tab@if(info.isFirst){ tabs__tab--selected tone-colour tone-accent-border}">
+                        <li class="tabs__tab@if(info.isFirst){ tabs__tab--selected tone-colour tone-accent-border}" role="tab" id="tabs-popular-@info.rowNum-tab"@if(info.isFirst){ aria-selected="true"} aria-controls="tabs-popular-@info.rowNum">
                             <a href="#tabs-popular-@info.rowNum" data-link-name="tab @info.rowNum @section.heading"><span class="u-h">Most read: </span>@Html(section.heading)</a>
                         </li>
                     }
@@ -21,6 +21,10 @@
         @popular.zipWithRowInfo.map{ case (section, info) =>
             <div id="tabs-popular-@info.rowNum"
                 class="@if(isTabbed){tabs__pane @if(!info.isFirst){js-hidden}} headline-list"
+                @if(isTabbed){
+                    role="tabpanel"
+                    aria-labelledby="tabs-popular-@info.rowNum-tab"
+                }
                 data-link-name="@section.heading"
                 data-link-context="most-read/@section.section">
 

@@ -22,7 +22,7 @@ class CompetitionListControllerTest extends FlatSpec with Matchers {
       
     val result = football.controllers.CompetitionListController.renderCompetitionList()(fakeRequest)
     status(result) should be(200)
-    header("Content-Type", result).get should be("application/javascript")
+    header("Content-Type", result).get should be("application/javascript; charset=utf-8")
     contentAsString(result) should startWith(s"""${callbackName}({\"config\"""")
   }
 
@@ -33,7 +33,7 @@ class CompetitionListControllerTest extends FlatSpec with Matchers {
       
     val result = football.controllers.CompetitionListController.renderCompetitionListJson()(fakeRequest)
     status(result) should be(200)
-    header("Content-Type", result).get should be("application/json")
+    header("Content-Type", result).get should be("application/json; charset=utf-8")
     contentAsString(result) should startWith("{\"config\"")
   }
   

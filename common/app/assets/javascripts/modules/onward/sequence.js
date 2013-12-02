@@ -19,7 +19,8 @@ define([
         store = storage.session,
         sequence = [],
         prefixes = {
-            context: 'gu.context',
+            contextName: 'gu.context.name',
+            contextPath: 'gu.context.path',
             sequence: 'gu.sequence'
         };
 
@@ -33,8 +34,8 @@ define([
     }
 
     function getSequence() { return get('sequence'); }
-    function getContext() { return get('context'); }
-    function removeContext() { return store.remove(prefixes.context); }
+    function getContext() { return { name: get('contextName'), path: get('contextPath') }; }
+    function removeContext() { return store.remove(prefixes.contextPath); }
 
     function dedupeSequence(sequence) {
         var history = new History({}).get().map(function(i){
@@ -47,11 +48,14 @@ define([
 
     function loadSequence(context) {
         ajax({
-            url: '/' + context + '.json',
+            url: '/' + context.path + '.json',
             crossOrigin: true
         }).then(function (json) {
             if(json && 'trails' in json) {
-                set('sequence', dedupeSequence(json.trails));
+                set('sequence', {
+                    name: context.name,
+                    items: dedupeSequence(json.trails)
+                });
                 removeContext();
                 mediator.emit('modules:sequence:loaded', getSequence());
             }
@@ -62,8 +66,9 @@ define([
 
     function bindListeners() {
         mediator.on('module:clickstream:click', function(clickSpec){
-            if (clickSpec.sameHost && !clickSpec.samePage && clickSpec.linkContext) {
-                set('context', clickSpec.linkContext);
+            if (clickSpec.sameHost && !clickSpec.samePage && clickSpec.linkContextPath) {
+                set('context.path', clickSpec.linkContextPath);
+                set('context.name', clickSpec.linkContextName);
             }
         });
     }
@@ -72,7 +77,7 @@ define([
         var context = getContext();
         currentPageId = id;
 
-        if(context !== null) {
+        if(context.path !== null) {
             loadSequence(context);
         } else {
             mediator.emit('modules:sequence:loaded', dedupeSequence(getSequence()));

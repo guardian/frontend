@@ -30,19 +30,21 @@ define(['utils/mediator', 'utils/ajax', 'modules/onward/sequence'], function(med
             server = sinon.fakeServer.create();
             server.autoRespond = true;
             server.autoRespondAfter = 20;
-            server.respondWith('/world.json?_edition=UK', [200, {}, response]);
+            server.respondWith('/uk/news.json?_edition=UK', [200, {}, response]);
             //Set up storage
-            setStorageItem('context', 'world', 'sessionStorage');
+            setStorageItem('context.path', 'uk/news', 'sessionStorage');
+            setStorageItem('context.name', 'uk news', 'sessionStorage');
             setStorageItem('history', [{"id":"/p/3k43n"}], 'localStorage');
         });
 
         afterEach(function () {
             server.restore();
-            window.sessionStorage.removeItem('gu.context');
+            window.sessionStorage.removeItem('gu.context.path');
+            window.sessionStorage.removeItem('gu.context.name');
             window.localStorage.removeItem('gu.sequence');
         });
 
-        it("should load a sequence from the server if none avaliable", function(){
+        it("should load a sequence from the server if none available", function(){
 
             runs(function() {
                 sequence.init();
@@ -61,7 +63,7 @@ define(['utils/mediator', 'utils/ajax', 'modules/onward/sequence'], function(med
             });
 
             waitsFor(function () {
-                return sequenceLoadedCallback.calledWith([{url: "/p/3k4vt"},{url: "/p/3k44f"},{url: "/p/3k44b"}]);
+                return sequenceLoadedCallback.calledWith({name: 'uk news', items: [{url: "/p/3k4vt"},{url: "/p/3k44f"},{url: "/p/3k44b"}]});
             }, 'sequence was not deduped', 500);
 
         });
@@ -73,7 +75,7 @@ define(['utils/mediator', 'utils/ajax', 'modules/onward/sequence'], function(med
             });
 
             waitsFor(function () {
-                return sequenceLoadedCallback.calledWith([{url: "/p/3k4vt"},{url: "/p/3k44b"}]);
+                return sequenceLoadedCallback.calledWith({name: 'uk news', items: [{url: "/p/3k4vt"},{url: "/p/3k44b"}]});
             }, 'sequence did not remove current page from sequence', 500);
 
         });
