@@ -284,7 +284,7 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
 
   def renderCollection(id: String) = Action { implicit request =>
     CollectionAgent.getCollection(id) map { collection =>
-      val html = views.html.fragments.collections.standard(Config(id, None, None), collection, NewsContainer(true, true), 1)
+      val html = views.html.fragments.collections.standard(Config(id, None, None, None), collection, NewsContainer(true, true), 1)
       Cached(60) {
         if (request.isJson) {
             JsonComponent(

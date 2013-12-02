@@ -53,7 +53,7 @@ trait ParseConfig extends ExecutionContexts with Logging {
       (json \ "id").as[String],
       (json \ "contentApiQuery").asOpt[String].filter(_.nonEmpty),
       (json \ "displayName").asOpt[String],
-      (json \ "type").asOpt[String]
+      (json \ "tone").asOpt[String]
     )
 
 }
@@ -225,7 +225,7 @@ trait ConfigAgent extends ExecutionContexts {
         id,
         (collectionJson \ "apiQuery").asOpt[String],
         (collectionJson \ "displayName").asOpt[String],
-        (collectionJson \ "type").asOpt[String]
+        (collectionJson \ "tone").asOpt[String]
       )
     }
   }

@@ -5,29 +5,46 @@ import model.Config
 object GetContainer {
 
   /**
-   * Mapping of collection 'type' to Container - in general, this should suffice
+   * Mapping of collection 'tone' to Container
    */
-  val collectionTypeMapping: Map[String, Container] = Map(
-    "news"            -> NewsContainer(),
-    "sport"           -> SportContainer(),
-    "feature"         -> FeaturesContainer(),
-    "comment"         -> CommentContainer(),
-    "section"         -> SectionContainer(),
-    "section-feature" -> SectionContainer(tone = "feature")
+  val collectionToneMapping: Map[String, Container] = Map(
+    "news"    -> SectionContainer(),
+    "feature" -> SectionContainer(tone = "feature"),
+    "comment" -> SectionContainer()
   )
 
   /**
-   * Allows use of different containers on specific fronts for specific collection
+   * Allows use of different containers on specific fronts for specific collections
    */
   val specificContainers: Map[String, Map[String, Container]] = Map(
+    ("au", Map(
+      ("au/news/regular-stories", NewsContainer()),
+      ("au/sport/regular-stories", SportContainer()),
+      ("au/commentisfree/regular-stories", CommentContainer()),
+      ("au/culture/regular-stories", FeaturesContainer()),
+      ("au/contributors/feature-stories", CommentContainer())
+    )),
     ("au/business", Map(
       ("au/business/regular-stories", SportContainer(showMore = false))
     )),
     ("au/commentisfree", Map(
       ("au/commentisfree/regular-stories", CommentContainer(showMore = false))
     )),
+    ("au/culture", Map(
+      ("au/culture/regular-stories", FeaturesContainer())
+    )),
     ("au/money", Map(
       ("au/money/regular-stories", SportContainer(showMore = false))
+    )),
+    ("au/sport", Map(
+      ("au/sport/regular-stories", SportContainer())
+    )),
+    ("uk", Map(
+      ("uk/news/regular-stories", NewsContainer()),
+      ("uk/sport/regular-stories", SportContainer()),
+      ("uk/commentisfree/regular-stories", CommentContainer()),
+      ("uk/culture/regular-stories", FeaturesContainer()),
+      ("uk/contributors/feature-stories", CommentContainer())
     )),
     ("uk/business", Map(
       ("uk/business/regular-stories", SportContainer(showMore = false))
@@ -35,8 +52,21 @@ object GetContainer {
     ("uk/commentisfree", Map(
       ("uk/commentisfree/regular-stories", CommentContainer(showMore = false))
     )),
+    ("uk/culture", Map(
+      ("uk/culture/regular-stories", FeaturesContainer())
+    )),
     ("uk/money", Map(
       ("uk/money/regular-stories", SportContainer(showMore = false))
+    )),
+    ("uk/sport", Map(
+      ("uk/sport/regular-stories", SportContainer())
+    )),
+    ("us", Map(
+      ("us/news/regular-stories", NewsContainer()),
+      ("us/sport/regular-stories", SportContainer()),
+      ("us/commentisfree/regular-stories", CommentContainer()),
+      ("us/culture/regular-stories", FeaturesContainer()),
+      ("us/contributors/feature-stories", CommentContainer())
     )),
     ("us/business", Map(
       ("us/business/regular-stories", SportContainer(showMore = false))
@@ -44,8 +74,14 @@ object GetContainer {
     ("us/commentisfree", Map(
       ("us/commentisfree/regular-stories", CommentContainer(showMore = false))
     )),
+    ("us/culture", Map(
+      ("us/culture/regular-stories", FeaturesContainer())
+    )),
     ("us/money", Map(
       ("us/money/regular-stories", SportContainer(showMore = false))
+    )),
+    ("us/sport", Map(
+      ("us/sport/regular-stories", SportContainer())
     )),
 
     ("football", Map(
@@ -80,8 +116,8 @@ object GetContainer {
       frontContainers.get(config.id)
     }.getOrElse {
       // else use general, defaulting to Highlights
-      config.collectionType.flatMap { collectionType =>
-        collectionTypeMapping.get(collectionType)
+      config.collectionTone.flatMap { collectionTone =>
+        collectionToneMapping.get(collectionTone)
       }.getOrElse(SectionContainer())
     }
   }
