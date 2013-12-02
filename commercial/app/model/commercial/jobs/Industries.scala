@@ -2,9 +2,12 @@ package model.commercial.jobs
 
 import model.commercial.{Keyword, Ad, Segment}
 import model.commercial.Utils._
-import common.ExecutionContexts
+import common.{AkkaAgent, ExecutionContexts}
+import conf.ContentApi
+import scala.concurrent.duration._
+import scala.concurrent.Future
 
-case class Job(id: Int,
+case class Industries(id: Int,
                title: String,
                shortDescription: String,
                recruiterName: String,
@@ -21,9 +24,11 @@ case class Job(id: Int,
   }
 }
 
-object Job extends ExecutionContexts {
+object Industries extends ExecutionContexts {
 
-  val sectorIdIndustryMap = Map[Int, String](
+  private lazy val industryKeywords = AkkaAgent(Map.empty[Int, Seq[Keyword]])
+
+  private val sectorIdIndustryMap = Map[Int, String](
     (101, "Arts & heritage"),
     (111, "Charities"),
     (124, "Construction"),
@@ -50,4 +55,17 @@ object Job extends ExecutionContexts {
     (343, "Skilled Trade"),
     (350, "Social Enterprise")
   )
+
+  def refresh() = Future.sequence(sectorIdIndustryMap.map{ case (id, name) =>
+    ContentApi.tags.stringParam("type", "keyword").stringParam("q", name).pageSize(50).response.flatMap{ response =>
+      val keywords = response.results.map(tag => Keyword(tag.id, tag.webTitle))
+      industryKeywords.alter(_.updated(id, keywords))(5.seconds)
+    }
+  })
+
+  def stop() {
+    industryKeywords.close()
+  }
+
+  def forIndustry(id: Int) = industryKeywords().get(id).getOrElse(Nil)
 }

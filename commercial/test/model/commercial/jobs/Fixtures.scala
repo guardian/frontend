@@ -65,7 +65,7 @@ object Fixtures {
 
   val jobs = List(
 
-    Job(1058606,
+    Industries(1058606,
       "Area Management Training Programme (Graduate Area Manager)",
       "We're only looking for outstanding individuals for the Aldi Management Programme.",
       "ALDI",
@@ -73,7 +73,7 @@ object Fixtures {
       Seq(149, 158, 245)
     ),
 
-    Job(4302057,
+    Industries(4302057,
       "Listen Laugh and Learn in Worcestershire",
       "The role of Association Visitor is a highly rewarding one with many opportunities for developing your own skills and knowledge, whilst being part of a team. Professional qualifications or personal experience of MND are not necessary...",
       "MOTOR NEURONE DISEASE ASSOCIATION",
@@ -81,7 +81,7 @@ object Fixtures {
       Seq(111, 112, 121, 286, 600117, 600190)
     ),
 
-    Job(4365671,
+    Industries(4365671,
       "Female Youth Work Volunteer in sports",
       "The Active Women's project helps young women access sports activities in their local area in Southampton. Volunteers will support the running of these sessions, as well as supporting the young women in accessing the sessions.",
       "CATCH 22",
@@ -89,7 +89,7 @@ object Fixtures {
       Seq(111, 112, 115, 219, 222, 600118, 600119)
     ),
 
-    Job(4411510,
+    Industries(4411510,
       "Air Traffic Controller",
       "Control some of the world’s most modern aircraft using radar and communications equipment",
       "RAF CAREERS",

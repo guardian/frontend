@@ -7,7 +7,7 @@ import model.commercial.Utils.OptString
 import model.commercial.XmlAdsApi
 import org.joda.time.format.DateTimeFormat
 
-object JobsApi extends XmlAdsApi[Job] {
+object JobsApi extends XmlAdsApi[Industries] {
 
   protected val adTypeName = "Jobs"
 
@@ -24,10 +24,10 @@ object JobsApi extends XmlAdsApi[Job] {
 
   override def cleanResponseBody(body: String) = body.dropWhile(_ != '<')
 
-  def parse(xml: Elem): Seq[Job] = {
+  def parse(xml: Elem): Seq[Industries] = {
     (xml \ "Job") map {
       job =>
-        Job(
+        Industries(
           (job \ "JobID").text.toInt,
           (job \ "JobTitle").text,
           (job \ "ShortJobDescription").text,
@@ -38,5 +38,5 @@ object JobsApi extends XmlAdsApi[Job] {
     }
   }
 
-  def getJobs: Future[Seq[Job]] = loadAds(url)
+  def getJobs: Future[Seq[Industries]] = loadAds(url)
 }

@@ -1,17 +1,17 @@
-import common.CloudWatchApplicationMetrics
+import common._
 import conf.Management
-import common.{Logging, AkkaAsync, Jobs}
 import conf.RequestMeasurementMetrics
 import dev.DevParametersLifecycle
 import model.commercial.masterclasses.MasterClassAgent
-import model.commercial.jobs.JobsAgent
+import model.commercial.jobs.{Industries, JobsAgent}
 import model.commercial.soulmates.SoulmatesAggregatingAgent
 import model.commercial.travel.OffersAgent
 import play.api.mvc.WithFilters
 import play.api.{Application => PlayApp, GlobalSettings}
-import scala.util.Random
+import scala.util.Success
+import scala.util.{Success, Random}
 
-trait CommercialLifecycle extends GlobalSettings with Logging {
+trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionContexts {
 
   override def onStart(app: PlayApp) {
 
@@ -47,7 +47,14 @@ trait CommercialLifecycle extends GlobalSettings with Logging {
     }
 
     // fire every 15 mins
-    val jobsRefreshSchedule = randomStartSchedule(minsLater = 3)
+    val industryRefreshSchedule = randomStartSchedule(minsLater = 3)
+    log.info(s"Industry refresh on schedule $industryRefreshSchedule")
+    Jobs.schedule("IndustryRefreshJob", industryRefreshSchedule) {
+      Industries.refresh()
+    }
+
+    // fire every 15 mins
+    val jobsRefreshSchedule = randomStartSchedule(minsLater = 4)
     log.info(s"Jobs refresh on schedule $jobsRefreshSchedule")
     Jobs.schedule("JobsRefreshJob", jobsRefreshSchedule) {
       JobsAgent.refresh()
@@ -57,7 +64,10 @@ trait CommercialLifecycle extends GlobalSettings with Logging {
       SoulmatesAggregatingAgent.refresh()
       MasterClassAgent.refresh()
       OffersAgent.refresh()
-      JobsAgent.refresh()
+      Industries.refresh().andThen{
+        case Success(_) => JobsAgent.refresh()
+        case _ => {}
+      }
     }
   }
 
@@ -66,11 +76,13 @@ trait CommercialLifecycle extends GlobalSettings with Logging {
     Jobs.deschedule("JobsRefreshJob")
     Jobs.deschedule("MasterClassRefreshJob")
     Jobs.deschedule("SoulmatesRefreshJob")
+    Jobs.deschedule("IndustryRefreshJob")
 
     OffersAgent.stop()
     JobsAgent.stop()
     SoulmatesAggregatingAgent.stop()
     MasterClassAgent.stop()
+    Industries.stop()
 
     super.onStop(app)
   }
