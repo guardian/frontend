@@ -141,8 +141,10 @@ define([
         });
 
         it("should not attempt to autosignin a user who has signed out more than 24 hours ago before the facebook check has ellapsed", function() {
-            var theDayBeforeYesterday = new Date().setDate(new Date().getDate() - 2),
-                timeStampInSeconds = theDayBeforeYesterday.getTime() / 1000;
+            var theDayBeforeYesterday = new Date();
+            theDayBeforeYesterday.setDate(new Date().getDate() - 2);
+
+            var timeStampInSeconds = theDayBeforeYesterday.getTime() / 1000;
 
             Cookies.get.withArgs("GU_SO").returns(timeStampInSeconds.toString);
             Storage.local.set("gu.id.nextFbCheck", "blah|blah");
@@ -151,8 +153,10 @@ define([
         });
 
         it("should not attempt to autosignin a user who has signed out within the last 24 hours", function() {
-            var fourHoursAgo = new Date().setHours(new Date().getHours() - 4),
-                timeStampInSeconds = fourHoursAgo.getTime() / 1000;
+            var fourHoursAgo = new Date();
+            fourHoursAgo.setHours(new Date().getHours() - 4);
+
+            var timeStampInSeconds = fourHoursAgo.getTime() / 1000;
 
             Cookies.get.withArgs("GU_SO").returns(timeStampInSeconds.toString());
 
