@@ -20,7 +20,7 @@ object JobsApi extends XmlAdsApi[Job] {
     urlTemplate map (_ replace("yyyy-MM-dd", feedDate))
   }
 
-  override protected val loadTimeout = 20000
+  override protected val loadTimeout = 30000
 
   override def cleanResponseBody(body: String) = body.dropWhile(_ != '<')
 
