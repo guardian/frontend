@@ -14,7 +14,7 @@ object OffersApi extends XmlAdsApi[Offer] {
   private lazy val allUrl = url map (u => s"$u/xmloffers")
   private lazy val mostPopularUrl = url map (u => s"$u/xmlmostpopular")
 
-  override protected val loadTimeout = 20000
+  override protected val loadTimeout = 30000
 
   private val dateFormat = DateTimeFormat.forPattern("dd-MMM-yyyy")
 

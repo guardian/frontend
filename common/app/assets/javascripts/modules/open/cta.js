@@ -14,10 +14,11 @@ var Cta = function(context, mediator, options) {
 };
 Component.define(Cta);
 
-/** @type {Object.<string.*>} */
-Cta.CONFIG = {
-    endpoint: '/open/cta/article/:discussionKey.json'
-};
+/**
+ * @type {string}
+ * @override
+ */
+Cta.prototype.endpoint = '/open/cta/article/:discussionKey.json';
 
 /** @type {Object.<string.*>} */
 Cta.prototype.defaultOptions = {

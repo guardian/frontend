@@ -4,7 +4,6 @@
     <section class="container container--@style.containerType @if(containerIndex > 0){js-container--toggle} tone-@style.tone"
              data-link-name="block | @config.id"
              data-id="@config.id"
-             data-link-context="@config.section"
              data-type="@style.containerType">
 
         @Seq(config.displayName, collection.displayName).find(_.nonEmpty).flatten.map { title =>
@@ -21,7 +20,7 @@
 
         @fragments.contributor(page)
 
-        @fragments.collections.standard(collection, style, containerIndex)
+        @fragments.collections.standard(config, collection, style, containerIndex)
 
     </section>
 }

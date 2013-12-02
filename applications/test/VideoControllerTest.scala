@@ -1,6 +1,5 @@
 package test
 
-import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.Matchers
 import org.scalatest.FlatSpec
@@ -21,7 +20,7 @@ class VideoControllerTest extends FlatSpec with Matchers {
 
     val result = controllers.VideoController.render(videoUrl)(fakeRequest)
     status(result) should be(200)
-    header("Content-Type", result).get should be("application/javascript")
+    header("Content-Type", result).get should be("application/javascript; charset=utf-8")
     contentAsString(result) should startWith(s"""${callbackName}({\"config\"""")
   }
 
@@ -32,7 +31,7 @@ class VideoControllerTest extends FlatSpec with Matchers {
 
     val result = controllers.VideoController.render(videoUrl)(fakeRequest)
     status(result) should be(200)
-    header("Content-Type", result).get should be("application/json")
+    header("Content-Type", result).get should be("application/json; charset=utf-8")
     contentAsString(result) should startWith("{\"config\"")
   }
 
