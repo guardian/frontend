@@ -237,7 +237,7 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to test the new commercial components",
     safeState = Off)
 
-  val ABMobileFacebookIdentityAutoSignin = Switch("A/B Tests", "ab-mobile-facebook-autosignin",
+  val ABMobileFacebookAutosignin = Switch("A/B Tests", "ab-mobile-facebook-autosignin",
     "If this is switched on an AB test runs to test facebook autosignin for mobile users",
    safeState = Off)
 
@@ -343,7 +343,7 @@ object Switches extends Collections {
     ABInitialShowMore,
     AdDwellTimeLoggerSwitch,
     ABShowMoreLayout,
-    ABMobileFacebookIdentityAutoSignin
+    ABMobileFacebookAutosignin
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
