@@ -158,23 +158,6 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
     NoCache(Redirect(redirectPath))
   }
   
-  def renderCollectionRss(path: String) = Action { implicit request =>
-
-    val feed = new SyndFeedImpl();
-    feed.setFeedType("rss_2.0");
-    feed.setTitle("rss_2.0");
-    feed.setDescription("Updates for Hike Uber Tracks - ");
-    feed.setLink("...");
-
-    val writer = new StringWriter();
-    val output = new SyndFeedOutput()
-    output.output(feed, writer);
-    writer.close
-
-    Ok(writer.toString).as("application/rss+xml");
-  }
-
-
   // Needed as aliases for reverse routing
   def renderEditionFrontJson(path: String) = renderFront(path)
   def renderEditionFront(path: String) = renderFront(path)
@@ -238,6 +221,27 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
 
     }.getOrElse(NotFound)
   }
+  
+  def renderCollectionRss(id: String) = Action { implicit request =>
+    
+    val pathOption = request.queryString("path").headOption
+    pathOption.map { path =>
+      
+      val editionalisedPath = editionPath(path, Edition(request))
+      FrontPage(editionalisedPath).flatMap { frontPage =>
+      
+        // get the trailblocks
+        val faciaPageOption: Option[FaciaPage] = front(editionalisedPath)
+        faciaPageOption map { faciaPage =>
+          val collection = faciaPage.copy(collections = faciaPage.collections.filter(t => t._1.id == id))
+          val trails = collection.collections.flatMap(_._2.items)
+          Ok(TrailsToRss(trails)).as("application/rss+xml");
+        }
+      }.getOrElse(NotFound)
+    }
+  }
+
+
 
   def renderResponsiveViewer() = Action {
     Cached(60) {
