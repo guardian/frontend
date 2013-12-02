@@ -53,6 +53,9 @@
             }
         }
         function loadFontsAsynchronously() {
+            @if(FontSwitch.isSwitchedOff) {
+                return;
+            }
             var f, x;
 
             x = document.getElementById('gu');
@@ -119,7 +122,7 @@
         @* we want this to happen ASAP to avoid FOUC *@
         var connectionClass = 'connection--' + (isConnectionLow() ? '' : 'not-') + 'low';
         var htmlClassNames = connectionClass;
-        
+
         @* http://modernizr.com/download/#-svg *@
         function hasSvgSupport() {
             var ns = {'svg': 'http://www.w3.org/2000/svg'};
