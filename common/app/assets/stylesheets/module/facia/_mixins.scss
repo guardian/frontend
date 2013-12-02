@@ -32,6 +32,58 @@ $item-top-border-height: 2px;
         }
     }
 }
+@mixin top-story-mobile {
+    .item__title {
+        @include fs-headline(3, $size-only: true);
+    }
+    .item__standfirst {
+        @include fs-headline(1, $size-only: true);
+        display: block;
+        margin-top: $baseline;
+        margin-bottom: 1em;
+    }
+    @include mq(mobileLandscape) {
+        @include clearfix;
+
+        .item__title {
+            @include fs-headline(4, $size-only: true);
+            margin-bottom: $gs-baseline / 2;
+        }
+        .item__standfirst {
+            @include fs-headline(2, $size-only: true);
+        }
+    }
+    @include mq($to: tablet, $and: '(orientation: landscape)') {
+        .item__image-container {
+            float: right;
+            width: 100 / 2.5 * 1%;
+            padding-bottom: 60 / 2.5 * 1%;
+            margin-left: $gs-gutter;
+            margin-bottom: $gs-baseline/2;
+        }
+    }
+    @include mq(mobileLandscape, tablet) {
+        .item__image-container {
+            float: right;
+            width: 100 / 2 * 1%;
+            padding-bottom: 60 / 2 * 1%;
+            margin-left: $gs-gutter;
+            margin-bottom: $gs-baseline/2;
+        }
+    }
+    @include card-mobile-image;
+}
+@mixin first-story-mobile {
+    .item__title {
+        @include fs-headline(2, $size-only: true);
+        margin-bottom: 1em;
+    }
+    @include mq(mobileLandscape) {
+        .item__title {
+            @include fs-headline(3, $size-only: true);
+        }
+    }
+}
 @mixin card-mobile($with-image: false) {
     .item__title {
         @include fs-headline(3, $size-only: true);
