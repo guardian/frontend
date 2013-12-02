@@ -14,7 +14,7 @@ trait S3 extends Logging {
 
   lazy val bucket = Configuration.aws.bucket
 
-  def client = {
+  lazy val client = {
     val client = new AmazonS3Client(Configuration.aws.credentials)
     client.setEndpoint("s3-eu-west-1.amazonaws.com")
     client
@@ -28,8 +28,6 @@ trait S3 extends Logging {
     case e: AmazonS3Exception if e.getStatusCode == 404 =>
       log.warn("not found at %s - %s" format(bucket, key))
       None
-  } finally {
-    client.shutdown()
   }
 
   def get(key: String): Option[String] = try {
@@ -69,7 +67,6 @@ trait S3 extends Logging {
     val request = new PutObjectRequest(bucket, key, new StringInputStream(value), metadata).withCannedAcl(accessControlList)
 
     client.putObject(request)
-    client.shutdown()
   }
 
   private def getListing(prefix: String, dropText: String): List[String] = {
@@ -98,6 +95,7 @@ object S3FrontsApi extends S3 {
 
   def getSchema = get(s"${location}/schema.json")
   def getConfig(id: String) = get(s"${location}/config/${id}/config.json")
+  def getMasterConfig: Option[String] = get(s"$location/config/config.json")
   def getBlock(id: String) = get(s"${location}/collection/${id}/collection.json")
   def listConfigsIds: List[String] = getConfigIds(s"$location/config/")
   def listCollectionIds: List[String] = getCollectionIds(s"$location/collection/")

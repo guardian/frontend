@@ -9,7 +9,8 @@ define([
     'modules/experiments/tests/commercial-components',
     'modules/experiments/tests/story-package-question',
     'modules/experiments/tests/initial-show-more',
-    'modules/experiments/tests/show-more-layout'
+    'modules/experiments/tests/show-more-layout',
+    'modules/experiments/tests/onward-intrusive'
 ], function (
     common,
     store,
@@ -20,7 +21,8 @@ define([
     CommercialComponentsTest,
     StoryPackageQuestion,
     InitialShowMore,
-    ShowMoreLayout
+    ShowMoreLayout,
+    OnwardIntrusive
     ) {
 
     var TESTS = [
@@ -30,7 +32,8 @@ define([
             new CommercialComponentsTest(),
             new StoryPackageQuestion(),
             new InitialShowMore(),
-            new ShowMoreLayout()
+            new ShowMoreLayout(),
+            new OnwardIntrusive()
         ],
         participationsKey = 'gu.ab.participations';
 

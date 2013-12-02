@@ -4,14 +4,12 @@ import common.{Logging, AkkaAsync, Jobs}
 import conf.RequestMeasurementMetrics
 import dev.DevParametersLifecycle
 import model.commercial.masterclasses.MasterClassAgent
-import model.commercial.jobs.{LightJobsAgent, JobsAgent}
+import model.commercial.jobs.JobsAgent
 import model.commercial.soulmates.SoulmatesAggregatingAgent
 import model.commercial.travel.OffersAgent
 import play.api.mvc.WithFilters
 import play.api.{Application => PlayApp, GlobalSettings}
 import scala.util.Random
-import play.api.Play
-import play.api.Play.current
 
 trait CommercialLifecycle extends GlobalSettings with Logging {
 
@@ -60,7 +58,6 @@ trait CommercialLifecycle extends GlobalSettings with Logging {
       MasterClassAgent.refresh()
       OffersAgent.refresh()
       JobsAgent.refresh()
-      if (Play.isDev) LightJobsAgent.refresh()
     }
   }
 
@@ -74,7 +71,6 @@ trait CommercialLifecycle extends GlobalSettings with Logging {
     JobsAgent.stop()
     SoulmatesAggregatingAgent.stop()
     MasterClassAgent.stop()
-    LightJobsAgent.stop()
 
     super.onStop(app)
   }
