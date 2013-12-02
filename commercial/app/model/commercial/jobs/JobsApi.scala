@@ -33,7 +33,7 @@ object JobsApi extends XmlAdsApi[Job] {
           (job \ "ShortJobDescription").text,
           (job \ "RecruiterName").text,
           OptString((job \ "RecruiterLogoURL").text),
-          ((job \ "Sectors" \ "Sector") map (_.text.toInt)).toSet
+          ((job \ "Sectors" \ "Sector") map (_.text.toInt)).toSeq
         )
     }
   }

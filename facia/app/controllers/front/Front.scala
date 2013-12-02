@@ -16,7 +16,7 @@ class Front extends Logging {
 
   def refreshJobs() = Seq(() => {
       ConfigAgent.refresh()}
-  ) ++ ConfigAgent.getAllCollectionIds.map{ collectionId => () => CollectionCache.updateCollectionById(collectionId) }
+  ) ++ ConfigAgent.getAllCollectionIds.map{ collectionId => () => CollectionAgent.updateCollectionById(collectionId) }
 
   def apply(path: String): Option[FaciaPage] = QueryAgents(path)
 
