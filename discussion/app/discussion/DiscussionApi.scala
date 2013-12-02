@@ -37,15 +37,7 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
     getJsonOrError(apiUrl, onError) map {
       json =>
         val comments = (json \\ "comments")(0).asInstanceOf[JsArray].value map {
-          commentJson =>
-            val responses = (commentJson \\ "responses").headOption map {
-              responsesJson =>
-                responsesJson.asInstanceOf[JsArray].value map {
-                  responseJson =>
-                    Comment(responseJson)
-                }
-            } getOrElse Nil
-            Comment(commentJson, responses)
+          commentJson =>  Comment(commentJson)
         }
 
         CommentPage(

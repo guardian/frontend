@@ -14,7 +14,7 @@ class CommentTest extends FreeSpec with ShouldMatchers {
     aComment.id should be(12495317)
     aComment.profile.userId should be("4505957")
     aComment.responseCount should be(1)
-    //    aComment.responses.head.id should be(27475612) . Will implement this soon - Ikenna
+    aComment.responses.head.id should be(27475612)
   }
 
   val aCommentJson: String =

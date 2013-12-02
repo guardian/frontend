@@ -29,13 +29,11 @@ case class Comment(
 
 object Comment extends {
 
-  def apply(json: JsValue): Comment = Comment(json, Nil)
-
-  def apply(json: JsValue, responses: Seq[Comment]): Comment = {
+  def apply(json: JsValue): Comment = {
     Comment(
       id = (json \ "id").as[Int],
       body = (json \ "body").as[String],
-      responses = responses,
+      responses = getResponses(json),
       profile = Profile(json),
       date = (json \ "isoDateTime").as[String].parseISODateTime,
       isHighlighted = (json \ "isHighlighted").as[Boolean],
@@ -44,6 +42,14 @@ object Comment extends {
       numRecommends = (json \ "numRecommends").as[Int],
       responseCount = (json \ "metaData" \ "responseCount").asOpt[Int].getOrElse(0)
     )
+  }
+
+  def getResponses(json: JsValue): Seq[Comment] = {
+    (json \\ "responses").headOption map {
+      _.asInstanceOf[JsArray].value map {
+        Comment(_)
+      }
+    } getOrElse Nil
   }
 }
 
