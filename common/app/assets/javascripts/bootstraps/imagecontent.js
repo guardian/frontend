@@ -8,7 +8,7 @@ define([
     var modules = {
 
         initDiscussion: function() {
-            mediator.on('page:imagecontent:ready', function(config, context) {
+            mediator.on("page:imagecontent:ready", function(config, context) {
                 if (config.page.commentable) {
                     var discussionLoader = new DiscussionLoader(context, mediator, {}, config.switches.discussionTopComments);
                     discussionLoader.attachToDefault();

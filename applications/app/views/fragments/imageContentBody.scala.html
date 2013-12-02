@@ -12,7 +12,6 @@
                  itemprop="mainContentOfPage" itemscope itemtype="@image.schemaType" role="main">
             <div class="article__inner article__inner--head">
                 <header class="article__head">
-
                     @fragments.headline(image.headline)
 
                     @fragments.standfirst(image)
@@ -54,9 +53,10 @@
             </div>
         </article>
 
+
         <div class="article__inner">
             @if(DiscussionSwitch.isSwitchedOn && image.isCommentable) {
-                @fragments.discussion(article.isClosedForComments, article.shortUrlId)
+                @fragments.discussion(image.isClosedForComments, image.shortUrlId)
             }
             @if(storyPackage.nonEmpty) {
                 <aside role="complementary" data-link-context="@image.section">
