@@ -24,22 +24,21 @@ case class Profile(prefix: String, width: Option[Int] = None, height: Option[Int
     elementFor(image).flatMap(_.altText)
 }
 
-/**********************************************************************************************************
- NOTE - if you change any of these profiles you need to make a corresponding change in the image service
-***********************************************************************************************************/
+// as a (general) rule we make pictures larger than 600px to be 95% quality, and smaller images 70%
+
 object Contributor extends Profile("c", Some(140), Some(140), 70) {}
-object GalleryLargeImage extends Profile("gli", Some(1024), None, 70) {}
+object GalleryLargeImage extends Profile("gli", Some(1024), None, 95) {}
 object GalleryLargeTrail extends Profile("glt", Some(480), Some(288), 70) {}
 object GallerySmallTrail extends Profile("gst", Some(280), Some(168), 70) {}
-object FeaturedTrail extends Profile("f", Some(640), None, 70) {}
-object ArticleMainPicture extends Profile("a", Some(640), None, 70) {}
+object FeaturedTrail extends Profile("f", Some(640), None, 95) {}
+object ArticleMainPicture extends Profile("a", Some(640), None, 95) {}
 object LargeThumbnail extends Profile("thumb", Some(220), None, 70)
 object Item140 extends Profile("item-140", Some(140), None, 70) {}
 object Item220 extends Profile("item-220", Some(220), None, 70) {}
 object Item300 extends Profile("item-300", Some(300), None, 70) {}
 object Item460 extends Profile("item-460", Some(460), None, 70) {}
-object Item620 extends Profile("item-620", Some(620), None, 70) {}
-object Item700 extends Profile("item-700", Some(700), None, 70) {}
+object Item620 extends Profile("item-620", Some(620), None, 95) {}
+object Item700 extends Profile("item-700",  Some(700), None, 95) {}
 
 // Just degrade the image quality without adjusting the width/height
 object Naked extends Profile("n", None, None, 70) {}
