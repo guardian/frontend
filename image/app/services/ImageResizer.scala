@@ -12,6 +12,7 @@ import play.api.mvc._
 import common.{ExecutionContexts, Logging}
 import play.api.libs.iteratee.Enumerator
 import scala.collection.JavaConversions._
+import conf.Configuration.images.resizeService
 
 object ImageResizer extends Logging with Results with controllers.Implicits with ExecutionContexts {
 
@@ -59,7 +60,6 @@ object ImageResizer extends Logging with Results with controllers.Implicits with
   def renderJpeg(path:String, cacheTime: Int, profile: Profile)(response: Response): SimpleResult = {
     response.status match {
       case 200 =>
-        val contentType = response.contentType
         val image = response.getAHCResponse.getResponseBodyAsStream.toBufferedImage
 
         log.info("Resize %s (jpeg) to (%s,%s) at %s compression".format(path, profile.width, profile.height, profile.compression))
@@ -87,9 +87,14 @@ object ImageResizer extends Logging with Results with controllers.Implicits with
     }
   }
 
-  import conf.Configuration.images.resizeService
   def renderImageService(profile: Profile, path: String, request: RequestHeader) = {
-      val url = s"$resizeService/${profile.prefix}/$path"
+
+      val desiredWidth = profile.width.map(_.toString).getOrElse("-")
+      val desiredHeight = profile.height.map(_.toString).getOrElse("-")
+      val desiredQuality =  profile.compression
+
+      val url = s"$resizeService/$path?width=$desiredWidth&height=$desiredHeight&quality=$desiredQuality"
+
       WS.url(url).withHeaders("Accept" -> request.headers("Accept")).get().map{ r =>
         val headers = r.ahcResponse.getHeaders.entrySet().toSeq.map(header => header.getKey -> header.getValue.mkString(","))
         SimpleResult(
