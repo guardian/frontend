@@ -7,7 +7,7 @@ import conf.ContentApi
 import scala.concurrent.duration._
 import scala.concurrent.Future
 
-case class Industries(id: Int,
+case class Job(id: Int,
                title: String,
                shortDescription: String,
                recruiterName: String,
