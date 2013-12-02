@@ -340,6 +340,9 @@ module.exports = function (grunt) {
             discussion: {
                 configFile: testConfDir + 'discussion.js'
             },
+            identity: {
+                configFile: testConfDir + 'identity.js'
+            },
             admin: {
                 configFile: testConfDir + 'admin.js'
             }
