@@ -18,7 +18,7 @@ class LiveMatchesControllerTest extends FlatSpec with Matchers {
       .withHeaders("Accept" -> "application/javascript")
     val result = football.controllers.LiveMatchesController.renderLiveMatches()(fakeRequest)
     status(result) should be(200)
-    header("Content-Type", result).get should be("application/javascript")
+    header("Content-Type", result).get should be("application/javascript; charset=utf-8")
   }
 
   it should "return JSON when .json format is supplied to live match" in Fake {
@@ -28,7 +28,7 @@ class LiveMatchesControllerTest extends FlatSpec with Matchers {
       
     val result = football.controllers.LiveMatchesController.renderLiveMatchesJson()(fakeRequest)
     status(result) should be(200)
-    header("Content-Type", result).get should be("application/json")
+    header("Content-Type", result).get should be("application/json; charset=utf-8")
     contentAsString(result) should startWith("{\"config\"")
   }
   
@@ -45,7 +45,7 @@ class LiveMatchesControllerTest extends FlatSpec with Matchers {
       .withHeaders("Accept" -> "application/javascript")
     val result = football.controllers.LiveMatchesController.renderLiveMatchesFor(competitionId)(fakeRequest)
     status(result) should be(200)
-    header("Content-Type", result).get should be("application/javascript")
+    header("Content-Type", result).get should be("application/javascript; charset=utf-8")
   }
 
   it should "return JSON .json format is supplied to competition live match" in Fake {
@@ -55,7 +55,7 @@ class LiveMatchesControllerTest extends FlatSpec with Matchers {
       
     val result = football.controllers.LiveMatchesController.renderLiveMatchesJsonFor(competitionId)(fakeRequest)
     status(result) should be(200)
-    header("Content-Type", result).get should be("application/json")
+    header("Content-Type", result).get should be("application/json; charset=utf-8")
     contentAsString(result) should startWith("{\"config\"")
   }
   

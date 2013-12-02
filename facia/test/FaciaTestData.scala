@@ -2,7 +2,7 @@ package test
 
 import common.{AkkaAgent, Edition}
 import common.editions.{Au, Us, Uk}
-import controllers.front.{Front, PageFront}
+import controllers.front.Front
 import model._
 import model.Config
 import model.FaciaPage
@@ -20,10 +20,10 @@ case class TestTrail(url: String) extends Trail {
   def isLive: Boolean = true
 }
 
-class TestPageFront(override val id: String, edition: Edition, faciaPage: FaciaPage) extends PageFront(id, edition) {
-  override val query = null
-  override def close() = {}
-  override def apply(): Option[FaciaPage] = Some(faciaPage)
+class TestPageFront(val id: String, edition: Edition, faciaPage: FaciaPage) {
+  val query = null
+  def close() = {}
+  def apply(): Option[FaciaPage] = Some(faciaPage)
 }
 
 trait ModelHelper {
@@ -130,7 +130,7 @@ trait FaciaTestData extends ModelHelper {
     )
   )
 
-  val defaultAgentContents: Map[String, PageFront] = Map(
+  val defaultAgentContents: Map[String, TestPageFront] = Map(
     ("uk", new TestPageFront("uk", Uk, ukFaciaPage)),
     ("us", new TestPageFront("us", Us, usFaciaPage)),
     ("au", new TestPageFront("au", Au, auFaciaPage)),
@@ -141,5 +141,5 @@ trait FaciaTestData extends ModelHelper {
 }
 
 class TestFront extends Front with FaciaTestData {
-  override val pageFrontAgent = AkkaAgent[Map[String, PageFront]](defaultAgentContents)
+  val pageFrontAgent = AkkaAgent[Map[String, TestPageFront]](defaultAgentContents)
 }
