@@ -83,8 +83,9 @@ define([
             }
 
             // Pick up the nearest data-link-context
-            if(!spec.linkContext && el.getAttribute('data-link-context')) {
-                spec.linkContext =  el.getAttribute('data-link-context');
+            if(!spec.linkContext && el.getAttribute('data-link-context-path')) {
+                spec.linkContextPath =  el.getAttribute('data-link-context-path');
+                spec.linkContextName =  el.getAttribute('data-link-context-name');
             }
 
             // Recurse

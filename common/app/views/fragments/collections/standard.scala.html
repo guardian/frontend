@@ -1,7 +1,8 @@
-@(collection: Collection, style: Container, containerIndex: Int, id: Option[String] = None)(implicit request: RequestHeader)
+@(config: Config, collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader)
 
 <ul class="unstyled collection collection--without-sport-stats collection--show-more-standard @if(style.showMore){js-collection--show-more}"
-    @id.map{ collectionId => data-link-context="collection/@collectionId" }
+     data-context-location="collection/@config.id"
+     data-context
 >
     @if(style.showMore) {
         @collection.items.take(5).zipWithIndex.map{ case (trail, index) =>
