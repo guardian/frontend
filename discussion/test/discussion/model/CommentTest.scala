@@ -13,7 +13,7 @@ class CommentTest extends FreeSpec with ShouldMatchers {
     aComment.body should include("<p>Morning,</p><p>In")
     aComment.id should be(12495317)
     aComment.profile.userId should be("4505957")
-    aComment.numResponses should be(1)
+    aComment.responseCount should be(1)
     //    aComment.responses.head.id should be(27475612) . Will implement this soon - Ikenna
   }
 
@@ -71,7 +71,15 @@ class CommentTest extends FreeSpec with ShouldMatchers {
       |     "badge": [{"name": "Staff"}]
       |    }
       | }
-      |]
+      |],
+      | "metaData": {
+      |   "commentCount": 4,
+      |   "commenterCount": 1,
+      |   "staffCommenterCount": 1,
+      |   "editorsPickCount": 0,
+      |   "blockedCount": 0,
+      |   "responseCount": 1
+      | }
       |}
       |
     """.stripMargin
