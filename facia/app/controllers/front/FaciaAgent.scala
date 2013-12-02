@@ -223,7 +223,8 @@ trait ConfigAgent extends ExecutionContexts {
       Config(
         id,
         (collectionJson \ "apiQuery").asOpt[String],
-        (collectionJson \ "displayName").asOpt[String]
+        (collectionJson \ "displayName").asOpt[String],
+        (collectionJson \ "type").asOpt[String]
       )
     }
   }
