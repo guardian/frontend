@@ -28,7 +28,7 @@ define([
         },
 
         state: {
-            liveMode: ko.observable(true) // default to live mode?
+            liveMode: ko.observable(false) // default to live mode?
         },
 
         util: {

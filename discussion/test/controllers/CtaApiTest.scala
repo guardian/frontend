@@ -7,21 +7,21 @@ import java.net.ServerSocket
 import discussion.api.CtaApi
 import conf.Configuration
 
-class CtaApiTest extends CtaApi with FlatSpecLike with ShouldMatchers {
+// class CtaApiTest extends CtaApi with FlatSpecLike with ShouldMatchers {
 
-  val availablePort: Int = new ServerSocket(0).getLocalPort
-  protected val ctaApiRoot: String = Configuration.open.ctaApiRoot
+//   // val availablePort: Int = new ServerSocket(0).getLocalPort
+//   // protected val ctaApiRoot: String = Configuration.open.ctaApiRoot
 
-  "CtaController" should "respond to request for callouts for a given discussion key" in {
-    running(TestServer(availablePort)) {
-      val Some(response) = route(FakeRequest("GET", "/open/cta/article/p/3tycg.json"))
+//   // "CtaController" should "respond to request for callouts for a given discussion key" in {
+//   //   running(TestServer(availablePort)) {
+//   //     val Some(response) = route(FakeRequest("GET", "/open/cta/article/p/3tycg.json"))
 
-      status(response) should be(OK)
-      contentAsString(response) should include("html")
-      contentAsString(response) should include("refreshStatus")
-    }
-  }
-}
+//   //     status(response) should be(OK)
+//   //     contentAsString(response) should include("html")
+//   //     contentAsString(response) should include("refreshStatus")
+//   //   }
+//   // }
+// }
 
 
 

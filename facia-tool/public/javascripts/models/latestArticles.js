@@ -96,7 +96,7 @@ define([
                     url  = common.config.apiSearchBase + '/search?show-fields=all&format=json';
                     url += '&page-size=' + (common.config.searchPageSize || 25);
                     url += '&page=' + self.page();
-                    url += '&q=' + encodeURIComponent(self.term());
+                    url += self.term() ? '&q=' + encodeURIComponent(self.term()) : '';
                     url += '&' + self.filterType().param + '=' + encodeURIComponent(self.filter());
                     propName = 'results';
                 }

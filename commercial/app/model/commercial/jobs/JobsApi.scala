@@ -11,13 +11,16 @@ object JobsApi extends XmlAdsApi[Job] {
 
   protected val adTypeName = "Jobs"
 
-  private lazy val url = {
+  override protected val characterEncoding = "utf-8"
+
+  // url changes daily so cannot be val
+  private def url = {
     val feedDate = DateTimeFormat.forPattern("yyyy-MM-dd").print(System.currentTimeMillis)
     val urlTemplate = CommercialConfiguration.getProperty("jobs.api.url.template")
     urlTemplate map (_ replace("yyyy-MM-dd", feedDate))
   }
 
-  override protected val loadTimeout = 20000
+  override protected val loadTimeout = 30000
 
   override def cleanResponseBody(body: String) = body.dropWhile(_ != '<')
 
