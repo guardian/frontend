@@ -120,6 +120,20 @@ define([
     );
 
     /**
+     * Returns user object when signed in, otherwise redirects to sign in with configurable absolute returnUrl
+     */
+    Id.getUserOrSignIn = function(returnUrl) {
+        if (Id.isUserLoggedIn()) {
+            return Id.getUserFromCookie();
+        } else {
+            returnUrl = encodeURIComponent(returnUrl || document.location.href);
+            window.location.href = Id.getUrl() + '/signin?returnUrl=' + returnUrl;
+        }
+    };
+
+    window.getUserOrSignIn = Id.getUserOrSignIn;
+
+    /**
      * Handles unicode chars correctly
      * @param {string} str
      * @return {string}
