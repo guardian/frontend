@@ -58,10 +58,10 @@ casper.test.begin("Display embedded tweet", function(test) {
 casper.test.begin("Display latest summary before events on small viewports", function(test) {
     if (casper.exists('.js-article__summary')) {
         casper.viewport(viewports.mobile.width, viewports.mobile.height);
-        test.assertNotVisible(
-            '[data-link-name="summary after content"]',
-            "RHS summary block not visible on small viewports"
-        );
+        // test.assertNotVisible(
+        //     '[data-link-name="summary after content"]',
+        //     "RHS summary block not visible on small viewports"
+        // );
         test.assertVisible(
             '[data-link-name="summary before content"]',
             "Inline summary block visible on small viewports"
