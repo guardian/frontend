@@ -76,11 +76,11 @@
 
             }
             @if(storyPackage.nonEmpty) {
-                <aside role="complementary" data-link-context="@image.section">
+                <aside role="complementary">
                     @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
                 </aside>
             } else {
-                <aside class="js-related" role="complementary" data-link-context="related@image.url"></aside>
+                <aside class="js-related" role="complementary"></aside>
             }
 
             @fragments.mostPopularPlaceholder(image.section)

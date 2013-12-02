@@ -2,10 +2,11 @@
     word-wrap: break-word;
 
     @include mq(768px) {
-        line-height: 22px;
+        @include rem((line-height: 24px));
 
         p {
             @include fs-data(5);
+            @include rem((line-height: 24px));
         }
     }
 

@@ -10,6 +10,7 @@ define([
     'modules/experiments/tests/story-package-question',
     'modules/experiments/tests/initial-show-more',
     'modules/experiments/tests/show-more-layout',
+    'modules/experiments/tests/mobile-facebook-autosignin',
     'modules/experiments/tests/onward-intrusive'
 ], function (
     common,
@@ -22,6 +23,7 @@ define([
     StoryPackageQuestion,
     InitialShowMore,
     ShowMoreLayout,
+    MobileFacebookAutosignin,
     OnwardIntrusive
     ) {
 
@@ -33,6 +35,7 @@ define([
             new StoryPackageQuestion(),
             new InitialShowMore(),
             new ShowMoreLayout(),
+            new MobileFacebookAutosignin(),
             new OnwardIntrusive()
         ],
         participationsKey = 'gu.ab.participations';
