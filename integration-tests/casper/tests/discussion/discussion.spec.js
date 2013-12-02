@@ -68,15 +68,15 @@ casper.test.begin('Read top level comments', function(test) {
             function then() {
 
                 var startHeight = casper.getElementInfo('.discussion__comments__top').height,
-                    fadeOut = '.d-image-fade',
+                    // fadeOut = '.d-image-fade',
                     showMore = '.js-show-more-top-comments';
 
                 if (casper.getElementInfo('.discussion__comments__top').height === 600) {
                     // Check that excess top comments hidden and clicking show more button reveals them
                     test.assertTruthy(startHeight === 600, 'Reached max-height');
                     
-                    test.assertExists(fadeOut, 'Fadeout exists');
-                    test.assertVisible(fadeOut, 'Fadeout is visible');
+                    // test.assertExists(fadeOut, 'Fadeout exists');
+                    // test.assertVisible(fadeOut, 'Fadeout is visible');
                     
                     test.assertExists(showMore, 'Show more button exists');
                     test.assertVisible(showMore, 'Show more button is visible');
@@ -92,7 +92,7 @@ casper.test.begin('Read top level comments', function(test) {
                 } else {
                     // Check that comments don't reach max height and show more button doesnt exist
                     test.assertTruthy(startHeight < 600);
-                    test.assertDoesntExist(fadeOut);
+                    // test.assertDoesntExist(fadeOut);
                     test.assertDoesntExist(showMore);
                     test.done();
                 }
