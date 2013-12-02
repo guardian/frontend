@@ -25,7 +25,7 @@ object JobsApi extends XmlAdsApi[Job] {
   override def cleanResponseBody(body: String) = body.dropWhile(_ != '<')
 
   def parse(xml: Elem): Seq[Job] = {
-    val jobs = (xml \ "Job") map {
+    (xml \ "Job") map {
       job =>
         Job(
           (job \ "JobID").text.toInt,
@@ -36,8 +36,6 @@ object JobsApi extends XmlAdsApi[Job] {
           ((job \ "Sectors" \ "Sector") map (_.text.toInt)).toSeq
         )
     }
-
-    Job.populateKeywords(jobs)
   }
 
   def getJobs: Future[Seq[Job]] = loadAds(url)
