@@ -87,6 +87,10 @@ define([
             return common.util.queryParams().front;
         }
 
+        function setfront() {
+            model.front(getFront());
+        }
+
         function renderFront(id) {
             history.pushState({}, "", window.location.pathname + '?' + common.util.ammendedQueryStr('front', id));
             model.collections(
@@ -98,10 +102,6 @@ define([
                     );
                 })
             );
-        }
-
-        function setfront() {
-            model.front(getFront());
         }
 
         function startPoller() {
