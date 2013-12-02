@@ -24,7 +24,7 @@ case class Comment(
   isBlocked: Boolean,
   responseTo: Option[ResponseTo] = None,
   numRecommends: Int,
-  numResponses: Int
+  responseCount: Int
 )
 
 object Comment extends {
@@ -42,10 +42,7 @@ object Comment extends {
       isBlocked = (json \ "status").as[String].contains("blocked"),
       responseTo = (json \\ "responseTo").headOption.map(ResponseTo(_)),
       numRecommends = (json \ "numRecommends").as[Int],
-      numResponses = {
-        val numResponses: JsValue = (json \ "numResponses")
-        if (numResponses.isInstanceOf[JsUndefined]) 0 else numResponses.as[Int]
-      }
+      responseCount = (json \ "metaData" \ "responseCount").asOpt[Int].getOrElse(0)
     )
   }
 }
