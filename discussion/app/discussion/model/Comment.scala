@@ -1,9 +1,9 @@
 package discussion
 package model
 
-import _root_.model._
+import _root_.model.ISODateTimeStringNoMillis2DateTime
 import org.joda.time.DateTime
-import play.api.libs.json.{JsNumber, JsString, JsObject, JsValue}
+import play.api.libs.json._
 
 case class CommentCount(id: String, count: Int) {
   lazy val toJson = JsObject(
@@ -31,27 +31,26 @@ object Comment extends {
 
   def apply(json: JsValue): Comment = Comment(json, Nil)
 
-  def apply(json: JsValue, responses: Seq[Comment], metaData: JsValue): Comment = {
-      print (json)
-      Comment(
-        id = (json \ "id").as[Int],
-        body = (json \ "body").as[String],
-        responses = responses,
-        profile = Profile(json),
-        date = (json \ "isoDateTime").as[String].parseISODateTime,
-        isHighlighted = (json \ "isHighlighted").as[Boolean],
-        isBlocked = (json \ "status").as[String].contains("blocked"),
-        responseTo = (json \\ "responseTo").headOption.map(ResponseTo(_)),
-        numRecommends = (json \ "numRecommends").as[Int],
-        numResponses = (metaData \ "responseCount").as[Int]
+  def apply(json: JsValue, responses: Seq[Comment]): Comment = {
+    Comment(
+      id = (json \ "id").as[Int],
+      body = (json \ "body").as[String],
+      responses = responses,
+      profile = Profile(json),
+      date = (json \ "isoDateTime").as[String].parseISODateTime,
+      isHighlighted = (json \ "isHighlighted").as[Boolean],
+      isBlocked = (json \ "status").as[String].contains("blocked"),
+      responseTo = (json \\ "responseTo").headOption.map(ResponseTo(_)),
+      numRecommends = (json \ "numRecommends").as[Int],
+      numResponses = {
+        val numResponses: JsValue = (json \ "numResponses")
+        if (numResponses.isInstanceOf[JsUndefined]) 0 else numResponses.as[Int]
+      }
     )
   }
 }
 
-case class ResponseTo(
-  displayName: String,
-  commentId: String
-)
+case class ResponseTo(displayName: String, commentId: String)
 
 object ResponseTo {
   def apply(json: JsValue): ResponseTo = {

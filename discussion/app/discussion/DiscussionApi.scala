@@ -3,10 +3,8 @@ package discussion
 import common.{ExecutionContexts, Logging}
 import conf.Switches.ShortDiscussionSwitch
 import scala.concurrent.Future
-import play.api.libs.json.JsArray
+import play.api.libs.json.{JsValue, JsArray, JsObject, JsNumber}
 import play.api.libs.ws.Response
-import play.api.libs.json.JsObject
-import play.api.libs.json.JsNumber
 import discussion.model.{DiscussionKey, Profile, Comment, CommentCount, Switch}
 import play.api.mvc.Headers
 import discussion.util.Http
@@ -47,11 +45,7 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
                     Comment(responseJson)
                 }
             } getOrElse Nil
-            val metaData = (commentJson \\ "metaData").headOption map {
-              metaDataJson =>
-                metaDataJson.asInstanceOf[JsArray].value
-            } getOrElse Nil
-            Comment(commentJson, responses, metaData)
+            Comment(commentJson, responses)
         }
 
         CommentPage(
