@@ -52,7 +52,7 @@ object GetContainer {
       ("football/latest-news/regular-stories", SportContainer(showMore = false))
     )),
     ("technology", Map(
-      ("technology/latest-news/regular-stories", NewsContainer(showMore = false))
+      ("technology/latest-news/regular-stories", SportContainer(showMore = false))
     )),
     ("travel", Map(
       ("travel/latest-news/regular-stories", FeaturesContainer(showMore = false))
@@ -61,10 +61,10 @@ object GetContainer {
       ("film/latest-news/regular-stories", FeaturesContainer(showMore = false))
     )),
     ("world/nsa", Map(
-      ("world/nsa/latest-news/regular-stories", NewsContainer(showMore = false))
+      ("world/nsa/latest-news/regular-stories", SportContainer(showMore = false))
     )),
     ("world/edward-snowden", Map(
-      ("world/edward-snowden/latest-news/regular-stories", NewsContainer(showMore = false))
+      ("world/edward-snowden/latest-news/regular-stories", SportContainer(showMore = false))
     )),
     ("football/arsenal", Map(
       ("football/arsenal/latest-news/regular-stories", SportContainer(showMore = false))

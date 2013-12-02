@@ -106,6 +106,97 @@ object FrontPage {
       )
     },
 
+    new FrontPage(isNetworkFront = false) {
+      override val id = "football"
+      override val section = "football"
+      override val webTitle = "Football"
+      override lazy val analyticsName = "GFE:football"
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "keywords" -> "Football",
+        "content-type" -> "Section",
+        "is-front" -> true
+      )
+    },
+
+    new FrontPage(isNetworkFront = false) {
+      override val id = "technology"
+      override val section = "technology"
+      override val webTitle = "Technology"
+      override lazy val analyticsName = "GFE:technology"
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "keywords" -> "Technology",
+        "content-type" -> "Section",
+        "is-front" -> true
+      )
+    },
+
+    new FrontPage(isNetworkFront = false) {
+      override val id = "travel"
+      override val section = "travel"
+      override val webTitle = "Travel"
+      override lazy val analyticsName = "GFE:travel"
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "keywords" -> "Travel",
+        "content-type" -> "Section",
+        "is-front" -> true
+      )
+    },
+
+    new FrontPage(isNetworkFront = false) {
+      override val id = "world/nsa"
+      override val section = "world"
+      override val webTitle = "NSA"
+      override lazy val analyticsName = "GFE:world/nsa"
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "keywords" -> "NSA",
+        "content-type" -> "Section",
+        "is-front" -> true
+      )
+    },
+
+    new FrontPage(isNetworkFront = false) {
+      override val id = "world/edward-snowden"
+      override val section = "world"
+      override val webTitle = "Edward Snowden"
+      override lazy val analyticsName = "GFE:world/edward-snowden"
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "keywords" -> "Edward Snowden",
+        "content-type" -> "Section",
+        "is-front" -> true
+      )
+    },
+
+    new FrontPage(isNetworkFront = false) {
+      override val id = "football/arsenal"
+      override val section = "football"
+      override val webTitle = "Arsenal"
+      override lazy val analyticsName = "GFE:football/arsenal"
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "keywords" -> "Arsenal",
+        "content-type" -> "Section",
+        "is-front" -> true
+      )
+    },
+
+    new FrontPage(isNetworkFront = false) {
+      override val id = "artanddesign/photography"
+      override val section = "artanddesign"
+      override val webTitle = "Photography"
+      override lazy val analyticsName = "GFE:artanddesign/photography"
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "keywords" -> "Photography",
+        "content-type" -> "Section",
+        "is-front" -> true
+      )
+    },
+
     //TODO important this one is last for matching purposes
     new FrontPage(isNetworkFront = true) {
       override val id = ""
@@ -140,7 +231,7 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
 
     val edition = Edition(request)
     val editionBase = s"/${edition.id.toLowerCase}"
-    
+
     val redirectPath = path match {
       case "" => editionBase
       case sectionFront => s"$editionBase/$sectionFront"
@@ -152,7 +243,7 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
 
       log.info(s"Edition redirect: geolocation: $country | edition: ${edition.id} | edition cookie set: $editionCookie"  )
     }
-  
+
     NoCache(Redirect(redirectPath))
   }
 
