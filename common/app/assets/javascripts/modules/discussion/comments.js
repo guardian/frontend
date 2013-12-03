@@ -306,6 +306,10 @@ Comments.prototype.commentsLoaded = function(resp, age) {
 
     $(this.getClass('showMoreOlder'), this.elem).replaceWith($(this.getClass('showMoreOlder'), html));
     $(this.getClass('showMoreNewer'), this.elem).replaceWith($(this.getClass('showMoreNewer'), html));
+
+    if (!this.isReadOnly()) {
+        this.renderPickButtons(qwery(this.getClass('comment'), bonzo(comments).parent()));
+    }
     
     bonzo(this.getElem('comments'))[age === 'older' ? 'append' : 'prepend'](comments);
 
