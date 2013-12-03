@@ -1,7 +1,7 @@
 system = require('system');
 environment = system.env.ENVIRONMENT;
 host = {
-    marc:   'http://marcjones:9000/',
+    marc:   'http://marcjones.int.gnl:9000/',
     dev:    'http://localhost:9000/',
     code:   'http://m.code.dev-theguardian.com/',
     prod:   'http://www.theguardian.com/'
