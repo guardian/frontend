@@ -18,7 +18,17 @@
     <link rel="apple-touch-icon" sizes="72x72" href="@Static("images/favicons/72x72.png")" />
     <link rel="apple-touch-icon-precomposed" href="@Static("images/favicons/57x57.png")" />
 
+    @* http://www.chromium.org/developers/design-documents/dns-prefetching *@
     <link rel="dns-prefetch" href="@Configuration.images.path" />
+    <link rel="dns-prefetch" href="@Configuration.ajax.url" />
+    <link rel="dns-prefetch" href="//hits.theguardian.com" />
+    <link rel="dns-prefetch" href="//s.ophan.co.uk" />
+    <link rel="dns-prefetch" href="//ophan.thguardian.com" />
+    <link rel="dns-prefetch" href="//oas.thguardian.com" />
+    <link rel="dns-prefetch" href="//beacon.www.thguardian.com" />
+
+    @* http://www.chromium.org/spdy/link-headers-and-server-hint/link-rel-subresource *@
+    <link rel="subresource" href="@Static("javascripts/bootstraps/app.js")"/>
 
     <meta name="application-name" content="The Guardian" />
     <meta name="msapplication-TileColor" content="#004983" />
