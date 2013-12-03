@@ -15,6 +15,8 @@ GET         /discussion/comment-counts                                          
 GET         /discussion/comment-counts.json                                                                  controllers.DiscussionApp.commentCountJson(shortUrls: String)
 GET         /discussion/top/*discussionKey.json                                                              controllers.DiscussionApp.topCommentsPageJson(discussionKey: discussion.model.DiscussionKey)
 GET         /discussion/top/*discussionKey                                                                   controllers.DiscussionApp.topCommentsPage(discussionKey: discussion.model.DiscussionKey)
+GET         /discussion/comment/*commentId.json                                                              controllers.DiscussionApp.commentRedirectJson(commentId: Int)
+GET         /discussion/comment/*commentId                                                                   controllers.DiscussionApp.commentRedirect(commentId: Int)
 GET         /discussion/*discussionKey.json                                                                  controllers.DiscussionApp.commentPageJson(discussionKey: discussion.model.DiscussionKey)
 GET         /discussion/*discussionKey                                                                       controllers.DiscussionApp.commentPage(discussionKey: discussion.model.DiscussionKey)
 GET         /open/cta/article/*discussionKey.json                                                            controllers.CtaController.cta(discussionKey: discussion.model.DiscussionKey)
@@ -144,8 +146,8 @@ GET         /onward/recently-published                                          
 # Facia
 GET         /                                                                                                controllers.FaciaController.editionRedirect(path = "")
 GET         /$path<(culture|sport|australia|commentisfree|business|money)>                                   controllers.FaciaController.editionRedirect(path)
-GET         /$path<(us|uk|au)?>                                                                              controllers.FaciaController.renderEditionFront(path)
-GET         /$path<(us|uk|au)?>.json                                                                         controllers.FaciaController.renderEditionFrontJson(path)
+GET         /$path<(us|uk|au|uk-alpha)?>                                                                     controllers.FaciaController.renderEditionFront(path)
+GET         /$path<(us|uk|au|uk-alpha)?>.json                                                                controllers.FaciaController.renderEditionFrontJson(path)
 GET         /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>                           controllers.FaciaController.renderEditionSectionFront(path)
 GET         /$path<(\w\w/)?(culture|sport|australia|commentisfree|business|money)>.json                      controllers.FaciaController.renderEditionSectionFrontJson(path)
 
