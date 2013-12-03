@@ -9,7 +9,6 @@
 
 casper.test.setUp(function() {
     casper.start(host + 'science/grrlscientist/2012/aug/07/3?view=mobile');
-    casper.options.waitTimeout = 10000;
 });
 
 /**
@@ -83,12 +82,12 @@ casper.test.begin('Read top level comments', function(test) {
                     
                     casper.log("Clicking Top Comments 'show more' button", 'info');
                     casper.click(showMore);
-                    
-                    test.assertTruthy(
-                        casper.getElementInfo('.discussion__comments__top').height > 600, 'Showed rest of top comments after show more clicked'
-                    );
-                    
-                    test.done();
+                    casper.waitForSelector('.js-show-more-top-comments.cta.u-h', function() {
+                        test.assertTruthy(
+                            casper.getElementInfo('.discussion__comments__top').height > 600, 'Showed rest of top comments after show more clicked'
+                        );
+                        test.done();  
+                    });
                 } else {
                     // Check that comments don't reach max height and show more button doesnt exist
                     test.assertTruthy(startHeight < 600);

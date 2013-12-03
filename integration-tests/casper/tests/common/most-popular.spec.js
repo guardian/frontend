@@ -20,8 +20,10 @@ casper.test.begin("Load Most Read", function(test){
                 return document.querySelectorAll('#tabs-popular-1 li').length;
             }, 10, 'Then I can see 10 most popular stories from this section');
             casper.click("[data-link-name='tab 2 The Guardian']");
-            test.assertVisible("#tabs-popular-2", "Then the global most popular list is visible after clicking the tab");
-            test.done();
+            casper.waitWhileVisible('#tabs-popular-1', function() {
+                test.assertVisible("#tabs-popular-2", "Then the global most popular list is visible after clicking the tab");
+                test.done();
+            })
         }, function timeout() {
             casper.capture(screens + 'most-popular-fail.png');
             test.fail('Failed to transclude most read component');

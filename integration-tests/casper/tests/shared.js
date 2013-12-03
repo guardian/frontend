@@ -1,6 +1,7 @@
 system = require('system');
 environment = system.env.ENVIRONMENT;
 host = {
+    marc:   'http://marcjones:9000/',
     dev:    'http://localhost:9000/',
     code:   'http://m.code.dev-theguardian.com/',
     prod:   'http://www.theguardian.com/'
@@ -21,6 +22,8 @@ casper.echo('Environment host is ' + host);
 clearLocalStorage = function() {
     casper.evaluate(function() { window.localStorage.clear(); });
 };
+
+casper.options.waitTimeout = 10000;
 
 casper.on('page.error', function(msg, trace) {
     console.log('-----------------------------');
