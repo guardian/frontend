@@ -60,7 +60,7 @@ define([
         }
 
         model.previewUrl = ko.computed(function() {
-            return common.config.viewer[Config.env] + '/responsive-viewer#env=' + Config.env + '&url=' + model.front() + encodeURIComponent('?view=mobile');
+            return common.config.viewer + '#env=' + Config.env + '&url=' + model.front() + encodeURIComponent('?view=mobile');
         })
 
         function fetchFronts() {

@@ -205,13 +205,6 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
       }
     } getOrElse(NotFound)
   }
-
-  def renderResponsiveViewer() = Action {
-    Cached(60) {
-      Ok(views.html.fragments.responsiveViewer())
-    }
-  }
-
 }
 
 object FaciaController extends FaciaController
