@@ -46,6 +46,15 @@ object GetContainer {
       ("uk/culture/regular-stories", FeaturesContainer()),
       ("uk/contributors/feature-stories", CommentContainer())
     )),
+    ("uk-alpha", Map(
+      ("uk-alpha/top-story/special-story", NewsContainer()),
+      ("uk-alpha/news/regular-stories", SportContainer()),
+      ("uk-alpha/features/feature-stories", FeaturesContainer()),
+      ("uk-alpha/special/special-story", SportContainer()),
+      ("uk-alpha/contributors/feature-stories", CommentContainer()),
+      ("uk-alpha/people-in-the-news/feature-stories", NewsContainer()),
+      ("uk-alpha/readers-contributions/feature-stories", FeaturesContainer())
+    )),
     ("uk/business", Map(
       ("uk/business/regular-stories", SportContainer(showMore = false))
     )),
