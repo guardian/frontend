@@ -8,19 +8,16 @@ import discussion.model.{DiscussionKey, Comment}
 import scala.concurrent.Future
 import play.api.mvc.Results.Redirect
 
-trait CommentPageController extends DiscussionController {
-
-  
+trait CommentPageController extends DiscussionController {  
 
   def commentRedirectJson(id: Int) = commentRedirect(id)
   def commentRedirect(id: Int) = Action.async {
     implicit request =>
       discussionApi.commentContext(id) map {
         page =>
-          Redirect("/discussion"+ page._1 + (if (request.isJson) ".json" else "") +"?page="+ page._2 + "#comment-"+ id)
+          Redirect("/discussion"+ page._1 + (if (request.isJson) ".json" else "") +"?page="+ page._2 + "#comment-"+ id).withHeaders("Access-Control-Allow-Origin" -> "*")
       }
   }
-
 
   def commentPageJson(key: DiscussionKey) = commentPage(key)
   def commentPage(key: DiscussionKey) = Action.async {
