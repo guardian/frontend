@@ -1,12 +1,13 @@
 @(page: model.MetaData, config: Config, collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader)
 
-@if(collection.items.nonEmpty) {
-    <section class="container container--@style.containerType @if(containerIndex > 0){js-container--toggle} tone-@style.tone"
-             data-link-name="block | @config.id"
-             data-id="@config.id"
-             data-type="@style.containerType">
+@defining(Seq(config.displayName, collection.displayName).find(_.nonEmpty).flatten.getOrElse("")) { title =>
 
-        @Seq(config.displayName, collection.displayName).find(_.nonEmpty).flatten.map { title =>
+    @if(collection.items.nonEmpty) {
+        <section class="container container--@style.containerType @if(title.nonEmpty){js-container--toggle} tone-@style.tone"
+                 data-link-name="block | @config.id"
+                 data-id="@config.id"
+                 data-type="@style.containerType">
+
             @if(title.nonEmpty) {
                 <h2 class="container__title tone-background tone-accent-border">
                     @if(style.headerLink) {
@@ -16,11 +17,12 @@
                     }
                 </h2>
             }
-        }
 
-        @fragments.contributor(page)
+            @fragments.contributor(page)
 
-        @fragments.collections.standard(config, collection, style, containerIndex)
+            @fragments.collections.standard(config, collection, style, containerIndex)
 
-    </section>
+        </section>
+    }
+
 }
