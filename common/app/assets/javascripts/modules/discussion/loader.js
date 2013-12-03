@@ -2,6 +2,7 @@ define([
     'utils/ajax',
     'bonzo',
     'qwery',
+    'bean',
     'modules/component',
     'modules/analytics/discussion',
     'modules/identity/api',
@@ -14,6 +15,7 @@ define([
     ajax,
     bonzo,
     qwery,
+    bean,
     Component,
     DiscussionAnalytics,
     Id,
@@ -142,6 +144,10 @@ Loader.prototype.loadComments = function (args) {
         discussionId: this.getDiscussionId(),
         user: this.user,
         commentId: isAnchor ? parseInt(hash.replace('#comment-', ''), 10) : null
+    });
+
+    bean.on(window, 'hashchange', function(e) {
+        // debugger;
     });
 
     // Doing this makes sure there is only one redraw
