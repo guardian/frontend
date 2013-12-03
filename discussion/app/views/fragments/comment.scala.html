@@ -7,9 +7,10 @@
            id="comment-@comment.id"
            data-comment-id="@comment.id"
            data-comment-author="@comment.profile.displayName"
+           data-comment-replies="@comment.responseCount"
+           data-comment-timestamp="@comment.date"           
            data-comment-author-id="@comment.profile.userId"
-           data-comment-highlighted="@comment.isHighlighted"
-           data-comment-replies="@comment.responseCount">
+           data-comment-highlighted="@comment.isHighlighted">
     <div class="d-comment__inner">
         
         <div class="d-comment__pick i i-guardian-picks @if(!comment.isHighlighted || comment.isBlocked){u-h}" title="Guardian pick"></div>

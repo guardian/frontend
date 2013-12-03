@@ -57,12 +57,6 @@ Comments.prototype.classes = {
     commentRecommend: 'd-comment__recommend'
 };
 
-/**
- * @type {string}
- * @override
- */
-Comments.prototype.endpoint = '/discussion:discussionId.json?maxResponses=3';
-
 /** @type {Object.<string.*>} */
 Comments.prototype.defaultOptions = {
     discussionId: null,
@@ -70,6 +64,12 @@ Comments.prototype.defaultOptions = {
     showRepliesCount: 3,
     user: null
 };
+
+/**
+ * @type {string}
+ * @override
+ */
+Comments.prototype.endpoint = '/discussion:discussionId.json?maxResponses='+Comments.prototype.defaultOptions.showRepliesCount;
 
 /** @type {Boolean} */
 Comments.prototype.hasHiddenComments = false;
@@ -141,7 +141,7 @@ Comments.prototype.ready = function() {
         if (!this.isReadOnly()) {
             this.bindCommentEvents();
         }
-        this.on('click', this.getClass('showReplies'), this.showMoreReplies);
+        this.on('click', this.getClass('showReplies'), this.getMoreReplies);
     }
     this.emit('ready');
 };
@@ -275,6 +275,85 @@ Comments.prototype.showHiddenComments = function() {
 Comments.prototype.showMoreReplies = function(e) {
     bonzo(qwery(this.getClass('reply'), bonzo(e.currentTarget).parent()[0])).removeAttr('hidden');
     bonzo(e.currentTarget).remove();
+};
+
+Comments.prototype.getMoreReplies = function(event) {
+    event.preventDefault();
+    var self = this,
+        source = bonzo(event.target).data("source-comment");
+    
+    ajax({
+        url: '/discussion/comment/'+ event.target.getAttribute("data-comment-id") +'.json',
+        type: 'json',
+        method: 'get',
+        crossOrigin: true
+    }).then(function (resp) {
+        var comment = bonzo.create(resp.html);
+        var replies = qwery(self.getClass('reply'), comment);
+
+        replies.sort(function compareFunction (a, b) {
+            a = new Date(a.getAttribute("data-comment-timestamp")).getTime();
+            b = new Date(b.getAttribute("data-comment-timestamp")).getTime();
+
+            if (a < b) {
+                return -1;
+            } else if (a > b) {
+                return 1;
+            } else {
+                return 0;
+            }
+        });
+
+        replies = replies.slice(self.options.showRepliesCount, replies.length);
+        bonzo(qwery('.d-thread--responses', source)).append(replies);
+        bonzo(event.currentTarget).addClass("u-h");
+    });
+};
+
+Comments.prototype.bindMoreReplies = function (comments) {
+    var repliesToHide,
+        self = this;
+
+    comments = comments || this.topLevelComments;
+    comments.forEach(function(elem, i) {
+        
+        var replies = parseInt(elem.getAttribute("data-comment-replies"), 10);
+        var rendered_replies = qwery(self.getClass('reply'), elem);
+
+        if (rendered_replies.length < replies) {
+            // Get extra replies on click
+            // repliesToHide = replies.slice(self.options.showRepliesCount, replies.length);
+            // bonzo(repliesToHide).attr('hidden', 'hidden');
+
+            var numHiddenReplies = replies - rendered_replies.length;
+
+            var showButton = [];
+            showButton.push('<li class="');
+            showButton.push(self.getClass('showReplies', true));
+            showButton.push(' cta" data-link-name="Show more replies" data-is-ajax data-comment-id="');
+            showButton.push(elem.getAttribute("data-comment-id"));
+            showButton.push('">Show ');
+            showButton.push(numHiddenReplies);
+            showButton.push(' more ');
+            showButton.push((numHiddenReplies === 1 ? 'reply' : 'replies'));
+            showButton.push('</li>');
+            showButton = bonzo.create(showButton.join(""));
+            bonzo(showButton).data("source-comment", elem);
+
+            bonzo(qwery('.d-thread--responses', elem)).append(showButton);
+        }
+
+        // replies = qwery(self.getClass('reply'), elem);
+        // if (replies.length > self.options.showRepliesCount) {
+        //     repliesToHide = replies.slice(self.options.showRepliesCount, replies.length);
+        //     bonzo(repliesToHide).attr('hidden', 'hidden');
+
+        //     bonzo(qwery('.d-thread--responses', elem)).append(
+        //         '<li class="'+ self.getClass('showReplies', true) +' cta" data-link-name="Show more replies" data-is-ajax>Show '+
+        //             repliesToHide.length + ' more ' + (repliesToHide.length === 1 ? 'reply' : 'replies') +
+        //         '</li>');
+        // }
+    });
 };
 
 /**
