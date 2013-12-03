@@ -307,6 +307,9 @@ Comments.prototype.getMoreReplies = function(event) {
         replies = replies.slice(self.options.showRepliesCount, replies.length);
         bonzo(qwery('.d-thread--responses', source)).append(replies);
         bonzo(event.currentTarget).addClass("u-h");
+        if (!self.isReadOnly()) {
+            RecommendComments.init(source);
+        }
     });
 };
 
@@ -410,7 +413,6 @@ Comments.prototype.commentsLoaded = function(resp) {
 
     if (!this.isReadOnly()) {
         RecommendComments.init(this.context);
-
     }
     this.emit('loaded');
 };
