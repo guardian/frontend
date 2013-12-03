@@ -5,6 +5,7 @@ import views.support.{ImgSrc, cleanTrailText}
 import play.api.mvc.RequestHeader
 import scala.collection.JavaConverters._
 import org.joda.time.DateTime
+import java.io.StringWriter
 
 object TrailsToRss { 
   def apply(title: Option[String], trails: Seq[Trail])(implicit request: RequestHeader): String = {
@@ -17,6 +18,8 @@ object TrailsToRss {
     // Feed: image
     val image = new SyndImageImpl
     image.setLink("http://www.theguardian.com")
+
+    // This image fits this spec. - https://support.google.com/news/publisher/answer/1407682
     image.setUrl("http://assets.guim.co.uk/images/guardian-logo-rss.8738b8e596be8126a767fdf608b696c8.png")
     image.setTitle(feedTitle)
 
@@ -63,8 +66,6 @@ object TrailsToRss {
 
     feed.setEntries(entries)
     
-    import java.io.StringWriter
-
     val writer = new StringWriter()
     val output = new SyndFeedOutput()
     output.output(feed, writer)
