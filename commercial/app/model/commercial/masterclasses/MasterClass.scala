@@ -62,7 +62,7 @@ case class MasterClass(id: String,
     } else f"${priceList.head}%,.2f"
   }
 
-  def isTargetedAt(segment: Segment) = true
+  def isTargetedAt(segment: Segment) = segment.context.isInSection("music")
 }
 
 case class Ticket(price: Double)

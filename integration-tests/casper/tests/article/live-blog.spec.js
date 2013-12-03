@@ -9,7 +9,6 @@
 
 casper.test.setUp(function() {
     casper.start(host + "football/2013/nov/19/austria-vs-usa-live?view=mobile");
-    casper.options.waitTimeout = 10000;
 });
 
 casper.test.begin("Show key events only / all posts", function(test) {
