@@ -60,7 +60,7 @@ define([
         }
 
         model.previewUrl = ko.computed(function() {
-            return common.config.viewer + '#env=' + Config.env + '&url=' + model.config() + encodeURIComponent('?view=mobile');
+            return 'http://s3-eu-west-1.amazonaws.com/facia/responsive-viewer.html#env=' + Config.env + '&url=' + model.front() + encodeURIComponent('?view=mobile');
         })
 
         function fetchFronts() {
