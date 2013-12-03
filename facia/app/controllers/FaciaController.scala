@@ -199,6 +199,19 @@ object FrontPage {
 
     //TODO important this one is last for matching purposes
     new FrontPage(isNetworkFront = true) {
+      override val id = "uk-alpha"
+      override val section = ""
+      override val webTitle = "The Guardian"
+      override lazy val analyticsName = "GFE:Network Front"
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "content-type" -> "Network Front",
+        "is-front" -> true
+      )
+    },
+
+    //TODO important this one is last for matching purposes
+    new FrontPage(isNetworkFront = true) {
       override val id = ""
       override val section = ""
       override val webTitle = "The Guardian"

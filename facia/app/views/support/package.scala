@@ -49,11 +49,10 @@ object GetContainer {
     ("uk-alpha", Map(
       ("uk-alpha/top-story/special-story", NewsContainer()),
       ("uk-alpha/news/regular-stories", SportContainer()),
-      ("uk-alpha/features/feature-stories", FeaturesContainer()),
-      ("uk-alpha/special/special-story", SportContainer()),
-      ("uk-alpha/contributors/feature-stories", CommentContainer()),
-      ("uk-alpha/people-in-the-news/feature-stories", NewsContainer()),
-      ("uk-alpha/readers-contributions/feature-stories", FeaturesContainer())
+      ("uk-alpha/features/feature-stories", FeaturesContainer(headerLink = false)),
+      ("uk-alpha/special/special-story", SportContainer(headerLink = false)),
+      ("uk-alpha/contributors/feature-stories", CommentContainer(headerLink = false)),
+      ("uk-alpha/people-in-the-news/feature-stories", NewsContainer(headerLink = false))
     )),
     ("uk/business", Map(
       ("uk/business/regular-stories", SportContainer(showMore = false))
