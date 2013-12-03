@@ -164,6 +164,14 @@
     }
 }
 
+.comment--collapsed {
+    .comment__body {
+        max-height: 300px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
 /* Person
    ========================================================================== */
 .person {
