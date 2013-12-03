@@ -318,7 +318,7 @@ define([
 
         logReadingHistory : function() {
             mediator.on('page:common:ready', function(config) {
-                 if(/Article|Video|Gallery|Interactive/.test(config.page.contentType)) {
+                if(/Article|Video|Gallery|Interactive/.test(config.page.contentType)) {
                     new History().log({
                         id: '/' + config.page.pageId,
                         meta: {
@@ -327,6 +327,7 @@ define([
                         }
                     });
                 }
+                sequence.init('/' + config.page.pageId);
             });
         },
 

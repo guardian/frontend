@@ -67,8 +67,8 @@ define([
     function bindListeners() {
         mediator.on('module:clickstream:click', function(clickSpec){
             if (clickSpec.sameHost && !clickSpec.samePage && clickSpec.linkContextPath) {
-                set('context.path', clickSpec.linkContextPath);
-                set('context.name', clickSpec.linkContextName);
+                set('contextPath', clickSpec.linkContextPath);
+                set('contextName', clickSpec.linkContextName);
             }
         });
     }

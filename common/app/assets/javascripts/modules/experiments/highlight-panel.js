@@ -30,6 +30,9 @@ define([
         useBem: true
     };
 
+    HighlightPanel.prototype.template = '<div class="highlight-panel"><div class="gs-container">' +
+         '<h3 class="highlight-panel__title"></h3><ul class="highlight-panel__items u-unstyled"></ul></div></div>';
+
     HighlightPanel.prototype.prerender = function() {
         var container = this.getElem(this.conf().classes.items);
         this.data.slice(0, this.conf().maxTrails).forEach(function(item) {
