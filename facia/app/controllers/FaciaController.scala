@@ -197,7 +197,6 @@ object FrontPage {
       )
     },
 
-    //TODO important this one is last for matching purposes
     new FrontPage(isNetworkFront = true) {
       override val id = "uk-alpha"
       override val section = ""
