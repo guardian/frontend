@@ -100,7 +100,7 @@ define('bootstraps/app', [
         },
 
         loadFonts: function(config, ua) {
-            if (config.switches.webFonts && !guardian.platformsGettingHintedFonts.test(ua)) {
+            if (config.switches.webFonts && !guardian.shouldLoadFontsAsynchronously) {
                 var fileFormat = detect.getFontFormatSupport(ua),
                     fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
                 var f = new Fonts(fontStyleNodes, fileFormat);

@@ -27,7 +27,7 @@ class TestPageFront(val id: String, edition: Edition, faciaPage: FaciaPage) {
 }
 
 trait ModelHelper {
-  def configWithId(id: String) = Config(id, None, None)
+  def configWithId(id: String) = Config(id, None, None, None)
 
   def trailWithUrl(url: String): Trail = TestTrail(url)
   def trailsWithUrl(url: Seq[String]): Seq[Trail] = url map trailWithUrl
