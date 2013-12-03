@@ -1,20 +1,17 @@
 define([
     "utils/mediator",
-    "modules/discussion/discussion"
+    "modules/discussion/loader"
 ], function(
     mediator,
-    Discussion
+    DiscussionLoader
 ) {
     var modules = {
 
         initDiscussion: function() {
-            mediator.on('page:imagecontent:ready', function(config, context) {
+            mediator.on("page:imagecontent:ready", function(config, context) {
                 if (config.page.commentable) {
-                    var discussionArticle = new Discussion({
-                        id: config.page.shortUrl,
-                        context: context,
-                        config: config
-                    }).init();
+                    var discussionLoader = new DiscussionLoader(context, mediator, {}, config.switches.discussionTopComments);
+                    discussionLoader.attachToDefault();
                 }
             });
         }
