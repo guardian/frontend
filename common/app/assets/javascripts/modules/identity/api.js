@@ -127,8 +127,16 @@ define([
             return Id.getUserFromCookie();
         } else {
             returnUrl = encodeURIComponent(returnUrl || document.location.href);
-            window.location.href = Id.getUrl() + '/signin?returnUrl=' + returnUrl;
+            var url = Id.getUrl() + '/signin?returnUrl=' + returnUrl;
+            Id.redirectTo(url);
         }
+    };
+
+    /**
+     * Wrap window.location.href so it can be spied in unit tests
+     */
+    Id.redirectTo = function(url) {
+        window.location.href = url;
     };
 
     window.getUserOrSignIn = Id.getUserOrSignIn;

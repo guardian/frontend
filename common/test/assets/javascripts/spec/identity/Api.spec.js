@@ -107,6 +107,25 @@ define([
             expect(ajax.reqwest.getCall(0).args[0]["crossOrigin"]).toBe(true);
         });
 
+        it('should redirect to sign in when user is not signed in', function() {
+            var redirectSpy = sinon.stub(Id, 'redirectTo'),
+                user = Id.getUserOrSignIn();
+
+            expect(redirectSpy.called).toBeTruthy();
+            Id.redirectTo.restore();
+        });
+
+        it('should not redirect to sign in when user is already signed in', function() {
+            Cookies.get.withArgs("GU_U").returns(cookieData);
+
+            var redirectSpy = sinon.stub(Id, 'redirectTo'),
+                user = Id.getUserOrSignIn();
+
+            expect(user.displayName).toBe('jamesgorrie');
+            expect(redirectSpy.called).toBeFalsy();
+            Id.redirectTo.restore();
+        });
+
         it("should attempt to autosigin an user who is not currently signed in and has not previously signed out", function() {
             Cookies.get.withArgs("GU_U").returns(null);
             Cookies.get.withArgs("GU_SO").returns(null);
