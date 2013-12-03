@@ -103,16 +103,18 @@
     height: 100%;
 }
 .mpu-container {
+    &.is-affixed {
+        width: 300px; // Needed as it doesn't respect the container width when fixed
+        position: fixed;
+    }
+}
+
+.mpu-container--sticky {
     @include sticky;
     background: #fff;
     margin-top: -$baseline*4;
     padding-top: $baseline*4;
     top: 0;
-
-    &.is-affixed {
-        width: 300px; // Needed as it doesn't respect the container width when fixed
-        position: fixed;
-    }
 }
 
 .ad-slot--middle-banner-ad {
