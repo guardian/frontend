@@ -99,9 +99,6 @@ Loader.prototype.ready = function() {
     bonzo(self.topLoadingElem).insertAfter(topCommentsElem);
 
     this.on('user:loaded', function(user) {
-
-        // Top comments =========================================== //
-
         self.topComments = new TopComments(self.context, self.mediator, {
             discussionId: self.getDiscussionId(),
             user: self.user
@@ -114,10 +111,7 @@ Loader.prototype.ready = function() {
                 self.on('click', $(self.topComments.showMoreButton), self.topComments.showMore.bind(self.topComments)); // Module-hopping calls - refactor needed
             });
 
-        self.mediator.on("module:topcomments:loadcomments", self.loadComments.bind(self));
-
-        // !Top comments ========================================== //
-
+        self.mediator.on('module:topcomments:loadcomments', self.loadComments.bind(self));
     });
 
     this.getUser();
@@ -129,9 +123,11 @@ Loader.prototype.loadComments = function (args) {
 
     var self = this;
 
-    var commentsContainer   = this.getElem('commentsContainer'),
-        commentsElem        = this.getElem('comments'),
-        loadingElem         = bonzo.create('<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>')[0];
+    var commentsContainer = this.getElem('commentsContainer'),
+        commentsElem = this.getElem('comments'),
+        loadingElem = bonzo.create('<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>')[0],
+        hash = window.location.hash,
+        isAnchor = /#comment-\d/.test(hash);
 
     if (args.showLoader) {
         // Comments are being loaded in the no-top-comments-available context
@@ -142,24 +138,24 @@ Loader.prototype.loadComments = function (args) {
     bonzo(loadingElem).insertAfter(commentsElem);
 
     this.comments = new Comments(this.context, this.mediator, {
-        initialShow: args.amount,
+        initialShow: isAnchor ? 10 : args.amount,
         discussionId: this.getDiscussionId(),
-        user: this.user
+        user: this.user,
+        commentId: isAnchor ? parseInt(hash.replace('#comment-', ''), 10) : null
     });
 
     // Doing this makes sure there is only one redraw
     // Within comments there is adding of reply buttons etc
-    this.comments
-        .fetch(commentsElem)
+    this.comments.fetch(commentsElem)
         .then(function killLoadingMessage() {
             bonzo(loadingElem).remove();
             self.renderCommentBar(self.user);
-            bonzo(self.comments.getElem('showMore')).addClass("u-h");
+            bonzo(self.comments.getElem('showMore')).addClass('u-h');
 
             if (args.showLoader) {
                 // Comments are being loaded in the no-top-comments-available context
                 bonzo(self.getElem('joinDiscussion')).remove();
-                bonzo([self.comments.getElem('showMore'), self.comments.getElem('header')]).removeClass("u-h");
+                bonzo([self.comments.getElem('showMore'), self.comments.getElem('header')]).removeClass('u-h');
             }
 
             self.on("click", self.getElem('joinDiscussion'), function (event) {
@@ -274,8 +270,8 @@ Loader.prototype.commentPosted = function () {
 
 /* Configure DOM for viewing of comments once some have been shown */
 Loader.prototype.cleanUpOnShowComments = function () {
-    bonzo([this.comments.getElem('showMore'), this.comments.getElem('header')]).removeClass("u-h");
-    bonzo(this.getElem('joinDiscussion')).addClass("u-h");
+    bonzo([this.comments.getElem('showMore'), this.comments.getElem('header')]).removeClass('u-h');
+    bonzo(this.getElem('joinDiscussion')).addClass('u-h');
 };
 
 Loader.prototype.renderUserBanned = function() {
