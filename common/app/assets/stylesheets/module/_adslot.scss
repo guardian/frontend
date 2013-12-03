@@ -104,7 +104,10 @@
 }
 .mpu-container {
     @include sticky;
-    top: $baseline*4;
+    background: #fff;
+    margin-top: -$baseline*4;
+    padding-top: $baseline*4;
+    top: 0;
 
     &.is-affixed {
         width: 300px; // Needed as it doesn't respect the container width when fixed
