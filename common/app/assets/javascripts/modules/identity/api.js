@@ -139,8 +139,6 @@ define([
         window.location.href = url;
     };
 
-    window.getUserOrSignIn = Id.getUserOrSignIn;
-
     /**
      * Handles unicode chars correctly
      * @param {string} str

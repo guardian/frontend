@@ -12,7 +12,8 @@ define([
     describe('Get user data', function() {
         var config = {
                 'page' : {
-                    'idApiUrl' : "https://idapi.theguardian.com"
+                    'idApiUrl' : "https://idapi.theguardian.com",
+                    'idUrl' : "https://profile.theguardian.com"
                 }
             },
             cookieData = 'WyIyMzEwOTU5IiwiamdvcnJpZUBnbWFpbC5jb20iLCJqYW1lc2dvcnJpZSIsIjUzNCIsMTM4Mjk1MzAzMTU5MSwxXQ.MC0CFBsFwIEITO91EGONK4puyO2ZgGQcAhUAqRa7PVDCoAjrbnJNYYvMFec4fAY',
@@ -123,6 +124,15 @@ define([
 
             expect(user.displayName).toBe('jamesgorrie');
             expect(redirectSpy.called).toBeFalsy();
+            Id.redirectTo.restore();
+        });
+
+        it('should redirect with return URL when given', function() {
+            var redirectSpy = sinon.stub(Id, 'redirectTo'),
+                returnUrl = 'http://www.theguardian.com/foo',
+                user = Id.getUserOrSignIn(returnUrl);
+
+            expect(redirectSpy.getCall(0).args[0]).toContain(encodeURIComponent(returnUrl));
             Id.redirectTo.restore();
         });
 
