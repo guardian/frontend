@@ -2,14 +2,14 @@ package controllers
 
 import common.{ ExecutionContexts, Logging }
 import conf.Switches._
-import play.api.http.MediaRange
-import play.api.libs.ws.{WS, Response}
+import play.api.libs.ws.WS
 import play.api.mvc._
 import services.ImageResizer._
 import scala.concurrent.Future
 import views.support._
+import implicits.Requests
 
-object ImageController extends Controller with Logging with Implicits with ExecutionContexts {
+object ImageController extends Controller with Logging with Implicits with ExecutionContexts with Requests {
 
   // URL validation: We're only going to accept proxy paths that match...
   val Path = """([/\w\.,@~-]*)""".r
@@ -26,15 +26,13 @@ object ImageController extends Controller with Logging with Implicits with Execu
     val path = "http://static.guim.co.uk/" + sanitised
     val imageCacheLifetime = 86400
 
-    // Find the highest priority accept type
-    val requestedContentType = request.acceptedTypes.sorted(MediaRange.ordering)
-    val imageMimeType = requestedContentType.find(media => media.accepts("image/jpeg")|| media.accepts("image/webp"))
-    val wsRequest: Future[Response]  = WS.url(path).get()
-
-    val renderSubtype = imageMimeType match {
-      case Some(media) if (media.mediaSubType == "webp" && ServeWebPImagesSwitch.isSwitchedOn) => renderWebp _
-      case _ => renderJpeg _
+    if (ServeWebPImagesSwitch.isSwitchedOn && request.isWebp) {
+        WS.url(path).get().map(renderWebp(path, imageCacheLifetime, profile))
+    } else {
+      if (ServeJpegViaImageService.isSwitchedOn)
+        renderImageService(profile, sanitised, request)
+      else
+        WS.url(path).get().map(renderJpeg(path, imageCacheLifetime, profile))
     }
-    wsRequest.map{renderSubtype(path, imageCacheLifetime, profile)}
   }
 }

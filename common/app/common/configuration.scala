@@ -133,6 +133,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object images {
     lazy val path = configuration.getMandatoryStringProperty("images.path")
+    lazy val resizeService = configuration.getStringProperty("image.resize.service").getOrElse("http://127.0.0.1")
   }
 
   object assets {
