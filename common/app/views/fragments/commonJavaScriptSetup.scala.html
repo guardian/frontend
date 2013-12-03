@@ -133,11 +133,15 @@
         }
         document.documentElement.className = document.documentElement.className.replace(/\bjs-off\b/g, '') + ' js-on ' + htmlClassNames;
 
-        guardian.platformsGettingHintedFonts = /Windows/;
-        guardian.platformsNotGettingHintedFonts = /W(indows Phone|PDesktop)/; // exceptions
+        @* Display hinted fonts (loaded asynchronously) in these platforms: *@
+        var loadsHintedFonts = /Windows/;
+        @* But exclude these platforms (and load non-hinted fonts from localStorage): *@
+        var loadsNonHintedFonts = /W(indows Phone|PDesktop)/;
 
-        if (guardian.platformsGettingHintedFonts.test(navigator.userAgent) &&
-            !guardian.platformsNotGettingHintedFonts.test(navigator.userAgent)) {
+        guardian.shouldLoadFontsAsynchronously = loadsHintedFonts.test(navigator.userAgent)
+                                                 && !loadsNonHintedFonts.test(navigator.userAgent);
+
+        if (guardian.shouldLoadFontsAsynchronously) {
             loadFontsAsynchronously();
         } else {
             loadFontsFromStorage();
