@@ -23,7 +23,6 @@ define('bootstraps/app', [
     "bootstraps/tag",
     "bootstraps/section",
     "bootstraps/imagecontent",
-    "modules/identity/api",
     "modules/adverts/userAdTargeting"
 ], function (
     qwery,
@@ -49,7 +48,6 @@ define('bootstraps/app', [
     Tag,
     Section,
     ImageContent,
-    IdApi,
     UserAdTargeting
 ) {
 
@@ -103,8 +101,8 @@ define('bootstraps/app', [
             }
         },
 
-        initId : function (config) {
-            IdApi.init(config);
+        initId: function (config, context) {
+            Identity.init(config, context);
         },
 
         initUserAdTargeting : function () {
@@ -124,7 +122,7 @@ define('bootstraps/app', [
             modules.initialiseAbTest(config);
             modules.attachGlobalErrorHandler(config);
             modules.loadFonts(config, navigator.userAgent);
-            modules.initId(config);
+            modules.initId(config, context);
             modules.initUserAdTargeting();
             modules.liveStats(config);
 
@@ -169,10 +167,6 @@ define('bootstraps/app', [
 
                 if (config.page.contentType === "Section" && !config.page.isFront) {
                     Section.init(config, context);
-                }
-
-                if (config.page.section === "identity") {
-                    Identity.init(config, context);
                 }
 
                 if (config.page.contentType === "ImageContent") {

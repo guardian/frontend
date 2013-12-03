@@ -36,7 +36,7 @@ define([
                 Identity.passwordToggle(config, context);
             });
         },
-        idConfig : function (config) {
+        idConfig: function (config) {
             mediator.on('page:identity:ready', function(config, context) {
                 Id.init(config);
             });
