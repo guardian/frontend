@@ -4,7 +4,7 @@
            @if(isResponse){d-comment--response}else{d-comment--top-level}
            @if(comment.isBlocked){d-comment--blocked}
            @if(comment.responses.nonEmpty){d-comment--has-replies}"
-           id="comment-@comment.id"
+           id="top-comment-@comment.id"
            data-comment-id="@comment.id"
            data-comment-author="@comment.profile.displayName"
            data-comment-author-id="@comment.profile.userId">
