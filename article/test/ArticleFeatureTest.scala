@@ -79,7 +79,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
       HtmlUnit("/commentisfree/2012/aug/06/price-rivers-rain-greatest-privatisation") { browser =>
         import browser._
 
-        ImageServerSwitch.switchOn
+        ImageServerSwitch.switchOn()
 
         Then("I should see the article's image")
         findFirst("[itemprop='associatedMedia primaryImageOfPage'] img[itemprop=contentURL]").getAttribute("src") should
@@ -169,7 +169,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
 
         val inBodyImage = findFirst("figure[itemprop=associatedMedia]")
 
-        ImageServerSwitch.switchOn
+        ImageServerSwitch.switchOn()
         inBodyImage.getAttribute("class") should include("img--extended")
         inBodyImage.findFirst("[itemprop=contentURL]").getAttribute("src") should
           endWith("sys-images/Travel/Late_offers/pictures/2012/10/11/1349951383662/Shops-in-Rainbow-Row-Char-001.jpg")
@@ -307,10 +307,10 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
       HtmlUnit("/society/2013/mar/26/failing-hospitals-nhs-jeremy-hunt") { browser =>
         import browser._
         Then("the main picture should be hidden")
-        $("[itemprop='associatedMedia primaryImageOfPage']") should have size (0)
+        $("[itemprop='associatedMedia primaryImageOfPage']") should have size 0
 
-        And("the embedded video should not show a poster when there are no images in the video element")
-        findFirst("video").getAttribute("poster") should be("")
+        And("the embedded video should show a poster if there are images in the video element")
+        findFirst("video").getAttribute("poster") should endWith("Jeremy-Hunt-announcing-ch-016.jpg")
       }
     }
 
@@ -320,7 +320,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
         import browser._
 
         Then("the main picture should be shown")
-        $("[itemprop='associatedMedia primaryImageOfPage']") should have size (1)
+        $("[itemprop='associatedMedia primaryImageOfPage']") should have size 1
 
         And("the embedded video should not have a poster when there are no images in the video element")
         findFirst("video").getAttribute("poster") should be("")
@@ -351,7 +351,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
       HtmlUnit("/artanddesign/2013/apr/15/buildings-tall-architecture-guardianwitness") { broswer =>
         import broswer._
         Then("The main picture should be show")
-        $("[itemprop='associatedMedia primaryImageOfPage']") should have size (1)
+        $("[itemprop='associatedMedia primaryImageOfPage']") should have size 1
       }
     }
 
@@ -359,7 +359,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
 
       Given("I read an article and want to share it with my friends")
 
-      SocialSwitch.switchOn
+      SocialSwitch.switchOn()
 
       HtmlUnit("/film/2012/nov/11/margin-call-cosmopolis-friends-with-kids-dvd-review") { browser =>
         import browser._
@@ -378,7 +378,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
 
       Given("I want to track the responsive share buttons using Facebook Insights")
 
-      SocialSwitch.switchOn
+      SocialSwitch.switchOn()
 
       HtmlUnit("/film/2012/nov/11/margin-call-cosmopolis-friends-with-kids-dvd-review") { browser =>
         import browser._
@@ -397,8 +397,8 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
 
       Given("I read an article")
 
-      SocialSwitch.switchOn
-      SearchSwitch.switchOn
+      SocialSwitch.switchOn()
+      SearchSwitch.switchOn()
 
       HtmlUnit("/world/2013/jan/27/brazil-nightclub-blaze-high-death-toll") { browser =>
         import browser._
@@ -424,10 +424,10 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
         import browser._
 
         Then("I should see a fancy gallery trail")
-        $(".trail--gallery") should have size (1)
+        $(".trail--gallery") should have size 1
 
         And("it should have 3 thumbnails")
-        $(".gallerythumbs__item") should have size (3)
+        $(".gallerythumbs__item") should have size 3
 
         And("should show a total image count of 12")
         $(".trail__count--imagecount").getText should be("12 images")
@@ -442,14 +442,14 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
         import browser._
 
         Then("I should see link to most popular in the article section")
-        $(".js-popular a") should have size (1)
+        $(".js-popular a") should have size 1
       }
     }
 
     scenario("Show keywords in an article"){
       Given("I am on an article entitled 'Iran's Rouhani may meet Obama at UN after American president reaches out'")
 
-      ArticleKeywordsSwitch.switchOn
+      ArticleKeywordsSwitch.switchOn()
 
       HtmlUnit("/world/2013/sep/15/obama-rouhani-united-nations-meeting"){ browser =>
         import browser._
@@ -462,7 +462,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
     scenario("Don't show keywords in an article with only section tags (eg info/info) or no keywords"){
       Given("I am on an article entitled 'Removed: Eyeball-licking: the fetish that is making Japanese teenagers sick'")
 
-      ArticleKeywordsSwitch.switchOn
+      ArticleKeywordsSwitch.switchOn()
 
       HtmlUnit("/info/2013/aug/26/2"){ browser =>
         import browser._

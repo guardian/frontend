@@ -52,7 +52,7 @@ trait TestSettings {
 
     verify(
       Configuration.contentApi.elasticSearchHost,
-      "973dff7baa408e6f2334e3cf4ca36a960f1743b6d09911ff68723db9cbe62163",
+      "4579a1427afd5b655767c16e35891b5c01360d7fe5f253885b3762f652554438",
       "YOU ARE NOT USING THE CORRECT ELASTIC SEARCH CONTENT API HOST"
     )
 

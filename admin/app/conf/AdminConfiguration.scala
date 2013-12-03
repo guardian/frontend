@@ -6,10 +6,6 @@ object AdminConfiguration {
 
   val configuration = ConfigurationFactory.getConfiguration("frontend", "env")
 
-  object mongo {
-    lazy val connection = configuration.getStringProperty("mongo.connection.password").getOrElse(throw new RuntimeException("Mongo connection not configured"))
-  }
-
   object pa {
     lazy val apiKey = configuration.getStringProperty("pa.api.key")
         .getOrElse(throw new RuntimeException("unable to load pa api key"))
