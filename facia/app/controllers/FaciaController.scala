@@ -208,8 +208,8 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
   def renderCollectionRss(id: String) = Action { implicit request =>
     CollectionAgent.getCollection(id) map { collection =>
       Cached(60) {
-        Ok(TrailsToRss(collection.displayName.getOrElse(""), collection.items))
-      }.as("application/rss+xml; charset=utf-8")
+        Ok(TrailsToRss(conf.displayName, collection.items))
+      }.as("text/xml; charset=utf-8")
     } getOrElse(NotFound)
   }
 
