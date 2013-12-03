@@ -4,9 +4,11 @@
     class="d-discussion@if(!page.isClosedForRecommendation){ d-discussion--reccomendations-open}"
     data-page-count="@page.pages"
     data-comment-count="@page.commentCount"
+    data-current-page="@page.currentPage"
     @page.switches.map{ switch =>
         data-@switch.name="@switch.state"
     }>
+    
     <div class="d-discussion__header">
         @if(page.commentCount > 0){
         <div class="d-discussion__meta d-meta-item">
@@ -15,13 +17,30 @@
         }
         <div class="d-discussion__meta d-meta-item">Sorted by newest first.</div>
     </div>
+    @if(page.currentPage != 1){
+        <a class="d-discussion__show-more d-discussion__show-more--newer cta"
+            href="@LinkTo{/@page.id?page=@(page.currentPage - 1)}"
+            data-link-name="Show more comments"
+            data-age="newer"
+            data-page="@(page.currentPage - 1)">
+            Show newer comments
+        </a>
+    }
+
     <ul class="d-thread d-thread--top-level">
         @page.comments.map{ comment =>
             @fragments.comment(comment, page.isClosedForRecommendation)
         }
     </ul>
+    
     @if(page.currentPage + 1 <= page.pages){
-        <a class="js-show-more-comments cta" data-link-name="Show more comments" href="@LinkTo{/@page.id?page=@(page.currentPage + 1)}">Show more comments</a>
+        <a class="d-discussion__show-more d-discussion__show-more--older cta"
+            href="@LinkTo{/@page.id?page=@(page.currentPage + 1)}"
+            data-link-name="Show more comments"
+            data-age="older"
+            data-page="@(page.currentPage + 1)">
+            Show older comments
+        </a>
     }
 
     <script type="text/template" id="tmpl-comment-box">@fragments.commentBox()</script>

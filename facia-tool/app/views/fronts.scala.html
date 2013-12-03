@@ -101,7 +101,7 @@
 
                     <a class="list-header__display" data-bind="
                         visible: typeof configMeta.displayName() === 'undefined',
-                        text: collectionMeta.displayName() || 'Set title for ' + configMeta.roleName(),
+                        text: collectionMeta.displayName() || 'Set title for ' + (configMeta.roleName() || id),
                         click: toggleEditingConfig"></a>
 
                     <span class="list-header__display" data-bind="

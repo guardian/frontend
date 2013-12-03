@@ -27,10 +27,7 @@ define([
         // properties from the config, about this collection
         this.configMeta   = common.util.asObservableProps([
             'displayName',
-            'min',
-            'max',
-            'roleName',
-            'roleDescription']);
+            'roleName']);
         common.util.populateObservables(this.configMeta, opts);
 
         // properties from the collection itself
