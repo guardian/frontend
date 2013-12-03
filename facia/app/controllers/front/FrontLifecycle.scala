@@ -9,7 +9,7 @@ trait FrontLifecycle extends GlobalSettings {
     super.onStart(app)
 
     Jobs.deschedule("FrontRefreshJob")
-    Jobs.schedule("FrontRefreshJob", "0/30 * * * * ?") {
+    Jobs.schedule("FrontRefreshJob", "0 * * * * ?") {
 
       // stagger refresh jobs to avoid dogpiling the api
       Front.refreshJobs().zipWithIndex.foreach{ case (job, index) =>
