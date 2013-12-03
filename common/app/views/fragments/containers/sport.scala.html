@@ -1,6 +1,6 @@
 @(page: model.MetaData, config: Config, collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader)
 
-@defining(Seq(config.displayName, collection.displayName).find(_.nonEmpty).flatten.getOrElse("")) { title =>
+@defining(config.displayName.orElse(collection.displayName).getOrElse("")) { title =>
 
     @if(collection.items.nonEmpty) {
         <section class="container container--@style.containerType @if(containerIndex > 0 && title.nonEmpty){js-container--toggle} tone-@style.tone"
