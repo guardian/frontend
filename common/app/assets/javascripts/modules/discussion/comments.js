@@ -78,7 +78,7 @@ Comments.prototype.defaultOptions = {
  * @type {string}
  * @override
  */
-Comments.prototype.endpoint = '/discussion:discussionId.json?maxResponses='+Comments.prototype.defaultOptions.showRepliesCount;
+Comments.prototype.endpoint = '/discussion:discussionId.json';
 
 /** @type {Boolean} */
 Comments.prototype.hasHiddenComments = false;
@@ -131,9 +131,6 @@ Comments.prototype.prerender = function() {
             }
         }
     }
-
-    // Hide excessive replies
-    this.hideExcessReplies();
 };
 
 /** @override */
@@ -318,7 +315,7 @@ Comments.prototype.commentsLoaded = function(resp, age) {
     showMoreButton.innerHTML = 'Show '+ age +' comments';
     showMoreButton.removeAttribute('data-disabled');
 
-    this.hideExcessReplies(comments);
+    this.bindMoreReplies(comments);
 
     if (!this.isReadOnly()) {
         RecommendComments.init(this.context);
@@ -432,24 +429,24 @@ Comments.prototype.bindMoreReplies = function (comments) {
 /**
  * @param {Array.<Element>=} comments (optional)
  */
-Comments.prototype.hideExcessReplies = function(comments) {
-    var replies, repliesToHide,
-        self = this;
+// Comments.prototype.hideExcessReplies = function(comments) {
+//     var replies, repliesToHide,
+//         self = this;
 
-    comments = comments || this.topLevelComments;
-    comments.forEach(function(elem, i) {
-        replies = qwery(self.getClass('reply'), elem);
-        if (replies.length > self.options.showRepliesCount) {
-            repliesToHide = replies.slice(self.options.showRepliesCount, replies.length);
-            bonzo(repliesToHide).attr('hidden', 'hidden');
+//     comments = comments || this.topLevelComments;
+//     comments.forEach(function(elem, i) {
+//         replies = qwery(self.getClass('reply'), elem);
+//         if (replies.length > self.options.showRepliesCount) {
+//             repliesToHide = replies.slice(self.options.showRepliesCount, replies.length);
+//             bonzo(repliesToHide).attr('hidden', 'hidden');
 
-            bonzo(qwery('.d-thread--responses', elem)).append(
-                '<li class="'+ self.getClass('showReplies', true) +' cta" data-link-name="Show more replies" data-is-ajax>Show '+
-                    repliesToHide.length + ' more ' + (repliesToHide.length === 1 ? 'reply' : 'replies') +
-                '</li>');
-        }
-    });
-};
+//             bonzo(qwery('.d-thread--responses', elem)).append(
+//                 '<li class="'+ self.getClass('showReplies', true) +' cta" data-link-name="Show more replies" data-is-ajax>Show '+
+//                     repliesToHide.length + ' more ' + (repliesToHide.length === 1 ? 'reply' : 'replies') +
+//                 '</li>');
+//         }
+//     });
+// };
 
 /**
  * @return {Boolean}
@@ -479,7 +476,7 @@ Comments.prototype.commentsLoaded = function(resp) {
     showMoreButton.innerHTML = 'Show more';
     showMoreButton.removeAttribute('data-disabled');
 
-    this.hideExcessReplies(comments);
+    this.bindMoreReplies(comments);
 
     if (!this.isReadOnly()) {
         RecommendComments.init(this.context);

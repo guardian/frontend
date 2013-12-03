@@ -72,8 +72,9 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
     getCommentJsonForId(id, s"$apiRoot/comment/$id?displayResponses=true&displayThreaded=true")
   }
 
-  def commentsFor(key: DiscussionKey, page: String, pageSize: String = ""): Future[CommentPage] = {
-    getJsonForUri(key, s"$apiRoot/discussion/$key?pageSize=${getPageSize(pageSize)}&page=$page&orderBy=$orderBy&showSwitches=true&maxResponses=3")
+  def commentsFor(key: DiscussionKey, page: String, pageSize: String = "", allResponses: Boolean = false): Future[CommentPage] = {
+    
+    getJsonForUri(key, s"$apiRoot/discussion/$key?pageSize=${getPageSize(pageSize)}&page=$page&orderBy=$orderBy&showSwitches=true" + (if(allResponses) "" else "&maxResponses=3"))
   }
 
   def topCommentsFor(key: DiscussionKey, page: String, pageSize: String = ""): Future[CommentPage] = {
