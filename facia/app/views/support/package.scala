@@ -52,7 +52,7 @@ object GetContainer {
       ("uk-alpha/features/feature-stories", FeaturesContainer(headerLink = false)),
       ("uk-alpha/special/special-story", SportContainer(headerLink = false)),
       ("uk-alpha/contributors/feature-stories", CommentContainer(headerLink = false)),
-      ("uk-alpha/people-in-the-news/feature-stories", NewsContainer(headerLink = false))
+      ("uk-alpha/people-in-the-news/feature-stories", SportContainer(headerLink = false))
     )),
     ("uk/business", Map(
       ("uk/business/regular-stories", SportContainer(showMore = false))
