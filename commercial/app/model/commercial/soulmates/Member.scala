@@ -4,8 +4,7 @@ import model.commercial.{Ad, Segment}
 
 case class Member(username: String, gender: Gender, age: Int, profilePhoto: String) extends Ad {
 
-  def isTargetedAt(segment: Segment) = true
-
+  def isTargetedAt(segment: Segment) = segment.context.isInSection("lifeandstyle")
 }
 
 case class Gender(name: String) {

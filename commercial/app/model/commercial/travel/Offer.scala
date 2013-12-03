@@ -10,7 +10,7 @@ case class Offer(id: Int, title: Option[String], offerUrl: String, imageUrl: Str
 
   def isTargetedAt(segment: Segment): Boolean = {
     val someKeywordsMatch = intersects(keywords.map(_.name), segment.context.keywords)
-    someKeywordsMatch
+    segment.context.isInSection("travel") && someKeywordsMatch
   }
 
 }
