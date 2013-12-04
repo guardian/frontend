@@ -52,19 +52,21 @@
     </head>
     <body>
 
-    <h1 class="tool-title">Fronts Editor</h1>
+    <div class="tool-title">
+        Fronts Editor
+        
+        @if(Play.isDev && Configuration.facia.stage.toLowerCase != "dev") {
+            <span class="message message--important">editing @Configuration.facia.stage.toUpperCase!</span>
+        }
 
-    @if(Play.isDev && Configuration.facia.stage.toLowerCase != "dev") {
-        <div class="message message--important">editing @Configuration.facia.stage.toUpperCase!</div>
-    }
-
-    @if(isAuthed) {
-        <div class="message" data-bind="visible: false">loading...</div>
-    } else {
-        <form action="@routes.Login.loginPost()" method="post" class="login-form">
-            <input value="Log In" class="tool" type="submit" id="login-button">
-        </form>
-    }
+        @if(isAuthed) {
+            <span class="message" data-bind="visible: false">loading...</span>
+        } else {
+            <form action="@routes.Login.loginPost()" method="post" class="login-form">
+                <input value="Log In" class="tool" type="submit" id="login-button">
+            </form>
+        }
+    </div>
 
     @content
 
