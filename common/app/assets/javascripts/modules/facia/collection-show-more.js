@@ -86,6 +86,8 @@ define([
         );
 
         this._renderButton = function() {
+            // add tone to button
+            this._$button.addClass('tone-' + (this._$collection.attr('data-tone') || 'news'));
             this._$collection.after(this._$button);
             var that = this;
             bean.on(this._$button[0], 'click', function() {
