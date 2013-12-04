@@ -20,6 +20,7 @@ object GetContainer {
     ("au", Map(
       ("au/news/regular-stories", NewsContainer()),
       ("au/sport/regular-stories", SportContainer()),
+      ("au/tone/features/feature-stories", FeaturesContainer()),
       ("au/commentisfree/regular-stories", CommentContainer()),
       ("au/culture/regular-stories", FeaturesContainer()),
       ("au/contributors/feature-stories", CommentContainer())
@@ -42,6 +43,7 @@ object GetContainer {
     ("uk", Map(
       ("uk/news/regular-stories", NewsContainer()),
       ("uk/sport/regular-stories", SportContainer()),
+      ("uk/tone/features/feature-stories", FeaturesContainer()),
       ("uk/commentisfree/regular-stories", CommentContainer()),
       ("uk/culture/regular-stories", FeaturesContainer()),
       ("uk/contributors/feature-stories", CommentContainer())
@@ -72,6 +74,7 @@ object GetContainer {
     ("us", Map(
       ("us/news/regular-stories", NewsContainer()),
       ("us/sport/regular-stories", SportContainer()),
+      ("us/tone/features/feature-stories", FeaturesContainer()),
       ("us/commentisfree/regular-stories", CommentContainer()),
       ("us/culture/regular-stories", FeaturesContainer()),
       ("us/contributors/feature-stories", CommentContainer())
