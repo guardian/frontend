@@ -13,7 +13,7 @@ object Fixtures {
       "5595"
       , new DateTime(2014, 1, 12, 0, 0),
       Nil,
-      List("Tanzania")),
+      List("Tanzania"), "12"),
     Offer(1,
       Some("Lake Maggiore, Orta & the Matterhorn"),
       "http://www.guardianholidayoffers.co.uk/holiday/3552/lake-maggiore-orta-and-the-matterhorn",
@@ -21,7 +21,7 @@ object Fixtures {
       "979",
       new DateTime(2014, 4, 29, 0, 0),
       Nil,
-      List("Italy", "Switzerland")),
+      List("Italy", "Switzerland"), "7"),
     Offer(2,
       Some("Horse riding holiday for intermediate and experienced riders"),
       "http://www.guardianholidayoffers.co.uk/holiday/5037/horse-riding-holiday-for-intermediate-and-experienced-riders",
@@ -29,7 +29,7 @@ object Fixtures {
       "1284",
       new DateTime(2013, 11, 2, 0, 0),
       Nil,
-      List("France"))
+      List("France"), "7")
   )
 
   val offers = List(
@@ -40,7 +40,7 @@ object Fixtures {
       "5595"
       , new DateTime(2014, 1, 12, 0, 0),
       List(Keyword("travel/tanzania", "Tanzania")),
-      List("Tanzania")),
+      List("Tanzania"), "12"),
     Offer(1,
       Some("Lake Maggiore, Orta & the Matterhorn"),
       "http://www.guardianholidayoffers.co.uk/holiday/3552/lake-maggiore-orta-and-the-matterhorn",
@@ -48,7 +48,7 @@ object Fixtures {
       "979",
       new DateTime(2014, 4, 29, 0, 0),
       List(Keyword("travel/italy", "Italy"), Keyword("travel/switzerland", "Switzerland")),
-      List("Italy", "Switzerland")),
+      List("Italy", "Switzerland"), "7"),
     Offer(2,
       Some("Horse riding holiday for intermediate and experienced riders"),
       "http://www.guardianholidayoffers.co.uk/holiday/5037/horse-riding-holiday-for-intermediate-and-experienced-riders",
@@ -56,7 +56,7 @@ object Fixtures {
       "1284",
       new DateTime(2013, 11, 2, 0, 0),
       List(Keyword("travel/france", "France")),
-      List("France"))
+      List("France"), "7")
   )
 
 
