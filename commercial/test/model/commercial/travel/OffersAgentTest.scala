@@ -7,7 +7,7 @@ import scala.util.Try
 
 class OffersAgentTest extends FlatSpec with Matchers {
 
-  private def segment(keywords: Seq[String]) = Segment(Context(None, keywords), Seq("repeat"))
+  private def segment(keywords: Seq[String]) = Segment(Context(Some("travel"), keywords), Seq("repeat"))
 
   "matchingAds" should "give offers associated with given keywords" in {
     val keywords = List("france")

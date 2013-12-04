@@ -3,7 +3,7 @@
 <ul class="unstyled collection collection--without-sport-stats collection--show-more-standard @if(style.showMore){js-collection--show-more}"
      data-link-context-path="collection/@config.id"
      data-link-context-name="@config.displayName"
->
+     data-tone="@style.tone">
     @if(style.showMore) {
         @collection.items.take(5).zipWithIndex.map{ case (trail, index) =>
             @fragments.items.standard(trail, index, containerIndex)

@@ -20,7 +20,7 @@ object Fixtures {
       |  </Job>
       |  <Job>
       |    <JobID>4302057</JobID>
-      |    <JobTitle>Listen Laugh and Learn in Worcestershire</JobTitle>
+      |    <JobTitle>Listen Laugh &amp; Learn in Worcestershire</JobTitle>
       |    <RecruiterName>MOTOR NEURONE DISEASE ASSOCIATION</RecruiterName>
       |    <ShortJobDescription>The role of Association Visitor is a highly rewarding one with many opportunities for developing your own skills and knowledge, whilst being part of a team. Professional qualifications or personal experience of MND are not necessary...</ShortJobDescription>
       |    <Sectors>
@@ -53,7 +53,7 @@ object Fixtures {
       |    <JobID>4411510</JobID>
       |    <JobTitle>Air Traffic Controller</JobTitle>
       |    <RecruiterName>RAF CAREERS</RecruiterName>
-      |    <ShortJobDescription>Control some of the world’s most modern aircraft using radar and communications equipment</ShortJobDescription>
+      |    <ShortJobDescription>Control some of the world&amp;rsquo;s most modern aircraft using radar &amp; communications equipment</ShortJobDescription>
       |    <Sectors>
       |      <Sector>166</Sector>
       |      <Sector>308</Sector>
@@ -74,7 +74,7 @@ object Fixtures {
     ),
 
     Job(4302057,
-      "Listen Laugh and Learn in Worcestershire",
+      "Listen Laugh & Learn in Worcestershire",
       "The role of Association Visitor is a highly rewarding one with many opportunities for developing your own skills and knowledge, whilst being part of a team. Professional qualifications or personal experience of MND are not necessary...",
       "MOTOR NEURONE DISEASE ASSOCIATION",
       Some("http://jobs.theguardian.com/getasset/?uiAssetID=70666A14-BD49-4BB8-AC6A-FCF8B716E131"),
@@ -91,7 +91,7 @@ object Fixtures {
 
     Job(4411510,
       "Air Traffic Controller",
-      "Control some of the world’s most modern aircraft using radar and communications equipment",
+      "Control some of the world’s most modern aircraft using radar & communications equipment",
       "RAF CAREERS",
       Some("http://jobs.theguardian.com/getasset/?uiAssetID=14357B35-BBA3-4F96-ADF3-F9ABC82C894C"),
       Seq(166, 308)

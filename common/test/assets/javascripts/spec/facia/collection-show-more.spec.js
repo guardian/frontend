@@ -124,6 +124,23 @@ define(['modules/facia/collection-show-more', 'bonzo', '$', 'utils/mediator', 'b
             expect($('.item:nth-child(3)', collection)[0]).toBe(extraItem);
         });
 
+        describe('button tone', function() {
+
+            it('should add default "news" tone', function() {
+                collectionShowMore.addShowMore();
+                expect($('button', container).hasClass('tone-news')).toBeTruthy();
+            });
+
+            it('should add tone in collection\'s "data-tone" attribute', function() {
+                var tone = 'feature',
+                    $collection = $('ul', container).attr('data-tone', tone),
+                    collectionShowMore = new CollectionShowMore($collection[0]);
+                collectionShowMore.addShowMore();
+                expect($('button', container).hasClass('tone-' + tone)).toBeTruthy();
+            });
+
+        });
+
     });
 
 });

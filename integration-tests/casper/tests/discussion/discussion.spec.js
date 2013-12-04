@@ -27,20 +27,20 @@ casper.test.begin('Read top level comments', function(test) {
     });
 });
 
-casper.test.begin('Hash comment permalink links to relevant comment', function(test) {
-    casper.thenOpen(host +'football/2013/sep/25/manchester-united-liverpool-capital-one-cup#comment-27353447', function() {
-        casper.waitForSelector('#comment-27353447', function then() {
-            test.assertExists('#comment-27353447');
-            test.assertVisible('#comment-27353447');
-            test.assertVisible('.d-discussion__show-more--newer');
-            test.assertVisible('.d-discussion__show-more--older');
-            test.done();
-        }, function timeout() {
-            casper.capture(screens + 'discussion-permalink-fail.png');
-            test.fail('Permalink failed to load comment');
-        })
-    });
-});
+// casper.test.begin('Hash comment permalink links to relevant comment', function(test) {
+//     casper.thenOpen(host +'football/2013/sep/25/manchester-united-liverpool-capital-one-cup#comment-27353447', function() {
+//         casper.waitForSelector('#comment-27353447', function then() {
+//             test.assertExists('#comment-27353447');
+//             test.assertVisible('#comment-27353447');
+//             test.assertVisible('.d-discussion__show-more--newer');
+//             test.assertVisible('.d-discussion__show-more--older');
+//             test.done();
+//         }, function timeout() {
+//             casper.capture(screens + 'discussion-permalink-fail.png');
+//             test.fail('Permalink failed to load comment');
+//         })
+//     });
+// });
 
 casper.run(function() {
     this.test.renderResults(true, 0, this.cli.get('xunit') + 'discussion.xml');

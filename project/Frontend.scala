@@ -27,7 +27,9 @@ object Frontend extends Build with Prototypes {
       "org.jboss.dna" % "dna-common" % "0.6",
       "org.scalaj" % "scalaj-time_2.10.0-M7" % "0.6",
 
-      "org.apache.commons" % "commons-math3" % "3.2"
+      "org.apache.commons" % "commons-math3" % "3.2",
+    
+      "rome" % "rome" % "1.0"
     )
   )
 
