@@ -1,5 +1,5 @@
 .clamp__fade {
-    @include simple-gradient(transparent, $c-neutral7);
+    @include simple-gradient(transparent, #ffffff);
     display: block;
     height: 50px;
     margin-top: -50px;
@@ -8,13 +8,13 @@
 }
 
 .clamp__fade-content {
-	@include fs-data(3);
-	border-top: 1px solid $c-neutral3;
-	background: $c-neutral7;
-	bottom: 0;
-	padding-top: 4px;
-	position: absolute;
-	right: 0;
-	text-align: center;
-	width: 100%;
+    @include fs-data(3);
+    border-top: 1px solid $c-neutral7;
+    background: #ffffff;
+    bottom: 0;
+    padding-top: 4px;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    width: 100%;
 }
