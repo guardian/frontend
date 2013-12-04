@@ -20,7 +20,7 @@ var clamp = function(elem, lines, showMore) {
     $elem.after($fade);
 
     if (showMore) {
-        $showMore = bonzo(bonzo.create('<span class="clamp__fade-content u-fauxlink">Read more</span>'));
+        $showMore = bonzo(bonzo.create('<span class="clamp__fade-content u-fauxlink" role="button">Read more</span>'));
         $fade.append($showMore);
         bean.on($showMore[0], 'click', function(e) {
             $fade.remove();
