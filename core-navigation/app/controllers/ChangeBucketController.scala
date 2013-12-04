@@ -4,7 +4,7 @@ import play.api.mvc._
 
 object ChangeBucketController extends Controller with PreferenceController {
 
-  val abCookieName: String = "GU_ALPHA_TEST"
+  val abCookieName: String = "GU_UK_ALPHA"
 
   def render(optaction: String, redirectUrl: String) = Action { implicit request =>
     optaction match {
