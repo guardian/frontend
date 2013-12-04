@@ -12,8 +12,8 @@ GET        /$path<(culture|sport|australia|commentisfree|business|money)>   cont
 
 
 # Editionalised pages
-GET        /$path<(us|uk|au|uk-alpha)?>                                     controllers.FaciaController.renderEditionFront(path)
-GET        /$path<(us|uk|au|uk-alpha)?>.json                                controllers.FaciaController.renderEditionFrontJson(path)
+GET        /$path<(us|uk|au|us-alpha|uk-alpha|au-alpha)?>                   controllers.FaciaController.renderEditionFront(path)
+GET        /$path<(us|uk|au|us-alpha|uk-alpha|au-alpha)?>.json              controllers.FaciaController.renderEditionFrontJson(path)
 GET        /$path<(\w+/)?([\d\w-]*)>                                        controllers.FaciaController.renderEditionSectionFront(path)
 GET        /$path<(\w+/)?([\d\w-]*)>.json                                   controllers.FaciaController.renderEditionSectionFrontJson(path)
 
