@@ -96,6 +96,10 @@ object Switches extends Collections {
     "Turns on our real-time KPIs",
     safeState = On)
 
+  val UserzoomSwitch = Switch("Analytics", "userzoom",
+    "Turns on userzoom survey popups",
+    safeState = Off)
+
   // Discussion Switches
 
   val DiscussionSwitch = Switch("Discussion", "discussion",
@@ -320,6 +324,7 @@ object Switches extends Collections {
     LiveSummarySwitch,
     LiveCricketSwitch,
     LiveStatsSwitch,
+    UserzoomSwitch,
     FaciaSwitch,
     AdSlotImpressionStatsSwitch,
     ABLiveBlogShowMore,
