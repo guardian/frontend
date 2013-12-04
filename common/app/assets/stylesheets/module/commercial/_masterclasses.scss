@@ -16,6 +16,7 @@
 
     &.commercial--w600 {
         .lineitem {
+            @include box-sizing(border-box);
             padding-right: $gs-gutter/2;
             width: 25%;
             float: left;

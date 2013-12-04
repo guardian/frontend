@@ -77,9 +77,18 @@
     }
 
     .commercial__search {
-        overflow: hidden;
         padding: $baseline;
-        
+        overflow: hidden;
+        position: relative;
+
+        .i.i-search-grey {
+            background-position: 10px 10px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 12px;
+        }
+
         .text-input {
             padding: $baseline;
             padding-left: 2em;

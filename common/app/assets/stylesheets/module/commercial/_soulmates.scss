@@ -53,9 +53,6 @@
         margin: 0 auto;
         display: block;
         position: relative;
-        &:hover {
-            text-decoration: none;
-        }
         &::before {
             content: " ";
             background-color: #D80457;

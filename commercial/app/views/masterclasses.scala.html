@@ -27,7 +27,7 @@
                     <p class="lineitem__description">
                         <img class="lineitem__image" src="http://dummyimage.com/80x80/ccc/fff.png" />
                         @event.firstParagraph
-                        <a class="lineitem__link">Learn more and book</a></p>
+                        <a class="lineitem__link"><i class="i i-single-arrow-right-blue"></i>Learn more and book</a></p>
                     </p>
                 </li>
             }
@@ -56,12 +56,12 @@
         <ul class="lineitems">
             @events.take(4).map { event =>
                 <li class="lineitem">
-                    <a href="@event.url">
+                    <a class="lineitem__blocklink" href="@event.url">
                         <img class="lineitem__image" src="http://dummyimage.com/140x85/ccc/fff.png" />
                         <h4 class="lineitem__title">@event.name</h4>
                         <p class="lineitem__meta">[17/18 November]<p>
                     </a>
-                    <p class="lineitem__description">@event.firstParagraph <a class="lineitem__link">Learn more and book</a></p>
+                    <p class="lineitem__description">@event.firstParagraph <a class="lineitem__link"><i class="i i-single-arrow-right-blue"></i>Learn more and book</a></p>
                 </li>
             }
         </ul>
