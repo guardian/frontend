@@ -41,11 +41,9 @@ casper.test.begin('Loads in >=1 comment <li>s', function (test) {
 casper.test.begin('Test top comments expand functionality', function (test) {
     casper.waitForSelector('.discussion__comments--top-comments',
         function then() {
-
             var startHeight = casper.getElementInfo('.discussion__comments__top').height,
                 fadeOut = '.d-image-fade',
                 showMore = '.js-show-more-top-comments';
-
             if (casper.getElementInfo('.discussion__comments__top').height === 600) {
                 // Check that excess top comments hidden and clicking show more button reveals them
                 test.assertTruthy(startHeight === 600, 'Reached max-height');
@@ -58,12 +56,12 @@ casper.test.begin('Test top comments expand functionality', function (test) {
                 
                 casper.log('Clicking Top Comments "show more" button', 'info');
                 casper.click(showMore);
-                
-                test.assertTruthy(
-                    casper.getElementInfo('.discussion__comments__top').height > 600, 'Showed rest of top comments after show more clicked'
-                );
-                
-                test.done();
+                casper.waitForSelector('.js-show-more-top-comments.cta.u-h', function() {
+                    test.assertTruthy(
+                        casper.getElementInfo('.discussion__comments__top').height > 600, 'Showed rest of top comments after show more clicked'
+                    );
+                    test.done();
+                });
             } else {
                 // Check that comments don't reach max height and show more button doesnt exist
                 test.assertTruthy(startHeight < 600);

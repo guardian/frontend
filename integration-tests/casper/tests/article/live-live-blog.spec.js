@@ -12,14 +12,13 @@ var livePageUri;
 
 casper.test.setUp(function() {
     casper.start(host + "tone/minutebyminute?view=mobile");
-    casper.options.waitTimeout = 10000;
 });
 
 casper.test.begin("Auto update toggle on / off", function(test) {
     casper.then(function testLiveBlogAutoUpdate() {
         casper.waitForSelector('.item__live-indicator', function() {
             livePageUri = casper.getElementAttribute(x('//*[@class="item__live-indicator"]/ancestor::a'), 'href');
-            if (host.indexOf("http://localhost") !=-1) {
+            if ((host.indexOf("http://localhost") !=-1) || (host.indexOf("http://marcjones") !=-1)) {
                 livePageUri = host + livePageUri.substring(1);
             }
             casper.thenOpen(livePageUri + "?view=mobile", function() {

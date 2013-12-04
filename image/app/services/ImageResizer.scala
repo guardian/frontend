@@ -17,9 +17,11 @@ object ImageResizer extends Logging with Results with controllers.Implicits{
     response.status match {
       case 200 =>
 
-        // Write the original file to temp
-        val inputFile = File.createTempFile(FilenameUtils.getName(path),"")
-        val outputFile = File.createTempFile(FilenameUtils.getBaseName(path),".webp")
+        // Write the original file to temp.
+        // NOTE prefix must be at least 3 characters long.
+        // http://docs.oracle.com/javase/6/docs/api/java/io/File.html#createTempFile(java.lang.String, java.lang.String, java.io.File)
+        val inputFile = File.createTempFile(s"webp-${FilenameUtils.getName(path)}", "")
+        val outputFile = File.createTempFile(s"webp-${FilenameUtils.getBaseName(path)}", ".webp")
 
         try {
           val image = response.getAHCResponse.getResponseBodyAsStream.toBufferedImage
@@ -86,7 +88,7 @@ object ImageResizer extends Logging with Results with controllers.Implicits{
   }
 
   private def addResponseHeaders(result: SimpleResult): SimpleResult = {
-    if (AddVaryAcceptHeader.isSwitchedOn || ServeWebPImagesSwitch.isSwitchedOn) {
+    if (ServeWebPImagesSwitch.isSwitchedOn) {
       result.withHeaders("Vary" -> "Accept")
     } else {
       result

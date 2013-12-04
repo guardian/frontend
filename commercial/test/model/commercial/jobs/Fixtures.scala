@@ -53,7 +53,7 @@ object Fixtures {
       |    <JobID>4411510</JobID>
       |    <JobTitle>Air Traffic Controller</JobTitle>
       |    <RecruiterName>RAF CAREERS</RecruiterName>
-      |    <ShortJobDescription>Control some of the world’s most modern aircraft using radar and communications equipment</ShortJobDescription>
+      |    <ShortJobDescription>Control some of the world&amp;rsquo;s most modern aircraft using radar and communications equipment</ShortJobDescription>
       |    <Sectors>
       |      <Sector>166</Sector>
       |      <Sector>308</Sector>

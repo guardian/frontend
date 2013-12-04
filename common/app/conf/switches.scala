@@ -6,7 +6,6 @@ import implicits.Collections
 import play.api.Plugin
 import play.api.libs.ws.WS
 
-
 sealed trait SwitchState
 case object On extends SwitchState
 case object Off extends SwitchState
@@ -277,11 +276,7 @@ object Switches extends Collections {
 
   val ServeWebPImagesSwitch = Switch("Image Server", "serve-webp-images",
     "If this is switched on the Image server will use the webp format when requested.",
-    safeState = Off)
-
-  val AddVaryAcceptHeader = Switch("Image Server", "add-vary-accept-header",
-    "If this is switched on the Image server will add vary-accept to responses.",
-    safeState = Off)
+    safeState = On)
 
   val ImageServerSwitch = Switch("Image Server", "image-server",
     "If this switch is on images will be served off i.guim.co.uk (dynamic image host).",
@@ -332,7 +327,6 @@ object Switches extends Collections {
     ElasticSearchSwitch,
     ShowUnsupportedEmbedsSwitch,
     ServeWebPImagesSwitch,
-    AddVaryAcceptHeader,
     ArticleKeywordsSwitch,
     ABAlphaAdverts,
     ABCommercialComponents,
