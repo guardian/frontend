@@ -189,7 +189,7 @@ Comments.prototype.renderPickButtons = function(comments) {
                                 .text(e.getAttribute('data-comment-highlighted') !== 'true' ? 'Pick' : 'Un-Pick');
                 button.data('thisComment', e);
                 var sep = bonzo.create(sepText);
-                $(self.getClass('commentActions'), e).append([sep[0],button[0]]);
+                $(self.getClass('commentActions'), e).first().append([sep[0],button[0]]);
                 self.on('click', button, self.handlePickClick.bind(self));
             }
         });
