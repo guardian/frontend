@@ -51,24 +51,36 @@ casper.test.begin('Show more comments', function (test) { // Testing on an artic
             test.assertEval(function () {
                 return document.querySelector('.discussion__comments__container .d-show-cta').className.match(/(u-h)/).length > 1;
             }, "Show CTA should not have u-h class");
+            test.done();
         });
-
     });
 });
 
-// casper.test.begin('Hash comment permalink links to relevant comment', function(test) {
-//     casper.thenOpen(host +'football/2013/sep/25/manchester-united-liverpool-capital-one-cup#comment-27353447', function() {
-//         casper.waitForSelector('#comment-27353447', function then() {
-//             test.assertExists('#comment-27353447');
-//             test.assertVisible('#comment-27353447');
+/* URL wont load for some reason... */
+
+// casper.test.begin('Hash comment permalink links to relevant comment', function (test) {
+    
+//     casper.thenOpen(host +'football/2013/sep/25/manchester-united-liverpool-capital-one-cup#comment-27350599', function() {
+        
+//         casper.log(host +'football/2013/sep/25/manchester-united-liverpool-capital-one-cup#comment-27350599', 'error');
+
+//         casper.waitForSelector('#comment-27350599', function () {
+//             test.assertExists('#comment-27350599', 'Permalinked comment should exist');
+//             test.assertVisible('#comment-27350599', 'Permalinked comment should be visible');
+//             test.assertEval(function () {
+//                 return window.getComputedStyle(
+//                     document.querySelector('#comment-27350599'),':target').getPropertyValue('background-color') === 'rgb(244, 244, 238)';
+//             }, "Permalinked comment should be highlighted using :target");
 //             test.assertVisible('.d-discussion__show-more--newer');
 //             test.assertVisible('.d-discussion__show-more--older');
 //             test.done();
 //         }, function timeout() {
 //             casper.capture(screens + 'discussion-permalink-fail.png');
 //             test.fail('Permalink failed to load comment');
-//         })
+//         }, 60000);
+
 //     });
+
 // });
 
 casper.run(function() {
