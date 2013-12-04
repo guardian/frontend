@@ -38,14 +38,19 @@ input[type=text] {
 .u-cf:after{clear:both}
 .u-cf{zoom:1}
 
+.logo {
+    position: absolute;
+    top: 8px;
+    left: 15px;
+}
+
 .tool-title {
     position: absolute;
-    top: 15px;
-    left: 15px;
+    top: 13px;
+    left: 45px;
     font-size: 26px;
-    color: #999999;
-    font-weight: bold;
-    letter-spacing: -1px;
+    color: #000000;
+    text-transform: lowercase;
 }
 
 .tool-title .message {
@@ -55,8 +60,14 @@ input[type=text] {
     font-weight: normal;
 }
 
-.message--important {
+.tool-title .message--important {
     color: #d61d00;
+}
+
+.tool-title .login-form {
+    position: absolute;
+    top: -4px;
+    left: 145px;
 }
 
 .finder {
@@ -65,7 +76,7 @@ input[type=text] {
     position: absolute;
     top: 49px;
     width: 50%;
-    padding: 10px 15px;
+    padding: 10px 15px 0 15px;
     color: #666666;
     border-right: 1px solid #cccccc;
     border-top: 1px solid #cccccc;
@@ -75,11 +86,6 @@ input[type=text] {
     font-size: 10px;
     color: #666666;
     text-transform: uppercase;
-}
-
-.login-form {
-    display: inline-table;
-    margin: 0 0 0 10px;
 }
 
 .title {
@@ -130,7 +136,7 @@ input[type=text] {
     left: 50%;
     top: 50px;
     width: 50%;
-    padding: 10px 15px;
+    padding: 10px 15px 0 15px;
 }
 
 .collections__inner {
@@ -238,7 +244,7 @@ input[type=text] {
     display: none;
     position: absolute;
     top: 4px;
-    right: 3px;
+    right: 0;
     background: #CCCCCC;
     width: 14px;
     height: 20px;
@@ -448,6 +454,7 @@ button {
     position: absolute;
     left: 50%;
     width: 50%;
+    min-width: 350px;
     padding: 10px 15px 10px 18px;
     height: 50px;
     white-space: nowrap;
@@ -569,9 +576,7 @@ button {
         left: 0;
         width: 100%;
         height: 50px;
-        padding: 10px 15px;
-        z-index: 1;
-        background: #ffffff;
+        padding: 10px 15px 10px 45px;
     }
     .finder {
         display: none;
@@ -581,7 +586,9 @@ button {
         width: 100%;
         padding-left: 10px;
     }
-
+    .collections__inner {
+        padding: 0;
+    }
     .scrollable {
         overflow-y: inherit
     }
@@ -594,7 +601,7 @@ button {
 }
 
 @media (max-width: 500px) {
-    .web-title {
+    .trail .web-title {
         margin: 0 0 0 80px;
     } 
     .trail .trail_stats,
@@ -603,5 +610,13 @@ button {
     }
 }
 
+@media (max-width: 350px) {
+    .trail .web-title {
+        margin: 5px 0 0 0;
+    } 
+    .trail img {
+        display: none;
+    }
+}
 
 
