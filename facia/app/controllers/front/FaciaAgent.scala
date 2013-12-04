@@ -7,7 +7,7 @@ import play.api.libs.json.Json._
 import play.api.libs.json._
 import play.api.libs.ws.{ WS, Response }
 import play.api.libs.json.JsObject
-import services.S3FrontsApi
+import services.{ConfigAgent, S3FrontsApi}
 import scala.concurrent.Future
 
 object Path {
@@ -199,45 +199,6 @@ object QueryAgents {
   } filter(_.exists(_._2.items.nonEmpty))
 
   def apply(id: String): Option[FaciaPage] = items(id).map(FaciaPage(id, _))
-}
-
-trait ConfigAgent extends ExecutionContexts {
-  private val configAgent = AkkaAgent[JsValue](JsNull)
-
-  def refresh() = S3FrontsApi.getMasterConfig map {s => configAgent.send(Json.parse(s))}
-
-  def getPathIds: List[String] = {
-    val json = configAgent.get()
-    (json \ "fronts").asOpt[Map[String, JsValue]].map { _.keys.toList } getOrElse Nil
-  }
-
-  def getConfigForId(id: String): Option[List[Config]] = {
-    val json = configAgent.get()
-    (json \ "fronts" \ id \ "collections").asOpt[List[String]] map { configList =>
-      configList flatMap getConfig
-    }
-  }
-
-  def getConfig(id: String): Option[Config] = {
-    val json = configAgent.get()
-    (json \ "collections" \ id).asOpt[JsValue] map { collectionJson =>
-      Config(
-        id,
-        (collectionJson \ "apiQuery").asOpt[String],
-        (collectionJson \ "displayName").asOpt[String],
-        (collectionJson \ "tone").asOpt[String]
-      )
-    }
-  }
-
-  def getAllCollectionIds: List[String] = {
-    val json = configAgent.get()
-    (json \ "collections").asOpt[Map[String, JsValue]] map { collectionMap =>
-      collectionMap.keys.toList
-    } getOrElse Nil
-  }
-
-  def close() = configAgent.close()
 }
 
 object ConfigAgent extends ConfigAgent
