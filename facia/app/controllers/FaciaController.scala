@@ -260,7 +260,8 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
   }
 
   def getPathForUkAlpha(path: String, request: RequestHeader): String =
-    if (Switches.UkAlphaSwitch.isSwitchedOn &&
+    if (path == "uk" &&
+      Switches.UkAlphaSwitch.isSwitchedOn &&
       Edition(request) == Uk &&
       request.headers.get("X-Gu-Uk-Alpha").filter(_.toLowerCase == "true").isDefined
     ) {
