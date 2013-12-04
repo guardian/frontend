@@ -12,7 +12,8 @@ define([
     describe('Get user data', function() {
         var config = {
                 'page' : {
-                    'idApiUrl' : "https://idapi.theguardian.com"
+                    'idApiUrl' : "https://idapi.theguardian.com",
+                    'idUrl' : "https://profile.theguardian.com"
                 }
             },
             cookieData = 'WyIyMzEwOTU5IiwiamdvcnJpZUBnbWFpbC5jb20iLCJqYW1lc2dvcnJpZSIsIjUzNCIsMTM4Mjk1MzAzMTU5MSwxXQ.MC0CFBsFwIEITO91EGONK4puyO2ZgGQcAhUAqRa7PVDCoAjrbnJNYYvMFec4fAY',
@@ -105,6 +106,34 @@ define([
             expect(ajax.reqwest.getCall(0).args[0]["url"]).toBe("https://idapi.theguardian.com/user/me?_edition=undefined");
             expect(ajax.reqwest.getCall(0).args[0]["type"]).toBe("jsonp");
             expect(ajax.reqwest.getCall(0).args[0]["crossOrigin"]).toBe(true);
+        });
+
+        it('should redirect to sign in when user is not signed in', function() {
+            var redirectSpy = sinon.stub(Id, 'redirectTo'),
+                user = Id.getUserOrSignIn();
+
+            expect(redirectSpy.called).toBeTruthy();
+            Id.redirectTo.restore();
+        });
+
+        it('should not redirect to sign in when user is already signed in', function() {
+            Cookies.get.withArgs("GU_U").returns(cookieData);
+
+            var redirectSpy = sinon.stub(Id, 'redirectTo'),
+                user = Id.getUserOrSignIn();
+
+            expect(user.displayName).toBe('jamesgorrie');
+            expect(redirectSpy.called).toBeFalsy();
+            Id.redirectTo.restore();
+        });
+
+        it('should redirect with return URL when given', function() {
+            var redirectSpy = sinon.stub(Id, 'redirectTo'),
+                returnUrl = 'http://www.theguardian.com/foo',
+                user = Id.getUserOrSignIn(returnUrl);
+
+            expect(redirectSpy.getCall(0).args[0]).toContain(encodeURIComponent(returnUrl));
+            Id.redirectTo.restore();
         });
 
         it("should attempt to autosigin an user who is not currently signed in and has not previously signed out", function() {
