@@ -1,7 +1,7 @@
 define([
     'common',
     'utils/storage',
-    'analytics/mvt-cookie',
+    'modules/analytics/mvt-cookie',
 
     //Current tests
     'modules/experiments/tests/aa',
@@ -137,17 +137,10 @@ define([
             return;
         }
 
-        // Determine whether the user is in the test or not.
-        // First find, the number of possible mvt ids and scale by the desired proportion to test.
-        var testPopulation = mvtCookie.getMvtNumValues() * test.audience;
-
-        // The testPopulation is just a subset of mvt ids, starting from 1. However,
-        // a test may begin from a specific value to avoid tests overlapping.
-        var smallestTestId = 1;
-        if ("audienceOffset" in test) {
-            smallestTestId = test.audienceOffset;
-        }
-        var largestTestId = smallestTestId + testPopulation;
+        // Determine whether the user is in the test or not. The test population is just a subset of mvt ids.
+        // A test population must begin from a specific value. Overlapping test ranges are permitted.
+        var smallestTestId = mvtCookie.getMvtNumValues() * test.audienceOffset;
+        var largestTestId  = smallestTestId + mvtCookie.getMvtNumValues() * test.audience;
 
         // Get this browser's mvt test id.
         var mvtCookieId = mvtCookie.getMvtValue();
@@ -178,15 +171,13 @@ define([
             TESTS = [];
         },
 
-        segment: function(config, options) {
-            var opts = options || {};
+        segment: function(config) {
             getActiveTests().forEach(function(test) {
                 allocateUserToTest(test, config);
             });
         },
 
-        // mostly for private use
-        forceSegment: function (testId, variant) {
+        forceSegment: function(testId, variant) {
             getActiveTests().filter(function (test) {
                 return (test.id === testId);
             }).forEach(function (test) {
@@ -200,9 +191,9 @@ define([
             if (forceUserIntoTest) {
                 var tokens = window.location.hash.replace('#ab-','').split('=');
                 var test = tokens[0], variant = tokens[1];
-                forceSegment(test, variant);
+                ab.forceSegment(test, variant);
             } else {
-                segment(config);
+                ab.segment(config);
             }
 
             cleanParticipations(config);

@@ -178,6 +178,8 @@ define([
 
             mediator.on('page:common:deferred:loaded', function(config, context) {
 
+                mvtCookie.generateMvtCookie();
+
                 omniture.go(config, function(){
                     // callback:
 
@@ -227,8 +229,6 @@ define([
 
                     Ophan.sendLog(config.swipe ? config.swipe.referrer : undefined, true);
                 });
-
-                mvtCookie.init();
             });
 
         },
@@ -365,9 +365,9 @@ define([
                 self.initialisedDeferred = true;
                 modules.loadAdverts();
                 modules.loadAnalytics();
-
-                // TODO: make these run in event 'page:common:deferred:loaded'
                 modules.cleanupCookies(context);
+                modules.runAbTests(config, context);
+                modules.transcludeRelated(config, context);
             }
             mediator.emit("page:common:deferred:loaded", config, context);
         });
@@ -376,18 +376,6 @@ define([
     var ready = function (config, context, contextHtml) {
         if (!this.initialised) {
             this.initialised = true;
-
-            mediator.on("page:common:ready", function(config, context){
-                try {
-                    modules.runAbTests(config, context);
-                    modules.transcludeRelated(config, context);
-                } catch(error) {
-                    // This catch ensures errors in AbTests and Related do not
-                    // affect the likelihood of reaching the analytics load.
-                    mediator.emit('module:error', 'Failed to run ab tests or transclude related: ' + error, 'bootstraps/common');
-                }
-            });
-
             modules.windowEventListeners();
             modules.upgradeImages();
             modules.showTabs();
