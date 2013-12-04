@@ -164,6 +164,10 @@
     }
 }
 
+.comment__meta {
+    margin-top: $gs-baseline;
+}
+
 /* Person
    ========================================================================== */
 .person {
@@ -594,4 +598,13 @@ $topCommentsHeight: 600px;
 
 .open-cta {
     margin-top: $baseline*8;
+
+    .clamp__fade {
+        @include simple-gradient(transparent, $c-neutral7);
+    }
+
+    .clamp__fade-content {
+        border-top: 1px solid $c-neutral3;
+        background: $c-neutral7;
+    }
 }
