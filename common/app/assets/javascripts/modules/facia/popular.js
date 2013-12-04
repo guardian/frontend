@@ -16,8 +16,8 @@ define([
             });
         },
         containerTmpl =
-            '<section class="container container--popular tone-news" data-link-name="block | popular" data-type="popular">' +
-                '<h2 class="container__title tone-background tone-accent-border">Popular</h2>' +
+            '<section class="container container--popular" data-link-name="block | popular" data-type="popular">' +
+                '<h2 class="container__title  tone-news tone-background tone-accent-border">Popular</h2>' +
             '</section>',
         itemTmpl  = function(trail) {
             return updateTmpl(
@@ -53,7 +53,7 @@ define([
                     if (!resp || !resp.trails || resp.trails.length === 0) {
                         return;
                     }
-                    var $collection = bonzo(bonzo.create('<ul class="unstyled collection"></ul>'));
+                    var $collection = bonzo(bonzo.create('<ul class="unstyled collection" data-tone="news"></ul>'));
                     resp.trails.forEach(function(trail, index) {
                         var $item = bonzo(bonzo.create(
                             itemTmpl(trail)
