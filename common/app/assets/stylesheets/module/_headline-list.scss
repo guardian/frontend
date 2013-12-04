@@ -57,3 +57,132 @@
         display: none;
     }
 }
+
+.headline-list__standfirst {
+    display: none;
+    @include fs-bodyCopy(1);
+    color: $c-neutral2;
+}
+
+
+.headline-list--large {
+
+    @include mq(rightCol, wide) {
+        margin-left: 50%;
+    }
+
+    .headline-list__count {
+        width: gs-span(1) - $gs-gutter/2;
+        color: $c-neutral4;
+        @include font($serifheadline, 200, 42px);
+
+        @include mq(rightCol) {
+            width: gs-span(1);
+        }
+
+        @include mq(wide) {
+            margin-left: $gs-gutter;
+        }
+    }
+
+    .headline-list__item {
+        padding-bottom: $baseline*6;
+        border-top-color: $c-neutral4;
+        color: $c-neutral1;
+        @include fs-headline(1);
+
+        @include mq(rightCol) {
+            position: relative;
+            border: none;
+
+            &:before {
+                position: absolute;
+                top: 0;
+                right: $gs-gutter/2;
+                left: 0;
+                content: '';
+                display: block;
+                height: 1px;
+                background-color: $c-neutral4;
+            }
+        }
+
+        @include mq(rightCol, wide) {
+            width: 100%;
+            float:left;
+            clear: left;
+            margin-left: -100%;
+            padding-right: $gs-gutter/2;
+
+            @include box-sizing(border-box);
+
+            &:nth-child(n+6) {
+                width: 100%;
+                float: none;
+                clear: none;
+                margin-left: 0px;
+                padding-right: 0;
+                padding-left: $gs-gutter/2;
+
+                &:before {
+                    right: 0;
+                    left: $gs-gutter/2;
+                }
+            }
+
+            &:nth-child(1),
+            &:nth-child(6) {
+                &:before {
+                    height: 0;
+                }
+            }
+        }
+
+        @include mq(wide) {
+            width: 25%;
+            float: left;
+            min-height: gs-height(2);
+
+            &:first-child {
+                min-height: gs-height(6);
+                @include fs-headline(3, true);
+
+                &:before {
+                    left: 0;
+                }
+
+                .headline-list__count {
+                    margin-left: 0;
+                    @include rem((font-size: 62px));
+                }
+            }
+
+            &:before {
+                right: 0;
+                left: $gs-gutter;
+            }
+
+            &:nth-child(-n+4) {
+                &:before {
+                    height: 0;
+                }
+            }
+
+        }
+    }
+
+    .headline-list__body {
+        width: 80%;
+
+        @include mq(wide) {
+            width:72%;
+        }
+   }
+
+    .headline-list__standfirst {
+        @include mq(wide) {
+            display: block;
+            padding-top: $baseline*6;
+        }
+    }
+}

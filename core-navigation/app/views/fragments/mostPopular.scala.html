@@ -20,7 +20,7 @@
 
         @popular.zipWithRowInfo.map{ case (section, info) =>
             <div id="tabs-popular-@info.rowNum"
-                class="@if(isTabbed){tabs__pane @if(!info.isFirst){js-hidden}} headline-list"
+                class="@if(isTabbed){tabs__pane @if(!info.isFirst){js-hidden}} headline-list u-cf"
                 @if(isTabbed){
                     role="tabpanel"
                     aria-labelledby="tabs-popular-@info.rowNum-tab"
@@ -28,11 +28,14 @@
                 data-link-name="@section.heading"
                 data-link-context="most-read/@section.section">
 
-                <ul class="unstyled">
+                <ul class="unstyled headline-list headline-list--large">
                     @section.trails.zipWithRowInfo.map{ case (trail, info) =>
                         <li class="headline-list__item">
                             <span class="headline-list__count">@info.rowNum</span>
-                            <div class="headline-list__body">@fragments.linkText(trail, info)</div>
+                            <div class="headline-list__body">
+                                @fragments.linkText(trail, info)
+                                @if(info.isFirst) { <p class="headline-list__standfirst">@trail.trailText</p> }
+                            </div>
                         </li>
                     }
                 </ul>
