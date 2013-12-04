@@ -9,7 +9,6 @@ import play.api.libs.json.{JsArray, Json}
 import Switches.EditionRedirectLoggingSwitch
 import views.support.NewsContainer
 
-
 abstract class FrontPage(val isNetworkFront: Boolean) extends MetaData
 
 object FrontPage {
@@ -258,7 +257,7 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
 
     NoCache(Redirect(redirectPath))
   }
-
+  
   // Needed as aliases for reverse routing
   def renderEditionFrontJson(path: String) = renderFront(path)
   def renderEditionFront(path: String) = renderFront(path)
@@ -309,6 +308,16 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
       }
     } getOrElse(NotFound)
   }
+  
+  def renderCollectionRss(id: String) = Action { implicit request =>
+    CollectionAgent.getCollection(id) map { collection =>
+      Cached(60) {
+        val config: Config = ConfigAgent.getConfig(id).getOrElse(Config("", None, None, None))
+        Ok(TrailsToRss(config.displayName, collection.items))
+      }.as("text/xml; charset=utf-8")
+    } getOrElse(NotFound)
+  }
+
 }
 
 object FaciaController extends FaciaController
