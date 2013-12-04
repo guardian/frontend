@@ -1,29 +1,71 @@
-@(events: List[model.commercial.masterclasses.MasterClass])
+@(events: List[model.commercial.masterclasses.MasterClass])(implicit request: RequestHeader)
+
+@main(Page(
+  "Masterclasses",
+  "Masterclasses",
+  "Masterclasses",
+  "Masterclasses")){
+  }{
 
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
 <div class="commercial masterclasses-component">
     <div class="commercial__head">
-        <h3 class="commercial__title">guardian<span>masterclasses</span></h3>
-    </div>
-
-    <div class="commercial__body">
-
-        <div class="commercial__promo">
-            <a href="#" class="product__image">
-                <img src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/25/1382691234022/hp-discover.jpg" />
+        <h3 class="commercial__title">
+            <a href="http://theguardian.com/guardian-masterclasses">
+                <span class="u-h">Guardian Masterclasses</span>
+                <i class="i i-guardian-masterclasses-logo"></i>
             </a>
-        </div>
-
-        <ul class="items">
-            @for(event <- events) {
+        </h3>
+    </div>
+    <div class="commercial__body">
+        <ul class="lineitems">
+            @events.take(1).map { event =>
                 <li class="lineitem">
                     <h4 class="lineitem__title"><a href="@event.url">@event.name</a></h4>
-                    <div class="lineitem__description">@event.firstParagraph</div>
+                    <p class="lineitem__meta">[17/18 November]<p>
+                    <p class="lineitem__description">
+                        <img class="lineitem__image" src="http://dummyimage.com/80x80/ccc/fff.png" />
+                        @event.firstParagraph
+                        <a class="lineitem__link">Learn more and book</a></p>
+                    </p>
                 </li>
             }
         </ul>
     </div>
-
-    <div class="commercial__foot"></div>
+    <div class="commercial__foot">
+        <a class="commercial__link" href="#">More courses from Guardian Masterclasses <i class="i i-double-arrow-right-blue"></i></a>
+    </div>
 </div>
+
+<br/>
+<br/>
+<br/>
+
+<div class="commercial masterclasses-component commercial--w600">
+    <div class="commercial__head">
+        <h3 class="commercial__title">
+            <a href="http://theguardian.com/guardian-masterclasses">
+                <span class="u-h">Guardian Masterclasses</span>
+                <i class="i i-guardian-masterclasses-logo"></i>
+            </a>
+        </h3>
+        <a class="commercial__link" href="#">More all courses <i class="i i-double-arrow-right-white"></i></a>
+    </div>
+    <div class="commercial__body">
+        <ul class="lineitems">
+            @events.take(4).map { event =>
+                <li class="lineitem">
+                    <a href="@event.url">
+                        <img class="lineitem__image" src="http://dummyimage.com/140x85/ccc/fff.png" />
+                        <h4 class="lineitem__title">@event.name</h4>
+                        <p class="lineitem__meta">[17/18 November]<p>
+                    </a>
+                    <p class="lineitem__description">@event.firstParagraph <a class="lineitem__link">Learn more and book</a></p>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+
+}
