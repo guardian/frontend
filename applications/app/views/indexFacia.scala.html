@@ -1,14 +1,8 @@
 @(index: services.IndexPage)(implicit request: RequestHeader)
 @import conf.Switches._
 @main(index.page, projectName = Option("facia")){ }{
-    <div class="facia-container
-                monocolumn-wrapper
-                monocolumn-wrapper--no-limit
-                @if(NewsContainerSwitch.isSwitchedOn) {
-                    news-container--v2
-                } else {
-                    news-container--v1
-                }"
+    <div class="facia-container monocolumn-wrapper monocolumn-wrapper--no-limit
+                @if(NewsContainerSwitch.isSwitchedOn){ news-container--v2 }else{ news-container--v1}"
          data-link-name="Front" role="main">
 
         @fragments.containers.sport(index.page, Config("uk/" + index.page.id + "/regular-stories", None, Some(index.page.webTitle), collectionTone = None), Collection(index.trails, None), SportContainer(showMore = false), containerIndex = 0)
