@@ -12,21 +12,20 @@ If you are unsure if you are or aren't, just make sure you are viewing the site 
 ## API locations
 As we have dependancies on both the Content API and Identity API, this can be a little precarious. Never fear, once you're up and running, it's pretty smooth sailing.
 
-For consistency of data, it is generally best to keep everything pointing to our code APIs.
+For consistency of data, it is generally best to keep everything pointing to our RELEASE APIs.
 
 In your local settings file, you should have the following:
 
-    # ID
-    id.apiRoot=https://id.code.dev-guardianapis.com
-    id.apiClientToken=frontend-code-client-token
-
-    # Discussion
-    discussion.apiRoot=http://discussion.code.dev-guardianapis.com/discussion-api
-    
-    # Generic
+	# Generic
     guardian.page.host=http://m.thegulocal.com
 
-    # Code API
+    # Cross domain testing
+    ajax.url=http://api.nextgen.thegulocalapps.co.uk
+
+    # ID
+    id.apiRoot=https://id.release.dev-guardianapis.com
+
+    # Content API
     content.api.host=(/¯◡ ‿ ◡)/¯ ~ ┻━┻
 
 **Please Note: CODE Content API URL is tip top secret, please refer to your colleagues for it**
