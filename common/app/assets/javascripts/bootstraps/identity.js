@@ -13,6 +13,9 @@ define([
 ) {
 
     var modules = {
+        idInit: function (config) {
+            Id.init(config);
+        },
         forgottenEmail: function () {
             mediator.on('page:identity:ready', function(config, context) {
                 Identity.forgottenEmail(config, context);
@@ -36,11 +39,6 @@ define([
                 Identity.passwordToggle(config, context);
             });
         },
-        idConfig : function (config) {
-            mediator.on('page:identity:ready', function(config, context) {
-                Id.init(config);
-            });
-        },
         userAdTargeting : function () {
             mediator.on('page:identity:ready', function(config, context) {
                 UserAdTargeting.requestUserSegmentsFromId();
@@ -51,11 +49,11 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
+            modules.idInit(config);
             modules.forgottenEmail();
             modules.forgottenPassword();
             modules.passwordStrength();
             modules.passwordToggle();
-            modules.idConfig(config);
             modules.userAdTargeting();
         }
         mediator.emit("page:identity:ready", config, context);

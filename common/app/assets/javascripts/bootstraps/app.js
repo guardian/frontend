@@ -1,54 +1,57 @@
 /*global guardian:true */
 define('bootstraps/app', [
-    "qwery",
-    "common",
-    "domReady",
-    "utils/ajax",
+    'common',
+    'qwery',
+    'domReady',
+    'utils/ajax',
     'utils/detect',
+    
     'modules/analytics/errors',
     'modules/analytics/livestats',
     'modules/ui/fonts',
-    "modules/router",
+    'modules/router',
+    'modules/pageconfig',
+    'modules/adverts/userAdTargeting',
     'modules/discussion/api',
-    "bootstraps/common",
-    "bootstraps/facia",
-    "bootstraps/football",
-    "bootstraps/article",
-    "bootstraps/video",
-    "bootstraps/gallery",
-    "bootstraps/interactive",
-    "bootstraps/identity",
-    "modules/pageconfig",
-    "bootstraps/tag",
-    "bootstraps/section",
-    "bootstraps/imagecontent",
-    "modules/identity/api",
-    "modules/adverts/userAdTargeting"
+
+    'bootstraps/common',
+    'bootstraps/tag',
+    'bootstraps/section',
+    'bootstraps/imagecontent',
+    
+    'bootstraps/facia',
+    'bootstraps/football',
+    'bootstraps/article',
+    'bootstraps/video',
+    'bootstraps/gallery',
+    'bootstraps/interactive',
+    'bootstraps/identity'
 ], function (
-    qwery,
     common,
+    qwery,
     domReady,
     ajax,
     detect,
+
     Errors,
     LiveStats,
     Fonts,
     Router,
+    pageConfig,
+    UserAdTargeting,
     DiscussionApi,
+
     bootstrapCommon,
+    Tag,
+    Section,
+    ImageContent,
     Facia,
     Football,
     Article,
     Video,
     Gallery,
     Interactive,
-    Identity,
-    pageConfig,
-    Tag,
-    Section,
-    ImageContent,
-    IdApi,
-    UserAdTargeting
+    Identity
 ) {
 
     var modules = {
@@ -71,7 +74,7 @@ define('bootstraps/app', [
                 beaconUrl: config.page.beaconUrl
             });
             e.init();
-            common.mediator.on("module:error", e.log);
+            common.mediator.on('module:error', e.log);
         },
         
         liveStats: function (config) {
@@ -82,7 +85,7 @@ define('bootstraps/app', [
         },
 
         loadFonts: function(config, ua) {
-            if (config.switches.webFonts && !guardian.platformsGettingHintedFonts.test(ua)) {
+            if (config.switches.webFonts && !guardian.shouldLoadFontsAsynchronously) {
                 var fileFormat = detect.getFontFormatSupport(ua),
                     fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
                 var f = new Fonts(fontStyleNodes, fileFormat);
@@ -90,8 +93,8 @@ define('bootstraps/app', [
             }
         },
 
-        initId : function (config) {
-            IdApi.init(config);
+        initId: function (config, context) {
+            Identity.init(config, context);
         },
 
         initUserAdTargeting : function () {
@@ -110,7 +113,7 @@ define('bootstraps/app', [
             modules.initialiseDiscussionApi(config);
             modules.attachGlobalErrorHandler(config);
             modules.loadFonts(config, navigator.userAgent);
-            modules.initId(config);
+            modules.initId(config, context);
             modules.initUserAdTargeting();
             modules.liveStats(config);
 
@@ -133,35 +136,31 @@ define('bootstraps/app', [
                 r.get('/football/:tag/:action', function(req) {                   Football.init(req, config, context); });
                 r.get('/football/:tag/:action/:year/:month/:day', function(req) { Football.init(req, config, context); });
 
-                if(config.page.contentType === "Article") {
+                if(config.page.contentType === 'Article') {
                     Article.init(config, context);
                 }
 
-                if (config.page.contentType === "Video") {
+                if (config.page.contentType === 'Video') {
                     Video.init(config, context);
                 }
 
-                if (config.page.contentType === "Gallery") {
+                if (config.page.contentType === 'Gallery') {
                     Gallery.init(config, context);
                 }
 
-                if (config.page.contentType === "Interactive") {
+                if (config.page.contentType === 'Interactive') {
                     Interactive.init(config, context);
                 }
 
-                if (config.page.contentType === "Tag") {
+                if (config.page.contentType === 'Tag') {
                     Tag.init(config, context);
                 }
 
-                if (config.page.contentType === "Section" && !config.page.isFront) {
+                if (config.page.contentType === 'Section' && !config.page.isFront) {
                     Section.init(config, context);
                 }
 
-                if (config.page.section === "identity") {
-                    Identity.init(config, context);
-                }
-
-                if (config.page.contentType === "ImageContent") {
+                if (config.page.contentType === 'ImageContent') {
                     ImageContent.init(config, context);
                 }
 

@@ -7,12 +7,12 @@
            id="comment-@comment.id"
            data-comment-id="@comment.id"
            data-comment-author="@comment.profile.displayName"
-           data-comment-author-id="@comment.profile.userId">
+           data-comment-author-id="@comment.profile.userId"
+           data-comment-highlighted="@comment.isHighlighted">
     <div class="d-comment__inner">
-        @if(comment.isHighlighted && !comment.isBlocked){
-            <div class="d-comment__pick i i-guardian-picks"><span class="u-h">Guardian pick</span></div>
-        }
-
+        
+        <div class="d-comment__pick i i-guardian-picks @if(!comment.isHighlighted || comment.isBlocked){u-h}" title="Guardian pick"></div>
+        
         @if(!(isClosedForRecommendation && comment.numRecommends == 0) && !comment.isBlocked){
             <div
                 class="d-comment__recommend@if(!isClosedForRecommendation){ js-recommend-comment}@if(comment.isHighlighted){ d-comment__recommend--left}" 
@@ -35,10 +35,11 @@
                 </div>
 
                 <div>
-                    <time class="d-meta-item d-comment__meta-item js-timestamp"
-                          datetime="@comment.date.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")" data-timestamp="@comment.date.getMillis">
-                        @Format(comment.date, "d MMM y")
-                    </time>
+                    <a href="http://discussion.theguardian.com/comment-permalink/@comment.id" class="d-meta-item d-comment__meta-item">
+                        <time class="js-timestamp" datetime="@comment.date.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")" data-timestamp="@comment.date.getMillis" title="Permalink to this comment">
+                            @Format(comment.date, "d MMM y")
+                        </time>
+                    </a>
                 </div>
             </div>
         </div>

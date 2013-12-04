@@ -52,7 +52,8 @@ trait ParseConfig extends ExecutionContexts with Logging {
     Config(
       (json \ "id").as[String],
       (json \ "contentApiQuery").asOpt[String].filter(_.nonEmpty),
-      (json \ "displayName").asOpt[String]
+      (json \ "displayName").asOpt[String],
+      (json \ "tone").asOpt[String]
     )
 
 }
@@ -145,6 +146,9 @@ trait ParseCollection extends ExecutionContexts with Logging {
     val newSearch = queryString match {
       case Path(Seg("search" ::  Nil)) => {
         val search = ContentApi.search(edition)
+                       .tag("type/gallery|type/article|type/video|type/sudoku")
+                       .showElements("all")
+                       .pageSize(20)
         val newSearch = queryParamsWithEdition.foldLeft(search){
           case (query, (key, value)) => query.stringParam(key, value)
         }.showFields("all")
@@ -154,6 +158,10 @@ trait ParseCollection extends ExecutionContexts with Logging {
       }
       case Path(id)  => {
         val search = ContentApi.item(id, edition)
+                       .tag("type/gallery|type/article|type/video|type/sudoku")
+                       .showElements("all")
+                       .showEditorsPicks(true)
+                       .pageSize(20)
         val newSearch = queryParamsWithEdition.foldLeft(search){
           case (query, (key, value)) => query.stringParam(key, value)
         }.showFields("all")
@@ -169,72 +177,74 @@ trait ParseCollection extends ExecutionContexts with Logging {
 
 }
 
-class Query(id: String, edition: Edition) extends ParseConfig with ParseCollection with Logging {
-  val queryAgent = AkkaAgent[Option[List[(Config, Collection)]]](Option(List(FaciaDefaults.configTuple(id))))
+object CollectionAgent extends ParseCollection {
+  private val collectionAgent = AkkaAgent[Map[String, Collection]](Map.empty)
 
-  def getItems: Future[List[(Config, Either[Throwable, Collection])]] = {
-    val futureConfig = getConfig(id) fallbackTo {
-      log.warn("Error getting config from S3: %s".format(id))
-      val result: List[Config] = queryAgent().map(_.map(_._1)).getOrElse(Nil)
-      Future.successful(result.toSeq)
-    } map {config =>
-      val isWarmedUp = items.isDefined
-      config map {c => c -> getCollection(c.id, c, edition, isWarmedUp)}
-    }
+  def getCollection(id: String): Option[Collection] = collectionAgent.get().get(id)
 
-    futureConfig.map(_.toVector).flatMap{ configMapping =>
-        configMapping.foldRight(Future(List[(Config, Either[Throwable, Collection])]()))((configMap, foldList) =>
-          for {
-            newList <- foldList
-            collection <- {configMap._2.map(Right(_)).recover{case t: Throwable => Left(t)}}
-          }
-          yield (configMap._1, collection) +: newList)
-    }
+  def updateCollection(id: String, config: Config, edition: Edition, isWarmedUp: Boolean): Unit = {
+    getCollection(id, config, edition, isWarmedUp) foreach { collection => updateCollection(id, collection) }
   }
 
-  def refresh(): Unit =
-    getItems map { newConfigList =>
-      queryAgent.send { oldConfigList =>
-        lazy val oldConfigMap = oldConfigList.map{_.map{case (config, collection) => (config.id, collection)}.toMap}
-        Option {
-          newConfigList flatMap {
-            case (config, Left(exception)) => {
-              log.warn("Updating ID %s failed".format(config.id))
-              oldConfigMap.flatMap{_.get(config.id).map(oldCollection => (config, oldCollection))}
-            }
-            case (config, Right(newCollection)) => Some((config, newCollection))
-          }
-        }
-      }
+  def updateCollection(id: String, collection: Collection): Unit = collectionAgent.send { _.updated(id, collection) }
+
+  def updateCollectionById(id: String): Unit = {
+    val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(id, None, None, None))
+    val edition = Edition.byId(id.take(2)).getOrElse(Edition.defaultEdition)
+    //TODO: Refactor isWarmedUp into method by ID
+    updateCollection(id, config, edition, isWarmedUp=true)
+  }
+
+  def close(): Unit = collectionAgent.close()
+}
+
+object QueryAgents {
+
+  def items(id: String): Option[List[(Config, Collection)]] = ConfigAgent.getConfigForId(id).map { configList => configList flatMap { config =>
+      CollectionAgent.getCollection(config.id) map { (config, _) }
     }
+  } filter(_.exists(_._2.items.nonEmpty))
 
-
-  def close() = queryAgent.close()
-
-  def items = queryAgent().filter(_.exists(_._2.items.nonEmpty))
-}
-
-object Query {
-  def apply(id: String, edition: Edition): Query = new Query(id, edition)
-}
-
-class PageFront(val id: String, edition: Edition) {
-  val query = Query(id, edition)
-
-  def refresh() = query.refresh()
-  def close() = query.close()
-
-  def apply(): Option[FaciaPage] = query.items.map(FaciaPage(id, _))
+  def apply(id: String): Option[FaciaPage] = items(id).map(FaciaPage(id, _))
 }
 
 trait ConfigAgent extends ExecutionContexts {
-  private val configAgent = AkkaAgent[List[String]](Nil)
+  private val configAgent = AkkaAgent[JsValue](JsNull)
 
-  def refresh() = configAgent.send(S3FrontsApi.listConfigsIds)
+  def refresh() = S3FrontsApi.getMasterConfig map {s => configAgent.send(Json.parse(s))}
+
+  def getPathIds: List[String] = {
+    val json = configAgent.get()
+    (json \ "fronts").asOpt[Map[String, JsValue]].map { _.keys.toList } getOrElse Nil
+  }
+
+  def getConfigForId(id: String): Option[List[Config]] = {
+    val json = configAgent.get()
+    (json \ "fronts" \ id \ "collections").asOpt[List[String]] map { configList =>
+      configList flatMap getConfig
+    }
+  }
+
+  def getConfig(id: String): Option[Config] = {
+    val json = configAgent.get()
+    (json \ "collections" \ id).asOpt[JsValue] map { collectionJson =>
+      Config(
+        id,
+        (collectionJson \ "apiQuery").asOpt[String],
+        (collectionJson \ "displayName").asOpt[String],
+        (collectionJson \ "tone").asOpt[String]
+      )
+    }
+  }
+
+  def getAllCollectionIds: List[String] = {
+    val json = configAgent.get()
+    (json \ "collections").asOpt[Map[String, JsValue]] map { collectionMap =>
+      collectionMap.keys.toList
+    } getOrElse Nil
+  }
 
   def close() = configAgent.close()
-
-  def apply(): List[String] = configAgent()
 }
 
 object ConfigAgent extends ConfigAgent

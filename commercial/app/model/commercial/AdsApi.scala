@@ -5,10 +5,14 @@ import play.api.libs.json.{Json, JsValue}
 import play.api.libs.ws.WS
 import common.{ExecutionContexts, Logging}
 import scala.xml.{XML, Elem}
+import com.ning.http.util.AsyncHttpProviderUtils
 
 trait AdsApi[F, T <: Ad] extends ExecutionContexts with Logging {
 
   protected val adTypeName: String
+
+  // following RFC-2616#3.7.1
+  protected val characterEncoding: String = AsyncHttpProviderUtils.DEFAULT_CHARSET
 
   protected val loadTimeout: Int = 2000
 
@@ -21,7 +25,13 @@ trait AdsApi[F, T <: Ad] extends ExecutionContexts with Logging {
       u =>
         val fads = WS.url(u) withRequestTimeout loadTimeout get() map {
           response => {
-            val body = response.body
+            val body = {
+              // look at documentation of response.body to see why this is necessary
+              if (characterEncoding == AsyncHttpProviderUtils.DEFAULT_CHARSET)
+                response.body
+              else
+                response.getAHCResponse.getResponseBody(characterEncoding)
+            }
             val feed = transform(body)
             parse(feed)
           }

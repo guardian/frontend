@@ -6,6 +6,7 @@ define([
     'qwery',
     // Modules
     'utils/detect',
+    'utils/storage',
     'modules/facia/popular',
     'modules/facia/collection-show-more',
     'modules/facia/container-toggle',
@@ -17,6 +18,7 @@ define([
     bonzo,
     qwery,
     detect,
+    storage,
     popular,
     CollectionShowMore,
     ContainerToggle,
@@ -95,8 +97,32 @@ define([
             mediator.on('page:front:ready', function(config, context) {
                 cricket.cricketTrail(config, context);
             });
-        }
+        },
 
+        showUserzoom: function(config) {
+            var path,
+                load;
+
+            if (config.switches.userzoom) {
+                path = window.location.pathname.substring(1);
+                load = {
+                    'uk': {vistsRequired: 2, script: 'userzoom-uk'},
+                    'uk-alpha': {vistsRequired: 0, script: 'userzoom-uk-alpha'},
+                }[path];
+
+                if(!load) { return; }
+
+                mediator.on('page:front:ready', function(config, context) {
+                    var visits = parseInt(storage.local.get('gu.userzoom.visits.' + path) || 0, 10);
+
+                    if(visits >= load.vistsRequired) {
+                        require(['js!' + load.script]);
+                    } else {
+                        storage.local.set('gu.userzoom.visits.' + path, visits + 1);
+                    }
+                });
+            }
+        }
     };
 
     var ready = function (config, context) {
@@ -106,6 +132,7 @@ define([
             modules.showContainerToggle();
             modules.showFootballFixtures();
             modules.showPopular();
+            modules.showUserzoom(config);
         }
         mediator.emit("page:front:ready", config, context);
     };

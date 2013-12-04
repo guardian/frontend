@@ -18,7 +18,7 @@ class GalleryControllerTest extends FlatSpec with Matchers {
   it should "return JSONP when callback is supplied" in Fake {
     val result = controllers.GalleryController.render(galleryUrl)(TestRequest(s"/${galleryUrl}?callback=$callbackName"))
     status(result) should be(200)
-    header("Content-Type", result).get should be("application/javascript")
+    header("Content-Type", result).get should be("application/javascript; charset=utf-8")
     contentAsString(result) should startWith(s"""${callbackName}({\"config\"""")
   }
 
@@ -28,7 +28,7 @@ class GalleryControllerTest extends FlatSpec with Matchers {
 
     val result = controllers.GalleryController.render(galleryUrl)(fakeRequest)
     status(result) should be(200)
-    header("Content-Type", result).get should be("application/json")
+    header("Content-Type", result).get should be("application/json; charset=utf-8")
     contentAsString(result) should startWith("{\"config\"")
   }
 
@@ -50,7 +50,7 @@ class GalleryControllerTest extends FlatSpec with Matchers {
 
     val result = controllers.GalleryController.renderLightbox(galleryUrl)(fakeRequest)
     status(result) should be(200)
-    header("Content-Type", result).get should be("application/json")
+    header("Content-Type", result).get should be("application/json; charset=utf-8")
     contentAsString(result) should startWith("{\"config\"")
     contentAsString(result) should include("gallery--lightbox")
   }

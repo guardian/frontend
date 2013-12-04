@@ -6,7 +6,6 @@ import implicits.Collections
 import play.api.Plugin
 import play.api.libs.ws.WS
 
-
 sealed trait SwitchState
 case object On extends SwitchState
 case object Off extends SwitchState
@@ -96,6 +95,10 @@ object Switches extends Collections {
   val LiveStatsSwitch = Switch("Analytics", "live-stats",
     "Turns on our real-time KPIs",
     safeState = On)
+
+  val UserzoomSwitch = Switch("Analytics", "userzoom",
+    "Turns on userzoom survey popups",
+    safeState = Off)
 
   // Discussion Switches
 
@@ -237,6 +240,10 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to test the new commercial components",
     safeState = Off)
 
+  val ABMobileFacebookAutosignin = Switch("A/B Tests", "ab-mobile-facebook-autosignin",
+    "If this is switched on an AB test runs to test facebook autosignin for mobile users",
+   safeState = Off)
+
   val ABImproveOnwardTrails = Switch("A/B Tests", "ab-improve-onward-trails",
     "If this is switched on an AB test runs to test re-ordering story packages",
     safeState = Off)
@@ -273,15 +280,11 @@ object Switches extends Collections {
 
   val ServeWebPImagesSwitch = Switch("Image Server", "serve-webp-images",
     "If this is switched on the Image server will use the webp format when requested.",
-    safeState = Off)
-
-  val AddVaryAcceptHeader = Switch("Image Server", "add-vary-accept-header",
-    "If this is switched on the Image server will add vary-accept to responses.",
-    safeState = Off)
+    safeState = On)
 
   val ImageServerSwitch = Switch("Image Server", "image-server",
     "If this switch is on images will be served off i.guim.co.uk (dynamic image host).",
-    safeState = Off)
+    safeState = On)
 
   val all: List[Switch] = List(
     AutoRefreshSwitch,
@@ -321,6 +324,7 @@ object Switches extends Collections {
     LiveSummarySwitch,
     LiveCricketSwitch,
     LiveStatsSwitch,
+    UserzoomSwitch,
     FaciaSwitch,
     AdSlotImpressionStatsSwitch,
     ABLiveBlogShowMore,
@@ -328,7 +332,6 @@ object Switches extends Collections {
     ElasticSearchSwitch,
     ShowUnsupportedEmbedsSwitch,
     ServeWebPImagesSwitch,
-    AddVaryAcceptHeader,
     ArticleKeywordsSwitch,
     ABAlphaAdverts,
     ABCommercialComponents,
@@ -338,7 +341,8 @@ object Switches extends Collections {
     ABOnwardIntrusive,
     ABInitialShowMore,
     AdDwellTimeLoggerSwitch,
-    ABShowMoreLayout
+    ABShowMoreLayout,
+    ABMobileFacebookAutosignin
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

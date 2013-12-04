@@ -12,9 +12,7 @@ trait AdAgent[T <: Ad] {
   protected def updateCurrentAds(ads: Seq[T]) = agent send ads
 
   def adsTargetedAt(segment: Segment, adsToChooseFrom: Seq[T] = currentAds): Seq[T] = {
-    // TODO: reinstate repeatVisitor condition when the time is right
-    //adsToChooseFrom filter (segment.isRepeatVisitor && _.matches(segment))
-    Random.shuffle(adsToChooseFrom filter (_.isTargetedAt(segment)))
+    Random.shuffle(adsToChooseFrom filter (segment.isRepeatVisitor && _.isTargetedAt(segment)))
   }
 
   def stop() {
