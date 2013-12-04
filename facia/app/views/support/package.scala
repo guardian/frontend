@@ -25,6 +25,14 @@ object GetContainer {
       ("au/culture/regular-stories", FeaturesContainer()),
       ("au/contributors/feature-stories", CommentContainer())
     )),
+    ("au-alpha", Map(
+      ("au-alpha/news/regular-stories", NewsContainer()),
+      ("au-alpha/features/feature-stories", FeaturesContainer(headerLink = false)),
+      ("au-alpha/special/special-story", SportContainer(headerLink = false)),
+      ("au-alpha/contributors/feature-stories", CommentContainer(headerLink = false)),
+      ("au-alpha/people-in-the-news/feature-stories", SportContainer(headerLink = false)),
+      ("au-alpha/special-other/special-story", SportContainer(headerLink = false))
+    )),
     ("au/business", Map(
       ("au/business/regular-stories", SportContainer(showMore = false))
     )),
@@ -78,6 +86,14 @@ object GetContainer {
       ("us/commentisfree/regular-stories", CommentContainer()),
       ("us/culture/regular-stories", FeaturesContainer()),
       ("us/contributors/feature-stories", CommentContainer())
+    )),
+    ("us-alpha", Map(
+      ("us-alpha/news/regular-stories", NewsContainer()),
+      ("us-alpha/features/feature-stories", FeaturesContainer(headerLink = false)),
+      ("us-alpha/special/special-story", SportContainer(headerLink = false)),
+      ("us-alpha/contributors/feature-stories", CommentContainer(headerLink = false)),
+      ("us-alpha/people-in-the-news/feature-stories", SportContainer(headerLink = false)),
+      ("us-alpha/special-other/special-story", SportContainer(headerLink = false))
     )),
     ("us/business", Map(
       ("us/business/regular-stories", SportContainer(showMore = false))
