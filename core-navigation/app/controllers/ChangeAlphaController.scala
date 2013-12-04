@@ -2,7 +2,7 @@ package controllers
 
 import play.api.mvc._
 
-object ChangeBucketController extends Controller with PreferenceController {
+object ChangeAlphaController extends Controller with PreferenceController {
 
   val abCookieName: String = "GU_UK_ALPHA"
 
