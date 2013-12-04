@@ -164,12 +164,8 @@
     }
 }
 
-.comment--collapsed {
-    .comment__body {
-        max-height: 300px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+.comment__meta {
+    margin-top: $baseline*3;
 }
 
 /* Person
