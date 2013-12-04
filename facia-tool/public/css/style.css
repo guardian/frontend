@@ -39,9 +39,10 @@ input[type=text] {
 .u-cf{zoom:1}
 
 .logo {
-    position: absolute;
+    position: fixed;
     top: 8px;
     left: 15px;
+    z-index: 2;
 }
 
 .tool-title {
@@ -462,6 +463,8 @@ button {
     border-bottom: 1px solid #cccccc;
     border-left: 1px solid #cccccc;
     margin-left: -1px;
+    z-index: 1;
+    background: #ffffff;
 }
 
 .toolbar > * {
