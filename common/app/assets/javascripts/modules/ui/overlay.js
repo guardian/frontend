@@ -24,8 +24,8 @@ define([
                        '</div>';
 
         bonzo(document.body).append(template);
-    
-        this._savedPos   = 0,
+
+        this._savedPos   = 0;
         this.node        = document.body.querySelector('.overlay');
         this.headerNode  = this.node.querySelector('.overlay__header');
         this.toolbarNode = this.node.querySelector('.overlay__toolbar');

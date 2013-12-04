@@ -24,7 +24,6 @@
     "debug"         : false,
     "devel"         : false,
 
-    "es5"           : true,
     "strict"        : false,
     "globalstrict"  : false,
 

@@ -146,6 +146,9 @@ trait ParseCollection extends ExecutionContexts with Logging {
     val newSearch = queryString match {
       case Path(Seg("search" ::  Nil)) => {
         val search = ContentApi.search(edition)
+                       .tag("type/gallery|type/article|type/video|type/sudoku")
+                       .showElements("all")
+                       .pageSize(20)
         val newSearch = queryParamsWithEdition.foldLeft(search){
           case (query, (key, value)) => query.stringParam(key, value)
         }.showFields("all")
@@ -155,6 +158,10 @@ trait ParseCollection extends ExecutionContexts with Logging {
       }
       case Path(id)  => {
         val search = ContentApi.item(id, edition)
+                       .tag("type/gallery|type/article|type/video|type/sudoku")
+                       .showElements("all")
+                       .showEditorsPicks(true)
+                       .pageSize(20)
         val newSearch = queryParamsWithEdition.foldLeft(search){
           case (query, (key, value)) => query.stringParam(key, value)
         }.showFields("all")
