@@ -21,7 +21,7 @@ GET        /recent/card.json                     controllers.RecentController.re
 
 GET        /preference/platform/:platform        controllers.ChangeViewController.render(platform, page)
 GET        /preference/edition/:edition          controllers.ChangeEditionController.render(edition)
-GET        /preference/alphatest/:optaction      controllers.ChangeBucketController.render(optaction, page)
+GET        /preference/ukalpha/:optaction        controllers.ChangeBucketController.render(optaction, page)
 
 # Experimental
 GET        /cards/opengraph/*path.json           controllers.CardController.opengraph(path)
