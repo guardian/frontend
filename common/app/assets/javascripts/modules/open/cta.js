@@ -53,7 +53,7 @@ Cta.prototype.prerender = function() {
 
 /** @override */
 Cta.prototype.ready = function() {
-    clamp(this.getElem('body'), 10, true);
+    clamp(this.getElem('body'), 10, true, 'CTA show more');
 };
 
 

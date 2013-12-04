@@ -231,9 +231,9 @@ Comments.prototype.pickComment = function(thisComment, $thisButton) {
 };
 
 /**
- * @param   {Element}      thisComment
- * @param   {Bonzo}    $thisButton
- * @return  {Reqwest}       AJAX Promise
+ * @param {Element} thisComment
+ * @param {Bonzo} $thisButton
+ * @return {Reqwest} AJAX Promise
  */
 Comments.prototype.unPickComment = function(thisComment, $thisButton) {
     var self = this;

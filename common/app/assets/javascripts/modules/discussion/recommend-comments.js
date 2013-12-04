@@ -2,7 +2,7 @@ define([
     'common',
     'bean',
     'qwery',
-    'modules/discussion/api',
+    'modules/discussion/api'
 ], function(
     common,
     bean,

@@ -14,28 +14,28 @@ define([
         getInitialShowSize = function (collectionType) {
             var breakpointOptions = {
                 wide: {
-                    default: 4,
+                    fallback: 4,
                     news: 9,
                     sport: 5,
                     comment: 5,
                     features: 3
                 },
                 desktop: {
-                    default: 4,
+                    fallback: 4,
                     news: 8,
                     sport: 5,
                     comment: 5,
                     features: 3
                 },
                 tablet: {
-                    default: 3,
+                    fallback: 3,
                     news: 7,
                     sport: 6,
                     comment: 4,
                     features: 4
                 },
                 mobile: {
-                    default: 2,
+                    fallback: 2,
                     news: 5,
                     sport: 5,
                     comment: 3,
@@ -43,7 +43,7 @@ define([
                     popular: 5
                 }
             }[detect.getBreakpoint()];
-            return breakpointOptions[collectionType] || breakpointOptions['default'];
+            return breakpointOptions[collectionType] || breakpointOptions.fallback;
         },
         getShowMoreSize = function() {
             return {
