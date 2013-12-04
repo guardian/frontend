@@ -1,4 +1,4 @@
-/* global module: false */
+/* global module: false, process: false */
 module.exports = function (grunt) {
     var isDev = grunt.option('dev') || process.env.GRUNT_ISDEV === '1',
         singleRun = grunt.option('single-run') !== false,
