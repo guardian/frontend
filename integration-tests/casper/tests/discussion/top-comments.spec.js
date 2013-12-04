@@ -11,7 +11,7 @@ casper.test.setUp(function() {
 });
 
 casper.test.begin('Loads top comments module', function (test) {
-    casper.waitForSelector('.discussion__comments__top',
+    casper.waitForSelector('.discussion__comments__top .d-discussion',
         function then() {
             test.assertExists('.discussion__comments__top');
             test.assertVisible('.discussion__comments__top');
