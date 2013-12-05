@@ -121,7 +121,7 @@ sink('Element attributes', function (test, ok) {
     })
   })
 
-  test('setting & getting attributes', 10, function () {
+  test('setting & getting attributes', function (done) {
     ok($('a#twitter').attr('href') == 'http://twitter.com/', 'retrieves "href" attribute from anchor')
     ok($('a#hrefrel').attr('href') == '/relative', 'retrieves relative "href" attribute from anchor')
     ok($('a#hrefname').attr('href') == '#name', 'retrieves plain #name "href" attribute from anchor')
@@ -137,6 +137,10 @@ sink('Element attributes', function (test, ok) {
     ok(input.attr('value', 'boosh').attr('value') == 'boosh', 'sets value attribute of input')
     input.val('eyoeyo')
     ok(input.val() == 'eyoeyo', 'val(val) can set value on input')
+    input.val(1234)
+    ok(input.val() == '1234', 'val(val) can set number value on input')
+
+    done()
   })
 
   test('setting attributes using object', 2, function () {
@@ -155,6 +159,18 @@ sink('Element attributes', function (test, ok) {
     ok($('#styles div').css('float') == 'left', 'float is "left" by default')
     $('#styles div').css('float', "right")
     ok($('#styles div').css('float') == 'right', '"right" after update.')
+  })
+
+  test('setting & getting opacity styles', 5, function () {
+    ok($('#styles').css('opacity') == 1, 'opacity is 1 by default')
+    $('#styles').css('opacity', '0.5')
+    ok($('#styles').css('opacity') == 0.5, '0.5 after update')
+    $('#styles div').css('opacity', '')
+    ok($('#styles div').css('opacity') == 1, 'back default after setting empty string')
+    $('#styles').css({opacity: 0})
+    ok($('#styles').css('opacity') == 0, '0 after setting with object')
+    $('#styles div').css('opacity', null)
+    ok($('#styles div').css('opacity') == 1, 'back default after setting null')
   })
 
   if (!(bowser.msie && bowser.version <= 8) && !(bowser.firefox && bowser.version < 3.5)) {

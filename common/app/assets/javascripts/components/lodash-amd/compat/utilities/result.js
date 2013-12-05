@@ -1,5 +1,5 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize exports="amd" -o ./compat/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -9,7 +9,7 @@
 define(['../objects/isFunction'], function(isFunction) {
 
   /**
-   * Resolves the value of `property` on `object`. If `property` is a function
+   * Resolves the value of property `key` on `object`. If `key` is a function
    * it will be invoked with the `this` binding of `object` and its result returned,
    * else the property value is returned. If `object` is falsey then `undefined`
    * is returned.
@@ -18,7 +18,7 @@ define(['../objects/isFunction'], function(isFunction) {
    * @memberOf _
    * @category Utilities
    * @param {Object} object The object to inspect.
-   * @param {string} property The property to get the value of.
+   * @param {string} key The name of the property to resolve.
    * @returns {*} Returns the resolved value.
    * @example
    *
@@ -35,10 +35,10 @@ define(['../objects/isFunction'], function(isFunction) {
    * _.result(object, 'stuff');
    * // => 'nonsense'
    */
-  function result(object, property) {
+  function result(object, key) {
     if (object) {
-      var value = object[property];
-      return isFunction(value) ? object[property]() : value;
+      var value = object[key];
+      return isFunction(value) ? object[key]() : value;
     }
   }
 

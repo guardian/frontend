@@ -1,5 +1,5 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize underscore exports="amd" -o ./underscore/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -14,7 +14,7 @@ define([], function() {
   /** Used for native method references */
   var objectProto = Object.prototype;
 
-  /** Native method shortcuts */
+  /** Used to resolve the internal [[Class]] of values */
   var toString = objectProto.toString;
 
   /**
@@ -27,11 +27,12 @@ define([], function() {
    * @returns {boolean} Returns `true` if the `value` is a string, else `false`.
    * @example
    *
-   * _.isString('moe');
+   * _.isString('fred');
    * // => true
    */
   function isString(value) {
-    return typeof value == 'string' || toString.call(value) == stringClass;
+    return typeof value == 'string' ||
+      value && typeof value == 'object' && toString.call(value) == stringClass || false;
   }
 
   return isString;

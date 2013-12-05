@@ -1,5 +1,5 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="amd" -o ./modern/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -32,24 +32,24 @@ define(['../functions/createCallback', '../objects/forOwn'], function(createCall
    * @returns {*} Returns the found element, else `undefined`.
    * @example
    *
-   * _.find([1, 2, 3, 4], function(num) {
-   *   return num % 2 == 0;
-   * });
-   * // => 2
-   *
-   * var food = [
-   *   { 'name': 'apple',  'organic': false, 'type': 'fruit' },
-   *   { 'name': 'banana', 'organic': true,  'type': 'fruit' },
-   *   { 'name': 'beet',   'organic': false, 'type': 'vegetable' }
+   * var characters = [
+   *   { 'name': 'barney',  'age': 36, 'blocked': false },
+   *   { 'name': 'fred',    'age': 40, 'blocked': true },
+   *   { 'name': 'pebbles', 'age': 1,  'blocked': false }
    * ];
    *
+   * _.find(characters, function(chr) {
+   *   return chr.age < 40;
+   * });
+   * // => { 'name': 'barney', 'age': 36, 'blocked': false }
+   *
    * // using "_.where" callback shorthand
-   * _.find(food, { 'type': 'vegetable' });
-   * // => { 'name': 'beet', 'organic': false, 'type': 'vegetable' }
+   * _.find(characters, { 'age': 1 });
+   * // =>  { 'name': 'pebbles', 'age': 1, 'blocked': false }
    *
    * // using "_.pluck" callback shorthand
-   * _.find(food, 'organic');
-   * // => { 'name': 'banana', 'organic': true, 'type': 'fruit' }
+   * _.find(characters, 'blocked');
+   * // => { 'name': 'fred', 'age': 40, 'blocked': true }
    */
   function find(collection, callback, thisArg) {
     callback = createCallback(callback, thisArg, 3);

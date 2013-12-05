@@ -1,5 +1,5 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize underscore exports="amd" -o ./underscore/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -25,8 +25,8 @@ define(['../objects/keys'], function(keys) {
    * _.size({ 'one': 1, 'two': 2, 'three': 3 });
    * // => 3
    *
-   * _.size('curly');
-   * // => 5
+   * _.size('pebbles');
+   * // => 7
    */
   function size(collection) {
     var length = collection ? collection.length : 0;

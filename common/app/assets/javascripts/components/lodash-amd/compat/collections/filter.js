@@ -1,5 +1,5 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize exports="amd" -o ./compat/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -35,18 +35,18 @@ define(['../internals/baseEach', '../functions/createCallback', '../objects/isAr
    * var evens = _.filter([1, 2, 3, 4, 5, 6], function(num) { return num % 2 == 0; });
    * // => [2, 4, 6]
    *
-   * var food = [
-   *   { 'name': 'apple',  'organic': false, 'type': 'fruit' },
-   *   { 'name': 'carrot', 'organic': true,  'type': 'vegetable' }
+   * var characters = [
+   *   { 'name': 'barney', 'age': 36, 'blocked': false },
+   *   { 'name': 'fred',   'age': 40, 'blocked': true }
    * ];
    *
    * // using "_.pluck" callback shorthand
-   * _.filter(food, 'organic');
-   * // => [{ 'name': 'carrot', 'organic': true, 'type': 'vegetable' }]
+   * _.filter(characters, 'blocked');
+   * // => [{ 'name': 'fred', 'age': 40, 'blocked': true }]
    *
    * // using "_.where" callback shorthand
-   * _.filter(food, { 'type': 'fruit' });
-   * // => [{ 'name': 'apple', 'organic': false, 'type': 'fruit' }]
+   * _.filter(characters, { 'age': 36 });
+   * // => [{ 'name': 'barney', 'age': 36, 'blocked': false }]
    */
   function filter(collection, callback, thisArg) {
     var result = [];
