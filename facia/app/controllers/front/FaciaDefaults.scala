@@ -18,7 +18,8 @@ trait FaciaDefaults {
     id              = "%s/%s".format(id, defaultStyle),
     contentApiQuery = Option(ContentApi.FaciaDefaults.generateContentApiQuery(id)),
     displayName     = None,
-    collectionTone  = None
+    collectionTone  = None,
+    groups          = Nil
   )
 
   def getEdition(id: String): Edition = Edition.all.find(edition => id.toLowerCase.startsWith(edition.id.toLowerCase)).getOrElse(Edition.defaultEdition)

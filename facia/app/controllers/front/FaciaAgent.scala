@@ -7,8 +7,9 @@ import play.api.libs.json.Json._
 import play.api.libs.json._
 import play.api.libs.ws.{ WS, Response }
 import play.api.libs.json.JsObject
-import services.{ConfigAgent, S3FrontsApi}
+import services.{ConfigAgent => ConfigAgentTrait, S3FrontsApi}
 import scala.concurrent.Future
+import play.api.http.Status
 
 object Path {
   def unapply[T](uri: String) = Some(uri.split('?')(0))
@@ -53,7 +54,8 @@ trait ParseConfig extends ExecutionContexts with Logging {
       (json \ "id").as[String],
       (json \ "contentApiQuery").asOpt[String].filter(_.nonEmpty),
       (json \ "displayName").asOpt[String],
-      (json \ "tone").asOpt[String]
+      (json \ "tone").asOpt[String],
+      (json \ "groups").asOpt[Seq[String]] getOrElse Nil
     )
 
 }
@@ -182,7 +184,7 @@ object CollectionAgent extends ParseCollection {
   def updateCollection(id: String, collection: Collection): Unit = collectionAgent.send { _.updated(id, collection) }
 
   def updateCollectionById(id: String): Unit = {
-    val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(id, None, None, None))
+    val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(id))
     val edition = Edition.byId(id.take(2)).getOrElse(Edition.defaultEdition)
     //TODO: Refactor isWarmedUp into method by ID
     updateCollection(id, config, edition, isWarmedUp=true)
@@ -201,4 +203,4 @@ object QueryAgents {
   def apply(id: String): Option[FaciaPage] = items(id).map(FaciaPage(id, _))
 }
 
-object ConfigAgent extends ConfigAgent
+object ConfigAgent extends ConfigAgentTrait
