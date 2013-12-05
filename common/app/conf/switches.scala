@@ -277,7 +277,7 @@ object Switches extends Collections {
     safeState = Off  )
 
   val UkAlphaSwitch = Switch("Facia", "facia-uk-alpha",
-    "Switch to turn on UK-Alpha for requests with the cookie GU_UK_ALPHA",
+    "If this is switched on then UK-Alpha will be served for requests with the cookie GU_UK_ALPHA",
     safeState = Off
   )
 
