@@ -6,6 +6,7 @@ body {
     overflow-y: hidden;
     margin: 0;
     padding: 0;
+    min-width: 320px;
     color: #000000;
     -webkit-touch-callout: none;
       -webkit-user-select: none;
@@ -46,12 +47,13 @@ input[type=text] {
 }
 
 .tool-title {
-    position: absolute;
-    top: 13px;
-    left: 45px;
+    float: left;
+    margin: 8px 10px 0 46px;
     font-size: 26px;
-    color: #000000;
+    line-height: 30px;
+    color: #000;
     text-transform: lowercase;
+    font-weight: normal;
 }
 
 .tool-title .message {
@@ -65,10 +67,17 @@ input[type=text] {
     color: #d61d00;
 }
 
-.tool-title .login-form {
-    position: absolute;
-    top: -4px;
-    left: 145px;
+.tool-title .message--loading {
+    display: none;
+}
+
+.is-authed .tool-title .message--loading {
+    display: inline;
+}
+
+.login-form {
+    float: left;
+    margin: 10px 10px 0 0;
 }
 
 .finder {
@@ -593,7 +602,7 @@ button {
 }
 
 @media (max-width: 875px) {
-    .tool-title,
+    .is-authed .tool-title,
     .finder,
     .ophan-legend {
         display: none;
