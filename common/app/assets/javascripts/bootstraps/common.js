@@ -175,62 +175,58 @@ define([
             ab.run(config, context);
         },
 
-        loadAnalytics: function () {
+        loadAnalytics: function (config, context) {
             var omniture = new Omniture();
 
-            mediator.on('page:common:deferred:loaded', function(config, context) {
+            omniture.go(config, function(){
+                // callback:
 
-                omniture.go(config, function(){
-                    // callback:
-
-                    Array.prototype.forEach.call(context.getElementsByTagName("video"), function(video){
-                        if (!bonzo(video).hasClass('tracking-applied')) {
-                            bonzo(video).addClass('tracking-applied');
-                            var v = new OmnitureMedia({
-                                el: video,
-                                config: config
-                            }).init();
-                        }
-                    });
-
-                    if (config.switches.adslotImpressionStats) {
-                        var advertsAnalytics = new AdvertsAnalytics(config, context);
+                Array.prototype.forEach.call(context.getElementsByTagName("video"), function(video){
+                    if (!bonzo(video).hasClass('tracking-applied')) {
+                        bonzo(video).addClass('tracking-applied');
+                        var v = new OmnitureMedia({
+                            el: video,
+                            config: config
+                        }).init();
                     }
                 });
 
-                require(config.page.ophanUrl, function (Ophan) {
-
-                    if (!Ophan.isInitialised) {
-                        Ophan.isInitialised = true;
-                        Ophan.initLog();
-                    }
-
-                    Ophan.additionalViewData(function() {
-
-                        var viewData = {};
-
-                        var audsci = storage.local.get('gu.ads.audsci');
-                        if (audsci) {
-                            viewData.audsci_json = JSON.stringify(audsci);
-                        }
-
-                        var participations = ab.getParticipations(),
-                            participationsKeys = Object.keys(participations);
-
-                        if (participationsKeys.length > 0) {
-                            var testData = participationsKeys.map(function(k) {
-                                return { id: k, variant: participations[k].variant };
-                            });
-                            viewData.experiments_json = JSON.stringify(testData);
-                        }
-
-                        return viewData;
-                    });
-
-                    Ophan.sendLog(config.swipe ? config.swipe.referrer : undefined, true);
-                });
+                if (config.switches.adslotImpressionStats) {
+                    var advertsAnalytics = new AdvertsAnalytics(config, context);
+                }
             });
 
+            require(config.page.ophanUrl, function (Ophan) {
+
+                if (!Ophan.isInitialised) {
+                    Ophan.isInitialised = true;
+                    Ophan.initLog();
+                }
+
+                Ophan.additionalViewData(function() {
+
+                    var viewData = {};
+
+                    var audsci = storage.local.get('gu.ads.audsci');
+                    if (audsci) {
+                        viewData.audsci_json = JSON.stringify(audsci);
+                    }
+
+                    var participations = ab.getParticipations(),
+                        participationsKeys = Object.keys(participations);
+
+                    if (participationsKeys.length > 0) {
+                        var testData = participationsKeys.map(function(k) {
+                            return { id: k, variant: participations[k].variant };
+                        });
+                        viewData.experiments_json = JSON.stringify(testData);
+                    }
+
+                    return viewData;
+                });
+
+                Ophan.sendLog(config.swipe ? config.swipe.referrer : undefined, true);
+            });
         },
 
         loadAdverts: function () {
@@ -365,7 +361,7 @@ define([
                 self.initialisedDeferred = true;
                 modules.initAbTests(config);
                 modules.loadAdverts();
-                modules.loadAnalytics();
+                modules.loadAnalytics(config, context);
                 modules.cleanupCookies(context);
                 modules.runAbTests(config, context);
                 modules.transcludeRelated(config, context);
