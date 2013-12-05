@@ -4,9 +4,14 @@ case class Config(
                    id: String,
                    contentApiQuery: Option[String],
                    displayName: Option[String],
-                   collectionTone: Option[String]) {
+                   collectionTone: Option[String],
+                   groups: Seq[String]) {
   // 'middle' part of the id is the section
   val section: String = id.split("/").tail.dropRight(1).mkString("/")
+}
+
+object Config {
+  def apply(id: String): Config = Config(id, None, None, None, Nil)
 }
 
 case class Collection(items: Seq[Trail],
