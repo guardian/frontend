@@ -23,14 +23,16 @@
             @jobs.take(1).map { job =>
                 <li class="lineitem">
                     <h4 class="lineitem__title"><a href="@job.listingUrl">@job.title</a></h4>
-                    <p class="lineitem__meta">[Central London]</p>
+                    <!--p class="lineitem__meta">[Central London]</p-->
                     <p class="lineitem__description">@job.recruiterLogoUrl.map{ url => <img class="lineitem__image lineitem__image-logo" src="@url" />} @job.shortDescription</p>
                 </li>
             }
         </ul>
     </div>
     <div class="commercial__foot">
-        <a class="commercial__link" href="#">Find your next [Media] job on Guardian Jobs <i class="i i-double-arrow-right-blue"></i></a>
+        @jobs.take(1).map { job =>
+            <a class="commercial__link" href="#">Find your next @job.mainIndustry job on Guardian Jobs <i class="i i-double-arrow-right-blue"></i></a>
+        }
     </div>
 </div>
 
@@ -46,7 +48,9 @@
                 <i class="i i-guardian-jobs-logo"></i>
             </a>
         </h3>
-        <a class="commercial__link" href="#">View all [Media] jobs <i class="i i-double-arrow-right-white"></i></a>
+        @jobs.take(1).map { job =>
+            <a class="commercial__link" href="#">View all @job.mainIndustry jobs <i class="i i-double-arrow-right-white"></i></a>
+        }
     </div>
     <div class="commercial__body">
         <div class="commercial__item">
@@ -54,7 +58,7 @@
                 @jobs.take(1).map { job =>
                     <li class="lineitem">
                         <h4 class="lineitem__title"><a href="@job.listingUrl">@job.title</a></h4>
-                        <p class="lineitem__meta">[Central London]</p>
+                        <!--p class="lineitem__meta">[Central London]</p-->
                         <p class="lineitem__description">@job.recruiterLogoUrl.map{ url => <img class="lineitem__image lineitem__image-logo" src="@url" />} @job.shortDescription</p>
                     </li>
                 }
@@ -63,7 +67,7 @@
         <div class="commercial__item">
             <img class="lineitem__image" src="http://dummyimage.com/220x132/ccc/fff.png" />
             <h4 class="lineitem__title"><a href="#">[How to switch careers - live chat]</a></h4>
-            <p class="lineitem__description">Whether you&#8217;re mid-career change and need some help, or you&#8217;re just considering a move, get advice from our experts on <strong>Thursday 21 November</strong> from 1pm-3pm</p>
+            <p class="lineitem__description">[Whether you&#8217;re mid-career change and need some help, or you&#8217;re just considering a move, get advice from our experts on <strong>Thursday 21 November</strong> from 1pm-3pm]</p>
         </div>
         <div class="commercial__item">
             <h4 class="lineitem__title">Find the latest job in your sector:</h4>
