@@ -404,6 +404,7 @@
     padding: $baseline*2 $gutter/2;
     resize: vertical;
     width: 100%;
+    word-break: break-word;
 }
 .d-comment-box__body--expanded {
     height: 150px;
