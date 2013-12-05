@@ -25,6 +25,7 @@ define([
         this.id = 'CommercialComponents';
         this.expiry = '2013-12-04';
         this.audience = 0.1;
+        this.audienceOffset = 0;
         this.description = 'Test new commercial components';
         this.canRun = function(config) {
             _config = config;
