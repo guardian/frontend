@@ -9,6 +9,7 @@ define([
         this.id = 'InitialShowMore';
         this.expiry = '2013-11-30';
         this.audience = 0.2;
+        this.audienceOffset = 0;
         this.description = 'Test how many items to initially show in the news container';
         this.canRun = function(config) {
             return config.page.contentType === 'Network Front';

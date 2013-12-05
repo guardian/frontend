@@ -89,7 +89,12 @@ define([
 
         showPopular: function () {
             mediator.on('page:front:ready', function(config, context) {
-                popular.render(config);
+                var opts = {};
+                // put popular after the first container if this is us-alpha front
+                if (config.page.pageId === 'us-alpha') {
+                    opts.insertAfter = $('.container').first();
+                }
+                popular.render(config, opts);
             });
         },
 

@@ -7,6 +7,7 @@ define([], function () {
         this.id = 'Abcd';
         this.expiry = '2013-12-31';
         this.audience = 0.25;
+        this.audienceOffset = 0;
         this.description = 'A/A test to prove we bucket users evenly';
         this.canRun = function(config) {
             return true;

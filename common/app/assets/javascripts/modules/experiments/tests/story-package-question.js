@@ -129,6 +129,7 @@ define([
         this.id = 'ImproveOnwardTrails';
         this.expiry = '2013-11-30';
         this.audience = 0.25;
+        this.audienceOffset = 0;
         this.description = 'Test effectiveness of various kinds of trails around story package';
         this.canRun = function(config) {
             if(config.page.contentType === 'Article'){

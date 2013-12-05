@@ -25,9 +25,14 @@ define(function () {
             nameEq = name + '=',
             cookies = document.cookie.split(';');
 
-        cookies.forEach(function(cookie, i) {
-            while (cookie.charAt(0) === ' ') { cookie = cookie.substring(1, cookie.length); }
-            if (cookie.indexOf(nameEq) === 0) { cookieVal = cookie.substring(nameEq.length, cookie.length); return cookieVal; }
+        cookies.forEach(function(cookie) {
+            while (cookie.charAt(0) === ' ') {
+                cookie = cookie.substring(1, cookie.length);
+            }
+            if (cookie.indexOf(nameEq) === 0) {
+                cookieVal = cookie.substring(nameEq.length, cookie.length);
+                return cookieVal;
+            }
         });
 
         return cookieVal;
