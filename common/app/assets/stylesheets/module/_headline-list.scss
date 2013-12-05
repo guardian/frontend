@@ -122,7 +122,7 @@
 
         @include mq(rightCol, wide) {
             width: 100%;
-            float:left;
+            float: left;
             clear: left;
             margin-left: -100%;
             padding-right: $gs-gutter/2;
@@ -166,6 +166,7 @@
 
                 .headline-list__count {
                     margin-left: 0;
+                    margin-top: $baseline*2;
                     @include rem((font-size: 62px));
                 }
             }
