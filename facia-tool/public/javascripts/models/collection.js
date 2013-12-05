@@ -1,24 +1,22 @@
-/* global _: true, humanized_time_span: true */
 define([
     'knockout',
-    'modules/vars',
-    'utils/as-observable-props',
-    'utils/populate-observables',
-    'modules/authed-ajax',
+    'models/common',
+    'models/humanizedTimeSpan',
+    'models/authedAjax',
+    'models/group',
     'models/article',
-    'modules/content-api',
-    'modules/ophan-api',
-    'js!humanized-time-span'
+    'models/contentApi',
+    'models/ophanApi'
 ], function(
     ko,
-    vars,
-    asObservableProps,
-    populateObservables,
+    common,
+    humanizedTimeSpan,
     authedAjax,
+    Group,
     Article,
     contentApi,
     ophanApi
-) {
+    ) {
     function Collection(opts) {
         var self = this;
 
@@ -29,19 +27,19 @@ define([
         this.groups = this.createGroups(opts.groups);
 
         // properties from the config, about this collection
-        this.configMeta   = asObservableProps([
+        this.configMeta   = common.util.asObservableProps([
             'displayName',
             'roleName']);
-        populateObservables(this.configMeta, opts);
+        common.util.populateObservables(this.configMeta, opts);
 
         // properties from the collection itself
-        this.collectionMeta = asObservableProps([
+        this.collectionMeta = common.util.asObservableProps([
             'displayName',
             'lastUpdated',
             'updatedBy',
             'updatedEmail']);
 
-        this.state  = asObservableProps([
+        this.state  = common.util.asObservableProps([
             'hasDraft',
             'loadIsPending',
             'editingConfig',
@@ -55,14 +53,12 @@ define([
             dropItem = this.drop.bind(this);
 
         return _.map(_.isArray(groupNames) ? groupNames : [undefined], function(name, index) {
-            return {
+            return new Group ({
                 group: index,
                 name: name,
                 collection: self,
-                articles:  ko.observableArray(),
-                underDrag: ko.observable(),
                 dropItem: dropItem
-            };
+            });
         }).reverse(); // because groupNames is assumed to be in ascending order of importance, yet should render in descending order
     };
 
@@ -90,12 +86,12 @@ define([
 
         authedAjax.request({
             type: 'post',
-            url: vars.CONST.apiBase + '/collection/' + this.id,
+            url: common.config.apiBase + '/collection/' + this.id,
             data: JSON.stringify(goLive ? {publish: true} : {discard: true})
         })
-        .then(function() {
-            self.load();
-        });
+            .then(function() {
+                self.load();
+            })
 
         this.state.hasDraft(false);
     };
@@ -107,15 +103,15 @@ define([
 
         authedAjax.request({
             type: 'delete',
-            url: vars.CONST.apiBase + '/collection/' + self.id,
+            url: common.config.apiBase + '/collection/' + self.id,
             data: JSON.stringify({
                 item: item.props.id(),
-                live:   vars.state.liveMode(),
-                draft: !vars.state.liveMode()
-            })
+                live:   common.state.liveMode(),
+                draft: !common.state.liveMode()
+            }),
         }).then(function() {
-            self.load();
-        });
+                self.load();
+            });
     };
 
     Collection.prototype.load = function(opts) {
@@ -123,28 +119,29 @@ define([
         opts = opts || {};
 
         return authedAjax.request({
-            url: vars.CONST.apiBase + '/collection/' + this.id
+            url: common.config.apiBase + '/collection/' + this.id
         }).then(function(resp) {
-            self.response = resp;
-            self.state.loadIsPending(false);
-            self.state.hasDraft(_.isArray(self.response.draft));
+                self.response = resp;
+                self.state.loadIsPending(false);
+                self.state.hasDraft(_.isArray(self.response.draft));
 
-            var dontUpdate = opts.isRefresh && (self.state.loadIsPending() || self.response.lastUpdated === self.collectionMeta.lastUpdated());
-            if (!dontUpdate) {
-                self.populateLists();
-            }
+                if (opts.isRefresh && (self.state.loadIsPending() || self.response.lastUpdated === self.collectionMeta.lastUpdated())) {
+                    // noop
+                } else {
+                    self.populateLists();
+                }
 
-            if (!self.state.editingConfig()) {
-                populateObservables(self.collectionMeta, self.response);
-                self.state.timeAgo(self.getTimeAgo(self.response.lastUpdated));
-            }
-        });
+                if (!self.state.editingConfig()) {
+                    common.util.populateObservables(self.collectionMeta, self.response)
+                    self.state.timeAgo(self.getTimeAgo(self.response.lastUpdated));
+                }
+            });
     };
 
     Collection.prototype.populateLists = function() {
         if (!this.response) { return; }
 
-        if (vars.state.liveMode()) {
+        if (common.state.liveMode()) {
             this.importList(this.response.live);
         } else {
             this.importList(this.response.draft || this.response.live); // No draft yet? Base it on live.
@@ -156,29 +153,31 @@ define([
         var self = this;
 
         _.each(this.groups, function(group) {
-            group.articles.removeAll();
+            group.items.removeAll();
         });
 
         _.toArray(source).forEach(function(item, index) {
             var groupInt,
                 group;
 
+            //item.sublinks = [{id: 'politics/blog/2013/dec/05/george-osbornes-autumn-statement-live'}]
+
             groupInt = parseInt((item.meta || {}).group, 10) || 0;
 
             group = _.find(self.groups, function(g){ return g.group === groupInt; }) || self.groups[0];
-            group.articles.push(new Article(item, self));
+            group.items.push(new Article(item, self));
         });
-    };
+    }
 
     Collection.prototype.decorate = function() {
         _.each(this.groups, function(group) {
-            contentApi.decorateItems(group.articles());
-            ophanApi.decorateItems(group.articles());
+            contentApi.decorateItems(group.items());
+            ophanApi.decorateItems(group.items());
         });
     };
 
     Collection.prototype.refresh = function() {
-        if (vars.state.uiBusy || this.state.loadIsPending()) { return; }
+        if (common.state.uiBusy || this.state.loadIsPending()) { return; }
         this.load({
             isRefresh: true
         });
@@ -191,7 +190,7 @@ define([
         this.state.loadIsPending(true);
 
         authedAjax.request({
-            url: vars.CONST.apiBase + '/collection/' + this.id,
+            url: common.config.apiBase + '/collection/' + this.id,
             type: 'post',
             data: JSON.stringify({
                 config: {
@@ -199,12 +198,12 @@ define([
                 }
             })
         }).then(function(){
-            self.load();
-        });
+                self.load();
+            });
     };
 
     Collection.prototype.getTimeAgo = function(date) {
-        return date ? humanized_time_span(date) : '';
+        return date ? humanizedTimeSpan(date) : '';
     };
 
     return Collection;

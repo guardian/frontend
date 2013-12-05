@@ -1,135 +1,145 @@
-/* global _: true, humanized_time_span: true */
 define([
-    'modules/vars',
-    'utils/as-observable-props',
-    'utils/populate-observables',
-    'utils/number-with-commas',
-    'modules/authed-ajax',
+    'models/editable',
+    'models/quote',
     'knockout',
-    'js!humanized-time-span'
+    'Common',
+    'Reqwest'
 ],
-function (
-    vars,
-    asObservableProps,
-    populateObservables,
-    numberWithCommas,
-    authedAjax,
-    ko
-){
-    var absUrlHost = 'http://m.guardian.co.uk/';
+    function (
+        Editable,
+        Quote,
+        ko,
+        Common,
+        Reqwest
+        ){
 
-    function Article(options, collection) {
-        var opts = options || {};
+        var mDotHost = 'http://m.guardian.co.uk/';
 
-        this.collection = collection;
+        var Article = function(opts) {
 
-        this.props = asObservableProps([
-            'id',
-            'webPublicationDate']);
+            var opts = opts || {},
+                self = this;
 
-        this.fields = asObservableProps([
-            'headline',
-            'thumbnail',
-            'trailText',
-            'shortId']);
+            this.id         = ko.observable(opts.id || '');
+            this.shortId    = ko.observable(opts.shortId || '');
+            this.webTitle   = ko.observable(opts.webTitle || '');
+            this.webPublicationDate = ko.observable(opts.webPublicationDate);
+            this.importance = ko.observable(opts.importance || 50);
+            this.colour     = ko.observable(opts.colour);
+            this.headlineOverride   = ko.observable(opts.headline);
 
-        this.fields.headline('...');
-
-        this.meta = asObservableProps([
-            'headline',
-            'group']);
-
-        this.state = asObservableProps([
-            'underDrag',
-            'editingTitle',
-            'shares',
-            'comments',
-            'totalHits',
-            'pageViewsSeries']);
-
-        // Computeds
-        this.humanDate = ko.computed(function(){
-            return this.props.webPublicationDate() ? humanized_time_span(this.props.webPublicationDate()) : '';
-        }, this);
-
-        this.totalHitsFormatted = ko.computed(function(){
-            return numberWithCommas(this.state.totalHits());
-        }, this);
-
-        this.headlineInput = ko.computed({
-            read: function() {
-                return this.meta.headline() || this.fields.headline();
-            },
-            write: function(value) {
-                this.meta.headline(value);
-            },
-            owner: this
-        });
-
-        this.provisionalHeadline = null;
-
-        this.populate(opts);
-    }
-
-    Article.prototype.populate = function(opts) {
-        populateObservables(this.props, opts);
-        populateObservables(this.meta, opts.meta);
-        populateObservables(this.fields, opts.fields);
-    };
-
-    Article.prototype.startTitleEdit = function() {
-        this.provisionalHeadline = this.meta.headline();
-        this.state.editingTitle(true);
-    };
-
-    Article.prototype.saveTitleEdit = function() {
-        if(this.meta.headline()) {
-            this.save();
-        }
-        this.state.editingTitle(false);
-    };
-
-    Article.prototype.cancelTitleEdit = function() {
-        this.meta.headline(this.provisionalHeadline);
-        this.state.editingTitle(false);
-    };
-
-    Article.prototype.revertTitleEdit = function() {
-        this.meta.headline(undefined);
-        this.state.editingTitle(false);
-        this.save();
-    };
-
-    Article.prototype.getMeta = function() {
-        var self = this;
-
-        return _.chain(this.meta)
-            .pairs()
-            // is the meta property a not a whitespace-only string ?
-            .filter(function(p){ return !_.isUndefined(p[1]()) && ("" + p[1]()).replace(/\s*/g, '').length > 0; })
-            // does it actually differ from the props value (if any) that it's overwriting ?
-            .filter(function(p){ return  _.isUndefined(self.props[p[0]]) || self.props[p[0]]() !== p[1](); })
-            .map(function(p){ return [p[0], p[1]()]; })
-            .object()
-            .value();
-    };
-
-    Article.prototype.save = function() {
-        if (!this.collection) { return; }
-
-        authedAjax.updateCollection(
-            'post',
-            this.collection,
-            {
-                item:     this.props.id(),
-                position: this.props.id(),
-                itemMeta: this.getMeta(),
-                live:     vars.state.liveMode(),
-                draft:   !vars.state.liveMode()
+            if (opts.fields) {
+                this.trailText  = ko.observable(opts.fields.trailText || '');
             }
-        );
-        this.collection.state.loadIsPending(true);
-    };
 
-    return Article;
-});
+            this.quote  = ko.observable(opts.quote ? new Quote(opts.quote) : '');
+
+            // Performance stats
+            this.shares          = ko.observable(opts.shares);
+            this.comments        = ko.observable(opts.comments);
+
+            // Temp vars
+            this._mDot      = ko.observable(mDotHost + opts.id || '');
+            this._humanDate = ko.computed(function(){
+                return this.webPublicationDate() ? humanized_time_span(this.webPublicationDate()) : '-';
+            }, this);
+
+            // colour is represented as a number at the moment
+            this._colourAsText = ko.computed(function() {
+                switch (this.colour()) {
+                    case 1: return 'Overview';
+                    case 2: return 'Background';
+                    case 3: return 'Analysis';
+                    case 4: return 'Reaction';
+                    case 5: return 'Light';
+                    case 0: return '';
+                }
+            }, this);
+
+            // Track for editability / saving
+            this._makeEditable(['importance', 'colour', 'headlineOverride']);
+        };
+
+        Article.prototype = new Editable();
+
+        Article.prototype.addPerformanceCounts = function() {
+            this.addSharedCount();
+            this.addCommentCount();
+        }
+
+        Article.prototype.addSharedCount = function() {
+            var url = encodeURIComponent('http://api.sharedcount.com/?url=http://www.guardian.co.uk/' + this.id()),
+                self = this;
+            Reqwest({
+                url: '/json/proxy/' + url,
+                type: 'json',
+                success: function(resp) {
+                    self.shares(self.sumNumericProps(resp));
+                    Common.mediator.emitEvent('models:story:haschanges');
+                },
+                complete: function() {
+                    Common.mediator.emitEvent('models:article:performance:done');
+                }
+            });
+        };
+
+        Article.prototype.addCommentCount = function() {
+            var url = encodeURIComponent('http://discussion.guardianapis.com/discussion-api/discussion/p/' +
+                    this.shortId() + '/comments/count'),
+                self = this;
+            if(this.shortId()) {
+                Reqwest({
+                    url: '/json/proxy/' + url,
+                    type: 'json',
+                    success: function(resp) {
+                        self.comments(resp.numberOfComments);
+                        Common.mediator.emitEvent('models:story:haschanges');
+                    },
+                    complete: function() {
+                        Common.mediator.emitEvent('models:article:performance:done');
+                    }
+                });
+            } else {
+                Common.mediator.emitEvent('models:article:performance:done');
+            }
+        };
+
+        Article.prototype.sumNumericProps = function sumNumericProps(obj) {
+            var self = this;
+            return _.reduce(obj, function(sum, p){
+                if (typeof p === 'object' && p) {
+                    return sum + self.sumNumericProps(p);
+                } else {
+                    return sum + (typeof p === 'number' ? p : 0);
+                }
+            }, 0);
+        };
+
+        Article.prototype.setColour = function(item, e) {
+            var colour = parseInt($(e.target).data('tone') || 0, 10);
+            this.colour(colour === item.colour() ? 0 : colour);
+        };
+
+        Article.prototype.addQuote = function() {
+            this.quote(new Quote());
+        };
+
+        Article.prototype.deleteQuote = function() {
+            if (!window.confirm("Are you sure you want to DELETE the quote?")) return;
+            this.quote(undefined);
+            Common.mediator.emitEvent('models:story:haschanges');
+        };
+
+        Article.prototype.addHeadlineOverride = function() {
+            var h = window.prompt("Enter the headline:");
+            this.headlineOverride(h);
+        };
+
+        Article.prototype.deleteHeadlineOverride = function() {
+            if (!window.confirm("Are you sure you want to DELETE the headline?")) return;
+            this.headlineOverride(undefined);
+            Common.mediator.emitEvent('models:story:haschanges');
+        };
+
+        return Article;
+    });
