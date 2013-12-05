@@ -157,7 +157,6 @@ define([
             var mvtId = mvtCookie.getMvtFullId();
 
             if (mvtId) {
-                s.prop60 = mvtId;
                 s.evar60 = mvtId;
             }
 
