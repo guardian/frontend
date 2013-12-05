@@ -583,6 +583,18 @@ button {
     top: 10px;
 }
 
+.sublinks {
+    min-height: 20px;
+    padding: 0 0 0 10px;
+    border-left: 2px dashed #CCCCCC;
+}
+
+.sublinks img {
+}
+
+.sublinks .web-title {
+}
+
 @media (max-width: 1100px) {
     .toolbar,
     .collections {

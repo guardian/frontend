@@ -3,6 +3,7 @@ define([
     'models/common',
     'models/humanizedTimeSpan',
     'models/authedAjax',
+    'models/group',
     'models/article',
     'models/contentApi',
     'models/ophanApi'
@@ -11,6 +12,7 @@ define([
     common,
     humanizedTimeSpan,
     authedAjax,
+    Group,
     Article,
     contentApi,
     ophanApi
@@ -51,14 +53,12 @@ define([
             dropItem = this.drop.bind(this);
 
         return _.map(_.isArray(groupNames) ? groupNames : [undefined], function(name, index) {
-            return {
+            return new Group ({
                 group: index,
                 name: name,
                 collection: self,
-                articles:  ko.observableArray(),
-                underDrag: ko.observable(),
                 dropItem: dropItem
-            };
+            });
         }).reverse(); // because groupNames is assumed to be in ascending order of importance, yet should render in descending order
     };
 
@@ -153,24 +153,26 @@ define([
         var self = this;
 
         _.each(this.groups, function(group) {
-            group.articles.removeAll();
+            group.items.removeAll();
         });
 
         _.toArray(source).forEach(function(item, index) {
             var groupInt,
                 group;
 
+            item.sublinks = [{id: 'politics/blog/2013/dec/05/george-osbornes-autumn-statement-live'}]
+
             groupInt = parseInt((item.meta || {}).group, 10) || 0;
 
             group = _.find(self.groups, function(g){ return g.group === groupInt; }) || self.groups[0];
-            group.articles.push(new Article(item, self));
+            group.items.push(new Article(item, self));
         });
     }
 
     Collection.prototype.decorate = function() {
         _.each(this.groups, function(group) {
-            contentApi.decorateItems(group.articles());
-            ophanApi.decorateItems(group.articles());
+            contentApi.decorateItems(group.items());
+            ophanApi.decorateItems(group.items());
         });
     };
 

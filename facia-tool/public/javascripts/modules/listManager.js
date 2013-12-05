@@ -5,6 +5,7 @@ define([
     'models/droppable',
     'models/authedAjax',
     'models/collection',
+    'models/group',
     'models/article',
     'models/latestArticles',
     'models/contentApi',
@@ -16,6 +17,7 @@ define([
     droppable,
     authedAjax,
     Collection,
+    Group,
     Article,
     LatestArticles,
     contentApi,
@@ -37,16 +39,14 @@ define([
                     filterTypes: common.config.filterTypes
                 }),
 
-                clipboard: {
-                    articles: ko.observableArray(),
-                    underDrag: ko.observable(),
+                clipboard: new Group ({
                     callback: updateLayout,
                     dropItem: function(item) {
-                        model.clipboard.articles.remove(item);
+                        model.clipboard.items.remove(item);
                         updateLayout();
                     },
                     keepCopy:  true
-                },
+                }),
 
                 liveMode: common.state.liveMode
             };

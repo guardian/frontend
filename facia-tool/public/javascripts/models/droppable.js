@@ -2,6 +2,7 @@ define([
     'knockout',
     'models/common',
     'models/authedAjax',
+    'models/group',
     'models/article',
     'models/contentApi',
     'models/ophanApi'
@@ -9,12 +10,13 @@ define([
     ko,
     common,
     authedAjax,
+    Group,
     Article,
     contentApi,
     ophanApi
 ) {
     var sourceList,
-        sourceArticle;
+        sourceItem;
 
     function init() {
 
@@ -33,18 +35,19 @@ define([
 
                 element.addEventListener('dragstart', function(event) {
                     sourceList = ko.dataFor(element);
-                    sourceArticle = ko.dataFor(event.target);
+                    sourceItem = ko.dataFor(event.target);
                 }, false);
 
                 element.addEventListener('dragover', function(event) {
                     var targetList = ko.dataFor(element),
-                        targetArticle = ko.dataFor(event.target);
+                        targetItem = ko.dataFor(event.target);
 
                     event.preventDefault();
+                    event.stopPropagation();
 
-                    targetList.underDrag(targetArticle.constructor !== Article);
-                    _.each(targetList.articles(), function(item) {
-                        var underDrag = (item === targetArticle);
+                    targetList.underDrag(targetItem.constructor === Group);
+                    _.each(targetList.items(), function(item) {
+                        var underDrag = (item === targetItem);
                         if (underDrag !== item.state.underDrag()) {
                             item.state.underDrag(underDrag);
                         }
@@ -55,9 +58,10 @@ define([
                     var targetList = ko.dataFor(element);
 
                     event.preventDefault();
+                    event.stopPropagation();
 
                     targetList.underDrag(false);
-                    _.each(targetList.articles(), function(item) {
+                    _.each(targetList.items(), function(item) {
                         if (item.state.underDrag()) {
                             item.state.underDrag(false);
                         }
@@ -66,7 +70,7 @@ define([
 
                 element.addEventListener('drop', function(event) {
                     var targetList = ko.dataFor(element),
-                        targetArticle = ko.dataFor(event.target),
+                        targetItem = ko.dataFor(event.target),
                         item = event.testData ? event.testData : event.dataTransfer.getData('Text'),
                         position,
                         article,
@@ -75,25 +79,26 @@ define([
                         isAfter = false;
 
                     event.preventDefault();
+                    event.stopPropagation();
 
-                    if (!targetList.articles || !targetList.underDrag) { return; }
+                    if (!targetList.items || !targetList.underDrag) { return; }
 
                     targetList.underDrag(false);
-                    _.each(targetList.articles(), function(item) {
+                    _.each(targetList.items(), function(item) {
                         item.state.underDrag(false);
                     });
 
-                    // If the item isn't dropped onto an article, asssume it's to be appended *after* the other articles in this group,
-                    if (targetArticle.constructor !== Article) {
-                        targetArticle = _.last(targetList.articles());
-                        if (targetArticle) {
+                    // If the item isn't dropped onto an article, asssume it's to be appended *after* the other items in this group,
+                    if (targetItem.constructor === Group) {
+                        targetItem = _.last(targetList.items());
+                        if (targetItem) {
                             isAfter = true;
-                        // or if there arent't any other articles, after those in the first preceding group that contains articles.
+                        // or if there arent't any other items, after those in the first preceding group that contains items.
                         } else if (targetList.collection) {
                             var groups = targetList.collection.groups; 
                             for (var i = groups.indexOf(targetList) - 1; i >= 0; i -= 1) {
-                                targetArticle = _.last(groups[i].articles());
-                                if (targetArticle) {
+                                targetItem = _.last(groups[i].items());
+                                if (targetItem) {
                                     isAfter = true;
                                     break;
                                 }
@@ -101,7 +106,7 @@ define([
                         }
                     }
 
-                    position = targetArticle && targetArticle.props ? targetArticle.props.id() : undefined;
+                    position = targetItem && targetItem.props ? targetItem.props.id() : undefined;
 
                     _.each(common.util.parseQueryParams(item), function(url){
                         if (url && url.match(/^http:\/\/www.theguardian.com/)) {
@@ -120,29 +125,29 @@ define([
                         targetList.collection.state.loadIsPending(true);
                     }
 
-                    // sourceArticle doesn't exist when the drag was from an arbitrary link elsewhere.
+                    // sourceItem doesn't exist when the drag was from an arbitrary link elsewhere.
                     // garbage collect it, if it's a leftover from a previous drag. 
-                    if(sourceArticle && sourceArticle.props.id() !== item) {
-                        sourceArticle = undefined;
+                    if(sourceItem && sourceItem.props.id() !== item) {
+                        sourceItem = undefined;
                     }
 
-                    insertAt = targetList.articles().indexOf(targetArticle) + isAfter;
-                    insertAt = insertAt === -1 ? targetList.articles().length : insertAt;
+                    insertAt = targetList.items().indexOf(targetItem) + isAfter;
+                    insertAt = insertAt === -1 ? targetList.items().length : insertAt;
  
                     article = new Article({
                         id: item,
-                        meta: sourceArticle ? sourceArticle.getMeta() : undefined
+                        meta: sourceItem ? sourceItem.getMeta() : undefined
                     });
 
                     // just for UI
-                    targetList.articles.splice(insertAt, 0, article)
+                    targetList.items.splice(insertAt, 0, article)
 
                     contentApi.validateItem(article)
                     .fail(function() {
                         if (targetList.collection) {
                             targetList.collection.state.loadIsPending(false);
                         }
-                        targetList.articles.remove(article);
+                        targetList.items.remove(article);
                         alertBadContent();
                     })
                     .done(function() {
@@ -158,7 +163,7 @@ define([
                             return;
                         }
 
-                        itemMeta = sourceArticle ? sourceArticle.getMeta() : {};
+                        itemMeta = sourceItem ? sourceItem.getMeta() : {};
                         itemMeta.group = targetList.group + '';
 
                         authedAjax.updateCollection(
@@ -185,8 +190,8 @@ define([
                         sourceList.collection.state.loadIsPending(true);
 
                         // just for UI
-                        sourceList.articles.remove(function(article) {
-                            return article === sourceArticle;
+                        sourceList.items.remove(function(article) {
+                            return article === sourceItem;
                         })
 
                         authedAjax.updateCollection(

@@ -1,17 +1,19 @@
 define([
+    'knockout',
     'models/common',
+    'models/group',
     'models/humanizedTimeSpan',
     'models/authedAjax',
-    'knockout'
+    'models/contentApi'
 ],
 function (
+    ko,
     common,
+    Group,
     humanizedTimeSpan,
     authedAjax,
-    ko
+    contentApi
 ){
-    var absUrlHost = 'http://m.guardian.co.uk/';
-
     function Article(opts, collection) {
         var opts = opts || {};
 
@@ -32,7 +34,8 @@ function (
         this.meta = common.util.asObservableProps([
             'headline',
             'group']);
-
+        
+        
         this.state = common.util.asObservableProps([
             'underDrag',
             'editingTitle',
@@ -40,6 +43,17 @@ function (
             'comments',
             'totalHits',
             'pageViewsSeries']);
+
+        if (_.isArray(opts.sublinks)) {
+            this.sublinks = new Group ({
+                items: _.map(opts.sublinks, function(sublink) {
+                    return new Article(sublink)
+                })
+            });
+            contentApi.decorateItems(this.sublinks.items());
+
+            //this.meta.sublinks = this.sublinks.items;
+        }
 
         // Computeds
         this.humanDate = ko.computed(function(){
