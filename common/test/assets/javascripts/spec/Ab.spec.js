@@ -113,6 +113,7 @@ define(['modules/experiments/ab', 'fixtures/ab-test', 'modules/analytics/mvt-coo
 
             it('should remove participation from tests that have been removed/renamed', function () {
                 localStorage.setItem(participationsKey, '{ "value": { "DummyTest": { "variant": "foo" }, "DummyTestDeleted": { "variant": "bar" } } }');
+                ab.segmentUser(switches.test_one_on);
                 ab.run(switches.test_one_on);
                 expect(localStorage.getItem(participationsKey)).toBe('{"value":{"DummyTest":{"variant":"foo"}}}');
             })
