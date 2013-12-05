@@ -33,15 +33,15 @@
                         <li class="headline-list__item">
                             <a href="@LinkTo{@trail.url}" class="headline-list__link" data-link-name="@info.rowNum | text">
                                 <span class="headline-list__count">@info.rowNum</span>
-                                <div class="headline-list__body">
+                                <h4 class="headline-list__body">
                                     @trail.linkText
-                                    @if(info.isFirst) {
-                                        @trail.trailText.map { text =>
-                                            <p class="headline-list__standfirst">@cleanTrailText(text)</p>
-                                        }
-                                    }
-                                </div>
+                                </h4>
                             </a>
+                                @if(info.isFirst) {
+                                    @trail.trailText.map { text =>
+                                        <p class="headline-list__standfirst">@cleanTrailText(text)</p>
+                                    }
+                                }
                         </li>
                     }
                 </ul>
