@@ -32,7 +32,7 @@
     "karma": "~0.10.4",
 
     "phantomjs": "~1.9.1",
-    "svgo": "~0.2",
+    "svgo": "~0.4.1",
     "casperjs": "git://github.com/smlgbl/casperjs.git#feature/makeUsableByNPM",
     "moment": "~2.4",
     "mkdirp": "~0.3.5"
