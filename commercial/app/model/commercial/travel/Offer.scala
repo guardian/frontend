@@ -13,4 +13,9 @@ case class Offer(id: Int, title: Option[String], offerUrl: String, imageUrl: Str
     segment.context.isInSection("travel") && someKeywordsMatch
   }
 
+  def durationInWords: String = duration match {
+    case "1" => return "1 night"
+    case x => return s"$x nights"
+  }
+
 }

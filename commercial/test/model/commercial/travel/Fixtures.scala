@@ -29,7 +29,7 @@ object Fixtures {
       "1284",
       new DateTime(2013, 11, 2, 0, 0),
       Nil,
-      List("France"), "7")
+      List("France"), "1")
   )
 
   val offers = List(
@@ -56,7 +56,7 @@ object Fixtures {
       "1284",
       new DateTime(2013, 11, 2, 0, 0),
       List(Keyword("travel/france", "France")),
-      List("France"), "7")
+      List("France"), "1")
   )
 
 
