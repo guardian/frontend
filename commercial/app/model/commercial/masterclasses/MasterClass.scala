@@ -1,6 +1,6 @@
 package model.commercial.masterclasses
 
-import org.joda.time.format.{DateTimeFormatterBuilder, DateTimeFormatter, DateTimeFormat}
+import org.joda.time.format.{DateTimeFormatter, DateTimeFormat}
 import org.joda.time.DateTime
 import play.api.libs.json.JsValue
 import org.jsoup.Jsoup
