@@ -123,13 +123,12 @@ Loader.prototype.ready = function() {
 
 Loader.prototype.loadComments = function (args) {
 
-    var self = this;
-
-    var commentsContainer = this.getElem('commentsContainer'),
+    var self = this,
+        commentsContainer = this.getElem('commentsContainer'),
         commentsElem = this.getElem('comments'),
         loadingElem = bonzo.create('<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>')[0],
-        hash = window.location.hash,
-        isAnchor = /#comment-\d/.test(hash);
+        commentId = this.getCommentIdFromHash();
+        
 
     if (args.showLoader) {
         // Comments are being loaded in the no-top-comments-available context
@@ -140,14 +139,17 @@ Loader.prototype.loadComments = function (args) {
     bonzo(loadingElem).insertAfter(commentsElem);
 
     this.comments = new Comments(this.context, this.mediator, {
-        initialShow: isAnchor ? 10 : args.amount,
+        initialShow: commentId ? 10 : args.amount,
         discussionId: this.getDiscussionId(),
         user: this.user,
-        commentId: isAnchor ? parseInt(hash.replace('#comment-', ''), 10) : null
+        commentId: commentId ? commentId : null
     });
 
     bean.on(window, 'hashchange', function(e) {
-        // debugger;
+        commentId = self.getCommentIdFromHash();
+        if (commentId) {
+            self.comments.gotoComment(commentId);
+        }
     });
 
     // Doing this makes sure there is only one redraw
@@ -341,6 +343,14 @@ Loader.prototype.renderCommentCount = function() {
             }
         }
     });
+};
+
+/**
+ * @return {number}
+ */
+Loader.prototype.getCommentIdFromHash = function() {
+    var reg = (/#comment-(\d+)/);
+    return reg.exec(window.location.hash) ? parseInt(reg.exec(window.location.hash)[1], 10) : null;
 };
 
 return Loader;

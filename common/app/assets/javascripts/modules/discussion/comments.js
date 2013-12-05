@@ -152,8 +152,7 @@ Comments.prototype.ready = function() {
             bean.fire($(this.getClass('showReplies'), comment.parent())[0], 'click'); // Bonzo can be rubbish (without Ender)
         }
 
-        window.location.hash = '#_';
-        window.location.hash = '#comment-'+ this.options.commentId;
+        window.location.replace('#comment-'+ this.options.commentId);
     }
 
     this.emit('ready');
@@ -231,8 +230,8 @@ Comments.prototype.pickComment = function(thisComment, $thisButton) {
 };
 
 /**
- * @param   {Element}      thisComment
- * @param   {Bonzo}    $thisButton
+ * @param   {Element} thisComment
+ * @param   {Bonzo}     $thisButton
  * @return  {Reqwest}       AJAX Promise
  */
 Comments.prototype.unPickComment = function(thisComment, $thisButton) {
@@ -245,6 +244,20 @@ Comments.prototype.unPickComment = function(thisComment, $thisButton) {
             $thisButton.text('Pick');
             thisComment.setAttribute('data-comment-highlighted', false);
         });
+};
+
+/**
+ * @param {number} commentId
+ */
+Comments.prototype.gotoComment = function(commentId) {
+    // console.log(this);
+};
+
+/**
+ * @param {number} page
+ */
+Comments.prototype.gotoPage = function(page) {
+
 };
 
 /**
@@ -274,6 +287,17 @@ Comments.prototype.showMore = function(e) {
             crossOrigin: true
         }).then(callback);
     }
+};
+
+/**
+ * @param {}
+ * options {
+ *   page: {number},
+ *  
+ * }
+ */
+Comments.prototype.showComments = function(options) {
+
 };
 
 /**
@@ -437,9 +461,8 @@ Comments.prototype.addComment = function(comment, focus, parent) {
         bonzo(parent).append(commentElem);
     }
 
-    window.location.hash = '#_';
     if (focus) {
-        window.location.hash = '#comment-'+ comment.id;
+        window.location.replace('#comment-'+ comment.id);
     }
 };
 
