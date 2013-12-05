@@ -173,6 +173,7 @@
     <script type="text/html" id="template_article">
         <div class="trail u-cf" data-bind="
             css: {
+                editingMeta: state.editingMeta,
                 underDrag: state.underDrag,
                 redundant: $parent.collectionMeta && $parent.collectionMeta.max ? (0 + $index()) >= (0 + $parent.collectionMeta.max()) : false
             }">
@@ -182,7 +183,7 @@
                     attr: {src: fields.thumbnail, title: props.id}" />
             </a>
 
-            <div data-bind="visible: !state.editingTitle()">
+            <div data-bind="visible: !state.editingMeta()">
                 <div class="trail__remove" data-bind="click: $parent.dropItem">
                     <i class="icon-trash icon-white"></i>
                 </div>
@@ -197,16 +198,16 @@
                 </div>
             </div>
 
-            <!-- ko if: state.editingTitle -->
+            <!-- ko if: state.editingMeta -->
             <div class="trail_tweaks u-cf">
                 <input type="text" data-bind="
                     value: headlineInput,
                     attr: {placeholder: fields.headline}"/>
                 <div>
-                    <a data-bind="click: saveTitleEdit">Save Title</a>
-                    <a data-bind="click: cancelTitleEdit">Cancel</a>
+                    <a data-bind="click: saveMetaEdit">Save Title</a>
+                    <a data-bind="click: cancelMetaEdit">Cancel</a>
                     <a data-bind="
-                        click: revertTitleEdit,
+                        click: revertMetaEdit,
                         attr: {title: fields.headline},
                         visible: meta.headline">Revert</a>
                 </div>
@@ -214,7 +215,7 @@
             <!-- /ko -->
 
             <div class="web-title" data-bind="
-                    visible: !state.editingTitle()">
+                    visible: !state.editingMeta()">
 
                 <a target="article" data-bind="
                     click: function() { return false; },
@@ -222,16 +223,17 @@
                     text: meta.headline() || fields.headline()"></a>
 
                 <i class="web-title--editable icon-pencil" data-bind="
-                    click: startTitleEdit,
+                    click: startMetaEdit,
                     css: {'web-title--editor': !meta.headline(), 'web-title--edited': meta.headline}"></i>
             </div>
 
         </div>
         
-        <!-- ko if: $data.sublinks -->
+        <!-- ko if: state.editingMeta -->
         <div class="sublinks" data-bind="with: sublinks">
             <div class="droppable" data-bind="
                 makeDropabble: true,
+                css: {underDrag: underDrag},
                 template: {name: 'template_article', foreach: items}"></div>
 
         </div>

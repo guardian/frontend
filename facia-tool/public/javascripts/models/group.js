@@ -15,7 +15,7 @@ define([
         this.collection = opts.collection;
         this.keepCopy =   opts.keepCopy;
 
-        this.dropItem =   opts.dropItem  || function(){};
+        this.onDropItem = opts.onDropItem  || function(){};
         this.callback =   opts.callback  || function(){};
     }
 

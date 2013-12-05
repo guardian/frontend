@@ -1,144 +1,146 @@
 define([
-    'models/editable',
-    'models/quote',
     'knockout',
-    'Common',
-    'Reqwest'
+    'models/common',
+    'models/group',
+    'models/humanizedTimeSpan',
+    'models/authedAjax',
+    'models/contentApi'
 ],
     function (
-        Editable,
-        Quote,
         ko,
-        Common,
-        Reqwest
+        common,
+        Group,
+        humanizedTimeSpan,
+        authedAjax,
+        contentApi
         ){
+        function Article(opts, collection) {
+            var opts = opts || {};
 
-        var mDotHost = 'http://m.guardian.co.uk/';
+            this.collection = collection;
 
-        var Article = function(opts) {
+            this.props = common.util.asObservableProps([
+                'id',
+                'webPublicationDate']);
 
-            var opts = opts || {},
-                self = this;
+            this.fields = common.util.asObservableProps([
+                'headline',
+                'thumbnail',
+                'trailText',
+                'shortId']);
 
-            this.id         = ko.observable(opts.id || '');
-            this.shortId    = ko.observable(opts.shortId || '');
-            this.webTitle   = ko.observable(opts.webTitle || '');
-            this.webPublicationDate = ko.observable(opts.webPublicationDate);
-            this.importance = ko.observable(opts.importance || 50);
-            this.colour     = ko.observable(opts.colour);
-            this.headlineOverride   = ko.observable(opts.headline);
+            this.fields.headline('...');
 
-            if (opts.fields) {
-                this.trailText  = ko.observable(opts.fields.trailText || '');
-            }
+            this.meta = common.util.asObservableProps([
+                'sublinks',
+                'headline',
+                'group']);
 
-            this.quote  = ko.observable(opts.quote ? new Quote(opts.quote) : '');
 
-            // Performance stats
-            this.shares          = ko.observable(opts.shares);
-            this.comments        = ko.observable(opts.comments);
+            this.state = common.util.asObservableProps([
+                'underDrag',
+                'editingMeta',
+                'shares',
+                'comments',
+                'totalHits',
+                'pageViewsSeries']);
 
-            // Temp vars
-            this._mDot      = ko.observable(mDotHost + opts.id || '');
-            this._humanDate = ko.computed(function(){
-                return this.webPublicationDate() ? humanized_time_span(this.webPublicationDate()) : '-';
+            // Computeds
+            this.humanDate = ko.computed(function(){
+                return this.props.webPublicationDate() ? humanizedTimeSpan(this.props.webPublicationDate()) : '';
             }, this);
 
-            // colour is represented as a number at the moment
-            this._colourAsText = ko.computed(function() {
-                switch (this.colour()) {
-                    case 1: return 'Overview';
-                    case 2: return 'Background';
-                    case 3: return 'Analysis';
-                    case 4: return 'Reaction';
-                    case 5: return 'Light';
-                    case 0: return '';
-                }
+            this.totalHitsFormatted = ko.computed(function(){
+                return common.util.numberWithCommas(this.state.totalHits());
             }, this);
 
-            // Track for editability / saving
-            this._makeEditable(['importance', 'colour', 'headlineOverride']);
+            this.headlineInput = ko.computed({
+                read: function() {
+                    return this.meta.headline() || this.fields.headline();
+                },
+                write: function(value) {
+                    this.meta.headline(value);
+                },
+                owner: this
+            });
+
+            this.provisionalHeadline = null;
+
+            this.populate(opts);
         };
 
-        Article.prototype = new Editable();
+        Article.prototype.populate = function(opts) {
+            common.util.populateObservables(this.props, opts);
+            common.util.populateObservables(this.meta, opts.meta);
+            common.util.populateObservables(this.fields, opts.fields);
 
-        Article.prototype.addPerformanceCounts = function() {
-            this.addSharedCount();
-            this.addCommentCount();
-        }
-
-        Article.prototype.addSharedCount = function() {
-            var url = encodeURIComponent('http://api.sharedcount.com/?url=http://www.guardian.co.uk/' + this.id()),
-                self = this;
-            Reqwest({
-                url: '/json/proxy/' + url,
-                type: 'json',
-                success: function(resp) {
-                    self.shares(self.sumNumericProps(resp));
-                    Common.mediator.emitEvent('models:story:haschanges');
-                },
-                complete: function() {
-                    Common.mediator.emitEvent('models:article:performance:done');
-                }
+            this.meta.sublinks = new Group ({
+                items: _.map((opts.meta || {}).sublinks, function(sublink) {
+                    return new Article(sublink)
+                })
             });
         };
 
-        Article.prototype.addCommentCount = function() {
-            var url = encodeURIComponent('http://discussion.guardianapis.com/discussion-api/discussion/p/' +
-                    this.shortId() + '/comments/count'),
-                self = this;
-            if(this.shortId()) {
-                Reqwest({
-                    url: '/json/proxy/' + url,
-                    type: 'json',
-                    success: function(resp) {
-                        self.comments(resp.numberOfComments);
-                        Common.mediator.emitEvent('models:story:haschanges');
-                    },
-                    complete: function() {
-                        Common.mediator.emitEvent('models:article:performance:done');
+        Article.prototype.startMetaEdit = function() {
+            this.provisionalHeadline = this.meta.headline();
+            this.state.editingMeta(true);
+        };
+
+        Article.prototype.saveMetaEdit = function() {
+            this.save();
+            this.state.editingMeta(false);
+        };
+
+        Article.prototype.cancelMetaEdit = function() {
+            this.state.editingMeta(false);
+            this.collection.load();
+        };
+
+        Article.prototype.revertMetaEdit = function() {
+            this.meta.headline(undefined);
+        };
+
+        Article.prototype.getMeta = function() {
+            var self = this,
+                result = _.chain(this.meta)
+                    .pairs()
+                    // do sublinks separately
+                    .filter(function(p){ return p[0] !== 'sublinks'})
+                    // is the meta property a not a whitespace-only string ?
+                    .filter(function(p){ return !_.isUndefined(p[1]()) && ("" + p[1]()).replace(/\s*/g, '').length > 0; })
+                    // does it actually differ from the props value (if any) that it's overwriting ?
+                    .filter(function(p){ return  _.isUndefined(self.props[p[0]]) || self.props[p[0]]() !== p[1](); })
+                    .map(function(p){ return [p[0], p[1]()]; })
+                    .object()
+                    .value();
+
+            if (this.meta.sublinks && this.meta.sublinks.items().length) {
+                result.sublinks = _.map(this.meta.sublinks.items(), function(sublink) {
+                    return {
+                        id:   sublink.props.id(),
+                        meta: sublink.meta.headline() ? {headline: sublink.meta.headline()} : undefined
                     }
                 });
-            } else {
-                Common.mediator.emitEvent('models:article:performance:done');
             }
+
+            return result;
         };
 
-        Article.prototype.sumNumericProps = function sumNumericProps(obj) {
-            var self = this;
-            return _.reduce(obj, function(sum, p){
-                if (typeof p === 'object' && p) {
-                    return sum + self.sumNumericProps(p);
-                } else {
-                    return sum + (typeof p === 'number' ? p : 0);
+        Article.prototype.save = function() {
+            if (!this.collection) { return; }
+
+            authedAjax.updateCollection(
+                'post',
+                this.collection,
+                {
+                    item:     this.props.id(),
+                    position: this.props.id(),
+                    itemMeta: this.getMeta(),
+                    live:     common.state.liveMode(),
+                    draft:   !common.state.liveMode(),
                 }
-            }, 0);
-        };
-
-        Article.prototype.setColour = function(item, e) {
-            var colour = parseInt($(e.target).data('tone') || 0, 10);
-            this.colour(colour === item.colour() ? 0 : colour);
-        };
-
-        Article.prototype.addQuote = function() {
-            this.quote(new Quote());
-        };
-
-        Article.prototype.deleteQuote = function() {
-            if (!window.confirm("Are you sure you want to DELETE the quote?")) return;
-            this.quote(undefined);
-            Common.mediator.emitEvent('models:story:haschanges');
-        };
-
-        Article.prototype.addHeadlineOverride = function() {
-            var h = window.prompt("Enter the headline:");
-            this.headlineOverride(h);
-        };
-
-        Article.prototype.deleteHeadlineOverride = function() {
-            if (!window.confirm("Are you sure you want to DELETE the headline?")) return;
-            this.headlineOverride(undefined);
-            Common.mediator.emitEvent('models:story:haschanges');
+            );
+            this.collection.state.loadIsPending(true)
         };
 
         return Article;
