@@ -166,8 +166,8 @@ Loader.prototype.loadComments = function (args) {
                 bonzo([self.comments.getElem('showMore'), self.comments.getElem('header')]).removeClass('u-h');
             }
 
-            self.on("click", self.getElem('joinDiscussion'), function (event) {
-                self.comments.showMore(event);
+            self.on('click', self.getElem('joinDiscussion'), function (e) {
+                self.comments.showHiddenComments(e);
                 self.cleanUpOnShowComments();
             });
             bonzo(commentsContainer).removeClass('u-h');

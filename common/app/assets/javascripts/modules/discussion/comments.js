@@ -21,7 +21,7 @@ define([
     RecommendComments,
     DiscussionApi
 ) {
-
+'use strict';
 /**
  * TODO (jamesgorrie):
  * * Move recommending into this, it has no need for it's own module.
@@ -54,6 +54,7 @@ Comments.prototype.classes = {
     showMore: 'd-discussion__show-more',
     showMoreNewer: 'd-discussion__show-more--newer',
     showMoreOlder: 'd-discussion__show-more--older',
+    showHidden: 'd-discussion__show-hidden',
     reply: 'd-comment--response',
     showReplies: 'js-show-more-replies',
     header: 'd-discussion__header',
@@ -79,9 +80,6 @@ Comments.prototype.defaultOptions = {
     user: null,
     commentId: null
 };
-
-/** @type {Boolean} */
-Comments.prototype.hasHiddenComments = false;
 
 /** @type {NodeList=} */
 Comments.prototype.comments = null;
@@ -116,7 +114,6 @@ Comments.prototype.prerender = function() {
     if (this.topLevelComments.length > 0) {
         qwery(this.getClass('topLevelComment'), this.elem).forEach(function(elem, i) {
             if (i >= initialShow) {
-                self.hasHiddenComments = true;
                 bonzo(elem).addClass('u-h');
             }
         });
@@ -124,7 +121,7 @@ Comments.prototype.prerender = function() {
         if (this.topLevelComments.length > initialShow) {
             if (!this.getElem('showMore')) {
                 bonzo(this.getElem('comments')).append(
-                    '<a class="d-discussion__show-more cta" data-age="older" data-link-name="Show more comments" data-remove="true" href="/discussion'+
+                    '<a class="'+ this.getClass('showHidden') +' cta" data-age="older" data-link-name="Show more comments" data-remove="true" href="/discussion'+
                         this.options.discussionId +'?page=1">'+
                         'Show older comments'+
                     '</a>');
@@ -140,6 +137,7 @@ Comments.prototype.prerender = function() {
 Comments.prototype.ready = function() {
     this.on('click', this.getClass('showReplies'), this.showMoreReplies);
     this.on('click', this.getClass('showMore'), this.showMore);
+    this.on('click', this.getClass('showHidden'), this.showHiddenComments);
     
     if (!this.isReadOnly()) {
         this.bindCommentEvents();
@@ -250,7 +248,7 @@ Comments.prototype.unPickComment = function(thisComment, $thisButton) {
  * @param {number} commentId
  */
 Comments.prototype.gotoComment = function(commentId) {
-    // console.log(this);
+    this.load({ comment: commentId });
 };
 
 /**
@@ -275,28 +273,26 @@ Comments.prototype.showMore = function(e) {
         return;
     }
 
-    if (this.hasHiddenComments) {
-        this.showHiddenComments();
-    } else {
-        showMoreButton.innerHTML = 'Loading…';
-        showMoreButton.setAttribute('data-disabled', 'disabled');
-        ajax({
-            url: '/discussion'+ this.options.discussionId +'.json?page='+ toPage,
-            type: 'json',
-            method: 'get',
-            crossOrigin: true
-        }).then(callback);
-    }
+    showMoreButton.innerHTML = 'Loading…';
+    showMoreButton.setAttribute('data-disabled', 'disabled');
+    ajax({
+        url: '/discussion'+ this.options.discussionId +'.json?page='+ toPage,
+        type: 'json',
+        method: 'get',
+        crossOrigin: true
+    }).then(callback);
 };
 
 /**
- * @param {}
+ * @param {Object.<string.*>}
  * options {
  *   page: {number},
- *  
+ *   comment: {number},
+ *   empty: {boolean},
+ *   callback: {function}
  * }
  */
-Comments.prototype.showComments = function(options) {
+Comments.prototype.load = function(options) {
 
 };
 
@@ -349,11 +345,15 @@ Comments.prototype.commentsLoaded = function(resp, age) {
     this.emit('loaded');
 };
 
-Comments.prototype.showHiddenComments = function() {
+/**
+ * @param {Event} e (optional)
+ */
+Comments.prototype.showHiddenComments = function(e) {
+    if (e) { e.preventDefault(); }
+
     qwery(this.getClass('topLevelComment'), this.elem).forEach(function(elem, i) {
         bonzo(elem).removeClass('u-h');
     });
-    this.hasHiddenComments = false;
 
     if (this.getElem('showMore').getAttribute('data-remove') === 'true') {
         bonzo(this.getElem('showMore')).remove();
