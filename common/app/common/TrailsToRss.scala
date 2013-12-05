@@ -20,7 +20,7 @@ object TrailsToRss {
     image.setLink("http://www.theguardian.com")
 
     // This image fits this spec. - https://support.google.com/news/publisher/answer/1407682
-    image.setUrl("http://assets.guim.co.uk/images/guardian-logo-rss.8738b8e596be8126a767fdf608b696c8.png")
+    image.setUrl("http://assets.guim.co.uk/images/guardian-logo-rss.c45beb1bafa34b347ac333af2e6fe23f.png")
     image.setTitle(feedTitle)
 
     // Feed
