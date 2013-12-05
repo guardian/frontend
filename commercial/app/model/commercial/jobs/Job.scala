@@ -22,13 +22,17 @@ case class Job(id: Int,
     val someKeywordsMatch = intersects(segment.context.keywords, keywords.map(_.name))
     segment.context.isInSection("business") && someKeywordsMatch
   }
+
+  val industries = sectorIds.flatMap(sectorId => Industries.sectorIdIndustryMap.get(sectorId))
+
+  val mainIndustry: Option[String] = industries.headOption
 }
 
 object Industries extends ExecutionContexts {
 
   private lazy val industryKeywords = AkkaAgent(Map.empty[Int, Seq[Keyword]])
 
-  private val sectorIdIndustryMap = Map[Int, String](
+  val sectorIdIndustryMap = Map[Int, String](
     (101, "Arts & heritage"),
     (111, "Charities"),
     (124, "Construction"),
@@ -56,11 +60,13 @@ object Industries extends ExecutionContexts {
     (350, "Social Enterprise")
   )
 
-  def refresh() = Future.sequence(sectorIdIndustryMap.map{ case (id, name) =>
-    ContentApi.tags.stringParam("type", "keyword").stringParam("q", name).pageSize(50).response.flatMap{ response =>
-      val keywords = response.results.map(tag => Keyword(tag.id, tag.webTitle))
-      industryKeywords.alter(_.updated(id, keywords))(5.seconds)
-    }
+  def refresh() = Future.sequence(sectorIdIndustryMap.map {
+    case (id, name) =>
+      ContentApi.tags.stringParam("type", "keyword").stringParam("q", name).pageSize(50).response.flatMap {
+        response =>
+          val keywords = response.results.map(tag => Keyword(tag.id, tag.webTitle))
+          industryKeywords.alter(_.updated(id, keywords))(5.seconds)
+      }
   })
 
   def stop() {
