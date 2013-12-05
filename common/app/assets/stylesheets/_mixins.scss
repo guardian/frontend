@@ -212,6 +212,13 @@
     user-select: none;
 }
 
+@mixin simple-gradient($from, $to) {
+    background-color: $from;
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from($from), to($to));
+    background-image: -webkit-linear-gradient($from, $to);
+    background-image: linear-gradient(to bottom, $from, $to);
+}
+
 // Misc
 // =============================================================================
 

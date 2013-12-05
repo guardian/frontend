@@ -4,6 +4,7 @@ define([], function () {
 
         this.id = id;
         this.audience = 1;
+        this.audienceOffset = 0;
         this.expiry = '2045-01-01';
         this.description = 'Dummy test';
         this.canRun = function(config) {

@@ -88,9 +88,8 @@
                                                 <h2 class="article__meta-heading tone-colour">Share this article</h2>
                                                 @fragments.social(article, "next to content")
                                             </div>
-
-                                            <div class="open-cta"></div>
                                         </div>
+                                        <div class="open-cta"></div>
                                     </div>
                                 </div>
                             </div>
@@ -121,9 +120,8 @@
             } else {
                 <aside class="js-related" role="complementary"></aside>
             }
-
-            @fragments.mostPopularPlaceholder(article.section)
         </div>
+        @fragments.mostPopularPlaceholder(article.section)
     </div>
 
     <script type="text/template" id="tmpl-right-ear">@fragments.onwardRightEar()</script>

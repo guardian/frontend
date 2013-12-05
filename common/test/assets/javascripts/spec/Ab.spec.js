@@ -1,4 +1,4 @@
-define(['modules/experiments/ab', 'fixtures/ab-test'], function(ab, ABTest) {
+define(['modules/experiments/ab', 'fixtures/ab-test', 'modules/analytics/mvt-cookie'], function(ab, ABTest, mvtCookie) {
 
     describe('AB Testing', function() {
 
@@ -13,6 +13,7 @@ define(['modules/experiments/ab', 'fixtures/ab-test'], function(ab, ABTest) {
         beforeEach(function() {
 
             ab.clearTests();
+            mvtCookie.overwriteMvtCookie(1);
 
             // a list of ab-tests that can be used in the spec's 
             test = {
@@ -87,11 +88,11 @@ define(['modules/experiments/ab', 'fixtures/ab-test'], function(ab, ABTest) {
 
             it("should not segment user if they already belong to the test", function() {
 
-                Math.seedrandom('3'); // generate 84%
+                mvtCookie.overwriteMvtCookie(1);
                 ab.segment(switches.test_one_on);
                 expect(ab.getParticipations()['DummyTest'].variant).toEqual('hide');
 
-                Math.seedrandom('2'); // generates 29%
+                mvtCookie.overwriteMvtCookie(1);
                 ab.segment(switches.test_one_on);
                 expect(ab.getParticipations()['DummyTest'].variant).toEqual('hide');
             });
@@ -134,12 +135,6 @@ define(['modules/experiments/ab', 'fixtures/ab-test'], function(ab, ABTest) {
                 expect(controlSpy.called || variantSpy.called).toBeTruthy();
             });
 
-            it('should not run the test if the user has not been put in a segment', function () {
-                // Nb. no call to ab.segment(...)
-                ab.run(switches.test_one_on);
-                expect(controlSpy.called || variantSpy.called).toBeFalsy();
-            });
-
             it('should not to run the after the expiry date', function () {
                 test.one.expiry = "2012-01-01";
                 ab.segment(switches.test_one_on);
@@ -178,6 +173,7 @@ define(['modules/experiments/ab', 'fixtures/ab-test'], function(ab, ABTest) {
 
             it('should return the variant of a test that current user is participating in', function () {
                 ab.addTest(test.two);
+                mvtCookie.overwriteMvtCookie(2);
                 ab.segment(switches.both_tests_on);
                 var event = {};
                 event.tag = 'most popular | The Guardian | trail | 1 | text';
@@ -185,9 +181,9 @@ define(['modules/experiments/ab', 'fixtures/ab-test'], function(ab, ABTest) {
             });
 
             it('should generate a string for Omniture to tag the test(s) the user is in', function() {
-                Math.seedrandom('gu');
-                test.two.audience = 1; 
+                test.two.audience = 1;
                 ab.addTest(test.two);
+                mvtCookie.overwriteMvtCookie(2);
                 ab.segment(switches.both_tests_on);
                 ab.run(switches.both_tests_on);
                 expect(ab.makeOmnitureTag(switches.both_tests_on)).toBe("AB | DummyTest | control,AB | DummyTest2 | control");
@@ -195,11 +191,11 @@ define(['modules/experiments/ab', 'fixtures/ab-test'], function(ab, ABTest) {
             });
 
             it('should generate Omniture tags when there is two tests, but one cannot run', function() {
-                Math.seedrandom('gu');
                 test.one.canRun = function() { return false; };
                 ab.addTest(test.one);
                 test.two.audience = 1;
                 ab.addTest(test.two);
+                mvtCookie.overwriteMvtCookie(2);
                 ab.segment(switches.both_tests_on);
                 ab.run(switches.both_tests_on);
                 expect(ab.makeOmnitureTag(switches.both_tests_on)).toBe("AB | DummyTest2 | control");
@@ -208,6 +204,7 @@ define(['modules/experiments/ab', 'fixtures/ab-test'], function(ab, ABTest) {
             it('should not generate Omniture tags when a test can not be run', function() {
                 test.two.canRun = function() { return false; };
                 ab.addTest(test.two);
+                mvtCookie.overwriteMvtCookie(2);
                 ab.segment(switches.both_tests_on);
                 ab.run(switches.both_tests_on);
                 expect(ab.makeOmnitureTag(switches.both_tests_on)).toBe("AB | DummyTest | control");

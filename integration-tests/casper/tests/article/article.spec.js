@@ -9,7 +9,6 @@
 
 casper.test.setUp(function() {
     casper.start(host + "business/2010/feb/08/fsa-european-directive-hedge-funds?view=mobile");
-    casper.options.waitTimeout = 10000;
 });
 
 casper.test.begin("Related content", function(test) {

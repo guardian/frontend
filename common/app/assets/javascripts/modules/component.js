@@ -8,7 +8,7 @@ define([
     qwery,
     bonzo,
     ajax
-    ) {
+) {
 
     /**
      * TODO (jamesgorrie):
@@ -17,7 +17,7 @@ define([
      *   Perhaps in the create method somewhere.
      * @constructor
      */
-    var Component = function() {};
+    var Component = function(config, options) {};
 
     /** @type {boolean} */
     Component.prototype.useBem = false;

@@ -6,6 +6,7 @@ import conf.CommercialConfiguration
 import model.commercial.Utils.OptString
 import model.commercial.XmlAdsApi
 import org.joda.time.format.DateTimeFormat
+import org.apache.commons.lang.StringEscapeUtils.unescapeHtml
 
 object JobsApi extends XmlAdsApi[Job] {
 
@@ -30,10 +31,10 @@ object JobsApi extends XmlAdsApi[Job] {
         Job(
           (job \ "JobID").text.toInt,
           (job \ "JobTitle").text,
-          (job \ "ShortJobDescription").text,
+          unescapeHtml((job \ "ShortJobDescription").text),
           (job \ "RecruiterName").text,
           OptString((job \ "RecruiterLogoURL").text),
-          ((job \ "Sectors" \ "Sector") map (_.text.toInt)).toSet
+          ((job \ "Sectors" \ "Sector") map (_.text.toInt)).toSeq
         )
     }
   }

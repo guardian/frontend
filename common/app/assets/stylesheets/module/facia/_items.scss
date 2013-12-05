@@ -38,13 +38,13 @@ $c-live: #e81818;
         border-top-width: $item-top-border-height;
         background-color: transparent !important;
         line-height: 1em;
-        .tone-news & {
+        &.tone-news {
             color: $c-newsDefault;
         }
-        .tone-comment & {
+        &.tone-comment {
             color: $c-commentDefault;
         }
-        .tone-feature & {
+        &.tone-feature {
             color: $c-featureDefault;
         }
     }
@@ -163,10 +163,6 @@ $c-live: #e81818;
         top: 0;
         left: 0;
     }
-}
-
-.item__image-container.inlined-image {
-  display: block !important;
 }
 
 .item__live-indicator {

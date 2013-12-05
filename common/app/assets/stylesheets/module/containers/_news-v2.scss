@@ -1,9 +1,5 @@
 $metaHeight: 20px;
 
-.container--news {
-    .container__toggle { display: none; }
-}
-
 // $collection: (width: 12, height: 5, flow-offset-x: 8, flow-offset-y: 3);
 //  @include nc-collection($collection);
 //
@@ -309,7 +305,7 @@ $metaHeight: 20px;
                     padding-right: 0;
                 }
             }
-            
+
             &:nth-child(3) {
                 @include nc-item(3, 4, 5, 6, $collection);
 

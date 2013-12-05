@@ -1,17 +1,16 @@
-import common.CloudWatchApplicationMetrics
+import common._
 import conf.Management
-import common.{Logging, AkkaAsync, Jobs}
 import conf.RequestMeasurementMetrics
 import dev.DevParametersLifecycle
 import model.commercial.masterclasses.MasterClassAgent
-import model.commercial.jobs.JobsAgent
+import model.commercial.jobs.{Industries, JobsAgent}
 import model.commercial.soulmates.SoulmatesAggregatingAgent
-import model.commercial.travel.OffersAgent
+import model.commercial.travel.{Countries, OffersAgent}
 import play.api.mvc.WithFilters
 import play.api.{Application => PlayApp, GlobalSettings}
-import scala.util.Random
+import scala.util.{Failure, Success, Random}
 
-trait CommercialLifecycle extends GlobalSettings with Logging {
+trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionContexts {
 
   override def onStart(app: PlayApp) {
 
@@ -20,10 +19,12 @@ trait CommercialLifecycle extends GlobalSettings with Logging {
 
     super.onStart(app)
 
-    Jobs.deschedule("TravelOffersRefreshJob")
-    Jobs.deschedule("JobsRefreshJob")
-    Jobs.deschedule("MasterClassRefreshJob")
     Jobs.deschedule("SoulmatesRefreshJob")
+    Jobs.deschedule("MasterClassRefreshJob")
+    Jobs.deschedule("CountryRefreshJob")
+    Jobs.deschedule("TravelOffersRefreshJob")
+    Jobs.deschedule("IndustryRefreshJob")
+    Jobs.deschedule("JobsRefreshJob")
 
     // fire every 15 mins
     val soulmatesRefreshSchedule = randomStartSchedule()
@@ -40,14 +41,28 @@ trait CommercialLifecycle extends GlobalSettings with Logging {
     }
 
     // fire every 15 mins
-    val travelRefreshSchedule = randomStartSchedule(minsLater = 2)
+    val countryRefreshSchedule = randomStartSchedule(minsLater = 2)
+    log.info(s"Country refresh on schedule $countryRefreshSchedule")
+    Jobs.schedule("CountryRefreshJob", countryRefreshSchedule) {
+      Countries.refresh()
+    }
+
+    // fire every 15 mins
+    val travelRefreshSchedule = randomStartSchedule(minsLater = 3)
     log.info(s"Travel offers refresh on schedule $travelRefreshSchedule")
     Jobs.schedule("TravelOffersRefreshJob", travelRefreshSchedule) {
       OffersAgent.refresh()
     }
 
     // fire every 15 mins
-    val jobsRefreshSchedule = randomStartSchedule(minsLater = 3)
+    val industryRefreshSchedule = randomStartSchedule(minsLater = 4)
+    log.info(s"Industry refresh on schedule $industryRefreshSchedule")
+    Jobs.schedule("IndustryRefreshJob", industryRefreshSchedule) {
+      Industries.refresh()
+    }
+
+    // fire every 15 mins
+    val jobsRefreshSchedule = randomStartSchedule(minsLater = 5)
     log.info(s"Jobs refresh on schedule $jobsRefreshSchedule")
     Jobs.schedule("JobsRefreshJob", jobsRefreshSchedule) {
       JobsAgent.refresh()
@@ -55,22 +70,35 @@ trait CommercialLifecycle extends GlobalSettings with Logging {
 
     AkkaAsync {
       SoulmatesAggregatingAgent.refresh()
+
       MasterClassAgent.refresh()
-      OffersAgent.refresh()
-      JobsAgent.refresh()
+
+      Countries.refresh() andThen {
+        case Success(_) => OffersAgent.refresh()
+        case Failure(e) => log.warn(s"Failed to refresh travel offer countries: ${e.getMessage}")
+      }
+
+      Industries.refresh() andThen {
+        case Success(_) => JobsAgent.refresh()
+        case Failure(e) => log.warn(s"Failed to refresh job industries: ${e.getMessage}")
+      }
     }
   }
 
   override def onStop(app: PlayApp) {
-    Jobs.deschedule("TravelOffersRefreshJob")
-    Jobs.deschedule("JobsRefreshJob")
-    Jobs.deschedule("MasterClassRefreshJob")
     Jobs.deschedule("SoulmatesRefreshJob")
+    Jobs.deschedule("MasterClassRefreshJob")
+    Jobs.deschedule("CountryRefreshJob")
+    Jobs.deschedule("TravelOffersRefreshJob")
+    Jobs.deschedule("IndustryRefreshJob")
+    Jobs.deschedule("JobsRefreshJob")
 
-    OffersAgent.stop()
-    JobsAgent.stop()
     SoulmatesAggregatingAgent.stop()
     MasterClassAgent.stop()
+    Countries.stop()
+    OffersAgent.stop()
+    Industries.stop()
+    JobsAgent.stop()
 
     super.onStop(app)
   }

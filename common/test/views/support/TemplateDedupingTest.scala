@@ -111,6 +111,7 @@ case class TestTrail(url: String) extends Trail {
   def shortUrl: String = ""
   def linkText: String = ""
   def headline: String = ""
+  def webUrl: String = ""
   def trailText: Option[String] = None
   def section: String = ""
   def sectionName: String = ""

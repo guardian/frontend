@@ -17,6 +17,7 @@ trait Trail extends Elements with Tags with FaciaFields {
   def linkText: String
   def headline: String
   def url: String
+  def webUrl: String
   def trailText: Option[String]
   def section: String //sectionId
   def sectionName: String

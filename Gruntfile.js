@@ -1,4 +1,4 @@
-/* global module: false */
+/* global module: false, process: false */
 module.exports = function (grunt) {
     var isDev = grunt.option('dev') || process.env.GRUNT_ISDEV === '1',
         singleRun = grunt.option('single-run') !== false,
@@ -339,6 +339,9 @@ module.exports = function (grunt) {
             },
             discussion: {
                 configFile: testConfDir + 'discussion.js'
+            },
+            identity: {
+                configFile: testConfDir + 'identity.js'
             },
             admin: {
                 configFile: testConfDir + 'admin.js'

@@ -24,7 +24,7 @@
 
 [data-link-name*="bottom-banner-ad"] {
     padding: $baseline*2 0;
-    background-color: #fff;
+    background-color: #ffffff;
 }
 
 .top-banner-ad-container {
@@ -103,17 +103,22 @@
     height: 100%;
 }
 .mpu-container {
-    @include sticky;
-    top: $baseline*4;
-
     &.is-affixed {
         width: 300px; // Needed as it doesn't respect the container width when fixed
         position: fixed;
     }
 }
 
+.mpu-container--sticky {
+    @include sticky;
+    background: #ffffff;
+    margin-top: -$baseline*4;
+    padding-top: $baseline*4;
+    top: 0;
+}
+
 .ad-slot--middle-banner-ad {
-    background-color: #fff;
+    background-color: #ffffff;
     min-height: 0;
     border-bottom: 1px solid $c-neutral6;
 }

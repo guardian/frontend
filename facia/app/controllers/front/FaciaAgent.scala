@@ -52,7 +52,8 @@ trait ParseConfig extends ExecutionContexts with Logging {
     Config(
       (json \ "id").as[String],
       (json \ "contentApiQuery").asOpt[String].filter(_.nonEmpty),
-      (json \ "displayName").asOpt[String]
+      (json \ "displayName").asOpt[String],
+      (json \ "tone").asOpt[String]
     )
 
 }
@@ -145,6 +146,9 @@ trait ParseCollection extends ExecutionContexts with Logging {
     val newSearch = queryString match {
       case Path(Seg("search" ::  Nil)) => {
         val search = ContentApi.search(edition)
+                       .tag("type/gallery|type/article|type/video|type/sudoku")
+                       .showElements("all")
+                       .pageSize(20)
         val newSearch = queryParamsWithEdition.foldLeft(search){
           case (query, (key, value)) => query.stringParam(key, value)
         }.showFields("all")
@@ -154,6 +158,10 @@ trait ParseCollection extends ExecutionContexts with Logging {
       }
       case Path(id)  => {
         val search = ContentApi.item(id, edition)
+                       .tag("type/gallery|type/article|type/video|type/sudoku")
+                       .showElements("all")
+                       .showEditorsPicks(true)
+                       .pageSize(20)
         val newSearch = queryParamsWithEdition.foldLeft(search){
           case (query, (key, value)) => query.stringParam(key, value)
         }.showFields("all")
@@ -181,7 +189,7 @@ object CollectionAgent extends ParseCollection {
   def updateCollection(id: String, collection: Collection): Unit = collectionAgent.send { _.updated(id, collection) }
 
   def updateCollectionById(id: String): Unit = {
-    val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(id, None, None))
+    val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(id, None, None, None))
     val edition = Edition.byId(id.take(2)).getOrElse(Edition.defaultEdition)
     //TODO: Refactor isWarmedUp into method by ID
     updateCollection(id, config, edition, isWarmedUp=true)
@@ -223,7 +231,8 @@ trait ConfigAgent extends ExecutionContexts {
       Config(
         id,
         (collectionJson \ "apiQuery").asOpt[String],
-        (collectionJson \ "displayName").asOpt[String]
+        (collectionJson \ "displayName").asOpt[String],
+        (collectionJson \ "tone").asOpt[String]
       )
     }
   }
