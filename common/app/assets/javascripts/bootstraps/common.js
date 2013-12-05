@@ -26,7 +26,6 @@ define([
     'modules/ui/relativedates',
     'modules/analytics/clickstream',
     'modules/analytics/omniture',
-    'modules/analytics/mvt-cookie',
     'modules/adverts/adverts',
     'utils/cookies',
     'modules/analytics/omnitureMedia',
@@ -67,7 +66,6 @@ define([
     RelativeDates,
     Clickstream,
     Omniture,
-    mvtCookie,
     Adverts,
     Cookies,
     OmnitureMedia,
@@ -169,6 +167,10 @@ define([
             });
         },
 
+        initAbTests: function (config) {
+            ab.segmentUser(config);
+        },
+
         runAbTests: function (config, context) {
             ab.run(config, context);
         },
@@ -177,8 +179,6 @@ define([
             var omniture = new Omniture();
 
             mediator.on('page:common:deferred:loaded', function(config, context) {
-
-                mvtCookie.generateMvtCookie();
 
                 omniture.go(config, function(){
                     // callback:
@@ -363,6 +363,7 @@ define([
         deferToLoadEvent(function() {
             if (!self.initialisedDeferred) {
                 self.initialisedDeferred = true;
+                modules.initAbTests(config);
                 modules.loadAdverts();
                 modules.loadAnalytics();
                 modules.cleanupCookies(context);

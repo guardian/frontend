@@ -186,7 +186,8 @@ define([
             });
         },
 
-        run: function(config, context) {
+        segmentUser: function(config) {
+            mvtCookie.generateMvtCookie();
 
             var forceUserIntoTest = /^#ab/.test(window.location.hash);
             if (forceUserIntoTest) {
@@ -198,7 +199,9 @@ define([
             }
 
             cleanParticipations(config);
+        },
 
+        run: function(config, context) {
             getActiveTests().forEach(function(test) {
                 run(test, config, context);
             });
