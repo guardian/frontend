@@ -13,8 +13,8 @@
     },
     "grunt-hash": {
       "version": "0.4.0",
-      "from": "grunt-hash@git://github.com/guardian/grunt-hash.git#master",
-      "resolved": "git://github.com/guardian/grunt-hash.git#71e2e6acabd2a6df601afcdc0daccf0d2d671b3d"
+      "from": "git://github.com/guardian/grunt-hash",
+      "resolved": "git://github.com/guardian/grunt-hash#71e2e6acabd2a6df601afcdc0daccf0d2d671b3d"
     },
     "grunt-mkdir": {
       "version": "0.1.1",
@@ -58,7 +58,7 @@
     },
     "requirejs": {
       "version": "2.1.9",
-      "from": "requirejs@~2.1.0"
+      "from": "requirejs@~2.1"
     },
     "grunt-contrib-requirejs": {
       "version": "0.4.1",
@@ -86,8 +86,8 @@
     },
     "grunt-env": {
       "version": "0.4.0",
-      "from": "grunt-env@git://github.com/smlgbl/grunt-env.git",
-      "resolved": "git://github.com/smlgbl/grunt-env.git#7973f7e35f88f71b26a48c4ca73cb09585ed815a",
+      "from": "git://github.com/smlgbl/grunt-env",
+      "resolved": "git://github.com/smlgbl/grunt-env#7973f7e35f88f71b26a48c4ca73cb09585ed815a",
       "dependencies": {
         "ini": {
           "version": "1.1.0",
@@ -107,8 +107,8 @@
     },
     "grunt-casperjs": {
       "version": "1.0.9",
-      "from": "grunt-casperjs@git://github.com/guardian/grunt-casperjs.git#upgrade",
-      "resolved": "git://github.com/guardian/grunt-casperjs.git#9eb27bf2be8a254a41e50d1ea652af26df334936",
+      "from": "git://github.com/guardian/grunt-casperjs#upgrade",
+      "resolved": "git://github.com/guardian/grunt-casperjs#9eb27bf2be8a254a41e50d1ea652af26df334936",
       "dependencies": {
         "rimraf": {
           "version": "2.1.4",
@@ -131,7 +131,7 @@
       "from": "grunt-contrib-clean@~0.5",
       "dependencies": {
         "rimraf": {
-          "version": "2.2.2",
+          "version": "2.2.4",
           "from": "rimraf@~2.2.1",
           "dependencies": {
             "graceful-fs": {
@@ -342,7 +342,7 @@
             },
             "optimist": {
               "version": "0.3.7",
-              "from": "optimist@~0.3",
+              "from": "optimist@~0.3.5",
               "dependencies": {
                 "wordwrap": {
                   "version": "0.0.2",
@@ -466,11 +466,13 @@
     },
     "grunt-webfontjson": {
       "version": "0.0.3",
-      "from": "grunt-webfontjson@~0.0.3",
+      "from": "git://github.com/guardian/grunt-webfontjson",
+      "resolved": "git://github.com/guardian/grunt-webfontjson#7cd44db58f771c4fbe4bc96bdef85afc662426c0",
       "dependencies": {
         "webfontjson": {
-          "version": "0.0.3",
-          "from": "webfontjson@0.0.3",
+          "version": "0.0.2",
+          "from": "git://github.com/guardian/webfontjson",
+          "resolved": "git://github.com/guardian/webfontjson#7afeab67bc61200dd32dcb9993f77dbe5c234860",
           "dependencies": {
             "commander": {
               "version": "1.1.1",
@@ -549,8 +551,8 @@
           }
         },
         "rimraf": {
-          "version": "2.2.2",
-          "from": "rimraf@~2.2.1",
+          "version": "2.2.4",
+          "from": "rimraf@2.2.4",
           "dependencies": {
             "graceful-fs": {
               "version": "2.0.1",
@@ -656,7 +658,7 @@
             },
             "underscore": {
               "version": "1.4.4",
-              "from": "underscore@~1.4.3"
+              "from": "underscore@1.4.x"
             },
             "cli": {
               "version": "0.4.5",
@@ -781,7 +783,7 @@
       }
     },
     "karma": {
-      "version": "0.10.6",
+      "version": "0.10.8",
       "from": "karma@~0.10.4",
       "dependencies": {
         "di": {
@@ -868,7 +870,7 @@
         },
         "minimatch": {
           "version": "0.2.12",
-          "from": "minimatch@0.x.x",
+          "from": "minimatch@~0.2.11",
           "dependencies": {
             "lru-cache": {
               "version": "2.5.0",
@@ -1046,7 +1048,7 @@
     },
     "grunt-contrib-imagemin": {
       "version": "0.3.0",
-      "from": "grunt-contrib-imagemin@git://github.com/guardian/grunt-contrib-imagemin#master",
+      "from": "git://github.com/guardian/grunt-contrib-imagemin",
       "resolved": "git://github.com/guardian/grunt-contrib-imagemin#867a4fd8c6214e3ce0bc76309384b719828158c4",
       "dependencies": {
         "filesize": {
@@ -1138,7 +1140,7 @@
                   "from": "fstream@~0.1.8",
                   "dependencies": {
                     "rimraf": {
-                      "version": "2.2.2",
+                      "version": "2.2.4",
                       "from": "rimraf@2"
                     },
                     "graceful-fs": {
@@ -1154,7 +1156,7 @@
               "from": "request@~2.26.0",
               "dependencies": {
                 "qs": {
-                  "version": "0.6.5",
+                  "version": "0.6.6",
                   "from": "qs@~0.6.0"
                 },
                 "json-stringify-safe": {
@@ -1338,7 +1340,7 @@
                   "from": "fstream@~0.1.8",
                   "dependencies": {
                     "rimraf": {
-                      "version": "2.2.2",
+                      "version": "2.2.4",
                       "from": "rimraf@2"
                     },
                     "graceful-fs": {
@@ -1354,7 +1356,7 @@
               "from": "request@~2.26.0",
               "dependencies": {
                 "qs": {
-                  "version": "0.6.5",
+                  "version": "0.6.6",
                   "from": "qs@~0.6.0"
                 },
                 "json-stringify-safe": {
@@ -1427,7 +1429,7 @@
                 },
                 "mime": {
                   "version": "1.2.11",
-                  "from": "mime@~1.2"
+                  "from": "mime@~1.2.9"
                 },
                 "form-data": {
                   "version": "0.1.2",
@@ -1538,7 +1540,7 @@
                   "from": "fstream@~0.1.8",
                   "dependencies": {
                     "rimraf": {
-                      "version": "2.2.2",
+                      "version": "2.2.4",
                       "from": "rimraf@2"
                     },
                     "graceful-fs": {
@@ -1554,7 +1556,7 @@
               "from": "request@~2.25.0",
               "dependencies": {
                 "qs": {
-                  "version": "0.6.5",
+                  "version": "0.6.6",
                   "from": "qs@~0.6.0"
                 },
                 "json-stringify-safe": {
@@ -1627,7 +1629,7 @@
                 },
                 "mime": {
                   "version": "1.2.11",
-                  "from": "mime@~1.2"
+                  "from": "mime@~1.2.9"
                 },
                 "form-data": {
                   "version": "0.1.2",
@@ -1748,7 +1750,7 @@
                   "from": "fstream@~0.1.8",
                   "dependencies": {
                     "rimraf": {
-                      "version": "2.2.2",
+                      "version": "2.2.4",
                       "from": "rimraf@2"
                     },
                     "graceful-fs": {
@@ -1764,7 +1766,7 @@
               "from": "request@~2.25.0",
               "dependencies": {
                 "qs": {
-                  "version": "0.6.5",
+                  "version": "0.6.6",
                   "from": "qs@~0.6.0"
                 },
                 "json-stringify-safe": {
