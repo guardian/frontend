@@ -4,6 +4,7 @@ define([
     cookies
 ) {
     var MULTIVARIATE_ID_COOKIE = "GU_mvtid",
+        VISITOR_ID_COOKIE ="s_vi",
         BROWSER_ID_COOKIE = "bwid";
 
     // Max integer in IEEE-754 is 2^53 (52-bit mantissa plus implicit integer bit 1).
@@ -24,16 +25,23 @@ define([
     }
 
     function getMvtFullId() {
-        var fullId = "",
-            bwidCookie = cookies.get(BROWSER_ID_COOKIE),
-            mvtidCookie = getMvtValue();
+        var bwidCookie = cookies.get(BROWSER_ID_COOKIE),
+            mvtidCookie = getMvtValue(),
+            visitoridCookie = cookies.get(VISITOR_ID_COOKIE);
 
-        if (bwidCookie && mvtidCookie) {
-            fullId = bwidCookie + " " + mvtidCookie;
-        } else if (mvtidCookie) {
-            fullId = "unknown-browser-id " + mvtidCookie;
+        if (!visitoridCookie) {
+            visitoridCookie = "unknown-visitor-id";
         }
-        return fullId;
+
+        if (!bwidCookie) {
+            bwidCookie = "unknown-browser-id";
+        }
+
+        if (!mvtidCookie) {
+            mvtidCookie = "unknown-mvt-id";
+        }
+
+        return visitoridCookie + " " + bwidCookie + " " + mvtidCookie;
     }
 
     function getMvtValue() {
