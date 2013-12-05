@@ -52,7 +52,6 @@
 
                     fs.writeFileSync(files[file], result.data);
 
-                    console.log('foooooo' + (inBytes - outBytes));
                     savings += (inBytes - outBytes);
 
                     if(file < files.length-1){
