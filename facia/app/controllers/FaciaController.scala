@@ -197,7 +197,31 @@ object FrontPage {
     },
 
     new FrontPage(isNetworkFront = true) {
+      override val id = "au-alpha"
+      override val section = ""
+      override val webTitle = "The Guardian"
+      override lazy val analyticsName = "GFE:Network Front"
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "content-type" -> "Network Front",
+        "is-front" -> true
+      )
+    },
+
+    new FrontPage(isNetworkFront = true) {
       override val id = "uk-alpha"
+      override val section = ""
+      override val webTitle = "The Guardian"
+      override lazy val analyticsName = "GFE:Network Front"
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "content-type" -> "Network Front",
+        "is-front" -> true
+      )
+    },
+
+    new FrontPage(isNetworkFront = true) {
+      override val id = "us-alpha"
       override val section = ""
       override val webTitle = "The Guardian"
       override lazy val analyticsName = "GFE:Network Front"
@@ -257,7 +281,7 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
 
     NoCache(Redirect(redirectPath))
   }
-  
+
   // Needed as aliases for reverse routing
   def renderEditionFrontJson(path: String) = renderFront(path)
   def renderEditionFront(path: String) = renderFront(path)
@@ -308,7 +332,7 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
       }
     } getOrElse(NotFound)
   }
-  
+
   def renderCollectionRss(id: String) = Action { implicit request =>
     CollectionAgent.getCollection(id) map { collection =>
       Cached(60) {
