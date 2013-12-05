@@ -5,12 +5,6 @@ define([
 
     //Current tests
     'modules/experiments/tests/aa',
-    'modules/experiments/tests/live-blog-show-more',
-    'modules/experiments/tests/alpha-adverts',
-    'modules/experiments/tests/commercial-components',
-    'modules/experiments/tests/story-package-question',
-    'modules/experiments/tests/initial-show-more',
-    'modules/experiments/tests/show-more-layout',
     'modules/experiments/tests/mobile-facebook-autosignin',
     'modules/experiments/tests/onward-intrusive'
 ], function (
@@ -19,24 +13,12 @@ define([
     mvtCookie,
 
     Aa,
-    LiveBlogShowMore,
-    AlphaAdverts,
-    CommercialComponentsTest,
-    StoryPackageQuestion,
-    InitialShowMore,
-    ShowMoreLayout,
     MobileFacebookAutosignin,
     OnwardIntrusive
     ) {
 
     var TESTS = [
             new Aa(),
-            new LiveBlogShowMore(),
-            new AlphaAdverts(),
-            new CommercialComponentsTest(),
-            new StoryPackageQuestion(),
-            new InitialShowMore(),
-            new ShowMoreLayout(),
             new MobileFacebookAutosignin(),
             new OnwardIntrusive()
         ],
@@ -186,7 +168,8 @@ define([
             });
         },
 
-        run: function(config, context) {
+        segmentUser: function(config) {
+            mvtCookie.generateMvtCookie();
 
             var forceUserIntoTest = /^#ab/.test(window.location.hash);
             if (forceUserIntoTest) {
@@ -198,7 +181,9 @@ define([
             }
 
             cleanParticipations(config);
+        },
 
+        run: function(config, context) {
             getActiveTests().forEach(function(test) {
                 run(test, config, context);
             });
