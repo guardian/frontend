@@ -175,10 +175,13 @@ input[type=text] {
     overflow: hidden;
     padding: 1px 3px 4px 4px;
     position: relative;
-    background-color: #FFFFFF;
+    background: #FFFFFF;
     -webkit-transition: background-color 100ms;
        -moz-transition: background-color 100ms;
             transition: background-color 100ms;
+}
+.sublinks .trail {
+    background: #EEEEEE;
 }
 
 .trail:last-child {
@@ -395,6 +398,10 @@ button {
     background: #a7d9a0 !important;
 }
 
+.editingMeta {
+    background: #EEEEEE !important;
+}
+
 .search-form {
     position: relative;
     height: 35px;
@@ -584,15 +591,7 @@ button {
 }
 
 .sublinks {
-    min-height: 20px;
-    padding: 0 0 0 10px;
-    border-left: 2px dashed #CCCCCC;
-}
-
-.sublinks img {
-}
-
-.sublinks .web-title {
+    background: #EEEEEE;
 }
 
 @media (max-width: 1100px) {

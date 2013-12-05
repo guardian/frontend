@@ -38,22 +38,18 @@ function (
         
         this.state = common.util.asObservableProps([
             'underDrag',
-            'editingTitle',
+            'editingMeta',
             'shares',
             'comments',
             'totalHits',
             'pageViewsSeries']);
 
-        if (_.isArray(opts.sublinks)) {
-            this.sublinks = new Group ({
-                items: _.map(opts.sublinks, function(sublink) {
-                    return new Article(sublink)
-                })
-            });
-            contentApi.decorateItems(this.sublinks.items());
-
-            //this.meta.sublinks = this.sublinks.items;
-        }
+        this.sublinks = new Group ({
+            items: _.map(opts.sublinks, function(sublink) {
+                return new Article(sublink)
+            })
+        });
+        contentApi.decorateItems(this.sublinks.items());
 
         // Computeds
         this.humanDate = ko.computed(function(){
@@ -85,26 +81,26 @@ function (
         common.util.populateObservables(this.fields, opts.fields);
     };
 
-    Article.prototype.startTitleEdit = function() {
+    Article.prototype.startMetaEdit = function() {
         this.provisionalHeadline = this.meta.headline();
-        this.state.editingTitle(true);
+        this.state.editingMeta(true);
     };
 
-    Article.prototype.saveTitleEdit = function() {
+    Article.prototype.saveMetaEdit = function() {
         if(this.meta.headline()) {
             this.save();
         };
-        this.state.editingTitle(false);
+        this.state.editingMeta(false);
     };
 
-    Article.prototype.cancelTitleEdit = function() {
+    Article.prototype.cancelMetaEdit = function() {
         this.meta.headline(this.provisionalHeadline);
-        this.state.editingTitle(false);
+        this.state.editingMeta(false);
     };
 
-    Article.prototype.revertTitleEdit = function() {
+    Article.prototype.revertMetaEdit = function() {
         this.meta.headline(undefined);
-        this.state.editingTitle(false);
+        this.state.editingMeta(false);
         this.save();
     };
 

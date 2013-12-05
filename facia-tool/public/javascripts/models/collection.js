@@ -160,7 +160,7 @@ define([
             var groupInt,
                 group;
 
-            item.sublinks = [{id: 'politics/blog/2013/dec/05/george-osbornes-autumn-statement-live'}]
+            //item.sublinks = [{id: 'politics/blog/2013/dec/05/george-osbornes-autumn-statement-live'}]
 
             groupInt = parseInt((item.meta || {}).group, 10) || 0;
 
