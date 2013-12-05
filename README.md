@@ -21,13 +21,23 @@ New developers quick-start
 ===========================
 Frontend is a set of Play Framework 2 Scala applications.
 
+Configuration
+-------------
+You need 2 files on you machine.
+
+The first file is called `/etc/gu/install_vars` and has the following contents...
+```
+STAGE=DEV
+```
+
+The second file is called `[YOUR_HOME_DIR]/.gu/frontend.properties` and you can get its contents from a shared
+document (ask your team mates to share it with you)
+
 Vagrant
 -------
-
 You can run the project with the supplied Vagrantfile - make sure you understand what vagrant is http://www.vagrantup.com/
 
 * You need Virtualbox and Vagrant - on Ubuntu `sudo apt-get install virtualbox vagrant` otherwise see http://docs.vagrantup.com/v2/installation/index.html
-* you need a frontend.properties file in you .gu folder (inside your home directory e.g. `/home/YOUR_NAME/.gu/frontend.properties`)
 * change directory into the folder where this README is located
 * `vagrant up` - this will take a while, make some coffee
 * You can now get onto the box by `vagrant ssh`
@@ -75,37 +85,6 @@ session required pam_limits.so
 Restart the machine.
 
 For more info see http://www.cyberciti.biz/faq/linux-increase-the-maximum-number-of-open-files/
-
-
-Configuration
--------------
-You'll need a config file called `/etc/gu/install_vars` with the following content :-
-
-```
-STAGE=DEV
-INT_SERVICE_DOMAIN=gudev.gnl
-EXT_SERVICE_DOMAIN=
-```
-
-And one called `~/.gu/frontend.properties`, ( alternatively `/gu/etc/frontend.properties` ) with the following content :-
-
-```
-content.api.key=XXXX
-content.api.host=http://XXXX
-pa.api.key=XXXX
-ophan.api.host=XXX
-ophan.api.key=XXXX
-```
-
-Get the correct keys and hosts from another developer on the project (for external developers, sign up for a ContentApi key at http://guardian.mashery.com).
-
-To set up a proxy
-
-```
-export proxy_host=proxy.somewhere.com
-export proxy_port=1234
-```
-
 
 Running
 -------
