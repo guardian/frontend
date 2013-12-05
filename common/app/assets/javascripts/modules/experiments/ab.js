@@ -148,9 +148,7 @@ define([
         // Get this browser's mvt test id.
         var mvtCookieId = mvtCookie.getMvtValue();
 
-        if (smallestTestId <= mvtCookieId &&
-            largestTestId > mvtCookieId) {
-
+        if (smallestTestId <= mvtCookieId && largestTestId > mvtCookieId) {
             // This mvt test id is in the test range, so allocate it to a test variant.
             var variantIds = test.variants.map(function(variant) {
                 return variant.id;
