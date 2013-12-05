@@ -182,7 +182,7 @@ Comments.prototype.renderPickButtons = function(comments) {
 
     comments = comments || self.comments;
 
-    if (self.user.is_staff) {
+    if (self.user && self.user.is_staff) {
         comments.forEach(function (e) {
             if (e.getAttribute('data-comment-author-id') !== self.user.userId) {
                 var button = bonzo(bonzo.create(buttonText))
@@ -424,7 +424,7 @@ Comments.prototype.addComment = function(comment, focus, parent) {
     }
     commentElem.id = 'comment-'+ comment.id;
 
-    if (this.user.is_staff) {
+    if (this.user && this.user.is_staff) {
         // Hack to allow staff badge to appear
         var staffBadge = bonzo.create(document.getElementById('tmpl-staff-badge').innerHTML);
         $('.d-comment__meta div', commentElem).first().append(staffBadge);
