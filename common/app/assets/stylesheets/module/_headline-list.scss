@@ -99,13 +99,11 @@
         position: absolute;
         top: $baseline/2;
         left: 0;
-        width: gs-span(1) - $gs-gutter/2;
         color: $c-neutral4;
         @include font($serifheadline, 200, 44px);
 
         @include mq(rightCol) {
             top: $baseline*2;
-            width: gs-span(1);
         }
     }
 
@@ -116,7 +114,6 @@
         padding-bottom: $baseline*7;
         border-top-color: $c-neutral4;
         color: $c-neutral1;
-        @include fs-headline(1);
         @include box-sizing(border-box);
 
         @include mq(rightCol) {
