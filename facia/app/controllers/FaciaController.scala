@@ -263,7 +263,7 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
     if (path == "uk" &&
       Switches.UkAlphaSwitch.isSwitchedOn &&
       Edition(request) == Uk &&
-      request.headers.get("X-Gu-Uk-Alpha").filter(_.toLowerCase == "true").isDefined
+      request.headers.get("X-Gu-Uk-Alpha").exists(_.toLowerCase == "true")
     ) {
       "uk-alpha"
     }
