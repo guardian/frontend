@@ -45,14 +45,14 @@
     processSVG = function(files, file, callback) {
         if(files[file].match( /\.svg$/i )){
             // optimize SVG from current file
-            var svgo = new SVGO();
-            svgo.fromFile(files[file])
-                .then(function(result) {
-                    var inBytes =  (Math.round((result.info.inBytes / 1024) * 1000) / 1000),
-                        outBytes = (Math.round((result.info.outBytes / 1024) * 1000) / 1000);
+            fs.readFile(files[file], 'utf8', function(err, data) {
+                var inBytes = Buffer.byteLength(data, 'utf8');
+                new SVGO().optimize(data, function(result) {
+                    var outBytes = Buffer.byteLength(result.data, 'utf8');
 
                     fs.writeFileSync(files[file], result.data);
 
+                    console.log('foooooo' + (inBytes - outBytes));
                     savings += (inBytes - outBytes);
 
                     if(file < files.length-1){
@@ -61,7 +61,8 @@
                         console.log("Total savings: " + Math.round(savings) + "kb");
                         callback();
                     }
-                }).done();
+                });
+            });
         } else {
             if(file < files.length-1){
                 processSVG(files, file + 1, callback);

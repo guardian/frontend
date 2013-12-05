@@ -51,13 +51,13 @@
       "version": "0.3.5",
       "from": "mkdirp@~0.3.5"
     },
-    "requirejs": {
-      "version": "2.1.9",
-      "from": "requirejs@~2.1.0"
-    },
     "moment": {
       "version": "2.4.0",
       "from": "moment@~2.4"
+    },
+    "requirejs": {
+      "version": "2.1.9",
+      "from": "requirejs@~2.1"
     },
     "grunt-contrib-requirejs": {
       "version": "0.4.1",
@@ -104,6 +104,22 @@
         }
       }
     },
+    "grunt-contrib-clean": {
+      "version": "0.5.0",
+      "from": "grunt-contrib-clean@~0.5",
+      "dependencies": {
+        "rimraf": {
+          "version": "2.2.4",
+          "from": "rimraf@~2.2.1",
+          "dependencies": {
+            "graceful-fs": {
+              "version": "2.0.1",
+              "from": "graceful-fs@~2"
+            }
+          }
+        }
+      }
+    },
     "grunt-casperjs": {
       "version": "1.0.9",
       "from": "git://github.com/guardian/grunt-casperjs#upgrade",
@@ -122,22 +138,6 @@
         "adm-zip": {
           "version": "0.4.3",
           "from": "adm-zip@~0.4.3"
-        }
-      }
-    },
-    "grunt-contrib-clean": {
-      "version": "0.5.0",
-      "from": "grunt-contrib-clean@~0.5",
-      "dependencies": {
-        "rimraf": {
-          "version": "2.2.4",
-          "from": "rimraf@~2.2.1",
-          "dependencies": {
-            "graceful-fs": {
-              "version": "2.0.1",
-              "from": "graceful-fs@~2"
-            }
-          }
         }
       }
     },
@@ -293,7 +293,7 @@
               "dependencies": {
                 "underscore": {
                   "version": "1.4.4",
-                  "from": "underscore@~1.4.3"
+                  "from": "underscore@1.4.x"
                 },
                 "underscore.string": {
                   "version": "2.3.3",
@@ -565,50 +565,20 @@
       }
     },
     "svgo": {
-      "version": "0.2.4",
-      "from": "svgo@~0.2",
+      "version": "0.4.1",
+      "from": "svgo@~0.4.1",
       "dependencies": {
         "sax": {
           "version": "0.5.5",
-          "from": "sax@~0.5.0"
-        },
-        "q": {
-          "version": "0.8.12",
-          "from": "q@~0.8.10"
-        },
-        "q-fs": {
-          "version": "0.1.36",
-          "from": "q-fs@~0.1.0",
-          "dependencies": {
-            "q-io": {
-              "version": "0.0.18",
-              "from": "q-io@0.0.x"
-            },
-            "fs-boot": {
-              "version": "0.0.9",
-              "from": "fs-boot@0.0.x"
-            }
-          }
+          "from": "sax@0.5.x"
         },
         "coa": {
-          "version": "0.3.9",
-          "from": "coa@~0.3.7"
-        },
-        "inherit": {
-          "version": "2.1.0",
-          "from": "inherit@"
-        },
-        "node.extend": {
-          "version": "1.0.8",
-          "from": "node.extend@",
+          "version": "0.4.0",
+          "from": "coa@~0.4.0",
           "dependencies": {
-            "is": {
-              "version": "0.2.6",
-              "from": "is@~0.2.6"
-            },
-            "object-keys": {
-              "version": "0.4.0",
-              "from": "object-keys@~0.4.0"
+            "q": {
+              "version": "0.9.7",
+              "from": "q@~0.9.6"
             }
           }
         },
@@ -639,6 +609,10 @@
         "colors": {
           "version": "0.6.2",
           "from": "colors@~0.6.0"
+        },
+        "whet.extend": {
+          "version": "0.9.9",
+          "from": "whet.extend@"
         }
       }
     },
