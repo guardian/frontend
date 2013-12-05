@@ -71,6 +71,19 @@
         margin-left: 50%;
     }
 
+    .headline-list__link {
+        display: block;
+        overflow: hidden;
+        color: $c-neutral1;
+
+        &:hover,
+        &:active {
+            .headline-list__count {
+                color: $c-neutral3;
+            }
+        }
+    }
+
     .headline-list__count {
         width: gs-span(1) - $gs-gutter/2;
         color: $c-neutral4;
@@ -175,9 +188,9 @@
         width: 80%;
 
         @include mq(wide) {
-            width:72%;
+            width:70%;
         }
-   }
+    }
 
     .headline-list__standfirst {
         @include mq(wide) {
