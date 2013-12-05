@@ -89,7 +89,12 @@ define([
 
         showPopular: function () {
             mediator.on('page:front:ready', function(config, context) {
-                popular.render(config);
+                var opts = {};
+                // put popular after the first container if this is us-alpha front
+                if (config.page.pageId === 'us-alpha') {
+                    opts.insertAfter = $('.container').first();
+                }
+                popular.render(config, opts);
             });
         },
 
@@ -107,7 +112,7 @@ define([
                 path = window.location.pathname.substring(1);
                 load = {
                     'uk': {vistsRequired: 2, script: 'userzoom-uk'},
-                    'uk-alpha': {vistsRequired: 0, script: 'userzoom-uk-alpha'},
+                    'uk-alpha': {vistsRequired: 0, script: 'userzoom-uk-alpha'}
                 }[path];
 
                 if(!load) { return; }

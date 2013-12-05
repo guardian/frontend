@@ -42,8 +42,10 @@ define([
 
     return  {
 
-        render:  function (config) {
-            var hasSection = config.page && config.page.section && config.page.section !== 'global';
+        render:  function (config, options) {
+            var opts = options || {},
+                insertAfter = opts.insertAfter || $('.container').last(),
+                hasSection = config.page && config.page.section && config.page.section !== 'global';
             return ajax({
                 url: '/most-read' + (hasSection ? '/' + config.page.section : '') + '.json',
                 type: 'json',
@@ -71,7 +73,7 @@ define([
                     });
                     bonzo(bonzo.create(containerTmpl))
                         .append($collection)
-                        .insertAfter($('.container').last());
+                        .insertAfter(insertAfter);
                     // add show more button
                     new CollectionShowMore($collection[0])
                         .addShowMore();
