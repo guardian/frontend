@@ -276,6 +276,11 @@ object Switches extends Collections {
     "Switch to redirect to facia if request has X-Gu-Facia=true",
     safeState = Off  )
 
+  val UkAlphaSwitch = Switch("Facia", "facia-uk-alpha",
+    "If this is switched on then UK-Alpha will be served for requests with the cookie GU_UK_ALPHA",
+    safeState = Off
+  )
+
   // Image Switch
 
   val ServeWebPImagesSwitch = Switch("Image Server", "serve-webp-images",
@@ -342,7 +347,8 @@ object Switches extends Collections {
     ABInitialShowMore,
     AdDwellTimeLoggerSwitch,
     ABShowMoreLayout,
-    ABMobileFacebookAutosignin
+    ABMobileFacebookAutosignin,
+    UkAlphaSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
