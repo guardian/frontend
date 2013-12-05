@@ -23,7 +23,7 @@ Frontend is a set of Play Framework 2 Scala applications.
 
 Configuration
 -------------
-You need 2 files on you machine.
+You need 2 files on your machine.
 
 The first file is called `/etc/gu/install_vars` and has the following contents...
 ```
