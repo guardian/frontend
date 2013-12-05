@@ -1,6 +1,6 @@
 define(['bonzo', 'bean'], function(bonzo, bean) {
 
-var clamp = function(elem, lines, showMore) {
+var clamp = function(elem, lines, showMore, showMoreTrackingName) {
     var height = elem.clientHeight,
         lineHeight = getComputedStyle(elem).getPropertyValue('line-height'),
         maxHeight = (parseInt(lineHeight, 10) + (showMore ? 2 : 0)) * lines,
@@ -20,7 +20,10 @@ var clamp = function(elem, lines, showMore) {
     $elem.after($fade);
 
     if (showMore) {
-        $showMore = bonzo(bonzo.create('<span class="clamp__fade-content u-fauxlink" role="button">Read more</span>'));
+        $showMore = bonzo(bonzo.create(
+            '<span class="clamp__fade-content u-fauxlink" role="button"'+
+            (showMoreTrackingName ? ' data-link-name="'+ showMoreTrackingName +'"' : '') +
+            '>Read more</span>'));
         $fade.append($showMore);
         bean.on($showMore[0], 'click', function(e) {
             $fade.remove();

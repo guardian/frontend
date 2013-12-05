@@ -112,7 +112,7 @@ define([
                 path = window.location.pathname.substring(1);
                 load = {
                     'uk': {vistsRequired: 2, script: 'userzoom-uk'},
-                    'uk-alpha': {vistsRequired: 0, script: 'userzoom-uk-alpha'},
+                    'uk-alpha': {vistsRequired: 0, script: 'userzoom-uk-alpha'}
                 }[path];
 
                 if(!load) { return; }
