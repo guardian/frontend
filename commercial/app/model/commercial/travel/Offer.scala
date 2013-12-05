@@ -16,6 +16,12 @@ case class Offer(id: Int, title: Option[String], offerUrl: String, imageUrl: Str
     val someKeywordsMatch = intersects(keywords.map(_.name), segment.context.keywords)
     segment.context.isInSection("travel") && someKeywordsMatch
   }
+
+  def durationInWords: String = duration match {
+    case "1" => return "1 night"
+    case x => return s"$x nights"
+  }
+
 }
 
 object Countries extends ExecutionContexts with Logging {
@@ -112,10 +118,6 @@ object Countries extends ExecutionContexts with Logging {
     countryKeywords.close()
   }
 
-  def durationInWords: String = duration match {
-    case "1" => return "1 night"
-    case x => return s"$x nights"
-  }
 
   def forCountry(name: String) = countryKeywords().get(name).getOrElse(Nil)
 }
