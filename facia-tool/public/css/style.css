@@ -89,6 +89,10 @@ input[type=text] {
     text-transform: uppercase;
 }
 
+.finder .latest-articles {
+    padding: 0 5px 0 0;
+}
+
 .title {
     font-size: 18px;
     font-weight: bold;
@@ -115,6 +119,7 @@ input[type=text] {
     color: #999999;
     overflow: hidden;
     padding: 5px 0 0 0;
+    min-width: 300px;
 }
 
 .list-header__saving  {
@@ -401,7 +406,7 @@ button {
 
 .autocompleter {
     position: absolute;
-    left: 40%;
+    left: 37%;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     display: inline-block;
@@ -569,8 +574,27 @@ button {
     top: 10px;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1100px) {
+    .toolbar,
+    .collections {
+        left: 40%;
+        width: 60%;
+    }
+    .finder {
+        width: 40%;
+    }
+    .finder .trail .web-title {
+        margin: 0 0 0 80px;
+    } 
+    .finder .trail .trail_stats,
+    .finder .trail .trail__meta {
+        display: none;
+    }
+}
+
+@media (max-width: 875px) {
     .tool-title,
+    .finder,
     .ophan-legend {
         display: none;
     }
@@ -581,29 +605,23 @@ button {
         height: 50px;
         padding: 10px 15px 10px 45px;
     }
-    .finder {
-        display: none;
-    }
     .collections {
         left: 0;
         width: 100%;
         padding-left: 10px;
-    }
-    .collections__inner {
-        padding: 0;
     }
     .scrollable {
         overflow-y: inherit
     }
 }
 
-@media (max-width: 650px) {
+@media (max-width: 675px) {
     .toolbar .tool-label {
         display: none;
     }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 525px) {
     .trail .web-title {
         margin: 0 0 0 80px;
     } 
@@ -619,6 +637,9 @@ button {
     } 
     .trail img {
         display: none;
+    }
+    .trail_tweaks {
+        margin: 0;
     }
 }
 
