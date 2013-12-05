@@ -1,4 +1,5 @@
 define([
+    '$',
     'utils/ajax',
     'bonzo',
     'qwery',
@@ -9,9 +10,9 @@ define([
     'modules/discussion/api',
     'modules/discussion/comments',
     'modules/discussion/top-comments',
-    'modules/discussion/comment-box',
-    '$'
+    'modules/discussion/comment-box'
 ], function(
+    $,
     ajax,
     bonzo,
     qwery,
@@ -22,8 +23,7 @@ define([
     DiscussionApi,
     Comments,
     TopComments,
-    CommentBox,
-    $
+    CommentBox
 ) {
 
 /**

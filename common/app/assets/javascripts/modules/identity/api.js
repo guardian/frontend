@@ -5,7 +5,7 @@ define([
     'utils/cookies',
     'utils/storage',
     'utils/ajax',
-    'modules/asyncCallMerger',
+    'modules/asyncCallMerger'
 ], function(
     $,
     utilAtob,
