@@ -1,6 +1,6 @@
 package model.commercial.masterclasses
 
-import org.joda.time.format.{DateTimeFormatter, DateTimeFormat}
+import org.joda.time.format.{DateTimeFormatterBuilder, DateTimeFormatter, DateTimeFormat}
 import org.joda.time.DateTime
 import play.api.libs.json.JsValue
 import org.jsoup.Jsoup
@@ -52,6 +52,7 @@ case class MasterClass(id: String,
                        capacity: Int,
                        guardianUrl: String,
                        firstParagraph: String = "") extends Ad {
+
   def isOpen = {status == "Live"}
 
   lazy val displayPrice = {
@@ -63,6 +64,10 @@ case class MasterClass(id: String,
   }
 
   def isTargetedAt(segment: Segment) = segment.context.isInSection("music")
+
+  private val readableDateFormat = DateTimeFormat.forPattern("d MMMMM yyyy")
+
+  def readableDate = readableDateFormat.print(startDate)
 }
 
 case class Ticket(price: Double)
