@@ -87,7 +87,7 @@
     .headline-list__count {
         width: gs-span(1) - $gs-gutter/2;
         color: $c-neutral4;
-        @include font($serifheadline, 200, 42px);
+        @include font($serifheadline, 200, 44px);
 
         @include mq(rightCol) {
             width: gs-span(1);
@@ -166,8 +166,8 @@
 
                 .headline-list__count {
                     margin-left: 0;
-                    margin-top: $baseline*2;
-                    @include rem((font-size: 62px));
+                    margin-top: 9px;
+                    @include rem((font-size: 65px));
                 }
             }
 
