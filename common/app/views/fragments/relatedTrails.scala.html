@@ -3,7 +3,7 @@
 @defining(trails.length){ numTrails =>
     <h2 id="related-content-head" class="page-sub-header tone-colour">@Html(heading)</h2>
     <div class="related-trails trailblock"
-        data-count="@{trails.length - visibleTrails}"
+        data-count="@{trails.length - visibleTrails -1}"
         data-link-name="Related @heading"
         role="complementary"
         aria-labelledby="related-content-head">

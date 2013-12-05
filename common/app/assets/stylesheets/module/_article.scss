@@ -507,6 +507,8 @@ video {
 
 
 .article__popular {
+    clear: left;
+
     .article-zone {
         border-color: $c-newsAccent; // Acts as a default
     }

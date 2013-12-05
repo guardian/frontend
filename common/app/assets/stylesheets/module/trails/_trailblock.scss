@@ -4,13 +4,6 @@
 
 .trailblock {
     max-height: none;
-    margin-left: $gs-gutter/2;
-    margin-right: $gs-gutter/2;
-
-    @include mq(mobileLandscape) {
-        margin-left: $gs-gutter;
-        margin-right: $gs-gutter;
-    }
 
     .article__inner & {
         margin-left: 0;
@@ -19,6 +12,73 @@
 
     > ul {
         margin-bottom: 0;
+    }
+
+    @include mq(rightCol) {
+        .trail {
+            width: 50%;
+            float: left;
+            padding-right: $gs-gutter*1.5;
+            border: none;
+            @include box-sizing(border-box);
+
+            &:before {
+                position: absolute;
+                top: 0;
+                right: $gs-gutter/2;
+                left: 0;
+                content: '';
+                display: block;
+                height: 1px;
+                background-color: $c-neutral4;
+            }
+
+            &:nth-child(odd) {
+                padding-right: 0;
+                padding-left: $gs-gutter/2;
+
+                &:before {
+                    right: 0;
+                    left: $gs-gutter/2;
+                }
+            }
+
+            &.trail--headline {
+                .trail__headline {
+                    @include fs-headline(3, true);
+                }
+            }
+
+            .trail__headline {
+                @include fs-headline(3, true);
+                min-height: gs-height(2) - ($baseline*6 - 3px);
+            }
+
+        }
+
+        .panel {
+            .trail {
+                &:nth-child(even) {
+                    padding-right: 0;
+                    padding-left: $gs-gutter/2;
+
+                    &:before {
+                        right: 0;
+                        left: $gs-gutter/2;
+                    }
+                }
+
+                &:nth-child(odd) {
+                    padding-right: $gs-gutter/2;
+                    padding-left: 0;
+
+                    &:before {
+                        right: $gs-gutter/2;
+                        left: 0;
+                    }
+                }
+            }
+        }
     }
 }
 
