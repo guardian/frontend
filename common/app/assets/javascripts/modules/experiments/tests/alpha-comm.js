@@ -29,7 +29,8 @@ define([
         adDwellTimes = {},
         flushInterval = 5000, // every 5 seconds
         trackInterval = 1000,
-        maxTrackTime  = 80000; // stop tracking after this time
+        maxTrackTime  = 80000, // stop tracking after this time
+        instanceId = Math.random(); // each page view generates a temporary user 'id'
 
     /*
         This idea here is that we have two timers. One to monitor whether an advert is in the viewport
@@ -67,6 +68,7 @@ define([
 
                 adDwellTimes.layout = detect.getBreakpoint();
                 adDwellTimes.variant = variant;
+                adDwellTimes.id = instanceId;
 
                 new LiveStatsAds({
                     beaconUrl: config.page.beaconUrl
