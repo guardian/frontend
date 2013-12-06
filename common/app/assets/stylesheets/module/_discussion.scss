@@ -51,12 +51,6 @@
 //     highlights comment with ID 123
 .d-comment:target > .d-comment__inner {
     background: $c-neutral7;
-
-    $highlightBleedingOffset: $gutter/4;
-    padding-left: $highlightBleedingOffset;
-    padding-right: $highlightBleedingOffset;
-    margin-left: $highlightBleedingOffset * -1;
-    margin-right: $highlightBleedingOffset * -1;
 }
 .d-comment__pick {
     position: absolute;
@@ -92,9 +86,11 @@
 .d-comment__body {
     @include d-comment__body;
 }
-
 .d-discussion[data-read-only="true"] .sign-in-required {
     display: none; /* Not the most performant, but it happens so rarely */
+}
+.d-discussion--not-staff .d-staff-required {
+    display: none;
 }
 
 /* New Comment

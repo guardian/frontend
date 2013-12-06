@@ -45,6 +45,12 @@ var Comments = function(context, mediator, options) {
 Component.define(Comments);
 
 /**
+ * @override
+ * @type {string}
+ */
+Comments.prototype.componentClass = 'd-discussion';
+
+/**
  * @type {Object.<string.*>}
  * @override
  */
@@ -106,9 +112,14 @@ Comments.prototype.prerender = function() {
 
     // Determine user staff status
     if (this.user && this.user.badge) {
-        this.user.is_staff = this.user.badge.some(function (e) { // Returns true if any element in array satisfies function
+        this.user.isStaff = this.user.badge.some(function (e) { // Returns true if any element in array satisfies function
             return e.name === 'Staff';
         });
+
+        if (this.user.isStaff) {
+            this.removeState('not-staff');
+            this.setState('is-staff');
+        }
     }
 
     if (this.topLevelComments.length > 0) {
@@ -136,7 +147,7 @@ Comments.prototype.prerender = function() {
 /** @override */
 Comments.prototype.ready = function() {
     this.on('click', this.getClass('showReplies'), this.showMoreReplies);
-    this.on('click', this.getClass('showMore'), this.showMore);
+    this.on('click', this.getClass('showMore'), this.loadMore);
     this.on('click', this.getClass('showHidden'), this.showHiddenComments);
     
     if (!this.isReadOnly()) {
@@ -163,33 +174,7 @@ Comments.prototype.bindCommentEvents = function() {
     RecommendComments.init(this.context);
 
     if (this.user && this.user.privateFields.canPostComment) {
-        this.renderPickButtons();
         this.on('click', this.getClass('commentReply'), this.replyToComment);
-    }
-};
-
-/**
- * @param {NodeList} comments
- */
-Comments.prototype.renderPickButtons = function(comments) {
-    var actions,
-        self = this,
-        buttonText = '<div class="u-fauxlink d-comment__action d-comment__action--pick" role="button"></div>',
-        sepText = '<span class="d-comment__seperator d-comment__action">|</span>';
-
-    comments = comments || self.comments;
-
-    if (self.user && self.user.is_staff) {
-        comments.forEach(function (e) {
-            if (e.getAttribute('data-comment-author-id') !== self.user.userId) {
-                var button = bonzo(bonzo.create(buttonText))
-                                .text(e.getAttribute('data-comment-highlighted') !== 'true' ? 'Pick' : 'Un-Pick');
-                button.data('thisComment', e);
-                var sep = bonzo.create(sepText);
-                $(self.getClass('commentActions'), e).first().append([sep[0],button[0]]);
-                self.on('click', button, self.handlePickClick.bind(self));
-            }
-        });
     }
 };
 
@@ -228,9 +213,9 @@ Comments.prototype.pickComment = function(thisComment, $thisButton) {
 };
 
 /**
- * @param   {Element} thisComment
- * @param   {Bonzo}     $thisButton
- * @return  {Reqwest}       AJAX Promise
+ * @param {Element} thisComment
+ * @param {Bonzo} $thisButton
+ * @return {Reqwest} AJAX Promise
  */
 Comments.prototype.unPickComment = function(thisComment, $thisButton) {
     var self = this;
@@ -245,42 +230,58 @@ Comments.prototype.unPickComment = function(thisComment, $thisButton) {
 };
 
 /**
- * @param {number} commentId
+ * @param {number} id
+ * @return {Reqwest|null}
  */
-Comments.prototype.gotoComment = function(commentId) {
-    this.load({ comment: commentId });
+Comments.prototype.gotoComment = function(id) {
+    var comment = $('#comment-'+ id, this.elem);
+    if (comment.length > 0) {
+        window.location.replace('#comment-'+ id);
+        return;
+    }
+
+    return this.fetchComments({
+        comment: id
+    }).then(function(resp) {
+        this.renderComments(resp, 'replaceWith');
+        window.location.replace('#comment-'+ id);
+    }.bind(this));
 };
 
 /**
  * @param {number} page
  */
 Comments.prototype.gotoPage = function(page) {
-
+    return this.fetchComments({
+        page: page,
+        position: 'replaceWith'
+    });
 };
 
 /**
  * @param {Event} e
  */
-Comments.prototype.showMore = function(e) {
-    if (e) { e.preventDefault(); }
+Comments.prototype.loadMore = function(e) {
+    e.preventDefault();
+    var button = e.currentTarget,
+        age = button.getAttribute('data-age'),
+        buttonHTML = button.innerHTML,
+        page = parseInt(button.getAttribute('data-page'), 10);
 
-    var showMoreButton = e.currentTarget,
-        age = showMoreButton.getAttribute('data-age'),
-        toPage = parseInt(showMoreButton.getAttribute('data-page'), 10),
-        callback = age === 'older' ? this.showOlder.bind(this) : this.showNewer.bind(this);
-
-    if (showMoreButton.getAttribute('data-disabled') === 'disabled') {
-        return;
+    if (button.getAttribute('data-disabled')) {
+        return false;
     }
 
-    showMoreButton.innerHTML = 'Loading…';
-    showMoreButton.setAttribute('data-disabled', 'disabled');
-    ajax({
-        url: '/discussion'+ this.options.discussionId +'.json?page='+ toPage,
-        type: 'json',
-        method: 'get',
-        crossOrigin: true
-    }).then(callback);
+    button.innerHTML = 'Loading…';
+    button.setAttribute('data-disabled', 'disabled');
+
+    return this.fetchComments({
+        page: page,
+        position: age === 'newer' ? 'prepend' : 'append'
+    }).then(function(resp) {
+        button.removeAttribute('data-disabled');
+        button.innerHTML = buttonHTML;
+    }.bind(this));
 };
 
 /**
@@ -288,37 +289,28 @@ Comments.prototype.showMore = function(e) {
  * options {
  *   page: {number},
  *   comment: {number},
- *   empty: {boolean},
- *   callback: {function}
+ *   position: {string} append|prepend|replaceWith
  * }
  */
-Comments.prototype.load = function(options) {
-
+Comments.prototype.fetchComments = function(options) {
+    var url = options.comment ? '/discussion/comment/'+ options.comment +'.json' :
+                '/discussion/'+ this.options.discussionId +'.json'+ (options.page ? '?page='+ options.page : '');
+    
+    return ajax({
+        url: url,
+        type: 'json',
+        method: 'get',
+        crossOrigin: true
+    }).then(this.renderComments.bind(this, options.position));
 };
 
 /**
  * @param {Object} resp
+ * @param {String} position append|prepend|replaceWith
  */
-Comments.prototype.showNewer = function(resp) {
-    this.commentsLoaded(resp, 'newer');
-};
-
-/**
- * @param {Object} resp
- */
-Comments.prototype.showOlder = function(resp) {
-    this.commentsLoaded(resp, 'older');
-};
-
-/**
- * @param {Object} resp
- * @param {String} age (optional)
- */
-Comments.prototype.commentsLoaded = function(resp, age) {
-    age = age || 'older';
+Comments.prototype.renderComments = function(position, resp) {
     var html = bonzo.create(resp.html),
-        comments = qwery(this.getClass('topLevelComment'), html),
-        showMoreButton = this.getElem('showMore');
+        comments = qwery(this.getClass('topLevelComment'), html);
 
     if (!resp.hasMore) {
         this.removeShowMoreButton();
@@ -326,16 +318,8 @@ Comments.prototype.commentsLoaded = function(resp, age) {
 
     $(this.getClass('showMoreOlder'), this.elem).replaceWith($(this.getClass('showMoreOlder'), html));
     $(this.getClass('showMoreNewer'), this.elem).replaceWith($(this.getClass('showMoreNewer'), html));
-
-    if (!this.isReadOnly()) {
-        this.renderPickButtons(qwery(this.getClass('comment'), bonzo(comments).parent()));
-    }
     
-    bonzo(this.getElem('comments'))[age === 'older' ? 'append' : 'prepend'](comments);
-
-    showMoreButton.innerHTML = 'Show '+ age +' comments';
-    showMoreButton.removeAttribute('data-disabled');
-
+    bonzo(this.getElem('comments'))[position](comments);
     this.hideExcessReplies(comments);
 
     if (!this.isReadOnly()) {
@@ -448,7 +432,7 @@ Comments.prototype.addComment = function(comment, focus, parent) {
     }
     commentElem.id = 'comment-'+ comment.id;
 
-    if (this.user && this.user.is_staff) {
+    if (this.user && this.user.isStaff) {
         // Hack to allow staff badge to appear
         var staffBadge = bonzo.create(document.getElementById('tmpl-staff-badge').innerHTML);
         $('.d-comment__meta div', commentElem).first().append(staffBadge);

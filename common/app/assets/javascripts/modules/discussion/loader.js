@@ -93,27 +93,26 @@ Loader.prototype.canComment = false;
  * 3. render comment bar
  */
 Loader.prototype.ready = function() {
-    var topCommentsElem = this.getElem('topComments'),
-        self = this;
+    var self = this,
+        topCommentsElem = this.getElem('topComments');
 
-    self.topLoadingElem = bonzo.create('<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>')[0];
-
-    bonzo(self.topLoadingElem).insertAfter(topCommentsElem);
+    this.topLoadingElem = bonzo.create('<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>')[0];
+    bonzo(this.topLoadingElem).insertAfter(topCommentsElem);
 
     this.on('user:loaded', function(user) {
-        self.topComments = new TopComments(self.context, self.mediator, {
-            discussionId: self.getDiscussionId(),
+        this.topComments = new TopComments(self.context, self.mediator, {
+            discussionId: this.getDiscussionId(),
             user: self.user
-        }, self.topCommentsSwitch);
+        }, this.topCommentsSwitch);
 
-        self.topComments
+        this.topComments
             .fetch(topCommentsElem)
             .then(function appendTopComments() {
                 bonzo(self.topLoadingElem).addClass('u-h');
                 self.on('click', $(self.topComments.showMoreButton), self.topComments.showMore.bind(self.topComments)); // Module-hopping calls - refactor needed
             });
 
-        self.mediator.on('module:topcomments:loadcomments', self.loadComments.bind(self));
+        this.mediator.on('module:topcomments:loadcomments', self.loadComments.bind(self));
     });
 
     this.getUser();
@@ -121,8 +120,7 @@ Loader.prototype.ready = function() {
     DiscussionAnalytics.init();
 };
 
-Loader.prototype.loadComments = function (args) {
-
+Loader.prototype.loadComments = function(args) {
     var self = this,
         commentsContainer = this.getElem('commentsContainer'),
         commentsElem = this.getElem('comments'),
@@ -145,25 +143,19 @@ Loader.prototype.loadComments = function (args) {
         commentId: commentId ? commentId : null
     });
 
-    bean.on(window, 'hashchange', function(e) {
-        commentId = self.getCommentIdFromHash();
-        if (commentId) {
-            self.comments.gotoComment(commentId);
-        }
-    });
-
     // Doing this makes sure there is only one redraw
     // Within comments there is adding of reply buttons etc
     this.comments.fetch(commentsElem)
         .then(function killLoadingMessage() {
             bonzo(loadingElem).remove();
             self.renderCommentBar(self.user);
-            bonzo(self.comments.getElem('showMore')).addClass('u-h');
 
-            if (args.showLoader) {
+            if (args.showLoader || commentId) {
                 // Comments are being loaded in the no-top-comments-available context
                 bonzo(self.getElem('joinDiscussion')).remove();
                 bonzo([self.comments.getElem('showMore'), self.comments.getElem('header')]).removeClass('u-h');
+            } else {
+                bonzo(self.comments.getElem('showMore')).addClass('u-h');
             }
 
             self.on('click', self.getElem('joinDiscussion'), function (e) {
@@ -172,6 +164,13 @@ Loader.prototype.loadComments = function (args) {
             });
             bonzo(commentsContainer).removeClass('u-h');
         }).fail(self.loadingError.bind(self));
+
+    bean.on(window, 'hashchange', function(e) {
+        commentId = self.getCommentIdFromHash();
+        if (commentId) {
+            self.comments.gotoComment(commentId);
+        }
+    });
 };
 
 /** @return {Reqwest|null} */

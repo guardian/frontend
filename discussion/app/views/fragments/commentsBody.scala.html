@@ -1,7 +1,7 @@
 @(page: CommentPage, blankComment: Comment = null)(implicit request: RequestHeader)
 
 <div
-    class="d-discussion"
+    class="d-discussion d-discussion--not-staff"
     data-page-count="@page.pages"
     data-comment-count="@page.commentCount"
     data-current-page="@page.currentPage"
