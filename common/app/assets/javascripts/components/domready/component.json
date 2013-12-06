@@ -1,9 +1,19 @@
 {
   "name": "domready",
-  "version": "0.0.0",
-  "commit": "316b0ed262d83a7f7dd519f922e7f4d8a238c8ba",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/ded/domready.git"
-  }
+  "repo": "ded/domready",
+  "description": "bullet proof DOM ready method",
+  "version": "0.2.13",
+  "homepage": "https://github.com/ded/domready",
+  "author": "Dustin Diaz <dustin@dustindiaz.com> (http://dustindiaz.com)",
+  "keywords": [
+    "domready",
+    "dom"
+  ],
+  "dependencies": {},
+  "development": {},
+  "license": "MIT",
+  "main": "ready.js",
+  "scripts": [
+    "ready.js"
+  ]
 }

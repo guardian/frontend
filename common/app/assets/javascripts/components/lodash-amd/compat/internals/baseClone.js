@@ -1,5 +1,5 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize exports="amd" -o ./compat/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -33,9 +33,11 @@ define(['../objects/assign', './baseEach', '../objects/forOwn', './getArray', '.
   /** Used for native method references */
   var objectProto = Object.prototype;
 
+  /** Used to resolve the internal [[Class]] of values */
+  var toString = objectProto.toString;
+
   /** Native method shortcuts */
-  var hasOwnProperty = objectProto.hasOwnProperty,
-      toString = objectProto.toString;
+  var hasOwnProperty = objectProto.hasOwnProperty;
 
   /** Used to lookup a built-in constructor by [[Class]] */
   var ctorByClass = {};
@@ -54,13 +56,13 @@ define(['../objects/assign', './baseEach', '../objects/forOwn', './getArray', '.
    *
    * @private
    * @param {*} value The value to clone.
-   * @param {boolean} [deep=false] Specify a deep clone.
+   * @param {boolean} [isDeep=false] Specify a deep clone.
    * @param {Function} [callback] The function to customize cloning values.
    * @param {Array} [stackA=[]] Tracks traversed source objects.
    * @param {Array} [stackB=[]] Associates clones with source counterparts.
    * @returns {*} Returns the cloned value.
    */
-  function baseClone(value, deep, callback, stackA, stackB) {
+  function baseClone(value, isDeep, callback, stackA, stackB) {
     if (callback) {
       var result = callback(value);
       if (typeof result != 'undefined') {
@@ -93,7 +95,7 @@ define(['../objects/assign', './baseEach', '../objects/forOwn', './getArray', '.
       return value;
     }
     var isArr = isArray(value);
-    if (deep) {
+    if (isDeep) {
       // check for circular references and return corresponding clone
       var initedStack = !stackA;
       stackA || (stackA = getArray());
@@ -120,7 +122,7 @@ define(['../objects/assign', './baseEach', '../objects/forOwn', './getArray', '.
       }
     }
     // exit for shallow clone
-    if (!deep) {
+    if (!isDeep) {
       return result;
     }
     // add the source value to the stack of traversed objects
@@ -130,7 +132,7 @@ define(['../objects/assign', './baseEach', '../objects/forOwn', './getArray', '.
 
     // recursively populate clone (susceptible to call stack limits)
     (isArr ? baseEach : forOwn)(value, function(objValue, key) {
-      result[key] = baseClone(objValue, deep, callback, stackA, stackB);
+      result[key] = baseClone(objValue, isDeep, callback, stackA, stackB);
     });
 
     if (initedStack) {

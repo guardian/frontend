@@ -1,5 +1,5 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="amd" -o ./modern/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -9,37 +9,26 @@
 define(['./map'], function(map) {
 
   /**
-   * Retrieves the value of a specified property from all elements in the `collection`.
+   * Retrieves the value of a specified property from all elements in the collection.
    *
    * @static
    * @memberOf _
    * @type Function
    * @category Collections
    * @param {Array|Object|string} collection The collection to iterate over.
-   * @param {string} property The property to pluck.
+   * @param {string} property The name of the property to pluck.
    * @returns {Array} Returns a new array of property values.
    * @example
    *
-   * var stooges = [
-   *   { 'name': 'moe', 'age': 40 },
-   *   { 'name': 'larry', 'age': 50 }
+   * var characters = [
+   *   { 'name': 'barney', 'age': 36 },
+   *   { 'name': 'fred',   'age': 40 }
    * ];
    *
-   * _.pluck(stooges, 'name');
-   * // => ['moe', 'larry']
+   * _.pluck(characters, 'name');
+   * // => ['barney', 'fred']
    */
-  function pluck(collection, property) {
-    var index = -1,
-        length = collection ? collection.length : 0;
-
-    if (typeof length == 'number') {
-      var result = Array(length);
-      while (++index < length) {
-        result[index] = collection[index][property];
-      }
-    }
-    return result || map(collection, property);
-  }
+  var pluck = map;
 
   return pluck;
 });

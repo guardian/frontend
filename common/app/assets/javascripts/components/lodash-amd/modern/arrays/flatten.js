@@ -1,5 +1,5 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="amd" -o ./modern/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -40,20 +40,20 @@ define(['../internals/baseFlatten', '../collections/map'], function(baseFlatten,
    * _.flatten([1, [2], [3, [[4]]]], true);
    * // => [1, 2, 3, [[4]]];
    *
-   * var stooges = [
-   *   { 'name': 'curly', 'quotes': ['Oh, a wise guy, eh?', 'Poifect!'] },
-   *   { 'name': 'moe', 'quotes': ['Spread out!', 'You knucklehead!'] }
+   * var characters = [
+   *   { 'name': 'barney', 'age': 30, 'pets': ['hoppy'] },
+   *   { 'name': 'fred',   'age': 40, 'pets': ['baby puss', 'dino'] }
    * ];
    *
    * // using "_.pluck" callback shorthand
-   * _.flatten(stooges, 'quotes');
-   * // => ['Oh, a wise guy, eh?', 'Poifect!', 'Spread out!', 'You knucklehead!']
+   * _.flatten(characters, 'pets');
+   * // => ['hoppy', 'baby puss', 'dino']
    */
   function flatten(array, isShallow, callback, thisArg) {
     // juggle arguments
     if (typeof isShallow != 'boolean' && isShallow != null) {
       thisArg = callback;
-      callback = !(thisArg && thisArg[isShallow] === array) ? isShallow : null;
+      callback = (typeof isShallow != 'function' && thisArg && thisArg[isShallow] === array) ? null : isShallow;
       isShallow = false;
     }
     if (callback != null) {
