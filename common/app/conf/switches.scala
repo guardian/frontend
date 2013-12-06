@@ -238,7 +238,7 @@ object Switches extends Collections {
   
   val ABAlphaComm = Switch("A/B Tests - second tranche", "ab-alpha-comm",
     "If this is switched on an AB test runs to trial new advertising user experiences and commercial models",
-    safeState = On)
+    safeState = Off)
 
   val ABCommercialComponents = Switch("A/B Tests", "ab-commercial-components",
     "If this is switched on an AB test runs to test the new commercial components",
