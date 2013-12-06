@@ -1,5 +1,5 @@
 define([
-    "utils/mediator",
+    "utils/mediator"
 ], function(
     mediator
 ) {

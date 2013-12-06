@@ -164,6 +164,10 @@
     }
 }
 
+.comment__meta {
+    margin-top: $gs-baseline;
+}
+
 /* Person
    ========================================================================== */
 .person {
@@ -400,6 +404,7 @@
     padding: $baseline*2 $gutter/2;
     resize: vertical;
     width: 100%;
+    word-break: break-word;
 }
 .d-comment-box__body--expanded {
     height: 150px;
@@ -594,4 +599,13 @@ $topCommentsHeight: 600px;
 
 .open-cta {
     margin-top: $baseline*8;
+
+    .clamp__fade {
+        @include simple-gradient(transparent, $c-neutral7);
+    }
+
+    .clamp__fade-content {
+        border-top: 1px solid $c-neutral3;
+        background: $c-neutral7;
+    }
 }

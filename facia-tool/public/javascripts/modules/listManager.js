@@ -27,9 +27,11 @@ define([
 
         var self = this,
             model = {
+                config: null,
+
                 collections: ko.observableArray(),
-                configs: ko.observableArray(),
-                config: ko.observable(),
+                fronts: ko.observableArray(),
+                front:  ko.observable(),
 
                 latestArticles: new LatestArticles({
                     filterTypes: common.config.filterTypes
@@ -49,69 +51,57 @@ define([
                 liveMode: common.state.liveMode
             };
 
-        if (window.localStorage && window.localStorage.getItem(prefKeyDefaultMode)) {
-            model.liveMode(window.localStorage.getItem(prefKeyDefaultMode) === '1');
-        }
-
         model.setModeLive = function() {
             model.liveMode(true);
-            if (window.localStorage) { 
-                window.localStorage.setItem(prefKeyDefaultMode, '1');
-            }
         }
 
         model.setModeDraft = function() {
             model.liveMode(false);
-            if (window.localStorage) { 
-                window.localStorage.setItem(prefKeyDefaultMode, '0');
-            }
         }
 
         model.previewUrl = ko.computed(function() {
-            return common.config.viewer[Config.env] + '/responsive-viewer#env=' + Config.env + '&url=' + model.config() + encodeURIComponent('?view=mobile');
+            return common.config.viewer + '#env=' + Config.env + '&url=' + model.front() + encodeURIComponent('?view=mobile');
         })
 
-        function fetchConfigsList() {
+        function fetchFronts() {
             return authedAjax.request({
                 url: common.config.apiBase + '/config'
-            }).then(function(resp) {
-                if (!(_.isArray(resp) && resp.length > 0)) {
-                    window.alert("Oops, no page definitions were found! Please contact support.");
+            })
+            .fail(function () {
+                window.alert("Oops, the fronts configuration was not available! Please contact support.");
+                return;                                
+            })
+            .done(function(resp) {
+
+                if (!(_.isObject(resp.fronts) && _.isObject(resp.collections))) {
+                    window.alert("Oops, the fronts configuration is invalid! Please contact support.");
                     return;
                 }
-                model.configs(resp.sort());
+
+                model.config = resp;
+                model.fronts(_.keys(resp.fronts).sort());;
             });
         };
 
-        function getConfig() {
+        function getFront() {
             return common.util.queryParams().front;
         }
 
-        function setConfig(id) {
+        function setfront() {
+            model.front(getFront());
+        }
+
+        function renderFront(id) {
             history.pushState({}, "", window.location.pathname + '?' + common.util.ammendedQueryStr('front', id));
-            renderCollections();
-        }
-
-        function renderConfig() {
-            model.config(getConfig());
-        }
-
-        function renderCollections() {
-            model.collections.removeAll();
-
-            if (!getConfig()) { return; }
-
-            authedAjax.request({
-                url: common.config.apiBase + '/config/' + getConfig()
-            })
-            .then(function(collections){
-                model.collections(
-                    (collections || []).map(function(collection){
-                        return new Collection(collection);
-                    })
-                );
-                //connectSortableLists();
-            });
+            model.collections(
+                (model.config.fronts[getFront()] || {}).collections
+                .filter(function(id){ return !!model.config.collections[id]; })
+                .map(function(id){
+                    return new Collection(
+                        _.extend(model.config.collections[id], {id: id})
+                    );
+                })
+            );
         }
 
         function startPoller() {
@@ -154,10 +144,8 @@ define([
             }
         };
 
-        model.config.subscribe(function(next) {
-            var previous = getConfig(), // previous config is still in queryStr
-                section;
-            setConfig(next);
+        model.front.subscribe(function(front) {
+            renderFront(front);
         });
 
         model.liveMode.subscribe(function() {
@@ -176,10 +164,10 @@ define([
         this.init = function() {
             droppable.init();
 
-            fetchConfigsList()
-            .then(function(){
-                renderConfig();
-                window.onpopstate = renderConfig;
+            fetchFronts()
+            .done(function(){
+                setfront();
+                window.onpopstate = setfront;
 
                 ko.applyBindings(model);
 

@@ -14,28 +14,28 @@ define([
         getInitialShowSize = function (collectionType) {
             var breakpointOptions = {
                 wide: {
-                    default: 4,
+                    'default': 4,
                     news: 9,
                     sport: 5,
                     comment: 5,
                     features: 3
                 },
                 desktop: {
-                    default: 4,
+                    'default': 4,
                     news: 8,
                     sport: 5,
                     comment: 5,
                     features: 3
                 },
                 tablet: {
-                    default: 3,
+                    'default': 3,
                     news: 7,
                     sport: 6,
                     comment: 4,
                     features: 4
                 },
                 mobile: {
-                    default: 2,
+                    'default': 2,
                     news: 5,
                     sport: 5,
                     comment: 3,
@@ -86,6 +86,8 @@ define([
         );
 
         this._renderButton = function() {
+            // add tone to button
+            this._$button.addClass('tone-' + (this._$collection.attr('data-tone') || 'news'));
             this._$collection.after(this._$button);
             var that = this;
             bean.on(this._$button[0], 'click', function() {

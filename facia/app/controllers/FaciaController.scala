@@ -7,7 +7,8 @@ import conf._
 import play.api.mvc._
 import play.api.libs.json.{JsArray, Json}
 import Switches.EditionRedirectLoggingSwitch
-
+import views.support.NewsContainer
+import common.editions.Uk
 
 abstract class FrontPage(val isNetworkFront: Boolean) extends MetaData
 
@@ -105,6 +106,133 @@ object FrontPage {
       )
     },
 
+    new FrontPage(isNetworkFront = false) {
+      override val id = "football"
+      override val section = "football"
+      override val webTitle = "Football"
+      override lazy val analyticsName = "GFE:football"
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "keywords" -> "Football",
+        "content-type" -> "Section",
+        "is-front" -> true
+      )
+    },
+
+    new FrontPage(isNetworkFront = false) {
+      override val id = "technology"
+      override val section = "technology"
+      override val webTitle = "Technology"
+      override lazy val analyticsName = "GFE:technology"
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "keywords" -> "Technology",
+        "content-type" -> "Section",
+        "is-front" -> true
+      )
+    },
+
+    new FrontPage(isNetworkFront = false) {
+      override val id = "travel"
+      override val section = "travel"
+      override val webTitle = "Travel"
+      override lazy val analyticsName = "GFE:travel"
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "keywords" -> "Travel",
+        "content-type" -> "Section",
+        "is-front" -> true
+      )
+    },
+
+    new FrontPage(isNetworkFront = false) {
+      override val id = "world/nsa"
+      override val section = "world"
+      override val webTitle = "NSA"
+      override lazy val analyticsName = "GFE:world/nsa"
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "keywords" -> "NSA",
+        "content-type" -> "Section",
+        "is-front" -> true
+      )
+    },
+
+    new FrontPage(isNetworkFront = false) {
+      override val id = "world/edward-snowden"
+      override val section = "world"
+      override val webTitle = "Edward Snowden"
+      override lazy val analyticsName = "GFE:world/edward-snowden"
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "keywords" -> "Edward Snowden",
+        "content-type" -> "Section",
+        "is-front" -> true
+      )
+    },
+
+    new FrontPage(isNetworkFront = false) {
+      override val id = "football/arsenal"
+      override val section = "football"
+      override val webTitle = "Arsenal"
+      override lazy val analyticsName = "GFE:football/arsenal"
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "keywords" -> "Arsenal",
+        "content-type" -> "Section",
+        "is-front" -> true
+      )
+    },
+
+    new FrontPage(isNetworkFront = false) {
+      override val id = "artanddesign/photography"
+      override val section = "artanddesign"
+      override val webTitle = "Photography"
+      override lazy val analyticsName = "GFE:artanddesign/photography"
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "keywords" -> "Photography",
+        "content-type" -> "Section",
+        "is-front" -> true
+      )
+    },
+
+    new FrontPage(isNetworkFront = true) {
+      override val id = "au-alpha"
+      override val section = ""
+      override val webTitle = "The Guardian"
+      override lazy val analyticsName = "GFE:Network Front"
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "content-type" -> "Network Front",
+        "is-front" -> true
+      )
+    },
+
+    new FrontPage(isNetworkFront = true) {
+      override val id = "uk-alpha"
+      override val section = ""
+      override val webTitle = "The Guardian"
+      override lazy val analyticsName = "GFE:Network Front"
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "content-type" -> "Network Front",
+        "is-front" -> true
+      )
+    },
+
+    new FrontPage(isNetworkFront = true) {
+      override val id = "us-alpha"
+      override val section = ""
+      override val webTitle = "The Guardian"
+      override lazy val analyticsName = "GFE:Network Front"
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "content-type" -> "Network Front",
+        "is-front" -> true
+      )
+    },
+
     //TODO important this one is last for matching purposes
     new FrontPage(isNetworkFront = true) {
       override val id = ""
@@ -139,7 +267,7 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
 
     val edition = Edition(request)
     val editionBase = s"/${edition.id.toLowerCase}"
-    
+
     val redirectPath = path match {
       case "" => editionBase
       case sectionFront => s"$editionBase/$sectionFront"
@@ -151,22 +279,37 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
 
       log.info(s"Edition redirect: geolocation: $country | edition: ${edition.id} | edition cookie set: $editionCookie"  )
     }
-  
+
     NoCache(Redirect(redirectPath))
   }
 
+  def getPathForUkAlpha(path: String, request: RequestHeader): String =
+    if (path == "uk" &&
+      Switches.UkAlphaSwitch.isSwitchedOn &&
+      Edition(request) == Uk &&
+      request.headers.get("X-Gu-Uk-Alpha").exists(_.toLowerCase == "true")
+    ) {
+      "uk-alpha"
+    }
+    else
+      path
+  
   // Needed as aliases for reverse routing
   def renderEditionFrontJson(path: String) = renderFront(path)
   def renderEditionFront(path: String) = renderFront(path)
   def renderEditionSectionFrontJson(path: String) = renderFront(path)
   def renderEditionSectionFront(path: String) = renderFront(path)
+  def renderArbitraryFront(path: String) = renderFront(path)
   def renderFrontJson(path: String) = renderFront(path)
 
   def renderEditionCollection(id: String) = renderCollection(id)
   def renderEditionCollectionJson(id: String) = renderCollection(id)
 
   def renderFront(path: String) = Action { implicit request =>
-      val editionalisedPath = editionPath(path, Edition(request))
+      //For UK alpha only
+      val newPath = getPathForUkAlpha(path, request)
+
+      val editionalisedPath = editionPath(newPath, Edition(request))
 
       FrontPage(editionalisedPath).flatMap { frontPage =>
 
@@ -190,39 +333,28 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
   }
 
   def renderCollection(id: String) = Action { implicit request =>
-    val pathOption = request.queryString("path").headOption
-
-    pathOption.map { path =>
-
-      val editionalisedPath = editionPath(path, Edition(request))
-
-      FrontPage(editionalisedPath).flatMap { frontPage =>
-
-      // get the trailblocks
-        val faciaPageOption: Option[FaciaPage] = front(editionalisedPath)
-        faciaPageOption map { faciaPage =>
-          Cached(frontPage) {
-            if (request.isJson) {
-              val collection = faciaPage.copy(collections = faciaPage.collections.filter(t => t._1.id == id))
-              val html = views.html.fragments.frontBody(frontPage, collection)
-              JsonComponent(
-                "html" -> html,
-                "trails" -> JsArray(collection.collections.flatMap(_._2.items.map(TrailToJson(_))))
-              )
-            }
-            else
-              Ok(views.html.front(frontPage, faciaPage))
-          }
+    CollectionAgent.getCollection(id) map { collection =>
+      val html = views.html.fragments.collections.standard(Config(id, None, None, None), collection, NewsContainer(true, true), 1)
+      Cached(60) {
+        if (request.isJson) {
+            JsonComponent(
+              "html" -> html,
+              "trails" -> JsArray(collection.items.map(TrailToJson(_)))
+            )
+        } else {
+          Ok(html)
         }
-      }.getOrElse(NotFound) //TODO is 404 the right thing here
-
-    }.getOrElse(NotFound)
+      }
+    } getOrElse(NotFound)
   }
 
-  def renderResponsiveViewer() = Action {
-    Cached(60) {
-      Ok(views.html.fragments.responsiveViewer())
-    }
+  def renderCollectionRss(id: String) = Action { implicit request =>
+    CollectionAgent.getCollection(id) map { collection =>
+      Cached(60) {
+        val config: Config = ConfigAgent.getConfig(id).getOrElse(Config("", None, None, None))
+        Ok(TrailsToRss(config.displayName, collection.items))
+      }.as("text/xml; charset=utf-8")
+    } getOrElse(NotFound)
   }
 
 }

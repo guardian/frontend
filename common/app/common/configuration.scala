@@ -20,7 +20,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       .getOrElse(throw new BadConfigurationException(property))
   }
 
-
   object environment {
     private val installVars = new File("/etc/gu/install_vars") match {
       case f if f.exists => IOUtils.toString(new FileInputStream(f))
@@ -58,7 +57,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val beaconUrl: String = configuration.getStringProperty("beacon.url").getOrElse("")
   }
 
-  override def toString(): String = configuration.toString
+  override def toString = configuration.toString
 
 
   object contentApi {
@@ -158,6 +157,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object discussion {
     lazy val apiRoot = configuration.getMandatoryStringProperty("discussion.apiRoot")
+    lazy val apiTimeout = configuration.getMandatoryStringProperty("discussion.apiTimeout")
     lazy val apiClientHeader = configuration.getMandatoryStringProperty("discussion.apiClientHeader")
   }
 
@@ -204,7 +204,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val host = configuration.getStringProperty("football.api.host").getOrElse("http://pads6.pa-sport.com")
   }
 
-
   object aws {
     lazy val accessKey = configuration.getMandatoryStringProperty("aws.access.key")
     lazy val secretKey = configuration.getMandatoryStringProperty("aws.access.secret.key")
@@ -227,15 +226,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val url = configuration.getMandatoryStringProperty("riffraff.url")
     lazy val apiKey = configuration.getMandatoryStringProperty("riffraff.apikey")
   }
-
-
-
-  // log out Play config on start
-  log.info("Play config ----------------------------------------------------------------------------")
-  Play.maybeApplication.map(c => c.configuration.entrySet.toSeq.sortBy(_._1).foreach{ case (k,v) =>
-    log.info(s"$k=$v")
-  })
-  log.info("Play config ----------------------------------------------------------------------------")
 }
 
 object ManifestData {

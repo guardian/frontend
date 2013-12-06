@@ -11,7 +11,7 @@
         <span class="tool-label">
             Editing front
         </span>
-        <select class="tool-select" data-bind="options: configs, value: config, optionsCaption: 'choose...'"></select>
+        <select class="tool-select" data-bind="options: fronts, value: front, optionsCaption: 'choose...'"></select>
        
         <span class="tool-label">
             Edit Mode
@@ -29,7 +29,7 @@
 
         <a class="tool preview" target="preview" data-bind="
             attr: {href: previewUrl},
-            visible: config">View Live</a>
+            visible: front">View Live</a>
 
     </div>
 
@@ -101,7 +101,7 @@
 
                     <a class="list-header__display" data-bind="
                         visible: typeof configMeta.displayName() === 'undefined',
-                        text: collectionMeta.displayName() || 'Set title for ' + configMeta.roleName(),
+                        text: collectionMeta.displayName() || 'Set title for ' + (configMeta.roleName() || id),
                         click: toggleEditingConfig"></a>
 
                     <span class="list-header__display" data-bind="
@@ -179,7 +179,8 @@
             }">
 
             <a target="article" data-bind="attr: {href: 'http://www.theguardian.com/' + props.id()}">
-                <img data-bind="attr: {src: fields.thumbnail}" draggable="false" />
+                <img draggable="false" data-bind="
+                    attr: {src: fields.thumbnail, title: props.id}" />
             </a>
 
             <div data-bind="visible: !state.editingTitle()">

@@ -1,8 +1,10 @@
 define([
     '$',
+    'utils/clamp',
     'modules/component'
 ], function(
     $,
+    clamp,
     Component
 ) {
 
@@ -19,6 +21,18 @@ Component.define(Cta);
  * @override
  */
 Cta.prototype.endpoint = '/open/cta/article/:discussionKey.json';
+
+/**
+ * @override
+ * @type {string}
+ */
+Cta.prototype.componentClass = 'comment';
+
+/**
+ * @override
+ * @type {Boolean}
+ */
+Cta.prototype.useBem = true;
 
 /** @type {Object.<string.*>} */
 Cta.prototype.defaultOptions = {
@@ -38,7 +52,9 @@ Cta.prototype.prerender = function() {
 };
 
 /** @override */
-Cta.prototype.ready = function() {};
+Cta.prototype.ready = function() {
+    clamp(this.getElem('body'), 10, true);
+};
 
 
 return Cta;
