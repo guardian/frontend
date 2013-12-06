@@ -376,33 +376,20 @@ Comments.prototype.addMoreRepliesButtons = function (comments) {
 Comments.prototype.getMoreReplies = function(event) {
     event.preventDefault();
     var self = this,
-        source = bonzo(event.target).data("source-comment");
+        source = bonzo(event.target).data('source-comment');
     
     ajax({
-        url: '/discussion/comment/'+ event.target.getAttribute("data-comment-id") +'.json',
+        url: '/discussion/comment/'+ event.target.getAttribute('data-comment-id') +'.json',
         type: 'json',
         method: 'get',
         crossOrigin: true
     }).then(function (resp) {
-        var comment = bonzo.create(resp.html);
-        var replies = qwery(self.getClass('reply'), comment);
-
-        replies.sort(function compareFunction (a, b) {
-            a = new Date(a.getAttribute("data-comment-timestamp")).getTime();
-            b = new Date(b.getAttribute("data-comment-timestamp")).getTime();
-
-            if (a < b) {
-                return -1;
-            } else if (a > b) {
-                return 1;
-            } else {
-                return 0;
-            }
-        });
+        var comment = bonzo.create(resp.html),
+            replies = qwery(self.getClass('reply'), comment);
 
         replies = replies.slice(self.options.showRepliesCount, replies.length);
         bonzo(qwery('.d-thread--responses', source)).append(replies);
-        bonzo(event.currentTarget).addClass("u-h");
+        bonzo(event.currentTarget).addClass('u-h');
         if (!self.isReadOnly()) {
             RecommendComments.init(source);
         }
