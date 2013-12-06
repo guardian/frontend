@@ -66,6 +66,12 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val elasticSearchHost = configuration.getMandatoryStringProperty("content.api.elastic.host")
     lazy val key = configuration.getMandatoryStringProperty("content.api.key")
     lazy val timeout: Int = configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000)
+
+    object write {
+      lazy val username: String = ""
+      lazy val password: String = ""
+      lazy val endpoint: String = ""
+    }
   }
 
   object ophanApi {
