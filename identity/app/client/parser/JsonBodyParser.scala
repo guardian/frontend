@@ -16,6 +16,12 @@ trait JsonBodyParser extends Logging {
     httpResponseResponse.right.flatMap { httpResponse =>
       try {
         (successType, httpResponse) match {
+          case (_, HttpResponse(body, status, message)) if status == 502 =>
+            Left(List(Error("Bad gateway", "The server was not available", 502)))
+          case (_, HttpResponse(body, status, message)) if status == 503 =>
+            Left(List(Error("Service unavailable", "The service was not available", 503)))
+          case (_, HttpResponse(body, status, message)) if status == 504 =>
+            Left(List(Error("Gateway timeout", "The service did not respond", 504)))
           case (_, HttpResponse(body, status, message)) if status > 299 =>
             Left(extractErrorFromResponse(parse(body), httpResponse.statusCode))
           case (extractType, HttpResponse(body, status, message)) if extractType == manifest[Unit] =>

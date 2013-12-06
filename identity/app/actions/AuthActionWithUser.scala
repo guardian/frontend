@@ -23,7 +23,7 @@ class AuthActionWithUser @Inject()(authService: AuthenticationService, identityA
         identityApiClient.me(auth.auth).flatMap {
           case Left(errors) => {
             logger.warn(s"Failed to look up logged-in user: $errors")
-            Future.successful(InternalServerError)
+            Future.failed(new RuntimeException(s"Failed to look up logged-in user: $errors"))
           }
           case Right(user) => block(AuthRequest(request, user, auth.auth))
         }
