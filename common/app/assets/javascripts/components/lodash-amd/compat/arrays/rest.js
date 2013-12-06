@@ -1,5 +1,5 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize exports="amd" -o ./compat/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -49,24 +49,19 @@ define(['../functions/createCallback', '../internals/slice'], function(createCal
    * });
    * // => [3]
    *
-   * var food = [
-   *   { 'name': 'banana', 'organic': true },
-   *   { 'name': 'beet',   'organic': false },
+   * var characters = [
+   *   { 'name': 'barney',  'blocked': true,  'employer': 'slate' },
+   *   { 'name': 'fred',    'blocked': false,  'employer': 'slate' },
+   *   { 'name': 'pebbles', 'blocked': true, 'employer': 'na' }
    * ];
    *
    * // using "_.pluck" callback shorthand
-   * _.rest(food, 'organic');
-   * // => [{ 'name': 'beet', 'organic': false }]
-   *
-   * var food = [
-   *   { 'name': 'apple',  'type': 'fruit' },
-   *   { 'name': 'banana', 'type': 'fruit' },
-   *   { 'name': 'beet',   'type': 'vegetable' }
-   * ];
+   * _.pluck(_.rest(characters, 'blocked'), 'name');
+   * // => ['fred', 'pebbles']
    *
    * // using "_.where" callback shorthand
-   * _.rest(food, { 'type': 'fruit' });
-   * // => [{ 'name': 'beet', 'type': 'vegetable' }]
+   * _.rest(characters, { 'employer': 'slate' });
+   * // => [{ 'name': 'pebbles', 'blocked': true, 'employer': 'na' }]
    */
   function rest(array, callback, thisArg) {
     if (typeof callback != 'number' && callback != null) {

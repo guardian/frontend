@@ -1,5 +1,5 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="amd" -o ./modern/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -46,7 +46,7 @@ define(['../objects/isString'], function(isString) {
    * // => 8
    */
   var parseInt = nativeParseInt(whitespace + '08') == 8 ? nativeParseInt : function(value, radix) {
-    // Firefox and Opera still follow the ES3 specified implementation of `parseInt`
+    // Firefox < 21 and Opera < 15 follow the ES3 specified implementation of `parseInt`
     return nativeParseInt(isString(value) ? value.replace(reLeadingSpacesAndZeros, '') : value, radix || 0);
   };
 

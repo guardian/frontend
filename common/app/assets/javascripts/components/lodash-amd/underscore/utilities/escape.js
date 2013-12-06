@@ -1,5 +1,5 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize underscore exports="amd" -o ./underscore/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -19,8 +19,8 @@ define(['../internals/escapeHtmlChar', '../objects/keys', '../internals/reUnesca
    * @returns {string} Returns the escaped string.
    * @example
    *
-   * _.escape('Moe, Larry & Curly');
-   * // => 'Moe, Larry &amp; Curly'
+   * _.escape('Fred, Wilma, & Pebbles');
+   * // => 'Fred, Wilma, &amp; Pebbles'
    */
   function escape(string) {
     return string == null ? '' : String(string).replace(reUnescapedHtml, escapeHtmlChar);

@@ -1,5 +1,5 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="amd" -o ./modern/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -12,6 +12,13 @@ define(['../functions/createCallback'], function(createCallback) {
    * This method is like `_.find` except that it returns the index of the first
    * element that passes the callback check, instead of the element itself.
    *
+   * If a property name is provided for `callback` the created "_.pluck" style
+   * callback will return the property value of the given element.
+   *
+   * If an object is provided for `callback` the created "_.where" style callback
+   * will return `true` for elements that have the properties of the given object,
+   * else `false`.
+   *
    * @static
    * @memberOf _
    * @category Arrays
@@ -23,9 +30,23 @@ define(['../functions/createCallback'], function(createCallback) {
    * @returns {number} Returns the index of the found element, else `-1`.
    * @example
    *
-   * _.findIndex(['apple', 'banana', 'beet'], function(food) {
-   *   return /^b/.test(food);
+   * var characters = [
+   *   { 'name': 'barney',  'age': 36, 'blocked': false },
+   *   { 'name': 'fred',    'age': 40, 'blocked': true },
+   *   { 'name': 'pebbles', 'age': 1,  'blocked': false }
+   * ];
+   *
+   * _.findIndex(characters, function(chr) {
+   *   return chr.age < 20;
    * });
+   * // => 2
+   *
+   * // using "_.where" callback shorthand
+   * _.findIndex(characters, { 'age': 36 });
+   * // => 0
+   *
+   * // using "_.pluck" callback shorthand
+   * _.findIndex(characters, 'blocked');
    * // => 1
    */
   function findIndex(array, callback, thisArg) {

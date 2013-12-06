@@ -1,12 +1,12 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="amd" -o ./modern/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
  * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  * Available under MIT license <http://lodash.com/license>
  */
-define(['../internals/reNative', '../internals/shimIsPlainObject'], function(reNative, shimIsPlainObject) {
+define(['../internals/isNative', '../internals/shimIsPlainObject'], function(isNative, shimIsPlainObject) {
 
   /** `Object#toString` result shortcuts */
   var objectClass = '[object Object]';
@@ -14,9 +14,11 @@ define(['../internals/reNative', '../internals/shimIsPlainObject'], function(reN
   /** Used for native method references */
   var objectProto = Object.prototype;
 
+  /** Used to resolve the internal [[Class]] of values */
+  var toString = objectProto.toString;
+
   /** Native method shortcuts */
-  var getPrototypeOf = reNative.test(getPrototypeOf = Object.getPrototypeOf) && getPrototypeOf,
-      toString = objectProto.toString;
+  var getPrototypeOf = isNative(getPrototypeOf = Object.getPrototypeOf) && getPrototypeOf;
 
   /**
    * Checks if `value` is an object created by the `Object` constructor.
@@ -28,26 +30,26 @@ define(['../internals/reNative', '../internals/shimIsPlainObject'], function(reN
    * @returns {boolean} Returns `true` if `value` is a plain object, else `false`.
    * @example
    *
-   * function Stooge(name, age) {
-   *   this.name = name;
-   *   this.age = age;
+   * function Shape() {
+   *   this.x = 0;
+   *   this.y = 0;
    * }
    *
-   * _.isPlainObject(new Stooge('moe', 40));
+   * _.isPlainObject(new Shape);
    * // => false
    *
    * _.isPlainObject([1, 2, 3]);
    * // => false
    *
-   * _.isPlainObject({ 'name': 'moe', 'age': 40 });
+   * _.isPlainObject({ 'x': 0, 'y': 0 });
    * // => true
    */
-  var isPlainObject = function(value) {
+  var isPlainObject = !getPrototypeOf ? shimIsPlainObject : function(value) {
     if (!(value && toString.call(value) == objectClass)) {
       return false;
     }
     var valueOf = value.valueOf,
-        objProto = typeof valueOf == 'function' && (objProto = getPrototypeOf(valueOf)) && getPrototypeOf(objProto);
+        objProto = isNative(valueOf) && (objProto = getPrototypeOf(valueOf)) && getPrototypeOf(objProto);
 
     return objProto
       ? (value == objProto || getPrototypeOf(value) == objProto)

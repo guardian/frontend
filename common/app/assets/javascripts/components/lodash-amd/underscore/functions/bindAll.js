@@ -1,12 +1,12 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize underscore exports="amd" -o ./underscore/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
  * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  * Available under MIT license <http://lodash.com/license>
  */
-define(['../internals/baseFlatten', '../internals/createBound', '../objects/functions'], function(baseFlatten, createBound, functions) {
+define(['../internals/baseFlatten', '../internals/createWrapper', '../objects/functions'], function(baseFlatten, createWrapper, functions) {
 
   /**
    * Binds methods of an object to the object itself, overwriting the existing
@@ -24,8 +24,8 @@ define(['../internals/baseFlatten', '../internals/createBound', '../objects/func
    * @example
    *
    * var view = {
-   *  'label': 'docs',
-   *  'onClick': function() { console.log('clicked ' + this.label); }
+   *   'label': 'docs',
+   *   'onClick': function() { console.log('clicked ' + this.label); }
    * };
    *
    * _.bindAll(view);
@@ -39,7 +39,7 @@ define(['../internals/baseFlatten', '../internals/createBound', '../objects/func
 
     while (++index < length) {
       var key = funcs[index];
-      object[key] = createBound(object[key], 1, null, null, object);
+      object[key] = createWrapper(object[key], 1, null, null, object);
     }
     return object;
   }

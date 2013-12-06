@@ -1,5 +1,5 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize exports="amd" -o ./compat/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -14,9 +14,12 @@ define(['../support'], function(support) {
   /** Used for native method references */
   var objectProto = Object.prototype;
 
+  /** Used to resolve the internal [[Class]] of values */
+  var toString = objectProto.toString;
+
   /** Native method shortcuts */
   var hasOwnProperty = objectProto.hasOwnProperty,
-      toString = objectProto.toString;
+      propertyIsEnumerable = objectProto.propertyIsEnumerable;
 
   /**
    * Checks if `value` is an `arguments` object.
@@ -42,7 +45,7 @@ define(['../support'], function(support) {
   if (!support.argsClass) {
     isArguments = function(value) {
       return value && typeof value == 'object' && typeof value.length == 'number' &&
-        hasOwnProperty.call(value, 'callee') || false;
+        hasOwnProperty.call(value, 'callee') && !propertyIsEnumerable.call(value, 'callee') || false;
     };
   }
 

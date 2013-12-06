@@ -1,5 +1,5 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="amd" -o ./modern/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -19,18 +19,18 @@ define(['../internals/lodashWrapper'], function(lodashWrapper) {
    * @returns {Object} Returns the wrapper object.
    * @example
    *
-   * var stooges = [
-   *   { 'name': 'moe', 'age': 40 },
-   *   { 'name': 'larry', 'age': 50 },
-   *   { 'name': 'curly', 'age': 60 }
+   * var characters = [
+   *   { 'name': 'barney',  'age': 36 },
+   *   { 'name': 'fred',    'age': 40 },
+   *   { 'name': 'pebbles', 'age': 1 }
    * ];
    *
-   * var youngest = _.chain(stooges)
+   * var youngest = _.chain(characters)
    *     .sortBy('age')
-   *     .map(function(stooge) { return stooge.name + ' is ' + stooge.age; })
+   *     .map(function(chr) { return chr.name + ' is ' + chr.age; })
    *     .first()
    *     .value();
-   * // => 'moe is 40'
+   * // => 'pebbles is 1'
    */
   function chain(value) {
     value = new lodashWrapper(value);

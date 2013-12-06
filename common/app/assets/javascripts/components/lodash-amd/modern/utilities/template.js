@@ -1,5 +1,5 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="amd" -o ./modern/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -18,7 +18,7 @@ define(['../objects/defaults', './escape', '../internals/escapeStringChar', '../
 
   /**
    * Used to match ES6 template delimiters
-   * http://people.mozilla.org/~jorendorff/es6-draft.html#sec-7.8.6
+   * http://people.mozilla.org/~jorendorff/es6-draft.html#sec-literals-string-literals
    */
   var reEsTemplate = /\$\{([^\\}]*(?:\\.[^\\}]*)*)\}/g;
 
@@ -36,7 +36,7 @@ define(['../objects/defaults', './escape', '../internals/escapeStringChar', '../
    * debugging. See http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/#toc-sourceurl
    *
    * For more information on precompiling templates see:
-   * http://lodash.com/#custom-builds
+   * http://lodash.com/custom-builds
    *
    * For more information on Chrome extension sandboxes see:
    * http://developer.chrome.com/stable/extensions/sandboxingEval.html
@@ -59,8 +59,8 @@ define(['../objects/defaults', './escape', '../internals/escapeStringChar', '../
    *
    * // using the "interpolate" delimiter to create a compiled template
    * var compiled = _.template('hello <%= name %>');
-   * compiled({ 'name': 'moe' });
-   * // => 'hello moe'
+   * compiled({ 'name': 'fred' });
+   * // => 'hello fred'
    *
    * // using the "escape" delimiter to escape HTML in data property values
    * _.template('<b><%- value %></b>', { 'value': '<script>' });
@@ -68,16 +68,16 @@ define(['../objects/defaults', './escape', '../internals/escapeStringChar', '../
    *
    * // using the "evaluate" delimiter to generate HTML
    * var list = '<% _.forEach(people, function(name) { %><li><%- name %></li><% }); %>';
-   * _.template(list, { 'people': ['moe', 'larry'] });
-   * // => '<li>moe</li><li>larry</li>'
+   * _.template(list, { 'people': ['fred', 'barney'] });
+   * // => '<li>fred</li><li>barney</li>'
    *
    * // using the ES6 delimiter as an alternative to the default "interpolate" delimiter
-   * _.template('hello ${ name }', { 'name': 'curly' });
-   * // => 'hello curly'
+   * _.template('hello ${ name }', { 'name': 'pebbles' });
+   * // => 'hello pebbles'
    *
    * // using the internal `print` function in "evaluate" delimiters
-   * _.template('<% print("hello " + name); %>!', { 'name': 'larry' });
-   * // => 'hello larry!'
+   * _.template('<% print("hello " + name); %>!', { 'name': 'barney' });
+   * // => 'hello barney!'
    *
    * // using a custom template delimiters
    * _.templateSettings = {
@@ -88,9 +88,9 @@ define(['../objects/defaults', './escape', '../internals/escapeStringChar', '../
    * // => 'hello mustache!'
    *
    * // using the `imports` option to import jQuery
-   * var list = '<% $.each(people, function(name) { %><li><%- name %></li><% }); %>';
-   * _.template(list, { 'people': ['moe', 'larry'] }, { 'imports': { '$': jQuery } });
-   * // => '<li>moe</li><li>larry</li>'
+   * var list = '<% jq.each(people, function(name) { %><li><%- name %></li><% }); %>';
+   * _.template(list, { 'people': ['fred', 'barney'] }, { 'imports': { 'jq': jQuery } });
+   * // => '<li>fred</li><li>barney</li>'
    *
    * // using the `sourceURL` option to specify a custom sourceURL for the template
    * var compiled = _.template('hello <%= name %>', null, { 'sourceURL': '/basic/greeting.jst' });
@@ -120,7 +120,7 @@ define(['../objects/defaults', './escape', '../internals/escapeStringChar', '../
     // and Laura Doktorova's doT.js
     // https://github.com/olado/doT
     var settings = templateSettings.imports._.templateSettings || templateSettings;
-    text || (text = '');
+    text = String(text || '');
 
     // avoid missing dependencies when `iteratorTemplate` is not defined
     options = defaults({}, options, settings);

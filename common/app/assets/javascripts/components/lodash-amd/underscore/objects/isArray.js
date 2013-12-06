@@ -1,12 +1,12 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize underscore exports="amd" -o ./underscore/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
  * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  * Available under MIT license <http://lodash.com/license>
  */
-define(['../internals/reNative'], function(reNative) {
+define(['../internals/isNative'], function(isNative) {
 
   /** `Object#toString` result shortcuts */
   var arrayClass = '[object Array]';
@@ -14,11 +14,11 @@ define(['../internals/reNative'], function(reNative) {
   /** Used for native method references */
   var objectProto = Object.prototype;
 
-  /** Native method shortcuts */
+  /** Used to resolve the internal [[Class]] of values */
   var toString = objectProto.toString;
 
   /* Native method shortcuts for methods with the same name as other `lodash` methods */
-  var nativeIsArray = reNative.test(nativeIsArray = Array.isArray) && nativeIsArray;
+  var nativeIsArray = isNative(nativeIsArray = Array.isArray) && nativeIsArray;
 
   /**
    * Checks if `value` is an array.
