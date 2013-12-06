@@ -142,7 +142,7 @@ Debugging
 ---------
 You can debug your local Frontend application, by attaching a debugger.
 
-* Start Simple Build Tool in debug mode by typing `./sbt012 --debug`
+* Start Simple Build Tool in debug mode by typing `./sbt --debug`
 * Build and run your application. See "Running" for steps.
 * Use a debugger to attach to the remote Java process, on localhost:1044.
 

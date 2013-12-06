@@ -157,7 +157,7 @@ define([
             var mvtId = mvtCookie.getMvtFullId();
 
             if (mvtId) {
-                s.evar60 = mvtId;
+                s.eVar60 = mvtId;
             }
 
             if (config.page.commentable) {

@@ -17,7 +17,13 @@ define(function () {
             expires.setDate(1);
         }
 
-        document.cookie = name + "=" + value + "; path=/; expires=" + expires.toUTCString() + ";";
+        var domain = document.domain;
+
+        if (domain.substr(0,4) === "www.") {
+            domain = domain.substr(3);
+        }
+
+        document.cookie = name + "=" + value + "; path=/; expires=" + expires.toUTCString() + "; domain=" + domain + ";";
     }
 
     function get(name) {

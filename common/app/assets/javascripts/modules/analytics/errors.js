@@ -41,7 +41,7 @@ define([
                 var error = {
                     message: message,
                     filename: filename,
-                    lineno: lineno,
+                    lineno: lineno
                 };
                 if (isDev) {
                     if (isUncaught !== true) {
