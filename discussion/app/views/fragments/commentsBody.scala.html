@@ -17,6 +17,9 @@
         }
         <div class="d-discussion__meta d-meta-item">Sorted by newest first.</div>
     </div>
+
+    <div class="js-new-comments"></div>
+
     @if(page.currentPage != 1){
         <a class="d-discussion__show-more d-discussion__show-more--newer cta"
             href="@LinkTo{/@page.id?page=@(page.currentPage - 1)}"

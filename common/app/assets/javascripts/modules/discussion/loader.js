@@ -269,7 +269,7 @@ Loader.prototype.commentPosted = function () {
     // Should more comments be shown?
     if (!this.firstComment) {
         this.firstComment = true;
-        this.comments.showMore();
+        this.comments.showHiddenComments();
         this.cleanUpOnShowComments();
     }
 

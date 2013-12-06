@@ -64,6 +64,7 @@ Comments.prototype.classes = {
     reply: 'd-comment--response',
     showReplies: 'js-show-more-replies',
     header: 'd-discussion__header',
+    newComments: 'js-new-comments',
 
     comment: 'd-comment',
     commentActions: 'd-comment__actions__main',
@@ -322,7 +323,15 @@ Comments.prototype.renderComments = function(position, resp) {
 
     $(this.getClass('showMoreOlder'), this.elem).replaceWith($(this.getClass('showMoreOlder'), html));
     $(this.getClass('showMoreNewer'), this.elem).replaceWith($(this.getClass('showMoreNewer'), html));
-    
+
+    // Stop duplication in new comments section
+    qwery(this.getClass('comment'), this.getElem('newComments')).forEach(function(comment) {
+        var $comment = $('#'+ comment.id, html);
+        if ($comment.length === 1) {
+            $(comment).remove();
+        }
+    });
+
     bonzo(this.getElem('comments'))[position](comments);
     this.hideExcessReplies(comments);
 
@@ -444,7 +453,7 @@ Comments.prototype.addComment = function(comment, focus, parent) {
 
     // Stupid hack. Will rearchitect.
     if (!parent) {
-        bonzo(this.getElem('comments')).prepend(commentElem);
+        bonzo(this.getElem('newComments')).prepend(commentElem);
     } else {
         bonzo(parent).append(commentElem);
     }
