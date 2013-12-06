@@ -1,0 +1,4 @@
+package services
+import common.ExecutionContexts
+
+object ConfigAgent extends ConfigAgentTrait with ExecutionContexts
