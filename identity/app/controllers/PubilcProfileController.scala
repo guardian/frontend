@@ -35,7 +35,7 @@ class PubilcProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
 
   def displayForm = authActionWithUser.apply { implicit request =>
     val idRequest = idRequestParser(request)
-    Ok(views.html.public_profile(page.tracking(idRequest), idRequest, idUrlBuilder, bindFormFromUser(request.user)))
+    Ok(views.html.public_profile(page.tracking(idRequest), request.user, bindFormFromUser(request.user), idRequest, idUrlBuilder))
   }
 
   def bindFormFromUser(user: User): Form[(Option[String], Option[String], Option[String], Option[String], Option[String])] = {
@@ -71,10 +71,10 @@ class PubilcProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
         val formDataWithErrors = errors.foldLeft(formData) { (formWithErrors,error) =>
           formWithErrors.withError(error.context.getOrElse(""), error.description)
         }
-        Ok(views.html.public_profile(page.tracking(idRequest), idRequest, idUrlBuilder, formDataWithErrors))
+        Ok(views.html.public_profile(page.tracking(idRequest), request.user, formDataWithErrors, idRequest, idUrlBuilder))
       }
       case Right(user) => {
-        Ok(views.html.public_profile(page.accountEdited(idRequest), idRequest, idUrlBuilder, bindFormFromUser(user)))
+        Ok(views.html.public_profile(page.accountEdited(idRequest), request.user, bindFormFromUser(user), idRequest, idUrlBuilder))
       }
     }
   }

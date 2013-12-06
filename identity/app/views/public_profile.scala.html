@@ -1,4 +1,10 @@
-@(page: model.MetaData with tracking.TrackingParams, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, profileForm: Form[(Option[String], Option[String], Option[String], Option[String], Option[String])])(implicit request: RequestHeader)
+@(
+        page: model.MetaData with tracking.TrackingParams,
+        user: com.gu.identity.model.User,
+        profileForm: Form[(Option[String], Option[String], Option[String], Option[String], Option[String])],
+        idRequest: services.IdentityRequest,
+        idUrlBuilder: services.IdentityUrlBuilder
+)(implicit request: RequestHeader)
 
 @import tracking.TrackingParams
 @import views.html.fragments.form.{inputField, textareaField}
@@ -11,7 +17,12 @@
 @identityMain(page, conf.Switches.all){
 }{
 <div class="identity-wrapper">
-    <h2 class="type-2">Edit your profile</h2>
+    <h2 class="type-2">
+        @user.publicFields.displayName
+    </h2>
+    @user.dates.accountCreatedDate.map { joinDate =>
+        <p class="form-field__note">Joined: @joinDate.toString("d MMM yyyy")</p>
+    }
 
     <form class="form" novalidate action="@idUrlBuilder.buildUrl("/profile/public", idRequest)" role="main" method="post">
         @if(profileForm.globalError.isDefined) {
@@ -29,10 +40,10 @@
 
             @textareaField(Input(profileForm("publicFields.aboutMe"), ('_label, "About me")))
             @textareaField(Input(profileForm("publicFields.interests"), ('_label, "Interests")))
-            @inputField(Input(profileForm("publicFields.webPage"), ('_label, "Website")))
+            @inputField(Input(profileForm("publicFields.webPage"), ('_label, "Website (enter full address)")))
 
             <li>
-                <button type="submit" class="submit-input" data-link-name="Create account">Save</button>
+                <button type="submit" class="submit-input" data-link-name="Create account">Save changes</button>
             </li>
         </ul>
     </form>
