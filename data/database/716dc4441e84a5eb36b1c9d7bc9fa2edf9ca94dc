@@ -1,0 +1,36 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":3,
+    "startIndex":1,
+    "pageSize":50,
+    "currentPage":1,
+    "pages":1,
+    "results":[{
+      "id":"travel/greece",
+      "type":"keyword",
+      "webTitle":"Greece",
+      "webUrl":"http://www.theguardian.com/travel/greece",
+      "apiUrl":"http://content.guardianapis.com/travel/greece",
+      "sectionId":"travel",
+      "sectionName":"Travel"
+    },{
+      "id":"travel/greek-islands",
+      "type":"keyword",
+      "webTitle":"Greek Islands",
+      "webUrl":"http://www.theguardian.com/travel/greek-islands",
+      "apiUrl":"http://content.guardianapis.com/travel/greek-islands",
+      "sectionId":"travel",
+      "sectionName":"Travel"
+    },{
+      "id":"travel/zeus",
+      "type":"keyword",
+      "webTitle":"The Statue of Zeus at Olympia, Greece",
+      "webUrl":"http://www.theguardian.com/travel/zeus",
+      "apiUrl":"http://content.guardianapis.com/travel/zeus",
+      "sectionId":"travel",
+      "sectionName":"Travel"
+    }]
+  }
+}
