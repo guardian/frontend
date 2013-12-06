@@ -60,7 +60,9 @@
                         <div class="u-fauxlink d-comment__action d-comment__action--reply sign-in-required" role="button" data-link-name="reply to comment" data-comment-id="@comment.id">Reply</div>
                         <span class="d-staff-required">
                             <span class="d-comment__seperator d-comment__action">|</span>
-                            <div class="u-fauxlink d-comment__action d-comment__action--pick" role="button">Pick</div>
+                            <span class="u-fauxlink d-comment__action d-comment__action--pick" role="button"
+                                data-comment-id="@comment.id"
+                                data-comment-highlighted="@if(comment.isHighlighted){true}else{false}">@if(comment.isHighlighted){Unpick}else{Pick}</span>
                         </span>
 
                         <a href="http://discussion.theguardian.com/components/report-abuse/@comment.id" class="d-comment__action d-comment__action--report" target="_blank">Report</a>

@@ -68,7 +68,7 @@ Comments.prototype.classes = {
     comment: 'd-comment',
     commentActions: 'd-comment__actions__main',
     commentReply: 'd-comment__action--reply',
-    commentPick: 'd-comment__pick',
+    commentPick: 'd-comment__action--pick',
     commentRecommend: 'd-comment__recommend'
 };
 
@@ -175,57 +175,61 @@ Comments.prototype.bindCommentEvents = function() {
 
     if (this.user && this.user.privateFields.canPostComment) {
         this.on('click', this.getClass('commentReply'), this.replyToComment);
+        this.on('click', this.getClass('commentPick'), this.handlePickClick);
     }
 };
 
 /**
- * @param {Event} event
+ * @param {Event} e
  */
-Comments.prototype.handlePickClick = function(event) {
-    event.preventDefault();
+Comments.prototype.handlePickClick = function(e) {
+    e.preventDefault();
+    var commentId = e.target.getAttribute('data-comment-id'),
+        $thisButton = $(e.target),
+        promise = $thisButton[0].getAttribute('data-comment-highlighted') === 'true' ? this.unPickComment.bind(this) : this.pickComment.bind(this);
 
-    var thisComment = bonzo(event.target).data('thisComment'),
-        $thisButton = $(event.target),
-        promise = thisComment.getAttribute('data-comment-highlighted') === 'true' ? this.unPickComment.bind(this) : this.pickComment.bind(this);
-
-    promise(thisComment, $thisButton)
+    promise(commentId, $thisButton)
         .fail(function (resp) {
             var responseText = resp.response.length > 0 ? JSON.parse(resp.response).message : resp.statusText;
-            $(event.target).text(responseText);
+            $(e.target).text(responseText);
         });
 };
 
 /**
- * @param {Element} thisComment
+ * @param {Element} commentId
  * @param {Bonzo} $thisButton
  * @return {Reqwest} AJAX Promise
  */
-Comments.prototype.pickComment = function(thisComment, $thisButton) {
-    var self = this;
+Comments.prototype.pickComment = function(commentId, $thisButton) {
+    var self = this,
+        comment = qwery('#comment-'+ commentId, this.elem);
+
     return DiscussionApi
-        .pickComment(thisComment.getAttribute('data-comment-id'))
+        .pickComment(commentId)
         .then(function () {
-            $(self.getClass('commentPick'), thisComment).removeClass('u-h');
-            $(self.getClass('commentRecommend'), thisComment).addClass('d-comment__recommend--left');
-            $thisButton.text('Un-pick');
-            thisComment.setAttribute('data-comment-highlighted', true);
+            $(self.getClass('commentPick'), comment).removeClass('u-h');
+            $(self.getClass('commentRecommend'), comment).addClass('d-comment__recommend--left');
+            $thisButton.text('Unpick');
+            comment.setAttribute('data-comment-highlighted', true);
         });
 };
 
 /**
- * @param {Element} thisComment
+ * @param {Element} comment
  * @param {Bonzo} $thisButton
  * @return {Reqwest} AJAX Promise
  */
-Comments.prototype.unPickComment = function(thisComment, $thisButton) {
-    var self = this;
+Comments.prototype.unPickComment = function(commentId, $thisButton) {
+    var self = this,
+        comment = qwery('#comment-'+ commentId);
+
     return DiscussionApi
-        .unPickComment(thisComment.getAttribute('data-comment-id'))
+        .unPickComment(commentId)
         .then(function () {
-            $(self.getClass('commentPick'), thisComment).addClass('u-h');
-            $(self.getClass('commentRecommend'), thisComment).removeClass('d-comment__recommend--left');
+            $(self.getClass('commentPick'), comment).addClass('u-h');
+            $(self.getClass('commentRecommend'), comment).removeClass('d-comment__recommend--left');
             $thisButton.text('Pick');
-            thisComment.setAttribute('data-comment-highlighted', false);
+            comment.setAttribute('data-comment-highlighted', false);
         });
 };
 
