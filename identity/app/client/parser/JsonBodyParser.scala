@@ -9,24 +9,26 @@ import client.connection.HttpResponse
 trait JsonBodyParser extends Logging {
   implicit val formats: Formats
 
-  def responseIsError(json: JValue, statusCode: Int): Boolean = statusCode > 299
   def extractErrorFromResponse(json: JValue, statusCode: Int): List[Error]
 
   def extract[T](extractJsonObj: JValue => JValue = {json => json})(httpResponseResponse: Response[HttpResponse])(implicit successType: Manifest[T]): Response[T] = {
     httpResponseResponse.right.flatMap { httpResponse =>
       try {
-        (successType, httpResponse) match {
-          case (_, HttpResponse(body, status, message)) if status == 502 =>
+        httpResponse match {
+          case HttpResponse(body, status, message) if status == 502 =>
+            logger.error("API unavailable, 502")
             Left(List(Error("Bad gateway", "The server was not available", 502)))
-          case (_, HttpResponse(body, status, message)) if status == 503 =>
+          case HttpResponse(body, status, message) if status == 503 =>
+            logger.error("API unavailable, 503")
             Left(List(Error("Service unavailable", "The service was not available", 503)))
-          case (_, HttpResponse(body, status, message)) if status == 504 =>
+          case HttpResponse(body, status, message) if status == 504 =>
+            logger.error("API unavailable, 504")
             Left(List(Error("Gateway timeout", "The service did not respond", 504)))
-          case (_, HttpResponse(body, status, message)) if status > 299 =>
+          case HttpResponse(body, status, message) if status > 299 =>
             Left(extractErrorFromResponse(parse(body), httpResponse.statusCode))
-          case (extractType, HttpResponse(body, status, message)) if extractType == manifest[Unit] =>
+          case HttpResponse(body, status, message) if successType == manifest[Unit] =>
             Right().asInstanceOf[Right[List[client.Error], T]]
-          case (_, HttpResponse(body, status, message)) =>
+          case HttpResponse(body, status, message) =>
             Right(extractJsonObj(parse(body)).extract[T])
         }
       } catch {
