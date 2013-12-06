@@ -3,7 +3,7 @@ package model
 import com.gu.openplatform.contentapi.model.{Content => ApiContent}
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
-import common.Reference
+import common.{Reference, Sponsor, Sponsors}
 import org.jsoup.Jsoup
 import collection.JavaConversions._
 import views.support.{Naked, ImgSrc}
@@ -27,6 +27,14 @@ class Content protected (val delegate: ApiContent) extends Trail with Tags with 
   lazy val blockAds: Boolean = videoAssets.exists(_.blockAds)
   lazy val isLiveBlog: Boolean = delegate.isLiveBlog
   lazy val openGraphImage: String = mainPicture.flatMap(_.largestImage.flatMap(_.url)).getOrElse(conf.Configuration.facebook.imageFallback)
+  lazy val isSponsored: Boolean = tags.exists(_.id == "sponsored/sponsored")
+  lazy val sponsor: Option[Sponsor] = {
+    if (isSponsored) {
+      Sponsors.find(tags.filter(_.tagType == "keyword").head.id) 
+    } else {
+      None
+    }
+  } 
 
   lazy val witnessAssignment = delegate.references.find(_.`type` == "witness-assignment")
     .map(_.id).map(Reference(_)).map(_._2)
@@ -57,6 +65,7 @@ class Content protected (val delegate: ApiContent) extends Trail with Tags with 
 
     souped getOrElse Nil
   }
+  
   override lazy val byline: Option[String] = fields.get("byline")
   override lazy val trailType: Option[String] = {
     if (tags.exists(_.id == "tone/comment")) {
