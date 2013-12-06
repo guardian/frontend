@@ -403,35 +403,6 @@ Comments.prototype.isReadOnly = function() {
     return this.elem.getAttribute('data-read-only') === 'true';
 };
 
-// /**
-//  * @param {Object} resp
-//  */
-// Comments.prototype.commentsLoaded = function(resp) {
-//     var comments = qwery(this.getClass('topLevelComment'), bonzo.create(resp.html)),
-//         showMoreButton = this.getElem('showMore');
-
-//     this.currentPage++;
-//     if (!resp.hasMore) {
-//         this.removeShowMoreButton();
-//     }
-
-//     if (!this.isReadOnly()) {
-//         this.renderPickButtons(qwery(this.getClass('comment'), bonzo(comments).parent()));
-//     }
-
-//     bonzo(this.getElem('comments')).append(comments);
-
-//     showMoreButton.innerHTML = 'Show more';
-//     showMoreButton.removeAttribute('data-disabled');
-
-//     this.addMoreRepliesButtons(comments);
-
-//     if (!this.isReadOnly()) {
-//         RecommendComments.init(this.context);
-//     }
-//     this.emit('loaded');
-// };
-
 Comments.prototype.removeShowMoreButton = function() {
     bonzo(this.getElem('showMore')).remove();
 };
