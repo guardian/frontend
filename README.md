@@ -31,7 +31,7 @@ STAGE=DEV
 ```
 
 The second file is called `[YOUR_HOME_DIR]/.gu/frontend.properties` and you can get its contents from a shared
-document (ask your team mates to share it with you)
+document. Ask your team mates to share it with you. If it has already been shared with you just search for "frontend.properties" in your documents.
 
 Vagrant
 -------
