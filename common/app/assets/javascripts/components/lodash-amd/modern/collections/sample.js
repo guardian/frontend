@@ -1,12 +1,12 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="amd" -o ./modern/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
  * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  * Available under MIT license <http://lodash.com/license>
  */
-define(['../objects/isString', '../utilities/random', './shuffle', '../objects/values'], function(isString, random, shuffle, values) {
+define(['../internals/baseRandom', '../objects/isString', './shuffle', '../objects/values'], function(baseRandom, isString, shuffle, values) {
 
   /** Used as a safe reference for `undefined` in pre ES5 environments */
   var undefined;
@@ -23,8 +23,8 @@ define(['../objects/isString', '../utilities/random', './shuffle', '../objects/v
    * @category Collections
    * @param {Array|Object|string} collection The collection to sample.
    * @param {number} [n] The number of elements to sample.
-   * @param- {Object} [guard] Allows working with functions, like `_.map`,
-   *  without using their `key` and `object` arguments as sources.
+   * @param- {Object} [guard] Allows working with functions like `_.map`
+   *  without using their `index` arguments as `n`.
    * @returns {Array} Returns the random sample(s) of `collection`.
    * @example
    *
@@ -35,12 +35,11 @@ define(['../objects/isString', '../utilities/random', './shuffle', '../objects/v
    * // => [3, 1]
    */
   function sample(collection, n, guard) {
-    var length = collection ? collection.length : 0;
-    if (typeof length != 'number') {
+    if (collection && typeof collection.length != 'number') {
       collection = values(collection);
     }
     if (n == null || guard) {
-      return collection ? collection[random(length - 1)] : undefined;
+      return collection ? collection[baseRandom(0, collection.length - 1)] : undefined;
     }
     var result = shuffle(collection);
     result.length = nativeMin(nativeMax(0, n), result.length);

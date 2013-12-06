@@ -1,6 +1,6 @@
 define([
     "utils/mediator",
-    "modules/interactive/loader",
+    "modules/interactive/loader"
 ], function(
     mediator,
     Interactive

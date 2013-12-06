@@ -1,5 +1,5 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize underscore exports="amd" -o ./underscore/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -22,8 +22,8 @@ define(['../functions/bind', '../utilities/identity'], function(bind, identity) 
     if (typeof func != 'function') {
       return identity;
     }
-    // exit early if there is no `thisArg`
-    if (typeof thisArg == 'undefined') {
+    // exit early for no `thisArg` or already bound by `Function#bind`
+    if (typeof thisArg == 'undefined' || !('prototype' in func)) {
       return func;
     }
     switch (argCount) {

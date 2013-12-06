@@ -1,5 +1,5 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="amd" -o ./modern/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -34,19 +34,22 @@ define(['../objects/isFunction', '../internals/keyPrefix'], function(isFunction,
    *   return n < 2 ? n : fibonacci(n - 1) + fibonacci(n - 2);
    * });
    *
+   * fibonacci(9)
+   * // => 34
+   *
    * var data = {
-   *   'moe': { 'name': 'moe', 'age': 40 },
-   *   'curly': { 'name': 'curly', 'age': 60 }
+   *   'fred': { 'name': 'fred', 'age': 40 },
+   *   'pebbles': { 'name': 'pebbles', 'age': 1 }
    * };
    *
    * // modifying the result cache
-   * var stooge = _.memoize(function(name) { return data[name]; }, _.identity);
-   * stooge('curly');
-   * // => { 'name': 'curly', 'age': 60 }
+   * var get = _.memoize(function(name) { return data[name]; }, _.identity);
+   * get('pebbles');
+   * // => { 'name': 'pebbles', 'age': 1 }
    *
-   * stooge.cache.curly.name = 'jerome';
-   * stooge('curly');
-   * // => { 'name': 'jerome', 'age': 60 }
+   * get.cache.pebbles.name = 'penelope';
+   * get('pebbles');
+   * // => { 'name': 'penelope', 'age': 1 }
    */
   function memoize(func, resolver) {
     if (!isFunction(func)) {

@@ -1,5 +1,5 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="amd" -o ./modern/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -36,23 +36,28 @@ define(['../internals/charAtCallback', '../functions/createCallback', './forEach
    * _.min([4, 2, 8, 6]);
    * // => 2
    *
-   * var stooges = [
-   *   { 'name': 'moe', 'age': 40 },
-   *   { 'name': 'larry', 'age': 50 }
+   * var characters = [
+   *   { 'name': 'barney', 'age': 36 },
+   *   { 'name': 'fred',   'age': 40 }
    * ];
    *
-   * _.min(stooges, function(stooge) { return stooge.age; });
-   * // => { 'name': 'moe', 'age': 40 };
+   * _.min(characters, function(chr) { return chr.age; });
+   * // => { 'name': 'barney', 'age': 36 };
    *
    * // using "_.pluck" callback shorthand
-   * _.min(stooges, 'age');
-   * // => { 'name': 'moe', 'age': 40 };
+   * _.min(characters, 'age');
+   * // => { 'name': 'barney', 'age': 36 };
    */
   function min(collection, callback, thisArg) {
     var computed = Infinity,
         result = computed;
 
-    if (!callback && isArray(collection)) {
+    // allows working with functions like `_.map` without using
+    // their `index` argument as a callback
+    if (typeof callback != 'function' && thisArg && thisArg[callback] === collection) {
+      callback = null;
+    }
+    if (callback == null && isArray(collection)) {
       var index = -1,
           length = collection.length;
 
@@ -63,7 +68,7 @@ define(['../internals/charAtCallback', '../functions/createCallback', './forEach
         }
       }
     } else {
-      callback = (!callback && isString(collection))
+      callback = (callback == null && isString(collection))
         ? charAtCallback
         : createCallback(callback, thisArg, 3);
 

@@ -8,6 +8,7 @@ import play.api.mvc._
 import play.api.libs.json.{JsArray, Json}
 import Switches.EditionRedirectLoggingSwitch
 import views.support.NewsContainer
+import common.editions.Uk
 
 abstract class FrontPage(val isNetworkFront: Boolean) extends MetaData
 
@@ -197,7 +198,31 @@ object FrontPage {
     },
 
     new FrontPage(isNetworkFront = true) {
+      override val id = "au-alpha"
+      override val section = ""
+      override val webTitle = "The Guardian"
+      override lazy val analyticsName = "GFE:Network Front"
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "content-type" -> "Network Front",
+        "is-front" -> true
+      )
+    },
+
+    new FrontPage(isNetworkFront = true) {
       override val id = "uk-alpha"
+      override val section = ""
+      override val webTitle = "The Guardian"
+      override lazy val analyticsName = "GFE:Network Front"
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "content-type" -> "Network Front",
+        "is-front" -> true
+      )
+    },
+
+    new FrontPage(isNetworkFront = true) {
+      override val id = "us-alpha"
       override val section = ""
       override val webTitle = "The Guardian"
       override lazy val analyticsName = "GFE:Network Front"
@@ -257,6 +282,17 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
 
     NoCache(Redirect(redirectPath))
   }
+
+  def getPathForUkAlpha(path: String, request: RequestHeader): String =
+    if (path == "uk" &&
+      Switches.UkAlphaSwitch.isSwitchedOn &&
+      Edition(request) == Uk &&
+      request.headers.get("X-Gu-Uk-Alpha").exists(_.toLowerCase == "true")
+    ) {
+      "uk-alpha"
+    }
+    else
+      path
   
   // Needed as aliases for reverse routing
   def renderEditionFrontJson(path: String) = renderFront(path)
@@ -270,7 +306,10 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
   def renderEditionCollectionJson(id: String) = renderCollection(id)
 
   def renderFront(path: String) = Action { implicit request =>
-      val editionalisedPath = editionPath(path, Edition(request))
+      //For UK alpha only
+      val newPath = getPathForUkAlpha(path, request)
+
+      val editionalisedPath = editionPath(newPath, Edition(request))
 
       FrontPage(editionalisedPath).flatMap { frontPage =>
 
@@ -308,7 +347,7 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
       }
     } getOrElse(NotFound)
   }
-  
+
   def renderCollectionRss(id: String) = Action { implicit request =>
     CollectionAgent.getCollection(id) map { collection =>
       Cached(60) {

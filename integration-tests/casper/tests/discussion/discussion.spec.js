@@ -7,7 +7,6 @@
 
 casper.test.setUp(function() {
     casper.start(host +'science/grrlscientist/2012/aug/07/3?view=mobile');
-    casper.options.waitTimeout = 10000;
 });
 
 /**
@@ -24,35 +23,6 @@ casper.test.begin('Read top level comments', function(test) {
     }, function timeout() {
         casper.capture(screens + 'discussion-fail.png');
         test.fail('Comments failed to load');
-    });
-});
-
-casper.test.begin('Show more comments', function (test) { // Testing on an article with topComments present
-    
-    var showCta = '.discussion__comments__container .d-show-cta',
-        commentLi = '.discussion__comments__container li.d-comment--top-level';
-
-    casper.waitForSelector('.discussion__comments__container', function then () {
-        test.assertExists('.discussion__comments__container');
-        test.assertVisible('.discussion__comments__container');
-        test.assertExists(showCta);
-        test.assertVisible(showCta);
-        test.assertElementCount(commentLi, 10);
-        test.assertEval(function () {
-            return document.querySelector('.discussion__comments__container li.d-comment--top-level').className.match(/(u-h)/).length > 1;
-        }, "Comment Li's should not have u-h class");
-        casper.click(showCta);
-        casper.waitFor(function check () {
-            return this.evaluate(function () {
-                return document.querySelector('.discussion__comments__container li.d-comment--top-level').className.match(/(u-h)/) === null; // Only checks one - should check all
-            });
-        }, function then () {
-            test.assertVisible(commentLi);
-            test.assertEval(function () {
-                return document.querySelector('.discussion__comments__container .d-show-cta').className.match(/(u-h)/).length > 1;
-            }, "Show CTA should not have u-h class");
-            test.done();
-        });
     });
 });
 
