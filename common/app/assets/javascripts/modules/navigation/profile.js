@@ -33,7 +33,8 @@ define([
             content: 'js-profile-info',
             popup: 'js-profile-nav-popup',
             signout: 'js-nav-signout',
-            emailPrefs: 'js-nav-emailPrefs'
+            emailPrefs: 'js-nav-emailPrefs',
+            publicProfile: 'js-nav-publicProfile'
         }
     };
 
@@ -68,6 +69,8 @@ define([
             $container.addClass('is-signed-in');
             $popup.html(
                 '<a href="' + this.config.url + '/email-prefs" class="pull-right box-indent ' + Profile.CONFIG.classes.emailPrefs + '">Email preferences</a>'
+                    +
+                '<a href="' + this.config.url + '/profile/public" class="pull-right box-indent ' + Profile.CONFIG.classes.publicProfile + '">Your profile</a>'
                     +
                 '<a href="' + this.config.url + '/signout" class="pull-right box-indent ' + Profile.CONFIG.classes.signout + '">Sign out</a>'
             );
