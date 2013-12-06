@@ -7,7 +7,7 @@ import play.api.libs.json.Json._
 import play.api.libs.json._
 import play.api.libs.ws.{ WS, Response }
 import play.api.libs.json.JsObject
-import services.{ConfigAgent => ConfigAgentTrait, S3FrontsApi}
+import services.{ConfigAgentTrait, S3FrontsApi}
 import scala.concurrent.Future
 import play.api.http.Status
 
@@ -55,7 +55,8 @@ trait ParseConfig extends ExecutionContexts with Logging {
       (json \ "contentApiQuery").asOpt[String].filter(_.nonEmpty),
       (json \ "displayName").asOpt[String],
       (json \ "tone").asOpt[String],
-      (json \ "groups").asOpt[Seq[String]] getOrElse Nil
+      (json \ "groups").asOpt[Seq[String]] getOrElse Nil,
+      (json \ "roleName").asOpt[String]
     )
 
 }
@@ -203,4 +204,4 @@ object QueryAgents {
   def apply(id: String): Option[FaciaPage] = items(id).map(FaciaPage(id, _))
 }
 
-object ConfigAgent extends ConfigAgentTrait
+object ConfigAgent extends ConfigAgentTrait with ExecutionContexts

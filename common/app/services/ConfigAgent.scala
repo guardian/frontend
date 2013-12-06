@@ -29,7 +29,8 @@ trait ConfigAgent extends ExecutionContexts {
         (collectionJson \ "apiQuery").asOpt[String],
         (collectionJson \ "displayName").asOpt[String],
         (collectionJson \ "tone").asOpt[String],
-        (collectionJson \ "groups").asOpt[Seq[String]] getOrElse Nil
+        (collectionJson \ "groups").asOpt[Seq[String]] getOrElse Nil,
+        (collectionJson \ "roleName").asOpt[String]
       )
     }
   }
