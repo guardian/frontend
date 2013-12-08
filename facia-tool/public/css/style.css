@@ -205,51 +205,18 @@ input[type=text] {
     opacity: 0.25;
 }
 
-.web-title {
-    margin: 0 190px 0 80px;
+.headline {
     display: block;    
-}
-
-.web-title a {
     text-decoration: none;
     font-size: 15px;
     line-height: 16px;
     color: #000000;
     cursor: move;
+    margin: 0 190px 0 80px;
 }
 
-.web-title:hover a {
+.headline:hover {
     color: #438835;
-}
-
-.web-title--editor {
-    display: none;
-}
-
-.latest-articles .web-title--editor {
-    display: none !important;
-}
-
-.web-title:hover .web-title--editor {
-    opacity: 0.5;
-    display: inline-block;
-}
-
-.web-title--editor:hover {
-    opacity: 1;
-}
-
-.web-title--edited {
-    opacity: 0.75;
-    display: inline-block;
-    background-color: #CCCCCC;
-    border: 2px solid #CCCCCC;
-    border-radius: 4px;
-    margin: 0;
-}
-
-.web-title--edited:hover {
-    opacity: 1;
 }
 
 .trail .trail__meta {
@@ -614,7 +581,7 @@ button {
     .finder {
         width: 40%;
     }
-    .finder .trail .web-title {
+    .finder .trail .headline {
         margin: 0 0 0 80px;
     } 
     .finder .trail .trail_stats,
@@ -653,7 +620,7 @@ button {
 }
 
 @media (max-width: 525px) {
-    .trail .web-title {
+    .trail .headline {
         margin: 0 0 0 80px;
     } 
     .trail .trail_stats,
@@ -663,7 +630,7 @@ button {
 }
 
 @media (max-width: 350px) {
-    .trail .web-title {
+    .trail .headline {
         margin: 5px 0 0 0;
     } 
     .trail img {

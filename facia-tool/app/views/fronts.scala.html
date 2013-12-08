@@ -209,18 +209,11 @@
             </div>
             <!-- /ko -->
 
-            <div class="web-title" data-bind="
-                    visible: !state.editingMeta()">
-
-                <a target="article" data-bind="
-                    click: startMetaEdit,
-                    attr: {href: 'http://www.theguardian.com/' + props.id()},
-                    text: meta.headline() || fields.headline()"></a>
-
-                <i class="web-title--editable icon-pencil" data-bind="
-                    click: startMetaEdit,
-                    css: {'web-title--editor': !meta.headline(), 'web-title--edited': meta.headline}"></i>
-            </div>
+            <a class="headline" target="article" data-bind="
+                click: startMetaEdit,
+                visible: !state.editingMeta(),
+                attr: {href: props.id()},
+                text: meta.headline() || fields.headline()"></a>
 
             <!-- ko if: state.editingMeta -->
             <div class="sublinks" data-bind="with: meta.sublinks">
