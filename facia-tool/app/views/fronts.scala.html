@@ -87,7 +87,7 @@
         </div>
     </div>
 
-    <div class="collections">
+    <div class="collections" data-bind="css: {'live-mode': $root.liveMode}">
         <div class="collections__inner scrollable" data-bind="template: {name: 'template_collection', foreach: collections}"></div>
     </div>
 

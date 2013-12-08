@@ -154,6 +154,10 @@ input[type=text] {
     padding: 10px 15px 0 15px;
 }
 
+.collections.live-mode {
+    background: #f6FFE8;
+}
+
 .collections__inner {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -175,7 +179,6 @@ input[type=text] {
     overflow: hidden;
     padding: 1px 3px 4px 4px;
     position: relative;
-    background-color: #FFFFFF;
     -webkit-transition: background-color 100ms;
        -moz-transition: background-color 100ms;
             transition: background-color 100ms;
