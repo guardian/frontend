@@ -19,9 +19,8 @@
         
         <a class="tool pref-draft" data-bind="
             click: setModeDraft,
-            css: {active: !liveMode()}">Draft</a>
-        
-        <a class="tool pref-live" data-bind="
+            css: {active: !liveMode()}">Draft</a
+        ><a class="tool pref-live" data-bind="
             click: setModeLive,
             css: {active: liveMode}">Live</a>
 
@@ -129,7 +128,7 @@
                     <button class="btn" value="Cancel" data-bind="click: cancelEditingConfig">Cancel</button>
                 </div>
 
-                <div class="draft-toolbar" data-bind="visible: state.hasDraft">
+                <div class="tools" data-bind="visible: state.hasDraft">
                     <a class="draft-warning" data-bind="
                         click: $root.setModeDraft,
                         visible: $root.liveMode">
@@ -203,14 +202,10 @@
                 <input type="text" data-bind="
                     value: headlineInput,
                     attr: {placeholder: fields.headline}"/>
-                <div>
-                    <a data-bind="click: saveMetaEdit">Save Title</a>
-                    <a data-bind="click: cancelMetaEdit">Cancel</a>
-                    <a data-bind="
-                        click: revertMetaEdit,
-                        attr: {title: fields.headline},
-                        visible: meta.headline">Revert</a>
-                </div>
+                <a data-bind="
+                    click: revertMetaEdit,
+                    attr: {title: fields.headline},
+                    visible: meta.headline">Revert Headline</a>
             </div>
             <!-- /ko -->
 
@@ -218,7 +213,7 @@
                     visible: !state.editingMeta()">
 
                 <a target="article" data-bind="
-                    click: function() { return false; },
+                    click: startMetaEdit,
                     attr: {href: 'http://www.theguardian.com/' + props.id()},
                     text: meta.headline() || fields.headline()"></a>
 
@@ -227,18 +222,23 @@
                     css: {'web-title--editor': !meta.headline(), 'web-title--edited': meta.headline}"></i>
             </div>
 
+            <!-- ko if: state.editingMeta -->
+            <div class="sublinks" data-bind="with: meta.sublinks">
+                <div class="droppable" data-bind="
+                    makeDropabble: true,
+                    css: {underDrag: underDrag},
+                    template: {name: 'template_article', foreach: items}"></div>
+
+            </div>
+            <div class="sublinks-message">Drop sublinks here</div>
+            <div class="tools">
+                <a class="tool" data-bind="click: saveMetaEdit">Save</a>
+                <a class="tool" data-bind="click: cancelMetaEdit">Cancel</a>
+            </div>
+            <!-- /ko -->
+
         </div>
         
-        <!-- ko if: state.editingMeta -->
-        <div class="sublinks" data-bind="with: sublinks">
-            <div class="droppable" data-bind="
-                makeDropabble: true,
-                css: {underDrag: underDrag},
-                template: {name: 'template_article', foreach: items}"></div>
-
-        </div>
-        <!-- /ko -->
-
     </script>
 
 </div>

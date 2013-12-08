@@ -32,6 +32,7 @@ function (
         this.fields.headline('...'); 
 
         this.meta = common.util.asObservableProps([
+            'sublinks',
             'headline',
             'group']);
         
@@ -43,13 +44,6 @@ function (
             'comments',
             'totalHits',
             'pageViewsSeries']);
-
-        this.sublinks = new Group ({
-            items: _.map(opts.sublinks, function(sublink) {
-                return new Article(sublink)
-            })
-        });
-        contentApi.decorateItems(this.sublinks.items());
 
         // Computeds
         this.humanDate = ko.computed(function(){
@@ -79,6 +73,12 @@ function (
         common.util.populateObservables(this.props, opts);
         common.util.populateObservables(this.meta, opts.meta);
         common.util.populateObservables(this.fields, opts.fields);
+        
+        this.meta.sublinks = new Group ({
+            items: _.map((opts.meta || {}).sublinks, function(sublink) {
+                return new Article(sublink)
+            })
+        });
     };
 
     Article.prototype.startMetaEdit = function() {
@@ -87,35 +87,43 @@ function (
     };
 
     Article.prototype.saveMetaEdit = function() {
-        if(this.meta.headline()) {
-            this.save();
-        };
+        this.save();
         this.state.editingMeta(false);
     };
 
     Article.prototype.cancelMetaEdit = function() {
-        this.meta.headline(this.provisionalHeadline);
         this.state.editingMeta(false);
+        this.collection.load();
     };
 
     Article.prototype.revertMetaEdit = function() {
         this.meta.headline(undefined);
-        this.state.editingMeta(false);
-        this.save();
     };
 
     Article.prototype.getMeta = function() {
-        var self = this;
+        var self = this,
+            result = _.chain(this.meta)
+                .pairs()
+                // do sublinks separately
+                .filter(function(p){ return p[0] !== 'sublinks'})
+                // is the meta property a not a whitespace-only string ?
+                .filter(function(p){ return !_.isUndefined(p[1]()) && ("" + p[1]()).replace(/\s*/g, '').length > 0; })
+                // does it actually differ from the props value (if any) that it's overwriting ?
+                .filter(function(p){ return  _.isUndefined(self.props[p[0]]) || self.props[p[0]]() !== p[1](); })
+                .map(function(p){ return [p[0], p[1]()]; })
+                .object()
+                .value();
+        
+        if (this.meta.sublinks && this.meta.sublinks.items().length) {
+            result.sublinks = _.map(this.meta.sublinks.items(), function(sublink) {
+                return {
+                    id:   sublink.props.id(),
+                    meta: sublink.meta.headline() ? {headline: sublink.meta.headline()} : undefined
+                }
+            });
+        }
 
-        return _.chain(this.meta)
-            .pairs()
-            // is the meta property a not a whitespace-only string ?
-            .filter(function(p){ return !_.isUndefined(p[1]()) && ("" + p[1]()).replace(/\s*/g, '').length > 0; })
-            // does it actually differ from the props value (if any) that it's overwriting ?
-            .filter(function(p){ return  _.isUndefined(self.props[p[0]]) || self.props[p[0]]() !== p[1](); })
-            .map(function(p){ return [p[0], p[1]()]; })
-            .object()
-            .value();
+        return result;
     };
 
     Article.prototype.save = function() {

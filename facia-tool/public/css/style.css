@@ -113,7 +113,7 @@ input[type=text] {
 }
 
 .droppable {
-    padding: 0 0 20px 0;
+    padding: 0 0 25px 0;
     -webkit-transition: background-color 50ms;
        -moz-transition: background-color 50ms;
             transition: background-color 50ms;
@@ -199,6 +199,10 @@ input[type=text] {
     margin: 3px 0 0 0;
     background-color: #EEEEEE;
     border-radius: 3px;
+}
+
+.trail .sublinks img {
+    opacity: 0.25;
 }
 
 .web-title {
@@ -296,8 +300,6 @@ input[type=text] {
     display: inline-block;
     font-size: 12px;
     line-height: 13px;
-    padding: 0 1px 0 6px;
-    border-left: 1px solid #CCCCCC;
 }
 
 .trail_tweaks a:first-child {
@@ -502,7 +504,6 @@ button {
 }
 
 .tool {
-    float: left;
     display: inline-block;
     padding: 4px 10px;
     background: #CCCCCC;
@@ -526,33 +527,28 @@ button {
     color: #999999;
 }
 
-.draft-toolbar {
-    color: #46c430;
-    margin: 0 0 10px 4px;
+.collection .tools {
+    margin: 0 0 2px 4px;
     height: 22px;
 }
 
-.draft-toolbar .tool {
+.collection .tools .tool {
     padding: 0 8px;
     font-size: 12px;
     line-height: 20px;
 }
 
-.draft-toolbar .tool.draft-warning {
+.collection .tools .tool.draft-warning {
     font-weight: bold;
     margin-right: 4px;
 }
 
-.draft-toolbar .tool.draft-publish {
+.collection .tools .tool:first-child {
     background: #0088cc;
 }
 
-.draft-toolbar .tool.draft-publish:hover {
+.collection .tools .tool:first-child:hover {
     background: #0077BB;
-}
-
-.draft-toolbar .tool.draft-discard {
-    margin-left: 2px;
 }
 
 .logout,
@@ -591,7 +587,22 @@ button {
 }
 
 .sublinks {
-    background: #EEEEEE;
+    margin: 4px -4px -4px -4px;
+}
+
+.sublinks-message {
+    position: absolute;
+    bottom: 4px;
+    z-index: 2;
+    left: 4px;
+    font-size: 12px;
+    color: #999999;
+}
+
+.trail .tools {
+    position: absolute;
+    bottom: 0px;
+    right: 3px;
 }
 
 @media (max-width: 1100px) {
