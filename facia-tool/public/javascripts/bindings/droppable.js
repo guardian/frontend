@@ -45,7 +45,6 @@ define([
                     event.preventDefault();
                     event.stopPropagation();
 
-                    console.log(targetList);
                     targetList.underDrag(targetItem.constructor === Group);
                     _.each(targetList.items(), function(item) {
                         var underDrag = (item === targetItem);
