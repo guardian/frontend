@@ -76,7 +76,8 @@ trait ContentApiWrite extends ExecutionContexts {
   }
 
   private def generateGroups(config: Config, block: Block): Seq[Group] = {
-    config.groups.zipWithIndex map {case (group, index) =>
+    //TODO: Reverse until this is merged: https://github.com/guardian/skeleton/pull/32
+    config.groups.reverse.zipWithIndex map {case (group, index) =>
       val trails = block.live.filter(_.meta.exists(_.get("group").exists(_.toInt == index)))
       Group(
         title = group,
