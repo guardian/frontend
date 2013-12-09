@@ -6,7 +6,7 @@
     "curl": "~0.8.4",
     "eventEmitter": "~4.2.6",
     "jquery": "~2.0.3",
-    "knockout.js": "~2.2.1",
+    "knockout.js": "~2.3.0",
     "jquery.sparkline": "http://omnipotent.net/jquery.sparkline/2.1.2/jquery.sparkline.min.js",
     "underscore": "~1.5.2"
   },
