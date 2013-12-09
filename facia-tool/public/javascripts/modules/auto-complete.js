@@ -1,10 +1,10 @@
 define([
-    'models/common',
-    'modules/authedAjax',
+    'modules/vars',
+    'modules/authed-ajax',
     'modules/cache'
 ],
 function (
-    common,
+    vars,
     authedAjax,
     cache
 ){
@@ -31,7 +31,7 @@ function (
             defer.notify([{_alert : "searching for " + path + "..."}]);
 
             authedAjax.request({
-                url: common.config.apiSearchBase + url + "&page-size=" + maxItems
+                url: vars.CONST.apiSearchBase + url + "&page-size=" + maxItems
             }).then(
                 function(resp) {
                     var results = resp.response && resp.response.results ? resp.response.results : false;

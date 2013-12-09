@@ -1,10 +1,10 @@
 define([
-    'models/common'
+    'modules/vars'
 ], function(
-    common
+    vars
 ) {
     var cache = {},
-        expiry = common.config.cacheExpiryMs || 300000; // 300000 == 5 mins
+        expiry = vars.CONST.cacheExpiryMs || 300000; // 300000 == 5 mins
 
     function put(pot, key, data) {
         var p;

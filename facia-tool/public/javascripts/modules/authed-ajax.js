@@ -1,7 +1,7 @@
 define([
-    'models/common'
+    'modules/vars'
 ], function (
-    common
+    vars
 ) {
 
     function request(opts) {
@@ -16,7 +16,7 @@ define([
 
     function updateCollection(method, collection, data) {
         return request({
-            url: common.config.apiBase + '/collection/' + collection.id,
+            url: vars.CONST.apiBase + '/collection/' + collection.id,
             type: method,
             data: JSON.stringify(data)
         }).fail(function(xhr) {

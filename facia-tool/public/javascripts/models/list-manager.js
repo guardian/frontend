@@ -1,16 +1,18 @@
 define([
     'config',
     'knockout',
-    'models/common',
+    'modules/vars',
+    'modules/utils',
     'bindings/droppable',
-    'modules/authedAjax',
+    'modules/authed-ajax',
     'models/collection',
     'models/article',
-    'models/latestArticles'
+    'models/latest-articles'
 ], function(
     config,
     ko,
-    common,
+    vars,
+    utils,
     droppable,
     authedAjax,
     Collection,
@@ -30,7 +32,7 @@ define([
                 front:  ko.observable(),
 
                 latestArticles: new LatestArticles({
-                    filterTypes: common.config.filterTypes
+                    filterTypes: vars.CONST.filterTypes
                 }),
 
                 clipboard: {
@@ -44,7 +46,7 @@ define([
                     keepCopy:  true
                 },
 
-                liveMode: common.state.liveMode
+                liveMode: vars.state.liveMode
             };
 
         model.setModeLive = function() {
@@ -56,12 +58,12 @@ define([
         }
 
         model.previewUrl = ko.computed(function() {
-            return common.config.viewer + '#env=' + config.env + '&url=' + model.front() + encodeURIComponent('?view=mobile');
+            return vars.CONST.viewer + '#env=' + config.env + '&url=' + model.front() + encodeURIComponent('?view=mobile');
         })
 
         function fetchFronts() {
             return authedAjax.request({
-                url: common.config.apiBase + '/config'
+                url: vars.CONST.apiBase + '/config'
             })
             .fail(function () {
                 window.alert("Oops, the fronts configuration was not available! Please contact support.");
@@ -80,7 +82,7 @@ define([
         };
 
         function getFront() {
-            return common.util.queryParams().front;
+            return utils.queryParams().front;
         }
 
         function setfront() {
@@ -88,7 +90,7 @@ define([
         }
 
         function renderFront(id) {
-            history.pushState({}, "", window.location.pathname + '?' + common.util.ammendedQueryStr('front', id));
+            history.pushState({}, "", window.location.pathname + '?' + utils.ammendedQueryStr('front', id));
             model.collections(
                 ((model.config.fronts[getFront()] || {}).collections || [])
                 .filter(function(id){ return !!model.config.collections[id]; })
@@ -101,7 +103,7 @@ define([
         }
 
         function startPoller() {
-            var period = common.config.collectionsPollMs || 60000;
+            var period = vars.CONST.collectionsPollMs || 60000;
 
             setInterval(function(){
                 model.collections().forEach(function(list, index){

@@ -1,13 +1,15 @@
 define([
     'knockout',
-    'models/common',
-    'modules/authedAjax',
+    'modules/vars',
+    'modules/utils',
+    'modules/authed-ajax',
     'models/article',
-    'modules/contentApi',
-    'modules/ophanApi'
+    'modules/content-api',
+    'modules/ophan-api'
 ], function(
     ko,
-    common,
+    vars,
+    utils,
     authedAjax,
     Article,
     contentApi,
@@ -103,13 +105,13 @@ define([
 
                     position = targetArticle && targetArticle.props ? targetArticle.props.id() : undefined;
 
-                    _.each(common.util.parseQueryParams(item), function(url){
+                    _.each(utils.parseQueryParams(item), function(url){
                         if (url && url.match(/^http:\/\/www.theguardian.com/)) {
                             item = url;
                         }
                     });
 
-                    item = common.util.urlAbsPath(item);
+                    item = utils.urlAbsPath(item);
 
                     if (!item) {
                         alertBadContent();
@@ -168,8 +170,8 @@ define([
                                 item:     item,
                                 position: position,
                                 after:    isAfter,
-                                live:     common.state.liveMode(),
-                                draft:   !common.state.liveMode(),
+                                live:     vars.state.liveMode(),
+                                draft:   !vars.state.liveMode(),
                                 itemMeta: itemMeta
                             }
                         )
@@ -194,8 +196,8 @@ define([
                             sourceList.collection,
                             {
                                 item:   item,
-                                live:   common.state.liveMode(),
-                                draft: !common.state.liveMode()
+                                live:   vars.state.liveMode(),
+                                draft: !vars.state.liveMode()
                             }
                         )
                     });

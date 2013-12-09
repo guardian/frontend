@@ -1,13 +1,15 @@
 define([
-    'models/common',
-    'modules/autoComplete',
+    'modules/vars',
+    'modules/utils',
+    'modules/auto-complete',
     'models/article',
-    'modules/ophanApi',
+    'modules/ophan-api',
     'modules/cache',
-    'modules/authedAjax',
+    'modules/authed-ajax',
     'knockout'
 ], function (
-    common,
+    vars,
+    utils,
     autoComplete,
     Article,
     ophanApi,
@@ -25,7 +27,7 @@ define([
 
         this.articles   = ko.observableArray();
 
-        this.term       = ko.observable(common.util.queryParams().q || '');
+        this.term       = ko.observable(utils.queryParams().q || '');
         this.suggestions= ko.observableArray();
 
         this.filter     = ko.observable();
@@ -89,12 +91,12 @@ define([
 
                 // If term contains slashes, assume it's an article id (and first convert it to a path)
                 if (self.isTermAnItem()) {
-                    self.term(common.util.urlAbsPath(self.term()));
-                    url = common.config.apiSearchBase + '/' + self.term() + '?show-fields=all&format=json';
+                    self.term(utils.urlAbsPath(self.term()));
+                    url = vars.CONST.apiSearchBase + '/' + self.term() + '?show-fields=all&format=json';
                     propName = 'content';
                 } else {
-                    url  = common.config.apiSearchBase + '/search?show-fields=all&format=json';
-                    url += '&page-size=' + (common.config.searchPageSize || 25);
+                    url  = vars.CONST.apiSearchBase + '/search?show-fields=all&format=json';
+                    url += '&page-size=' + (vars.CONST.searchPageSize || 25);
                     url += '&page=' + self.page();
                     url += self.term() ? '&q=' + encodeURIComponent(self.term()) : '';
                     url += '&' + self.filterType().param + '=' + encodeURIComponent(self.filter());
@@ -149,7 +151,7 @@ define([
                 if (self.page() === 1) {
                     self.search({noFlushFirst: true});
                 }
-            }, common.config.latestArticlesPollMs || 60000);
+            }, vars.CONST.latestArticlesPollMs || 60000);
 
             this.startPoller = function() {}; // make idempotent
         };

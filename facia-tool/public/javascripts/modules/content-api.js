@@ -1,11 +1,11 @@
 define([
-    'modules/authedAjax',
-    'models/common',
+    'modules/authed-ajax',
+    'modules/vars',
     'modules/cache'
 ],
 function (
     authedAjax,
-    common,
+    vars,
     cache
 ){
     function validateItem (item) {
@@ -66,7 +66,7 @@ function (
             defer = $.Deferred();
 
         if (ids.length) {
-            apiUrl = common.config.apiSearchBase + "/search?page-size=50&format=json&show-fields=all&show-tags=all";
+            apiUrl = vars.CONST.apiSearchBase + "/search?page-size=50&format=json&show-fields=all&show-tags=all";
             apiUrl += "&ids=" + ids.map(function(id){
                 return encodeURIComponent(id);
             }).join(',');

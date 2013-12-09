@@ -1,12 +1,13 @@
 define([
-    'models/common',
-    'js!humanized-time-span',
-    'modules/authedAjax',
-    'knockout'
+    'modules/vars',
+    'modules/utils',
+    'modules/authed-ajax',
+    'knockout',
+    'js!humanized-time-span'
 ],
 function (
-    common,
-    humanizedTimeSpan,
+    vars,
+    utils,
     authedAjax,
     ko
 ){
@@ -17,11 +18,11 @@ function (
 
         this.collection = collection;
 
-        this.props = common.util.asObservableProps([
+        this.props = utils.asObservableProps([
             'id',
             'webPublicationDate']);
 
-        this.fields = common.util.asObservableProps([
+        this.fields = utils.asObservableProps([
             'headline',
             'thumbnail',
             'trailText',
@@ -29,11 +30,11 @@ function (
 
         this.fields.headline('...');
 
-        this.meta = common.util.asObservableProps([
+        this.meta = utils.asObservableProps([
             'headline',
             'group']);
 
-        this.state = common.util.asObservableProps([
+        this.state = utils.asObservableProps([
             'underDrag',
             'editingTitle',
             'shares',
@@ -43,11 +44,11 @@ function (
 
         // Computeds
         this.humanDate = ko.computed(function(){
-            return this.props.webPublicationDate() ? humanizedTimeSpan(this.props.webPublicationDate()) : '';
+            return this.props.webPublicationDate() ? humanized_time_span(this.props.webPublicationDate()) : '';
         }, this);
 
         this.totalHitsFormatted = ko.computed(function(){
-            return common.util.numberWithCommas(this.state.totalHits());
+            return utils.numberWithCommas(this.state.totalHits());
         }, this);
 
         this.headlineInput = ko.computed({
@@ -66,9 +67,9 @@ function (
     };
 
     Article.prototype.populate = function(opts) {
-        common.util.populateObservables(this.props, opts);
-        common.util.populateObservables(this.meta, opts.meta);
-        common.util.populateObservables(this.fields, opts.fields);
+        utils.populateObservables(this.props, opts);
+        utils.populateObservables(this.meta, opts.meta);
+        utils.populateObservables(this.fields, opts.fields);
     };
 
     Article.prototype.startTitleEdit = function() {
@@ -118,8 +119,8 @@ function (
                 item:     this.props.id(),
                 position: this.props.id(),
                 itemMeta: this.getMeta(),
-                live:     common.state.liveMode(),
-                draft:   !common.state.liveMode(),
+                live:     vars.state.liveMode(),
+                draft:   !vars.state.liveMode(),
             }
         );
         this.collection.state.loadIsPending(true)
