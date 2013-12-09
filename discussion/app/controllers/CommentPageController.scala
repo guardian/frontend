@@ -23,9 +23,8 @@ trait CommentPageController extends DiscussionController {
   def commentPage(key: DiscussionKey) = Action.async {
     implicit request =>
       val page = request.getQueryString("page").getOrElse("1")
-      val pageSize = request.getQueryString("pageSize").getOrElse("")
       val allResponses = request.getQueryString("allResponses").exists( _ == "true")
-      val commentPage = discussionApi.commentsFor(key, page, pageSize, allResponses)
+      val commentPage = discussionApi.commentsFor(key, page, allResponses)
       val blankComment = Comment(Json.parse("""{
         "id": 5,
         "body": "",
