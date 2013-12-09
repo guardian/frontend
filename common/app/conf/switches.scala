@@ -224,10 +224,6 @@ object Switches extends Collections {
     "If this is switched on an AA test runs to prove the assignment of users in to segments is working reliably.",
     safeState = Off)
 
-  val ABLiveBlogShowMore = Switch("A/B Tests", "ab-live-blog-show-more",
-    "If this is switched on an AB test runs to trial the impact of only displaying 10 live blog blocks with a show more cta",
-    safeState = Off)
-
   val ABAlphaAdverts = Switch("A/B Tests", "ab-alpha-adverts",
     "If this is switched on an AB test runs to trial new advertising user experiences and commercial models",
     safeState = Off)
@@ -331,7 +327,6 @@ object Switches extends Collections {
     UserzoomSwitch,
     FaciaSwitch,
     AdSlotImpressionStatsSwitch,
-    ABLiveBlogShowMore,
     CssFromStorageSwitch,
     ElasticSearchSwitch,
     ShowUnsupportedEmbedsSwitch,
