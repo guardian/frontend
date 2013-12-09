@@ -74,16 +74,15 @@ trait ContentApiWrite extends ExecutionContexts {
         Option("Default Description"),
         groups,
         Map("id" -> "uk/news", "edition" -> "UK"),
-        block.lastUpdated,
+        "2013-10-15T11:42:17Z", //Endpoint has a problem with dates
         block.updatedEmail
       )
     }
   }
 
   private def generateGroups(config: Config, block: Block): Seq[Group] = {
-    //TODO: Reverse until this is merged: https://github.com/guardian/skeleton/pull/32
-    config.groups.reverse.zipWithIndex map {case (group, index) =>
-      val trails = block.live.filter(_.meta.exists(_.get("group").exists(_.toInt == index)))
+    config.groups.zipWithIndex.map {case (group, index) =>
+    val trails = block.live.filter(_.meta.exists(_.get("group").exists(_.toInt == index)))
       Group(
         title = group,
         content = trails.map { trail =>
@@ -93,7 +92,8 @@ trait ContentApiWrite extends ExecutionContexts {
           )
         }
       )
-    }
+    //TODO: Reverse until this is merged: https://github.com/guardian/skeleton/pull/32
+    }.reverse
   }
 }
 
