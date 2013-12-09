@@ -114,7 +114,7 @@ define([
                     'uk': [
                         {
                             pageId: 'uk-alpha',
-                            visits: 2,
+                            visits: 0,
                             script: 'userzoom-uk-alpha'
                         },
                         {
