@@ -7,18 +7,30 @@ import org.joda.time.DateTime
 import com.amazonaws.handlers.AsyncHandler
 import common.Logging
 import Configuration._
+import java.util.concurrent.Executors
 
 case class LoadBalancer(id: String, name: String, project: String)
 
 object CloudWatch {
 
+  private lazy val executor = Executors.newCachedThreadPool
+
+  def shutdown() {
+    executor.shutdownNow()
+  }
+
   val stage = new Dimension().withName("Stage").withValue(environment.stage)
 
-  lazy val cloudClient = {
-    val c = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials)
-    c.setEndpoint("monitoring.eu-west-1.amazonaws.com")
-    c
+  // we create a new client on each request, otherwise we run into this problem
+  // http://blog.bdoughan.com/2011/03/preventing-entity-expansion-attacks-in.html
+  def euWestClient = {
+    val client = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials, executor)
+    client.setEndpoint("monitoring.eu-west-1.amazonaws.com")
+    client
   }
+
+  // some metrics are only available in the 'default' region
+  def defaultClient = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials, executor)
 
   val primaryLoadBalancers = Seq(
     LoadBalancer("frontend-RouterLo-1HHMP4C9L33QJ", "Router", "frontend-router"),
@@ -72,18 +84,12 @@ object CloudWatch {
     }
   }
 
-  def shutdown() {
-    cloudClient.shutdown()
-    defaultCloudClient.shutdown()
-  }
-
-
   // TODO - this file is getting a bit long/ complicated. It needs to be split up a bit
 
   private def latency(loadBalancers: Seq[LoadBalancer]) = {
     loadBalancers.map{ loadBalancer =>
       new LineChart(loadBalancer.name , Seq("Time", "latency (ms)"),
-        cloudClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
+        euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
           .withStartTime(new DateTime().minusHours(2).toDate)
           .withEndTime(new DateTime().toDate)
           .withPeriod(60)
@@ -103,7 +109,7 @@ object CloudWatch {
   private def requestOkCount(loadBalancers: Seq[LoadBalancer]) = {
     loadBalancers.map{ loadBalancer =>
       new LineChart(loadBalancer.name, Seq("Time", "2xx/minute"),
-        cloudClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
+        euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
           .withStartTime(new DateTime().minusHours(2).toDate)
           .withEndTime(new DateTime().toDate)
           .withPeriod(60)
@@ -118,7 +124,7 @@ object CloudWatch {
   
   def jsErrors = { 
     val metrics = jsErrorMetrics.map{ case (graphTitle, metric) =>
-        cloudClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
+        euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
           .withStartTime(new DateTime().minusHours(6).toDate)
           .withEndTime(new DateTime().toDate)
           .withPeriod(120)
@@ -132,7 +138,7 @@ object CloudWatch {
   }
   
   def adsInView(statistic: String) = new LineChart(statistic, Nil,
-    cloudClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
+    euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
       .withStartTime(new DateTime().minusHours(1).toDate)
       .withEndTime(new DateTime().toDate)
       .withPeriod(120)
@@ -144,7 +150,7 @@ object CloudWatch {
 
   def fastlyErrors = fastlyMetrics.map{ case (graphTitle, metric, region, service) =>
     new LineChart(graphTitle, Seq("Time", metric),
-      cloudClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
+      euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
         .withStartTime(new DateTime().minusHours(6).toDate)
         .withEndTime(new DateTime().toDate)
         .withPeriod(120)
@@ -158,7 +164,7 @@ object CloudWatch {
   }.toSeq
   
   def liveStats(statistic: String) = new LineChart(statistic, Nil,
-    cloudClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
+    euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
       .withStartTime(new DateTime().minusHours(6).toDate)
       .withEndTime(new DateTime().toDate)
       .withPeriod(120)
@@ -168,9 +174,7 @@ object CloudWatch {
       .withDimensions(stage),
       asyncHandler))
 
-  // charges are only available from the 'default' region
-  private lazy val defaultCloudClient = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials)
-  def cost = new MaximumMetric(defaultCloudClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
+  def cost = new MaximumMetric(defaultClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
     .withNamespace("AWS/Billing")
     .withMetricName("EstimatedCharges")
     .withStartTime(new DateTime().toLocalDate.toDate)
@@ -182,7 +186,7 @@ object CloudWatch {
   def fastlyHitMissStatistics = fastlyHitMissMetrics.map{ case (graphTitle, region, service) =>
     new LineChart( graphTitle, Seq("Time", "Hits", "Misses"),
 
-      cloudClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
+      euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
         .withStartTime(new DateTime().minusHours(6).toDate)
         .withEndTime(new DateTime().toDate)
         .withPeriod(120)
@@ -193,7 +197,7 @@ object CloudWatch {
                         new Dimension().withName("service").withValue(service)),
         asyncHandler),
 
-      cloudClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
+      euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
         .withStartTime(new DateTime().minusHours(6).toDate)
         .withEndTime(new DateTime().toDate)
         .withPeriod(120)
