@@ -110,22 +110,21 @@ define([
 
             if (config.switches.userzoom && config.switches.faciaUkAlpha) {
                 path = window.location.pathname.substring(1);
-                steps = {
-                    'uk': [
-                        {
-                            pageId: 'uk-alpha',
-                            visits: 0,
-                            script: 'userzoom-uk-alpha'
-                        },
-                        {
-                            pageId: '',
-                            visits: 2,
-                            script: 'userzoom-uk'
-                        }
-                    ]
-                }[path];
 
-                if(!steps) { return; }
+                if (path !== 'uk' && path !=='uk-alpha') { return; }
+
+                steps = [
+                    {
+                        pageId: 'uk-alpha',
+                        visits: 0,
+                        script: 'userzoom-uk-alpha'
+                    },
+                    {
+                        pageId: '',
+                        visits: 2,
+                        script: 'userzoom-uk'
+                    }
+                ];
 
                 mediator.on('page:front:ready', function(config, context) {
                     steps.some(function(step) {
@@ -133,7 +132,7 @@ define([
                             visits;
 
                         if (step.pageId === config.page.pageId) {
-                            storeKey = 'gu.userzoom.' + path + '.' + step.pageId;
+                            storeKey = 'gu.userzoom.uk.' + step.pageId;
                             visits = parseInt(storage.local.get(storeKey) || 0, 10);
                             if(visits >= step.visits) {
                                 require(['js!' + step.script]);
