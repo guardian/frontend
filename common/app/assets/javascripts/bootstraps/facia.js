@@ -106,25 +106,43 @@ define([
 
         showUserzoom: function(config) {
             var path,
-                load;
+                steps;
 
-            if (config.switches.userzoom) {
+            if (config.switches.userzoom && config.switches.faciaUkAlpha) {
                 path = window.location.pathname.substring(1);
-                load = {
-                    'uk': {vistsRequired: 2, script: 'userzoom-uk'},
-                    'uk-alpha': {vistsRequired: 0, script: 'userzoom-uk-alpha'}
+                steps = {
+                    'uk': [
+                        {
+                            pageId: 'uk-alpha',
+                            visits: 2,
+                            script: 'userzoom-uk-alpha'
+                        },
+                        {
+                            pageId: '',
+                            visits: 2,
+                            script: 'userzoom-uk'
+                        }
+                    ]
                 }[path];
 
-                if(!load) { return; }
+                if(!steps) { return; }
 
                 mediator.on('page:front:ready', function(config, context) {
-                    var visits = parseInt(storage.local.get('gu.userzoom.visits.' + path) || 0, 10);
+                    steps.some(function(step) {
+                        var storeKey,
+                            visits;
 
-                    if(visits >= load.vistsRequired) {
-                        require(['js!' + load.script]);
-                    } else {
-                        storage.local.set('gu.userzoom.visits.' + path, visits + 1);
-                    }
+                        if (step.pageId === config.page.pageId) {
+                            storeKey = 'gu.userzoom.' + path + '.' + step.pageId;
+                            visits = parseInt(storage.local.get(storeKey) || 0, 10);
+                            if(visits >= step.visits) {
+                                require(['js!' + step.script]);
+                            } else {
+                                storage.local.set(storeKey, visits + 1);
+                            }
+                            return true;
+                        }
+                    });
                 });
             }
         }
