@@ -62,7 +62,7 @@
                             <span class="d-comment__seperator d-comment__action">|</span>
                             <span class="u-fauxlink d-comment__action d-comment__action--pick" role="button"
                                 data-comment-id="@comment.id"
-                                data-comment-highlighted="@if(comment.isHighlighted){true}else{false}">@if(comment.isHighlighted){Unpick}else{Pick}</span>
+                                data-comment-highlighted="@comment.isHighlighted">@if(comment.isHighlighted){Unpick}else{Pick}</span>
                         </span>
 
                         <a href="http://discussion.theguardian.com/components/report-abuse/@comment.id" class="d-comment__action d-comment__action--report" target="_blank">Report</a>
