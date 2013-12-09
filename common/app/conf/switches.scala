@@ -106,10 +106,6 @@ object Switches extends Collections {
     "If this switch is on, comments are displayed on articles.",
     safeState = Off)
 
-  val ShortDiscussionSwitch = Switch("Discussion", "short-discussion",
-    "If this switch is on, only 10 top level comments are requested from discussion api.",
-    safeState = Off)
-
   val DiscussionCommentRecommend = Switch("Discussion", "discussion-comment-recommend",
     "If this switch is on, users can recommend comments",
     safeState = Off)
@@ -303,7 +299,6 @@ object Switches extends Collections {
     DiscussionPostCommentSwitch,
     DiscussionTopCommentsSwitch,
     OpenCtaSwitch,
-    ShortDiscussionSwitch,
     SwipeNav,
     SwipeNavOnClick,
     FontSwitch,
