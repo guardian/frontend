@@ -9,47 +9,15 @@
 
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
-<div class="commercial soulmates-component">
-    <div class="commercial__head">
-        <h3 class="commercial__title">
-            <a href="http://soulmates.theguardian.com/">
-                <span class="u-h">Guardian Solemates</span>
-                <i class="i i-guardian-soulmates-logo"></i>
-            </a>
-        </h3>
-        <p class="commercial__subtitle">The Guardian&#8217;s online dating site</p>
-    </div>
-    <div class="commercial__body">
-        <ul class="lineitems">
-            @members.take(2).map { member =>
-                <li class="lineitem">
-                    <a class="lineitem__blocklink" href="#">
-                        <img class="lineitem__image" src="@member.profilePhoto" />
-                        <h4 class="lineitem__title">@member.username</h4>
-                        <p class="lineitem__meta">@member.age, @member.location</p>
-                    </a>
-                </li>
-            }
-        </ul>
-    </div>
-    <div class="commercial__foot">
-        <a class="commercial__link" href="#">Join Guardian Soulmates <i class="i i-double-arrow-right-blue"></i></a>
-    </div>
-</div>
-
-<br/>
-<br/>
-<br/>
-
 <div class="commercial soulmates-component commercial--w600">
     <div class="commercial__head">
         <h3 class="commercial__title">
             <a href="http://soulmates.theguardian.com/">
-                <span class="u-h">Guardian Solemates</span>
+                <span class="u-h">Guardian Sulmates</span>
                 <i class="i i-guardian-soulmates-logo"></i>
             </a>
         </h3>
-        <p class="commercial__subtitle">The Guardian&#8217;s online dating site</p>
+        <p class="commercial__subtitle">The Guardian’s online dating site</p>
     </div>
     <div class="commercial__body">
         <div class="commercial__item">
@@ -57,7 +25,7 @@
                 @members.take(4).map { member =>
                     <li class="lineitem">
                         <a class="lineitem__blocklink" href="#">
-                            <img class="lineitem__image" src="@member.profilePhoto" />
+                            <img class="lineitem__image" src="@member.profilePhoto" alt=""/>
                             <h4 class="lineitem__title">@member.username</h4>
                             <p class="lineitem__meta">@member.age, @member.location</p>
                         </a>
