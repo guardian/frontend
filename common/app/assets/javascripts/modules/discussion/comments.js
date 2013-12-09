@@ -21,7 +21,7 @@ define([
     RecommendComments,
     DiscussionApi
 ) {
-
+'use strict';
 /**
  * TODO (jamesgorrie):
  * * Move recommending into this, it has no need for it's own module.
@@ -45,6 +45,12 @@ var Comments = function(context, mediator, options) {
 Component.define(Comments);
 
 /**
+ * @override
+ * @type {string}
+ */
+Comments.prototype.componentClass = 'd-discussion';
+
+/**
  * @type {Object.<string.*>}
  * @override
  */
@@ -54,14 +60,16 @@ Comments.prototype.classes = {
     showMore: 'd-discussion__show-more',
     showMoreNewer: 'd-discussion__show-more--newer',
     showMoreOlder: 'd-discussion__show-more--older',
+    showHidden: 'd-discussion__show-hidden',
     reply: 'd-comment--response',
     showReplies: 'js-show-more-replies',
     header: 'd-discussion__header',
+    newComments: 'js-new-comments',
 
     comment: 'd-comment',
     commentActions: 'd-comment__actions__main',
     commentReply: 'd-comment__action--reply',
-    commentPick: 'd-comment__pick',
+    commentPick: 'd-comment__action--pick',
     commentRecommend: 'd-comment__recommend'
 };
 
@@ -108,15 +116,19 @@ Comments.prototype.prerender = function() {
 
     // Determine user staff status
     if (this.user && this.user.badge) {
-        this.user.is_staff = this.user.badge.some(function (e) { // Returns true if any element in array satisfies function
+        this.user.isStaff = this.user.badge.some(function (e) { // Returns true if any element in array satisfies function
             return e.name === 'Staff';
         });
+
+        if (this.user.isStaff) {
+            this.removeState('not-staff');
+            this.setState('is-staff');
+        }
     }
 
     if (this.topLevelComments.length > 0) {
         qwery(this.getClass('topLevelComment'), this.elem).forEach(function(elem, i) {
             if (i >= initialShow) {
-                self.hasHiddenComments = true;
                 bonzo(elem).addClass('u-h');
             }
         });
@@ -124,7 +136,7 @@ Comments.prototype.prerender = function() {
         if (this.topLevelComments.length > initialShow) {
             if (!this.getElem('showMore')) {
                 bonzo(this.getElem('comments')).append(
-                    '<a class="d-discussion__show-more cta" data-age="older" data-link-name="Show more comments" data-remove="true" href="/discussion'+
+                    '<a class="'+ this.getClass('showHidden') +' cta" data-age="older" data-link-name="Show more comments" data-remove="true" href="/discussion'+
                         this.options.discussionId +'?page=1">'+
                         'Show older comments'+
                     '</a>');
@@ -136,7 +148,8 @@ Comments.prototype.prerender = function() {
 /** @override */
 Comments.prototype.ready = function() {
     this.on('click', this.getClass('showReplies'), this.getMoreReplies);
-    this.on('click', this.getClass('showMore'), this.showMore);
+    this.on('click', this.getClass('showMore'), this.loadMore);
+    this.on('click', this.getClass('showHidden'), this.showHiddenComments);
 
     this.addMoreRepliesButtons();
     
@@ -151,8 +164,7 @@ Comments.prototype.ready = function() {
             bean.fire($(this.getClass('showReplies'), comment.parent())[0], 'click'); // Bonzo can be rubbish (without Ender)
         }
 
-        window.location.hash = '#_';
-        window.location.hash = '#comment-'+ this.options.commentId;
+        window.location.replace('#comment-'+ this.options.commentId);
     }
 
     this.emit('ready');
@@ -165,139 +177,149 @@ Comments.prototype.bindCommentEvents = function() {
     RecommendComments.init(this.context);
 
     if (this.user && this.user.privateFields.canPostComment) {
-        this.renderPickButtons();
         this.on('click', this.getClass('commentReply'), this.replyToComment);
+        this.on('click', this.getClass('commentPick'), this.handlePickClick);
     }
-};
-
-/**
- * @param {NodeList} comments
- */
-Comments.prototype.renderPickButtons = function(comments) {
-    var actions,
-        self = this,
-        buttonText = '<div class="u-fauxlink d-comment__action d-comment__action--pick" role="button"></div>',
-        sepText = '<span class="d-comment__seperator d-comment__action">|</span>';
-
-    comments = comments || self.comments;
-
-    if (self.user && self.user.is_staff) {
-        comments.forEach(function (e) {
-            if (e.getAttribute('data-comment-author-id') !== self.user.userId) {
-                var button = bonzo(bonzo.create(buttonText))
-                                .text(e.getAttribute('data-comment-highlighted') !== 'true' ? 'Pick' : 'Un-Pick');
-                button.data('thisComment', e);
-                var sep = bonzo.create(sepText);
-                $(self.getClass('commentActions'), e).first().append([sep[0],button[0]]);
-                self.on('click', button, self.handlePickClick.bind(self));
-            }
-        });
-    }
-};
-
-/**
- * @param {Event} event
- */
-Comments.prototype.handlePickClick = function(event) {
-    event.preventDefault();
-
-    var thisComment = bonzo(event.target).data('thisComment'),
-        $thisButton = $(event.target),
-        promise = thisComment.getAttribute('data-comment-highlighted') === 'true' ? this.unPickComment.bind(this) : this.pickComment.bind(this);
-
-    promise(thisComment, $thisButton)
-        .fail(function (resp) {
-            var responseText = resp.response.length > 0 ? JSON.parse(resp.response).message : resp.statusText;
-            $(event.target).text(responseText);
-        });
-};
-
-/**
- * @param  {Element} thisComment
- * @param  {Bonzo} $thisButton
- * @return {Reqwest} AJAX Promise
- */
-Comments.prototype.pickComment = function(thisComment, $thisButton) {
-    var self = this;
-    return DiscussionApi
-        .pickComment(thisComment.getAttribute('data-comment-id'))
-        .then(function () {
-            $(self.getClass('commentPick'), thisComment).removeClass('u-h');
-            $(self.getClass('commentRecommend'), thisComment).addClass('d-comment__recommend--left');
-            $thisButton.text('Un-pick');
-            thisComment.setAttribute('data-comment-highlighted', true);
-        });
-};
-
-/**
- * @param   {Element}      thisComment
- * @param   {Bonzo}    $thisButton
- * @return  {Reqwest}       AJAX Promise
- */
-Comments.prototype.unPickComment = function(thisComment, $thisButton) {
-    var self = this;
-    return DiscussionApi
-        .unPickComment(thisComment.getAttribute('data-comment-id'))
-        .then(function () {
-            $(self.getClass('commentPick'), thisComment).addClass('u-h');
-            $(self.getClass('commentRecommend'), thisComment).removeClass('d-comment__recommend--left');
-            $thisButton.text('Pick');
-            thisComment.setAttribute('data-comment-highlighted', false);
-        });
 };
 
 /**
  * @param {Event} e
  */
-Comments.prototype.showMore = function(e) {
-    if (e) { e.preventDefault(); }
+Comments.prototype.handlePickClick = function(e) {
+    e.preventDefault();
+    var commentId = e.target.getAttribute('data-comment-id'),
+        $thisButton = $(e.target),
+        promise = $thisButton[0].getAttribute('data-comment-highlighted') === 'true' ? this.unPickComment.bind(this) : this.pickComment.bind(this);
 
-    var showMoreButton = e.currentTarget,
-        age = showMoreButton.getAttribute('data-age'),
-        toPage = parseInt(showMoreButton.getAttribute('data-page'), 10),
-        callback = age === 'older' ? this.showOlder.bind(this) : this.showNewer.bind(this);
+    promise(commentId, $thisButton)
+        .fail(function (resp) {
+            var responseText = resp.response.length > 0 ? JSON.parse(resp.response).message : resp.statusText;
+            $(e.target).text(responseText);
+        });
+};
 
-    if (showMoreButton.getAttribute('data-disabled') === 'disabled') {
+/**
+ * @param {Element} commentId
+ * @param {Bonzo} $thisButton
+ * @return {Reqwest} AJAX Promise
+ */
+Comments.prototype.pickComment = function(commentId, $thisButton) {
+    var self = this,
+        comment = qwery('#comment-'+ commentId, this.elem);
+
+    return DiscussionApi
+        .pickComment(commentId)
+        .then(function () {
+            $(self.getClass('commentPick'), comment).removeClass('u-h');
+            $(self.getClass('commentRecommend'), comment).addClass('d-comment__recommend--left');
+            $thisButton.text('Unpick');
+            comment.setAttribute('data-comment-highlighted', true);
+        });
+};
+
+/**
+ * @param {Element} comment
+ * @param {Bonzo} $thisButton
+ * @return {Reqwest} AJAX Promise
+ */
+Comments.prototype.unPickComment = function(commentId, $thisButton) {
+    var self = this,
+        comment = qwery('#comment-'+ commentId);
+
+    return DiscussionApi
+        .unPickComment(commentId)
+        .then(function () {
+            $(self.getClass('commentPick'), comment).addClass('u-h');
+            $(self.getClass('commentRecommend'), comment).removeClass('d-comment__recommend--left');
+            $thisButton.text('Pick');
+            comment.setAttribute('data-comment-highlighted', false);
+        });
+};
+
+/**
+ * @param {number} id
+ * @return {Reqwest|null}
+ */
+Comments.prototype.gotoComment = function(id) {
+    var comment = $('#comment-'+ id, this.elem);
+    if (comment.length > 0) {
+        window.location.replace('#comment-'+ id);
         return;
     }
 
-    if (this.hasHiddenComments) {
-        this.showHiddenComments();
-    } else {
-        showMoreButton.innerHTML = 'Loading…';
-        showMoreButton.setAttribute('data-disabled', 'disabled');
-        ajax({
-            url: '/discussion'+ this.options.discussionId +'.json?page='+ toPage + '&maxResponses=3',
-            type: 'json',
-            method: 'get',
-            crossOrigin: true
-        }).then(callback);
+    return this.fetchComments({
+        comment: id
+    }).then(function(resp) {
+        this.renderComments(resp, 'replaceWith');
+        window.location.replace('#comment-'+ id);
+    }.bind(this));
+};
+
+/**
+ * @param {number} page
+ */
+Comments.prototype.gotoPage = function(page) {
+    return this.fetchComments({
+        page: page,
+        position: 'replaceWith'
+    });
+};
+
+/**
+ * @param {Event} e
+ */
+Comments.prototype.loadMore = function(e) {
+    e.preventDefault();
+    var button = e.currentTarget,
+        age = button.getAttribute('data-age'),
+        buttonHTML = button.innerHTML,
+        page = parseInt(button.getAttribute('data-page'), 10);
+
+    if (button.getAttribute('data-disabled')) {
+        return false;
     }
+
+    button.innerHTML = 'Loading…';
+    button.setAttribute('data-disabled', 'disabled');
+
+    return this.fetchComments({
+        page: page,
+        position: age === 'newer' ? 'prepend' : 'append'
+    }).then(function(resp) {
+        button.removeAttribute('data-disabled');
+        button.innerHTML = buttonHTML;
+    }.bind(this));
+};
+
+/**
+ * @param {Object.<string.*>}
+ * options {
+ *   page: {number},
+ *   comment: {number},
+ *   position: {string} append|prepend|replaceWith
+ * }
+ */
+Comments.prototype.fetchComments = function(options) {
+    var url = options.comment ? '/discussion/comment/'+ options.comment +'.json' :
+                '/discussion/'+ this.options.discussionId +'.json?'+
+                (options.page ? '&page='+ options.page : '') +
+                '&maxResponses=3';
+    
+    return ajax({
+        url: url,
+        type: 'json',
+        method: 'get',
+        crossOrigin: true
+    }).then(this.renderComments.bind(this, options.position));
 };
 
 /**
  * @param {Object} resp
+ * @param {String} position append|prepend|replaceWith
  */
-Comments.prototype.showNewer = function(resp) {
-    this.commentsLoaded(resp, 'newer');
-};
-
-/**
- * @param {Object} resp
- */
-Comments.prototype.showOlder = function(resp) {
-    this.commentsLoaded(resp, 'older');
-};
-
-/**
- * @param {Object} resp
- * @param {String} age (optional)
- */
-Comments.prototype.commentsLoaded = function(resp, age) {
-    age = age || 'older';
+Comments.prototype.renderComments = function(position, resp) {
     var html = bonzo.create(resp.html),
-        comments = qwery(this.getClass('topLevelComment'), html),
-        showMoreButton = this.getElem('showMore');
+        comments = qwery(this.getClass('topLevelComment'), html);
 
     if (!resp.hasMore) {
         this.removeShowMoreButton();
@@ -306,15 +328,15 @@ Comments.prototype.commentsLoaded = function(resp, age) {
     $(this.getClass('showMoreOlder'), this.elem).replaceWith($(this.getClass('showMoreOlder'), html));
     $(this.getClass('showMoreNewer'), this.elem).replaceWith($(this.getClass('showMoreNewer'), html));
 
-    if (!this.isReadOnly()) {
-        this.renderPickButtons(qwery(this.getClass('comment'), bonzo(comments).parent()));
-    }
-    
-    bonzo(this.getElem('comments'))[age === 'older' ? 'append' : 'prepend'](comments);
+    // Stop duplication in new comments section
+    qwery(this.getClass('comment'), this.getElem('newComments')).forEach(function(comment) {
+        var $comment = $('#'+ comment.id, html);
+        if ($comment.length === 1) {
+            $(comment).remove();
+        }
+    });
 
-    showMoreButton.innerHTML = 'Show '+ age +' comments';
-    showMoreButton.removeAttribute('data-disabled');
-
+    bonzo(this.getElem('comments'))[position](comments);
     this.addMoreRepliesButtons(comments);
 
     if (!this.isReadOnly()) {
@@ -324,11 +346,15 @@ Comments.prototype.commentsLoaded = function(resp, age) {
     this.emit('loaded');
 };
 
-Comments.prototype.showHiddenComments = function() {
+/**
+ * @param {Event} e (optional)
+ */
+Comments.prototype.showHiddenComments = function(e) {
+    if (e) { e.preventDefault(); }
+
     qwery(this.getClass('topLevelComment'), this.elem).forEach(function(elem, i) {
         bonzo(elem).removeClass('u-h');
     });
-    this.hasHiddenComments = false;
 
     if (this.getElem('showMore').getAttribute('data-remove') === 'true') {
         bonzo(this.getElem('showMore')).remove();
@@ -452,7 +478,7 @@ Comments.prototype.addComment = function(comment, focus, parent) {
     }
     commentElem.id = 'comment-'+ comment.id;
 
-    if (this.user && this.user.is_staff) {
+    if (this.user && this.user.isStaff) {
         // Hack to allow staff badge to appear
         var staffBadge = bonzo.create(document.getElementById('tmpl-staff-badge').innerHTML);
         $('.d-comment__meta div', commentElem).first().append(staffBadge);
@@ -460,14 +486,13 @@ Comments.prototype.addComment = function(comment, focus, parent) {
 
     // Stupid hack. Will rearchitect.
     if (!parent) {
-        bonzo(this.getElem('comments')).prepend(commentElem);
+        bonzo(this.getElem('newComments')).prepend(commentElem);
     } else {
         bonzo(parent).append(commentElem);
     }
 
-    window.location.hash = '#_';
     if (focus) {
-        window.location.hash = '#comment-'+ comment.id;
+        window.location.replace('#comment-'+ comment.id);
     }
 };
 
@@ -506,7 +531,7 @@ Comments.prototype.replyToComment = function(e) {
 
     // I don't like this, but UX says go
     showRepliesElem = qwery(this.getClass('showReplies'), parentCommentEl);
-    if (showRepliesElem.length > 0) {
+    if (showRepliesElem.length > 0 && !bonzo(showRepliesElem).hasClass('u-h')) {
         showRepliesElem[0].click();
     }
     commentBox.render(parentCommentEl);

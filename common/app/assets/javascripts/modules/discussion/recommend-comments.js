@@ -22,7 +22,7 @@ RecommendComments.CONFIG = {
         count: 'js-recommend-count',
         active: 'd-comment__recommend--active',
         userRecommended: 'd-comment__recommend--user-recommended',
-        open: 'd-discussion--reccomendations-open'
+        open: 'd-discussion--recommendations-open'
     },
     events: {
         prefix: 'discussion:comment:recommend:',
