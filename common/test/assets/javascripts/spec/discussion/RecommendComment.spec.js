@@ -21,7 +21,7 @@ define([
             recommendCommentFixture = {
                 id: fixturesId,
                 fixtures: [
-                    '<div class="d-comment__recommend js-recommend-comment d-discussion--reccomendations-open" data-comment-id="200" data-recommend-count="3" title="3 recommendations"><i class="i i-recommend"></i><span class="d-comment__recommend-count js-recommend-count">3</span></div>'
+                    '<div class="d-comment__recommend js-recommend-comment d-discussion--recommendations-open" data-comment-id="200" data-recommend-count="3" title="3 recommendations"><i class="i i-recommend"></i><span class="d-comment__recommend-count js-recommend-count">3</span></div>'
                 ]
             };
 
