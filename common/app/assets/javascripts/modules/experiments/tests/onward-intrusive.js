@@ -22,8 +22,8 @@ define([
                 test: function (context) {
                     sequence.init();
                     var currentSequence = sequence.getSequence();
-                    if (currentSequence && currentSequence.length > 0) {
-                        var rightEar = new RightEar(currentSequence, {});
+                    if (currentSequence && currentSequence.items.length > 0) {
+                        var rightEar = new RightEar(currentSequence.items, {});
                         rightEar.render();
                     }
                 }
