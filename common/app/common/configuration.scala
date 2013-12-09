@@ -68,9 +68,9 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val timeout: Int = configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000)
 
     object write {
-      lazy val username: String = ""
-      lazy val password: String = ""
-      lazy val endpoint: String = ""
+      lazy val username: String = configuration.getStringProperty("contentApi.write.username").getOrElse("")
+      lazy val password: String = configuration.getStringProperty("contentApi.write.password").getOrElse("")
+      lazy val endpoint: Option[String] = configuration.getStringProperty("contentApi.write.endpoint")
     }
   }
 
