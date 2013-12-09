@@ -36,7 +36,6 @@ object Industries extends ExecutionContexts {
     (141, "Environment"),
     (142, "Design"),
     (149, "Finance & Accounting"),
-    (158, "General"),
     (166, "Government & Politics"),
     (184, "Health"),
     (196, "Housing"),
