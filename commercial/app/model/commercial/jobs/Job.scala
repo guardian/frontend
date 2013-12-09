@@ -3,7 +3,6 @@ package model.commercial.jobs
 import model.commercial.{Keyword, Ad, Segment}
 import model.commercial.Utils._
 import common.{AkkaAgent, ExecutionContexts}
-import conf.ContentApi
 import scala.concurrent.duration._
 import scala.concurrent.Future
 
@@ -37,7 +36,6 @@ object Industries extends ExecutionContexts {
     (141, "Environment"),
     (142, "Design"),
     (149, "Finance & Accounting"),
-    (158, "General"),
     (166, "Government & Politics"),
     (184, "Health"),
     (196, "Housing"),
@@ -56,12 +54,14 @@ object Industries extends ExecutionContexts {
     (350, "Social Enterprise")
   )
 
-  def refresh() = Future.sequence(sectorIdIndustryMap.map{ case (id, name) =>
-    ContentApi.tags.stringParam("type", "keyword").stringParam("q", name).pageSize(50).response.flatMap{ response =>
-      val keywords = response.results.map(tag => Keyword(tag.id, tag.webTitle))
-      industryKeywords.alter(_.updated(id, keywords))(5.seconds)
+  def refresh() = Future.sequence {
+    sectorIdIndustryMap map {
+      case (id, name) =>
+        Keyword.lookup(name) flatMap {
+          keywords => industryKeywords.alter(_.updated(id, keywords))(5.seconds)
+        }
     }
-  })
+  }
 
   def stop() {
     industryKeywords.close()
