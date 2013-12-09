@@ -57,7 +57,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
         val identity = Identity(request).get
         UpdateActions.updateCollectionList(id, update, identity)
         //TODO: How do we know if it was updated or created? Do we need to know?
-        notifyContentApi(id)
+        if (update.live) notifyContentApi(id)
         Ok
       }
       case blockAction: BlockActionJson => {
@@ -72,7 +72,6 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
           .orElse {
           blockAction.discard.filter {_ == true}.map { _ =>
             FaciaApi.discardBlock(id, identity)
-            notifyContentApi(id)
             Ok
           }
         } getOrElse NotFound("Invalid JSON")
@@ -99,7 +98,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
       case update: UpdateList => {
         val identity = Identity(request).get
         UpdateActions.updateCollectionFilter(id, update, identity)
-        notifyContentApi(id)
+        if (update.live) notifyContentApi(id)
         Ok
       }
       case _ => NotFound
