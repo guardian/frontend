@@ -1,5 +1,5 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize underscore exports="amd" -o ./underscore/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -20,31 +20,36 @@ define(['../collections/forEach', '../objects/functions', '../objects/isFunction
   var push = arrayRef.push;
 
   /**
-   * Adds function properties of a source object to the `lodash` function and
-   * chainable wrapper.
+   * Adds function properties of a source object to the destination object.
+   * If `object` is a function methods will be added to its prototype as well.
    *
    * @static
    * @memberOf _
    * @category Utilities
-   * @param {Object} object The object of function properties to add to `lodash`.
-   * @param {Object} object The object of function properties to add to `lodash`.
+   * @param {Function|Object} [object=lodash] object The destination object.
+   * @param {Object} source The object of functions to add.
+   * @param {Object} [options] The options object.
+   * @param {boolean} [options.chain=true] Specify whether the functions added are chainable.
    * @example
    *
-   * _.mixin({
-   *   'capitalize': function(string) {
-   *     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-   *   }
-   * });
+   * function capitalize(string) {
+   *   return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+   * }
    *
-   * _.capitalize('moe');
-   * // => 'Moe'
+   * _.mixin({ 'capitalize': capitalize });
+   * _.capitalize('fred');
+   * // => 'Fred'
    *
-   * _('moe').capitalize();
-   * // => 'Moe'
+   * _('fred').capitalize().value();
+   * // => 'Fred'
+   *
+   * _.mixin({ 'capitalize': capitalize }, { 'chain': false });
+   * _('fred').capitalize();
+   * // => 'Fred'
    */
   function mixin(object, source) {
     var ctor = object,
-        isFunc = !source || isFunction(ctor);
+        isFunc = isFunction(ctor);
 
     forEach(functions(source), function(methodName) {
       var func = object[methodName] = source[methodName];

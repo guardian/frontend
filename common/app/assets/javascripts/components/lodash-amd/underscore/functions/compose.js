@@ -1,5 +1,5 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize underscore exports="amd" -o ./underscore/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -22,7 +22,7 @@ define(['../objects/isFunction'], function(isFunction) {
    * @example
    *
    * var realNameMap = {
-   *   'curly': 'jerome'
+   *   'pebbles': 'penelope'
    * };
    *
    * var format = function(name) {
@@ -35,8 +35,8 @@ define(['../objects/isFunction'], function(isFunction) {
    * };
    *
    * var welcome = _.compose(greet, format);
-   * welcome('curly');
-   * // => 'Hiya Jerome!'
+   * welcome('pebbles');
+   * // => 'Hiya Penelope!'
    */
   function compose() {
     var funcs = arguments,

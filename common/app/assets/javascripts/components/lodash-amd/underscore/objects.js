@@ -1,5 +1,5 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize underscore exports="amd" -o ./underscore/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -12,6 +12,7 @@ define(['./objects/assign', './objects/clone', './objects/defaults', './objects/
     'assign': assign,
     'clone': clone,
     'defaults': defaults,
+    'extend': assign,
     'forIn': forIn,
     'forOwn': forOwn,
     'functions': functions,
@@ -34,6 +35,7 @@ define(['./objects/assign', './objects/clone', './objects/defaults', './objects/
     'isString': isString,
     'isUndefined': isUndefined,
     'keys': keys,
+    'methods': functions,
     'omit': omit,
     'pairs': pairs,
     'pick': pick,

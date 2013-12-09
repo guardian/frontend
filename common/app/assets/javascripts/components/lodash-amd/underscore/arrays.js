@@ -1,5 +1,5 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize underscore exports="amd" -o ./underscore/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -11,18 +11,25 @@ define(['./arrays/compact', './arrays/difference', './arrays/first', './arrays/f
   return {
     'compact': compact,
     'difference': difference,
+    'drop': rest,
     'first': first,
     'flatten': flatten,
+    'head': first,
     'indexOf': indexOf,
     'initial': initial,
     'intersection': intersection,
     'last': last,
     'lastIndexOf': lastIndexOf,
+    'object': zipObject,
     'range': range,
     'rest': rest,
     'sortedIndex': sortedIndex,
+    'tail': rest,
+    'take': first,
     'union': union,
     'uniq': uniq,
+    'unique': uniq,
+    'unzip': zip,
     'without': without,
     'zip': zip,
     'zipObject': zipObject

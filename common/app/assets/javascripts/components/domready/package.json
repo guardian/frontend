@@ -1,7 +1,7 @@
 {
     "name": "domready"
   , "description": "bullet proof DOM ready method"
-  , "version": "0.2.11"
+  , "version": "0.2.13"
   , "homepage": "https://github.com/ded/domready"
   , "author": "Dustin Diaz <dustin@dustindiaz.com> (http://dustindiaz.com)"
   , "keywords": ["ender", "domready", "dom"]

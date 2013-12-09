@@ -267,13 +267,6 @@
 
       }
 
-      // If the user hasn't really swiped (ie. tap), then transitionend never fires
-      // So we re-enable swiping here
-      if (this.deltaX === 0) {
-          this.enable();
-      }
-
-
     }
 
   };

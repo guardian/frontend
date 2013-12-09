@@ -1,9 +1,0 @@
-{
-  "name": "swipe",
-  "version": "0.0.0",
-  "commit": "470129d1f56ac0bc3065e8216b98aafc4b434fa2",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/guardian/Swipe.git"
-  }
-}

@@ -39,7 +39,7 @@ var Comments = function(context, mediator, options) {
     this.setOptions(options);
 
     if (this.options.commentId) {
-        this.endpoint = '/discussion/comment/'+ this.options.commentId +'.json';
+        this.endpoint = '/discussion/comment-redirect/'+ this.options.commentId +'.json';
     }
 };
 Component.define(Comments);
@@ -73,12 +73,6 @@ Comments.prototype.classes = {
     commentRecommend: 'd-comment__recommend'
 };
 
-/**
- * @type {string}
- * @override
- */
-Comments.prototype.endpoint = '/discussion:discussionId.json';
-
 /** @type {Object.<string.*>} */
 Comments.prototype.defaultOptions = {
     discussionId: null,
@@ -87,6 +81,15 @@ Comments.prototype.defaultOptions = {
     user: null,
     commentId: null
 };
+
+/**
+ * @type {string}
+ * @override
+ */
+Comments.prototype.endpoint = '/discussion:discussionId.json';
+
+/** @type {Boolean} */
+Comments.prototype.hasHiddenComments = false;
 
 /** @type {NodeList=} */
 Comments.prototype.comments = null;
@@ -140,16 +143,15 @@ Comments.prototype.prerender = function() {
             }
         }
     }
-
-    // Hide excessive replies
-    this.hideExcessReplies();
 };
 
 /** @override */
 Comments.prototype.ready = function() {
-    this.on('click', this.getClass('showReplies'), this.showMoreReplies);
+    this.on('click', this.getClass('showReplies'), this.getMoreReplies);
     this.on('click', this.getClass('showMore'), this.loadMore);
     this.on('click', this.getClass('showHidden'), this.showHiddenComments);
+
+    this.addMoreRepliesButtons();
     
     if (!this.isReadOnly()) {
         this.bindCommentEvents();
@@ -299,7 +301,9 @@ Comments.prototype.loadMore = function(e) {
  */
 Comments.prototype.fetchComments = function(options) {
     var url = options.comment ? '/discussion/comment/'+ options.comment +'.json' :
-                '/discussion/'+ this.options.discussionId +'.json'+ (options.page ? '?page='+ options.page : '');
+                '/discussion/'+ this.options.discussionId +'.json?'+
+                (options.page ? '&page='+ options.page : '') +
+                '&maxResponses=3';
     
     return ajax({
         url: url,
@@ -333,7 +337,7 @@ Comments.prototype.renderComments = function(position, resp) {
     });
 
     bonzo(this.getElem('comments'))[position](comments);
-    this.hideExcessReplies(comments);
+    this.addMoreRepliesButtons(comments);
 
     if (!this.isReadOnly()) {
         RecommendComments.init(this.context);
@@ -359,32 +363,61 @@ Comments.prototype.showHiddenComments = function(e) {
 };
 
 /**
- * @param {Event}
+ * @param {NodeList} comments
  */
-Comments.prototype.showMoreReplies = function(e) {
-    bonzo(qwery(this.getClass('reply'), bonzo(e.currentTarget).parent()[0])).removeAttr('hidden');
-    bonzo(e.currentTarget).remove();
-};
-
-/**
- * @param {Array.<Element>=} comments (optional)
- */
-Comments.prototype.hideExcessReplies = function(comments) {
-    var replies, repliesToHide,
+Comments.prototype.addMoreRepliesButtons = function (comments) {
+    var repliesToHide,
         self = this;
 
     comments = comments || this.topLevelComments;
     comments.forEach(function(elem, i) {
-        replies = qwery(self.getClass('reply'), elem);
+        var replies = parseInt(elem.getAttribute("data-comment-replies"), 10);
+        var rendered_replies = qwery(self.getClass('reply'), elem);
 
-        if (replies.length > self.options.showRepliesCount) {
-            repliesToHide = replies.slice(self.options.showRepliesCount, replies.length);
-            bonzo(repliesToHide).attr('hidden', 'hidden');
+        if (rendered_replies.length < replies) {
 
-            bonzo(qwery('.d-thread--responses', elem)).append(
-                '<li class="'+ self.getClass('showReplies', true) +' cta" data-link-name="Show more replies" data-is-ajax>Show '+
-                    repliesToHide.length + ' more ' + (repliesToHide.length === 1 ? 'reply' : 'replies') +
-                '</li>');
+            var numHiddenReplies = replies - rendered_replies.length;
+
+            var showButton = [];
+            showButton.push('<li class="');
+            showButton.push(self.getClass('showReplies', true));
+            showButton.push(' cta" data-link-name="Show more replies" data-is-ajax data-comment-id="');
+            showButton.push(elem.getAttribute("data-comment-id"));
+            showButton.push('">Show ');
+            showButton.push(numHiddenReplies);
+            showButton.push(' more ');
+            showButton.push((numHiddenReplies === 1 ? 'reply' : 'replies'));
+            showButton.push('</li>');
+            showButton = bonzo.create(showButton.join(""));
+            bonzo(showButton).data("source-comment", elem);
+
+            bonzo(qwery('.d-thread--responses', elem)).append(showButton);
+        }
+    });
+};
+
+/**
+ * @param {Event}
+ */
+Comments.prototype.getMoreReplies = function(event) {
+    event.preventDefault();
+    var self = this,
+        source = bonzo(event.target).data('source-comment');
+    
+    ajax({
+        url: '/discussion/comment/'+ event.target.getAttribute('data-comment-id') +'.json',
+        type: 'json',
+        method: 'get',
+        crossOrigin: true
+    }).then(function (resp) {
+        var comment = bonzo.create(resp.html),
+            replies = qwery(self.getClass('reply'), comment);
+
+        replies = replies.slice(self.options.showRepliesCount, replies.length);
+        bonzo(qwery('.d-thread--responses', source)).append(replies);
+        bonzo(event.currentTarget).addClass('u-h');
+        if (!self.isReadOnly()) {
+            RecommendComments.init(source);
         }
     });
 };
@@ -498,7 +531,7 @@ Comments.prototype.replyToComment = function(e) {
 
     // I don't like this, but UX says go
     showRepliesElem = qwery(this.getClass('showReplies'), parentCommentEl);
-    if (showRepliesElem.length > 0) {
+    if (showRepliesElem.length > 0 && !bonzo(showRepliesElem).hasClass('u-h')) {
         showRepliesElem[0].click();
     }
     commentBox.render(parentCommentEl);

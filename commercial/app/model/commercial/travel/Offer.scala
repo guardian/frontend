@@ -97,7 +97,7 @@ object Countries extends ExecutionContexts with Logging {
     val countries = {
       val currentAds = AllOffersAgent.currentAds
       if (currentAds.isEmpty) defaultCountries
-      else currentAds flatMap (_.countries)
+      else currentAds.flatMap(_.countries).distinct
     }
     Future.sequence {
       countries map {

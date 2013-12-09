@@ -1,12 +1,12 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize exports="amd" -o ./compat/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
  * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  * Available under MIT license <http://lodash.com/license>
  */
-define(['./internals/reNative'], function(reNative) {
+define(['./internals/isNative'], function(isNative) {
 
   /** Used to detect functions containing a `this` reference */
   var reThis = /\bthis\b/;
@@ -27,16 +27,11 @@ define(['./internals/reNative'], function(reNative) {
   var errorProto = Error.prototype,
       objectProto = Object.prototype;
 
+  /** Used to resolve the internal [[Class]] of values */
+  var toString = objectProto.toString;
+
   /** Native method shortcuts */
-  var propertyIsEnumerable = objectProto.propertyIsEnumerable,
-      toString = objectProto.toString;
-
-  /* Native method shortcuts for methods with the same name as other `lodash` methods */
-  var nativeBind = reNative.test(nativeBind = toString.bind) && nativeBind;
-
-  /** Detect various environments */
-  var isIeOpera = reNative.test(window.attachEvent),
-      isV8 = nativeBind && !/\n|true/.test(nativeBind + isIeOpera);
+  var propertyIsEnumerable = objectProto.propertyIsEnumerable;
 
   /**
    * An object used to flag environments features.
@@ -53,8 +48,8 @@ define(['./internals/reNative'], function(reNative) {
         props = [];
 
     ctor.prototype = { 'valueOf': 1, 'y': 1 };
-    for (var prop in new ctor) { props.push(prop); }
-    for (prop in arguments) { }
+    for (var key in new ctor) { props.push(key); }
+    for (key in arguments) { }
 
     /**
      * Detect if an `arguments` object's [[Class]] is resolvable (all but Firefox < 4, IE < 9).
@@ -95,21 +90,13 @@ define(['./internals/reNative'], function(reNative) {
     support.enumPrototypes = propertyIsEnumerable.call(ctor, 'prototype');
 
     /**
-     * Detect if `Function#bind` exists and is inferred to be fast (all but V8).
-     *
-     * @memberOf _.support
-     * @type boolean
-     */
-    support.fastBind = nativeBind && !isV8;
-
-    /**
      * Detect if functions can be decompiled by `Function#toString`
      * (all but PS3 and older Opera mobile browsers & avoided in Windows 8 apps).
      *
      * @memberOf _.support
      * @type boolean
      */
-    support.funcDecomp = !reNative.test(window.WinRTError) && reThis.test(function() { return this; });
+    support.funcDecomp = !isNative(window.WinRTError) && reThis.test(function() { return this; });
 
     /**
      * Detect if `Function#name` is supported (all but IE).
@@ -126,7 +113,7 @@ define(['./internals/reNative'], function(reNative) {
      * @memberOf _.support
      * @type boolean
      */
-    support.nonEnumArgs = prop != 0;
+    support.nonEnumArgs = key != 0;
 
     /**
      * Detect if properties shadowing those on `Object.prototype` are non-enumerable.

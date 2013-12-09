@@ -6,7 +6,8 @@ define([
     //Current tests
     'modules/experiments/tests/aa',
     'modules/experiments/tests/mobile-facebook-autosignin',
-    'modules/experiments/tests/onward-intrusive'
+    'modules/experiments/tests/onward-intrusive',
+    'modules/experiments/tests/alpha-comm'
 ], function (
     common,
     store,
@@ -14,13 +15,15 @@ define([
 
     Aa,
     MobileFacebookAutosignin,
-    OnwardIntrusive
+    OnwardIntrusive,
+    AlphaComm
     ) {
 
     var TESTS = [
             new Aa(),
             new MobileFacebookAutosignin(),
-            new OnwardIntrusive()
+            new OnwardIntrusive(),
+            new AlphaComm()
         ],
         participationsKey = 'gu.ab.participations';
 
