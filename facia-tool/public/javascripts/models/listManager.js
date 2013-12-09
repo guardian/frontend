@@ -2,13 +2,11 @@ define([
     'Config',
     'knockout',
     'models/common',
-    'models/droppable',
-    'models/authedAjax',
+    'bindings/droppable',
+    'modules/authedAjax',
     'models/collection',
     'models/article',
-    'models/latestArticles',
-    'models/contentApi',
-    'models/ophanApi'
+    'models/latestArticles'
 ], function(
     Config,
     ko,
@@ -17,9 +15,7 @@ define([
     authedAjax,
     Collection,
     Article,
-    LatestArticles,
-    contentApi,
-    ophanApi
+    LatestArticles
 ) {
     var prefKeyDefaultMode = 'gu.frontsTool.defaultToLiveMode';
 
@@ -69,7 +65,7 @@ define([
             })
             .fail(function () {
                 window.alert("Oops, the fronts configuration was not available! Please contact support.");
-                return;                                
+                return;
             })
             .done(function(resp) {
 
@@ -153,7 +149,7 @@ define([
                 collection.populateLists();
             });
         });
-        
+
         function updateLayout() {
             var height = $(window).height();
             $('.scrollable').each(function() {

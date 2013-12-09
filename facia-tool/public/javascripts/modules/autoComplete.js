@@ -1,7 +1,7 @@
 define([
     'models/common',
-    'models/authedAjax',
-    'models/cache'
+    'modules/authedAjax',
+    'modules/cache'
 ],
 function (
     common,

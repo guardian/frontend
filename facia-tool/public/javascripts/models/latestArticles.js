@@ -1,10 +1,10 @@
 define([
     'models/common',
-    'models/autoComplete',
+    'modules/autoComplete',
     'models/article',
-    'models/ophanApi',
-    'models/cache',
-    'models/authedAjax',
+    'modules/ophanApi',
+    'modules/cache',
+    'modules/authedAjax',
     'knockout'
 ], function (
     common,

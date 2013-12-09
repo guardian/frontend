@@ -1,11 +1,11 @@
 define([
     'knockout',
     'models/common',
-    'models/humanizedTimeSpan',
-    'models/authedAjax',
+    'js!humanized-time-span',
+    'modules/authedAjax',
     'models/article',
-    'models/contentApi',
-    'models/ophanApi'
+    'modules/contentApi',
+    'modules/ophanApi'
 ], function(
     ko,
     common,

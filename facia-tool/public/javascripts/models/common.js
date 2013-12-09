@@ -1,5 +1,5 @@
 define([
-    'EventEmitter',
+    'event-emitter',
     'knockout'
 ], function(
     EventEmitter,

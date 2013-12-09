@@ -1,7 +1,7 @@
 define([
     'models/common',
-    'models/humanizedTimeSpan',
-    'models/authedAjax',
+    'js!humanized-time-span',
+    'modules/authedAjax',
     'knockout'
 ],
 function (
@@ -27,7 +27,7 @@ function (
             'trailText',
             'shortId']);
 
-        this.fields.headline('...'); 
+        this.fields.headline('...');
 
         this.meta = common.util.asObservableProps([
             'headline',
@@ -45,7 +45,7 @@ function (
         this.humanDate = ko.computed(function(){
             return this.props.webPublicationDate() ? humanizedTimeSpan(this.props.webPublicationDate()) : '';
         }, this);
-        
+
         this.totalHitsFormatted = ko.computed(function(){
             return common.util.numberWithCommas(this.state.totalHits());
         }, this);

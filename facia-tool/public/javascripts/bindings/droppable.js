@@ -1,10 +1,10 @@
 define([
     'knockout',
     'models/common',
-    'models/authedAjax',
+    'modules/authedAjax',
     'models/article',
-    'models/contentApi',
-    'models/ophanApi'
+    'modules/contentApi',
+    'modules/ophanApi'
 ], function(
     ko,
     common,
@@ -90,7 +90,7 @@ define([
                             isAfter = true;
                         // or if there arent't any other articles, after those in the first preceding group that contains articles.
                         } else if (targetList.collection) {
-                            var groups = targetList.collection.groups; 
+                            var groups = targetList.collection.groups;
                             for (var i = groups.indexOf(targetList) - 1; i >= 0; i -= 1) {
                                 targetArticle = _.last(groups[i].articles());
                                 if (targetArticle) {
@@ -111,7 +111,7 @@ define([
 
                     item = common.util.urlAbsPath(item);
 
-                    if (!item) { 
+                    if (!item) {
                         alertBadContent();
                         return;
                     }
@@ -121,14 +121,14 @@ define([
                     }
 
                     // sourceArticle doesn't exist when the drag was from an arbitrary link elsewhere.
-                    // garbage collect it, if it's a leftover from a previous drag. 
+                    // garbage collect it, if it's a leftover from a previous drag.
                     if(sourceArticle && sourceArticle.props.id() !== item) {
                         sourceArticle = undefined;
                     }
 
                     insertAt = targetList.articles().indexOf(targetArticle) + isAfter;
                     insertAt = insertAt === -1 ? targetList.articles().length : insertAt;
- 
+
                     article = new Article({
                         id: item,
                         meta: sourceArticle ? sourceArticle.getMeta() : undefined

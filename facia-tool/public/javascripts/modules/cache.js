@@ -1,5 +1,5 @@
 define([
-    'models/common',
+    'models/common'
 ], function(
     common
 ) {
@@ -19,7 +19,7 @@ define([
 
         p[key] = {
             data: JSON.stringify(data),
-            
+
             // Spread actual timeouts into the range of "two-times expiry"
             time: +new Date() + expiry * Math.random()
         };

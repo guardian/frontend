@@ -1,8 +1,8 @@
 define([
     'Config',
-    'models/authedAjax',
+    'modules/authedAjax',
     'models/common',
-    'models/cache'
+    'modules/cache'
 ],
 function (
     Config,

@@ -1,5 +1,5 @@
 curl([
-    'modules/listManager'
+    'models/listManager'
 ]).then(function(
     ListManager
 ){
