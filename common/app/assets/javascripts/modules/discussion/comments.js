@@ -543,8 +543,8 @@ Comments.prototype.replyToComment = function(e) {
             responses = bonzo.create('<ul class="d-thread d-thread--responses"></ul>')[0];
             bonzo(parentCommentEl).append(responses);
         }
-        self.addComment(comment, false, responses);
         this.destroy();
+        self.addComment(comment, false, responses);
     });
 };
 
