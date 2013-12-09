@@ -129,10 +129,11 @@ define([
 
                 mediator.on('page:front:ready', function(config, context) {
                     steps.some(function(step) {
-                        var storeKey = 'gu.userzoom.' + path + '.' + step.pageId,
+                        var storeKey,
                             visits;
 
                         if (step.pageId === config.page.pageId) {
+                            storeKey = 'gu.userzoom.' + path + '.' + step.pageId;
                             visits = parseInt(storage.local.get(storeKey) || 0, 10);
                             if(visits >= step.visits) {
                                 require(['js!' + step.script]);
