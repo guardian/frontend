@@ -1,6 +1,5 @@
 @(jobs: Seq[model.commercial.jobs.Job])(implicit request: RequestHeader)
 
-
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
 <div class="commercial jobs-component">
@@ -17,7 +16,6 @@
             @jobs.take(1).map { job =>
                 <li class="lineitem">
                     <h4 class="lineitem__title"><a href="@job.listingUrl">@job.title</a></h4>
-                    <!--p class="lineitem__meta">[Central London]</p-->
                     <p class="lineitem__description">@job.recruiterLogoUrl.map{ url => <img class="lineitem__image lineitem__image-logo" src="@url" />} @job.shortDescription</p>
                 </li>
             }

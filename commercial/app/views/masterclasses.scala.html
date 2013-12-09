@@ -1,6 +1,5 @@
 @(events: List[model.commercial.masterclasses.MasterClass])(implicit request: RequestHeader)
 
-
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
 <div class="commercial masterclasses-component">
@@ -19,7 +18,6 @@
                     <h4 class="lineitem__title"><a href="@event.url">@event.name</a></h4>
                     <p class="lineitem__meta">@event.readableDate<p>
                     <p class="lineitem__description">
-                        <!--img class="lineitem__image" src="http://dummyimage.com/80x80/ccc/fff.png" /-->
                         @event.firstParagraph
                         <a class="lineitem__link"><i class="i i-single-arrow-right-blue"></i>Learn more and book</a></p>
                     </p>
