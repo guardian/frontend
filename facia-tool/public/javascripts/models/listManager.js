@@ -1,5 +1,5 @@
 define([
-    'Config',
+    'config',
     'knockout',
     'models/common',
     'bindings/droppable',
@@ -8,7 +8,7 @@ define([
     'models/article',
     'models/latestArticles'
 ], function(
-    Config,
+    config,
     ko,
     common,
     droppable,
@@ -56,7 +56,7 @@ define([
         }
 
         model.previewUrl = ko.computed(function() {
-            return common.config.viewer + '#env=' + Config.env + '&url=' + model.front() + encodeURIComponent('?view=mobile');
+            return common.config.viewer + '#env=' + config.env + '&url=' + model.front() + encodeURIComponent('?view=mobile');
         })
 
         function fetchFronts() {

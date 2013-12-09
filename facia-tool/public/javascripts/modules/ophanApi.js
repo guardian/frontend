@@ -1,11 +1,9 @@
 define([
-    'Config',
     'modules/authedAjax',
     'models/common',
     'modules/cache'
 ],
 function (
-    Config,
     authedAjax,
     common,
     cache
