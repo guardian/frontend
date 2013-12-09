@@ -1,9 +1,9 @@
 package discussion
 package model
 
-import _root_.model._
+import _root_.model.ISODateTimeStringNoMillis2DateTime
 import org.joda.time.DateTime
-import play.api.libs.json.{JsNumber, JsString, JsObject, JsValue}
+import play.api.libs.json._
 
 case class CommentCount(id: String, count: Int) {
   lazy val toJson = JsObject(
@@ -23,32 +23,37 @@ case class Comment(
   isHighlighted: Boolean,
   isBlocked: Boolean,
   responseTo: Option[ResponseTo] = None,
-  numRecommends: Int
+  numRecommends: Int,
+  responseCount: Int
 )
 
 object Comment extends {
 
-  def apply(json: JsValue): Comment = Comment(json, Nil)
-
-  def apply(json: JsValue, responses: Seq[Comment]): Comment = {
-      Comment(
-        id = (json \ "id").as[Int],
-        body = (json \ "body").as[String],
-        responses = responses,
-        profile = Profile(json),
-        date = (json \ "isoDateTime").as[String].parseISODateTime,
-        isHighlighted = (json \ "isHighlighted").as[Boolean],
-        isBlocked = (json \ "status").as[String].contains("blocked"),
-        responseTo = (json \\ "responseTo").headOption.map(ResponseTo(_)),
-        numRecommends = (json \ "numRecommends").as[Int]
+  def apply(json: JsValue): Comment = {
+    Comment(
+      id = (json \ "id").as[Int],
+      body = (json \ "body").as[String],
+      responses = getResponses(json),
+      profile = Profile(json),
+      date = (json \ "isoDateTime").as[String].parseISODateTime,
+      isHighlighted = (json \ "isHighlighted").as[Boolean],
+      isBlocked = (json \ "status").as[String].contains("blocked"),
+      responseTo = (json \\ "responseTo").headOption.map(ResponseTo(_)),
+      numRecommends = (json \ "numRecommends").as[Int],
+      responseCount = (json \ "metaData" \ "responseCount").asOpt[Int].getOrElse(0)
     )
+  }
+
+  def getResponses(json: JsValue): Seq[Comment] = {
+    (json \\ "responses").headOption map {
+      _.asInstanceOf[JsArray].value map {
+        Comment(_)
+      }
+    } getOrElse Nil
   }
 }
 
-case class ResponseTo(
-  displayName: String,
-  commentId: String
-)
+case class ResponseTo(displayName: String, commentId: String)
 
 object ResponseTo {
   def apply(json: JsValue): ResponseTo = {

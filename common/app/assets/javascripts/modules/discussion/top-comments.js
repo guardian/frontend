@@ -220,29 +220,6 @@ TopComments.prototype.showHiddenComments = function() {
     $('.d-image-fade', this.parent).addClass('u-h');
 };
 
-/**
-* @param {Object} resp
-*/
-// TopComments.prototype.commentsLoaded = function(resp) {
-//     var comments = qwery(this.getClass('topLevelComment'), bonzo.create(resp.html)),
-//         showMoreButton = this.getElem('showMore');
-
-//     this.currentPage++;
-//     if (!resp.hasMore) {
-//         this.removeShowMoreButton();
-//     }
-
-//     bonzo(this.getElem('comments')).append(comments);
-
-//     showMoreButton.innerHTML = 'Show more';
-//     showMoreButton.removeAttribute('data-disabled');
-
-//     this.hideExcessReplies(comments);
-
-//     RecommendComments.init(this.context);
-//     this.emit('loaded');
-// };
-
 /** @param {Event} e */
 TopComments.prototype.replyToComment = function(e) {
     var parentCommentEl, showRepliesElem,

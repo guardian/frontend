@@ -21,7 +21,8 @@ RecommendComments.CONFIG = {
         button: 'js-recommend-comment',
         count: 'js-recommend-count',
         active: 'd-comment__recommend--active',
-        userRecommended: 'd-comment__recommend--user-recommended'
+        userRecommended: 'd-comment__recommend--user-recommended',
+        open: 'd-discussion--reccomendations-open'
     },
     events: {
         prefix: 'discussion:comment:recommend:',
@@ -36,7 +37,14 @@ RecommendComments.CONFIG = {
  * @param {Object=} options
  */
 RecommendComments.init = function(context, options) {
-    var buttons = qwery('.'+ RecommendComments.CONFIG.classes.button, context);
+
+    var buttons;
+
+    this.open = this.open || qwery('.'+ RecommendComments.CONFIG.classes.open, context).length > 0;
+
+    if (this.open) {
+        buttons = qwery('.'+ RecommendComments.CONFIG.classes.button, context);
+    }
 
     for (var prop in options) {
         RecommendComments.options[prop] = options[prop];

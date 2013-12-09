@@ -26,7 +26,7 @@ class DiscussionApiTest extends FreeSpec {
   }
 
   "Should do GET request on correct URL for comments " in {
-    val expectedUrl: String = "/discussion/p/3tycg?pageSize=10&page=1&orderBy=newest&showSwitches=true"
+    val expectedUrl: String = "/discussion/p/3tycg?pageSize=10&page=1&orderBy=newest&showSwitches=true&maxResponses=3"
 
     val discussionApi = new DiscussionApi {
       override protected def GET(url: String, headers: (String, String)*): Future[Response] = {

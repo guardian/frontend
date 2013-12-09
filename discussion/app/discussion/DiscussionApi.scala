@@ -2,10 +2,8 @@ package discussion
 
 import common.{ExecutionContexts, Logging}
 import scala.concurrent.Future
-import play.api.libs.json.JsArray
+import play.api.libs.json.{JsValue, JsArray, JsObject, JsNumber}
 import play.api.libs.ws.Response
-import play.api.libs.json.JsObject
-import play.api.libs.json.JsNumber
 import discussion.model.{DiscussionKey, Profile, Comment, CommentCount, Switch}
 import play.api.mvc.Headers
 import discussion.util.Http
@@ -40,15 +38,7 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
     getJsonOrError(apiUrl, onError) map {
       json =>
         val comments = (json \\ "comments")(0).asInstanceOf[JsArray].value map {
-          commentJson =>
-            val responses = (commentJson \\ "responses").headOption map {
-              responsesJson =>
-                responsesJson.asInstanceOf[JsArray].value map {
-                  responseJson =>
-                    Comment(responseJson)
-                }
-            } getOrElse Nil
-            Comment(commentJson, responses)
+          commentJson =>  Comment(commentJson)
         }
 
         CommentPage(
@@ -67,8 +57,23 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
     }
   }
 
-  def commentsFor(key: DiscussionKey, page: String): Future[CommentPage] = {
-    getJsonForUri(key, s"$apiRoot/discussion/$key?pageSize=$pageSize&page=$page&orderBy=$orderBy&showSwitches=true")
+  private def getCommentJsonForId(id: String, apiUrl: String): Future[Comment] = {
+    def onError(r: Response) =
+      s"Error loading comment id: $id status: ${r.status} message: ${r.statusText}"
+
+    getJsonOrError(apiUrl, onError) map {
+      json => 
+        val comment = (json \ "comment")
+        Comment(comment)
+    }
+  }
+
+  def commentFor(id: String): Future[Comment] = {
+    getCommentJsonForId(id, s"$apiRoot/comment/$id?displayResponses=true&displayThreaded=true")
+  }
+
+  def commentsFor(key: DiscussionKey, page: String, allResponses: Boolean = false): Future[CommentPage] = {
+    getJsonForUri(key, s"$apiRoot/discussion/$key?pageSize=$pageSize&page=$page&orderBy=$orderBy&showSwitches=true" + (if(allResponses) "" else "&maxResponses=3"))
   }
 
   def topCommentsFor(key: DiscussionKey, page: String): Future[CommentPage] = {
