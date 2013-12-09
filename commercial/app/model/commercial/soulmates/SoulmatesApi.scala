@@ -23,7 +23,8 @@ object SoulmatesApi extends JsonAdsApi[Member] {
             (member \ "username").as[String],
             Gender((member \ "gender").as[String]),
             (member \ "age").as[Int],
-            (member \ "profile_photo").as[String]
+            (member \ "profile_photo").as[String],
+            (member \ "location").as[String].split(',').head
           )
       }
       case other => Nil

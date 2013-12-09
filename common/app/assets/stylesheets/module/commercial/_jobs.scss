@@ -4,52 +4,37 @@
 
 .jobs-component {
 
-    background-color: #7BBB00;
-    color: #ffffff;
-
-    .commercial__title span {
-        color: #4A7801;
-    }
-
-    .lineitem {
-        width: 100%;
-        display: none;
-    }
-
-    .lineitem:first-child {
-        display: block;
+    .lineitem__image-logo {
+        margin-left: $baseline;
+        @include rem((
+            width: 100px,
+            height: 40px
+        ));
+        float: right;
     }
 
     .lineitem__description {
-        display: none;
+        margin-top: $gutter;
     }
-
-    &.commercial--w300 {
-        .lineitem__description {
-            display: block;
-        }
-    }
-
-    &.commercial--w500 {
-        .lineitem {
-            width: 33%;
-            float: left;
-            padding-right: $gutter;
-        }
-
-        .lineitem:nth-child(2),
-        .lineitem:nth-child(3) {
-            display: block;
-        }
+    
+    .lineitem__list {
+        @include font-size(14,16);
+        margin: $baseline*4 0;
     }
 
     &.commercial--w600 {
-        .product {
-            width: 25%;
-        }
-
-        .lineitem:nth-child(4) {
-            display: block;
+        .commercial__item {
+            @include box-sizing(border-box);
+            padding-right: $gs-gutter/2;
+            width: 40%;
+            float: left;
+            &.commercial__item:nth-child(3) {
+                width: 20%;
+                .lineitem__title {
+                    @include f-headline;
+                    @include font-size(14,16);
+                }
+            }
         }
     }
 }

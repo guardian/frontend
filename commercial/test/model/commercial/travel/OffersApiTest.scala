@@ -155,7 +155,7 @@ class OffersApiTest extends FlatSpec with Matchers with ExecutionContexts {
       |<departure date="21-Oct-2014" fromprice="999.00" places="50" />
       |</departures>
       |</offer>
-      |<offer uniqueidentifier="9dfb3305-c3c0-4a8c-9769-06274888605a" id="5037" fromprice="1284.00" duration="7" views="665" earliestdeparture="02-Nov-2013">
+      |<offer uniqueidentifier="9dfb3305-c3c0-4a8c-9769-06274888605a" id="5037" fromprice="1284.00" duration="1" views="665" earliestdeparture="02-Nov-2013">
       |<offerurl><![CDATA[http://www.guardianholidayoffers.co.uk/holiday/5037/horse-riding-holiday-for-intermediate-and-experienced-riders]]></offerurl>
       |<imageurl><![CDATA[http://www.guardianholidayoffers.co.uk/Image.aspx?id=33819&type=NoResize]]></imageurl>
       |<seoname><![CDATA[horse-riding-holiday-for-intermediate-and-experienced-riders]]></seoname>
@@ -187,6 +187,13 @@ class OffersApiTest extends FlatSpec with Matchers with ExecutionContexts {
   "OffersApi" should "build Offers from XML" in {
     val offers = OffersApi.parse(xml)
     offers should be(Fixtures.untaggedOffers)
+  }
+
+  "Hydrated Offers" should "provide duration in words" in {
+    val offers = OffersApi.parse(xml)
+
+    offers.find(_.id == 2).head.durationInWords should be ("1 night")
+    offers.find(_.id == 0).head.durationInWords should be ("12 nights")
   }
 
 }

@@ -1,8 +1,15 @@
 @(offers: Seq[model.commercial.travel.Offer])(implicit request: RequestHeader)
 
+@main(Page(
+  "Holiday Offers",
+  "Travel",
+  "Travel offers",
+  "Travel offers")){
+  }{
+
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
-<div class="commercial travel-component">
+<div class="commercial travel-component commercial--w600">
     <div class="commercial__head">
         <h3 class="commercial__title">
             <a href="http://www.guardianholidayoffers.co.uk">
@@ -25,6 +32,16 @@
                     </a>
                 </li>
             }
+            @offers.take(4).map { offer =>
+                <li class="lineitem lineitem-reduced">
+                    <a class="lineitem__link" href="@offer.offerUrl?INTCMP=ILCTOFFTXT5263I">
+                        <img class="lineitem__image" src="@offer.imageUrl&amp;INTCMP=ILCTOFFTXT5263I" alt="@offer.title" />
+                        <div class="lineitem__offer">
+                            <h4 class="lineitem__title">@offer.title</h4>
+                        </div>
+                    </a>
+                </li>
+            }
         </ul>
     </div>
 
@@ -38,3 +55,5 @@
         </form>
     </div>
 </div>
+
+}
