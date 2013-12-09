@@ -27,7 +27,7 @@ define([
     var _config,
         variantName,
         adDwellTimes = {},
-        flushInterval = 5000, // every 5 seconds
+        flushInterval = 3000, // every 2 seconds
         trackInterval = 1000,
         maxTrackTime  = 80000, // stop tracking after this time
         instanceId = Math.random(); // each page view generates a temporary user 'id'
