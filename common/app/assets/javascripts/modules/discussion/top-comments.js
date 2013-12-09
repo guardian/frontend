@@ -70,7 +70,7 @@ TopComments.prototype.defaultOptions = {
     heightLimit: 600, // max-height in _discussion.scss .discussion__comments__top
     showRepliesCount: 3,
     user: null,
-    sectionHeading: 'Top Comments '
+    sectionHeading: 'Featured Comments '
 };
 
 /** @type {Boolean} */
@@ -155,10 +155,10 @@ TopComments.prototype.ready = function() {
 
         var showMoreButton = [];
 
-        showMoreButton.push('<a class="js-show-more-top-comments cta" data-link-name="Show more top comments" data-remove="true" href="/discussion');
+        showMoreButton.push('<a class="js-show-more-top-comments cta" data-link-name="Show more featured comments" data-remove="true" href="/discussion');
         showMoreButton.push(self.options.discussionId);
         showMoreButton.push('?page=1">');
-        showMoreButton.push('Show more top comments');
+        showMoreButton.push('Show more featured comments');
         showMoreButton.push('</a>');
 
         if (!self.showMoreButton) {
