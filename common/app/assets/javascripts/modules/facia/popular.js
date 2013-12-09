@@ -17,7 +17,7 @@ define([
         },
         containerTmpl =
             '<section class="container container--popular" data-link-name="block | popular" data-type="popular">' +
-                '<h2 class="container__title  tone-news tone-background tone-accent-border">Popular</h2>' +
+                '<h2 class="container__title  tone-news tone-background tone-accent-border">Most popular</h2>' +
             '</section>',
         itemTmpl  = function(trail) {
             return updateTmpl(

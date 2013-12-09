@@ -1,23 +1,12 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize exports="amd" -o ./compat/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
  * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  * Available under MIT license <http://lodash.com/license>
  */
-define(['../internals/createBound'], function(createBound) {
-
-  /**
-   * Used for `Array` method references.
-   *
-   * Normally `Array.prototype` would suffice, however, using an array literal
-   * avoids issues in Narwhal.
-   */
-  var arrayRef = [];
-
-  /* Native method shortcuts for methods with the same name as other `lodash` methods */
-  var nativeSlice = arrayRef.slice;
+define(['../internals/createWrapper', '../internals/slice'], function(createWrapper, slice) {
 
   /**
    * Creates a function that, when called, invokes the method at `object[key]`
@@ -36,7 +25,7 @@ define(['../internals/createBound'], function(createBound) {
    * @example
    *
    * var object = {
-   *   'name': 'moe',
+   *   'name': 'fred',
    *   'greet': function(greeting) {
    *     return greeting + ' ' + this.name;
    *   }
@@ -44,19 +33,19 @@ define(['../internals/createBound'], function(createBound) {
    *
    * var func = _.bindKey(object, 'greet', 'hi');
    * func();
-   * // => 'hi moe'
+   * // => 'hi fred'
    *
    * object.greet = function(greeting) {
-   *   return greeting + ', ' + this.name + '!';
+   *   return greeting + 'ya ' + this.name + '!';
    * };
    *
    * func();
-   * // => 'hi, moe!'
+   * // => 'hiya fred!'
    */
   function bindKey(object, key) {
     return arguments.length > 2
-      ? createBound(key, 19, nativeSlice.call(arguments, 2), null, object)
-      : createBound(key, 3, null, null, object);
+      ? createWrapper(key, 19, slice(arguments, 2), null, object)
+      : createWrapper(key, 3, null, null, object);
   }
 
   return bindKey;

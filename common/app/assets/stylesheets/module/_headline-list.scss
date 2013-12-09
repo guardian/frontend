@@ -114,6 +114,7 @@
         padding-bottom: $baseline*7;
         border-top-color: $c-neutral4;
         color: $c-neutral1;
+        @include fs-headline(1);
         @include box-sizing(border-box);
 
         @include mq(rightCol) {

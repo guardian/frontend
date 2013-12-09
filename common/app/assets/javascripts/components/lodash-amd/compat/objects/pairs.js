@@ -1,5 +1,5 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize exports="amd" -o ./compat/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -19,8 +19,8 @@ define(['./keys'], function(keys) {
    * @returns {Array} Returns new array of key-value pairs.
    * @example
    *
-   * _.pairs({ 'moe': 30, 'larry': 40 });
-   * // => [['moe', 30], ['larry', 40]] (property order is not guaranteed across environments)
+   * _.pairs({ 'barney': 36, 'fred': 40 });
+   * // => [['barney', 36], ['fred', 40]] (property order is not guaranteed across environments)
    */
   function pairs(object) {
     var index = -1,

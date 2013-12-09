@@ -7,15 +7,17 @@
            id="comment-@comment.id"
            data-comment-id="@comment.id"
            data-comment-author="@comment.profile.displayName"
+           data-comment-replies="@comment.responseCount"
+           data-comment-timestamp="@comment.date"           
            data-comment-author-id="@comment.profile.userId"
            data-comment-highlighted="@comment.isHighlighted">
     <div class="d-comment__inner">
         
         <div class="d-comment__pick i i-guardian-picks @if(!comment.isHighlighted || comment.isBlocked){u-h}" title="Guardian pick"></div>
         
-        @if(!(isClosedForRecommendation && comment.numRecommends == 0) && !comment.isBlocked){
+        @if(!comment.isBlocked){ @* Change here should be double check for functionality relating to wether recs should show when recs are closed *@
             <div
-                class="d-comment__recommend@if(!isClosedForRecommendation){ js-recommend-comment}@if(comment.isHighlighted){ d-comment__recommend--left}" 
+                class="d-comment__recommend js-recommend-comment@if(comment.isHighlighted){ d-comment__recommend--left}" 
                 data-comment-id="@comment.id"
                 data-user-id="@comment.profile.userId"
                 data-recommend-count="@comment.numRecommends"

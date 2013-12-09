@@ -1,5 +1,5 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize underscore exports="amd" -o ./underscore/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -20,9 +20,11 @@ define(['../objects/forIn', './indicatorObject', '../objects/isFunction', './obj
   /** Used for native method references */
   var objectProto = Object.prototype;
 
+  /** Used to resolve the internal [[Class]] of values */
+  var toString = objectProto.toString;
+
   /** Native method shortcuts */
-  var hasOwnProperty = objectProto.hasOwnProperty,
-      toString = objectProto.toString;
+  var hasOwnProperty = objectProto.hasOwnProperty;
 
   /**
    * The base implementation of `_.isEqual`, without support for `thisArg` binding,
@@ -74,8 +76,11 @@ define(['../objects/forIn', './indicatorObject', '../objects/isFunction', './obj
     }
     var isArr = className == arrayClass;
     if (!isArr) {
-      if (hasOwnProperty.call(a, '__wrapped__ ') || hasOwnProperty.call(b, '__wrapped__')) {
-        return baseIsEqual(a.__wrapped__ || a, b.__wrapped__ || b, stackA, stackB);
+      var aWrapped = hasOwnProperty.call(a, '__wrapped__'),
+          bWrapped = hasOwnProperty.call(b, '__wrapped__');
+
+      if (aWrapped || bWrapped) {
+        return baseIsEqual(aWrapped ? a.__wrapped__ : a, bWrapped ? b.__wrapped__ : b, stackA, stackB);
       }
       if (className != objectClass) {
         return false;
@@ -83,10 +88,10 @@ define(['../objects/forIn', './indicatorObject', '../objects/isFunction', './obj
       var ctorA = a.constructor,
           ctorB = b.constructor;
 
-      if (ctorA != ctorB && !(
-            isFunction(ctorA) && ctorA instanceof ctorA &&
-            isFunction(ctorB) && ctorB instanceof ctorB
-          )) {
+      if (ctorA != ctorB &&
+            !(isFunction(ctorA) && ctorA instanceof ctorA && isFunction(ctorB) && ctorB instanceof ctorB) &&
+            ('constructor' in a && 'constructor' in b)
+          ) {
         return false;
       }
     }
@@ -116,22 +121,25 @@ define(['../objects/forIn', './indicatorObject', '../objects/isFunction', './obj
           }
         }
       }
-      return result;
     }
-    forIn(b, function(value, key, b) {
-      if (hasOwnProperty.call(b, key)) {
-        size++;
-        return !(result = hasOwnProperty.call(a, key) && baseIsEqual(a[key], value, stackA, stackB)) && indicatorObject;
-      }
-    });
-
-    if (result) {
-      forIn(a, function(value, key, a) {
-        if (hasOwnProperty.call(a, key)) {
-          return !(result = --size > -1) && indicatorObject;
+    else {
+      forIn(b, function(value, key, b) {
+        if (hasOwnProperty.call(b, key)) {
+          size++;
+          return !(result = hasOwnProperty.call(a, key) && baseIsEqual(a[key], value, stackA, stackB)) && indicatorObject;
         }
       });
+
+      if (result) {
+        forIn(a, function(value, key, a) {
+          if (hasOwnProperty.call(a, key)) {
+            return !(result = --size > -1) && indicatorObject;
+          }
+        });
+      }
     }
+    stackA.pop();
+    stackB.pop();
     return result;
   }
 

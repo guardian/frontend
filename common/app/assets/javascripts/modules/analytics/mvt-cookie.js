@@ -3,7 +3,7 @@ define([
 ], function (
     cookies
 ) {
-    var MULTIVARIATE_ID_COOKIE = "GU_mvtid",
+    var MULTIVARIATE_ID_COOKIE = "GU_mvt_id",
         VISITOR_ID_COOKIE ="s_vi",
         BROWSER_ID_COOKIE = "bwid";
 
@@ -11,12 +11,13 @@ define([
     var MAX_INT = 9007199254740992;
 
     function generateMvtCookie() {
-        // Add an mvt cookie if there isn't one to complement the Ophan browser id.
-        // It is unecssary to halt if Ophan failed to make a browser id cookie.
         if (!getMvtValue()) {
             var mvtId = generateRandomInteger(MAX_INT, 1);
             cookies.add(MULTIVARIATE_ID_COOKIE, mvtId, 365);
         }
+
+        // Temporary cleanup call for old cookie with incorrect domain.
+        cookies.cleanUp(['GU_mvtid']);
     }
 
     function overwriteMvtCookie(testId) {

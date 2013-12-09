@@ -106,10 +106,6 @@ object Switches extends Collections {
     "If this switch is on, comments are displayed on articles.",
     safeState = Off)
 
-  val ShortDiscussionSwitch = Switch("Discussion", "short-discussion",
-    "If this switch is on, only 10 top level comments are requested from discussion api.",
-    safeState = Off)
-
   val DiscussionCommentRecommend = Switch("Discussion", "discussion-comment-recommend",
     "If this switch is on, users can recommend comments",
     safeState = Off)
@@ -235,6 +231,10 @@ object Switches extends Collections {
   val ABAlphaAdverts = Switch("A/B Tests", "ab-alpha-adverts",
     "If this is switched on an AB test runs to trial new advertising user experiences and commercial models",
     safeState = Off)
+  
+  val ABAlphaComm = Switch("A/B Tests - second tranche", "ab-alpha-comm",
+    "If this is switched on an AB test runs to trial new advertising user experiences and commercial models",
+    safeState = Off)
 
   val ABCommercialComponents = Switch("A/B Tests", "ab-commercial-components",
     "If this is switched on an AB test runs to test the new commercial components",
@@ -303,7 +303,6 @@ object Switches extends Collections {
     DiscussionPostCommentSwitch,
     DiscussionTopCommentsSwitch,
     OpenCtaSwitch,
-    ShortDiscussionSwitch,
     SwipeNav,
     SwipeNavOnClick,
     FontSwitch,
@@ -339,6 +338,7 @@ object Switches extends Collections {
     ServeWebPImagesSwitch,
     ArticleKeywordsSwitch,
     ABAlphaAdverts,
+    ABAlphaComm,
     ABCommercialComponents,
     EditionRedirectLoggingSwitch,
     FacebookAutoSigninSwitch,
