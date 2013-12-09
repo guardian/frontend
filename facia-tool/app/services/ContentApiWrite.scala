@@ -40,20 +40,25 @@ trait ContentApiWrite extends ExecutionContexts {
   lazy val password = Configuration.contentApi.write.password
   lazy val endpoint = Configuration.contentApi.write.endpoint
 
-  def getCollectionUrlForWrite(id: String) = endpoint + s"/collections/${id.replace('/', '-')}"
+  def getCollectionUrlForWrite(id: String): Option[String] = endpoint
+    .filter(_.startsWith("https://"))
+    .map(_ + s"/collections/${id.replace('/', '-')}")
 
   def writeToContentapi(config: Config): Future[Response] = {
-    generateContentApiPut(config) map { contentApiPut =>
-
+    (for {
+      url           <- getCollectionUrlForWrite(config.id)
+      contentApiPut <- generateContentApiPut(config)
+    } yield
+    {
       val response = WS
-        .url(getCollectionUrlForWrite(config.id)).withAuth(username, password, Realm.AuthScheme.NONE)
+        .url(url).withAuth(username, password, Realm.AuthScheme.NONE)
         .put(Json.toJson(contentApiPut))
 
       //Initial logging out, remove
       response.onSuccess{case r => println(s"Successful Put to content api with status ${r.status}: ${r.body}")}
       response.onFailure{case e => println(s"Failure to put to content api with exception ${e.toString}")}
       response
-    } getOrElse Future.failed(new Throwable(s"${config.id} does not exist"))
+    }) getOrElse Future.failed(new Throwable(s"${config.id} does not exist"))
   }
 
   //Just to check to see what is going out, remove
