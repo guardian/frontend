@@ -5,8 +5,9 @@ define(function() {
         if(typeof x === 'undefined') { return ''; }
 
         x = x.toString();
-        while (pattern.test(x))
+        while (pattern.test(x)) {
             x = x.replace(pattern, "$1,$2");
+        }
         return x;
     };
 });

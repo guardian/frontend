@@ -1,3 +1,4 @@
+/* global _: true */
 define(['modules/vars'], function(vars) {
     function request(opts) {
         return $.ajax(
@@ -7,7 +8,7 @@ define(['modules/vars'], function(vars) {
                 window.location.href = window.location.href;
             }
         });
-    };
+    }
 
     function updateCollection(method, collection, data) {
         return request({
@@ -19,10 +20,10 @@ define(['modules/vars'], function(vars) {
         }).always(function() {
             collection.load();
         });
-    };
+    }
 
     return {
         request: request,
         updateCollection: updateCollection
-    }
+    };
 });

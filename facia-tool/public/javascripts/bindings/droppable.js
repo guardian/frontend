@@ -1,3 +1,4 @@
+/* global _: true */
 define([
     'knockout',
     'modules/vars',
@@ -74,7 +75,6 @@ define([
                         item = event.testData ? event.testData : event.dataTransfer.getData('Text'),
                         position,
                         article,
-                        groups,
                         insertAt,
                         isAfter = false;
 
@@ -139,7 +139,7 @@ define([
                     });
 
                     // just for UI
-                    targetList.articles.splice(insertAt, 0, article)
+                    targetList.articles.splice(insertAt, 0, article);
 
                     contentApi.validateItem(article)
                     .fail(function() {
@@ -176,7 +176,7 @@ define([
                                 draft:   !vars.state.liveMode(),
                                 itemMeta: itemMeta
                             }
-                        )
+                        );
 
                         if (!sourceList || !sourceList.collection || sourceList.keepCopy) {
                             return;
@@ -191,7 +191,7 @@ define([
                         // just for UI
                         sourceList.articles.remove(function(article) {
                             return article === sourceArticle;
-                        })
+                        });
 
                         authedAjax.updateCollection(
                             'delete',
@@ -201,15 +201,15 @@ define([
                                 live:   vars.state.liveMode(),
                                 draft: !vars.state.liveMode()
                             }
-                        )
+                        );
                     });
                 }, false);
             }
         };
-    };
+    }
 
     function alertBadContent() {
-        window.alert('Sorry, that isn\'t a Guardian article!')
+        window.alert('Sorry, that isn\'t a Guardian article!');
     }
 
     return {

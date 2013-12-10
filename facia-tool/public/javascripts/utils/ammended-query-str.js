@@ -1,3 +1,4 @@
+/* global _: true */
 define(['utils/query-params'], function(queryParams) {
     return function(key, val) {
         var qp = queryParams();

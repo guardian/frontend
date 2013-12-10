@@ -1,3 +1,4 @@
+/* global _: true */
 define([
     'modules/vars',
     'utils/query-params',
@@ -19,11 +20,11 @@ define([
     authedAjax,
     ko
 ) {
-    return function(opts) {
+    return function(options) {
 
         var self = this,
             deBounced,
-            opts = opts || {},
+            opts = options || {},
             counter = 0,
             container = document.querySelector('.latest-articles');
 
@@ -34,13 +35,13 @@ define([
 
         this.filter     = ko.observable();
         this.filterType = ko.observable();
-        this.filterTypes= ko.observableArray(_.values(opts.filterTypes) || []),
+        this.filterTypes= ko.observableArray(_.values(opts.filterTypes) || []);
 
         this.page       = ko.observable(1);
 
         this.isTermAnItem = function() {
             return (self.term() || '').match(/\//);
-        }
+        };
 
         this.term.subscribe(function(){
             self.search();
@@ -89,7 +90,7 @@ define([
 
                 if (!opts.noFlushFirst) {
                     self.flush('searching...');
-                };
+                }
 
                 // If term contains slashes, assume it's an article id (and first convert it to a path)
                 if (self.isTermAnItem()) {
@@ -118,7 +119,7 @@ define([
                         article.index = index;
                         self.articles.push(new Article(article));
                         cache.put('contentApi', article.id, article);
-                    })
+                    });
 
                     ophanApi.decorateItems(self.articles());
                 });

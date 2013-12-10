@@ -35,7 +35,6 @@ define(['modules/vars'], function(vars) {
         if (!obj) { return; }
 
         if (+new Date() - obj.time > expiry) {
-            delete obj;
             return;
         }
 
@@ -45,5 +44,5 @@ define(['modules/vars'], function(vars) {
     return {
         put: put,
         get: get
-    }
+    };
 });

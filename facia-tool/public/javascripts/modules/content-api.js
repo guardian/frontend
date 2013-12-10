@@ -1,3 +1,4 @@
+/* global _: true */
 define([
     'modules/authed-ajax',
     'modules/vars',
@@ -30,7 +31,7 @@ function (
             });
         }
         return defer;
-    };
+    }
 
     function decorateItems (items) {
         var ids = [];
@@ -55,7 +56,7 @@ function (
                 });
             });
         });
-    };
+    }
 
     function populate(fromObj, toKoObj) {
         toKoObj.populate(fromObj);
@@ -87,6 +88,6 @@ function (
     return {
         decorateItems: decorateItems,
         validateItem:  validateItem
-    }
+    };
 
 });

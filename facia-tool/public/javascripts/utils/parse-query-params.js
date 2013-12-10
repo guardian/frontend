@@ -1,3 +1,4 @@
+/* global _: true */
 define(['utils/url-query'], function(urlQuery) {
     return function(url) {
         return _.object(urlQuery(url).split('&').map(function(keyVal){

@@ -1,3 +1,4 @@
+/* global _: true */
 define(function() {
     return function (obj, path) {
         if(obj.hasOwnProperty(path[0])) {

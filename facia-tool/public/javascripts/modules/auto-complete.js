@@ -59,5 +59,5 @@ function (
         }
 
         return defer;
-    }
+    };
 });

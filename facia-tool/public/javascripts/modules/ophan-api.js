@@ -1,3 +1,4 @@
+/* global _: true */
 define([
     'modules/authed-ajax',
     'modules/vars',
@@ -35,7 +36,7 @@ function (
                 });
             }, index * 1000/(vars.CONST.ophanCallsPerSecond || 4)); // stagger requests
         });
-    };
+    }
 
     function decorateItem(item, opts) {
         if(opts.totalHits !== item.state.totalHits()) {
@@ -90,13 +91,13 @@ function (
         }).then(function (resp) {
             _.each(resp.seriesData, function(s){
                 s.data.pop(); // Drop the last data point
-            })
+            });
             return resp;
         });
     }
 
     return {
         decorateItems: decorateItems
-    }
+    };
 
 });

@@ -1,3 +1,4 @@
+/* global _: true, humanized_time_span: true */
 define([
     'knockout',
     'modules/vars',
@@ -89,12 +90,12 @@ define([
 
         authedAjax.request({
             type: 'post',
-            url: common.config.apiBase + '/collection/' + this.id,
+            url: vars.CONST.apiBase + '/collection/' + this.id,
             data: JSON.stringify(goLive ? {publish: true} : {discard: true})
         })
         .then(function() {
             self.load();
-        })
+        });
 
         this.state.hasDraft(false);
     };
@@ -109,8 +110,8 @@ define([
             url: vars.CONST.apiBase + '/collection/' + self.id,
             data: JSON.stringify({
                 item: item.props.id(),
-                live:   common.state.liveMode(),
-                draft: !common.state.liveMode()
+                live:   vars.state.liveMode(),
+                draft: !vars.state.liveMode()
             })
         }).then(function() {
             self.load();
@@ -128,14 +129,13 @@ define([
             self.state.loadIsPending(false);
             self.state.hasDraft(_.isArray(self.response.draft));
 
-            if (opts.isRefresh && (self.state.loadIsPending() || self.response.lastUpdated === self.collectionMeta.lastUpdated())) {
-                // noop
-            } else {
+            var dontUpdate = opts.isRefresh && (self.state.loadIsPending() || self.response.lastUpdated === self.collectionMeta.lastUpdated());
+            if (!dontUpdate) {
                 self.populateLists();
             }
 
             if (!self.state.editingConfig()) {
-                populateObservables(self.collectionMeta, self.response)
+                populateObservables(self.collectionMeta, self.response);
                 self.state.timeAgo(self.getTimeAgo(self.response.lastUpdated));
             }
         });
@@ -168,7 +168,7 @@ define([
             group = _.find(self.groups, function(g){ return g.group === groupInt; }) || self.groups[0];
             group.articles.push(new Article(item, self));
         });
-    }
+    };
 
     Collection.prototype.decorate = function() {
         _.each(this.groups, function(group) {
@@ -191,7 +191,7 @@ define([
         this.state.loadIsPending(true);
 
         authedAjax.request({
-            url: common.CONST.apiBase + '/collection/' + this.id,
+            url: vars.CONST.apiBase + '/collection/' + this.id,
             type: 'post',
             data: JSON.stringify({
                 config: {

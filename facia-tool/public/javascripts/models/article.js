@@ -1,3 +1,4 @@
+/* global _: true, humanized_time_span: true */
 define([
     'modules/vars',
     'utils/as-observable-props',
@@ -17,8 +18,8 @@ function (
 ){
     var absUrlHost = 'http://m.guardian.co.uk/';
 
-    function Article(opts, collection) {
-        var opts = opts || {};
+    function Article(options, collection) {
+        var opts = options || {};
 
         this.collection = collection;
 
@@ -68,7 +69,7 @@ function (
         this.provisionalHeadline = null;
 
         this.populate(opts);
-    };
+    }
 
     Article.prototype.populate = function(opts) {
         populateObservables(this.props, opts);
@@ -84,7 +85,7 @@ function (
     Article.prototype.saveTitleEdit = function() {
         if(this.meta.headline()) {
             this.save();
-        };
+        }
         this.state.editingTitle(false);
     };
 
@@ -124,10 +125,10 @@ function (
                 position: this.props.id(),
                 itemMeta: this.getMeta(),
                 live:     vars.state.liveMode(),
-                draft:   !vars.state.liveMode(),
+                draft:   !vars.state.liveMode()
             }
         );
-        this.collection.state.loadIsPending(true)
+        this.collection.state.loadIsPending(true);
     };
 
     return Article;

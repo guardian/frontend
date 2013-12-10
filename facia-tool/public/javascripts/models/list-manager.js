@@ -1,3 +1,4 @@
+/* global _: true */
 define([
     'config',
     'knockout',
@@ -24,6 +25,13 @@ define([
     var prefKeyDefaultMode = 'gu.frontsTool.defaultToLiveMode';
 
     return function(selector) {
+
+        function updateLayout() {
+            var height = $(window).height();
+            $('.scrollable').each(function() {
+                $(this).height(Math.max(100, height - $(this).offset().top) - 2);
+            });
+        }
 
         var self = this,
             model = {
@@ -53,15 +61,15 @@ define([
 
         model.setModeLive = function() {
             model.liveMode(true);
-        }
+        };
 
         model.setModeDraft = function() {
             model.liveMode(false);
-        }
+        };
 
         model.previewUrl = ko.computed(function() {
             return vars.CONST.viewer + '#env=' + config.env + '&url=' + model.front() + encodeURIComponent('?view=mobile');
-        })
+        });
 
         function fetchFronts() {
             return authedAjax.request({
@@ -79,9 +87,9 @@ define([
                 }
 
                 model.config = resp;
-                model.fronts(_.keys(resp.fronts).sort());;
+                model.fronts(_.keys(resp.fronts).sort());
             });
-        };
+        }
 
         function getFront() {
             return queryParams().front;
@@ -123,9 +131,9 @@ define([
                 var graphs = ko.utils.unwrapObservable(valueAccessor()),
                     max;
 
-                if (!_.isArray(graphs)) { return; };
+                if (!_.isArray(graphs)) { return; }
                 max = _.max(_.pluck(graphs, 'max'));
-                if (!max) { return; };
+                if (!max) { return; }
 
                 _.each(_.toArray(graphs).reverse(), function(graph, i){
                     $(element).sparkline(graph.data, {
@@ -153,13 +161,6 @@ define([
                 collection.populateLists();
             });
         });
-
-        function updateLayout() {
-            var height = $(window).height();
-            $('.scrollable').each(function() {
-                $(this).height(Math.max(100, height - $(this).offset().top) - 2)
-            });
-        };
 
         this.init = function() {
             droppable.init();
