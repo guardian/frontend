@@ -6,13 +6,11 @@ define([
 
     function request(opts) {
         return $.ajax(
-            _.extend({}, opts, {dataType: 'json', contentType: 'application/json'})
+            _.extend({}, {dataType: !opts.type || opts.type === 'get' ? 'json' : undefined, contentType: 'application/json'}, opts)
         ).fail(function(xhr) {
             if (xhr.status === 403) {
                 window.location.href = window.location.href;
             }
-        }).then(function(data) {
-            return data;
         });
     };
 
