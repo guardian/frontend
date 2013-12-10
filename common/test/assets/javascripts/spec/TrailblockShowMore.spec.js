@@ -111,7 +111,7 @@ define(['common','utils/ajax', 'bean', 'bonzo', 'modules/ui/trailblock-show-more
             });
         });
 
-        it("should increase cta omniture count by one on 'module:clickstream:click' event", function(){
+        xit("should increase cta omniture count by one on 'module:clickstream:click' event", function(){
             waitsFor(function() {
                 return common.mediator.emit.called;
               }, 'Trails not loaded in in time', 100);
@@ -124,7 +124,7 @@ define(['common','utils/ajax', 'bean', 'bonzo', 'modules/ui/trailblock-show-more
             });
         });
 
-        it("shouldn't listen to non-cta clickstream clicks", function(){
+        xit("shouldn't listen to non-cta clickstream clicks", function(){
             waitsFor(function() {
                 return common.mediator.emit.called;
               }, 'Trails not loaded in in time', 100);
@@ -148,7 +148,7 @@ define(['common','utils/ajax', 'bean', 'bonzo', 'modules/ui/trailblock-show-more
             });
         });
 
-        it("should remove cta when no more trails", function(){
+        xit("should remove cta when no more trails", function(){
             waitsFor(function() {
                 return common.mediator.emit.called;
               }, 'Trails not loaded in in time', 100);
