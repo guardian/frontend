@@ -1,0 +1,20 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "startIndex":1,
+    "pageSize":50,
+    "currentPage":1,
+    "pages":1,
+    "results":[{
+      "id":"business/construction",
+      "type":"keyword",
+      "webTitle":"Construction industry",
+      "webUrl":"http://www.theguardian.com/business/construction",
+      "apiUrl":"http://content.guardianapis.com/business/construction",
+      "sectionId":"business",
+      "sectionName":"Business"
+    }]
+  }
+}
