@@ -60,9 +60,8 @@ sinon.xhr = { XMLHttpRequest: this.XMLHttpRequest };
         this.statusText = "";
 
         var xhr = this;
-        var events = ["loadstart", "load", "abort", "loadend"];
 
-        function addEventListener(eventName) {
+        ["loadstart", "load", "abort", "loadend"].forEach(function (eventName) {
             xhr.addEventListener(eventName, function (event) {
                 var listener = xhr["on" + eventName];
 
@@ -70,11 +69,7 @@ sinon.xhr = { XMLHttpRequest: this.XMLHttpRequest };
                     listener(event);
                 }
             });
-        }
-
-        for (var i = events.length - 1; i >= 0; i--) {
-            addEventListener(events[i]);
-        }
+        });
 
         if (typeof FakeXMLHttpRequest.onCreate == "function") {
             FakeXMLHttpRequest.onCreate(this);
@@ -395,7 +390,7 @@ sinon.xhr = { XMLHttpRequest: this.XMLHttpRequest };
             if (typeof this.onload === "function"){
                 this.onload();
             }
-
+            
         }
     });
 

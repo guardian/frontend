@@ -13,11 +13,10 @@
 (function (global) {
 //"use strict"; don't restore this until the config routine is refactored
 	var
-		version = '0.8.4',
+		version = '0.7.4',
 		curlName = 'curl',
 		defineName = 'define',
-		bootScriptAttr = 'data-curl-run',
-		bootScript,
+		runModuleAttr = 'data-curl-run',
 		userCfg,
 		prevCurl,
 		prevDefine,
@@ -53,7 +52,7 @@
 		findDotsRx = /(\.)(\.?)(?:$|\/([^\.\/]+.*)?)/g,
 		removeCommentsRx = /\/\*[\s\S]*?\*\/|\/\/.*?[\n\r]/g,
 		findRValueRequiresRx = /require\s*\(\s*(["'])(.*?[^\\])\1\s*\)|[^\\]?(["'])/g,
-		splitCommaSepRx = /\s*,\s*/,
+		splitMainDirectives = /\s*,\s*/,
 		cjsGetters,
 		core;
 
@@ -63,16 +62,15 @@
 		return toString.call(obj).indexOf('[object ' + type) == 0;
 	}
 
-	function normalizePkgDescriptor (descriptor, isPkg) {
+	function normalizePkgDescriptor (descriptor) {
 		var main;
 
 		descriptor.path = removeEndSlash(descriptor['path'] || descriptor['location'] || '');
-		if (isPkg) {
-			main = descriptor['main'] || './main';
-			if (!isRelUrl(main)) main = './' + main;
-			// trailing slashes trick reduceLeadingDots to see them as base ids
-			descriptor.main = reduceLeadingDots(main, descriptor.name + '/');
-		}
+		main = descriptor['main'] || './main';
+		if (!isRelUrl(main)) main = './' + main;
+		// trailing slashes trick reduceLeadingDots to see them as base ids
+		descriptor.main = reduceLeadingDots(main, descriptor.name + '/');
+		//if (isRelUrl(descriptor.main)) throw new Error('invalid main (' + main + ') in ' + descriptor.name);
 		descriptor.config = descriptor['config'];
 
 		return descriptor;
@@ -305,32 +303,15 @@
 
 			// functions that dependencies will use:
 
-			function toAbsId (childId, checkPlugins) {
-				var absId, parts, plugin;
-
-				absId = core.toAbsId(childId, def.id, cfg);
-				if (!checkPlugins) return absId;
-
-				parts = pluginParts(absId);
-				if (!parts.pluginId) return absId;
-
-				plugin = cache[parts.pluginId];
-				// check if plugin supports the normalize method
-				if ('normalize' in plugin) {
-					// note: dojo/has may return falsey values (0, actually)
-					parts.resourceId = plugin['normalize'](parts.resourceId, toAbsId, def.config) || '';
-				}
-				else {
-					parts.resourceId = toAbsId(parts.resourceId);
-				}
-				return parts.pluginId + '!' + parts.resourceId;
+			function toAbsId (childId) {
+				return core.toAbsId(childId, def.id, cfg);
 			}
 
 			function toUrl (n) {
 				// the AMD spec states that we should not append an extension
 				// in this function since it could already be appended.
 				// we need to use toAbsId in case this is a module id.
-				return core.resolvePathInfo(toAbsId(n, true), cfg).url;
+				return core.resolvePathInfo(toAbsId(n), cfg).url;
 			}
 
 			function localRequire (ids, callback, errback) {
@@ -346,7 +327,7 @@
 						throw new Error('require(id, callback) not allowed');
 					}
 					// return resource
-					rvid = toAbsId(ids, true);
+					rvid = toAbsId(ids);
 					childDef = cache[rvid];
 					if (!(rvid in cache)) {
 						// this should only happen when devs attempt their own
@@ -589,8 +570,13 @@
 						// remove plugin-specific path from coll
 						delete coll[name];
 					}
-					info = normalizePkgDescriptor(data, isPkg);
-					if (info.config) info.config = beget(newCfg, info.config);
+					if (isPkg) {
+						info = normalizePkgDescriptor(data);
+						if (info.config) info.config = beget(newCfg, info.config);
+					}
+					else {
+						info = { path: removeEndSlash(data.path) };
+					}
 					info.specificity = id.split('/').length;
 					if (id) {
 						currCfg.pathMap[id] = info;
@@ -690,7 +676,6 @@
 
 		loadScript: function (def, success, failure) {
 			// script processing rules learned from RequireJS
-			// TODO: pass a validate function into loadScript to check if a success really is a success
 
 			// insert script
 			var el = doc.createElement('script');
@@ -976,12 +961,12 @@
 		},
 
 		fetchDep: function (depName, parentDef) {
-			var toAbsId, isPreload, parentCfg, parts, absId, mainId, loaderId, pluginId,
+			var toAbsId, isPreload, cfg, parts, absId, mainId, loaderId, pluginId,
 				resId, pathInfo, def, tempDef, resCfg;
 
 			toAbsId = parentDef.toAbsId;
 			isPreload = parentDef.isPreload;
-			parentCfg = parentDef.config || userCfg; // is this fallback necessary?
+			cfg = parentDef.config || userCfg; // is this fallback necessary?
 
 			absId = toAbsId(depName);
 
@@ -995,26 +980,24 @@
 				resId = parts.resourceId;
 				// get id of first resource to load (which could be a plugin)
 				mainId = parts.pluginId || resId;
-				pathInfo = core.resolvePathInfo(mainId, parentCfg);
+				pathInfo = core.resolvePathInfo(mainId, cfg);
 			}
 
-			if (!(absId in cache)) {
-				resCfg = core.resolvePathInfo(resId, parentCfg).config;
+			// get custom module loader from package config if not a plugin
+			if (parts) {
 				if (parts.pluginId) {
 					loaderId = mainId;
 				}
 				else {
-					// get custom module loader from package config if not a plugin
-					// TODO: move config.moduleLoader to config.loader
-					loaderId = resCfg['moduleLoader'] || resCfg.moduleLoader
-						|| resCfg['loader'] || resCfg.loader;
+					// TODO: move config.moduleLoader to config.transform
+					loaderId = pathInfo.config['moduleLoader'] || pathInfo.config.moduleLoader;
 					if (loaderId) {
 						// TODO: allow transforms to have relative module ids?
 						// (we could do this by returning package location from
 						// resolvePathInfo. why not return all package info?)
 						resId = mainId;
 						mainId = loaderId;
-						pathInfo = core.resolvePathInfo(loaderId, parentCfg);
+						pathInfo = core.resolvePathInfo(loaderId, cfg);
 					}
 				}
 			}
@@ -1026,7 +1009,7 @@
 				def = cache[mainId] = urlCache[pathInfo.url];
 			}
 			else {
-				def = core.createResourceDef(resCfg, mainId, isPreload);
+				def = core.createResourceDef(pathInfo.config, mainId, isPreload);
 				// TODO: can this go inside createResourceDef?
 				// TODO: can we pass pathInfo.url to createResourceDef instead?
 				def.url = core.checkToAddJsExt(pathInfo.url, pathInfo.config);
@@ -1037,10 +1020,6 @@
 			// plugin or transformer
 			if (mainId == loaderId) {
 
-				// use plugin's config if specified
-				if (parts.pluginId && parentCfg.plugins[parts.pluginId]) {
-					resCfg = parentCfg.plugins[parts.pluginId];
-				}
 				// we need to use an anonymous promise until plugin tells
 				// us normalized id. then, we need to consolidate the promises
 				// below. Note: exports objects will be different between
@@ -1049,6 +1028,10 @@
 				// resId doesn't change, the check if this is a new
 				// normalizedDef (below) will think it's already being loaded.
 				tempDef = new Promise();
+
+				// note: this means moduleLoaders can store config info in the
+				// plugins config, too.
+				resCfg = cfg.plugins[loaderId] || cfg;
 
 				// wait for plugin resource def
 				when(def, function(plugin) {
@@ -1129,53 +1112,27 @@
 		},
 
 		findScript: function (predicate) {
-			var i = 0, scripts, script;
-			scripts = doc && (doc.scripts || doc.getElementsByTagName('script'));
-			while (scripts && (script = scripts[i++])) {
+			var i = 0, script;
+			while (doc && (script = doc.scripts[i++])) {
 				if (predicate(script)) return script;
 			}
 		},
 
-		extractDataAttrConfig: function () {
-			var script, attr = '';
+		extractDataAttrConfig: function (cfg) {
+			var script;
 			script = core.findScript(function (script) {
-				var run;
-				// find data-curl-run attr on script element
-				run = script.getAttribute(bootScriptAttr);
-				if (run) attr = run;
-				return run;
+				var main;
+				// find main module(s) in data-curl-run attr on script element
+				// TODO: extract baseUrl, too?
+				main = script.getAttribute(runModuleAttr);
+				if (main) cfg.main = main;
+				return main;
 			});
 			// removeAttribute is wonky (in IE6?) but this works
 			if (script) {
-				script.setAttribute(bootScriptAttr, '');
+				script.setAttribute(runModuleAttr, '');
 			}
-			return attr;
-		},
-
-		bootScript: function () {
-			var urls = bootScript.split(splitCommaSepRx);
-			if (urls.length) {
-				load();
-			}
-			function load () {
-				// Note: IE calls success handler if it gets a 400+.
-				core.loadScript({ url: urls.shift() }, check, check);
-			}
-			function check () {
-				// check if run.js called curl() or curl.config()
-				if (bootScript) {
-					if (urls.length) {
-						// show an error message
-						core.nextTurn(fail);
-						// try next
-						load();
-					}
-					else fail('run.js script did not run.');
-				}
-			}
-			function fail (msg) {
-				throw new Error(msg || 'Primary run.js failed. Trying fallback.');
-			}
+			return cfg;
 		},
 
 		nextTurn: function (task) {
@@ -1190,9 +1147,6 @@
 	function _curl (/* various */) {
 		var args, promise, cfg;
 
-		// indicate we're no longer waiting for a boot script
-		bootScript = '';
-
 		args = [].slice.call(arguments);
 
 		// extract config, if it's specified
@@ -1205,10 +1159,7 @@
 	}
 
 	function _config (cfg, callback, errback) {
-		var pPromise, main, fallback;
-
-		// indicate we're no longer waiting for a boot script
-		bootScript = '';
+		var pPromise, mPromise, main, devmain, fallback;
 
 		if (cfg) {
 			core.setApi(cfg);
@@ -1224,8 +1175,16 @@
 			}
 			// check for main module(s). all modules wait for preloads implicitly.
 			main = cfg['main'];
+			main = main && String(main).split(splitMainDirectives);
 			if (main) {
-				return new CurlApi(main, callback, errback);
+				mPromise = new Promise();
+				mPromise.then(callback, errback);
+				// figure out if we are using a dev-time fallback
+				fallback = main[1]
+					? function () { new CurlApi(main[1], mPromise.resolve, mPromise.reject); }
+					: mPromise.reject;
+				new CurlApi(main[0], mPromise.resolve, fallback);
+				return mPromise;
 			}
 		}
 	}
@@ -1278,7 +1237,7 @@
 
 		if (id == undef) {
 			if (argsNet !== undef) {
-				argsNet = { ex: 'Multiple anonymous defines encountered' };
+				argsNet = { ex: 'Multiple anonymous defines in url' };
 			}
 			else if (!(id = core.getCurrentDefName())/* intentional assignment */) {
 				// anonymous define(), defer processing until after script loads
@@ -1324,26 +1283,24 @@
 		pathRx: /$^/
 	};
 
+	// look for "data-curl-run" directive, and override config
+	userCfg = core.extractDataAttrConfig(userCfg);
+
 	// handle pre-existing global
 	prevCurl = global[curlName];
 	prevDefine = global[defineName];
 
 	// only run config if there is something to config (perf saver?)
-	if (prevCurl && isType(prevCurl, 'Object')) {
+	if (prevCurl && isType(prevCurl, 'Object') || userCfg.main) {
 		// remove global curl object
 		global[curlName] = undef; // can't use delete in IE 6-8
 		// configure curl
-		_config(prevCurl);
+		_config(prevCurl || userCfg);
 	}
 	else {
 		// set default api
 		core.setApi();
 	}
-
-	// look for "data-curl-run" directive
-	bootScript = core.extractDataAttrConfig();
-	// wait a bit in case curl.js is bundled into the boot script
-	if (bootScript) core.nextTurn(core.bootScript);
 
 	// allow curl to be a dependency
 	cache[curlName] = _curl;

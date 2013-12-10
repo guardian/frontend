@@ -11,13 +11,13 @@
 
 	curl(
 		{
-			baseUrl: '..',
+			baseUrl: '../..',
 			paths: {
 				// this pattern fails in 0.5.x:
-				'curl': 'src/curl'
+				'curl': 'curl/src/curl'
 			},
 			// we're not testing plugin path resolution, so just ensure domReady! works:
-			pluginPath: 'curl/plugin'
+			pluginPath: '../../curl/src/curl/plugin'
 		},
 		[
 			// see if curl can find something under 'curl'

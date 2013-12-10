@@ -55,10 +55,6 @@ $(document).ready(function() {
     ok(_.isEqual(vals, [0,1,2]), "works as a wrapper");
     // collects return values
     ok(_.isEqual([0, 1, 2], _.times(3, function(i) { return i; })), "collects return values");
-
-    deepEqual(_.times(0, _.identity), []);
-    deepEqual(_.times(-1, _.identity), []);
-    deepEqual(_.times(parseFloat('-Infinity'), _.identity), []);
   });
 
   test("mixin", function() {
@@ -73,7 +69,6 @@ $(document).ready(function() {
 
   test("_.escape", function() {
     equal(_.escape("Curly & Moe"), "Curly &amp; Moe");
-    equal(_.escape('<a href="http://moe.com">Curly & Moe\'s</a>'), '&lt;a href=&quot;http://moe.com&quot;&gt;Curly &amp; Moe&#x27;s&lt;/a&gt;');
     equal(_.escape("Curly &amp; Moe"), "Curly &amp;amp; Moe");
     equal(_.escape(null), '');
   });
@@ -81,7 +76,6 @@ $(document).ready(function() {
   test("_.unescape", function() {
     var string = "Curly & Moe";
     equal(_.unescape("Curly &amp; Moe"), string);
-    equal(_.unescape('&lt;a href=&quot;http://moe.com&quot;&gt;Curly &amp; Moe&#x27;s&lt;/a&gt;'), '<a href="http://moe.com">Curly & Moe\'s</a>');
     equal(_.unescape("Curly &amp;amp; Moe"), "Curly &amp; Moe");
     equal(_.unescape(null), '');
     equal(_.unescape(_.escape(string)), string);
@@ -213,7 +207,7 @@ $(document).ready(function() {
     strictEqual(_.result(obj, 'x'), 'x');
     strictEqual(_.result(obj, 'y'), 'x');
     strictEqual(_.result(obj, 'z'), undefined);
-    strictEqual(_.result(null, 'x'), undefined);
+    strictEqual(_.result(null, 'x'), null);
   });
 
   test('_.templateSettings.variable', function() {
