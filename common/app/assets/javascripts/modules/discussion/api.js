@@ -21,7 +21,12 @@ var Api = {
  * @param {Object.<string.*>}
  */
 Api.init = function(config) {
-    Api.root = config.page.discussionApiRoot;
+    if ("https:" === document.location.protocol) {
+//        Api.root = config.page.secureDiscussionApiRoot;
+        Api.root = config.page.discussionApiRoot;
+    } else {
+        Api.root = config.page.discussionApiRoot;
+    }
     Api.clientHeader = config.page.discussionApiClientHeader;
 };
 

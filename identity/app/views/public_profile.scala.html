@@ -17,6 +17,7 @@
 @identityMain(page, conf.Switches.all){
 }{
 <div class="identity-wrapper">
+    <div class="user-avatar" data-userid="@user.id"></div>
     <h2 class="type-2">
         @user.publicFields.displayName
     </h2>
@@ -24,29 +25,32 @@
         <p class="form-field__note">Joined: @joinDate.toString("d MMM yyyy")</p>
     }
 
-    <form class="form" novalidate action="@idUrlBuilder.buildUrl("/profile/public", idRequest)" role="main" method="post">
-        @if(profileForm.globalError.isDefined) {
-            <div class="form__error">@profileForm.globalErrors.map(_.message).mkString(", ")</div>
-        }
+    <div class="identity-section">
 
-        <ul class="form-fields">
-            @inputField(Input(profileForm("publicFields.location"), '_label -> "Location"))
-            @select(
-                profileForm("privateFields.gender"),
-                List("Male" -> "Male", "Female" -> "Female", "unknown" -> "Prefer not to say"),
-                '_label -> "Gender",
-                '_default -> ""
-            )
+        <form class="form" novalidate action="@idUrlBuilder.buildUrl("/profile/public", idRequest)" role="main" method="post">
+            @if(profileForm.globalError.isDefined) {
+                <div class="form__error">@profileForm.globalErrors.map(_.message).mkString(", ")</div>
+            }
 
-            @textareaField(Input(profileForm("publicFields.aboutMe"), ('_label, "About me")))
-            @textareaField(Input(profileForm("publicFields.interests"), ('_label, "Interests")))
-            @inputField(Input(profileForm("publicFields.webPage"), ('_label, "Website (enter full address)")))
+            <ul class="form-fields">
+                @inputField(Input(profileForm("publicFields.location"), '_label -> "Location"))
+                @select(
+                    profileForm("privateFields.gender"),
+                    List("Male" -> "Male", "Female" -> "Female", "unknown" -> "Prefer not to say"),
+                    '_label -> "Gender",
+                    '_default -> ""
+                )
 
-            <li>
-                <button type="submit" class="submit-input" data-link-name="Create account">Save changes</button>
-            </li>
-        </ul>
-    </form>
+                @textareaField(Input(profileForm("publicFields.aboutMe"), ('_label, "About me")))
+                @textareaField(Input(profileForm("publicFields.interests"), ('_label, "Interests")))
+                @inputField(Input(profileForm("publicFields.webPage"), ('_label, "Website (enter full address)")))
+
+                <li>
+                    <button type="submit" class="submit-input" data-link-name="Create account">Save changes</button>
+                </li>
+            </ul>
+        </form>
+    </div>
 
     @registrationFooter(page, idRequest, idUrlBuilder)
 </div>

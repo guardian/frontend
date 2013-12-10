@@ -136,3 +136,18 @@
         margin-top: 14px;
     }
 }
+
+.user-avatar {
+  float: left;
+  height: 60px;
+  width: 60px;
+  margin-right: 10px;
+  display: none;
+
+  img {
+    float: left;
+    height: 60px;
+    width: 60px;
+    margin-right: 10px;
+  }
+}
