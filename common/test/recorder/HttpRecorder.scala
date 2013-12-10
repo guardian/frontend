@@ -4,7 +4,7 @@ import java.io._
 import org.apache.commons.codec.digest.DigestUtils
 import io.Source
 import com.gu.openplatform.contentapi.connection.HttpResponse
-import concurrent.Future
+import scala.concurrent.Future
 import common.ExecutionContexts
 import conf.Configuration
 
@@ -20,10 +20,8 @@ trait HttpRecorder[A] extends ExecutionContexts {
 
     // integration test environment
     // make sure people have checked in test files
-    if (Configuration.environment.stage.equalsIgnoreCase("DEVINFRA") && !new File(fileName).exists()) {
-
-      //TODO
-      //throw new IllegalStateException(s"Data file has not been checked in for: $url")
+    if (Configuration.environment.stage.equalsIgnoreCase("DEVINFRA") && !new File(baseDir, fileName).exists()) {
+      throw new IllegalStateException(s"Data file has not been checked in for: $url")
     }
 
     get(fileName).map { f =>
@@ -62,9 +60,8 @@ trait HttpRecorder[A] extends ExecutionContexts {
   def fromResponse(response: A): String
 
   private [recorder] def name(url: String, headers: Map[String, String]) = {
-    val urlPart = url.split("\\?").flatMap(_.split("\\&")).sorted.mkString
-    val headerPart = headers.toList.map { case (key, value) => key + value }.sorted.mkString
-    DigestUtils.shaHex((urlPart + headerPart).getBytes)
+    val headersString = headers.map{ case (key, value) => key + value }.mkString
+    DigestUtils.sha256Hex(url.sorted +  headersString.sorted)
   }
 }
 

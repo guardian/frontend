@@ -1,0 +1,52 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":5,
+    "startIndex":1,
+    "pageSize":50,
+    "currentPage":1,
+    "pages":1,
+    "results":[{
+      "id":"women-in-leadership/legal",
+      "type":"keyword",
+      "webTitle":"Legal",
+      "webUrl":"http://www.theguardian.com/women-in-leadership/legal",
+      "apiUrl":"http://content.guardianapis.com/women-in-leadership/legal",
+      "sectionId":"women-in-leadership",
+      "sectionName":"Women in Leadership"
+    },{
+      "id":"law/legal-aid",
+      "type":"keyword",
+      "webTitle":"Legal aid",
+      "webUrl":"http://www.theguardian.com/law/legal-aid",
+      "apiUrl":"http://content.guardianapis.com/law/legal-aid",
+      "sectionId":"law",
+      "sectionName":"Law"
+    },{
+      "id":"law/legal-ombudsmen",
+      "type":"keyword",
+      "webTitle":"Legal ombudsmen",
+      "webUrl":"http://www.theguardian.com/law/legal-ombudsmen",
+      "apiUrl":"http://content.guardianapis.com/law/legal-ombudsmen",
+      "sectionId":"law",
+      "sectionName":"Law"
+    },{
+      "id":"business/legalandgeneralgroup",
+      "type":"keyword",
+      "webTitle":"Legal and General",
+      "webUrl":"http://www.theguardian.com/business/legalandgeneralgroup",
+      "apiUrl":"http://content.guardianapis.com/business/legalandgeneralgroup",
+      "sectionId":"business",
+      "sectionName":"Business"
+    },{
+      "id":"law/legal-services-commission",
+      "type":"keyword",
+      "webTitle":"Legal Services Commission",
+      "webUrl":"http://www.theguardian.com/law/legal-services-commission",
+      "apiUrl":"http://content.guardianapis.com/law/legal-services-commission",
+      "sectionId":"law",
+      "sectionName":"Law"
+    }]
+  }
+}

@@ -1,0 +1,172 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":20,
+    "startIndex":1,
+    "pageSize":50,
+    "currentPage":1,
+    "pages":1,
+    "results":[{
+      "id":"global-development-professionals-network/technology",
+      "type":"keyword",
+      "webTitle":"Technology",
+      "webUrl":"http://www.theguardian.com/global-development-professionals-network/technology",
+      "apiUrl":"http://content.guardianapis.com/global-development-professionals-network/technology",
+      "sectionId":"global-development-professionals-network",
+      "sectionName":"Global Development Professionals Network"
+    },{
+      "id":"public-leaders-network/technology",
+      "type":"keyword",
+      "webTitle":"Technology",
+      "webUrl":"http://www.theguardian.com/public-leaders-network/technology",
+      "apiUrl":"http://content.guardianapis.com/public-leaders-network/technology",
+      "sectionId":"public-leaders-network",
+      "sectionName":"Public Leaders Network"
+    },{
+      "id":"higher-education-network/technology",
+      "type":"keyword",
+      "webTitle":"Technology",
+      "webUrl":"http://www.theguardian.com/higher-education-network/technology",
+      "apiUrl":"http://content.guardianapis.com/higher-education-network/technology",
+      "sectionId":"higher-education-network",
+      "sectionName":"Higher Education Network"
+    },{
+      "id":"sustainable-business/technology",
+      "type":"keyword",
+      "webTitle":"Technology",
+      "webUrl":"http://www.theguardian.com/sustainable-business/technology",
+      "apiUrl":"http://content.guardianapis.com/sustainable-business/technology",
+      "sectionId":"sustainable-business",
+      "sectionName":"Guardian Sustainable Business"
+    },{
+      "id":"technology/technology",
+      "type":"keyword",
+      "webTitle":"Technology",
+      "webUrl":"http://www.theguardian.com/technology/technology",
+      "apiUrl":"http://content.guardianapis.com/technology/technology",
+      "sectionId":"technology",
+      "sectionName":"Technology"
+    },{
+      "id":"healthcare-network/innovation-with-technology",
+      "type":"keyword",
+      "webTitle":"Innovation with Technology",
+      "webUrl":"http://www.theguardian.com/healthcare-network/innovation-with-technology",
+      "apiUrl":"http://content.guardianapis.com/healthcare-network/innovation-with-technology",
+      "sectionId":"healthcare-network",
+      "sectionName":"Healthcare Professionals Network"
+    },{
+      "id":"football/goalline-technology",
+      "type":"keyword",
+      "webTitle":"Goalline technology",
+      "webUrl":"http://www.theguardian.com/football/goalline-technology",
+      "apiUrl":"http://content.guardianapis.com/football/goalline-technology",
+      "sectionId":"football",
+      "sectionName":"Football"
+    },{
+      "id":"technology/wearable-technology",
+      "type":"keyword",
+      "webTitle":"Wearable technology",
+      "webUrl":"http://www.theguardian.com/technology/wearable-technology",
+      "apiUrl":"http://content.guardianapis.com/technology/wearable-technology",
+      "sectionId":"technology",
+      "sectionName":"Technology"
+    },{
+      "id":"technology/startups",
+      "type":"keyword",
+      "webTitle":"Technology startups",
+      "webUrl":"http://www.theguardian.com/technology/startups",
+      "apiUrl":"http://content.guardianapis.com/technology/startups",
+      "sectionId":"technology",
+      "sectionName":"Technology"
+    },{
+      "id":"business/technology",
+      "type":"keyword",
+      "webTitle":"Technology sector",
+      "webUrl":"http://www.theguardian.com/business/technology",
+      "apiUrl":"http://content.guardianapis.com/business/technology",
+      "sectionId":"business",
+      "sectionName":"Business"
+    },{
+      "id":"cloud-technology/cloud-technology",
+      "type":"keyword",
+      "webTitle":"Cloud technology",
+      "webUrl":"http://www.theguardian.com/cloud-technology/cloud-technology",
+      "apiUrl":"http://content.guardianapis.com/cloud-technology/cloud-technology",
+      "sectionId":"cloud-technology",
+      "sectionName":"Cloud technology"
+    },{
+      "id":"sustainable-business/technology-innovation",
+      "type":"keyword",
+      "webTitle":"Technology and innovation",
+      "webUrl":"http://www.theguardian.com/sustainable-business/technology-innovation",
+      "apiUrl":"http://content.guardianapis.com/sustainable-business/technology-innovation",
+      "sectionId":"sustainable-business",
+      "sectionName":"Guardian Sustainable Business"
+    },{
+      "id":"science/weaponstechnology",
+      "type":"keyword",
+      "webTitle":"Weapons technology",
+      "webUrl":"http://www.theguardian.com/science/weaponstechnology",
+      "apiUrl":"http://content.guardianapis.com/science/weaponstechnology",
+      "sectionId":"science",
+      "sectionName":"Science"
+    },{
+      "id":"technology/politics",
+      "type":"keyword",
+      "webTitle":"Politics and technology",
+      "webUrl":"http://www.theguardian.com/technology/politics",
+      "apiUrl":"http://content.guardianapis.com/technology/politics",
+      "sectionId":"technology",
+      "sectionName":"Technology"
+    },{
+      "id":"technology/mapping-technologies",
+      "type":"keyword",
+      "webTitle":"Mapping technologies",
+      "webUrl":"http://www.theguardian.com/technology/mapping-technologies",
+      "apiUrl":"http://content.guardianapis.com/technology/mapping-technologies",
+      "sectionId":"technology",
+      "sectionName":"Technology"
+    },{
+      "id":"media-network/technology-in-retail",
+      "type":"keyword",
+      "webTitle":"Technology in retail",
+      "webUrl":"http://www.theguardian.com/media-network/technology-in-retail",
+      "apiUrl":"http://content.guardianapis.com/media-network/technology-in-retail",
+      "sectionId":"media-network",
+      "sectionName":"Media Network"
+    },{
+      "id":"lg-talking-technology/lg-talking-technology",
+      "type":"keyword",
+      "webTitle":"LG Talking Technology",
+      "webUrl":"http://www.theguardian.com/lg-talking-technology/lg-talking-technology",
+      "apiUrl":"http://content.guardianapis.com/lg-talking-technology/lg-talking-technology",
+      "sectionId":"lg-talking-technology",
+      "sectionName":"LG Talking Technology"
+    },{
+      "id":"education/mit-massachusetts-institute-of-technology",
+      "type":"keyword",
+      "webTitle":"MIT - Massachusetts Institute of Technology",
+      "webUrl":"http://www.theguardian.com/education/mit-massachusetts-institute-of-technology",
+      "apiUrl":"http://content.guardianapis.com/education/mit-massachusetts-institute-of-technology",
+      "sectionId":"education",
+      "sectionName":"Education"
+    },{
+      "id":"select/select-technology-and-media",
+      "type":"keyword",
+      "webTitle":"Select Technology and Media",
+      "webUrl":"http://www.theguardian.com/select/select-technology-and-media",
+      "apiUrl":"http://content.guardianapis.com/select/select-technology-and-media",
+      "sectionId":"select",
+      "sectionName":"Select"
+    },{
+      "id":"environment/cleantechnology100",
+      "type":"keyword",
+      "webTitle":"Clean technology 100",
+      "webUrl":"http://www.theguardian.com/environment/cleantechnology100",
+      "apiUrl":"http://content.guardianapis.com/environment/cleantechnology100",
+      "sectionId":"environment",
+      "sectionName":"Environment"
+    }]
+  }
+}
