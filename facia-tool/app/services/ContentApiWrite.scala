@@ -75,7 +75,7 @@ trait ContentApiWrite extends ExecutionContexts {
         Option("Default Description"),
         groups,
         Map("id" -> "uk/news", "edition" -> "UK"),
-        "2013-10-15T11:42:17Z", //Endpoint has a problem with dates
+        block.lastUpdated,
         block.updatedEmail
       )
     }
