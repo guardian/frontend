@@ -108,8 +108,7 @@ define([
                 item: item.props.id(),
                 live:   common.state.liveMode(),
                 draft: !common.state.liveMode()
-            }),
-            dataType: undefined
+            })
         }).then(function() {
             self.load();
         });
