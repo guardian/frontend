@@ -15,9 +15,9 @@ class FormstackController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
                                         authAction: utils.AuthAction)
   extends Controller with ExecutionContexts with SafeLogging {
 
-  val page = IdentityPage("/form", "Foo", "formstack")
+  val page = IdentityPage("/form", "Form", "formstack")
 
   def formstackForm(formId: String) = authAction.apply { implicit request =>
-    Ok(views.html.formstack.formstackForm(formId))
+    Ok(views.html.formstack.formstackForm(page, formId))
   }
 }

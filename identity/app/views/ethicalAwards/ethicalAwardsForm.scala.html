@@ -1,6 +1,7 @@
-@(page: model.MetaData, formId: String, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder)(implicit request: RequestHeader)
+@(metaData: model.MetaData, formId: String, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder)(implicit request: RequestHeader)
 
-@identityMain(page, conf.Switches.all) {
+@identityMain(metaData, conf.Switches.all) {
 } {
-    <iframe src="@idUrlBuilder.buildUrl(s"/form/$formId")"></iframe>
+    <h1>Ethical awards</h1>
+    <iframe src="@idUrlBuilder.buildUrl(s"/form/$formId")" width="100%" height="400" style="border: none; margin: 0"></iframe>
 }

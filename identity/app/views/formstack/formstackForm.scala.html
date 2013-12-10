@@ -1,1 +1,14 @@
-@(formstackId: String)
+@(metaData: model.MetaData, formstackId: String)
+
+<!DOCTYPE html>
+<html class="js-off" lang="en-GB">
+<head>
+    <meta charset="utf-8" />
+    <title>@Html(metaData.webTitle)</title>
+</head>
+<body id="top" itemscope itemtype="http://schema.org/WebPage" itemref="schema-WebPage">
+
+    <h1>Form @formstackId</h1>
+
+</body>
+</html>

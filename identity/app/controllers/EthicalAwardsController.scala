@@ -15,7 +15,7 @@ class EthicalAwardsController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
                                         authAction: utils.AuthAction)
   extends Controller with ExecutionContexts with SafeLogging {
 
-  val page = IdentityPage("/foo", "Foo", "foo")
+  val page = IdentityPage("/ethical-awards", "Ethical Awards", "ethical-awards")
 
   def ethicalAwardsForm(formId: String) = authAction.apply { implicit request =>
     val idRequest = idRequestParser(request)
