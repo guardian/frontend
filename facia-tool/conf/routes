@@ -25,6 +25,10 @@ DELETE        /collection/*id            controllers.FaciaToolController.deleteT
 GET           /collection                controllers.FaciaToolController.listCollections
 GET           /config                    controllers.FaciaToolController.listConfigs
 
+GET           /print/*path               controllers.FaciaToolController.printstuff(path)
+GET           /configagent               controllers.FaciaToolController.printagent
+GET           /refresh                   controllers.FaciaToolController.refreshagent
+
 # endpoints for proxying https
 GET           /api/proxy/*path           controllers.FaciaContentApiProxy.proxy(path)
 GET           /json/proxy/*absUrl        controllers.FaciaContentApiProxy.json(absUrl)

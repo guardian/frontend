@@ -71,6 +71,13 @@ trait ParseCollection extends ExecutionContexts with Logging {
     WS.url(collectionUrl).withRequestTimeout(2000).get()
   }
 
+  private def parseCollectionItem(json: JsValue): Seq[CollectionItem] = (json \ "live").as[Seq[JsObject]] map { trail =>
+    CollectionItem((trail \ "id").as[String], (trail \ "meta").asOpt[Map[String, String]])
+  }
+
+  def getCollectionItems(id: String): Future[Seq[CollectionItem]] =
+    requestCollection(id) filter {response => response.status == Status.OK} map {response => parse(response.body)} map parseCollectionItem
+
   def getCollection(id: String, config: Config, edition: Edition, isWarmedUp: Boolean): Future[Collection] = {
     // get the running order from the apiwith
     val response = requestCollection(id)
