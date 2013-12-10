@@ -124,10 +124,3 @@
     background-color: transparent;
     @include transition(opacity 2s ease-out, background-color 4s ease-out);
 }
-
-.live-blog__blocks--hidden {
-    opacity: 0;
-    height: 0;
-    overflow: hidden;
-    background-color: $c-neutral7;
-}

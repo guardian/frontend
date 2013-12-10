@@ -1,30 +1,29 @@
 {
-  "name": "eventEmitter",
-  "description": "Event based JavaScript for the browser",
-  "version": "4.1.1",
-  "main": [
-    "./EventEmitter.js"
-  ],
-  "author": {
-    "name": "Oliver Caldwell",
-    "url": "http://oli.me.uk/"
-  },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://github.com/Wolfy87/EventEmitter#license-mit"
-    }
-  ],
-  "keywords": [
-    "events",
-    "structure"
-  ],
-  "gitHead": "43667e08cac43060860ace13ced173ccdde7821d",
-  "readme": "# EventEmitter\n\n## Event based JavaScript for the browser\n\nAs the subtitle suggests, this script brings the power of events from platforms such as [node.js](http://nodejs.org/) to your browser. Although it can be used on any other platform, I just built it with browsers in mind.\n\nThis is actually the fourth full rewrite of EventEmitter, my aim is for it to be faster and lighter than ever before. It also has a remapped API which just makes a lot more sense. Because the methods now have more descriptive names it is friendlier to extension into other classes. You will be able to distinguish event method from your own methods.\n\nI have been working on it for over ~~a year~~ two years so far and in that time my skills in JavaScript have come a long way. This script is a culmination of my learnings which you can hopefully find very useful.\n\n## Dependencies\n\nThere are no hard dependencies. The only reason you will want to run `npm install` to grab the development dependencies is to build the documentation or minify the source code. No other scripts are required to actually use EventEmitter.\n\n## Documentation\n\n * [Guide](https://github.com/Wolfy87/EventEmitter/blob/master/docs/guide.md)\n * [API](https://github.com/Wolfy87/EventEmitter/blob/master/docs/api.md)\n\n### Examples\n\n * [Simple](http://jsfiddle.net/Wolfy87/qXQu9/)\n * [RegExp DOM caster](http://jsfiddle.net/Wolfy87/JqRvS/)\n\n### Building the documentation\n\nYou can run `tools/doc.sh` to build from the JSDoc comments found within the source code. The built documentation will be placed in `docs/api.md`. I actually keep this inside the repository so each version will have it's documentation stored with it.\n\n## Minifying\n\nYou can grab minified versions of EventEmitter from inside this repository, every version is tagged. If you need to build a custom version then you can run `tools/dist.sh`.\n\n## Cloning\n\nYou can clone the repository with your generic clone commands as a standalone repository or submodule.\n\n```bash\n# Full repository\ngit clone git://github.com/Wolfy87/EventEmitter.git\n\n# Or submodule\ngit submodule add git://github.com/Wolfy87/EventEmitter.git assets/js/EventEmitter\n```\n\n### Package managers\n\nYou can also get a copy of EventEmitter through [NPM](https://npmjs.org/) (wolfy87-eventemitter) or [Bower](http://bower.io/) (eventEmitter).\n\n## Testing\n\nTests are performed using [Mocha](http://visionmedia.github.io/mocha/) and [Chai](http://chaijs.com/) in the following browsers.\n\n * Firefox\n * Chrome\n * Opera\n * Safari\n * IE9+\n\nWhen testing in the more modern browsers, I run it through the very early versions, some midrange versions and the very latest ones too. I don't just do the latest version.\n\nEventEmitter will always be tested and working perfectly in all of them before a release. I will not release anything I think is riddled with bugs. However, if you do spot one, please [submit it as an issue](https://github.com/Wolfy87/EventEmitter/issues) and I will get right on it.\n\nI had to stop testing in IE<9. This is because Jasmine no longer seems to work in old IE. I converted all of my tests to Mocha/Chai and then realised Chai doesn't work in IE<9 either. I know it works, I just can't run the tests anymore, I still recommend using it in older IE versions. However, if you do encounter problems, all you have to do is roll back before v4.1.0, the first IE9+ only tested version.\n\nAs consolation for the lack of legacy browser testing, I have made sure the examples listed above run perfectly in IE6+. So the unit tests might not be able to run, but I am **very** confident that it works absolutely perfectly.\n\n## License (MIT)\n\nCopyright (c) 2011-2013 Oliver Caldwell\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.",
-  "readmeFilename": "README.md",
-  "_id": "eventEmitter@4.1.1",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/Wolfy87/EventEmitter.git"
-  }
+	"name": "eventEmitter",
+	"description": "Event based JavaScript for the browser",
+	"version": "4.2.6",
+	"main": [
+		"./EventEmitter.js"
+	],
+	"author": {
+		"name": "Oliver Caldwell",
+		"web": "http://oli.me.uk/"
+	},
+	"licenses": [
+		{
+			"type": "MIT",
+			"url": "https://github.com/Wolfy87/EventEmitter#license-mit"
+		}
+	],
+	"keywords": [
+		"events",
+		"structure"
+	],
+	"ignore": [
+		"docs",
+		"tests",
+		"tools",
+		".gitignore",
+		"package.json"
+	]
 }

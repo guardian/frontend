@@ -8,10 +8,10 @@ import conf.Switches._
 
 object Viewability extends Logging {
 
-  def report(top: Option[Int], bottom: Option[Int], inline: Option[Int], mpu: Option[Int], view: Option[Int], layout: Option[String], variant: Option[String]) {
+  def report(top: Option[Int], bottom: Option[Int], inline: Option[Int], mpu: Option[Int], view: Option[Int], layout: Option[String], variant: Option[String], id: Option[String]) {
     
     if (AdDwellTimeLoggerSwitch.isSwitchedOn) {
-      log.info(s"Top -> ${top}, Bottom -> ${bottom}, Inline -> ${inline}, Mpu -> ${mpu}, Views -> ${view}, Layout -> ${layout}, Variant -> ${variant}")
+      log.info(s"Top -> ${top}, Bottom -> ${bottom}, Inline -> ${inline}, Mpu -> ${mpu}, Views -> ${view}, Layout -> ${layout}, Variant -> ${variant}, Id -> ${id}")
     }
 
     top.foreach(Top.increment(_))

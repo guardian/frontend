@@ -9,9 +9,9 @@ define([
     return function() {
 
         this.id = 'OnwardIntrusive';
-        this.expiry = '2013-12-09';
+        this.expiry = '2013-12-30';
         this.audience = 0.25;
-        this.audienceOffset = 0;
+        this.audienceOffset = 0.3;
         this.description = 'Test whether onward components increase page views per session';
         this.canRun = function(config) {
             return config.page.contentType === 'Article';
@@ -22,8 +22,8 @@ define([
                 test: function (context) {
                     sequence.init();
                     var currentSequence = sequence.getSequence();
-                    if (currentSequence && currentSequence.length > 0) {
-                        var rightEar = new RightEar(currentSequence, {});
+                    if (currentSequence && currentSequence.items.length > 0) {
+                        var rightEar = new RightEar(currentSequence.items, {});
                         rightEar.render();
                     }
                 }

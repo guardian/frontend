@@ -63,16 +63,16 @@
                             </div>
                         }
 
-                        <div class="article-body u-cf from-content-api @if(article.isLive) {live-blog} js-live-blog"
+                        <div class="article-body u-cf from-content-api @if(article.isLive) {live-blog}"
                         itemprop="@if(article.isReview){reviewBody} else {articleBody}">
 
                             @if(article.groupedBlocks.nonEmpty) {
                                 @article.groupedBlocks.map{ blockGroup =>
-                                    <div class="live-blog__blocks js-live-blog-blocks">
+                                    <div class="live-blog__blocks">
                                         @BodyCleaner(article, blockGroup)
                                     </div>
                                 }
-                                <button class="h u-button-reset cta cta--read-more js-live-blog-show-more" data-link-name="live blog | read more">
+                                <button class="h u-button-reset cta cta--read-more" data-link-name="live blog | read more">
                                     Read more <i class="i i-swipe-arrow cta--read-more__icon"></i>
                                 </button>
                             }  else {
