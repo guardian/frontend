@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>plugin errback test</title>
+
+<script>
+	curl = {
+			baseUrl: '',
+			paths: {
+				curl: '../src/curl'
+			}
+		};
+
+</script>
+<script src="../src/curl.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+	define('curl/plugin/plugin-that-fails', function(){
+		return {
+			load: function(id, require, loaded, config){
+				// loads two instead of one
+				loaded.error(new Error('foo'));
+			}
+		};
+	});
+
+	var testId = 'should call standard errback';
+	curl(['plugin-that-fails!anything'],
+		function () {
+			write('FAILED: ' + testId);
+		},
+		function (ex) {
+			write('SUCCESS: ' + testId + ' - ' + ex.message);
+		}
+	);
+
+	function write (msg) {
+		curl('domReady!', function () {
+			document.body.appendChild(document.createElement('div')).innerHTML = msg;
+		});
+	}
+
+</script>
+
+</head>
+<body>
+
+</body>
+</html>

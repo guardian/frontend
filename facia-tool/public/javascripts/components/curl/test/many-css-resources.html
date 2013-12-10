@@ -1,0 +1,116 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Many CSS Resources test</title>
+
+<script>
+
+	curl = {
+		paths: {
+			curl: '../src/curl'
+		}
+	};
+
+</script>
+<script src="../src/curl.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+(function () {
+"use strict";
+
+	// local css file
+	curl(['css!stuff/base.css']).then(
+		function () {
+			var testEl = document.getElementById('test-rules-applied');
+			write('SUCCESS! loaded local css file.');
+			if (testEl.offsetHeight == 273) {
+				write('SUCCESS! applied rules from css file.');
+			}
+			else {
+				write('FAILED! did not apply rules from css file.');
+			}
+		},
+		function () {
+			write('FAILED! did not load local css file.');
+		}
+	);
+
+	// XD css file
+	curl(['css!http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/resources/dojo.css']).then(
+		function () {
+			write('SUCCESS! loaded XD css file.');
+		},
+		function () {
+			write('FAILED! did not load XD css file.');
+		}
+	);
+
+	// HTTP error
+	curl(['css!bogus.css']).then(
+		function () {
+			write('FAILED! error handler didn\'t fire for 404 HTTP error.');
+		},
+		function () {
+			write('SUCCESS! detected 404 HTTP error.');
+		}
+	);
+
+	// test cascade and comma-separated resource Ids
+	curl(['css!stuff/cascade-start.css,stuff/cascade-middle.css,stuff/cascade-end.css', 'domReady!']).then(
+		function (sheets) {
+			var testEl = document.getElementById('test-cascade'), i, sheet;
+			write((testEl.offsetTop == 33 ? 'SUCCESS' : 'FAILED') + ': css cascaded correctly through three levels.');
+			write((testEl.offsetLeft == 20 ? 'SUCCESS' : 'FAILED') + ': css cascaded correctly through two levels.');
+			write((sheets.length == 3 ? 'SUCCESS' : 'FAILED') + ': multiple sheets returned when comma-separated.');
+			for (i = 0; i < sheets.length; i++) {
+				sheet = sheets[i];
+				write((sheet.rules || sheet.cssRules ? 'SUCCESS' : 'FAILED') + ': sheet returned as ' + i + 'th array item.');
+			}
+		},
+		function (ex) { write('FAILED: cascade tests did not run.') }
+	);
+
+	// test empty stylesheet
+	curl(['css!stuff/blank']).then(
+		function () { write('SUCCESS: should load blank stylesheet.'); },
+		function () { write('FAILED: should load blank stylesheet.'); }
+	);
+
+	// 31 should be enough to cause IE to fail. see if we can load more than that
+	var howMany = 70, total = 0, all = [];
+
+	for (var i = 0; i < howMany; i++) {
+		all.push('css!stuff/base.css?which=' + i + '&bust=' + Math.random() + new Date().valueOf());
+	}
+
+	curl(all).then(
+		function () {
+			write('SUCCESS: all ' + howMany + ' css files loaded.');
+		},
+		function (ex) {
+			write('FAILED: not all ' + howMany + ' css files loaded. ' + ex.message);
+		}
+	);
+
+	function write (msg) {
+		curl(['domReady!'], function () {
+			document.body.appendChild(document.createElement('div')).innerHTML = msg;
+		});
+	}
+
+	function getComputedStyle (el) {
+		return window.getComputedStyle ? window.getComputedStyle(el, null) : el.currentStyle;
+	}
+
+}());
+</script>
+
+</head>
+<body>
+<div id="test-cascade-parent">
+	<p id="test-cascade">test element</p>
+</div>
+<div id="test-rules-applied"></div>
+</body>
+</html>

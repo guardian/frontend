@@ -1,0 +1,40 @@
+{
+	"name": "curl",
+	"version": "0.8.4",
+	"description": "curl.js is small, fast, extensible module loader that handles AMD, CommonJS Modules/1.1, CSS, HTML/text, and legacy scripts.",
+	"keywords": ["curl", "cujo", "amd", "loader", "module", "commonjs", "css", "html", "json"],
+	"licenses": [
+		{
+			"type": "MIT",
+			"url": "http://www.opensource.org/licenses/mit-license.php"
+		}
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/cujojs/curl"
+	},
+	"bugs": "https://github.com/cujojs/curl/issues",
+	"maintainers": [
+		{
+			"name": "John Hann",
+			"web": "http://unscriptable.com"
+		}
+	],
+	"contributors": [
+		{
+			"name": "John Hann",
+			"web": "http://unscriptable.com"
+		},
+		{
+			"name": "Brian Cavalier",
+			"web": "http://hovercraftstudios.com"
+		}
+	],
+	"main": "./src/curl",
+	"directories": {
+		"test": "test"
+	},
+	"volo": {
+		"type": "directory"
+	}
+}
