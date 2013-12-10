@@ -10,10 +10,11 @@ import play.api.data.{Forms, Form}
 import idapiclient.{IdApiClient, UserUpdate}
 import com.gu.identity.model.{PrivateFields, PublicFields, User}
 import actions.AuthActionWithUser
+import play.filters.csrf.{CSRFCheck, CSRFAddToken}
 
 
 @Singleton
-class PubilcProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
+class PublicProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
                                         authActionWithUser: AuthActionWithUser,
                                         identityApiClient: IdApiClient,
                                         idRequestParser: IdRequestParser)
@@ -33,9 +34,11 @@ class PubilcProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
 
   val page = IdentityPage("/profile/public", "Public profile", "public profile")
 
-  def displayForm = authActionWithUser.apply { implicit request =>
-    val idRequest = idRequestParser(request)
-    Ok(views.html.public_profile(page.tracking(idRequest), request.user, bindFormFromUser(request.user), idRequest, idUrlBuilder))
+  def displayForm = CSRFAddToken {
+    authActionWithUser.apply { implicit request =>
+      val idRequest = idRequestParser(request)
+      Ok(views.html.public_profile(page.tracking(idRequest), request.user, bindFormFromUser(request.user), idRequest, idUrlBuilder))
+    }
   }
 
   def bindFormFromUser(user: User): Form[(Option[String], Option[String], Option[String], Option[String], Option[String])] = {
@@ -50,31 +53,33 @@ class PubilcProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
     )
   }
 
-  def submitForm = authActionWithUser.async { implicit request =>
-    val idRequest = idRequestParser(request)
-    val formData = form.bindFromRequest()
+  def submitForm = CSRFCheck {
+    authActionWithUser.async { implicit request =>
+      val idRequest = idRequestParser(request)
+      val formData = form.bindFromRequest()
 
-    val userUpdate = UserUpdate(
-      publicFields = Some(PublicFields(
-        location = formData("publicFields.location").value,
-        aboutMe = formData("publicFields.aboutMe").value,
-        interests = formData("publicFields.interests").value,
-        webPage = formData("publicFields.webPage").value
-      )),
-      privateFields = Some(PrivateFields(
-        gender = formData("privateFields.gender").value
-      ))
-    )
+      val userUpdate = UserUpdate(
+        publicFields = Some(PublicFields(
+          location = formData("publicFields.location").value,
+          aboutMe = formData("publicFields.aboutMe").value,
+          interests = formData("publicFields.interests").value,
+          webPage = formData("publicFields.webPage").value
+        )),
+        privateFields = Some(PrivateFields(
+          gender = formData("privateFields.gender").value
+        ))
+      )
 
-    identityApiClient.saveUser(request.user.id, userUpdate, request.auth).map {
-      case Left(errors) => {
-        val formDataWithErrors = errors.foldLeft(formData) { (formWithErrors,error) =>
-          formWithErrors.withError(error.context.getOrElse(""), error.description)
+      identityApiClient.saveUser(request.user.id, userUpdate, request.auth).map {
+        case Left(errors) => {
+          val formDataWithErrors = errors.foldLeft(formData) { (formWithErrors,error) =>
+            formWithErrors.withError(error.context.getOrElse(""), error.description)
+          }
+          Ok(views.html.public_profile(page.tracking(idRequest), request.user, formDataWithErrors, idRequest, idUrlBuilder))
         }
-        Ok(views.html.public_profile(page.tracking(idRequest), request.user, formDataWithErrors, idRequest, idUrlBuilder))
-      }
-      case Right(user) => {
-        Ok(views.html.public_profile(page.accountEdited(idRequest), request.user, bindFormFromUser(user), idRequest, idUrlBuilder))
+        case Right(user) => {
+          Ok(views.html.public_profile(page.accountEdited(idRequest), request.user, bindFormFromUser(user), idRequest, idUrlBuilder))
+        }
       }
     }
   }
