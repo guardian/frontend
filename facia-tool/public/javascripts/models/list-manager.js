@@ -48,11 +48,6 @@ define([
                 }),
 
                 clipboard: new Group ({
-                    callback: updateLayout,
-                    dropItem: function(item) {
-                        model.clipboard.items.remove(item);
-                        updateLayout();
-                    },
                     keepCopy:  true
                 }),
 
