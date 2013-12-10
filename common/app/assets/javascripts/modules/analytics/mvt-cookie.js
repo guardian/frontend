@@ -3,19 +3,21 @@ define([
 ], function (
     cookies
 ) {
-    var MULTIVARIATE_ID_COOKIE = "GU_mvtid",
+    var MULTIVARIATE_ID_COOKIE = "GU_mvt_id",
+        VISITOR_ID_COOKIE ="s_vi",
         BROWSER_ID_COOKIE = "bwid";
 
     // Max integer in IEEE-754 is 2^53 (52-bit mantissa plus implicit integer bit 1).
     var MAX_INT = 9007199254740992;
 
     function generateMvtCookie() {
-        // Add an mvt cookie if there isn't one to complement the Ophan browser id.
-        // It is unecssary to halt if Ophan failed to make a browser id cookie.
         if (!getMvtValue()) {
             var mvtId = generateRandomInteger(MAX_INT, 1);
             cookies.add(MULTIVARIATE_ID_COOKIE, mvtId, 365);
         }
+
+        // Temporary cleanup call for old cookie with incorrect domain.
+        cookies.cleanUp(['GU_mvtid']);
     }
 
     function overwriteMvtCookie(testId) {
@@ -24,16 +26,23 @@ define([
     }
 
     function getMvtFullId() {
-        var fullId = "",
-            bwidCookie = cookies.get(BROWSER_ID_COOKIE),
-            mvtidCookie = getMvtValue();
+        var bwidCookie = cookies.get(BROWSER_ID_COOKIE),
+            mvtidCookie = getMvtValue(),
+            visitoridCookie = cookies.get(VISITOR_ID_COOKIE);
 
-        if (bwidCookie && mvtidCookie) {
-            fullId = bwidCookie + " " + mvtidCookie;
-        } else if (mvtidCookie) {
-            fullId = "unknown-browser-id " + mvtidCookie;
+        if (!visitoridCookie) {
+            visitoridCookie = "unknown-visitor-id";
         }
-        return fullId;
+
+        if (!bwidCookie) {
+            bwidCookie = "unknown-browser-id";
+        }
+
+        if (!mvtidCookie) {
+            mvtidCookie = "unknown-mvt-id";
+        }
+
+        return visitoridCookie + " " + bwidCookie + " " + mvtidCookie;
     }
 
     function getMvtValue() {

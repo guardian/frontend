@@ -4,35 +4,106 @@
 
 .travel-component {
 
-    background-color: #004A83;
-    color: #ffffff;
+    .lineitem {
+        border-bottom: 1px solid lighten($c-neutral7, 2%);
+        position: relative;
+    }
 
-    .commercial__promo {
-        display: none;
+    .lineitem__offer {
+        text-shadow: 0 0 2px $c-neutral1;
+        background-color: $c-neutral1;
+        background: -moz-linear-gradient(top, fade-out($c-neutral1, 1) 0%, $c-neutral1 66%);
+        background: -webkit-linear-gradient(top, fade-out($c-neutral1, 1) 0%, $c-neutral1 66%);
+        background: -ms-linear-gradient(top, fade-out($c-neutral1, 1) 0%, $c-neutral1 66%);
+        background: linear-gradient(to bottom, fade-out($c-neutral1, 1) 0%, $c-neutral1 66%);
+        padding: $baseline*2;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+    
+    .lineitem__image {
+        width: 100%;
+        display: block;
+    }
+    
+    .lineitem__title {
+        color: #fff;
+        font-weight: bold;
+    }
+
+    .lineitem__meta {
+        color: #64C5F8;
+    }
+
+    .commercial__body {
+        padding: 0;
     }
 
     &.commercial--w600 {
-        .items {
-            width: 50%;
+        .lineitems {
+            margin-right: -1px;
         }
 
         .lineitem {
+            @include box-sizing(border-box);
             width: 50%;
-            padding-right: $gs-gutter/2;
-            padding-bottom: $gs-baseline/2;
+            float: left;
         }
 
-        .lineitem__title {
-            display: none;
-        }
-
-        .commercial__promo {
-            display: block;
+        .lineitem-reduced {
+            border: solid lighten($c-neutral7, 2%);;
+            border-width: 0 0 1px 1px;
+            width: 25%;
+            
+            .lineitem__title {
+                color: #fff;
+                @include fs-data(2);
+                font-weight: normal;
+                margin: 0;
+            }
+            .lineitem__offer {
+                padding: $baseline;
+            }
         }
     }
 
+    .commercial__foot {
+        background-color: $c-neutral1;
+        margin: 0;
+        border: 0 none;
+        padding: 0;
+    }
 
-    .commercial__submit {
-        background-color: #64C5F8;
+    .commercial__search {
+        padding: $baseline;
+        overflow: hidden;
+        position: relative;
+
+        .i.i-search-grey {
+            background-position: 10px 10px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 12px;
+        }
+
+        .text-input {
+            padding: $baseline;
+            padding-left: 2em;
+            width: 70%;
+            float: left;
+            overflow: hidden;
+        }
+
+        .submit-input {
+            background-color: #37B0EB;
+            margin: 0;
+            min-width: 0;
+            padding: rem(9px) 0;
+            width: 30%;
+            float: left;
+        }
     }
 }

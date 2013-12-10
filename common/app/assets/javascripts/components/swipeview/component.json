@@ -1,9 +1,0 @@
-{
-  "name": "swipeview",
-  "version": "0.0.0",
-  "commit": "de0af10fae9d6b4ff8dfc299f5c0bc21157a97ae",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:guardian/SwipeView.git"
-  }
-}

@@ -274,17 +274,17 @@ define([
      */
     Component.prototype.detach = function() {
         bean.off(this.elem);
-        delete this.elem;
     };
 
     /**
      * Removes all event listeners and removes the DOM elem
      */
     Component.prototype.destroy = function() {
-        this.detach();
         if (this.elem) {
             bonzo(this.elem).remove();
+            delete this.elem;
         }
+        this.detach();
         this.destroyed = true;
     };
 

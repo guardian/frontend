@@ -1,6 +1,6 @@
 @(comment: Comment, showMore: Boolean = false)(implicit request: RequestHeader)
 <div class="comment comment--speechy" itemscope itemtype="http://schema.org/Comment">
-    <h2 class="article__meta-heading tone-colour">Top comment</h2>
+    <h2 class="article__meta-heading tone-colour">Featured comment</h2>
     <div class="comment__inner">
         <div class="comment__body" itemprop="text">
             @withJsoup(BulletCleaner(comment.body))(

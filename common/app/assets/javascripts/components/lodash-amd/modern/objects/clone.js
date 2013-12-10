@@ -1,5 +1,5 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="amd" -o ./modern/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -9,7 +9,7 @@
 define(['../internals/baseClone', '../internals/baseCreateCallback'], function(baseClone, baseCreateCallback) {
 
   /**
-   * Creates a clone of `value`. If `deep` is `true` nested objects will also
+   * Creates a clone of `value`. If `isDeep` is `true` nested objects will also
    * be cloned, otherwise they will be assigned by reference. If a callback
    * is provided it will be executed to produce the cloned values. If the
    * callback returns `undefined` cloning will be handled by the method instead.
@@ -19,23 +19,23 @@ define(['../internals/baseClone', '../internals/baseCreateCallback'], function(b
    * @memberOf _
    * @category Objects
    * @param {*} value The value to clone.
-   * @param {boolean} [deep=false] Specify a deep clone.
+   * @param {boolean} [isDeep=false] Specify a deep clone.
    * @param {Function} [callback] The function to customize cloning values.
    * @param {*} [thisArg] The `this` binding of `callback`.
    * @returns {*} Returns the cloned value.
    * @example
    *
-   * var stooges = [
-   *   { 'name': 'moe', 'age': 40 },
-   *   { 'name': 'larry', 'age': 50 }
+   * var characters = [
+   *   { 'name': 'barney', 'age': 36 },
+   *   { 'name': 'fred',   'age': 40 }
    * ];
    *
-   * var shallow = _.clone(stooges);
-   * shallow[0] === stooges[0];
+   * var shallow = _.clone(characters);
+   * shallow[0] === characters[0];
    * // => true
    *
-   * var deep = _.clone(stooges, true);
-   * deep[0] === stooges[0];
+   * var deep = _.clone(characters, true);
+   * deep[0] === characters[0];
    * // => false
    *
    * _.mixin({
@@ -48,15 +48,15 @@ define(['../internals/baseClone', '../internals/baseCreateCallback'], function(b
    * clone.childNodes.length;
    * // => 0
    */
-  function clone(value, deep, callback, thisArg) {
+  function clone(value, isDeep, callback, thisArg) {
     // allows working with "Collections" methods without using their `index`
-    // and `collection` arguments for `deep` and `callback`
-    if (typeof deep != 'boolean' && deep != null) {
+    // and `collection` arguments for `isDeep` and `callback`
+    if (typeof isDeep != 'boolean' && isDeep != null) {
       thisArg = callback;
-      callback = deep;
-      deep = false;
+      callback = isDeep;
+      isDeep = false;
     }
-    return baseClone(value, deep, typeof callback == 'function' && baseCreateCallback(callback, thisArg, 1));
+    return baseClone(value, isDeep, typeof callback == 'function' && baseCreateCallback(callback, thisArg, 1));
   }
 
   return clone;

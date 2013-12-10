@@ -1,5 +1,5 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize underscore exports="amd" -o ./underscore/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -44,7 +44,7 @@ define(['../internals/createAggregator'], function(createAggregator) {
    * _.indexBy(keys, function(key) { return String.fromCharCode(key.code); });
    * // => { 'a': { 'dir': 'left', 'code': 97 }, 'd': { 'dir': 'right', 'code': 100 } }
    *
-   * _.indexBy(stooges, function(key) { this.fromCharCode(key.code); }, String);
+   * _.indexBy(characters, function(key) { this.fromCharCode(key.code); }, String);
    * // => { 'a': { 'dir': 'left', 'code': 97 }, 'd': { 'dir': 'right', 'code': 100 } }
    */
   var indexBy = createAggregator(function(result, value, key) {

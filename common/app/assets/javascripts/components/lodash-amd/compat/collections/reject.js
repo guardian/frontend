@@ -1,5 +1,5 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize exports="amd" -o ./compat/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -33,18 +33,18 @@ define(['../functions/createCallback', './filter'], function(createCallback, fil
    * var odds = _.reject([1, 2, 3, 4, 5, 6], function(num) { return num % 2 == 0; });
    * // => [1, 3, 5]
    *
-   * var food = [
-   *   { 'name': 'apple',  'organic': false, 'type': 'fruit' },
-   *   { 'name': 'carrot', 'organic': true,  'type': 'vegetable' }
+   * var characters = [
+   *   { 'name': 'barney', 'age': 36, 'blocked': false },
+   *   { 'name': 'fred',   'age': 40, 'blocked': true }
    * ];
    *
    * // using "_.pluck" callback shorthand
-   * _.reject(food, 'organic');
-   * // => [{ 'name': 'apple', 'organic': false, 'type': 'fruit' }]
+   * _.reject(characters, 'blocked');
+   * // => [{ 'name': 'barney', 'age': 36, 'blocked': false }]
    *
    * // using "_.where" callback shorthand
-   * _.reject(food, { 'type': 'fruit' });
-   * // => [{ 'name': 'carrot', 'organic': true, 'type': 'vegetable' }]
+   * _.reject(characters, { 'age': 36 });
+   * // => [{ 'name': 'fred', 'age': 40, 'blocked': true }]
    */
   function reject(collection, callback, thisArg) {
     callback = createCallback(callback, thisArg, 3);

@@ -7,5 +7,5 @@ GET     /   controllers.Application.front
 
 GET     /js.gif         controllers.DiagnosticsController.js
 GET     /px.gif         controllers.DiagnosticsController.px
-GET     /ad.gif         controllers.DiagnosticsController.ads(Top: Option[Int] ?= None, Bottom: Option[Int] ?= None, Inline: Option[Int] ?= None, MPU: Option[Int] ?= None, first: Option[Int] ?= None, layout: Option[String] ?= None, variant: Option[String])
+GET     /ad.gif         controllers.DiagnosticsController.ads(Top: Option[Int] ?= None, Bottom: Option[Int] ?= None, Inline: Option[Int] ?= None, MPU: Option[Int] ?= None, first: Option[Int] ?= None, layout: Option[String] ?= None, variant: Option[String], id: Option[String])
 

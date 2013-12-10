@@ -1,12 +1,13 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * @license
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="amd" -o ./modern/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
  * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  * Available under MIT license <http://lodash.com/license>
  */
-define(['./arrays', './chaining', './collections', './functions', './objects', './utilities', './collections/forEach', './objects/forOwn', './objects/isArray', './internals/lodashWrapper', './utilities/mixin', './support'], function(arrays, chaining, collections, functions, objects, utilities, forEach, forOwn, isArray, lodashWrapper, mixin, support) {
+define(['./arrays', './chaining', './collections', './functions', './objects', './utilities', './collections/forEach', './objects/forOwn', './objects/isArray', './internals/lodashWrapper', './utilities/mixin', './support', './utilities/templateSettings'], function(arrays, chaining, collections, functions, objects, utilities, forEach, forOwn, isArray, lodashWrapper, mixin, support, templateSettings) {
 
   /**
    * Used for `Array` method references.
@@ -20,8 +21,7 @@ define(['./arrays', './chaining', './collections', './functions', './objects', '
   var objectProto = Object.prototype;
 
   /** Native method shortcuts */
-  var hasOwnProperty = objectProto.hasOwnProperty,
-      push = arrayRef.push;
+  var hasOwnProperty = objectProto.hasOwnProperty;
 
   /**
    * Creates a `lodash` object which wraps the given value to enable intuitive
@@ -36,15 +36,16 @@ define(['./arrays', './chaining', './collections', './functions', './objects', '
    *
    * The chainable wrapper functions are:
    * `after`, `assign`, `bind`, `bindAll`, `bindKey`, `chain`, `compact`,
-   * `compose`, `concat`, `countBy`, `createCallback`, `curry`, `debounce`,
-   * `defaults`, `defer`, `delay`, `difference`, `filter`, `flatten`, `forEach`,
-   * `forEachRight`, `forIn`, `forInRight`, `forOwn`, `forOwnRight`, `functions`,
-   * `groupBy`, `indexBy`, `initial`, `intersection`, `invert`, `invoke`, `keys`,
-   * `map`, `max`, `memoize`, `merge`, `min`, `object`, `omit`, `once`, `pairs`,
-   * `partial`, `partialRight`, `pick`, `pluck`, `pull`, `push`, `range`, `reject`,
-   * `remove`, `rest`, `reverse`, `shuffle`, `slice`, `sort`, `sortBy`, `splice`,
-   * `tap`, `throttle`, `times`, `toArray`, `transform`, `union`, `uniq`, `unshift`,
-   * `unzip`, `values`, `where`, `without`, `wrap`, and `zip`
+   * `compose`, `concat`, `countBy`, `create`, `createCallback`, `curry`,
+   * `debounce`, `defaults`, `defer`, `delay`, `difference`, `filter`, `flatten`,
+   * `forEach`, `forEachRight`, `forIn`, `forInRight`, `forOwn`, `forOwnRight`,
+   * `functions`, `groupBy`, `indexBy`, `initial`, `intersection`, `invert`,
+   * `invoke`, `keys`, `map`, `max`, `memoize`, `merge`, `min`, `object`, `omit`,
+   * `once`, `pairs`, `partial`, `partialRight`, `pick`, `pluck`, `pull`, `push`,
+   * `range`, `reject`, `remove`, `rest`, `reverse`, `shuffle`, `slice`, `sort`,
+   * `sortBy`, `splice`, `tap`, `throttle`, `times`, `toArray`, `transform`,
+   * `union`, `uniq`, `unshift`, `unzip`, `values`, `where`, `without`, `wrap`,
+   * and `zip`
    *
    * The non-chainable wrapper functions are:
    * `clone`, `cloneDeep`, `contains`, `escape`, `every`, `find`, `findIndex`,
@@ -98,12 +99,16 @@ define(['./arrays', './chaining', './collections', './functions', './objects', '
 
   // wrap `_.mixin` so it works when provided only one argument
   mixin = (function(fn) {
-    return function(object, source) {
-      if (!source) {
+    var functions = objects.functions;
+    return function(object, source, options) {
+      if (!source || (!options && !functions(source).length)) {
+        if (options == null) {
+          options = source;
+        }
         source = object;
         object = lodash;
       }
-      return fn(object, source);
+      return fn(object, source, options);
     };
   }(mixin));
 
@@ -117,7 +122,9 @@ define(['./arrays', './chaining', './collections', './functions', './objects', '
   lodash.chain = chaining.chain;
   lodash.compact = arrays.compact;
   lodash.compose = functions.compose;
+  lodash.constant = utilities.constant;
   lodash.countBy = collections.countBy;
+  lodash.create = objects.create;
   lodash.createCallback = functions.createCallback;
   lodash.curry = functions.curry;
   lodash.debounce = functions.debounce;
@@ -127,11 +134,11 @@ define(['./arrays', './chaining', './collections', './functions', './objects', '
   lodash.difference = arrays.difference;
   lodash.filter = collections.filter;
   lodash.flatten = arrays.flatten;
-  lodash.forEach = collections.forEach;
+  lodash.forEach = forEach;
   lodash.forEachRight = collections.forEachRight;
   lodash.forIn = objects.forIn;
   lodash.forInRight = objects.forInRight;
-  lodash.forOwn = objects.forOwn;
+  lodash.forOwn = forOwn;
   lodash.forOwnRight = objects.forOwnRight;
   lodash.functions = objects.functions;
   lodash.groupBy = collections.groupBy;
@@ -142,6 +149,7 @@ define(['./arrays', './chaining', './collections', './functions', './objects', '
   lodash.invoke = collections.invoke;
   lodash.keys = objects.keys;
   lodash.map = collections.map;
+  lodash.mapValues = objects.mapValues;
   lodash.max = collections.max;
   lodash.memoize = functions.memoize;
   lodash.merge = objects.merge;
@@ -153,6 +161,7 @@ define(['./arrays', './chaining', './collections', './functions', './objects', '
   lodash.partialRight = functions.partialRight;
   lodash.pick = objects.pick;
   lodash.pluck = collections.pluck;
+  lodash.property = utilities.property;
   lodash.pull = arrays.pull;
   lodash.range = arrays.range;
   lodash.reject = collections.reject;
@@ -171,13 +180,14 @@ define(['./arrays', './chaining', './collections', './functions', './objects', '
   lodash.where = collections.where;
   lodash.without = arrays.without;
   lodash.wrap = functions.wrap;
+  lodash.xor = arrays.xor;
   lodash.zip = arrays.zip;
   lodash.zipObject = arrays.zipObject;
 
   // add aliases
   lodash.collect = collections.map;
   lodash.drop = arrays.rest;
-  lodash.each = collections.forEach;
+  lodash.each = forEach;
   lodash.eachRight = collections.forEachRight;
   lodash.extend = objects.assign;
   lodash.methods = objects.functions;
@@ -206,7 +216,7 @@ define(['./arrays', './chaining', './collections', './functions', './objects', '
   lodash.identity = utilities.identity;
   lodash.indexOf = arrays.indexOf;
   lodash.isArguments = objects.isArguments;
-  lodash.isArray = objects.isArray;
+  lodash.isArray = isArray;
   lodash.isBoolean = objects.isBoolean;
   lodash.isDate = objects.isDate;
   lodash.isElement = objects.isElement;
@@ -223,8 +233,10 @@ define(['./arrays', './chaining', './collections', './functions', './objects', '
   lodash.isString = objects.isString;
   lodash.isUndefined = objects.isUndefined;
   lodash.lastIndexOf = arrays.lastIndexOf;
-  lodash.mixin = utilities.mixin;
+  lodash.mixin = mixin;
   lodash.noConflict = utilities.noConflict;
+  lodash.noop = utilities.noop;
+  lodash.now = utilities.now;
   lodash.parseInt = utilities.parseInt;
   lodash.random = utilities.random;
   lodash.reduce = collections.reduce;
@@ -247,20 +259,15 @@ define(['./arrays', './chaining', './collections', './functions', './objects', '
   lodash.include = collections.contains;
   lodash.inject = collections.reduce;
 
-  forOwn(lodash, function(func, methodName) {
-    if (!lodash.prototype[methodName]) {
-      lodash.prototype[methodName] = function() {
-        var args = [this.__wrapped__],
-            chainAll = this.__chain__;
-
-        push.apply(args, arguments);
-        var result = func.apply(lodash, args);
-        return chainAll
-          ? new lodashWrapper(result, chainAll)
-          : result;
-      };
-    }
-  });
+  mixin(function() {
+    var source = {}
+    forOwn(lodash, function(func, methodName) {
+      if (!lodash.prototype[methodName]) {
+        source[methodName] = func;
+      }
+    });
+    return source;
+  }(), false);
 
   // add functions capable of returning wrapped and unwrapped values when chaining
   lodash.first = arrays.first;
@@ -292,7 +299,7 @@ define(['./arrays', './chaining', './collections', './functions', './objects', '
    * @memberOf _
    * @type string
    */
-  lodash.VERSION = '2.2.1';
+  lodash.VERSION = '2.4.1';
 
   // add "Chaining" functions to the wrapper
   lodash.prototype.chain = chaining.wrapperChain;
@@ -313,7 +320,7 @@ define(['./arrays', './chaining', './collections', './functions', './objects', '
     };
   });
 
-  // add `Array` functions that return the wrapped value
+  // add `Array` functions that return the existing wrapped value
   forEach(['push', 'reverse', 'sort', 'unshift'], function(methodName) {
     var func = arrayRef[methodName];
     lodash.prototype[methodName] = function() {

@@ -1,5 +1,5 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="amd" -o ./modern/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -28,13 +28,13 @@ define(['../internals/baseClone', '../internals/baseCreateCallback'], function(b
    * @returns {*} Returns the deep cloned value.
    * @example
    *
-   * var stooges = [
-   *   { 'name': 'moe', 'age': 40 },
-   *   { 'name': 'larry', 'age': 50 }
+   * var characters = [
+   *   { 'name': 'barney', 'age': 36 },
+   *   { 'name': 'fred',   'age': 40 }
    * ];
    *
-   * var deep = _.cloneDeep(stooges);
-   * deep[0] === stooges[0];
+   * var deep = _.cloneDeep(characters);
+   * deep[0] === characters[0];
    * // => false
    *
    * var view = {
