@@ -1,0 +1,261 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"travel/2013/nov/01/readers-travel-photo-competition-sunlight",
+      "sectionId":"travel",
+      "sectionName":"Travel",
+      "webPublicationDate":"2013-11-01T12:26:11Z",
+      "webTitle":"Readers' travel photo competition: sunlight",
+      "webUrl":"http://www.theguardian.com/travel/2013/nov/01/readers-travel-photo-competition-sunlight",
+      "apiUrl":"http://content.guardianapis.com/travel/2013/nov/01/readers-travel-photo-competition-sunlight",
+      "fields":{
+        "trailText":"The theme for this month's competition is sunlight in all its manifestations. You can enter your shot - together with an 80-word caption - via GuardianWitness",
+        "headline":"Readers' travel photo competition: sunlight",
+        "body":"<p>Can you turn the sun's rays from a photographic cliche (sunsets, sunrises over beaches etc) into a great travel shot? Go over to <a href=\"https://witness.theguardian.com/assignment/52738de4e4b0be3ac2bf4ad6\">GuardianWitness</a> and enter your shot but <strong>please remember to add an 80-word caption.</strong></p> <p>The winning images will be mounted by <a href=\"http://www.point101.com/\">Point101</a>, and displayed at the finalists' exhibition at the Guardian's offices in January 2014. The prize for the overall winner is an Arctic adventure to Canada, including polar bear and whale tours, courtesy of the <a href=\"http://uk-keepexploring.canada.travel/\">Canadian Tourism Commission.</a></p> <p>Just a heads up: your photo should be at least 240dpi, a raw TIFF image or high-resolution JPEG, and be accompanied by a detailed caption of up to 80 words &ndash; where it was taken, what's happening in the shot, what inspired you to take it, any technical details if pertinent. You must also supply your full name with the caption.</p> <p>As you've noticed, we're changing things a little while the Been there website has a bit of a revamp and we'd like you to enter your photos via GuardianWitness. All you have to do is click on the blue contribute button.</p> <ul> <li><a href=\"https://witness.guardian.co.uk/\">GuardianWitness</a> is the home of user-generated content on the Guardian. Contribute your video, pictures and stories, and browse news, reviews and creations submitted by others. Posts will be reviewed prior to publication on GuardianWitness, and the best pieces will feature on the Guardian site.</li> </ul> <p>Don't forget to <a href=\"http://www.guardian.co.uk/travel/2013/jun/28/photo-competition-terms-and-conditions\">read the terms and conditions</a> before you enter.</p> <p>The competition ends on 24 November 2013 at 11.59pm BST</p><!-- Guardian Watermark: internal-code/content/421446727|2013-11-05T11:03:48Z|80ecfed5cc5af5fee4efb1584fb7bfffff91441e -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-04T07:12:06Z",
+        "hasStoryPackage":"false",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383305697686/745b20b7-86c6-400a-b2cc-b29de0062817-140x84.jpeg",
+        "standfirst":"The theme for this month's competition is sunlight in all its manifestations. You can enter your shot - together with an 80-word caption - via GuardianWitness",
+        "shortUrl":"http://gu.com/p/3k36a",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383305697686/745b20b7-86c6-400a-b2cc-b29de0062817-140x84.jpeg",
+        "wordcount":"1",
+        "commentable":"false",
+        "internalContentCode":"421446727",
+        "allowUgc":"true",
+        "internalComposerCode":"52738de4e4b0be3ac2bf4ad6",
+        "isPremoderated":"false",
+        "byline":"Susan Greenwood",
+        "publication":"theguardian.com",
+        "internalPageCode":"1990342",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T12:26:11Z"
+      },
+      "tags":[{
+        "id":"travel/travel",
+        "type":"keyword",
+        "webTitle":"Travel",
+        "webUrl":"http://www.theguardian.com/travel/travel",
+        "apiUrl":"http://content.guardianapis.com/travel/travel",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"travel/series/been-there-photo-competition",
+        "type":"series",
+        "webTitle":"Been there photo competition",
+        "webUrl":"http://www.theguardian.com/travel/series/been-there-photo-competition",
+        "apiUrl":"http://content.guardianapis.com/travel/series/been-there-photo-competition",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"travel/series/been-there-readers-tips",
+        "type":"series",
+        "webTitle":"Been there readers' tips",
+        "webUrl":"http://www.theguardian.com/travel/series/been-there-readers-tips",
+        "apiUrl":"http://content.guardianapis.com/travel/series/been-there-readers-tips",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"travel/series/experts-readers-tips",
+        "type":"series",
+        "webTitle":"Experts' and readers' tips",
+        "webUrl":"http://www.theguardian.com/travel/series/experts-readers-tips",
+        "apiUrl":"http://content.guardianapis.com/travel/series/experts-readers-tips",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"profile/susangreenwood",
+        "type":"contributor",
+        "webTitle":"Susan Greenwood",
+        "webUrl":"http://www.theguardian.com/profile/susangreenwood",
+        "apiUrl":"http://content.guardianapis.com/profile/susangreenwood",
+        "bio":"<p>Susan Greenwood is former production coordinator for <a href=\"http://www.guardian.co.uk/travel\">travel</a></p>",
+        "r2ContributorId":"26668",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-97719cf0-93c3-420b-a325-4c989c290d80",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383305697686/745b20b7-86c6-400a-b2cc-b29de0062817-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383305697686/745b20b7-86c6-400a-b2cc-b29de0062817-140x84.jpeg",
+            "source":"Alamy",
+            "altText":"﻿﻿The Place Djema el Fna and Koutoubia mosque at sunset.",
+            "height":"84",
+            "credit":"Alamy",
+            "caption":"The Place Djema el Fna and Koutoubia mosque at sunset. Photograph: /Alamy",
+            "mediaId":"gu-fc-97719cf0-93c3-420b-a325-4c989c290d80",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383305697806/0965e02f-ec6e-4b73-a8e2-cf9447a7d4e6-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383305697806/0965e02f-ec6e-4b73-a8e2-cf9447a7d4e6-460x276.jpeg",
+            "source":"Alamy",
+            "altText":"﻿﻿The Place Djema el Fna and Koutoubia mosque at sunset.",
+            "height":"276",
+            "credit":"Alamy",
+            "caption":"The Place Djema el Fna and Koutoubia mosque at sunset. Photograph: /Alamy",
+            "mediaId":"gu-fc-97719cf0-93c3-420b-a325-4c989c290d80",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383305697950/18c44e4a-81e6-4072-8fb5-6d78162e39a7-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383305697950/18c44e4a-81e6-4072-8fb5-6d78162e39a7-220x132.jpeg",
+            "source":"Alamy",
+            "altText":"﻿﻿The Place Djema el Fna and Koutoubia mosque at sunset.",
+            "height":"132",
+            "credit":"Alamy",
+            "caption":"The Place Djema el Fna and Koutoubia mosque at sunset. Photograph: /Alamy",
+            "mediaId":"gu-fc-97719cf0-93c3-420b-a325-4c989c290d80",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383305698410/93c22a3d-235b-41ed-b1db-a7d308571311-2060x1236.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383305698410/93c22a3d-235b-41ed-b1db-a7d308571311-2060x1236.jpeg",
+            "source":"Alamy",
+            "altText":"﻿﻿The Place Djema el Fna and Koutoubia mosque at sunset.",
+            "height":"1236",
+            "credit":"Alamy",
+            "caption":"The Place Djema el Fna and Koutoubia mosque at sunset. Photograph: /Alamy",
+            "mediaId":"gu-fc-97719cf0-93c3-420b-a325-4c989c290d80",
+            "width":"2060"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383305699139/cb0685fc-b53c-417d-9c79-073d3f405ea0-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383305699139/cb0685fc-b53c-417d-9c79-073d3f405ea0-1020x612.jpeg",
+            "source":"Alamy",
+            "altText":"﻿﻿The Place Djema el Fna and Koutoubia mosque at sunset.",
+            "height":"612",
+            "credit":"Alamy",
+            "caption":"The Place Djema el Fna and Koutoubia mosque at sunset. Photograph: /Alamy",
+            "mediaId":"gu-fc-97719cf0-93c3-420b-a325-4c989c290d80",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383305699357/7309b4e6-e0fa-4b8e-982e-4bfd25a720c8-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383305699357/7309b4e6-e0fa-4b8e-982e-4bfd25a720c8-300x180.jpeg",
+            "source":"Alamy",
+            "altText":"﻿﻿The Place Djema el Fna and Koutoubia mosque at sunset.",
+            "height":"180",
+            "credit":"Alamy",
+            "caption":"The Place Djema el Fna and Koutoubia mosque at sunset. Photograph: /Alamy",
+            "mediaId":"gu-fc-97719cf0-93c3-420b-a325-4c989c290d80",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383305699803/5504a536-1814-41e8-ae43-e64ced6b95bb-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383305699803/5504a536-1814-41e8-ae43-e64ced6b95bb-540x324.jpeg",
+            "source":"Alamy",
+            "altText":"﻿﻿The Place Djema el Fna and Koutoubia mosque at sunset.",
+            "height":"324",
+            "credit":"Alamy",
+            "caption":"The Place Djema el Fna and Koutoubia mosque at sunset. Photograph: /Alamy",
+            "mediaId":"gu-fc-97719cf0-93c3-420b-a325-4c989c290d80",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383305700051/72860ede-34e5-4043-bcc6-f808df4c20b0-68x68.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383305700051/72860ede-34e5-4043-bcc6-f808df4c20b0-68x68.jpeg",
+            "source":"Alamy",
+            "altText":"﻿﻿The Place Djema el Fna and Koutoubia mosque at sunset.",
+            "height":"68",
+            "credit":"Alamy",
+            "caption":"The Place Djema el Fna and Koutoubia mosque at sunset. Photograph: /Alamy",
+            "mediaId":"gu-fc-97719cf0-93c3-420b-a325-4c989c290d80",
+            "width":"68"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383305700148/bd3b3ea8-4f6a-44a7-a308-98d4316a4af5-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383305700148/bd3b3ea8-4f6a-44a7-a308-98d4316a4af5-380x228.jpeg",
+            "source":"Alamy",
+            "altText":"﻿﻿The Place Djema el Fna and Koutoubia mosque at sunset.",
+            "height":"228",
+            "credit":"Alamy",
+            "caption":"The Place Djema el Fna and Koutoubia mosque at sunset. Photograph: /Alamy",
+            "mediaId":"gu-fc-97719cf0-93c3-420b-a325-4c989c290d80",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383305700687/619c8267-38b9-444a-9404-cf726ade0ad6-2048x1536.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383305700687/619c8267-38b9-444a-9404-cf726ade0ad6-2048x1536.jpeg",
+            "source":"Alamy",
+            "altText":"﻿﻿The Place Djema el Fna and Koutoubia mosque at sunset.",
+            "height":"1536",
+            "credit":"Alamy",
+            "caption":"The Place Djema el Fna and Koutoubia mosque at sunset. Photograph: /Alamy",
+            "mediaId":"gu-fc-97719cf0-93c3-420b-a325-4c989c290d80",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383305701436/7a1c2ac7-ad7d-4768-a3d2-4c85c0f49994-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383305701436/7a1c2ac7-ad7d-4768-a3d2-4c85c0f49994-620x372.jpeg",
+            "source":"Alamy",
+            "altText":"﻿﻿The Place Djema el Fna and Koutoubia mosque at sunset.",
+            "height":"372",
+            "credit":"Alamy",
+            "caption":"The Place Djema el Fna and Koutoubia mosque at sunset. Photograph: /Alamy",
+            "mediaId":"gu-fc-97719cf0-93c3-420b-a325-4c989c290d80",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383305701710/522fa28c-7c41-4018-8116-db7740272d46-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383305701710/522fa28c-7c41-4018-8116-db7740272d46-1024x768.jpeg",
+            "source":"Alamy",
+            "altText":"﻿﻿The Place Djema el Fna and Koutoubia mosque at sunset.",
+            "height":"768",
+            "credit":"Alamy",
+            "caption":"The Place Djema el Fna and Koutoubia mosque at sunset. Photograph: /Alamy",
+            "mediaId":"gu-fc-97719cf0-93c3-420b-a325-4c989c290d80",
+            "width":"1024"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"witness-assignment",
+        "id":"witness-assignment/52738de4e4b0be3ac2bf4ad6"
+      }]
+    },
+    "storyPackage":[]
+  }
+}

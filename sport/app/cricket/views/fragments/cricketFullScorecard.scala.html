@@ -1,0 +1,136 @@
+@(theMatch: cricketModel.Match)(implicit request: RequestHeader)
+
+<div class="sport-fullscorecard sport-fullscorecard--cricket">
+    @for(innings <- theMatch.innings.reverse) {
+        @displayInnings(innings)
+    }
+
+    <dl class="sport-fullscorecard__information">
+        <dt>Umpires</dt>
+        <dd>
+            @theMatch.officials.mkString(", ")
+        </dd>
+
+        <dt>@theMatch.homeTeam.name</dt>
+        <dd>
+            @theMatch.homeTeam.lineup.mkString(", ")
+        </dd>
+
+        <dt>@theMatch.awayTeam.name</dt>
+        <dd>
+            @theMatch.awayTeam.lineup.mkString(", ")
+        </dd>
+    </dl>
+</div>
+
+@displayInnings(innings: cricketModel.Innings) = {
+
+    <div class="sport-fullscorecard__primary">
+        <h3 class="sport-fullscorecard__heading">@innings.description</h3>
+        <table class="sport-fullscorecard__table">
+            <thead class="sport-fullscorecard__thead">
+                <tr>
+                    <th>Batsman</th>
+                    <th class="sport-fullscorecard__additional"></th>
+                    <th class="sport-fullscorecard__statistic">Runs</th>
+                    <th class="sport-fullscorecard__additional sport-fullscorecard__statistic">Balls</th>
+                    <th class="sport-fullscorecard__additional sport-fullscorecard__statistic">4s</th>
+                    <th class="sport-fullscorecard__additional sport-fullscorecard__statistic">6s</th>
+                </tr>
+            </thead>
+            <tbody class="sport-fullscorecard__tbody">
+                @for(batsman <- innings.batsmen) {
+                    <tr>
+                        <td>
+                            <b>@batsman.name</b>
+                            <div class="sport-fullscorecard__inline-info">
+                                @batsman.howOut
+                            </div>
+                        </td>
+                        <td class="sport-fullscorecard__additional">@batsman.howOut</td>
+                        <td>@batsman.runs</td>
+                        <td class="sport-fullscorecard__additional">@batsman.ballsFaced</td>
+                        <td class="sport-fullscorecard__additional">@batsman.fours</td>
+                        <td class="sport-fullscorecard__additional">@batsman.sixes</td>
+                    </tr>
+                }
+                <tr>
+                    <td>Extras</td>
+                    <td class="sport-fullscorecard__additional">
+                        @if(innings.byes > 0){ @(innings.byes)b }
+                        @if(innings.legByes > 0){ @(innings.legByes)lb }
+                        @if(innings.wides > 0){ @(innings.wides)w }
+                        @if(innings.noBalls > 0){ @(innings.noBalls)nb }
+                        @if(innings.penalties > 0){ @(innings.penalties)p }
+                    </td>
+                    <td>@innings.extras</td>
+                    <td class="sport-fullscorecard__additional" colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>Total</td>
+                    <td class="sport-fullscorecard__additional">for @innings.wickets</td>
+                    <td>@innings.runsScored</td>
+                    <td class="sport-fullscorecard__additional" colspan="3">@innings.overs overs</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="sport-fullscorecard__container">
+
+        @if(innings.bowlers.length > 0) {
+            <div class="sport-fullscorecard__secondary">
+                <table class="sport-fullscorecard__table">
+                    <thead class="sport-fullscorecard__thead">
+                        <tr>
+                            <th>Bowler</th>
+                            <th class="sport-fullscorecard__statistic">O</th>
+                            <th class="sport-fullscorecard__statistic">M</th>
+                            <th class="sport-fullscorecard__statistic">R</th>
+                            <th class="sport-fullscorecard__statistic">W</th>
+                        </tr>
+                    </thead>
+                    <tbody class="sport-fullscorecard__tbody">
+                    @for(bowler <- innings.bowlers) {
+                        <tr>
+                            <td>@bowler.name</td>
+                            <td>@bowler.overs</td>
+                            <td>@bowler.maidens</td>
+                            <td>@bowler.runs</td>
+                            <td>@bowler.wickets</td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        }
+
+        @if(innings.fallOfWicket.length > 0) {
+            <div class="sport-fullscorecard__detail">
+                <table class="sport-fullscorecard__table">
+                    <thead class="sport-fullscorecard__thead">
+                        <tr>
+                            <th colspan=3>Fall of wickets</th>
+                        </tr>
+                    </thead>
+                    <thead class="u-h">
+                        <tr>
+                            <th class="sport-fullscorecard__statistic">Order</th>
+                            <th>Name</th>
+                            <th class="sport-fullscorecard__statistic">Runs</th>
+                        </tr>
+                    </thead>
+                    <tbody class="sport-fullscorecard__tbody">
+                    @for(wicket <- innings.fallOfWicket) {
+                        <tr>
+                            <td class="sport-fullscorecard__statistic">@wicket.order</td>
+                            <td>@wicket.name</td>
+                            <td class="sport-fullscorecard__statistic">@wicket.runs</td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+}

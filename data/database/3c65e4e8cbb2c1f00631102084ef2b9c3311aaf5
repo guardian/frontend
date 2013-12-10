@@ -1,0 +1,2150 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"business/2013/nov/01/royal-bank-scotland-losses-internal-bad-bank-rbs",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2013-11-01T11:04:00Z",
+      "webTitle":"RBS places troublesome assets worth £38bn in internal 'bad bank'",
+      "webUrl":"http://www.theguardian.com/business/2013/nov/01/royal-bank-scotland-losses-internal-bad-bank-rbs",
+      "apiUrl":"http://content.guardianapis.com/business/2013/nov/01/royal-bank-scotland-losses-internal-bad-bank-rbs",
+      "fields":{
+        "newspaperPageNumber":"43",
+        "trailText":"RBS chief executive Ross McEwan warns of substantial losses this year as George Osborne says no sell-off until after election",
+        "headline":"RBS places troublesome assets worth £38bn in internal 'bad bank'",
+        "body":"<p>Royal Bank of Scotland warned on Friday that it was on course for a substantial loss this year, dashing any remaining hopes of a return to the private sector until after the 2015 election.</p><p>Announcing that £38bn of troublesome loans would be ringfenced within the bank, the new chief executive Ross McEwan heralded a \"resetting\" of the often fraught relationship with the Treasury – owner of 81% of the shares – and the Bank of England, which regulates the bank and is poised to impose tougher rules on capital.</p><p>McEwan who took the helm only a month ago <a href=\"http://www.theguardian.com/business/2013/aug/02/rbs-ross-mcewan-stephen-hester\" title=\"\">after Stephen Hester was ousted in the summer</a>, said he wanted to end the \"weariness\" and \"defensiveness\" that had crept into RBS. He is embarking on a review of all the bank's operations – including its troublesome Ulster operations in Ireland and the already-scaled back investment bank – which will be announced in February. He will accelerate the sale of the US arm, Citizens.</p><p>\"The bar for RBS is higher than for any other bank because we got saved by the UK government,\" said McEwan. A <a href=\"http://www.theguardian.com/business/2013/nov/01/rbs-business-lending-attacked\" title=\"\">highly critical report into its lending to small business</a> found it turning away three out of every four applications for business loans and acting too aggressively towards customers in difficulty.</p><p>Unions feared a new wave of job cuts on top of 30,000 already axed since the 2008 bailout. Dominic Hook, Unite national officer, said: \"Management claim that customer service is a priority for the bank and its reputation depends on it but RBS has cut staff numbers to the bone.\"</p><p>RBS shares  were the second biggest fallers in the FTSE 100, down 7.5% at 340p – well below the 500p average price the taxpayer spent £45bn buying them for – after the bank reported a third-quarter loss of more than £600m.</p><p>Demonstrating a thawing of relations with the new boss, Chancellor George Osborne was at the London office of RBS for the announcement of the result of the review he had commissioned into whether the bank should be split up.</p><p>The study by financial advisers Rothschild, estimated to have cost £9m, stepped back from a full break-up and creation of a \"bad bank\" suggested by senior figures such as  former chancellor, Lord Lawson and former Bank of England governor Lord King.</p><p>Instead, about £38bn of troublesome loans – including £9bn from Ulster Bank – will be placed into a new non-core division to be known as the capital resolution division, which the bank aims to wind down in three years. This will mean writing off up to £4.5bn of problem loans in the next quarter – driving the bank to a \"substantial loss\" for the full year. But some £11bn of capital should be released as a result.</p><p>McEwan insisted the government had not forced RBS into the new-look non-core bank, saying it had to listen major shareholders. \"If you were a hedge fund and had 81% of the business you'd want to be having good conversations,\" he said.</p><p><a href=\"http://www.theguardian.com/business/2013/jun/19/osborne-lloyds-rbs-sell-off\" title=\"\">Commissioned following a recommendation by the parliamentary commission on banking</a> , the review concluded the \"effort, risk and expense involved in the creation of an external bad bank is not justified\". <a href=\"https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/254540/PU1581_RBS_bad_bank_Govt_review.pdf\" title=\"\">A 150 page document published by the Treasur</a>y said creating bad bank would \"do more harm than good\".</p><p>Labour MP Pat McFadden, who sat on the commission, said the outcome \"simply changes the name plate on what was already happening\". Lord McFall, also on the commission, said on Twitter it was the \"status quo w[ith] frills\".</p><p>But Osborne said the bank was now set on a \"new direction\", to focus on the UK and small business lending and become a bank that would be \"batting for Britain\". A sale of the government's stake was unlikely to happen before the May 2015 election, Osborne said.</p><p>Sir Philip Hampton, RBS chairman who had previously indicated a sale could start next year, said that since its bailout RBS had pumped £15bn into Ulster bank, paid out more in compensation to customers and paid fees to the government which should be taken into account when assessing its share performance.</p><p>McEwan's aim is \"to dispel any suggestions that RBS is travelling light on capital\" at a time when the Bank of England is preparing to force all UK banks to hold more capital and more quickly than international regulations require. It is aiming for a 12% ratio in three years. The Treasury said the bank needed to \"accommodate any additional headwinds which may adversely affect their capital resources, for example future costs of redress\".</p><p>The bank took a fresh provision for payment protection insurance mis-selling of £250m – taking its total bill so far to £2.65bn, and admitted it was involved in new investigation into alleged manipulation of foreign exchange markets.</p><p>RBS is now in discussions about releasing the dividend access share that would have forced the bank to pay dividends – when it could afford them – to the government before its other shareholders.</p><p>An £8bn contingent capital facility which required the government to pump more money into the bank if its capital ratio fell is now being repaid a year early.</p><!-- Guardian Watermark: internal-code/content/421434497|2013-11-05T11:03:52Z|d3700e4926806f5da96000f3ea838949d3e9203f -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-02T00:11:07Z",
+        "hasStoryPackage":"true",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/1/1383303673810/RBS-chief-Ross-McEwan-and-003.jpg",
+        "standfirst":"RBS chief executive Ross McEwan warns of substantial losses this year as George Osborne says no sell-off until after election",
+        "shortUrl":"http://gu.com/p/3k33t",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/1/1383303673810/RBS-chief-Ross-McEwan-and-003.jpg",
+        "wordcount":"845",
+        "commentable":"true",
+        "internalContentCode":"421434497",
+        "allowUgc":"false",
+        "internalOctopusCode":"8267778",
+        "isPremoderated":"false",
+        "byline":"Jill Treanor",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-11-02",
+        "internalPageCode":"1990269",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T07:57:11Z"
+      },
+      "tags":[{
+        "id":"business/royalbankofscotlandgroup",
+        "type":"keyword",
+        "webTitle":"Royal Bank of Scotland",
+        "webUrl":"http://www.theguardian.com/business/royalbankofscotlandgroup",
+        "apiUrl":"http://content.guardianapis.com/business/royalbankofscotlandgroup",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/banking",
+        "type":"keyword",
+        "webTitle":"Banking",
+        "webUrl":"http://www.theguardian.com/business/banking",
+        "apiUrl":"http://content.guardianapis.com/business/banking",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/ross-mcewan",
+        "type":"keyword",
+        "webTitle":"Ross McEwan",
+        "webUrl":"http://www.theguardian.com/business/ross-mcewan",
+        "apiUrl":"http://content.guardianapis.com/business/ross-mcewan",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/credit-crunch",
+        "type":"keyword",
+        "webTitle":"Credit crunch",
+        "webUrl":"http://www.theguardian.com/business/credit-crunch",
+        "apiUrl":"http://content.guardianapis.com/business/credit-crunch",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/marketturmoil",
+        "type":"keyword",
+        "webTitle":"Market turmoil",
+        "webUrl":"http://www.theguardian.com/business/marketturmoil",
+        "apiUrl":"http://content.guardianapis.com/business/marketturmoil",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/financial-crisis",
+        "type":"keyword",
+        "webTitle":"Financial crisis",
+        "webUrl":"http://www.theguardian.com/business/financial-crisis",
+        "apiUrl":"http://content.guardianapis.com/business/financial-crisis",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/recession",
+        "type":"keyword",
+        "webTitle":"Recession",
+        "webUrl":"http://www.theguardian.com/business/recession",
+        "apiUrl":"http://content.guardianapis.com/business/recession",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/economics",
+        "type":"keyword",
+        "webTitle":"Economics",
+        "webUrl":"http://www.theguardian.com/business/economics",
+        "apiUrl":"http://content.guardianapis.com/business/economics",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"profile/jilltreanor",
+        "type":"contributor",
+        "webTitle":"Jill Treanor",
+        "webUrl":"http://www.theguardian.com/profile/jilltreanor",
+        "apiUrl":"http://content.guardianapis.com/profile/jilltreanor",
+        "bio":"<p>Jill Treanor is the Guardian's City editor. She specialises in the banking sector</p>",
+        "rcsId":"GNL003510",
+        "r2ContributorId":"15822",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jill_treanor_140x140.jpg",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"politics/georgeosborne",
+        "type":"keyword",
+        "webTitle":"George Osborne",
+        "webUrl":"http://www.theguardian.com/politics/georgeosborne",
+        "apiUrl":"http://content.guardianapis.com/politics/georgeosborne",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/financial3",
+        "type":"newspaper-book-section",
+        "webTitle":"Financial",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/financial3",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/financial3",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421445842",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/1/1383292419388/RBS-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Cheskin",
+            "altText":"RBS",
+            "height":"372",
+            "credit":"David Cheskin/PA",
+            "caption":"RBS is to create a mini bad bank for £38bn of troublesome loans. Photograph: David Cheskin/PA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/1/1383303670200/RBS-chief-Ross-McEwan-and-001.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"RBS chief Ross McEwan and chancellor George Osborne",
+            "height":"54",
+            "credit":"PR",
+            "caption":"RBS chief Ross McEwan and chancellor George Osborne at the bank's London headquarters",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/1/1383303672510/RBS-chief-Ross-McEwan-and-002.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"RBS chief Ross McEwan and chancellor George Osborne",
+            "height":"130",
+            "credit":"PR",
+            "caption":"RBS chief Ross McEwan and chancellor George Osborne at the bank's London headquarters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/1/1383303673810/RBS-chief-Ross-McEwan-and-003.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"RBS chief Ross McEwan and chancellor George Osborne",
+            "height":"84",
+            "credit":"PR",
+            "caption":"RBS chief Ross McEwan and chancellor George Osborne at the bank's London headquarters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/1/1383303675149/RBS-chief-Ross-McEwan-and-004.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"RBS chief Ross McEwan and chancellor George Osborne",
+            "height":"132",
+            "credit":"PR",
+            "caption":"RBS chief Ross McEwan and chancellor George Osborne at the bank's London headquarters",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/1/1383303676415/RBS-chief-Ross-McEwan-and-005.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"RBS chief Ross McEwan and chancellor George Osborne",
+            "height":"168",
+            "credit":"PR",
+            "caption":"RBS chief Ross McEwan and chancellor George Osborne at the bank's London headquarters",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/1/1383303677831/RBS-chief-Ross-McEwan-and-006.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"RBS chief Ross McEwan and chancellor George Osborne",
+            "height":"180",
+            "credit":"PR",
+            "caption":"RBS chief Ross McEwan and chancellor George Osborne at the bank's London headquarters",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/1/1383303679070/RBS-chief-Ross-McEwan-and-007.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"RBS chief Ross McEwan and chancellor George Osborne",
+            "height":"228",
+            "credit":"PR",
+            "caption":"RBS chief Ross McEwan and chancellor George Osborne at the bank's London headquarters",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/1/1383303680360/RBS-chief-Ross-McEwan-and-008.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"RBS chief Ross McEwan and chancellor George Osborne",
+            "height":"276",
+            "credit":"PR",
+            "caption":"RBS chief Ross McEwan and chancellor George Osborne at the bank's London headquarters",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/1/1383303680360/RBS-chief-Ross-McEwan-and-008.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"RBS chief Ross McEwan and chancellor George Osborne",
+            "height":"276",
+            "credit":"PR",
+            "caption":"RBS chief Ross McEwan and chancellor George Osborne at the bank's London headquarters",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421445843",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/1/1383303673810/RBS-chief-Ross-McEwan-and-003.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"RBS chief Ross McEwan and chancellor George Osborne",
+            "height":"84",
+            "credit":"PR",
+            "caption":"RBS chief Ross McEwan and chancellor George Osborne at the bank's London headquarters",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"business/2013/oct/31/banks-told-improve-protection-against-money-laundering",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2013-10-31T18:58:36Z",
+      "webTitle":"City of London banks told to improve protection against money laundering",
+      "webUrl":"http://www.theguardian.com/business/2013/oct/31/banks-told-improve-protection-against-money-laundering",
+      "apiUrl":"http://content.guardianapis.com/business/2013/oct/31/banks-told-improve-protection-against-money-laundering",
+      "fields":{
+        "newspaperPageNumber":"43",
+        "trailText":"We expected financial industry to have taken more action, says City watchdog, revealing lax procedures to counter crime",
+        "headline":"City of London banks told to improve protection against money laundering",
+        "body":"<p>The Financial Conduct Authority has warned City firms to strengthen their defences against financial crime after it found serious failures in wealth and asset managers' anti-money laundering and corruption measures.</p><p>A review by the watchdog found that most firms fell short when it came to preventing financial crime. It said offenders included companies that should have known better and firms that had already been told to clean up their act.</p><p>In its report, the FCA said: \"Given our strong regulatory focus and previous publications on anti-money laundering and anti-bribery and corruption we expected firms to have taken more action.</p><p>\"Our findings were of particular concern where the firms were part of major financial groups, which should have been aware of our expectations. In some cases, the firms we visited were from groups that had been subject to previous regulatory attention but we still found significant weakness.\"</p><p>At one firm, the annual money laundering report for 2011 did not go to the board until August 2012 and another had not checked its money laundering risks since May 2011.</p><p>Another firm's bosses said its exposure to financial crime was \"low\" but could not show how they had reached that conclusion.</p><p>The FCA has pledged to clamp down amid concerns that London is a major venue for laundering the proceeds of crime and money used to fund terrorism.</p><p>The regulator found widespread failings in checking high-risk customers such as government officials from dictatorships. A firm had checked a long-standing customer from the Cayman Islands a week before the FCA's visit but there had been no check for more than 10 years before that.</p><p>A customer withdrawal of £25m triggered an alert at a firm but there was no evidence of how it was investigated or cleared.</p><p>The regulator said firms were not doing enough to clamp down on bribes. Limits on gifts and hospitality that did not need management approval ranged from £25 to £500.</p><p>The FCA said it was disturbed by the failings because its rules were clear and it had already exposed slack practice at banks and insurers.</p><p>Its 2011 review found that three quarters of banks did not run enough checks on customers' wealth. The following year Coutts was fined £8.75m for sloppy controls.</p><p>An FCA spokeswoman declined to comment on whether wealth and asset managers found wanting in its latest review would be punished.</p><p>The report said: \"We have provided feedback to those firms in our review but we expect all firms to consider our findings. We will be following up with some firms to discuss the actions they should take.\"</p><!-- Guardian Watermark: internal-code/content/421405743|2013-11-05T11:03:52Z|3f9df42b97c2a0d56c7a632d8ba86854ac7cfb34 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-01T00:10:05Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383245369797/Banks-told-to-improve-pro-004.jpg",
+        "standfirst":"We expected financial industry to have taken more action, says City watchdog, revealing lax procedures to counter crime",
+        "shortUrl":"http://gu.com/p/3k2pp",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383245369797/Banks-told-to-improve-pro-004.jpg",
+        "wordcount":"419",
+        "commentable":"false",
+        "internalContentCode":"421405743",
+        "allowUgc":"false",
+        "internalOctopusCode":"8266108",
+        "isPremoderated":"false",
+        "byline":"Sean Farrell",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-11-01",
+        "internalPageCode":"1990141",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-03T18:58:36Z"
+      },
+      "tags":[{
+        "id":"business/financial-conduct-authority",
+        "type":"keyword",
+        "webTitle":"Financial Conduct Authority",
+        "webUrl":"http://www.theguardian.com/business/financial-conduct-authority",
+        "apiUrl":"http://content.guardianapis.com/business/financial-conduct-authority",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/regulators",
+        "type":"keyword",
+        "webTitle":"Regulators",
+        "webUrl":"http://www.theguardian.com/business/regulators",
+        "apiUrl":"http://content.guardianapis.com/business/regulators",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/financial-sector",
+        "type":"keyword",
+        "webTitle":"Financial sector",
+        "webUrl":"http://www.theguardian.com/business/financial-sector",
+        "apiUrl":"http://content.guardianapis.com/business/financial-sector",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"uk/ukcrime",
+        "type":"keyword",
+        "webTitle":"Crime",
+        "webUrl":"http://www.theguardian.com/uk/ukcrime",
+        "apiUrl":"http://content.guardianapis.com/uk/ukcrime",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"profile/sean-farrell",
+        "type":"contributor",
+        "webTitle":"Sean Farrell",
+        "webUrl":"http://www.theguardian.com/profile/sean-farrell",
+        "apiUrl":"http://content.guardianapis.com/profile/sean-farrell",
+        "r2ContributorId":"58999",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/financial3",
+        "type":"newspaper-book-section",
+        "webTitle":"Financial",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/financial3",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/financial3",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421406182",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383245364677/Banks-told-to-improve-pro-001.jpg",
+          "typeData":{
+            "source":"David Levene",
+            "photographer":"David Levene",
+            "altText":"Banks told to improve protection measures against money laundering",
+            "height":"54",
+            "credit":"David Levene/David Levene",
+            "caption":"The Financial Conduct Authority has criticised the City for not taking enough action over financial crime Photograph: David Levene",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383245366592/Banks-told-to-improve-pro-002.jpg",
+          "typeData":{
+            "source":"David Levene",
+            "photographer":"David Levene",
+            "altText":"Banks told to improve protection measures against money laundering",
+            "height":"340",
+            "credit":"David Levene/David Levene",
+            "caption":"The Financial Conduct Authority has criticised the City for not taking enough action over financial crime Photograph: David Levene",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383245368234/Banks-told-to-improve-pro-003.jpg",
+          "typeData":{
+            "source":"David Levene",
+            "photographer":"David Levene",
+            "altText":"Banks told to improve protection measures against money laundering",
+            "height":"130",
+            "credit":"David Levene/David Levene",
+            "caption":"The Financial Conduct Authority has criticised the City for not taking enough action over financial crime Photograph: David Levene",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383245369797/Banks-told-to-improve-pro-004.jpg",
+          "typeData":{
+            "source":"David Levene",
+            "photographer":"David Levene",
+            "altText":"Banks told to improve protection measures against money laundering",
+            "height":"84",
+            "credit":"David Levene/David Levene",
+            "caption":"The Financial Conduct Authority has criticised the City for not taking enough action over financial crime Photograph: David Levene",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383245371442/Banks-told-to-improve-pro-005.jpg",
+          "typeData":{
+            "source":"David Levene",
+            "photographer":"David Levene",
+            "altText":"Banks told to improve protection measures against money laundering",
+            "height":"132",
+            "credit":"David Levene/David Levene",
+            "caption":"The Financial Conduct Authority has criticised the City for not taking enough action over financial crime Photograph: David Levene",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383245373237/Banks-told-to-improve-pro-006.jpg",
+          "typeData":{
+            "source":"David Levene",
+            "photographer":"David Levene",
+            "altText":"Banks told to improve protection measures against money laundering",
+            "height":"168",
+            "credit":"David Levene/David Levene",
+            "caption":"The Financial Conduct Authority has criticised the City for not taking enough action over financial crime Photograph: David Levene",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383245374785/Banks-told-to-improve-pro-007.jpg",
+          "typeData":{
+            "source":"David Levene",
+            "photographer":"David Levene",
+            "altText":"Banks told to improve protection measures against money laundering",
+            "height":"180",
+            "credit":"David Levene/David Levene",
+            "caption":"The Financial Conduct Authority has criticised the City for not taking enough action over financial crime Photograph: David Levene",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383245376419/Banks-told-to-improve-pro-008.jpg",
+          "typeData":{
+            "source":"David Levene",
+            "photographer":"David Levene",
+            "altText":"Banks told to improve protection measures against money laundering",
+            "height":"228",
+            "credit":"David Levene/David Levene",
+            "caption":"The Financial Conduct Authority has criticised the City for not taking enough action over financial crime Photograph: David Levene",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383245377987/Banks-told-to-improve-pro-009.jpg",
+          "typeData":{
+            "source":"David Levene",
+            "photographer":"David Levene",
+            "altText":"Banks told to improve protection measures against money laundering",
+            "height":"276",
+            "credit":"David Levene/David Levene",
+            "caption":"The Financial Conduct Authority has criticised the City for not taking enough action over financial crime Photograph: David Levene",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383245379655/Banks-told-to-improve-pro-010.jpg",
+          "typeData":{
+            "source":"David Levene",
+            "photographer":"David Levene",
+            "altText":"Banks told to improve protection measures against money laundering",
+            "height":"372",
+            "credit":"David Levene/David Levene",
+            "caption":"The Financial Conduct Authority has criticised the City for not taking enough action over financial crime Photograph: David Levene",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383245377987/Banks-told-to-improve-pro-009.jpg",
+          "typeData":{
+            "source":"David Levene",
+            "photographer":"David Levene",
+            "altText":"Banks told to improve protection measures against money laundering",
+            "height":"276",
+            "credit":"David Levene/David Levene",
+            "caption":"The Financial Conduct Authority has criticised the City for not taking enough action over financial crime Photograph: David Levene",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421406183",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383245369797/Banks-told-to-improve-pro-004.jpg",
+          "typeData":{
+            "source":"David Levene",
+            "photographer":"David Levene",
+            "altText":"Banks told to improve protection measures against money laundering",
+            "height":"84",
+            "credit":"David Levene/David Levene",
+            "caption":"The Financial Conduct Authority has criticised the City for not taking enough action over financial crime Photograph: David Levene",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"business/2013/oct/31/ross-mcewan-rbs-boss-bad-bank-review",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2013-10-31T20:19:19Z",
+      "webTitle":"Ross McEwan to make first presentation to City as RBS boss",
+      "webUrl":"http://www.theguardian.com/business/2013/oct/31/ross-mcewan-rbs-boss-bad-bank-review",
+      "apiUrl":"http://content.guardianapis.com/business/2013/oct/31/ross-mcewan-rbs-boss-bad-bank-review",
+      "fields":{
+        "newspaperPageNumber":"45",
+        "trailText":"New Zealander expected to set out ambitions for RBS amid speculation he will also announce outcome of 'bad bank' review",
+        "headline":"Ross McEwan to make first presentation to City as RBS boss",
+        "body":"<p>Ross McEwan is to make his first presentation to the City as boss of Royal Bank of Scotland on Friday amid speculation that the outcome of a government review into spinning off a bad bank will be announced with the third quarter results.</p><p>The New Zealander is expected to set out an ambition to end lingering concerns about the bank's financial strength after taking over from Stephen Hester on 1 October. It is thought McEwan will outline the outcome of the government-commissioned review into whether a \"bad bank\" of underperforming loans should be spun out of 81% taxpayer-owned RBS.</p><p>He is also expected to publish a report the bank commissioned from the former Bank of England deputy governor Sir Andrew Large after it faced criticism about its lending to small businesses.</p><p>It is thought the government will step back from asking RBS to create an extensive bad bank holding as much as £120bn of problem loans. But McEwan is expected to set out his thoughts on the future of the RBS investment bank, its US arm, Citizens, and its private bank Coutts – banker to the Queen.</p><p>Citizens, already due for a stock market flotation in 2015, could be sold off more quickly, and there has been repeated speculation that Coutts could also be earmarked for sale. The investment bank, where the headcount has already shrunk from 25,000 before the bailout to 9,000, could be forced to retrench further.</p><p>The new chief executive is not expected to use the third quarter results to outline his strategic vision for the bank he joined a year ago as head of the retail operations. Sky News reported last night however that he would open talks with the government over restarting dividend payments to shareholders, although it could be years before such a move was approved.</p><p>McEwan has been readying the bank's staff for the outcome of the government review into a breakup. He recently told them he believed it would resolve an outstanding uncertainty about the future of the bank, bailed out five years ago with £45bn of taxpayer money.</p><p>In an email to staff a fortnight ago, he said: \"The future of this company will not be about whether we operate in particular areas or where our problem assets sit. The future of this company is about how good a job we do for our customers, including those who are having difficulty repaying their loans. And it will be about how well we live up to all our responsibilities, particularly those we have to the UK.\"</p><p>The same week, George Osborne told the Daily Telegraph he was close to a decision on RBS. \"We are looking at the case for a bad bank and if not a bad bank, what is the alternative strategy that really gets on top of the problems in that bank and goes on being what I want it to be, which is a bank supporting the British economy,\" he said.</p><p>The City is anxious about the creation of a bad bank although speculation in recent days has focused on the expansion of the existing non-core division. Even so, Ian Gordon, banks analyst at Investec, said: \"We still fear that, even in the absence of an outright good bank/bad bank split, more covert steps may still destroy value\".</p><h2>Mortgage firm sues over Libor<br /></h2><p>US mortgage finance company Fannie Mae sued nine of the world's largest banks yesterday, including Barclays and Royal Bank of Scotland, accusing them of colluding to manipulate interest rates and seeking more than $800m of damages.</p><p>In a complaint filed in the US district court in Manhattan, the company accused the banks of manipulating the London Interbank Offered Rate, or Libor, as well as other interest rate benchmarks.</p><p>Fannie Mae said this manipulation caused it to lose money on interest-rate swaps and other transactions. It is also seeking punitive damages.</p><p>Smaller rival Freddie Mac filed a similar lawsuit in March against more than a dozen banks.</p><p>\"Fannie Mae filed this action to recover losses it suffered as a result of the defendants' manipulation of Libor,\" a spokesman said. \"We have a responsibility to be good stewards of our resources.\"</p><p>Four of the banks sued by Fannie Mae – Barclays, Rabobank, Royal Bank of Scotland and UBS - have previously settled with regulators over similar allegations and admitted wrongdoing.</p><p>The other bank defendants are Bank of America, Citigroup, Credit Suisse, Deutsche Bank and JPMorgan Chase.</p><p>Representatives of Bank of America, Barclays, Citigroup, Deutsche Bank, JPMorgan and RBS declined to comment. The other banks did not immediately respond to requests for comment.</p><p>The case is Federal National Mortgage Association v Barclays Bank Plc et al, US District Court, Southern District of New York, No. 13-07720.</p><p>RBS has already signalled it is involved in the new global investigation into foreign exchange trading and last night it was reported to have suspended two traders.</p><!-- Guardian Watermark: internal-code/content/421410324|2013-11-05T11:03:52Z|67dd5aab671eafebba2b555149c9706e9123aacc -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-01T00:10:03Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/10/31/1383250685206/RBS-boss-Ross-McEwan-005.jpg",
+        "standfirst":"New Zealander expected to set out ambitions for RBS amid speculation he will also announce outcome of 'bad bank' review",
+        "shortUrl":"http://gu.com/p/3k3vv",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/31/1383250685206/RBS-boss-Ross-McEwan-005.jpg",
+        "wordcount":"795",
+        "commentable":"false",
+        "internalContentCode":"421410324",
+        "allowUgc":"false",
+        "internalOctopusCode":"8266847",
+        "isPremoderated":"false",
+        "byline":"Jill Treanor",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-11-01",
+        "internalPageCode":"1990170",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-03T20:19:19Z"
+      },
+      "tags":[{
+        "id":"business/ross-mcewan",
+        "type":"keyword",
+        "webTitle":"Ross McEwan",
+        "webUrl":"http://www.theguardian.com/business/ross-mcewan",
+        "apiUrl":"http://content.guardianapis.com/business/ross-mcewan",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/banking",
+        "type":"keyword",
+        "webTitle":"Banking",
+        "webUrl":"http://www.theguardian.com/business/banking",
+        "apiUrl":"http://content.guardianapis.com/business/banking",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"money/banks",
+        "type":"keyword",
+        "webTitle":"Banks and building societies",
+        "webUrl":"http://www.theguardian.com/money/banks",
+        "apiUrl":"http://content.guardianapis.com/money/banks",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/money",
+        "type":"keyword",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/money/money",
+        "apiUrl":"http://content.guardianapis.com/money/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/jilltreanor",
+        "type":"contributor",
+        "webTitle":"Jill Treanor",
+        "webUrl":"http://www.theguardian.com/profile/jilltreanor",
+        "apiUrl":"http://content.guardianapis.com/profile/jilltreanor",
+        "bio":"<p>Jill Treanor is the Guardian's City editor. She specialises in the banking sector</p>",
+        "rcsId":"GNL003510",
+        "r2ContributorId":"15822",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jill_treanor_140x140.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/financial3",
+        "type":"newspaper-book-section",
+        "webTitle":"Financial",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/financial3",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/financial3",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421411344",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/31/1383250554362/McEwan-001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ian Macaulay",
+            "altText":"McEwan",
+            "height":"54",
+            "credit":"Ian Macaulay/PA",
+            "caption":"RBS chief Ross McEwan,is to announce the third quarter results on Friday. He has been readying staff for the outcome of a government review into a breakup. Photograph: Ian Macaulay/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/31/1383250678743/RBS-boss-Ross-McEwan-001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ian Macaulay",
+            "altText":"RBS boss Ross McEwan",
+            "height":"340",
+            "credit":"Ian Macaulay/PA",
+            "caption":"RBS chief Ross McEwan is to announce third quarter results on Friday. He has been readying staff for the outcome of a government review into a breakup. Photograph: Ian Macaulay/PA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/31/1383250680137/RBS-boss-Ross-McEwan-002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ian Macaulay",
+            "altText":"RBS boss Ross McEwan",
+            "height":"130",
+            "credit":"Ian Macaulay/PA",
+            "caption":"RBS chief Ross McEwan is to announce third quarter results on Friday. He has been readying staff for the outcome of a government review into a breakup. Photograph: Ian Macaulay/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/31/1383250681680/RBS-boss-Ross-McEwan-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ian Macaulay",
+            "altText":"RBS boss Ross McEwan",
+            "height":"720",
+            "credit":"Ian Macaulay/PA",
+            "caption":"RBS chief Ross McEwan is to announce third quarter results on Friday. He has been readying staff for the outcome of a government review into a breakup. Photograph: Ian Macaulay/PA",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/31/1383250683340/RBS-boss-Ross-McEwan-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ian Macaulay",
+            "altText":"RBS boss Ross McEwan",
+            "height":"1536",
+            "credit":"Ian Macaulay/PA",
+            "caption":"RBS chief Ross McEwan is to announce third quarter results on Friday. He has been readying staff for the outcome of a government review into a breakup. Photograph: Ian Macaulay/PA",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/31/1383250685206/RBS-boss-Ross-McEwan-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ian Macaulay",
+            "altText":"RBS boss Ross McEwan",
+            "height":"84",
+            "credit":"Ian Macaulay/PA",
+            "caption":"RBS chief Ross McEwan is to announce third quarter results on Friday. He has been readying staff for the outcome of a government review into a breakup. Photograph: Ian Macaulay/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/31/1383250686413/RBS-boss-Ross-McEwan-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ian Macaulay",
+            "altText":"RBS boss Ross McEwan",
+            "height":"132",
+            "credit":"Ian Macaulay/PA",
+            "caption":"RBS chief Ross McEwan is to announce third quarter results on Friday. He has been readying staff for the outcome of a government review into a breakup. Photograph: Ian Macaulay/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/31/1383250687715/RBS-boss-Ross-McEwan-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ian Macaulay",
+            "altText":"RBS boss Ross McEwan",
+            "height":"168",
+            "credit":"Ian Macaulay/PA",
+            "caption":"RBS chief Ross McEwan is to announce third quarter results on Friday. He has been readying staff for the outcome of a government review into a breakup. Photograph: Ian Macaulay/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/31/1383250688963/RBS-boss-Ross-McEwan-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ian Macaulay",
+            "altText":"RBS boss Ross McEwan",
+            "height":"180",
+            "credit":"Ian Macaulay/PA",
+            "caption":"RBS chief Ross McEwan is to announce third quarter results on Friday. He has been readying staff for the outcome of a government review into a breakup. Photograph: Ian Macaulay/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/31/1383250690253/RBS-boss-Ross-McEwan-009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ian Macaulay",
+            "altText":"RBS boss Ross McEwan",
+            "height":"228",
+            "credit":"Ian Macaulay/PA",
+            "caption":"RBS chief Ross McEwan is to announce third quarter results on Friday. He has been readying staff for the outcome of a government review into a breakup. Photograph: Ian Macaulay/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/31/1383250691642/RBS-boss-Ross-McEwan-010.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ian Macaulay",
+            "altText":"RBS boss Ross McEwan",
+            "height":"276",
+            "credit":"Ian Macaulay/PA",
+            "caption":"RBS chief Ross McEwan is to announce third quarter results on Friday. He has been readying staff for the outcome of a government review into a breakup. Photograph: Ian Macaulay/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/31/1383250692925/RBS-boss-Ross-McEwan-011.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ian Macaulay",
+            "altText":"RBS boss Ross McEwan",
+            "height":"372",
+            "credit":"Ian Macaulay/PA",
+            "caption":"RBS chief Ross McEwan is to announce third quarter results on Friday. He has been readying staff for the outcome of a government review into a breakup. Photograph: Ian Macaulay/PA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/31/1383250694415/RBS-boss-Ross-McEwan-012.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ian Macaulay",
+            "altText":"RBS boss Ross McEwan",
+            "height":"1116",
+            "credit":"Ian Macaulay/PA",
+            "caption":"RBS chief Ross McEwan is to announce third quarter results on Friday. He has been readying staff for the outcome of a government review into a breakup. Photograph: Ian Macaulay/PA",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/31/1383250696492/RBS-boss-Ross-McEwan-013.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ian Macaulay",
+            "altText":"RBS boss Ross McEwan",
+            "height":"1536",
+            "credit":"Ian Macaulay/PA",
+            "caption":"RBS chief Ross McEwan is to announce third quarter results on Friday. He has been readying staff for the outcome of a government review into a breakup. Photograph: Ian Macaulay/PA",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/31/1383250691642/RBS-boss-Ross-McEwan-010.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ian Macaulay",
+            "altText":"RBS boss Ross McEwan",
+            "height":"276",
+            "credit":"Ian Macaulay/PA",
+            "caption":"RBS chief Ross McEwan is to announce third quarter results on Friday. He has been readying staff for the outcome of a government review into a breakup. Photograph: Ian Macaulay/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421411345",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/31/1383250685206/RBS-boss-Ross-McEwan-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ian Macaulay",
+            "altText":"RBS boss Ross McEwan",
+            "height":"84",
+            "credit":"Ian Macaulay/PA",
+            "caption":"RBS chief Ross McEwan is to announce third quarter results on Friday. He has been readying staff for the outcome of a government review into a breakup. Photograph: Ian Macaulay/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"business/2013/nov/01/rbs-ulster-bank-ireland-northern-villiers",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2013-11-01T12:54:23Z",
+      "webTitle":"RBS's decision to keep operating as Ulster Bank across Ireland welcomed",
+      "webUrl":"http://www.theguardian.com/business/2013/nov/01/rbs-ulster-bank-ireland-northern-villiers",
+      "apiUrl":"http://content.guardianapis.com/business/2013/nov/01/rbs-ulster-bank-ireland-northern-villiers",
+      "fields":{
+        "trailText":"The Northern Ireland secretary, Theresa Villiers, supports decision and says restructuring of RBS overall will help economy",
+        "headline":"RBS's decision to keep operating as Ulster Bank across Ireland welcomed",
+        "body":"<p>The Northern Ireland secretary, Theresa Villiers, has welcomed  Royal Bank of Scotland's decision to continue operating as the Ulster Bank on both sides of the Irish border.</p><p>The secretary of state said on Friday she had been working closely with colleagues in the Treasury \"to ensure the importance of this decision to Northern Ireland was clearly understood and properly considered\".</p><p>She said the restructuring of RBS overall would \"give Ulster Bank a greater ability to lend, providing extra help to Northern Ireland business and the economy\".</p><p>The Northern Ireland finance minister, Simon Hamilton, said the news that RBS was not being split up was \"far better than many people feared\".</p><p>\"We have the opportunity, as a result of the review that will take place, to shape Ulster Bank into the bank that we need it to be,\" he said.</p><p>RBS will create an internal \"bad bank\", ringfencing £38bn of toxic assets such as loans not expected to be repaid. About £9bn of those toxic assets are from Ulster Bank.</p><p>Ulster Bank will also face a further review aimed at finding a viable and sustainable business model.</p><p>The Ulster Bank also revealed it lost a further £132m in the third quarter of this year as it continues to suffer from the impacts of the property crash, particularly in the Irish Republic.</p><p>The bank's importance to the economies of both states on the island of Ireland is critical to the banking sector. Ulster Bank is the largest bank in Northern Ireland and the third largest in the Republic. Most of its debts on the island were generated when it lent billions in commercial property loans during the Celtic Tiger years before the crash.</p><!-- Guardian Watermark: internal-code/content/421452363|2013-11-05T11:03:52Z|e060d69af2f7743fd99bd5ed37c95160c6cbb7d3 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-01T13:34:26Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383309935683/RBS-Ulster-Bank-003.jpg",
+        "standfirst":"The Northern Ireland secretary, Theresa Villiers, supports decision and says restructuring of RBS overall will help economy",
+        "shortUrl":"http://gu.com/p/3k39h",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383309935683/RBS-Ulster-Bank-003.jpg",
+        "wordcount":"273",
+        "commentable":"false",
+        "internalContentCode":"421452363",
+        "allowUgc":"false",
+        "internalOctopusCode":"8268197",
+        "isPremoderated":"false",
+        "byline":"Henry McDonald",
+        "publication":"theguardian.com",
+        "internalPageCode":"1990430",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T12:54:23Z"
+      },
+      "tags":[{
+        "id":"business/royalbankofscotlandgroup",
+        "type":"keyword",
+        "webTitle":"Royal Bank of Scotland",
+        "webUrl":"http://www.theguardian.com/business/royalbankofscotlandgroup",
+        "apiUrl":"http://content.guardianapis.com/business/royalbankofscotlandgroup",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"uk/northernireland",
+        "type":"keyword",
+        "webTitle":"Northern Ireland",
+        "webUrl":"http://www.theguardian.com/uk/northernireland",
+        "apiUrl":"http://content.guardianapis.com/uk/northernireland",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"business/banking",
+        "type":"keyword",
+        "webTitle":"Banking",
+        "webUrl":"http://www.theguardian.com/business/banking",
+        "apiUrl":"http://content.guardianapis.com/business/banking",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"politics/theresa-villiers",
+        "type":"keyword",
+        "webTitle":"Theresa Villiers",
+        "webUrl":"http://www.theguardian.com/politics/theresa-villiers",
+        "apiUrl":"http://content.guardianapis.com/politics/theresa-villiers",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/henrymcdonald",
+        "type":"contributor",
+        "webTitle":"Henry McDonald",
+        "webUrl":"http://www.theguardian.com/profile/henrymcdonald",
+        "apiUrl":"http://content.guardianapis.com/profile/henrymcdonald",
+        "bio":"<p>Henry McDonald is the Observer's Belfast correspondent</p>",
+        "rcsId":"GNL004658",
+        "r2ContributorId":"15264",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/9/23/1316792668937/henry-mcdonald.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421453355",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383309932774/RBS-Ulster-Bank-001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Paul Faith",
+            "altText":"RBS Ulster Bank",
+            "height":"54",
+            "credit":"Paul Faith/PA",
+            "caption":"The Northern Ireland finance minister, Simon Hamilton, says the forthcoming review will provide an opportunity to transform Ulster Bank. Photograph: Paul Faith/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383309934495/RBS-Ulster-Bank-002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Paul Faith",
+            "altText":"RBS Ulster Bank",
+            "height":"130",
+            "credit":"Paul Faith/PA",
+            "caption":"The Northern Ireland finance minister, Simon Hamilton, says the forthcoming review will provide an opportunity to transform Ulster Bank. Photograph: Paul Faith/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383309935683/RBS-Ulster-Bank-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Paul Faith",
+            "altText":"RBS Ulster Bank",
+            "height":"84",
+            "credit":"Paul Faith/PA",
+            "caption":"The Northern Ireland finance minister, Simon Hamilton, says the forthcoming review will provide an opportunity to transform Ulster Bank. Photograph: Paul Faith/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383309936904/RBS-Ulster-Bank-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Paul Faith",
+            "altText":"RBS Ulster Bank",
+            "height":"132",
+            "credit":"Paul Faith/PA",
+            "caption":"The Northern Ireland finance minister, Simon Hamilton, says the forthcoming review will provide an opportunity to transform Ulster Bank. Photograph: Paul Faith/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383309938397/RBS-Ulster-Bank-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Paul Faith",
+            "altText":"RBS Ulster Bank",
+            "height":"168",
+            "credit":"Paul Faith/PA",
+            "caption":"The Northern Ireland finance minister, Simon Hamilton, says the forthcoming review will provide an opportunity to transform Ulster Bank. Photograph: Paul Faith/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383309939587/RBS-Ulster-Bank-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Paul Faith",
+            "altText":"RBS Ulster Bank",
+            "height":"180",
+            "credit":"Paul Faith/PA",
+            "caption":"The Northern Ireland finance minister, Simon Hamilton, says the forthcoming review will provide an opportunity to transform Ulster Bank. Photograph: Paul Faith/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383309940802/RBS-Ulster-Bank-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Paul Faith",
+            "altText":"RBS Ulster Bank",
+            "height":"228",
+            "credit":"Paul Faith/PA",
+            "caption":"The Northern Ireland finance minister, Simon Hamilton, says the forthcoming review will provide an opportunity to transform Ulster Bank. Photograph: Paul Faith/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383309942028/RBS-Ulster-Bank-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Paul Faith",
+            "altText":"RBS Ulster Bank",
+            "height":"276",
+            "credit":"Paul Faith/PA",
+            "caption":"The Northern Ireland finance minister, Simon Hamilton, says the forthcoming review will provide an opportunity to transform Ulster Bank. Photograph: Paul Faith/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383309942028/RBS-Ulster-Bank-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Paul Faith",
+            "altText":"RBS Ulster Bank",
+            "height":"276",
+            "credit":"Paul Faith/PA",
+            "caption":"The Northern Ireland finance minister, Simon Hamilton, says the forthcoming review will provide an opportunity to transform Ulster Bank. Photograph: Paul Faith/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421453356",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383309935683/RBS-Ulster-Bank-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Paul Faith",
+            "altText":"RBS Ulster Bank",
+            "height":"84",
+            "credit":"Paul Faith/PA",
+            "caption":"The Northern Ireland finance minister, Simon Hamilton, says the forthcoming review will provide an opportunity to transform Ulster Bank. Photograph: Paul Faith/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"business/2013/nov/01/rbs-business-lending-attacked",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2013-11-01T07:32:00Z",
+      "webTitle":"RBS fails to lend to small firms, says former Bank of England official",
+      "webUrl":"http://www.theguardian.com/business/2013/nov/01/rbs-business-lending-attacked",
+      "apiUrl":"http://content.guardianapis.com/business/2013/nov/01/rbs-business-lending-attacked",
+      "fields":{
+        "trailText":"Royal Bank of Scotland has been over-cautious about lending to SME sector, says report",
+        "headline":"RBS fails to lend to small firms, says former Bank of England official",
+        "body":"<p>Royal Bank of Scotland received stinging criticism on Friday for turning away too many small business customers as a result of overly strict lending criteria and a complex management structure.</p><p>The 81% taxpayer-owned bank failed to meet its own goals for lending to small businesses – regarded as a potential engine of growth for the economy – and has been too aggressive towards existing customers facing financial difficulty, according to the report by Sir Andrew Large, a former deputy governor of the Bank of England.</p><p>Outlining nine recommendations, Large suggests the bank conduct a forensic inquiry into the way it has treated customers in distress. He also says it should  create more coherent and realistic targets for lending to the small and medium-size enterprise (SME) sector.</p><p>Ross McEwan, presenting his first set of results since being promoted to chief executive, said: \"The picture Sir Andrew Large paints is not an entirely comfortable one, but it's one we have to confront. A successful, vibrant and well-regarded SME bank is central to the overall value and reputation of this company.\"</p><p>McEwan said he was conducting a review of the bank and would report back in February. In the meantime the bank is to write to customers and speed up the time it takes to grant loans after Large said the bank should give staff more confidence to lend.</p><p>Large said one person should be put in charge of the SME business, which is currently split across the business bank, the non-core division, the 315 branches that must be sold off to meet EU rules and a division  which looks after financially stretched customers.</p><p>The bank has faced repeated criticism over its lending to SMEs. The report said RBS had been losing market share – from 42% of net lending in the months before its 2008 bailout to 27% five years later – after reducing the period of time over which it was prepared to lend. It added that \"risk aversion\" among its bankers meant credit-worthy customers were turned away.</p><p>The report, commissioned by the bank following repeated criticism from politicians and small businesses bosses, said RBS's stock of lending has continued to fall this year, by £1.8bn in the first half, when rivals were expanding their SME lending.</p><p>\"RBS should look afresh at the manner in which it delivers lending to SMEs and make sure that the various components of its offering to customers are aligned,\" said Large.</p><p>RBS's lending before the 2008 crash was unsustainable when it reached £55bn but it then fell too quickly to £38bn. The bank had been trying to reduce its exposure to commercial property lending but as a result had turned away creditworthy customers.</p><p>\"The bank failed to meet its own SME lending targets, partly because they were unrealistic and also because of weakness in its lending operations,\" Large said.</p><p>Until 2012, the RBS small business bankers had been focused on gathering deposits and worrying about risk rather than issuing new loans. The processes inside the bank meant that credit controllers were turning away applications too quickly.</p><p>The report said RBS had been more active than its rivals in renegotiating loans after the crisis. \"RBS has also changed the way it manages its relationship with customers that it believes have shown signs of financial deterioration or distress. A small minority of customers who have experienced this have made serious allegations about the actions that RBS has taken,\" the report said.</p><p>The inquiry needed to substantiate or refute these allegations, the report said.</p><!-- Guardian Watermark: internal-code/content/421424810|2013-11-05T11:03:52Z|55b3e0e009a38a6c80fa2ee6184a83b5f6ccc192 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-01T07:33:05Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383268038598/RBS-attacked-over-busines-004.jpg",
+        "standfirst":"Royal Bank of Scotland has been over-cautious about lending to SME sector, says report",
+        "shortUrl":"http://gu.com/p/3k328",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383268038598/RBS-attacked-over-busines-004.jpg",
+        "wordcount":"573",
+        "commentable":"false",
+        "internalContentCode":"421424810",
+        "allowUgc":"false",
+        "internalOctopusCode":"8266879",
+        "isPremoderated":"false",
+        "byline":"Jill Treanor",
+        "publication":"theguardian.com",
+        "internalPageCode":"1990232",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T07:00:13Z"
+      },
+      "tags":[{
+        "id":"business/royalbankofscotlandgroup",
+        "type":"keyword",
+        "webTitle":"Royal Bank of Scotland",
+        "webUrl":"http://www.theguardian.com/business/royalbankofscotlandgroup",
+        "apiUrl":"http://content.guardianapis.com/business/royalbankofscotlandgroup",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/banking",
+        "type":"keyword",
+        "webTitle":"Banking",
+        "webUrl":"http://www.theguardian.com/business/banking",
+        "apiUrl":"http://content.guardianapis.com/business/banking",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/economic-recovery",
+        "type":"keyword",
+        "webTitle":"Economic recovery",
+        "webUrl":"http://www.theguardian.com/business/economic-recovery",
+        "apiUrl":"http://content.guardianapis.com/business/economic-recovery",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/economics",
+        "type":"keyword",
+        "webTitle":"Economics",
+        "webUrl":"http://www.theguardian.com/business/economics",
+        "apiUrl":"http://content.guardianapis.com/business/economics",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"profile/jilltreanor",
+        "type":"contributor",
+        "webTitle":"Jill Treanor",
+        "webUrl":"http://www.theguardian.com/profile/jilltreanor",
+        "apiUrl":"http://content.guardianapis.com/profile/jilltreanor",
+        "bio":"<p>Jill Treanor is the Guardian's City editor. She specialises in the banking sector</p>",
+        "rcsId":"GNL003510",
+        "r2ContributorId":"15822",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jill_treanor_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421425266",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383268033183/RBS-attacked-over-busines-001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Johnny Green",
+            "altText":"RBS-attacked-over-business-loans",
+            "height":"54",
+            "credit":"Johnny Green/PA",
+            "caption":"RBS turned away credit-worthy businesses seeking looans, says the report. Photograph: Johnny Green/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383268035164/RBS-attacked-over-busines-002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Johnny Green",
+            "altText":"RBS-attacked-over-business-loans",
+            "height":"340",
+            "credit":"Johnny Green/PA",
+            "caption":"RBS turned away credit-worthy businesses seeking looans, says the report. Photograph: Johnny Green/PA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383268037397/RBS-attacked-over-busines-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Johnny Green",
+            "altText":"RBS-attacked-over-business-loans",
+            "height":"130",
+            "credit":"Johnny Green/PA",
+            "caption":"RBS turned away credit-worthy businesses seeking looans, says the report. Photograph: Johnny Green/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383268038598/RBS-attacked-over-busines-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Johnny Green",
+            "altText":"RBS-attacked-over-business-loans",
+            "height":"84",
+            "credit":"Johnny Green/PA",
+            "caption":"RBS turned away credit-worthy businesses seeking looans, says the report. Photograph: Johnny Green/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383268039841/RBS-attacked-over-busines-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Johnny Green",
+            "altText":"RBS-attacked-over-business-loans",
+            "height":"132",
+            "credit":"Johnny Green/PA",
+            "caption":"RBS turned away credit-worthy businesses seeking looans, says the report. Photograph: Johnny Green/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383268041302/RBS-attacked-over-busines-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Johnny Green",
+            "altText":"RBS-attacked-over-business-loans",
+            "height":"168",
+            "credit":"Johnny Green/PA",
+            "caption":"RBS turned away credit-worthy businesses seeking looans, says the report. Photograph: Johnny Green/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383268042484/RBS-attacked-over-busines-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Johnny Green",
+            "altText":"RBS-attacked-over-business-loans",
+            "height":"180",
+            "credit":"Johnny Green/PA",
+            "caption":"RBS turned away credit-worthy businesses seeking looans, says the report. Photograph: Johnny Green/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383268043675/RBS-attacked-over-busines-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Johnny Green",
+            "altText":"RBS-attacked-over-business-loans",
+            "height":"228",
+            "credit":"Johnny Green/PA",
+            "caption":"RBS turned away credit-worthy businesses seeking looans, says the report. Photograph: Johnny Green/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383268044973/RBS-attacked-over-busines-009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Johnny Green",
+            "altText":"RBS-attacked-over-business-loans",
+            "height":"276",
+            "credit":"Johnny Green/PA",
+            "caption":"RBS turned away credit-worthy businesses seeking looans, says the report. Photograph: Johnny Green/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383268046174/RBS-attacked-over-busines-010.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Johnny Green",
+            "altText":"RBS-attacked-over-business-loans",
+            "height":"372",
+            "credit":"Johnny Green/PA",
+            "caption":"RBS turned away credit-worthy businesses seeking looans, says the report. Photograph: Johnny Green/PA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383268044973/RBS-attacked-over-busines-009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Johnny Green",
+            "altText":"RBS-attacked-over-business-loans",
+            "height":"276",
+            "credit":"Johnny Green/PA",
+            "caption":"RBS turned away credit-worthy businesses seeking loans, says the report. Photograph: Johnny Green/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421425267",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383268038598/RBS-attacked-over-busines-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Johnny Green",
+            "altText":"RBS-attacked-over-business-loans",
+            "height":"84",
+            "credit":"Johnny Green/PA",
+            "caption":"RBS turned away credit-worthy businesses seeking looans, says the report. Photograph: Johnny Green/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"business/2013/nov/01/what-in-rbs-bad-bank-royal-scotland",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2013-11-01T11:58:58Z",
+      "webTitle":"What's in RBS's bad bank?",
+      "webUrl":"http://www.theguardian.com/business/2013/nov/01/what-in-rbs-bad-bank-royal-scotland",
+      "apiUrl":"http://content.guardianapis.com/business/2013/nov/01/what-in-rbs-bad-bank-royal-scotland",
+      "fields":{
+        "newspaperPageNumber":"43",
+        "trailText":"Royal Bank of Scotland is placing £38bn of its most troublesome loans into its capital resolution division",
+        "headline":"What's in RBS's bad bank?",
+        "body":"<p>Royal Bank of Scotland's new capital resolution division (RCR) will contain £38bn of the bailed-out bank's most troublesome loans.</p><p>The bank already had a \"non-core\" division, which Stephen Hester created on joining RBS five years ago when the bank was on the brink of collapse. At that time it had £258bn of unwanted businesses and assets, which had shrunk to £35bn by the time Hester left in September. These businesses included substantial operations such as its commodity trading business, plane leasing and pub chains.</p><p>Some £14.8bn of those remaining non-core assets will go into the RCR together with another £23.5bn of loans that look as if they will not be repaid.</p><p>That £23.5bn is largely made up of commercial property loans - some 47% of the total - split between four of the bank's divisions. UK corporate, which lends to big business, will put £5.5bn of loans in, while Ulster bank will put in £4.1bn. The investment banking arm has £2.6bn of troubled positions that will go into the RCR, while £2.6bn will come from international markets.</p><p>The addition of the new legacy positions mean that £9bn loans from Ulster Bank are now included in the division. While half of the RCR will be comprised of commercial property, a quarter is corporate lending with the other quarter made up of shipping loans (8%) and trading positions.</p><!-- Guardian Watermark: internal-code/content/421448040|2013-11-05T11:03:52Z|5687f271f4a00624f6a6a36f1db06ff2765c1f9b -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-02T00:11:07Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/1/1383306136538/RBS-bad-bank-003.jpg",
+        "standfirst":"Royal Bank of Scotland is placing £38bn of its most troublesome loans into its capital resolution division",
+        "shortUrl":"http://gu.com/p/3k37x",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/1/1383306136538/RBS-bad-bank-003.jpg",
+        "wordcount":"222",
+        "commentable":"false",
+        "internalContentCode":"421448040",
+        "allowUgc":"false",
+        "internalOctopusCode":"8267983",
+        "isPremoderated":"false",
+        "byline":"Jill Treanor",
+        "publication":"theguardian.com",
+        "newspaperEditionDate":"2013-11-02",
+        "internalPageCode":"1990360",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T11:58:58Z"
+      },
+      "tags":[{
+        "id":"business/royalbankofscotlandgroup",
+        "type":"keyword",
+        "webTitle":"Royal Bank of Scotland",
+        "webUrl":"http://www.theguardian.com/business/royalbankofscotlandgroup",
+        "apiUrl":"http://content.guardianapis.com/business/royalbankofscotlandgroup",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/banking",
+        "type":"keyword",
+        "webTitle":"Banking",
+        "webUrl":"http://www.theguardian.com/business/banking",
+        "apiUrl":"http://content.guardianapis.com/business/banking",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/jilltreanor",
+        "type":"contributor",
+        "webTitle":"Jill Treanor",
+        "webUrl":"http://www.theguardian.com/profile/jilltreanor",
+        "apiUrl":"http://content.guardianapis.com/profile/jilltreanor",
+        "bio":"<p>Jill Treanor is the Guardian's City editor. She specialises in the banking sector</p>",
+        "rcsId":"GNL003510",
+        "r2ContributorId":"15822",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jill_treanor_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/financial3",
+        "type":"newspaper-book-section",
+        "webTitle":"Financial",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/financial3",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/financial3",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421448230",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/1/1383306132391/RBS-bad-bank-001.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Kirsty Wigglesworth",
+            "altText":"RBS bad bank",
+            "height":"54",
+            "credit":"Kirsty Wigglesworth/AP",
+            "caption":"The RBS bad bank's assets include property loans, plane leasing and pub chains.  Photograph: Kirsty Wigglesworth/AP",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/1/1383306135014/RBS-bad-bank-002.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Kirsty Wigglesworth",
+            "altText":"RBS bad bank",
+            "height":"130",
+            "credit":"Kirsty Wigglesworth/AP",
+            "caption":"The RBS bad bank's assets include property loans, plane leasing and pub chains.  Photograph: Kirsty Wigglesworth/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/1/1383306136538/RBS-bad-bank-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Kirsty Wigglesworth",
+            "altText":"RBS bad bank",
+            "height":"84",
+            "credit":"Kirsty Wigglesworth/AP",
+            "caption":"The RBS bad bank's assets include property loans, plane leasing and pub chains.  Photograph: Kirsty Wigglesworth/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/1/1383306137875/RBS-bad-bank-004.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Kirsty Wigglesworth",
+            "altText":"RBS bad bank",
+            "height":"132",
+            "credit":"Kirsty Wigglesworth/AP",
+            "caption":"The RBS bad bank's assets include property loans, plane leasing and pub chains.  Photograph: Kirsty Wigglesworth/AP",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/1/1383306139222/RBS-bad-bank-005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Kirsty Wigglesworth",
+            "altText":"RBS bad bank",
+            "height":"168",
+            "credit":"Kirsty Wigglesworth/AP",
+            "caption":"The RBS bad bank's assets include property loans, plane leasing and pub chains.  Photograph: Kirsty Wigglesworth/AP",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/1/1383306140621/RBS-bad-bank-006.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Kirsty Wigglesworth",
+            "altText":"RBS bad bank",
+            "height":"180",
+            "credit":"Kirsty Wigglesworth/AP",
+            "caption":"The RBS bad bank's assets include property loans, plane leasing and pub chains.  Photograph: Kirsty Wigglesworth/AP",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/1/1383306141961/RBS-bad-bank-007.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Kirsty Wigglesworth",
+            "altText":"RBS bad bank",
+            "height":"228",
+            "credit":"Kirsty Wigglesworth/AP",
+            "caption":"The RBS bad bank's assets include property loans, plane leasing and pub chains.  Photograph: Kirsty Wigglesworth/AP",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/1/1383306144001/RBS-bad-bank-008.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Kirsty Wigglesworth",
+            "altText":"RBS bad bank",
+            "height":"276",
+            "credit":"Kirsty Wigglesworth/AP",
+            "caption":"The RBS bad bank's assets include property loans, plane leasing and pub chains.  Photograph: Kirsty Wigglesworth/AP",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/1/1383306144001/RBS-bad-bank-008.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Kirsty Wigglesworth",
+            "altText":"RBS bad bank",
+            "height":"276",
+            "credit":"Kirsty Wigglesworth/AP",
+            "caption":"The RBS bad bank's assets include property loans, plane leasing and pub chains.  Photograph: Kirsty Wigglesworth/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421448231",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/1/1383306136538/RBS-bad-bank-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Kirsty Wigglesworth",
+            "altText":"RBS bad bank",
+            "height":"84",
+            "credit":"Kirsty Wigglesworth/AP",
+            "caption":"The RBS bad bank's assets include property loans, plane leasing and pub chains.  Photograph: Kirsty Wigglesworth/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"business/2013/nov/01/royal-bank-scotland-losses-internal-bad-bank-rbs",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2013-11-01T11:04:00Z",
+      "webTitle":"RBS places troublesome assets worth £38bn in internal 'bad bank'",
+      "webUrl":"http://www.theguardian.com/business/2013/nov/01/royal-bank-scotland-losses-internal-bad-bank-rbs",
+      "apiUrl":"http://content.guardianapis.com/business/2013/nov/01/royal-bank-scotland-losses-internal-bad-bank-rbs",
+      "fields":{
+        "newspaperPageNumber":"43",
+        "trailText":"RBS chief executive Ross McEwan warns of substantial losses this year as George Osborne says no sell-off until after election",
+        "headline":"RBS places troublesome assets worth £38bn in internal 'bad bank'",
+        "body":"<p>Royal Bank of Scotland warned on Friday that it was on course for a substantial loss this year, dashing any remaining hopes of a return to the private sector until after the 2015 election.</p><p>Announcing that £38bn of troublesome loans would be ringfenced within the bank, the new chief executive Ross McEwan heralded a \"resetting\" of the often fraught relationship with the Treasury – owner of 81% of the shares – and the Bank of England, which regulates the bank and is poised to impose tougher rules on capital.</p><p>McEwan who took the helm only a month ago <a href=\"http://www.theguardian.com/business/2013/aug/02/rbs-ross-mcewan-stephen-hester\" title=\"\">after Stephen Hester was ousted in the summer</a>, said he wanted to end the \"weariness\" and \"defensiveness\" that had crept into RBS. He is embarking on a review of all the bank's operations – including its troublesome Ulster operations in Ireland and the already-scaled back investment bank – which will be announced in February. He will accelerate the sale of the US arm, Citizens.</p><p>\"The bar for RBS is higher than for any other bank because we got saved by the UK government,\" said McEwan. A <a href=\"http://www.theguardian.com/business/2013/nov/01/rbs-business-lending-attacked\" title=\"\">highly critical report into its lending to small business</a> found it turning away three out of every four applications for business loans and acting too aggressively towards customers in difficulty.</p><p>Unions feared a new wave of job cuts on top of 30,000 already axed since the 2008 bailout. Dominic Hook, Unite national officer, said: \"Management claim that customer service is a priority for the bank and its reputation depends on it but RBS has cut staff numbers to the bone.\"</p><p>RBS shares  were the second biggest fallers in the FTSE 100, down 7.5% at 340p – well below the 500p average price the taxpayer spent £45bn buying them for – after the bank reported a third-quarter loss of more than £600m.</p><p>Demonstrating a thawing of relations with the new boss, Chancellor George Osborne was at the London office of RBS for the announcement of the result of the review he had commissioned into whether the bank should be split up.</p><p>The study by financial advisers Rothschild, estimated to have cost £9m, stepped back from a full break-up and creation of a \"bad bank\" suggested by senior figures such as  former chancellor, Lord Lawson and former Bank of England governor Lord King.</p><p>Instead, about £38bn of troublesome loans – including £9bn from Ulster Bank – will be placed into a new non-core division to be known as the capital resolution division, which the bank aims to wind down in three years. This will mean writing off up to £4.5bn of problem loans in the next quarter – driving the bank to a \"substantial loss\" for the full year. But some £11bn of capital should be released as a result.</p><p>McEwan insisted the government had not forced RBS into the new-look non-core bank, saying it had to listen major shareholders. \"If you were a hedge fund and had 81% of the business you'd want to be having good conversations,\" he said.</p><p><a href=\"http://www.theguardian.com/business/2013/jun/19/osborne-lloyds-rbs-sell-off\" title=\"\">Commissioned following a recommendation by the parliamentary commission on banking</a> , the review concluded the \"effort, risk and expense involved in the creation of an external bad bank is not justified\". <a href=\"https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/254540/PU1581_RBS_bad_bank_Govt_review.pdf\" title=\"\">A 150 page document published by the Treasur</a>y said creating bad bank would \"do more harm than good\".</p><p>Labour MP Pat McFadden, who sat on the commission, said the outcome \"simply changes the name plate on what was already happening\". Lord McFall, also on the commission, said on Twitter it was the \"status quo w[ith] frills\".</p><p>But Osborne said the bank was now set on a \"new direction\", to focus on the UK and small business lending and become a bank that would be \"batting for Britain\". A sale of the government's stake was unlikely to happen before the May 2015 election, Osborne said.</p><p>Sir Philip Hampton, RBS chairman who had previously indicated a sale could start next year, said that since its bailout RBS had pumped £15bn into Ulster bank, paid out more in compensation to customers and paid fees to the government which should be taken into account when assessing its share performance.</p><p>McEwan's aim is \"to dispel any suggestions that RBS is travelling light on capital\" at a time when the Bank of England is preparing to force all UK banks to hold more capital and more quickly than international regulations require. It is aiming for a 12% ratio in three years. The Treasury said the bank needed to \"accommodate any additional headwinds which may adversely affect their capital resources, for example future costs of redress\".</p><p>The bank took a fresh provision for payment protection insurance mis-selling of £250m – taking its total bill so far to £2.65bn, and admitted it was involved in new investigation into alleged manipulation of foreign exchange markets.</p><p>RBS is now in discussions about releasing the dividend access share that would have forced the bank to pay dividends – when it could afford them – to the government before its other shareholders.</p><p>An £8bn contingent capital facility which required the government to pump more money into the bank if its capital ratio fell is now being repaid a year early.</p><!-- Guardian Watermark: internal-code/content/421434497|2013-11-05T11:03:52Z|d3700e4926806f5da96000f3ea838949d3e9203f -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-02T00:11:07Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/1/1383303673810/RBS-chief-Ross-McEwan-and-003.jpg",
+        "standfirst":"RBS chief executive Ross McEwan warns of substantial losses this year as George Osborne says no sell-off until after election",
+        "shortUrl":"http://gu.com/p/3k33t",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/1/1383303673810/RBS-chief-Ross-McEwan-and-003.jpg",
+        "wordcount":"845",
+        "commentable":"true",
+        "internalContentCode":"421434497",
+        "allowUgc":"false",
+        "internalOctopusCode":"8267778",
+        "isPremoderated":"false",
+        "byline":"Jill Treanor",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-11-02",
+        "internalPageCode":"1990269",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T07:57:11Z"
+      },
+      "tags":[{
+        "id":"business/royalbankofscotlandgroup",
+        "type":"keyword",
+        "webTitle":"Royal Bank of Scotland",
+        "webUrl":"http://www.theguardian.com/business/royalbankofscotlandgroup",
+        "apiUrl":"http://content.guardianapis.com/business/royalbankofscotlandgroup",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/banking",
+        "type":"keyword",
+        "webTitle":"Banking",
+        "webUrl":"http://www.theguardian.com/business/banking",
+        "apiUrl":"http://content.guardianapis.com/business/banking",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/ross-mcewan",
+        "type":"keyword",
+        "webTitle":"Ross McEwan",
+        "webUrl":"http://www.theguardian.com/business/ross-mcewan",
+        "apiUrl":"http://content.guardianapis.com/business/ross-mcewan",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/credit-crunch",
+        "type":"keyword",
+        "webTitle":"Credit crunch",
+        "webUrl":"http://www.theguardian.com/business/credit-crunch",
+        "apiUrl":"http://content.guardianapis.com/business/credit-crunch",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/marketturmoil",
+        "type":"keyword",
+        "webTitle":"Market turmoil",
+        "webUrl":"http://www.theguardian.com/business/marketturmoil",
+        "apiUrl":"http://content.guardianapis.com/business/marketturmoil",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/financial-crisis",
+        "type":"keyword",
+        "webTitle":"Financial crisis",
+        "webUrl":"http://www.theguardian.com/business/financial-crisis",
+        "apiUrl":"http://content.guardianapis.com/business/financial-crisis",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/recession",
+        "type":"keyword",
+        "webTitle":"Recession",
+        "webUrl":"http://www.theguardian.com/business/recession",
+        "apiUrl":"http://content.guardianapis.com/business/recession",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/economics",
+        "type":"keyword",
+        "webTitle":"Economics",
+        "webUrl":"http://www.theguardian.com/business/economics",
+        "apiUrl":"http://content.guardianapis.com/business/economics",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"profile/jilltreanor",
+        "type":"contributor",
+        "webTitle":"Jill Treanor",
+        "webUrl":"http://www.theguardian.com/profile/jilltreanor",
+        "apiUrl":"http://content.guardianapis.com/profile/jilltreanor",
+        "bio":"<p>Jill Treanor is the Guardian's City editor. She specialises in the banking sector</p>",
+        "rcsId":"GNL003510",
+        "r2ContributorId":"15822",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jill_treanor_140x140.jpg",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"politics/georgeosborne",
+        "type":"keyword",
+        "webTitle":"George Osborne",
+        "webUrl":"http://www.theguardian.com/politics/georgeosborne",
+        "apiUrl":"http://content.guardianapis.com/politics/georgeosborne",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/financial3",
+        "type":"newspaper-book-section",
+        "webTitle":"Financial",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/financial3",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/financial3",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421445842",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/1/1383292419388/RBS-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Cheskin",
+            "altText":"RBS",
+            "height":"372",
+            "credit":"David Cheskin/PA",
+            "caption":"RBS is to create a mini bad bank for £38bn of troublesome loans. Photograph: David Cheskin/PA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/1/1383303670200/RBS-chief-Ross-McEwan-and-001.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"RBS chief Ross McEwan and chancellor George Osborne",
+            "height":"54",
+            "credit":"PR",
+            "caption":"RBS chief Ross McEwan and chancellor George Osborne at the bank's London headquarters",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/1/1383303672510/RBS-chief-Ross-McEwan-and-002.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"RBS chief Ross McEwan and chancellor George Osborne",
+            "height":"130",
+            "credit":"PR",
+            "caption":"RBS chief Ross McEwan and chancellor George Osborne at the bank's London headquarters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/1/1383303673810/RBS-chief-Ross-McEwan-and-003.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"RBS chief Ross McEwan and chancellor George Osborne",
+            "height":"84",
+            "credit":"PR",
+            "caption":"RBS chief Ross McEwan and chancellor George Osborne at the bank's London headquarters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/1/1383303675149/RBS-chief-Ross-McEwan-and-004.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"RBS chief Ross McEwan and chancellor George Osborne",
+            "height":"132",
+            "credit":"PR",
+            "caption":"RBS chief Ross McEwan and chancellor George Osborne at the bank's London headquarters",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/1/1383303676415/RBS-chief-Ross-McEwan-and-005.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"RBS chief Ross McEwan and chancellor George Osborne",
+            "height":"168",
+            "credit":"PR",
+            "caption":"RBS chief Ross McEwan and chancellor George Osborne at the bank's London headquarters",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/1/1383303677831/RBS-chief-Ross-McEwan-and-006.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"RBS chief Ross McEwan and chancellor George Osborne",
+            "height":"180",
+            "credit":"PR",
+            "caption":"RBS chief Ross McEwan and chancellor George Osborne at the bank's London headquarters",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/1/1383303679070/RBS-chief-Ross-McEwan-and-007.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"RBS chief Ross McEwan and chancellor George Osborne",
+            "height":"228",
+            "credit":"PR",
+            "caption":"RBS chief Ross McEwan and chancellor George Osborne at the bank's London headquarters",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/1/1383303680360/RBS-chief-Ross-McEwan-and-008.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"RBS chief Ross McEwan and chancellor George Osborne",
+            "height":"276",
+            "credit":"PR",
+            "caption":"RBS chief Ross McEwan and chancellor George Osborne at the bank's London headquarters",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/1/1383303680360/RBS-chief-Ross-McEwan-and-008.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"RBS chief Ross McEwan and chancellor George Osborne",
+            "height":"276",
+            "credit":"PR",
+            "caption":"RBS chief Ross McEwan and chancellor George Osborne at the bank's London headquarters",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421445843",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/1/1383303673810/RBS-chief-Ross-McEwan-and-003.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"RBS chief Ross McEwan and chancellor George Osborne",
+            "height":"84",
+            "credit":"PR",
+            "caption":"RBS chief Ross McEwan and chancellor George Osborne at the bank's London headquarters",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

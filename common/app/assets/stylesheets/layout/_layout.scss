@@ -1,40 +1,112 @@
-/* ==========================================================================
-   Global wrapper
+/* Global wrapper
    ========================================================================== */
 
-#container {
-  position: relative;
-  clear: both;
-  max-width: 80em;
-  max-width: 125rem;
-  margin: 0 auto;
+#preloads {
+    @include gs-container;
+    clear: both;
+    margin-top: $headerHeight;
 }
 
-/* ==========================================================================
-   Global header and navigation
+@include mq(tablet) {
+    #header.has-nav + #preloads {
+        margin-top: 104px;
+    }
+}
+
+
+/* Global header and navigation
    ========================================================================== */
+
+#header.js-site-message {
+    top: auto
+}
 
 #header {
-  position: relative;
-  background-color: $blue;
+    min-height: $headerHeight;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1050; // On top of Google "Adchoices" label which has z-index: 1040…
+
+    /* These styles extend the top bars to the screen edges */
+    @include mq(tablet) {
+        &:before,
+        &:after {
+            content: "";
+            display: block;
+            position: absolute;
+            width: 100%;
+            z-index: -10;
+        }
+
+        &:before {
+            top: 0;
+            height: $headerHeight;
+            background-color: $c-brandBlue;
+        }
+
+        &.has-nav {
+            &:after {
+                top: $headerHeight;
+                height: 40px;
+                background-color: $c-neutral7;
+                border-bottom: 1px solid $c-neutral5;
+            }
+        }
+    }
+}
+    .header__inner {
+        background-color: $c-brandBlue;
+        height: $headerHeight;
+    }
+
+.guardian-logo-wrapper {
+    float: left;
+    margin: 20px 0 18px $gs-gutter/2;
+
+    i {
+        display: block;
+    }
+
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter;
+    }
 }
 
-#logo {
-  display: block;
-  float: left;
-  margin: 20px 0 18px $gutter;
-  text-indent: -9999px;
 
-  @media only screen and (-webkit-min-device-pixel-ratio: 2) {
-    background-position: 0px 0px;
-    background-size: 100%;
-    background-image: url('../images/guardian-logo%402x.6d3878cbb92dd65a215d34db3aa5c0ec.png');
-  }
+/* Columning
+   ========================================================================== */
+
+.monocolumn-wrapper {
+    padding-left: $gs-gutter / 2;
+    padding-right: $gs-gutter / 2;
+
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
+
+    .page-header,
+    .page-sub-header {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+@include mq(tablet) {
+    .monocolumn-wrapper {
+        max-width: gs-span(8);
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .monocolumn-wrapper--no-limit {
+        max-width: none;
+    }
 }
 
 
-/*
-   Layout helpers
+/* Layout helpers
    ========================================================================== */
 
 /**
@@ -46,19 +118,68 @@
 }
 
 .box-indent {
-    padding: 0 $gutter $baseline*1 $gutter;
+    padding: 0 $gs-gutter/2 $baseline;
+
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
 }
 
-.inline-image {
+
+.img--inline {
     width: $inArticleInlineImgWidth;
     float: left;
-    margin: 0;
-    margin-right: 10px;
-    margin-bottom: 15px;
-    margin-top: 3px;
+    clear: left;
+    margin: 3px $gs-gutter 0 0;
+
+    @include mq(mobileLandscape) {
+        width: gs-span(2);
+    }
+
+    figcaption {
+        padding-top: $baseline;
+        word-wrap: break-word;
+    }
 }
 
-.img-tiny.inline-image {
+.img-tiny.img--inline {
     width: auto;
     max-width: $inArticleInlineImgWidth;
+}
+
+
+/* Preloads (for swipe)
+   ========================================================================== */
+
+#preloads-inner {
+    position: relative;
+    top: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.has-swipe {
+    .preload {
+        position: absolute;
+        width: 100%;
+    }
+
+    #preload-0 { left: -100%; }
+    #preload-1 { left:     0; }
+    #preload-2 { left:  100%; }
+}
+
+
+/* Ajax loading helpers
+   ========================================================================== */
+
+.preload-msg {
+    padding: 50px 50px 250px 50px;
+    text-align: center;
+}
+
+.preload-msg .is-updating {
+    display: block;
+    margin: 10px auto;
 }

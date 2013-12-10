@@ -1,0 +1,1687 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"travel/2013/oct/30/uk-chain-hotels-survey-best-and-worst",
+      "sectionId":"travel",
+      "sectionName":"Travel",
+      "webPublicationDate":"2013-10-30T06:00:00Z",
+      "webTitle":"The UK's best and worst hotel chains",
+      "webUrl":"http://www.theguardian.com/travel/2013/oct/30/uk-chain-hotels-survey-best-and-worst",
+      "apiUrl":"http://content.guardianapis.com/travel/2013/oct/30/uk-chain-hotels-survey-best-and-worst",
+      "fields":{
+        "trailText":"<p>A customer survey by Which? has found a huge difference in standards across UK hotel brands. But which chain hotels do you rate? And which would you avoid at all costs?</p>",
+        "headline":"The UK's best and worst hotel chains",
+        "body":"<p>With thousands of bedrooms in as many locations, it's easy to imagine that chain hotels all offer the same bland, basic experience. However a new survey by Which? reveals they may not be as homogenous as you think, with a huge difference in quality between the best and worst brands.</p><p>The survey of 36 UK hotel chains asked Which? members to rate the chains on cleanliness, customer service, bed comfort and value for money. The results are based on 8,267 hotel stays in the past year.</p><p>Topping the table is Q Hotels, with 21 four-star hotels, which received a full five-star rating for cleanliness and room fixtures and an overall customer score of 78%. One member described their stay as \"excellent in every department\".</p><p>For Britannia Hotels, however, the results tell a different story. The chain, described by members as \"shabby\" and \"run down\", scored a dismal 36% overall, to come bottom of the list. Some guests were shocked to find bedrooms without windows. One disappointed customer said: \"It was £10 a night extra for a window in the room!\"</p><p>Travelodge, the most visited chain in the survey, with 500 hotels, fared only slightly better, with an overall score of 50%. While it received a three-star rating when it came to value for money, its breakfasts were awarded just a single rather unappetising star.</p><p>The chain that should be most satisfied with the results is Premier Inn. The budget chain came third, in the company of luxury brands such as Radisson Blu Edwardian (second), Sofitel (fourth) and Double Tree by Hilton (fifth).</p><p>With 650 hotels in the UK, Premier Inn is also the biggest chain on the list. In a recent ad campaign for the hotel comedian Lenny Henry promises \"a great night's sleep guaranteed\". According to Which?, one in 10 members requested a refund under this promise. Members said refunds were offered \"with no quibble\", and sometimes even \"without requesting it\", presumably as soon as a complaint is made. The chain won a five-star rating for customer service.</p><p>Which? editor Richard Headland, said: \"Our survey has revealed a king-sized bed gap between the best and worst hotel chains in the UK and shows you don't have to spend a fortune to get a decent overnight stay.\"</p><p><strong>The top six hotels customer satisfaction score:</strong></p><p>Q hotels \t<strong>78%</strong><br />Radisson Blu Edwardian \t <strong>77%</strong><br />Premier Inn \t<strong>76%</strong><br />Sofitel \t<strong>74%</strong><br />DoubleTree by Hilton \t <strong>71%</strong><br />Park Plaza \t <strong>71%</strong></p><p><strong>And the bottom six:</strong></p><p>Britannia Hotels \t <strong>36%</strong><br />Travelodge \t <strong>50%</strong><br />Ramada \t <strong>51%</strong><br />PH Hotels \t <strong>51%</strong><br />De Vere Village \t <strong>51%</strong><br />Shearings Hotels \t <strong>52%</strong></p><!-- Guardian Watermark: internal-code/content/421215240|2013-11-05T11:03:55Z|4db68abe65f86f8d98f7f810d65e10fa7026220d -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-30T09:38:39Z",
+        "hasStoryPackage":"true",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Travel/Late_offers/pictures/2013/10/29/1383061602637/Premier-inn-bedroom-004.jpg",
+        "standfirst":"A customer survey by Which? has found a huge difference in standards across UK hotel brands. But which chain hotels do you rate? And which would you avoid at all costs? (Tell us in the comments below)",
+        "shortUrl":"http://gu.com/p/3kvyt",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Travel/Late_offers/pictures/2013/10/29/1383061602637/Premier-inn-bedroom-004.jpg",
+        "wordcount":"403",
+        "commentable":"true",
+        "internalContentCode":"421215240",
+        "allowUgc":"false",
+        "internalOctopusCode":"8250892",
+        "isPremoderated":"false",
+        "byline":"Will Coldwell",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-30",
+        "internalPageCode":"1988568",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-02T06:00:00Z"
+      },
+      "tags":[{
+        "id":"travel/hotels",
+        "type":"keyword",
+        "webTitle":"Hotels",
+        "webUrl":"http://www.theguardian.com/travel/hotels",
+        "apiUrl":"http://content.guardianapis.com/travel/hotels",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"travel/uk",
+        "type":"keyword",
+        "webTitle":"United Kingdom",
+        "webUrl":"http://www.theguardian.com/travel/uk",
+        "apiUrl":"http://content.guardianapis.com/travel/uk",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"money/consumer-affairs",
+        "type":"keyword",
+        "webTitle":"Consumer affairs",
+        "webUrl":"http://www.theguardian.com/money/consumer-affairs",
+        "apiUrl":"http://content.guardianapis.com/money/consumer-affairs",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"profile/will-coldwell",
+        "type":"contributor",
+        "webTitle":"Will Coldwell",
+        "webUrl":"http://www.theguardian.com/profile/will-coldwell",
+        "apiUrl":"http://content.guardianapis.com/profile/will-coldwell",
+        "bio":"<p>Will Coldwell is a freelance writer and journalist. You can follow him on Twitter <br /><a href=\"https://twitter.com/will_coldwell\">here</a></p>",
+        "r2ContributorId":"50195",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Education/Clearing_Pix/furniture/2012/10/5/1349435287443/will-coldwell-003.jpg",
+        "references":[]
+      },{
+        "id":"travel/travel",
+        "type":"keyword",
+        "webTitle":"Travel",
+        "webUrl":"http://www.theguardian.com/travel/travel",
+        "apiUrl":"http://content.guardianapis.com/travel/travel",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"theguardian/travel/travel",
+        "type":"newspaper-book-section",
+        "webTitle":"Travel features",
+        "webUrl":"http://www.theguardian.com/theguardian/travel/travel",
+        "apiUrl":"http://content.guardianapis.com/theguardian/travel/travel",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"theguardian/travel",
+        "type":"newspaper-book",
+        "webTitle":"Travel",
+        "webUrl":"http://www.theguardian.com/theguardian/travel",
+        "apiUrl":"http://content.guardianapis.com/theguardian/travel",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421264076",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Travel/Late_offers/pictures/2013/10/29/1383061597979/Premier-inn-bedroom-001.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Premier inn bedroom",
+            "height":"54",
+            "credit":"PR",
+            "caption":"Premier Inn came third in the survey after Radisson Blu",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Travel/Late_offers/pictures/2013/10/29/1383061600233/Premier-inn-bedroom-002.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Premier inn bedroom",
+            "height":"340",
+            "credit":"PR",
+            "caption":"Premier Inn came third in the survey after Radisson Blu",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Travel/Late_offers/pictures/2013/10/29/1383061601463/Premier-inn-bedroom-003.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Premier inn bedroom",
+            "height":"130",
+            "credit":"PR",
+            "caption":"Premier Inn came third in the survey after Radisson Blu",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Travel/Late_offers/pictures/2013/10/29/1383061602637/Premier-inn-bedroom-004.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Premier inn bedroom",
+            "height":"84",
+            "credit":"PR",
+            "caption":"Premier Inn came third in the survey after Radisson Blu",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Travel/Late_offers/pictures/2013/10/29/1383061603817/Premier-inn-bedroom-005.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Premier inn bedroom",
+            "height":"132",
+            "credit":"PR",
+            "caption":"Premier Inn came third in the survey after Radisson Blu",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Travel/Late_offers/pictures/2013/10/29/1383061604990/Premier-inn-bedroom-006.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Premier inn bedroom",
+            "height":"168",
+            "credit":"PR",
+            "caption":"Premier Inn came third in the survey after Radisson Blu",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Travel/Late_offers/pictures/2013/10/29/1383061606231/Premier-inn-bedroom-007.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Premier inn bedroom",
+            "height":"180",
+            "credit":"PR",
+            "caption":"Premier Inn came third in the survey after Radisson Blu",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Travel/Late_offers/pictures/2013/10/29/1383061607538/Premier-inn-bedroom-008.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Premier inn bedroom",
+            "height":"228",
+            "credit":"PR",
+            "caption":"Premier Inn came third in the survey after Radisson Blu",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Travel/Late_offers/pictures/2013/10/29/1383061608741/Premier-inn-bedroom-009.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Premier inn bedroom",
+            "height":"276",
+            "credit":"PR",
+            "caption":"Premier Inn came third in the survey after Radisson Blu",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Travel/Late_offers/pictures/2013/10/29/1383061609940/Premier-inn-bedroom-010.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Premier inn bedroom",
+            "height":"372",
+            "credit":"PR",
+            "caption":"Premier Inn came third in the survey after Radisson Blu",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Travel/Late_offers/pictures/2013/10/29/1383061608741/Premier-inn-bedroom-009.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Premier inn bedroom",
+            "height":"276",
+            "credit":"PR",
+            "caption":"Premier Inn came third in the survey after Radisson Blu",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421264077",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Travel/Late_offers/pictures/2013/10/29/1383061602637/Premier-inn-bedroom-004.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Premier inn bedroom",
+            "height":"84",
+            "credit":"PR",
+            "caption":"Premier Inn came third in the survey after Radisson Blu",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"music/2007/sep/29/popandrock2",
+      "sectionId":"music",
+      "sectionName":"Music",
+      "webPublicationDate":"2007-09-28T23:07:02Z",
+      "webTitle":"Pamela Des Barres' quiz: rock stars and groupies",
+      "webUrl":"http://www.theguardian.com/music/2007/sep/29/popandrock2",
+      "apiUrl":"http://content.guardianapis.com/music/2007/sep/29/popandrock2",
+      "fields":{
+        "newspaperPageNumber":"8",
+        "trailText":"<p>Who was the best rock star lover? Who preferred girls in uniforms? Who shagged to his own music? Professional groupie <strong>Pamela Des Barres</strong>' new book reveals all. But can you match the star to the story?</p>",
+        "headline":"Let's get quizzical!",
+        "body":"<p><strong>1</strong> \"He was into cross-dressing. He wore pantyhose with cut-out parts, high heels, dresses, wigs, make-up: the whole thing... The sex was very regular, nothing out of the ordinary. There was never another person involved. The only oddity was that he dressed up a lot... <strong>XXXX</strong> knew his masculinity and his femininity. He had some of his own women's clothes made for him and he was the kind of person who would go into your closet. He was a dumpster diver, too, and he got stuff out of the trash.\"</p><p><strong> Groupie: Miss B</strong></p><p>A. Pete Townshend B. Kurt Cobain C. Marilyn Manson</p><p><strong>2</strong> \"Here was the greatest sex star on the planet and there I was getting high with him.\" Mercy remembers that <strong>XXXX</strong> had an elaborate tape deck system, and as they made love he played his own songs over and over, the entire time. \"It was all set up,\" she recalls. \"I remember thinking he was ego ridden. All through the sex, he listened to himself, one tape after another... He was an extremely funny guy, I don't know why I didn't pursue that one.\"<br /><strong>Groupie: Miss Mercy</strong></p><p>A. Tom Jones B. Prince C. Al Green</p><p><strong>3</strong> \"I said to him, 'No, no, no, you don't kiss a girl like that,' and then I showed him how to French kiss. 'Oooh, I like that!' he said, and he went on from there. Once I showed him the difference between how he was kissing and how I kissed, he said, 'Oh God, that feels so good.' When I said, 'Yeah, it feels good all over, too,' his eyes lit up... When we first started out, he was kinda like 'wham, bam, thank you, ma'am,'... Eventually he became much more sophisticated. He was definitely worth the effort.\"</p><p><strong>Groupie: Tura </strong></p><p>A. Jim Morrison B. Gene Simmons C. Elvis Presley</p><p><strong>4</strong> \"He liked me in long, flowy skirts. He wanted me to look like a gypsy all the time; an innocent gypsy... He was so possessive and protective over me. He wouldn't let me drink, and one time I was smoking cigarettes and he went crazy. He made me smoke a whole pack of Salems until I was gagging. I never smoked again. He was like a dad sometimes.\"<br /><strong> Groupie: Lori Lightning</strong></p><p>A. Jimmy Page B. Paul McCartney C. Jeff Beck</p><p><strong>5</strong> \"A lot of Englishmen have this thing about English schoolgirls... He took me to Marks &amp; Spencer, and we went into the section where they sold school uniforms. We started play-acting and <strong>XXXX</strong> told the saleslady, 'I have to buy this little girl a school uniform, she's the daughter of one of my friends, can you fit her please?' Here was this 21-year-old kid with this however-the-hell-old-I-looked young girl. I was supposed to be going into seventh or eighth grade, but must have looked about 11.<br /><strong> Groupie: Patti D'Arbanville</strong></p><p>A.Bryan Ferry B. John Lennon C. Cat Stevens</p><p><strong>6</strong> \"We walked around Chelsea, and he'd tell me about the architecture, the carriage houses, who once lived in this house or when that home was built. He taught me all about the pre-Raphaelites. We'd go to fancy little restaurants for dinner... We'd stay home and listen to music, get high and drink champagne. He'd put on a James Brown record and do his <strong>XXXX </strong>dance for me.\" <strong>Groupie: Catherine James</strong></p><p>A. Mick Jagger B. Eric Clapton C. David Bowie</p><p><strong>7</strong> \"He was the best lover. I mean, he was the absolute best. He lived in the attic on the top floor of the house. He had speakers on either side of his pillows, and when you laid in bed, you were immersed in this wall of sound. He used to make this sexy blowing noise in my ear... He was very uninhibited, physically and sexually free, and in touch with his body. He used to play an album by the Hollies all the time, and now, whenever I hear that song Hey, Carrie Anne, I think of him.\"<br /><strong> Groupie: Michele Overman</strong></p><p>A.Steven Tyler B. Robert Plant C. Leo Sayer</p><p><strong>&#183;</strong> Pamela Des Barres' Lets Spend The Night Together is out now.</p><p><strong>Answers</strong>\n1B; 2C; 3C; 4A; 5C; 6A; 7A</p><!-- Guardian Watermark: internal-code/content/330831007|2013-11-05T11:03:55Z|75e6a0a168e06190b748e3562f39f3020d7b6c5d -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2007-09-28T23:07:02Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "standfirst":"Who was the best rock star lover? Who preferred girls in uniforms? Who shagged to his own music? Professional groupie Pamela Des Barres' new book reveals all. But can you match the star to the story?",
+        "shortUrl":"http://gu.com/p/xjtha",
+        "wordcount":"681",
+        "commentable":"false",
+        "internalContentCode":"330831007",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Complied by Sian Thatcher",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2007-09-29",
+        "internalPageCode":"919009",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2007-10-01T23:07:02Z"
+      },
+      "tags":[{
+        "id":"music/popandrock",
+        "type":"keyword",
+        "webTitle":"Pop and rock",
+        "webUrl":"http://www.theguardian.com/music/popandrock",
+        "apiUrl":"http://content.guardianapis.com/music/popandrock",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/music",
+        "type":"keyword",
+        "webTitle":"Music",
+        "webUrl":"http://www.theguardian.com/music/music",
+        "apiUrl":"http://content.guardianapis.com/music/music",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"theguardian/theguide/guidefeatures",
+        "type":"newspaper-book-section",
+        "webTitle":"The Guide features",
+        "webUrl":"http://www.theguardian.com/theguardian/theguide/guidefeatures",
+        "apiUrl":"http://content.guardianapis.com/theguardian/theguide/guidefeatures",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"theguardian/theguide",
+        "type":"newspaper-book",
+        "webTitle":"The Guide",
+        "webUrl":"http://www.theguardian.com/theguardian/theguide",
+        "apiUrl":"http://content.guardianapis.com/theguardian/theguide",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"profile/sianthatcher",
+        "type":"contributor",
+        "webTitle":"Sian Thatcher",
+        "webUrl":"http://www.theguardian.com/profile/sianthatcher",
+        "apiUrl":"http://content.guardianapis.com/profile/sianthatcher",
+        "bio":"<p>Sian Thatcher is a freelance writer based in north London</p>",
+        "r2ContributorId":"26577",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[],
+      "references":[]
+    },{
+      "id":"science/2011/aug/27/space-hotel-rich-thrill-world",
+      "sectionId":"science",
+      "sectionName":"Science",
+      "webPublicationDate":"2011-08-27T18:40:12Z",
+      "webTitle":"Space hotel to give rich a thrill that's out of this world",
+      "webUrl":"http://www.theguardian.com/science/2011/aug/27/space-hotel-rich-thrill-world",
+      "apiUrl":"http://content.guardianapis.com/science/2011/aug/27/space-hotel-rich-thrill-world",
+      "fields":{
+        "newspaperPageNumber":"14",
+        "trailText":"Russian aerospace engineers join race to provide wealthy thrill-seekers with the ultimate holiday destination",
+        "headline":"Space hotel to give rich a thrill that's out of this world",
+        "body":"<p>Russian engineers have announced the ultimate get-away-from-it-all holiday, revealing plans to put a hotel into orbit 200 miles above Earth by 2016. The four-room Hotel in the Heavens would house up to seven guests who would be able to cavort in zero-gravity while watching as our planet turns.</p><p>The out-of-this-world experience will not come cheaply, however. Space tourists will have to pay £500,000 to travel on a Soyuz rocket to get to the hotel before stumping up a further £100,000 for a five-day stay.</p><p>\"The hotel will be aimed at wealthy individuals and people working for private companies who want to do research in space,\" said Sergei Kostenko, chief executive of Orbital Technologies, which will construct the orbiting guest house. \"A hotel should be comfortable, and this one will be.\"</p><p>The news that Russia plans to launch a hotel into outer space is the latest example in a series of extreme holidaymaking projects. As the world accumulates more and more billionaires, entrepreneurs are seeking newer and more demanding ways to provide them with the ultimate in hi-tech thrills. Apart from space hotels, which have also been touted recently by US and European aerospace companies, proposals to fly thrill-seekers on rocket flights to the edge of space are now being finalised by Richard Branson's Virgin Galactic as well as by US companies such as Space Adventures, Armadillo Aerospace and XCOR Aerospace.</p><p>In addition, billionaires may soon be able to buy their own artificial countries – built in international waters on oil rig-type platforms – where they can indulge in their dictatorial fantasies. Or they could buy high-performance submarines that will allow them to dive and explore the deepest parts of oceans. Being rich has never offered so many opportunities for adventure – and excess.</p><p>In the case of the space hotels, hedonism will be limited, however. Orbital Technologies have made it clear that guests will be restricted to consuming iced tea and fruit juices for their liquid intake. Alcohol will be banned. In addition, waste water will be recycled while air will be filtered to remove odour and bacteria and then returned to cabins.</p><p>Tourists, accompanied by experienced crew, will also have to dine on food prepared on Earth and reheated in microwave ovens, while showers will be carefully sealed affairs to prevent water escaping as globules that  otherwise would float around the hotel's interior.</p><p>It is scarcely five-star luxury. On the other hand, there will be many compensations. Views of the Earth from the space hotel's special observation windows should be breathtaking as the craft whizzes round our planet every 90 minutes – providing guests with 16 sunsets and 16 sunrises a day. Visitors will also be able to choose to have their beds vertically or horizontally inclined to their line of flight. Indeed, the prospect of weightlessness offers all sorts of zero-gravity activities that can only be dreamt of on Earth.</p><p>By contrast, the pleasures offered for those who go on suborbital flights offered by Virgin Galactic will be over far more quickly. Launched on craft pioneered by aviation designer Burt Rutan, these craft will allow passengers to slip the surly bonds of the gravitational field for only a few minutes before their rocket-powered craft descends back to Earth. On the other hand, the company's plans are far more advanced than those put forward by most other space tourism entrepreneurs. Branson says Virgin Galactic's first flights should begin next year. Tickets will cost a mere $200,000, with celebrities such as Paris Hilton, Tom Hanks and Stephen Hawking signing up for early flights.</p><p>If that doesn't appeal, Peter Thiel – who co-founded PayPal and who was one of Facebook's earliest backers – has revealed  that he wants to create communities that would be run according to extreme <em>laissez-faire</em> ideals. According to <em>Details</em> magazine, he wants to build artificial islands – based on oil-rig designs – that would be a \"kind of floating Petri dish for implementing policies that libertarians, stymied by indifference at the voting booths, have been unable to advance: no welfare, looser building codes, no minimum wage and few restrictions on weapons.\" A billionaire's dream venture, in other words.</p><p>And then there is the prospect of taking to the ocean depths in a range of new submersibles that will use ultra-strong materials to withstand the incredible pressures found at the deepest parts of the oceans. Again these are aimed for sale to the planet's richest inhabitants.</p><p>\"Ninety per cent of the sea bed has still to be explored,\" said Patrick Lahey, president of Triton Submarines of Vero Beach, Florida, one of the leading companies involved in building such submersibles. \"There is a host of wonders down there. You could cruise down to the wrecks of the Titanic or the Bismarck. You will be able to access any place in the ocean and watch all those wonderful sea creatures.\"</p><!-- Guardian Watermark: internal-code/content/378329558|2013-11-05T11:03:55Z|5b48cf00784f334fc23010abdf9d801cc058721a -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-06-27T07:31:39Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Observer/Columnist/Columnists/2011/8/26/1314396634493/Hotel-in-space-planned-by-003.jpg",
+        "standfirst":"Russian aerospace engineers join race to provide wealthy thrill-seekers with the ultimate holiday destination",
+        "shortUrl":"http://gu.com/p/3xfmg",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2011/8/26/1314396634493/Hotel-in-space-planned-by-003.jpg",
+        "wordcount":"799",
+        "commentable":"true",
+        "internalContentCode":"378329558",
+        "allowUgc":"false",
+        "internalOctopusCode":"5120932",
+        "isPremoderated":"false",
+        "byline":"Robin McKie, science editor",
+        "publication":"The Observer",
+        "newspaperEditionDate":"2011-08-28",
+        "internalPageCode":"1625551",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2011-08-30T18:40:12Z"
+      },
+      "tags":[{
+        "id":"science/space",
+        "type":"keyword",
+        "webTitle":"Space",
+        "webUrl":"http://www.theguardian.com/science/space",
+        "apiUrl":"http://content.guardianapis.com/science/space",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"world/russia",
+        "type":"keyword",
+        "webTitle":"Russia",
+        "webUrl":"http://www.theguardian.com/world/russia",
+        "apiUrl":"http://content.guardianapis.com/world/russia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/richard-branson",
+        "type":"keyword",
+        "webTitle":"Richard Branson",
+        "webUrl":"http://www.theguardian.com/business/richard-branson",
+        "apiUrl":"http://content.guardianapis.com/business/richard-branson",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/virgin-group",
+        "type":"keyword",
+        "webTitle":"Virgin Group",
+        "webUrl":"http://www.theguardian.com/business/virgin-group",
+        "apiUrl":"http://content.guardianapis.com/business/virgin-group",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"travel/travel",
+        "type":"keyword",
+        "webTitle":"Travel",
+        "webUrl":"http://www.theguardian.com/travel/travel",
+        "apiUrl":"http://content.guardianapis.com/travel/travel",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"world/europe-news",
+        "type":"keyword",
+        "webTitle":"Europe",
+        "webUrl":"http://www.theguardian.com/world/europe-news",
+        "apiUrl":"http://content.guardianapis.com/world/europe-news",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"science/science",
+        "type":"keyword",
+        "webTitle":"Science",
+        "webUrl":"http://www.theguardian.com/science/science",
+        "apiUrl":"http://content.guardianapis.com/science/science",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/robinmckie",
+        "type":"contributor",
+        "webTitle":"Robin McKie",
+        "webUrl":"http://www.theguardian.com/profile/robinmckie",
+        "apiUrl":"http://content.guardianapis.com/profile/robinmckie",
+        "bio":"<p>Robin McKie is <a href=\"http://www.guardian.co.uk/science\">science</a> and <a href=\"http://www.guardian.co.uk/technology\">technology </a> editor for the <a href=\"http://observer.guardian.co.uk/\">Observer</a></p>",
+        "rcsId":"GNL004746",
+        "r2ContributorId":"15289",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2010/10/23/1287830920805/Robin-McKie-001.jpg",
+        "references":[]
+      },{
+        "id":"theobserver/news/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/theobserver/news/uknews",
+        "apiUrl":"http://content.guardianapis.com/theobserver/news/uknews",
+        "sectionId":"theobserver",
+        "sectionName":"From the Observer",
+        "references":[]
+      },{
+        "id":"theobserver/news",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theobserver/news",
+        "apiUrl":"http://content.guardianapis.com/theobserver/news",
+        "sectionId":"theobserver",
+        "sectionName":"From the Observer",
+        "references":[]
+      },{
+        "id":"publication/theobserver",
+        "type":"publication",
+        "webTitle":"The Observer",
+        "webUrl":"http://www.theguardian.com/theobserver/all",
+        "apiUrl":"http://content.guardianapis.com/theobserver/all",
+        "sectionId":"theobserver",
+        "sectionName":"From the Observer",
+        "references":[]
+      },{
+        "id":"world/south-and-central-asia",
+        "type":"keyword",
+        "webTitle":"South and Central Asia",
+        "webUrl":"http://www.theguardian.com/world/south-and-central-asia",
+        "apiUrl":"http://content.guardianapis.com/world/south-and-central-asia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-378346349",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2011/8/26/1314396632701/Hotel-in-space-planned-by-001.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Orbital Technologies",
+            "altText":"Hotel in space planned by Orbital Technologies",
+            "height":"54",
+            "credit":"Orbital Technologies/PR",
+            "caption":"An artist's impression of the hotel in space planned by Orbital Technologies. Photograph: Orbital Technologies",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2011/8/26/1314396633572/Hotel-in-space-planned-by-002.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Orbital Technologies",
+            "altText":"Hotel in space planned by Orbital Technologies",
+            "height":"130",
+            "credit":"Orbital Technologies/PR",
+            "caption":"An artist's impression of the hotel in space planned by Orbital Technologies. Photograph: Orbital Technologies",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2011/8/26/1314396635315/Hotel-in-space-planned-by-004.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Orbital Technologies",
+            "altText":"Hotel in space planned by Orbital Technologies",
+            "height":"132",
+            "credit":"Orbital Technologies/PR",
+            "caption":"An artist's impression of the hotel in space planned by Orbital Technologies. Photograph: Orbital Technologies",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2011/8/26/1314396636199/Hotel-in-space-planned-by-005.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Orbital Technologies",
+            "altText":"Hotel in space planned by Orbital Technologies",
+            "height":"180",
+            "credit":"Orbital Technologies/PR",
+            "caption":"An artist's impression of the hotel in space planned by Orbital Technologies. Photograph: Orbital Technologies",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2011/8/26/1314396637151/Hotel-in-space-planned-by-006.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Orbital Technologies",
+            "altText":"Hotel in space planned by Orbital Technologies",
+            "height":"228",
+            "credit":"Orbital Technologies/PR",
+            "caption":"An artist's impression of the hotel in space planned by Orbital Technologies. Photograph: Orbital Technologies",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2011/8/26/1314396638051/Hotel-in-space-planned-by-007.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Orbital Technologies",
+            "altText":"Hotel in space planned by Orbital Technologies",
+            "height":"276",
+            "credit":"Orbital Technologies/PR",
+            "caption":"Up to seven space enthusiasts at a time would be housed in the Hotel in the Heavens, which is planned by Russian company Orbital Technologies",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-378346350",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2011/8/26/1314396634493/Hotel-in-space-planned-by-003.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Orbital Technologies",
+            "altText":"Hotel in space planned by Orbital Technologies",
+            "height":"84",
+            "credit":"Orbital Technologies/PR",
+            "caption":"An artist's impression of the hotel in space planned by Orbital Technologies. Photograph: Orbital Technologies",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"artanddesign/2013/mar/17/me-hotel-foster-london-review",
+      "sectionId":"artanddesign",
+      "sectionName":"Art and design",
+      "webPublicationDate":"2013-03-17T00:05:00Z",
+      "webTitle":"ME hotel – review",
+      "webUrl":"http://www.theguardian.com/artanddesign/2013/mar/17/me-hotel-foster-london-review",
+      "apiUrl":"http://content.guardianapis.com/artanddesign/2013/mar/17/me-hotel-foster-london-review",
+      "fields":{
+        "newspaperPageNumber":"27",
+        "trailText":"<p>The first hotel to be designed entirely by Foster and Partners gives London another bizarre space, writes <strong>Rowan Moore</strong></p>",
+        "headline":"ME hotel – review",
+        "body":"<p>I exit a black lift into a low, black lobby, pass through an opening and, without warning, find myself inside a steepling pyramid – a near-tetrahedron in fact – also dark and shiny. It is lit from a single triangular opening at the top. An implausibly vast book lies open on a stand, with a quotation from Aristotle on its page. Images of jellyfish, projected on to the walls, shimmer, as do monochrome attendants.</p><p>This is Bond villain/weird cult scenography, and it vaguely recalls a shrine I once saw in Brasilia that was dedicated to the belief that that 1960s city was the fulfilment of some ancient Egyptian prophecy. This, however, is the middle of London and it is nothing more exotic than the lobby of a hotel, albeit one with high ambitions of design and &pound;<a href=\"http://www.melia.com/hotels/united-kingdom/london/me-london/index.html\" title=\"\">400-a-night rooms</a>.</p><p><a href=\"http://www.fosterandpartners.com/projects/me-hotel/\" title=\"\">The ME hotel </a>is the first hotel to be designed in its entirety by Foster &amp; Partners, with an amount of influence over interiors that is rarely granted to architects. Usually these spaces are handed over to interior designers who delight in doing everything the architect would hate. Most common building types – airports, museums, shops, offices, malls, apartment blocks, parliaments – have been achieved several times over by the gigantic Foster machine, so it's rare to come across one that was virgin territory for the practice.</p><p>The ME hotel (its name so strikingly shameless in its appeal to the egocentric) is also an emissary from a once and probably future age, having first been conceived in 2003, in the era of the boom without end. Its developers were initially the Silken group, who also made one of the most extravagant and bizarre monuments of that epoch, the <a href=\"http://www.hoteles-silken.com/hotel-puerta-america-madrid/en\" title=\"\">Hotel Puerta Am&eacute;rica </a>in Madrid, which tried to compensate for its location by the side of a motorway by getting signature architects – Hadid, Arad, Chipperfield, Nouvel, Foster – to design one floor each.</p><figure data-media-id=\"gu-image-405780300\"><img src=\"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/3/15/1363373617151/ME-London-008.jpg\" alt=\"ME London\" width=\"460\" height=\"276\" class=\"gu-image\" /><figcaption>The ME hotel in the Aldwych, London. Photograph: Francisco Guerrero/ME London</figcaption></figure><p>Silken bought Marconi House, a 1904 building in the Aldwych, which has been converted into flats, and a 1950s building next door which was demolished to make space for the hotel. In 2003 the phenomenon of the designer hotel was still fairly new in London, the field dominated by the Sanderson and St Martins Lane, whose designer, Philippe Starck, had previously developed his brand of interior in New York. By hiring the very big name of Foster, Silken would have wanted something comparable to Starck's wacky Gallic machismo, but different.</p><p>Construction started, the British part of Silken went the way of the bubble and construction stopped again. Another group, Sol Meli&aacute;, bought the London site, asked Fosters to make some changes to the interior and the project proceeded. In particular, a large restaurant was installed on the ground floor of the central atrium, displacing the reception to the first floor, which requires arriving guests to be guided along an extended route to the mystic tetrahedron. It makes arrival all the more like an initiation ceremony, but is not necessarily the worse for that.</p><p>Its complicated history, plus the accumulated pressures of building on central London sites, makes the hotel an alliance of different intentions, unified by the themes of luxury and Foster-ness. It sits in an area where the dominant style is bulky Edwardian neo-baroque, and the multi-level mansard and ornate gablets of Marconi House have been dutifully restored, while the hotel's new elevations are English Heritage-approved – solid, substantial, load-bearing Portland stone. There is plenty of roach bed variant of the material, which teems with fossils. It's like a venerable cheese, cut with a sharp wire.</p><p>Here the style is updated baroque – that is, with putti, swags and bosoms omitted. There are still curves, and a slightly silo-like corner tower through which you enter, albeit also crystalline bay windows that suggest there is something different inside. So you go in, past an execrable abstract sculpture that presumably symbolises creativity, and the black marble begins. There are also wave-like screens of chrome rods to guide you on the way.</p><p>Things stay dark – black lifts, black reception, black foyers and corridors – until you get to bedrooms (a bit narrow, but nicely done) lined in pale leather and lit by the crystalline windows you see on the outside. The joins in the glass are minimal, so you have the vertiginous experience of standing on a small triangular projection over the street. Alternatively you can go to another bright space, the rooftop bar, from where you get an exceptional view of London and of its multibillion-pound car-boot sale of trophy towers – Walkie-Talkie, Cheesegrater, Philishave.</p><p>Within this journey from light to dark to light there are other elements, such as a two-level, cylindrical, rock-star penthouse on top of the silo, and the ground-floor restaurant is a big noisy place run by the One Group, which started off in New York. Here the theme is a blokey version of sexiness – &quot;a steak house with lots of girls&quot; is how Nigel Dancey and Giles Robinson of Foster &amp; Partners describe it.</p><p>The overall effect is of something expensive, well-made, containing surprises, sometimes enjoyable, sometimes strange, not always cohering. The switch from fogey-friendly Portland stone to the magic pyramid is a drastic one and not entirely smooth. There is an obsessive, not quite explicable geometry of triangles similar to that in the <a href=\"http://www.guardian.co.uk/world/2010/aug/08/astana-kazakhstan-space-station-steppes\" title=\"\">Palace of Peace and Reconciliation</a> in Astana, Kazakhstan, which came out of the Foster office at about the same time that the hotel was being designed. There is a tendency, common among architects, to use overly architectural means to make interiors: chrome rods, for example, are a bit of a clunky way to achieve what might be done with a curtain.</p><figure data-media-id=\"gu-image-405780301\"><img src=\"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2013/3/13/1363188461729/me-hotel-001.jpg\" alt=\"me hotel\" width=\"220\" height=\"247\" class=\"gu-image\" /><figcaption>The lift lobby at the ME hotel, with the external wall of the tetrahedron visible.</figcaption></figure><p>You get the feeling that Fosters is trying to be a bit Starck-y at times, and it doesn't come naturally to this once-sober practice. What the ME hotel is not is a modern incarnation of the <a href=\"http://en.wikipedia.org/wiki/Radisson_Blu_Royal_Hotel,_Copenhagen\" title=\"\">SAS Royal in Copenhagen</a>, of 1960, where the architect and designer Arne Jacobsen governed everything from the exterior to door handles and developed chairs and cutlery that would become design classics. The ME hotel is the product of a time when there are many constituencies to be satisfied – the restaurant franchise, the image-makers, English Heritage – and even an outfit as powerful as Fosters has to tack and trim to please them all.</p><p>But it also has much of what is good about Foster, including a certain ruthlessness in the details. And, to London's treasury of remarkable if bizarre spaces, the black tetrahedron is a notable addition.</p><!-- Guardian Watermark: internal-code/content/405516662|2013-11-05T11:03:55Z|9482ba94561c5e74fc9aaea86589945d1104271d -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-07-03T19:50:49Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/3/15/1363379447843/ME-hotel-004.jpg",
+        "standfirst":"A black tetrahedron at the heart of Foster &amp; Partners' new central London hotel is the most arresting element of an exercise in compromise",
+        "shortUrl":"http://gu.com/p/3edh5",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/3/15/1363379447843/ME-hotel-004.jpg",
+        "wordcount":"1083",
+        "commentable":"true",
+        "internalContentCode":"405516662",
+        "allowUgc":"false",
+        "internalOctopusCode":"7356319",
+        "isPremoderated":"false",
+        "byline":"Rowan Moore",
+        "publication":"The Observer",
+        "newspaperEditionDate":"2013-03-17",
+        "internalPageCode":"1879826",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-04-13T14:04:00Z"
+      },
+      "tags":[{
+        "id":"artanddesign/architecture",
+        "type":"keyword",
+        "webTitle":"Architecture",
+        "webUrl":"http://www.theguardian.com/artanddesign/architecture",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/architecture",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"artanddesign/norman-foster",
+        "type":"keyword",
+        "webTitle":"Norman Foster",
+        "webUrl":"http://www.theguardian.com/artanddesign/norman-foster",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/norman-foster",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"artanddesign/design",
+        "type":"keyword",
+        "webTitle":"Design",
+        "webUrl":"http://www.theguardian.com/artanddesign/design",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/design",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"travel/hotels",
+        "type":"keyword",
+        "webTitle":"Hotels",
+        "webUrl":"http://www.theguardian.com/travel/hotels",
+        "apiUrl":"http://content.guardianapis.com/travel/hotels",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"uk/london",
+        "type":"keyword",
+        "webTitle":"London",
+        "webUrl":"http://www.theguardian.com/uk/london",
+        "apiUrl":"http://content.guardianapis.com/uk/london",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"travel/travel",
+        "type":"keyword",
+        "webTitle":"Travel",
+        "webUrl":"http://www.theguardian.com/travel/travel",
+        "apiUrl":"http://content.guardianapis.com/travel/travel",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"artanddesign/artanddesign",
+        "type":"keyword",
+        "webTitle":"Art and design",
+        "webUrl":"http://www.theguardian.com/artanddesign/artanddesign",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/artanddesign",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"tone/reviews",
+        "type":"tone",
+        "webTitle":"Reviews",
+        "webUrl":"http://www.theguardian.com/tone/reviews",
+        "apiUrl":"http://content.guardianapis.com/tone/reviews",
+        "references":[]
+      },{
+        "id":"profile/rowan-moore",
+        "type":"contributor",
+        "webTitle":"Rowan Moore",
+        "webUrl":"http://www.theguardian.com/profile/rowan-moore",
+        "apiUrl":"http://content.guardianapis.com/profile/rowan-moore",
+        "r2ContributorId":"36692",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/18/1268912235644/Rowan-Moore.jpg",
+        "references":[]
+      },{
+        "id":"publication/theobserver",
+        "type":"publication",
+        "webTitle":"The Observer",
+        "webUrl":"http://www.theguardian.com/theobserver/all",
+        "apiUrl":"http://content.guardianapis.com/theobserver/all",
+        "sectionId":"theobserver",
+        "sectionName":"From the Observer",
+        "references":[]
+      },{
+        "id":"theobserver/new-review/critics",
+        "type":"newspaper-book-section",
+        "webTitle":"Critics",
+        "webUrl":"http://www.theguardian.com/theobserver/new-review/critics",
+        "apiUrl":"http://content.guardianapis.com/theobserver/new-review/critics",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"theobserver/new-review",
+        "type":"newspaper-book",
+        "webTitle":"The New Review",
+        "webUrl":"http://www.theguardian.com/theobserver/new-review",
+        "apiUrl":"http://content.guardianapis.com/theobserver/new-review",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-405780298",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2013/3/13/1363187778808/me-hotel-003.jpg",
+          "typeData":{
+            "source":"Francisco Guerrero",
+            "altText":"me hotel",
+            "height":"340",
+            "credit":"Francisco Guerrero",
+            "caption":"A view of the rooftop at Foster and Partners' ME hotel, London. Photograph: Francisco Guerrero",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2013/3/13/1363187797619/me-hotel-011.jpg",
+          "typeData":{
+            "source":"Francisco Guerrero",
+            "altText":"me hotel",
+            "height":"372",
+            "credit":"Francisco Guerrero",
+            "caption":"A view of the rooftop at Foster and Partners' ME hotel, London. Photograph: Francisco Guerrero",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/3/15/1363378420931/Stewart-Lee-009.jpg",
+          "typeData":{
+            "source":"Observer",
+            "photographer":"David Foldvari",
+            "altText":"Stewart Lee",
+            "height":"550",
+            "credit":"David Foldvari/Observer",
+            "caption":"  Illustration: David Foldvari for the Observer",
+            "width":"295"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/3/15/1363378422150/Stewart-Lee-010.jpg",
+          "typeData":{
+            "source":"Observer",
+            "photographer":"David Foldvari",
+            "altText":"Stewart Lee",
+            "height":"220",
+            "credit":"David Foldvari/Observer",
+            "caption":"  Illustration: David Foldvari for the Observer",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/3/15/1363379443327/ME-hotel-001.jpg",
+          "typeData":{
+            "source":"ME London",
+            "photographer":"Francisco Guerrero",
+            "altText":"ME hotel",
+            "height":"550",
+            "credit":"Francisco Guerrero/ME London",
+            "caption":"The rooftop bar at the ME hotel. Photograph: Francisco Guerrero/ME London",
+            "width":"865"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/3/15/1363379445027/ME-hotel-002.jpg",
+          "typeData":{
+            "source":"ME London",
+            "photographer":"Francisco Guerrero",
+            "altText":"ME hotel",
+            "height":"54",
+            "credit":"Francisco Guerrero/ME London",
+            "caption":"The rooftop bar at the ME hotel. Photograph: Francisco Guerrero/ME London",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/3/15/1363379446449/ME-hotel-003.jpg",
+          "typeData":{
+            "source":"ME London",
+            "photographer":"Francisco Guerrero",
+            "altText":"ME hotel",
+            "height":"130",
+            "credit":"Francisco Guerrero/ME London",
+            "caption":"The rooftop bar at the ME hotel. Photograph: Francisco Guerrero/ME London",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/3/15/1363379447843/ME-hotel-004.jpg",
+          "typeData":{
+            "source":"ME London",
+            "photographer":"Francisco Guerrero",
+            "altText":"ME hotel",
+            "height":"84",
+            "credit":"Francisco Guerrero/ME London",
+            "caption":"The rooftop bar at the ME hotel. Photograph: Francisco Guerrero/ME London",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/3/15/1363379449299/ME-hotel-005.jpg",
+          "typeData":{
+            "source":"ME London",
+            "photographer":"Francisco Guerrero",
+            "altText":"ME hotel",
+            "height":"132",
+            "credit":"Francisco Guerrero/ME London",
+            "caption":"The rooftop bar at the ME hotel. Photograph: Francisco Guerrero/ME London",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/3/15/1363379450705/ME-hotel-006.jpg",
+          "typeData":{
+            "source":"ME London",
+            "photographer":"Francisco Guerrero",
+            "altText":"ME hotel",
+            "height":"168",
+            "credit":"Francisco Guerrero/ME London",
+            "caption":"The rooftop bar at the ME hotel. Photograph: Francisco Guerrero/ME London",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/3/15/1363379452255/ME-hotel-007.jpg",
+          "typeData":{
+            "source":"ME London",
+            "photographer":"Francisco Guerrero",
+            "altText":"ME hotel",
+            "height":"180",
+            "credit":"Francisco Guerrero/ME London",
+            "caption":"The rooftop bar at the ME hotel. Photograph: Francisco Guerrero/ME London",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/3/15/1363379453648/ME-hotel-008.jpg",
+          "typeData":{
+            "source":"ME London",
+            "photographer":"Francisco Guerrero",
+            "altText":"ME hotel",
+            "height":"228",
+            "credit":"Francisco Guerrero/ME London",
+            "caption":"The rooftop bar at the ME hotel. Photograph: Francisco Guerrero/ME London",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/3/15/1363379455090/ME-hotel-009.jpg",
+          "typeData":{
+            "source":"ME London",
+            "photographer":"Francisco Guerrero",
+            "altText":"ME hotel",
+            "height":"276",
+            "credit":"Francisco Guerrero/ME London",
+            "caption":"The rooftop bar at the ME hotel. Photograph: Francisco Guerrero/ME London",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/3/15/1363379455090/ME-hotel-009.jpg",
+          "typeData":{
+            "source":"ME London",
+            "photographer":"Francisco Guerrero",
+            "altText":"ME hotel",
+            "height":"276",
+            "credit":"Francisco Guerrero/ME London",
+            "caption":"The rooftop bar at the ME hotel. Photograph: Francisco Guerrero/ME London",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-405780299",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/3/15/1363379447843/ME-hotel-004.jpg",
+          "typeData":{
+            "source":"ME London",
+            "photographer":"Francisco Guerrero",
+            "altText":"ME hotel",
+            "height":"84",
+            "credit":"Francisco Guerrero/ME London",
+            "caption":"The rooftop bar at the ME hotel. Photograph: Francisco Guerrero/ME London",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-405780300",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/3/15/1363373617151/ME-London-008.jpg",
+          "typeData":{
+            "source":"ME London",
+            "photographer":"Francisco Guerrero",
+            "altText":"ME London",
+            "height":"276",
+            "credit":"Francisco Guerrero/ME London",
+            "caption":"The ME hotel in the Aldwych, London. Photograph: Francisco Guerrero/ME London",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-405780301",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2013/3/13/1363188461729/me-hotel-001.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"me hotel",
+            "height":"247",
+            "credit":"PR",
+            "caption":"The lift lobby at the ME hotel, with the external wall of the tetrahedron visible.",
+            "width":"220"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"travel/2013/oct/30/uk-chain-hotels-survey-best-and-worst",
+      "sectionId":"travel",
+      "sectionName":"Travel",
+      "webPublicationDate":"2013-10-30T06:00:00Z",
+      "webTitle":"The UK's best and worst hotel chains",
+      "webUrl":"http://www.theguardian.com/travel/2013/oct/30/uk-chain-hotels-survey-best-and-worst",
+      "apiUrl":"http://content.guardianapis.com/travel/2013/oct/30/uk-chain-hotels-survey-best-and-worst",
+      "fields":{
+        "trailText":"<p>A customer survey by Which? has found a huge difference in standards across UK hotel brands. But which chain hotels do you rate? And which would you avoid at all costs?</p>",
+        "headline":"The UK's best and worst hotel chains",
+        "body":"<p>With thousands of bedrooms in as many locations, it's easy to imagine that chain hotels all offer the same bland, basic experience. However a new survey by Which? reveals they may not be as homogenous as you think, with a huge difference in quality between the best and worst brands.</p><p>The survey of 36 UK hotel chains asked Which? members to rate the chains on cleanliness, customer service, bed comfort and value for money. The results are based on 8,267 hotel stays in the past year.</p><p>Topping the table is Q Hotels, with 21 four-star hotels, which received a full five-star rating for cleanliness and room fixtures and an overall customer score of 78%. One member described their stay as \"excellent in every department\".</p><p>For Britannia Hotels, however, the results tell a different story. The chain, described by members as \"shabby\" and \"run down\", scored a dismal 36% overall, to come bottom of the list. Some guests were shocked to find bedrooms without windows. One disappointed customer said: \"It was £10 a night extra for a window in the room!\"</p><p>Travelodge, the most visited chain in the survey, with 500 hotels, fared only slightly better, with an overall score of 50%. While it received a three-star rating when it came to value for money, its breakfasts were awarded just a single rather unappetising star.</p><p>The chain that should be most satisfied with the results is Premier Inn. The budget chain came third, in the company of luxury brands such as Radisson Blu Edwardian (second), Sofitel (fourth) and Double Tree by Hilton (fifth).</p><p>With 650 hotels in the UK, Premier Inn is also the biggest chain on the list. In a recent ad campaign for the hotel comedian Lenny Henry promises \"a great night's sleep guaranteed\". According to Which?, one in 10 members requested a refund under this promise. Members said refunds were offered \"with no quibble\", and sometimes even \"without requesting it\", presumably as soon as a complaint is made. The chain won a five-star rating for customer service.</p><p>Which? editor Richard Headland, said: \"Our survey has revealed a king-sized bed gap between the best and worst hotel chains in the UK and shows you don't have to spend a fortune to get a decent overnight stay.\"</p><p><strong>The top six hotels customer satisfaction score:</strong></p><p>Q hotels \t<strong>78%</strong><br />Radisson Blu Edwardian \t <strong>77%</strong><br />Premier Inn \t<strong>76%</strong><br />Sofitel \t<strong>74%</strong><br />DoubleTree by Hilton \t <strong>71%</strong><br />Park Plaza \t <strong>71%</strong></p><p><strong>And the bottom six:</strong></p><p>Britannia Hotels \t <strong>36%</strong><br />Travelodge \t <strong>50%</strong><br />Ramada \t <strong>51%</strong><br />PH Hotels \t <strong>51%</strong><br />De Vere Village \t <strong>51%</strong><br />Shearings Hotels \t <strong>52%</strong></p><!-- Guardian Watermark: internal-code/content/421215240|2013-11-05T11:03:55Z|4db68abe65f86f8d98f7f810d65e10fa7026220d -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-30T09:38:39Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Travel/Late_offers/pictures/2013/10/29/1383061602637/Premier-inn-bedroom-004.jpg",
+        "standfirst":"A customer survey by Which? has found a huge difference in standards across UK hotel brands. But which chain hotels do you rate? And which would you avoid at all costs? (Tell us in the comments below)",
+        "shortUrl":"http://gu.com/p/3kvyt",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Travel/Late_offers/pictures/2013/10/29/1383061602637/Premier-inn-bedroom-004.jpg",
+        "wordcount":"403",
+        "commentable":"true",
+        "internalContentCode":"421215240",
+        "allowUgc":"false",
+        "internalOctopusCode":"8250892",
+        "isPremoderated":"false",
+        "byline":"Will Coldwell",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-30",
+        "internalPageCode":"1988568",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-02T06:00:00Z"
+      },
+      "tags":[{
+        "id":"travel/hotels",
+        "type":"keyword",
+        "webTitle":"Hotels",
+        "webUrl":"http://www.theguardian.com/travel/hotels",
+        "apiUrl":"http://content.guardianapis.com/travel/hotels",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"travel/uk",
+        "type":"keyword",
+        "webTitle":"United Kingdom",
+        "webUrl":"http://www.theguardian.com/travel/uk",
+        "apiUrl":"http://content.guardianapis.com/travel/uk",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"money/consumer-affairs",
+        "type":"keyword",
+        "webTitle":"Consumer affairs",
+        "webUrl":"http://www.theguardian.com/money/consumer-affairs",
+        "apiUrl":"http://content.guardianapis.com/money/consumer-affairs",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"profile/will-coldwell",
+        "type":"contributor",
+        "webTitle":"Will Coldwell",
+        "webUrl":"http://www.theguardian.com/profile/will-coldwell",
+        "apiUrl":"http://content.guardianapis.com/profile/will-coldwell",
+        "bio":"<p>Will Coldwell is a freelance writer and journalist. You can follow him on Twitter <br /><a href=\"https://twitter.com/will_coldwell\">here</a></p>",
+        "r2ContributorId":"50195",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Education/Clearing_Pix/furniture/2012/10/5/1349435287443/will-coldwell-003.jpg",
+        "references":[]
+      },{
+        "id":"travel/travel",
+        "type":"keyword",
+        "webTitle":"Travel",
+        "webUrl":"http://www.theguardian.com/travel/travel",
+        "apiUrl":"http://content.guardianapis.com/travel/travel",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"theguardian/travel/travel",
+        "type":"newspaper-book-section",
+        "webTitle":"Travel features",
+        "webUrl":"http://www.theguardian.com/theguardian/travel/travel",
+        "apiUrl":"http://content.guardianapis.com/theguardian/travel/travel",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"theguardian/travel",
+        "type":"newspaper-book",
+        "webTitle":"Travel",
+        "webUrl":"http://www.theguardian.com/theguardian/travel",
+        "apiUrl":"http://content.guardianapis.com/theguardian/travel",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421264076",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Travel/Late_offers/pictures/2013/10/29/1383061597979/Premier-inn-bedroom-001.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Premier inn bedroom",
+            "height":"54",
+            "credit":"PR",
+            "caption":"Premier Inn came third in the survey after Radisson Blu",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Travel/Late_offers/pictures/2013/10/29/1383061600233/Premier-inn-bedroom-002.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Premier inn bedroom",
+            "height":"340",
+            "credit":"PR",
+            "caption":"Premier Inn came third in the survey after Radisson Blu",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Travel/Late_offers/pictures/2013/10/29/1383061601463/Premier-inn-bedroom-003.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Premier inn bedroom",
+            "height":"130",
+            "credit":"PR",
+            "caption":"Premier Inn came third in the survey after Radisson Blu",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Travel/Late_offers/pictures/2013/10/29/1383061602637/Premier-inn-bedroom-004.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Premier inn bedroom",
+            "height":"84",
+            "credit":"PR",
+            "caption":"Premier Inn came third in the survey after Radisson Blu",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Travel/Late_offers/pictures/2013/10/29/1383061603817/Premier-inn-bedroom-005.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Premier inn bedroom",
+            "height":"132",
+            "credit":"PR",
+            "caption":"Premier Inn came third in the survey after Radisson Blu",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Travel/Late_offers/pictures/2013/10/29/1383061604990/Premier-inn-bedroom-006.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Premier inn bedroom",
+            "height":"168",
+            "credit":"PR",
+            "caption":"Premier Inn came third in the survey after Radisson Blu",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Travel/Late_offers/pictures/2013/10/29/1383061606231/Premier-inn-bedroom-007.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Premier inn bedroom",
+            "height":"180",
+            "credit":"PR",
+            "caption":"Premier Inn came third in the survey after Radisson Blu",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Travel/Late_offers/pictures/2013/10/29/1383061607538/Premier-inn-bedroom-008.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Premier inn bedroom",
+            "height":"228",
+            "credit":"PR",
+            "caption":"Premier Inn came third in the survey after Radisson Blu",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Travel/Late_offers/pictures/2013/10/29/1383061608741/Premier-inn-bedroom-009.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Premier inn bedroom",
+            "height":"276",
+            "credit":"PR",
+            "caption":"Premier Inn came third in the survey after Radisson Blu",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Travel/Late_offers/pictures/2013/10/29/1383061609940/Premier-inn-bedroom-010.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Premier inn bedroom",
+            "height":"372",
+            "credit":"PR",
+            "caption":"Premier Inn came third in the survey after Radisson Blu",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Travel/Late_offers/pictures/2013/10/29/1383061608741/Premier-inn-bedroom-009.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Premier inn bedroom",
+            "height":"276",
+            "credit":"PR",
+            "caption":"Premier Inn came third in the survey after Radisson Blu",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421264077",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Travel/Late_offers/pictures/2013/10/29/1383061602637/Premier-inn-bedroom-004.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Premier inn bedroom",
+            "height":"84",
+            "credit":"PR",
+            "caption":"Premier Inn came third in the survey after Radisson Blu",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/nov/01/oslo-hotel-sleep-with-favourite-rock-star-coldplay",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-11-01T16:18:02Z",
+      "webTitle":"The Oslo hotel where you can sleep with your favourite rock star",
+      "webUrl":"http://www.theguardian.com/world/2013/nov/01/oslo-hotel-sleep-with-favourite-rock-star-coldplay",
+      "apiUrl":"http://content.guardianapis.com/world/2013/nov/01/oslo-hotel-sleep-with-favourite-rock-star-coldplay",
+      "fields":{
+        "newspaperPageNumber":"39",
+        "trailText":"The musicians may just be projections but when a European supergroup – including members of A-ha and Coldplay – was given carte blanche to decorate they got straight to the point",
+        "headline":"The Oslo hotel where you can sleep with your favourite rock star",
+        "body":"<p>The ultimate fantasy of many a 1980s teenager is being made a reality in Oslo, where a hotel is offering guests the chance to sleep with A-ha. Well … one of the band members anyway. Other available bed-partners include the bassist from Coldplay, the singer from the Danish band Mew, or a Grammy award-winning music-producer (for the more discerning guest).</p><p>The <a href=\"http:// www.theguardian.com/culture/2013/aug/25/nordic-hotel-petter-stordalen-pornography-tv\" title=\"\">Nordic hotel that replaced pay-TV porn with contemporary art</a> has produced another first: an interactive suite that encourages guests to project a life-size image of their favourite musician onto the bed beside them as they sleep (or not, as the case may be).</p><p>The idea came from A-ha's Magne Furuholmen, Coldplay's Guy Berryman, Mew singer Jonas Bjerre and producer Martin Terefe, who together make up the pan-European supergroup Apparatjik. The band formed in 2008 to create the music for the BBC Two series Amazon with Bruce Parry and has been recording and performing together ever since.</p><p>Rock stars are generally better known for wrecking hotel rooms than designing them but Furuholmen says that the idea of creating a suite held a particular appeal. \"One common denominator of all four members of Apparatjik is that we've spent a disproportionately large part of our lives in hotel rooms and we were sick of every room looking identical.\" Petter Stordalen, boss of the Nordic Choice chain, felt the same and invited Apparatjik to do something about it at his flagship hotel, The Thief. \"Art has always been really important to me,\" says Stordalen, \"so this seemed like a good idea. I gave the band carte blanche to do what they wanted – and they did.\"</p><p>\"We started by going around tacky gift shops trying to find things to make the room as kitsch as we could and create a sort of 'disco combat' feel,\" explains Furuholmen. \"We found pixelated carpets, retro fabrics, lots of vinyl, and something every hotel room needs: a disco ball for the bathroom.\" Furuholmen and his band mates took these treasures and created Apparatjik World, an eclectic mix of art, video, music and installations – including projections of band members dressed as semi-nude muscle men with bulging silver posing pouches (\"we like a costume: it gives us freedom,\" says Furuholmen). The result? \"Quirky … with a touch of insanity,\" is how Stordalen describes his new suite.</p><p>The guests seem to like it, too. \"We've had a great response from regulars, as well as some big names who've stayed,\" says Stordalen. The hotel is a favourite among A-listers and although its owner won't name names, gossip sites report that Justin Bieber and Jay Z have been recent guests.</p><p>There's just one problem. \"We've got this internal competition going on about which band member's projection is the most popular,\" says Furuholmen, \"in bed.\" So whose buttons are getting pressed? Stordalen, the man with the answers, won't divulge numbers. \"I don't want anyone to get upset,\" he says. \"So the results are strictly confidential.\"</p><!-- Guardian Watermark: internal-code/content/421468792|2013-11-05T11:03:55Z|4728eda93e4e2c83338f08a06a91d32800aae19d -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-02T01:16:50Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383321903061/Rock-star-remote-control--004.jpg",
+        "standfirst":"The musicians may just be projections but when a European supergroup – including members of A-ha and Coldplay – was given carte blanche to decorate they got straight to the point",
+        "shortUrl":"http://gu.com/p/3k3gg",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383321903061/Rock-star-remote-control--004.jpg",
+        "wordcount":"487",
+        "commentable":"true",
+        "internalContentCode":"421468792",
+        "allowUgc":"false",
+        "internalOctopusCode":"8270027",
+        "isPremoderated":"false",
+        "byline":"Helen Russell",
+        "publication":"theguardian.com",
+        "newspaperEditionDate":"2013-11-02",
+        "internalPageCode":"1990618",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T16:18:02Z"
+      },
+      "tags":[{
+        "id":"world/norway",
+        "type":"keyword",
+        "webTitle":"Norway",
+        "webUrl":"http://www.theguardian.com/world/norway",
+        "apiUrl":"http://content.guardianapis.com/world/norway",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"travel/norway",
+        "type":"keyword",
+        "webTitle":"Norway",
+        "webUrl":"http://www.theguardian.com/travel/norway",
+        "apiUrl":"http://content.guardianapis.com/travel/norway",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/europe-news",
+        "type":"keyword",
+        "webTitle":"Europe",
+        "webUrl":"http://www.theguardian.com/world/europe-news",
+        "apiUrl":"http://content.guardianapis.com/world/europe-news",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"travel/hotels",
+        "type":"keyword",
+        "webTitle":"Hotels",
+        "webUrl":"http://www.theguardian.com/travel/hotels",
+        "apiUrl":"http://content.guardianapis.com/travel/hotels",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"travel/travel",
+        "type":"keyword",
+        "webTitle":"Travel",
+        "webUrl":"http://www.theguardian.com/travel/travel",
+        "apiUrl":"http://content.guardianapis.com/travel/travel",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"travel/oslo",
+        "type":"keyword",
+        "webTitle":"Oslo",
+        "webUrl":"http://www.theguardian.com/travel/oslo",
+        "apiUrl":"http://content.guardianapis.com/travel/oslo",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"travel/europe",
+        "type":"keyword",
+        "webTitle":"Europe",
+        "webUrl":"http://www.theguardian.com/travel/europe",
+        "apiUrl":"http://content.guardianapis.com/travel/europe",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"profile/helen-russell",
+        "type":"contributor",
+        "webTitle":"Helen Russell",
+        "webUrl":"http://www.theguardian.com/profile/helen-russell",
+        "apiUrl":"http://content.guardianapis.com/profile/helen-russell",
+        "bio":"<p>Helen Russell is a freelance journalist based in Denmark. She tweets at <a href=\"https://twitter.com/MsHelenRussell\" >@MsHelenRussell</a> and can be found at<a href=\"http://helenrussell.co.uk\" > helenrussell.co.uk</a></p>",
+        "r2ContributorId":"54968",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/5/1378380141453/HelenRussell.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/international",
+        "type":"newspaper-book-section",
+        "webTitle":"International",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/international",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/international",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421470109",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383321897743/Rock-star-remote-control--001.jpg",
+          "typeData":{
+            "source":"The Thief hotel",
+            "altText":"Rock-star remote control ",
+            "height":"54",
+            "credit":"The Thief hotel",
+            "caption":"The remote control that allows guests to choose who is projected on to the pillow beside them at The Thief hotel in Oslo. Photograph: The Thief hotel",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383321899958/Rock-star-remote-control--002.jpg",
+          "typeData":{
+            "source":"The Thief hotel",
+            "altText":"Rock-star remote control ",
+            "height":"340",
+            "credit":"The Thief hotel",
+            "caption":"The remote control that allows guests to choose who is projected on to the pillow beside them at The Thief hotel in Oslo. Photograph: The Thief hotel",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383321901543/Rock-star-remote-control--003.jpg",
+          "typeData":{
+            "source":"The Thief hotel",
+            "altText":"Rock-star remote control ",
+            "height":"130",
+            "credit":"The Thief hotel",
+            "caption":"The remote control that allows guests to choose who is projected on to the pillow beside them at The Thief hotel in Oslo. Photograph: The Thief hotel",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383321903061/Rock-star-remote-control--004.jpg",
+          "typeData":{
+            "source":"The Thief hotel",
+            "altText":"Rock-star remote control ",
+            "height":"84",
+            "credit":"The Thief hotel",
+            "caption":"The remote control that allows guests to choose who is projected on to the pillow beside them at The Thief hotel in Oslo. Photograph: The Thief hotel",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383321904745/Rock-star-remote-control--005.jpg",
+          "typeData":{
+            "source":"The Thief hotel",
+            "altText":"Rock-star remote control ",
+            "height":"132",
+            "credit":"The Thief hotel",
+            "caption":"The remote control that allows guests to choose who is projected on to the pillow beside them at The Thief hotel in Oslo. Photograph: The Thief hotel",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383321906353/Rock-star-remote-control--006.jpg",
+          "typeData":{
+            "source":"The Thief hotel",
+            "altText":"Rock-star remote control ",
+            "height":"168",
+            "credit":"The Thief hotel",
+            "caption":"The remote control that allows guests to choose who is projected on to the pillow beside them at The Thief hotel in Oslo. Photograph: The Thief hotel",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383321907908/Rock-star-remote-control--007.jpg",
+          "typeData":{
+            "source":"The Thief hotel",
+            "altText":"Rock-star remote control ",
+            "height":"180",
+            "credit":"The Thief hotel",
+            "caption":"The remote control that allows guests to choose who is projected on to the pillow beside them at The Thief hotel in Oslo. Photograph: The Thief hotel",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383321909520/Rock-star-remote-control--008.jpg",
+          "typeData":{
+            "source":"The Thief hotel",
+            "altText":"Rock-star remote control ",
+            "height":"228",
+            "credit":"The Thief hotel",
+            "caption":"The remote control that allows guests to choose who is projected on to the pillow beside them at The Thief hotel in Oslo. Photograph: The Thief hotel",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383321911268/Rock-star-remote-control--009.jpg",
+          "typeData":{
+            "source":"The Thief hotel",
+            "altText":"Rock-star remote control ",
+            "height":"276",
+            "credit":"The Thief hotel",
+            "caption":"The remote control that allows guests to choose who is projected on to the pillow beside them at The Thief hotel in Oslo. Photograph: The Thief hotel",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383321912995/Rock-star-remote-control--010.jpg",
+          "typeData":{
+            "source":"The Thief hotel",
+            "altText":"Rock-star remote control ",
+            "height":"372",
+            "credit":"The Thief hotel",
+            "caption":"The remote control that allows guests to choose who is projected on to the pillow beside them at The Thief hotel in Oslo. Photograph: The Thief hotel",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383321911268/Rock-star-remote-control--009.jpg",
+          "typeData":{
+            "source":"The Thief hotel",
+            "altText":"Rock-star remote control ",
+            "height":"276",
+            "credit":"The Thief hotel",
+            "caption":"The remote control that allows guests to choose who is projected on to the pillow beside them at The Thief hotel in Oslo. Photograph: The Thief hotel",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421470110",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383321903061/Rock-star-remote-control--004.jpg",
+          "typeData":{
+            "source":"The Thief hotel",
+            "altText":"Rock-star remote control ",
+            "height":"84",
+            "credit":"The Thief hotel",
+            "caption":"The remote control that allows guests to choose who is projected on to the pillow beside them at The Thief hotel in Oslo. Photograph: The Thief hotel",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

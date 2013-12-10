@@ -15,4 +15,4 @@ Installation
 Usage
 -----
 
-    $ node spricon.js global-icon-config.json
+    grunt compile:icons

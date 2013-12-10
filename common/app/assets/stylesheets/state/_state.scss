@@ -1,3 +1,5 @@
+@charset 'utf-8';
+
 .js-on .js-hidden,
 .js-off .js-visible {
     display: none;
@@ -8,11 +10,15 @@
 }
 
 .current {
-  font-weight: bold;
+    font-weight: bold;
 }
 
 .is-on {
     display: block;
+}
+
+.has-cursor {
+    cursor: pointer;
 }
 
 .maxed {
@@ -24,21 +30,9 @@
     height: auto;
 }
 
-.cta { /* call to action */
-    cursor: pointer;
-}
-
-.expander:before {
-    content: '- ';
-}
-
-.shut .expander:before {
-    content: '+ ';
-}
-
 .collapsible {
     // padding top/bottom looks like it should be 12, but this forces height to 42px which is desired
-    padding: 9px $gutter*2 9px $baseline*2; // double space on right to avoid icon
+    padding: 9px $gutter*2 9px $gutter/2; // double space on right to avoid icon
     position: relative;
     cursor: pointer;
 }
@@ -54,7 +48,7 @@
 .trailblock .panel,
 .rolled-out {
     height: auto;
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 
 .shut > .panel,
@@ -66,66 +60,42 @@
 }
 
 .update {
-	display:block;
-    background-color: $mushroom;
-    margin: 0 $gutter $baseline*4 $gutter;
-    padding: 0 0 0 $baseline*2;
+    display: block;
     overflow: hidden;
-}
 
-.update.hidden{
-    display: none;
-}
-
-.update-text {
-    float:left;
-    margin: 0 $gutter 0 0;
-    padding: 6px 0 0 0;
-    line-height: 32px;
-}
-
-.update-btn {
-    float:right;
-    margin: 0;
-    padding: 13px 12px;
-    background-color: $mushroom;
-    color: #333333;
-    font-weight: normal;
-    border: none;
-    text-shadow: none;
-    box-shadow: none;
-}
-
-.update-btn.is-active,
-.update-btn:hover {
-    color: #ffffff;
-    background-color: #E47A39;
-}
-
-.update-live-matches .update-btn.is-active,
-.update-live-matches .update-btn:hover {
-    background-color: $sportBright;
+    &.hidden {
+        display: none;
+    }
 }
 
 .is-updating {
-    display:none;
-    width: 36px;
-    height: 12px;
-    background-image: url('../images/auto-update-activity.2613085cd6387a1c11ee181d39f8f3b4.gif');
+    display: none;
+    width: 40px;
+    height: 20px;
     background-size: 100%;
     margin-top: 18px;
+
+    &.is-active {
+        display: inline-block;
+    }
 }
 
-.is-updating.is-active {
-    display:inline-block;
+.is-updating--dark {
+    width: 36px;
+    height: 12px;
 }
 
 .is-live-icon {
-    padding: $baseline;
-    margin-right: 5px;
+    padding: 1px 4px 2px 4px;
+    margin: 1px 3px 0 0;
     font-size: 10px;
     font-style: normal;
-    line-height: 1em;
-    color: #ffffff;
+    line-height: 1;
+    color: #fff;
     background-color: #ec1c1c;
+    display: inline-block;
+}
+
+.id--signed-out .sign-in-required {
+    display: none;
 }

@@ -1,21 +1,16 @@
 package model.image
 
 import java.awt.image.BufferedImage
-import org.im4java.core.{ IMOperation, ConvertCmd, Stream2BufferedImage }
+import org.im4java.core.{GraphicsMagickCmd, IMOperation, Stream2BufferedImage}
 import java.io.ByteArrayOutputStream
 import javax.imageio.ImageIO
 
-case class Profile(width: Int = 50, height: Int = 50, compression: Int = 50) {}
-
-// Configuration of our different image profiles
-object Contributor extends Profile(140, 140, 70) {}
-object Gallery extends Profile(750, 480, 90) {}
-
 object Im4Java {
 
-  def apply(image: BufferedImage, operation:IMOperation, format: String = "jpg"): Array[Byte] = { 
-    
-    val cmd = new ConvertCmd(true) // true uses GraphicsMagick, which is better supported by CentOS 
+  def apply(image: BufferedImage, operation:IMOperation, format: String = "jpg"): Array[Byte] = {
+
+    // Use GraphicsMagick, which is better supported by CentOS
+    val cmd = new GraphicsMagickCmd("convert")
     val s2b = new Stream2BufferedImage
     cmd.setOutputConsumer(s2b)
 

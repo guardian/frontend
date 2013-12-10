@@ -1,64 +1,118 @@
-//Fronts/Sections/tags
-//---------------------------------------------
-.front-section-head,
+/* Fronts/Sections/tags
+   ========================================================================== */
+
 .sub-section-head {
     position: relative;
     overflow: hidden;
-    border-top: $baseline solid $mushroom;
+    border-top: $baseline solid $c-newsAccent;
+
+    h1 {
+        @include fs-header(3);
+        height: $gs-column-height;
+        margin-bottom: 0;
+        line-height: 1;
+        font-weight: bolder;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+        display: block;
+        padding: $baseline*1.75 $gs-gutter/2 $baseline*2;
+        @include mq(mobileLandscape) {
+            padding-left: $gs-gutter;
+            padding-right: $gs-gutter;
+        }
+    }
 }
 
-    .front-section-head h1,
-    .sub-section-head h1 {
-        margin-bottom: 0px;
-        line-height: 1em;
-    }
-
-    .front-section-head a,
-    .sub-section-head a {
-        display: block;
-        padding: 15px $gutter;
-    }
-
-    .front-section-head a, 
-    .front-section-head a:link, 
-    .front-section-head a:visited {
-        color: #ffffff;
-    }
-
 .sub-section-head {
-    border-bottom: 1px solid $mushroom;
+    margin: 0 $gs-gutter/2;
+    border-top-width: $baseline/2;
+
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter;
+        margin-right: $gs-gutter;
+    }
+
+    a {
+        padding-left: 0;
+        padding-right: 0;
+    }
 }
 
 .section-head {
-    @extend .type-0;
-    padding: 14px 0 15px 0;
-    margin: 0 $gutter;
-    line-height: 1em;
-    border-top: 4px solid $mushroom;
-    border-bottom: 1px solid $mushroom;
+    @include fs-header(4);
+    height: $gs-column-height + $baseline*2;
+    line-height: 1;
+    font-weight: bolder;
+    margin: 0;
+    border-top: $baseline/2 solid $c-newsAccent;
     @include box-sizing(border-box);
+
+    padding: $baseline $gs-gutter/2 0;
+
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
+
+    @include mq(tablet) {
+        margin-left: $gs-gutter;
+        margin-right: $gs-gutter;
+        padding-left: 0;
+    }
 }
 
-.section-head.zone-color {
-  @media only screen and (min-width: $tablet) { border-top: none; }
+/* Static pages and misc
+   ========================================================================== */
+
+.page-header {
+    @include fs-headline(2);
+    padding: 0 0 $baseline*4;
+    margin: 0 $gs-gutter/2 $baseline $gs-gutter/2;
+    border-bottom: 1px dotted $c-neutral4;
+
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter;
+        margin-right: $gs-gutter;
+    }
 }
 
-//Articles
-//---------------------------------------------
-.article-section-head {
-    @include box-sizing(border-box);
-    padding: 13px 0 14px 0;
-    margin: 0 $gutter;
-    line-height: 1em;
-    border-top: 4px solid $mushroom;
-    border-bottom: 1px solid $mushroom;
+.page-sub-header {
+    @include fs-header(2);
+    padding: $baseline/2 0 $baseline;
+    margin-left: $gs-gutter/2;
+    margin-right: $gs-gutter/2;
+    margin-bottom: $baseline*3;
 
-    @media only screen and (min-width: $tablet) { border-top: none; }
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter;
+        margin-right: $gs-gutter;
+    }
+    .article-zone-no-indent &,
+    .monocolumn-wrapper & {
+        margin-left: 0;
+        margin-right: 0;
+    }
+    > a {
+        display: block;
+    }
 }
 
-//Static pages and misc
-//---------------------------------------------
-.page-head {
-    @extend .type-4;
-    padding: 0 $gutter $baseline*2 $gutter;
+.release {
+    display: none;
+
+    @include mq(tablet) {
+        margin: 18px 0 0;
+        float: left;
+        display: block;
+        color: #95B1CA;
+        font-size: 10px;
+        font-size: 1rem;
+    }
+}
+
+.message {
+    padding: 11px;
+    background-color: #ffffee;
 }

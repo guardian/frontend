@@ -1,13 +1,11 @@
-@(trails: Seq[Trail], numItemsVisible: Int = 5, numWithImages: Int = 5, related: Boolean = false, showFeatured: Boolean = true)
+@(trails: Seq[Trail], numItemsVisible: Int = 5, numWithImages: Int = 5, related: Boolean = false, showFeatured: Boolean = true)(implicit request: RequestHeader)
 
 <ul class="unstyled">
     @trails.take(numItemsVisible).zipWithRowInfo.map{ case (trail, info) =>
-        <li class="trail t@info.rowNum @if(info.rowNum == 1 && trail.mainPicture(width=220)) { has-image }" data-link-name="trail">
-            @info.rowNum match {
-                case featuredRow if featuredRow == 1 & showFeatured => { @fragments.trails.featured(trail, featuredRow, related) }
-                case thumbnailRow if thumbnailRow <= numWithImages  => { @fragments.trails.thumbnail(trail, thumbnailRow, related) }
-                case headlineRow                                    => { @fragments.trails.headline(trail, headlineRow, related) }
-            }
-        </li>
+        @info.rowNum match {
+            case featuredRow if featuredRow == 1 & showFeatured => { @fragments.trails.featured(trail, featuredRow, related) }
+            case thumbnailRow if thumbnailRow <= numWithImages  => { @fragments.trails.thumbnail(trail, thumbnailRow, related) }
+            case headlineRow                                    => { @fragments.trails.headline(trail, headlineRow, related) }
+        }
     }
 </ul>

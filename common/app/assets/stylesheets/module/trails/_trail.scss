@@ -1,98 +1,210 @@
+/* ==========================================================================
+   Trail object
+   ========================================================================== */
+
 .trail {
+    position: relative;
     overflow: hidden;
-    margin: 0 0 $baseline 0;
-    border-bottom: 1px solid #EDEDE7;
-    padding: $baseline*2 0 $baseline*3 0;
+    margin: 0;
+    padding: $baseline 0 $baseline*6;
+    border-top: 1px solid $c-neutral5;
+
+    .relative-timestamp {
+        display: inline-block;
+    }
 }
 
-.trail:first-child {
-    padding-top: $baseline*3
+.trail--gallery,
+.trail + .trail--gallery,
+.matches + .trail,
+.trail--gallery + .trail {
+    border-top: none;
+    padding-top: $baseline*3;
 }
 
-.trail:first-child h2 {
-    margin-bottom: $baseline;
-}
+.trail__headline {
+    @include fs-headline(2);
+    margin-top: $baseline;
+    margin-bottom: $baseline*6 - 3px;
 
-.trail.has-image img {
-    vertical-align: bottom;
-}
+    @include mq(tablet) {
+        @include fs-headline(4, true);
+        margin-bottom: $baseline*8 - 3px;
+    }
 
-.trail:last-child {
-    margin-bottom: 0;
+    > a { display: block; }
 }
-
-.trail-headline {
-    @media screen and (min-width: 25em) { @extend .type-4; }
-    @media screen and (min-width: 64em) { @extend .type-5; }
-}
-
-.media .trail-headline {
-    padding: 0;
-    margin-bottom: $baseline;
-}
-
-.trail-headline a,
-.trail-headline a:hover,
-.trail-headline a:link,
-.trail-headline a:active,
-.trail-headline a:visited,
+.trail__headline a,
+.trail__headline a:hover,
+.trail__headline a:focus,
+.trail__headline a:active,
 .trail h2 a {
-    color: #333333;
+    color: $c-neutral1;
 }
-
-.trail h2 a:active, 
-.trail-headline a:active {
-    color:#333333;
+.trail__headline a:visited,
+.trail h2 a:visited {
+    color: $c-neutral2;
+}
+.trail__headline a:active {
     text-decoration: underline;
 }
-
-.trail-text {
-    @extend .type-7;
+.trail__headline-kicker {
     display: block;
-    clear: left;
-    padding: 0;
-    color: #555555;
-
-  @media screen and (min-width: 37.5em) {
-      clear: none;
-  }
+    color: #F9AF41;
 }
-
-.matches-container .trail-text {
+.trail__img {
     display: none;
+
+    .connection--not-low & {
+        display: block;
+    }
+}
+.trail__text {
+    @include fs-bodyCopy(1);
+
+    @include mq(tablet) {
+        @include fs-bodyCopy(3, true);
+        clear: none;
+    }
 }
 
-.media .trail-text {
-    padding: 0;
+
+/* ==========================================================================
+   Trail counters
+   ========================================================================== */
+
+.trail__count {
+    position: absolute;
+    top: $baseline;
+    right: 0;
+
+    a {
+        display: inline-block;
+    }
+    i {
+        vertical-align: -3px;
+        margin-right: 4px;
+    }
+}
+.trail__count a,
+.trail__count a:hover,
+.trail__count a:focus,
+.trail__count a:active,
+.trail .relative-timestamp {
+    color: $c-neutral2;
+    @include fs-data(2);
+
+    @include mq(tablet) {
+        @include fs-data(3, true);
+    }
+}
+.trail__count--commentcount {
+    a,
+    a:hover,
+    a:focus,
+    a:active {
+        color: inherit;
+        line-height: inherit;
+    }
+}
+.trail__count--imagecount {
+    right: $gutter/2;
 }
 
-.has-image .trail-text {
-    padding-bottom: $baseline*4;
+
+/* ==========================================================================
+   Trail modifiers
+   ========================================================================== */
+
+.trail--featured {
+    .trail__headline {
+        @include fs-headline(3);
+        margin-bottom: $baseline*6;
+
+        @include mq(tablet) {
+            @include fs-headline(5, true);
+            margin-bottom: $baseline*8;
+        }
+    }
+    &.trail--has-image {
+        .trail__text {
+            padding-bottom: $baseline*4;
+        }
+        img {
+            vertical-align: bottom;
+        }
+    }
+}
+.trail--thumbnail {
+    .trail__img {
+        float: left;
+        margin-bottom: $baseline;
+        margin-right: $gs-gutter/2;
+        margin-top: 3px; // Align with top of text
+        position: relative;
+        overflow: hidden;
+        height: 71px;
+        width: 120px;
+
+        @include mq(mobileLandscape) {
+            margin-right: $gs-gutter;
+        }
+
+        @include mq(tablet) {
+            height: gs-height(2);
+            width: gs-span(2);
+        }
+
+        img {
+            width: 100%;
+            display: block;
+        }
+
+        .ab-expandable-trails--on & {
+            margin-bottom: 0;
+        }
+    }
 }
 
-.trail .media {
-    padding: 0 0 $baseline*1 0;
+.trail--headline {
+    .trail__headline {
+        @include fs-headline(1, true);
+        margin-bottom: 0;
+    }
 }
 
-.trail .media-img { width: 35%; }
+.trail--gallery {
+    background-color: #F9F9F6;
+    padding-bottom: 3px;
 
-.trail .media-img img {
-    width: $trailblockImgWidth;
-    margin-bottom: 5px;
-    margin-top: 3px;
+    &:first-child {
+        margin-top: -8px;
+    }
+    .i-gallery {
+        margin-top: 0;
+    }
+    ul {
+        background-color: #ffffff;
+    }
+    .trail__headline {
+        margin-left: $gutter/2;
+        margin-right: $gutter/2;
+    }
+    .relative-timestamp {
+        margin-left: $gutter/2;
+    }
+    & + & {
+        margin: $baseline * 4 0;
+    }
 }
-
-.trail .img-large img {
-    width: $trailblockImgWidthLarge;
-}
-
-.competition .trail {
-    margin-top: $baseline*3;
-    border-bottom: none;
-}
-
-@media screen and (min-width: 53.125em) {
-    .trail .img img {
-        width: 160px;
+.trail--expandable {
+    &.trail--has-image {
+        .trail__img {
+            float: left;
+        }
+        .trail__expander-headline {
+            float: right;
+            width: 61%;
+        }
     }
 }

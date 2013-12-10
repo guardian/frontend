@@ -1,57 +1,123 @@
-// Some surgical layout helpers
-.pull-left {
-    float: left
-}
+/* Accessible hidden content.
+   ========================================================================== */
 
-.pull-right {
-    float: right;
-}
-.margin-top {
-    margin-top: $baseline*2;
-}
-
-.margin-bottom {
-    margin-bottom: $baseline*2;
-}
-
-.border-top {
-    border-top: 1px solid $mushroom;
-}
-
-.border-bottom {
-    border-bottom: 4px solid $mushroom;
-}
-
-// Accessible hidden content.
-.h {
+.u-h {
+    border: 0 !important;
+    clip: rect(0 0 0 0) !important;
+    height: 1px !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    padding: 0 !important;
     position: absolute !important;
-    clip: rect(1px 1px 1px 1px);
-    clip: rect(1px, 1px, 1px, 1px);
+    width: 1px !important;
 }
 
+.is-hidden,
 [hidden] {
-    display: none;
+    display: none !important;
 }
 
 .mobile-only {
-  @media only screen and (min-width: $tablet) {
+    @include mq(tablet) {
+        display: none !important;
+    }
+}
+
+.hide-on-mobile {
     display: none !important;
-  }
+
+    @include mq(tablet) {
+        display: block !important;
+    }
 }
 
-// Micro clearfix
-// http://nicolasgallagher.com/micro-clearfix-hack/
+.is-invisible {
+    visibility: hidden;
+}
 
-// For modern browsers
-.cf:before,
-.cf:after {
-    content:"";
-    display:table;
+
+
+/* Micro clearfix (http://nicolasgallagher.com/micro-clearfix-hack/)
+   ========================================================================== */
+
+@mixin clearfix {
+    &:after,
+    &:before {
+        content: "";
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
+    @if $old-ie {
+        & {
+            zoom: 1;
+        }
+    }
 }
-.cf:after {
-    clear:both;
+
+.u-cf {
+    @include clearfix;
 }
-// For IE 6/7 (trigger hasLayout)
-.cf {
-    zoom:1;
+
+
+/**
+ * Text hyphenation
+ *
+ * Break strings when their length exceeds the width of their container
+ * and hyphenate words at the end of lines using the `hyphens` property.
+ * Browser support for hyphenation: http://caniuse.com/#search=hyphenation
+ */
+
+.u-text-hyphenate {
+  word-wrap: break-word;
+  -webkit-hyphens: auto;
+     -moz-hyphens: auto;
+      -ms-hyphens: auto;
+          hyphens: auto;
+}
+
+
+/**
+ * Fake table
+ */
+
+.u-table {
+    display: table;
+}
+.u-table__row {
+    display: table-row;
+}
+.u-table__cell {
+    display: table-cell;
+    width: 10000px;
+    max-width: 100%;
+}
+.u-table__cell--top {
+    vertical-align: top;
+}
+.u-table__cell--bottom {
+    vertical-align: bottom;
+}
+.u-table__cell--collapse {
+    // Cell / row will only take the height it needs
+    height: 1px;
+}
+
+
+/**
+ * Reset button styles
+ */
+
+.u-button-reset {
+    display: block;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    width: 100%;
+    background: transparent;
+    
+    &:focus {
+        outline: 0;
+    }
 }

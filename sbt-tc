@@ -1,0 +1,49 @@
+#!/bin/bash
+
+set -o xtrace
+set -o nounset
+set -o errexit
+
+
+if [ -f "~/.sbtconfig" ]; then
+  . ~/.sbtconfig
+fi
+
+
+# SBT configuration
+export SBT_BOOT_DIR=${HOME}/.sbt/boot/
+
+if [ ! -d "${SBT_BOOT_DIR}" ]; then
+  mkdir -p ${SBT_BOOT_DIR}
+fi
+
+
+# Build configuration
+BUILD_PARAMS=""
+if [ -n "$BUILD_NUMBER" ]; then
+  BUILD_PARAMS="${BUILD_PARAMS} -Dbuild.number=\"$BUILD_NUMBER\""
+fi 
+if [ -n "$BUILD_VCS_NUMBER" ]; then
+  BUILD_PARAMS="${BUILD_PARAMS} -Dbuild.vcs.number=\"$BUILD_VCS_NUMBER\""
+fi 
+
+
+# Ivy configuration
+echo "setting ivy cache dir"
+IVY_PARAMS="-Dsbt.ivy.home=.ivy -Divy.home=.ivy"
+echo $IVY_PARAMS
+
+DOMAIN=`hostname -d`
+
+#MaxPermSize specifies the the maximum size for the permanent generation heap,
+# a heap that holds objects such as classes and methods. Xmx is the heap size.
+cat /dev/null | java -Xmx4096M -XX:MaxPermSize=2048m \
+  -XX:ReservedCodeCacheSize=128m \
+  -Dsbt.boot.directory=$SBT_BOOT_DIR \
+  -Dsbt.log.noformat=true \
+  -XX:+UseConcMarkSweepGC \
+  -XX:+CMSIncrementalMode \
+  -DAPP_SECRET="myKV8HQkjcaxygbDuyneHBeyFgsyyM8yCFFOxyDoT0QGuyrY7IyammSyP1VivCxS" \
+  $BUILD_PARAMS \
+  $IVY_PARAMS \
+  -jar `dirname $0`/dev/sbt-launch-0.13.0.jar "$@"

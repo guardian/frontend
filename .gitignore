@@ -8,13 +8,17 @@ frontend-gallery.properties
 frontend-tag.properties
 frontend-section.properties
 frontend-video.properties
+frontend-applications.properties
 
+*.min.css
+*.min.css.map
 *.csv
 *.iml
 *.box
 *.log
 
 .*
+!.editorconfig
 
 log
 logs
@@ -26,16 +30,21 @@ target
 
 RUNNING_PID
 
-frontend.sublime-workspace
-frontend.sublime-project
+*.sublime-*
 
 tags
 
 local.sbt
 
 node_modules
+screenshots
 
-common/app/assets/stylesheets/main.min.css
-style-guide/app/assets/stylesheets/styleguide.min.css
+common/conf/assets
 
 dev/gems
+dev/casperjs
+integration-tests/target/*
+
+developer.properties
+
+*-spec-runner.html

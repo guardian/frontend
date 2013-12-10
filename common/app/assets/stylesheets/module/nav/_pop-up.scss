@@ -3,73 +3,62 @@
    ========================================================================== */
 
 .nav-popup {
-  position: relative;
-  clear: both;
-  z-index: 100;
-  padding: $baseline*2 0;
-  list-style: none;
-  margin-bottom: -4px;
-  border-bottom: $baseline solid $blue;
-
-  @media only screen and (min-width: $tablet) {
-    top: -48px;
-    margin-bottom: -48px;
+    position: absolute;
+    top: $headerHeight;
+    clear: both;
+    z-index: 100;
+    padding: $baseline*2 0;
+    list-style: none;
+    margin-bottom: -4px;
+    border-bottom: $baseline solid $c-brandBlue;
+    background: #ffffff;
     width: 100%;
-    background-color: #ffffff;
-  }
-}
-
-.nav-popup .nav--section-divider {
-  padding-bottom: $baseline*4;
-
-  @media only screen and (min-width: $tablet) {
-    margin: 0px;
-    border-top: none;
-  }
+    @include transform(translateZ(0)); // Hotfix to make popups stay on top
+                                       // of .preload elements in Chrome Android
 }
 
 
 /* Small
- ========================================================================== */
-.nav-popup--small  {
-  padding-bottom: 0;
+   ========================================================================== */
 
-  @media only screen and (min-width: $tablet) {
-    position: absolute;
-    top: 174px;
-    right: 0px;
-    width: auto;
-    padding: 0;
-    min-width: 160px;
-    background-color: #ffffff;
-    border-bottom: 2px solid $darkMushroom;
-    border-left: 2px solid $darkMushroom;
-  }
+.nav-popup--small {
+    padding-top: $baseline*3;
+    padding-bottom: 0;
 
-  @media only screen and (min-width: $desktopAd) {
-    top: 200px;
-  }
+    .nav__link {
+        color: #333333;
+    }
+
+    @include mq(tablet) {
+        position: absolute;
+        top: 99px;
+        right: 0;
+        width: auto;
+        padding-top: $baseline;
+        width: gs-span(4) + $gs-gutter;
+        @include box-sizing(border-box);
+        background-color: #ffffff;
+        border-bottom: 1px solid $c-neutral5;
+        border-left: 1px solid $c-neutral5;
+
+        .nav--additional-sections > .nav__item {
+            > .nav__link {
+                border-top: 0;
+                border-bottom: 1px solid $c-neutral7;
+            }
+        }
+
+        .nav__link {
+            @include font-size(14, 19);
+            padding: 10px 0;
+        }
+    }
+
+    // Popup is not sticking to the edge of screen
+    @include mq(1157px, 1299px) {
+        border-right: 1px solid $c-neutral5;
+    }
+    @include mq(1316px) {
+        border-right: 1px solid $c-neutral5;
+    }
 }
-
-  .nav-popup--small .nav__item {
-    @media only screen and (min-width: $tablet) {
-      margin: 0 $gutter;
-      border-bottom: 1px solid #C3C3C3;
-      text-align: right;
-
-      &:last-child {
-        border-bottom: none;
-      }
-    }
-  }
-
-  .nav-popup--small .nav__link,
-  .nav-popup--small .nav--columns .nav__link{
-    @extend .type-7;
-
-    @media only screen and (min-width: $tablet) {
-      color: #444444;
-      padding: $baseline*3 0 $baseline*3 0;
-      @include font($serifheadline, 200, 14, 14);
-    }
-  }

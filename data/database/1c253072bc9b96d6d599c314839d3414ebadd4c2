@@ -1,0 +1,234 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"politics/2013/nov/07/universal-credit-waste-mps",
+      "sectionId":"politics",
+      "sectionName":"Politics",
+      "webPublicationDate":"2013-11-07T00:51:00Z",
+      "webTitle":"Universal credit scheme will waste at least £140m, say MPs",
+      "webUrl":"http://www.theguardian.com/politics/2013/nov/07/universal-credit-waste-mps",
+      "apiUrl":"http://content.guardianapis.com/politics/2013/nov/07/universal-credit-waste-mps",
+      "fields":{
+        "newspaperPageNumber":"4",
+        "trailText":"<p>Committee criticises 'alarmingly weak' management and questions whether project can be delivered by 2017 deadline</p>",
+        "headline":"Universal credit scheme will waste at least £140m, say MPs",
+        "body":"<video data-media-id=\"gu-video-421891468\" class=\"gu-video\" controls=\"controls\" poster=\"\">\n        <source src=\"http://cdn.theguardian.tv/mainwebsite/2013/11/07/ITNP_NF_CREDIT_HODGE_1000_07_dv-16x9.mp4\"></source><source src=\"http://cdn.theguardian.tv/3gp/small/2013/11/07/ITNP_NF_CREDIT_HODGE_1000_07_dv_3gpSml16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/3gp/large/2013/11/07/ITNP_NF_CREDIT_HODGE_1000_07_dv_3gpLg16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/ad/2013/11/07/ITNP_NF_CREDIT_HODGE_1000_07_dv/ITNP_NF_CREDIT_HODGE_1000_07_dv.m3u8\"></source>\n      </video><p>Iain Duncan Smith's flagship benefit reform has been severely criticised by MPs for failures that are expected to waste at least £140m of public money.</p><p>The universal credit scheme has been overseen by \"alarmingly weak\" management, with systems so lax that <a href=\"http://www.theguardian.com/politics/2013/sep/20/universal-credit-rules-orders\" title=\"\">a secretary was allowed to authorise purchase orders worth £23m</a>, according to the public accounts committee. In some cases it is unclear what suppliers have been paid for.</p><p>MPs also voiced doubts about whether the project can still be fully delivered by the deadline of 2017 and described a pilot set up under Duncan Smith's guidance as inadequate and open to fraud.</p><p>The findings will cause some embarrassment for the welfare and pensions minister, who has insisted he will be able to deliver – on budget and on time – a working IT system for rolling up to six means-tested benefits into one.</p><p>Universal credit is due to be introduced in four years, with Duncan Smith saying it can ensure people are always better off in jobs and save £38bn by 2023.</p><p>Margaret Hodge, the committee's chair, said the implementation of the system so far had been \"extraordinarily poor\".</p><p>\"The failure to develop a comprehensive plan has led to extensive delay and the waste of a yet-to-be-determined amount of public money,\" she said. \"£425m has been spent so far … It is likely that much of this, including at least £140m of IT assets, will now have to be written off. From the outset, the department has failed to grasp the nature and enormity of the task; failed to monitor and challenge progress regularly; and, when problems arose, failed to intervene promptly,\" she said.</p><p>Hodge also claimed that the pilot programme is not a proper pilot. \"It does not deal with the key issues that universal credit must address: the volume of claims; their complexity; change in claimants' circumstances; and the need for claimants to meet conditions for continuing entitlement to benefit,\" she said.</p><p>The escalating costs of the IT project were outlined by two witnesses who gave evidence to the committee. Mike Driver, the finance director general of the DWP, said as much as £161m could have been wasted, while Norma Wood, the head of the Major Projects Authority, agreed that the system would have to write off at least £140m.</p><p>Unusually, the report has singled out the role of the Department for Work and Pensions' permanent secretary, Robert Devereux, for his failings in the management of the £2.4bn universal credit scheme.</p><p>Senior managers including Devereux only became aware of problems through ad hoc reviews because inadequate management information and reporting arrangements had not alerted them that things were amiss, the report concluded.</p><p>\"Given its huge importance to the department, the accounting officer [Devereux] and his team should have been more alert to identifying and acting on early warning signs that things were going wrong with the programme,\" the report said.</p><p>Devereux was also criticised because he had not closely monitored the project, even after he knew of major problems.</p><p>\"Governance arrangements were not remotely adequate, and the accounting officer discussed progress with the head of the universal credit programme only every two or three weeks,\" the report said.</p><p>Senior Tories said Devereux's resignation would be accepted if offered.</p><p>A Conservative source close to Duncan Smith said: \"Once again officials have been named and ministers have not, and that will make uncomfortable reading.\"</p><p><a href=\"http://www.theguardian.com/politics/2013/sep/05/universal-credit-iain-duncan-smith\" title=\"\">In September, Duncan Smith took a rare step for a cabinet minister and blamed civil servants</a> for the IT failures that threatened to derail the scheme, telling the Commons: \"When I arrived I expected professionalism to be able to do this.\"</p><p>The union that represents Britain's senior civil servants has criticised the way that ministers now feel able to shrug off their responsibilities and blame staff.</p><p>Rob O'Neil, assistant general secretary of the FDA union, said: \"Ministers must accept their responsibilities for any difficulties in the delivery of the project. It is ministers who determine the priorities, time scales and resources available. It is unrealistic to expect simple solutions to complex problems.\"</p><p>It is understood that some Tory members of the public accounts committee argued at a meeting on Monday for further criticisms of Devereux to be included in the final report. However, these were not adopted following a discussion.</p><p>A DWP spokesperson said: \"This report doesn't take into account our new leadership team, or our progress on delivery. We have already taken comprehensive action including strengthening governance, supplier management and financial controls.</p><p>\"We don't recognise the write-off figure quoted by the committee, and expect this to be substantially less,\" she said. A spokesperson for Duncan Smith said: \"Iain was clear back in the summer about how he and the permanent secretary took action to fix those problems. He has every confidence with the team now in place, and that team includes Robert Devereux.\"</p><!-- Guardian Watermark: internal-code/content/421852109|2013-11-11T15:34:05Z|417086012cd6c0ea9c45492ec74253b2c710e3bf -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-07T11:47:09Z",
+        "hasStoryPackage":"false",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/6/1383769651317/Iain-Duncan-Smith-003.jpg",
+        "standfirst":"Committee criticises 'alarmingly weak' management and questions whether project can be delivered by 2017 deadline",
+        "shortUrl":"http://gu.com/p/3k76x",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/6/1383769651317/Iain-Duncan-Smith-003.jpg",
+        "wordcount":"788",
+        "commentable":"true",
+        "internalContentCode":"421852109",
+        "allowUgc":"false",
+        "internalOctopusCode":"8290509",
+        "isPremoderated":"false",
+        "byline":"Rajeev Syal",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-11-07",
+        "internalPageCode":"1993249",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-10T00:06:00Z"
+      },
+      "tags":[{
+        "id":"politics/welfare",
+        "type":"keyword",
+        "webTitle":"Welfare",
+        "webUrl":"http://www.theguardian.com/politics/welfare",
+        "apiUrl":"http://content.guardianapis.com/politics/welfare",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/iain-duncan-smith",
+        "type":"keyword",
+        "webTitle":"Iain Duncan Smith",
+        "webUrl":"http://www.theguardian.com/politics/iain-duncan-smith",
+        "apiUrl":"http://content.guardianapis.com/politics/iain-duncan-smith",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"society/benefits",
+        "type":"keyword",
+        "webTitle":"Benefits",
+        "webUrl":"http://www.theguardian.com/society/benefits",
+        "apiUrl":"http://content.guardianapis.com/society/benefits",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/rajeev-syal",
+        "type":"contributor",
+        "webTitle":"Rajeev Syal",
+        "webUrl":"http://www.theguardian.com/profile/rajeev-syal",
+        "apiUrl":"http://content.guardianapis.com/profile/rajeev-syal",
+        "bio":"<p>Rajeev Syal covers Whitehall and works on off-diary stories from the lobby for the Guardian</p>",
+        "r2ContributorId":"29467",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421902174",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/6/1383769651317/Iain-Duncan-Smith-003.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Ray Tang",
+            "altText":"Iain Duncan Smith",
+            "height":"84",
+            "credit":"Ray Tang/Rex Features",
+            "caption":"Iain Duncan Smith, the work and pensions secretary. Photograph: Ray Tang/Rex Features",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-video-421891468",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/11/07/ITNP_NF_CREDIT_HODGE_1000_07_dv-16x9.mp4",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"28"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/11/07/ITNP_NF_CREDIT_HODGE_1000_07_dv_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"28"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/11/07/ITNP_NF_CREDIT_HODGE_1000_07_dv_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"28"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/11/07/ITNP_NF_CREDIT_HODGE_1000_07_dv/ITNP_NF_CREDIT_HODGE_1000_07_dv.m3u8",
+          "typeData":{
+            "source":"ITN",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942306387/Guardian-Video-Holding-Im-003.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/1/23/1358942308989/Guardian-Video-Holding-Im-005.jpg",
+            "width":"480",
+            "durationSeconds":"28"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[]
+  }
+}

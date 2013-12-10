@@ -1,0 +1,1377 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"lifeandstyle/2013/oct/30/jack-monroe-kale-pesto-paste-recipe",
+      "sectionId":"lifeandstyle",
+      "sectionName":"Life and style",
+      "webPublicationDate":"2013-10-30T12:01:28Z",
+      "webTitle":"Jack Monroe's kale pesto pasta recipe",
+      "webUrl":"http://www.theguardian.com/lifeandstyle/2013/oct/30/jack-monroe-kale-pesto-paste-recipe",
+      "apiUrl":"http://content.guardianapis.com/lifeandstyle/2013/oct/30/jack-monroe-kale-pesto-paste-recipe",
+      "fields":{
+        "newspaperPageNumber":"15",
+        "trailText":"<p>This nut-free pesto is a delicious way to eat kale – serve it with creamy spaghetti and crunchy breadcrumbs</p>",
+        "headline":"Jack Monroe's kale pesto pasta recipe",
+        "body":"<p>Kale is packed with antioxidants and nutrients, and is up there among my favourite greens. Try using it in this lovely nut-free pesto.</p><h2><strong>Kale pesto</strong></h2><p><strong><em>(Serves 10) </em></strong><em>20p a portion </em><br /><strong>200g kale, washed, </strong><em>75p</em><br /><strong>1 chilli, sliced, </strong><em>8p</em><br /><strong>80g grated strong hard cheese,</strong><em> 92p</em><br /><strong>150ml sunflower oil, </strong><em>20p</em><br /><strong>30ml lemon juice, </strong><em>7p</em><br /><strong>150ml water</strong></p><h2><strong>Spaghetti with kale pesto and lemon chilli breadcrumbs</strong></h2><p><strong><em>(Serves 2)</em></strong> <em>42p a portion</em><br /><strong>150g spaghetti,</strong><em> 9p</em><br /><strong>1 slice of bread, </strong><em>3p</em><br /><strong>1 chilli, sliced, </strong><em>8p</em><br /><strong>15ml lemon juice, </strong><em>4p</em><br /><strong>2 portions kale pesto,</strong><em> 40p  (see above)</em><br /><strong>50g soft cream cheese, </strong><em>20p</em></p><p>Cram the kale into a blender. Add the chilli, cheese, oil, lemon juice and water and blend vigorously until you have a vivid green pulp. Add any remaining kale, and blend again. Store in a clean, sealed jar with oil on top to preserve.</p><p>Cook the pasta and grate the bread into crumbs into a small frying pan. Add the chilli and lemon juice and toast on a medium heat for a few minutes until golden.</p><p>When the pasta is cooked, drain and stir the pesto and cheese through to coat generously, and top with the breadcrumbs.</p><h2>Jack's tip</h2><p>Make your pesto in a batch and keep it in the fridge for a week, or freeze portions in an ice-cube tray for some quick, easy dinners.<br /><em><br />• For more recipe ideas, including using up remaining ingredients, see <a href=\"http://agirlcalledjack.com/\">agirlcalledjack.com</a> or follow <a href=\"https://twitter.com/MsJackMonroe\">@MsJackMonroe on Twitter</a>.</em></p><!-- Guardian Watermark: internal-code/content/421278329|2013-11-05T11:03:48Z|138e142b1b28b9232fecf151576d55a548494407 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-31T00:06:04Z",
+        "hasStoryPackage":"true",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Lifeandhealth/Pix/pictures/2013/10/30/1383133877248/Jack-Monroes-kale-pesto-p-004.jpg",
+        "standfirst":"This nut-free pesto is a delicious way to eat kale – serve it with creamy spaghetti and crunchy breadcrumbs",
+        "shortUrl":"http://gu.com/p/3kxbk",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Lifeandhealth/Pix/pictures/2013/10/30/1383133877248/Jack-Monroes-kale-pesto-p-004.jpg",
+        "wordcount":"217",
+        "commentable":"true",
+        "internalContentCode":"421278329",
+        "allowUgc":"false",
+        "internalOctopusCode":"8255422",
+        "isPremoderated":"false",
+        "byline":"Jack Monroe",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-31",
+        "internalPageCode":"1989029",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-02T12:01:28Z"
+      },
+      "tags":[{
+        "id":"lifeandstyle/series/jack-monroe-low-cost-recipes",
+        "type":"series",
+        "webTitle":"Jack Monroe's low-cost recipes",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/series/jack-monroe-low-cost-recipes",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/series/jack-monroe-low-cost-recipes",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/pasta",
+        "type":"keyword",
+        "webTitle":"Pasta",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/pasta",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/pasta",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/italian-food-and-drink",
+        "type":"keyword",
+        "webTitle":"Italian food and drink",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/italian-food-and-drink",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/italian-food-and-drink",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/vegetarian",
+        "type":"keyword",
+        "webTitle":"Vegetarian food and drink",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/vegetarian",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/vegetarian",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/food-and-drink",
+        "type":"keyword",
+        "webTitle":"Food & drink",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/food-and-drink",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/food-and-drink",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"tone/recipes",
+        "type":"tone",
+        "webTitle":"Recipes",
+        "webUrl":"http://www.theguardian.com/tone/recipes",
+        "apiUrl":"http://content.guardianapis.com/tone/recipes",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"profile/jack-monroe",
+        "type":"contributor",
+        "webTitle":"Jack Monroe",
+        "webUrl":"http://www.theguardian.com/profile/jack-monroe",
+        "apiUrl":"http://content.guardianapis.com/profile/jack-monroe",
+        "bio":"<p>Jack Monroe blogs at <a href=\"http://agirlcalledjack.com/\">A Girl Called Jack</a> and is author of the forthcoming A Girl Called Jack recipe book</p>",
+        "r2ContributorId":"57609",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/10/1378813805813/Jack-Monroe.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/g2/features",
+        "type":"newspaper-book-section",
+        "webTitle":"Comment & features",
+        "webUrl":"http://www.theguardian.com/theguardian/g2/features",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2/features",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/g2",
+        "type":"newspaper-book",
+        "webTitle":"G2",
+        "webUrl":"http://www.theguardian.com/theguardian/g2",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421280082",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Lifeandhealth/Pix/pictures/2013/10/30/1383133885320/Jack-Monroes-kale-pesto-p-009.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Graham Turner",
+            "altText":"Jack Monroe's kale pesto pasta",
+            "height":"276",
+            "credit":"Graham Turner/Guardian",
+            "caption":"Jack Monroe's kale pesto pasta. Photograph: Graham Turner for the Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421280083",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Lifeandhealth/Pix/pictures/2013/10/30/1383133877248/Jack-Monroes-kale-pesto-p-004.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Graham Turner",
+            "altText":"Jack Monroe's kale pesto pasta",
+            "height":"84",
+            "credit":"Graham Turner/Guardian",
+            "caption":"Jack Monroe's kale pesto pasta. Photograph: Graham Turner for the Guardian",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"society/2013/sep/18/jack-monroe-starve-benefits-england",
+      "sectionId":"society",
+      "sectionName":"Society",
+      "webPublicationDate":"2013-09-18T07:00:00Z",
+      "webTitle":"You can starve on benefits in this country | Jack Monroe",
+      "webUrl":"http://www.theguardian.com/society/2013/sep/18/jack-monroe-starve-benefits-england",
+      "apiUrl":"http://content.guardianapis.com/society/2013/sep/18/jack-monroe-starve-benefits-england",
+      "fields":{
+        "newspaperPageNumber":"35",
+        "trailText":"<p><strong>Jack Monroe:</strong> It's hard to say to a nation that hates benefit claimants: 'Your perception is wrong. The system is flawed,' says Jack Monroe in the first of a new series called <a href=\"http://http://www.theguardian.com/society/series/austerity-bites\">Austerity bites</a></p>",
+        "headline":"You can starve on benefits in this country",
+        "body":"<p>How can anyone possibly \"starve on benefits\"? \"Something doesn't add up.\" Responses to my <a href=\"http://agirlcalledjack.com/\" title=\"\">blog</a> and <a href=\"http://www.theguardian.com/profile/jack-monroe\" title=\"\">comment</a> pieces about life on the breadline are filled with these kinds of musings. After all, everyone has an anecdote about a mate or a neighbour who has all the latest gadgets and designer sportswear for their children, \"and they've been on benefits since, like, for ever\".</p><p>Yet you don't know to look at someone whether their trainers came from JD&nbsp;Sports or Oxfam, or if they wash their hair in Charles Worthington or Sainsbury's baby shampoo. You don't know whether the young man in the town centre with a takeaway in the middle of the day is a night-shift worker or a student or, heaven forbid, has the day off work. Not everyone works Monday to Friday, 9-5. Someone needs to staff the checkouts at night so the 9-5ers can pick up a bottle of Bolly after work. The 999 control room staff work day and night shifts across all of the emergency services. And someone needs to clean those supermarkets and those offices.</p><p>You don't know whether the young woman walking down the street with a black baby and a lanky blond nine-year-old on her arm is a foster carer or a&nbsp;\"slut\". I was that young woman taking the kids to the shops to give my parents, who were foster carers, five minutes' peace. I&nbsp;was always met with whispers and stares, because people judge and people assume. One woman told me that I \"should have kept my legs shut\". I&nbsp;told her that I was a virgin, and, funnily enough, she didn't have a comeback.</p><p>So, in an attempt to explain again and again that life is not as black and white, and the \"free money\" is not as easy to come by as certain newspapers would have you believe, I find myself a stuck record, plastering my personal circumstances across the media in an effort to make people understand.</p><p>When I first needed to claim housing benefit, the payments were delayed, leaving me in arrears. I had to involve my MP and the town clerk, but the rent arrears were already piling up. When payments are delayed, bills bounce, leaving you with hundreds of pounds in bank charges, on top of your rent arrears. When you go back to work, you need to pay for a month's fees in advance to secure your child's nursery place. The money allocated to benefits is for housing, food and bills. But when it is not&nbsp;paid in full, or not paid on time, when you have to wait 11 weeks for it due to \"administrative backlog\", the money also has to pay for late payment fees, bank charges and rent arrears.</p><p>This mess is not unique to me. According to the <a href=\"http://www.trusselltrust.org/stats\" title=\"\">Trussell Trust</a>, the most cited reason for referral to food banks is delayed and missed benefit payments. Meaning, yes, <a href=\"http://www.bbc.co.uk/news/uk-politics-24042446\" title=\"\">Mr Gove, you were half right that food bank use is down to financial mismanagement</a>, but it is the financial mismanagement of the Department for Work and Pensions, and the financial mismanagement of local authorities that administer housing benefit. Not quite the fault of the \"feckless poor\".</p><p>While it is easy for people to pontificate on what I could have done differently (taken my former employer to a tribunal would be first on my list if I could relive the past two years) or berate my \"absent\" friends and family (to whom I was too embarrassed and humiliated to admit how bad things were) – it is much harder to put your head above the parapet and say to a nation that hates benefit claimants: \"Your perception is wrong. The system is flawed. People are getting hurt. Something has to change.\"</p><p>• Jack Monroe blogs at <a href=\"http://agirlcalledjack.com/\" title=\"\">A Girl Called Jack</a> and&nbsp;is author of a forthcoming recipe book for people cooking on a tight budget</p><!-- Guardian Watermark: internal-code/content/417218543|2013-11-05T11:03:48Z|deaf64a6bb99f320fcc223bea2d1efd824b20df8 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-09-23T19:04:52Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Books/Pix/pictures/2013/9/13/1379076909447/food-bank-005.jpg",
+        "standfirst":"It's hard to say to a nation that hates benefit claimants: 'Your perception is wrong. The system is flawed,' says Jack Monroe in&nbsp;the&nbsp;first of a new series called <a href=\"http://http://www.theguardian.com/society/series/austerity-bites\">Austerity bites</a>",
+        "shortUrl":"http://gu.com/p/3tmfy",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/9/13/1379076909447/food-bank-005.jpg",
+        "wordcount":"640",
+        "commentable":"true",
+        "internalContentCode":"417218543",
+        "allowUgc":"false",
+        "internalOctopusCode":"8070442",
+        "isPremoderated":"false",
+        "byline":"Jack Monroe",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-09-18",
+        "internalPageCode":"1965081",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-09-23T23:00:00Z"
+      },
+      "tags":[{
+        "id":"society/benefits",
+        "type":"keyword",
+        "webTitle":"Benefits",
+        "webUrl":"http://www.theguardian.com/society/benefits",
+        "apiUrl":"http://content.guardianapis.com/society/benefits",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/socialexclusion",
+        "type":"keyword",
+        "webTitle":"Social exclusion",
+        "webUrl":"http://www.theguardian.com/society/socialexclusion",
+        "apiUrl":"http://content.guardianapis.com/society/socialexclusion",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/poverty",
+        "type":"keyword",
+        "webTitle":"Poverty",
+        "webUrl":"http://www.theguardian.com/society/poverty",
+        "apiUrl":"http://content.guardianapis.com/society/poverty",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/series/austerity-bites",
+        "type":"series",
+        "webTitle":"Austerity bites",
+        "webUrl":"http://www.theguardian.com/society/series/austerity-bites",
+        "apiUrl":"http://content.guardianapis.com/society/series/austerity-bites",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"profile/jack-monroe",
+        "type":"contributor",
+        "webTitle":"Jack Monroe",
+        "webUrl":"http://www.theguardian.com/profile/jack-monroe",
+        "apiUrl":"http://content.guardianapis.com/profile/jack-monroe",
+        "bio":"<p>Jack Monroe blogs at <a href=\"http://agirlcalledjack.com/\">A Girl Called Jack</a> and is author of the forthcoming A Girl Called Jack recipe book</p>",
+        "r2ContributorId":"57609",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/10/1378813805813/Jack-Monroe.jpg",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/society",
+        "type":"newspaper-book-section",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/society",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418069586",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/9/13/1379076900893/food-bank-002.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Sophia Evans",
+            "altText":"food bank",
+            "height":"54",
+            "credit":"Sophia Evans/Guardian",
+            "caption":"A Trussell Trust food bank … missed or delayed benefit payments account for most referrals. Photograph: Sophia Evans for the Guardian",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/9/13/1379076903438/food-bank-003.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Sophia Evans",
+            "altText":"food bank",
+            "height":"340",
+            "credit":"Sophia Evans/Guardian",
+            "caption":"A Trussell Trust food bank … missed or delayed benefit payments account for most referrals. Photograph: Sophia Evans for the Guardian",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/9/13/1379076906551/food-bank-004.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Sophia Evans",
+            "altText":"food bank",
+            "height":"130",
+            "credit":"Sophia Evans/Guardian",
+            "caption":"A Trussell Trust food bank … missed or delayed benefit payments account for most referrals. Photograph: Sophia Evans for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/9/13/1379076909447/food-bank-005.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Sophia Evans",
+            "altText":"food bank",
+            "height":"84",
+            "credit":"Sophia Evans/Guardian",
+            "caption":"A Trussell Trust food bank … missed or delayed benefit payments account for most referrals. Photograph: Sophia Evans for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/9/13/1379076913586/food-bank-006.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Sophia Evans",
+            "altText":"food bank",
+            "height":"132",
+            "credit":"Sophia Evans/Guardian",
+            "caption":"A Trussell Trust food bank … missed or delayed benefit payments account for most referrals. Photograph: Sophia Evans for the Guardian",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/9/13/1379076914808/food-bank-007.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Sophia Evans",
+            "altText":"food bank",
+            "height":"168",
+            "credit":"Sophia Evans/Guardian",
+            "caption":"A Trussell Trust food bank … missed or delayed benefit payments account for most referrals. Photograph: Sophia Evans for the Guardian",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/9/13/1379076918961/food-bank-008.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Sophia Evans",
+            "altText":"food bank",
+            "height":"180",
+            "credit":"Sophia Evans/Guardian",
+            "caption":"A Trussell Trust food bank … missed or delayed benefit payments account for most referrals. Photograph: Sophia Evans for the Guardian",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/9/13/1379076920271/food-bank-009.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Sophia Evans",
+            "altText":"food bank",
+            "height":"228",
+            "credit":"Sophia Evans/Guardian",
+            "caption":"A Trussell Trust food bank … missed or delayed benefit payments account for most referrals. Photograph: Sophia Evans for the Guardian",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/9/13/1379076937086/food-bank-010.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Sophia Evans",
+            "altText":"food bank",
+            "height":"276",
+            "credit":"Sophia Evans/Guardian",
+            "caption":"A Trussell Trust food bank … missed or delayed benefit payments account for most referrals. Photograph: Sophia Evans for the Guardian",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/9/13/1379076949135/food-bank-011.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Sophia Evans",
+            "altText":"food bank",
+            "height":"372",
+            "credit":"Sophia Evans/Guardian",
+            "caption":"A Trussell Trust food bank … missed or delayed benefit payments account for most referrals. Photograph: Sophia Evans for the Guardian",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/9/13/1379076937086/food-bank-010.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Sophia Evans",
+            "altText":"food bank",
+            "height":"276",
+            "credit":"Sophia Evans/Guardian",
+            "caption":"A Trussell Trust food bank … missed or delayed benefit payments account for most referrals. Photograph: Sophia Evans for the Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418069587",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/9/13/1379076909447/food-bank-005.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Sophia Evans",
+            "altText":"food bank",
+            "height":"84",
+            "credit":"Sophia Evans/Guardian",
+            "caption":"A Trussell Trust food bank … missed or delayed benefit payments account for most referrals. Photograph: Sophia Evans for the Guardian",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"lifeandstyle/2013/oct/30/jack-monroe-kale-pesto-paste-recipe",
+      "sectionId":"lifeandstyle",
+      "sectionName":"Life and style",
+      "webPublicationDate":"2013-10-30T12:01:28Z",
+      "webTitle":"Jack Monroe's kale pesto pasta recipe",
+      "webUrl":"http://www.theguardian.com/lifeandstyle/2013/oct/30/jack-monroe-kale-pesto-paste-recipe",
+      "apiUrl":"http://content.guardianapis.com/lifeandstyle/2013/oct/30/jack-monroe-kale-pesto-paste-recipe",
+      "fields":{
+        "newspaperPageNumber":"15",
+        "trailText":"<p>This nut-free pesto is a delicious way to eat kale – serve it with creamy spaghetti and crunchy breadcrumbs</p>",
+        "headline":"Jack Monroe's kale pesto pasta recipe",
+        "body":"<p>Kale is packed with antioxidants and nutrients, and is up there among my favourite greens. Try using it in this lovely nut-free pesto.</p><h2><strong>Kale pesto</strong></h2><p><strong><em>(Serves 10) </em></strong><em>20p a portion </em><br /><strong>200g kale, washed, </strong><em>75p</em><br /><strong>1 chilli, sliced, </strong><em>8p</em><br /><strong>80g grated strong hard cheese,</strong><em> 92p</em><br /><strong>150ml sunflower oil, </strong><em>20p</em><br /><strong>30ml lemon juice, </strong><em>7p</em><br /><strong>150ml water</strong></p><h2><strong>Spaghetti with kale pesto and lemon chilli breadcrumbs</strong></h2><p><strong><em>(Serves 2)</em></strong> <em>42p a portion</em><br /><strong>150g spaghetti,</strong><em> 9p</em><br /><strong>1 slice of bread, </strong><em>3p</em><br /><strong>1 chilli, sliced, </strong><em>8p</em><br /><strong>15ml lemon juice, </strong><em>4p</em><br /><strong>2 portions kale pesto,</strong><em> 40p  (see above)</em><br /><strong>50g soft cream cheese, </strong><em>20p</em></p><p>Cram the kale into a blender. Add the chilli, cheese, oil, lemon juice and water and blend vigorously until you have a vivid green pulp. Add any remaining kale, and blend again. Store in a clean, sealed jar with oil on top to preserve.</p><p>Cook the pasta and grate the bread into crumbs into a small frying pan. Add the chilli and lemon juice and toast on a medium heat for a few minutes until golden.</p><p>When the pasta is cooked, drain and stir the pesto and cheese through to coat generously, and top with the breadcrumbs.</p><h2>Jack's tip</h2><p>Make your pesto in a batch and keep it in the fridge for a week, or freeze portions in an ice-cube tray for some quick, easy dinners.<br /><em><br />• For more recipe ideas, including using up remaining ingredients, see <a href=\"http://agirlcalledjack.com/\">agirlcalledjack.com</a> or follow <a href=\"https://twitter.com/MsJackMonroe\">@MsJackMonroe on Twitter</a>.</em></p><!-- Guardian Watermark: internal-code/content/421278329|2013-11-05T11:03:48Z|138e142b1b28b9232fecf151576d55a548494407 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-31T00:06:04Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Lifeandhealth/Pix/pictures/2013/10/30/1383133877248/Jack-Monroes-kale-pesto-p-004.jpg",
+        "standfirst":"This nut-free pesto is a delicious way to eat kale – serve it with creamy spaghetti and crunchy breadcrumbs",
+        "shortUrl":"http://gu.com/p/3kxbk",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Lifeandhealth/Pix/pictures/2013/10/30/1383133877248/Jack-Monroes-kale-pesto-p-004.jpg",
+        "wordcount":"217",
+        "commentable":"true",
+        "internalContentCode":"421278329",
+        "allowUgc":"false",
+        "internalOctopusCode":"8255422",
+        "isPremoderated":"false",
+        "byline":"Jack Monroe",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-31",
+        "internalPageCode":"1989029",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-02T12:01:28Z"
+      },
+      "tags":[{
+        "id":"lifeandstyle/series/jack-monroe-low-cost-recipes",
+        "type":"series",
+        "webTitle":"Jack Monroe's low-cost recipes",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/series/jack-monroe-low-cost-recipes",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/series/jack-monroe-low-cost-recipes",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/pasta",
+        "type":"keyword",
+        "webTitle":"Pasta",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/pasta",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/pasta",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/italian-food-and-drink",
+        "type":"keyword",
+        "webTitle":"Italian food and drink",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/italian-food-and-drink",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/italian-food-and-drink",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/vegetarian",
+        "type":"keyword",
+        "webTitle":"Vegetarian food and drink",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/vegetarian",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/vegetarian",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/food-and-drink",
+        "type":"keyword",
+        "webTitle":"Food & drink",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/food-and-drink",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/food-and-drink",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"tone/recipes",
+        "type":"tone",
+        "webTitle":"Recipes",
+        "webUrl":"http://www.theguardian.com/tone/recipes",
+        "apiUrl":"http://content.guardianapis.com/tone/recipes",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"profile/jack-monroe",
+        "type":"contributor",
+        "webTitle":"Jack Monroe",
+        "webUrl":"http://www.theguardian.com/profile/jack-monroe",
+        "apiUrl":"http://content.guardianapis.com/profile/jack-monroe",
+        "bio":"<p>Jack Monroe blogs at <a href=\"http://agirlcalledjack.com/\">A Girl Called Jack</a> and is author of the forthcoming A Girl Called Jack recipe book</p>",
+        "r2ContributorId":"57609",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/10/1378813805813/Jack-Monroe.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/g2/features",
+        "type":"newspaper-book-section",
+        "webTitle":"Comment & features",
+        "webUrl":"http://www.theguardian.com/theguardian/g2/features",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2/features",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/g2",
+        "type":"newspaper-book",
+        "webTitle":"G2",
+        "webUrl":"http://www.theguardian.com/theguardian/g2",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421280082",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Lifeandhealth/Pix/pictures/2013/10/30/1383133885320/Jack-Monroes-kale-pesto-p-009.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Graham Turner",
+            "altText":"Jack Monroe's kale pesto pasta",
+            "height":"276",
+            "credit":"Graham Turner/Guardian",
+            "caption":"Jack Monroe's kale pesto pasta. Photograph: Graham Turner for the Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421280083",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Lifeandhealth/Pix/pictures/2013/10/30/1383133877248/Jack-Monroes-kale-pesto-p-004.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Graham Turner",
+            "altText":"Jack Monroe's kale pesto pasta",
+            "height":"84",
+            "credit":"Graham Turner/Guardian",
+            "caption":"Jack Monroe's kale pesto pasta. Photograph: Graham Turner for the Guardian",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"business/video/2013/aug/12/jack-monroe-cooking-breadline-video",
+      "sectionId":"lifeandstyle",
+      "sectionName":"Life and style",
+      "webPublicationDate":"2013-08-12T11:05:00Z",
+      "webTitle":"A Girl Called Jack: cooking on the breadline – video",
+      "webUrl":"http://www.theguardian.com/business/video/2013/aug/12/jack-monroe-cooking-breadline-video",
+      "apiUrl":"http://content.guardianapis.com/business/video/2013/aug/12/jack-monroe-cooking-breadline-video",
+      "fields":{
+        "trailText":"<p>Jack Monroe talks about how she became a popular austerity food blogger while living below the poverty line, and demonstrates how to cook a carrot, cumin and kidney bean burger</p>",
+        "headline":"A Girl Called Jack: cooking on the breadline – video",
+        "body":"<video data-media-id=\"gu-video-414463084\" class=\"gu-video\" controls=\"controls\" poster=\"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/8/6/1375802905041/Jack-Monroe-austerity-coo-012.jpg\">\n        <source src=\"http://cdn.theguardian.tv/mainwebsite/2013/8/6/130806JackMonroe-16x9.mp4\"></source><source src=\"http://cdn.theguardian.tv/connectedTV/1280/2013/8/6/130806JackMonroe-720.mp4\"></source><source src=\"http://cdn.theguardian.tv/3gp/small/2013/8/6/130806JackMonroe_3gpSml16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/3gp/large/2013/8/6/130806JackMonroe_3gpLg16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/ad/2013/8/6/130806JackMonroe/130806JackMonroe.m3u8\"></source>\n      </video><!-- Guardian Watermark: internal-code/content/414463084|2013-11-05T11:03:48Z|99e259230e44a85b820439aa17105427882b33c1 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-01T14:04:46Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/8/6/1375802895156/Jack-Monroe-austerity-coo-006.jpg",
+        "standfirst":"Jack Monroe, who writes the blog <a href=\"http://agirlcalledjack.com/\">A Girl Called Jack</a>, discusses how she became a popular austerity cook and food blogger while living below the poverty line, and demonstrates how to cook one of her signature dishes: the carrot, cumin and kidney bean burger. A selection of recipes from <a href=\"http://agirlcalledjack.com/\">A Girl Called Jack</a> are to be published next year in a book of the same name",
+        "shortUrl":"http://gu.com/p/3hznt",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/8/6/1375802895156/Jack-Monroe-austerity-coo-006.jpg",
+        "commentable":"true",
+        "internalContentCode":"414463084",
+        "allowUgc":"false",
+        "internalOctopusCode":"7923227",
+        "isPremoderated":"false",
+        "byline":"John Domokos",
+        "publication":"theguardian.com",
+        "internalPageCode":"1947069",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-08-15T11:05:00Z"
+      },
+      "tags":[{
+        "id":"lifeandstyle/food-and-drink",
+        "type":"keyword",
+        "webTitle":"Food & drink",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/food-and-drink",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/food-and-drink",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/chefs",
+        "type":"keyword",
+        "webTitle":"Chefs",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/chefs",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/chefs",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"society/food-poverty",
+        "type":"keyword",
+        "webTitle":"Food poverty",
+        "webUrl":"http://www.theguardian.com/society/food-poverty",
+        "apiUrl":"http://content.guardianapis.com/society/food-poverty",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/poverty",
+        "type":"keyword",
+        "webTitle":"Poverty",
+        "webUrl":"http://www.theguardian.com/society/poverty",
+        "apiUrl":"http://content.guardianapis.com/society/poverty",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/food-banks",
+        "type":"keyword",
+        "webTitle":"Food banks",
+        "webUrl":"http://www.theguardian.com/society/food-banks",
+        "apiUrl":"http://content.guardianapis.com/society/food-banks",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"business/austerity",
+        "type":"keyword",
+        "webTitle":"Austerity",
+        "webUrl":"http://www.theguardian.com/business/austerity",
+        "apiUrl":"http://content.guardianapis.com/business/austerity",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"media/blogging",
+        "type":"keyword",
+        "webTitle":"Blogging",
+        "webUrl":"http://www.theguardian.com/media/blogging",
+        "apiUrl":"http://content.guardianapis.com/media/blogging",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"profile/jack-monroe",
+        "type":"contributor",
+        "webTitle":"Jack Monroe",
+        "webUrl":"http://www.theguardian.com/profile/jack-monroe",
+        "apiUrl":"http://content.guardianapis.com/profile/jack-monroe",
+        "bio":"<p>Jack Monroe blogs at <a href=\"http://agirlcalledjack.com/\">A Girl Called Jack</a> and is author of the forthcoming A Girl Called Jack recipe book</p>",
+        "r2ContributorId":"57609",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/10/1378813805813/Jack-Monroe.jpg",
+        "references":[]
+      },{
+        "id":"profile/johndomokos",
+        "type":"contributor",
+        "webTitle":"John Domokos",
+        "webUrl":"http://www.theguardian.com/profile/johndomokos",
+        "apiUrl":"http://content.guardianapis.com/profile/johndomokos",
+        "bio":"<p>John Domokos is a video producer for guardian.co.uk. You can follow him on twitter: <a href=\"http://twitter.com/@JohnDomokos\">@JohnDomokos</a></p>",
+        "r2ContributorId":"20428",
+        "references":[]
+      },{
+        "id":"lifeandstyle/burgers",
+        "type":"keyword",
+        "webTitle":"Burgers",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/burgers",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/burgers",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-414463084",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/8/6/1375802886570/Jack-Monroe-austerity-coo-001.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"guardian.co.uk",
+            "altText":"Jack Monroe, austerity cook and blogger",
+            "height":"230",
+            "credit":"guardian.co.uk/guardian.co.uk",
+            "caption":"Jack Monroe, austerity cook and blogger Photograph: guardian.co.uk",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/8/6/1375802890327/Jack-Monroe-austerity-coo-003.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"guardian.co.uk",
+            "altText":"Jack Monroe, austerity cook and blogger",
+            "height":"54",
+            "credit":"guardian.co.uk/guardian.co.uk",
+            "caption":"Jack Monroe, austerity cook and blogger Photograph: guardian.co.uk",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/8/6/1375802891915/Jack-Monroe-austerity-coo-004.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"guardian.co.uk",
+            "altText":"Jack Monroe, austerity cook and blogger",
+            "height":"340",
+            "credit":"guardian.co.uk/guardian.co.uk",
+            "caption":"Jack Monroe, austerity cook and blogger Photograph: guardian.co.uk",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/8/6/1375802893533/Jack-Monroe-austerity-coo-005.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"guardian.co.uk",
+            "altText":"Jack Monroe, austerity cook and blogger",
+            "height":"130",
+            "credit":"guardian.co.uk/guardian.co.uk",
+            "caption":"Jack Monroe, austerity cook and blogger Photograph: guardian.co.uk",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/8/6/1375802895156/Jack-Monroe-austerity-coo-006.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"guardian.co.uk",
+            "altText":"Jack Monroe, austerity cook and blogger",
+            "height":"84",
+            "credit":"guardian.co.uk/guardian.co.uk",
+            "caption":"Jack Monroe, austerity cook and blogger Photograph: guardian.co.uk",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/8/6/1375802896955/Jack-Monroe-austerity-coo-007.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"guardian.co.uk",
+            "altText":"Jack Monroe, austerity cook and blogger",
+            "height":"132",
+            "credit":"guardian.co.uk/guardian.co.uk",
+            "caption":"Jack Monroe, austerity cook and blogger Photograph: guardian.co.uk",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/8/6/1375802898616/Jack-Monroe-austerity-coo-008.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"guardian.co.uk",
+            "altText":"Jack Monroe, austerity cook and blogger",
+            "height":"168",
+            "credit":"guardian.co.uk/guardian.co.uk",
+            "caption":"Jack Monroe, austerity cook and blogger Photograph: guardian.co.uk",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/8/6/1375802900206/Jack-Monroe-austerity-coo-009.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"guardian.co.uk",
+            "altText":"Jack Monroe, austerity cook and blogger",
+            "height":"180",
+            "credit":"guardian.co.uk/guardian.co.uk",
+            "caption":"Jack Monroe, austerity cook and blogger Photograph: guardian.co.uk",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/8/6/1375802901854/Jack-Monroe-austerity-coo-010.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"guardian.co.uk",
+            "altText":"Jack Monroe, austerity cook and blogger",
+            "height":"228",
+            "credit":"guardian.co.uk/guardian.co.uk",
+            "caption":"Jack Monroe, austerity cook and blogger Photograph: guardian.co.uk",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/8/6/1375802903451/Jack-Monroe-austerity-coo-011.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"guardian.co.uk",
+            "altText":"Jack Monroe, austerity cook and blogger",
+            "height":"276",
+            "credit":"guardian.co.uk/guardian.co.uk",
+            "caption":"Jack Monroe, austerity cook and blogger Photograph: guardian.co.uk",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/8/6/1375802905041/Jack-Monroe-austerity-coo-012.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"guardian.co.uk",
+            "altText":"Jack Monroe, austerity cook and blogger",
+            "height":"372",
+            "credit":"guardian.co.uk/guardian.co.uk",
+            "caption":"Jack Monroe, austerity cook and blogger Photograph: guardian.co.uk",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/8/6/1375802906815/Jack-Monroe-austerity-coo-013.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"guardian.co.uk",
+            "altText":"Jack Monroe, austerity cook and blogger",
+            "height":"90",
+            "credit":"guardian.co.uk/guardian.co.uk",
+            "caption":"Jack Monroe, austerity cook and blogger Photograph: guardian.co.uk",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/8/6/1375802908453/Jack-Monroe-austerity-coo-014.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"guardian.co.uk",
+            "altText":"Jack Monroe, austerity cook and blogger",
+            "height":"225",
+            "credit":"guardian.co.uk/guardian.co.uk",
+            "caption":"Jack Monroe, austerity cook and blogger Photograph: guardian.co.uk",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/8/6/1375802910139/Jack-Monroe-austerity-coo-015.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"guardian.co.uk",
+            "altText":"Jack Monroe, austerity cook and blogger",
+            "height":"360",
+            "credit":"guardian.co.uk/guardian.co.uk",
+            "caption":"Jack Monroe, austerity cook and blogger Photograph: guardian.co.uk",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/8/6/1375802911937/Jack-Monroe-austerity-coo-016.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"guardian.co.uk",
+            "altText":"Jack Monroe, austerity cook and blogger",
+            "height":"360",
+            "credit":"guardian.co.uk/guardian.co.uk",
+            "caption":"Jack Monroe, austerity cook and blogger Photograph: guardian.co.uk",
+            "width":"640"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/8/6/130806JackMonroe-16x9.mp4",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/8/6/130806JackMonroe_7923227.jpg",
+            "height":"360",
+            "durationMinutes":"4",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/8/6/130806JackMonroe_7923227.jpg",
+            "width":"480",
+            "durationSeconds":"47"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/8/6/130806JackMonroe_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/8/6/130806JackMonroe_7923227.jpg",
+            "height":"360",
+            "durationMinutes":"4",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/8/6/130806JackMonroe_7923227.jpg",
+            "width":"480",
+            "durationSeconds":"47"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/8/6/130806JackMonroe_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/8/6/130806JackMonroe_7923227.jpg",
+            "height":"360",
+            "durationMinutes":"4",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/8/6/130806JackMonroe_7923227.jpg",
+            "width":"480",
+            "durationSeconds":"47"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/8/6/130806JackMonroe/130806JackMonroe.m3u8",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/8/6/130806JackMonroe_7923227.jpg",
+            "height":"360",
+            "durationMinutes":"4",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/8/6/130806JackMonroe_7923227.jpg",
+            "width":"480",
+            "durationSeconds":"47"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/8/6/130806JackMonroe-720.mp4",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/8/6/130806JackMonroe_7923227.jpg",
+            "height":"360",
+            "durationMinutes":"4",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/8/6/130806JackMonroe_7923227.jpg",
+            "width":"480",
+            "durationSeconds":"47"
+          }
+        }]
+      },{
+        "id":"gu-image-414862281",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/8/6/1375802895156/Jack-Monroe-austerity-coo-006.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"guardian.co.uk",
+            "altText":"Jack Monroe, austerity cook and blogger",
+            "height":"84",
+            "credit":"guardian.co.uk/guardian.co.uk",
+            "caption":"Jack Monroe, austerity cook and blogger Photograph: guardian.co.uk",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/nov/01/richard-littlejohn-wrong-about-jack-monroe-daily-mail",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-11-01T11:55:52Z",
+      "webTitle":"Dear Richard Littlejohn – here are all the things you got wrong about me | Jack Monroe",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/nov/01/richard-littlejohn-wrong-about-jack-monroe-daily-mail",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/nov/01/richard-littlejohn-wrong-about-jack-monroe-daily-mail",
+      "fields":{
+        "trailText":"<strong>Jack Monroe:</strong> I'm not single, and I didn't quit my job for a life on benefits, but why let facts get in the way of your Daily Mail column?",
+        "headline":"Dear Richard Littlejohn – here are all the things you got wrong about me",
+        "body":"<video data-media-id=\"gu-video-414463084\" class=\"gu-video\" controls=\"controls\" poster=\"\">\n        <source src=\"http://cdn.theguardian.tv/mainwebsite/2013/8/6/130806JackMonroe-16x9.mp4\"></source><source src=\"http://cdn.theguardian.tv/connectedTV/1280/2013/8/6/130806JackMonroe-720.mp4\"></source><source src=\"http://cdn.theguardian.tv/3gp/large/2013/8/6/130806JackMonroe_3gpLg16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/ad/2013/8/6/130806JackMonroe/130806JackMonroe.m3u8\"></source><source src=\"http://cdn.theguardian.tv/3gp/small/2013/8/6/130806JackMonroe_3gpSml16x9.3gp\"></source>\n      </video><p>Dear Richard Littlejohn,</p><p></p><p>I've read your trash non-journalism <a href=\"http://www.dailymail.co.uk/debate/article-2482111/RICHARD-LITTLEJOHN-Ah-Pesto-Meet-poverty-poster-girls.html\" title=\"\">\"comment\" piece about me in the Daily Mail</a> this morning – not because it is a newspaper I read, but because a friend forwarded it to me.</p><p></p><p>Firstly, I have to commend you for managing to get so many facts completely wrong in a comparatively short article. But that's your style isn't it? Never let the truth get in the way of a good smear campaign, or something like that.</p><p></p><p>So just in case you wanted to attempt to polish that turd of an article with something that resembles the truth, here's some of them addressed:</p><p></p><p>1. I'm not single – I'm getting married in the spring.</p><p></p><p>2. When I returned to work after maternity leave, my relationship broke down, and I found it impossible to cover the irregular night shifts 30 miles from home with any form of childcare. Childminders just don't work all night. Her son's father <em>did</em> and <em>does</em> look after him, but at the time it was impossible to match our work shifts up with friends, family and childcare to cover my working hours. Because he works too. But don't let that ruin your image of a very good man as a feckless waster. I applied for flexible hours under the fire service flexible working policy, I applied for a job share post, I applied for day work roles, other jobs in the fire service closer to home, and was turned down on all counts.</p><p></p><figure data-media-id='gu-image-421450096'><img src='http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383304449791/Kale-008.jpg' alt='Kale' width='460' height='276' class='gu-image'/><figcaption>'My food column is for anyone … I also eat baked beans, but kale was such an easy target.' Photograph: Kevin Summers/Getty Images</figcaption></figure><p>So, 3. I didn't sail out of the door for a life on benefits, I left to find a job closer to home, with better hours more suited to bringing up a young child alone. It took 18 months for me to find that job, and hundreds of applications, but I did it. And that's what sticks in your craw, isn't it? Because in order to satisfy the stereotype that you peddle day in day out in the rag currently lining my ferret cage, I should have stayed feckless and unemployed, and not tried to feed myself and my son decent nutritious meals, nor had the audacity to write about it.</p><p></p><p>4. I'm sure married men can raise families on £27k. There's a few thousand in the fire service. I wouldn't have had to give up my job if I'd had a wife to look after my child on night shifts either, so your point is null and void. What was I meant to do, take my son to work? (I actually asked …)</p><p></p><p>5. I'm a \"hard-pressed British taxpayer\" too. You know that £27k salary I just mentioned? Well I paid tax into the big welfare pot from that salary. The difference between us is that I am glad I live in a country that seeks to look after its citizens with a safety net, imperfect as it is, it's surely better than no support at all.</p><p></p><p>6. Claiming benefits wasn't a lifestyle choice. See above.</p><p></p><p>7. It wasn't a laptop, I blogged from my mobile phone. And before everyone starts bitching and bickering about the fact I had a mobile phone, it wasn't a fancy smartphone – I'd sold that to pay the rent – it was a Nokia that could send emails, and I emailed the posts in. Now I have a full-time job, I have a little notebook computer and a nice phone again, and I make no apology for that.</p><p></p><p>8. My food column is for anyone, funnily enough you don't need to fill out a gov.uk benefits assessment before being allowed to read it. My readership is varied and consists of young working families, people struggling to make ends meet, and also Paul Heaton, Nigel Slater and Tom Parker Bowles. I also eat baked beans, but kale was such an easy target for you, as you seem to have ideas about what people can eat based on their employment status.</p><p></p><p>9. I don't have a 52-inch plasma TV. I had a 17-inch one that my parents bought me a few Christmases ago but I sold it to pay the rent in August 2012.</p><p></p><p>10. \"No one makes any money out of blogging\". Yes they do. Adverts on high-traffic blogs, guest posts, sponsored posts, product endorsement – there are many ways to make money out of blogging. I don't go in for product endorsement posts, or guest or sponsored posts, but I do have adverts on my blog, which don't pay much but they do \"make money\". Even £1 is money, don't you know? But that's beside the point, you and I both know that I didn't set that blog up to make a career out of it. There are 40 million live blogs on the internet – the chances of mine leading to this when I started it, considering it was initially about Southend council meetings, are slimmer than the odds of winning the lottery.</p><p></p><p>11. I don't \"rely on some sort of income support from the state\". I still receive child benefit, like all parents that earn less than £50,000 a year, single, married or otherwise, but I stopped claiming all other benefits when I started working full time. I'm grateful that the welfare safety net is there, but I no longer need it because I have a full-time job and earn just enough to look after myself and my son.</p><p></p><p>12. \"They think they are entitled to benefits on their own terms.\" Don't tell me what I think … If \"on my own terms\" means \"on time and not suspended without warning leaving me in rent arrears\" then absolutely, yes.</p><p></p><p>13. Ah, the tattoos. An easy distraction from the real issues. Read this slowly and absorb: I got my first tattoo when I was 18 (no baby, in work) and continued spending my wages on my tattoos until I didn't have wages to spend on them any more. I did not spend my \"benefit money\" on tattoos. End of. I do still have them, because tattoos are permanent, so even when you're freezing and starving you can't sell them for a bit of cash.</p><p></p><p>14. \"Her arms look like your average professional footballer\". But thinner, non?</p><p></p><p>15. 'Jack's bill for body art' (paid for when she was <em>working</em>) is cheaper than you'd think, being done mostly by friends and apprentices. Not that it's any of your business, what I spend my wages on.</p><p></p><p>16. \"Want the gravy without having to work for it.\" Ah, this old chestnut. See above. Left job to find new job. Now have a new job.</p><p></p><p>I think that's everything.</p><p></p><p>Thank you in advance for the amusement I will get reading the comments section of the Daily Mail today, and for the extra followers on Twitter and the messages of support. <a href=\"http://www.dailymail.co.uk/news/article-2480664/The-phoney-ordinary-folk-Labours-TV-broadcast-Millionaire-restaurateur-Guardian-journalist-interviewees-saying-afford-fuel-bills.html\" title=\"\">Yesterday's smear campaign was a mild irritation</a>, but my blog got lots of hits as people Googled that feckless waster that dared to talk about a political issue, which in turn means that the income I receive from the little advert on the side bar will be significantly higher than usual. Cheers for that.</p><p></p><p>Oh, and if you really wanted your readers to foam at the mouth about me, I can't understand why you omitted the detail that I'm a <em>lesbian</em>. <a href=\"http://agirlcalledjack.com/2013/10/12/the-pink-list-2013/\" title=\"\">Number 19 on this years Pink List lesbian</a>, to be precise.</p><p></p><p>With my very best wishes,</p><p></p><p>Jack Monroe</p><p></p><p>• This first appeared on Jack Monroe's blog <a href=\"http://agirlcalledjack.com/\" title=\"\">A Girl Called Jack</a> and is republished here with permission</p><!-- Guardian Watermark: internal-code/content/421445414|2013-11-05T11:03:48Z|d59492a6eb318dd6267c746b9f4c3f1a1a1e3dd8 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-01T14:04:46Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383304443615/Kale-003.jpg",
+        "standfirst":"I'm not single, and I didn't quit my job for a life on benefits, but why let facts get in the way of your Daily Mail column?",
+        "shortUrl":"http://gu.com/p/3k35y",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383304443615/Kale-003.jpg",
+        "wordcount":"1222",
+        "commentable":"true",
+        "internalContentCode":"421445414",
+        "allowUgc":"false",
+        "internalOctopusCode":"8268163",
+        "isPremoderated":"false",
+        "byline":"Jack Monroe",
+        "publication":"theguardian.com",
+        "internalPageCode":"1990326",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T11:55:00Z"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"society/benefits",
+        "type":"keyword",
+        "webTitle":"Benefits",
+        "webUrl":"http://www.theguardian.com/society/benefits",
+        "apiUrl":"http://content.guardianapis.com/society/benefits",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"media/richard-littlejohn",
+        "type":"keyword",
+        "webTitle":"Richard Littlejohn",
+        "webUrl":"http://www.theguardian.com/media/richard-littlejohn",
+        "apiUrl":"http://content.guardianapis.com/media/richard-littlejohn",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.theguardian.com/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"society/poverty",
+        "type":"keyword",
+        "webTitle":"Poverty",
+        "webUrl":"http://www.theguardian.com/society/poverty",
+        "apiUrl":"http://content.guardianapis.com/society/poverty",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/socialexclusion",
+        "type":"keyword",
+        "webTitle":"Social exclusion",
+        "webUrl":"http://www.theguardian.com/society/socialexclusion",
+        "apiUrl":"http://content.guardianapis.com/society/socialexclusion",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"profile/jack-monroe",
+        "type":"contributor",
+        "webTitle":"Jack Monroe",
+        "webUrl":"http://www.theguardian.com/profile/jack-monroe",
+        "apiUrl":"http://content.guardianapis.com/profile/jack-monroe",
+        "bio":"<p>Jack Monroe blogs at <a href=\"http://agirlcalledjack.com/\">A Girl Called Jack</a> and is author of the forthcoming A Girl Called Jack recipe book</p>",
+        "r2ContributorId":"57609",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/10/1378813805813/Jack-Monroe.jpg",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/food-poverty",
+        "type":"keyword",
+        "webTitle":"Food poverty",
+        "webUrl":"http://www.theguardian.com/society/food-poverty",
+        "apiUrl":"http://content.guardianapis.com/society/food-poverty",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421450095",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383304443615/Kale-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Kevin Summers",
+            "altText":"Kale",
+            "height":"84",
+            "credit":"Kevin Summers/Getty Images",
+            "caption":"'My food column is for anyone … I also eat baked beans, but kale was such an easy target.' Photograph: Kevin Summers/Getty Images",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-421450096",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383304449791/Kale-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Kevin Summers",
+            "altText":"Kale",
+            "height":"276",
+            "credit":"Kevin Summers/Getty Images",
+            "caption":"'My food column is for anyone … I also eat baked beans, but kale was such an easy target.' Photograph: Kevin Summers/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-video-414463084",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/8/6/130806JackMonroe-16x9.mp4",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/8/6/130806JackMonroe_7923227.jpg",
+            "height":"360",
+            "durationMinutes":"4",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/8/6/130806JackMonroe_7923227.jpg",
+            "width":"480",
+            "durationSeconds":"47"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/8/6/130806JackMonroe_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/8/6/130806JackMonroe_7923227.jpg",
+            "height":"360",
+            "durationMinutes":"4",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/8/6/130806JackMonroe_7923227.jpg",
+            "width":"480",
+            "durationSeconds":"47"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/8/6/130806JackMonroe_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/8/6/130806JackMonroe_7923227.jpg",
+            "height":"360",
+            "durationMinutes":"4",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/8/6/130806JackMonroe_7923227.jpg",
+            "width":"480",
+            "durationSeconds":"47"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/8/6/130806JackMonroe/130806JackMonroe.m3u8",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/8/6/130806JackMonroe_7923227.jpg",
+            "height":"360",
+            "durationMinutes":"4",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/8/6/130806JackMonroe_7923227.jpg",
+            "width":"480",
+            "durationSeconds":"47"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/8/6/130806JackMonroe-720.mp4",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/8/6/130806JackMonroe_7923227.jpg",
+            "height":"360",
+            "durationMinutes":"4",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/8/6/130806JackMonroe_7923227.jpg",
+            "width":"480",
+            "durationSeconds":"47"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

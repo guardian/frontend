@@ -1,29 +1,57 @@
 @(item: MetaData)(implicit request: RequestHeader)
-    <meta charset="utf-8" />
+@import common._
+@import model._
+@import conf._
+@import Switches._
+
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
 
-
-    @defining(Site(request)){ site =>
-        @if(site.isSingleDomain) {
-            <link rel="alternate" @if(site.isUkEdition){
-                hreflang="en_US" href="http://@{site.usHost}/@item.id"
-            } else {
-                hreflang="en" href="http://@{site.ukHost}/@item.id"
-            }/>
-        } else {
-            @item.canonicalUrl.map{ url => <link rel="canonical" href="@url" /> }
-        }
-    }
+    @* https://support.google.com/plus/answer/1713826 *@
+    <link rel="publisher" href="https://plus.google.com/113000071431138202574" />
 
     <link rel="shortcut icon" type="image/png" href="@Static("images/favicons/32x32.ico")" />
 
+    <link rel="apple-touch-icon" sizes="152x152" href="@Static("images/favicons/152x152.png")" />
     <link rel="apple-touch-icon" sizes="144x144" href="@Static("images/favicons/144x144.png")" />
+    <link rel="apple-touch-icon" sizes="120x120" href="@Static("images/favicons/120x120.png")" />
     <link rel="apple-touch-icon" sizes="114x114" href="@Static("images/favicons/114x114.png")" />
     <link rel="apple-touch-icon" sizes="72x72" href="@Static("images/favicons/72x72.png")" />
     <link rel="apple-touch-icon-precomposed" href="@Static("images/favicons/57x57.png")" />
 
+    @* http://www.chromium.org/developers/design-documents/dns-prefetching *@
+    <link rel="dns-prefetch" href="@Configuration.images.path" />
+    <link rel="dns-prefetch" href="@Configuration.ajax.url" />
+    <link rel="dns-prefetch" href="//hits.theguardian.com" />
+    <link rel="dns-prefetch" href="//s.ophan.co.uk" />
+    <link rel="dns-prefetch" href="//ophan.theguardian.com" />
+    <link rel="dns-prefetch" href="//oas.theguardian.com" />
+    <link rel="dns-prefetch" href="//beacon.www.theguardian.com" />
+
+    @* http://www.chromium.org/spdy/link-headers-and-server-hint/link-rel-subresource *@
+    <link rel="subresource" href="@Static("javascripts/bootstraps/app.js")" />
+
+    <meta name="application-name" content="The Guardian" />
+    <meta name="msapplication-TileColor" content="#004983" />
+    <meta name="msapplication-TileImage" content="@Static("images/favicons/windows_tile_144_b.png")" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="format-detection" content="telephone=no" />
+    <meta name="HandheldFriendly" content="True" />
+
+    @item.openGraph.map{ case (key, value) =>
+    <meta property="@key" content="@value" />
+    }
+
+    @item.cards.map{ case (key, value) =>
+    <meta property="@key" content="@value" />
+    }
+
+    @if(Switches.iPhoneAppSwitch.isSwitchedOn){
+        @defining(if(Edition(request).id == "US") conf.Configuration.ios.usAppId else conf.Configuration.ios.ukAppId) { id =>
+    <meta name="apple-itunes-app" content="app-id=@id, app-argument=@item.id" />
+        }
+    }
+
 @*
     this script allows you to hook up an external debugger for mobile devices
     see: http://people.apache.org/~pmuellr/weinre/docs/latest/

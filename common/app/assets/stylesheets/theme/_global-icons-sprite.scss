@@ -1,67 +1,153 @@
-.i { background-image: url(../images/global/sprite.14676e910b147bee01b8c1d73d20780c.png); background-repeat: no-repeat; display: inline-block; }
+.i { background-repeat: no-repeat; display: inline-block; }
 
-.i-arrow-large-down { background-position: -8px -8px; width: 26px; height: 14px; }
+.i-arrow-blue-down { background-position: -8px -9px; width: 15px; height: 7px; }
 
-.i-arrow-small-down { background-position: -34px -8px; width: 12.667px; height: 7px; }
+.i-arrow-grey-down { background-position: -24px -9px; width: 15px; height: 7px; }
 
-.i-arrow-small-up { background-position: -46px -8px; width: 12.667px; height: 7.083px; }
+.i-arrow-small-up { background-position: -40px -9px; width: 13px; height: 7px; }
 
-.i-close-x { background-position: -58px -8px; width: 14.5px; height: 14.5px; }
+.i-arrow-white-down { background-position: -53px -9px; width: 15px; height: 7px; }
 
-.i-date { background-position: -72px -8px; width: 10px; height: 10px; }
+.i-arrow-white-large { background-position: -69px -9px; width: 24px; height: 10px; }
 
-.i-default-witness-avatar { background-position: -82px -8px; width: 32px; height: 32px; }
+.i-arrow-white-right { background-position: -94px -9px; width: 24px; height: 25px; }
 
-.i-ee-add-button { background-position: -114px -8px; width: 54px; height: 47px; }
+.i-back { background-position: -119px -9px; width: 12px; height: 12px; }
 
-.i-filter-arrow-down { background-position: -181px -8px; width: 20px; height: 11.431px; }
+.i-clock-grey { background-position: -132px -9px; width: 11px; height: 11px; }
 
-.i-filter-arrow-left { background-position: -201px -8px; width: 8.703px; height: 15px; }
+.i-clock-light-grey { background-position: -144px -9px; width: 11px; height: 11px; }
 
-.i-filter-arrow-right { background-position: -209px -8px; width: 8.702px; height: 15px; }
+.i-close-icon { background-position: -156px -9px; width: 18px; height: 18px; }
 
-.i-filter-arrow-up { background-position: -217px -8px; width: 20px; height: 11.431px; }
+.i-comment-comment { background-position: -175px -9px; width: 16px; height: 16px; }
 
-.i-fullscreen-toggle { background-position: -237px -8px; width: 12px; height: 12px; }
+.i-comment-feature { background-position: -192px -9px; width: 16px; height: 16px; }
 
-.i-guardian-logo { background-position: -249px -8px; width: 107.667px; height: 20.125px; }
+.i-comment-grey { background-position: -209px -9px; width: 16px; height: 16px; }
 
-.i-image-inverted { background-position: -356px -8px; width: 12px; height: 9px; }
+.i-comment-light-grey { background-position: -226px -9px; width: 14px; height: 12px; }
 
-.i-image { background-position: -368px -8px; width: 12px; height: 9px; }
+.i-comment-news { background-position: -241px -9px; width: 16px; height: 16px; }
 
-.i-livequote-after { background-position: -380px -8px; width: 37px; height: 20px; }
+.i-date { background-position: -258px -9px; width: 10px; height: 10px; }
 
-.i-livequote-before { background-position: -417px -8px; width: 37px; height: 20px; }
+.i-double-arrow-right-blue { background-position: -269px -9px; width: 15px; height: 14px; }
 
-.i-menu-active { background-position: -454px -8px; width: 18px; height: 12px; }
+.i-double-arrow-right-white { background-position: -284px -9px; width: 15px; height: 14px; }
 
-.i-menu { background-position: -472px -8px; width: 18px; height: 12px; }
+.i-ee-add-button { background-position: -299px -9px; width: 54px; height: 47px; }
 
-.i-more-arrow { background-position: -490px -8px; width: 10px; height: 8px; }
+.i-fb { background-position: -354px -9px; width: 11px; height: 22px; }
 
-.i-powered-by-ee { background-position: -500px -8px; width: 68px; height: 31px; }
+.i-filter-arrow-down { background-position: -365px -9px; width: 20px; height: 11px; }
 
-.i-quote-marks { background-position: -181px -44px; width: 64px; height: 32px; }
+.i-filter-arrow-left { background-position: -386px -9px; width: 9px; height: 15px; }
 
-.i-red-card { background-position: -258px -44px; width: 9px; height: 12px; }
+.i-filter-arrow-right { background-position: -395px -9px; width: 9px; height: 15px; }
 
-.i-search-blue { background-position: -267px -44px; width: 14px; height: 14px; }
+.i-filter-arrow-up { background-position: -404px -9px; width: 20px; height: 11px; }
 
-.i-search { background-position: -281px -44px; width: 14px; height: 14px; }
+.i-fullscreen-toggle { background-position: -425px -9px; width: 12px; height: 12px; }
 
-.i-sport-arrow-small { background-position: -295px -44px; width: 5.802px; height: 10px; }
+.i-gallery-arrow { background-position: -438px -9px; width: 32px; height: 32px; }
 
-.i-sport-arrow { background-position: -300px -44px; width: 8.703px; height: 15px; }
+.i-gallery-fullimage-icon { background-position: -471px -9px; width: 18px; height: 18px; }
 
-.i-story-quote { background-position: -308px -44px; width: 36.66px; height: 17.88px; }
+.i-gallery-pause-slideshow { background-position: -490px -9px; width: 18px; height: 18px; }
 
-.i-tool { background-position: -344px -44px; width: 13px; height: 13px; }
+.i-gallery-play-slideshow { background-position: -509px -9px; width: 18px; height: 18px; }
 
-.i-top-stories-active { background-position: -357px -44px; width: 16px; height: 16px; }
+.i-gallery-thumb-icon { background-position: -528px -9px; width: 18px; height: 18px; }
 
-.i-top-stories { background-position: -373px -44px; width: 16px; height: 16px; }
+.i-gallery { background-position: -547px -9px; width: 16px; height: 14px; }
 
-.i-witness-logo { background-position: -389px -44px; width: 119px; height: 16px; }
+.i-gplus { background-position: -564px -9px; width: 24px; height: 21px; }
 
-.i-yellow-card { background-position: -508px -44px; width: 9px; height: 12px; }
+.i-guardian-holidayoffers-logo { background-position: -354px -42px; width: 227px; height: 20px; }
+
+.i-guardian-jobs-logo { background-position: -8px -63px; width: 147px; height: 20px; }
+
+.i-guardian-logo { background-position: -156px -63px; width: 108px; height: 20px; }
+
+.i-guardian-masterclasses-logo { background-position: -264px -63px; width: 234px; height: 20px; }
+
+.i-guardian-picks { background-position: -499px -63px; width: 15px; height: 47px; }
+
+.i-guardian-soulmates-logo { background-position: -8px -110px; width: 90px; height: 20px; }
+
+.i-image { background-position: -99px -110px; width: 17px; height: 12px; }
+
+.i-liveblog-pause { background-position: -117px -110px; width: 30px; height: 30px; }
+
+.i-liveblog-play { background-position: -148px -110px; width: 30px; height: 30px; }
+
+.i-livequote-after { background-position: -179px -110px; width: 37px; height: 20px; }
+
+.i-livequote-before { background-position: -217px -110px; width: 37px; height: 20px; }
+
+.i-local-nav-arrow { background-position: -255px -110px; width: 50px; height: 37px; }
+
+.i-menu-active { background-position: -306px -110px; width: 18px; height: 12px; }
+
+.i-menu { background-position: -325px -110px; width: 18px; height: 12px; }
+
+.i-message-close { background-position: -344px -110px; width: 22px; height: 22px; }
+
+.i-play { background-position: -367px -110px; width: 10px; height: 12px; }
+
+.i-powered-by-ee { background-position: -378px -110px; width: 68px; height: 31px; }
+
+.i-profile-active { background-position: -447px -110px; width: 18px; height: 18px; }
+
+.i-profile-signed-in { background-position: -466px -110px; width: 18px; height: 18px; }
+
+.i-profile { background-position: -485px -110px; width: 18px; height: 18px; }
+
+.i-quote-light-grey { background-position: -504px -110px; width: 34px; height: 20px; }
+
+.i-quote-marks { background-position: -539px -110px; width: 39px; height: 24px; }
+
+.i-recommend-inactive { background-position: -578px -110px; width: 12px; height: 12px; }
+
+.i-recommend { background-position: -578px -123px; width: 12px; height: 12px; }
+
+.i-red-card { background-position: -447px -136px; width: 9px; height: 12px; }
+
+.i-search-blue { background-position: -457px -136px; width: 18px; height: 18px; }
+
+.i-search-grey { background-position: -476px -136px; width: 18px; height: 18px; }
+
+.i-search { background-position: -495px -136px; width: 18px; height: 18px; }
+
+.i-share-email-hover { background-position: -514px -136px; width: 36px; height: 36px; }
+
+.i-share-email { background-position: -551px -136px; width: 36px; height: 36px; }
+
+.i-share-facebook-hover { background-position: -8px -173px; width: 36px; height: 36px; }
+
+.i-share-facebook { background-position: -45px -173px; width: 36px; height: 36px; }
+
+.i-share-gplus-hover { background-position: -82px -173px; width: 36px; height: 36px; }
+
+.i-share-gplus { background-position: -119px -173px; width: 36px; height: 36px; }
+
+.i-share-twitter-hover { background-position: -156px -173px; width: 36px; height: 36px; }
+
+.i-share-twitter { background-position: -193px -173px; width: 36px; height: 36px; }
+
+.i-single-arrow-right-blue { background-position: -230px -173px; width: 4px; height: 8px; }
+
+.i-sport-arrow { background-position: -235px -173px; width: 8px; height: 15px; }
+
+.i-story-quote { background-position: -244px -173px; width: 49px; height: 25px; }
+
+.i-swipe-arrow-small { background-position: -294px -173px; width: 5px; height: 10px; }
+
+.i-swipe-arrow { background-position: -300px -173px; width: 7px; height: 16px; }
+
+.i-top-stories-active { background-position: -308px -173px; width: 18px; height: 18px; }
+
+.i-top-stories { background-position: -327px -173px; width: 18px; height: 18px; }
+
+.i-yellow-card { background-position: -346px -173px; width: 9px; height: 12px; }

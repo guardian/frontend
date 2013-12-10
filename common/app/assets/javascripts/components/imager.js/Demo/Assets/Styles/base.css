@@ -1,0 +1,25 @@
+body {
+    font: normal 100%/1.3 sans-serif;
+    margin: auto;
+    max-width: 60em; /* 960px/16px */
+}
+
+img {
+    max-width: 100%;
+}
+
+a {
+    display: block;
+    margin-top: 1em;
+}
+
+code {
+    color: blue;
+}
+
+.strategy-container .delayed-image-load {
+    margin-bottom: 1.5em;
+    outline: 2px dashed #ccc;
+    width: 50vw;
+    height: 50vw;
+}

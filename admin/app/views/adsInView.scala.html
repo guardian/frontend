@@ -1,0 +1,89 @@
+@(top: tools.LineChart, topCount: tools.LineChart, bottom: tools.LineChart, inline: tools.LineChart, mpu: tools.LineChart, views: tools.LineChart, env: String)
+
+<!DOCTYPE html>
+<html>
+  <head>
+        <meta http-equiv="refresh" content="60">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>theguardian.com eyeballs</title>
+        <style>
+            body {
+               margin: 0;
+               padding: 0;
+               font-family: Georgia, serif;
+            }
+            table {
+                display: table;
+                width: 100%;
+                font-size: 100px;
+                text-shadow: #000 2px 2px;
+                line-height: 200%;
+                border-collapse: separate;
+                border-spacing: 0;
+            }
+            small {
+                font-size: 30px;
+            }
+            tr.data td {
+                width: 50%;
+                padding: 0px 50px;
+            }
+            tr.data td:nth-child(1) {
+                text-align: right;     
+            }
+            .top, .mpu {
+                background-color: #ff3;
+                color: #08d;
+            }
+            .summary, .bottom, .inline {
+                background-color: #08d;
+                color: #ff3;
+            }
+            .summary {
+                font-size: 50px; 
+            } 
+            .summary td {
+                text-align: center;
+            }
+            #nb {
+                position: absolute;
+                right: 0;
+                margin: 2px;
+                padding: 10px;
+                font-size: 22px;
+                color: #000;
+                background-color: #fff;
+            }
+
+        </style>
+  </head>
+  <body>
+        <div id="nb">
+            Nb. analysis period is the last 2 minutes, 10% sample size.
+        </div>
+        <table>
+            <tr class="summary">
+                <td colspan="2">
+                    @{"%.0f".format(views.latest)} users have seen an advert in the last 2 minutes.
+                </td>
+            </tr>
+            <tr class="top data">
+                <td>Top</td>
+                <td>@{"%.0f".format(top.latest)} <small>(viewed for seconds)</small></td>
+            </tr>
+            <tr class="inline data">
+                <td>Inline</td>
+                <td>@{"%.0f".format(inline.latest)}</td>
+            </tr>
+            <tr class="mpu data">
+                <td>MPU</td>
+                <td>@{"%.0f".format(mpu.latest)}</td>
+            </tr>
+            <tr class="bottom data">
+                <td>Bottom</td>
+                <td>@{"%.0f".format(bottom.latest)}</td>
+            </tr>
+        </table>
+  </body>
+</html>

@@ -1,0 +1,55 @@
+@(page: CommentPage, blankComment: Comment = null)(implicit request: RequestHeader)
+
+<div
+    class="d-discussion d-discussion--not-staff@if(!page.isClosedForRecommendation){ d-discussion--recommendations-open}"
+    data-page-count="@page.pages"
+    data-comment-count="@page.commentCount"
+    data-current-page="@page.currentPage"
+    @page.switches.map{ switch =>
+        data-@switch.name="@switch.state"
+    }>
+    
+    <div class="d-discussion__header">
+        @if(page.commentCount > 0){
+        <div class="d-discussion__meta d-meta-item">
+            @page.commentCount comment@if(page.commentCount != 1){s} in @page.topLevelCommentCount thread@if(page.topLevelCommentCount != 1){s}.
+        </div>
+        }
+        <div class="d-discussion__meta d-meta-item">Sorted by newest first.</div>
+    </div>
+
+    <div class="js-new-comments"></div>
+
+    @if(page.currentPage != 1){
+        <a class="d-discussion__show-more d-discussion__show-more--newer cta"
+            href="@LinkTo{/@page.id?page=@(page.currentPage - 1)}"
+            data-link-name="Show more comments"
+            data-age="newer"
+            data-page="@(page.currentPage - 1)">
+            Show newer comments
+        </a>
+    }
+
+    <ul class="d-thread d-thread--top-level">
+        @page.comments.map{ comment =>
+            @fragments.comment(comment, page.isClosedForRecommendation)
+        }
+    </ul>
+    
+    @if(page.currentPage + 1 <= page.pages){
+        <a class="d-discussion__show-more d-discussion__show-more--older cta"
+            href="@LinkTo{/@page.id?page=@(page.currentPage + 1)}"
+            data-link-name="Show more comments"
+            data-age="older"
+            data-page="@(page.currentPage + 1)">
+            Show older comments
+        </a>
+    }
+
+    <script type="text/template" id="tmpl-comment-box">@fragments.commentBox()</script>
+    <script type="text/template" id="tmpl-banned-user">@fragments.cannotComment()</script>
+    @if(blankComment != null){<script type="text/template" id="tmpl-comment">@fragments.comment(blankComment)</script>}
+    <script type="text/template" id="tmpl-staff-badge">
+        <i class="d-badge d-badge--guardian-staff d-comment__author-status" title="Guardian staff"><span class="d-badge__label">Guardian Staff</span></i>
+    </script>
+</div>

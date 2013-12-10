@@ -1,0 +1,130 @@
+.commercial {
+    @include box-sizing(border-box);
+    text-align: left;
+    color: $c-neutral1;
+    background-color: lighten($c-neutral7, 2%);
+    width: 100%;
+    position: relative;
+}
+
+.commercial__head {
+    background-color: $c-neutral6;
+    overflow: hidden;
+    @include rem((
+        height: 40px
+    ))
+}
+
+.commercial__title {
+    color: $c-brandBlue;
+    @include fs-header(2);
+    margin: 0;
+    padding: $baseline*2 $baseline;
+    float: left;
+}
+
+.commercial__body {
+    padding: $baseline*2 $baseline;
+    overflow: hidden;
+}
+
+.commercial__foot {
+    border-top: 1px dotted $c-neutral5;
+    padding: $baseline*2 0;
+    margin: 0 $baseline;
+    clear: both;
+}
+
+.commercial__link {
+    @include fs-data(4);
+    .i {
+        position: relative;
+        top: 2px;
+    }
+    .commercial__head & {
+        @include rem((
+            line-height: 32px
+        ));
+        padding: $baseline;
+        display: block;
+        float: right;
+        .i {
+            background-color: $c-newsDefault;
+            background-position: 9px 9px;
+            border-radius: 100%;
+            margin-left: $baseline;
+            top: 0;
+            @include rem((
+                width: 32px,
+                height: 32px
+            ));
+            float: right;
+        }
+    }
+}
+
+.commercial__label {
+    display: block;
+}
+
+
+/* ==========================================================================
+   Entries
+   ========================================================================== */
+.lineitems {
+    list-style-type: none;
+    margin: 0;
+}
+
+.lineitem__title {
+    @include f-headline;
+    @include font-size(18,20);
+    a {
+        color: $c-neutral1;
+    }
+}
+
+.lineitem__description,
+.lineitem__link {
+    @include fs-data(4);
+    strong {
+        color: #000;
+        font-weight: normal;
+    }
+}
+
+.lineitem__link {
+    margin-top: $baseline;
+    .i.i-single-arrow-right-blue {
+        background-position: 6px 4px;
+        border: 1px solid $c-newsDefault;
+        border-radius: 100%;
+        margin-right: $baseline;
+        padding: $baseline;
+        @include rem((
+            width: 8px,
+            height: 8px
+        ));
+        float: left;
+    }
+}
+
+.lineitem__blocklink {
+    &:hover {
+        text-decoration: none;
+        .lineitem__title {
+            text-decoration: underline;
+        }
+    }
+}
+
+.lineitem__meta {
+    color: $c-neutral2;
+    @include fs-data(2);
+    margin: 0;
+}
+
+.lineitem__image {
+    max-width: 100%;
+    outline: 1px solid $c-neutral7;
+}

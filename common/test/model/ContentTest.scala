@@ -1,34 +1,50 @@
 package model
 
 import org.scalatest.FlatSpec
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 
 import org.joda.time.DateTime
-import com.gu.openplatform.contentapi.model.{ MediaAsset, Content => ApiContent, Tag => ApiTag }
+import com.gu.openplatform.contentapi.model.{ Asset, Element =>ApiElement, Content => ApiContent, Tag => ApiTag }
 
-class ContentTest extends FlatSpec with ShouldMatchers {
+class ContentTest extends FlatSpec with Matchers {
+
 
   "Trail" should "be populated properly" in {
 
-    val media = List(
-      MediaAsset("picture", "body", 1, Some("http://www.foo.com/bar"),
-        Some(Map("caption" -> "caption", "width" -> "55"))),
-      MediaAsset("audio", "body", 1, None, None)
+    val imageElement = ApiElement(
+      "test-picture",
+      "main",
+      "image",
+      Some(0),
+      List(Asset(
+        "image",
+        Some("image/jpeg"),
+        Some("http://www.foo.com/bar"),
+        Map("caption" -> "caption", "width" -> "55"))))
+
+    val elements = List(
+      imageElement,
+      ApiElement(
+        "test-audio",
+        "main",
+        "audio",
+        Some(0),
+        Nil)
     )
 
     val content = ApiContent("foo/2012/jan/07/bar", None, None, new DateTime, "Some article",
       "http://www.guardian.co.uk/foo/2012/jan/07/bar",
       "http://content.guardianapis.com/foo/2012/jan/07/bar",
-      mediaAssets = media,
+      //mediaAssets = media,
       tags = List(tag("type/article")),
-      elements = None
+      elements = Some(elements)
     )
 
-    val trail: Trail = new Content(content)
+    val trail: Trail = Content(content)
 
     trail.linkText should be("Some article")
     trail.url should be("/foo/2012/jan/07/bar")
-    trail.images should be(List(Image(media(0))))
+    trail.mainPicture.flatMap(_.largestImage.flatMap(_.url)) should be (Some("http://www.foo.com/bar"))
   }
 
   "Tags" should "understand tag types" in {
@@ -55,25 +71,84 @@ class ContentTest extends FlatSpec with ShouldMatchers {
     tags.series should be(theSeries)
 
     tags.types should be(theTypes)
+  }
+
+  "Content" should "understand that in body pictures are not main pictures" in {
+
+    val testContent = content("article", List(image("test-image-0","body", "body picture 1", 50, 0),
+                                              image("test-image-1","body", "body picture 2", 50, 0),
+                                              image("test-image-2","main", "main picture 1", 50, 0)))
+
+    testContent.mainPicture.flatMap(_.largestImage.flatMap(_.caption)) should be(Some("main picture 1"))
+  }
+
+  it should "understand that trail image can be an image of type 'video'" in {
+
+    val testContent = content("article", List(image("test-image-0","body", "body picture 1", 50, 0),
+                                              image("test-image-1","body", "body picture 2", 50, 0),
+                                              video("test-image-3","main", "video poster", 50, 0)))
+
+    testContent.trailPicture.flatMap(_.largestImage.flatMap(_.caption)) should be(Some("video poster"))
+  }
+
+  it should "detect if content is commentable" in{
+    val noFields = article.copy(fields = None)
+    Content(noFields).isCommentable should be(false)
+
+    val notCommentable= article.copy(fields = Some(Map("commentable" -> "false")))
+    Content(notCommentable).isCommentable should be(false)
+
+    val commentable = article.copy(fields = Some(Map("commentable" -> "true")))
+    commentable.safeFields.get("commentable") should be(Some("true"))
+    Content(commentable).isCommentable should be(true)
 
   }
 
-  "Canonical urls" should "point back to guardian.co.uk" in {
-    val apiContent = ApiContent("foo/2012/jan/07/bar", None, None, new DateTime, "Some article",
-      "http://www.guardian.co.uk/foo/2012/jan/07/bar",
-      "http://content.guardianapis.com/foo/2012/jan/07/bar",
-      elements = None
-    )
+  it should "detect if content is closed for comments" in{
+    val noFields = article.copy(fields = None)
+    Content(noFields).isClosedForComments should be(true)
 
-    val apiTag = tag(url = "http://www.guardian.co.uk/sport/cycling")
+    val future = new DateTime().plusDays(3).toISODateTimeNoMillisString
+    val openComments= article.copy(fields = Some(Map("commentCloseDate" -> future)))
+    Content(openComments).isClosedForComments should be(false)
 
-    new Content(apiContent).canonicalUrl should be(Some("http://www.guardian.co.uk/foo/2012/jan/07/bar"))
-
-    Tag(apiTag).canonicalUrl should be(Some("http://www.guardian.co.uk/sport/cycling"))
+    val past = new DateTime().minus(3).toISODateTimeNoMillisString
+    val closedComments = article.copy(fields = Some(Map("commentCloseDate" -> past)))
+    Content(closedComments).isClosedForComments should be(true)
   }
 
   private def tag(id: String = "/id", tagType: String = "keyword", name: String = "", url: String = "") = {
     ApiTag(id = id, `type` = tagType, webTitle = name,
       sectionId = None, sectionName = None, webUrl = url, apiUrl = "apiurl", references = Nil)
+  }
+
+  private def content(contentType:String, elements:List[ApiElement]): Content = {
+    Content(
+      ApiContent("/content", None, None, DateTime.now, "webTitle", "webUrl", "apiUrl", None,
+                 List(tag(s"type/${contentType}")), Nil,Nil, Some(elements), None, Nil, None)
+    )
+  }
+
+  private val article: ApiContent = ApiContent("/content", None, None, DateTime.now, "webTitle", "webUrl", "apiUrl", None,
+    List(tag("type/article")), Nil,Nil, None, None, Nil, None)
+
+  private def image(  id: String,
+                      relation: String,
+                      caption: String,
+                      width: Int,
+                      index: Int): ApiElement = {
+    ApiElement(id, relation, "image", Some(index), List(asset(caption, width)))
+  }
+
+  private def video(  id: String,
+                      relation: String,
+                      caption: String,
+                      width: Int,
+                      index: Int): ApiElement = {
+    ApiElement(id, relation, "video", Some(index), List(asset(caption, width)))
+  }
+
+  private def asset(caption: String, width: Int): Asset = {
+    Asset("image", Some("image/jpeg"), Some("http://www.foo.com/bar"), Map("caption" -> caption, "width" -> width.toString))
   }
 }

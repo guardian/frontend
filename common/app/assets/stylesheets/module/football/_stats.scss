@@ -1,7 +1,12 @@
+.match-stats {
+    margin-bottom: $baseline*4;
+}
+
 .match-aggregate,
 .match-comment {
     text-align: center;
     display: block;
+    width: 90%;
 }
 
 .match-summary .match-aggregate,
@@ -9,24 +14,18 @@
     text-align: left;
 }
 
-/* this is a filthy hack to get around weird link hover implications */
-.match-aggregate > span,
-.match-comment > span {
-    padding-right: 36px; /* to compensate for the status on above line */
-}
-
 .match-aggregate span span {
     letter-spacing: 2px;
 }
 
 .home-stat {
-    background-color: $homeColour;
+    background-color: $c-sportHome;
     height: 15px;
     width: 100%;
 }
 
 .away-stat {
-    background-color: $awayColour;
+    background-color: $c-sportAway;
     height: 15px;
 }
 
@@ -44,72 +43,69 @@
     width: 100%;
 }
 
-.team-list {
-    list-style: none
-}
-
 .team-list-name {
-    width: 49%;
-    display: inline-block;
+    float: left;
+    width: 49.5%;
+
+    & + & {
+        float: right;
+    }
 }
 
 .m-status {
-    padding: 2px 5px 2px 5px;
+    padding: 0 5px;
 }
 
 .home-header {
-    display: inline-block;
-    width: 49%;
+    float: left;
+    width: 49.5%;
     margin-bottom: $baseline * 3;
-    border-bottom: 5px solid $homeColour;
+    border-bottom: 5px solid $c-sportHome;
     padding-bottom: $baseline;
 }
 
 .away-header {
-    display: inline-block;
-    width: 49%;
+    float: right;
+    width: 49.5%;
     text-align: right;
     margin-bottom: $baseline * 3;
-    border-bottom: 5px solid $awayColour;
+    border-bottom: 5px solid $c-sportAway;
     padding-bottom: $baseline;
 }
 
-.lineup{
-    display: inline-block;
-    width: 49%;
+.lineup {
+    float: left;
+    width: 49.5%;
     vertical-align: top;
     padding-bottom: $baseline * 2;
+
+    & + & {
+        float: right;
+    }
 }
 
 .i-status {
-    padding: 5px 5px;
+    padding: 5px;
     margin-right: 5px;
     font-size: 10px;
     font-style: normal;
-    line-height: 1em;
-    color: #ffffff;
-    background-color: $sportBright;
-}
-    .i-status abbr {
+    line-height: 1;
+    color: #fff;
+    background-color: $c-sportBright;
+
+    abbr {
         border-bottom: none !important;
     }
+}
 
 .item-divider {
-    border-top: 1px solid $mushroom;
-    padding-top: $baseline
+    border-top: 1px solid $c-neutral7;
+    padding-top: $baseline;
 }
 
 .section-divider {
-    border-top: 4px solid $mushroom;
-    border-bottom: 1px solid $mushroom;
+    @include fs-header(1);
+    border-bottom: 1px solid $c-neutral7;
     padding-top: $baseline * 2;
     padding-bottom: $baseline * 3;
-}
-
-.place-holder {
-    padding-bottom: 10px;
-}
-
-.update.update-match-stats {
-    margin: 0px 0px 10px 0px;
 }

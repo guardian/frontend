@@ -1,14 +1,12 @@
+/*global guardian */
 define([
-    'common',
-    'ajax',
-    'domwrite',
-
-    'modules/detect',
+    'utils/mediator',
+    'utils/ajax',
+    'utils/detect',
     'modules/adverts/audience-science'
 ], function (
-    common,
+    mediator,
     ajax,
-    domwrite,
 
     detect,
     audienceScience
@@ -21,13 +19,13 @@ define([
     }
 
     function getPageUrl(config) {
-            var id = (config.pageId === '') ? '' : config.pageId + '/';
-            return 'm.guardian.co.uk/' + id + 'oas.html';
+        var id = (config.pageId === '') ? '' : config.pageId + '/';
+        return guardian.config.page.oasSiteIdHost + '/' + id + 'oas.html';
     }
 
     function getKeywords(config) {
         return config.keywords.split(',').map(function(keyword){
-            return 'k=' + encodeURIComponent(keyword.replace(" ", "-").toLowerCase());
+            return 'k=' + encodeURIComponent(keyword.replace(/\s/g, "-").toLowerCase());
         }).join('&');
     }
 
@@ -41,9 +39,17 @@ define([
         }).join(',');
     }
 
-    function generateUrl(config, slots) {
-        var oasUrl = config.oasUrl + 'adstream_[REQUEST_TYPE].ads/' + getPageUrl(config)+ '/[RANDOM]@' + '[SLOTS]' + '[QUERY]';
-        var type = (detect.getConnectionSpeed() === 'low') ? 'nx' : 'mjx';
+    function getUserSegments(userSegments) {
+        return userSegments.map(function(segment) {
+            return '&gdncrm=' + encodeURIComponent(segment);
+        }).join('');
+    }
+
+    function generateUrl(config, slots, userSegments) {
+        var oasUrl = config.oasUrl + 'adstream_[REQUEST_TYPE].ads/' + getPageUrl(config) + '/[RANDOM]@' + '[SLOTS]' + '[QUERY]';
+
+        var type = 'mjx';
+
         var query = '?';
 
         if (config.keywords) {
@@ -63,6 +69,10 @@ define([
             query += getSegments(segments);
         }
 
+        if (userSegments) {
+            query += getUserSegments(userSegments);
+        }
+
         var url = oasUrl;
         url = url.replace('[RANDOM]', Math.random().toString().substring(2,11));
         url = url.replace('[SLOTS]', getSlots(slots));
@@ -72,28 +82,39 @@ define([
         return url;
     }
 
+    function handleStateChange(script) {
+        var loaded = false;
+        return function() {
+            if ((script.readyState && script.readyState !== 'complete' && script.readyState !== 'loaded') || loaded) {
+                return false;
+            }
+            script.onload = script.onreadystatechange = null;
+            loaded = true;
+            mediator.emit('modules:adverts:docwrite:loaded');
+        };
+    }
+
     function load(options) {
         if(!options.config) {
             return;
         }
 
-        var oasUrl = options.url || generateUrl(options.config.page, options.slots);
+        var oasUrl = options.url || generateUrl(options.config.page, options.slots, options.userSegments);
 
-        ajax({
-            url: oasUrl,
-            type: 'jsonp',
-            success: function (js) {
-                common.mediator.emit('modules:adverts:docwrite:loaded');
-            },
-            error: function () {
-                common.mediator.emit('module:error', 'Failed to load adverts', 'document-write.js');
-            }
-        });
+        // using this, as request isn't actually jsonp, and borks with latest reqwest (0.8.1)
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = oasUrl;
+        script.async = 'async';
+        script.onload = script.onreadystatechange = handleStateChange(script);
+
+        document.querySelector('head').appendChild(script);
     }
 
     return {
         load: load,
-        generateUrl: generateUrl
+        generateUrl: generateUrl,
+        getKeywords: getKeywords
     };
 
 });

@@ -1,11 +1,12 @@
 {
     "packages":{
         "frontend-diagnostics":{
-            "type":"asg-elb",
+            "type":"autoscaling",
             "apps":[ "frontend::diagnostics" ],
             "data":{
-                "secondsToWait":900,
+                "secondsToWait":1200,
                 "port":18080,
+                "healthcheckGrace":20,
                 "bucket":"aws-frontend-artifacts",
                 "healthcheck_paths":[
                     "/management/healthcheck"

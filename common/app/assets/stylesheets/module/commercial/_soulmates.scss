@@ -1,0 +1,103 @@
+/* ==========================================================================
+   Soulmates component
+   ========================================================================== */
+
+.soulmates-component {
+    background-color: #F4F8FD;
+
+    .commercial__head {
+        background-color: #DEEBF9;
+        overflow: hidden;
+        clear: both;
+    }
+
+    .commercial__subtitle {
+        color: #2478D8;
+        @include f-headline;
+        @include font-size(13,20);
+        padding: $baseline*2 0;
+        float: left;
+    }
+
+    .commercial__body {
+        padding: $baseline*2;
+    }
+
+
+    /* Entries */
+    .lineitem {
+        width: 50%;
+        float: left;
+    }
+
+    .lineitem__title {
+        color: $c-newsDefault;
+        font-size: rem(13px);
+        line-height: 1.5385;
+        font-weight: bold;
+        margin-top: $baseline;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    .lineitem__image {
+        padding: $baseline;
+        background-color: #fff;
+        box-shadow: 2px 2px 0 0 rgba(0,0,0,0.15);
+        position: relative;
+        z-index: 2;
+    }
+
+    .lineitem__blocklink {
+        margin: 0 auto;
+        display: block;
+        position: relative;
+        &::before {
+            content: " ";
+            background-color: #D80457;
+            padding: 1px;
+            width: 88px;
+            height: 108px;
+            display: block;
+            position: absolute;
+            z-index: 1;
+            -webkit-transform:rotate(-4deg);
+            -moz-transform:rotate(-4deg);
+            -ms-transform:rotate(-4deg);
+            transform:rotate(-4deg);
+        }
+    }
+    .lineitem {
+        &:nth-child(2n) {
+            .lineitem__blocklink {
+                &::before {
+                    background-color: #5994DD;
+                }
+            }
+        }
+        &:nth-child(3n) {
+            .lineitem__blocklink {
+                &::before {
+                    background-color: #039763;
+                }
+            }
+        }
+    }
+
+    &.commercial--w600 {
+        .commercial__item {
+            float: left;
+            width: 80%;
+        }
+        
+        .commercial__search {
+            float: left;
+            width: 20%;
+        }
+        
+        .lineitem {
+            width: 25%;
+        }
+    }
+}

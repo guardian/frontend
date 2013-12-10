@@ -1,0 +1,168 @@
+/* Base form styles
+   ========================================================================== */
+
+@if $old-ie {
+   // IE 8 won't display webfonts in password fields…
+   [type=password] {
+      font-family: sans-serif !important;
+   }
+}
+
+.form {
+    margin-top: $baseline*6;
+    margin-bottom: $baseline*6;
+    max-width: gs-span(6);
+}
+
+.form__heading {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.form__note,
+.form-field__note {
+    font-family: $sans-serif;
+    font-size: 13px;
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+}
+
+.form-fields {
+    margin: $baseline*6 0;
+    padding: 0;
+}
+
+.form-fields-group .form-field {
+    margin-bottom: 0;
+}
+
+.form-fields > li,
+.form-field {
+    list-style: none;
+    margin: 0 0 $baseline*6 0;
+    padding: 0;
+}
+
+.form-field--error {
+    .label {
+        color: $newsRed;
+    }
+
+    .text-input,
+    .text-input:focus {
+        border-color: $newsRed;
+    }
+}
+
+.form__error {
+    background-color: #fdf4f3;
+    border-bottom: 1px solid lighten($newsRed, 35%);
+    border-top: 1px solid lighten($newsRed, 35%);
+    color: $newsRed;
+    margin-top: 6px;
+    padding: 7px $baseline*2;
+}
+
+.form-field__error {
+    color: $newsRed;
+    margin-top: 6px;
+}
+
+.form-field__note--below {
+    margin-bottom: 0;
+    margin-top: 6px;
+}
+
+.form-field__note--left {
+    float: left;
+}
+
+.form-field__note--right {
+    float: right;
+    margin-left: $gs-gutter;
+}
+
+.label {
+    color: #333;
+    cursor: pointer;
+    display: block;
+    font-size: 16px;
+    font-size: 1.6rem;
+    margin-bottom: 6px;
+}
+
+.text-input,
+.textarea {
+    border: 1px solid $c-neutral4;
+    @include box-shadow(none);
+    @include box-sizing(border-box);
+    color: #545454;
+    display: inline-block;
+    font-family: $sans-serif;
+    font-size: 16px;
+    font-size: 1.6rem;
+    line-height: 1.4;
+    padding: 8px 8px 7px;
+    @include rounded-corners(0);
+    width: 100%;
+    -webkit-appearance: none;
+
+    &:focus {
+        border-color: $c-neutral2;
+    }
+
+    @include mq(tablet) {
+        font-size: 14px;
+        font-size: 1.4rem;
+    }
+}
+
+.submit-input {
+    background: $c-newsDefault;
+    border: 0 none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    font-size: 1.4rem;
+    margin: 0 $gs-gutter 0 0;
+    min-width: gs-span(2);
+    outline: none;
+    padding: 11px 0;
+
+    &:hover,
+    &:focus {
+        background: darken($c-newsDefault, 5%);
+    }
+
+    &:active {
+        background: #000;
+    }
+}
+
+.submit-input[disabled] {
+    background: $c-neutral5;
+}
+
+.check-label,
+.radio-label {
+    display: block;
+    font-family: $sans-serif;
+    font-size: 13px;
+    font-size: 1.3rem;
+    margin-bottom: $baseline;
+    padding-left: $gs-gutter;
+}
+
+.check-label--helper {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+[type=checkbox],
+[type=radio] {
+    float: left;
+    height: 13px;
+    margin-left: -$gs-gutter;
+    margin-top: 3px;
+    width: 13px;
+}

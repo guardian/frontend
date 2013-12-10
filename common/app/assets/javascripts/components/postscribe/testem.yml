@@ -1,0 +1,43 @@
+framework: qunit
+
+test_page: test/test.html
+
+on_start: browserstack tunnel localhost:<port>
+
+launchers:
+
+  bs_opera:
+    command: browserstack launch --attach opera:12.11 <url>
+    protocol: browser
+
+  bs_firefox:
+    command: browserstack launch --attach firefox:16.0 <url>
+    protocol: browser
+
+  bs_chrome:
+    command: browserstack launch --attach chrome:24.0 <url>
+    protocol: browser
+
+  bs_safari_5:
+    command: browserstack launch --attach safari:5.0 <url>
+    protocol: browser
+
+  bs_safari_51:
+    command: browserstack launch --attach safari:5.1 <url>
+    protocol: browser
+
+  bs_ie_7:
+    command: browserstack launch --attach ie:7.0 <url>
+    protocol: browser
+
+  bs_ie_8:
+    command: browserstack launch --attach ie:8.0 <url>
+    protocol: browser
+
+  bs_ie_9:
+    command: browserstack launch --attach ie:9.0 <url>
+    protocol: browser
+
+launch_in_ci: [PhantomJS, Firefox, bs_opera, bs_chrome, bs_safari_51, bs_safari_5, bs_ie_8, bs_ie_9, bs_ie_7]
+
+launch_in_dev: []

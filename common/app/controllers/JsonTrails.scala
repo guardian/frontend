@@ -27,7 +27,6 @@ trait JsonTrails extends Paging with Results {
       }
 
       JsonComponent(
-        request.getQueryString("callback"),
         "html" -> html,
         "hasMore" -> (offsetTrails.size > paging("page-size"))
       )

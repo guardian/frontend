@@ -1,16 +1,33 @@
 define([
     "common",
-
-    "modules/expandable",
-    "modules/autoupdate",
-    "modules/matchnav",
-    "modules/analytics/reading"
+    "$",
+    "modules/ui/autoupdate",
+    "modules/live/filter",
+    "modules/live/summary",
+    "modules/sport/football/matchnav",
+    "modules/analytics/reading",
+    "modules/discussion/loader",
+    "modules/sport/cricket",
+    "modules/experiments/live-blog-show-more",
+    "modules/ui/notification-counter",
+    "utils/detect",
+    "modules/experiments/left-hand-card",
+    "modules/open/cta"
 ], function (
     common,
-    Expandable,
+    $,
     AutoUpdate,
+    LiveFilter,
+    LiveSummary,
     MatchNav,
-    Reading
+    Reading,
+    DiscussionLoader,
+    Cricket,
+    LiveShowMore,
+    NotificationCounter,
+    detect,
+    LeftHandCard,
+    OpenCta
 ) {
 
     var modules = {
@@ -19,14 +36,14 @@ define([
             var matchNav = new MatchNav();
             common.mediator.on('page:article:ready', function(config, context) {
                 if(config.page.section === "football") {
-                    var teamIds = config.referencesOfType('paFootballTeam');
-                    var isRightTypeOfContent = config.hasTone("Match reports") || config.hasTone("Minute by minutes");
+                    var teamIds = config.referencesOfType('paFootballTeam'),
+                        isRightTypeOfContent = config.hasTone("Match reports") || config.page.isLiveBlog;
 
                     if(teamIds.length === 2 && isRightTypeOfContent){
-                        var url = "/football/api/match-nav/";
-                            url += config.webPublicationDateAsUrlPart() + "/";
-                            url += teamIds[0] + "/" + teamIds[1];
-                            url += "?currentPage=" + encodeURIComponent(config.page.pageId);
+                        var url = "/football/api/match-nav/" +
+                                  config.webPublicationDateAsUrlPart() + "/" +
+                                  teamIds[0] + "/" + teamIds[1] +
+                                  ".json?page=" + encodeURIComponent(config.page.pageId);
 
                         matchNav.load(url, context);
                     }
@@ -37,21 +54,51 @@ define([
         initLiveBlogging: function() {
             common.mediator.on('page:article:ready', function(config, context) {
                 if (config.page.isLive) {
-                    var a = new AutoUpdate({
-                        path: window.location.pathname,
-                        delay: 60000,
+
+                    var timerDelay = /desktop|wide/.test(detect.getBreakpoint()) ? 30000 : 60000,
+                        a = new AutoUpdate({
+                        path: function() {
+                            var id = context.querySelector('.article-body .block').id,
+                                path = window.location.pathname;
+
+                           return path + '.json' + '?lastUpdate=' + id;
+                        },
+                        delay: timerDelay,
                         attachTo: context.querySelector(".article-body"),
-                        switches: config.switches
+                        switches: config.switches,
+                        manipulationType: 'prepend',
+                        animateInserts: true,
+                        progressToggle: true,
+                        progressColour: '#ec1c1c'
                     }).init();
+                }
+                if (config.page.isLiveBlog) {
+                    var lf = new LiveFilter(context).init(),
+                        nc = new NotificationCounter().init();
+
+
+                    if (config.switches.liveSummary) {
+                        var ls = new LiveSummary(context).init();
+                    }
+                }
+            });
+        },
+
+        initDiscussion: function() {
+
+            common.mediator.on('page:article:ready', function(config, context) {
+                if (config.page.commentable) {
+                    var discussionLoader = new DiscussionLoader(context, common.mediator, {}, config.switches.discussionTopComments);
+                    discussionLoader.attachToDefault();
                 }
             });
         },
 
         logReading: function() {
-            common.mediator.on('page:article:loaded', function(config, context) {
+            common.mediator.on('page:article:ready', function(config, context) {
                 var wordCount = config.page.wordCount;
                 if(wordCount !== "") {
-                    
+
                     var reader = new Reading({
                         id: config.page.pageId,
                         wordCount: parseInt(config.page.wordCount, 10),
@@ -62,37 +109,69 @@ define([
                     reader.init();
                 }
             });
+        },
+
+        initCricket: function() {
+            common.mediator.on('page:article:ready', function(config, context) {
+
+                var cricketMatchRefs = config.referencesOfType('esaCricketMatch');
+
+                if(cricketMatchRefs[0]) {
+                    var options = { url: cricketMatchRefs[0],
+                                loadSummary: true,
+                                loadScorecard: true,
+                                summaryElement: '.article__headline',
+                                scorecardElement: '.article__headline',
+                                summaryManipulation: 'after',
+                                scorecardManipulation: 'after' };
+                    Cricket.cricketArticle(config, context, options);
+                }
+            });
+        },
+
+        externalLinksCards: function () {
+            common.mediator.on('page:article:ready', function(config, context) {
+                if (config.switches && config.switches.externalLinksCards) {
+                    var card = new LeftHandCard({
+                            origin: 'internal',
+                            context: context
+                    });
+                }
+            });
+        },
+
+        initOpen: function() {
+            common.mediator.on('page:article:ready', function(config, context) {
+                if (config.switches.openCta && config.page.commentable) {
+                    var openCta = new OpenCta(context, common.mediator, {
+                            discussionKey: config.page.shortUrl.replace('http://gu.com/', '')
+                        }),
+                        $openCtaElem = $('.open-cta');
+
+                    if ($openCtaElem[0]) {
+                        openCta.fetch($openCtaElem[0]);
+                    }
+                }
+            });
         }
     };
 
-    var deferrable = function (config, context) {
-        deferrable = function (config, context) {
-            common.mediator.emit("page:article:loaded", config, context);
-        };
-        // On first call to this fn only:
-        common.deferToLoadEvent(function() {
-            modules.logReading();
-            deferrable(config, context);
-        });
-    };
-
     var ready = function (config, context) {
-        ready = function (config, context) {
-            common.mediator.emit("page:article:ready", config, context);
-        };
-        // On first call to this fn only:
-        modules.matchNav();
-        modules.initLiveBlogging();
-        ready(config, context);
-    };
-
-    var init = function (config, context) {
-        ready(config, context);
-        deferrable(config, context);
+        if (!this.initialised) {
+            this.initialised = true;
+            modules.matchNav();
+            modules.initLiveBlogging();
+            modules.logReading();
+            modules.initDiscussion();
+            modules.initCricket();
+            modules.externalLinksCards();
+            modules.initOpen();
+        }
+        common.mediator.emit("page:article:ready", config, context);
     };
 
     return {
-        init: init
+        init: ready
     };
 
 });

@@ -1,0 +1,227 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"uk-news/2013/nov/11/home-office-staff-david-blunkett-secret-affair",
+      "sectionId":"uk-news",
+      "sectionName":"UK news",
+      "webPublicationDate":"2013-11-11T15:28:46Z",
+      "webTitle":"Home Office staff knew of David Blunkett's secret affair, court hears",
+      "webUrl":"http://www.theguardian.com/uk-news/2013/nov/11/home-office-staff-david-blunkett-secret-affair",
+      "apiUrl":"http://content.guardianapis.com/uk-news/2013/nov/11/home-office-staff-david-blunkett-secret-affair",
+      "fields":{
+        "trailText":"Girlfriend of former News International chief Les Hinton among staff members who were aware of secret relationship",
+        "headline":"Home Office staff knew of David Blunkett's secret affair, court hears",
+        "body":"<p>Thirteen people, including the girlfriend of former News International chief executive Les Hinton, knew about a secret relationship David Blunkett was having, a former aide to the then home secretary has told the phone-hacking trial.</p><p>Huw Evans, one of Blunkett's press aides at the time the News of the World exposed the affair in 2004, believed the story would come out eventually, the Old Bailey heard.</p><p>Under cross examination from Timothy Langdale, QC, for former News of the World editor Andy Coulson, Evans agreed that several home office staff were aware.</p><p>These included the then home office head of news, and its then director of communications, as well as some special advisers.</p><p>Their number also included Katherine Raymond, a home office special adviser who at the time, said Langdale \"had recently formed a relationship with Les Hinton, then the chief executive of News International\".</p><p>Blunkett's sons, his protection officers and his driver were also aware, the jury heard.</p><p>\"Given the open nature of the contact between Mr Blunkett and Kimberly Fortier [later Quinn], if people put two and two together they would make an accurate four, wouldn't they,\" said Langdale.</p><p>\"Indeed,\" replied Evans.</p><p>Was he concerned the story \"would come out in due course\", continued Langdale.</p><p>\"I took the view that it was inevitable that at some point it would get into the public domain,\" replied Evans.</p><p>Questioned about the relationship between Coulson and Blunkett, Evans said he could remember one lunch the two had together at the Commons shortly after Coulson became editor of the Sunday tabloid. Coulson denies a charge of conspiring to hack phones.Evans said he did not accept anything he or Blunkett said to Coulson could be said to have stood up the Quinn story. Asked if Blunkett was not in danger of giving \"credibility\" to the story by agreeing to meet Coulson before the story was published, Evans said Blunkett faced \"a series of unenviable choices\".</p><p>The then home secretary was \"agitated and distressed at the prospect the story might appear,\" he said. \"It was David's wish to do everything that he could, and to demonstrate to the woman involved that he had done everything that he could, to persuade the newspaper not to run the story\".</p><p>Asked by Langdale if it was not a matter of \"legitimate public interest\" that Blunkett was having, or had had, a relationship with the married publisher of the Spectator, he replied: \" I did not consider then, or consider now, it was in the public interest to expose it\". Blunkett was not married at the time, he said.</p><p>Jonathan Laidlaw, QC, for Rebekah Brooks, said Blunkett and Fortier [later Quinn] had been on holiday together to Italy in August 2003, and attended a state banquet at Buckingham Palace in November 2003, and a further holiday abroad in May 2004. A couple of \"diary items\" had appeared in newspapers, said Laidlaw. \"You said, in your statement, they were hiding in plain sight, effectively, and I always knew it was a matter of time before someone worked it out\". Evans agreed.</p><p>The day after the News of the World published, Evans said he was contacted by Brooks, then editor of the Sun, who said she was going to publish Quinn's name \"in a sympathetic \" way.</p><p>He said he did not challenge Brooks in the same way as he had challenged Coulson, but would not have denied the story. \"I was not going to deny anything that was true. That would be lying on behalf of the home secretary, and that was clearly unacceptable,\" he said, adding Blunkett had never asked him to lie about it.</p><p>The trial continues.</p><!-- Guardian Watermark: internal-code/content/422208904|2013-11-12T10:05:52Z|63c7dc99bc333ff3f61e60641b28d707865f4044 -->",
+        "showInRelatedContent":"false",
+        "lastModified":"2013-11-11T16:22:00Z",
+        "hasStoryPackage":"false",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/11/11/1384182954357/News-of-the-world-003.jpg",
+        "standfirst":"Girlfriend of former News International chief Les Hinton among staff members who were aware of secret relationship",
+        "shortUrl":"http://gu.com/p/3ka5q",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/11/1384182954357/News-of-the-world-003.jpg",
+        "wordcount":"593",
+        "commentable":"false",
+        "internalContentCode":"422208904",
+        "allowUgc":"false",
+        "internalOctopusCode":"8308548",
+        "isPremoderated":"false",
+        "byline":"<strong>Caroline Davies</strong> and <strong>Lisa O'Carroll</strong>",
+        "publication":"theguardian.com",
+        "internalPageCode":"1995434",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-14T15:28:46Z"
+      },
+      "tags":[{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/carolinedavies",
+        "type":"contributor",
+        "webTitle":"Caroline Davies",
+        "webUrl":"http://www.theguardian.com/profile/carolinedavies",
+        "apiUrl":"http://content.guardianapis.com/profile/carolinedavies",
+        "bio":"<p>Caroline Davies is a writer for the Guardian</p>",
+        "r2ContributorId":"20582",
+        "references":[]
+      },{
+        "id":"profile/lisaocarroll",
+        "type":"contributor",
+        "webTitle":"Lisa O'Carroll",
+        "webUrl":"http://www.theguardian.com/profile/lisaocarroll",
+        "apiUrl":"http://content.guardianapis.com/profile/lisaocarroll",
+        "rcsId":"GNL004691",
+        "r2ContributorId":"15275",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/11/23/1290506292406/Lisa-OCarroll-byline-004.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-422210022",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/11/1384182948942/News-of-the-world-001.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Suzanne Plunkett",
+            "altText":"News of the world",
+            "height":"54",
+            "credit":"Suzanne Plunkett/Reuters",
+            "caption":"David Blunkett’s former press aide said several staff knew of the home secretary’s affair, which was exposed by the News of the World. Photograph: Suzanne Plunkett/Reuters",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/11/1384182952539/News-of-the-world-002.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Suzanne Plunkett",
+            "altText":"News of the world",
+            "height":"130",
+            "credit":"Suzanne Plunkett/Reuters",
+            "caption":"David Blunkett’s former press aide said several staff knew of the home secretary’s affair, which was exposed by the News of the World. Photograph: Suzanne Plunkett/Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/11/1384182954357/News-of-the-world-003.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Suzanne Plunkett",
+            "altText":"News of the world",
+            "height":"84",
+            "credit":"Suzanne Plunkett/Reuters",
+            "caption":"David Blunkett’s former press aide said several staff knew of the home secretary’s affair, which was exposed by the News of the World. Photograph: Suzanne Plunkett/Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/11/1384182955731/News-of-the-world-004.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Suzanne Plunkett",
+            "altText":"News of the world",
+            "height":"132",
+            "credit":"Suzanne Plunkett/Reuters",
+            "caption":"David Blunkett’s former press aide said several staff knew of the home secretary’s affair, which was exposed by the News of the World. Photograph: Suzanne Plunkett/Reuters",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/11/1384182956999/News-of-the-world-005.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Suzanne Plunkett",
+            "altText":"News of the world",
+            "height":"168",
+            "credit":"Suzanne Plunkett/Reuters",
+            "caption":"David Blunkett’s former press aide said several staff knew of the home secretary’s affair, which was exposed by the News of the World. Photograph: Suzanne Plunkett/Reuters",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/11/1384182958375/News-of-the-world-006.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Suzanne Plunkett",
+            "altText":"News of the world",
+            "height":"180",
+            "credit":"Suzanne Plunkett/Reuters",
+            "caption":"David Blunkett’s former press aide said several staff knew of the home secretary’s affair, which was exposed by the News of the World. Photograph: Suzanne Plunkett/Reuters",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/11/1384182960083/News-of-the-world-007.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Suzanne Plunkett",
+            "altText":"News of the world",
+            "height":"228",
+            "credit":"Suzanne Plunkett/Reuters",
+            "caption":"David Blunkett’s former press aide said several staff knew of the home secretary’s affair, which was exposed by the News of the World. Photograph: Suzanne Plunkett/Reuters",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/11/1384182961678/News-of-the-world-008.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Suzanne Plunkett",
+            "altText":"News of the world",
+            "height":"276",
+            "credit":"Suzanne Plunkett/Reuters",
+            "caption":"David Blunkett’s former press aide said several staff knew of the home secretary’s affair, which was exposed by the News of the World. Photograph: Suzanne Plunkett/Reuters",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/11/1384182961678/News-of-the-world-008.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Suzanne Plunkett",
+            "altText":"News of the world",
+            "height":"276",
+            "credit":"Suzanne Plunkett/Reuters",
+            "caption":"David Blunkett’s former press aide said several staff knew of the home secretary’s affair, which was exposed by the News of the World. Photograph: Suzanne Plunkett/Reuters",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-422210023",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/11/1384182954357/News-of-the-world-003.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Suzanne Plunkett",
+            "altText":"News of the world",
+            "height":"84",
+            "credit":"Suzanne Plunkett/Reuters",
+            "caption":"David Blunkett’s former press aide said several staff knew of the home secretary’s affair, which was exposed by the News of the World. Photograph: Suzanne Plunkett/Reuters",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[]
+  }
+}

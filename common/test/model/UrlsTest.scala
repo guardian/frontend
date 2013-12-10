@@ -3,12 +3,12 @@ package model
 import com.gu.openplatform.contentapi.model.{ Content => ApiContent, Tag => ApiTag }
 import org.joda.time.DateTime
 import org.scalatest.FlatSpec
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import play.api.Play
 import play.api.mvc.Request
 import play.api.test.FakeHeaders
 
-class UrlsTest extends FlatSpec with ShouldMatchers {
+class UrlsTest extends FlatSpec with Matchers {
 
   Play.unsafeApplication
 
@@ -23,7 +23,7 @@ class UrlsTest extends FlatSpec with ShouldMatchers {
 
     SupportedUrl(content) should be("/foo/2012/jan/07/bar")
 
-    new Content(content).url should be("/foo/2012/jan/07/bar")
+    Content(content).url should be("/foo/2012/jan/07/bar")
   }
 
   they should "be created relative for galleries" in {
@@ -37,21 +37,7 @@ class UrlsTest extends FlatSpec with ShouldMatchers {
 
     SupportedUrl(content) should be("/foo/gallery/2012/jan/07/bar")
 
-    new Content(content).url should be("/foo/gallery/2012/jan/07/bar")
-  }
-
-  they should "be created absolute for unsupported content types" in {
-
-    val content = ApiContent("foo/2012/jan/07/bar", None, None, new DateTime, "Some article",
-      "http://www.guardian.co.uk/foo/2012/jan/07/bar",
-      "http://content.guardianapis.com/foo/2012/jan/07/bar",
-      tags = List(tag("type/interactive")),
-      elements = None
-    )
-
-    SupportedUrl(content) should be("http://www.guardian.co.uk/foo/2012/jan/07/bar")
-
-    new Content(content).url should be("http://www.guardian.co.uk/foo/2012/jan/07/bar")
+    Content(content).url should be("/foo/gallery/2012/jan/07/bar")
   }
 
   they should "be created relative for tags" in {
@@ -84,23 +70,3 @@ class UrlsTest extends FlatSpec with ShouldMatchers {
     id = id, `type` = "type", webTitle = name, webUrl = "", apiUrl = ""
   )
 }
-
-/*
-
-
-
-  [error] Failed tests:
-[error] 	test.TagControllerTest
-[info] No tests to run for diagnostics/test:test
-[error] Failed tests:
-[error] 	test.FrontFeatureTest
-[info] No tests to run for router/test:test
-[error] Failed tests:
-[error] 	test.RelatedControllerTest
-
-
-
-
-
-
-*/

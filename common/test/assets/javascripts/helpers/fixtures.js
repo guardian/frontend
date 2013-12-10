@@ -12,7 +12,7 @@ define(['common'], function(common) {
         };
 
      function add(id, fixtures) {
-        common.$g('body').append('<div id="' + id + '">foo</div>');
+        common.$g('body').append('<div id="' + id + '"></div>');
         fixtures.forEach(function(fixture) {
             common.$g('#' + id).append(fixture);
         });
@@ -22,7 +22,8 @@ define(['common'], function(common) {
         render: function(conf) {
             clean(conf.id);
             add(conf.id, conf.fixtures);
-        }
+        },
+        clean: clean
     }
 
 });

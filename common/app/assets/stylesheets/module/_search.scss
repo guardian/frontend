@@ -1,9 +1,41 @@
 .nav-popup-search {
     min-height: 47px;
+    padding-top: 14px;
+    padding-bottom: 7px;
+
+    @include mq(tablet) {
+        right: 0;
+        max-width: 512px;
+
+        &:before,
+        &:after {
+            content: '';
+            display: block;
+            width: 1px;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            background: $c-neutral5;
+        }
+    }
+    @include mq(1157px, 1299px) { // When the layout starts to be centered
+        right: -1px;
+        &:after { left: auto; right: 0; }
+    }
+    @include mq(1316px) { // When the layout starts to be centered
+        right: -1px;
+        &:after { left: auto; right: 0; }
+    }
+}
+
+.gsc-search-box {
+    padding: 0;
+    max-width: none;
 }
 
 .search-box {
-  margin: 0 $gutter;
+    margin: 0 $gutter;
 }
 
 .gsc-search-box .gsib_a {
@@ -37,7 +69,7 @@ input.gsc-search-button-v2 {
 }
 
 .gs-result {
-    font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;;
+    font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
 }
 
 .gsc-control-cse {
@@ -46,7 +78,7 @@ input.gsc-search-button-v2 {
 
 .gsc-results .gsc-thumbnail-inside, 
 .gsc-results .gsc-url-top {
-    padding-left: 0px; 
+    padding-left: 0; 
 }
 
 .gsc-results .gs-snippet {
@@ -66,7 +98,7 @@ input.gsc-search-button-v2 {
 }
 
 .gsc-results .gsc-cursor-box {
-    margin: 0 0 $gutter 0 !important;
+    margin: 0 0 $baseline*4 0 !important;
 }
 
 .gsc-results .gsc-cursor-box .gsc-cursor-page {

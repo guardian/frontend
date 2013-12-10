@@ -1,7 +1,6 @@
 package model
 
 import com.gu.openplatform.contentapi.model.{ Tag => ApiTag }
-import java.net.URI
 import common.Reference
 import views.support.{Contributor, ImgSrc}
 
@@ -10,15 +9,14 @@ case class Tag(private val delegate: ApiTag) extends MetaData {
   lazy val tagType: String = delegate.`type`
 
   lazy val id: String = delegate.id
-  lazy val section: String = delegate.sectionId.getOrElse("")
+
+  // some tags e.g. tone do not have an explicit section
+  lazy val section: String = delegate.sectionId.getOrElse("global")
+
   lazy val webUrl: String = delegate.webUrl
   lazy val webTitle: String = delegate.webTitle
 
-  lazy val canonicalUrl = Some(webUrl)
-
-  lazy val url: String = SupportedUrl(delegate)
-  lazy val linkText: String = webTitle
-  lazy val pageId = delegate
+  override lazy val url: String = SupportedUrl(delegate)
 
   lazy val contributorImagePath: Option[String] = delegate.bylineImageUrl.map(ImgSrc(_, Contributor))
 

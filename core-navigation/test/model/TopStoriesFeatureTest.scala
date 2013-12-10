@@ -1,10 +1,10 @@
 package model
 
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import org.scalatest.{ GivenWhenThen, FeatureSpec }
 import test.`package`._
 
-class TopStoriesFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
+class TopStoriesFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
   feature("Latest top stories") {
 

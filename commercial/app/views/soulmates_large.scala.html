@@ -1,0 +1,42 @@
+@(members: Seq[model.commercial.soulmates.Member])(implicit request: RequestHeader)
+
+@main(Page(
+  "Soulmates",
+  "Soulmates",
+  "Soulmates",
+  "Soulmates")){
+  }{
+
+<link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
+
+<div class="commercial soulmates-component commercial--w600">
+    <div class="commercial__head">
+        <h3 class="commercial__title">
+            <a href="http://soulmates.theguardian.com/">
+                <span class="u-h">Guardian Sulmates</span>
+                <i class="i i-guardian-soulmates-logo"></i>
+            </a>
+        </h3>
+        <p class="commercial__subtitle">The Guardian’s online dating site</p>
+    </div>
+    <div class="commercial__body">
+        <div class="commercial__item">
+            <ul class="lineitems">
+                @members.take(4).map { member =>
+                    <li class="lineitem">
+                        <a class="lineitem__blocklink" href="#">
+                            <img class="lineitem__image" src="@member.profilePhoto" alt=""/>
+                            <h4 class="lineitem__title">@member.username</h4>
+                            <p class="lineitem__meta">@member.age, @member.location</p>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div class="commercial__item commercial__search">
+            <p>Search TBD</p>
+        </div>
+    </div>
+</div>
+
+}

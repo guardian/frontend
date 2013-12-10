@@ -1,0 +1,945 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"media/gallery/2013/nov/11/mtv-awards-2013-miley-cyrus-gallery",
+      "sectionId":"media",
+      "sectionName":"Media",
+      "webPublicationDate":"2013-11-11T00:25:00Z",
+      "webTitle":"MTV Europe music awards 2013 – in pictures",
+      "webUrl":"http://www.theguardian.com/media/gallery/2013/nov/11/mtv-awards-2013-miley-cyrus-gallery",
+      "apiUrl":"http://content.guardianapis.com/media/gallery/2013/nov/11/mtv-awards-2013-miley-cyrus-gallery",
+      "fields":{
+        "trailText":"<p>Gallery of live performances at this year's MTV Europe music awards in Amsterdam, with comments from Stuart Heritage's liveblog</p>",
+        "headline":"MTV Europe music awards 2013 – in pictures",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-11T11:16:14Z",
+        "hasStoryPackage":"true",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384127878400/MTV-awards-performance--003.jpg",
+        "standfirst":"Gallery of live performances at this year's MTV Europe music awards in Amsterdam, with comments from Stuart Heritage.<br /><br /><a href=\"http://www.theguardian.com/music/2013/nov/11/mtv-awards-miley-cyrus-smokes-onstage-eminem\">News: Miley Cyrus smokes 'joint' onstage as Eminem wins big</a>",
+        "shortUrl":"http://gu.com/p/3k9j7",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384127878400/MTV-awards-performance--003.jpg",
+        "commentable":"false",
+        "internalContentCode":"422151197",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Stuart Heritage",
+        "publication":"theguardian.com",
+        "internalPageCode":"1995064",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-14T00:25:37Z"
+      },
+      "tags":[{
+        "id":"media/mtv",
+        "type":"keyword",
+        "webTitle":"MTV",
+        "webUrl":"http://www.theguardian.com/media/mtv",
+        "apiUrl":"http://content.guardianapis.com/media/mtv",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"culture/awards-and-prizes",
+        "type":"keyword",
+        "webTitle":"Awards and prizes",
+        "webUrl":"http://www.theguardian.com/culture/awards-and-prizes",
+        "apiUrl":"http://content.guardianapis.com/culture/awards-and-prizes",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"music/music",
+        "type":"keyword",
+        "webTitle":"Music",
+        "webUrl":"http://www.theguardian.com/music/music",
+        "apiUrl":"http://content.guardianapis.com/music/music",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tv-and-radio/entertainment",
+        "type":"keyword",
+        "webTitle":"Entertainment",
+        "webUrl":"http://www.theguardian.com/tv-and-radio/entertainment",
+        "apiUrl":"http://content.guardianapis.com/tv-and-radio/entertainment",
+        "sectionId":"tv-and-radio",
+        "sectionName":"Television &amp; radio",
+        "references":[]
+      },{
+        "id":"profile/stuart-heritage",
+        "type":"contributor",
+        "webTitle":"Stuart Heritage",
+        "webUrl":"http://www.theguardian.com/profile/stuart-heritage",
+        "apiUrl":"http://content.guardianapis.com/profile/stuart-heritage",
+        "bio":"<p>Stuart Heritage writes about film, TV and music for the Guardian</p>",
+        "r2ContributorId":"32922",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/8/1362748164877/Stuart-Heritage.jpg",
+        "references":[]
+      },{
+        "id":"type/gallery",
+        "type":"type",
+        "webTitle":"Gallery",
+        "webUrl":"http://www.theguardian.com/inpictures",
+        "apiUrl":"http://content.guardianapis.com/inpictures",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-422183830",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384127878400/MTV-awards-performance--003.jpg",
+          "typeData":{
+            "source":"Getty Images for MTV",
+            "photographer":"Ian Gavan",
+            "altText":"MTV awards performance ",
+            "height":"84",
+            "credit":"Ian Gavan/Getty Images for MTV",
+            "caption":"Miley Cyrus performs onstage during the MTV EMA's 2013 at the Ziggo Dome in Amsterdam, Netherlands.   Photograph: Ian Gavan/Getty Images for MTV",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-422151170",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":1,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384127538070/MTV-awards-performance-001.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Peter Dejong",
+            "altText":"MTV awards performance: MTV awards performance",
+            "height":"480",
+            "credit":"Peter Dejong/AP",
+            "caption":"<strong>Stuart Heritage: </strong>'Oh wow. Miley's up first. She's wearing a silver rubber skirt. She's wearing the exact same thing that the lead singer of Babylon Zoo wore in the video for that sing of his. She's also twerking fairly heavily into a midget's face, so that's something'",
+            "width":"720"
+          }
+        }]
+      },{
+        "id":"gu-image-422151172",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":2,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384127545290/MTV-awards-performance-002.jpg",
+          "typeData":{
+            "source":"Getty Images for MTV",
+            "photographer":"Ian Gavan",
+            "altText":"MTV awards performance: MTV awards performance",
+            "height":"480",
+            "credit":"Ian Gavan/Getty Images for MTV",
+            "caption":"'MC Redfoo onstage. Next up: the single most annoying man who has ever walked the face of the entire sodding planet. \"Woo! Yeah! You're looking sexy and you know it! Woo! Yeah baby! Owww! Woo!\" he goes.  He's just ripped his shirt off. Now he's presenting in a pair of Speedos …'\r\n",
+            "width":"724"
+          }
+        }]
+      },{
+        "id":"gu-image-422151152",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":3,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384127548633/MTV-awards-performance--003.jpg",
+          "typeData":{
+            "source":"Getty Images for MTV",
+            "photographer":"Ian Gavan",
+            "altText":"MTV awards performance: MTV awards performance ",
+            "height":"480",
+            "credit":"Ian Gavan/Getty Images for MTV",
+            "caption":"'Anyway, not to make the host look comparatively less douchey, here's Robin Thicke. And Robin Thicke's troupe of sad-faced female dancers who I'm choosing to believe are doing this against their will. I don't know Morse code, but I'm pretty sure they're all blinking desperate pleas for help …'",
+            "width":"721"
+          }
+        }]
+      },{
+        "id":"gu-image-422151154",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":4,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384127552644/MTV-awards-performance--004.jpg",
+          "typeData":{
+            "source":"Getty Images for MTV",
+            "photographer":"Ian Gavan",
+            "altText":"MTV awards performance: MTV awards performance ",
+            "height":"480",
+            "credit":"Ian Gavan/Getty Images for MTV",
+            "caption":"'But now Katy Perry is singing a song called Unconditional. You know that song Roar that she did? It's the same as that, but with the word 'unconditional' where the word 'roar' used to go. However, she's singing on top of a maypole, so that's nice'",
+            "width":"741"
+          }
+        }]
+      },{
+        "id":"gu-image-422151156",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":5,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384127555875/MTV-awards-performance--005.jpg",
+          "typeData":{
+            "source":"Getty Images for MTV",
+            "photographer":"Ian Gavan",
+            "altText":"MTV awards performance: MTV awards performance ",
+            "height":"600",
+            "credit":"Ian Gavan/Getty Images for MTV",
+            "caption":"'The maypole dancers have yanked their ribbons away, and now Katy is just hanging in mid-air in a sparkly top that's got lots of lights trained at it. Don't tell anyone, but I think she might be regenerating'",
+            "width":"397"
+          }
+        }]
+      },{
+        "id":"gu-image-422151158",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":6,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384127558978/MTV-awards-performance--006.jpg",
+          "typeData":{
+            "source":"Getty Images for MTV",
+            "photographer":"Gareth Cattermole",
+            "altText":"MTV awards performance: MTV awards performance ",
+            "height":"480",
+            "credit":"Gareth Cattermole/Getty Images for MTV",
+            "caption":"'Will Ferrell as Anchorman's Ron Burgundy has filmed a special little interlude for the EMAs. It's the only thing I've seen that makes me not want to watch Anchorman 2. He does call Daft Punk 'a pair of inexplicable continentals', though, so it's not an entirely lost cause'",
+            "width":"735"
+          }
+        }]
+      },{
+        "id":"gu-image-422151160",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":7,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384127561422/MTV-awards-performance--007.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Sven Hoogerhuis, POOL",
+            "altText":"MTV awards performance: MTV awards performance ",
+            "height":"480",
+            "credit":"Sven Hoogerhuis, POOL/EPA",
+            "caption":"'And now, just to kick all the fun out of the room, here's Kings Of Leon to perform a song that doesn't have a tune. They're performing behind a kind of mesh barrier …'",
+            "width":"744"
+          }
+        }]
+      },{
+        "id":"gu-image-422151162",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":8,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384127564578/MTV-awards-performance--008.jpg",
+          "typeData":{
+            "source":"Getty Images for MTV",
+            "photographer":"Gareth Cattermole",
+            "altText":"MTV awards performance: MTV awards performance ",
+            "height":"480",
+            "credit":"Gareth Cattermole/Getty Images for MTV",
+            "caption":"'But Bruno Mars is performing now. Next to a pole dancer. I think. This performance has all the camera effects of a late-era episode of the Old Grey Whistle Test, so it's quite hard to tell what's going on. Perhaps Bruno Mars wanted to show us what it's like to have cataracts, because that's roughly the effect …'",
+            "width":"722"
+          }
+        }]
+      },{
+        "id":"gu-image-422151164",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":9,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384127567774/MTV-awards-performance--009.jpg",
+          "typeData":{
+            "source":"Getty Images for MTV",
+            "photographer":"Ian Gavan",
+            "altText":"MTV awards performance: MTV awards performance ",
+            "height":"480",
+            "credit":"Ian Gavan/Getty Images for MTV",
+            "caption":"'And now the moment we've all been waiting for - it's Miley Cyrus. She's singing Wrecking Ball. She's wearing a leotard. Her tongue is still inside her head. She isn't really moving about very much. At the moment, she's making Kings Of Leon look like Cirque Du Soleil …'",
+            "width":"725"
+          }
+        }]
+      },{
+        "id":"gu-image-422151166",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":10,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384127574273/MTV-awards-performance--011.jpg",
+          "typeData":{
+            "source":"WireImage",
+            "photographer":"Kevin Mazur",
+            "altText":"MTV awards performance: MTV awards performance ",
+            "height":"494",
+            "credit":"Kevin Mazur/WireImage",
+            "caption":"'Now, for reasons I can't quite work out, it's time for a performance from The Killers. I might have got that wrong. From looking at them, I'm pretty sure I'm actually watching a supergroup that consists of Brian Adams, Jamie Afro, Comic Book Guy and Jesus. And they might be doing A Phil Collins cover. I don't know …'",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-422151174",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":11,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384127570974/MTV-awards-performance-010.jpg",
+          "typeData":{
+            "source":"Getty Images for MTV",
+            "photographer":"Ian Gavan",
+            "altText":"MTV awards performance: MTV awards performance",
+            "height":"480",
+            "credit":"Ian Gavan/Getty Images for MTV",
+            "caption":"'And now there's a performance by Eminem. He's doing Berserk, while standing in front of a massive ghetto blaster. That's basically it. His microphone doesn't seem to be working properly, because only about one in every five of his words is actually loud enough to hear …'",
+            "width":"723"
+          }
+        }]
+      },{
+        "id":"gu-image-422175335",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":12,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/11/1384163853623/Singer-Miley-Cyrus-smokes-016.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Remko De Waal",
+            "altText":"MTV Awards: Singer Miley Cyrus smokes on stage after receiving the Best Video award",
+            "height":"576",
+            "credit":"Remko De Waal/Reuters",
+            "caption":"So who's won BEST VIDEO? I'll tell you - it's Miley Cyrus for Wrecking Ball. There's a message for everyone. You want awards? Take your clothes off, lick a hammer and then burst into tears. As a special reward to her fans for supporting her, Miley shows everyone what her vagina looks like and then lights a joint. The Mail Online sidebar breathes a sigh of relief. It gets to stay in business for another day",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-422151168",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":13,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384127577469/MTV-awards-performance--012.jpg",
+          "typeData":{
+            "source":"Getty Images for MTV",
+            "photographer":"Ian Gavan",
+            "altText":"MTV awards performance: MTV awards performance ",
+            "height":"480",
+            "credit":"Ian Gavan/Getty Images for MTV",
+            "caption":"'And now for the evening's final performance. It's Icona Pop. They're both dressed as Katy Perry, which is weird. Maybe they're who Katy regenerated into earlier. Still, this song deserves to close the MTV EMAs for 2013, because it's been used for more ITV2 lifestyle show promos than any other song of the year …'",
+            "width":"720"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"music/2013/nov/10/the-mtv-europe-music-awards-liveblog",
+      "sectionId":"music",
+      "sectionName":"Music",
+      "webPublicationDate":"2013-11-10T23:14:08Z",
+      "webTitle":"The MTV Europe Music Awards – as they happened",
+      "webUrl":"http://www.theguardian.com/music/2013/nov/10/the-mtv-europe-music-awards-liveblog",
+      "apiUrl":"http://content.guardianapis.com/music/2013/nov/10/the-mtv-europe-music-awards-liveblog",
+      "fields":{
+        "trailText":"The 20th MTV EMA awards came live from the Ziggo Dome in Amsterdam. What did Miley Cyrus have planned for her performance? <strong>Stuart Heritage</strong> was there for every too-loud minute of it.",
+        "headline":"The MTV Europe Music Awards – as they happened",
+        "body":"<div id=\"block-528012c6e4b0344539440348\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T23:14:08.262Z\">11.14pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Lots of confetti, a small flag and then that's that. The obnoxious host puts on an obnoxious jetpack, which sadly doesn't explode on ignition, and disappears into the ceiling. &quot;See you in 2014&quot; he says. Jesus lord, I hope not.</p> <p>And here ends the MTV EMAs 2013. I hope you’ve all learned a lot. I know I certainly have. Thanks for joining in. If you’d like to follow me on Twitter, I’m <a href=\"http://www.twitter.com/stuheritage\">@StuHeritage</a>. Now, let’s all go away and think long and hard about what we’ve just seen.</p> </div> </div> <div id=\"block-528011c4e4b055987af6770b\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T23:11:15.367Z\">11.11pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>And now for the evening's final performance. It's Icona Pop. They're both dressed as Katy Perry, which is weird. Maybe they're who Katy regenerated into earlier. Still, this song deserves to close the MTV EMAs for 2013, because it's been used for more ITV2 lifestyle show promos than any other song of the year. So hooray for that.</p> </div> </div> <div id=\"block-5280116ae4b08521f0cfb55e\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T23:07:41.013Z\">11.07pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>SOMETHING ABOUT IMAGINE DRAGONS THAT I DIDN'T REALISE: If you put them at one end of a corridor and The Killers at the other end, both bands would think that they were staring into a mirror. But only Imagine Dragons would worry about their lifestyle as a result.</p> </div> </div> <div id=\"block-52801122e4b08521f0cfb55d\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T23:06:10.827Z\">11.06pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>And now for Imagine Dragons, performing Radioactive. It's one of the biggest songs of the year, says the host, which means it's been on the most adverts. Same thing, really.</p> </div> </div> <div id=\"block-5280106de4b08521f0cfb55c\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T23:04:52.597Z\">11.04pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Anyway, this is an awards show, remember. So who's won BEST VIDEO? I'll tell you - it's Miley Cyrus for Wrecking Ball. There's a message for everyone. You want awards? Take your clothes off, lick a hammer and then burst into tears.</p> <p>As a special reward to her fans for supporting her, Miley shows everyone what her vagina looks like and then lights a joint. The Mail Online sidebar breathes a sigh of relief. It gets to stay in business for another day.</p> </div> </div> <div id=\"block-52800ff9e4b08521f0cfb55b\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T23:01:56.984Z\">11.01pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>We're back. And this is probably the final stretch, because we've reached the stage of the evening where Ron Burgundy makes awkward, poorly-rehearsed smalltalk with Katy Perry. &quot;Amsterdam is the country that Game of Thrones is historically based on&quot;, Ron says in what has suddenly become my favourite moment of the evening.</p> </div> </div> <div id=\"block-52800e8ce4b055987af6770a\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T22:55:32.649Z\">10.55pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>And because this is MTV, they're now singing tweets. Next up, interpretive dance to tweets. After that, tweets made of my evaporated tears. After that, nothing. There is nothing after that.</p> </div> </div> <div id=\"block-52800e36e4b08521f0cfb55a\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T22:53:32.779Z\">10.53pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>And now, because this is 2013, they're reading tweets out.</p> </div> </div> <div id=\"block-52800df6e4b055987af67709\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T22:52:18.489Z\">10.52pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Just on the off-chance that this song is too old for the MTV audience, Brian Adams has decided to use a Keyboard shaped like Harry Potter's scar. Unless Harry Potter is too old for them as well. He probably is. Perhaps his keyboard should have been shaped like a Snapchat of a stranger's todger instead. Who knows?</p> </div> </div> <div id=\"block-52800d82e4b08521f0cfb559\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T22:50:31.270Z\">10.50pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Oh, don't worry, they're doing Mr Brightside now. It's just like being at an indie disco a decade ago, except I'm sitting on a sofa on my own and my hands hurt from typing.&nbsp;</p> </div> </div> <div id=\"block-52800ce1e4b055987af67708\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T22:49:31.622Z\">10.49pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Now, for reasons I can't quite work out, it's time for a performance from The Killers. I might have got that wrong. From looking at them, I'm pretty sure I'm actually watching a supergroup that consists of Brian Adams, Jamie Afro, Comic Book Guy and Jesus. And they might be doing A Phil Collins cover. I don't know. I do know that this song won't end, though, which is annoying.</p> </div> </div> <div id=\"block-52800cb0e4b0541f62c72e0c\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T22:46:40.470Z\">10.46pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>More Ron Burgundy now. He's eating a pot brownie! Because he's in Amsterdam! LOL!</p> </div> </div> <div id=\"block-52800bcbe4b08521f0cfb558\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T22:45:52.588Z\">10.45pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Now we're back in the middle of Amsterdam watching Snoop Dogg doing Gin And Juice with his Seven Days of Funk collaborator. He's in the tiny club from before, so there isn't any space or budget for a big performance. All we have is Snoop Dogg doing his best to confuse his audience with a song recorded a full decade before any of them were born. He says the F-word, and it isn't bleeped. He says the MF-word, and it is bleeped. I think we all know where we stand in terms of what we're allowed to call the MTV EMAs host tonight.</p> </div> </div> <div id=\"block-52800b3be4b0541f62c72e0b\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T22:42:01.089Z\">10.42pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Oh, we're doing that quick 'video acceptances of minor awards' thing again. But I've just found a list of winners online, so I know that One Direction won Best Pop and Beyonce won Best Live.&nbsp;</p> <p>The host is now doing What The Fox Say with the What The Fox Say people. It isn't as good as I've made it sound.</p> </div> </div> <div id=\"block-52800a5fe4b055987af67707\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T22:36:41.530Z\">10.36pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>You know which part of this ceremony is going to go viral on YouTube tomorrow morning? None of it.</p> </div> </div> <div id=\"block-5280099fe4b055987af67706\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T22:34:46.114Z\">10.34pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>And now it's all gone dark and nothing is happening. Oh, Ron Burgundy has just given Eminem his award. They're doing the Brick Tamland bit from Anchorman. It's very sweet.</p> </div> </div> <div id=\"block-528008b8e4b08521f0cfb556\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T22:31:24.911Z\">10.31pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>But because he's just won the Icon award, he's allowed to try again with another song. This one's a bit quieter, so it's a little bit easier to hear what he's saying. I'm still missing the bulk of it, but it's one of Eminem's quieter songs so it's almost definitely about either a) how much he loves his daughter or b) how much he doesn't love his mum.</p> </div> </div> <div id=\"block-528007e5e4b0541f62c72e07\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T22:28:23.018Z\">10.28pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>And now there's a performance by Eminem. He's doing Berserk, while standing in front of a massive ghetto blaster. That's basically it. His microphone doesn't seem to be working properly, because only about one in every five of his words is actually loud enough to hear. Still, he's doing a pretty good meerkat impression as well, and that's enough to maintain my interest.</p> </div> </div> <div id=\"block-52800767e4b0541f62c72e06\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T22:25:28.175Z\">10.25pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Eminem's getting a WORLDWIDE ICON award. This consists of library footage of him talking about himself, and a dispassionate robot voice listing dry statistics about his career. He must be proud.</p> </div> </div> <div id=\"block-5280074ae4b0344539440344\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T22:23:29.712Z\">10.23pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>The host just fired a rocket out of his penis. If you're not watching this live, you're really missing out.</p> </div> </div> <div id=\"block-5280060ce4b0541f62c72e05\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T22:22:55.664Z\">10.22pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Jared Leto's mum is now onstage. And, oh, he's asking for a minute's since for the victims of Typhoon&nbsp;Haiyan. That's quite nice of him. Not that ANYBODY IN THE ENTIRE STADIUM stops whooping for even a second, though. Still, nice sentiment. Jared's there to present the WORLDWIDE award. And it's won by Chris Lee from China, whose thing is apparently wearing some massively impractical-looking clothes.</p> </div> </div> <div id=\"block-528004c9e4b055987af67705\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T22:17:17.534Z\">10.17pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Another advert for cookers. I don't know about you, but I really want a cooker now.</p> </div> </div> <div id=\"block-5280044de4b0344539440342\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T22:12:02.094Z\">10.12pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>And now Ron Burgundy is in the Red Light district of Amsterdam. He's been mistaken for a prostitute! It's well LOL.</p> </div> </div> <div id=\"block-528003ece4b0541f62c72e04\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T22:10:12.910Z\">10.10pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>She can really sing, though, can't she? It's surprising the things you notice about people when they're not rubbing their buttocks against a middle-aged man's crotch. I'm not sure I ever thought I'd say this, but well done Miley Cyrus.</p> </div> </div> <div id=\"block-5280035be4b08521f0cfb555\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T22:08:10.490Z\">10.08pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>And now the moment we've all been waiting for - it's Miley Cyrus. She's singing Wrecking Ball. She's wearing a leotard. Her tongue is still inside her head. She isn't really moving about very much. At the moment, she's making Kings Of Leon look like Cirque Du Soleil. Hopefully this will change soon.</p> </div> </div> <div id=\"block-52800308e4b055987af67704\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T22:06:15.959Z\">10.06pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Bieber can't be there to accept the award, but was available to mumble some incoherent thanks inside a toilet cubicle in a conference centre somewhere while looking like he fully resents being made to do even that. Europe appreciates the effort.</p> </div> </div> <div id=\"block-5280028be4b0541f62c72e02\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T22:04:48.244Z\">10.04pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>BEST MALE now. Iggy Azalea is pretending that she can't read the teleprompter. You had to be there, I suppose. And Justin Bieber wins.</p> </div> </div> <div id=\"block-5280013ee4b08521f0cfb554\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T21:58:17.231Z\">9.58pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>MTV is now whizzing through some of the night's less important winners. I missed every single one of them, because I was trying to find a glass of water. Sorry. I think Green Day might have won something.</p> </div> </div> <div id=\"block-528000aee4b055987af67703\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T21:57:13.029Z\">9.57pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>And then Bruno Mars grabs a guitar and tears out a windtunnel solo. It's exactly what Prince would have done in his prime, had Prince spend most of the 1980s exclusively performing to audiences of pensioners with visual disabilities. And I say that as a fan of that performance.&nbsp;</p> </div> </div> <div id=\"block-527fffe1e4b055987af67702\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T21:53:57.849Z\">9.53pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>But Bruno Mars is performing now. Next to a pole dancer. I think. This performance has all the camera effects of a late-era episode of The Old Grey Whistle Test, so it's quite hard to tell what's going on. Perhaps Bruno Mars wanted to show us what it's like to have cataracts, because that's roughly the effect. If nothing else, the 2013 MTV EMAs have taught me that cataracts must be a right pain in the arse.</p> </div> </div> <div id=\"block-527fff7ee4b0344539440340\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T21:51:23.525Z\">9.51pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>The host, in his billionth awful lycra onesie of the night, is repeating the word 'chain' as loudly as he can. He's essentially precisely the last person you'd ever want to run into on a night bus. Then we're back to the nightclub, where we see three seconds of a man playing a record. I am at least two decades too old for this show.</p> </div> </div> <div id=\"block-527fff06e4b034453944033f\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T21:49:40.366Z\">9.49pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>The fact that the entire audience just sang along with the clip of Katy Perry means that this one's already in the bag. Katy Perry wins. &quot;I was just there drinking a champagne&quot; says Katy, immediately before plugging her new album. Say what you like about Katy Perry, but the woman knows how to connect with pre-teens.</p> </div> </div> <div id=\"block-527ffeade4b08521f0cfb553\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T21:47:12.334Z\">9.47pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>BEST FEMALE NOW, presented by Walt Jr from Breaking Bad. This is his life now, making sort of sexually threatening jokes to young pop stars. What a waste of ricin.</p> </div> </div> <div id=\"block-527ffcace4b0541f62c72dfc\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T21:40:45.723Z\">9.40pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Oh, the barrier has lifted. And - ta-<em>daaa!</em> - Kings Of Leon were behind it all along. It's basically the worst magic trick of all time. Imagine if David Blaine told you to pick a card, and that card turned out to be Kings Of Leon, and Kings Of Leon were playing a dreary song that was specifically designed to be someone's fifth choice for a Football Focus highlights soundbed four years from now. You'd punch him in the face, wouldn't you? You'd punch David Blaine right in the face.</p> </div> <p class=\"block-time updated-time\">Updated <time datetime=\"2013-11-10T21:40:58.065Z\">at 9.40pm GMT</time></p> </div> <div id=\"block-527ffc5be4b034453944033b\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T21:37:39.921Z\">9.37pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>And now, just to kick all the fun out of the room, here's Kings Of Leon to perform a song that doesn't have a tune. They're performing behind a kind of mesh barrier. This might be because the barrier has a light show playing across it, but I think it's because Kings Of Leon are worried that all the MTV tweens are going to throw glass bottles full of hot piss at them.</p> </div> </div> <div id=\"block-527ffbfde4b0541f62c72df9\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T21:36:09.593Z\">9.36pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>There's now a bit where the host says &quot;Are you enjoying the party, people&quot; and there's a lot of noise and everyone does a horrible Harlem Shake impersonation. Imagine being stuck in a lift with this man. Imagine it. No, really imagine it. Isn't it awful?</p> </div> </div> <div id=\"block-527ffbb0e4b034453944033a\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T21:34:41.220Z\">9.34pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Jared Leto (tonight dressed as Jared Leto's mum) uses the speech to announce an upcoming show. He also thanks The Dreamers, who might have been one of the other nominated groups. And he absolutely doesn't let anyone else from the band talk. Such is life.</p> </div> </div> <div id=\"block-527ffb7ee4b055987af67701\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T21:33:23.088Z\">9.33pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>The award goes to 30 Seconds To Mars, because everyone who voted for this is a full-blown div.</p> </div> </div> <div id=\"block-527ffb37e4b08521f0cfb552\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T21:32:27.441Z\">9.32pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Ellie Goulding is presenting BEST ALTERNATIVE. From her introduction, I now know that Ellie Goulding makes a noise like an old lady slipping on some icy steps when she whoops. And because of this, I've missed the nominees. Never mind. They'll be online somewhere.</p> </div> </div> <div id=\"block-527ffacee4b08521f0cfb551\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T21:31:25.687Z\">9.31pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Ron Burgundy has filmed a special little interlude for the EMAs. It's the only thing I've seen that makes me not want to watch Anchorman 2. He does call Daft Punk 'a pair of inexplicable continentals', though, so it's not an entirely lost cause.</p> </div> </div> <div id=\"block-527ffaa3e4b08521f0cfb550\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T21:29:44.247Z\">9.29pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Eminem says 'thank you' to a lot of people with his mouth, and 'please just let me sleep' to everyone with his eyes.</p> </div> </div> <div id=\"block-527ffa14e4b0541f62c72df5\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T21:28:59.184Z\">9.28pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>BEST HIP-HOP is being presented by Rita Ora and a Poundland Power Ranger. The nominees are Macklemore, Jay Z, Drake, Kanye West and Eminem. Eminem wins it. Eminem has attended these awards. I don't know if any of the others did. This is a nice coincidence.</p> </div> </div> <div id=\"block-527ff9cde4b055987af67700\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T21:26:27.096Z\">9.26pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>The maypole dancers have yanked their ribbons away, and now Katy is just hanging in mid-air in a sparkly top that's got lots of lights trained at it. Don't tell anyone, but I think she might be regenerating.</p> </div> </div> <div id=\"block-527ff93ae4b08521f0cfb54f\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T21:25:30.073Z\">9.25pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>But now Katie Perry is singing a song called Unconditional. You know that song Roar that she did? It's the same as that, but with the word 'unconditional' where the word 'roar' used to go. However, she's singing on top of a maypole, so that's nice. Maybe Lady Gaga will do some country dancing during her performance. Maybe Miley Cyrus's performance will have an interpretive brass rubbing mid-section.</p> </div> </div> <div id=\"block-527ff8e5e4b0344539440339\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T21:23:04.168Z\">9.23pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>The host has had a camera installed in his glasses &quot;So you can see my point of view&quot;. He means that we can see what his glasses are pointing at, not that we can understand his idealogical standpoint. Because, quite clearly, this man is not capable of independent thought.</p> </div> </div> <div id=\"block-527ff8a6e4b0344539440338\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T21:21:34.066Z\">9.21pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>There's an advert for duel-fuel Rangemaster cookers on. If there's one thing that pop-loving tweens go crazy for, it's&nbsp;duel-fuel Rangemaster cookers.</p> </div> </div> <div id=\"block-527ff780e4b08521f0cfb54e\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T21:16:57.053Z\">9.16pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Some of the EMAs are being broadcast live from a club. It is literally as fun as watching a man listlessly jigging behind a mixing desk sounds. And then it stops, just as soon as it starts. But, hey, thanks for trying.</p> </div> </div> <div id=\"block-527ff725e4b08521f0cfb54d\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T21:15:37.428Z\">9.15pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>The host just grabbed his sunglasses, pushed the lenses out of them, put them back on and shouted &quot;YEAH BABY&quot;. He's doing a stage dive now. I think he might be dressed as a Teletubby. I really want this ceremony to end with some sort of giant Wicker Man.</p> </div> </div> <div id=\"block-527ff6e7e4b0541f62c72df2\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T21:14:09.698Z\">9.14pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>And Bruno Mars wins it for Locked Out Of Heaven, which is a surprise. He uses his acceptance speech to say nothing of worth.</p> </div> </div> <div id=\"block-527ff689e4b0541f62c72df0\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T21:13:07.272Z\">9.13pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>BEST SONG is the first award of the night. It's between Blurred Lines, Get Lucky, Thrift Shop, Diamonds and Locked Out Of Heaven. Did I say this was for Best Song? I think it's actually for Song You're Now Become Allergic To Through Overexposure.</p> </div> </div> <div id=\"block-527ff61de4b055987af676ff\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T21:11:33.312Z\">9.11pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>However, then Robin Thicke goes on to sing a song that isn't Blurred Lines. This is a terrible mistake. It's like getting Neil Armstrong to give a talk about the state of his toenails. Nobody cares. It doesn't have a tune. But every second he's singing it is a second that I don't have to look at that terrible speedo douchebag.</p> </div> </div> <div id=\"block-527ff574e4b0344539440333\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T21:09:38.316Z\">9.09pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Anyway, not to make the host look comparatively less douchey, here's Robin Thicke. And Robin Thicke's troupe of sad-faced female dancers who I'm choosing to believe are doing this against their will. I don't know Morse Code, but I'm pretty sure they're all blinking desperate pleas for help. Thicke, to his credit, looks utterly fed up of singing that song, and not even a brief rap from Iggy Azalea&nbsp;(who isn't masturbating with a foam hand, also to her credit) can gee things up.</p> </div> </div> <div id=\"block-527ff517e4b0541f62c72dee\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T21:06:45.033Z\">9.06pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>He's just ripped his shirt off. Now he's presenting in a pair of Speedos. &quot;YEAH BABY&quot; he shouts as he does this. If I get through this evening without attempting to slash my throat on the thinnest bit of my keyboard, then it's going to be a miracle.</p> </div> </div> <div id=\"block-527ff4b7e4b0541f62c72dec\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T21:05:20.682Z\">9.05pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Next up: the single most annoying man who has ever walked the face of the entire sodding planet. &quot;Woo! Yeah! You're looking sexy and you know it! Woo! Yeah baby! Owww! Woo!&quot; he goes.</p> <p>Is this what I've got to put up with for the next two hours? This sunglasses-indoors berk? Because, seriously, if we are then me and MTV are going to have a pretty serious falling out.</p> </div> </div> <div id=\"block-527ff45be4b0541f62c72dea\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T21:03:38.459Z\">9.03pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Oh wow. Miley's up first. She's wearing a silver rubber skirt. She's wearing the exact same thing that the lead singer of Babylon Zoo wore in the video for that sing of his. She's also twerking fairly heavily into a midget's face, so that's something.</p> </div> </div> <div id=\"block-527ff3f5e4b08521f0cfb54c\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T21:02:08.951Z\">9.02pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>And we're off. There is smoke. There are lights. There is, bewilderingly, the musical cue from Close Encounters Of The Third Kind, even though nobody who watches MTv is even slightly old enough to know what that is.</p> </div> </div> <div id=\"block-527ff396e4b0541f62c72de8\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T20:59:47.345Z\">8.59pm <span class=\"timezone\">GMT</span></time> </p> <div class=\"block-elements\"> <p>Hello! Sorry for the delay, everyone. I was just putting the <a href=\"http://www.theguardian.com/tv-and-radio/2013/nov/09/the-x-factor-2013-live-blog-fifth-live-show\">X Factor liveblog</a> to bed. But now I’m here to liveblog this year’s MTV EMAs (live from Amsterdam! The show, not me!) as they happen, because I’m apparently quite desperate to show the world how old and out of touch with popular music I am.</p> <p>I’ll level with you here. I don’t actually care who wins any of the awards tonight. This is all about the performances. Miley Cyrus has already promised to blow everyone’s minds tonight. I want giant foam hands. I want ill-advised medleys. I want twerking, damn it, and plenty of it. Anyway, please comment along if you’re watching at home, because I want this dawning realisation of my ongoing decrepitude to be as communal as possible. Right, what have I missed?</p> </div> </div> <div id=\"block-527fece5e4b08521f0cfb544\" class=\"block\"> <p class=\"block-time published-time\"> <time datetime=\"2013-11-10T20:41:44.501Z\">8.41pm <span class=\"timezone\">GMT</span></time> </p> <h2 class=\"block-title\">The EMAs! Nearly there!</h2> <div class=\"block-elements\"> <p>As we approach 9pm, the tension is nearly unbearable! We know Miley Cyrus has at least made it to the event after <a href=\"http://www.dailymail.co.uk/tvshowbiz/article-2494411/Miley-Cyrus-high-spirits-returns-special-Amsterdam-coffee-shop--time-model-Cara-Delevingne.html\">a night of revelry in Amsterdam's coffee shops</a>. And we know that because she strode the red carpet <a href=\"http://perezhilton.com/2013-11-09-miley-cyrus-cara-delevingne-party-together-greenhouse-cafe-amsterdam#sthash.p1neYxVb.dpbs\">wearing this remarkable ensemble</a>. We even know she had a shower today, because she <a href=\"http://www.contactmusic.com/story/miley-cyrus-shares-shower-selfie-ahead-of-emas_3946577\">took a photo of herself doing so and shared it with the world</a>. We know Eminem is <a href=\"http://www.nme.com/news/eminem/73740\">to be given a Global Icon Award</a>, for his iconic status across the entire world, be it Irian Jaya, Bhutan or Easter Island. But how will he feel, having learned <a href=\"http://metro.co.uk/2013/11/10/eminems-childhood-home-burns-down-before-mtv-emas-4181141/\">his childhood home has just burned down</a>? That'll be the childhood home celebrated in so many happy songs about his loving family. And, more prosaically, we know that Rita Ora &quot;<a href=\"http://www.mirror.co.uk/3am/celebrity-news/rita-ora-dazzles-low-cut-black-2717892\">dazzled in a low-cut jumpsuit</a>&quot; as she left her hotel today. But what else might happen? Who knows! But once the show proper starts at 9pm, we will be bringing you every single incident, in minute detail.</p> </div> </div><!-- Guardian Watermark: internal-code/content/421915841|2013-11-11T15:34:05Z|6e62c8e1abedbfb901cb5016cf9532504ab60703 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-11T10:26:38Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/7/1383820681860/Miley-Cyrus-003.jpg",
+        "standfirst":"The 20th MTV EMA awards came live from the Ziggo Dome in Amsterdam. What did Miley Cyrus have planned for her performance? Stuart Heritage was there for every too-loud minute of it.",
+        "displayHint":"news",
+        "shortUrl":"http://gu.com/p/3k7j2",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/7/1383820681860/Miley-Cyrus-003.jpg",
+        "wordcount":"1",
+        "commentable":"true",
+        "internalContentCode":"421915841",
+        "allowUgc":"false",
+        "internalComposerCode":"527b97ade4b0625ea40a9cb2",
+        "isPremoderated":"false",
+        "byline":"Stuart Heritage",
+        "displayRelativeTimes":"false",
+        "publication":"theguardian.com",
+        "internalPageCode":"1993601",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-13T20:41:19Z"
+      },
+      "tags":[{
+        "id":"music/music",
+        "type":"keyword",
+        "webTitle":"Music",
+        "webUrl":"http://www.theguardian.com/music/music",
+        "apiUrl":"http://content.guardianapis.com/music/music",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"media/mtv",
+        "type":"keyword",
+        "webTitle":"MTV",
+        "webUrl":"http://www.theguardian.com/media/mtv",
+        "apiUrl":"http://content.guardianapis.com/media/mtv",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"culture/awards-and-prizes",
+        "type":"keyword",
+        "webTitle":"Awards and prizes",
+        "webUrl":"http://www.theguardian.com/culture/awards-and-prizes",
+        "apiUrl":"http://content.guardianapis.com/culture/awards-and-prizes",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"music/popandrock",
+        "type":"keyword",
+        "webTitle":"Pop and rock",
+        "webUrl":"http://www.theguardian.com/music/popandrock",
+        "apiUrl":"http://content.guardianapis.com/music/popandrock",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"culture/television",
+        "type":"keyword",
+        "webTitle":"Television",
+        "webUrl":"http://www.theguardian.com/culture/television",
+        "apiUrl":"http://content.guardianapis.com/culture/television",
+        "sectionId":"tv-and-radio",
+        "sectionName":"Television &amp; radio",
+        "references":[]
+      },{
+        "id":"culture/miley-cyrus",
+        "type":"keyword",
+        "webTitle":"Miley Cyrus",
+        "webUrl":"http://www.theguardian.com/culture/miley-cyrus",
+        "apiUrl":"http://content.guardianapis.com/culture/miley-cyrus",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"music/dizzeerascal",
+        "type":"keyword",
+        "webTitle":"Dizzee Rascal",
+        "webUrl":"http://www.theguardian.com/music/dizzeerascal",
+        "apiUrl":"http://content.guardianapis.com/music/dizzeerascal",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/beyonce",
+        "type":"keyword",
+        "webTitle":"Beyoncé",
+        "webUrl":"http://www.theguardian.com/music/beyonce",
+        "apiUrl":"http://content.guardianapis.com/music/beyonce",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/kingsofleon",
+        "type":"keyword",
+        "webTitle":"Kings of Leon",
+        "webUrl":"http://www.theguardian.com/music/kingsofleon",
+        "apiUrl":"http://content.guardianapis.com/music/kingsofleon",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/one-direction",
+        "type":"keyword",
+        "webTitle":"One Direction",
+        "webUrl":"http://www.theguardian.com/music/one-direction",
+        "apiUrl":"http://content.guardianapis.com/music/one-direction",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/bruno-mars",
+        "type":"keyword",
+        "webTitle":"Bruno Mars",
+        "webUrl":"http://www.theguardian.com/music/bruno-mars",
+        "apiUrl":"http://content.guardianapis.com/music/bruno-mars",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/minutebyminute",
+        "type":"tone",
+        "webTitle":"Minute by minutes",
+        "webUrl":"http://www.theguardian.com/tone/minutebyminute",
+        "apiUrl":"http://content.guardianapis.com/tone/minutebyminute",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/stuart-heritage",
+        "type":"contributor",
+        "webTitle":"Stuart Heritage",
+        "webUrl":"http://www.theguardian.com/profile/stuart-heritage",
+        "apiUrl":"http://content.guardianapis.com/profile/stuart-heritage",
+        "bio":"<p>Stuart Heritage writes about film, TV and music for the Guardian</p>",
+        "r2ContributorId":"32922",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/8/1362748164877/Stuart-Heritage.jpg",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-f8326bd9-fe0a-47d7-9db4-46b55121a61a",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/10/5/1380975776333/Miley-Cyrus-Comment-011.jpg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Observer/Pix/pictures/2013/10/5/1380975776333/Miley-Cyrus-Comment-011.jpg",
+            "source":"Rex/PictureGroup",
+            "altText":"Miley Cyrus, Comment",
+            "height":"372",
+            "credit":"Rex/PictureGroup",
+            "caption":"Repeat performance? &hellip; Miley Cyrus at MTV's Video Music Awards show in New York in August 2013. Photograph: Rex/PictureGroup",
+            "mediaId":"gu-fc-f8326bd9-fe0a-47d7-9db4-46b55121a61a",
+            "width":"620"
+          }
+        }]
+      },{
+        "id":"gu-fc-bca943b9-06a2-4665-96ae-399b987ce25d",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/7/1383820681860/Miley-Cyrus-003.jpg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/7/1383820681860/Miley-Cyrus-003.jpg",
+            "source":"FilmMagic",
+            "photographer":"Jeff Kravitz",
+            "altText":"Miley Cyrus",
+            "height":"84",
+            "credit":"Jeff Kravitz/FilmMagic",
+            "caption":"Miley Cyrus performs during the iHeartRadio music festival at the MGM Grand Garden Arena in Nevada. Photograph: Jeff Kravitz/FilmMagic",
+            "mediaId":"gu-fc-bca943b9-06a2-4665-96ae-399b987ce25d",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"media/gallery/2013/nov/11/mtv-awards-2013-miley-cyrus-gallery",
+      "sectionId":"media",
+      "sectionName":"Media",
+      "webPublicationDate":"2013-11-11T00:25:00Z",
+      "webTitle":"MTV Europe music awards 2013 – in pictures",
+      "webUrl":"http://www.theguardian.com/media/gallery/2013/nov/11/mtv-awards-2013-miley-cyrus-gallery",
+      "apiUrl":"http://content.guardianapis.com/media/gallery/2013/nov/11/mtv-awards-2013-miley-cyrus-gallery",
+      "fields":{
+        "trailText":"<p>Gallery of live performances at this year's MTV Europe music awards in Amsterdam, with comments from Stuart Heritage's liveblog</p>",
+        "headline":"MTV Europe music awards 2013 – in pictures",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-11T11:16:14Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384127878400/MTV-awards-performance--003.jpg",
+        "standfirst":"Gallery of live performances at this year's MTV Europe music awards in Amsterdam, with comments from Stuart Heritage.<br /><br /><a href=\"http://www.theguardian.com/music/2013/nov/11/mtv-awards-miley-cyrus-smokes-onstage-eminem\">News: Miley Cyrus smokes 'joint' onstage as Eminem wins big</a>",
+        "shortUrl":"http://gu.com/p/3k9j7",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384127878400/MTV-awards-performance--003.jpg",
+        "commentable":"false",
+        "internalContentCode":"422151197",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Stuart Heritage",
+        "publication":"theguardian.com",
+        "internalPageCode":"1995064",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-14T00:25:37Z"
+      },
+      "tags":[{
+        "id":"media/mtv",
+        "type":"keyword",
+        "webTitle":"MTV",
+        "webUrl":"http://www.theguardian.com/media/mtv",
+        "apiUrl":"http://content.guardianapis.com/media/mtv",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"culture/awards-and-prizes",
+        "type":"keyword",
+        "webTitle":"Awards and prizes",
+        "webUrl":"http://www.theguardian.com/culture/awards-and-prizes",
+        "apiUrl":"http://content.guardianapis.com/culture/awards-and-prizes",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"music/music",
+        "type":"keyword",
+        "webTitle":"Music",
+        "webUrl":"http://www.theguardian.com/music/music",
+        "apiUrl":"http://content.guardianapis.com/music/music",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tv-and-radio/entertainment",
+        "type":"keyword",
+        "webTitle":"Entertainment",
+        "webUrl":"http://www.theguardian.com/tv-and-radio/entertainment",
+        "apiUrl":"http://content.guardianapis.com/tv-and-radio/entertainment",
+        "sectionId":"tv-and-radio",
+        "sectionName":"Television &amp; radio",
+        "references":[]
+      },{
+        "id":"profile/stuart-heritage",
+        "type":"contributor",
+        "webTitle":"Stuart Heritage",
+        "webUrl":"http://www.theguardian.com/profile/stuart-heritage",
+        "apiUrl":"http://content.guardianapis.com/profile/stuart-heritage",
+        "bio":"<p>Stuart Heritage writes about film, TV and music for the Guardian</p>",
+        "r2ContributorId":"32922",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/8/1362748164877/Stuart-Heritage.jpg",
+        "references":[]
+      },{
+        "id":"type/gallery",
+        "type":"type",
+        "webTitle":"Gallery",
+        "webUrl":"http://www.theguardian.com/inpictures",
+        "apiUrl":"http://content.guardianapis.com/inpictures",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-422183830",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384127878400/MTV-awards-performance--003.jpg",
+          "typeData":{
+            "source":"Getty Images for MTV",
+            "photographer":"Ian Gavan",
+            "altText":"MTV awards performance ",
+            "height":"84",
+            "credit":"Ian Gavan/Getty Images for MTV",
+            "caption":"Miley Cyrus performs onstage during the MTV EMA's 2013 at the Ziggo Dome in Amsterdam, Netherlands.   Photograph: Ian Gavan/Getty Images for MTV",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-422151170",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":1,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384127538070/MTV-awards-performance-001.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Peter Dejong",
+            "altText":"MTV awards performance: MTV awards performance",
+            "height":"480",
+            "credit":"Peter Dejong/AP",
+            "caption":"<strong>Stuart Heritage: </strong>'Oh wow. Miley's up first. She's wearing a silver rubber skirt. She's wearing the exact same thing that the lead singer of Babylon Zoo wore in the video for that sing of his. She's also twerking fairly heavily into a midget's face, so that's something'",
+            "width":"720"
+          }
+        }]
+      },{
+        "id":"gu-image-422151172",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":2,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384127545290/MTV-awards-performance-002.jpg",
+          "typeData":{
+            "source":"Getty Images for MTV",
+            "photographer":"Ian Gavan",
+            "altText":"MTV awards performance: MTV awards performance",
+            "height":"480",
+            "credit":"Ian Gavan/Getty Images for MTV",
+            "caption":"'MC Redfoo onstage. Next up: the single most annoying man who has ever walked the face of the entire sodding planet. \"Woo! Yeah! You're looking sexy and you know it! Woo! Yeah baby! Owww! Woo!\" he goes.  He's just ripped his shirt off. Now he's presenting in a pair of Speedos …'\r\n",
+            "width":"724"
+          }
+        }]
+      },{
+        "id":"gu-image-422151152",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":3,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384127548633/MTV-awards-performance--003.jpg",
+          "typeData":{
+            "source":"Getty Images for MTV",
+            "photographer":"Ian Gavan",
+            "altText":"MTV awards performance: MTV awards performance ",
+            "height":"480",
+            "credit":"Ian Gavan/Getty Images for MTV",
+            "caption":"'Anyway, not to make the host look comparatively less douchey, here's Robin Thicke. And Robin Thicke's troupe of sad-faced female dancers who I'm choosing to believe are doing this against their will. I don't know Morse code, but I'm pretty sure they're all blinking desperate pleas for help …'",
+            "width":"721"
+          }
+        }]
+      },{
+        "id":"gu-image-422151154",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":4,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384127552644/MTV-awards-performance--004.jpg",
+          "typeData":{
+            "source":"Getty Images for MTV",
+            "photographer":"Ian Gavan",
+            "altText":"MTV awards performance: MTV awards performance ",
+            "height":"480",
+            "credit":"Ian Gavan/Getty Images for MTV",
+            "caption":"'But now Katy Perry is singing a song called Unconditional. You know that song Roar that she did? It's the same as that, but with the word 'unconditional' where the word 'roar' used to go. However, she's singing on top of a maypole, so that's nice'",
+            "width":"741"
+          }
+        }]
+      },{
+        "id":"gu-image-422151156",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":5,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384127555875/MTV-awards-performance--005.jpg",
+          "typeData":{
+            "source":"Getty Images for MTV",
+            "photographer":"Ian Gavan",
+            "altText":"MTV awards performance: MTV awards performance ",
+            "height":"600",
+            "credit":"Ian Gavan/Getty Images for MTV",
+            "caption":"'The maypole dancers have yanked their ribbons away, and now Katy is just hanging in mid-air in a sparkly top that's got lots of lights trained at it. Don't tell anyone, but I think she might be regenerating'",
+            "width":"397"
+          }
+        }]
+      },{
+        "id":"gu-image-422151158",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":6,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384127558978/MTV-awards-performance--006.jpg",
+          "typeData":{
+            "source":"Getty Images for MTV",
+            "photographer":"Gareth Cattermole",
+            "altText":"MTV awards performance: MTV awards performance ",
+            "height":"480",
+            "credit":"Gareth Cattermole/Getty Images for MTV",
+            "caption":"'Will Ferrell as Anchorman's Ron Burgundy has filmed a special little interlude for the EMAs. It's the only thing I've seen that makes me not want to watch Anchorman 2. He does call Daft Punk 'a pair of inexplicable continentals', though, so it's not an entirely lost cause'",
+            "width":"735"
+          }
+        }]
+      },{
+        "id":"gu-image-422151160",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":7,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384127561422/MTV-awards-performance--007.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Sven Hoogerhuis, POOL",
+            "altText":"MTV awards performance: MTV awards performance ",
+            "height":"480",
+            "credit":"Sven Hoogerhuis, POOL/EPA",
+            "caption":"'And now, just to kick all the fun out of the room, here's Kings Of Leon to perform a song that doesn't have a tune. They're performing behind a kind of mesh barrier …'",
+            "width":"744"
+          }
+        }]
+      },{
+        "id":"gu-image-422151162",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":8,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384127564578/MTV-awards-performance--008.jpg",
+          "typeData":{
+            "source":"Getty Images for MTV",
+            "photographer":"Gareth Cattermole",
+            "altText":"MTV awards performance: MTV awards performance ",
+            "height":"480",
+            "credit":"Gareth Cattermole/Getty Images for MTV",
+            "caption":"'But Bruno Mars is performing now. Next to a pole dancer. I think. This performance has all the camera effects of a late-era episode of the Old Grey Whistle Test, so it's quite hard to tell what's going on. Perhaps Bruno Mars wanted to show us what it's like to have cataracts, because that's roughly the effect …'",
+            "width":"722"
+          }
+        }]
+      },{
+        "id":"gu-image-422151164",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":9,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384127567774/MTV-awards-performance--009.jpg",
+          "typeData":{
+            "source":"Getty Images for MTV",
+            "photographer":"Ian Gavan",
+            "altText":"MTV awards performance: MTV awards performance ",
+            "height":"480",
+            "credit":"Ian Gavan/Getty Images for MTV",
+            "caption":"'And now the moment we've all been waiting for - it's Miley Cyrus. She's singing Wrecking Ball. She's wearing a leotard. Her tongue is still inside her head. She isn't really moving about very much. At the moment, she's making Kings Of Leon look like Cirque Du Soleil …'",
+            "width":"725"
+          }
+        }]
+      },{
+        "id":"gu-image-422151166",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":10,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384127574273/MTV-awards-performance--011.jpg",
+          "typeData":{
+            "source":"WireImage",
+            "photographer":"Kevin Mazur",
+            "altText":"MTV awards performance: MTV awards performance ",
+            "height":"494",
+            "credit":"Kevin Mazur/WireImage",
+            "caption":"'Now, for reasons I can't quite work out, it's time for a performance from The Killers. I might have got that wrong. From looking at them, I'm pretty sure I'm actually watching a supergroup that consists of Brian Adams, Jamie Afro, Comic Book Guy and Jesus. And they might be doing A Phil Collins cover. I don't know …'",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-422151174",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":11,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384127570974/MTV-awards-performance-010.jpg",
+          "typeData":{
+            "source":"Getty Images for MTV",
+            "photographer":"Ian Gavan",
+            "altText":"MTV awards performance: MTV awards performance",
+            "height":"480",
+            "credit":"Ian Gavan/Getty Images for MTV",
+            "caption":"'And now there's a performance by Eminem. He's doing Berserk, while standing in front of a massive ghetto blaster. That's basically it. His microphone doesn't seem to be working properly, because only about one in every five of his words is actually loud enough to hear …'",
+            "width":"723"
+          }
+        }]
+      },{
+        "id":"gu-image-422175335",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":12,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/11/1384163853623/Singer-Miley-Cyrus-smokes-016.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Remko De Waal",
+            "altText":"MTV Awards: Singer Miley Cyrus smokes on stage after receiving the Best Video award",
+            "height":"576",
+            "credit":"Remko De Waal/Reuters",
+            "caption":"So who's won BEST VIDEO? I'll tell you - it's Miley Cyrus for Wrecking Ball. There's a message for everyone. You want awards? Take your clothes off, lick a hammer and then burst into tears. As a special reward to her fans for supporting her, Miley shows everyone what her vagina looks like and then lights a joint. The Mail Online sidebar breathes a sigh of relief. It gets to stay in business for another day",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-422151168",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":13,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/10/1384127577469/MTV-awards-performance--012.jpg",
+          "typeData":{
+            "source":"Getty Images for MTV",
+            "photographer":"Ian Gavan",
+            "altText":"MTV awards performance: MTV awards performance ",
+            "height":"480",
+            "credit":"Ian Gavan/Getty Images for MTV",
+            "caption":"'And now for the evening's final performance. It's Icona Pop. They're both dressed as Katy Perry, which is weird. Maybe they're who Katy regenerated into earlier. Still, this song deserves to close the MTV EMAs for 2013, because it's been used for more ITV2 lifestyle show promos than any other song of the year …'",
+            "width":"720"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

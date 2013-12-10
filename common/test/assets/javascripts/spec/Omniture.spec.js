@@ -10,19 +10,17 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
         }
 
         beforeEach(function(){
+            config.page = { analyticsName: 'the_page_name' };
+            config.switches = {};
 
-            config.page = { omnitureAccount: 'the_account', analyticsName: 'the_page_name' };
-            config.switches = { optimizely: false };
-
-            s = { t: function(){}, tl: function(){} };
+            s = { t: function(){}, tl: function(){}, apl: function(){} };
             sinon.spy(s, "t");
             sinon.spy(s, "tl");
-
+            sinon.spy(s, "apl");
         });
 
-        it("should correctly set the Omniture account", function(){
-            var o = new Omniture(s, config).init();
-            expect(s_account).toBe("the_account");
+        afterEach(function(){
+            sessionStorage.removeItem('gu.analytics.referrerVars');
         });
 
         it("should record clicks with correct analytics name", function(){
@@ -30,8 +28,8 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
             config.page.contentType = 'Article';
             s.pageType = 'article';
 
-            var o = new Omniture(s, config)
-            o.init();
+            var o = new Omniture(s);
+            o.go(config);
             o.populateEventProperties('outer:link');
 
             expect(s.linkTrackVars).toBe('eVar37,events');
@@ -61,10 +59,10 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
                     analyticsName: "GFE:theworld:a-really-long-title-a-really-long-title-a-really-long-title-a-really-long"
             };
 
-            var o = new Omniture(s, config, w);
-            o.populatePageProperties();
+            var o = new Omniture(s, w);
+            o.go(config);
 
-            expect(s.linkInternalFilters).toBe("guardian.co.uk,guardiannews.co.uk,localhost,gucode.co.uk,gucode.com,guardiannews.com,int.gnl,proxylocal.com");
+            expect(s.linkInternalFilters).toBe("guardian.co.uk,guardiannews.co.uk,localhost,gucode.co.uk,gucode.com,guardiannews.com,int.gnl,proxylocal.com,theguardian.com");
             expect(s.pageName).toBe("GFE:theworld:a-really-long-title-a-really-long-title-a-really-long-title-a-really-long");
             expect(s.prop9).toBe("Article");
             expect(s.channel).toBe("theworld");
@@ -80,8 +78,12 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
             expect(s.prop56).toBe("Javascript");
             expect(s.prop30).toBe("content");
             expect(s.prop19).toBe("frontend");
+            expect(s.prop67).toBe("nextgen-served");
             expect(s.eVar19).toBe("frontend");
             expect(s.cookieDomainPeriods).toBe("2")
+            expect(s.trackingServer).toBe("hits.theguardian.com");
+            expect(s.trackingServerSecure).toBe('hits-secure.theguardian.com');
+
         });
 
         it("should correctly set cookieDomainPeriods for UK edition", function(){
@@ -92,45 +94,100 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
                 edition: "NOT-US"
             };
 
-            var o = new Omniture(s, config, w);
-            o.populatePageProperties();
+            var o = new Omniture(s, w);
+            o.go(config);
 
-            expect(s.cookieDomainPeriods).toBe("3")
+            expect(s.cookieDomainPeriods).toBe("2")
         });
 
         it("should log a page view event", function() {
-            var o = new Omniture(s, config).init();
+            var o = new Omniture(s).go(config);
             waits(100);
             runs(function() {
                 expect(s.t).toHaveBeenCalledOnce();
             });
         });
+        
+        it("should send event46 when a page has comments", function(){
+            config.page.contentType = 'Article';
+            config.page.commentable = true;
+            var o = new Omniture(s).go(config);
+
+            expect(s.apl).toHaveBeenCalled();
+            expect(s.apl.args[0][1]).toBe('event46');
+        });
 
         it("should log a clickstream event", function() {
 
-            var o = new Omniture(s, config)
-            o.init();
+            var o = new Omniture(s),
+                clickSpec = {
+                    target: document.documentElement,
+                    samePage: true,
+                    sameHost: true,
+                    tag: 'something'
+                };
+
+            o.go(config);
             waits(100);
             runs(function() {
-                common.mediator.emit('module:clickstream:click', ['tag', false, false]);
+                common.mediator.emit('module:clickstream:click', clickSpec);
                 expect(s.tl).toHaveBeenCalledOnce();
             });
         });
 
-        it("should not introduce an artificial delay for same-page links or same-host links", function(){
+        it("should make a non-delayed s.tl call for same-page links", function(){
 
-            var o = new Omniture(s, config),
-                el = document.createElement("a");
+            var o = new Omniture(s),
+                el = document.createElement("a"),
+                clickSpecSamePage = {
+                    target: el,
+                    samePage: true,
+                    sameHost: true,
+                    tag: 'tag'
+                };
 
-            o.init();
-            waits(100);
+            o.go(config);
             runs(function() {
-                common.mediator.emit('module:clickstream:click', [el, 'tag', true, true]);   // same-page  (non-delayed s.tl call)
-                common.mediator.emit('module:clickstream:click', [el, 'tag', false, false]); // other-host (delayed s.tl call)
-                /* Uncomment when Omnitute have implemented localStorage for same-host clicks: */
-                //common.mediator.emit('module:clickstream:click', [el, 'tag', false, true]);  // same-host  (no s.tl call; use session storage)
-                expect(s.tl.withArgs(el, 'o', 'tag')).toHaveBeenCalledOnce();
+                common.mediator.emit('module:clickstream:click', clickSpecSamePage);  // same page  (non-delayed s.tl call)
                 expect(s.tl.withArgs(true, 'o', 'tag')).toHaveBeenCalledOnce();
+            });
+
+        });
+
+        it("should use local storage for same-host links", function(){
+
+            var o = new Omniture(s),
+                el = document.createElement("a"),
+                clickSpec = {
+                    target: el,
+                    samePage: false,
+                    sameHost: true,
+                    tag: 'tag in localstorage'
+                };
+
+            o.go(config);
+            runs(function() {
+                common.mediator.emit('module:clickstream:click', clickSpec);
+                expect(JSON.parse(sessionStorage.getItem('gu.analytics.referrerVars')).value.tag).toEqual('tag in localstorage')
+            });
+
+        });
+
+        it("should make a delayed s.tl call for other-host links", function(){
+
+            var o = new Omniture(s),
+                el = document.createElement("a"),
+                clickSpec = {
+                    target: el,
+                    samePage: false,
+                    sameHost: false,
+                    tag: 'tag'
+                };
+
+            o.go(config);
+            runs(function() {
+                common.mediator.emit('module:clickstream:click', clickSpec);
+                expect(s.tl.withArgs(el,   'o', 'tag')).toHaveBeenCalledOnce();
             });
 
         });

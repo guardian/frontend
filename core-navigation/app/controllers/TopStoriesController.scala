@@ -1,39 +1,43 @@
 package controllers
 
 import common._
+import com.gu.openplatform.contentapi.ApiError
 import conf._
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
-import play.api.libs.concurrent.Execution.Implicits._
+import scala.concurrent.Future
 import com.gu.openplatform.contentapi.ApiError
+import play.api.libs.json.JsArray
 
-object TopStoriesController extends Controller with Logging with Paging with JsonTrails {
+object TopStoriesController extends Controller with Logging with Paging with JsonTrails with ExecutionContexts {
 
   val validFormats: Seq[String] = Seq("html", "json")
 
-  def render() = Action { implicit request =>
-    val edition = Site(request).edition
-    val promiseOfTopStories = lookup(edition)
-    Async {
-      promiseOfTopStories.map(_.map { renderTopStories(_, "html") } getOrElse { NotFound })
+  def renderTopStoriesJson() = renderTopStories()
+  def renderTopStories() = Action.async { implicit request =>
+    val response = lookup(Edition(request)) map { topStories =>
+      topStories map { renderTopStoriesPage(_) }
     }
+
+    response map { _ getOrElse NotFound }
   }
 
-  def renderJson() = Action { implicit request =>
-    val edition = Site(request).edition
-    val promiseOfTopStories = lookup(edition)
-    Async {
-      promiseOfTopStories.map(_.map { renderTopStories(_, "json") } getOrElse { NotFound })
+  def renderJsonTrails() = renderTrails()
+  def renderTrails() = Action.async { implicit request =>
+    val response = lookup(Edition(request)) map { topStories =>
+      topStories map { renderTopStoriesTrails(_) }
     }
+
+    response map { _ getOrElse NotFound }
   }
 
-  private def lookup(edition: String)(implicit request: RequestHeader) = {
-    log.info(s"Fetching top stories for edition $edition")
+  private def lookup(edition: Edition)(implicit request: RequestHeader): Future[Option[Seq[Content]]] = {
+    log.info(s"Fetching top stories for edition ${edition.id}")
     ContentApi.item("/", edition)
       .showEditorsPicks(true)
       .response
-      .map {response =>
-        SupportedContentFilter(response.editorsPicks map { new Content(_) }) match {
+      .map { response =>
+        response.editorsPicks map { Content(_) } match {
           case Nil => None
           case picks => Some(picks)
         }
@@ -43,20 +47,35 @@ object TopStoriesController extends Controller with Logging with Paging with Jso
       }
   }
 
-  private def renderTopStories(trails: Seq[Trail], format: String)(implicit request: RequestHeader) = {
+  private def renderTopStoriesPage(trails: Seq[Trail])(implicit request: RequestHeader) = {
+    val page = new Page(
+      "top-stories",
+      "top-stories",
+      "Top Stories",
+      "GFE:Top Stories"
+    )
+
+    val htmlResponse = () => views.html.topStories(page, trails)
+    val jsonResponse = () => views.html.fragments.topStoriesBody(trails)
+
     Cached(900) {
-      if (format == "json") {
-        renderJsonTrails(trails)
-      } else {
-        val page = new Page(
-          Some("http://www.guardian.co.uk/"),
-          "top-stories",
-          "top-stories",
-          "Top Stories",
-          "GFE:Top Stories"
+      if (request.isJson)
+        JsonComponent(
+          "html" -> jsonResponse(),
+          "trails" -> JsArray(trails.map(TrailToJson(_)))
         )
-        Ok(Compressed(views.html.topStories(page, trails)))
-      }
+      else
+        Ok(htmlResponse())
     }
+  }
+
+  private def renderTopStoriesTrails(trails: Seq[Trail])(implicit request: RequestHeader) = {
+    val trailsLength = request.getQueryString("page-size").map{ _.toInt }.getOrElse(trails.size)
+    val response = if (request.getQueryString("view") == Some("link")) 
+      () => views.html.fragments.trailblocks.link(trails, trailsLength)
+    else
+      () => views.html.fragments.trailblocks.headline(trails, trailsLength)
+      
+    renderFormat(response, response, 900)
   }
 }

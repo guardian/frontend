@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Paths test</title>
+
+<script>
+
+	curl = curl_base = {
+		paths: {
+			curl: '../src/curl'
+		}
+	};
+
+</script>
+<script src="../src/curl.js"></script>
+<!--<script src="https://raw.github.com/cujojs/curl/dev/src/curl.js"></script>-->
+<!--<script src="https://raw.github.com/cujojs/curl/ec8c7e4b7aa6ac6d1fbcd369f50ba26883cc6b57/src/curl.js"></script>-->
+
+<script type="text/javascript">
+
+(function () {
+"use strict";
+
+	var tests, privateCfg, testRunner, domReady, configureAsserts;
+
+	tests = {
+		'path config': {
+			setup: configureSetup({
+				baseUrl: '',
+				paths: beget(curl_base.paths, {
+					'plainJane.js': 'stuff/plain_old.js',
+					'jane2.js': 'stuff/plain_old.js', // shouldn't get loaded
+					'js!jane2.js': 'stuff/plain_old_2.js', // this one should
+					'increments': 'stuff/increments'
+					// TODO: more tests
+				})
+			}),
+			test: function (require, done) {
+				var tests;
+				tests = {
+					'should remap plugin-loaded resource': function (cb, assert) {
+						curl(['js!plainJane.js!order'])
+							.then(cb.success, cb.failure)
+							.then(done, done);
+					},
+					'should remap plugin-specific path': function (cb, assert) {
+						function checkExports (junk, exports) {
+							assert.equal('ketchup', exports, 'verify exports');
+						}
+						curl(['js!plainJane.js!order', 'js!jane2.js!order!exports=testDomain.awesome.sauce'])
+							.then(cb.success, cb.failure)
+							.then(checkExports)
+							.then(done, done);
+					},
+					'should recognize both a fully-pathed and path-mapped module as the same': function (cb, assert) {
+						function checkIncrements (inc1, inc2) {
+							assert.equal(inc2, inc1, 'should be same (not incremented)');
+						}
+						curl(['stuff/increments', 'increments'])
+							.then(cb.success, cb.failure)
+							.then(checkIncrements)
+							.then(done, done);
+					}
+				};
+				for (var name in tests) {
+					tests[name](
+						configureCallbacks(success, failure, name),
+						configureAsserts(success, failure, name)
+					);
+				}
+			}
+		}
+	};
+
+	curl(['curl/_privileged', 'curl/tdd/runner', 'curl/domReady', 'tdd/configureAsserts']).then(
+		function (priv, runner, ready, asserts) {
+			privateCfg = priv.cfg;
+			testRunner = runner;
+			domReady = ready;
+			configureAsserts = asserts;
+		}
+	).then(
+		function () {
+			for (var name in tests) {
+				testRunner(false, tests[name].setup).run(tests[name].test);
+			}
+		}
+	);
+
+	function configureSetup (config) {
+		return function setup () {
+			resetCurl();
+			curl(config);
+		};
+	}
+
+	function configureCallbacks (success, failure, msg) {
+		return {
+			success: function () { success(msg); },
+			failure: function (ex) { failure(msg + (ex ? ': ' + ex.message : '')); }
+		};
+	}
+
+	function write (msg) {
+		domReady(function () {
+			document.body.appendChild(document.createElement('div')).innerHTML = msg;
+		})
+	}
+
+	function assertTrue (val, msg) { (val ? success: failure)(msg); }
+	function failure (msg, expected) { write('FAILED: ' + msg); }
+	function success (msg) { write('SUCCESS: ' + msg); }
+
+	function resetCurl () {
+		for (var name in privateCfg) {
+			delete privateCfg[name];
+		}
+	}
+
+	function beget (ancestor, props) {
+		function Begetter () {}
+		Begetter.prototype = ancestor;
+		var obj = new Begetter();
+		if (props) for (var p in props) obj[p] = props[p];
+		return obj;
+	}
+
+}());
+</script>
+
+</head>
+<body>
+
+</body>
+</html>

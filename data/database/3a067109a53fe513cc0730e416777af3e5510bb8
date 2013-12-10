@@ -1,0 +1,2479 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":54471,
+    "startIndex":1,
+    "pageSize":10,
+    "currentPage":1,
+    "pages":5448,
+    "orderBy":"newest",
+    "edition":{
+      "id":"books",
+      "webTitle":"Books",
+      "webUrl":"http://www.theguardian.com/books",
+      "apiUrl":"http://content.guardianapis.com/books",
+      "code":"default"
+    },
+    "section":{
+      "id":"books",
+      "webTitle":"Books",
+      "webUrl":"http://www.theguardian.com/books",
+      "apiUrl":"http://content.guardianapis.com/books",
+      "editions":[{
+        "id":"books",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books",
+        "apiUrl":"http://content.guardianapis.com/books",
+        "code":"default"
+      }]
+    },
+    "results":[{
+      "id":"books/2013/nov/01/mount-merrion-justin-quinn-review",
+      "sectionId":"books",
+      "sectionName":"Books",
+      "webPublicationDate":"2013-11-01T16:30:07Z",
+      "webTitle":"Mount Merrion by Justin Quinn – review",
+      "webUrl":"http://www.theguardian.com/books/2013/nov/01/mount-merrion-justin-quinn-review",
+      "apiUrl":"http://content.guardianapis.com/books/2013/nov/01/mount-merrion-justin-quinn-review",
+      "fields":{
+        "trailText":"<strong>Kate Clanchy</strong> on a lyrical&nbsp;journey through a&nbsp;changing Ireland",
+        "headline":"Mount Merrion by Justin Quinn – review",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3kvtb",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/10/29/1383054966972/Bouncy-castle-004.jpg",
+        "wordcount":"717",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-12-13T13:47:00Z"
+      },
+      "tags":[{
+        "id":"books/fiction",
+        "type":"keyword",
+        "webTitle":"Fiction",
+        "webUrl":"http://www.theguardian.com/books/fiction",
+        "apiUrl":"http://content.guardianapis.com/books/fiction",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"profile/kate-clanchy",
+        "type":"contributor",
+        "webTitle":"Kate Clanchy",
+        "webUrl":"http://www.theguardian.com/profile/kate-clanchy",
+        "apiUrl":"http://content.guardianapis.com/profile/kate-clanchy",
+        "bio":"<p>Kate Clanchy is a poet, author and journalist. Her book Antigona and Me is published in paperback by Picador</p>",
+        "r2ContributorId":"33797",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2009/8/20/1250780715827/kate.jpg",
+        "references":[]
+      },{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"theguardian/guardianreview/saturdayreviewsfeatres",
+        "type":"newspaper-book-section",
+        "webTitle":"Features & reviews",
+        "webUrl":"http://www.theguardian.com/theguardian/guardianreview/saturdayreviewsfeatres",
+        "apiUrl":"http://content.guardianapis.com/theguardian/guardianreview/saturdayreviewsfeatres",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"theguardian/guardianreview",
+        "type":"newspaper-book",
+        "webTitle":"Guardian review",
+        "webUrl":"http://www.theguardian.com/theguardian/guardianreview",
+        "apiUrl":"http://content.guardianapis.com/theguardian/guardianreview",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"tone/reviews",
+        "type":"tone",
+        "webTitle":"Reviews",
+        "webUrl":"http://www.theguardian.com/tone/reviews",
+        "apiUrl":"http://content.guardianapis.com/tone/reviews",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421205919",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/10/29/1383054962921/Bouncy-castle-001.jpg",
+          "typeData":{
+            "source":"Most Wanted/REX",
+            "altText":"Bouncy castle",
+            "height":"54",
+            "credit":"Most Wanted/REX",
+            "caption":"Building castles in the sand … contemplating credit-boom Ireland. Photograph: Most Wanted/REX",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/10/29/1383054964556/Bouncy-castle-002.jpg",
+          "typeData":{
+            "source":"Most Wanted/REX",
+            "altText":"Bouncy castle",
+            "height":"340",
+            "credit":"Most Wanted/REX",
+            "caption":"Building castles in the sand … contemplating credit-boom Ireland. Photograph: Most Wanted/REX",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/10/29/1383054965807/Bouncy-castle-003.jpg",
+          "typeData":{
+            "source":"Most Wanted/REX",
+            "altText":"Bouncy castle",
+            "height":"130",
+            "credit":"Most Wanted/REX",
+            "caption":"Building castles in the sand … contemplating credit-boom Ireland. Photograph: Most Wanted/REX",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/10/29/1383054966972/Bouncy-castle-004.jpg",
+          "typeData":{
+            "source":"Most Wanted/REX",
+            "altText":"Bouncy castle",
+            "height":"84",
+            "credit":"Most Wanted/REX",
+            "caption":"Building castles in the sand … contemplating credit-boom Ireland. Photograph: Most Wanted/REX",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/10/29/1383054968207/Bouncy-castle-005.jpg",
+          "typeData":{
+            "source":"Most Wanted/REX",
+            "altText":"Bouncy castle",
+            "height":"132",
+            "credit":"Most Wanted/REX",
+            "caption":"Building castles in the sand … contemplating credit-boom Ireland. Photograph: Most Wanted/REX",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/10/29/1383054969381/Bouncy-castle-006.jpg",
+          "typeData":{
+            "source":"Most Wanted/REX",
+            "altText":"Bouncy castle",
+            "height":"168",
+            "credit":"Most Wanted/REX",
+            "caption":"Building castles in the sand … contemplating credit-boom Ireland. Photograph: Most Wanted/REX",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/10/29/1383054970577/Bouncy-castle-007.jpg",
+          "typeData":{
+            "source":"Most Wanted/REX",
+            "altText":"Bouncy castle",
+            "height":"180",
+            "credit":"Most Wanted/REX",
+            "caption":"Building castles in the sand … contemplating credit-boom Ireland. Photograph: Most Wanted/REX",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/10/29/1383054971902/Bouncy-castle-008.jpg",
+          "typeData":{
+            "source":"Most Wanted/REX",
+            "altText":"Bouncy castle",
+            "height":"228",
+            "credit":"Most Wanted/REX",
+            "caption":"Building castles in the sand … contemplating credit-boom Ireland. Photograph: Most Wanted/REX",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/10/29/1383054973147/Bouncy-castle-009.jpg",
+          "typeData":{
+            "source":"Most Wanted/REX",
+            "altText":"Bouncy castle",
+            "height":"276",
+            "credit":"Most Wanted/REX",
+            "caption":"Building castles in the sand … contemplating credit-boom Ireland. Photograph: Most Wanted/REX",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/10/29/1383054974423/Bouncy-castle-010.jpg",
+          "typeData":{
+            "source":"Most Wanted/REX",
+            "altText":"Bouncy castle",
+            "height":"372",
+            "credit":"Most Wanted/REX",
+            "caption":"Building castles in the sand … contemplating credit-boom Ireland. Photograph: Most Wanted/REX",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/10/29/1383054973147/Bouncy-castle-009.jpg",
+          "typeData":{
+            "source":"Most Wanted/REX",
+            "altText":"Bouncy castle",
+            "height":"276",
+            "credit":"Most Wanted/REX",
+            "caption":"Building castles in the sand … contemplating credit-boom Ireland. Photograph: Most Wanted/REX",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421205920",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/10/29/1383054966972/Bouncy-castle-004.jpg",
+          "typeData":{
+            "source":"Most Wanted/REX",
+            "altText":"Bouncy castle",
+            "height":"84",
+            "credit":"Most Wanted/REX",
+            "caption":"Building castles in the sand … contemplating credit-boom Ireland. Photograph: Most Wanted/REX",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"books/2013/nov/01/10-best-books-inspired-by-jfk",
+      "sectionId":"books",
+      "sectionName":"Books",
+      "webPublicationDate":"2013-11-01T16:00:01Z",
+      "webTitle":"The 10 best books inspired by JFK",
+      "webUrl":"http://www.theguardian.com/books/2013/nov/01/10-best-books-inspired-by-jfk",
+      "apiUrl":"http://content.guardianapis.com/books/2013/nov/01/10-best-books-inspired-by-jfk",
+      "fields":{
+        "trailText":"<p><strong>Mark Lawson</strong> recommends fiction, history and biography published in the half century since the Kennedy assassination</p>",
+        "headline":"The 10 best books inspired by JFK",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3kxm8",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383150366230/John-F-Kennedy-and-Jacque-004.jpg",
+        "wordcount":"1079",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-08T22:13:00Z"
+      },
+      "tags":[{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"world/john-f-kennedy",
+        "type":"keyword",
+        "webTitle":"John F Kennedy",
+        "webUrl":"http://www.theguardian.com/world/john-f-kennedy",
+        "apiUrl":"http://content.guardianapis.com/world/john-f-kennedy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/kennedys",
+        "type":"keyword",
+        "webTitle":"The Kennedys",
+        "webUrl":"http://www.theguardian.com/world/kennedys",
+        "apiUrl":"http://content.guardianapis.com/world/kennedys",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"world/us-politics",
+        "type":"keyword",
+        "webTitle":"US politics",
+        "webUrl":"http://www.theguardian.com/world/us-politics",
+        "apiUrl":"http://content.guardianapis.com/world/us-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"theguardian/guardianreview/saturdayreviewsfeatres",
+        "type":"newspaper-book-section",
+        "webTitle":"Features & reviews",
+        "webUrl":"http://www.theguardian.com/theguardian/guardianreview/saturdayreviewsfeatres",
+        "apiUrl":"http://content.guardianapis.com/theguardian/guardianreview/saturdayreviewsfeatres",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"theguardian/guardianreview",
+        "type":"newspaper-book",
+        "webTitle":"Guardian review",
+        "webUrl":"http://www.theguardian.com/theguardian/guardianreview",
+        "apiUrl":"http://content.guardianapis.com/theguardian/guardianreview",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"books/fiction",
+        "type":"keyword",
+        "webTitle":"Fiction",
+        "webUrl":"http://www.theguardian.com/books/fiction",
+        "apiUrl":"http://content.guardianapis.com/books/fiction",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/history",
+        "type":"keyword",
+        "webTitle":"History",
+        "webUrl":"http://www.theguardian.com/books/history",
+        "apiUrl":"http://content.guardianapis.com/books/history",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/books/politics",
+        "apiUrl":"http://content.guardianapis.com/books/politics",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/biography",
+        "type":"keyword",
+        "webTitle":"Biography",
+        "webUrl":"http://www.theguardian.com/books/biography",
+        "apiUrl":"http://content.guardianapis.com/books/biography",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"profile/marklawson",
+        "type":"contributor",
+        "webTitle":"Mark Lawson",
+        "webUrl":"http://www.theguardian.com/profile/marklawson",
+        "apiUrl":"http://content.guardianapis.com/profile/marklawson",
+        "bio":"<p>Mark Lawson is a Guardian columnist and feature writer and theatre critic for the Tablet</p>",
+        "rcsId":"GNL210047",
+        "r2ContributorId":"16063",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/25/mark_lawson2_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421443977",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383150361178/John-F-Kennedy-and-Jacque-001.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Bettmann",
+            "altText":"John F Kennedy and Jacqueline Bouvier",
+            "height":"54",
+            "credit":"Bettmann/Corbis",
+            "caption":"Prenuptial arrangement … John F Kennedy and Jacqueline Bouvier at the Kennedy family home at Hyannis Port, Massachusetts, on 27 June 1953 Photograph: Bettmann/Corbis",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383150363652/John-F-Kennedy-and-Jacque-002.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Bettmann",
+            "altText":"John F Kennedy and Jacqueline Bouvier",
+            "height":"340",
+            "credit":"Bettmann/Corbis",
+            "caption":"Prenuptial arrangement … John F Kennedy and Jacqueline Bouvier at the Kennedy family home at Hyannis Port, Massachusetts, on 27 June 1953 Photograph: Bettmann/Corbis",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383150364968/John-F-Kennedy-and-Jacque-003.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Bettmann",
+            "altText":"John F Kennedy and Jacqueline Bouvier",
+            "height":"130",
+            "credit":"Bettmann/Corbis",
+            "caption":"Prenuptial arrangement … John F Kennedy and Jacqueline Bouvier at the Kennedy family home at Hyannis Port, Massachusetts, on 27 June 1953 Photograph: Bettmann/Corbis",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383150366230/John-F-Kennedy-and-Jacque-004.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Bettmann",
+            "altText":"John F Kennedy and Jacqueline Bouvier",
+            "height":"84",
+            "credit":"Bettmann/Corbis",
+            "caption":"Prenuptial arrangement … John F Kennedy and Jacqueline Bouvier at the Kennedy family home at Hyannis Port, Massachusetts, on 27 June 1953 Photograph: Bettmann/Corbis",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383150367576/John-F-Kennedy-and-Jacque-005.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Bettmann",
+            "altText":"John F Kennedy and Jacqueline Bouvier",
+            "height":"132",
+            "credit":"Bettmann/Corbis",
+            "caption":"Prenuptial arrangement … John F Kennedy and Jacqueline Bouvier at the Kennedy family home at Hyannis Port, Massachusetts, on 27 June 1953 Photograph: Bettmann/Corbis",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383150368847/John-F-Kennedy-and-Jacque-006.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Bettmann",
+            "altText":"John F Kennedy and Jacqueline Bouvier",
+            "height":"168",
+            "credit":"Bettmann/Corbis",
+            "caption":"Prenuptial arrangement … John F Kennedy and Jacqueline Bouvier at the Kennedy family home at Hyannis Port, Massachusetts, on 27 June 1953 Photograph: Bettmann/Corbis",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383150370122/John-F-Kennedy-and-Jacque-007.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Bettmann",
+            "altText":"John F Kennedy and Jacqueline Bouvier",
+            "height":"180",
+            "credit":"Bettmann/Corbis",
+            "caption":"Prenuptial arrangement … John F Kennedy and Jacqueline Bouvier at the Kennedy family home at Hyannis Port, Massachusetts, on 27 June 1953 Photograph: Bettmann/Corbis",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383150371487/John-F-Kennedy-and-Jacque-008.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Bettmann",
+            "altText":"John F Kennedy and Jacqueline Bouvier",
+            "height":"228",
+            "credit":"Bettmann/Corbis",
+            "caption":"Prenuptial arrangement … John F Kennedy and Jacqueline Bouvier at the Kennedy family home at Hyannis Port, Massachusetts, on 27 June 1953 Photograph: Bettmann/Corbis",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383150372797/John-F-Kennedy-and-Jacque-009.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Bettmann",
+            "altText":"John F Kennedy and Jacqueline Bouvier",
+            "height":"276",
+            "credit":"Bettmann/Corbis",
+            "caption":"Prenuptial arrangement … John F Kennedy and Jacqueline Bouvier at the Kennedy family home at Hyannis Port, Massachusetts, on 27 June 1953 Photograph: Bettmann/Corbis",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383150374090/John-F-Kennedy-and-Jacque-010.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Bettmann",
+            "altText":"John F Kennedy and Jacqueline Bouvier",
+            "height":"372",
+            "credit":"Bettmann/Corbis",
+            "caption":"Prenuptial arrangement … John F Kennedy and Jacqueline Bouvier at the Kennedy family home at Hyannis Port, Massachusetts, on 27 June 1953 Photograph: Bettmann/Corbis",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383150372797/John-F-Kennedy-and-Jacque-009.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Bettmann",
+            "altText":"John F Kennedy and Jacqueline Bouvier",
+            "height":"276",
+            "credit":"Bettmann/Corbis",
+            "caption":"Prenuptial arrangement … John F Kennedy and Jacqueline Bouvier at the Kennedy family home at Hyannis Port on 27 June 1953. Photograph: Bettmann/Corbis",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421443978",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383150366230/John-F-Kennedy-and-Jacque-004.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Bettmann",
+            "altText":"John F Kennedy and Jacqueline Bouvier",
+            "height":"84",
+            "credit":"Bettmann/Corbis",
+            "caption":"Prenuptial arrangement … John F Kennedy and Jacqueline Bouvier at the Kennedy family home at Hyannis Port, Massachusetts, on 27 June 1953 Photograph: Bettmann/Corbis",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-421443979",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/10/31/1383240115624/Don-Delillo-use-this-one-002.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Don Delillo use this one",
+            "height":"215",
+            "credit":"PR",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-421443980",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/10/31/1383241359295/The-Death-of-a-President-002.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"The Death of a President",
+            "height":"215",
+            "credit":"PR",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-421443981",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/10/31/1383241435390/Tears-of-Autumn-002.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Tears of Autumn",
+            "height":"215",
+            "credit":"PR",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-421443982",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/10/31/1383241474551/No-Safe-Place-002.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"No Safe Place",
+            "height":"215",
+            "credit":"PR",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"books/2013/nov/01/john-f-kennedy-assassination-50-years-conspiracy-books-film",
+      "sectionId":"books",
+      "sectionName":"Books",
+      "webPublicationDate":"2013-11-01T16:00:00Z",
+      "webTitle":"John F Kennedy assassination: 50 years of conspiracy in fiction and film",
+      "webUrl":"http://www.theguardian.com/books/2013/nov/01/john-f-kennedy-assassination-50-years-conspiracy-books-film",
+      "apiUrl":"http://content.guardianapis.com/books/2013/nov/01/john-f-kennedy-assassination-50-years-conspiracy-books-film",
+      "fields":{
+        "trailText":"The assassination of JFK and the conspiracy theories that followed have proved irresistible to writers and artists, from Oliver Stone to Stephen King. By <strong>Colin Kidd</strong>",
+        "headline":"John F Kennedy assassination: 50 years of conspiracy in fiction and film",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3kxvn",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383071015373/Kennedys-riding-in-Dallas-004.jpg",
+        "wordcount":"3441",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-08T23:15:00Z"
+      },
+      "tags":[{
+        "id":"books/true-crime",
+        "type":"keyword",
+        "webTitle":"True crime",
+        "webUrl":"http://www.theguardian.com/books/true-crime",
+        "apiUrl":"http://content.guardianapis.com/books/true-crime",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/thrillers",
+        "type":"keyword",
+        "webTitle":"Thrillers",
+        "webUrl":"http://www.theguardian.com/books/thrillers",
+        "apiUrl":"http://content.guardianapis.com/books/thrillers",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/fiction",
+        "type":"keyword",
+        "webTitle":"Fiction",
+        "webUrl":"http://www.theguardian.com/books/fiction",
+        "apiUrl":"http://content.guardianapis.com/books/fiction",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/history",
+        "type":"keyword",
+        "webTitle":"History",
+        "webUrl":"http://www.theguardian.com/books/history",
+        "apiUrl":"http://content.guardianapis.com/books/history",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"film/thriller",
+        "type":"keyword",
+        "webTitle":"Thriller",
+        "webUrl":"http://www.theguardian.com/film/thriller",
+        "apiUrl":"http://content.guardianapis.com/film/thriller",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/film",
+        "type":"keyword",
+        "webTitle":"Film",
+        "webUrl":"http://www.theguardian.com/film/film",
+        "apiUrl":"http://content.guardianapis.com/film/film",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"theguardian/guardianreview/saturdayreviewsfeatres",
+        "type":"newspaper-book-section",
+        "webTitle":"Features & reviews",
+        "webUrl":"http://www.theguardian.com/theguardian/guardianreview/saturdayreviewsfeatres",
+        "apiUrl":"http://content.guardianapis.com/theguardian/guardianreview/saturdayreviewsfeatres",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"theguardian/guardianreview",
+        "type":"newspaper-book",
+        "webTitle":"Guardian review",
+        "webUrl":"http://www.theguardian.com/theguardian/guardianreview",
+        "apiUrl":"http://content.guardianapis.com/theguardian/guardianreview",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"world/kennedys",
+        "type":"keyword",
+        "webTitle":"The Kennedys",
+        "webUrl":"http://www.theguardian.com/world/kennedys",
+        "apiUrl":"http://content.guardianapis.com/world/kennedys",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421403222",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383071010137/Kennedys-riding-in-Dallas-001.jpg",
+          "typeData":{
+            "source":"Bettmann/Corbis",
+            "altText":"Kennedys riding in Dallas motorcade",
+            "height":"54",
+            "credit":"Bettmann/Corbis",
+            "caption":"Instigating moment … the Kennedy motorcade passes through Dallas, Texas on 22 November 1963, minutes before the president was shot. Photograph: Bettmann/Corbis",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383071012851/Kennedys-riding-in-Dallas-002.jpg",
+          "typeData":{
+            "source":"Bettmann/Corbis",
+            "altText":"Kennedys riding in Dallas motorcade",
+            "height":"340",
+            "credit":"Bettmann/Corbis",
+            "caption":"Instigating moment … the Kennedy motorcade passes through Dallas, Texas on 22 November 1963, minutes before the president was shot. Photograph: Bettmann/Corbis",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383071014157/Kennedys-riding-in-Dallas-003.jpg",
+          "typeData":{
+            "source":"Bettmann/Corbis",
+            "altText":"Kennedys riding in Dallas motorcade",
+            "height":"130",
+            "credit":"Bettmann/Corbis",
+            "caption":"Instigating moment … the Kennedy motorcade passes through Dallas, Texas on 22 November 1963, minutes before the president was shot. Photograph: Bettmann/Corbis",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383071015373/Kennedys-riding-in-Dallas-004.jpg",
+          "typeData":{
+            "source":"Bettmann/Corbis",
+            "altText":"Kennedys riding in Dallas motorcade",
+            "height":"84",
+            "credit":"Bettmann/Corbis",
+            "caption":"Instigating moment … the Kennedy motorcade passes through Dallas, Texas on 22 November 1963, minutes before the president was shot. Photograph: Bettmann/Corbis",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383071016629/Kennedys-riding-in-Dallas-005.jpg",
+          "typeData":{
+            "source":"Bettmann/Corbis",
+            "altText":"Kennedys riding in Dallas motorcade",
+            "height":"132",
+            "credit":"Bettmann/Corbis",
+            "caption":"Instigating moment … the Kennedy motorcade passes through Dallas, Texas on 22 November 1963, minutes before the president was shot. Photograph: Bettmann/Corbis",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383071017889/Kennedys-riding-in-Dallas-006.jpg",
+          "typeData":{
+            "source":"Bettmann/Corbis",
+            "altText":"Kennedys riding in Dallas motorcade",
+            "height":"168",
+            "credit":"Bettmann/Corbis",
+            "caption":"Instigating moment … the Kennedy motorcade passes through Dallas, Texas on 22 November 1963, minutes before the president was shot. Photograph: Bettmann/Corbis",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383071019193/Kennedys-riding-in-Dallas-007.jpg",
+          "typeData":{
+            "source":"Bettmann/Corbis",
+            "altText":"Kennedys riding in Dallas motorcade",
+            "height":"180",
+            "credit":"Bettmann/Corbis",
+            "caption":"Instigating moment … the Kennedy motorcade passes through Dallas, Texas on 22 November 1963, minutes before the president was shot. Photograph: Bettmann/Corbis",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383071020538/Kennedys-riding-in-Dallas-008.jpg",
+          "typeData":{
+            "source":"Bettmann/Corbis",
+            "altText":"Kennedys riding in Dallas motorcade",
+            "height":"228",
+            "credit":"Bettmann/Corbis",
+            "caption":"Instigating moment … the Kennedy motorcade passes through Dallas, Texas on 22 November 1963, minutes before the president was shot. Photograph: Bettmann/Corbis",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383071021827/Kennedys-riding-in-Dallas-009.jpg",
+          "typeData":{
+            "source":"Bettmann/Corbis",
+            "altText":"Kennedys riding in Dallas motorcade",
+            "height":"276",
+            "credit":"Bettmann/Corbis",
+            "caption":"Instigating moment … the Kennedy motorcade passes through Dallas, Texas on 22 November 1963, minutes before the president was shot. Photograph: Bettmann/Corbis",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383071023140/Kennedys-riding-in-Dallas-010.jpg",
+          "typeData":{
+            "source":"Bettmann/Corbis",
+            "altText":"Kennedys riding in Dallas motorcade",
+            "height":"372",
+            "credit":"Bettmann/Corbis",
+            "caption":"Instigating moment … the Kennedy motorcade passes through Dallas, Texas on 22 November 1963, minutes before the president was shot. Photograph: Bettmann/Corbis",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383071021827/Kennedys-riding-in-Dallas-009.jpg",
+          "typeData":{
+            "source":"Bettmann/Corbis",
+            "altText":"Kennedys riding in Dallas motorcade",
+            "height":"276",
+            "credit":"Bettmann/Corbis",
+            "caption":"Instigating moment … the Kennedy motorcade passes through Dallas, Texas on 22 November 1963, minutes before the president was shot. Photograph: Bettmann/Corbis",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421403223",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383071015373/Kennedys-riding-in-Dallas-004.jpg",
+          "typeData":{
+            "source":"Bettmann/Corbis",
+            "altText":"Kennedys riding in Dallas motorcade",
+            "height":"84",
+            "credit":"Bettmann/Corbis",
+            "caption":"Instigating moment … the Kennedy motorcade passes through Dallas, Texas on 22 November 1963, minutes before the president was shot. Photograph: Bettmann/Corbis",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-421403224",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/10/31/1383243186605/John-F-Kennedy-with-Wife--009.jpg",
+          "typeData":{
+            "source":"  Bettmann/CORBIS",
+            "photographer":"Herb Scharfman",
+            "altText":"John F Kennedy with Wife Jackie Kennedy",
+            "height":"276",
+            "credit":"Herb Scharfman/  Bettmann/CORBIS",
+            "caption":"John F Kennedy and wife Jacqueline in 1961. Photograph: Herb Scharfman/Bettmann/Corbis",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421403225",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/10/31/1383242637816/Lee-Harvey-Oswald-009.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Bob Jackson",
+            "altText":"Lee Harvey Oswald",
+            "height":"276",
+            "credit":"Bob Jackson/AP",
+            "caption":"The moment when Lee Harvey Oswald is shot by Jack Ruby in 1963. Photograph: Bob Jackson/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421403226",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/10/31/1383242561054/J.F.K.-JFK-009.jpg",
+          "typeData":{
+            "source":"Allstar/Cinetext / Allstar Collection/WARNER BROS",
+            "photographer":"Allstar/Cinetext / Allstar Collection/WARNER BROS",
+            "altText":"J.F.K.: JFK",
+            "height":"276",
+            "credit":"Allstar/Cinetext / Allstar Collection/WARNER BROS/Allstar/Cinetext / Allstar Collection/WARNER BROS",
+            "caption":"Kevin Costner as Jim Garrison in Oliver Stone’s JFK from 1991. Photograph: Allstar/Cinetext/Warner",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"books/2013/nov/01/joyce-carol-oates-robert-frost-lovely-dark-deep",
+      "sectionId":"books",
+      "sectionName":"Books",
+      "webPublicationDate":"2013-11-01T15:45:15Z",
+      "webTitle":"Joyce Carol Oates attacked for 'distasteful' portrayal of Robert Frost",
+      "webUrl":"http://www.theguardian.com/books/2013/nov/01/joyce-carol-oates-robert-frost-lovely-dark-deep",
+      "apiUrl":"http://content.guardianapis.com/books/2013/nov/01/joyce-carol-oates-robert-frost-lovely-dark-deep",
+      "fields":{
+        "trailText":"Short story 'Lovely, Dark, Deep' paints the much-garlanded poet as a racist, sexist boor",
+        "headline":"Joyce Carol Oates attacked for 'distasteful' portrayal of Robert Frost",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3k3fp",
+        "thumbnail":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/11/1/1383320388129/Robert-Frost-004.jpg",
+        "wordcount":"404",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-08T15:31:00Z"
+      },
+      "tags":[{
+        "id":"books/joyce-carol-oates",
+        "type":"keyword",
+        "webTitle":"Joyce Carol Oates",
+        "webUrl":"http://www.theguardian.com/books/joyce-carol-oates",
+        "apiUrl":"http://content.guardianapis.com/books/joyce-carol-oates",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/short-stories",
+        "type":"keyword",
+        "webTitle":"Short stories",
+        "webUrl":"http://www.theguardian.com/books/short-stories",
+        "apiUrl":"http://content.guardianapis.com/books/short-stories",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/fiction",
+        "type":"keyword",
+        "webTitle":"Fiction",
+        "webUrl":"http://www.theguardian.com/books/fiction",
+        "apiUrl":"http://content.guardianapis.com/books/fiction",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/poetry",
+        "type":"keyword",
+        "webTitle":"Poetry",
+        "webUrl":"http://www.theguardian.com/books/poetry",
+        "apiUrl":"http://content.guardianapis.com/books/poetry",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/robert-frost",
+        "type":"keyword",
+        "webTitle":"Robert Frost",
+        "webUrl":"http://www.theguardian.com/books/robert-frost",
+        "apiUrl":"http://content.guardianapis.com/books/robert-frost",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/liz-bury",
+        "type":"contributor",
+        "webTitle":"Liz Bury",
+        "webUrl":"http://www.theguardian.com/profile/liz-bury",
+        "apiUrl":"http://content.guardianapis.com/profile/liz-bury",
+        "r2ContributorId":"57417",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421468440",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/11/1/1383320381584/Robert-Frost-001.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Bachrach",
+            "altText":"Robert Frost",
+            "height":"54",
+            "credit":"Bachrach/Getty Images",
+            "caption":"Darkness visible? Robert Frost. Photograph: Bachrach/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/11/1/1383320384448/Robert-Frost-002.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Bachrach",
+            "altText":"Robert Frost",
+            "height":"340",
+            "credit":"Bachrach/Getty Images",
+            "caption":"Darkness visible? Robert Frost. Photograph: Bachrach/Getty Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/11/1/1383320386383/Robert-Frost-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Bachrach",
+            "altText":"Robert Frost",
+            "height":"130",
+            "credit":"Bachrach/Getty Images",
+            "caption":"Darkness visible? Robert Frost. Photograph: Bachrach/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/11/1/1383320388129/Robert-Frost-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Bachrach",
+            "altText":"Robert Frost",
+            "height":"84",
+            "credit":"Bachrach/Getty Images",
+            "caption":"Darkness visible? Robert Frost. Photograph: Bachrach/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/11/1/1383320389998/Robert-Frost-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Bachrach",
+            "altText":"Robert Frost",
+            "height":"132",
+            "credit":"Bachrach/Getty Images",
+            "caption":"Darkness visible? Robert Frost. Photograph: Bachrach/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/11/1/1383320391816/Robert-Frost-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Bachrach",
+            "altText":"Robert Frost",
+            "height":"168",
+            "credit":"Bachrach/Getty Images",
+            "caption":"Darkness visible? Robert Frost. Photograph: Bachrach/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/11/1/1383320393550/Robert-Frost-007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Bachrach",
+            "altText":"Robert Frost",
+            "height":"180",
+            "credit":"Bachrach/Getty Images",
+            "caption":"Darkness visible? Robert Frost. Photograph: Bachrach/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/11/1/1383320395316/Robert-Frost-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Bachrach",
+            "altText":"Robert Frost",
+            "height":"228",
+            "credit":"Bachrach/Getty Images",
+            "caption":"Darkness visible? Robert Frost. Photograph: Bachrach/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/11/1/1383320397148/Robert-Frost-009.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Bachrach",
+            "altText":"Robert Frost",
+            "height":"276",
+            "credit":"Bachrach/Getty Images",
+            "caption":"Darkness visible? Robert Frost. Photograph: Bachrach/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/11/1/1383320398938/Robert-Frost-010.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Bachrach",
+            "altText":"Robert Frost",
+            "height":"372",
+            "credit":"Bachrach/Getty Images",
+            "caption":"Darkness visible? Robert Frost. Photograph: Bachrach/Getty Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/11/1/1383320397148/Robert-Frost-009.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Bachrach",
+            "altText":"Robert Frost",
+            "height":"276",
+            "credit":"Bachrach/Getty Images",
+            "caption":"Darkness visible? Robert Frost. Photograph: Bachrach/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421468441",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/11/1/1383320388129/Robert-Frost-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Bachrach",
+            "altText":"Robert Frost",
+            "height":"84",
+            "credit":"Bachrach/Getty Images",
+            "caption":"Darkness visible? Robert Frost. Photograph: Bachrach/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"books/booksblog/2013/nov/01/reader-reviews-roundup",
+      "sectionId":"books",
+      "sectionName":"Books",
+      "webPublicationDate":"2013-11-01T15:24:17Z",
+      "webTitle":"Reader reviews roundup",
+      "webUrl":"http://www.theguardian.com/books/booksblog/2013/nov/01/reader-reviews-roundup",
+      "apiUrl":"http://content.guardianapis.com/books/booksblog/2013/nov/01/reader-reviews-roundup",
+      "fields":{
+        "trailText":"<p>William Boyd, Morrissey, and Jhumpa Lahiri are among the writers under review this week</p>",
+        "headline":"Reader reviews roundup",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3k37q",
+        "wordcount":"689",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-08T15:24:17Z"
+      },
+      "tags":[{
+        "id":"books/series/reader-reviews-roundup",
+        "type":"series",
+        "webTitle":"Reader reviews roundup",
+        "webUrl":"http://www.theguardian.com/books/series/reader-reviews-roundup",
+        "apiUrl":"http://content.guardianapis.com/books/series/reader-reviews-roundup",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/booksblog",
+        "type":"blog",
+        "webTitle":"Books blog",
+        "webUrl":"http://www.theguardian.com/books/booksblog",
+        "apiUrl":"http://content.guardianapis.com/books/booksblog",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/fiction",
+        "type":"keyword",
+        "webTitle":"Fiction",
+        "webUrl":"http://www.theguardian.com/books/fiction",
+        "apiUrl":"http://content.guardianapis.com/books/fiction",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421467490",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2009/2/3/1233682466634/1980s-Morrissey-studio-ph-001.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Sheila Rock",
+            "altText":"1980s Morrissey studio photograph",
+            "height":"276",
+            "credit":"Sheila Rock/Rex Features",
+            "caption":"\"No one can be this Morrissey, this predictable – it's not possible\", says one of our reviewers this week. Photograph: Sheila Rock/Rex Features",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"books/2013/nov/01/review-how-i-live-now-meg-rosoff",
+      "sectionId":"books",
+      "sectionName":"Books",
+      "webPublicationDate":"2013-11-01T15:00:00Z",
+      "webTitle":"How I Live Now by Meg Rosoff - review",
+      "webUrl":"http://www.theguardian.com/books/2013/nov/01/review-how-i-live-now-meg-rosoff",
+      "apiUrl":"http://content.guardianapis.com/books/2013/nov/01/review-how-i-live-now-meg-rosoff",
+      "fields":{
+        "trailText":"<p><strong>Readr:</strong> 'An impressive novel about war, survival and teenage love'</p>",
+        "headline":"How I Live Now by Meg Rosoff - review",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jqp4",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Books/Pix/covers/2013/10/28/1382972613887/How-I-Live-Now.jpg",
+        "wordcount":"503",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T15:00:01Z"
+      },
+      "tags":[{
+        "id":"books/teen-books",
+        "type":"keyword",
+        "webTitle":"Teen books",
+        "webUrl":"http://www.theguardian.com/books/teen-books",
+        "apiUrl":"http://content.guardianapis.com/books/teen-books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"childrens-books-site/childrens-books-site",
+        "type":"blog",
+        "webTitle":"Children's books",
+        "webUrl":"http://www.theguardian.com/childrens-books-site/childrens-books-site",
+        "apiUrl":"http://content.guardianapis.com/childrens-books-site/childrens-books-site",
+        "sectionId":"childrens-books-site",
+        "sectionName":"Children's books",
+        "references":[]
+      },{
+        "id":"books/booksforchildrenandteenagers",
+        "type":"keyword",
+        "webTitle":"Children and teenagers",
+        "webUrl":"http://www.theguardian.com/books/booksforchildrenandteenagers",
+        "apiUrl":"http://content.guardianapis.com/books/booksforchildrenandteenagers",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"tone/childrens-user-reviews",
+        "type":"tone",
+        "webTitle":"Children's user reviews",
+        "webUrl":"http://www.theguardian.com/tone/childrens-user-reviews",
+        "apiUrl":"http://content.guardianapis.com/tone/childrens-user-reviews",
+        "references":[]
+      },{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"books/childrens-war",
+        "type":"keyword",
+        "webTitle":"War (children and teens)",
+        "webUrl":"http://www.theguardian.com/books/childrens-war",
+        "apiUrl":"http://content.guardianapis.com/books/childrens-war",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421199767",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/covers/2013/10/28/1382972613887/How-I-Live-Now.jpg",
+          "typeData":{
+            "source":"Public Domain",
+            "altText":"Meg Rosoff, How I Live Now",
+            "height":"130",
+            "credit":"Public Domain",
+            "caption":"Meg Rosoff, How I Live Now",
+            "width":"84"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"books/audio/2013/nov/01/comics-graphic-fiction-first-book-prizes",
+      "sectionId":"books",
+      "sectionName":"Books",
+      "webPublicationDate":"2013-11-01T14:08:06Z",
+      "webTitle":"Comics, graphic fiction and first books – prizes podcast",
+      "webUrl":"http://www.theguardian.com/books/audio/2013/nov/01/comics-graphic-fiction-first-book-prizes",
+      "apiUrl":"http://content.guardianapis.com/books/audio/2013/nov/01/comics-graphic-fiction-first-book-prizes",
+      "fields":{
+        "trailText":"<p>We discuss the state of comics and talk to Guardian first book award-longlisted novelist Hannah Kent</p>",
+        "headline":"Comics, graphic fiction and first books – prizes podcast",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3k2mb",
+        "thumbnail":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/11/1/1383314421874/The-Gigantic-Beard-That-W-001.jpg",
+        "wordcount":"250",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-08T00:01:00Z"
+      },
+      "tags":[{
+        "id":"books/series/books",
+        "type":"series",
+        "webTitle":"The Guardian Books Podcast",
+        "webUrl":"http://www.theguardian.com/books/series/books",
+        "apiUrl":"http://content.guardianapis.com/books/series/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/comics",
+        "type":"keyword",
+        "webTitle":"Comics and graphic novels",
+        "webUrl":"http://www.theguardian.com/books/comics",
+        "apiUrl":"http://content.guardianapis.com/books/comics",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/fiction",
+        "type":"keyword",
+        "webTitle":"Fiction",
+        "webUrl":"http://www.theguardian.com/books/fiction",
+        "apiUrl":"http://content.guardianapis.com/books/fiction",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/guardianfirstbookaward",
+        "type":"keyword",
+        "webTitle":"Guardian first book award",
+        "webUrl":"http://www.theguardian.com/books/guardianfirstbookaward",
+        "apiUrl":"http://content.guardianapis.com/books/guardianfirstbookaward",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.theguardian.com/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/clairearmitstead",
+        "type":"contributor",
+        "webTitle":"Claire Armitstead",
+        "webUrl":"http://www.theguardian.com/profile/clairearmitstead",
+        "apiUrl":"http://content.guardianapis.com/profile/clairearmitstead",
+        "bio":"<p>Claire Armitstead is the Guardian's literary editor. She was previously arts editor, having worked as a theatre critic for the Ham &amp; High, the Financial Times and the Guardian. As a published author,she has contributed essays to New Performance (Macmillan, 1994) and Women: A Cultural Review (Oxford University Press, 1996). She makes regular appearances on radio and television as a cultural commentator on literature and the arts</p>",
+        "rcsId":"GNL004619",
+        "r2ContributorId":"15499",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/4/1336163587945/Claire_Armitstead.jpg",
+        "references":[]
+      },{
+        "id":"profile/rachelcooke",
+        "type":"contributor",
+        "webTitle":"Rachel Cooke",
+        "webUrl":"http://www.theguardian.com/profile/rachelcooke",
+        "apiUrl":"http://content.guardianapis.com/profile/rachelcooke",
+        "rcsId":"GNL483982",
+        "r2ContributorId":"16301",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/18/1268913463910/Rachel-Cooke.jpg",
+        "references":[]
+      },{
+        "id":"profile/stephen-collins",
+        "type":"contributor",
+        "webTitle":"Stephen Collins",
+        "webUrl":"http://www.theguardian.com/profile/stephen-collins",
+        "apiUrl":"http://content.guardianapis.com/profile/stephen-collins",
+        "r2ContributorId":"46594",
+        "references":[]
+      },{
+        "id":"profile/richardlea",
+        "type":"contributor",
+        "webTitle":"Richard Lea",
+        "webUrl":"http://www.theguardian.com/profile/richardlea",
+        "apiUrl":"http://content.guardianapis.com/profile/richardlea",
+        "bio":"<p>Richard Lea is a writer and subeditor for <a href=\"http://www.guardian.co.uk/books\"> books</a></p>",
+        "rcsId":"GNL019095",
+        "r2ContributorId":"16327",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/red/blue_pics/2008/09/12/richard_lea.jpg",
+        "references":[]
+      },{
+        "id":"profile/timmaby",
+        "type":"contributor",
+        "webTitle":"Tim Maby",
+        "webUrl":"http://www.theguardian.com/profile/timmaby",
+        "apiUrl":"http://content.guardianapis.com/profile/timmaby",
+        "bio":"<p>Tim Maby is an audio producer at the Guardian</p>",
+        "r2ContributorId":"20571",
+        "references":[]
+      },{
+        "id":"tone/interview",
+        "type":"tone",
+        "webTitle":"Interviews",
+        "webUrl":"http://www.theguardian.com/tone/interview",
+        "apiUrl":"http://content.guardianapis.com/tone/interview",
+        "references":[]
+      },{
+        "id":"books/series/observer-graphic-short-story-prize",
+        "type":"series",
+        "webTitle":"Observer/Cape/Comica graphic short story prize",
+        "webUrl":"http://www.theguardian.com/books/series/observer-graphic-short-story-prize",
+        "apiUrl":"http://content.guardianapis.com/books/series/observer-graphic-short-story-prize",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"type/podcast",
+        "type":"type",
+        "webTitle":"Podcast",
+        "webUrl":"http://www.theguardian.com/podcasts",
+        "apiUrl":"http://content.guardianapis.com/podcasts",
+        "references":[]
+      },{
+        "id":"type/audio",
+        "type":"type",
+        "webTitle":"Audio",
+        "webUrl":"http://www.theguardian.com/audio",
+        "apiUrl":"http://content.guardianapis.com/audio",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421460007",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/11/1/1383314421874/The-Gigantic-Beard-That-W-001.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"The Gigantic Beard That Was Evil",
+            "height":"84",
+            "credit":"PR",
+            "caption":"The Gigantic Beard That Was Evil",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-audio-421396462",
+        "relation":"main",
+        "type":"audio",
+        "assets":[{
+          "type":"audio",
+          "mimeType":"audio/mpeg",
+          "file":"http://static.guim.co.uk/audio/kip/books/series/books/e/1383235269580/1529/gdn.book.131101.tm.comics-prize-first-book-Hannah-Kent.mp3",
+          "typeData":{
+            "explicit":"true",
+            "source":"guardian.co.uk",
+            "durationMinutes":"31",
+            "durationSeconds":"54"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"books/booksblog/2013/nov/01/rest-is-noise-70s-politics-spirituality",
+      "sectionId":"books",
+      "sectionName":"Books",
+      "webPublicationDate":"2013-11-01T14:00:04Z",
+      "webTitle":"More me time: The Rest Is Noise festival reaches the 70s",
+      "webUrl":"http://www.theguardian.com/books/booksblog/2013/nov/01/rest-is-noise-70s-politics-spirituality",
+      "apiUrl":"http://content.guardianapis.com/books/booksblog/2013/nov/01/rest-is-noise-70s-politics-spirituality",
+      "fields":{
+        "trailText":"<strong>Sam Jordison: </strong>With a weekend of literary events focused on Thatcher-era Politics and Spirituality, there's lots to self-interest you",
+        "headline":"More me time: The Rest Is Noise festival reaches the 70s",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3k37j",
+        "thumbnail":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/11/1/1383307530839/Margaret-Thatcher-and-can-003.jpg",
+        "wordcount":"677",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-08T14:00:04Z"
+      },
+      "tags":[{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"books/booksblog",
+        "type":"blog",
+        "webTitle":"Books blog",
+        "webUrl":"http://www.theguardian.com/books/booksblog",
+        "apiUrl":"http://content.guardianapis.com/books/booksblog",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"music/series/the-rest-is-noise-festival",
+        "type":"series",
+        "webTitle":"The Rest Is Noise festival",
+        "webUrl":"http://www.theguardian.com/music/series/the-rest-is-noise-festival",
+        "apiUrl":"http://content.guardianapis.com/music/series/the-rest-is-noise-festival",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"books/alain-de-botton",
+        "type":"keyword",
+        "webTitle":"Alain de Botton",
+        "webUrl":"http://www.theguardian.com/books/alain-de-botton",
+        "apiUrl":"http://content.guardianapis.com/books/alain-de-botton",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"profile/samjordison",
+        "type":"contributor",
+        "webTitle":"Sam Jordison",
+        "webUrl":"http://www.theguardian.com/profile/samjordison",
+        "apiUrl":"http://content.guardianapis.com/profile/samjordison",
+        "bio":"<p>Sam Jordison is the author of Sod That: 103 Things Not to Do Before You Die and co-editor of Crap Towns. He still hasn't written a novel.</p>",
+        "rcsId":"GNL033531",
+        "r2ContributorId":"16395",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/7/1336387144696/Sam-Jordison.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421449859",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/11/1/1383307527721/Margaret-Thatcher-and-can-001.jpg",
+          "typeData":{
+            "source":"Corbis/Alamy",
+            "altText":"Margaret Thatcher and candle",
+            "height":"54",
+            "credit":"Corbis/Alamy",
+            "caption":"Spiritual beacons … Margaret Thatcher, and a water candle. Photograph: Corbis/Alamy",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/11/1/1383307529460/Margaret-Thatcher-and-can-002.jpg",
+          "typeData":{
+            "source":"Corbis/Alamy",
+            "altText":"Margaret Thatcher and candle",
+            "height":"130",
+            "credit":"Corbis/Alamy",
+            "caption":"Spiritual beacons … Margaret Thatcher, and a water candle. Photograph: Corbis/Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/11/1/1383307530839/Margaret-Thatcher-and-can-003.jpg",
+          "typeData":{
+            "source":"Corbis/Alamy",
+            "altText":"Margaret Thatcher and candle",
+            "height":"84",
+            "credit":"Corbis/Alamy",
+            "caption":"Spiritual beacons … Margaret Thatcher, and a water candle. Photograph: Corbis/Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/11/1/1383307532280/Margaret-Thatcher-and-can-004.jpg",
+          "typeData":{
+            "source":"Corbis/Alamy",
+            "altText":"Margaret Thatcher and candle",
+            "height":"132",
+            "credit":"Corbis/Alamy",
+            "caption":"Spiritual beacons … Margaret Thatcher, and a water candle. Photograph: Corbis/Alamy",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/11/1/1383307533629/Margaret-Thatcher-and-can-005.jpg",
+          "typeData":{
+            "source":"Corbis/Alamy",
+            "altText":"Margaret Thatcher and candle",
+            "height":"168",
+            "credit":"Corbis/Alamy",
+            "caption":"Spiritual beacons … Margaret Thatcher, and a water candle. Photograph: Corbis/Alamy",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/11/1/1383307534996/Margaret-Thatcher-and-can-006.jpg",
+          "typeData":{
+            "source":"Corbis/Alamy",
+            "altText":"Margaret Thatcher and candle",
+            "height":"180",
+            "credit":"Corbis/Alamy",
+            "caption":"Spiritual beacons … Margaret Thatcher, and a water candle. Photograph: Corbis/Alamy",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/11/1/1383307536371/Margaret-Thatcher-and-can-007.jpg",
+          "typeData":{
+            "source":"Corbis/Alamy",
+            "altText":"Margaret Thatcher and candle",
+            "height":"228",
+            "credit":"Corbis/Alamy",
+            "caption":"Spiritual beacons … Margaret Thatcher, and a water candle. Photograph: Corbis/Alamy",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/11/1/1383307537770/Margaret-Thatcher-and-can-008.jpg",
+          "typeData":{
+            "source":"Corbis/Alamy",
+            "altText":"Margaret Thatcher and candle",
+            "height":"276",
+            "credit":"Corbis/Alamy",
+            "caption":"Spiritual beacons … Margaret Thatcher, and a water candle. Photograph: Corbis/Alamy",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/11/1/1383307537770/Margaret-Thatcher-and-can-008.jpg",
+          "typeData":{
+            "source":"Corbis/Alamy",
+            "altText":"Margaret Thatcher and candle",
+            "height":"276",
+            "credit":"Corbis/Alamy",
+            "caption":"Spiritual beacons … Margaret Thatcher, and a water candle. Photograph: Corbis/Alamy",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421449860",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/11/1/1383307530839/Margaret-Thatcher-and-can-003.jpg",
+          "typeData":{
+            "source":"Corbis/Alamy",
+            "altText":"Margaret Thatcher and candle",
+            "height":"84",
+            "credit":"Corbis/Alamy",
+            "caption":"Spiritual beacons … Margaret Thatcher, and a water candle. Photograph: Corbis/Alamy",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"books/2013/nov/01/iain-sinclair-interview",
+      "sectionId":"books",
+      "sectionName":"Books",
+      "webPublicationDate":"2013-11-01T14:00:01Z",
+      "webTitle":"Iain Sinclair: 'I take a walk every morning. It's opening up your system to the world, charging circuits to be able to write'",
+      "webUrl":"http://www.theguardian.com/books/2013/nov/01/iain-sinclair-interview",
+      "apiUrl":"http://content.guardianapis.com/books/2013/nov/01/iain-sinclair-interview",
+      "fields":{
+        "trailText":"<strong>The books interview: </strong>The author talks to James Campbell about morning walks, the beat generation and making fiction out of facts",
+        "headline":"Iain Sinclair: 'I take a walk every morning. It's opening up your system to the world, charging circuits to be able to write'",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3kxvf",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/10/29/1383070205329/Iain-Sinclair-on-the-sout-004.jpg",
+        "wordcount":"2600",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-09T18:07:00Z"
+      },
+      "tags":[{
+        "id":"books/iain-sinclair",
+        "type":"keyword",
+        "webTitle":"Iain Sinclair",
+        "webUrl":"http://www.theguardian.com/books/iain-sinclair",
+        "apiUrl":"http://content.guardianapis.com/books/iain-sinclair",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/jackkerouac",
+        "type":"keyword",
+        "webTitle":"Jack Kerouac",
+        "webUrl":"http://www.theguardian.com/books/jackkerouac",
+        "apiUrl":"http://content.guardianapis.com/books/jackkerouac",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/travel-writing",
+        "type":"keyword",
+        "webTitle":"Travel writing",
+        "webUrl":"http://www.theguardian.com/books/travel-writing",
+        "apiUrl":"http://content.guardianapis.com/books/travel-writing",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/allen-ginsberg",
+        "type":"keyword",
+        "webTitle":"Allen Ginsberg",
+        "webUrl":"http://www.theguardian.com/books/allen-ginsberg",
+        "apiUrl":"http://content.guardianapis.com/books/allen-ginsberg",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"uk/hackney",
+        "type":"keyword",
+        "webTitle":"Hackney",
+        "webUrl":"http://www.theguardian.com/uk/hackney",
+        "apiUrl":"http://content.guardianapis.com/uk/hackney",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"theguardian/guardianreview/saturdayreviewsfeatres",
+        "type":"newspaper-book-section",
+        "webTitle":"Features & reviews",
+        "webUrl":"http://www.theguardian.com/theguardian/guardianreview/saturdayreviewsfeatres",
+        "apiUrl":"http://content.guardianapis.com/theguardian/guardianreview/saturdayreviewsfeatres",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"theguardian/guardianreview",
+        "type":"newspaper-book",
+        "webTitle":"Guardian review",
+        "webUrl":"http://www.theguardian.com/theguardian/guardianreview",
+        "apiUrl":"http://content.guardianapis.com/theguardian/guardianreview",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"profile/james-campbell",
+        "type":"contributor",
+        "webTitle":"James Campbell",
+        "webUrl":"http://www.theguardian.com/profile/james-campbell",
+        "apiUrl":"http://content.guardianapis.com/profile/james-campbell",
+        "r2ContributorId":"39669",
+        "references":[]
+      },{
+        "id":"culture/series/a-life-in",
+        "type":"series",
+        "webTitle":"A life in ...",
+        "webUrl":"http://www.theguardian.com/culture/series/a-life-in",
+        "apiUrl":"http://content.guardianapis.com/culture/series/a-life-in",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"tone/interview",
+        "type":"tone",
+        "webTitle":"Interviews",
+        "webUrl":"http://www.theguardian.com/tone/interview",
+        "apiUrl":"http://content.guardianapis.com/tone/interview",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421227317",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/10/29/1383070200116/Iain-Sinclair-on-the-sout-001.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Alex Macnaughton",
+            "altText":"Iain Sinclair on the south bank of the river Thames, London, Britain - 26 Aug 2011",
+            "height":"54",
+            "credit":"Alex Macnaughton/Rex Features",
+            "caption":"'I read about what I was doing long after I was actually doing it' … Iain Sinclair.  Photograph: Alex Macnaughton/Rex Features",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/10/29/1383070202148/Iain-Sinclair-on-the-sout-002.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Alex Macnaughton",
+            "altText":"Iain Sinclair on the south bank of the river Thames, London, Britain - 26 Aug 2011",
+            "height":"340",
+            "credit":"Alex Macnaughton/Rex Features",
+            "caption":"'I read about what I was doing long after I was actually doing it' … Iain Sinclair.  Photograph: Alex Macnaughton/Rex Features",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/10/29/1383070203603/Iain-Sinclair-on-the-sout-003.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Alex Macnaughton",
+            "altText":"Iain Sinclair on the south bank of the river Thames, London, Britain - 26 Aug 2011",
+            "height":"130",
+            "credit":"Alex Macnaughton/Rex Features",
+            "caption":"'I read about what I was doing long after I was actually doing it' … Iain Sinclair.  Photograph: Alex Macnaughton/Rex Features",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/10/29/1383070205329/Iain-Sinclair-on-the-sout-004.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Alex Macnaughton",
+            "altText":"Iain Sinclair on the south bank of the river Thames, London, Britain - 26 Aug 2011",
+            "height":"84",
+            "credit":"Alex Macnaughton/Rex Features",
+            "caption":"'I read about what I was doing long after I was actually doing it' … Iain Sinclair.  Photograph: Alex Macnaughton/Rex Features",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/10/29/1383070206669/Iain-Sinclair-on-the-sout-005.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Alex Macnaughton",
+            "altText":"Iain Sinclair on the south bank of the river Thames, London, Britain - 26 Aug 2011",
+            "height":"132",
+            "credit":"Alex Macnaughton/Rex Features",
+            "caption":"'I read about what I was doing long after I was actually doing it' … Iain Sinclair.  Photograph: Alex Macnaughton/Rex Features",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/10/29/1383070208301/Iain-Sinclair-on-the-sout-006.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Alex Macnaughton",
+            "altText":"Iain Sinclair on the south bank of the river Thames, London, Britain - 26 Aug 2011",
+            "height":"168",
+            "credit":"Alex Macnaughton/Rex Features",
+            "caption":"'I read about what I was doing long after I was actually doing it' … Iain Sinclair.  Photograph: Alex Macnaughton/Rex Features",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/10/29/1383070209524/Iain-Sinclair-on-the-sout-007.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Alex Macnaughton",
+            "altText":"Iain Sinclair on the south bank of the river Thames, London, Britain - 26 Aug 2011",
+            "height":"180",
+            "credit":"Alex Macnaughton/Rex Features",
+            "caption":"'I read about what I was doing long after I was actually doing it' … Iain Sinclair.  Photograph: Alex Macnaughton/Rex Features",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/10/29/1383070210716/Iain-Sinclair-on-the-sout-008.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Alex Macnaughton",
+            "altText":"Iain Sinclair on the south bank of the river Thames, London, Britain - 26 Aug 2011",
+            "height":"228",
+            "credit":"Alex Macnaughton/Rex Features",
+            "caption":"'I read about what I was doing long after I was actually doing it' … Iain Sinclair.  Photograph: Alex Macnaughton/Rex Features",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/10/29/1383070211924/Iain-Sinclair-on-the-sout-009.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Alex Macnaughton",
+            "altText":"Iain Sinclair on the south bank of the river Thames, London, Britain - 26 Aug 2011",
+            "height":"276",
+            "credit":"Alex Macnaughton/Rex Features",
+            "caption":"'I read about what I was doing long after I was actually doing it' … Iain Sinclair.  Photograph: Alex Macnaughton/Rex Features",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/10/29/1383070213116/Iain-Sinclair-on-the-sout-010.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Alex Macnaughton",
+            "altText":"Iain Sinclair on the south bank of the river Thames, London, Britain - 26 Aug 2011",
+            "height":"372",
+            "credit":"Alex Macnaughton/Rex Features",
+            "caption":"'I read about what I was doing long after I was actually doing it' … Iain Sinclair.  Photograph: Alex Macnaughton/Rex Features",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/10/29/1383070211924/Iain-Sinclair-on-the-sout-009.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Alex Macnaughton",
+            "altText":"Iain Sinclair on the south bank of the river Thames, London, Britain - 26 Aug 2011",
+            "height":"276",
+            "credit":"Alex Macnaughton/Rex Features",
+            "caption":"'I read about what I was doing long after I was actually doing it' … Iain Sinclair.  Photograph: Alex Macnaughton/Rex Features",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421227318",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Books/Pix/pictures/2013/10/29/1383070205329/Iain-Sinclair-on-the-sout-004.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Alex Macnaughton",
+            "altText":"Iain Sinclair on the south bank of the river Thames, London, Britain - 26 Aug 2011",
+            "height":"84",
+            "credit":"Alex Macnaughton/Rex Features",
+            "caption":"'I read about what I was doing long after I was actually doing it' … Iain Sinclair.  Photograph: Alex Macnaughton/Rex Features",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"books/2013/nov/01/neil-gaiman-professor-creative-writing-us-college",
+      "sectionId":"books",
+      "sectionName":"Books",
+      "webPublicationDate":"2013-11-01T13:07:14Z",
+      "webTitle":"Neil Gaiman becomes professor at US college",
+      "webUrl":"http://www.theguardian.com/books/2013/nov/01/neil-gaiman-professor-creative-writing-us-college",
+      "apiUrl":"http://content.guardianapis.com/books/2013/nov/01/neil-gaiman-professor-creative-writing-us-college",
+      "fields":{
+        "trailText":"ÍAuthor to teach wide range of courses over five years in the languages and literature faculty of Bard College",
+        "headline":"Neil Gaiman becomes professor at US college",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3k392",
+        "thumbnail":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/11/1/1383309448769/Neil-Gaiman-006.jpg",
+        "wordcount":"309",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-07T12:27:00Z"
+      },
+      "tags":[{
+        "id":"books/neilgaiman",
+        "type":"keyword",
+        "webTitle":"Neil Gaiman",
+        "webUrl":"http://www.theguardian.com/books/neilgaiman",
+        "apiUrl":"http://content.guardianapis.com/books/neilgaiman",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"profile/liz-bury",
+        "type":"contributor",
+        "webTitle":"Liz Bury",
+        "webUrl":"http://www.theguardian.com/profile/liz-bury",
+        "apiUrl":"http://content.guardianapis.com/profile/liz-bury",
+        "r2ContributorId":"57417",
+        "references":[]
+      },{
+        "id":"books/creative-writing",
+        "type":"keyword",
+        "webTitle":"Creative writing",
+        "webUrl":"http://www.theguardian.com/books/creative-writing",
+        "apiUrl":"http://content.guardianapis.com/books/creative-writing",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421452320",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/11/1/1383309443373/Neil-Gaiman-003.jpg",
+          "typeData":{
+            "source":"Graeme Robertson",
+            "altText":"Neil Gaiman",
+            "height":"54",
+            "credit":"Graeme Robertson",
+            "caption":"'An ideal teacher' … Neil Gaiman. Photograph: Graeme Robertson",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/11/1/1383309445129/Neil-Gaiman-004.jpg",
+          "typeData":{
+            "source":"Graeme Robertson",
+            "altText":"Neil Gaiman",
+            "height":"340",
+            "credit":"Graeme Robertson",
+            "caption":"'An ideal teacher' … Neil Gaiman. Photograph: Graeme Robertson",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/11/1/1383309447043/Neil-Gaiman-005.jpg",
+          "typeData":{
+            "source":"Graeme Robertson",
+            "altText":"Neil Gaiman",
+            "height":"130",
+            "credit":"Graeme Robertson",
+            "caption":"'An ideal teacher' … Neil Gaiman. Photograph: Graeme Robertson",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/11/1/1383309448769/Neil-Gaiman-006.jpg",
+          "typeData":{
+            "source":"Graeme Robertson",
+            "altText":"Neil Gaiman",
+            "height":"84",
+            "credit":"Graeme Robertson",
+            "caption":"'An ideal teacher' … Neil Gaiman. Photograph: Graeme Robertson",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/11/1/1383309450474/Neil-Gaiman-007.jpg",
+          "typeData":{
+            "source":"Graeme Robertson",
+            "altText":"Neil Gaiman",
+            "height":"132",
+            "credit":"Graeme Robertson",
+            "caption":"'An ideal teacher' … Neil Gaiman. Photograph: Graeme Robertson",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/11/1/1383309452211/Neil-Gaiman-008.jpg",
+          "typeData":{
+            "source":"Graeme Robertson",
+            "altText":"Neil Gaiman",
+            "height":"168",
+            "credit":"Graeme Robertson",
+            "caption":"'An ideal teacher' … Neil Gaiman. Photograph: Graeme Robertson",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/11/1/1383309453885/Neil-Gaiman-009.jpg",
+          "typeData":{
+            "source":"Graeme Robertson",
+            "altText":"Neil Gaiman",
+            "height":"180",
+            "credit":"Graeme Robertson",
+            "caption":"'An ideal teacher' … Neil Gaiman. Photograph: Graeme Robertson",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/11/1/1383309455634/Neil-Gaiman-010.jpg",
+          "typeData":{
+            "source":"Graeme Robertson",
+            "altText":"Neil Gaiman",
+            "height":"228",
+            "credit":"Graeme Robertson",
+            "caption":"'An ideal teacher' … Neil Gaiman. Photograph: Graeme Robertson",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/11/1/1383309457433/Neil-Gaiman-011.jpg",
+          "typeData":{
+            "source":"Graeme Robertson",
+            "altText":"Neil Gaiman",
+            "height":"276",
+            "credit":"Graeme Robertson",
+            "caption":"'An ideal teacher' … Neil Gaiman. Photograph: Graeme Robertson",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/11/1/1383309459427/Neil-Gaiman-012.jpg",
+          "typeData":{
+            "source":"Graeme Robertson",
+            "altText":"Neil Gaiman",
+            "height":"372",
+            "credit":"Graeme Robertson",
+            "caption":"'An ideal teacher' … Neil Gaiman. Photograph: Graeme Robertson",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/11/1/1383309457433/Neil-Gaiman-011.jpg",
+          "typeData":{
+            "source":"Graeme Robertson",
+            "altText":"Neil Gaiman",
+            "height":"276",
+            "credit":"Graeme Robertson",
+            "caption":"'An ideal teacher' … Neil Gaiman. Photograph: Graeme Robertson",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421452321",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/BOOKS/Pix/pictures/2013/11/1/1383309448769/Neil-Gaiman-006.jpg",
+          "typeData":{
+            "source":"Graeme Robertson",
+            "altText":"Neil Gaiman",
+            "height":"84",
+            "credit":"Graeme Robertson",
+            "caption":"'An ideal teacher' … Neil Gaiman. Photograph: Graeme Robertson",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }],
+    "storyPackage":[]
+  }
+}

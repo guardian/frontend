@@ -1,0 +1,1296 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"money/gallery/2013/oct/29/eco-homes-for-sale-in-pictures",
+      "sectionId":"money",
+      "sectionName":"Money",
+      "webPublicationDate":"2013-10-29T15:40:00Z",
+      "webTitle":"Eco homes for sale – in pictures",
+      "webUrl":"http://www.theguardian.com/money/gallery/2013/oct/29/eco-homes-for-sale-in-pictures",
+      "apiUrl":"http://content.guardianapis.com/money/gallery/2013/oct/29/eco-homes-for-sale-in-pictures",
+      "fields":{
+        "trailText":"<p>From a new estate in West Sussex to a barn conversion in Cheshire</p>",
+        "headline":"Eco homes for sale – in pictures",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-30T15:44:35Z",
+        "hasStoryPackage":"true",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/29/1383064203103/Oxfordshire-ecohome-003.jpg",
+        "standfirst":"With gas and electricity bills only heading in one direction, there are real advantages to owning an energy-efficient home. We scoured the market for eco homes and found that while they are not all cheap, you don't have to sacrifice style for practicality",
+        "shortUrl":"http://gu.com/p/3kvmx",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/29/1383064203103/Oxfordshire-ecohome-003.jpg",
+        "commentable":"false",
+        "internalContentCode":"421215685",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Anna Tims",
+        "publication":"theguardian.com",
+        "internalPageCode":"1988578",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-02T11:52:27Z"
+      },
+      "tags":[{
+        "id":"money/houseprices",
+        "type":"keyword",
+        "webTitle":"House prices",
+        "webUrl":"http://www.theguardian.com/money/houseprices",
+        "apiUrl":"http://content.guardianapis.com/money/houseprices",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/property",
+        "type":"keyword",
+        "webTitle":"Property",
+        "webUrl":"http://www.theguardian.com/money/property",
+        "apiUrl":"http://content.guardianapis.com/money/property",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"environment/environment",
+        "type":"keyword",
+        "webTitle":"Environment",
+        "webUrl":"http://www.theguardian.com/environment/environment",
+        "apiUrl":"http://content.guardianapis.com/environment/environment",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"profile/annatims",
+        "type":"contributor",
+        "webTitle":"Anna Tims",
+        "webUrl":"http://www.theguardian.com/profile/annatims",
+        "apiUrl":"http://content.guardianapis.com/profile/annatims",
+        "rcsId":"GNL480079",
+        "r2ContributorId":"15393",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/29/anna_timms_140x140.jpg",
+        "references":[]
+      },{
+        "id":"money/money",
+        "type":"keyword",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/money/money",
+        "apiUrl":"http://content.guardianapis.com/money/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"lifeandstyle/homes",
+        "type":"keyword",
+        "webTitle":"Homes",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/homes",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/homes",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"type/gallery",
+        "type":"type",
+        "webTitle":"Gallery",
+        "webUrl":"http://www.theguardian.com/inpictures",
+        "apiUrl":"http://content.guardianapis.com/inpictures",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421302316",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/29/1383064203103/Oxfordshire-ecohome-003.jpg",
+          "typeData":{
+            "source":"John D Wood & Co",
+            "altText":"Oxfordshire ecohome",
+            "height":"84",
+            "credit":"John D Wood & Co",
+            "caption":"Oxfordshire ecohome Photograph: John D Wood &amp; Co",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-421215783",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":1,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/gallery/2013/10/29/1383059887731/Eco-home-in-Chichester-003.jpg",
+          "typeData":{
+            "source":"Linden Homes",
+            "altText":"Eco homes: Eco home in Chichester",
+            "height":"448",
+            "credit":"Linden Homes",
+            "caption":"<b>Zero carbon in West Sussex.</b> This new estate in 85 acres of parkland near Chichester city centre claims to be one of the first net-zero carbon developments in the country. The new and converted flats and houses – 40% of which are affordable housing – are heavily insulated with heat recovery and water-saving systems, photovoltaic panels and heat and power generated from a single on-site power plant. All fitted appliances are A-rated for energy efficiency. One-bedroom flats start at £234,995 and shared ownership homes are available.<br/>\r\n<a href=\"http://www.lindenhomes.co.uk/developments/west-sussex/graylingwell-park-chichester\">Linden Homes</a>",
+            "width":"760"
+          }
+        }]
+      },{
+        "id":"gu-image-421219437",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":2,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/29/1383063850539/Chiswick-eco-home-002.jpg",
+          "typeData":{
+            "source":"Kinleigh Folkard & Hayward",
+            "altText":"Ecohomes: Chiswick eco home",
+            "height":"414",
+            "credit":"Kinleigh Folkard & Hayward",
+            "caption":"<b>Low-impact modernity in London.</b> If £1.05m strikes you as steep for a four-bedroom house in west London, console yourself with the fact that its Level 5 sustainable homes rating (the second highest) means your electricity bills will be negligible, your water costs half that of most other households and you can expect to receive about £1,000 a year from the solar energy you produce. You can ditch the car, too, because it’s half a mile from Turnham Green tube station. Then all you need to do is stay alive for the next century or so to justify your investment.<br/> \r\n<a href=\"http://www.kfh.co.uk/residential-properties/houses-for-sale-london/houses-in-chiswick-w4-rugby-road/2116567/\">Kinleigh Folkard & Hayward</a>",
+            "width":"620"
+          }
+        }]
+      },{
+        "id":"gu-image-421219515",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":3,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/29/1383063970158/Oxfordshire-ecohome-003.jpg",
+          "typeData":{
+            "source":"John D Wood & Co",
+            "altText":"Ecohomes: Oxfordshire ecohome",
+            "height":"480",
+            "credit":"John D Wood & Co",
+            "caption":"<b>Sun-seeking in Oxfordshire.</b> It’s odd how large eco homes' garages often are. But this £698,000 four-bedroom house with an energy performance rating of A is in the heart of commuterland in Standlake, Oxfordshire. You can offset your guilt over your exhaust fumes as the house has solar panels, heat recovery ventilation and hot water from an air source pump. A small paddock supplements the garden.<br/>\r\n<a href=\"http://www.johndwood.co.uk/property-for-sale/4-bedroom-new-detached-house-in-Standlake-Abingdon-Road-OX29/OXF130716/\">John D Wood & Co</a>",
+            "width":"723"
+          }
+        }]
+      },{
+        "id":"gu-image-421219251",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":4,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/29/1383063777873/Hertfordshire-eco-home-001.jpg",
+          "typeData":{
+            "source":"Paramount",
+            "altText":"Ecohomes: Hertfordshire eco home",
+            "height":"448",
+            "credit":"Paramount",
+            "caption":"<b>Eco to go in Hertfordshire.</b> While a Roca bathroom for each of the three bedrooms may seem environmentally extravagant, this £120,000 house has a Grade A energy performance rating thanks to its air heat recovery system. The downside is you have to buy a plot on which to plant this off-the-shelf former showhome. You can see it at its current site at the Building Research Establishment in Watford. <br/>\r\n<a href=\"http://www.paramountinvestments.co.uk/Property-Refurbishment-for-sale-Watford-Hertfordshire-WD25-3\">Paramount</a>",
+            "width":"760"
+          }
+        }]
+      },{
+        "id":"gu-image-421215806",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":5,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/gallery/2013/10/29/1383059890092/Eco-home-in-Wilmslow-004.jpg",
+          "typeData":{
+            "source":"Jackson-Stops & Staff",
+            "altText":"Eco homes: Eco home in Wilmslow",
+            "height":"448",
+            "credit":"Jackson-Stops & Staff",
+            "caption":"<b>A-grade efficiency in Cheshire.</b> Once a barn, it’s now an environmentally friendly home with gardens and a paddock. It stands on the edge of the Cheshire town of Wilmslow and its solar panels, air source heat pump, rain water recycling and grassed annexe roof have earned it a Grade A energy performance rating. The annexe adds an en suite bedroom or office to the three-bedroom, three-reception main house. Beware, though: the double car port may tempt you into ungreen extravagances. Cost: £859,950. <br/>\r\n<a href=\"http://www.jackson-stops.co.uk/cgi-bin/properties/summary-details.pl?propID=51349\">Jackson-Stops & Staff</a>",
+            "width":"760"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"money/blog/2013/oct/31/estate-agent-horror-stories-dead-bodies-burglary",
+      "sectionId":"money",
+      "sectionName":"Money",
+      "webPublicationDate":"2013-10-31T10:35:30Z",
+      "webTitle":"Scarier than a haunted house: estate agent horror stories",
+      "webUrl":"http://www.theguardian.com/money/blog/2013/oct/31/estate-agent-horror-stories-dead-bodies-burglary",
+      "apiUrl":"http://content.guardianapis.com/money/blog/2013/oct/31/estate-agent-horror-stories-dead-bodies-burglary",
+      "fields":{
+        "trailText":"From dead bodies to burglary, we look at some of the most terrifying mistakes estate agents have made – and how you can avoid them",
+        "headline":"Scarier than a haunted house: estate agent horror stories",
+        "body":"<p>As the second part of the government's Help to Buy scheme kicks off, and the property market continues to get busier, more of us are set to spend a bit of time with estate agents over the coming months.</p><p></p><p>Agents who do not voluntarily join a professional body do not have to meet minimum competency standards, and buyers and sellers can have little come back if things go wrong. And sometimes they do go horribly wrong, as these stories attest …</p><p></p><h2>The agents who let in a thief</h2><p>Not one but <a href=\"http://www.estateagenttoday.co.uk/news_features/Estate-agents-warned-as-fake-viewer-steals-expensive-gems\" title=\"Estate Agent Today thief story\">three different agents in Essex showed luxury homes to a thief</a> who stole expensive jewellery during the viewings in August. The bogus buyer, who called himself Oleg, managed to convince the agents he was a representative of a wealthy Russian and needed time alone in the property to speak privately to his client on his mobile phone. <em>Source: Estate Agent Today</em></p><p></p><h2>The agent who didn't call ahead </h2><p>An agent showed a couple round a flat without checking whether anyone was home. All was well until they got to a bedroom and opened the built-in wardrobes … <a href=\"http://www.rightmove.co.uk/news/articles/rightmove-news/funny-property-stories\" title=\"Rightmove naked story\">to be greeted with the sight of the owner hiding inside, stark naked</a>. <em>Source: Rightmove.co.uk</em></p><p></p><h2>The agent who failed to make proper checks</h2><p>A couple signed up to a shorthold tenancy through a lettings agent, but were evicted just 10 days later. Bailiffs forced entry while the tenants were at work and changed the locks. The lettings agent had failed to verify that the landlord had the authority to rent out the property and it turned out she was being evicted by her mortgage lender. The couple were not even allowed back in to remove their belongings. <em>Source: </em><a href=\"https://www.facebook.com/TheTenantsVoice.co.uk\" title=\"\"><em>The Tenants Voice</em></a></p><p></p><h2>The agent who failed to call the police</h2><p>A lettings agent in Holland Park arrived at a property with a prospective tenant to find the front door hanging on its hinges. Inside, the flat was a shambles, but the agent continued with the viewing and merely pulled the door shut when he left. It wasn't until the owner returned home that evening that she discovered she had been burgled. <em>Source: Sourcingproperty.co.uk</em></p><p></p><h2>The agency which left too much to the imagination</h2><p>An estate agency's description of a property in Epsom went viral <a href=\"http://www.thisislocallondon.co.uk/whereilive/southlondon/epsom/10548209._Does_it_involve_uranium___Speculation_about_mystery__hobby_house__reaches_New_York/\" title=\"This Is Local London:  'Does it involve uranium?' Speculation about mystery 'hobby house' reaches New York\">after it stated it could not show internal photos \"due to the owners' hobby\"</a>. Speculation ensued, including a New York newspaper wondering whether said hobby might involve uranium. <em>Source: ThisislocalLondon.co.uk</em></p><p></p><h2>The agent who showed a property with a dead body inside</h2><p>An estate agent showed prospective buyers around an £800,000 house in Notting Hill, London, <a href=\"http://www.dailymail.co.uk/news/article-1312356/Owner-lay-dead-couch-buyers-shown-round-Notting-Hill-home.html\" title=\"Daily Mail story\">without realising that the 55-year-old owner he presumed was asleep on the sofa had actually died</a>. The agent admitted to a coroner's court that he had thought \"something didn't seem right\" but continued with the viewing nevertheless. <em>Source: Daily Mail</em></p><p></p><h2>The agent who had no idea where he was</h2><p>A couple visited a property with an estate agent who conducted the entire viewing on auto pilot. \"He told us all the normal spiel about heating and wiring etc, then said there was potential for developing or extending the property with a conservatory or adding a loft conversion,\" the prospective buyer said. \"The wife and I looked at each other, feeling very confused. We were on the third floor of a five-storey block.\" <em>Source: Rightmove.co.uk</em></p><p></p><p>First-time buyers are particularly vulnerable to incompetent agents, the Royal Institution of Chartered Surveyors says, claiming most are forced to \"fly blind\" through the \"biggest purchase of their lives\". But sellers also need to know they are not paying huge fees to someone who is sleeping on the job – maybe even literally if the tales above are anything to go by. Here are a few things you can do to reduce your chances of encountering a hapless estate agent:</p><p></p><p>1) Only deal with agents supervised by the property ombudsman. These agents must follow the ombudsman's code of practice and you can get up to £25,000 compensation if they break the code. Find participating agents from <a href=\"http://www.tpos.co.uk\" title=\"\">The Property Ombudsman</a>.</p><p></p><p>2) Get recommendations from friends who have both bought and sold in the area. If you are selling up you will want to know the agent is polite to would-be buyers and turns up on time for appointments, as he or she will be representing you.</p><p></p><p>3) Value the property yourself. You can do this online for free at <a href=\"http://www.Zoopla.co.uk\" title=\"\">Zoopla.co.uk</a> or pay <a href=\"http://www.Hometrack.co.uk\" title=\"\">Hometrack.co.uk</a> £19.95 for a detailed property valuation report based on the same database used by mortgage lenders.</p><p></p><p>4) Deal directly with sellers and buyers using <a href=\"http://www.Tepilo.com\" title=\"Tepilo website\">Tepilo</a>. The property search engine, set up by Channel 4 TV presenter Sarah Beeny, allows homeowners to advertise directly to sellers, avoiding the need for estate agents completely. The site is free with no commission fees to pay. Alternatively, try fee-charging sites like <a href=\"http://www.emoov.co.uk\" title=\"emoov.co.uk\">emoov.co.uk</a> or <a href=\"http://www.housesimple.co.uk\" title=\"House Simple\">House Simple</a>.</p><p></p><p>5) Contact potential sellers in person. Visit your chosen area and contact the sellers of properties you like directly, perhaps by popping a card through the door. Tell them you are interested in buying their home and give your contact number. They may be considering selling up and be glad to bypass agency fees.</p><p></p><p>6) Look at how the agent markets other properties. If the descriptions on its website tend towards the jocular, and you seek seriousness, or the pictures look like they were taken through a dirty window, you might want to steer clear – even if the agent is charging the lowest commission.</p><p></p><p>7) Check any agent you hire is a member of the National Association of Estate Agents. They must undergo professional development training each year and follow a voluntary code of conduct. There is a disciplinary process which includes penalties up to £5,000 for each rule broken. Search the directory of members at <a href=\"http://www.naea.co.uk\" title=\"\">NAEA.co.uk</a>.</p><!-- Guardian Watermark: internal-code/content/421301439|2013-11-05T11:03:48Z|ed4aa36475e83a9b743cfaf858c8fea069cefaa1 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-31T10:35:30Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/31/1383215675538/The-Amityville-Horror-hou-003.jpg",
+        "standfirst":"From dead bodies to burglary, we look at some of the most terrifying mistakes estate agents have made – and how you can avoid them",
+        "shortUrl":"http://gu.com/p/3kxk8",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/31/1383215675538/The-Amityville-Horror-hou-003.jpg",
+        "wordcount":"947",
+        "commentable":"true",
+        "internalContentCode":"421301439",
+        "allowUgc":"false",
+        "internalOctopusCode":"8191998",
+        "isPremoderated":"false",
+        "byline":"Donna Ferguson",
+        "publication":"theguardian.com",
+        "internalPageCode":"1989260",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-07T10:35:30Z"
+      },
+      "tags":[{
+        "id":"money/blog",
+        "type":"blog",
+        "webTitle":"Money blog",
+        "webUrl":"http://www.theguardian.com/money/blog",
+        "apiUrl":"http://content.guardianapis.com/money/blog",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/property",
+        "type":"keyword",
+        "webTitle":"Property",
+        "webUrl":"http://www.theguardian.com/money/property",
+        "apiUrl":"http://content.guardianapis.com/money/property",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/renting",
+        "type":"keyword",
+        "webTitle":"Renting property",
+        "webUrl":"http://www.theguardian.com/money/renting",
+        "apiUrl":"http://content.guardianapis.com/money/renting",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/consumer-affairs",
+        "type":"keyword",
+        "webTitle":"Consumer affairs",
+        "webUrl":"http://www.theguardian.com/money/consumer-affairs",
+        "apiUrl":"http://content.guardianapis.com/money/consumer-affairs",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/consumer-rights-money",
+        "type":"keyword",
+        "webTitle":"Consumer rights",
+        "webUrl":"http://www.theguardian.com/money/consumer-rights-money",
+        "apiUrl":"http://content.guardianapis.com/money/consumer-rights-money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/money",
+        "type":"keyword",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/money/money",
+        "apiUrl":"http://content.guardianapis.com/money/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"business/realestate",
+        "type":"keyword",
+        "webTitle":"Real estate",
+        "webUrl":"http://www.theguardian.com/business/realestate",
+        "apiUrl":"http://content.guardianapis.com/business/realestate",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"money/firsttimebuyers",
+        "type":"keyword",
+        "webTitle":"First-time buyers",
+        "webUrl":"http://www.theguardian.com/money/firsttimebuyers",
+        "apiUrl":"http://content.guardianapis.com/money/firsttimebuyers",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"business/housingmarket",
+        "type":"keyword",
+        "webTitle":"Housing market",
+        "webUrl":"http://www.theguardian.com/business/housingmarket",
+        "apiUrl":"http://content.guardianapis.com/business/housingmarket",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421357582",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/31/1383215670623/The-Amityville-Horror-hou-001.jpg",
+          "typeData":{
+            "source":"Ronald Grant Archive",
+            "altText":"The Amityville Horror house",
+            "height":"54",
+            "credit":"Ronald Grant Archive",
+            "caption":"House of horror: estate agents' Amytiville moments revealed. Photograph: Ronald Grant Archive",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/31/1383215674312/The-Amityville-Horror-hou-002.jpg",
+          "typeData":{
+            "source":"Ronald Grant Archive",
+            "altText":"The Amityville Horror house",
+            "height":"130",
+            "credit":"Ronald Grant Archive",
+            "caption":"House of horror: estate agents' Amytiville moments revealed. Photograph: Ronald Grant Archive",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/31/1383215675538/The-Amityville-Horror-hou-003.jpg",
+          "typeData":{
+            "source":"Ronald Grant Archive",
+            "altText":"The Amityville Horror house",
+            "height":"84",
+            "credit":"Ronald Grant Archive",
+            "caption":"House of horror: estate agents' Amytiville moments revealed. Photograph: Ronald Grant Archive",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/31/1383215676797/The-Amityville-Horror-hou-004.jpg",
+          "typeData":{
+            "source":"Ronald Grant Archive",
+            "altText":"The Amityville Horror house",
+            "height":"132",
+            "credit":"Ronald Grant Archive",
+            "caption":"House of horror: estate agents' Amytiville moments revealed. Photograph: Ronald Grant Archive",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/31/1383215678079/The-Amityville-Horror-hou-005.jpg",
+          "typeData":{
+            "source":"Ronald Grant Archive",
+            "altText":"The Amityville Horror house",
+            "height":"168",
+            "credit":"Ronald Grant Archive",
+            "caption":"House of horror: estate agents' Amytiville moments revealed. Photograph: Ronald Grant Archive",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/31/1383215679305/The-Amityville-Horror-hou-006.jpg",
+          "typeData":{
+            "source":"Ronald Grant Archive",
+            "altText":"The Amityville Horror house",
+            "height":"180",
+            "credit":"Ronald Grant Archive",
+            "caption":"House of horror: estate agents' Amytiville moments revealed. Photograph: Ronald Grant Archive",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/31/1383215680527/The-Amityville-Horror-hou-007.jpg",
+          "typeData":{
+            "source":"Ronald Grant Archive",
+            "altText":"The Amityville Horror house",
+            "height":"228",
+            "credit":"Ronald Grant Archive",
+            "caption":"House of horror: estate agents' Amytiville moments revealed. Photograph: Ronald Grant Archive",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/31/1383215681821/The-Amityville-Horror-hou-008.jpg",
+          "typeData":{
+            "source":"Ronald Grant Archive",
+            "altText":"The Amityville Horror house",
+            "height":"276",
+            "credit":"Ronald Grant Archive",
+            "caption":"House of horror: estate agents' Amytiville moments revealed. Photograph: Ronald Grant Archive",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/31/1383215681821/The-Amityville-Horror-hou-008.jpg",
+          "typeData":{
+            "source":"Ronald Grant Archive",
+            "altText":"The Amityville Horror house",
+            "height":"276",
+            "credit":"Ronald Grant Archive",
+            "caption":"House of horror: estate agents' Amytiville moments revealed. Photograph: Ronald Grant Archive",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421357583",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/31/1383215675538/The-Amityville-Horror-hou-003.jpg",
+          "typeData":{
+            "source":"Ronald Grant Archive",
+            "altText":"The Amityville Horror house",
+            "height":"84",
+            "credit":"Ronald Grant Archive",
+            "caption":"House of horror: estate agents' Amytiville moments revealed. Photograph: Ronald Grant Archive",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"money/gallery/2013/oct/16/buy-uk-property-market-gallery",
+      "sectionId":"money",
+      "sectionName":"Money",
+      "webPublicationDate":"2013-10-16T10:50:00Z",
+      "webTitle":"What will £600,000 buy you in the UK property market?",
+      "webUrl":"http://www.theguardian.com/money/gallery/2013/oct/16/buy-uk-property-market-gallery",
+      "apiUrl":"http://content.guardianapis.com/money/gallery/2013/oct/16/buy-uk-property-market-gallery",
+      "fields":{
+        "trailText":"<p>With Help to Buy supporting buyers of homes up to £600,000 we look at the stately piles the taxpayer will help you raise a mortgage on</p>",
+        "headline":"What will £600,000 buy you in the UK property market?",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-16T13:14:01Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381847704460/What-can-you-buy-for-Norw-009.jpg",
+        "standfirst":"With Help to Buy supporting buyers of homes up to £600,000 we look at the stately piles the taxpayer will help you raise a mortgage on. The new scheme means you can borrow up to £570,000 of the purchase price – provided your salary is big enough, of course",
+        "shortUrl":"http://gu.com/p/3jhnm",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381847704460/What-can-you-buy-for-Norw-009.jpg",
+        "commentable":"false",
+        "internalContentCode":"420036123",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Anna Tims",
+        "publication":"theguardian.com",
+        "internalPageCode":"1981336",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-19T10:50:05Z"
+      },
+      "tags":[{
+        "id":"money/series/what-can-you-buy-for",
+        "type":"series",
+        "webTitle":"What can you buy for …",
+        "webUrl":"http://www.theguardian.com/money/series/what-can-you-buy-for",
+        "apiUrl":"http://content.guardianapis.com/money/series/what-can-you-buy-for",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/property",
+        "type":"keyword",
+        "webTitle":"Property",
+        "webUrl":"http://www.theguardian.com/money/property",
+        "apiUrl":"http://content.guardianapis.com/money/property",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/money",
+        "type":"keyword",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/money/money",
+        "apiUrl":"http://content.guardianapis.com/money/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"profile/annatims",
+        "type":"contributor",
+        "webTitle":"Anna Tims",
+        "webUrl":"http://www.theguardian.com/profile/annatims",
+        "apiUrl":"http://content.guardianapis.com/profile/annatims",
+        "rcsId":"GNL480079",
+        "r2ContributorId":"15393",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/29/anna_timms_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/gallery",
+        "type":"type",
+        "webTitle":"Gallery",
+        "webUrl":"http://www.theguardian.com/inpictures",
+        "apiUrl":"http://content.guardianapis.com/inpictures",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420147276",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381847704460/What-can-you-buy-for-Norw-009.jpg",
+          "typeData":{
+            "source":"Abbots",
+            "altText":"Trail What can you buy for ...: What can you buy for: Norwich house ",
+            "height":"84",
+            "credit":"Abbots",
+            "caption":"You may, of course, find that only four double bedrooms and three receptions cramp your style and it's a blow that the government won't help you convert the outbuildings into something more palatial. The comfort is that this £600,000 barn conversion near Norwich in Norfolk is stylish and sizeable, with the main bathroom dwarfing most people's living rooms. http://www.abbotts.co.uk/buy/property/4-bedroom-detached-house-in-south-walsham,nr13-for-guide-price-gbp-600,000-ref-2316413/",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-420115917",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":1,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/gallery/2013/10/16/1381916488684/doncaster-001.jpg",
+          "typeData":{
+            "source":"Fine and Country",
+            "altText":"what can you: doncaster",
+            "height":"480",
+            "credit":"Fine and Country",
+            "caption":"<strong>This Doncaster property is billed as The Cottage</strong>, but there’s nothing dinky about this six-bedroom pile in three-quarters of an acre in Ed Miliband’s constituency of South Yorkshire. While close family can slum it in the sitting room, guests can be formally hosted in the drawing room. A study and an office allow you to earn your living away from distraction so you can get on with repaying that mortgage. Yours for £600,000.<br><a href=\"http://www.fineandcountry.co.uk/property/doncaster-/6-bedroom-detached-for-sale-in-doncaster-/full_details_fandc/50023445\">Fine and Country</a> </br>",
+            "width":"721"
+          }
+        }]
+      },{
+        "id":"gu-image-420115944",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":2,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/gallery/2013/10/16/1381916491552/gwynedd-002.jpg",
+          "typeData":{
+            "source":"Jackson-Stops",
+            "altText":"what can you: gwynedd",
+            "height":"392",
+            "credit":"Jackson-Stops",
+            "caption":"<strong>A Grade II-listed house in Gwynedd.</strong> For £595,000 you get 28 acres of Snowdonia national park with a six-bedroom Elizabethan manor house, a one-bedroom annexe and two three-bedroom cottages thrown in for free. Stained glass, Elizabethan panelling and moulded ceilings, dramatic fireplaces and those little essentials like a butler’s room and two minstrels' galleries survive. <br><a href=\"http://www.jackson-stops.co.uk/cgi-bin/properties/summary-details.pl?propID=51080\">Jackson-Stops</a></br>",
+            "width":"588"
+          }
+        }]
+      },{
+        "id":"gu-image-420036015",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":3,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/15/1381847688071/Ludlow-house--002.jpg",
+          "typeData":{
+            "source":"Strutt and Parker ",
+            "altText":"What can you buy for ...: Ludlow house ",
+            "height":"448",
+            "credit":"Strutt and Parker ",
+            "caption":"<strong>This 17th century house in Ludlow, Shropshire</strong> sent the architectural historian Nikolaus Pevsner into ecstasies, because even by the standards of the handsome market town, the building is a craftsman’s masterpiece. Its intricate panellings, mouldings and carvings have been rescued from pending dereliction by a programme of renovation, which has left the four bedrooms and three receptions newly wired, plumbed and piped. Given the extent of the new kitchen-breakfast room you could harness the utility room as a study overlooking the garden. On the market for £599,000. <br>\r\n<a href=\"http://search.struttandparker.com/property/print/id/13767\">Strutt and Parker</a></br>",
+            "width":"760"
+          }
+        }]
+      },{
+        "id":"gu-image-420118926",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":4,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/gallery/2013/10/16/1381917747857/london-005.jpg",
+          "typeData":{
+            "source":"West End Residence",
+            "altText":"what can you: london",
+            "height":"255",
+            "credit":"West End Residence",
+            "caption":"<strong>Getting a foothold in the London property market</strong> is an expensive business, especially when you have status to maintain, so why not get the taxpayer to help you achieve one of the capital's premier postcodes. This two-bedroom flat in a mansion block in W2 is a few minutes stroll from Hyde Park and Oxford Street. At £600,000, it almost counts as cheap given the location and the decent room sizes (bar the Lilliputian kitchen), but that's because the fittings and decor need modernising. <br/><a href=\"http://www.zoopla.co.uk/for-sale/details/30714142?\">West End Residence</a>",
+            "width":"354"
+          }
+        }]
+      },{
+        "id":"gu-image-420115984",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":5,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/gallery/2013/10/16/1381916496415/norwich-004.jpg",
+          "typeData":{
+            "source":"Abbotts",
+            "altText":"what can you: norwich",
+            "height":"480",
+            "credit":"Abbotts",
+            "caption":"<strong>This £600,000 barn conversion near Norwich, Norfolk</strong>, may leave you feeling that only four double bedrooms and three receptions cramp your style, and it’s a blow that the government won’t help you convert the outbuildings into something more palatial. The comfort is that it is stylish and sizeable, with the main bathroom dwarfing most people’s living rooms. <br> <a href=\"http://www.abbotts.co.uk/buy/property/4-bedroom-detached-house-in-south-walsham,nr13-for-guide-price-gbp-600,000-ref-2316413/\">Abbotts</a></br>\n",
+            "width":"640"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"money/gallery/2013/oct/25/snooping-around-homes-market",
+      "sectionId":"money",
+      "sectionName":"Money",
+      "webPublicationDate":"2013-10-25T11:00:02Z",
+      "webTitle":"Snooping around – in pictures",
+      "webUrl":"http://www.theguardian.com/money/gallery/2013/oct/25/snooping-around-homes-market",
+      "apiUrl":"http://content.guardianapis.com/money/gallery/2013/oct/25/snooping-around-homes-market",
+      "fields":{
+        "trailText":"<p>From a dream home in easy reach of London, to a couple of barns in need of work near Truro</p>",
+        "headline":"Snooping around – in pictures",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-25T11:00:02Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Money/Pix/gallery/2013/10/24/1382625271884/snoop-251013-gretna-003.jpg",
+        "standfirst":"Considering a move or just wondering how the other half lives? Take a look at our gallery of homes on the market to see what your money will buy",
+        "shortUrl":"http://gu.com/p/3jzke",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Money/Pix/gallery/2013/10/24/1382625271884/snoop-251013-gretna-003.jpg",
+        "commentable":"false",
+        "internalContentCode":"420867346",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Anna Tims",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-24",
+        "internalPageCode":"1986350",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-28T12:00:02Z"
+      },
+      "tags":[{
+        "id":"money/series/snoopingaround",
+        "type":"series",
+        "webTitle":"Snooping around",
+        "webUrl":"http://www.theguardian.com/money/series/snoopingaround",
+        "apiUrl":"http://content.guardianapis.com/money/series/snoopingaround",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/property",
+        "type":"keyword",
+        "webTitle":"Property",
+        "webUrl":"http://www.theguardian.com/money/property",
+        "apiUrl":"http://content.guardianapis.com/money/property",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/houseprices",
+        "type":"keyword",
+        "webTitle":"House prices",
+        "webUrl":"http://www.theguardian.com/money/houseprices",
+        "apiUrl":"http://content.guardianapis.com/money/houseprices",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"profile/annatims",
+        "type":"contributor",
+        "webTitle":"Anna Tims",
+        "webUrl":"http://www.theguardian.com/profile/annatims",
+        "apiUrl":"http://content.guardianapis.com/profile/annatims",
+        "rcsId":"GNL480079",
+        "r2ContributorId":"15393",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/29/anna_timms_140x140.jpg",
+        "references":[]
+      },{
+        "id":"lifeandstyle/homes",
+        "type":"keyword",
+        "webTitle":"Homes",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/homes",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/homes",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"theguardian/weekend/space2",
+        "type":"newspaper-book-section",
+        "webTitle":"Space",
+        "webUrl":"http://www.theguardian.com/theguardian/weekend/space2",
+        "apiUrl":"http://content.guardianapis.com/theguardian/weekend/space2",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"theguardian/weekend",
+        "type":"newspaper-book",
+        "webTitle":"Weekend",
+        "webUrl":"http://www.theguardian.com/theguardian/weekend",
+        "apiUrl":"http://content.guardianapis.com/theguardian/weekend",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"type/gallery",
+        "type":"type",
+        "webTitle":"Gallery",
+        "webUrl":"http://www.theguardian.com/inpictures",
+        "apiUrl":"http://content.guardianapis.com/inpictures",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420878668",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/gallery/2013/10/24/1382625271884/snoop-251013-gretna-003.jpg",
+          "typeData":{
+            "source":"H&H King",
+            "altText":"snoop 251013 gretna",
+            "height":"84",
+            "credit":"H&H King",
+            "caption":"<b>In the country: Dumfries and Galloway.</b> Roses Halt, the old station house just outside Gretna is a trainspotter's paradise. It has three receptions, three bedrooms and big garden and is on the market for £225,000. However, the din from trains passing below the windows could impede your weekend lie-ins. Photograph: H&amp;H King",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-420866996",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":1,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/gallery/2013/10/24/1382625132501/Nottingham-001.jpg",
+          "typeData":{
+            "source":"Chesterton Humberts",
+            "altText":"snoop 251013: Nottingham",
+            "height":"480",
+            "credit":"Chesterton Humberts",
+            "caption":"<b>In town: Nottingham.</b> This four-bedroom semi-detached house is large and elegantly adorned, with a decent-sized garden. It’s a mile-and-a-half from the centre of Sherwood. Three of the bedrooms are doubles, but at £240,000 it is a shame that the kitchen is too narrow for dining.<br/>\r\n<a href=\"http://www.chestertonhumberts.com\">Chesterton Humberts</a>\r\n",
+            "width":"720"
+          }
+        }]
+      },{
+        "id":"gu-image-420866968",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":2,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/gallery/2013/10/24/1382625135362/Dumfries-and-Galloway-002.jpg",
+          "typeData":{
+            "source":"H&H King",
+            "altText":"snoop 251013: Dumfries and Galloway",
+            "height":"425",
+            "credit":"H&H King",
+            "caption":"<b>In the country: Dumfries and Galloway.</b> Roses Halt, the old station house just outside Gretna, is a trainspotter’s paradise. It has three receptions, three bedrooms and a big garden, and is on the market for £225,000. However, the din from trains passing below the windows could impede your weekend lie-ins.<br/>\r\n<a href=\"http://www.hhking.co.uk\">H&H King</a>\r\n\r\n\r\n",
+            "width":"638"
+          }
+        }]
+      },{
+        "id":"gu-image-420867037",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":3,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/gallery/2013/10/24/1382625138435/Cornwall-003.jpg",
+          "typeData":{
+            "source":"Chesterton Humberts",
+            "altText":"snoop 251013: Cornwall",
+            "height":"480",
+            "credit":"Chesterton Humberts",
+            "caption":"<b>Wreck of the week: Cornwall.</b> Two stone barns with planning permission to become houses. One is going for £260,000 and the other for £200,000, though neither are converted. They are in the lofty hamlet of Grampound, near Truro, on the Roseland peninsula with sweeping views and nearby beaches. Extra paddock is available, but remember, if you buy only one, you’ll be cheek by jowl with a neighbour.<br/>\r\n<a href=\"http://www.chestertonhumberts.com\">Chesterton Humberts</a>\r\n\r\n\r\n",
+            "width":"718"
+          }
+        }]
+      },{
+        "id":"gu-image-420867032",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":4,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/gallery/2013/10/24/1382625140577/Essex-004.jpg",
+          "typeData":{
+            "source":"Berefords",
+            "altText":"snoop 251013: Essex",
+            "height":"448",
+            "credit":"Berefords",
+            "caption":"<b>Dream home: Essex.</b> You could commute directly from an office in London to this rustic fantasy in Cressing. Home Counties quaintness comes at a price, even in the unglamorous postcode of Braintree – £495,000 is the asking price – but there is good-sized space for the outlay, including four double bedrooms, three receptions and a double car port. The 300-year-old cottage used to be the village bakery and is buffered front and back by landscaped garden.<br/>\r\n<a href=\"http://www.beresfordsgroup.co.uk/property/8545/4-bed-cottage-for-sale-in-Cressing\">Berefords</a> \r\n",
+            "width":"760"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"money/gallery/2013/oct/29/eco-homes-for-sale-in-pictures",
+      "sectionId":"money",
+      "sectionName":"Money",
+      "webPublicationDate":"2013-10-29T15:40:00Z",
+      "webTitle":"Eco homes for sale – in pictures",
+      "webUrl":"http://www.theguardian.com/money/gallery/2013/oct/29/eco-homes-for-sale-in-pictures",
+      "apiUrl":"http://content.guardianapis.com/money/gallery/2013/oct/29/eco-homes-for-sale-in-pictures",
+      "fields":{
+        "trailText":"<p>From a new estate in West Sussex to a barn conversion in Cheshire</p>",
+        "headline":"Eco homes for sale – in pictures",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-30T15:44:35Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/29/1383064203103/Oxfordshire-ecohome-003.jpg",
+        "standfirst":"With gas and electricity bills only heading in one direction, there are real advantages to owning an energy-efficient home. We scoured the market for eco homes and found that while they are not all cheap, you don't have to sacrifice style for practicality",
+        "shortUrl":"http://gu.com/p/3kvmx",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/29/1383064203103/Oxfordshire-ecohome-003.jpg",
+        "commentable":"false",
+        "internalContentCode":"421215685",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Anna Tims",
+        "publication":"theguardian.com",
+        "internalPageCode":"1988578",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-02T11:52:27Z"
+      },
+      "tags":[{
+        "id":"money/houseprices",
+        "type":"keyword",
+        "webTitle":"House prices",
+        "webUrl":"http://www.theguardian.com/money/houseprices",
+        "apiUrl":"http://content.guardianapis.com/money/houseprices",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/property",
+        "type":"keyword",
+        "webTitle":"Property",
+        "webUrl":"http://www.theguardian.com/money/property",
+        "apiUrl":"http://content.guardianapis.com/money/property",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"environment/environment",
+        "type":"keyword",
+        "webTitle":"Environment",
+        "webUrl":"http://www.theguardian.com/environment/environment",
+        "apiUrl":"http://content.guardianapis.com/environment/environment",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"profile/annatims",
+        "type":"contributor",
+        "webTitle":"Anna Tims",
+        "webUrl":"http://www.theguardian.com/profile/annatims",
+        "apiUrl":"http://content.guardianapis.com/profile/annatims",
+        "rcsId":"GNL480079",
+        "r2ContributorId":"15393",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/29/anna_timms_140x140.jpg",
+        "references":[]
+      },{
+        "id":"money/money",
+        "type":"keyword",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/money/money",
+        "apiUrl":"http://content.guardianapis.com/money/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"lifeandstyle/homes",
+        "type":"keyword",
+        "webTitle":"Homes",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/homes",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/homes",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"type/gallery",
+        "type":"type",
+        "webTitle":"Gallery",
+        "webUrl":"http://www.theguardian.com/inpictures",
+        "apiUrl":"http://content.guardianapis.com/inpictures",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421302316",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/29/1383064203103/Oxfordshire-ecohome-003.jpg",
+          "typeData":{
+            "source":"John D Wood & Co",
+            "altText":"Oxfordshire ecohome",
+            "height":"84",
+            "credit":"John D Wood & Co",
+            "caption":"Oxfordshire ecohome Photograph: John D Wood &amp; Co",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-421215783",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":1,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/gallery/2013/10/29/1383059887731/Eco-home-in-Chichester-003.jpg",
+          "typeData":{
+            "source":"Linden Homes",
+            "altText":"Eco homes: Eco home in Chichester",
+            "height":"448",
+            "credit":"Linden Homes",
+            "caption":"<b>Zero carbon in West Sussex.</b> This new estate in 85 acres of parkland near Chichester city centre claims to be one of the first net-zero carbon developments in the country. The new and converted flats and houses – 40% of which are affordable housing – are heavily insulated with heat recovery and water-saving systems, photovoltaic panels and heat and power generated from a single on-site power plant. All fitted appliances are A-rated for energy efficiency. One-bedroom flats start at £234,995 and shared ownership homes are available.<br/>\r\n<a href=\"http://www.lindenhomes.co.uk/developments/west-sussex/graylingwell-park-chichester\">Linden Homes</a>",
+            "width":"760"
+          }
+        }]
+      },{
+        "id":"gu-image-421219437",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":2,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/29/1383063850539/Chiswick-eco-home-002.jpg",
+          "typeData":{
+            "source":"Kinleigh Folkard & Hayward",
+            "altText":"Ecohomes: Chiswick eco home",
+            "height":"414",
+            "credit":"Kinleigh Folkard & Hayward",
+            "caption":"<b>Low-impact modernity in London.</b> If £1.05m strikes you as steep for a four-bedroom house in west London, console yourself with the fact that its Level 5 sustainable homes rating (the second highest) means your electricity bills will be negligible, your water costs half that of most other households and you can expect to receive about £1,000 a year from the solar energy you produce. You can ditch the car, too, because it’s half a mile from Turnham Green tube station. Then all you need to do is stay alive for the next century or so to justify your investment.<br/> \r\n<a href=\"http://www.kfh.co.uk/residential-properties/houses-for-sale-london/houses-in-chiswick-w4-rugby-road/2116567/\">Kinleigh Folkard & Hayward</a>",
+            "width":"620"
+          }
+        }]
+      },{
+        "id":"gu-image-421219515",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":3,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/29/1383063970158/Oxfordshire-ecohome-003.jpg",
+          "typeData":{
+            "source":"John D Wood & Co",
+            "altText":"Ecohomes: Oxfordshire ecohome",
+            "height":"480",
+            "credit":"John D Wood & Co",
+            "caption":"<b>Sun-seeking in Oxfordshire.</b> It’s odd how large eco homes' garages often are. But this £698,000 four-bedroom house with an energy performance rating of A is in the heart of commuterland in Standlake, Oxfordshire. You can offset your guilt over your exhaust fumes as the house has solar panels, heat recovery ventilation and hot water from an air source pump. A small paddock supplements the garden.<br/>\r\n<a href=\"http://www.johndwood.co.uk/property-for-sale/4-bedroom-new-detached-house-in-Standlake-Abingdon-Road-OX29/OXF130716/\">John D Wood & Co</a>",
+            "width":"723"
+          }
+        }]
+      },{
+        "id":"gu-image-421219251",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":4,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/29/1383063777873/Hertfordshire-eco-home-001.jpg",
+          "typeData":{
+            "source":"Paramount",
+            "altText":"Ecohomes: Hertfordshire eco home",
+            "height":"448",
+            "credit":"Paramount",
+            "caption":"<b>Eco to go in Hertfordshire.</b> While a Roca bathroom for each of the three bedrooms may seem environmentally extravagant, this £120,000 house has a Grade A energy performance rating thanks to its air heat recovery system. The downside is you have to buy a plot on which to plant this off-the-shelf former showhome. You can see it at its current site at the Building Research Establishment in Watford. <br/>\r\n<a href=\"http://www.paramountinvestments.co.uk/Property-Refurbishment-for-sale-Watford-Hertfordshire-WD25-3\">Paramount</a>",
+            "width":"760"
+          }
+        }]
+      },{
+        "id":"gu-image-421215806",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":5,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/gallery/2013/10/29/1383059890092/Eco-home-in-Wilmslow-004.jpg",
+          "typeData":{
+            "source":"Jackson-Stops & Staff",
+            "altText":"Eco homes: Eco home in Wilmslow",
+            "height":"448",
+            "credit":"Jackson-Stops & Staff",
+            "caption":"<b>A-grade efficiency in Cheshire.</b> Once a barn, it’s now an environmentally friendly home with gardens and a paddock. It stands on the edge of the Cheshire town of Wilmslow and its solar panels, air source heat pump, rain water recycling and grassed annexe roof have earned it a Grade A energy performance rating. The annexe adds an en suite bedroom or office to the three-bedroom, three-reception main house. Beware, though: the double car port may tempt you into ungreen extravagances. Cost: £859,950. <br/>\r\n<a href=\"http://www.jackson-stops.co.uk/cgi-bin/properties/summary-details.pl?propID=51349\">Jackson-Stops & Staff</a>",
+            "width":"760"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"money/gallery/2013/nov/01/snooping-around-homes-market",
+      "sectionId":"money",
+      "sectionName":"Money",
+      "webPublicationDate":"2013-11-01T12:00:00Z",
+      "webTitle":"Snooping around – in pictures",
+      "webUrl":"http://www.theguardian.com/money/gallery/2013/nov/01/snooping-around-homes-market",
+      "apiUrl":"http://content.guardianapis.com/money/gallery/2013/nov/01/snooping-around-homes-market",
+      "fields":{
+        "trailText":"<p>From the quay at Deal to a 300-year-old house in Northamptonshire</p>",
+        "headline":"Snooping around – in pictures",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-01T12:00:00Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/31/1383223867323/Snooping-around-in-Staver-003.jpg",
+        "standfirst":"Considering a move or just wondering how the other half lives? Take a look at our gallery of homes on the market to see what your money will buy",
+        "shortUrl":"http://gu.com/p/3k2bd",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/31/1383223867323/Snooping-around-in-Staver-003.jpg",
+        "commentable":"false",
+        "internalContentCode":"421365979",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Anna Tims",
+        "publication":"theguardian.com",
+        "internalPageCode":"1989751",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T12:00:00Z"
+      },
+      "tags":[{
+        "id":"money/series/snoopingaround",
+        "type":"series",
+        "webTitle":"Snooping around",
+        "webUrl":"http://www.theguardian.com/money/series/snoopingaround",
+        "apiUrl":"http://content.guardianapis.com/money/series/snoopingaround",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/property",
+        "type":"keyword",
+        "webTitle":"Property",
+        "webUrl":"http://www.theguardian.com/money/property",
+        "apiUrl":"http://content.guardianapis.com/money/property",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/houseprices",
+        "type":"keyword",
+        "webTitle":"House prices",
+        "webUrl":"http://www.theguardian.com/money/houseprices",
+        "apiUrl":"http://content.guardianapis.com/money/houseprices",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/money",
+        "type":"keyword",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/money/money",
+        "apiUrl":"http://content.guardianapis.com/money/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"lifeandstyle/homes",
+        "type":"keyword",
+        "webTitle":"Homes",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/homes",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/homes",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"profile/annatims",
+        "type":"contributor",
+        "webTitle":"Anna Tims",
+        "webUrl":"http://www.theguardian.com/profile/annatims",
+        "apiUrl":"http://content.guardianapis.com/profile/annatims",
+        "rcsId":"GNL480079",
+        "r2ContributorId":"15393",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/29/anna_timms_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/gallery",
+        "type":"type",
+        "webTitle":"Gallery",
+        "webUrl":"http://www.theguardian.com/inpictures",
+        "apiUrl":"http://content.guardianapis.com/inpictures",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421445853",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/pictures/2013/10/31/1383223867323/Snooping-around-in-Staver-003.jpg",
+          "typeData":{
+            "source":"Jackson-Stops & Staff",
+            "altText":"Snooping around in Staverton, Northamptonshire",
+            "height":"84",
+            "credit":"Jackson-Stops & Staff",
+            "caption":"Snooping around in Staverton, Northamptonshire Photograph: Jackson-Stops &amp; Staff",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-421365974",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":1,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/gallery/2013/10/31/1383217901603/Snooping-around-in-Broadf-002.jpg",
+          "typeData":{
+            "source":"Strutt & Parker",
+            "altText":"Snoop 011113: Snooping around in Broadford, Isle of Skye",
+            "height":"480",
+            "credit":"Strutt & Parker",
+            "caption":"<b>In the country: Isle of Skye.</b> Yours for £175,000, this lofty perch near Broadford takes in a dramatic sweep of sea and mountainscape, and a burn runs through the gardens. There are only two bedrooms and it could do with a modernising hand.<br/>\r\n<a href=\"http://www.struttandparker.com\">Strutt & Parker</a>\r\n",
+            "width":"640"
+          }
+        }]
+      },{
+        "id":"gu-image-421365976",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":2,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/gallery/2013/10/31/1383217897366/Snooping-around-in-Deal-K-001.jpg",
+          "typeData":{
+            "source":"Bright & Bright",
+            "altText":"Snoop 011113: Snooping around in Deal, Kent",
+            "height":"600",
+            "credit":"Bright & Bright",
+            "caption":"<b>In town: Kent.</b> This is on Deal’s quaint front, with unsullied views of the sea. On the market for £425,000, there is panelling, terracotta tiling and dramatic fireplaces among the three receptions and three bedrooms. It’s a shame the garden is a squeezed courtyard.<br/>\r\n<a href=\"http://www.brightandbright.co.uk\">Bright & Bright</a>",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-421365978",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":3,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/gallery/2013/10/31/1383217904607/Snooping-around-in-Staver-003.jpg",
+          "typeData":{
+            "source":"Jackson-Stops & Staff",
+            "altText":"Snoop 011113: Snooping around in Staverton, Northamptonshire",
+            "height":"480",
+            "credit":"Jackson-Stops & Staff",
+            "caption":"<b>Wreck of the week: Northamptonshire.</b> Staverton, near Daventry, is the setting for this 300-year-old, three-bedroomed house. The last 50 years have passed it by, but it retains handsome ingredients: beams and fireplaces. However, the Grade II-listing will restrict any ambitions to alter or extend. Cost: £400,000.<br/>\r\n<a href=\"http://www.jackson-stops.co.uk\">Jackson-Stops & Staff</a>",
+            "width":"723"
+          }
+        }]
+      },{
+        "id":"gu-image-421445832",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":4,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Money/Pix/gallery/2013/11/1/1383303631359/Monmouthshire-001.jpg",
+          "typeData":{
+            "source":"House Simple",
+            "photographer":"Phil France",
+            "altText":"snooping 11113: Monmouthshire",
+            "height":"480",
+            "credit":"Phil France/House Simple",
+            "caption":"<strong>Dream home: Monmouthshire. </strong>If it’s rural sprawl you dream off, this sizeable five-bedder near Chepstow could fit the bill. Just a few miles from Tintern Abbey and 20 minutes from a station, you can enjoy some of the UK’s most ethereal views while retaining a link to more practical facilities. For £575,000 you get a sitting room, dining/garden room, kitchen/breakfast room, dining room, study and utility room downstairs, plus room on the drive for up to 10 cars. If that all sounds too much, the agent suggests bits could be easily carved off to create holiday lets. <br/>\r\n<a href=\"http://www.housesimple.co.uk/property.asp?PR_ID=2296\">House Simple</a>\r\n",
+            "width":"720"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

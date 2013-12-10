@@ -1,0 +1,40 @@
+/* ==========================================================================
+   Jobs component
+   ========================================================================== */
+
+.jobs-component {
+
+    .lineitem__image-logo {
+        margin-left: $baseline;
+        @include rem((
+            width: 100px,
+            height: 40px
+        ));
+        float: right;
+    }
+
+    .lineitem__description {
+        margin-top: $gutter;
+    }
+    
+    .lineitem__list {
+        @include font-size(14,16);
+        margin: $baseline*4 0;
+    }
+
+    &.commercial--w600 {
+        .commercial__item {
+            @include box-sizing(border-box);
+            padding-right: $gs-gutter/2;
+            width: 40%;
+            float: left;
+            &.commercial__item:nth-child(3) {
+                width: 20%;
+                .lineitem__title {
+                    @include f-headline;
+                    @include font-size(14,16);
+                }
+            }
+        }
+    }
+}

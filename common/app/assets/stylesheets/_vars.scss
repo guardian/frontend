@@ -1,52 +1,152 @@
-/* ==========================================================================
-    Global Variables
-   ========================================================================== */
-/**
- *  Be careful of SASS variable scope: http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#variables_
- **/
+// =============================================================================
+// Global variables
+// =============================================================================
 
-/* Breakpoints
- ========================================================================== */
-$mobile: 18.75em; //300px
-$tablet: 37.5em; //600px
-$desktop: 56.25em; //900px
+// Be careful of Sass variable scope
+// Note: Sass 3.3.0 adds Local and local vars
+// http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#variables
 
-/* Tweakpoints
- ========================================================================== */
- $desktopAd: 810px; // Pixel width for leader board change.
 
-/* Layout dimensions
- ========================================================================== */
+// Support
+// =============================================================================
+
+$old-ie:      false !default;
+$svg-support: true !default;
+
+
+// Layout dimensions
+// =============================================================================
+
 $baseline: 4px;
 $gutter: 16px;
+$unitHeight: 36px;
 $inArticleInlineImgWidth: 114px;
 $trailblockImgWidth: 100%;
 $trailblockImgWidthLarge: 140px;
+$headerHeight: 58px;
 
-/* Fonts
- ========================================================================== */
-$sans-serif: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+
+// Breakpoints
+// =============================================================================
+
+// Name your breakpoints in a way that creates a ubiquitous language
+// across team members. It will improve communication between
+// stakeholders, designers, developers, and testers.
+// NB. If these change, please update detect.js to match
+
+@import 'layout/_grid-system';
+
+// Article breakpoints
+$a-rightCol-width:    gs-span(4);
+$a-rightCol-trigger:  gs-span(11) + $gs-gutter*2; // 900px
+$a-leftCol-width:     gs-span(2); // Grows to 3 columns on wide viewports
+$a-leftCol-trigger:   gs-span(13) + $gs-gutter*2; // 1060px
+$a-leftColWide-width: gs-span(3); // Grows to 3 columns on wide viewports
+
+$mq-breakpoints: (
+    mobile:  gs-span(4)  + $gs-gutter,   // 320px
+    tablet:  gs-span(9)  + $gs-gutter*2, // 740px
+    desktop: gs-span(12) + $gs-gutter*2, // 980px
+    wide:    gs-span(16) + $gs-gutter*2, // 1300px
+
+    // Tweakpoints
+    mobileLandscape: gs-span(6) + $gs-gutter, // 480px
+    desktopAd: 810px,
+
+    // Article layout
+    rightCol: $a-rightCol-trigger,
+    leftCol: $a-leftCol-trigger
+);
+
+
+// Fonts
+// =============================================================================
+
+$sans-serif: "AgateSans", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 $serif: "EgyptianText", georgia, serif;
 $serifheadline: "EgyptianHeadline", georgia, serif;
 
-/* Colours
- ========================================================================== */
-/**
- * @todo: Blues need comments to associate with brand/logo colours
- **/
-$blue: #214583;
-$darkBlue: #152E5F;
-$lightBlue: #95B2CB;
-$linkBlue: #005689;
-$mushroom: #F4F4EE;
-$darkMushroom: #E3E3DB;
+// Font scale
+// Usage:
+// font-size (px) line-height (px) // level
+$fs-headers: (
+    16 20, // 1
+    18 24, // 2
+    20 28, // 3
+    22 28, // 4
+    24 28  // 5
+);
 
-/* Zones
- ========================================================================== */
+$fs-headlines: (
+    16 20, // 1
+    20 24, // 2
+    24 28, // 3
+    28 32, // 4
+    32 36, // 5
+    36 40, // 6
+    40 44, // 7
+    44 48, // 8
+    48 52, // 9
+    18 22  // 10
+);
 
-/** (be sure to update the styleguide when changing these)
- * note: try to at least alphabetise these within sections
- **/
+$fs-bodyHeadings: (
+    14 22, // 1
+    16 24, // 2
+    18 28, // 3
+    20 28  // 4
+);
+
+$fs-bodyCopy: (
+    14 20, // 1
+    14 22, // 2
+    16 24, // 3
+    18 28  // 4
+);
+
+$fs-data: (
+    11 14, // 1
+    12 14, // 2
+    13 16, // 3
+    14 18, // 4
+    16 20, // 5
+    18 22  // 6
+);
+
+// Colours
+// =============================================================================
+
+// @todo: Blues need comments to associate with brand/logo colours
+
+$c-brandBlue: #214583;
+
+$c-neutral1: #333333;
+$c-neutral2: #767676;
+$c-neutral3: #bdbdbd;
+$c-neutral4: #dcdcdc;
+$c-neutral5: #e3e3db;
+$c-neutral6: #edede7;
+$c-neutral7: #f4f4ee;
+
+
+// Tones
+// =============================================================================
+
+$c-newsDefault: #005689;
+$c-newsAccent: #4BC6DF;
+
+$c-featureDefault: #951C55;
+$c-featureAccent: #F66980;
+
+$c-commentDefault: #E6711B;
+$c-commentAccent: #FFBB00;
+
+
+// Zones
+// =============================================================================
+
+// Note: try to at least alphabetise these within sections
+
 $articleOrange: #e47a39; //Used for live-blogging
 $businessBlue: #004179;
 $commentBlue: #004179;
@@ -55,12 +155,16 @@ $environmentGreen: #4A7801;
 $lifeandstyleOrange: #EA721E;
 $moneyPurple: #7D0068;
 $newsRed: #D61D00;
-$sportBright: #20A111;
-$sportDark: #005D1D;
-$sportMid: #057227;
+
 $travelBlue: #066EC9;
 
-/* Football
- ========================================================================== */
-$homeColour: $sportBright;
-$awayColour: #19646E;
+
+// Football
+// =============================================================================
+
+$c-sportBright: #70d2e6;
+$c-sportMid: #005689;
+$c-sportDark: #003f64;
+
+$c-sportHome: $c-sportBright;
+$c-sportAway: $c-sportDark;

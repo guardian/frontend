@@ -1,0 +1,11 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+
+#######################################################
+# There is no end, there are no endpoints.
+#######################################################
+
+# But you might want to start the app in DEV.
+GET /                                    controllers.IndexController.index()

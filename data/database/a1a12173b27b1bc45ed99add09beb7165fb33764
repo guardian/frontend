@@ -1,0 +1,1563 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"world/2013/oct/27/afghan-soldier-killed-nato-troops-kabul",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-27T12:31:37Z",
+      "webTitle":"Afghan soldier killed after opening fire on Nato troops",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/27/afghan-soldier-killed-nato-troops-kabul",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/27/afghan-soldier-killed-nato-troops-kabul",
+      "fields":{
+        "newspaperPageNumber":"9",
+        "trailText":"Afghan fired three rounds before being shot dead by Australian soldiers after row with foreign trainer from Kabul's Sandhurst-style training complex",
+        "headline":"Afghan soldier killed after opening fire on Nato troops",
+        "body":"<p><strong> </strong></p><p>An Afghan soldier has been killed after opening fire on a foreign trainer from Afghanistan's Sandhurst-inspired officer academy, meant as Britain's main legacy, just days after its first recruits enrolled for class.</p><p>The Afghan was shot after having an argument with a trainer from New Zealand and two Australian soldiers, all three of whom were also injured in the skirmish.</p><p>The shooting casts a shadow over the start of the first term at the academy, which has been described as a Sandhurst-inspired complex. An initial class of 230 recruits began training last week, with journalists invited to see them put through their paces and tour the tents serving as temporary classrooms while work finishes on the permanent buildings.</p><p>Eventually it could train up to 1,500 men and women a year, with 120 UK mentors supported by instructors from Australia, New Zealand, Norway and Denmark. The brief gunfight broke out after the trainer had visited a nearby building at the Afghan National Defence University site in the mountainous western outskirts of Kabul. The UK-funded National Army Officers' Academy nestles by five other colleges including a foreign languages centre and a sergeants' training academy.</p><p>Following an argument, the Afghan soldier fired three rounds before being shot dead by the Australian soldiers who had been assigned to guard the trainer.</p><p>\"The armed Afghan soldier had an argument with the [foreign] soldiers and after some minutes the misunderstanding escalated and he opened fire. The Afghan soldier was killed,\" said Daulat Waziri, the deputy spokesman for Afghanistan's ministry of defence. \"It wasn't inside the [officer training] academy. It was inside one of the Afghan National Army military quarters nearby.\"</p><p>The injuries to the Australians and New Zealander were apparently caused by shrapnel when a bullet fired at short-range at one of them disintegrated, a commander said.</p><p>\"Only one bullet that we're aware of hit, the second Australian returned fire and critically injured and possibly killed the Afghani,\" said Lieutenant General Rhys Jones, chief of the New Zealand Defence Force, who identified his injured soldier as an instructor from the officer academy.</p><p>\"Some of the shrapnel went into the arm of the Australian soldier that was hit, another part went into the foot [of the New Zealand soldier],\" he told<a href=\"http://au.news.yahoo.com/a/19563740/australian-nz-soldiers-wounded-in-afghan-insider-shooting\" title=\"\"> a news conference</a>.</p><p>A spokesman for the Taliban said they had not played any role in the shooting, even though the insurgent group has been quick to claim responsibility for other attacks and has urged Afghan soldiers and police to turn on their foreign mentors.</p><p>A steady stream of insider attacks on both foreign and Afghan troops, by both insurgent sympathisers and angry loners, has undermined morale and raised questions about plans for a long-term training programme in the country.</p><p>A series of Nato measures to protect its troops has cut the toll this year from a peak in 2012, when gunmen from police or army ranks accounted for around 15% of all foreign military deaths. The precautions include having armed \"guardian angels\", such as the Australians who ended Saturday's attack, watch over all meetings with Afghan counterparts.</p><!-- Guardian Watermark: internal-code/content/421057904|2013-11-05T11:03:48Z|d50a3ee85c2e9ed608012710635185440f4183eb -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-28T00:06:46Z",
+        "hasStoryPackage":"true",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382876928347/Afghan-recruits-006.jpg",
+        "standfirst":"Afghan fired three rounds before being shot dead by Australian soldiers after row with foreign trainer from Kabul's Sandhurst-style training complex",
+        "shortUrl":"http://gu.com/p/3jq7g",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382876928347/Afghan-recruits-006.jpg",
+        "wordcount":"501",
+        "commentable":"false",
+        "internalContentCode":"421057904",
+        "allowUgc":"false",
+        "internalOctopusCode":"8247167",
+        "isPremoderated":"false",
+        "byline":"Emma Graham-Harrison in Kabul",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-28",
+        "internalPageCode":"1987459",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-30T12:31:37Z"
+      },
+      "tags":[{
+        "id":"world/afghanistan",
+        "type":"keyword",
+        "webTitle":"Afghanistan",
+        "webUrl":"http://www.theguardian.com/world/afghanistan",
+        "apiUrl":"http://content.guardianapis.com/world/afghanistan",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/nato",
+        "type":"keyword",
+        "webTitle":"Nato",
+        "webUrl":"http://www.theguardian.com/world/nato",
+        "apiUrl":"http://content.guardianapis.com/world/nato",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.theguardian.com/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"uk/emma-harrison",
+        "type":"keyword",
+        "webTitle":"Emma Harrison",
+        "webUrl":"http://www.theguardian.com/uk/emma-harrison",
+        "apiUrl":"http://content.guardianapis.com/uk/emma-harrison",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421059368",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382876921244/Afghan-recruits-001.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Massoud Hossaini",
+            "altText":"Afghan recruits",
+            "height":"54",
+            "credit":"Massoud Hossaini/AFP/Getty Images",
+            "caption":"Afghan recruits gather at the National Army Officers' Academy in Kabul: eventually it could train up to 1,500 men and women a year. Photograph: Massoud Hossaini/AFP/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382876922968/Afghan-recruits-002.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Massoud Hossaini",
+            "altText":"Afghan recruits",
+            "height":"340",
+            "credit":"Massoud Hossaini/AFP/Getty Images",
+            "caption":"Afghan recruits gather at the National Army Officers' Academy in Kabul: eventually it could train up to 1,500 men and women a year. Photograph: Massoud Hossaini/AFP/Getty Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382876924052/Afghan-recruits-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Massoud Hossaini",
+            "altText":"Afghan recruits",
+            "height":"130",
+            "credit":"Massoud Hossaini/AFP/Getty Images",
+            "caption":"Afghan recruits gather at the National Army Officers' Academy in Kabul: eventually it could train up to 1,500 men and women a year. Photograph: Massoud Hossaini/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382876925200/Afghan-recruits-004.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Massoud Hossaini",
+            "altText":"Afghan recruits",
+            "height":"720",
+            "credit":"Massoud Hossaini/AFP/Getty Images",
+            "caption":"Afghan recruits gather at the National Army Officers' Academy in Kabul: eventually it could train up to 1,500 men and women a year. Photograph: Massoud Hossaini/AFP/Getty Images",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382876926703/Afghan-recruits-005.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Massoud Hossaini",
+            "altText":"Afghan recruits",
+            "height":"1536",
+            "credit":"Massoud Hossaini/AFP/Getty Images",
+            "caption":"Afghan recruits gather at the National Army Officers' Academy in Kabul: eventually it could train up to 1,500 men and women a year. Photograph: Massoud Hossaini/AFP/Getty Images",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382876928347/Afghan-recruits-006.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Massoud Hossaini",
+            "altText":"Afghan recruits",
+            "height":"84",
+            "credit":"Massoud Hossaini/AFP/Getty Images",
+            "caption":"Afghan recruits gather at the National Army Officers' Academy in Kabul: eventually it could train up to 1,500 men and women a year. Photograph: Massoud Hossaini/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382876929354/Afghan-recruits-007.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Massoud Hossaini",
+            "altText":"Afghan recruits",
+            "height":"132",
+            "credit":"Massoud Hossaini/AFP/Getty Images",
+            "caption":"Afghan recruits gather at the National Army Officers' Academy in Kabul: eventually it could train up to 1,500 men and women a year. Photograph: Massoud Hossaini/AFP/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382876930359/Afghan-recruits-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Massoud Hossaini",
+            "altText":"Afghan recruits",
+            "height":"168",
+            "credit":"Massoud Hossaini/AFP/Getty Images",
+            "caption":"Afghan recruits gather at the National Army Officers' Academy in Kabul: eventually it could train up to 1,500 men and women a year. Photograph: Massoud Hossaini/AFP/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382876931434/Afghan-recruits-009.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Massoud Hossaini",
+            "altText":"Afghan recruits",
+            "height":"180",
+            "credit":"Massoud Hossaini/AFP/Getty Images",
+            "caption":"Afghan recruits gather at the National Army Officers' Academy in Kabul: eventually it could train up to 1,500 men and women a year. Photograph: Massoud Hossaini/AFP/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382876932554/Afghan-recruits-010.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Massoud Hossaini",
+            "altText":"Afghan recruits",
+            "height":"228",
+            "credit":"Massoud Hossaini/AFP/Getty Images",
+            "caption":"Afghan recruits gather at the National Army Officers' Academy in Kabul: eventually it could train up to 1,500 men and women a year. Photograph: Massoud Hossaini/AFP/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382876933598/Afghan-recruits-011.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Massoud Hossaini",
+            "altText":"Afghan recruits",
+            "height":"276",
+            "credit":"Massoud Hossaini/AFP/Getty Images",
+            "caption":"Afghan recruits gather at the National Army Officers' Academy in Kabul: eventually it could train up to 1,500 men and women a year. Photograph: Massoud Hossaini/AFP/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382876934657/Afghan-recruits-012.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Massoud Hossaini",
+            "altText":"Afghan recruits",
+            "height":"372",
+            "credit":"Massoud Hossaini/AFP/Getty Images",
+            "caption":"Afghan recruits gather at the National Army Officers' Academy in Kabul: eventually it could train up to 1,500 men and women a year. Photograph: Massoud Hossaini/AFP/Getty Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382876936437/Afghan-recruits-013.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Massoud Hossaini",
+            "altText":"Afghan recruits",
+            "height":"1116",
+            "credit":"Massoud Hossaini/AFP/Getty Images",
+            "caption":"Afghan recruits gather at the National Army Officers' Academy in Kabul: eventually it could train up to 1,500 men and women a year. Photograph: Massoud Hossaini/AFP/Getty Images",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382876938372/Afghan-recruits-014.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Massoud Hossaini",
+            "altText":"Afghan recruits",
+            "height":"1536",
+            "credit":"Massoud Hossaini/AFP/Getty Images",
+            "caption":"Afghan recruits gather at the National Army Officers' Academy in Kabul: eventually it could train up to 1,500 men and women a year. Photograph: Massoud Hossaini/AFP/Getty Images",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382876933598/Afghan-recruits-011.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Massoud Hossaini",
+            "altText":"Afghan recruits",
+            "height":"276",
+            "credit":"Massoud Hossaini/AFP/Getty Images",
+            "caption":"Afghan recruits at the National Army Officers' Academy eventually it could train up to 1,500 men and women a year. Photograph: Massoud Hossaini/AFP/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421059369",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382876928347/Afghan-recruits-006.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Massoud Hossaini",
+            "altText":"Afghan recruits",
+            "height":"84",
+            "credit":"Massoud Hossaini/AFP/Getty Images",
+            "caption":"Afghan recruits gather at the National Army Officers' Academy in Kabul: eventually it could train up to 1,500 men and women a year. Photograph: Massoud Hossaini/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"uk-news/2013/oct/25/royal-marines-court-martial-video-transcript",
+      "sectionId":"uk-news",
+      "sectionName":"UK news",
+      "webPublicationDate":"2013-10-25T17:55:01Z",
+      "webTitle":"Royal Marines court martial: video transcripts",
+      "webUrl":"http://www.theguardian.com/uk-news/2013/oct/25/royal-marines-court-martial-video-transcript",
+      "apiUrl":"http://content.guardianapis.com/uk-news/2013/oct/25/royal-marines-court-martial-video-transcript",
+      "fields":{
+        "trailText":"The full transcript of two video clips recording the moment a wounded Afghan insurgent was allegedly executed by three Royal Marines",
+        "headline":"Royal Marines court martial: video transcripts",
+        "body":"<p>A transcript of two video clips that record the alleged \"execution\" of a wounded detainee in Afghanistan by three British marines has been released.</p><p>The Royal Marines are accused of roughly dragging the unidentified prisoner to the edge of the field after he has been hit by cannon fire from an Apache attack helicopter.</p><p>They allegedly waited until the helicopter had left the area before the commander of the patrol, identified only as Marine A, is said to have shot the man in the chest.</p><p>The incident was recorded with a head-camera worn by another of the soldiers, Marine B. The third soldier, Marine C, can allegedly be heard asking if he can shoot the captive in the head. All three deny murder.</p><p>Their <a href=\"http://www.theguardian.com/uk-news/2013/oct/25/royal-marine-court-martial-murder-afghan-detainee\" title=\"\">court martial at Bulford military court centre</a> continues.</p><p>The video clips have not been released. The transcript can be hard to follow at times but gives an insight into the incident, which happened in September 2011.</p><p>The marines are referred to in the transcript as Marine A, Marine B, Marine C, Marine D (who is not accused of murder) and simply M, where the speaker is unidentified. The prosecution employed a forensic speech analysis to attempt to establish which voice belongs to which marine.</p><p>In all, six clips were taken from the head-cam with clips 4 and 5 - which last a total of just over six minutes – allegedly capturing the \"key moments\" .</p><h2>Key: <br /></h2><p>Square brackets [] are the speech analyst's marks.</p><p>Round brackets () signify that the analyst has a lower confidence in the words recorded.</p><p>Three dots … denote unintelligible speech.</p><p>?Marine B – question mark denotes lower confidence in attribution.</p><p>Sometimes alternative possibilities are given (Yes/no)</p><p>The { } brackets indicate that this is the Guardian's explanation of what is allegedly happening.</p><p></p><h2>Clip 4 <br /></h2><p>The transcript of clip 4 begins with unintelligible speech and coughing before a man said to be Marine B begins to talk. The figures record the elapsed time from the beginning of the recording. At the start of the clip the prisoner is being dragged across a field. His shirt and trousers are blood-stained. Towards the end of the clip he is thrown to the ground. The Apache helicopter that legitimately opened fire on the man, wounding him, is still in the area.</p><p>00:00:03 ?Marine B: Rear man, take east.</p><p>M: ...</p><p>Marine B: Come out towards you.</p><p>M: ...</p><p>00:00:09 M: ...</p><p>M : ... fucking ...</p><p>M: ...</p><p>00:00:11 Marine A ... get his arse over there.</p><p>M: [coughs]</p><p>Marine B: Fucking cunt.</p><p>00:00:18 M: Fucking bastard.</p><p>M: [coughs]</p><p>00:00:19 M: Why couldn't (you/he) just be fucking dead?</p><p>M: Good effort lads</p><p>00:00:24 M: Swap (hands)</p><p>Marine B: Yeah, I took</p><p>M: ...</p><p>00:00:29 Marine D: You're fucking browners, fella {brown bread: dead}</p><p>[Grunting from soldiers]</p><p>Marine B: Don't give a fuck about you, son</p><p>00:00:37 M: ...</p><p>[Vocalisations probably from insurgent]</p><p>00:00:40 M: Does anyone recognise him?</p><p>M: Stop fucking whinging</p><p>M: ...</p><p>00:00:43 M: ... going ... way</p><p>M: Yeah</p><p>Marine B: Fucking prick</p><p>00:00:45 Marine A: Right, get him closer in so PGSS {British observation balloon} can't see what we're doing to him.</p><p>M: (Place/push) him in there, come on.</p><p>Marine A: Get him right in.</p><p>M: Come on.</p><p>00:00:51 Marine A: Over by that corn.</p><p>M: That'll do.</p><p>Marine A: Right in that – that clear space.</p><p>00:00:57 M: Get him right over here.</p><p>00:01:05 M: ...</p><p>M: (Take him out there and ...)</p><p>00:01:07 M: That'll do, that'll do, that'll do</p><p>M: Mm.</p><p>M: Out here [Radio]</p><p>00:01:12 ?Marine D: Do you want him back in?</p><p>Marine A: Yeah, I want – I want him in this area here so I can see what the fuck (we're/I'm) doing</p><p>00:01:18 M: Er-</p><p>M: ... just arrived in there</p><p>00:01:32 Marine A: Anybody want to do first aid on this idiot?</p><p>M: No.</p><p>00:01:34 Marine B: No.</p><p>M: ...</p><p>00:01:36 Marine C: I'll put one in his head, if you want</p><p>M: ...</p><p>00:01:41 M: ...</p><p>M: [Laughs]</p><p>M: [Laughs]</p><p>00:01:43 Marine C: Take your pick.</p><p>M: [Laughs]</p><p>M: ...</p><p>M: Yeah M: ...</p><p>00:01:50 Marine A: No, not in his head, 'cause that'll be fucking obvious</p><p>M: Just move him round here</p><p>M: ...</p><p>00:01:54 M: Move him round</p><p>Marine A: ...</p><p>Marine B: Going to switch this fucker off</p><p>M: ...</p><p>Marine A: I don't know where that AH {Apache helicopter} is mate</p><p>00:01:58 – end of recording.</p><p></p><h2>Clip 5 <br /></h2><p>The captive is lying face down at the start of the clip. The marines allegedly pretended to apply a field dressing while the Apache helicopter hovered nearby. The captive is turned on to his back. It is alleged that after the helicopter has gone, Marine A murdered the man by shooting him in the chest with a 9mm pistol.</p><p>M: Yeah.</p><p>Marine A: Yeah he's got a sucking chest wound, mate</p><p>M: Fucking hell</p><p>M: ...</p><p>00:00:03 Marine B: We'll patch him with an FFD, {field dressing}</p><p>Marine A: Yeah, send, over [speaking on radio]</p><p>00:00:05 Marine B: That'll do, won't it.</p><p>M: ...</p><p>M: ...</p><p>00:00:12 Marine B: Keep your eyes on my weapon, mate.</p><p>00:00:21 M: Where's that (Where's that Ugly) now? {Ugly is the helicopter}</p><p>Marine A: He – he's over there and he can fucking see us. Ah.</p><p>00:00:26 M: Yeah check the- check the ...</p><p>M: Yeah M: Yeah 00:00:36</p><p>Marine C: I think Murph's trying to get hold of us on the er- {Murph is a fellow marine back at base}</p><p>M: (Okay)</p><p>Marine A: Yeah, Murph, this is [name of Marine A], send, over. [Speaking on radio]</p><p>00:00:41 Marine B: Better send up a nine liner, I suppose {report that a medical evacuation is needed}</p><p>[Radio]</p><p>00:00:50 Marine A: Yeah, er, we're just waiting for [name of comrade] to er get ... He may well be dead. [Speaking on radio]</p><p>Marine C: He'll be on – be behind them trees in a minute.</p><p>00:01:02 Marine B: For fuck's sake, I cannot believe I'm doing this</p><p>Marine C: Don't – just – don't – yeah, wait a minute, just pretend to do it until he's behind them trees</p><p>00:01:08 M: ... just strangle him.</p><p>Marine A: Yeah 00:01:11 [Laughs]</p><p>Marine B: Yeah, that might ...</p><p>M: Yeah 00:01:13 Marine A: Yeah, he's past. Fuck it, he's past.</p><p>M: Yeah Marine C: He's dead</p><p>00:01:19 Marine A: Hello, one zero, one four, hotel. [Speaking on radio]</p><p>M: ...</p><p>00:01:25 Marine B: Fucking cunt shooting at Taalander, you twat {Taalander is a British command post}</p><p>00:01:28 M: (Just making...)</p><p>00:01:30 Marine A: (Hello) one zero, one four, hotel [Speaking on radio]</p><p>Marine C: ...</p><p>00:01:36 Marine B: (Hang on a sec) say</p><p>M: ...</p><p>00:01:37 Marine A: I hate to say it, administering first aid to this er- individual, he's er- [Speaking on radio]</p><p>Marine B: Wait</p><p>00:01:41 Marine A: Passed on from this er world, over. [Speaking on radio]</p><p>00:01:50 Marine A: one zero, one four, hotel, I will er- [Speaking on radio]</p><p>M: Mm</p><p>00:01:53 Marine A: Okay, er- [Speaking on radio]</p><p>M: Mm, mm</p><p>Marine A: Do my best to er biometrically enrol him erm and then er gather a DNA samples er [Speaking on radio] {DNA samples and fingerprints are routinely taken from suspected insurgents}</p><p>M: ...</p><p>00:01:58 Marine A: To bag up the evidence, the weapon and the er grenade, over [Speaking on radio]</p><p>M: ...</p><p>00:02:03 Marine B: There was a grenade there, as well, was there</p><p>Marine C: Yeah in his pocket</p><p>Marine B: Fucking twat</p><p>M: Yeah, cunt.</p><p>00:02:08 Marine B: That's probably re- ready to go on you boys.</p><p>M: Mm 00:02:13 M: (Get your) shot fucking...</p><p>M: Fucking...</p><p>00:02:18 M: Fucking hell</p><p>Marine A: ... [Speaking on radio]</p><p>00:02:19 Marine C: Yeah, maybe we should pump one in his heart</p><p>Marine A: ...er b-both of my call signs all round [Speaking on radio]</p><p>Marine C: Can't...</p><p>00:02:22 Marine B: Just hold that on him, [name of comrade], just a few secs</p><p>Marine A: ... er er while we er, like I say, we'll try to biometrically enrol this guy as best as we can and we'll gather what er intelligence we can before moving back. [Speaking on radio]</p><p>M: [Clears throat]</p><p>00:02:35 Marine B: Right we'll roll him over again 00:02:36</p><p>Marine A: Er he's dead. Don't waste your fucking FFDs on the cheeser. Take it off him. Right, get the- get the HIIDE camera out, see if you can a picture of him, minus all the- the thing. [name of comrade], push up the corn there will, you? {The HIIDE camera takes images of fingerprints, irises and other details}</p><p>00:02:46 Marine B: Can you just (grab/get) the HIIDE camera out (my back for me, mate). HIIDE camera's in my (sack).</p><p>M: Yeah M: Top?</p><p>00:02:51 Marine B: Yeah, it's in the main compartment, mate.</p><p>Marine A: (Just) down there mate. Stay there (covering/cover) him, fucking -</p><p>M: ...</p><p>00:02:56 Marine A: Er [name of comrade] [Speaking on radio]</p><p>M: Did you get him?</p><p>Marine B: Eh?</p><p>00:03:01 M: ... you get him?</p><p>M: ... [Speaking on radio]</p><p>Marine B: In the head? Yeah that's fine.</p><p>00:03:03 Marine A: ... back pack, get er er a DNA kit for this guy. [Speaking on radio]</p><p>00:03:10 M: Yeah, got that,</p><p>00:03:16 Marine A: Where is the CAT, Ugly call sign? {referring to the helicopter again}</p><p>Marine B: It's gone that way.</p><p>?Marine A: Yeah Marine B: Went South, mate.</p><p>00:03:20 [GUNSHOT] {This is the moment when A allegedly shoots the prisoner}</p><p>M: (What was that?) [Distant voice]</p><p>M: (Don't know) [Distant voice]</p><p>00:03:28 M: ...</p><p>00:03:33 M: ...</p><p>00:03:35 Marine A: There you are, shuffle off this mortal coil you cunt.</p><p>M: ...</p><p>00:03:47 Marine A: It's nothing you wouldn't do to us</p><p>Marine B: I know</p><p>M: Exactly.</p><p>M: All right.</p><p>00:03:50 Marine A: Obviously, this doesn't go anywhere, fellas.</p><p>Marine B: Yeah, roger, mate.</p><p>Marine A: I've just broke the Geneva Convention</p><p>00:03:54 Marine B: Yeah, roge.</p><p>M: ...</p><p>00:04:01 Marine A: Biometric data module, right. Er try and brush some of that shit off his face.</p><p>00:04:05 Marine B: If anything- if anything gets heard, mate, it's as a warning shot went down.</p><p>M: ...</p><p>00:04:08 Marine A: Yeah [name of comrade] he's er fully dead now [Speaking on radio]</p><p>M: (Yeah, roger) ... [Response from radio]</p><p>00:04:14 Marine B: [Laughs]</p><p>Marine A: Yeah, just getting a ... mate. [Speaking on radio]</p><p>00:04:17 – end of recording</p><!-- Guardian Watermark: internal-code/content/420956475|2013-11-05T11:03:48Z|13e5ba808a59e9f7b357804db995a2f04aa21389 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-25T17:55:01Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/10/25/1382709649980/British-troops-in-Afghani-003.jpg",
+        "standfirst":"The full transcript of two video clips recording the moment a wounded Afghan insurgent was allegedly executed by three Royal Marines",
+        "shortUrl":"http://gu.com/p/3jpff",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/25/1382709649980/British-troops-in-Afghani-003.jpg",
+        "wordcount":"1577",
+        "commentable":"false",
+        "internalContentCode":"420956475",
+        "allowUgc":"false",
+        "internalOctopusCode":"8241880",
+        "isPremoderated":"false",
+        "byline":"Steven Morris",
+        "publication":"theguardian.com",
+        "internalPageCode":"1986945",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-28T18:55:01Z"
+      },
+      "tags":[{
+        "id":"uk/military",
+        "type":"keyword",
+        "webTitle":"Military",
+        "webUrl":"http://www.theguardian.com/uk/military",
+        "apiUrl":"http://content.guardianapis.com/uk/military",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"world/afghanistan",
+        "type":"keyword",
+        "webTitle":"Afghanistan",
+        "webUrl":"http://www.theguardian.com/world/afghanistan",
+        "apiUrl":"http://content.guardianapis.com/world/afghanistan",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"law/law",
+        "type":"keyword",
+        "webTitle":"Law",
+        "webUrl":"http://www.theguardian.com/law/law",
+        "apiUrl":"http://content.guardianapis.com/law/law",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"profile/stevenmorris",
+        "type":"contributor",
+        "webTitle":"Steven Morris",
+        "webUrl":"http://www.theguardian.com/profile/stevenmorris",
+        "apiUrl":"http://content.guardianapis.com/profile/stevenmorris",
+        "bio":"<p>Steven Morris is a reporter for the <a href=\"http://www.guardian.co.uk/\">Guardian</a></p>",
+        "rcsId":"GNL004769",
+        "r2ContributorId":"16487",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/steven_morris_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420957753",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/25/1382709645914/British-troops-in-Afghani-001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ben Birchall",
+            "altText":"British troops in Afghanistan",
+            "height":"54",
+            "credit":"Ben Birchall/PA",
+            "caption":"British soldiers in Helmand province, Afghanistan Photograph: Ben Birchall/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/25/1382709648313/British-troops-in-Afghani-002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ben Birchall",
+            "altText":"British troops in Afghanistan",
+            "height":"130",
+            "credit":"Ben Birchall/PA",
+            "caption":"British soldiers in Helmand province, Afghanistan Photograph: Ben Birchall/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/25/1382709649980/British-troops-in-Afghani-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ben Birchall",
+            "altText":"British troops in Afghanistan",
+            "height":"84",
+            "credit":"Ben Birchall/PA",
+            "caption":"British soldiers in Helmand province, Afghanistan Photograph: Ben Birchall/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/25/1382709651736/British-troops-in-Afghani-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ben Birchall",
+            "altText":"British troops in Afghanistan",
+            "height":"132",
+            "credit":"Ben Birchall/PA",
+            "caption":"British soldiers in Helmand province, Afghanistan Photograph: Ben Birchall/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/25/1382709653499/British-troops-in-Afghani-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ben Birchall",
+            "altText":"British troops in Afghanistan",
+            "height":"168",
+            "credit":"Ben Birchall/PA",
+            "caption":"British soldiers in Helmand province, Afghanistan Photograph: Ben Birchall/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/25/1382709655383/British-troops-in-Afghani-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ben Birchall",
+            "altText":"British troops in Afghanistan",
+            "height":"180",
+            "credit":"Ben Birchall/PA",
+            "caption":"British soldiers in Helmand province, Afghanistan Photograph: Ben Birchall/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/25/1382709657140/British-troops-in-Afghani-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ben Birchall",
+            "altText":"British troops in Afghanistan",
+            "height":"228",
+            "credit":"Ben Birchall/PA",
+            "caption":"British soldiers in Helmand province, Afghanistan Photograph: Ben Birchall/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/25/1382709658984/British-troops-in-Afghani-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ben Birchall",
+            "altText":"British troops in Afghanistan",
+            "height":"276",
+            "credit":"Ben Birchall/PA",
+            "caption":"British soldiers in Helmand province, Afghanistan Photograph: Ben Birchall/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/25/1382709658984/British-troops-in-Afghani-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ben Birchall",
+            "altText":"British troops in Afghanistan",
+            "height":"276",
+            "credit":"Ben Birchall/PA",
+            "caption":"British soldiers in Helmand province, Afghanistan Photograph: Ben Birchall/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420957754",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/25/1382709649980/British-troops-in-Afghani-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ben Birchall",
+            "altText":"British troops in Afghanistan",
+            "height":"84",
+            "credit":"Ben Birchall/PA",
+            "caption":"British soldiers in Helmand province, Afghanistan Photograph: Ben Birchall/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"uk-news/2013/oct/25/royal-marine-court-martial-murder-afghan-detainee",
+      "sectionId":"uk-news",
+      "sectionName":"UK news",
+      "webPublicationDate":"2013-10-25T17:54:20Z",
+      "webTitle":"Royal Marine faces court martial for murder of Afghan detainee",
+      "webUrl":"http://www.theguardian.com/uk-news/2013/oct/25/royal-marine-court-martial-murder-afghan-detainee",
+      "apiUrl":"http://content.guardianapis.com/uk-news/2013/oct/25/royal-marine-court-martial-murder-afghan-detainee",
+      "fields":{
+        "newspaperPageNumber":"28",
+        "trailText":"Sergeant denies killing insurgent, with encouragement from colleagues, saying man had already died when he shot him",
+        "headline":"Royal Marine faces court martial for murder of Afghan detainee",
+        "body":"<p>An experienced Royal Marine sergeant accused of murdering a wounded detainee in Afghanistan has told investigators he and his troops were under immense pressure and had suffered devastating losses at the time of the incident.</p><p>The man, who can only be identified as Marine A, said he had lost two close colleagues and others had been badly injured. He said the encounter with the man was one of the few occasions they had come \"face to face\" at close quarters with an insurgent.</p><p>Marine A also pointed out that the man was found with grenades on him two days after their base had been subjected to a sustained grenade attack. \"Tensions were high,\" he said.</p><p>However the marine insisted that neither he nor other troops had killed the man, rather he had died of injuries sustained in an earlier helicopter air strike. \"There was a little bit of banter about topping him but that didn't happen. All joking aside, no one killed him. I don't want that on my conscience. He died of his injuries.\"</p><p>Marine A and two colleagues, B and C, are accused of carrying out the cold-blooded \"execution\" of the man. A court martial in Wiltshire has been told that A shot the man in the chest with a pistol and was helped and encouraged by B and C. All three deny murder, which allegedly took place in September 2011.</p><p>The investigation began a year later after a videoclip was found showing part of the incident recorded on a head-camera worn by Marine B. It showed marines roughly dragging the man across a field. <a href=\"http://www.theguardian.com/uk-news/2013/oct/25/royal-marines-court-martial-video-transcript\" title=\"\">A can be heard</a> asking: \"Anybody want to do first aid on this idiot\". Another marine, allegedly C, says: \"I'll put one in his head, if you want.\" Marine A allegedly replies: \"Not in his head, cause that'll be fucking obvious.\" The clip did not show the moment when the man was actually shot.</p><p>A was arrested in September 2012 and questioned by the navy's special investigations branch on suspicion of committing a war crime contrary to the Geneva conventions.</p><p>Marine A said he accepted that if the video was seen in public it would damage the reputation of British troops and probably put service personnel in more danger. He conceded the man had not been treated in a \"particularly friendly manner\". But he said he would not let anyone \"start popping people in the head\" and insisted he had given the man first aid shortly after the camera stopped recording.</p><p>Soon afterwards, the section of film showing the shooting was found. A is allegedly seen shooting the man in the chest before telling him: \"There you are, shuffle off this mortal coil, you cunt. It's nothing you wouldn't do to us.\" He tells his colleagues: \"Obviously this doesn't go anywhere fellas … I've just broken the Geneva convention.\"</p><p>A changed his story, the court has heard, accepting in a second interview that he had fired at the man – but claiming the detainee was already dead by then. He said he had shot a \"corpse\" in anger.</p><p>On Monday the court martial will hear legal argument for a media request to release the videos clips with the soldiers' faces obscured..</p><!-- Guardian Watermark: internal-code/content/420978983|2013-11-05T11:03:48Z|c2510f895a760bf5eb986e5335ab535975a8819e -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-25T23:10:31Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/25/1382723421218/A-man-at-a-detention-faci-004.jpg",
+        "standfirst":"Sergeant denies killing insurgent, with encouragement from colleagues, saying man had already died when he shot him",
+        "shortUrl":"http://gu.com/p/3jpz9",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/25/1382723421218/A-man-at-a-detention-faci-004.jpg",
+        "wordcount":"528",
+        "commentable":"false",
+        "internalContentCode":"420978983",
+        "allowUgc":"false",
+        "internalOctopusCode":"8243289",
+        "isPremoderated":"false",
+        "byline":"Steven Morris",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-26",
+        "internalPageCode":"1987182",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-28T18:54:20Z"
+      },
+      "tags":[{
+        "id":"uk/royal-navy",
+        "type":"keyword",
+        "webTitle":"Royal Navy",
+        "webUrl":"http://www.theguardian.com/uk/royal-navy",
+        "apiUrl":"http://content.guardianapis.com/uk/royal-navy",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/military",
+        "type":"keyword",
+        "webTitle":"Military",
+        "webUrl":"http://www.theguardian.com/uk/military",
+        "apiUrl":"http://content.guardianapis.com/uk/military",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"profile/stevenmorris",
+        "type":"contributor",
+        "webTitle":"Steven Morris",
+        "webUrl":"http://www.theguardian.com/profile/stevenmorris",
+        "apiUrl":"http://content.guardianapis.com/profile/stevenmorris",
+        "bio":"<p>Steven Morris is a reporter for the <a href=\"http://www.guardian.co.uk/\">Guardian</a></p>",
+        "rcsId":"GNL004769",
+        "r2ContributorId":"16487",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/steven_morris_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"world/afghanistan",
+        "type":"keyword",
+        "webTitle":"Afghanistan",
+        "webUrl":"http://www.theguardian.com/world/afghanistan",
+        "apiUrl":"http://content.guardianapis.com/world/afghanistan",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420979946",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/25/1382723416447/A-man-at-a-detention-faci-001.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Dar Yasin",
+            "altText":"A man at a detention facility in Afghanistan",
+            "height":"54",
+            "credit":"Dar Yasin/AP",
+            "caption":"A man at a detention facility in Afghanistan. Three Royal Marines have been charged with 'executing' a detained insurgent in September 2011. Photograph: Dar Yasin/AP",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/25/1382723418303/A-man-at-a-detention-faci-002.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Dar Yasin",
+            "altText":"A man at a detention facility in Afghanistan",
+            "height":"340",
+            "credit":"Dar Yasin/AP",
+            "caption":"A man at a detention facility in Afghanistan. Three Royal Marines have been charged with 'executing' a detained insurgent in September 2011. Photograph: Dar Yasin/AP",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/25/1382723419650/A-man-at-a-detention-faci-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Dar Yasin",
+            "altText":"A man at a detention facility in Afghanistan",
+            "height":"130",
+            "credit":"Dar Yasin/AP",
+            "caption":"A man at a detention facility in Afghanistan. Three Royal Marines have been charged with 'executing' a detained insurgent in September 2011. Photograph: Dar Yasin/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/25/1382723421218/A-man-at-a-detention-faci-004.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Dar Yasin",
+            "altText":"A man at a detention facility in Afghanistan",
+            "height":"84",
+            "credit":"Dar Yasin/AP",
+            "caption":"A man at a detention facility in Afghanistan. Three Royal Marines have been charged with 'executing' a detained insurgent in September 2011. Photograph: Dar Yasin/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/25/1382723422441/A-man-at-a-detention-faci-005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Dar Yasin",
+            "altText":"A man at a detention facility in Afghanistan",
+            "height":"132",
+            "credit":"Dar Yasin/AP",
+            "caption":"A man at a detention facility in Afghanistan. Three Royal Marines have been charged with 'executing' a detained insurgent in September 2011. Photograph: Dar Yasin/AP",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/25/1382723423672/A-man-at-a-detention-faci-006.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Dar Yasin",
+            "altText":"A man at a detention facility in Afghanistan",
+            "height":"168",
+            "credit":"Dar Yasin/AP",
+            "caption":"A man at a detention facility in Afghanistan. Three Royal Marines have been charged with 'executing' a detained insurgent in September 2011. Photograph: Dar Yasin/AP",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/25/1382723424910/A-man-at-a-detention-faci-007.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Dar Yasin",
+            "altText":"A man at a detention facility in Afghanistan",
+            "height":"180",
+            "credit":"Dar Yasin/AP",
+            "caption":"A man at a detention facility in Afghanistan. Three Royal Marines have been charged with 'executing' a detained insurgent in September 2011. Photograph: Dar Yasin/AP",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/25/1382723426151/A-man-at-a-detention-faci-008.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Dar Yasin",
+            "altText":"A man at a detention facility in Afghanistan",
+            "height":"228",
+            "credit":"Dar Yasin/AP",
+            "caption":"A man at a detention facility in Afghanistan. Three Royal Marines have been charged with 'executing' a detained insurgent in September 2011. Photograph: Dar Yasin/AP",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/25/1382723427408/A-man-at-a-detention-faci-009.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Dar Yasin",
+            "altText":"A man at a detention facility in Afghanistan",
+            "height":"276",
+            "credit":"Dar Yasin/AP",
+            "caption":"A man at a detention facility in Afghanistan. Three Royal Marines have been charged with 'executing' a detained insurgent in September 2011. Photograph: Dar Yasin/AP",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/25/1382723428695/A-man-at-a-detention-faci-010.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Dar Yasin",
+            "altText":"A man at a detention facility in Afghanistan",
+            "height":"372",
+            "credit":"Dar Yasin/AP",
+            "caption":"A man at a detention facility in Afghanistan. Three Royal Marines have been charged with 'executing' a detained insurgent in September 2011. Photograph: Dar Yasin/AP",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/25/1382723427408/A-man-at-a-detention-faci-009.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Dar Yasin",
+            "altText":"A man at a detention facility in Afghanistan",
+            "height":"276",
+            "credit":"Dar Yasin/AP",
+            "caption":"A man at a detention facility in Afghanistan. Three Royal Marines have been charged with 'executing' a detained insurgent in September 2011. Photograph: Dar Yasin/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420979947",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/25/1382723421218/A-man-at-a-detention-faci-004.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Dar Yasin",
+            "altText":"A man at a detention facility in Afghanistan",
+            "height":"84",
+            "credit":"Dar Yasin/AP",
+            "caption":"A man at a detention facility in Afghanistan. Three Royal Marines have been charged with 'executing' a detained insurgent in September 2011. Photograph: Dar Yasin/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"uk-news/2013/oct/27/british-soldiers-nazi-salutes-afghanistan",
+      "sectionId":"uk-news",
+      "sectionName":"UK news",
+      "webPublicationDate":"2013-10-27T12:01:33Z",
+      "webTitle":"British soldiers photographed giving Nazi-style salutes in Afghanistan",
+      "webUrl":"http://www.theguardian.com/uk-news/2013/oct/27/british-soldiers-nazi-salutes-afghanistan",
+      "apiUrl":"http://content.guardianapis.com/uk-news/2013/oct/27/british-soldiers-nazi-salutes-afghanistan",
+      "fields":{
+        "newspaperPageNumber":"8",
+        "trailText":"Three-year-old picture circulating online may be show of solidarity with loyalists in Northern Ireland",
+        "headline":"British soldiers photographed giving Nazi-style salutes in Afghanistan",
+        "body":"<p>Two British army soldiers have been photographed standing in front of the union flag making Nazi-style salutes.</p><p>The pair, dressed in camouflage fatigues, have their right arms raised and hands out straight in the image, which was published in the Mail on Sunday (MoS).</p><p>But their gesture could be an apparent show of solidarity with loyalists in Northern Ireland. The flag is inscribed with the words \"Invicta Loyal\", the name of a Kent-based Glasgow Rangers supporters' club, and below it hangs the flag of Northern Ireland.</p><p>There is a suggestion the soldiers may be making a \"Red Hand of Ulster\" salute, once used by Rangers fans as a sign of allegiance with Northern Irish loyalists, the MoS said.</p><p>Democratic Unionist MP Sammy Wilson said: \"This is not a salute made by marching bands … It is not clear what the context is but I do not think it can be explained away as some type of Red Hand of Ulster salute.\"</p><p>Another Democratic Unionist MP, Jeffrey Donaldson, added: \"Anyone who would imitate a Nazi salute in front of the union flag or wearing the uniform dishonours these flags and the British army.</p><p>\"Any symbolism associated with fascism has no place in the Unionist tradition or any regiment of the British army. We do not know to which regiment these soldiers belong but the Royal Irish Regiment, with which I am associated, has a proud record of fighting fascism.\"</p><p>The Ministry of Defence (MoD) confirmed the men were serving soldiers when the picture was taken, reportedly at an army base in Afghanistan. The MoD said the image is at least three and a half years old and has been circulating on online forums for some time.</p><p>The MoD said the incident had been investigated and \"administrative action\" was taken at the time, in which the soldiers were dealt with by their chain of command. It is not known if they were dismissed.</p><p>An MoD spokesman said: \"Individuals are free to join political parties but are expected to abide by our values and standards in all they do. Regular service personnel are not to take any active part in the affairs of any political organisation, party or movement and they are not to participate in political marches or demonstrations.</p><p>\"All those who are found to fall short of the armed forces' high standards or who are found to have committed an offence under the Armed Forces Act are dealt with administratively (up to and including dismissal) or through the disciplinary process.\"</p><p>The emergence of the photo in the runup to Remembrance Sunday has provoked disgust and outrage.</p><p>John Mann, chairman of the Commons all party group against antisemitism, told the MoS: \"This is an insult to the memory of those who gave their lives to stop the Nazis. These idiots need to be re-educated and they should be sent to visit Auschwitz and see what happened there and witness the evil which so many people fought to stop.</p><p>\"So many thousands of people died for this country and the last thing we want is their memory being tarnished by a couple of idiots in uniform.</p><p>\"As Remembrance Sunday approaches, the MoD should send these guys around the country to clean war memorials.\"</p><p>He added: \"Whether they call it a 'Red Hand salute' or whatever makes absolutely no difference – this is one of the most offensive gestures they could make in the modern world.\"</p><!-- Guardian Watermark: internal-code/content/421057028|2013-11-05T11:03:48Z|89dc8a7c7dafeec13629c63e323a817530591985 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-28T00:06:44Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382875200663/British-troops-in-Afghani-006.jpg",
+        "standfirst":"Three-year-old picture circulating online may be show of solidarity with loyalists in Northern Ireland",
+        "shortUrl":"http://gu.com/p/3jq79",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382875200663/British-troops-in-Afghani-006.jpg",
+        "wordcount":"557",
+        "commentable":"false",
+        "internalContentCode":"421057028",
+        "allowUgc":"false",
+        "internalOctopusCode":"8247063",
+        "isPremoderated":"false",
+        "byline":"Press Association",
+        "publication":"theguardian.com",
+        "newspaperEditionDate":"2013-10-28",
+        "internalPageCode":"1987452",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-30T12:01:33Z"
+      },
+      "tags":[{
+        "id":"uk/british-army",
+        "type":"keyword",
+        "webTitle":"British Army",
+        "webUrl":"http://www.theguardian.com/uk/british-army",
+        "apiUrl":"http://content.guardianapis.com/uk/british-army",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/military",
+        "type":"keyword",
+        "webTitle":"Military",
+        "webUrl":"http://www.theguardian.com/uk/military",
+        "apiUrl":"http://content.guardianapis.com/uk/military",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"world/afghanistan",
+        "type":"keyword",
+        "webTitle":"Afghanistan",
+        "webUrl":"http://www.theguardian.com/world/afghanistan",
+        "apiUrl":"http://content.guardianapis.com/world/afghanistan",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421057182",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382875193025/British-troops-in-Afghani-001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ben Birchall",
+            "altText":"British troops in Afghanistan\r",
+            "height":"54",
+            "credit":"Ben Birchall/PA",
+            "caption":"British troops in Afghanistan: the MoD said the incident had been investigated and 'administrative action' taken. Photograph: Ben Birchall/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382875194398/British-troops-in-Afghani-002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ben Birchall",
+            "altText":"British troops in Afghanistan\r",
+            "height":"340",
+            "credit":"Ben Birchall/PA",
+            "caption":"British troops in Afghanistan: the MoD said the incident had been investigated and 'administrative action' taken. Photograph: Ben Birchall/PA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382875195636/British-troops-in-Afghani-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ben Birchall",
+            "altText":"British troops in Afghanistan\r",
+            "height":"130",
+            "credit":"Ben Birchall/PA",
+            "caption":"British troops in Afghanistan: the MoD said the incident had been investigated and 'administrative action' taken. Photograph: Ben Birchall/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382875196982/British-troops-in-Afghani-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ben Birchall",
+            "altText":"British troops in Afghanistan\r",
+            "height":"720",
+            "credit":"Ben Birchall/PA",
+            "caption":"British troops in Afghanistan: the MoD said the incident had been investigated and 'administrative action' taken. Photograph: Ben Birchall/PA",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382875198802/British-troops-in-Afghani-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ben Birchall",
+            "altText":"British troops in Afghanistan\r",
+            "height":"1536",
+            "credit":"Ben Birchall/PA",
+            "caption":"British troops in Afghanistan: the MoD said the incident had been investigated and 'administrative action' taken. Photograph: Ben Birchall/PA",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382875200663/British-troops-in-Afghani-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ben Birchall",
+            "altText":"British troops in Afghanistan\r",
+            "height":"84",
+            "credit":"Ben Birchall/PA",
+            "caption":"British troops in Afghanistan: the MoD said the incident had been investigated and 'administrative action' taken. Photograph: Ben Birchall/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382875201903/British-troops-in-Afghani-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ben Birchall",
+            "altText":"British troops in Afghanistan\r",
+            "height":"132",
+            "credit":"Ben Birchall/PA",
+            "caption":"British troops in Afghanistan: the MoD said the incident had been investigated and 'administrative action' taken. Photograph: Ben Birchall/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382875203154/British-troops-in-Afghani-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ben Birchall",
+            "altText":"British troops in Afghanistan\r",
+            "height":"168",
+            "credit":"Ben Birchall/PA",
+            "caption":"British troops in Afghanistan: the MoD said the incident had been investigated and 'administrative action' taken. Photograph: Ben Birchall/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382875204493/British-troops-in-Afghani-009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ben Birchall",
+            "altText":"British troops in Afghanistan\r",
+            "height":"180",
+            "credit":"Ben Birchall/PA",
+            "caption":"British troops in Afghanistan: the MoD said the incident had been investigated and 'administrative action' taken. Photograph: Ben Birchall/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382875205763/British-troops-in-Afghani-010.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ben Birchall",
+            "altText":"British troops in Afghanistan\r",
+            "height":"228",
+            "credit":"Ben Birchall/PA",
+            "caption":"British troops in Afghanistan: the MoD said the incident had been investigated and 'administrative action' taken. Photograph: Ben Birchall/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382875207023/British-troops-in-Afghani-011.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ben Birchall",
+            "altText":"British troops in Afghanistan\r",
+            "height":"276",
+            "credit":"Ben Birchall/PA",
+            "caption":"British troops in Afghanistan: the MoD said the incident had been investigated and 'administrative action' taken. Photograph: Ben Birchall/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382875208314/British-troops-in-Afghani-012.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ben Birchall",
+            "altText":"British troops in Afghanistan\r",
+            "height":"372",
+            "credit":"Ben Birchall/PA",
+            "caption":"British troops in Afghanistan: the MoD said the incident had been investigated and 'administrative action' taken. Photograph: Ben Birchall/PA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382875209794/British-troops-in-Afghani-013.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ben Birchall",
+            "altText":"British troops in Afghanistan\r",
+            "height":"1116",
+            "credit":"Ben Birchall/PA",
+            "caption":"British troops in Afghanistan: the MoD said the incident had been investigated and 'administrative action' taken. Photograph: Ben Birchall/PA",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382875211839/British-troops-in-Afghani-014.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ben Birchall",
+            "altText":"British troops in Afghanistan\r",
+            "height":"1536",
+            "credit":"Ben Birchall/PA",
+            "caption":"British troops in Afghanistan: the MoD said the incident had been investigated and 'administrative action' taken. Photograph: Ben Birchall/PA",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382875207023/British-troops-in-Afghani-011.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ben Birchall",
+            "altText":"British troops in Afghanistan\r",
+            "height":"276",
+            "credit":"Ben Birchall/PA",
+            "caption":"British troops in Afghanistan: the MoD said the incident had been investigated and 'administrative action' taken. Photograph: Ben Birchall/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421057183",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382875200663/British-troops-in-Afghani-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Ben Birchall",
+            "altText":"British troops in Afghanistan\r",
+            "height":"84",
+            "credit":"Ben Birchall/PA",
+            "caption":"British troops in Afghanistan: the MoD said the incident had been investigated and 'administrative action' taken. Photograph: Ben Birchall/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/oct/27/afghan-soldier-killed-nato-troops-kabul",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-27T12:31:37Z",
+      "webTitle":"Afghan soldier killed after opening fire on Nato troops",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/27/afghan-soldier-killed-nato-troops-kabul",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/27/afghan-soldier-killed-nato-troops-kabul",
+      "fields":{
+        "newspaperPageNumber":"9",
+        "trailText":"Afghan fired three rounds before being shot dead by Australian soldiers after row with foreign trainer from Kabul's Sandhurst-style training complex",
+        "headline":"Afghan soldier killed after opening fire on Nato troops",
+        "body":"<p><strong> </strong></p><p>An Afghan soldier has been killed after opening fire on a foreign trainer from Afghanistan's Sandhurst-inspired officer academy, meant as Britain's main legacy, just days after its first recruits enrolled for class.</p><p>The Afghan was shot after having an argument with a trainer from New Zealand and two Australian soldiers, all three of whom were also injured in the skirmish.</p><p>The shooting casts a shadow over the start of the first term at the academy, which has been described as a Sandhurst-inspired complex. An initial class of 230 recruits began training last week, with journalists invited to see them put through their paces and tour the tents serving as temporary classrooms while work finishes on the permanent buildings.</p><p>Eventually it could train up to 1,500 men and women a year, with 120 UK mentors supported by instructors from Australia, New Zealand, Norway and Denmark. The brief gunfight broke out after the trainer had visited a nearby building at the Afghan National Defence University site in the mountainous western outskirts of Kabul. The UK-funded National Army Officers' Academy nestles by five other colleges including a foreign languages centre and a sergeants' training academy.</p><p>Following an argument, the Afghan soldier fired three rounds before being shot dead by the Australian soldiers who had been assigned to guard the trainer.</p><p>\"The armed Afghan soldier had an argument with the [foreign] soldiers and after some minutes the misunderstanding escalated and he opened fire. The Afghan soldier was killed,\" said Daulat Waziri, the deputy spokesman for Afghanistan's ministry of defence. \"It wasn't inside the [officer training] academy. It was inside one of the Afghan National Army military quarters nearby.\"</p><p>The injuries to the Australians and New Zealander were apparently caused by shrapnel when a bullet fired at short-range at one of them disintegrated, a commander said.</p><p>\"Only one bullet that we're aware of hit, the second Australian returned fire and critically injured and possibly killed the Afghani,\" said Lieutenant General Rhys Jones, chief of the New Zealand Defence Force, who identified his injured soldier as an instructor from the officer academy.</p><p>\"Some of the shrapnel went into the arm of the Australian soldier that was hit, another part went into the foot [of the New Zealand soldier],\" he told<a href=\"http://au.news.yahoo.com/a/19563740/australian-nz-soldiers-wounded-in-afghan-insider-shooting\" title=\"\"> a news conference</a>.</p><p>A spokesman for the Taliban said they had not played any role in the shooting, even though the insurgent group has been quick to claim responsibility for other attacks and has urged Afghan soldiers and police to turn on their foreign mentors.</p><p>A steady stream of insider attacks on both foreign and Afghan troops, by both insurgent sympathisers and angry loners, has undermined morale and raised questions about plans for a long-term training programme in the country.</p><p>A series of Nato measures to protect its troops has cut the toll this year from a peak in 2012, when gunmen from police or army ranks accounted for around 15% of all foreign military deaths. The precautions include having armed \"guardian angels\", such as the Australians who ended Saturday's attack, watch over all meetings with Afghan counterparts.</p><!-- Guardian Watermark: internal-code/content/421057904|2013-11-05T11:03:48Z|d50a3ee85c2e9ed608012710635185440f4183eb -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-28T00:06:46Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382876928347/Afghan-recruits-006.jpg",
+        "standfirst":"Afghan fired three rounds before being shot dead by Australian soldiers after row with foreign trainer from Kabul's Sandhurst-style training complex",
+        "shortUrl":"http://gu.com/p/3jq7g",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382876928347/Afghan-recruits-006.jpg",
+        "wordcount":"501",
+        "commentable":"false",
+        "internalContentCode":"421057904",
+        "allowUgc":"false",
+        "internalOctopusCode":"8247167",
+        "isPremoderated":"false",
+        "byline":"Emma Graham-Harrison in Kabul",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-28",
+        "internalPageCode":"1987459",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-30T12:31:37Z"
+      },
+      "tags":[{
+        "id":"world/afghanistan",
+        "type":"keyword",
+        "webTitle":"Afghanistan",
+        "webUrl":"http://www.theguardian.com/world/afghanistan",
+        "apiUrl":"http://content.guardianapis.com/world/afghanistan",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/nato",
+        "type":"keyword",
+        "webTitle":"Nato",
+        "webUrl":"http://www.theguardian.com/world/nato",
+        "apiUrl":"http://content.guardianapis.com/world/nato",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.theguardian.com/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"uk/emma-harrison",
+        "type":"keyword",
+        "webTitle":"Emma Harrison",
+        "webUrl":"http://www.theguardian.com/uk/emma-harrison",
+        "apiUrl":"http://content.guardianapis.com/uk/emma-harrison",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421059368",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382876921244/Afghan-recruits-001.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Massoud Hossaini",
+            "altText":"Afghan recruits",
+            "height":"54",
+            "credit":"Massoud Hossaini/AFP/Getty Images",
+            "caption":"Afghan recruits gather at the National Army Officers' Academy in Kabul: eventually it could train up to 1,500 men and women a year. Photograph: Massoud Hossaini/AFP/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382876922968/Afghan-recruits-002.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Massoud Hossaini",
+            "altText":"Afghan recruits",
+            "height":"340",
+            "credit":"Massoud Hossaini/AFP/Getty Images",
+            "caption":"Afghan recruits gather at the National Army Officers' Academy in Kabul: eventually it could train up to 1,500 men and women a year. Photograph: Massoud Hossaini/AFP/Getty Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382876924052/Afghan-recruits-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Massoud Hossaini",
+            "altText":"Afghan recruits",
+            "height":"130",
+            "credit":"Massoud Hossaini/AFP/Getty Images",
+            "caption":"Afghan recruits gather at the National Army Officers' Academy in Kabul: eventually it could train up to 1,500 men and women a year. Photograph: Massoud Hossaini/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382876925200/Afghan-recruits-004.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Massoud Hossaini",
+            "altText":"Afghan recruits",
+            "height":"720",
+            "credit":"Massoud Hossaini/AFP/Getty Images",
+            "caption":"Afghan recruits gather at the National Army Officers' Academy in Kabul: eventually it could train up to 1,500 men and women a year. Photograph: Massoud Hossaini/AFP/Getty Images",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382876926703/Afghan-recruits-005.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Massoud Hossaini",
+            "altText":"Afghan recruits",
+            "height":"1536",
+            "credit":"Massoud Hossaini/AFP/Getty Images",
+            "caption":"Afghan recruits gather at the National Army Officers' Academy in Kabul: eventually it could train up to 1,500 men and women a year. Photograph: Massoud Hossaini/AFP/Getty Images",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382876928347/Afghan-recruits-006.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Massoud Hossaini",
+            "altText":"Afghan recruits",
+            "height":"84",
+            "credit":"Massoud Hossaini/AFP/Getty Images",
+            "caption":"Afghan recruits gather at the National Army Officers' Academy in Kabul: eventually it could train up to 1,500 men and women a year. Photograph: Massoud Hossaini/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382876929354/Afghan-recruits-007.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Massoud Hossaini",
+            "altText":"Afghan recruits",
+            "height":"132",
+            "credit":"Massoud Hossaini/AFP/Getty Images",
+            "caption":"Afghan recruits gather at the National Army Officers' Academy in Kabul: eventually it could train up to 1,500 men and women a year. Photograph: Massoud Hossaini/AFP/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382876930359/Afghan-recruits-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Massoud Hossaini",
+            "altText":"Afghan recruits",
+            "height":"168",
+            "credit":"Massoud Hossaini/AFP/Getty Images",
+            "caption":"Afghan recruits gather at the National Army Officers' Academy in Kabul: eventually it could train up to 1,500 men and women a year. Photograph: Massoud Hossaini/AFP/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382876931434/Afghan-recruits-009.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Massoud Hossaini",
+            "altText":"Afghan recruits",
+            "height":"180",
+            "credit":"Massoud Hossaini/AFP/Getty Images",
+            "caption":"Afghan recruits gather at the National Army Officers' Academy in Kabul: eventually it could train up to 1,500 men and women a year. Photograph: Massoud Hossaini/AFP/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382876932554/Afghan-recruits-010.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Massoud Hossaini",
+            "altText":"Afghan recruits",
+            "height":"228",
+            "credit":"Massoud Hossaini/AFP/Getty Images",
+            "caption":"Afghan recruits gather at the National Army Officers' Academy in Kabul: eventually it could train up to 1,500 men and women a year. Photograph: Massoud Hossaini/AFP/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382876933598/Afghan-recruits-011.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Massoud Hossaini",
+            "altText":"Afghan recruits",
+            "height":"276",
+            "credit":"Massoud Hossaini/AFP/Getty Images",
+            "caption":"Afghan recruits gather at the National Army Officers' Academy in Kabul: eventually it could train up to 1,500 men and women a year. Photograph: Massoud Hossaini/AFP/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382876934657/Afghan-recruits-012.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Massoud Hossaini",
+            "altText":"Afghan recruits",
+            "height":"372",
+            "credit":"Massoud Hossaini/AFP/Getty Images",
+            "caption":"Afghan recruits gather at the National Army Officers' Academy in Kabul: eventually it could train up to 1,500 men and women a year. Photograph: Massoud Hossaini/AFP/Getty Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382876936437/Afghan-recruits-013.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Massoud Hossaini",
+            "altText":"Afghan recruits",
+            "height":"1116",
+            "credit":"Massoud Hossaini/AFP/Getty Images",
+            "caption":"Afghan recruits gather at the National Army Officers' Academy in Kabul: eventually it could train up to 1,500 men and women a year. Photograph: Massoud Hossaini/AFP/Getty Images",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382876938372/Afghan-recruits-014.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Massoud Hossaini",
+            "altText":"Afghan recruits",
+            "height":"1536",
+            "credit":"Massoud Hossaini/AFP/Getty Images",
+            "caption":"Afghan recruits gather at the National Army Officers' Academy in Kabul: eventually it could train up to 1,500 men and women a year. Photograph: Massoud Hossaini/AFP/Getty Images",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382876933598/Afghan-recruits-011.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Massoud Hossaini",
+            "altText":"Afghan recruits",
+            "height":"276",
+            "credit":"Massoud Hossaini/AFP/Getty Images",
+            "caption":"Afghan recruits at the National Army Officers' Academy eventually it could train up to 1,500 men and women a year. Photograph: Massoud Hossaini/AFP/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421059369",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/27/1382876928347/Afghan-recruits-006.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Massoud Hossaini",
+            "altText":"Afghan recruits",
+            "height":"84",
+            "credit":"Massoud Hossaini/AFP/Getty Images",
+            "caption":"Afghan recruits gather at the National Army Officers' Academy in Kabul: eventually it could train up to 1,500 men and women a year. Photograph: Massoud Hossaini/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

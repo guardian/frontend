@@ -1,0 +1,13 @@
+@(idInput: form.Input)(implicit handler: views.html.helper.FieldConstructor)
+
+@import views.html.helper.input
+@import play.api.templates.PlayMagic.toHtmlArgs
+
+@input(idInput.field, idInput.args:_*) { (id, name, value, htmlArgs) =>
+    <label class="check-label" for="@idInput.field.id">
+        @fragments.form.checkbox(idInput.field, idInput.args:_*)
+        @idInput.args.toMap.get('_label).map { label =>
+            @label
+        }
+    </label>
+}

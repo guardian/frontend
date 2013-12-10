@@ -1,17 +1,15 @@
 package model
 
 import common.ManifestData
+import conf.Configuration
 
 trait MetaData {
-  // indicates the absolute url of this page (the one to be used for search engine indexing)
-  // see http://googlewebmastercentral.blogspot.co.uk/2009/02/specify-your-canonical.html
-  // never give this a default value, we need people to think each time before using it
-  def canonicalUrl: Option[String]
-
   def id: String
   def section: String
   def webTitle: String
   def analyticsName: String
+  def url: String  = s"/$id"
+  def linkText: String = webTitle
 
   // this is here so it can be included in analytics.
   // Basically it helps us understand the impact of changes and needs
@@ -26,14 +24,27 @@ trait MetaData {
     "section" -> section,
     "web-title" -> webTitle,
     "build-number" -> buildNumber,
-    "analytics-name" -> analyticsName
-  ) ++ canonicalUrl.map { url => Map("canonical-url" -> url) }.getOrElse(Map.empty)
+    "analytics-name" -> analyticsName,
+    "blockAds" -> false
+  )
+
+  def openGraph: List[(String, Any)] = List(
+    "og:site_name" -> "the Guardian",
+    "fb:app_id"    -> Configuration.facebook.appId
+  )
+  
+  def cards: List[(String, Any)] = List(
+    "twitter:site" -> "@guardian",
+    "twitter:app:name:iphone" -> "The Guardian",
+    "twitter:app:id:iphone" -> "409128287",
+    "twitter:app:name:googleplay" -> "The Guardian",
+    "twitter:app:id:googleplay" -> "com.guardian"
+  )
 
   def cacheSeconds = 60
 }
 
 class Page(
-  val canonicalUrl: Option[String],
   val id: String,
   val section: String,
   val webTitle: String,
@@ -41,66 +52,64 @@ class Page(
 
 object Page {
   def apply(
-    canonicalUrl: Option[String],
     id: String,
     section: String,
     webTitle: String,
-    analyticsName: String) = new Page(canonicalUrl, id, section, webTitle, analyticsName)
+    analyticsName: String) = new Page(id, section, webTitle, analyticsName)
 }
 
-trait Images {
-  def images: Seq[Image]
-  def videoImages: Seq[Image]
+trait Elements {
 
-  def imageOfWidth(desiredWidth: Int, tolerance: Int = 0): Option[Image] = {
-    val widthRange = (desiredWidth - tolerance) to (desiredWidth + tolerance)
-    val imagesInWidthRange = images filter { _.width in widthRange }
-    val imagesByDistance = imagesInWidthRange sortBy { _.width distanceFrom desiredWidth }
-
-    imagesByDistance.headOption
+  // Find a main picture crop which matches this aspect ratio.
+  def trailPicture(aspectWidth: Int, aspectHeight: Int): Option[ImageContainer] = trailPicture.flatMap{ main =>
+    val correctCrops = main.imageCrops.filter(image => image.aspectRatioWidth == aspectWidth && image.aspectRatioHeight == aspectHeight)
+    correctCrops.headOption.map{ head => ImageContainer(correctCrops, main.delegate, head.index) }
   }
 
-  //I know the stuff below this line looks a bit weird. There is longer term work going on in the content api to
-  //improve how pictures work. It is not going to be done in time for us, so for now we have to infer a lot and work to
-  //some arbitrary conventions.
+  // trail picture is used on index pages (i.e. Fronts and tag pages)
+  def trailPicture: Option[ImageContainer] = mainPicture.orElse(thumbnail)
 
-  //Assumption number 1 - All alt-size images are crops of the main picture
-  private lazy val mainPictureCrops: Seq[Image] = mainPicture.map { main =>
-    var crops = images.filter(_.rel == "alt-size").filter(_.aspectRatio == main.aspectRatio)
-    // if there's more than one body image, use the crops with the same index
-    if (images.filter(i => i.rel == "body" || i.rel=="main").size > 1) {
-      crops = crops.filter(_.index == main.index)
-    }
-    crops
-  } getOrElse (Nil)
 
-  //at the moment all the crops will exists, or none of them will exist. If we have no crops then
-  //fall back to full size image
-  def mainPicture(width: Int): Option[Image] = mainPictureCrops.filter(_.width == width).headOption.orElse(mainPicture)
+  /*
+  Now I know you might THINK that you want to change how we get the main picture.
+  The people around you might have convinced you that there is some magic formula.
+  There might even be a 'Business Stakeholder' involved...
 
-  def mainPicture(width: Int, height: Int): Option[Image] =
-    mainPictureCrops.filter(_.width == width).filter(_.height == height).headOption.orElse(mainPicture)
+  But know this... I WILL find you, I WILL hunt you down, and you WILL be sorry.
 
-  //the canonical main picture, the actual one the editor chose
-  lazy val mainPicture: Option[Image] = if (hasMainPicture)
-    images.filter(List("body", "main", "gallery") contains _.rel).filter(_.index == 1).headOption
-  else
-    // we might have videos
-    videoImages.sortBy(_.index).filter(_.index == 1).headOption.orElse {
-      // otherwise just get the 460 sized crop
-      // NOTE safe?
-      images.filter(_.rel == "alt-size").filter(_.width == 460).headOption
-    }
+  If you need to express a hack, express it somewhere where you are not pretending it is the Main Picture
 
-  //Assumption number 2 - the first rel="body" picture is the main picture if (and only if) there are more rel="body"
-  //pictures than there are in-body pictures. If there are the same amount, then there is no main picture.
-  lazy val hasMainPicture: Boolean = {
-    val bodyPictureCount = images.filter(List("body", "main" , "gallery") contains _.rel).size
-    bodyPictureCount > inBodyPictureCount
+  You probably want the TRAIL PICTURE
+*/
+  // main picture is used on the content page (i.e. the article page or the video page)
+  def mainPicture: Option[ImageContainer] = imageElements.headOption
+  lazy val hasMainPicture = mainPicture.flatMap(_.imageCrops.headOption).isDefined
+
+  def mainVideo: Option[VideoElement] = videoMap("main").headOption
+  lazy val hasMainVideo: Boolean = mainVideo.flatMap(_.videoAssets.headOption).isDefined
+
+  lazy val bodyImages: List[ImageElement] = imageMap("body")
+  lazy val bodyVideos: List[VideoElement] = videoMap("body")
+  lazy val videoAssets: List[VideoAsset] = videos.flatMap(_.videoAssets)
+  lazy val thumbnail: Option[ImageElement] = imageMap("thumbnail").headOption
+
+  private lazy val images: List[ImageElement] = imageMap("main")
+  private lazy val videos: List[VideoElement] = videoMap("main") ++ videoMap("body")
+  private lazy val imageElements: List[ImageContainer] = (images ++ videos).sortBy(_.index)
+
+  def elementsMap(elementType: String): Map[String,List[Element]] = Map.empty.withDefaultValue(Nil)
+
+  protected lazy val imageMap: Map[String,List[ImageElement]] = {
+    elementsMap("image").collect {
+      case (relation, elements) => ( relation -> elements.collect{case x:ImageElement => x})
+    }.toMap.withDefaultValue(Nil)
   }
 
-  lazy val inBodyPictureCount: Int = 0
-
+  protected lazy val videoMap: Map[String,List[VideoElement]] = {
+    elementsMap("video").collect {
+      case (relation, elements) => ( relation -> elements.collect{case x:VideoElement => x})
+    }.toMap.withDefaultValue(Nil)
+  }
 }
 
 trait Tags {

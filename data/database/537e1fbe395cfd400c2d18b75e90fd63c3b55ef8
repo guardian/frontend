@@ -1,0 +1,1294 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"culture/jonathanjonesblog/2013/oct/17/banksy-mcdonalds-new-york",
+      "sectionId":"artanddesign",
+      "sectionName":"Art and design",
+      "webPublicationDate":"2013-10-17T11:25:19Z",
+      "webTitle":"Banksy gives Ronald McDonald's clown shoes a shine",
+      "webUrl":"http://www.theguardian.com/culture/jonathanjonesblog/2013/oct/17/banksy-mcdonalds-new-york",
+      "apiUrl":"http://content.guardianapis.com/culture/jonathanjonesblog/2013/oct/17/banksy-mcdonalds-new-york",
+      "fields":{
+        "trailText":"<p>Banksy's latest New York stunt involves a statue of Ronald McDonald and a real-life shoeshine boy. The man's a genius of the obvious</p>",
+        "headline":"Banksy gives Ronald McDonald's clown shoes a shine",
+        "body":"<p>That Banksy – what will he come up with next? He's the genius of the obvious. The Bristol-born artist is <a href=\"http://www.banksy.co.uk/\" title=\"\">currently \"in residence\" in New York</a>, and not a day passes without a story about his exploits in the Big Apple. The latest is that Banksy has carved a statue of Ronald McDonald, mascot of the renowned fast food chain, and is moving it from one McDonald's to another in the New York area together with a – living – boy giving the corporate clown a shoeshine.</p><p>Look, it's a bit pointless mocking American capitalism, Banksy. <a href=\"http://www.theguardian.com/world/2013/oct/17/us-shutdown-imf-christine-lagarde-appeals-stability\" title=\"\">Congress has already done that for you</a>. How the world laughed when Republican extremists brought the \"world's most powerful nation\" to the brink of debt default. How it shrugged when this lunatic crisis was resolved at the last minute. What's America going to do next to make itself a living joke?</p><p>By comparison, Banksy's stunts are light entertainment for complacent liberals and Leftists. Being a bit of both, I can totally get behind his tilt at McDonald's. I am pretty sure it stands for everything that is wrong with the world. I can't quite remember the details but yeah, McDonald's, it's got to be bad. Go for it.</p><video data-media-id=\"gu-video-419901931\" class=\"gu-video\" controls=\"controls\" poster=\"\">\n        <source src=\"http://cdn.theguardian.tv/mainwebsite/2013/10/14/131014banksysells-16x9.mp4\"></source><source src=\"http://cdn.theguardian.tv/3gp/small/2013/10/14/131014banksysells_3gpSml16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/3gp/large/2013/10/14/131014banksysells_3gpLg16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/ad/2013/10/14/131014banksysells/131014banksysells.m3u8\"></source>\n      </video><p>This <a href=\"http://www.azlyrics.com/lyrics/sting/englishmaninnewyork.html\" title=\"\">Englishman in New York</a> is clearly generating impressive interest and a lot of headlines. He <a href=\"http://www.theguardian.com/artanddesign/video/2013/oct/14/banksy-central-park-new-york-video\" title=\"\">sold some of his work for cheap to tourists</a>. He was <a href=\"http://www.mirror.co.uk/news/world-news/banksy-pictured-new-york-graffiti-2352010\" title=\"\">possibly photographed</a>. Fans have been racing around Manhattan and Brooklyn to see the latest Banksy before it gets vandalised – he dared the anonymous rivals who have been defacing his work by <a href=\"http://www.nytimes.com/2013/10/16/nyregion/racing-to-see-banksy-graffiti-while-it-can-still-be-seen.html?_r=0\" title=\"\">painting a homage to the World Trade Center</a>. Vandalise that ...</p><p>Yet all this reporting of Banksy's art and its fate reveals the massive intellectual lacunae in our current understanding of art. On the one hand, Banksy is a street artist, having a laugh defying the authorities. On the other hand, his works are now regarded as financially valuable so when they get defaced it is seen as an attack on some kind of cultural monument. It's just street art! Lighten up! It does not need to survive and people who pay big money for it are silly.</p><p>To his credit, Mr Banksy seems to know that. Hence the cheap art sale to those lucky tourists. They could sell the works at a huge profit, and have the blowout of a lifetime at McDonald's.</p><video data-media-id=\"gu-video-419832428\" class=\"gu-video\" controls=\"controls\" poster=\"\">\n        <source src=\"http://cdn.theguardian.tv/mainwebsite/2013/10/13/131013BanksyAnimals-16x9.mp4\"></source><source src=\"http://cdn.theguardian.tv/3gp/small/2013/10/13/131013BanksyAnimals_3gpSml16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/ad/2013/10/13/131013BanksyAnimals/131013BanksyAnimals.m3u8\"></source><source src=\"http://cdn.theguardian.tv/3gp/large/2013/10/13/131013BanksyAnimals_3gpLg16x9.3gp\"></source>\n      </video><!-- Guardian Watermark: internal-code/content/420247469|2013-11-05T11:03:48Z|2ed663a8fe0be76745df91f09592d2b1c4481331 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-17T16:28:04Z",
+        "hasStoryPackage":"true",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382008934118/Banksys-Ronald-McDonald-s-005.jpg",
+        "standfirst":"Banksy's latest New York stunt involves a statue of Ronald McDonald and a real-life shoeshine boy. The man's a genius of the obvious",
+        "shortUrl":"http://gu.com/p/3jjch",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382008934118/Banksys-Ronald-McDonald-s-005.jpg",
+        "wordcount":"392",
+        "commentable":"true",
+        "internalContentCode":"420247469",
+        "allowUgc":"false",
+        "internalOctopusCode":"8206556",
+        "isPremoderated":"false",
+        "byline":"Jonathan Jones",
+        "publication":"theguardian.com",
+        "internalPageCode":"1982492",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-20T11:25:00Z"
+      },
+      "tags":[{
+        "id":"artanddesign/artanddesign",
+        "type":"keyword",
+        "webTitle":"Art and design",
+        "webUrl":"http://www.theguardian.com/artanddesign/artanddesign",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/artanddesign",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"profile/jonathanjones",
+        "type":"contributor",
+        "webTitle":"Jonathan Jones",
+        "webUrl":"http://www.theguardian.com/profile/jonathanjones",
+        "apiUrl":"http://content.guardianapis.com/profile/jonathanjones",
+        "bio":"<p>Jonathan Jones writes on art for the Guardian and was on the jury for the 2009 Turner prize</p>",
+        "rcsId":"GNL234013",
+        "r2ContributorId":"15906",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jonathan_jones_140x140.jpg",
+        "references":[]
+      },{
+        "id":"artanddesign/jonathanjonesblog",
+        "type":"blog",
+        "webTitle":"Jonathan Jones on art",
+        "webUrl":"http://www.theguardian.com/artanddesign/jonathanjonesblog",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/jonathanjonesblog",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"business/mcdonalds",
+        "type":"keyword",
+        "webTitle":"McDonald's",
+        "webUrl":"http://www.theguardian.com/business/mcdonalds",
+        "apiUrl":"http://content.guardianapis.com/business/mcdonalds",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"artanddesign/banksy",
+        "type":"keyword",
+        "webTitle":"Banksy",
+        "webUrl":"http://www.theguardian.com/artanddesign/banksy",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/banksy",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"artanddesign/art",
+        "type":"keyword",
+        "webTitle":"Art",
+        "webUrl":"http://www.theguardian.com/artanddesign/art",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/art",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420278588",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382008946807/Banksys-Ronald-McDonald-s-010.jpg",
+          "typeData":{
+            "source":"  Scott Houston/Corbis",
+            "photographer":"Scott Houston",
+            "altText":"Banksy's Ronald McDonald statue",
+            "height":"276",
+            "credit":"Scott Houston/  Scott Houston/Corbis",
+            "caption":"Shiny happy people ? Banksy's statue outside a branch of McDonald's in south Bronx. Photograph: Scott Houston/  Scott Houston/Corbis",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382009567516/Banksy-002.jpg",
+          "typeData":{
+            "source":"  Scott Houston/Corbis",
+            "photographer":"Scott Houston",
+            "altText":"Banksy",
+            "height":"130",
+            "credit":"Scott Houston/  Scott Houston/Corbis",
+            "caption":"Banksy's Ronald McDonald statue  Photograph: Scott Houston/  Scott Houston/Corbis",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382008934118/Banksys-Ronald-McDonald-s-005.jpg",
+          "typeData":{
+            "source":"  Scott Houston/Corbis",
+            "photographer":"Scott Houston",
+            "altText":"Banksy's Ronald McDonald statue",
+            "height":"84",
+            "credit":"Scott Houston/  Scott Houston/Corbis",
+            "caption":"Shiny happy people ? Banksy's statue outside a branch of McDonald's in south Bronx. Photograph: Scott Houston/  Scott Houston/Corbis",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382008946807/Banksys-Ronald-McDonald-s-010.jpg",
+          "typeData":{
+            "source":"  Scott Houston/Corbis",
+            "photographer":"Scott Houston",
+            "altText":"Banksy's Ronald McDonald statue",
+            "height":"276",
+            "credit":"Scott Houston/  Scott Houston/Corbis",
+            "caption":"Shiny happy people ? Banksy's statue outside a branch of McDonald's in south Bronx. Photograph: Scott Houston/  Scott Houston/Corbis",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420278589",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382008934118/Banksys-Ronald-McDonald-s-005.jpg",
+          "typeData":{
+            "source":"  Scott Houston/Corbis",
+            "photographer":"Scott Houston",
+            "altText":"Banksy's Ronald McDonald statue",
+            "height":"84",
+            "credit":"Scott Houston/  Scott Houston/Corbis",
+            "caption":"Shiny happy people … Banksy's statue outside a branch of McDonald's in south Bronx. Photograph: Scott Houston/  Scott Houston/Corbis",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-video-419832428",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/13/131013BanksyAnimals-16x9.mp4",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/13/131013BanksyAnimals_8190214.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/13/131013BanksyAnimals_8190214.jpg",
+            "width":"480",
+            "durationSeconds":"55"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/10/13/131013BanksyAnimals_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/13/131013BanksyAnimals_8190214.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/13/131013BanksyAnimals_8190214.jpg",
+            "width":"480",
+            "durationSeconds":"55"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/13/131013BanksyAnimals_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/13/131013BanksyAnimals_8190214.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/13/131013BanksyAnimals_8190214.jpg",
+            "width":"480",
+            "durationSeconds":"55"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/13/131013BanksyAnimals/131013BanksyAnimals.m3u8",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/13/131013BanksyAnimals_8190214.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/13/131013BanksyAnimals_8190214.jpg",
+            "width":"480",
+            "durationSeconds":"55"
+          }
+        }]
+      },{
+        "id":"gu-video-419901931",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/14/131014banksysells_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Banksy NY",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/14/131014banksysells_8192640.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/14/131014banksysells_8192640.jpg",
+            "width":"480",
+            "durationSeconds":"46"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/14/131014banksysells-16x9.mp4",
+          "typeData":{
+            "source":"Banksy NY",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/14/131014banksysells_8192640.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/14/131014banksysells_8192640.jpg",
+            "width":"480",
+            "durationSeconds":"46"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/10/14/131014banksysells_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"Banksy NY",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/14/131014banksysells_8192640.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/14/131014banksysells_8192640.jpg",
+            "width":"480",
+            "durationSeconds":"46"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/14/131014banksysells/131014banksysells.m3u8",
+          "typeData":{
+            "source":"Banksy NY",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/14/131014banksysells_8192640.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/14/131014banksysells_8192640.jpg",
+            "width":"480",
+            "durationSeconds":"46"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"culture/jonathanjonesblog/2013/oct/17/banksy-mcdonalds-new-york",
+      "sectionId":"artanddesign",
+      "sectionName":"Art and design",
+      "webPublicationDate":"2013-10-17T11:25:19Z",
+      "webTitle":"Banksy gives Ronald McDonald's clown shoes a shine",
+      "webUrl":"http://www.theguardian.com/culture/jonathanjonesblog/2013/oct/17/banksy-mcdonalds-new-york",
+      "apiUrl":"http://content.guardianapis.com/culture/jonathanjonesblog/2013/oct/17/banksy-mcdonalds-new-york",
+      "fields":{
+        "trailText":"<p>Banksy's latest New York stunt involves a statue of Ronald McDonald and a real-life shoeshine boy. The man's a genius of the obvious</p>",
+        "headline":"Banksy gives Ronald McDonald's clown shoes a shine",
+        "body":"<p>That Banksy – what will he come up with next? He's the genius of the obvious. The Bristol-born artist is <a href=\"http://www.banksy.co.uk/\" title=\"\">currently \"in residence\" in New York</a>, and not a day passes without a story about his exploits in the Big Apple. The latest is that Banksy has carved a statue of Ronald McDonald, mascot of the renowned fast food chain, and is moving it from one McDonald's to another in the New York area together with a – living – boy giving the corporate clown a shoeshine.</p><p>Look, it's a bit pointless mocking American capitalism, Banksy. <a href=\"http://www.theguardian.com/world/2013/oct/17/us-shutdown-imf-christine-lagarde-appeals-stability\" title=\"\">Congress has already done that for you</a>. How the world laughed when Republican extremists brought the \"world's most powerful nation\" to the brink of debt default. How it shrugged when this lunatic crisis was resolved at the last minute. What's America going to do next to make itself a living joke?</p><p>By comparison, Banksy's stunts are light entertainment for complacent liberals and Leftists. Being a bit of both, I can totally get behind his tilt at McDonald's. I am pretty sure it stands for everything that is wrong with the world. I can't quite remember the details but yeah, McDonald's, it's got to be bad. Go for it.</p><video data-media-id=\"gu-video-419901931\" class=\"gu-video\" controls=\"controls\" poster=\"\">\n        <source src=\"http://cdn.theguardian.tv/mainwebsite/2013/10/14/131014banksysells-16x9.mp4\"></source><source src=\"http://cdn.theguardian.tv/3gp/small/2013/10/14/131014banksysells_3gpSml16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/3gp/large/2013/10/14/131014banksysells_3gpLg16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/ad/2013/10/14/131014banksysells/131014banksysells.m3u8\"></source>\n      </video><p>This <a href=\"http://www.azlyrics.com/lyrics/sting/englishmaninnewyork.html\" title=\"\">Englishman in New York</a> is clearly generating impressive interest and a lot of headlines. He <a href=\"http://www.theguardian.com/artanddesign/video/2013/oct/14/banksy-central-park-new-york-video\" title=\"\">sold some of his work for cheap to tourists</a>. He was <a href=\"http://www.mirror.co.uk/news/world-news/banksy-pictured-new-york-graffiti-2352010\" title=\"\">possibly photographed</a>. Fans have been racing around Manhattan and Brooklyn to see the latest Banksy before it gets vandalised – he dared the anonymous rivals who have been defacing his work by <a href=\"http://www.nytimes.com/2013/10/16/nyregion/racing-to-see-banksy-graffiti-while-it-can-still-be-seen.html?_r=0\" title=\"\">painting a homage to the World Trade Center</a>. Vandalise that ...</p><p>Yet all this reporting of Banksy's art and its fate reveals the massive intellectual lacunae in our current understanding of art. On the one hand, Banksy is a street artist, having a laugh defying the authorities. On the other hand, his works are now regarded as financially valuable so when they get defaced it is seen as an attack on some kind of cultural monument. It's just street art! Lighten up! It does not need to survive and people who pay big money for it are silly.</p><p>To his credit, Mr Banksy seems to know that. Hence the cheap art sale to those lucky tourists. They could sell the works at a huge profit, and have the blowout of a lifetime at McDonald's.</p><video data-media-id=\"gu-video-419832428\" class=\"gu-video\" controls=\"controls\" poster=\"\">\n        <source src=\"http://cdn.theguardian.tv/mainwebsite/2013/10/13/131013BanksyAnimals-16x9.mp4\"></source><source src=\"http://cdn.theguardian.tv/3gp/small/2013/10/13/131013BanksyAnimals_3gpSml16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/ad/2013/10/13/131013BanksyAnimals/131013BanksyAnimals.m3u8\"></source><source src=\"http://cdn.theguardian.tv/3gp/large/2013/10/13/131013BanksyAnimals_3gpLg16x9.3gp\"></source>\n      </video><!-- Guardian Watermark: internal-code/content/420247469|2013-11-05T11:03:48Z|2ed663a8fe0be76745df91f09592d2b1c4481331 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-17T16:28:04Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382008934118/Banksys-Ronald-McDonald-s-005.jpg",
+        "standfirst":"Banksy's latest New York stunt involves a statue of Ronald McDonald and a real-life shoeshine boy. The man's a genius of the obvious",
+        "shortUrl":"http://gu.com/p/3jjch",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382008934118/Banksys-Ronald-McDonald-s-005.jpg",
+        "wordcount":"392",
+        "commentable":"true",
+        "internalContentCode":"420247469",
+        "allowUgc":"false",
+        "internalOctopusCode":"8206556",
+        "isPremoderated":"false",
+        "byline":"Jonathan Jones",
+        "publication":"theguardian.com",
+        "internalPageCode":"1982492",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-20T11:25:00Z"
+      },
+      "tags":[{
+        "id":"artanddesign/artanddesign",
+        "type":"keyword",
+        "webTitle":"Art and design",
+        "webUrl":"http://www.theguardian.com/artanddesign/artanddesign",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/artanddesign",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"profile/jonathanjones",
+        "type":"contributor",
+        "webTitle":"Jonathan Jones",
+        "webUrl":"http://www.theguardian.com/profile/jonathanjones",
+        "apiUrl":"http://content.guardianapis.com/profile/jonathanjones",
+        "bio":"<p>Jonathan Jones writes on art for the Guardian and was on the jury for the 2009 Turner prize</p>",
+        "rcsId":"GNL234013",
+        "r2ContributorId":"15906",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jonathan_jones_140x140.jpg",
+        "references":[]
+      },{
+        "id":"artanddesign/jonathanjonesblog",
+        "type":"blog",
+        "webTitle":"Jonathan Jones on art",
+        "webUrl":"http://www.theguardian.com/artanddesign/jonathanjonesblog",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/jonathanjonesblog",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"business/mcdonalds",
+        "type":"keyword",
+        "webTitle":"McDonald's",
+        "webUrl":"http://www.theguardian.com/business/mcdonalds",
+        "apiUrl":"http://content.guardianapis.com/business/mcdonalds",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"artanddesign/banksy",
+        "type":"keyword",
+        "webTitle":"Banksy",
+        "webUrl":"http://www.theguardian.com/artanddesign/banksy",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/banksy",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"artanddesign/art",
+        "type":"keyword",
+        "webTitle":"Art",
+        "webUrl":"http://www.theguardian.com/artanddesign/art",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/art",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420278588",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382008946807/Banksys-Ronald-McDonald-s-010.jpg",
+          "typeData":{
+            "source":"  Scott Houston/Corbis",
+            "photographer":"Scott Houston",
+            "altText":"Banksy's Ronald McDonald statue",
+            "height":"276",
+            "credit":"Scott Houston/  Scott Houston/Corbis",
+            "caption":"Shiny happy people ? Banksy's statue outside a branch of McDonald's in south Bronx. Photograph: Scott Houston/  Scott Houston/Corbis",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382009567516/Banksy-002.jpg",
+          "typeData":{
+            "source":"  Scott Houston/Corbis",
+            "photographer":"Scott Houston",
+            "altText":"Banksy",
+            "height":"130",
+            "credit":"Scott Houston/  Scott Houston/Corbis",
+            "caption":"Banksy's Ronald McDonald statue  Photograph: Scott Houston/  Scott Houston/Corbis",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382008934118/Banksys-Ronald-McDonald-s-005.jpg",
+          "typeData":{
+            "source":"  Scott Houston/Corbis",
+            "photographer":"Scott Houston",
+            "altText":"Banksy's Ronald McDonald statue",
+            "height":"84",
+            "credit":"Scott Houston/  Scott Houston/Corbis",
+            "caption":"Shiny happy people ? Banksy's statue outside a branch of McDonald's in south Bronx. Photograph: Scott Houston/  Scott Houston/Corbis",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382008946807/Banksys-Ronald-McDonald-s-010.jpg",
+          "typeData":{
+            "source":"  Scott Houston/Corbis",
+            "photographer":"Scott Houston",
+            "altText":"Banksy's Ronald McDonald statue",
+            "height":"276",
+            "credit":"Scott Houston/  Scott Houston/Corbis",
+            "caption":"Shiny happy people ? Banksy's statue outside a branch of McDonald's in south Bronx. Photograph: Scott Houston/  Scott Houston/Corbis",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420278589",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382008934118/Banksys-Ronald-McDonald-s-005.jpg",
+          "typeData":{
+            "source":"  Scott Houston/Corbis",
+            "photographer":"Scott Houston",
+            "altText":"Banksy's Ronald McDonald statue",
+            "height":"84",
+            "credit":"Scott Houston/  Scott Houston/Corbis",
+            "caption":"Shiny happy people … Banksy's statue outside a branch of McDonald's in south Bronx. Photograph: Scott Houston/  Scott Houston/Corbis",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-video-419832428",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/13/131013BanksyAnimals-16x9.mp4",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/13/131013BanksyAnimals_8190214.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/13/131013BanksyAnimals_8190214.jpg",
+            "width":"480",
+            "durationSeconds":"55"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/10/13/131013BanksyAnimals_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/13/131013BanksyAnimals_8190214.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/13/131013BanksyAnimals_8190214.jpg",
+            "width":"480",
+            "durationSeconds":"55"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/13/131013BanksyAnimals_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/13/131013BanksyAnimals_8190214.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/13/131013BanksyAnimals_8190214.jpg",
+            "width":"480",
+            "durationSeconds":"55"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/13/131013BanksyAnimals/131013BanksyAnimals.m3u8",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/13/131013BanksyAnimals_8190214.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/13/131013BanksyAnimals_8190214.jpg",
+            "width":"480",
+            "durationSeconds":"55"
+          }
+        }]
+      },{
+        "id":"gu-video-419901931",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/14/131014banksysells_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Banksy NY",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/14/131014banksysells_8192640.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/14/131014banksysells_8192640.jpg",
+            "width":"480",
+            "durationSeconds":"46"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/14/131014banksysells-16x9.mp4",
+          "typeData":{
+            "source":"Banksy NY",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/14/131014banksysells_8192640.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/14/131014banksysells_8192640.jpg",
+            "width":"480",
+            "durationSeconds":"46"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/10/14/131014banksysells_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"Banksy NY",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/14/131014banksysells_8192640.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/14/131014banksysells_8192640.jpg",
+            "width":"480",
+            "durationSeconds":"46"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/14/131014banksysells/131014banksysells.m3u8",
+          "typeData":{
+            "source":"Banksy NY",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/14/131014banksysells_8192640.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/14/131014banksysells_8192640.jpg",
+            "width":"480",
+            "durationSeconds":"46"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"artanddesign/gallery/2013/oct/18/5-pointz-new-york-graffiti",
+      "sectionId":"artanddesign",
+      "sectionName":"Art and design",
+      "webPublicationDate":"2013-10-18T15:56:00Z",
+      "webTitle":"5 Pointz: New York's graffiti space is going, going … gone?",
+      "webUrl":"http://www.theguardian.com/artanddesign/gallery/2013/oct/18/5-pointz-new-york-graffiti",
+      "apiUrl":"http://content.guardianapis.com/artanddesign/gallery/2013/oct/18/5-pointz-new-york-graffiti",
+      "fields":{
+        "trailText":"<p>The 5 Pointz museum in New York's Long Island City is a 200,000 sq ft ode to graffiti – but it's currently embroiled in a legal fight to keep the space open, after plans for demolition were approved last week</p>",
+        "headline":"5 Pointz: New York's graffiti space is going, going … gone?",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-18T16:12:43Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382028589215/5-Pointz-003.jpg",
+        "standfirst":"The 5 Pointz museum in New York's Long Island City is a 200,000 sq ft ode to graffiti – but it's currently embroiled in a legal fight to keep the space open, after plans for demolition were approved last week<br /><br />• <a href=\"http://www.theguardian.com/world/2013/oct/18/5-pointz-new-york-banksy\">5 Pointz: New York graffiti mecca calls on Banksy for help in fight to stay alive</a>",
+        "shortUrl":"http://gu.com/p/3jkv8",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382028589215/5-Pointz-003.jpg",
+        "commentable":"true",
+        "internalContentCode":"420295777",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Raya Jalabi",
+        "publication":"theguardian.com",
+        "internalPageCode":"1982888",
+        "productionOffice":"US",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-21T15:56:00Z"
+      },
+      "tags":[{
+        "id":"artanddesign/streetart",
+        "type":"keyword",
+        "webTitle":"Street art",
+        "webUrl":"http://www.theguardian.com/artanddesign/streetart",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/streetart",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"artanddesign/art",
+        "type":"keyword",
+        "webTitle":"Art",
+        "webUrl":"http://www.theguardian.com/artanddesign/art",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/art",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"artanddesign/artanddesign",
+        "type":"keyword",
+        "webTitle":"Art and design",
+        "webUrl":"http://www.theguardian.com/artanddesign/artanddesign",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/artanddesign",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"profile/raya-jalabi",
+        "type":"contributor",
+        "webTitle":"Raya Jalabi",
+        "webUrl":"http://www.theguardian.com/profile/raya-jalabi",
+        "apiUrl":"http://content.guardianapis.com/profile/raya-jalabi",
+        "bio":"<p>Raya Jalabi is a copy editor at the Guardian US. Her previous work has been featured by the Atlantic, among other outlets. Follow her on Twitter <a href=\"https://twitter.com/rayajalabi\">@rayajalabi</a></p>",
+        "r2ContributorId":"54919",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/23/1374613479060/Raya-Jalabi.jpg",
+        "references":[]
+      },{
+        "id":"world/new-york",
+        "type":"keyword",
+        "webTitle":"New York",
+        "webUrl":"http://www.theguardian.com/world/new-york",
+        "apiUrl":"http://content.guardianapis.com/world/new-york",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/gallery",
+        "type":"type",
+        "webTitle":"Gallery",
+        "webUrl":"http://www.theguardian.com/inpictures",
+        "apiUrl":"http://content.guardianapis.com/inpictures",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420380126",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382028589215/5-Pointz-003.jpg",
+          "typeData":{
+            "source":"theguardian.com",
+            "photographer":"Raya Jalabi",
+            "altText":"5 Pointz",
+            "height":"84",
+            "credit":"Raya Jalabi/theguardian.com",
+            "caption":"5 Pointz loading dock in Long Island City, Queens, NY. Photograph: Raya Jalabi/theguardian.com",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-420283168",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":1,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382029590849/5-Pointz-001.jpg",
+          "typeData":{
+            "source":"theguardian.com",
+            "photographer":"Raya Jalabi",
+            "altText":"5 Pointz",
+            "height":"480",
+            "credit":"Raya Jalabi for the Guardian",
+            "caption":"5 Pointz from the outside",
+            "width":"720"
+          }
+        }]
+      },{
+        "id":"gu-image-420283160",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":2,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382029860556/5-Pointz-001.jpg",
+          "typeData":{
+            "source":"theguardian.com",
+            "photographer":"Raya Jalabi",
+            "altText":"5 Pointz",
+            "height":"480",
+            "credit":"Raya Jalabi for the Guardian",
+            "caption":"A mural by Italian artist Mr Blob. Noel Edmonds not pictured",
+            "width":"720"
+          }
+        }]
+      },{
+        "id":"gu-image-420295507",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":3,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382034136828/5-Pointz-001.jpg",
+          "typeData":{
+            "source":"theguardian.com",
+            "photographer":"Raya Jalabi",
+            "altText":"5 Pointz",
+            "height":"480",
+            "credit":"Raya Jalabi for the Guardian",
+            "caption":"This mural by Austrian artist Onur, has 'Fressen & gefressen werden' inscribed beneath it, meaning Eat or Be Eaten. According to 5 Pointz staff members, the briefcase-wielding man symbolizes the developer being devoured by the 5 Pointz shark",
+            "width":"720"
+          }
+        }]
+      },{
+        "id":"gu-image-420283166",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":4,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382029636879/5-Pointz-001.jpg",
+          "typeData":{
+            "source":"theguardian.com",
+            "photographer":"Raya Jalabi",
+            "altText":"5 Pointz",
+            "height":"480",
+            "credit":"Raya Jalabi for the Guardian",
+            "caption":"Madrid-based graffiti artist Dier made his first visit to 5 Pointz on Wednesday",
+            "width":"720"
+          }
+        }]
+      },{
+        "id":"gu-image-420295499",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":5,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382034908432/5-Pointz-009.jpg",
+          "typeData":{
+            "source":"theguardian.com",
+            "photographer":"Raya Jalabi",
+            "altText":"5 Pointz",
+            "height":"480",
+            "credit":"Raya Jalabi for the Guardian",
+            "caption":"This mural by artist James Cochran (aka Jimmy C) was influenced by Georges Seurat. It was inspired by a young man Cochran spotted on the 7 train en route to 5 Pointz, though visitors often assume the subject is slain Florida teenager Trayvon Martin",
+            "width":"720"
+          }
+        }]
+      },{
+        "id":"gu-image-420295556",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":6,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382034419228/5-Pointz-001.jpg",
+          "typeData":{
+            "source":"theguardian.com",
+            "photographer":"Raya Jalabi",
+            "altText":"5 Pointz",
+            "height":"800",
+            "credit":"Raya Jalabi for The Guardian",
+            "caption":"Artist: Dase, from Barcelona",
+            "width":"500"
+          }
+        }]
+      },{
+        "id":"gu-image-420295503",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":7,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382034668535/5-Pointz-009.jpg",
+          "typeData":{
+            "source":"theguardian.com",
+            "photographer":"Raya Jalabi",
+            "altText":"5 Pointz",
+            "height":"480",
+            "credit":"Raya Jalabi for The Guardian",
+            "caption":"Artist: Fumero",
+            "width":"720"
+          }
+        }]
+      },{
+        "id":"gu-image-420295497",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":8,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382035096850/5-Pointz-001.jpg",
+          "typeData":{
+            "source":"theguardian.com",
+            "photographer":"Raya Jalabi",
+            "altText":"5 Pointz",
+            "height":"480",
+            "credit":"Raya Jalabi for The Guardian",
+            "caption":"Queens artist Kid Lew is colorblind, which explains the bright palette. He's only able to faintly distinguish loud colors",
+            "width":"720"
+          }
+        }]
+      },{
+        "id":"gu-image-420295495",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":9,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382035265648/5-Pointz-009.jpg",
+          "typeData":{
+            "source":"theguardian.com",
+            "photographer":"Raya Jalabi",
+            "altText":"5 Pointz",
+            "height":"480",
+            "credit":"Raya Jalabi for The Guardian",
+            "caption":"Above the sleeping woman by Chilean artist Dasic are the names of artists close to 5 Pointz",
+            "width":"720"
+          }
+        }]
+      },{
+        "id":"gu-image-420295554",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":10,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382034498721/5-Pointz-001.jpg",
+          "typeData":{
+            "source":"theguardian.com",
+            "photographer":"Raya Jalabi",
+            "altText":"5 Pointz",
+            "height":"800",
+            "credit":"Raya Jalabi for The Guardian",
+            "caption":"Artist Esteban del Valle was inspired in part by Jean Cocteau's 1946 film adaptation of Beauty and the Beast",
+            "width":"500"
+          }
+        }]
+      },{
+        "id":"gu-image-420283162",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":11,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382029728708/5-Pointz-001.jpg",
+          "typeData":{
+            "source":"theguardian.com",
+            "photographer":"Raya Jalabi",
+            "altText":"5 Pointz",
+            "height":"480",
+            "credit":"Raya Jalabi/theguardian.com",
+            "caption":"A biker stares at the walls",
+            "width":"720"
+          }
+        }]
+      },{
+        "id":"gu-image-420295501",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":12,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382034770530/5-Pointz-001.jpg",
+          "typeData":{
+            "source":"theguardian.com",
+            "photographer":"Raya Jalabi",
+            "altText":"5 Pointz",
+            "height":"480",
+            "credit":"Raya Jalabi for the Guardian",
+            "caption":"This mural of David & Goliath can be seen as a symbol of 5 Pointz' fight against the land developers. The mural is a collaboration between US artists Breaking Crew, Static and Poem",
+            "width":"720"
+          }
+        }]
+      },{
+        "id":"gu-image-420295505",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":13,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382034251055/5-Pointz-001.jpg",
+          "typeData":{
+            "source":"theguardian.com",
+            "photographer":"Raya Jalabi",
+            "altText":"5 Pointz",
+            "height":"480",
+            "credit":"Raya Jalabi for The Guardian",
+            "caption":"Artist Python was inspired by Van Gogh. This mural is an ode to Starry Night",
+            "width":"720"
+          }
+        }]
+      },{
+        "id":"gu-image-420295528",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":14,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382032490491/5-Pointz-009.jpg",
+          "typeData":{
+            "source":"theguardian.com",
+            "photographer":"Raya Jalabi",
+            "altText":"5 Pointz",
+            "height":"480",
+            "credit":"Raya Jalabi for The Guardian",
+            "caption":"5 Pointz dumpster by unknown artist",
+            "width":"720"
+          }
+        }]
+      },{
+        "id":"gu-image-420295526",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":15,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382034009274/5-Pointz-001.jpg",
+          "typeData":{
+            "source":"theguardian.com",
+            "photographer":"Raya Jalabi",
+            "altText":"5 Pointz",
+            "height":"480",
+            "credit":"Raya Jalabi for The Guardian",
+            "caption":"Artist: See TF aka Carlos Game",
+            "width":"720"
+          }
+        }]
+      },{
+        "id":"gu-image-420295530",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":16,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382032149089/5-Pointz-001.jpg",
+          "typeData":{
+            "source":"theguardian.com",
+            "photographer":"Raya Jalabi",
+            "altText":"5 Pointz",
+            "height":"480",
+            "credit":"Raya Jalabi for The Guardian",
+            "caption":"Artist: Tripel from Brooklyn",
+            "width":"720"
+          }
+        }]
+      },{
+        "id":"gu-image-420295519",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":17,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382034065886/5-Pointz-001.jpg",
+          "typeData":{
+            "source":"theguardian.com",
+            "photographer":"Raya Jalabi",
+            "altText":"5 Pointz",
+            "height":"480",
+            "credit":"Raya Jalabi for The Guardian",
+            "caption":"Save 5 Pointz, by unknown artist",
+            "width":"720"
+          }
+        }]
+      },{
+        "id":"gu-image-420296725",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":18,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382036897000/5-Pointz-001.jpg",
+          "typeData":{
+            "source":"theguardian.com",
+            "photographer":"Raya Jalabi",
+            "altText":"5 Pointz",
+            "height":"480",
+            "credit":"Raya Jalabi for The Guardian",
+            "caption":"The loading dock is the entrypoint into the 5 Pointz space",
+            "width":"720"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2013/oct/18/5-pointz-new-york-banksy",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-18T15:17:12Z",
+      "webTitle":"5 Pointz: New York graffiti mecca calls on Banksy for help in fight to stay alive",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/18/5-pointz-new-york-banksy",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/18/5-pointz-new-york-banksy",
+      "fields":{
+        "trailText":"Queens graffiti space hopes last-ditch lawsuit and maybe a word from world's most famous street painter can save its work<br /><br />&bull; <a href=\"http://www.theguardian.com/artanddesign/gallery/2013/oct/18/5-pointz-new-york-graffiti\">5 Pointz: New York's 'United Nations of graffiti' &ndash; in pictures</a>",
+        "headline":"5 Pointz: New York graffiti mecca calls on Banksy for help in fight to stay alive",
+        "body":"<p>It's the closest thing the world has to a graffiti museum. Standing in the loading docks at the center of a sprawling complex of disused warehouses in Long Island City, visitors can see a rotating collection of works by artists from France, Spain, Brazil – and, of course, New York.</p> <p>The space – known as 5 Pointz, in reference to the five boroughs of New York and in homage to a gritty 19th-century lower-Manhattan neighborhood –&nbsp;has played host to weddings, hip-hop celebrations and memorials for the dead. It’s also a building to which Meres One, its curator and creator, is planning to chain himself, should 5 Pointz lose a legal battle against the property’s owners, whose plans for demolition were approved last week.</p> <p>As the 5 Pointz community struggles to keep its “United Nations of graffiti” alive, Banksy, the closest thing street art has to a celebrity, is in the middle of a highly publicized New York “residency”. His <a href=\"http://www.theguardian.com/culture/jonathanjonesblog/2013/oct/17/banksy-mcdonalds-new-york\">daily stunts </a>have&nbsp;attracted crowds of observers and <a href=\"http://www.theguardian.com/artanddesign/2013/oct/02/bansky-arrives-new-york-street-art-residency\">mass press coverage</a>,&nbsp;but he has not yet used his pulling power to support the battle to save 5 Pointz.</p> <p>Meres – real name Jonathan Cohen – has been a volunteer curator at 5 Pointz since 2002. He is a fan of Banksy’s work and commends his success, but believes the Briton should offer support to 5 Pointz.&nbsp;“We’re not asking you to give us money, but your words could help,” Meres said. “Why don’t you put a comment out?”</p> <p>Banksy’s representatives did not respond to requests for comment.</p> <p>Meres’s relationship with Jerry and David Wolkoff, the owners of the property on which 5 Pointz stands, ran relatively smoothly until the Wolkoffs decided to sell the complex. The two parties have been seeking a compromise for three years, but last week the <a href=\"http://queens.brownstoner.com/2013/10/breaking-city-council-approves-5pointz-plan-more-development-details-emerge/\">city planning commission approved the Wolkoffs' $400m development proposal,&nbsp;</a>which would result in the destruction of 5 Pointz.&nbsp;</p> <p>“I’m here till the last day – chained to the building is definitely a scenario that might go down if it has to,” said Meres, who along with 15 other artists has launched a lawsuit against the developers. On Thursday, 5 Pointz was granted a 10-day restraining order.&nbsp;</p> <figure class=\"element element-image\" data-media-id=\"gu-fc-122f7635-3f47-4683-bb33-c511a065569e\"> <img src=\"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382035488136/5-Pointz-008.jpg\" alt=\"5 Pointz\" width=\"460\" height=\"276\" class=\"gu-image\" /> <figcaption>By Japanese artist Shiro</figcaption> </figure> <p>It seems a straightforward case: the Wolkoffs own the building and artists put graffiti on it. Over the years, the developers have allowed the graffiti to continue, asking only that it include no pornography, profanity or political messages. It's an uneasy partnership, but it has lasted for 20 years.</p> <p>However, in 2009 an artist was seriously injured when a staircase collapsed. An investigation by city officials resulted in a number of citations against the Wolkoffs. (The&nbsp;Wolkoffs did not respond to multiple calls for comment.)&nbsp;<a href=\"http://www.nytimes.com/2009/04/19/nyregion/19pointz.html\">In 2010, they started exploring options to sell</a>.</p> <p>The approved development will include one 47-storey building and one 41-storey building. A bar around the corner from 5 Pointz will be destroyed. So will an art gallery.&nbsp;</p> <p>After three years of negotiations with the developers – including an offer to buy the property – 5 Pointz filed <a href=\"http://www.scribd.com/doc/176977344/VARA-Complaint-10102013-Copy\">the lawsuit</a>, arguing that the work on site is protected under the federal Visual Artists Rights Act (Vara).</p> <p>Celia Lerman, a law professor at Torcuato Di Tella University in Buenos Aires, said this defense would depend on whether the developers <a href=\"http://www.theguardian.com/artanddesign/2013/oct/06/banksy-new-york-murals-law\">gave consent to the work</a>&nbsp;– and what the conditions of such an agreement were. She said the artists would not necessarily forfeit their Vara rights by painting on other people’s property, but acknowledged that they could not simply enforce Vara against the property owner.</p> <p>“In the 5 Pointz case, the artists may not be able to enforce their Vara rights against the owner, but they would be able to enforce Vara rights against other potential parties – like the government,” Lerman said.</p> <p>The 5 Pointz lawsuit is running parallel to a second application, for landmark status. (It is routine in New York for a first attempt to be rejected; 5 Pointz expects to have more material to support its second application.)</p> <figure class=\"element element-image\" data-media-id=\"gu-fc-6bc80030-ae37-44c5-9f9a-f3e26c5367d9\"> <img src=\"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382041446490/5-Pointz-008.jpg\" alt=\"5 Pointz\" width=\"460\" height=\"276\" class=\"gu-image\" /> <figcaption>By French artist Djalouz</figcaption> </figure> <p>While the lawyers fight it out, 5 Pointz remains open. The top floors bear the “permanent collection”, which includes work from “old-school” artists which provides inspiration to today's hopefuls. Sometimes the old timers stop by 5 Pointz to paint, attend events or help maintain the property, which is free to visit.</p> <p>“5 Pointz is the classic spot in New York to meet up and paint,” said <a href=\"http://dier.es/\">Dier, an artist from Madrid</a>&nbsp;who was in New York&nbsp;to paint a 5 Pointz wall for the first time. A&nbsp;graffiti artist since 1992, he said 5 Pointz was the only place in New York where people could spend time on graffiti without worrying about whether they would be discovered by police. Dier has worked extensively on the west coast, but said the US was notorious for its lack of space and acceptance for graffiti.</p> <p>“Sooner or later, Americans have to accept that one of the biggest parts of their cultural heritage is graffiti and hip-hop,” Dier said.</p> <p>To create his work, Dier will need somewhere between $400 and $700-worth of paint. If it takes him into the night, lights will be provided by Meres – who also provides homes and meals – or&nbsp;Marie Cecile Flageul, his fellow curator.&nbsp;Flageul credits a cluster of volunteers for helping keep the place alive. “Out of nothing, we made everything happen,” she said.</p> <p>5 Pointz relies on small donations and out-of-pocket contributions from Meres and Flageul. On Wednesday afternoon, they were discussing how to cover a $400 door-lock repair. Meres and two frequent 5 Pointz painters and patrons held the door to assist the repairman.</p> <p>Flageul, like Meres, is optimistic. She said: “Either way, whatever happens, we've given talented artists a platform. We’ve made history.&quot;</p> <p><strong>Share your photos of graffiti from around the world: </strong>click on blue 'Contribute' button and submit your photos or if you're on your smartphone, download the free <a href=\"ttps://witness.theguardian.com/apps\">GuardianWitness app</a>.</p><!-- Guardian Watermark: internal-code/content/420285277|2013-11-05T11:03:48Z|b54a56f223836df1dc247d45a78f492877d663ff -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-18T16:11:24Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382028589215/5-Pointz-003.jpg",
+        "standfirst":"Queens graffiti space hopes last-ditch lawsuit and maybe a word from world's most famous street painter can save its work<br /><br />&bull; <a href=\"http://www.theguardian.com/artanddesign/gallery/2013/oct/18/5-pointz-new-york-graffiti\">5 Pointz: New York's 'United Nations of graffiti' &ndash; in pictures</a>",
+        "shortUrl":"http://gu.com/p/3jjph",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382028589215/5-Pointz-003.jpg",
+        "wordcount":"1",
+        "commentable":"true",
+        "internalContentCode":"420285277",
+        "allowUgc":"true",
+        "internalComposerCode":"52601eade4b0010b6627a96e",
+        "isPremoderated":"false",
+        "byline":"Amanda Holpuch in New York",
+        "publication":"theguardian.com",
+        "internalPageCode":"1982843",
+        "productionOffice":"US",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-21T15:15:10Z"
+      },
+      "tags":[{
+        "id":"world/new-york",
+        "type":"keyword",
+        "webTitle":"New York",
+        "webUrl":"http://www.theguardian.com/world/new-york",
+        "apiUrl":"http://content.guardianapis.com/world/new-york",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"artanddesign/streetart",
+        "type":"keyword",
+        "webTitle":"Street art",
+        "webUrl":"http://www.theguardian.com/artanddesign/streetart",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/streetart",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"artanddesign/art",
+        "type":"keyword",
+        "webTitle":"Art",
+        "webUrl":"http://www.theguardian.com/artanddesign/art",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/art",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"artanddesign/banksy",
+        "type":"keyword",
+        "webTitle":"Banksy",
+        "webUrl":"http://www.theguardian.com/artanddesign/banksy",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/banksy",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"profile/amanda-holpuch",
+        "type":"contributor",
+        "webTitle":"Amanda Holpuch",
+        "webUrl":"http://www.theguardian.com/profile/amanda-holpuch",
+        "apiUrl":"http://content.guardianapis.com/profile/amanda-holpuch",
+        "bio":"<p>Amanda is a reporter at the Guardian US. She graduated from NYU's Gallatin School of Individualized Study with a self-designed degree in The Reconstruction of American Journalism and has worked at the New York Daily News and Rodale.</p>",
+        "r2ContributorId":"50290",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/28/1359390632771/Amanda_Holpuch.jpg",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-91ae12c8-b0a4-41b4-8960-a2f033a20700",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382028598796/5-Pointz-008.jpg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382028598796/5-Pointz-008.jpg",
+            "source":"theguardian.com",
+            "photographer":"Raya Jalabi",
+            "altText":"5 Pointz",
+            "height":"276",
+            "credit":"Raya Jalabi/theguardian.com",
+            "caption":"5 Pointz creator Meres One said: 'Chained to the building is definitely a scenario that might go down if it has to.'&nbsp;Photographs: Raya Jalabi for the Guardian",
+            "mediaId":"gu-fc-91ae12c8-b0a4-41b4-8960-a2f033a20700",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-fc-122f7635-3f47-4683-bb33-c511a065569e",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382035488136/5-Pointz-008.jpg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382035488136/5-Pointz-008.jpg",
+            "source":"theguardian.com",
+            "photographer":"Raya Jalabi",
+            "altText":"5 Pointz",
+            "height":"276",
+            "credit":"Raya Jalabi/theguardian.com",
+            "caption":"By Japanese artist Shiro",
+            "mediaId":"gu-fc-122f7635-3f47-4683-bb33-c511a065569e",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-fc-6bc80030-ae37-44c5-9f9a-f3e26c5367d9",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382041446490/5-Pointz-008.jpg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/17/1382041446490/5-Pointz-008.jpg",
+            "source":"The Guardian",
+            "photographer":"Raya Jalabi",
+            "altText":"5 Pointz",
+            "height":"276",
+            "credit":"Raya Jalabi/The Guardian",
+            "caption":"By French artist Djalouz",
+            "mediaId":"gu-fc-6bc80030-ae37-44c5-9f9a-f3e26c5367d9",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"witness-assignment",
+        "id":"witness-assignment/526001cbe4b0bbc67cfff424"
+      }]
+    }]
+  }
+}

@@ -2,133 +2,391 @@ package conf
 
 import com.gu.management.{ DefaultSwitch, Switchable }
 import common._
-import org.apache.commons.io.IOUtils
-import java.util.Properties
+import implicits.Collections
 import play.api.Plugin
-import akka.actor.Cancellable
-import scala.concurrent.duration.FiniteDuration
-import scala.concurrent.duration._
-import play.api.{ Application => PlayApp }
-import com.gu.management.play.RequestMetrics
-import play.api.libs.ws.{Response, WS}
+import play.api.libs.ws.WS
 
-object CommonSwitches {
+sealed trait SwitchState
+case object On extends SwitchState
+case object Off extends SwitchState
 
-  val AutoRefreshSwitch = DefaultSwitch("auto-refresh",
-    "Enables auto refresh in pages such as live blogs and live scores. Turn off to help handle exceptional load.",
-    initiallyOn = true)
+case class Switch(group: String, name: String, description: String, safeState: SwitchState) extends Switchable {
+  val delegate = DefaultSwitch(name, description, initiallyOn = safeState == On)
 
-  val FontSwitch = DefaultSwitch("web-fonts",
-    "If this is switched on then the custom Guardian web font will load.",
-    initiallyOn = true)
+  def isSwitchedOn: Boolean = delegate.isSwitchedOn
 
-  val AudienceScienceSwitch = DefaultSwitch("audience-science",
-    "If this switch is on the Audience Science will be enabled.",
-    initiallyOn = true)
-
-  val DoubleCacheTimesSwitch = DefaultSwitch("double-cache-times",
-    "If this switch is turned on it doubles the cache time of every endpoint. Turn on to help handle exceptional load.",
-    initiallyOn = false)
-
-  val RelatedContentSwitch = DefaultSwitch("related-content",
-    "If this switch is turned on then related content will show. Turn off to help handle exceptional load.",
-    initiallyOn = true)
-
-  val OmnitureVerificationSwitch = DefaultSwitch("omniture-verification",
-    "If this switch is turned on then a separate call to Omniture will be made to help verify our tracking.",
-    initiallyOn = false)
-
-  val NetworkFrontAppealSwitch = DefaultSwitch("network-front-appeal",
-    "Switch to show the appeal trailblock on the network front.",
-    initiallyOn = false)
-
-  val WitnessVideoSwitch = DefaultSwitch("witness-video",
-    "Switch this switch off to disable witness video embeds.",
-    initiallyOn = true)
-
-  val ExperimentStoryModule01Switch = DefaultSwitch("experiment-story-module-01",
-    "Enable storified articles.",
-    initiallyOn = false)
-
-  val StoryVersionBSwitch = DefaultSwitch("story-version-b",
-    "Switch to enable version B of story page.",
-    initiallyOn = false)
-
-  val StoryFrontTrails = DefaultSwitch("story-front-trails",
-    "Switch on to enable front trails for latest stories.",
-    initiallyOn = false)
-
-  val SocialSwitch = DefaultSwitch("social-icons",
-    "If this switch is enabled the icons to popular social media sites will be displayed",
-    initiallyOn = false)
-
-  val SearchSwitch = DefaultSwitch("google-search",
-    "If this switch is turned on then Google search is added to the sections nav",
-    initiallyOn = false)
-
-  val QuantcastSwitch = DefaultSwitch("quantcast",
-    "If this switch is enabled the Quantcast audience segment web bug will be embedded in all responses",
-    initiallyOn = false)
-
-  val HomescreenSwitch = DefaultSwitch("homescreen",
-    "If this switch is enabled the add-to-homescreen popup will plague iOS users",
-    initiallyOn = false)
-
-  val OptimizelySwitch = DefaultSwitch("optimizely",
-    "If this switch is on Optimizely will be enabled.",
-    initiallyOn = false)
-
-  val AdvertSwitch = DefaultSwitch("adverts",
-    "If this switch is on OAS adverts will be enabled.",
-    initiallyOn = true)
-
-  val ABRelatedContent = DefaultSwitch("ab-related-content",
-    "If this switch is on related content AB test will be enabled.",
-    initiallyOn = false)
-  
-  val ImageServerSwitch = DefaultSwitch("image-server",
-    "If this switch is on then i.guim.co.uk serve as our image host. Otherwise, images will come from static.guim.co.uk",
-    initiallyOn = false)
-  
-  val all: Seq[Switchable] = Seq(
-    FontSwitch, AutoRefreshSwitch, AudienceScienceSwitch, DoubleCacheTimesSwitch,
-    RelatedContentSwitch, OmnitureVerificationSwitch, NetworkFrontAppealSwitch,
-    ExperimentStoryModule01Switch, StoryVersionBSwitch, StoryFrontTrails, SocialSwitch,
-    SearchSwitch, QuantcastSwitch, HomescreenSwitch, OptimizelySwitch, AdvertSwitch,
-    ImageServerSwitch, ABRelatedContent
-  )
+  def switchOn() {
+    if (isSwitchedOff) {
+      delegate.switchOn()
+    }
+  }
+  def switchOff() {
+    if (isSwitchedOn) {
+      delegate.switchOff()
+    }
+  }
 }
 
-class SwitchBoardAgent(config: GuardianConfiguration, val switches: Seq[Switchable]) extends AkkaSupport with Logging with Plugin {
+object Switches extends Collections {
 
-  import play.api.libs.concurrent.Execution.Implicits._
+  // Switch names can be letters numbers and hyphens only
 
-  val configUrl = config.switches.configurationUrl
 
-  private lazy val schedule = play_akka.scheduler.every(Duration(1, MINUTES), initialDelay = Duration(5, SECONDS)) {
-    refresh()
-  }
+  // Load Switches
+
+  val AutoRefreshSwitch = Switch("Performance Switches", "auto-refresh",
+    "Enables auto refresh in pages such as live blogs and live scores. Turn off to help handle exceptional load.",
+    safeState = Off)
+
+  val DoubleCacheTimesSwitch = Switch("Performance Switches", "double-cache-times",
+    "Doubles the cache time of every endpoint. Turn on to help handle exceptional load.",
+    safeState = On)
+
+  val RelatedContentSwitch = Switch("Performance Switches", "related-content",
+    "If this switch is turned on then related content will show. Turn off to help handle exceptional load.",
+    safeState = Off)
+
+  val CssFromStorageSwitch = Switch("Performance Switches", "css-from-storage",
+    "If this switch is on CSS will be cached in users localStorage and read from there on subsequent requests.",
+    safeState = Off)
+
+  val ElasticSearchSwitch = Switch("Performance Switches", "elastic-search-content-api",
+    "If this switch is on then (parts of) the application will use the Elastic Search content api",
+    safeState = Off)
+
+  val EditionRedirectLoggingSwitch = Switch("Performance Switches", "edition-redirect-logging",
+    "If this switch is on, then extra logging will be done for edition redirects.",
+    safeState = Off
+  )
+
+  // Advertising Switches
+
+  val AdvertSwitch = Switch("Advertising", "adverts",
+    "If this switch is on then OAS adverts will be loaded with JavaScript.",
+    safeState = On)
+
+  val VideoAdvertSwitch = Switch("Advertising", "video-adverts",
+    "If this switch is on then OAS video adverts will be loaded with JavaScript.",
+    safeState = Off)
+
+  val iPhoneAppSwitch = Switch("Advertising", "iphone-app",
+    "If this switch is on then the iPhone app upsell will be enabled.",
+    safeState = Off)
+
+
+  // Analytics Switches
+
+  val AudienceScienceSwitch = Switch("Analytics", "audience-science",
+    "If this switch is on the Audience Science will be enabled.",
+    safeState = Off)
+  
+  val AdDwellTimeLoggerSwitch = Switch("Analytics", "ad-dwell-times-logging",
+    "If this is on the in-view advert tracker will log some data to the Play logs",
+    safeState = On)
+
+  val QuantcastSwitch = Switch("Analytics", "quantcast",
+    "Enable the Quantcast audience segment tracking.",
+    safeState = Off)
+
+  val AdSlotImpressionStatsSwitch = Switch("Analytics", "adslot-impression-stats",
+    "Track when adslots (and possible ad slots) are scrolled into view.",
+    safeState = Off)
+
+  val LiveStatsSwitch = Switch("Analytics", "live-stats",
+    "Turns on our real-time KPIs",
+    safeState = On)
+
+  val UserzoomSwitch = Switch("Analytics", "userzoom",
+    "Turns on userzoom survey popups",
+    safeState = Off)
+
+  // Discussion Switches
+
+  val DiscussionSwitch = Switch("Discussion", "discussion",
+    "If this switch is on, comments are displayed on articles.",
+    safeState = Off)
+
+  val DiscussionCommentRecommend = Switch("Discussion", "discussion-comment-recommend",
+    "If this switch is on, users can recommend comments",
+    safeState = Off)
+
+  val DiscussionPostCommentSwitch = Switch("Discussion", "discussion-post-comment",
+    "If this switch is on, users will be able to post comments",
+    safeState = Off)
+
+  val DiscussionTopCommentsSwitch = Switch("Discussion", "discussion-top-comments",
+    "If this switch is on, users will see top comments if there are any",
+    safeState = Off)
+
+  // Open
+
+  val OpenCtaSwitch = Switch("Open", "open-cta",
+    "If this switch is on, will see a CTA to comments on the right hand side",
+    safeState = Off)
+
+
+  // Swipe Switches
+
+  val SwipeNav = Switch("Swipe Navigation", "swipe-nav",
+    "If this switch is on then swipe navigation is enabled.",
+    safeState = Off)
+
+  val SwipeNavOnClick = Switch("Swipe Navigation", "swipe-nav-on-click",
+    "If this switch is also on then swipe navigation on clicks is enabled.",
+    safeState = Off)
+
+  // Feature Switches
+
+  val ReleaseMessageSwitch = Switch("Feature Switches", "release-message",
+    "If this is switched on users will be messaged that they are inside the alpha/beta/whatever release",
+    safeState = Off)
+
+
+  val FontSwitch = Switch("Feature Switches", "web-fonts",
+    "If this is switched on then the custom Guardian web font will load.",
+    safeState = Off)
+
+  val NetworkFrontAppealSwitch = Switch("Feature Switches", "network-front-appeal",
+    "Switch to show the appeal trailblock on the network front.",
+    safeState = Off)
+
+  val WitnessVideoSwitch = Switch("Feature Switches", "witness-video",
+    "Switch this switch off to disable witness video embeds.",
+    safeState = Off)
+
+  val SocialSwitch = Switch("Feature Switches", "social-icons",
+    "Enable the social media share icons (Facebook, Twitter etc.)",
+    safeState = Off)
+
+  val SearchSwitch = Switch("Feature Switches", "google-search",
+    "If this switch is turned on then Google search is added to the sections nav.",
+    safeState = Off)
+
+  val AustraliaFrontSwitch = Switch("Feature Switches", "australia-front",
+    "If this switch is on the australia front will be available. Otherwise it will 404.",
+    safeState = Off)
+
+  val NewsContainerSwitch = Switch("Feature Switches", "news-container",
+    "If this switch is on the news container will be on the network front. Otherwise fronts will display a normal facia container.",
+    safeState = Off)
+
+  val LocalNavSwitch = Switch("Feature Switches", "local-nav",
+    "If this switch is on, a secondary local nav is shown.",
+    safeState = Off)
+
+  val LightboxGalleriesSwitch = Switch("Feature Switches", "lightbox-galleries",
+    "If this switch is on, galleries open in a lightbox.",
+    safeState = Off)
+
+  val IdentityProfileNavigationSwitch = Switch("Feature Switches", "id-profile-navigation",
+    "If this switch is on you will see the link in the topbar taking you through to the users profile or sign in..",
+    safeState = On)
+
+  val ExternalLinksCardsSwitch = Switch("Feature Switches", "external-links-cards",
+    "If this switch is on, external links are turned into cards in body content on wide viewports.",
+    safeState = Off)
+
+  val LiveSummarySwitch = Switch("Feature Switches", "live-summary",
+    "If this is switched on the live events will show a summary at the beginning of the page on mobile next to the article on wider devices.",
+    safeState = Off)
+
+  val ShowUnsupportedEmbedsSwitch = Switch("Feature Switches", "unsupported-embeds",
+    "If this is switched on then unsupported embeds will be included in article bodies.",
+    safeState = Off)
+
+  val ArticleKeywordsSwitch = Switch("Feature Switches", "article-keywords",
+    "If this is switched on then keywords will be shown at the end of articles.",
+    safeState = Off)
+
+  val ClientSideErrorSwitch = Switch("Feature Switches", "client-side-errors",
+    "If this is switch on the the browser will log JavaScript errors to the server (via a beacon)",
+    safeState = Off)
+
+  val FacebookAutoSigninSwitch = Switch("Feature Switches", "facebook-autosignin",
+    "If this switch is on then users who have previously authorized the guardian app in facebook and who have not recently signed out are automatically signed in.",
+    safeState = Off)
+
+  // A/B Test Switches
+
+  val FontDelaySwitch = Switch("A/B Tests", "web-fonts-delay",
+    "If this is switched on an AB test runs to measure the impact of not showing fallback fonts while fonts download.",
+    safeState = Off)
+
+  val ABParagraphSpacingSwitch = Switch("A/B Tests", "ab-paragraph-spacing",
+    "If this is switched on an AB test runs to measure the impact of macro typography tweaks on readability.",
+    safeState = Off)
+
+  val ABInlineLinkCardSwitch = Switch("A/B Tests", "ab-inline-link-card",
+    "If this is switched on an AB test runs to measure the impact of cardifying inline links on number of linked stories read.",
+    safeState = Off)
+
+  val ABAa = Switch("A/B Tests", "ab-abcd",
+    "If this is switched on an AA test runs to prove the assignment of users in to segments is working reliably.",
+    safeState = Off)
+
+  val ABLiveBlogShowMore = Switch("A/B Tests", "ab-live-blog-show-more",
+    "If this is switched on an AB test runs to trial the impact of only displaying 10 live blog blocks with a show more cta",
+    safeState = Off)
+
+  val ABAlphaAdverts = Switch("A/B Tests", "ab-alpha-adverts",
+    "If this is switched on an AB test runs to trial new advertising user experiences and commercial models",
+    safeState = Off)
+  
+  val ABAlphaComm = Switch("A/B Tests - second tranche", "ab-alpha-comm",
+    "If this is switched on an AB test runs to trial new advertising user experiences and commercial models",
+    safeState = Off)
+
+  val ABCommercialComponents = Switch("A/B Tests", "ab-commercial-components",
+    "If this is switched on an AB test runs to test the new commercial components",
+    safeState = Off)
+
+  val ABMobileFacebookAutosignin = Switch("A/B Tests", "ab-mobile-facebook-autosignin",
+    "If this is switched on an AB test runs to test facebook autosignin for mobile users",
+   safeState = Off)
+
+  val ABImproveOnwardTrails = Switch("A/B Tests", "ab-improve-onward-trails",
+    "If this is switched on an AB test runs to test re-ordering story packages",
+    safeState = Off)
+
+  val ABInitialShowMore = Switch("A/B Tests", "ab-initial-show-more",
+    "If this is switched on an AB test runs to test how many items to initially show in news container",
+    safeState = Off)
+
+  val ABShowMoreLayout = Switch("A/B Tests", "ab-show-more-layout",
+    "If this is switched on an AB test runs that presents the 'show more' layout of a collection",
+    safeState = Off)
+
+  val ABOnwardIntrusive = Switch("A/B Tests", "ab-onward-intrusive",
+    "If this is switched on an AB test runs to test intrusive onward components",
+    safeState = Off)
+
+  // Sport Switch
+
+  val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
+    "If this is switched on the live cricket blocks are added to cricket articles, cricket tag and sport front.",
+    safeState = Off)
+
+  // Dummy Switch
+
+  val IntegrationTestSwitch = Switch("Unwired Test Switch", "integration-test-switch",
+    "Switch that is only used while running tests. You never need to change this switch.",
+    safeState = Off)
+
+  val FaciaSwitch = Switch("Facia", "facia",
+    "Switch to redirect to facia if request has X-Gu-Facia=true",
+    safeState = Off  )
+
+  val UkAlphaSwitch = Switch("Facia", "facia-uk-alpha",
+    "If this is switched on then UK-Alpha will be served for requests with the cookie GU_UK_ALPHA",
+    safeState = Off
+  )
+
+  // Image Switch
+
+  val ServeWebPImagesSwitch = Switch("Image Server", "serve-webp-images",
+    "If this is switched on the Image server will use the webp format when requested.",
+    safeState = On)
+
+  val ImageServerSwitch = Switch("Image Server", "image-server",
+    "If this switch is on images will be served off i.guim.co.uk (dynamic image host).",
+    safeState = On)
+
+  val all: List[Switch] = List(
+    AutoRefreshSwitch,
+    DoubleCacheTimesSwitch,
+    RelatedContentSwitch,
+    AdvertSwitch,
+    VideoAdvertSwitch,
+    AudienceScienceSwitch,
+    QuantcastSwitch,
+    DiscussionSwitch,
+    DiscussionPostCommentSwitch,
+    DiscussionTopCommentsSwitch,
+    OpenCtaSwitch,
+    SwipeNav,
+    SwipeNavOnClick,
+    FontSwitch,
+    NetworkFrontAppealSwitch,
+    WitnessVideoSwitch,
+    SocialSwitch,
+    SearchSwitch,
+    ImageServerSwitch,
+    ReleaseMessageSwitch,
+    AustraliaFrontSwitch,
+    NewsContainerSwitch,
+    FontDelaySwitch,
+    ABParagraphSpacingSwitch,
+    ABInlineLinkCardSwitch,
+    IntegrationTestSwitch,
+    iPhoneAppSwitch,
+    ClientSideErrorSwitch,
+    LocalNavSwitch,
+    ABAa,
+    LightboxGalleriesSwitch,
+    IdentityProfileNavigationSwitch,
+    ExternalLinksCardsSwitch,
+    LiveSummarySwitch,
+    LiveCricketSwitch,
+    LiveStatsSwitch,
+    UserzoomSwitch,
+    FaciaSwitch,
+    AdSlotImpressionStatsSwitch,
+    ABLiveBlogShowMore,
+    CssFromStorageSwitch,
+    ElasticSearchSwitch,
+    ShowUnsupportedEmbedsSwitch,
+    ServeWebPImagesSwitch,
+    ArticleKeywordsSwitch,
+    ABAlphaAdverts,
+    ABAlphaComm,
+    ABCommercialComponents,
+    EditionRedirectLoggingSwitch,
+    FacebookAutoSigninSwitch,
+    ABImproveOnwardTrails,
+    ABOnwardIntrusive,
+    ABInitialShowMore,
+    AdDwellTimeLoggerSwitch,
+    ABShowMoreLayout,
+    ABMobileFacebookAutosignin,
+    UkAlphaSwitch
+  )
+
+  val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
+}
+
+
+class SwitchBoardAgent(config: GuardianConfiguration) extends Plugin with ExecutionContexts with Logging {
 
   def refresh() {
     log.info("Refreshing switches")
-    WS.url(configUrl).get().foreach{ response =>
+    WS.url(config.switches.configurationUrl).get() foreach { response =>
       response.status match {
         case 200 =>
-          val properties = new Properties()
-          properties.load(IOUtils.toInputStream(response.body))
-          switches.foreach { switch =>
-            Option(properties.getProperty(switch.name)).map {
+          val nextState = Properties(response.body)
+
+          for (switch <- Switches.all) {
+            nextState.get(switch.name) foreach {
               case "on" => switch.switchOn()
               case "off" => switch.switchOff()
               case other => log.warn(s"Badly configured switch ${switch.name} -> $other")
             }
           }
+
         case _ => log.warn(s"Could not load switch config ${response.status} ${response.statusText}")
       }
     }
   }
 
-  override def onStart() = schedule
+  override def onStart() {
+    Jobs.deschedule("SwitchBoardRefreshJob")
+    Jobs.schedule("SwitchBoardRefreshJob", "0 * * * * ?") {
+      refresh()
+    }
 
-  override def onStop() = schedule.cancel()
+    refresh()
+  }
+
+  override def onStop() {
+    Jobs.deschedule("SwitchBoardRefreshJob")
+  }
 }

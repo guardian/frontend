@@ -1,4 +1,4 @@
-define(['common', 'modules/errors'], function(common, Errors) {
+define(['common', 'bean', 'modules/analytics/errors'], function(common, bean, Errors) {
 
     describe("Errors", function() {
        
@@ -8,7 +8,7 @@ define(['common', 'modules/errors'], function(common, Errors) {
             fakeError = { 'message': 'foo', lineno: 1, filename: 'foo.js' };
         
         beforeEach(function() {
-            e = new Errors({window: w});
+            e = new Errors({window: w, beaconUrl: 'beacon.gu.com', buildNumber: 643});
             e.init();
         });
         
@@ -20,9 +20,9 @@ define(['common', 'modules/errors'], function(common, Errors) {
             expect(w.onerror).toBeDefined();
         });
 
-        it("should log javascript errors with the error message, line number and file", function(){
+        it("should log javascript errors with the error message, line number, build number, and file", function(){
             expect(e.log(fakeError.message, fakeError.filename, fakeError.lineno)).toBeTruthy();
-            expect(document.getElementById('js-err').getAttribute('src')).toContain('/px.gif?js/message=foo&filename=foo.js&lineno=1');
+            expect(document.getElementById('js-err').getAttribute('src')).toContain('beacon.gu.com/js.gif?message=foo&filename=foo.js&lineno=1&type=js&build=643');
         });
 
         it("after logging, should let browser handle error if user pref switch 'showErrors is on", function(){
@@ -58,17 +58,29 @@ define(['common', 'modules/errors'], function(common, Errors) {
             it("it should log 'documentwriteslot.js' errors as advert errors", function(){
                 e.log(fakeError.message, 'modules/adverts/documentwriteslot.js', fakeError.lineno);
                 expect(document.getElementById('js-err').getAttribute('src')).toContain(
-                    '/px.gif?ads/message=foo&filename=modules%2Fadverts%2Fdocumentwriteslot.js&lineno=1'
+                    'beacon.gu.com/js.gif?message=foo&filename=modules%2Fadverts%2Fdocumentwriteslot.js&lineno=1&type=ads'
                 );
             });
             
             it("it should log 'Script error.' errors as advert errors", function(){
                 e.log('Script error.', fakeError.filename, fakeError.lineno);
                 expect(document.getElementById('js-err').getAttribute('src')).toContain(
-                    '/px.gif?ads/message=Script%20error.&filename=foo.js&lineno=1'
+                    'beacon.gu.com/js.gif?message=Script%20error.&filename=foo.js&lineno=1&type=ads'
                 );
             });
             
+        });
+
+        it("should correctly parse [object Event] errors", function(){
+            // script element for error event
+            var script = document.createElement('script');
+            script.src = 'http://foo.com/bar.js';
+            // fake event
+            bean.on(script, 'error', function(event) {
+                e.log(event.originalEvent, fakeError.filename, fakeError.lineno);
+                expect(document.getElementById('js-err').getAttribute('src')).toContain('Syntax%20or%20http%20error%3A%20http%3A%2F%2Ffoo.com%2Fbar.js');
+            })
+            bean.fire(script, 'error');
         });
 
     });

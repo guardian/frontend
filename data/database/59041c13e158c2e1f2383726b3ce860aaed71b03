@@ -1,0 +1,2801 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"law/2013/nov/04/serious-fraud-office-inquiry-g4s-serco-overcharging",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2013-11-04T12:34:40Z",
+      "webTitle":"Serious Fraud Office launches inquiry into G4S and Serco overcharging claims",
+      "webUrl":"http://www.theguardian.com/law/2013/nov/04/serious-fraud-office-inquiry-g4s-serco-overcharging",
+      "apiUrl":"http://content.guardianapis.com/law/2013/nov/04/serious-fraud-office-inquiry-g4s-serco-overcharging",
+      "fields":{
+        "newspaperPageNumber":"18",
+        "trailText":"Investigation follows justice secretary's claims that firms overcharged on electronic tagging contracts for offenders<br />",
+        "headline":"Serious Fraud Office launches inquiry into G4S and Serco overcharging claims",
+        "body":"<p>The Serious Fraud Office has launched a formal criminal investigation into two of the government's biggest suppliers, G4S and Serco, following claims by the justice secretary, Chris Grayling, of tens of millions of pounds of overcharging on electronic tagging contracts for offenders.</p><p>Grayling asked the SFO to look into the billing allegations in July when he told MPs that an external audit had revealed that the overcharging included billing for tracking the movements of criminals who had moved abroad, who were back in prison, who had had their tags removed and even, in a few cases, those who had died.</p><p>The justice secretary said that in some cases the bills had continued to be presented years after active monitoring had stopped.</p><p>Whitehall sources have confirmed that the central allegation in the case revolves around charges for 3,000 phantom offenders. The justice ministry was being billed by the two companies for the tagging of 18,000 offenders a day under the &pound;700m contract when only 15,000 were actually being monitored.</p><p>G4S said it would co-operate with the investigation and had been notified by the SFO director, David Green, that it would cover &quot;the contract for the provision of electronic monitoring services which commenced in 2005 as amended and extended until the present day&quot;.</p><p>In July Grayling asked the SFO to look into the situation after G4S refused to co-operate with a justice ministry internal forensic audit to establish whether any dishonesty had taken place. The decision to refer Serco, which did co-operate with the MoJ audit, to the SFO was taken in September.</p><p>In July Serco said senior management had not been aware of the discrepancies but they did not believe anything dishonest had taken place. The company agreed with the MoJ that if the forensic audit showed dishonesty had taken place they would jointly call in the SFO.</p><p>The pattern of overcharging was revealed by a PricewaterhouseCoopers external audit commissioned by Grayling in May after billing discrepancies were discovered during the re-tendering process.</p><p>Under the contracts, more than 20,000 offenders are monitored on electronic tags at any one time. They are a key element in the criminal justice system's menu of community punishments as they are used to enforce curfews for prisoners on early release as well as some court orders.</p><p>In a small number of cases they have been used to track the movements of terror suspects and paedophiles. Last week prosecutions were halted against three terror suspects accused of tampering with their G4S-supplied GPS tags amid claims of faults with the tags and their straps.</p><p>The two companies are among the government's biggest suppliers. Both have already agreed to withdraw from bidding for the &pound;3bn next-generation tagging contract.</p><p>The Cabinet Office has also been reviewing the 28 contracts that the two companies currently hold with the government worth a total of &pound;9bn, including the management of the atomic weapons establishment at Aldermaston. Grayling has said that both companies can bid for contracts to run 70% of the probation service but will not be awarded them unless the SFO give them a clean bill of health.</p><p>Sadiq Khan, the shadow justice secretary, said the SFO decision was a major development. &quot;In July I wrote to the SFO calling on them to investigate claims against G4S and to act swiftly to secure any possible evidence that might be needed. I hope that the time taken to launch this investigation hasn't resulted in the loss of important evidence,&quot; he said.</p><p>&quot;With future Ministry of Justice contracts up for grabs, including more than &pound;600m of probation contracts, the government must act swiftly and bar G4S from bidding for any more until the SFO has concluded its investigation. By failing to do so, David Cameron risks undermining public confidence in our justice system.&quot;</p><!-- Guardian Watermark: internal-code/content/421618253|2013-11-05T11:03:51Z|df5976dcc5879fda7b656cdf0b92145487558cb3 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-05T00:10:59Z",
+        "hasStoryPackage":"true",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383568423030/An-electronic-tag-004.jpg",
+        "standfirst":"Investigation follows justice secretary's claims that firms overcharged on electronic tagging contracts for offenders<br />",
+        "shortUrl":"http://gu.com/p/3k4yx",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383568423030/An-electronic-tag-004.jpg",
+        "wordcount":"616",
+        "commentable":"false",
+        "internalContentCode":"421618253",
+        "allowUgc":"false",
+        "internalOctopusCode":"8278295",
+        "isPremoderated":"false",
+        "byline":"Alan Travis, home affairs editor",
+        "publication":"theguardian.com",
+        "newspaperEditionDate":"2013-11-05",
+        "internalPageCode":"1991467",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-11T12:34:40Z"
+      },
+      "tags":[{
+        "id":"business/g4s",
+        "type":"keyword",
+        "webTitle":"G4S",
+        "webUrl":"http://www.theguardian.com/business/g4s",
+        "apiUrl":"http://content.guardianapis.com/business/g4s",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"law/serious-fraud-office",
+        "type":"keyword",
+        "webTitle":"Serious Fraud Office",
+        "webUrl":"http://www.theguardian.com/law/serious-fraud-office",
+        "apiUrl":"http://content.guardianapis.com/law/serious-fraud-office",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"law/law",
+        "type":"keyword",
+        "webTitle":"Law",
+        "webUrl":"http://www.theguardian.com/law/law",
+        "apiUrl":"http://content.guardianapis.com/law/law",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/sercogroup",
+        "type":"keyword",
+        "webTitle":"Serco",
+        "webUrl":"http://www.theguardian.com/business/sercogroup",
+        "apiUrl":"http://content.guardianapis.com/business/sercogroup",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"law/criminal-justice",
+        "type":"keyword",
+        "webTitle":"UK criminal justice",
+        "webUrl":"http://www.theguardian.com/law/criminal-justice",
+        "apiUrl":"http://content.guardianapis.com/law/criminal-justice",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"profile/alantravis",
+        "type":"contributor",
+        "webTitle":"Alan Travis",
+        "webUrl":"http://www.theguardian.com/profile/alantravis",
+        "apiUrl":"http://content.guardianapis.com/profile/alantravis",
+        "bio":"<p>Alan Travis is the Guardian's <a href=\"http://politics.guardian.co.uk/homeaffairs/0,,584184,00.html\">home affairs</a> editor. He is the author of Bound and Gagged, a history of British obscenity</p>",
+        "rcsId":"GNL027519",
+        "r2ContributorId":"15315",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/26/alan_travis_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"society/prisons-and-probation",
+        "type":"keyword",
+        "webTitle":"Prisons and probation",
+        "webUrl":"http://www.theguardian.com/society/prisons-and-probation",
+        "apiUrl":"http://content.guardianapis.com/society/prisons-and-probation",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"politics/chrisgrayling",
+        "type":"keyword",
+        "webTitle":"Chris Grayling",
+        "webUrl":"http://www.theguardian.com/politics/chrisgrayling",
+        "apiUrl":"http://content.guardianapis.com/politics/chrisgrayling",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421618473",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383568417804/An-electronic-tag-001.jpg",
+          "typeData":{
+            "source":"Gary Calton",
+            "altText":"An electronic tag",
+            "height":"54",
+            "credit":"Gary Calton",
+            "caption":"Under the contracts more than 20,000 offenders are monitored on electronic tags at any one time. \r Photograph: Gary Calton",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383568420582/An-electronic-tag-002.jpg",
+          "typeData":{
+            "source":"Gary Calton",
+            "altText":"An electronic tag",
+            "height":"340",
+            "credit":"Gary Calton",
+            "caption":"Under the contracts more than 20,000 offenders are monitored on electronic tags at any one time. \r Photograph: Gary Calton",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383568421834/An-electronic-tag-003.jpg",
+          "typeData":{
+            "source":"Gary Calton",
+            "altText":"An electronic tag",
+            "height":"130",
+            "credit":"Gary Calton",
+            "caption":"Under the contracts more than 20,000 offenders are monitored on electronic tags at any one time. \r Photograph: Gary Calton",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383568423030/An-electronic-tag-004.jpg",
+          "typeData":{
+            "source":"Gary Calton",
+            "altText":"An electronic tag",
+            "height":"84",
+            "credit":"Gary Calton",
+            "caption":"Under the contracts more than 20,000 offenders are monitored on electronic tags at any one time. \r Photograph: Gary Calton",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383568424285/An-electronic-tag-005.jpg",
+          "typeData":{
+            "source":"Gary Calton",
+            "altText":"An electronic tag",
+            "height":"132",
+            "credit":"Gary Calton",
+            "caption":"Under the contracts more than 20,000 offenders are monitored on electronic tags at any one time. \r Photograph: Gary Calton",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383568425518/An-electronic-tag-006.jpg",
+          "typeData":{
+            "source":"Gary Calton",
+            "altText":"An electronic tag",
+            "height":"168",
+            "credit":"Gary Calton",
+            "caption":"Under the contracts more than 20,000 offenders are monitored on electronic tags at any one time. \r Photograph: Gary Calton",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383568426986/An-electronic-tag-007.jpg",
+          "typeData":{
+            "source":"Gary Calton",
+            "altText":"An electronic tag",
+            "height":"180",
+            "credit":"Gary Calton",
+            "caption":"Under the contracts more than 20,000 offenders are monitored on electronic tags at any one time. \r Photograph: Gary Calton",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383568428278/An-electronic-tag-008.jpg",
+          "typeData":{
+            "source":"Gary Calton",
+            "altText":"An electronic tag",
+            "height":"228",
+            "credit":"Gary Calton",
+            "caption":"Under the contracts more than 20,000 offenders are monitored on electronic tags at any one time. \r Photograph: Gary Calton",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383568429550/An-electronic-tag-009.jpg",
+          "typeData":{
+            "source":"Gary Calton",
+            "altText":"An electronic tag",
+            "height":"276",
+            "credit":"Gary Calton",
+            "caption":"Under the contracts more than 20,000 offenders are monitored on electronic tags at any one time. \r Photograph: Gary Calton",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383568430803/An-electronic-tag-010.jpg",
+          "typeData":{
+            "source":"Gary Calton",
+            "altText":"An electronic tag",
+            "height":"372",
+            "credit":"Gary Calton",
+            "caption":"Under the contracts more than 20,000 offenders are monitored on electronic tags at any one time. \r Photograph: Gary Calton",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383568429550/An-electronic-tag-009.jpg",
+          "typeData":{
+            "source":"Gary Calton",
+            "altText":"An electronic tag",
+            "height":"276",
+            "credit":"Gary Calton",
+            "caption":"Under the contracts more than 20,000 offenders are monitored on electronic tags at any one time. \r Photograph: Gary Calton",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421618474",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383568423030/An-electronic-tag-004.jpg",
+          "typeData":{
+            "source":"Gary Calton",
+            "altText":"An electronic tag",
+            "height":"84",
+            "credit":"Gary Calton",
+            "caption":"Under the contracts more than 20,000 offenders are monitored on electronic tags at any one time. \r Photograph: Gary Calton",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"business/nils-pratley-on-finance/2013/jul/11/g4s-serco-allegations-serious-fraud-office",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2013-07-11T20:57:35Z",
+      "webTitle":"G4S and Serco face a huge hit to their reputations if SFO proves fraud claims",
+      "webUrl":"http://www.theguardian.com/business/nils-pratley-on-finance/2013/jul/11/g4s-serco-allegations-serious-fraud-office",
+      "apiUrl":"http://content.guardianapis.com/business/nils-pratley-on-finance/2013/jul/11/g4s-serco-allegations-serious-fraud-office",
+      "fields":{
+        "newspaperPageNumber":"27",
+        "trailText":"<p>Allegations that G4S and Serco charged to tag dead offenders will harm two firms that rely heavily on UK government contracts</p>",
+        "headline":"G4S and Serco face a huge hit to their reputations if SFO proves fraud claims",
+        "body":"<p>Chris Grayling, justice secretary, says the state of affairs is \"wholly indefensible and unacceptable\" and he is astonished that <a href=\"http://www.guardian.co.uk/business/2013/jul/11/g4s-investigated-overcharging-millions-pounds\" title=\"\">two respected government suppliers \"would seek to charge in this way\"</a>. Is the case a slam-dunk then? Have G4S and Serco knowingly been ripping off taxpayers by charging to tag offenders who are dead or in prison? Was it a scam?</p><p>Grayling is not saying that. He has \"no information to confirm that dishonesty has taken place on the part of either supplier\" and admits that his civil servants didn't act when made aware of potential problems in 2008. It seems the jury is out on who is to blame and why.</p><p>For both companies, an awful lot now hangs on the answers. The immediate hit from repaying \"tens of millions\" of pounds would be lost in the wash since both are valued at £3bn or thereabouts. It's the loss of reputation, and thus the knock-on effect on bidding for government work in future, that matters. In the circumstances, the market's instinctive reaction – 8% off Serco's share price and 5.5% of G4S's more lowly rated stock – inevitably amounts to a best guess in the face of inadequate information.</p><p>Serco is a company built on UK government work, which still accounts for 40% of total revenues. It would not survive in its current form if UK public-sector contracts dried up; and the decision to withdraw from tendering for the next tagging contract is a blow in itself. The risk of corporate meltdown is clearly remote but investors still have to price the risk.</p><p>For G4S, it's one thing after another: a farcical £5.2bn bid for ISS of Denmark in 2011; the <a href=\"http://www.guardian.co.uk/business/2013/mar/13/g4s-profits-tumble-olympics-failings\" title=\"\">Olympics debacle</a>; a profits warning; and now the arrival of investigators from the Serious Fraud Office.</p><p>G4S is less dependent than Serco on UK government contracts (about 10% of revenues) but it's hard to understand why it didn't follow its rival in co-operating with a further independent review of tagging practices and thus keeping the SFO out of the picture.</p><p>G4S is clearly confident of its case, which shareholders might regard as reassuring. On the other hand, if the customer feels aggrieved surely the sensible course is to grant its wish on how the affair should be investigated. It's an odd sub-plot to a tale that clearly has much further to run.</p><!-- Guardian Watermark: internal-code/content/412666299|2013-11-05T11:03:52Z|bb364c66d9d2accb2d906069ace982cd53668698 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-07-12T18:51:32Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/7/11/1373576156224/An-offender-with-an-elect-005.jpg",
+        "standfirst":"Allegations that G4S and Serco charged to tag dead offenders will harm two firms that rely heavily on UK government contracts",
+        "shortUrl":"http://gu.com/p/3h96x",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/7/11/1373576156224/An-offender-with-an-elect-005.jpg",
+        "wordcount":"387",
+        "commentable":"false",
+        "internalContentCode":"412666299",
+        "allowUgc":"false",
+        "internalOctopusCode":"7828033",
+        "isPremoderated":"false",
+        "byline":"Nils Pratley",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-07-12",
+        "internalPageCode":"1935658",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-07-14T20:57:35Z"
+      },
+      "tags":[{
+        "id":"business/nils-pratley-on-finance",
+        "type":"blog",
+        "webTitle":"Nils Pratley on finance",
+        "webUrl":"http://www.theguardian.com/business/nils-pratley-on-finance",
+        "apiUrl":"http://content.guardianapis.com/business/nils-pratley-on-finance",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/sercogroup",
+        "type":"keyword",
+        "webTitle":"Serco",
+        "webUrl":"http://www.theguardian.com/business/sercogroup",
+        "apiUrl":"http://content.guardianapis.com/business/sercogroup",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/g4s",
+        "type":"keyword",
+        "webTitle":"G4S",
+        "webUrl":"http://www.theguardian.com/business/g4s",
+        "apiUrl":"http://content.guardianapis.com/business/g4s",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"law/serious-fraud-office",
+        "type":"keyword",
+        "webTitle":"Serious Fraud Office",
+        "webUrl":"http://www.theguardian.com/law/serious-fraud-office",
+        "apiUrl":"http://content.guardianapis.com/law/serious-fraud-office",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"profile/nilspratley",
+        "type":"contributor",
+        "webTitle":"Nils Pratley",
+        "webUrl":"http://www.theguardian.com/profile/nilspratley",
+        "apiUrl":"http://content.guardianapis.com/profile/nilspratley",
+        "bio":"<p>Nils Pratley is the Guardian's financial editor. Read his opinions on markets, boardroom winner and losers and business values on his <a href=\"http://www.guardian.co.uk/business/nils-pratley-on-finance\">Nils Pratley on Finance blog</a>. Follow him on Twitter at <a href=\"http://twitter.com/nilspratley\">@nilspratley</a></p>",
+        "rcsId":"GNL001064",
+        "r2ContributorId":"16201",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2008/02/06/nilspratleyb140140.jpg",
+        "references":[]
+      },{
+        "id":"business/blog",
+        "type":"blog",
+        "webTitle":"Business blog",
+        "webUrl":"http://www.theguardian.com/business/blog",
+        "apiUrl":"http://content.guardianapis.com/business/blog",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"politics/chrisgrayling",
+        "type":"keyword",
+        "webTitle":"Chris Grayling",
+        "webUrl":"http://www.theguardian.com/politics/chrisgrayling",
+        "apiUrl":"http://content.guardianapis.com/politics/chrisgrayling",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/financial3",
+        "type":"newspaper-book-section",
+        "webTitle":"Financial",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/financial3",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/financial3",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"society/prisons-and-probation",
+        "type":"keyword",
+        "webTitle":"Prisons and probation",
+        "webUrl":"http://www.theguardian.com/society/prisons-and-probation",
+        "apiUrl":"http://content.guardianapis.com/society/prisons-and-probation",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"politics/privatisation",
+        "type":"keyword",
+        "webTitle":"Privatisation",
+        "webUrl":"http://www.theguardian.com/politics/privatisation",
+        "apiUrl":"http://content.guardianapis.com/politics/privatisation",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-412670445",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/7/11/1373576153090/An-offender-with-an-elect-002.jpg",
+          "typeData":{
+            "source":"Gary Calton",
+            "altText":"An offender with an electronic tag. ",
+            "height":"54",
+            "credit":"Gary Calton",
+            "caption":"An offender with an electronic tag. Chris Grayling, justice secretary, called in the SFO over claims that G4S and Serco charged to tag offenders who were dead or in prison but said he had 'no information to confirm that dishonesty has taken place'.  Photograph: Gary Calton",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/7/11/1373576154130/An-offender-with-an-elect-003.jpg",
+          "typeData":{
+            "source":"Gary Calton",
+            "altText":"An offender with an electronic tag. ",
+            "height":"340",
+            "credit":"Gary Calton",
+            "caption":"An offender with an electronic tag. Chris Grayling, justice secretary, called in the SFO over claims that G4S and Serco charged to tag offenders who were dead or in prison but said he had 'no information to confirm that dishonesty has taken place'.  Photograph: Gary Calton",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/7/11/1373576155182/An-offender-with-an-elect-004.jpg",
+          "typeData":{
+            "source":"Gary Calton",
+            "altText":"An offender with an electronic tag. ",
+            "height":"130",
+            "credit":"Gary Calton",
+            "caption":"An offender with an electronic tag. Chris Grayling, justice secretary, called in the SFO over claims that G4S and Serco charged to tag offenders who were dead or in prison but said he had 'no information to confirm that dishonesty has taken place'.  Photograph: Gary Calton",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/7/11/1373576156224/An-offender-with-an-elect-005.jpg",
+          "typeData":{
+            "source":"Gary Calton",
+            "altText":"An offender with an electronic tag. ",
+            "height":"84",
+            "credit":"Gary Calton",
+            "caption":"An offender with an electronic tag. Chris Grayling, justice secretary, called in the SFO over claims that G4S and Serco charged to tag offenders who were dead or in prison but said he had 'no information to confirm that dishonesty has taken place'.  Photograph: Gary Calton",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/7/11/1373576157314/An-offender-with-an-elect-006.jpg",
+          "typeData":{
+            "source":"Gary Calton",
+            "altText":"An offender with an electronic tag. ",
+            "height":"132",
+            "credit":"Gary Calton",
+            "caption":"An offender with an electronic tag. Chris Grayling, justice secretary, called in the SFO over claims that G4S and Serco charged to tag offenders who were dead or in prison but said he had 'no information to confirm that dishonesty has taken place'.  Photograph: Gary Calton",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/7/11/1373576158356/An-offender-with-an-elect-007.jpg",
+          "typeData":{
+            "source":"Gary Calton",
+            "altText":"An offender with an electronic tag. ",
+            "height":"168",
+            "credit":"Gary Calton",
+            "caption":"An offender with an electronic tag. Chris Grayling, justice secretary, called in the SFO over claims that G4S and Serco charged to tag offenders who were dead or in prison but said he had 'no information to confirm that dishonesty has taken place'.  Photograph: Gary Calton",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/7/11/1373576159456/An-offender-with-an-elect-008.jpg",
+          "typeData":{
+            "source":"Gary Calton",
+            "altText":"An offender with an electronic tag. ",
+            "height":"180",
+            "credit":"Gary Calton",
+            "caption":"An offender with an electronic tag. Chris Grayling, justice secretary, called in the SFO over claims that G4S and Serco charged to tag offenders who were dead or in prison but said he had 'no information to confirm that dishonesty has taken place'.  Photograph: Gary Calton",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/7/11/1373576160467/An-offender-with-an-elect-009.jpg",
+          "typeData":{
+            "source":"Gary Calton",
+            "altText":"An offender with an electronic tag. ",
+            "height":"228",
+            "credit":"Gary Calton",
+            "caption":"An offender with an electronic tag. Chris Grayling, justice secretary, called in the SFO over claims that G4S and Serco charged to tag offenders who were dead or in prison but said he had 'no information to confirm that dishonesty has taken place'.  Photograph: Gary Calton",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/7/11/1373576161591/An-offender-with-an-elect-010.jpg",
+          "typeData":{
+            "source":"Gary Calton",
+            "altText":"An offender with an electronic tag. ",
+            "height":"276",
+            "credit":"Gary Calton",
+            "caption":"An offender with an electronic tag. Chris Grayling, justice secretary, called in the SFO over claims that G4S and Serco charged to tag offenders who were dead or in prison but said he had 'no information to confirm that dishonesty has taken place'.  Photograph: Gary Calton",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/7/11/1373576162649/An-offender-with-an-elect-011.jpg",
+          "typeData":{
+            "source":"Gary Calton",
+            "altText":"An offender with an electronic tag. ",
+            "height":"372",
+            "credit":"Gary Calton",
+            "caption":"An offender with an electronic tag. Chris Grayling, justice secretary, called in the SFO over claims that G4S and Serco charged to tag offenders who were dead or in prison but said he had 'no information to confirm that dishonesty has taken place'.  Photograph: Gary Calton",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/7/11/1373576161591/An-offender-with-an-elect-010.jpg",
+          "typeData":{
+            "source":"Gary Calton",
+            "altText":"An offender with an electronic tag. ",
+            "height":"276",
+            "credit":"Gary Calton",
+            "caption":"An offender with an electronic tag. The SFO were called in over claims that G4S and Serco charged to tag offenders who were dead or in prison. Photograph: Gary Calton",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-412670446",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GU_front_gifs/2013/7/11/1373576156224/An-offender-with-an-elect-005.jpg",
+          "typeData":{
+            "source":"Gary Calton",
+            "altText":"An offender with an electronic tag. ",
+            "height":"84",
+            "credit":"Gary Calton",
+            "caption":"An offender with an electronic tag. Chris Grayling, justice secretary, called in the SFO over claims that G4S and Serco charged to tag offenders who were dead or in prison but said he had 'no information to confirm that dishonesty has taken place'.  Photograph: Gary Calton",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"business/2013/jul/11/g4s-investigated-overcharging-millions-pounds",
+      "sectionId":"society",
+      "sectionName":"Society",
+      "webPublicationDate":"2013-07-12T07:19:00Z",
+      "webTitle":"G4S faces fraud investigation over tagging contracts",
+      "webUrl":"http://www.theguardian.com/business/2013/jul/11/g4s-investigated-overcharging-millions-pounds",
+      "apiUrl":"http://content.guardianapis.com/business/2013/jul/11/g4s-investigated-overcharging-millions-pounds",
+      "fields":{
+        "newspaperPageNumber":"1",
+        "trailText":"<p>Justice secretary tells MPs he has called in Serious Fraud Office to investigate private security firm for overcharging</p>",
+        "headline":"G4S faces fraud investigation over tagging contracts",
+        "body":"<p>The Serious Fraud Office has been called in by the justice secretary to investigate the private security company G4S for overcharging tens of millions of pounds on electronic tagging contracts for offenders.</p><p>Chris Grayling told MPs the overcharging included billing for tracking the movements of people who had moved abroad, those who had returned to prison and had their tags removed, and even people who had died.</p><p>He said he had made the decision after G4S refused on Wednesday to co-operate with a voluntary forensic audit of its billing practices and to withdraw as a potential bidder for the next generation of tagging contracts worth up to £3bn.</p><p>\"At this time I do not have evidence of dishonesty by G4S but I have invited the Serious Fraud Office to investigate that,\" he said.</p><p>Whitehall sources say that a new forensic audit will look at a central allegation that the justice ministry was being billed for the tagging of 18,000 offenders a day when only 15,000 were actually being monitored – raising the prospect of being charged for 3,000 \"phantom\" offenders or one in six of all those on tags.</p><p>Grayling told MPs that G4S and a second major supplier, Serco, had been overcharging on the existing £700m contract, with the Ministry of Justice being billed for non-existent services that dated back to at least 2005 and possibly as long ago as 1999.</p><p>Grayling added that it included charging for monitoring people who were back in prison and had had their tags removed, people who had left the country, and those who had never been tagged in the first place.</p><p>\"There are a small number of cases where charging continued for a period when the subject was known to have died,\" he told the Commons.</p><p>\"In some instances, charging continued for a period of many months and indeed years after active monitoring ceased. This is a wholly indefensible and unacceptable state of affairs. The house will share my astonishment that two of the government's biggest suppliers would seek to charge in this way.\"</p><p>Shares in Serco fell about 8% and for G4S almost 6% by the close on Thursday.</p><p>The decision to call in the SFO follows an audit by PricewaterhouseCoopers commissioned by Grayling in May after billing discrepancies were discovered during a re-tendering process. Under the contracts the movements of more than 20,000 offenders are monitored using electronic ankle tags at any one time.</p><p>\"The audit team is at present confirming its calculations but the current estimate is that the sums involved are significant, and run into the low tens of millions in total, for both companies, since the contracts commenced in 2005,\" Grayling said.</p><p>Serco, which is one of the government's biggest and most important suppliers, agreed on Wednesday to fully co-operate with a forensic audit to establish whether any dishonesty took place on its part. It has also agreed to withdraw from bidding for the £3bn next-generation tagging contract.</p><p>\"They have said they take the issue extremely seriously and assure me that senior management were not aware of it. They do not believe anything dishonest has taken place, but we have agreed that if the audit does show dishonest action, we will jointly call in the authorities to address it,\" Grayling said.</p><p>Serco was the leading bidder to take over the management of a prison in South Yorkshire. Grayling said that decision had now been delayed until the voluntary forensic audit was completed.</p><p>The Cabinet Office is to review all G4S and Serco contracts held across government as a result of the tagging scandal. The Cabinet Office minister, Francis Maude, had already started preparations for a register of companies holding public sector contracts to detail their track record in the wake of G4S's failure last year to fulfil its contract to provide security guards for the London Olympics.</p><p>Grayling, who had the attorney general, Dominic Grieve QC, next to him when he made his Commons statement, said he had taken the decision to call in the SFO \"given the nature of the findings of the audit work that had taken place so far, and the very clear legal advice that I have received\".</p><p>He said the SFO was being asked to consider whether an investigation was appropriate, and to confirm \"whether any of the actions of anyone in that company represent more than a contractual breach\".</p><p>The justice secretary has started a formal process to determine whether to exclude G4S from the next 10-year tagging contract which is due to start shortly. He has also taken action within the justice ministry after disclosing that his own officials became aware in a limited way of some of the problems in 2008 but failed to take adequate steps to address them.</p><p>He said an entirely new contract management team had been put in place. \"The permanent secretary is also instituting disciplinary investigations to consider whether failings on the part of individual members of staff constitute misconduct\", he said.</p><p>The shadow justice secretary, Sadiq Khan, said the disclosures were \"truly shocking\" and the police should be called in immediately to investigate Serco as well as G4S. \"There can be no cosy relationship with either company if we are to truly get to the bottom of these very serious allegations,\" he said.</p><p>G4S said the justice ministry was an important customer and it was committed to resolving its concerns. It said it was conducting its own review and would reimburse any overbilling it identified. It said it was not aware of any indications of dishonesty or misconduct.</p><p>Ashley Almanza, the G4S chief executive, said: \"We are committed to having close and open relationships with our customers and we strive to work in partnership for the mutual benefit of our organisations.</p><p>\"We place the highest premium on customer service and integrity and therefore take very seriously the concerns expressed by the Ministry of Justice. We are determined to deal with these issues in a prompt and appropriate manner.\"</p><p>Serco Group's chief executive, Christopher Hyman, said: \"Serco is a business led by our values and built on the strength of our reputation for integrity. These values lie at the heart of the many thousands of our people who are endeavouring to deliver the highest standard of service to our customers around the world. We are deeply concerned if we fall short of the standards expected of all of us.\"</p><!-- Guardian Watermark: internal-code/content/412624977|2013-11-05T11:03:52Z|6ee4a2d2475f5cdd79d71fd40ea59545e0daade3 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-07-12T18:51:11Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pixies/2012/9/6/1346951282997/G4S-003.jpg",
+        "standfirst":"Justice secretary tells MPs he has called in Serious Fraud Office to investigate private security firm for overcharging",
+        "shortUrl":"http://gu.com/p/3h8tm",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2012/9/6/1346951282997/G4S-003.jpg",
+        "wordcount":"1041",
+        "commentable":"false",
+        "internalContentCode":"412624977",
+        "allowUgc":"false",
+        "internalOctopusCode":"7825944",
+        "isPremoderated":"false",
+        "byline":"Alan Travis, home affairs editor",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-07-12",
+        "internalPageCode":"1935274",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-07-14T11:54:27Z"
+      },
+      "tags":[{
+        "id":"society/prisons-and-probation",
+        "type":"keyword",
+        "webTitle":"Prisons and probation",
+        "webUrl":"http://www.theguardian.com/society/prisons-and-probation",
+        "apiUrl":"http://content.guardianapis.com/society/prisons-and-probation",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"business/g4s",
+        "type":"keyword",
+        "webTitle":"G4S",
+        "webUrl":"http://www.theguardian.com/business/g4s",
+        "apiUrl":"http://content.guardianapis.com/business/g4s",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"society/public-finance",
+        "type":"keyword",
+        "webTitle":"Public finance",
+        "webUrl":"http://www.theguardian.com/society/public-finance",
+        "apiUrl":"http://content.guardianapis.com/society/public-finance",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"law/serious-fraud-office",
+        "type":"keyword",
+        "webTitle":"Serious Fraud Office",
+        "webUrl":"http://www.theguardian.com/law/serious-fraud-office",
+        "apiUrl":"http://content.guardianapis.com/law/serious-fraud-office",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"law/law",
+        "type":"keyword",
+        "webTitle":"Law",
+        "webUrl":"http://www.theguardian.com/law/law",
+        "apiUrl":"http://content.guardianapis.com/law/law",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/alantravis",
+        "type":"contributor",
+        "webTitle":"Alan Travis",
+        "webUrl":"http://www.theguardian.com/profile/alantravis",
+        "apiUrl":"http://content.guardianapis.com/profile/alantravis",
+        "bio":"<p>Alan Travis is the Guardian's <a href=\"http://politics.guardian.co.uk/homeaffairs/0,,584184,00.html\">home affairs</a> editor. He is the author of Bound and Gagged, a history of British obscenity</p>",
+        "rcsId":"GNL027519",
+        "r2ContributorId":"15315",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/26/alan_travis_140x140.jpg",
+        "references":[]
+      },{
+        "id":"society/policy",
+        "type":"keyword",
+        "webTitle":"Public services policy",
+        "webUrl":"http://www.theguardian.com/society/policy",
+        "apiUrl":"http://content.guardianapis.com/society/policy",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"politics/chrisgrayling",
+        "type":"keyword",
+        "webTitle":"Chris Grayling",
+        "webUrl":"http://www.theguardian.com/politics/chrisgrayling",
+        "apiUrl":"http://content.guardianapis.com/politics/chrisgrayling",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/privatisation",
+        "type":"keyword",
+        "webTitle":"Privatisation",
+        "webUrl":"http://www.theguardian.com/politics/privatisation",
+        "apiUrl":"http://content.guardianapis.com/politics/privatisation",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/topstories",
+        "type":"newspaper-book-section",
+        "webTitle":"Top stories",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/topstories",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/topstories",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"law/criminal-justice",
+        "type":"keyword",
+        "webTitle":"UK criminal justice",
+        "webUrl":"http://www.theguardian.com/law/criminal-justice",
+        "apiUrl":"http://content.guardianapis.com/law/criminal-justice",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-412686015",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/7/23/1343073567289/G4S-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"G4S",
+            "height":"276",
+            "credit":"David Davies/PA",
+            "caption":"The overcharging included billing for tracking the movements of people who had died. Photograph: David Davies/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-412686016",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2012/9/6/1346951282997/G4S-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Davies",
+            "altText":"G4S",
+            "height":"84",
+            "credit":"David Davies/PA",
+            "caption":"The Home Office's most senior civil servant said reponsibility for the Olympic debacle rested entirely with G4S. Photograph: David Davies/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"business/2013/oct/24/g4s-uk-ireland-head-resigns",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2013-10-24T20:32:12Z",
+      "webTitle":"Head of G4S in UK and Ireland resigns",
+      "webUrl":"http://www.theguardian.com/business/2013/oct/24/g4s-uk-ireland-head-resigns",
+      "apiUrl":"http://content.guardianapis.com/business/2013/oct/24/g4s-uk-ireland-head-resigns",
+      "fields":{
+        "newspaperPageNumber":"32",
+        "trailText":"<p>Observers suggest Richard Morris's departure is part of bid to rebuild relationship with  government after tagging controversy</p>",
+        "headline":"Head of G4S in UK and Ireland resigns",
+        "body":"<p>G4S, the world's biggest securities services firm, has parted company with the head of its UK and Irish operations as it tries to improve its relationship with the government after the botched Olympic contract and inquiries into the electronic tagging of criminals.</p><p>Richard Morris, who had been promoted to run the UK and Irish operations in September 2012 in the fallout after the Olympics scandal, is to be replaced by Eddie Aston, who was recruited in July. Aston was previously chief operating officer, having been recruited from Deutsche Post DHL.</p><p>The company confirmed that Morris had resigned but gave no reason for his departure, which is to take place immediately, after a 10-year career with the troubled security firm.</p><p>With a third boss now in charge of the UK arm in as many years, there was speculation that G4S would be hoping to begin to improve its key, but damaged, relationship with the government, for which it already runs prisons, border controls and work programmes.</p><p>The discovery that G4S and its rival Serco had been charging the government for tagging criminals who were dead, in prison or never tagged in the first place prompted the justice secretary, Chris Grayling, to ask the Serious Fraud Office to investigate both firms earlier this year.</p><p>G4S, which employs 620,000 staff, has said that it could not find any evidence to support some of the claims, which it said had been taken out of proportion, but in August it pulled out of the bidding for new tagging contracts.</p><p>Grayling has said that G4S and Serco have overcharged the government by tens of millions of pounds and the Cabinet Office is now in the process of reviewing 28 government contracts the two companies were involved in, worth £1bn. Nine of them involve G4S. The National Audit Office is also conducting a review.</p><p>Morris did not have a seat on the board of the company, which operates in 125 countries around the world, but was a member of the senior executive team. He had worked in the company's justice arm previously and had taken charge of the UK business after the bad management of the Olympics contract cost £88m.</p><p>Nick Buckles, the group chief executive, initially survived the embarrassment of thousands of troops and police being drafted in to guard the Games but not before admitting it had turned into a \"humiliating shambles\".</p><p>Buckles had also overseen the ill-fated attempt to take over Danish rival ISS the previous year. He eventually left in May this year with a <a href=\"http://www.theguardian.com/business/2013/may/21/g4s-nick-buckles-quits\" title=\"\">£1.2m payoff</a>.</p><p>It was a profit warning in May that eventually led to Buckles's departure and his replacement by Ashley Almanza, who had joined only three weeks earlier as chief financial officer from BG. Almanza is now embarking on a turnaround strategy and selling off non-core operations following a £550m fundraising in August, which was announced as the company reported a loss after a £202m profit a year earlier.</p><p>Almanza had warned that the share placing in August was needed to avoid a credit downgrade. He also announced plans to sell off businesses in Colombia, Canada and some US operations.</p><p>Rumours that the private equity group Charterhouse has been mulling a takeover bid for one its operations have lifted the shares in recent days. They fell to 200p earlier this year as the company warned about pressure on its margins but have recovered some lost ground, closing at 253p yesterday. In April they were changing hands at more than 300p.</p><p>G4S was recently linked to a joint £1bn bid with the French group Oberthur Technologies to supply Britain's next wave of banknotes.</p><p>• This article was amended on Friday 25 October. The new chief executive of G4S in the UK and Ireland is Eddie Aston, not Eddie Ashton as we had it. The article also said G4S employs 230,000 staff. In fact the company employs 620,000 people globally.</p><p>The new chief executive of G4S in the UK and Ireland is Eddie Aston, not Eddie Ashton as we had it. The article also said G4S employs 230,000 staff. In fact the company employs 620,000 people globally.</p><!-- Guardian Watermark: internal-code/content/420894492|2013-11-05T11:03:52Z|c6b3e8237931f606510f2e573dfa52a238c8554b -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-25T11:24:03Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/24/1382646535720/G4S-logo-004.jpg",
+        "standfirst":"Observers suggest Richard Morris's departure is part of bid to rebuild relationship with  government after tagging controversy",
+        "shortUrl":"http://gu.com/p/3jp3v",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/24/1382646535720/G4S-logo-004.jpg",
+        "wordcount":"672",
+        "commentable":"false",
+        "internalContentCode":"420894492",
+        "allowUgc":"false",
+        "internalOctopusCode":"8238727",
+        "isPremoderated":"false",
+        "byline":"Jill Treanor",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-25",
+        "internalPageCode":"1986606",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-27T21:32:12Z"
+      },
+      "tags":[{
+        "id":"business/g4s",
+        "type":"keyword",
+        "webTitle":"G4S",
+        "webUrl":"http://www.theguardian.com/business/g4s",
+        "apiUrl":"http://content.guardianapis.com/business/g4s",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/jilltreanor",
+        "type":"contributor",
+        "webTitle":"Jill Treanor",
+        "webUrl":"http://www.theguardian.com/profile/jilltreanor",
+        "apiUrl":"http://content.guardianapis.com/profile/jilltreanor",
+        "bio":"<p>Jill Treanor is the Guardian's City editor. She specialises in the banking sector</p>",
+        "rcsId":"GNL003510",
+        "r2ContributorId":"15822",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jill_treanor_140x140.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/financial3",
+        "type":"newspaper-book-section",
+        "webTitle":"Financial",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/financial3",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/financial3",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420939549",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/24/1382646531166/G4S-logo-001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Jones",
+            "altText":"G4S logo",
+            "height":"54",
+            "credit":"David Jones/PA",
+            "caption":"G4S is facing two inquiries into alleged overcharging on contracts to electronically tag criminals. Photograph: David Jones/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/24/1382646533265/G4S-logo-002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Jones",
+            "altText":"G4S logo",
+            "height":"340",
+            "credit":"David Jones/PA",
+            "caption":"G4S is facing two inquiries into alleged overcharging on contracts to electronically tag criminals. Photograph: David Jones/PA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/24/1382646534458/G4S-logo-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Jones",
+            "altText":"G4S logo",
+            "height":"130",
+            "credit":"David Jones/PA",
+            "caption":"G4S is facing two inquiries into alleged overcharging on contracts to electronically tag criminals. Photograph: David Jones/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/24/1382646535720/G4S-logo-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Jones",
+            "altText":"G4S logo",
+            "height":"84",
+            "credit":"David Jones/PA",
+            "caption":"G4S is facing two inquiries into alleged overcharging on contracts to electronically tag criminals. Photograph: David Jones/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/24/1382646536897/G4S-logo-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Jones",
+            "altText":"G4S logo",
+            "height":"132",
+            "credit":"David Jones/PA",
+            "caption":"G4S is facing two inquiries into alleged overcharging on contracts to electronically tag criminals. Photograph: David Jones/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/24/1382646538075/G4S-logo-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Jones",
+            "altText":"G4S logo",
+            "height":"168",
+            "credit":"David Jones/PA",
+            "caption":"G4S is facing two inquiries into alleged overcharging on contracts to electronically tag criminals. Photograph: David Jones/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/24/1382646539239/G4S-logo-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Jones",
+            "altText":"G4S logo",
+            "height":"180",
+            "credit":"David Jones/PA",
+            "caption":"G4S is facing two inquiries into alleged overcharging on contracts to electronically tag criminals. Photograph: David Jones/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/24/1382646540430/G4S-logo-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Jones",
+            "altText":"G4S logo",
+            "height":"228",
+            "credit":"David Jones/PA",
+            "caption":"G4S is facing two inquiries into alleged overcharging on contracts to electronically tag criminals. Photograph: David Jones/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/24/1382646541646/G4S-logo-009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Jones",
+            "altText":"G4S logo",
+            "height":"276",
+            "credit":"David Jones/PA",
+            "caption":"G4S is facing two inquiries into alleged overcharging on contracts to electronically tag criminals. Photograph: David Jones/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/24/1382646542928/G4S-logo-010.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Jones",
+            "altText":"G4S logo",
+            "height":"372",
+            "credit":"David Jones/PA",
+            "caption":"G4S is facing two inquiries into alleged overcharging on contracts to electronically tag criminals. Photograph: David Jones/PA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/24/1382646541646/G4S-logo-009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Jones",
+            "altText":"G4S logo",
+            "height":"276",
+            "credit":"David Jones/PA",
+            "caption":"G4S is facing two inquiries into alleged overcharging on contracts to electronically tag criminals. Photograph: David Jones/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420939550",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/24/1382646535720/G4S-logo-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"David Jones",
+            "altText":"G4S logo",
+            "height":"84",
+            "credit":"David Jones/PA",
+            "caption":"G4S is facing two inquiries into alleged overcharging on contracts to electronically tag criminals. Photograph: David Jones/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"business/2013/nov/03/g4s-fireworks-investors",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2013-11-03T00:06:00Z",
+      "webTitle":"G4S boss braced for fireworks as investors say group is too big to handle",
+      "webUrl":"http://www.theguardian.com/business/2013/nov/03/g4s-fireworks-investors",
+      "apiUrl":"http://content.guardianapis.com/business/2013/nov/03/g4s-fireworks-investors",
+      "fields":{
+        "newspaperPageNumber":"46",
+        "trailText":"<p>The security group put the Olympics fiasco behind it, only to face further serious allegations. Ashley Almanza now has to fight to keep the firm in one piece</p>",
+        "headline":"G4S boss braced for fireworks as investors say group is too big to handle",
+        "body":"<p>As Ashley Almanza, boss of security group G4S, rehearses his lines this weekend for his crucial 5 November strategy presentation, several investors are whispering of gunpowder, treason and plot. Almanza is facing the biggest presentation of his life: he will have to spell out why the embattled £6bn group should not bow to activist shareholders and split itself up.</p><p>He knows it could be a make-or-break performance. Shareholders remain divided on the question of whether the group is too big for its own good. G4S manages 650,000 staff around the world – and only two years ago came close to <a href=\"http://www.theguardian.com/business/2011/nov/01/g4s-iss-takeover-fails\" title=\"\">a £5.2bn merger (with Danish rival ISS)</a> that would have seen it become the world's second largest commercial employer, behind Walmart.</p><p>And if shareholder ferment were not trouble enough, the G4S boss is also facing a series of <a href=\"http://www.theguardian.com/business/2013/may/24/g4s-contract-sexual-assault-referral-centres\" title=\"\">contract meltdowns</a> and <a href=\"http://www.theguardian.com/world/2013/oct/28/g4s-run-prison-south-africa-investigation\" title=\"\">rogue employee scandals</a>, and <a href=\"http://www.theguardian.com/business/2013/jul/11/g4s-investigated-overcharging-millions-pounds\" title=\"\">investigation by the Serious Fraud Office over electronic tagging</a>.</p><p>Steve Woolf, analyst at Numis Securities, said: \"We believe the emphasis [from Almanza on Tuesday] will be on increasing a culture of best practice throughout the group in order to avoid some of the negative press that surfaces in areas such G4S's UK and overseas prison operations.\"</p><p>The past week alone has seen two damaging incidents as far apart as South Africa and Scotland. First came what G4S said were \"unsubstantiated allegations\" of prisoners at its Mangaung prison in Bloemfontein being subjected to electric shocks or forcibly injected with antipsychotic drugs to sedate them.</p><p>The South African government <a href=\"http://www.theguardian.com/world/2013/oct/09/g4s-sacked-south-africa-prison-mangaung\" title=\"\">last month took charge of the prison</a> as strike threats and allegations of mistreatment mounted. \"The contractor has effectively lost control of the facility,\" the department of correctional services concluded – a damning verdict in a market Almanza had months earlier flagged as a bright spot.</p><p>Then, last Tuesday, a G4S security guard was <a href=\"http://www.bbc.co.uk/news/uk-scotland-glasgow-west-24727644\" title=\"\">given a life sentence at Glasgow high court </a>for bludgeoning a 42-year-old Thai conference delegate to death with a fire extinguisher. During the trial, the jury was told that the guard, Clive Carter, had complained of fatigue due to long working hours. On one occasion, months earlier, he had worked 26 consecutive days, the court heard. G4S says Carter worked a standard shift pattern in the period before the murder, adding that previous periods of more intensive employment related to specific events \"in keeping with the standard work patterns of fellow employees\".</p><p>Among earlier flashpoints around the world, one of the most controversial was the unlawful killing by G4S guards of <a href=\"http://www.theguardian.com/uk/2010/oct/14/security-guards-accused-jimmy-mubenga-death\" title=\"\">Angolan deportee Jimmy Mubenga </a>three years ago. The Crown Prosecution Service is still considering whether to bring charges after racist material was found on two of the guards'&nbsp;phones.</p><p>Many more sorry G4S episodes have been <a href=\"http://opendemocracy.net/ourkingdom/collections/g4s-securing-whose-world\" title=\"\">catalogued by investigative journalist Clare Sambrook</a>, who questions whether, given its record, G4S is a fit organisation to run prisons, children's homes and detention centres. Those who defend the company's record point out that more than 90% of its staff work in security operations, where occasional dangerous episodes are inevitable.</p><p>Despite the growing list of tragic events, however, what preoccupies investors is G4S's ability to deliver on contracts, growth and profitability. And there was some shareholder unease last year over the <a href=\"http://www.theguardian.com/uk/2012/jul/16/police-forces-olympic-security-g4s\" title=\"\">London Olympics security contract debacle</a>, which saw G4S fail to recruit sufficient staff for the contract.</p><p>But investors do not ditch managers over one failure, however high profile. G4S chairman <a href=\"http://www.theguardian.com/business/nils-pratley-on-finance/2012/sep/28/nick-buckles-saved-by-g4s-shareholders\" title=\"\">John Connolly presided over a review of then chief executive Nick Buckles's</a> record and found \"no significant shortcomings\". He dismissed calls for Buckles to resign over the Olympics fiasco as \"media frenzy\".</p><p>The view was shared by Invesco fund manager Neil Woodford, who is by no means always in agreement with the G4S board, but said Buckles had an \"excellent\" track record. \"I don't want to throw all that away,\" he said.</p><p>Until May this year, the group had appeared to many in the City as the best in its class. \"We retain G4S as a top pick,\" wrote Panmure Gordon analysts in March. \"We expect the company to deliver creditable growth with margins more positive than [previously] expected.\" Days earlier, analysts at Cantor Fitzgerald took a similar view: \"G4S remains one of our top picks in the sector. We believe [it] should be trading at a premium to its peers reflecting its track record of growth and more attractive operational and geographical profile.\"</p><p><em>Financial Times</em> City editor Jonathan Guthrie declared: \"Shares steamed past their pre-Olympic peak earlier this month and look affordable... Buckles survived the backlash unscathed, save for suffering a media-friendly haircut, having generated a 180% return for shareholders over the previous seven years.\"</p><p>Buckles himself, meanwhile, was bragging that he would get <a href=\"http://www.google.co.uk/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=1&amp;ved=0CC4QFjAA&amp;url=http%3A%2F%2Fwww.g4s.com%2F~%2Fmedia%2FFiles%2FInvestor%2520Relations%2520documents%2FCMD%25202012%2FSection%25201%2520-%2520Strategy.ashx&amp;ei=DctzUvO3Lae40QWMrIHwCw&amp;usg=AFQjCNEH-6-_ijunT9EvN8ETcm82vwQA2Q&amp;sig2=JVgzmszaJDr76aP4qi4uCQ\" title=\"\">G4S's £7.5bn revenues up to £10bn by 2014</a>.</p><p>That picture changed abruptly, however, with <a href=\"http://www.theguardian.com/business/2013/may/07/g4s-shares-tumble-profit-margins\" title=\"\">a heavy profits warning in May</a>, when Buckles admitted to significant problems in its cash transport and storage business, particularly in the UK and Ireland. This unit, which generates about a quarter of the group's profits by moving money out to cashpoints and in from retailers and other sales businesses, had been losing ground to competitors. \"A lot of new contracts at the back end of last year have not delivered in terms of profitability,\" he said, promising cost reductions. Profitability on other UK contracts was suffering too, he added.</p><figure data-media-id='gu-image-421600820'><img src='http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/27/1346086990196/G4S-chief-executive-Nick--010.jpg' alt='G4S chief executive Nick Buckles' width='460' height='276' class='gu-image'/><figcaption>Nick Buckles, former chief executive of G4S. Photograph: David Rose/Rex Features</figcaption></figure><p>This was a shock for all those investors who had loyally backed Buckles though the Olympics shambles. The shares lost 15% of their value overnight and the same again in the next two-and-a-half months. Within two weeks of the warning, <a href=\"http://www.theguardian.com/business/2013/may/21/g4s-nick-buckles-quits\" title=\"\">Buckles was gone</a> and Almanza – who had joined the company as finance director only that month – was hurriedly appointed to succeed him.</p><p>Since then, the new G4S boss has been dashing from crisis to crisis, finding himself in the firing line from investors and human rights campaigners, as well as facing a meltdown in relations with the UK government.</p><p>In June, the group's <a href=\"http://www.theguardian.com/business/2013/jun/06/israel-prison-contracts-g4s-agm\" title=\"\">annual shareholder meeting was besieged by campaign groups</a>. Protesters claimed G4S was putting children as young as 12 in solitary confinement in its prisons. War on Want told the meeting it was \"profoundly concerned with G4S's exposure in Palestine\". On two occasions the meeting was disrupted by flash protests over the Mubenga case.</p><p>A month later, relations with the UK government abruptly broke down over allegations that G4S had been overcharging the ministry of justice on an electronic tagging contract, allegedly continuing to charge the department after returning prisoners to prison. Unhappy with Almanza's approach to the contract dispute, justice secretary Chris Grayling referred the matter to the Serious Fraud Office.</p><p>Meanwhile, as if Almanza did not have enough on his plate, short-sellers began targeting G4S, believing the company's finances were in such a mess that it would be scrambling to raise emergency capital and the shares would be forced down in value. And in August they were proved right.</p><p>Delivering <a href=\"http://www.theguardian.com/business/nils-pratley-on-finance/2013/aug/28/g4s-share\" title=\"\">his first interim results as chief executive</a>, Almanza announced that new shares equivalent to 10% of existing equity would be placed with institutions, raising £348m to shore up the balance sheet. In addition, £250m would be found from the disposal of peripheral businesses.</p><p>At about that time, Cevian Capital, a £5bn activist investment fund, emerged as a major G4S shareholder, eventually declaring a 5.1% stake and reportedly harbouring aspirations to increase that to 10%. The influential Stockholm-based fund, run by Christer Gardell – a sometime collaborator with US activist investor Carl Icahn – was soon after linked to speculation in the City that Almanza was coming under pressure to dispose of G4S's troubled cash business.</p><p>Cevian declined to comment on reports that it backed such a disposal, but sources close to the fund insisted the group was not confrontational and \"prefers to be described as an engaged shareholder rather than activist\". This claim is not accepted by all in Sweden, where some newspapers call Gardell \"the butcher\" and \"Sweden's Gordon Gekko\". According to former Social Democrat prime minister Goran Persson, it is companies such as Cevian \"who will destroy the national capitalist structures\".</p><p>A week ago, analysts at HSBC declared: \"Hopes that value can be unlocked through break-ups and a rejuvenated strategy are likely to buoy G4S stock through what is perceived as a rump of difficult trading.\"</p><p>Since then, however, it has emerged that G4S has received an approach for its cash division from Charterhouse Capital. It rejected it in less than a week on the grounds that, first, the price of £1.55bn was too low, and second – and more controversially – the unit was, Almanza made it clear, strategically vital to the group and not for sale.</p><p>It is this second argument that is thought to have set him at loggerheads with activists urging a break-up. He will have to enlarge on this theme on Tuesday, as well as delivering a turnaround plan for the struggling UK and Irish cash businesses, which have recently lost major ATM contracts.</p><figure data-media-id='gu-image-421600821'><img src='http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/6/6/1370542394773/Protesters-demonstrate-in-010.jpg' alt='Protesters demonstrate in front of G4S's AGM, June 2013' width='460' height='276' class='gu-image'/><figcaption>Protesters demonstrate at G4S's AGM. Photograph: Stephanie Bosset/  Stephanie Bosset/Demotix/Corbis</figcaption></figure><p>Some shareholders have already come out in support of Almanza. Threadneedle Investments backed the decision to turn Charterhouse away, saying: \"The rejection is consistent with G4S's strategy to sell underperforming businesses – but cash solutions is not one of them.\"</p><p>Sources close to the company say selling the cash arm would be a costly folly in many markets, and that now would be precisely the wrong time to do it. They note that in periods of low interest rates there is less demand from companies to get their cash to the bank quickly.</p><p>It remains to be seen whether Almanza will carry his audience with him on Tuesday. And whatever the verdict, there are unlikely to be any more sudden boardroom departures. Only last year, the group's chairman, Alf Duch-Pedersen, departed in the wake of the aborted ISS takeover. Since then Almanza has arrived, and he has recruited Himanshu Raja from Misys to replace him as finance director. For now at least, investors can agree G4S needs a spell of management stability rather than another body on the bonfire.</p><!-- Guardian Watermark: internal-code/content/421475788|2013-11-05T11:03:52Z|b4a7de56ca61d22c988c7bc079badb3999aa18ec -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-04T08:47:04Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "standfirst":"The security group put the Olympics fiasco behind it, only to face further serious allegations. Ashley Almanza now has to fight to keep the firm in one piece",
+        "shortUrl":"http://gu.com/p/3k3kt",
+        "wordcount":"1639",
+        "commentable":"true",
+        "internalContentCode":"421475788",
+        "allowUgc":"false",
+        "internalOctopusCode":"8264706",
+        "isPremoderated":"false",
+        "byline":"Simon Bowers",
+        "publication":"The Observer",
+        "newspaperEditionDate":"2013-11-03",
+        "internalPageCode":"1990728",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-06T00:06:00Z"
+      },
+      "tags":[{
+        "id":"business/g4s",
+        "type":"keyword",
+        "webTitle":"G4S",
+        "webUrl":"http://www.theguardian.com/business/g4s",
+        "apiUrl":"http://content.guardianapis.com/business/g4s",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/investing",
+        "type":"keyword",
+        "webTitle":"Investing",
+        "webUrl":"http://www.theguardian.com/business/investing",
+        "apiUrl":"http://content.guardianapis.com/business/investing",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"profile/simonbowers",
+        "type":"contributor",
+        "webTitle":"Simon Bowers",
+        "webUrl":"http://www.theguardian.com/profile/simonbowers",
+        "apiUrl":"http://content.guardianapis.com/profile/simonbowers",
+        "bio":"<p>Simon Bowers is a financial reporter for the <a href=\"http://www.guardian.co.uk/theguardian\">Guardian</a>. He covers the leisure and retail sectors</p>",
+        "rcsId":"GNL004757",
+        "r2ContributorId":"16450",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/10/03/simon_bowers_140x140.jpg",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"theobserver/news/business",
+        "type":"newspaper-book-section",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/theobserver/news/business",
+        "apiUrl":"http://content.guardianapis.com/theobserver/news/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"theobserver/news",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theobserver/news",
+        "apiUrl":"http://content.guardianapis.com/theobserver/news",
+        "sectionId":"theobserver",
+        "sectionName":"From the Observer",
+        "references":[]
+      },{
+        "id":"business/rwe-npower",
+        "type":"keyword",
+        "webTitle":"RWE npower",
+        "webUrl":"http://www.theguardian.com/business/rwe-npower",
+        "apiUrl":"http://content.guardianapis.com/business/rwe-npower",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/energy-industry",
+        "type":"keyword",
+        "webTitle":"Energy industry",
+        "webUrl":"http://www.theguardian.com/business/energy-industry",
+        "apiUrl":"http://content.guardianapis.com/business/energy-industry",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theobserver",
+        "type":"publication",
+        "webTitle":"The Observer",
+        "webUrl":"http://www.theguardian.com/theobserver/all",
+        "apiUrl":"http://content.guardianapis.com/theobserver/all",
+        "sectionId":"theobserver",
+        "sectionName":"From the Observer",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421600820",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/27/1346086990196/G4S-chief-executive-Nick--010.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"David Rose",
+            "altText":"G4S chief executive Nick Buckles",
+            "height":"276",
+            "credit":"David Rose/Rex Features",
+            "caption":"Nick Buckles, former chief executive of G4S. Photograph: David Rose/Rex Features",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421600821",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/6/6/1370542394773/Protesters-demonstrate-in-010.jpg",
+          "typeData":{
+            "source":"  Stephanie Bosset/Demotix/Corbis",
+            "photographer":"Stephanie Bosset",
+            "altText":"Protesters demonstrate in front of G4S's AGM, June 2013",
+            "height":"276",
+            "credit":"Stephanie Bosset/  Stephanie Bosset/Demotix/Corbis",
+            "caption":"Protesters demonstrate at G4S's AGM. Photograph: Stephanie Bosset/  Stephanie Bosset/Demotix/Corbis",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"business/2013/aug/28/police-serco-alleged-fraud",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2013-08-28T18:28:10Z",
+      "webTitle":"Police called in over alleged fraud by Serco staff",
+      "webUrl":"http://www.theguardian.com/business/2013/aug/28/police-serco-alleged-fraud",
+      "apiUrl":"http://content.guardianapis.com/business/2013/aug/28/police-serco-alleged-fraud",
+      "fields":{
+        "newspaperPageNumber":"2",
+        "trailText":"Staff working on contract to transport prisoners alleged to have been misleadingly recording prisoners as ready for court",
+        "headline":"Police called in over alleged fraud by Serco staff",
+        "body":"<p>The justice secretary, Chris Grayling, has called in the City of London police to investigate alleged fraud by Serco staff working on a £285m contract to transport prisoners to and from courts across London and East Anglia.</p><p>Grayling said it had \"become very clear there has been a culture within parts of Serco that has been totally unacceptable\".</p><p>Last month, Grayling asked the Serious Fraud Office to investigate potential overcharging by tens of millions of pounds by the private security company G4S on a £700m contract for the electronic tagging of offenders.</p><p>The Ministry of Justice (MoJ) said detailed audit work initiated as a result of the investigation into the tagging contract in July had shown that some Serco staff were recording prisoners as having been ready for court when in fact they were not. This data is a key performance measure for the contract that could determine whether or not it is terminated.</p><p>It is thought the \"potentially fraudulent behaviour\" has been going on since last summer, when persistent delays in transporting prisoners between jails and courts led to an official improvement notice being issued.</p><p>It is alleged that instead of ending the delays, Serco staff simply fiddled the paperwork, for example by recording the time that the van arrived at court as if that meant prisoners were ready to appear in the dock.</p><p>The ministry said in a statement: \"MoJ has informed Serco in the light of the new evidence, it is putting the contract under administrative supervision with immediate effect. Serco have agreed to repay all past profits made on the prisoner escorting and custodial services contract and to forgo any future profits.\"</p><p>The decision to call in the City of London police is particularly embarrassing for Grayling as two of his department's major private sector suppliers are now being investigated for fraud at a time when he is trying to accelerate the pace of his probation and prison outsourcing programme.</p><p>Serco is also involved in the allegations involving overcharging on the bigger tagging contract, but unlike G4S it agreed to co-operate with an outside forensic audit to establish whether there had been any dishonest behaviour on its part.</p><p>Ministry sources said Serco had asserted that no member of the company's board had any knowledge of the alleged fraud on the prisoner transport contract. \"If any evidence of corporate as opposed to individual wrongdoing emerges, MoJ will terminate this contract,\" it said.</p><p>The company has been put on three-month notice that it will have to overhaul its management, strengthen its internal audit procedures and open up its accounts to much more intense government scrutiny.</p><p>After three months a specially convened committee of government non-executive directors will assess whether the necessary changes have been put in place.</p><p>\"Unless government is satisfied the changes made by the company are sufficient to guarantee the future integrity of government contracts, Serco will face exclusion from all new and future work with the government,\" the MoJ said.</p><p>The threat is serious for Serco which is one the government's most important private sector suppliers managing services that range from running prisons and local education authorities to the atomic weapons establishment.</p><p>Grayling said: \"We have not seen evidence of systemic malpractice up to board level, but we have been clear with the company: unless it undertakes a rapid process of major change, and becomes completely open with government about the work it is doing for us, then it will not win public contracts in future. The taxpayer must know that their money is being  properly used.\"</p><p>Chris Hyman, chief executive of Serco, said: \"The justice secretary is right to expect the highest standards of performance from Serco. I am deeply saddened and appalled at the misreporting of data by a small number of employees on the contract.</p><p>\"This is a very serious matter for the customer and for us. We will not tolerate any wrongdoing and that is why we have referred this matter to the police. It is also why I have immediately initiated a programme of change and corporate renewal.</p><p>\"The overwhelming majority of our people work hard every day to deliver important public services and will share my deep concern about this matter.\"</p><!-- Guardian Watermark: internal-code/content/416025781|2013-11-05T11:03:52Z|d90fb806f4db5849f1072ac3d8614453995dc670 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-08-28T23:40:05Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/8/28/1377713540113/Serco-005.jpg",
+        "standfirst":"Staff working on contract to transport prisoners alleged to have been misleadingly recording prisoners as ready for court",
+        "shortUrl":"http://gu.com/p/3tbyz",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/8/28/1377713540113/Serco-005.jpg",
+        "wordcount":"685",
+        "commentable":"false",
+        "internalContentCode":"416025781",
+        "allowUgc":"false",
+        "internalOctopusCode":"8005036",
+        "isPremoderated":"false",
+        "byline":"Alan Travis, home affairs editor",
+        "publication":"theguardian.com",
+        "newspaperEditionDate":"2013-08-29",
+        "internalPageCode":"1957227",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-08-31T18:28:10Z"
+      },
+      "tags":[{
+        "id":"business/sercogroup",
+        "type":"keyword",
+        "webTitle":"Serco",
+        "webUrl":"http://www.theguardian.com/business/sercogroup",
+        "apiUrl":"http://content.guardianapis.com/business/sercogroup",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/alantravis",
+        "type":"contributor",
+        "webTitle":"Alan Travis",
+        "webUrl":"http://www.theguardian.com/profile/alantravis",
+        "apiUrl":"http://content.guardianapis.com/profile/alantravis",
+        "bio":"<p>Alan Travis is the Guardian's <a href=\"http://politics.guardian.co.uk/homeaffairs/0,,584184,00.html\">home affairs</a> editor. He is the author of Bound and Gagged, a history of British obscenity</p>",
+        "rcsId":"GNL027519",
+        "r2ContributorId":"15315",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/26/alan_travis_140x140.jpg",
+        "references":[]
+      },{
+        "id":"society/prisons-and-probation",
+        "type":"keyword",
+        "webTitle":"Prisons and probation",
+        "webUrl":"http://www.theguardian.com/society/prisons-and-probation",
+        "apiUrl":"http://content.guardianapis.com/society/prisons-and-probation",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"politics/chrisgrayling",
+        "type":"keyword",
+        "webTitle":"Chris Grayling",
+        "webUrl":"http://www.theguardian.com/politics/chrisgrayling",
+        "apiUrl":"http://content.guardianapis.com/politics/chrisgrayling",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/topstories",
+        "type":"newspaper-book-section",
+        "webTitle":"Top stories",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/topstories",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/topstories",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-416026721",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/8/28/1377713535783/Serco-002.jpg",
+          "typeData":{
+            "source":"Jim Wileman for the Guardian",
+            "altText":"Serco",
+            "height":"54",
+            "credit":"Jim Wileman for the Guardian",
+            "caption":"'There has been a culture within parts of Serco that has been totally unacceptable,' says justice secretary Chris Grayling. Photograph: Jim Wileman for the Guardian",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/8/28/1377713537284/Serco-003.jpg",
+          "typeData":{
+            "source":"Jim Wileman for the Guardian",
+            "altText":"Serco",
+            "height":"340",
+            "credit":"Jim Wileman for the Guardian",
+            "caption":"'There has been a culture within parts of Serco that has been totally unacceptable,' says justice secretary Chris Grayling. Photograph: Jim Wileman for the Guardian",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/8/28/1377713538777/Serco-004.jpg",
+          "typeData":{
+            "source":"Jim Wileman for the Guardian",
+            "altText":"Serco",
+            "height":"130",
+            "credit":"Jim Wileman for the Guardian",
+            "caption":"'There has been a culture within parts of Serco that has been totally unacceptable,' says justice secretary Chris Grayling. Photograph: Jim Wileman for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/8/28/1377713540113/Serco-005.jpg",
+          "typeData":{
+            "source":"Jim Wileman for the Guardian",
+            "altText":"Serco",
+            "height":"84",
+            "credit":"Jim Wileman for the Guardian",
+            "caption":"'There has been a culture within parts of Serco that has been totally unacceptable,' says justice secretary Chris Grayling. Photograph: Jim Wileman for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/8/28/1377713541456/Serco-006.jpg",
+          "typeData":{
+            "source":"Jim Wileman for the Guardian",
+            "altText":"Serco",
+            "height":"132",
+            "credit":"Jim Wileman for the Guardian",
+            "caption":"'There has been a culture within parts of Serco that has been totally unacceptable,' says justice secretary Chris Grayling. Photograph: Jim Wileman for the Guardian",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/8/28/1377713543083/Serco-007.jpg",
+          "typeData":{
+            "source":"Jim Wileman for the Guardian",
+            "altText":"Serco",
+            "height":"168",
+            "credit":"Jim Wileman for the Guardian",
+            "caption":"'There has been a culture within parts of Serco that has been totally unacceptable,' says justice secretary Chris Grayling. Photograph: Jim Wileman for the Guardian",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/8/28/1377713544690/Serco-008.jpg",
+          "typeData":{
+            "source":"Jim Wileman for the Guardian",
+            "altText":"Serco",
+            "height":"180",
+            "credit":"Jim Wileman for the Guardian",
+            "caption":"'There has been a culture within parts of Serco that has been totally unacceptable,' says justice secretary Chris Grayling. Photograph: Jim Wileman for the Guardian",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/8/28/1377713546144/Serco-009.jpg",
+          "typeData":{
+            "source":"Jim Wileman for the Guardian",
+            "altText":"Serco",
+            "height":"228",
+            "credit":"Jim Wileman for the Guardian",
+            "caption":"'There has been a culture within parts of Serco that has been totally unacceptable,' says justice secretary Chris Grayling. Photograph: Jim Wileman for the Guardian",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/8/28/1377713547950/Serco-010.jpg",
+          "typeData":{
+            "source":"Jim Wileman for the Guardian",
+            "altText":"Serco",
+            "height":"276",
+            "credit":"Jim Wileman for the Guardian",
+            "caption":"'There has been a culture within parts of Serco that has been totally unacceptable,' says justice secretary Chris Grayling. Photograph: Jim Wileman for the Guardian",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/8/28/1377713549546/Serco-011.jpg",
+          "typeData":{
+            "source":"Jim Wileman for the Guardian",
+            "altText":"Serco",
+            "height":"372",
+            "credit":"Jim Wileman for the Guardian",
+            "caption":"'There has been a culture within parts of Serco that has been totally unacceptable,' says justice secretary Chris Grayling. Photograph: Jim Wileman for the Guardian",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/8/28/1377713547950/Serco-010.jpg",
+          "typeData":{
+            "source":"Jim Wileman for the Guardian",
+            "altText":"Serco",
+            "height":"276",
+            "credit":"Jim Wileman for the Guardian",
+            "caption":"'There has been a culture within parts of Serco that has been totally unacceptable,' says justice secretary Chris Grayling. Photograph: Jim Wileman for the Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-416026722",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/8/28/1377713540113/Serco-005.jpg",
+          "typeData":{
+            "source":"Jim Wileman for the Guardian",
+            "altText":"Serco",
+            "height":"84",
+            "credit":"Jim Wileman for the Guardian",
+            "caption":"'There has been a culture within parts of Serco that has been totally unacceptable,' says justice secretary Chris Grayling. Photograph: Jim Wileman for the Guardian",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"politics/2013/sep/15/serco-g4s-bid-contracts-chris-grayling",
+      "sectionId":"politics",
+      "sectionName":"Politics",
+      "webPublicationDate":"2013-09-15T16:39:33Z",
+      "webTitle":"Investigated Serco and G4S can bid for new contracts, says Chris Grayling",
+      "webUrl":"http://www.theguardian.com/politics/2013/sep/15/serco-g4s-bid-contracts-chris-grayling",
+      "apiUrl":"http://content.guardianapis.com/politics/2013/sep/15/serco-g4s-bid-contracts-chris-grayling",
+      "fields":{
+        "newspaperPageNumber":"4",
+        "trailText":"Justice secretary says firms can be in running for MoJ contracts despite fraud probes, but not until 'forensic audit' clears them",
+        "headline":"Investigated Serco and G4S can bid for new contracts, says Chris Grayling",
+        "body":"<p>The justice secretary is to allow two security companies to bid for Ministry of Justice contracts despite both <a href=\"http://www.theguardian.com/business/2013/aug/28/police-serco-alleged-fraud\" title=\"\">facing alleged fraud investigations</a> over <a href=\"http://www.theguardian.com/business/2013/jul/12/g4s-chris-grayling-allegations-overcharging\" title=\"\">existing deals</a>.</p><p>Chris Grayling has not ruled Serco and G4S out of the running for new MoJ contracts, which include the £800m privatisation of most probation services.</p><p>But he has for the first time assured his Labour counterpart, Sadiq Khan, that no new contracts will be awarded to either company until a series of official \"forensic audits\" has given them a clean bill of health.</p><p>The official publication of invitations to bid for the privatisation of the bulk of the probation service is due soon. Both companies are leading contenders for the payment-by-results contracts under which 235,000 offenders are to be supervised each year. City analysts see few other large-scale players able or willing to bid for the work if Serco and G4S are excluded.</p><p>Grayling told Khan last week: \"I am strongly of the view that we should not award new contracts for the two companies until we have established the facts about both their performance and their corporate behaviour. That is why I have requested an audit of every contract that MoJ holds with G4S and Serco.</p><p>\"It is important to note that MoJ will not award new contracts to the companies unless this audit work is completed to our satisfaction. However, I do not intend to prejudge the outcome of this process at this stage by excluding the two companies from participating in the current competitions.\" Grayling said a decision would be taken only once the audits had been completed.</p><p>Khan, who wrote to Grayling demanding that the two companies be banned from any new contracts until they are given a clean bill of health, said: \"I'm pleased that the government has finally come round to Labour's view on the G4S and Serco scandals.</p><p>\"It would be an outrage if a single penny of [MoJ] contracts was awarded to either company before both have been given a clean bill of health. The British public would be rightly seething and confidence in our justice system would be dangerously undermined.\"</p><p>The shadow justice secretary added that until the two companies were cleared they should be barred from even bidding for contracts: \"It's beyond the pale that Chris Grayling won't rule out G4S and Serco. Under his plans, serious and violent offenders will be supervised in our communities by private companies, and the public want confidence this won't put their safety at risk.\"</p><p>Grayling has asked the Serious Fraud Office to investigate G4s and subjected Serco to a forensic audit after it emerged they had been billing the MoJ for tracking the movements of offenders who had gone abroad, been returned to jail, or even died.</p><p>The multimillion-pound tagging fiasco, which emerged in July, also triggered a Cabinet Office review of all the government contracts worth more than £10m held by G4S and Serco. It is understood that this investigation is looking at no fewer than 29 separate contracts to ensure \"they are well managed and in good order\".</p><p>The City of London police have also been asked to investigate allegations of fraudulent behaviour by Serco staff in a separate £285m prisoner escort contract in London and East Anglia.</p><p>The companies' contracts span everything from managing the nuclear weapons establishment at Aldermaston and prisons and immigration centres, to running the Docklands Light Railway and out-of-hours GP services in Cornwall.</p><p>Both Serco and G4s have been ordered to go through a \"process of corporate renewal\" which Grayling has said involves both companies demonstrating that they have addressed \"internal cultural issues\" that allowed the overcharging to happen and have \"purged\" the staff involved.</p><p>City analysts who were briefed by the government's chief procurement officer last week say there is now a more conciliatory tone in government discussions with Serco. They do not expect the relationship with Serco to be severed, although the company may have to drop out of bidding for some contracts in the near future such as the one for decommissioning Magnox nuclear reactors.</p><p>But the uncertainty will remain for several months as the outcome of Grayling's \"forensic audits\" and reviews is not expected before late November or December. Ministers want the new contracts in place by October next year – well before the 2015 general election. Serco said last week that it had appointed Lord Gold to oversee its internal renewal programme.</p><p>The chief procurement officer is also understood to have downplayed talk by David Cameron last week of a confidential \"blacklist of banned suppliers\", saying the Cabinet Office exercise was more likely to involve requiring an \"enhanced burden of proof regarding capability from suppliers with problematic histories\".</p><!-- Guardian Watermark: internal-code/content/417336191|2013-11-05T11:03:52Z|bd2fdb6cedc6ebb93dfd340dd03dcf2ad12a79e5 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-09-15T23:06:08Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/9/15/1379262850618/Justice-secretary-Chris-G-005.jpg",
+        "standfirst":"Justice secretary says firms can be in running for MoJ contracts despite fraud probes, but not until 'forensic audit' clears them",
+        "shortUrl":"http://gu.com/p/3tndx",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/15/1379262850618/Justice-secretary-Chris-G-005.jpg",
+        "wordcount":"766",
+        "commentable":"false",
+        "internalContentCode":"417336191",
+        "allowUgc":"false",
+        "internalOctopusCode":"8071223",
+        "isPremoderated":"false",
+        "byline":"Alan Travis, home affairs editor",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-09-16",
+        "internalPageCode":"1965736",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-09-18T16:39:33Z"
+      },
+      "tags":[{
+        "id":"politics/chrisgrayling",
+        "type":"keyword",
+        "webTitle":"Chris Grayling",
+        "webUrl":"http://www.theguardian.com/politics/chrisgrayling",
+        "apiUrl":"http://content.guardianapis.com/politics/chrisgrayling",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"business/g4s",
+        "type":"keyword",
+        "webTitle":"G4S",
+        "webUrl":"http://www.theguardian.com/business/g4s",
+        "apiUrl":"http://content.guardianapis.com/business/g4s",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/sercogroup",
+        "type":"keyword",
+        "webTitle":"Serco",
+        "webUrl":"http://www.theguardian.com/business/sercogroup",
+        "apiUrl":"http://content.guardianapis.com/business/sercogroup",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"society/prisons-and-probation",
+        "type":"keyword",
+        "webTitle":"Prisons and probation",
+        "webUrl":"http://www.theguardian.com/society/prisons-and-probation",
+        "apiUrl":"http://content.guardianapis.com/society/prisons-and-probation",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"law/law",
+        "type":"keyword",
+        "webTitle":"Law",
+        "webUrl":"http://www.theguardian.com/law/law",
+        "apiUrl":"http://content.guardianapis.com/law/law",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"law/criminal-justice",
+        "type":"keyword",
+        "webTitle":"UK criminal justice",
+        "webUrl":"http://www.theguardian.com/law/criminal-justice",
+        "apiUrl":"http://content.guardianapis.com/law/criminal-justice",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"law/serious-fraud-office",
+        "type":"keyword",
+        "webTitle":"Serious Fraud Office",
+        "webUrl":"http://www.theguardian.com/law/serious-fraud-office",
+        "apiUrl":"http://content.guardianapis.com/law/serious-fraud-office",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/alantravis",
+        "type":"contributor",
+        "webTitle":"Alan Travis",
+        "webUrl":"http://www.theguardian.com/profile/alantravis",
+        "apiUrl":"http://content.guardianapis.com/profile/alantravis",
+        "bio":"<p>Alan Travis is the Guardian's <a href=\"http://politics.guardian.co.uk/homeaffairs/0,,584184,00.html\">home affairs</a> editor. He is the author of Bound and Gagged, a history of British obscenity</p>",
+        "rcsId":"GNL027519",
+        "r2ContributorId":"15315",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/26/alan_travis_140x140.jpg",
+        "references":[]
+      },{
+        "id":"politics/labour",
+        "type":"keyword",
+        "webTitle":"Labour",
+        "webUrl":"http://www.theguardian.com/politics/labour",
+        "apiUrl":"http://content.guardianapis.com/politics/labour",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/liberal-conservative-coalition",
+        "type":"keyword",
+        "webTitle":"Liberal-Conservative coalition",
+        "webUrl":"http://www.theguardian.com/politics/liberal-conservative-coalition",
+        "apiUrl":"http://content.guardianapis.com/politics/liberal-conservative-coalition",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/conservatives",
+        "type":"keyword",
+        "webTitle":"Conservatives",
+        "webUrl":"http://www.theguardian.com/politics/conservatives",
+        "apiUrl":"http://content.guardianapis.com/politics/conservatives",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/liberaldemocrats",
+        "type":"keyword",
+        "webTitle":"Liberal Democrats",
+        "webUrl":"http://www.theguardian.com/politics/liberaldemocrats",
+        "apiUrl":"http://content.guardianapis.com/politics/liberaldemocrats",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/topstories",
+        "type":"newspaper-book-section",
+        "webTitle":"Top stories",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/topstories",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/topstories",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417336511",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/15/1379262845045/Justice-secretary-Chris-G-002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Sean Dempsey",
+            "altText":"Justice secretary Chris Grayling",
+            "height":"54",
+            "credit":"Sean Dempsey/PA",
+            "caption":"Justice secretary Chris Grayling says Serco and G4S can bid for new MoJ contracts, but has assured Labour's Sadiq Khan they must be cleared of fraud allegations first. Photograph: Sean Dempsey/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/15/1379262846562/Justice-secretary-Chris-G-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Sean Dempsey",
+            "altText":"Justice secretary Chris Grayling",
+            "height":"340",
+            "credit":"Sean Dempsey/PA",
+            "caption":"Justice secretary Chris Grayling says Serco and G4S can bid for new MoJ contracts, but has assured Labour's Sadiq Khan they must be cleared of fraud allegations first. Photograph: Sean Dempsey/PA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/15/1379262848005/Justice-secretary-Chris-G-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Sean Dempsey",
+            "altText":"Justice secretary Chris Grayling",
+            "height":"130",
+            "credit":"Sean Dempsey/PA",
+            "caption":"Justice secretary Chris Grayling says Serco and G4S can bid for new MoJ contracts, but has assured Labour's Sadiq Khan they must be cleared of fraud allegations first. Photograph: Sean Dempsey/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/15/1379262850618/Justice-secretary-Chris-G-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Sean Dempsey",
+            "altText":"Justice secretary Chris Grayling",
+            "height":"84",
+            "credit":"Sean Dempsey/PA",
+            "caption":"Justice secretary Chris Grayling says Serco and G4S can bid for new MoJ contracts, but has assured Labour's Sadiq Khan they must be cleared of fraud allegations first. Photograph: Sean Dempsey/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/15/1379262852004/Justice-secretary-Chris-G-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Sean Dempsey",
+            "altText":"Justice secretary Chris Grayling",
+            "height":"132",
+            "credit":"Sean Dempsey/PA",
+            "caption":"Justice secretary Chris Grayling says Serco and G4S can bid for new MoJ contracts, but has assured Labour's Sadiq Khan they must be cleared of fraud allegations first. Photograph: Sean Dempsey/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/15/1379262853397/Justice-secretary-Chris-G-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Sean Dempsey",
+            "altText":"Justice secretary Chris Grayling",
+            "height":"168",
+            "credit":"Sean Dempsey/PA",
+            "caption":"Justice secretary Chris Grayling says Serco and G4S can bid for new MoJ contracts, but has assured Labour's Sadiq Khan they must be cleared of fraud allegations first. Photograph: Sean Dempsey/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/15/1379262854833/Justice-secretary-Chris-G-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Sean Dempsey",
+            "altText":"Justice secretary Chris Grayling",
+            "height":"180",
+            "credit":"Sean Dempsey/PA",
+            "caption":"Justice secretary Chris Grayling says Serco and G4S can bid for new MoJ contracts, but has assured Labour's Sadiq Khan they must be cleared of fraud allegations first. Photograph: Sean Dempsey/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/15/1379262856321/Justice-secretary-Chris-G-009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Sean Dempsey",
+            "altText":"Justice secretary Chris Grayling",
+            "height":"228",
+            "credit":"Sean Dempsey/PA",
+            "caption":"Justice secretary Chris Grayling says Serco and G4S can bid for new MoJ contracts, but has assured Labour's Sadiq Khan they must be cleared of fraud allegations first. Photograph: Sean Dempsey/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/15/1379262857824/Justice-secretary-Chris-G-010.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Sean Dempsey",
+            "altText":"Justice secretary Chris Grayling",
+            "height":"276",
+            "credit":"Sean Dempsey/PA",
+            "caption":"Justice secretary Chris Grayling says Serco and G4S can bid for new MoJ contracts, but has assured Labour's Sadiq Khan they must be cleared of fraud allegations first. Photograph: Sean Dempsey/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/15/1379262859275/Justice-secretary-Chris-G-011.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Sean Dempsey",
+            "altText":"Justice secretary Chris Grayling",
+            "height":"372",
+            "credit":"Sean Dempsey/PA",
+            "caption":"Justice secretary Chris Grayling says Serco and G4S can bid for new MoJ contracts, but has assured Labour's Sadiq Khan they must be cleared of fraud allegations first. Photograph: Sean Dempsey/PA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/15/1379262857824/Justice-secretary-Chris-G-010.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Sean Dempsey",
+            "altText":"Justice secretary Chris Grayling",
+            "height":"276",
+            "credit":"Sean Dempsey/PA",
+            "caption":"Justice secretary Chris Grayling says Serco and G4S can bid for new MoJ contracts, but has assured Labour's Sadiq Khan they must be cleared of fraud allegations first. Photograph: Sean Dempsey/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417336512",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/15/1379262850618/Justice-secretary-Chris-G-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Sean Dempsey",
+            "altText":"Justice secretary Chris Grayling",
+            "height":"84",
+            "credit":"Sean Dempsey/PA",
+            "caption":"Justice secretary Chris Grayling says Serco and G4S can bid for new MoJ contracts, but has assured Labour's Sadiq Khan they must be cleared of fraud allegations first. Photograph: Sean Dempsey/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"business/marketforceslive/2013/sep/27/serco-serious-fraud-office-tagging-contract",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2013-09-27T10:38:07Z",
+      "webTitle":"Serco slips after Serious Fraud Office considers investigation into tagging contracts",
+      "webUrl":"http://www.theguardian.com/business/marketforceslive/2013/sep/27/serco-serious-fraud-office-tagging-contract",
+      "apiUrl":"http://content.guardianapis.com/business/marketforceslive/2013/sep/27/serco-serious-fraud-office-tagging-contract",
+      "fields":{
+        "newspaperPageNumber":"35",
+        "trailText":"<p>Ministry of Justice passes on information to SFO to consider over electronic monitoring</p>",
+        "headline":"Serco slips after Serious Fraud Office considers investigation into tagging contracts",
+        "body":"<p>It has not been a particularly good week for outsourcing group <strong>Serco</strong>.</p><p>On Monday the company began life in the mid-cap index after its eviction from the FTSE 100, and now it transpires it may be investigated by the Serious Fraud Office over electronic monitoring contracts. Both Serco and rival G4S have been accused of charging the government for tagging criminals who were either in prison, never tagged at all, or dead.</p><p>The Ministry of Justice has already asked the SFO to consider carrying out an investigation into G4S, and now fraud detectives have confirmed they are considering information provided by the ministry on Serco. Serco said after the market closed on Thursday it believed it had billed in accordance with the terms of the contract, and was co-operating with the ministry. It said it would not tolerate poor practice and would put it right wherever it was found.</p><p>Serco's shares have dropped 8p or nearly 1.5% to 543p as investors had their first chance to react to Thursday night's statements, but analysts said the news was not unexpected. Robin Speakman at Shore Capital, in a hold note, said:</p><blockquote><p>Clearly to our minds, whilst this may be disappointing to investors, it is of little surprise; the SFO being in a much stronger position to review and determine the nature of evidence and actions. Serco are due to present their own internal findings on the contract (and related/ancillary issues) at the end of November. We stress, however, that this is unlikely to coincide with a resolution, in our view. We believe that investigations and the resolution process are likely to stretch into the first quarter of 2014. Meanwhile, Serco remains unable to effectively participate in the UK government contracting market, in our opinion. We remain cautious on the economic and reputational damage being inflicted on Serco - in our view a full resolution remains some months away.</p></blockquote><p>Oriel Securities issued a sell recommendation, saying:</p><blockquote><p>It looks to us as if the ministry statement is no more than confirming that the processes of SFO investigation, ministry audit of Serco and G4S and wider review by the Cabinet Office of all contracts held by Serco and G4S across government is on-going. </p></blockquote><p>Caroline de La Soujeole at Cantor Fitzgerald said the update did not make Serco's position materially worse, but added:</p><blockquote><p>If Serco fails to convince the government that it has mended its way it could be frozen from new government work. The UK public sector currently accounts for around 50% of total group sales. Given the cloud of uncertainty hanging over Serco's UK operations, we have a hold recommendation and target price of 550p.<br /> </p></blockquote><!-- Guardian Watermark: internal-code/content/418450333|2013-11-05T11:03:52Z|f6cec4ac018eb5eed25294eff74c3e15ccd8293a -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-09-27T23:05:50Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "standfirst":"Ministry of Justice passes on information to SFO to consider over electronic monitoring",
+        "shortUrl":"http://gu.com/p/3j54b",
+        "wordcount":"434",
+        "commentable":"true",
+        "internalContentCode":"418450333",
+        "allowUgc":"false",
+        "internalOctopusCode":"8125872",
+        "isPremoderated":"false",
+        "byline":"Nick Fletcher",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-09-28",
+        "internalPageCode":"1972064",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-04T10:38:00Z"
+      },
+      "tags":[{
+        "id":"business/marketforceslive",
+        "type":"blog",
+        "webTitle":"Market Forces blog",
+        "webUrl":"http://www.theguardian.com/business/marketforceslive",
+        "apiUrl":"http://content.guardianapis.com/business/marketforceslive",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/nickfletcher",
+        "type":"contributor",
+        "webTitle":"Nick Fletcher",
+        "webUrl":"http://www.theguardian.com/profile/nickfletcher",
+        "apiUrl":"http://content.guardianapis.com/profile/nickfletcher",
+        "bio":"<p>Nick Fletcher is a Guardian columnist and writer of the Market Forces column</p>",
+        "rcsId":"GNL023406",
+        "r2ContributorId":"16178",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/10/03/nick_fletcher_140x140.jpg",
+        "references":[]
+      },{
+        "id":"business/sercogroup",
+        "type":"keyword",
+        "webTitle":"Serco",
+        "webUrl":"http://www.theguardian.com/business/sercogroup",
+        "apiUrl":"http://content.guardianapis.com/business/sercogroup",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/international",
+        "type":"newspaper-book-section",
+        "webTitle":"International",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/international",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/international",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[],
+      "references":[]
+    },{
+      "id":"business/2013/oct/25/serco-chief-quits-government-contracts-chris-hyman",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2013-10-25T18:20:00Z",
+      "webTitle":"Serco chief quits before investigation into electronic tagging charges",
+      "webUrl":"http://www.theguardian.com/business/2013/oct/25/serco-chief-quits-government-contracts-chris-hyman",
+      "apiUrl":"http://content.guardianapis.com/business/2013/oct/25/serco-chief-quits-government-contracts-chris-hyman",
+      "fields":{
+        "newspaperPageNumber":"40",
+        "trailText":"<p>Chris Hyman says he is leaving the services company because it is the best way to mend relationship with UK government</p>",
+        "headline":"Serco chief quits before investigation into electronic tagging charges",
+        "body":"<p>The boss of government outsourcing group Serco quit to allow a new boss to be appointed from outside the troubled company.</p><p>Serco is scrambling to restore its reputation following a series of debacles ranging from failing to provide enough doctors in Cornwall to charging the government for electronic tags on dead prisoners.</p><p>Chris Hyman, left with immediate effect on Friday after 20 years with the operator of hospitals, prisons and railways. He said he would \"step back\" from his chief executive role, held for 11 years, to allow relations with the government to be rebuilt.</p><p>He received £2.5m last year, when bonuses are included, and he is expected to walk away with £1.6m and a £2m pension pot. He has options over shares, that if he were to cash in today would be worth an additional £2m.</p><p>A government spokesman welcomed his resignation – discussed with the Cabinet Office in advance and announced just weeks before the government is expected to decide whether to allow Serco to bid for future contracts .</p><p>Serco generates a quarter of its revenues from government work and is attempting to placate the government after claims it had overcharged the Ministry of Justice by \"tens of millions\" of pounds for electronic tags for criminals.</p><p>Last month <a href=\"http://www.theguardian.com/business/marketforceslive/2013/sep/27/serco-serious-fraud-office-tagging-contract\" title=\"\">Serco was put on notice it could be investigated by the Serious Fraud Office</a> after charging the government for tagging criminals who were either dead, still in prison or who had never been tagged in the first place.</p><p>The government said it would take \"full account of all the changes Serco have made\".</p><p>\"Whilst it is early days in their programme of renewal, this is a positive move by Serco and a step forward,\" the government said.</p><p>But Keith Vaz, the Labour MP who chairs the home affairs committee, said:  \"I am surprised by the resignation of Mr Hyman who has always maintained that there is nothing untoward with the contracts that Serco holds with the government, even after the company was referred by secretary of state for justice to the SFO.\"</p><p>Shares in Serco, which was demoted from the FTSE 100 last month after its shares fell sharply following the allegations over its tagging contracts, rose 1p to 557p after the surprise departure of Hyman.</p><p>Hyman said: \"At this time, nothing is more important to me than rebuilding the relationship with our UK government customer. In recent weeks it has become clear to me that the best way for the company to move forward is for me to step back.\"</p><p>Underlining the scale of the task involved in repairing relations with the government, Alastair Lyons, the Serco chairman, said a new chief executive would be appointed from outside the group. In the interim, Ed Casey, head of the Americas division since 2005, will  take the helm.</p><p>The management upheaval came less than 24 hours after rival G4S, also caught up in the controversial electronic tagging fiasco, <a href=\"http://www.theguardian.com/business/2013/oct/24/g4s-uk-ireland-head-resigns\" title=\"\">parted company with the head of its UK and Irish operations Richard Morris</a>. The G4S chief executive, Nick Buckles, left in May.</p><p>Both companies are being subjected to a government-wide review of every one of their contracts and have been ordered to prove they are taking steps to improve their operations.</p><p>Serco, which was transformed into a major international firm under Hyman, is embarking on what it describes as a \"renewal programme\".</p><p>The UK and Europe division is to be split in two, with one section to focus on the \"UK government customers\" and the other on activities in the wider public sector.</p><p>Three new non-executive directors are to be appointed along with a new general counsel. A board committee for corporate responsibility is also to be created.</p><p>Despite Hyman's rapid departure, Lyons paid tribute to the outgoing boss: \"As CEO since 2002, he has taken Serco from a predominantly UK business with a turnover of £1.3bn to the £5bn international services business it is today. He leaves with our very best wishes.\"</p><p>Brought up in apartheid Durban, Hyman is a Pentecostal Christian and was one of only a few non-white students at his university. He <a href=\"http://www.theguardian.com/business/2006/feb/24/columnists.guardiancolumnists\" title=\"\">has previously told</a> the Guardian that he donates a biblical tithe – or 10% of his annual income – to his local Pentecostal church in Surrey and fasts every Tuesday, as he has done every week of his life.</p><p>He worked for Arthur Anderson and Ernst &amp; Young before joining Serco in 1994.</p><p>Andre Spicer, professor of organisational behaviour at Cass Business School, said Hyman may have become a scapegoat. \"Typically, CEOs at companies that face a scandal are often pushed out to clear the air. This tends to lead to some short-term confusion, but pays off in terms of an increase in corporate performance. But in some cases it can be a fatal distraction where companies feel they have addressed the big issues by changing the leader.\"</p><!-- Guardian Watermark: internal-code/content/420940988|2013-11-05T11:03:52Z|c25775927984e32243e70b0760cdf96948af2a50 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-25T23:19:55Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/25/1382701425996/Chris-Hyman-quits-Serco--003.jpg",
+        "standfirst":"Chris Hyman says he is leaving the services company because it is the best way to mend relationship with UK government",
+        "shortUrl":"http://gu.com/p/3jpby",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/25/1382701425996/Chris-Hyman-quits-Serco--003.jpg",
+        "wordcount":"791",
+        "commentable":"false",
+        "internalContentCode":"420940988",
+        "allowUgc":"false",
+        "internalOctopusCode":"8240873",
+        "isPremoderated":"false",
+        "byline":"Jill Treanor and Rajeev Syal",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-26",
+        "internalPageCode":"1986843",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-28T12:58:18Z"
+      },
+      "tags":[{
+        "id":"business/sercogroup",
+        "type":"keyword",
+        "webTitle":"Serco",
+        "webUrl":"http://www.theguardian.com/business/sercogroup",
+        "apiUrl":"http://content.guardianapis.com/business/sercogroup",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"profile/jilltreanor",
+        "type":"contributor",
+        "webTitle":"Jill Treanor",
+        "webUrl":"http://www.theguardian.com/profile/jilltreanor",
+        "apiUrl":"http://content.guardianapis.com/profile/jilltreanor",
+        "bio":"<p>Jill Treanor is the Guardian's City editor. She specialises in the banking sector</p>",
+        "rcsId":"GNL003510",
+        "r2ContributorId":"15822",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jill_treanor_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/rajeev-syal",
+        "type":"contributor",
+        "webTitle":"Rajeev Syal",
+        "webUrl":"http://www.theguardian.com/profile/rajeev-syal",
+        "apiUrl":"http://content.guardianapis.com/profile/rajeev-syal",
+        "bio":"<p>Rajeev Syal covers Whitehall and works on off-diary stories from the lobby for the Guardian</p>",
+        "r2ContributorId":"29467",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/financial3",
+        "type":"newspaper-book-section",
+        "webTitle":"Financial",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/financial3",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/financial3",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420997989",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/25/1382701422076/Chris-Hyman-quits-Serco--001.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Bloomberg",
+            "altText":"Chris Hyman quits Serco ",
+            "height":"54",
+            "credit":"Bloomberg/Getty Images",
+            "caption":"Chris Hyman transformed Serco into a major international firm during his 10 years in charge.  Photograph: Bloomberg/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/25/1382701424403/Chris-Hyman-quits-Serco--002.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Bloomberg",
+            "altText":"Chris Hyman quits Serco ",
+            "height":"130",
+            "credit":"Bloomberg/Getty Images",
+            "caption":"Chris Hyman transformed Serco into a major international firm during his 10 years in charge.  Photograph: Bloomberg/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/25/1382701425996/Chris-Hyman-quits-Serco--003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Bloomberg",
+            "altText":"Chris Hyman quits Serco ",
+            "height":"84",
+            "credit":"Bloomberg/Getty Images",
+            "caption":"Chris Hyman transformed Serco into a major international firm during his 10 years in charge.  Photograph: Bloomberg/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/25/1382701427675/Chris-Hyman-quits-Serco--004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Bloomberg",
+            "altText":"Chris Hyman quits Serco ",
+            "height":"132",
+            "credit":"Bloomberg/Getty Images",
+            "caption":"Chris Hyman transformed Serco into a major international firm during his 10 years in charge.  Photograph: Bloomberg/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/25/1382701429601/Chris-Hyman-quits-Serco--005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Bloomberg",
+            "altText":"Chris Hyman quits Serco ",
+            "height":"168",
+            "credit":"Bloomberg/Getty Images",
+            "caption":"Chris Hyman transformed Serco into a major international firm during his 10 years in charge.  Photograph: Bloomberg/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/25/1382701431244/Chris-Hyman-quits-Serco--006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Bloomberg",
+            "altText":"Chris Hyman quits Serco ",
+            "height":"180",
+            "credit":"Bloomberg/Getty Images",
+            "caption":"Chris Hyman transformed Serco into a major international firm during his 10 years in charge.  Photograph: Bloomberg/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/25/1382701432840/Chris-Hyman-quits-Serco--007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Bloomberg",
+            "altText":"Chris Hyman quits Serco ",
+            "height":"228",
+            "credit":"Bloomberg/Getty Images",
+            "caption":"Chris Hyman transformed Serco into a major international firm during his 10 years in charge.  Photograph: Bloomberg/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/25/1382701434639/Chris-Hyman-quits-Serco--008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Bloomberg",
+            "altText":"Chris Hyman quits Serco ",
+            "height":"276",
+            "credit":"Bloomberg/Getty Images",
+            "caption":"Chris Hyman transformed Serco into a major international firm during his 10 years in charge.  Photograph: Bloomberg/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/25/1382701434639/Chris-Hyman-quits-Serco--008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Bloomberg",
+            "altText":"Chris Hyman quits Serco ",
+            "height":"276",
+            "credit":"Bloomberg/Getty Images",
+            "caption":"Chris Hyman transformed Serco into a major international firm during his 10 years in charge.  Photograph: Bloomberg/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420997990",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/25/1382701425996/Chris-Hyman-quits-Serco--003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Bloomberg",
+            "altText":"Chris Hyman quits Serco ",
+            "height":"84",
+            "credit":"Bloomberg/Getty Images",
+            "caption":"Chris Hyman transformed Serco into a major international firm during his 10 years in charge.  Photograph: Bloomberg/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"law/2013/nov/04/serious-fraud-office-inquiry-g4s-serco-overcharging",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2013-11-04T12:34:40Z",
+      "webTitle":"Serious Fraud Office launches inquiry into G4S and Serco overcharging claims",
+      "webUrl":"http://www.theguardian.com/law/2013/nov/04/serious-fraud-office-inquiry-g4s-serco-overcharging",
+      "apiUrl":"http://content.guardianapis.com/law/2013/nov/04/serious-fraud-office-inquiry-g4s-serco-overcharging",
+      "fields":{
+        "newspaperPageNumber":"18",
+        "trailText":"Investigation follows justice secretary's claims that firms overcharged on electronic tagging contracts for offenders<br />",
+        "headline":"Serious Fraud Office launches inquiry into G4S and Serco overcharging claims",
+        "body":"<p>The Serious Fraud Office has launched a formal criminal investigation into two of the government's biggest suppliers, G4S and Serco, following claims by the justice secretary, Chris Grayling, of tens of millions of pounds of overcharging on electronic tagging contracts for offenders.</p><p>Grayling asked the SFO to look into the billing allegations in July when he told MPs that an external audit had revealed that the overcharging included billing for tracking the movements of criminals who had moved abroad, who were back in prison, who had had their tags removed and even, in a few cases, those who had died.</p><p>The justice secretary said that in some cases the bills had continued to be presented years after active monitoring had stopped.</p><p>Whitehall sources have confirmed that the central allegation in the case revolves around charges for 3,000 phantom offenders. The justice ministry was being billed by the two companies for the tagging of 18,000 offenders a day under the &pound;700m contract when only 15,000 were actually being monitored.</p><p>G4S said it would co-operate with the investigation and had been notified by the SFO director, David Green, that it would cover &quot;the contract for the provision of electronic monitoring services which commenced in 2005 as amended and extended until the present day&quot;.</p><p>In July Grayling asked the SFO to look into the situation after G4S refused to co-operate with a justice ministry internal forensic audit to establish whether any dishonesty had taken place. The decision to refer Serco, which did co-operate with the MoJ audit, to the SFO was taken in September.</p><p>In July Serco said senior management had not been aware of the discrepancies but they did not believe anything dishonest had taken place. The company agreed with the MoJ that if the forensic audit showed dishonesty had taken place they would jointly call in the SFO.</p><p>The pattern of overcharging was revealed by a PricewaterhouseCoopers external audit commissioned by Grayling in May after billing discrepancies were discovered during the re-tendering process.</p><p>Under the contracts, more than 20,000 offenders are monitored on electronic tags at any one time. They are a key element in the criminal justice system's menu of community punishments as they are used to enforce curfews for prisoners on early release as well as some court orders.</p><p>In a small number of cases they have been used to track the movements of terror suspects and paedophiles. Last week prosecutions were halted against three terror suspects accused of tampering with their G4S-supplied GPS tags amid claims of faults with the tags and their straps.</p><p>The two companies are among the government's biggest suppliers. Both have already agreed to withdraw from bidding for the &pound;3bn next-generation tagging contract.</p><p>The Cabinet Office has also been reviewing the 28 contracts that the two companies currently hold with the government worth a total of &pound;9bn, including the management of the atomic weapons establishment at Aldermaston. Grayling has said that both companies can bid for contracts to run 70% of the probation service but will not be awarded them unless the SFO give them a clean bill of health.</p><p>Sadiq Khan, the shadow justice secretary, said the SFO decision was a major development. &quot;In July I wrote to the SFO calling on them to investigate claims against G4S and to act swiftly to secure any possible evidence that might be needed. I hope that the time taken to launch this investigation hasn't resulted in the loss of important evidence,&quot; he said.</p><p>&quot;With future Ministry of Justice contracts up for grabs, including more than &pound;600m of probation contracts, the government must act swiftly and bar G4S from bidding for any more until the SFO has concluded its investigation. By failing to do so, David Cameron risks undermining public confidence in our justice system.&quot;</p><!-- Guardian Watermark: internal-code/content/421618253|2013-11-05T11:03:52Z|ed6cb811731bc7f978c2a9786a5bddd1677cada1 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-05T00:10:59Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383568423030/An-electronic-tag-004.jpg",
+        "standfirst":"Investigation follows justice secretary's claims that firms overcharged on electronic tagging contracts for offenders<br />",
+        "shortUrl":"http://gu.com/p/3k4yx",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383568423030/An-electronic-tag-004.jpg",
+        "wordcount":"616",
+        "commentable":"false",
+        "internalContentCode":"421618253",
+        "allowUgc":"false",
+        "internalOctopusCode":"8278295",
+        "isPremoderated":"false",
+        "byline":"Alan Travis, home affairs editor",
+        "publication":"theguardian.com",
+        "newspaperEditionDate":"2013-11-05",
+        "internalPageCode":"1991467",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-11T12:34:40Z"
+      },
+      "tags":[{
+        "id":"business/g4s",
+        "type":"keyword",
+        "webTitle":"G4S",
+        "webUrl":"http://www.theguardian.com/business/g4s",
+        "apiUrl":"http://content.guardianapis.com/business/g4s",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"law/serious-fraud-office",
+        "type":"keyword",
+        "webTitle":"Serious Fraud Office",
+        "webUrl":"http://www.theguardian.com/law/serious-fraud-office",
+        "apiUrl":"http://content.guardianapis.com/law/serious-fraud-office",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"law/law",
+        "type":"keyword",
+        "webTitle":"Law",
+        "webUrl":"http://www.theguardian.com/law/law",
+        "apiUrl":"http://content.guardianapis.com/law/law",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/sercogroup",
+        "type":"keyword",
+        "webTitle":"Serco",
+        "webUrl":"http://www.theguardian.com/business/sercogroup",
+        "apiUrl":"http://content.guardianapis.com/business/sercogroup",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"law/criminal-justice",
+        "type":"keyword",
+        "webTitle":"UK criminal justice",
+        "webUrl":"http://www.theguardian.com/law/criminal-justice",
+        "apiUrl":"http://content.guardianapis.com/law/criminal-justice",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"profile/alantravis",
+        "type":"contributor",
+        "webTitle":"Alan Travis",
+        "webUrl":"http://www.theguardian.com/profile/alantravis",
+        "apiUrl":"http://content.guardianapis.com/profile/alantravis",
+        "bio":"<p>Alan Travis is the Guardian's <a href=\"http://politics.guardian.co.uk/homeaffairs/0,,584184,00.html\">home affairs</a> editor. He is the author of Bound and Gagged, a history of British obscenity</p>",
+        "rcsId":"GNL027519",
+        "r2ContributorId":"15315",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/26/alan_travis_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"society/prisons-and-probation",
+        "type":"keyword",
+        "webTitle":"Prisons and probation",
+        "webUrl":"http://www.theguardian.com/society/prisons-and-probation",
+        "apiUrl":"http://content.guardianapis.com/society/prisons-and-probation",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"politics/chrisgrayling",
+        "type":"keyword",
+        "webTitle":"Chris Grayling",
+        "webUrl":"http://www.theguardian.com/politics/chrisgrayling",
+        "apiUrl":"http://content.guardianapis.com/politics/chrisgrayling",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421618473",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383568417804/An-electronic-tag-001.jpg",
+          "typeData":{
+            "source":"Gary Calton",
+            "altText":"An electronic tag",
+            "height":"54",
+            "credit":"Gary Calton",
+            "caption":"Under the contracts more than 20,000 offenders are monitored on electronic tags at any one time. \r Photograph: Gary Calton",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383568420582/An-electronic-tag-002.jpg",
+          "typeData":{
+            "source":"Gary Calton",
+            "altText":"An electronic tag",
+            "height":"340",
+            "credit":"Gary Calton",
+            "caption":"Under the contracts more than 20,000 offenders are monitored on electronic tags at any one time. \r Photograph: Gary Calton",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383568421834/An-electronic-tag-003.jpg",
+          "typeData":{
+            "source":"Gary Calton",
+            "altText":"An electronic tag",
+            "height":"130",
+            "credit":"Gary Calton",
+            "caption":"Under the contracts more than 20,000 offenders are monitored on electronic tags at any one time. \r Photograph: Gary Calton",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383568423030/An-electronic-tag-004.jpg",
+          "typeData":{
+            "source":"Gary Calton",
+            "altText":"An electronic tag",
+            "height":"84",
+            "credit":"Gary Calton",
+            "caption":"Under the contracts more than 20,000 offenders are monitored on electronic tags at any one time. \r Photograph: Gary Calton",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383568424285/An-electronic-tag-005.jpg",
+          "typeData":{
+            "source":"Gary Calton",
+            "altText":"An electronic tag",
+            "height":"132",
+            "credit":"Gary Calton",
+            "caption":"Under the contracts more than 20,000 offenders are monitored on electronic tags at any one time. \r Photograph: Gary Calton",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383568425518/An-electronic-tag-006.jpg",
+          "typeData":{
+            "source":"Gary Calton",
+            "altText":"An electronic tag",
+            "height":"168",
+            "credit":"Gary Calton",
+            "caption":"Under the contracts more than 20,000 offenders are monitored on electronic tags at any one time. \r Photograph: Gary Calton",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383568426986/An-electronic-tag-007.jpg",
+          "typeData":{
+            "source":"Gary Calton",
+            "altText":"An electronic tag",
+            "height":"180",
+            "credit":"Gary Calton",
+            "caption":"Under the contracts more than 20,000 offenders are monitored on electronic tags at any one time. \r Photograph: Gary Calton",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383568428278/An-electronic-tag-008.jpg",
+          "typeData":{
+            "source":"Gary Calton",
+            "altText":"An electronic tag",
+            "height":"228",
+            "credit":"Gary Calton",
+            "caption":"Under the contracts more than 20,000 offenders are monitored on electronic tags at any one time. \r Photograph: Gary Calton",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383568429550/An-electronic-tag-009.jpg",
+          "typeData":{
+            "source":"Gary Calton",
+            "altText":"An electronic tag",
+            "height":"276",
+            "credit":"Gary Calton",
+            "caption":"Under the contracts more than 20,000 offenders are monitored on electronic tags at any one time. \r Photograph: Gary Calton",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383568430803/An-electronic-tag-010.jpg",
+          "typeData":{
+            "source":"Gary Calton",
+            "altText":"An electronic tag",
+            "height":"372",
+            "credit":"Gary Calton",
+            "caption":"Under the contracts more than 20,000 offenders are monitored on electronic tags at any one time. \r Photograph: Gary Calton",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383568429550/An-electronic-tag-009.jpg",
+          "typeData":{
+            "source":"Gary Calton",
+            "altText":"An electronic tag",
+            "height":"276",
+            "credit":"Gary Calton",
+            "caption":"Under the contracts more than 20,000 offenders are monitored on electronic tags at any one time. \r Photograph: Gary Calton",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421618474",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383568423030/An-electronic-tag-004.jpg",
+          "typeData":{
+            "source":"Gary Calton",
+            "altText":"An electronic tag",
+            "height":"84",
+            "credit":"Gary Calton",
+            "caption":"Under the contracts more than 20,000 offenders are monitored on electronic tags at any one time. \r Photograph: Gary Calton",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

@@ -1,0 +1,44 @@
+// Styles for elements available for painting at initial load
+@mixin tone-head($tone, $colour, $accentColour) {
+    .tone-#{$tone} {
+        .tone-colour,
+        &.tone-colour {
+            &,
+            &:active,
+            &:focus,
+            &:hover {
+                color: $colour;
+            }
+        }
+        .tone-border,
+        &.tone-border { border-color: $colour; }
+
+        .tone-accent-border,
+        &.tone-accent-border { border-color: $accentColour; }
+
+        .tone-background,
+        &.tone-background { background-color: $colour; }
+
+        .is-summary > .block-title {
+            color: $colour;
+        }
+    }
+}
+
+// Styles with global dependencies
+// or for elements which painting can be delayed
+@mixin tone-global($tone, $colour, $accentColour) {
+    .tone-#{$tone} {
+        .commentcount {
+            i {
+                @extend .i-comment-#{$tone};
+
+                @if $svg-support {
+                    .svg & {
+                        @extend .svg-i-comment-#{$tone};
+                    }
+                }
+            }
+        }
+    }
+}

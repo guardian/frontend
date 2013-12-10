@@ -1,0 +1,28 @@
+/* ==========================================================================
+   Masterclass component
+   ========================================================================== */
+
+.masterclasses-component {
+
+    .lineitem__image {
+        margin-right: $baseline;
+        outline: 1px solid $c-neutral7;
+        float: left;
+    }
+
+    .lineitem__link {
+        display: block;
+    }
+
+    &.commercial--w600 {
+        .lineitem {
+            @include box-sizing(border-box);
+            padding-right: $gs-gutter/2;
+            width: 25%;
+            float: left;
+        }
+        .lineitem__image {
+            float: none;
+        }
+    }
+}

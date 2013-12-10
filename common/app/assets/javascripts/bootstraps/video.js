@@ -1,46 +1,41 @@
 define([
-    "common",
-    "modules/analytics/video",
-    "modules/accordion",
-    "modules/story/experiment"
+    "utils/mediator",
+    "utils/detect",
+    "utils/lazy-load-css",
+    "modules/analytics/video"
 ], function(
-    common,
-    Videostream,
-    Accordion,
-    Experiment
+    mediator,
+    detect,
+    lazyLoadCss,
+    Videostream
 ) {
 
     var modules = {
-        initAnalytics: function (config) {
-            var v = new Videostream({
-                id: config.page.id,
-                el: document.querySelector('#player video'),
-                ophanUrl: config.page.ophanUrl
+
+        initAnalytics: function () {
+            mediator.on('video:ads:finished', function(config, context) {
+                var v = new Videostream({
+                    id: config.page.pageId,
+                    el: context.querySelector('.player video'),
+                    ophanUrl: config.page.ophanUrl
+                });
+
+                v.init();
             });
-
-            v.init();
-        },
-
-        initExperiments: function(config) {
-            common.mediator.on('modules:experiment:render', function() {
-                if(document.querySelector('.accordion')) {
-                    var a = new Accordion();
-                }
-            });
-            var e = new Experiment(config);
-
-            e.init();
         }
     };
 
-    var init = function(req, config, context) {
 
-        common.mediator.emit("page:gallery:ready", config, context);
-
-        modules.initAnalytics(config);
+    var ready = function (config, context) {
+        if (!this.initialised) {
+            this.initialised = true;
+            lazyLoadCss('video', config);
+            modules.initAnalytics();
+        }
+        mediator.emit("page:video:ready", config, context);
     };
 
     return {
-        init: init
+        init: ready
     };
 });

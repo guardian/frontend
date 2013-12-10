@@ -1,29 +1,30 @@
-@(trail: Trail, rowNum: Int, related: Boolean = false, showThumbnail: Boolean = true, headingLevel: Int = 2)
+@(trail: Trail, rowNum: Int, related: Boolean = false, showThumbnail: Boolean = true, element: String = "li", headingLevel: Int = 2)(implicit request: RequestHeader)
 
-@fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
-<div class="media">
-    @if(showThumbnail) {
-        @trail.thumbnail.map{ thumbnailUrl =>
-            <a href="@trail.url" class="media-img" data-link-name="@rowNum | image">
-                <img class="maxed" src="@thumbnailUrl"
-                    data-thumb-width="140"
-                    @trail.mainPicture(width=220).map { largeCrop =>
-                        data-fullsrc="@largeCrop.url"
-                        data-full-width="@largeCrop.width"
-                        alt="@StripHtmlTags(largeCrop.altText.getOrElse(""))" 
-                        title="@StripHtmlTags(largeCrop.caption.getOrElse(""))"
-                    }
-                    itemprop="contentURL"
-                />
-            </a>
-        }
-    }
+<@element class="trail trail--thumbnail t@rowNum  @if(trail.hasMainPicture) { trail--has-image}" data-link-name="trail"
+    @trail.discussionId.map{ id => data-discussion-id="@id" }
+    data-discussion-closed="@trail.isClosedForComments"
+    @CricketMatch(trail).map{ id => data-cricket-match="@id" } >
 
-    <h@headingLevel class="media-body trail-headline type-5">
-        <a href="@trail.url" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | text">
+    @fragments.relativeDate(trail.webPublicationDate, trail.isLive, isFront=true)
+
+    <h@headingLevel class="trail__headline">
+        <a href="@LinkTo{@trail.url}" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | text">
             @RemoveOuterParaHtml(trail.headline)
         </a>
     </h@headingLevel>
 
-    @trail.trailText.map { text => <div class="trail-text">@cleanTrailText(text)</div> }
-</div>
+    @trail.trailPicture.map { imageContainer =>
+        @ImgSrc.imager(imageContainer).map{ imgSrc =>
+            <a href="@LinkTo{@trail.url}"
+               class="trail__img item__image-container"
+               data-link-name="@rowNum | image"
+               aria-hidden="true"
+               data-src="@imgSrc"
+               data-img-class="maxed">
+                <img class="maxed responsive-img" alt="" itemprop="contentURL" />
+            </a>
+        }
+    }
+    @trail.trailText.map { text => <div class="trail__text">@cleanTrailText(text)(Edition(request))</div> }
+
+</@element>

@@ -1,0 +1,2650 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"lifeandstyle/costume-and-culture/gallery/2013/oct/30/halloween-celebrity-costumes-in-pictures",
+      "sectionId":"lifeandstyle",
+      "sectionName":"Life and style",
+      "webPublicationDate":"2013-10-30T14:34:00Z",
+      "webTitle":"Sixteen great celebrity Halloween costumes - in pictures",
+      "webUrl":"http://www.theguardian.com/lifeandstyle/costume-and-culture/gallery/2013/oct/30/halloween-celebrity-costumes-in-pictures",
+      "apiUrl":"http://content.guardianapis.com/lifeandstyle/costume-and-culture/gallery/2013/oct/30/halloween-celebrity-costumes-in-pictures",
+      "fields":{
+        "trailText":"<p>Celebs know how vital it is to rock something really, really disturbing this time of year. Here are some outfits returning from the grave to terrorise your eyeballs, from Kelly Brook and Mariah Carey to the undisputed king and queen of the Halloween scene, Seal and Heidi Klum</p>",
+        "headline":"Sixteen great celebrity Halloween costumes - in pictures",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-01T11:25:25Z",
+        "hasStoryPackage":"true",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137840098/Eli-Roth-003.jpg",
+        "standfirst":"Celebs know how vital it is to rock something really, really disturbing this time of year. Here are some outfits returning from the grave to terrorise your eyeballs, from Kelly Brook and Mariah Carey to the undisputed king and queen of the Halloween scene, Seal and Heidi Klum",
+        "shortUrl":"http://gu.com/p/3kxf8",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137840098/Eli-Roth-003.jpg",
+        "commentable":"false",
+        "internalContentCode":"421285703",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "publication":"theguardian.com",
+        "internalPageCode":"1989125",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-02T14:34:23Z"
+      },
+      "tags":[{
+        "id":"lifeandstyle/halloween",
+        "type":"keyword",
+        "webTitle":"Halloween",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/halloween",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/halloween",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/celebrity",
+        "type":"keyword",
+        "webTitle":"Celebrity",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/celebrity",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/celebrity",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"fashion/fashion",
+        "type":"keyword",
+        "webTitle":"Fashion",
+        "webUrl":"http://www.theguardian.com/fashion/fashion",
+        "apiUrl":"http://content.guardianapis.com/fashion/fashion",
+        "sectionId":"fashion",
+        "sectionName":"Fashion",
+        "references":[]
+      },{
+        "id":"type/gallery",
+        "type":"type",
+        "webTitle":"Gallery",
+        "webUrl":"http://www.theguardian.com/inpictures",
+        "apiUrl":"http://content.guardianapis.com/inpictures",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421447201",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137840098/Eli-Roth-003.jpg",
+          "typeData":{
+            "source":"WireImage",
+            "photographer":"Denise Truscello",
+            "altText":"Eli Roth",
+            "height":"84",
+            "credit":"Denise Truscello/WireImage",
+            "caption":"Eli Roth poses at his 2012 Halloween bash at Eli Roth's Goretorium in Las Vegas, Nevada Photograph: Denise Truscello/WireImage",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-421285412",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":1,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137738242/Eli-Roth-001.jpg",
+          "typeData":{
+            "source":"WireImage",
+            "photographer":"Denise Truscello",
+            "altText":"Celebs Halloween costumes: Eli Roth",
+            "height":"480",
+            "credit":"Denise Truscello/WireImage",
+            "caption":"Eli Roth appears to be in a spot of bother during the 2012 Halloween bash at his Goretorium in Las Vegas",
+            "width":"659"
+          }
+        }]
+      },{
+        "id":"gu-image-421285416",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":2,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137742943/Heidi-Klum-and-Seal-002.jpg",
+          "typeData":{
+            "source":"FilmMagic",
+            "photographer":"Gregg DeGuire",
+            "altText":"Celebs Halloween costumes: Heidi Klum and Seal",
+            "height":"480",
+            "credit":"Gregg DeGuire/FilmMagic",
+            "caption":"Stalwarts of outrageous costume ideas, Seal and Heidi Klum arrive at their 10th Annual Halloween Party in Hollywood in 2009 dressed as a pair of crows",
+            "width":"729"
+          }
+        }]
+      },{
+        "id":"gu-image-421285496",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":3,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137746699/Royal-wedding-outfits-003.jpg",
+          "typeData":{
+            "source":"WireImage",
+            "photographer":"Bennett Raglin",
+            "altText":"Celebs Halloween costumes: Royal wedding outfits",
+            "height":"501",
+            "credit":"Bennett Raglin/WireImage",
+            "caption":"Exquisitely topped off with ill-advised headgear, Kathie Lee Gifford, Hoda Kotb, Ann Curry, Meredith Vieira and Al Roker re-enact the royal wedding at NBC's Today 2011 Halloween celebration in New York",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-421285475",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":4,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137751585/Nick-Cannon-and-Mariah-Ca-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Mike Coppola",
+            "altText":"Celebs Halloween costumes: Nick Cannon and Mariah Carey",
+            "height":"480",
+            "credit":"Mike Coppola/Getty Images",
+            "caption":"Arguably the sickliest couple of the season, Nick Cannon and Mariah Carey at a 2009 Halloween celebration in New York in all-white angel outfits ",
+            "width":"575"
+          }
+        }]
+      },{
+        "id":"gu-image-421285470",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":5,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137753865/Kyle-Maclachlan-005.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Matt Baron",
+            "altText":"Celebs Halloween costumes: Kyle Maclachlan",
+            "height":"587",
+            "credit":"Matt Baron/Rex Features",
+            "caption":"Kyle Maclachlan sports a golf ball injury guaranteed to make any makeup artist jealous in 2007",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-421285360",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":6,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137756093/Al-and-Tipper-Gore-006.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"White House",
+            "altText":"Celebs Halloween costumes: Al and Tipper Gore",
+            "height":"530",
+            "credit":"White House/AP",
+            "caption":"Aghast from the past: Al Gore and his wife, Tipper, in werewolf costumes in 1997",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-421285473",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":7,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137760135/Miranda-Kerrs-Sexy-Circus-007.jpg",
+          "typeData":{
+            "source":"WireImage",
+            "photographer":"Jerritt Clark",
+            "altText":"Celebs Halloween costumes: Miranda Kerr's Sexy Circus 2011",
+            "height":"480",
+            "credit":"Jerritt Clark/WireImage",
+            "caption":"Unperturbed by the lack of a discernible theme connecting their outfits, Miranda Kerr, Kate Upton, Chrissy Teigen, Nicole Trunfio and Jaslene Gonzalez pose at Kerr's Sexy Circus Halloween party in New York in 2011",
+            "width":"714"
+          }
+        }]
+      },{
+        "id":"gu-image-421285518",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":8,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137765573/Tina-Fey-and-Will-Ferrell-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Stephen Lovekin",
+            "altText":"Celebs Halloween costumes: Tina Fey and Will Ferrell",
+            "height":"586",
+            "credit":"Stephen Lovekin/Getty Images",
+            "caption":"Tina Fey and Will Ferrell appear on NBC's Today Halloween episode in 2010, dressed in their Megamind outfits",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-421285414",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":9,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137767980/Heidi-Klum-and-Seal-009.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Startraks",
+            "altText":"Celebs Halloween costumes: Heidi Klum and Seal",
+            "height":"480",
+            "credit":"Startraks/Rex Features",
+            "caption":"Another Heidi Klum/Seal triumph from 2011",
+            "width":"511"
+          }
+        }]
+      },{
+        "id":"gu-image-421285364",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":10,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137771641/Christina-Milian-010.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"David Livingston",
+            "altText":"Celebs Halloween costumes: Christina Milian",
+            "height":"600",
+            "credit":"David Livingston/Getty Images",
+            "caption":"Christina Milian prompted onlookers to gouge their own eyes out with this horror from 2012",
+            "width":"399"
+          }
+        }]
+      },{
+        "id":"gu-image-421285466",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":11,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137773866/Kelly-Brook-011.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Beverly News",
+            "altText":"Celebs Halloween costumes: Kelly Brook",
+            "height":"410",
+            "credit":"Beverly News/Rex Features",
+            "caption":"This year, Kelly Brook went for an ambitious 'Jane-Austen-murder-victim' look for her outfit in Los Angeles – and pulled it off",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-421285418",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":12,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137776004/Heidi-Klums-muscle-outfit-012.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Startraks",
+            "altText":"Celebs Halloween costumes: Heidi Klum's muscle outfit",
+            "height":"480",
+            "credit":"Startraks/Rex Features",
+            "caption":"Heidi Klum effortlessly cements her position as queen of Halloween with this muscle-tissue effort from 2011",
+            "width":"723"
+          }
+        }]
+      },{
+        "id":"gu-image-421444485",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":13,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383302646323/Kate-Moss-and-Jamie-Hince-003.jpg",
+          "typeData":{
+            "source":"FilmMagic",
+            "photographer":"Alex Davies",
+            "altText":"Halloween costumes update: Kate Moss and Jamie Hince",
+            "height":"600",
+            "credit":"Alex Davies/FilmMagic",
+            "caption":"Jamie Hince and Kate Moss arrive at Jonathan Ross's annual party this year",
+            "width":"388"
+          }
+        }]
+      },{
+        "id":"gu-image-421444479",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":14,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383302643168/Julie-Macklowe-and-Perez--002.jpg",
+          "typeData":{
+            "source":"Photowire/BEI/Rex Features",
+            "photographer":"Henry Lamb",
+            "altText":"Halloween costumes update: Julie Macklowe and Perez Hilton",
+            "height":"508",
+            "credit":"Henry Lamb/Photowire/BEI/Rex Features",
+            "caption":"Julie Macklowe and Perez Hilton twerk their way into Heidi Klum's Halloween bash in New York. It doesn't get more scary than this",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-421444476",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":15,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383302648919/Gok-Wan-004.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Rotello",
+            "altText":"Halloween costumes update: Gok Wan",
+            "height":"498",
+            "credit":"Rotello/Rex Features",
+            "caption":"Gok Wan goes terror-chic at Jonathan Ross's party this year",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-421444474",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":16,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383302639653/Elderly-Heidi-Klum-001.jpg",
+          "typeData":{
+            "source":"Getty Images for Heidi Klum",
+            "photographer":"Mike Coppola",
+            "altText":"Halloween costumes update: Elderly Heidi Klum",
+            "height":"529",
+            "credit":"Mike Coppola/Getty Images for Heidi Klum",
+            "caption":"And, finally, yes, it's Heidi Klum again at her 14th annual Halloween party this year in in New York. Let's hope those varicose veins are part of the costume …",
+            "width":"400"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"commentisfree/2013/oct/31/halloween-costumes-what-not-to-wear",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-10-31T09:30:00Z",
+      "webTitle":"Halloween costumes – what not to wear | Rhiannon Lucy Cosslett",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/oct/31/halloween-costumes-what-not-to-wear",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/oct/31/halloween-costumes-what-not-to-wear",
+      "fields":{
+        "trailText":"<strong>Rhiannon Lucy Cosslett:</strong> Bye bye pagan roots, hello a world of fancy dress stress. Here's how to get it right by avoiding blackface and Slutoween",
+        "headline":"Halloween costumes – what not to wear",
+        "body":"<p>Oh for the time when Halloween costumes were, first and foremost, about being scary. The ancient superstition of 31 October was still lingering, just about, during my childhood in Wales. We'd dress up as either ghouls or witches to trick or treat for <a href=\"http://www.celticearthspirit.co.uk/calan-gaeaf.html\" title=\"\">Noson Calan Gaeaf</a>, the night before winter. How I long for those days when even chubby children were given sweets, rather than a <a href=\"http://www.foxnews.com/health/2013/10/30/woman-to-hand-out-fat-letters-to-overweight-children-instead-candy/\" title=\"\">harshly worded letter regarding obesity</a> addressed to their parents.</p><p>Nowadays, many a purist complains that the festival's creepy, pagan roots are being forgotten in favour of such activities as competitive pumpkin carving, E-number quaffing, eggy neighbour-bothering, and fatuous readymade Miley Cyrus costume wearing, a trend for which we can only blame those pesky Americans. So what to wear?</p><p>With the advent of the internet, the choosing of a Halloween costume has become a loaded activity. The right choice carries the potential of bearing witness to the birth of a legend and the wrong one could render you the subject or an irate Gawker post accessed by millions. This has upped the ante somewhat. Forget your mum cutting holes in a sheet or the classic donning of a last-minute bin bag, when you've got costume over-achiever Heidi Klum <a href=\"http://www.digitalspy.co.uk/showbiz/i505624-16/heidi-klums-belated-halloween-best-costumes-in-pics-goddess-kali.html\" title=\"\">dressed as the Hindu goddess Kali</a>, a <a href=\"http://www.trendhunter.com/trends/heidi-klum-raven-costume\" title=\"\">full-feathered raven</a>, the <a href=\"http://www.modelinia.com/slideshows/heidi-klum-s-best-halloween-costumes/285#/4\" title=\"\">apple of temptation</a>, or <a href=\"http://www.modelinia.com/slideshows/heidi-klum-s-best-halloween-costumes/285#/15\" title=\"\">Lady Godiva</a> complete with horse (the list goes on). And don't bother with those plastic witches' hats with the fake green hair attached. That is so 90s, babes, not to mention insensitive towards all our sister witches persecuted for their beliefs. Even Private Eye wouldn't resort to such sexist cliches.</p><p>It's time to tear up the rulebook and start again with these new rules:</p><h2>Know how soon is too soon</h2><p>If you're wondering how soon is too soon, then chances are it's too soon. The British penchant for tasteless Halloween costumes seems to be going from strength to strength (see last year's plethora of Jimmy Saviles) and there are some people who it will never, ever, be OK to dress as. Then again, there are also certain real-life monsters who were so awful and frightening that they have rendered themselves deserving of a Halloween costume – provided a certain grace period has passed, naturally. Remember, the golden rule is to be scary and gruesome, not gratuitously cruel. This advice was sadly not followed by a distant acquaintance of mine (and can I use this opportunity to stress just how distant) who was ejected from a party for being dressed as <a href=\"http://www.theguardian.com/uk/shipman\" title=\"\">Harold Shipman</a> – by a girl whose elderly relative had been murdered by the doctor.</p><h2><a href=\"http://www.boredpanda.com/kids-halloween-costume-ideas/\" title=\"\">Dress your baby up</a>, they're too young to be embarrassed so who cares?</h2><p>Look! It's a baby! <a href=\"http://www.allmyfaves.com/blog/shopping/need-some-great-halloween-costumes-ideas/\" title=\"\">Dressed up as a lobster</a>! In a pot! For the entertainment of adults!</p><h2>Don't disrespect other people's cultures</h2><p>Not to get all PC brigade on you, but is this really so hard? Can't you just put down that native American headdress? (I can see you. Put. It. Down). By all means go as a character from another race, it is possible to do this sensitively, but an Arab or a Mexican is not a Halloween costume. Also, fancy dress should never, ever, involve the wearing of <a href=\"http://www.theguardian.com/commentisfree/2013/oct/30/blackface-halloween-costumes-obviously-offensive\" title=\"\">blackface</a>. I don't care how much you love Obama. I can't believe I'm even having to say this in 2013, but this is the year that some reprehensible asshat thought <a href=\"http://nymag.com/daily/intelligencer/2013/10/dead-trayvon-martin-halloween-costume-not-okay.html\" title=\"\">going as Trayvon Martin</a> would be pop culture hilarious, so clearly we still have aeons of progress to work through.</p><h2>Make sure you're easily identifiable</h2><p>There's nothing more annoying than having to repeatedly explain your costume to strangers. \"I'm the human immunodeficiency virus,\" you mutter to your drinking companion, as people stare at you in disgust. Saying it out loud makes it less funny, somehow. Though unfunny is perhaps preferable to incomprehensible obscurity. Pretentious can be fun provided its enacted literally (see this <a href=\"http://www.makefive.com/categories/experiences/life/top-5-halloween-costumes/freudian-slip\" title=\"\">Freudian slip</a>) or looks beautiful, as in the case of <a href=\"http://www.thezooom.com/2012/10/8014/\" title=\"\">this Van Gogh</a>.</p><h2>Be topical</h2><p>Going as someone or something that's been making headlines shows other people just how much of a plugged-in, switched-on, politically aware Guardianista you are. Take <a href=\"http://www.huffingtonpost.co.uk/2013/10/30/tory-halloween-costumes_n_4174264.html\" title=\"\">this jumper bearing the slogan \"David Cameron told me to wear this\", or this \"Man who hated Britain\" hat</a>. I also forsee \"dead badger\" being a popular choice.</p><h2>Try not to embrace Slutoween</h2><p>Time to confront head-on the line made infamous by Tina Fey: \"Halloween is the one night a year when a girl can dress like a total slut and none of the other girls can say a word about it.\" From the 90s onwards, lingerie paired with animal ears became a legit costume choice for women, and the sheer range of sexy costumes on the market is staggering. I'm not about to slut shame you for wanting to be the \"office tramp\", a \"sexy chewbacca\", or even the <a href=\"http://features.blogs.fortune.cnn.com/2013/10/30/the-brains-behind-the-sexy-pizza-costume/?section=magazines_fortune\" title=\"\">\"sexy pizza\"</a> made famous by the Daily Show last week.</p><p>But a friend who dashed down to Ann Summers to pick up a maid's costume found herself fielding repeated requests for vodka from inebriated men who assumed she was a shot girl rather than a guest, which clearly would not have happened had she gone to <a href=\"http://takebackhalloween.org/\" title=\"\">Take Back Halloween</a> – \"a costume guide for women with imagination\" – and copied their incredible <a href=\"http://takebackhalloween.org/?s=baba+yaga&amp;x=0&amp;y=0\" title=\"\">Baba Yaga costume</a>. Which of course she would never do, because Baba Yaga is dead ugly and sometimes looking sexy is fun.</p><p>Freedom lies in having options. Options that don't make people cry on the best night out of the year, except maybe with laughter. Which is why I'll be going as a false widow spider. With stockings and suspenders, obviously. Have a good one.</p><!-- Guardian Watermark: internal-code/content/421315799|2013-11-05T11:03:48Z|6041759fbacb2f2e6070c6394f8e042c3cd04d01 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-31T12:55:10Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Environment/Pix/pictures/2013/10/30/1383157810469/11th-Annual-Zombie-Walk-i-003.jpg",
+        "standfirst":"Bye bye pagan roots, hello a world of fancy dress stress. Here's how to get it right by avoiding blackface and Slutoween",
+        "shortUrl":"http://gu.com/p/3k2vc",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/10/30/1383157810469/11th-Annual-Zombie-Walk-i-003.jpg",
+        "wordcount":"928",
+        "commentable":"true",
+        "internalContentCode":"421315799",
+        "allowUgc":"false",
+        "internalOctopusCode":"8260102",
+        "isPremoderated":"false",
+        "byline":"Rhiannon Lucy Cosslett",
+        "publication":"theguardian.com",
+        "internalPageCode":"1989453",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-03T09:30:00Z"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"lifeandstyle/halloween",
+        "type":"keyword",
+        "webTitle":"Halloween",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/halloween",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/halloween",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"fashion/fashion",
+        "type":"keyword",
+        "webTitle":"Fashion",
+        "webUrl":"http://www.theguardian.com/fashion/fashion",
+        "apiUrl":"http://content.guardianapis.com/fashion/fashion",
+        "sectionId":"fashion",
+        "sectionName":"Fashion",
+        "references":[]
+      },{
+        "id":"profile/rhiannon-lucy-cosslett",
+        "type":"contributor",
+        "webTitle":"Rhiannon Lucy Cosslett",
+        "webUrl":"http://www.theguardian.com/profile/rhiannon-lucy-cosslett",
+        "apiUrl":"http://content.guardianapis.com/profile/rhiannon-lucy-cosslett",
+        "bio":"<p>Rhiannon Lucy Cosslett  is a London-based freelance writer. She co-founded and edits <a href=\"http://vagendamag.blogspot.co.uk/\">The Vagenda blog</a>, the book version of which will be available from Random House in May 2014. You can follow her <a href=\"https://twitter.com/RhiannonLucyC\">@rhiannonlucyc</a></p>",
+        "r2ContributorId":"50529",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/25/1374749152108/Rhiannon-Lucy-Coslett.jpg",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421316471",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/10/30/1383157804470/11th-Annual-Zombie-Walk-i-001.jpg",
+          "typeData":{
+            "source":"Demotix/Corbis",
+            "photographer":"Nisarg Lakhmani",
+            "altText":"11th Annual Zombie Walk in Toronto",
+            "height":"54",
+            "credit":"Nisarg Lakhmani/Demotix/Corbis",
+            "caption":"‘The golden rule is to be scary and gruesome, not gratuitously cruel.’ Photograph: Nisarg Lakhmani/Demotix/Corbis",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/10/30/1383157808984/11th-Annual-Zombie-Walk-i-002.jpg",
+          "typeData":{
+            "source":"Demotix/Corbis",
+            "photographer":"Nisarg Lakhmani",
+            "altText":"11th Annual Zombie Walk in Toronto",
+            "height":"130",
+            "credit":"Nisarg Lakhmani/Demotix/Corbis",
+            "caption":"‘The golden rule is to be scary and gruesome, not gratuitously cruel.’ Photograph: Nisarg Lakhmani/Demotix/Corbis",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/10/30/1383157810469/11th-Annual-Zombie-Walk-i-003.jpg",
+          "typeData":{
+            "source":"Demotix/Corbis",
+            "photographer":"Nisarg Lakhmani",
+            "altText":"11th Annual Zombie Walk in Toronto",
+            "height":"84",
+            "credit":"Nisarg Lakhmani/Demotix/Corbis",
+            "caption":"‘The golden rule is to be scary and gruesome, not gratuitously cruel.’ Photograph: Nisarg Lakhmani/Demotix/Corbis",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/10/30/1383157812897/11th-Annual-Zombie-Walk-i-004.jpg",
+          "typeData":{
+            "source":"Demotix/Corbis",
+            "photographer":"Nisarg Lakhmani",
+            "altText":"11th Annual Zombie Walk in Toronto",
+            "height":"132",
+            "credit":"Nisarg Lakhmani/Demotix/Corbis",
+            "caption":"‘The golden rule is to be scary and gruesome, not gratuitously cruel.’ Photograph: Nisarg Lakhmani/Demotix/Corbis",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/10/30/1383157814603/11th-Annual-Zombie-Walk-i-005.jpg",
+          "typeData":{
+            "source":"Demotix/Corbis",
+            "photographer":"Nisarg Lakhmani",
+            "altText":"11th Annual Zombie Walk in Toronto",
+            "height":"168",
+            "credit":"Nisarg Lakhmani/Demotix/Corbis",
+            "caption":"‘The golden rule is to be scary and gruesome, not gratuitously cruel.’ Photograph: Nisarg Lakhmani/Demotix/Corbis",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/10/30/1383157816881/11th-Annual-Zombie-Walk-i-006.jpg",
+          "typeData":{
+            "source":"Demotix/Corbis",
+            "photographer":"Nisarg Lakhmani",
+            "altText":"11th Annual Zombie Walk in Toronto",
+            "height":"180",
+            "credit":"Nisarg Lakhmani/Demotix/Corbis",
+            "caption":"‘The golden rule is to be scary and gruesome, not gratuitously cruel.’ Photograph: Nisarg Lakhmani/Demotix/Corbis",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/10/30/1383157818277/11th-Annual-Zombie-Walk-i-007.jpg",
+          "typeData":{
+            "source":"Demotix/Corbis",
+            "photographer":"Nisarg Lakhmani",
+            "altText":"11th Annual Zombie Walk in Toronto",
+            "height":"228",
+            "credit":"Nisarg Lakhmani/Demotix/Corbis",
+            "caption":"‘The golden rule is to be scary and gruesome, not gratuitously cruel.’ Photograph: Nisarg Lakhmani/Demotix/Corbis",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/10/30/1383157819643/11th-Annual-Zombie-Walk-i-008.jpg",
+          "typeData":{
+            "source":"Demotix/Corbis",
+            "photographer":"Nisarg Lakhmani",
+            "altText":"11th Annual Zombie Walk in Toronto",
+            "height":"276",
+            "credit":"Nisarg Lakhmani/Demotix/Corbis",
+            "caption":"‘The golden rule is to be scary and gruesome, not gratuitously cruel.’ Photograph: Nisarg Lakhmani/Demotix/Corbis",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/10/30/1383157819643/11th-Annual-Zombie-Walk-i-008.jpg",
+          "typeData":{
+            "source":"Demotix/Corbis",
+            "photographer":"Nisarg Lakhmani",
+            "altText":"11th Annual Zombie Walk in Toronto",
+            "height":"276",
+            "credit":"Nisarg Lakhmani/Demotix/Corbis",
+            "caption":"‘The golden rule is to be scary and gruesome, not gratuitously cruel.’ Photograph: Nisarg Lakhmani/Demotix/Corbis",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421316472",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2013/10/30/1383157810469/11th-Annual-Zombie-Walk-i-003.jpg",
+          "typeData":{
+            "source":"Demotix/Corbis",
+            "photographer":"Nisarg Lakhmani",
+            "altText":"11th Annual Zombie Walk in Toronto",
+            "height":"84",
+            "credit":"Nisarg Lakhmani/Demotix/Corbis",
+            "caption":"‘The golden rule is to be scary and gruesome, not gratuitously cruel.’ Photograph: Nisarg Lakhmani/Demotix/Corbis",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/oct/31/halloween-in-australia-what-a-terrible-and-spooky-sight",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-10-31T03:51:07Z",
+      "webTitle":"Halloween in Australia? What a terrible and spooky sight | Van Badham",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/oct/31/halloween-in-australia-what-a-terrible-and-spooky-sight",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/oct/31/halloween-in-australia-what-a-terrible-and-spooky-sight",
+      "fields":{
+        "trailText":"<strong>Van Badham:</strong> Australian children are now celebrating the American holiday &ndash; and it's an imported travesty. Real pumpkins aren&rsquo;t in season, for a start. Salad vegetables are",
+        "headline":"Halloween in Australia? What a terrible and spooky sight",
+        "body":"<p>It&rsquo;s 31 October in Australia, and apparently it also means that it&rsquo;s Halloween.</p> <p>Halloween wasn't a feature of my childhood, and as an Australian that doesn&rsquo;t make me particularly uncommon. We inherited a more dourly Protestant approach to the old festival from our colonial British overlords; when I was growing up, kids in monster costumes trick-or-treating was something we used to watch American children do on television with empty envy.</p> <p>So it was broadcast, however, so it has become. Across the island continent, children are now costuming themselves along the theme of &ldquo;scary monster&rdquo; to entice friendly neighbours to give them sweets, which are known as &ldquo;lollies&rdquo; in the local parlance. Teenagers and 20-somethings are pursuing a slightly more spicy interpretation of the similar habillement in order to attract sweets of the adult kind at various Halloween parties. There is proof that Halloween is officially a &ldquo;thing&rdquo; in Australia because it has a retail presence: there are a lot of sexy witches hats on the sexy models in the sexy window displays. There are heaps of pumpkins in our supermarkets, too.</p> <p>Australian kids these days may expect neighbours awaiting their visits with pre-prepared lolly-bags, but if any children approach my building, I&rsquo;m just going to silently admire them from the intercom screen and pretend that I&rsquo;m not home. I won&rsquo;t be the only one; the adult generations of Australians who didn&rsquo;t grow up with trick-or-treating are just not yet quite hip to the protocol. For people like my mother, it&rsquo;s a deliberate rejection of the kind of US imperialism that suckered her generation not into witches hats and candy, but Australian participation in the Vietnam war. For people like me, there just aren&rsquo;t enough seasonal cues to realise that it&rsquo;s Halloween. Real pumpkins aren&rsquo;t in season, for a start. Salad vegetables are.</p> <p>What genuinely spooks me about the event is what its placement on our calendar reveals about how much more tuned into the commodities of imported cultural ritual we Australians are than to the material reality of the environment around us.</p> <p>The origin of Halloween as a European and then North American festival is based on rituals commemorating tasks demanded by the passing of autumn and the birth of winter. The dead giveaway is the presence of the in-season pumpkins and apples that are intrinsic with Halloween decorations and games. Halloween revels in the dark and scary because it is the time of the year where decisions about life and death were made before communities faced the deprivation of cold, snowed upon winter months.</p> <p>Halloween is associated with death because, with less live food available from the snowy ground, it&rsquo;s the time of year livestock animals are slaughtered to thin herds. It&rsquo;s when vegetables are pickled and meat smoked so there&rsquo;s food preserved for winter &ndash; and the process is kinda spooky-gross. The extreme cold of the European and North American winters that follow Halloween make death a force to be socially acknowledged in advance of the small-room germ environments that form when folks are forced to stay indoors. Halloween is associated with bonfires because it's a seasonal time of year for burning away dead animal carcasses, rotting vegetation and any other garbage that could endanger your communities' safety or health when trapped inside by a blizzard.</p> <p>I can&rsquo;t imagine many of the Australians trying to work out how to dress like a sexy gynaecologist (my greatest horror party achievement ever) are considering the associations of weather that are implicitly built into the northern hemisphere rituals of Halloween. What it betrays is an ongoing habit of white Australia to ignore the seasonal realities of our existence on this continent. Those who wonder how a continent currently undergoing out-of-season bushfires, floods, unprecedented high temperatures and other freakish events could elect a government that <a href=\"http://www.theguardian.com/world/2013/sep/19/coalition-scraps-climate-commission-flannery\">abolishes its Climate Commission</a>, bear in mind that there are young Australians currently carving jack-o-lanterns out of pumpkins that have had to be flown in for the occasion.</p> <p>Yes, let&rsquo;s wear our fun outfits. And by any means if you have lollies to spare, make a kid's day. But if we want to celebrate horror as a cultural event, let&rsquo;s inform it with the realities of our own immediate cultural deprivations, which are these: white Australians have spent 225 years either ignoring or trying to obliterate black Australia&rsquo;s centuries of stored wisdom of weather patterns. Our Halloween dances take place on imported assumptions and false paradigms. And the scariest costumes of all depict urban creatures partying on while the land bears the lessons of their heedlessness. </p><!-- Guardian Watermark: internal-code/content/421337970|2013-11-05T11:03:48Z|3a1d2f0a4e9e0b465d4186397a020d9b4e5c60f7 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-31T03:51:07Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383189237563/c446f14b-7b69-4d6f-a56b-33e438ea87ab-140x84.jpeg",
+        "standfirst":"Australian children are now celebrating the American holiday &ndash; and it's an imported travesty. Real pumpkins aren&rsquo;t in season, for a start. Salad vegetables are",
+        "shortUrl":"http://gu.com/p/3k25x",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383189237563/c446f14b-7b69-4d6f-a56b-33e438ea87ab-140x84.jpeg",
+        "wordcount":"1",
+        "commentable":"true",
+        "internalContentCode":"421337970",
+        "allowUgc":"false",
+        "internalComposerCode":"5271c5ace4b0abef81219b21",
+        "isPremoderated":"false",
+        "byline":"Van Badham",
+        "publication":"theguardian.com",
+        "internalPageCode":"1989577",
+        "productionOffice":"AUS",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-03T03:45:06Z"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.theguardian.com/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"lifeandstyle/halloween",
+        "type":"keyword",
+        "webTitle":"Halloween",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/halloween",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/halloween",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"environment/climate-change",
+        "type":"keyword",
+        "webTitle":"Climate change",
+        "webUrl":"http://www.theguardian.com/environment/climate-change",
+        "apiUrl":"http://content.guardianapis.com/environment/climate-change",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"world/australian-politics",
+        "type":"keyword",
+        "webTitle":"Australian politics",
+        "webUrl":"http://www.theguardian.com/world/australian-politics",
+        "apiUrl":"http://content.guardianapis.com/world/australian-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"profile/van-badham",
+        "type":"contributor",
+        "webTitle":"Van Badham",
+        "webUrl":"http://www.theguardian.com/profile/van-badham",
+        "apiUrl":"http://content.guardianapis.com/profile/van-badham",
+        "bio":"<p>Van Badham is a theatre-maker and novelist, occasional broadcaster and critic, feminist, bogan and trollfighter. Follow her on twitter: <a href=\"https://twitter.com/vanbadham\">@vanbadham</a>. She lives in Melbourne</p>",
+        "r2ContributorId":"56537",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/21/1369097617058/van_badham.jpg",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-047ad178-86e9-4f95-9eb2-8b2c785131f3",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383189237563/c446f14b-7b69-4d6f-a56b-33e438ea87ab-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383189237563/c446f14b-7b69-4d6f-a56b-33e438ea87ab-140x84.jpeg",
+            "source":"Alamy",
+            "altText":"halloween",
+            "height":"84",
+            "credit":"Alamy",
+            "caption":"'If any children approach my building, I&rsquo;m going to silently admire them from the intercom screen'. Photograph: Alamy",
+            "mediaId":"gu-fc-047ad178-86e9-4f95-9eb2-8b2c785131f3",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383189237717/c446f14b-7b69-4d6f-a56b-33e438ea87ab-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383189237717/c446f14b-7b69-4d6f-a56b-33e438ea87ab-460x276.jpeg",
+            "source":"Alamy",
+            "altText":"halloween",
+            "height":"276",
+            "credit":"Alamy",
+            "caption":"'If any children approach my building, I&rsquo;m going to silently admire them from the intercom screen'. Photograph: Alamy",
+            "mediaId":"gu-fc-047ad178-86e9-4f95-9eb2-8b2c785131f3",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383189237847/c446f14b-7b69-4d6f-a56b-33e438ea87ab-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383189237847/c446f14b-7b69-4d6f-a56b-33e438ea87ab-220x132.jpeg",
+            "source":"Alamy",
+            "altText":"halloween",
+            "height":"132",
+            "credit":"Alamy",
+            "caption":"'If any children approach my building, I&rsquo;m going to silently admire them from the intercom screen'. Photograph: Alamy",
+            "mediaId":"gu-fc-047ad178-86e9-4f95-9eb2-8b2c785131f3",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383189238240/c446f14b-7b69-4d6f-a56b-33e438ea87ab-2060x1236.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383189238240/c446f14b-7b69-4d6f-a56b-33e438ea87ab-2060x1236.jpeg",
+            "source":"Alamy",
+            "altText":"halloween",
+            "height":"1236",
+            "credit":"Alamy",
+            "caption":"'If any children approach my building, I&rsquo;m going to silently admire them from the intercom screen'. Photograph: Alamy",
+            "mediaId":"gu-fc-047ad178-86e9-4f95-9eb2-8b2c785131f3",
+            "width":"2060"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383189238886/c446f14b-7b69-4d6f-a56b-33e438ea87ab-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383189238886/c446f14b-7b69-4d6f-a56b-33e438ea87ab-1020x612.jpeg",
+            "source":"Alamy",
+            "altText":"halloween",
+            "height":"612",
+            "credit":"Alamy",
+            "caption":"'If any children approach my building, I&rsquo;m going to silently admire them from the intercom screen'. Photograph: Alamy",
+            "mediaId":"gu-fc-047ad178-86e9-4f95-9eb2-8b2c785131f3",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383189239121/c446f14b-7b69-4d6f-a56b-33e438ea87ab-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383189239121/c446f14b-7b69-4d6f-a56b-33e438ea87ab-300x180.jpeg",
+            "source":"Alamy",
+            "altText":"halloween",
+            "height":"180",
+            "credit":"Alamy",
+            "caption":"'If any children approach my building, I&rsquo;m going to silently admire them from the intercom screen'. Photograph: Alamy",
+            "mediaId":"gu-fc-047ad178-86e9-4f95-9eb2-8b2c785131f3",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383189239363/c446f14b-7b69-4d6f-a56b-33e438ea87ab-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383189239363/c446f14b-7b69-4d6f-a56b-33e438ea87ab-540x324.jpeg",
+            "source":"Alamy",
+            "altText":"halloween",
+            "height":"324",
+            "credit":"Alamy",
+            "caption":"'If any children approach my building, I&rsquo;m going to silently admire them from the intercom screen'. Photograph: Alamy",
+            "mediaId":"gu-fc-047ad178-86e9-4f95-9eb2-8b2c785131f3",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383189239641/c446f14b-7b69-4d6f-a56b-33e438ea87ab-68x68.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383189239641/c446f14b-7b69-4d6f-a56b-33e438ea87ab-68x68.jpeg",
+            "source":"Alamy",
+            "altText":"halloween",
+            "height":"68",
+            "credit":"Alamy",
+            "caption":"'If any children approach my building, I&rsquo;m going to silently admire them from the intercom screen'. Photograph: Alamy",
+            "mediaId":"gu-fc-047ad178-86e9-4f95-9eb2-8b2c785131f3",
+            "width":"68"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383189239750/c446f14b-7b69-4d6f-a56b-33e438ea87ab-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383189239750/c446f14b-7b69-4d6f-a56b-33e438ea87ab-380x228.jpeg",
+            "source":"Alamy",
+            "altText":"halloween",
+            "height":"228",
+            "credit":"Alamy",
+            "caption":"'If any children approach my building, I&rsquo;m going to silently admire them from the intercom screen'. Photograph: Alamy",
+            "mediaId":"gu-fc-047ad178-86e9-4f95-9eb2-8b2c785131f3",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383189240302/c446f14b-7b69-4d6f-a56b-33e438ea87ab-2048x1536.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383189240302/c446f14b-7b69-4d6f-a56b-33e438ea87ab-2048x1536.jpeg",
+            "source":"Alamy",
+            "altText":"halloween",
+            "height":"1536",
+            "credit":"Alamy",
+            "caption":"'If any children approach my building, I&rsquo;m going to silently admire them from the intercom screen'. Photograph: Alamy",
+            "mediaId":"gu-fc-047ad178-86e9-4f95-9eb2-8b2c785131f3",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383189241105/c446f14b-7b69-4d6f-a56b-33e438ea87ab-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383189241105/c446f14b-7b69-4d6f-a56b-33e438ea87ab-620x372.jpeg",
+            "source":"Alamy",
+            "altText":"halloween",
+            "height":"372",
+            "credit":"Alamy",
+            "caption":"'If any children approach my building, I&rsquo;m going to silently admire them from the intercom screen'. Photograph: Alamy",
+            "mediaId":"gu-fc-047ad178-86e9-4f95-9eb2-8b2c785131f3",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383189241739/c446f14b-7b69-4d6f-a56b-33e438ea87ab-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383189241739/c446f14b-7b69-4d6f-a56b-33e438ea87ab-1024x768.jpeg",
+            "source":"Alamy",
+            "altText":"halloween",
+            "height":"768",
+            "credit":"Alamy",
+            "caption":"'If any children approach my building, I&rsquo;m going to silently admire them from the intercom screen'. Photograph: Alamy",
+            "mediaId":"gu-fc-047ad178-86e9-4f95-9eb2-8b2c785131f3",
+            "width":"1024"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"environment/2013/oct/31/halloween-treats-fuelling-rainforest-destruction",
+      "sectionId":"environment",
+      "sectionName":"Environment",
+      "webPublicationDate":"2013-10-31T10:03:51Z",
+      "webTitle":"Are your Halloween treats fuelling rainforest destruction?",
+      "webUrl":"http://www.theguardian.com/environment/2013/oct/31/halloween-treats-fuelling-rainforest-destruction",
+      "apiUrl":"http://content.guardianapis.com/environment/2013/oct/31/halloween-treats-fuelling-rainforest-destruction",
+      "fields":{
+        "trailText":"<strong>BusinessGreen:</strong> Rainforest Action Network calls on America's top snack food companies to commit to a more rapid phasing out of unsustainable palm oil, reports <a href=\"http://www.businessgreen.com/\">BusinessGreen</a>",
+        "headline":"Are your Halloween treats fuelling rainforest destruction?",
+        "body":"<p>When you hand out sweets to trick or treaters knocking at your front door tonight, it might not just be rotten eggs or teeth you have to worry about.</p> <p>The campaign group Rainforest Action Network (RAN) has warned that the tonnes of goodies given out on 31 October could be inadvertently fuelling the destruction of rainforests in south east Asia and devastating the habitat of endangered orangutans.</p> <p>RAN is calling on America's 20 biggest snack companies, including global giants Mars, Mondelez, Nestle and Kellogg, to phase out the use of palm oil&nbsp;that has been linked to rainforest destruction.</p> <p>Many of the companies&nbsp;on the list have already committed to source palm oil from sources that have been certified as sustainable. For example, Unilever, which buys 3% of global palm oil supply, is seeking to source all its palm oil from certified, traceable sources by 2020, while Nestle says all of the palm oil it uses is already certified by the Roundtable on Sustainable Palm Oil.</p> <p>Similarly, Mars said it is halfway to a target to supply all palm oil from certified sources by 2015, while Kellogg maintains that all of its palm oil is sustainably sourced through a combination of certificates, mass balance, and segregated sustainably grown supply.</p> <p>But <a href=\"http://ran.org/sites/default/files/conflict_palm_oil_lowres.pdf\">a recent report by RAN</a> found that none of the \"Snack Food 20\" companies can yet prove their products do not contain palm oil from plantations connected to rainforest destruction, high levels of greenhouse gas emissions, or human rights abuses.</p> <p>\"In the 21st century customers don't want to buy candy and cookies that are responsible for pushing the world's last wild orangutans to extinction and for horrifying child labour violations,\" said Lindsey Allen, executive director of Rainforest Action Network in a statement.</p> <p>\"That's why Rainforest Action Network is putting these top 20 snack food companies using \"Conflict Palm Oil\" on notice that it's time to develop responsible policies and create products that reflect the&nbsp;<a href=\"http://www.businessgreen.com/bg/news/2304007/are-your-halloween-treats-fueling-rainforest-destruction\">v</a>alues&nbsp;of their customers and the needs of our planet.\"</p> <p>The campaign comes after Greenpeace&nbsp;<a href=\"http://www.businessgreen.com/bg/analysis/2292490/greenpeace-and-rspo-engage-in-palm-oil-fire-fight\">last month accus</a><a href=\"http://www.businessgreen.com/bg/analysis/2292490/greenpeace-and-rspo-engage-in-palm-oil-fire-fight\">ed the RSPO of failing to adequately enforce its sustainability code of conduct</a>&nbsp;that is designed to help curb deforestation and certify palm oil from plantations that adhere to agreed environmental best practices, including no burning policies.</p> <p>A Greenpeace report claimed that a high proportion of the forest fire \"hotspots\" in the province of Riau on the island of Sumatra took place in areas or concessions owned by members of the RSPO.</p> <p>But the RSPO subsequently hit back at the claims, arguing the evidence of violations of its code of practice was flawed and insisting that where RSPO members had been found to be in breach of its qualifying criteria urgent action was taken.</p><!-- Guardian Watermark: internal-code/content/421353047|2013-11-05T11:03:48Z|1bed64dcccd5cb0f005925a22f966a2835c19214 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-31T10:03:49Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383212580933/ac7afffe-88f0-4862-b70b-f7ec4fbffb25-140x84.jpeg",
+        "standfirst":"Rainforest Action Network calls on America's top snack food companies to commit to a more rapid phasing out of unsustainable palm oil, reports <a href=\"http://www.businessgreen.com/\">BusinessGreen</a>",
+        "shortUrl":"http://gu.com/p/3k273",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383212580933/ac7afffe-88f0-4862-b70b-f7ec4fbffb25-140x84.jpeg",
+        "wordcount":"1",
+        "commentable":"true",
+        "internalContentCode":"421353047",
+        "allowUgc":"false",
+        "internalComposerCode":"52722499e4b0cdcad3c0404f",
+        "isPremoderated":"false",
+        "byline":"BusinessGreen, part of the Guardian Environment Network",
+        "publication":"theguardian.com",
+        "internalPageCode":"1989633",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-03T10:00:49Z"
+      },
+      "tags":[{
+        "id":"environment/series/guardian-environment-network",
+        "type":"series",
+        "webTitle":"Guardian Environment Network",
+        "webUrl":"http://www.theguardian.com/environment/series/guardian-environment-network",
+        "apiUrl":"http://content.guardianapis.com/environment/series/guardian-environment-network",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/environment",
+        "type":"keyword",
+        "webTitle":"Environment",
+        "webUrl":"http://www.theguardian.com/environment/environment",
+        "apiUrl":"http://content.guardianapis.com/environment/environment",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/palm-oil",
+        "type":"keyword",
+        "webTitle":"Palm oil",
+        "webUrl":"http://www.theguardian.com/environment/palm-oil",
+        "apiUrl":"http://content.guardianapis.com/environment/palm-oil",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/deforestation",
+        "type":"keyword",
+        "webTitle":"Deforestation",
+        "webUrl":"http://www.theguardian.com/environment/deforestation",
+        "apiUrl":"http://content.guardianapis.com/environment/deforestation",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"world/indonesia",
+        "type":"keyword",
+        "webTitle":"Indonesia",
+        "webUrl":"http://www.theguardian.com/world/indonesia",
+        "apiUrl":"http://content.guardianapis.com/world/indonesia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"lifeandstyle/halloween",
+        "type":"keyword",
+        "webTitle":"Halloween",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/halloween",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/halloween",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-922daab7-8bfa-4bea-a988-0e98a840b919",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383212580933/ac7afffe-88f0-4862-b70b-f7ec4fbffb25-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383212580933/ac7afffe-88f0-4862-b70b-f7ec4fbffb25-140x84.jpeg",
+            "source":"BOS Foundation / Barcroft India",
+            "photographer":"BOS Foundation / Barcroft India",
+            "altText":"An orangutan in Kehje Sewen forest, Indonesia. The species has been threatened by deforestation caused by palm oil plantations.",
+            "height":"84",
+            "credit":"BOS Foundation / Barcroft India/BOS Foundation / Barcroft India",
+            "caption":"An orangutan in Kehje Sewen forest, Indonesia. The species has been threatened by deforestation caused by palm oil plantations. Photograph: BOS Foundation/Barcroft India",
+            "mediaId":"gu-fc-922daab7-8bfa-4bea-a988-0e98a840b919",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383212581119/ac7afffe-88f0-4862-b70b-f7ec4fbffb25-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383212581119/ac7afffe-88f0-4862-b70b-f7ec4fbffb25-460x276.jpeg",
+            "source":"BOS Foundation / Barcroft India",
+            "photographer":"BOS Foundation / Barcroft India",
+            "altText":"An orangutan in Kehje Sewen forest, Indonesia. The species has been threatened by deforestation caused by palm oil plantations.",
+            "height":"276",
+            "credit":"BOS Foundation / Barcroft India/BOS Foundation / Barcroft India",
+            "caption":"An orangutan in Kehje Sewen forest, Indonesia. The species has been threatened by deforestation caused by palm oil plantations. Photograph: BOS Foundation/Barcroft India",
+            "mediaId":"gu-fc-922daab7-8bfa-4bea-a988-0e98a840b919",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383212581264/ac7afffe-88f0-4862-b70b-f7ec4fbffb25-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383212581264/ac7afffe-88f0-4862-b70b-f7ec4fbffb25-220x132.jpeg",
+            "source":"BOS Foundation / Barcroft India",
+            "photographer":"BOS Foundation / Barcroft India",
+            "altText":"An orangutan in Kehje Sewen forest, Indonesia. The species has been threatened by deforestation caused by palm oil plantations.",
+            "height":"132",
+            "credit":"BOS Foundation / Barcroft India/BOS Foundation / Barcroft India",
+            "caption":"An orangutan in Kehje Sewen forest, Indonesia. The species has been threatened by deforestation caused by palm oil plantations. Photograph: BOS Foundation/Barcroft India",
+            "mediaId":"gu-fc-922daab7-8bfa-4bea-a988-0e98a840b919",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383212581707/ac7afffe-88f0-4862-b70b-f7ec4fbffb25-2060x1236.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383212581707/ac7afffe-88f0-4862-b70b-f7ec4fbffb25-2060x1236.jpeg",
+            "source":"BOS Foundation / Barcroft India",
+            "photographer":"BOS Foundation / Barcroft India",
+            "altText":"An orangutan in Kehje Sewen forest, Indonesia. The species has been threatened by deforestation caused by palm oil plantations.",
+            "height":"1236",
+            "credit":"BOS Foundation / Barcroft India/BOS Foundation / Barcroft India",
+            "caption":"An orangutan in Kehje Sewen forest, Indonesia. The species has been threatened by deforestation caused by palm oil plantations. Photograph: BOS Foundation/Barcroft India",
+            "mediaId":"gu-fc-922daab7-8bfa-4bea-a988-0e98a840b919",
+            "width":"2060"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383212582417/ac7afffe-88f0-4862-b70b-f7ec4fbffb25-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383212582417/ac7afffe-88f0-4862-b70b-f7ec4fbffb25-1020x612.jpeg",
+            "source":"BOS Foundation / Barcroft India",
+            "photographer":"BOS Foundation / Barcroft India",
+            "altText":"An orangutan in Kehje Sewen forest, Indonesia. The species has been threatened by deforestation caused by palm oil plantations.",
+            "height":"612",
+            "credit":"BOS Foundation / Barcroft India/BOS Foundation / Barcroft India",
+            "caption":"An orangutan in Kehje Sewen forest, Indonesia. The species has been threatened by deforestation caused by palm oil plantations. Photograph: BOS Foundation/Barcroft India",
+            "mediaId":"gu-fc-922daab7-8bfa-4bea-a988-0e98a840b919",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383212582801/ac7afffe-88f0-4862-b70b-f7ec4fbffb25-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383212582801/ac7afffe-88f0-4862-b70b-f7ec4fbffb25-300x180.jpeg",
+            "source":"BOS Foundation / Barcroft India",
+            "photographer":"BOS Foundation / Barcroft India",
+            "altText":"An orangutan in Kehje Sewen forest, Indonesia. The species has been threatened by deforestation caused by palm oil plantations.",
+            "height":"180",
+            "credit":"BOS Foundation / Barcroft India/BOS Foundation / Barcroft India",
+            "caption":"An orangutan in Kehje Sewen forest, Indonesia. The species has been threatened by deforestation caused by palm oil plantations. Photograph: BOS Foundation/Barcroft India",
+            "mediaId":"gu-fc-922daab7-8bfa-4bea-a988-0e98a840b919",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383212582975/ac7afffe-88f0-4862-b70b-f7ec4fbffb25-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383212582975/ac7afffe-88f0-4862-b70b-f7ec4fbffb25-540x324.jpeg",
+            "source":"BOS Foundation / Barcroft India",
+            "photographer":"BOS Foundation / Barcroft India",
+            "altText":"An orangutan in Kehje Sewen forest, Indonesia. The species has been threatened by deforestation caused by palm oil plantations.",
+            "height":"324",
+            "credit":"BOS Foundation / Barcroft India/BOS Foundation / Barcroft India",
+            "caption":"An orangutan in Kehje Sewen forest, Indonesia. The species has been threatened by deforestation caused by palm oil plantations. Photograph: BOS Foundation/Barcroft India",
+            "mediaId":"gu-fc-922daab7-8bfa-4bea-a988-0e98a840b919",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383212583151/ac7afffe-88f0-4862-b70b-f7ec4fbffb25-68x68.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383212583151/ac7afffe-88f0-4862-b70b-f7ec4fbffb25-68x68.jpeg",
+            "source":"BOS Foundation / Barcroft India",
+            "photographer":"BOS Foundation / Barcroft India",
+            "altText":"An orangutan in Kehje Sewen forest, Indonesia. The species has been threatened by deforestation caused by palm oil plantations.",
+            "height":"68",
+            "credit":"BOS Foundation / Barcroft India/BOS Foundation / Barcroft India",
+            "caption":"An orangutan in Kehje Sewen forest, Indonesia. The species has been threatened by deforestation caused by palm oil plantations. Photograph: BOS Foundation/Barcroft India",
+            "mediaId":"gu-fc-922daab7-8bfa-4bea-a988-0e98a840b919",
+            "width":"68"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383212583331/ac7afffe-88f0-4862-b70b-f7ec4fbffb25-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383212583331/ac7afffe-88f0-4862-b70b-f7ec4fbffb25-380x228.jpeg",
+            "source":"BOS Foundation / Barcroft India",
+            "photographer":"BOS Foundation / Barcroft India",
+            "altText":"An orangutan in Kehje Sewen forest, Indonesia. The species has been threatened by deforestation caused by palm oil plantations.",
+            "height":"228",
+            "credit":"BOS Foundation / Barcroft India/BOS Foundation / Barcroft India",
+            "caption":"An orangutan in Kehje Sewen forest, Indonesia. The species has been threatened by deforestation caused by palm oil plantations. Photograph: BOS Foundation/Barcroft India",
+            "mediaId":"gu-fc-922daab7-8bfa-4bea-a988-0e98a840b919",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383212584181/ac7afffe-88f0-4862-b70b-f7ec4fbffb25-2048x1536.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383212584181/ac7afffe-88f0-4862-b70b-f7ec4fbffb25-2048x1536.jpeg",
+            "source":"BOS Foundation / Barcroft India",
+            "photographer":"BOS Foundation / Barcroft India",
+            "altText":"An orangutan in Kehje Sewen forest, Indonesia. The species has been threatened by deforestation caused by palm oil plantations.",
+            "height":"1536",
+            "credit":"BOS Foundation / Barcroft India/BOS Foundation / Barcroft India",
+            "caption":"An orangutan in Kehje Sewen forest, Indonesia. The species has been threatened by deforestation caused by palm oil plantations. Photograph: BOS Foundation/Barcroft India",
+            "mediaId":"gu-fc-922daab7-8bfa-4bea-a988-0e98a840b919",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383212584983/ac7afffe-88f0-4862-b70b-f7ec4fbffb25-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383212584983/ac7afffe-88f0-4862-b70b-f7ec4fbffb25-620x372.jpeg",
+            "source":"BOS Foundation / Barcroft India",
+            "photographer":"BOS Foundation / Barcroft India",
+            "altText":"An orangutan in Kehje Sewen forest, Indonesia. The species has been threatened by deforestation caused by palm oil plantations.",
+            "height":"372",
+            "credit":"BOS Foundation / Barcroft India/BOS Foundation / Barcroft India",
+            "caption":"An orangutan in Kehje Sewen forest, Indonesia. The species has been threatened by deforestation caused by palm oil plantations. Photograph: BOS Foundation/Barcroft India",
+            "mediaId":"gu-fc-922daab7-8bfa-4bea-a988-0e98a840b919",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383212585353/ac7afffe-88f0-4862-b70b-f7ec4fbffb25-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383212585353/ac7afffe-88f0-4862-b70b-f7ec4fbffb25-1024x768.jpeg",
+            "source":"BOS Foundation / Barcroft India",
+            "photographer":"BOS Foundation / Barcroft India",
+            "altText":"An orangutan in Kehje Sewen forest, Indonesia. The species has been threatened by deforestation caused by palm oil plantations.",
+            "height":"768",
+            "credit":"BOS Foundation / Barcroft India/BOS Foundation / Barcroft India",
+            "caption":"An orangutan in Kehje Sewen forest, Indonesia. The species has been threatened by deforestation caused by palm oil plantations. Photograph: BOS Foundation/Barcroft India",
+            "mediaId":"gu-fc-922daab7-8bfa-4bea-a988-0e98a840b919",
+            "width":"1024"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2013/oct/30/blackface-halloween-costumes-obviously-offensive",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-10-30T14:25:13Z",
+      "webTitle":"I shouldn't have to say this in 2013: blackface Halloween outfits aren't OK | David Dennis",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/oct/30/blackface-halloween-costumes-obviously-offensive",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/oct/30/blackface-halloween-costumes-obviously-offensive",
+      "fields":{
+        "trailText":"<p><strong>David Dennis:</strong> It should go without saying that costumes using racist imagery should be off-limits. Halloween should be about fun, not hatred</p>",
+        "headline":"I shouldn't have to say this in 2013: blackface Halloween outfits aren't OK",
+        "body":"<p>Here's something I shouldn't have to be saying in 2013: it's <a href=\"http://www.theguardian.com/world/2013/aug/30/dunkin-donuts-racist-thai-advert-blackface\">wrong to wear blackface</a>. Blackface represents a time when white Americans would put dark paint on their faces and act out incredibly racist and offensive stereotypes about African Americans. The symbolism of blackface is incendiary, insensitive and racist. This is a fact. This is not up for debate. I understand how the comment section here works, and how some will choose to dispute the merits of blackface by saying it's just face paint and shouldn't be taken as offensive. Those people will be wrong. </p><p>In America, it has been clearly established that blackface is something that's at best in bad taste and at worst an act of unflinching racism. So, by participating in the act, people are admitting that they don't care who they offend or what symbols of oppression they perpetuate. Which is why Halloween is one of the most frustrating holidays for black Americans. </p><p>Without fail, every October, Facebook, Instagram and Twitter are loaded with \"controversial\" pictures of people donning blackface for Halloween costumes. Like clockwork, October 2013 rolled around and we have a new slew of offensive images. Most notably, the Facebook picture of a <a href=\"http://www.buzzfeed.com/alisonvingiano/a-boy-wore-blackface-and-dressed-up-as-trayvon-martin-for-ha\">blackfaced \"Trayvon Martin\"</a> standing next to a man with a \"Neighborhood Watch\" shirt, pretending to be George Zimmerman with a gun pointed to the kid's head. There's also the media personality <a href=\"http://www.eonline.com/news/475530/orange-is-the-new-black-star-laverne-cox-speaks-out-about-julianne-hough-s-blackface-costume\">Julianne Hough dressed</a> as the African American character \"Crazy Eyes\" from the show Orange is the New Black. </p><p>In Hough's case, she wore the character's orange prison jumpsuit, distinctive hairstyle and expressed the \"crazy eyes\" she got her name from. Any fan of the TV show can discern who Hough was trying to portray without applying any blackface. If a white person puts on a Chicago Bulls 23 jersey, a fake bald head and some basketball shorts, I won't sit around stumped trying to figure out who the person is dressing as for Halloween. The missing piece to complete the puzzle won't be a heavy coat of black paint to bring home that someone is dressed as Michael Jordan. So there's really no point in wearing blackface other than to elicit an emotional, negative response from people of color. </p><p>But, of course, <a href=\"http://racerelations.about.com/od/understandingrac1/a/RaciallyOffensiveCostumes.htm\">costume insensitivity</a> isn't just relegated to blackface. Halloween is the time for the terrorist in brown face, the geisha with white powder and slanted eyes or the red-faced Native American. In all of these cases, basic human decency and respect for other cultures gets tossed for cheap laughs and Facebook likes from equally ignorant friends. </p><p>Some readers may think I'm overreacting; as if I'm placing a meaning to simple face paint that harkens too far back to still be relevant. The fact is, blackface is still seen as incredibly offensive by a large segment of the community – black or otherwise. Shouldn't that be enough to make someone want to not put the black paint on his or her face? </p><p>Too often, though, it's the offending party who tries to determine exactly what's offensive to subjugated groups. That conversation is always a disaster. Trying to convince a subjugated group not to feel a certain way about oppressive symbols – with decades or even centuries of history – is an exercise in hegemonic privilege: </p><blockquote class=\"quoted\"><p>Because <em>I</em> don't feel offended by it, you shouldn't either. </p></blockquote><p>Basically, the desire to avoid hurt caused by an act of racial symbolism should outweigh someone's desire to make sure everybody gets that you're dressed as Barack Obama for Halloween. By continuing — every year without fail — to don blackface, brownface or slanted eyes, offenders are standing firm in their belief that they don't care: they don't care that they're hurting people, and they don't care that they're calling on centuries of hatred for a simple prop.</p><p>That's why we're here, with me writing about how blackface – a well established expression of prejudice and hate – is wrong. Halloween should be a night of fun and celebration, not a perpetuation of one of the most racially charged and offensive acts America has to offer. If you're just dying to use paint, maybe go as the Incredible Hulk instead.</p><!-- Guardian Watermark: internal-code/content/421291633|2013-11-05T11:03:48Z|b65534b8b6ffc61dbf98478a718ab3c6043c0bc4 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-30T14:31:37Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383141981053/140julianne-hough-orange-is-the-new-blackface.jpg",
+        "standfirst":"It should go without saying that costumes using racist imagery should be off-limits. Halloween should be about fun, not hatred",
+        "shortUrl":"http://gu.com/p/3kxge",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383141981053/140julianne-hough-orange-is-the-new-blackface.jpg",
+        "wordcount":"694",
+        "commentable":"true",
+        "internalContentCode":"421291633",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"David Dennis",
+        "publication":"theguardian.com",
+        "internalPageCode":"1989158",
+        "productionOffice":"US",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-02T14:25:13Z"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"lifeandstyle/halloween",
+        "type":"keyword",
+        "webTitle":"Halloween",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/halloween",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/halloween",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"world/race",
+        "type":"keyword",
+        "webTitle":"Race issues",
+        "webUrl":"http://www.theguardian.com/world/race",
+        "apiUrl":"http://content.guardianapis.com/world/race",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/david-dennis",
+        "type":"contributor",
+        "webTitle":"David Dennis",
+        "webUrl":"http://www.theguardian.com/profile/david-dennis",
+        "apiUrl":"http://content.guardianapis.com/profile/david-dennis",
+        "bio":"<p>David Dennis, Jr is creative director at <a href=\"http://smokingsection.uproxx.com/TSS/\">The Smoking Section</a> and a freelance writer. He's a Davidson College alum who lives in New Orleans. Follow him on Twitter: <a href=\"@DaviddTSS\">@DaviddTSS</a></p>",
+        "r2ContributorId":"56477",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/15/1368638415744/david_dennis.jpg",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421296183",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383141949407/460julianne-hough-orange-is-the-new-blackface.jpg",
+          "typeData":{
+            "source":"Public domain",
+            "altText":"Julianne Hough blackface",
+            "height":"276",
+            "credit":"Public domain",
+            "caption":"Julianne Hough (second from right) dressed in blackface as an African American character from Orange is the New Black. Photograph: Instagram",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421296184",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383141981053/140julianne-hough-orange-is-the-new-blackface.jpg",
+          "typeData":{
+            "source":"Public domain",
+            "altText":"Julianne Hough blackface 140",
+            "height":"84",
+            "credit":"Public domain",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"lifeandstyle/wordofmouth/2013/oct/29/fake-blood-halloween-costumes-cakes-recipe-edible",
+      "sectionId":"lifeandstyle",
+      "sectionName":"Life and style",
+      "webPublicationDate":"2013-10-29T13:12:10Z",
+      "webTitle":"Fake blood for Halloween costumes and cakes: what's the best recipe?",
+      "webUrl":"http://www.theguardian.com/lifeandstyle/wordofmouth/2013/oct/29/fake-blood-halloween-costumes-cakes-recipe-edible",
+      "apiUrl":"http://content.guardianapis.com/lifeandstyle/wordofmouth/2013/oct/29/fake-blood-halloween-costumes-cakes-recipe-edible",
+      "fields":{
+        "trailText":"<p><strong>Simon Creasey:</strong> You can buy edible blood, but making your own adds a rich vein of fun to gory Halloween fancy dress</p>",
+        "headline":"Fake blood for Halloween costumes and cakes: what's the best recipe?",
+        "body":"<p>Getting the right hue and consistency for fake blood – or \"Kensington Gore\" as it's known to thespians – is a problem that has challenged makeup artists for years. Not only does it need to look convincing, but if it's being applied to mouth wounds in zombie or vampire movies it also needs to taste good (or at least not poison the \"wounded\" party).</p><p>In the <a href=\"http://www.slate.com/blogs/browbeat/2013/10/22/movie_blood_recipe_and_history_from_hershey_s_to_corn_syrup_and_beyond.html\" title=\"\">halcyon days of black-and-white movies, Hershey's chocolate syrup was the flavour of the month</a> – its dark colour providing a starker blood-splattered contrast on screen than vibrant red food items such as tomato ketchup.</p><p>With the advent of colour movies chocolate sauce was superseded by red food-colouring mixed with all manner of thickeners and sometimes dangerous chemicals to create the requisite colour and consistency.</p><p>Legendary movie makeup artist <a href=\"http://www.morphicmotion.com/faq/faq1.html\" title=\"\">Dick Smith, who provided pints of fake blood for films such as The Godfather, Taxi Driver and Scanners</a>, swore by a combination of corn syrup, methylparaben, red food-colouring, yellow food-colouring … and Kodak Photo-Flo, which was normally used as a drying aid and is highly poisonous.</p><figure data-media-id='gu-image-421202211'><img src='http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383049234971/Fake-blood-child-with-fak-009.jpg' alt='Fake blood: child with fake vampire fangs and blood' width='460' height='276' class='gu-image'/><figcaption>Fang fiction: realistic blood and gnashers, but apparently this is <em>not</em> a real vampire. Photograph: Simon Creasey for the Guardian</figcaption></figure><p>Actor <a href=\"http://www.theguardian.com/film/2009/feb/12/bruce-campbell-evil-dead-my-name-is\" title=\"\">Bruce Campbell</a> revealed in his autobiography <a href=\"http://moviemiscellany.com/2010/08/recipe-for-fake-blood-used-in-the-evil-dead/\" title=\"\">that the secret recipe favoured by director Sam Raimi</a> for the B-movie horror <a href=\"http://www.theguardian.com/film/2010/oct/22/evil-dead-raimi-horror\" title=\"\">The Evil Dead</a>, mixed pints of corn syrup, food colouring and creamer. To wash the mixture off the skin and out of clothing Campbell advised placing blood-drenched actors in a shower for half an hour.</p><p>These days, fake blood is used by thousands of trick-or-treating children dressed as witches, vampires, werewolves and assorted ghouls; costumed partygoers of all ages; and for decorating vampire cakes the world over. You can buy <a href=\"http://www.amazon.co.uk/Candy-Blood-strawberry-flavoured-candy/dp/B0061D6PS6/ref=sr_1_1?ie=UTF8&amp;qid=1382906122&amp;sr=8-1&amp;keywords=candy+blood\" title=\"\">pre-made edible blood</a>, but part of the fun is experimenting with different ingredients and coming up with a combination that is tasty as well as gory.</p><p>There are dozens of <a href=\"http://m.wikihow.com/Make-Fake-Blood\" title=\"\">fake blood recipes, and although they vary wildly</a>, the base ingredient seems to be a generous tablespoon of corn syrup. Golden syrup works just as well. Add red food-colouring and a few drops of blue food-colouring for a darker red (use it sparingly to avoid an unconvincing purple).</p><p>Then it depends how authentic and precise you want to be. Arterial blood needs to be bright red; venous blood is much darker. To achieve the latter, add a couple of squirts of chocolate syrup, <a href=\"http://chemistry.about.com/b/2010/09/23/edible-fake-blood-recipes.htm\" title=\"\">which will darken and thicken the blood</a>. To make blood with an even thicker consistency many professional makeup artists add gelatine to the mix. However, DIY gore enthusiasts can achieve a similar effect by simply adding a generous dollop of smooth peanut butter – you can also add seedless strawberry jam to make it even more gelatinous. If the mixture becomes too gloopy, just add a little water to thin it out.</p><p>Many of the recipes we tried produced a suitably grim appearance, but got a thumbs-down from my ghoulish taste testers (my Halloween-crazy nephew and niece, Caleb and Lana). The recipe that proved tastiest for mouth wounds <a href=\"http://seddy5.typepad.com/blog/2010/10/how-to-make-edible-fake-blood.html\" title=\"\">and also provided realistic cake decoration</a> is below. It's basically syrup though, so don't drink too much of it straight – vampire costume or not.</p><figure data-media-id='gu-image-421202212'><img src='http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383049553295/Fake-blood-stirred-in-a-m-009.jpg' alt='Fake blood stirred in a mixing bowl' width='460' height='276' class='gu-image'/><figcaption>Blood? Simple. And delicious too … for vampires with a sweet tooth. Photograph: Simon Creasey for the Guardian</figcaption></figure><h2>Tasty fake blood</h2><p><strong>1 large tbsp golden syrup</strong><br /><strong>1 large tbsp maple syrup</strong><br /><strong>1 tsp red food-colouring</strong><br /><strong>Few drops blue food-colouring</strong></p><p>If the mixture is too loose stir in a teaspoon of corn starch, whisking rapidly to thin out any lumps (alternatively you can leave it to settle for a while and skim the lumps off the top). Then apply the mixture liberally to the <a href=\"http://www.fancydress.com/costumes/Cut-Throat-3D-FX-Transfers/0~4551440~302\" title=\"\">mouth, face and gaping fake wounds</a> for a full-on horror show.</p><p><em>• Do you have a tried and trusted recipe for making fake blood taste great?</em></p><!-- Guardian Watermark: internal-code/content/421197126|2013-11-05T11:03:48Z|a72e5f09b0e8c6709ad97e43a4830f41d8f44216 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-29T13:12:10Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383051267018/Bruce-Campbell-covered-in-004.jpg",
+        "standfirst":"You can buy edible blood, but making your own adds a rich vein of fun to gory Halloween fancy dress",
+        "shortUrl":"http://gu.com/p/3kvfj",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383051267018/Bruce-Campbell-covered-in-004.jpg",
+        "wordcount":"592",
+        "commentable":"true",
+        "internalContentCode":"421197126",
+        "allowUgc":"false",
+        "internalOctopusCode":"8253658",
+        "isPremoderated":"false",
+        "byline":"Simon Creasey",
+        "publication":"theguardian.com",
+        "internalPageCode":"1988407",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-05T13:12:10Z"
+      },
+      "tags":[{
+        "id":"lifeandstyle/wordofmouth",
+        "type":"blog",
+        "webTitle":"Word of Mouth blog",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/wordofmouth",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/wordofmouth",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/food-and-drink",
+        "type":"keyword",
+        "webTitle":"Food & drink",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/food-and-drink",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/food-and-drink",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/halloween",
+        "type":"keyword",
+        "webTitle":"Halloween",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/halloween",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/halloween",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/cake",
+        "type":"keyword",
+        "webTitle":"Cake",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/cake",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/cake",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"profile/simon-creasey",
+        "type":"contributor",
+        "webTitle":"Simon Creasey",
+        "webUrl":"http://www.theguardian.com/profile/simon-creasey",
+        "apiUrl":"http://content.guardianapis.com/profile/simon-creasey",
+        "bio":"<p>Simon Creasey writes about food, drink and anything else that tickles his fancy, from his home in Margate</p>",
+        "r2ContributorId":"52014",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/7/24/1343125323604/Contributor-Simon-Creasey-003.jpg",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"tone/recipes",
+        "type":"tone",
+        "webTitle":"Recipes",
+        "webUrl":"http://www.theguardian.com/tone/recipes",
+        "apiUrl":"http://content.guardianapis.com/tone/recipes",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421202209",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383049234971/Fake-blood-child-with-fak-009.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Simon Creasey",
+            "altText":"Fake blood: child with fake vampire fangs and blood",
+            "height":"276",
+            "credit":"Simon Creasey/Guardian",
+            "caption":"Fang fiction: realistic blood and gnashers, but apparently this is <em>not</em> a real vampire. Photograph: Simon Creasey for the Guardian",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383051273414/Bruce-Campbell-covered-in-009.jpg",
+          "typeData":{
+            "source":"Sportsphoto Ltd/Allstar",
+            "photographer":"New Line Cinema",
+            "altText":"Bruce Campbell covered in 'blood' in The Evil Dead (1981)",
+            "height":"276",
+            "credit":"New Line Cinema/Sportsphoto Ltd/Allstar",
+            "caption":"Bruce Campbell in The Evil Dead: covered in corn syrup, food colouring and creamer. No wonder he's so angry. Photograph: New Line Cinema/Sportsphoto Ltd/Allstar",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383051272137/Bruce-Campbell-covered-in-008.jpg",
+          "typeData":{
+            "source":"Sportsphoto Ltd/Allstar",
+            "photographer":"New Line Cinema",
+            "altText":"Bruce Campbell covered in 'blood' in The Evil Dead (1981)",
+            "height":"228",
+            "credit":"New Line Cinema/Sportsphoto Ltd/Allstar",
+            "caption":"Bruce Campbell in The Evil Dead: covered in corn syrup, food colouring and creamer. No wonder he's so angry. Photograph: New Line Cinema/Sportsphoto Ltd/Allstar",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383051270820/Bruce-Campbell-covered-in-007.jpg",
+          "typeData":{
+            "source":"Sportsphoto Ltd/Allstar",
+            "photographer":"New Line Cinema",
+            "altText":"Bruce Campbell covered in 'blood' in The Evil Dead (1981)",
+            "height":"180",
+            "credit":"New Line Cinema/Sportsphoto Ltd/Allstar",
+            "caption":"Bruce Campbell in The Evil Dead: covered in corn syrup, food colouring and creamer. No wonder he's so angry. Photograph: New Line Cinema/Sportsphoto Ltd/Allstar",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383051269576/Bruce-Campbell-covered-in-006.jpg",
+          "typeData":{
+            "source":"Sportsphoto Ltd/Allstar",
+            "photographer":"New Line Cinema",
+            "altText":"Bruce Campbell covered in 'blood' in The Evil Dead (1981)",
+            "height":"168",
+            "credit":"New Line Cinema/Sportsphoto Ltd/Allstar",
+            "caption":"Bruce Campbell in The Evil Dead: covered in corn syrup, food colouring and creamer. No wonder he's so angry. Photograph: New Line Cinema/Sportsphoto Ltd/Allstar",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383051268281/Bruce-Campbell-covered-in-005.jpg",
+          "typeData":{
+            "source":"Sportsphoto Ltd/Allstar",
+            "photographer":"New Line Cinema",
+            "altText":"Bruce Campbell covered in 'blood' in The Evil Dead (1981)",
+            "height":"132",
+            "credit":"New Line Cinema/Sportsphoto Ltd/Allstar",
+            "caption":"Bruce Campbell in The Evil Dead: covered in corn syrup, food colouring and creamer. No wonder he's so angry. Photograph: New Line Cinema/Sportsphoto Ltd/Allstar",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383051267018/Bruce-Campbell-covered-in-004.jpg",
+          "typeData":{
+            "source":"Sportsphoto Ltd/Allstar",
+            "photographer":"New Line Cinema",
+            "altText":"Bruce Campbell covered in 'blood' in The Evil Dead (1981)",
+            "height":"84",
+            "credit":"New Line Cinema/Sportsphoto Ltd/Allstar",
+            "caption":"Bruce Campbell in The Evil Dead: covered in corn syrup, food colouring and creamer. No wonder he's so angry. Photograph: New Line Cinema/Sportsphoto Ltd/Allstar",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383051265747/Bruce-Campbell-covered-in-003.jpg",
+          "typeData":{
+            "source":"Sportsphoto Ltd/Allstar",
+            "photographer":"New Line Cinema",
+            "altText":"Bruce Campbell covered in 'blood' in The Evil Dead (1981)",
+            "height":"340",
+            "credit":"New Line Cinema/Sportsphoto Ltd/Allstar",
+            "caption":"Bruce Campbell in The Evil Dead: covered in corn syrup, food colouring and creamer. No wonder he's so angry. Photograph: New Line Cinema/Sportsphoto Ltd/Allstar",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383051264441/Bruce-Campbell-covered-in-002.jpg",
+          "typeData":{
+            "source":"Sportsphoto Ltd/Allstar",
+            "photographer":"New Line Cinema",
+            "altText":"Bruce Campbell covered in 'blood' in The Evil Dead (1981)",
+            "height":"130",
+            "credit":"New Line Cinema/Sportsphoto Ltd/Allstar",
+            "caption":"Bruce Campbell in The Evil Dead: covered in corn syrup, food colouring and creamer. No wonder he's so angry. Photograph: New Line Cinema/Sportsphoto Ltd/Allstar",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383051261669/Bruce-Campbell-covered-in-001.jpg",
+          "typeData":{
+            "source":"Sportsphoto Ltd/Allstar",
+            "photographer":"New Line Cinema",
+            "altText":"Bruce Campbell covered in 'blood' in The Evil Dead (1981)",
+            "height":"54",
+            "credit":"New Line Cinema/Sportsphoto Ltd/Allstar",
+            "caption":"Bruce Campbell in The Evil Dead: covered in corn syrup, food colouring and creamer. No wonder he's so angry. Photograph: New Line Cinema/Sportsphoto Ltd/Allstar",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383051273414/Bruce-Campbell-covered-in-009.jpg",
+          "typeData":{
+            "source":"Sportsphoto Ltd/Allstar",
+            "photographer":"New Line Cinema",
+            "altText":"Bruce Campbell covered in 'blood' in The Evil Dead (1981)",
+            "height":"276",
+            "credit":"New Line Cinema/Sportsphoto Ltd/Allstar",
+            "caption":"Bruce Campbell in The Evil Dead: covered in corn syrup, food colouring and creamer. No wonder he's so angry. Photograph: New Line Cinema/Sportsphoto Ltd/Allstar",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421202210",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383051267018/Bruce-Campbell-covered-in-004.jpg",
+          "typeData":{
+            "source":"Sportsphoto Ltd/Allstar",
+            "photographer":"New Line Cinema",
+            "altText":"Bruce Campbell covered in 'blood' in The Evil Dead (1981)",
+            "height":"84",
+            "credit":"New Line Cinema/Sportsphoto Ltd/Allstar",
+            "caption":"Bruce Campbell in The Evil Dead: covered in corn syrup, food colouring and creamer. No wonder he's so angry. Photograph: New Line Cinema/Sportsphoto Ltd/Allstar",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-421202211",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383049234971/Fake-blood-child-with-fak-009.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Simon Creasey",
+            "altText":"Fake blood: child with fake vampire fangs and blood",
+            "height":"276",
+            "credit":"Simon Creasey/Guardian",
+            "caption":"Fang fiction: realistic blood and gnashers, but apparently this is <em>not</em> a real vampire. Photograph: Simon Creasey for the Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421202212",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/29/1383049553295/Fake-blood-stirred-in-a-m-009.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Simon Creasey",
+            "altText":"Fake blood stirred in a mixing bowl",
+            "height":"276",
+            "credit":"Simon Creasey/Guardian",
+            "caption":"Blood? Simple. And delicious too … for vampires with a sweet tooth. Photograph: Simon Creasey for the Guardian",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"lifeandstyle/costume-and-culture/gallery/2013/oct/30/halloween-celebrity-costumes-in-pictures",
+      "sectionId":"lifeandstyle",
+      "sectionName":"Life and style",
+      "webPublicationDate":"2013-10-30T14:34:00Z",
+      "webTitle":"Sixteen great celebrity Halloween costumes - in pictures",
+      "webUrl":"http://www.theguardian.com/lifeandstyle/costume-and-culture/gallery/2013/oct/30/halloween-celebrity-costumes-in-pictures",
+      "apiUrl":"http://content.guardianapis.com/lifeandstyle/costume-and-culture/gallery/2013/oct/30/halloween-celebrity-costumes-in-pictures",
+      "fields":{
+        "trailText":"<p>Celebs know how vital it is to rock something really, really disturbing this time of year. Here are some outfits returning from the grave to terrorise your eyeballs, from Kelly Brook and Mariah Carey to the undisputed king and queen of the Halloween scene, Seal and Heidi Klum</p>",
+        "headline":"Sixteen great celebrity Halloween costumes - in pictures",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-01T11:25:25Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137840098/Eli-Roth-003.jpg",
+        "standfirst":"Celebs know how vital it is to rock something really, really disturbing this time of year. Here are some outfits returning from the grave to terrorise your eyeballs, from Kelly Brook and Mariah Carey to the undisputed king and queen of the Halloween scene, Seal and Heidi Klum",
+        "shortUrl":"http://gu.com/p/3kxf8",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137840098/Eli-Roth-003.jpg",
+        "commentable":"false",
+        "internalContentCode":"421285703",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "publication":"theguardian.com",
+        "internalPageCode":"1989125",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-02T14:34:23Z"
+      },
+      "tags":[{
+        "id":"lifeandstyle/halloween",
+        "type":"keyword",
+        "webTitle":"Halloween",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/halloween",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/halloween",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/celebrity",
+        "type":"keyword",
+        "webTitle":"Celebrity",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/celebrity",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/celebrity",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"fashion/fashion",
+        "type":"keyword",
+        "webTitle":"Fashion",
+        "webUrl":"http://www.theguardian.com/fashion/fashion",
+        "apiUrl":"http://content.guardianapis.com/fashion/fashion",
+        "sectionId":"fashion",
+        "sectionName":"Fashion",
+        "references":[]
+      },{
+        "id":"type/gallery",
+        "type":"type",
+        "webTitle":"Gallery",
+        "webUrl":"http://www.theguardian.com/inpictures",
+        "apiUrl":"http://content.guardianapis.com/inpictures",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421447201",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137840098/Eli-Roth-003.jpg",
+          "typeData":{
+            "source":"WireImage",
+            "photographer":"Denise Truscello",
+            "altText":"Eli Roth",
+            "height":"84",
+            "credit":"Denise Truscello/WireImage",
+            "caption":"Eli Roth poses at his 2012 Halloween bash at Eli Roth's Goretorium in Las Vegas, Nevada Photograph: Denise Truscello/WireImage",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-421285412",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":1,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137738242/Eli-Roth-001.jpg",
+          "typeData":{
+            "source":"WireImage",
+            "photographer":"Denise Truscello",
+            "altText":"Celebs Halloween costumes: Eli Roth",
+            "height":"480",
+            "credit":"Denise Truscello/WireImage",
+            "caption":"Eli Roth appears to be in a spot of bother during the 2012 Halloween bash at his Goretorium in Las Vegas",
+            "width":"659"
+          }
+        }]
+      },{
+        "id":"gu-image-421285416",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":2,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137742943/Heidi-Klum-and-Seal-002.jpg",
+          "typeData":{
+            "source":"FilmMagic",
+            "photographer":"Gregg DeGuire",
+            "altText":"Celebs Halloween costumes: Heidi Klum and Seal",
+            "height":"480",
+            "credit":"Gregg DeGuire/FilmMagic",
+            "caption":"Stalwarts of outrageous costume ideas, Seal and Heidi Klum arrive at their 10th Annual Halloween Party in Hollywood in 2009 dressed as a pair of crows",
+            "width":"729"
+          }
+        }]
+      },{
+        "id":"gu-image-421285496",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":3,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137746699/Royal-wedding-outfits-003.jpg",
+          "typeData":{
+            "source":"WireImage",
+            "photographer":"Bennett Raglin",
+            "altText":"Celebs Halloween costumes: Royal wedding outfits",
+            "height":"501",
+            "credit":"Bennett Raglin/WireImage",
+            "caption":"Exquisitely topped off with ill-advised headgear, Kathie Lee Gifford, Hoda Kotb, Ann Curry, Meredith Vieira and Al Roker re-enact the royal wedding at NBC's Today 2011 Halloween celebration in New York",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-421285475",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":4,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137751585/Nick-Cannon-and-Mariah-Ca-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Mike Coppola",
+            "altText":"Celebs Halloween costumes: Nick Cannon and Mariah Carey",
+            "height":"480",
+            "credit":"Mike Coppola/Getty Images",
+            "caption":"Arguably the sickliest couple of the season, Nick Cannon and Mariah Carey at a 2009 Halloween celebration in New York in all-white angel outfits ",
+            "width":"575"
+          }
+        }]
+      },{
+        "id":"gu-image-421285470",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":5,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137753865/Kyle-Maclachlan-005.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Matt Baron",
+            "altText":"Celebs Halloween costumes: Kyle Maclachlan",
+            "height":"587",
+            "credit":"Matt Baron/Rex Features",
+            "caption":"Kyle Maclachlan sports a golf ball injury guaranteed to make any makeup artist jealous in 2007",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-421285360",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":6,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137756093/Al-and-Tipper-Gore-006.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"White House",
+            "altText":"Celebs Halloween costumes: Al and Tipper Gore",
+            "height":"530",
+            "credit":"White House/AP",
+            "caption":"Aghast from the past: Al Gore and his wife, Tipper, in werewolf costumes in 1997",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-421285473",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":7,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137760135/Miranda-Kerrs-Sexy-Circus-007.jpg",
+          "typeData":{
+            "source":"WireImage",
+            "photographer":"Jerritt Clark",
+            "altText":"Celebs Halloween costumes: Miranda Kerr's Sexy Circus 2011",
+            "height":"480",
+            "credit":"Jerritt Clark/WireImage",
+            "caption":"Unperturbed by the lack of a discernible theme connecting their outfits, Miranda Kerr, Kate Upton, Chrissy Teigen, Nicole Trunfio and Jaslene Gonzalez pose at Kerr's Sexy Circus Halloween party in New York in 2011",
+            "width":"714"
+          }
+        }]
+      },{
+        "id":"gu-image-421285518",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":8,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137765573/Tina-Fey-and-Will-Ferrell-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Stephen Lovekin",
+            "altText":"Celebs Halloween costumes: Tina Fey and Will Ferrell",
+            "height":"586",
+            "credit":"Stephen Lovekin/Getty Images",
+            "caption":"Tina Fey and Will Ferrell appear on NBC's Today Halloween episode in 2010, dressed in their Megamind outfits",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-421285414",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":9,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137767980/Heidi-Klum-and-Seal-009.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Startraks",
+            "altText":"Celebs Halloween costumes: Heidi Klum and Seal",
+            "height":"480",
+            "credit":"Startraks/Rex Features",
+            "caption":"Another Heidi Klum/Seal triumph from 2011",
+            "width":"511"
+          }
+        }]
+      },{
+        "id":"gu-image-421285364",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":10,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137771641/Christina-Milian-010.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"David Livingston",
+            "altText":"Celebs Halloween costumes: Christina Milian",
+            "height":"600",
+            "credit":"David Livingston/Getty Images",
+            "caption":"Christina Milian prompted onlookers to gouge their own eyes out with this horror from 2012",
+            "width":"399"
+          }
+        }]
+      },{
+        "id":"gu-image-421285466",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":11,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137773866/Kelly-Brook-011.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Beverly News",
+            "altText":"Celebs Halloween costumes: Kelly Brook",
+            "height":"410",
+            "credit":"Beverly News/Rex Features",
+            "caption":"This year, Kelly Brook went for an ambitious 'Jane-Austen-murder-victim' look for her outfit in Los Angeles – and pulled it off",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-421285418",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":12,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/30/1383137776004/Heidi-Klums-muscle-outfit-012.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Startraks",
+            "altText":"Celebs Halloween costumes: Heidi Klum's muscle outfit",
+            "height":"480",
+            "credit":"Startraks/Rex Features",
+            "caption":"Heidi Klum effortlessly cements her position as queen of Halloween with this muscle-tissue effort from 2011",
+            "width":"723"
+          }
+        }]
+      },{
+        "id":"gu-image-421444485",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":13,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383302646323/Kate-Moss-and-Jamie-Hince-003.jpg",
+          "typeData":{
+            "source":"FilmMagic",
+            "photographer":"Alex Davies",
+            "altText":"Halloween costumes update: Kate Moss and Jamie Hince",
+            "height":"600",
+            "credit":"Alex Davies/FilmMagic",
+            "caption":"Jamie Hince and Kate Moss arrive at Jonathan Ross's annual party this year",
+            "width":"388"
+          }
+        }]
+      },{
+        "id":"gu-image-421444479",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":14,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383302643168/Julie-Macklowe-and-Perez--002.jpg",
+          "typeData":{
+            "source":"Photowire/BEI/Rex Features",
+            "photographer":"Henry Lamb",
+            "altText":"Halloween costumes update: Julie Macklowe and Perez Hilton",
+            "height":"508",
+            "credit":"Henry Lamb/Photowire/BEI/Rex Features",
+            "caption":"Julie Macklowe and Perez Hilton twerk their way into Heidi Klum's Halloween bash in New York. It doesn't get more scary than this",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-421444476",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":15,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383302648919/Gok-Wan-004.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Rotello",
+            "altText":"Halloween costumes update: Gok Wan",
+            "height":"498",
+            "credit":"Rotello/Rex Features",
+            "caption":"Gok Wan goes terror-chic at Jonathan Ross's party this year",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-421444474",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":16,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383302639653/Elderly-Heidi-Klum-001.jpg",
+          "typeData":{
+            "source":"Getty Images for Heidi Klum",
+            "photographer":"Mike Coppola",
+            "altText":"Halloween costumes update: Elderly Heidi Klum",
+            "height":"529",
+            "credit":"Mike Coppola/Getty Images for Heidi Klum",
+            "caption":"And, finally, yes, it's Heidi Klum again at her 14th annual Halloween party this year in in New York. Let's hope those varicose veins are part of the costume …",
+            "width":"400"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"lifeandstyle/gallery/2013/oct/29/pumpkin-carvings-for-halloween-in-pictures",
+      "sectionId":"lifeandstyle",
+      "sectionName":"Life and style",
+      "webPublicationDate":"2013-10-29T15:25:08Z",
+      "webTitle":"Pumpkin carvings for Halloween - in pictures",
+      "webUrl":"http://www.theguardian.com/lifeandstyle/gallery/2013/oct/29/pumpkin-carvings-for-halloween-in-pictures",
+      "apiUrl":"http://content.guardianapis.com/lifeandstyle/gallery/2013/oct/29/pumpkin-carvings-for-halloween-in-pictures",
+      "fields":{
+        "trailText":"<p>Ray Villafane and his team of professional sculptors, from Michigan, meticulously carve pumpkins using spoons and scalpels. Each character takes an average of two hours to complete</p>",
+        "headline":"Pumpkin carvings for Halloween - in pictures",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-29T15:25:08Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/online/2013/10/29/1383050959306/A-character-carved-out-of-003.jpg",
+        "standfirst":"Ray Villafane and his team of professional sculptors, from Michigan, meticulously carve pumpkins using spoons and scalpels. Each character takes an average of two hours to complete",
+        "shortUrl":"http://gu.com/p/3kvh6",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/online/2013/10/29/1383050959306/A-character-carved-out-of-003.jpg",
+        "commentable":"false",
+        "internalContentCode":"421200768",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "publication":"theguardian.com",
+        "internalPageCode":"1988448",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-01T15:25:08Z"
+      },
+      "tags":[{
+        "id":"lifeandstyle/halloween",
+        "type":"keyword",
+        "webTitle":"Halloween",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/halloween",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/halloween",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/pumpkin",
+        "type":"keyword",
+        "webTitle":"Pumpkin",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/pumpkin",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/pumpkin",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"type/gallery",
+        "type":"type",
+        "webTitle":"Gallery",
+        "webUrl":"http://www.theguardian.com/inpictures",
+        "apiUrl":"http://content.guardianapis.com/inpictures",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421213931",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/online/2013/10/29/1383050959306/A-character-carved-out-of-003.jpg",
+          "typeData":{
+            "source":"Barcroft Media",
+            "photographer":"Ray Villafane",
+            "altText":"A character carved out of a pumpkin by Ray Villafane and team",
+            "height":"84",
+            "credit":"Ray Villafane/Barcroft Media",
+            "caption":"A character carved out of a pumpkin by Ray Villafane and team Photograph: Ray Villafane/Barcroft Media",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-421200740",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":1,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383050538234/A-face-carved-out-of-a-pu-008.jpg",
+          "typeData":{
+            "source":"Barcroft Media",
+            "photographer":"Ray Villafane",
+            "altText":"Pumpkin carving: A face carved out of a pumpkin",
+            "height":"544",
+            "credit":"Ray Villafane/Barcroft Media",
+            "caption":"A squashed face carved from a squash ",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-421201832",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":2,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383051983645/A-horror-face-carved-out--003.jpg",
+          "typeData":{
+            "source":"Barcroft Media",
+            "photographer":"Ray Villafane",
+            "altText":"Pumpkin carving: A horror face carved out of a pumpkin",
+            "height":"600",
+            "credit":"Ray Villafane/Barcroft Media",
+            "caption":"Oh my gourd! Horror face carved out of a pumpkin",
+            "width":"367"
+          }
+        }]
+      },{
+        "id":"gu-image-421200735",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":3,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383050526863/A-character-carved-out-of-003.jpg",
+          "typeData":{
+            "source":"Barcroft Media",
+            "photographer":"Ray Villafane",
+            "altText":"Pumpkin carving: A character carved out of a pumpkin",
+            "height":"480",
+            "credit":"Ray Villafane/Barcroft Media",
+            "caption":"A Gremlin carved out of a pumpkin - don't water this one",
+            "width":"756"
+          }
+        }]
+      },{
+        "id":"gu-image-421200748",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":4,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383050535813/A-horror-face-carved-out--007.jpg",
+          "typeData":{
+            "source":"Barcroft Media",
+            "photographer":"Ray Villafane",
+            "altText":"Pumpkin carving: A horror face carved out of a pumpkin",
+            "height":"574",
+            "credit":"Ray Villafane/Barcroft Media",
+            "caption":"Another one of Villafane's smashing pumpkins (which have absolutely nothing to do with the US band of the same name)",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-421200750",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":5,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383050533421/A-horror-face-carved-out--006.jpg",
+          "typeData":{
+            "source":"Barcroft Media",
+            "photographer":"Ray Villafane",
+            "altText":"Pumpkin carving: A horror face carved out of a pumpkin",
+            "height":"480",
+            "credit":"Ray Villafane/Barcroft Media",
+            "caption":"Happy Halloween. Or not",
+            "width":"488"
+          }
+        }]
+      },{
+        "id":"gu-image-421200752",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":6,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383050529027/A-horror-face-carved-out--004.jpg",
+          "typeData":{
+            "source":"Barcroft Media",
+            "photographer":"Ray Villafane",
+            "altText":"Pumpkin carving: A horror face carved out of a pumpkin",
+            "height":"461",
+            "credit":"Ray Villafane/Barcroft Media",
+            "caption":"What do you mean, I'm just a pumpkin?",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-421201777",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":7,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383051978964/A-clown-face-carved-out-o-001.jpg",
+          "typeData":{
+            "source":"Barcroft Media",
+            "photographer":"Ray Villafane",
+            "altText":"Pumpkin carving: A clown face carved out of a pumpkin",
+            "height":"466",
+            "credit":"Ray Villafane/Barcroft Media",
+            "caption":"Is there anyone out there who doesn't think clowns are scary?",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-421202552",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":8,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383052426857/A-horror-face-carved-out--006.jpg",
+          "typeData":{
+            "source":"Barcroft Media",
+            "photographer":"Ray Villafane",
+            "altText":"Pumpkin carving: A horror face carved out of a pumpkin",
+            "height":"498",
+            "credit":"Ray Villafane/Barcroft Media",
+            "caption":"Scary or scared? You decide",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-421201956",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":9,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383051985822/Expert-Pumpkin-Carving-004.jpg",
+          "typeData":{
+            "source":"Barcroft Media",
+            "photographer":"Ray Villafane / Barcroft Media",
+            "altText":"Pumpkin carving: Expert Pumpkin Carving",
+            "height":"585",
+            "credit":"Ray Villafane / Barcroft Media/Barcroft Media",
+            "caption":"We finally really did it - we carved a gorilla face out of a pumpkin",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-421200746",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":10,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383050531278/A-horror-charcter-carved--005.jpg",
+          "typeData":{
+            "source":"Barcroft Media",
+            "photographer":"Ray Villafane",
+            "altText":"Pumpkin carving: A horror charcter carved out of a pumpkin",
+            "height":"480",
+            "credit":"Ray Villafane/Barcroft Media",
+            "caption":"Pumpkin pie? I don't think so",
+            "width":"496"
+          }
+        }]
+      },{
+        "id":"gu-image-421208928",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":11,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383057189686/A-funny-face-carved-out-o-001.jpg",
+          "typeData":{
+            "source":"Barcroft Media",
+            "photographer":"Ray Villafane",
+            "altText":"Halloween pumpkin: A funny face carved out of a pumpkin ",
+            "height":"533",
+            "credit":"Ray Villafane/Barcroft Media",
+            "caption":"This one has a pumpkin seed on its tongue for some reason",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-421200755",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":12,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383050524403/A-horror-face-carved-out--002.jpg",
+          "typeData":{
+            "source":"Barcroft Media",
+            "photographer":"Ray Villafane",
+            "altText":"Pumpkin carving: A horror face carved out of a pumpkin",
+            "height":"533",
+            "credit":"Ray Villafane/Barcroft Media",
+            "caption":"Is this the future of Halloween-themed vegetable carving? Only time will tell",
+            "width":"400"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"science/brain-flapping/2013/oct/31/halloween-costumes-science",
+      "sectionId":"science",
+      "sectionName":"Science",
+      "webPublicationDate":"2013-10-31T12:30:00Z",
+      "webTitle":"Halloween costumes inspired by science | Dean Burnett",
+      "webUrl":"http://www.theguardian.com/science/brain-flapping/2013/oct/31/halloween-costumes-science",
+      "apiUrl":"http://content.guardianapis.com/science/brain-flapping/2013/oct/31/halloween-costumes-science",
+      "fields":{
+        "trailText":"<p><strong>Dean Burnett: </strong>Tired of dressing up as supernatural things for Halloween? Then why not try some terrifying scientific costumes</p>",
+        "headline":"Halloween costumes inspired by science",
+        "body":"<p>Halloween is upon us. But what if you're someone who has dedicated their life to science? Halloween typically means dressing up as something \"scary\", and almost everyone interprets this as something with supernatural, paranormal or just flat-out impossible origins. So what is a rational scientist type, who lives in the real world and doesn't believe in anything without empirical evidence, to do? You want to join in the scary fun, but can't be seen to encourage unscientific things.</p><p>Don't worry though; there are still plenty of things from the world of science that you can dress up as that are fun, interesting and genuinely terrifying as they really are out there.</p><h2>MRSA</h2><figure data-media-id='gu-image-421324844'><img src='http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/05/18/mrsa460.jpg' alt='MRSA,bacteria magnified x9560 by a scanning electron micrograph' width='460' height='276' class='gu-image'/><figcaption>It takes more than garlic to fend off this monster! Photograph: Guardian</figcaption></figure><p><br />When it comes to scary monsters, they don't come much more terrifying than a monster that is immune to every defence we humans have. Who says it has to be some macroscopic slobbering beast? <a href=\"http://www.nhs.uk/Conditions/MRSA/Pages/Introduction.aspx\">MRSA</a>, or methicillin-resistant <em>Staphylococcus aureus</em> to give it its full title, combines all the properties of the classic Halloween horrors; you don't see it coming, it strikes down innocent victims, it has few weaknesses, it is often associated with oozing flesh, it cannot be reasoned with. Your only options are to run, hide or observe very high standards of hand-washing and hygiene. </p><p>The outfit is simple; just attach a few bunches of grapes or coloured tennis balls to an everyday garment to get that authentic<a href=\"http://www.medicinenet.com/staph_infection_pictures_slideshow/article.htm\"> Staphylococcus</a> look. For added effect, get some friends to occasionally throw<a href=\"http://www.medicalnewstoday.com/articles/216798.php\"> penicillin</a> at you while you laugh manically as you remain unharmed by this feeble attack, truly emphasising the horrors of <a href=\"http://www.who.int/mediacentre/factsheets/fs194/en/\">antibiotic resistance</a>.  </p><h2>Entropy</h2><figure data-media-id='gu-image-421324845'><img src='http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/21/1345560053503/Early-universe-010.jpg' alt='Early universe' width='460' height='276' class='gu-image'/><figcaption>Run! Entropy is coming for you! Photograph: Adolf Schaller/AP</figcaption></figure><p><br />What could be scarier than the thing that stalks all aspects of life at all times, and may in the end effectively <a href=\"http://www.physlink.com/education/askexperts/ae181.cfm\">kill the whole universe</a>? Yes, entropy has many <a href=\"http://en.wikipedia.org/wiki/Entropy\">definitions and descriptions</a>, but basically means the unavailability of energy, order or the fundamental properties generally required for life to exist and things to happen. The <a href=\"http://hyperphysics.phy-astr.gsu.edu/hbase/thermo/seclaw.html\">second law of thermodynamics</a> states that in a closed system entropy can only increase, and despite its scale the universe itself is a closed system. You have nowhere to run, nowhere to hide, in all of creation; entropy will get you in the end!</p><p>Demonstrate this in costume form by wearing any garments you like, but slowly unravelling them as the night progresses, until you're eventually left, cold and alone, with nothing but a mass of useless thread and memories of how things were.</p><h2>Cotard Delusion</h2><figure data-media-id='gu-image-421324846'><img src='http://static.guim.co.uk/sys-images/Guardian/Archive/Search/2011/10/28/1319816633437/Zombies-007.jpg' alt='Zombies' width='460' height='276' class='gu-image'/><figcaption>The Cotard delusion is sort of the opposite of this, which is probably worse. Photograph: Manu Fernandez/AP</figcaption></figure><p><br />Many Halloween costumes portray individuals or creatures that have died in some way. Ghosts, vampires, zombies, all of these are individuals who have experienced death but overcome it or cheated it somehow. But why not flip this dynamic and bring awareness to an unsettling and strange mental condition by dressing as the <a href=\"http://health.howstuffworks.com/mental-health/mental-disorders/what-is-cotards-syndrome.htm\">Cotard Delusion</a>, a condition where sufferers become disengaged with reality and their own bodies to the extent that they believe they have died. </p><p>Dressing up as someone with a mental condition for Halloween is <a href=\"http://www.theguardian.com/science/brain-flapping/2013/sep/26/asda-halloween-mental-patient-costume\">a \"questionable\" approach</a>, but this doesn't even require a specific outfit. Just dress normally, but whenever someone asks how you are just say \"I'm dead\". This is guaranteed to unnerve people more than any amount of fake blood. </p><h2>Vampire squid</h2><figure data-media-id='gu-image-421324847'><img src='http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/04/28/squid4.jpg' alt='The colossal squid was landed by fishermen in the Ross Sea, Antarctica, last year. ' width='460' height='276' class='gu-image'/><figcaption>Imagine this, but also a vampire. Are you imagining it? Yes? Awful, isn't it. Photograph: AP</figcaption></figure><p><br />Vampires are a staple of Halloween, despite their being almost <a href=\"http://www.breakingdawn-themovie.com/\">done</a> <a href=\"http://en.wikipedia.org/wiki/Underworld_(film_series)\">to</a><a href=\"http://www.entertainmentwise.com/news/130927/REVIEW-The-Vampire-Diaries-Season-5-I-Know-What-You-Did-Last-Summer\"> death</a> (no pun intended) these days. So why not put a new scientific spin on this most hoary of Halloween clichés and go as a <a href=\"http://marinebio.org/species.asp?id=179\">vampire squid</a>, only known member of the order Vampyromorphida. The vampire squid from hell (that's <a href=\"http://en.wikipedia.org/wiki/Vampire_squid\">genuinely its scientific name</a>) is a sort of half-octopus, half-squid with blood-red skin and fang-like spines all along its tentacles. </p><p>By taking a typical vampire costume and adding spiky tentacles, a beak, fins and <a href=\"http://eol.org/pages/492277/details\">massive eyes</a>, you're sure to terrify unsuspecting friends and strangers alike. You'll be lucky to last two minutes out of your house before a mob armed with torches and pitchforks is chasing you just on principle. </p><h2>Peer review</h2><figure data-media-id='gu-image-421324848'><img src='http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/25/1337957084669/Man-with-paperwork-009.jpg' alt='Man with paperwork' width='460' height='276' class='gu-image'/><figcaption>\"You're doing it wrong!!\" Photograph: Trinette Reed/Getty Images</figcaption></figure><p><br />Imagine you spend weeks, months, even years working on a costume. It is your everything; your life revolves around it. But before you can wear it, it has to be approved by strangers who just happen to be working on similar costumes. Could you handle the stress, the fear, the anticipation, of knowing that your work could all be for naught if it doesn't meet the uncertain standards of an unknown individual? What if you have no choice?</p><p>Convey this in costume form by wearing any typical Halloween outfit but attaching countless notes to it showing where it needs to be improved, like \"I don't see how this outfit is sufficiently different to other zombie costumes\", \"This vampire suit doesn't incorporate the well-known design introduced in 1987\", or \"the maker needs to establish that this sewing technique can be replicated\". This is the true terror of <a href=\"http://www.senseaboutscience.org/pages/peer-review.html\">peer review</a>.</p><h2>Transhumanism</h2><figure data-media-id='gu-image-421324849'><img src='http://static.guim.co.uk/sys-images/Guardian/Pix/commercial/2011/7/11/1310386723979/Man-in-headphones-with-la-007.jpg' alt='Man in headphones with laptop' width='460' height='276' class='gu-image'/><figcaption>Transhumanism is like this. Only … better/worse. Photograph: David Buffington/Getty Images/Blend Images RM</figcaption></figure><p><br /><a href=\"http://villains.wikia.com/wiki/Frankenstein's_Monster\">Frankenstein's monster</a> is arguably the iconic Halloween character most closely associated with science, in that it was created by Dr Victor Frankenstein, the most famous \"mad scientist\" of them all. The monster is an attempt to rebuild a working human using science and technology. It didn't really work the first time, but science is often about repeating and refining something until it does. </p><p><a href=\"http://www.amazon.co.uk/The-Transhumanist-Reader-Contemporary-Technology/dp/1118334310\">Transhumanism</a> is a philosophy and movement that supports and encourages the improvement of the human form by technological means. Some say this is inevitable, some say this is the <a href=\"http://www.nickbostrom.com/papers/dangerous.html\">greatest threat to humanity</a>. Could it turn us all into super-beings, or into the <a href=\"http://en.memory-alpha.org/wiki/Borg\">Borg</a>? </p><p>Turn up at Halloween events wearing glasses, earrings, designer shoes, a Bluetooth headset with MP3 players, smartphone and tablet. If anyone asks you why you aren't wearing a costume, it's already too late.</p><h2>Funding cuts</h2><figure data-media-id='gu-image-421324850'><img src='http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/10/1/1285954898499/Students-in-a-chemistry-l-006.jpg' alt='Students in a chemistry laboratory at Imperial College London' width='460' height='276' class='gu-image'/><figcaption>Funding is very bad in many labs. This guy is meant to be working in the refectory.  Photograph: Linda Nylind/Guardian</figcaption></figure><p><br />Those who experience the horror of peer review (discussed above) can sometimes be considered the lucky ones. Often, especially these days, a scientist may not get to even finish their work before it all comes to a halt due to <a href=\"http://www.theguardian.com/science/science-funding-crisis\">funding cuts</a>. The knife-edge existence of trying to complete elaborate, long-term experiments in a time of unknown financial stability has taken years off the lives of more than a few scientists due to stress alone. </p><p>Convey this bleak existence in costume form by doing your best to create an elaborate and impressive outfit but on a very limited budget, then turning up at a party wearing a set of sparkly shoes, or a complex, suggestive shirt or top. And nothing else. </p><p><em>Dean Burnett is aware that some of these suggestions are niche references that scare scientists in particular, but feel free to point it out to him on Twitter, <a href=\"https://twitter.com/garwboy\">@garwboy</a></em></p><!-- Guardian Watermark: internal-code/content/421307724|2013-11-05T11:03:48Z|a2b975fe5cc7c83fd51786ee2ee9571cab934838 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-31T12:30:00Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2009/10/29/1256833853148/Halloween-costume-for-kid-004.jpg",
+        "standfirst":"Halloween costumes are often based on the occult or supernatural. But if you're a rational scientist type, there are still many scary things you can dress as that are even more terrifying because they're real",
+        "shortUrl":"http://gu.com/p/3kxn6",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2009/10/29/1256833853148/Halloween-costume-for-kid-004.jpg",
+        "wordcount":"1084",
+        "commentable":"true",
+        "internalContentCode":"421307724",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Dean Burnett",
+        "publication":"theguardian.com",
+        "internalPageCode":"1989339",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-07T12:30:00Z"
+      },
+      "tags":[{
+        "id":"science/brain-flapping",
+        "type":"blog",
+        "webTitle":"Brain flapping",
+        "webUrl":"http://www.theguardian.com/science/brain-flapping",
+        "apiUrl":"http://content.guardianapis.com/science/brain-flapping",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/science",
+        "type":"keyword",
+        "webTitle":"Science",
+        "webUrl":"http://www.theguardian.com/science/science",
+        "apiUrl":"http://content.guardianapis.com/science/science",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"lifeandstyle/halloween",
+        "type":"keyword",
+        "webTitle":"Halloween",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/halloween",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/halloween",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"science/science-scepticism",
+        "type":"keyword",
+        "webTitle":"Science and scepticism",
+        "webUrl":"http://www.theguardian.com/science/science-scepticism",
+        "apiUrl":"http://content.guardianapis.com/science/science-scepticism",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"books/horror",
+        "type":"keyword",
+        "webTitle":"Horror",
+        "webUrl":"http://www.theguardian.com/books/horror",
+        "apiUrl":"http://content.guardianapis.com/books/horror",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"profile/dean-burnett",
+        "type":"contributor",
+        "webTitle":"Dean Burnett",
+        "webUrl":"http://www.theguardian.com/profile/dean-burnett",
+        "apiUrl":"http://content.guardianapis.com/profile/dean-burnett",
+        "bio":"<p>Dean Burnett is a doctor of neuroscience, but moonlights as a comedy writer and stand-up comedian. He <a href=\"http://www.mscpsychiatry.co.uk/\">tutors and lectures at Cardiff University</a></p>",
+        "r2ContributorId":"48703",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421324842",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/7/13/1342196887187/Boris-Karloff-in-Frankens-008.jpg",
+          "typeData":{
+            "source":"  Bettmann/CORBIS",
+            "altText":"Boris Karloff in <Frankenstein>",
+            "height":"276",
+            "credit":"  Bettmann/CORBIS",
+            "caption":"What could be more scientific than repairing a damaged human by technological means? Photograph: Bettmann/Corbis",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421324843",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2009/10/29/1256833853148/Halloween-costume-for-kid-004.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Sarah Lee",
+            "altText":"Halloween costume for kids",
+            "height":"84",
+            "credit":"Sarah Lee/Guardian",
+            "caption":"Rebecca Child's DIY Halloween costumes for kids: the ghost, the witch and the vampire. Photograph: Sarah Lee",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-421324844",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/05/18/mrsa460.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Corbis",
+            "altText":"MRSA,bacteria magnified x9560 by a scanning electron micrograph",
+            "height":"276",
+            "credit":"Corbis/Corbis",
+            "caption":"It takes more than garlic to fend off this monster! Photograph: Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421324845",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/21/1345560053503/Early-universe-010.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Adolf Schaller",
+            "altText":"Early universe",
+            "height":"276",
+            "credit":"Adolf Schaller/AP",
+            "caption":"Run! Entropy is coming for you! Photograph: Adolf Schaller/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421324846",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Archive/Search/2011/10/28/1319816633437/Zombies-007.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Manu Fernandez",
+            "altText":"Zombies",
+            "height":"276",
+            "credit":"Manu Fernandez/AP",
+            "caption":"The Cotard delusion is sort of the opposite of this, which is probably worse. Photograph: Manu Fernandez/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421324847",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/04/28/squid4.jpg",
+          "typeData":{
+            "source":"AP",
+            "altText":"The colossal squid was landed by fishermen in the Ross Sea, Antarctica, last year. ",
+            "height":"276",
+            "credit":"AP",
+            "caption":"Imagine this, but also a vampire. Are you imagining it? Yes? Awful, isn't it. Photograph: AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421324848",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/25/1337957084669/Man-with-paperwork-009.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Trinette Reed",
+            "altText":"Man with paperwork",
+            "height":"276",
+            "credit":"Trinette Reed/Getty Images",
+            "caption":"\"You're doing it wrong!!\" Photograph: Trinette Reed/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421324849",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/commercial/2011/7/11/1310386723979/Man-in-headphones-with-la-007.jpg",
+          "typeData":{
+            "source":"Getty Images/Blend Images RM",
+            "photographer":"David Buffington",
+            "altText":"Man in headphones with laptop",
+            "height":"276",
+            "credit":"David Buffington/Getty Images/Blend Images RM",
+            "caption":"Transhumanism is like this. Only … better/worse. Photograph: David Buffington/Getty Images/Blend Images RM",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421324850",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/10/1/1285954898499/Students-in-a-chemistry-l-006.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Linda Nylind",
+            "altText":"Students in a chemistry laboratory at Imperial College London",
+            "height":"276",
+            "credit":"Linda Nylind/Guardian",
+            "caption":"Funding is very bad in many labs. This guy is meant to be working in the refectory.  Photograph: Linda Nylind/Guardian",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

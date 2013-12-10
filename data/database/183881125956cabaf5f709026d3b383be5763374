@@ -1,0 +1,2659 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":129832,
+    "startIndex":1,
+    "pageSize":10,
+    "currentPage":1,
+    "pages":12984,
+    "orderBy":"newest",
+    "edition":{
+      "id":"football",
+      "webTitle":"Football",
+      "webUrl":"http://www.theguardian.com/football",
+      "apiUrl":"http://content.guardianapis.com/football",
+      "code":"default"
+    },
+    "section":{
+      "id":"football",
+      "webTitle":"Football",
+      "webUrl":"http://www.theguardian.com/football",
+      "apiUrl":"http://content.guardianapis.com/football",
+      "editions":[{
+        "id":"football",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football",
+        "apiUrl":"http://content.guardianapis.com/football",
+        "code":"default"
+      }]
+    },
+    "results":[{
+      "id":"football/video/2013/nov/01/tottenham-kyle-walker-halloween-prank-video",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-11-01T16:41:18Z",
+      "webTitle":"Tottenham's Kyle Walker pulls Halloween prank on team-mates – video",
+      "webUrl":"http://www.theguardian.com/football/video/2013/nov/01/tottenham-kyle-walker-halloween-prank-video",
+      "apiUrl":"http://content.guardianapis.com/football/video/2013/nov/01/tottenham-kyle-walker-halloween-prank-video",
+      "fields":{
+        "trailText":"<p>Spurs defender Kyle Walker sets up a Halloween prank on fellow team-mates</p>",
+        "headline":"Tottenham's Kyle Walker pulls Halloween prank on team-mates – video",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3k3tq",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383323508086/Tottenham-Hotspur-s-Kyle--005.jpg",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T16:41:18Z"
+      },
+      "tags":[{
+        "id":"football/tottenham-hotspur",
+        "type":"keyword",
+        "webTitle":"Tottenham Hotspur",
+        "webUrl":"http://www.theguardian.com/football/tottenham-hotspur",
+        "apiUrl":"http://content.guardianapis.com/football/tottenham-hotspur",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/19"
+        }]
+      },{
+        "id":"lifeandstyle/halloween",
+        "type":"keyword",
+        "webTitle":"Halloween",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/halloween",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/halloween",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"football/premierleague",
+        "type":"keyword",
+        "webTitle":"Premier League",
+        "webUrl":"http://www.theguardian.com/football/premierleague",
+        "apiUrl":"http://content.guardianapis.com/football/premierleague",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-competition",
+          "id":"pa-football-competition/100"
+        }]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-421472204",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383323504180/Tottenham-Hotspur-s-Kyle--002.jpg",
+          "typeData":{
+            "source":"Spurs TV",
+            "photographer":"Spurs TV",
+            "altText":"Tottenham Hotspur’s Kyle Walker pulls Halloween prank on teammates - video",
+            "height":"54",
+            "credit":"Spurs TV/Spurs TV",
+            "caption":"Spurs defender Kyle Walker is in festive spirits as he sets up a Halloween prank on fellow teammates. \r\r Photograph: Spurs TV",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383323505426/Tottenham-Hotspur-s-Kyle--003.jpg",
+          "typeData":{
+            "source":"Spurs TV",
+            "photographer":"Spurs TV",
+            "altText":"Tottenham Hotspur’s Kyle Walker pulls Halloween prank on teammates - video",
+            "height":"340",
+            "credit":"Spurs TV/Spurs TV",
+            "caption":"Spurs defender Kyle Walker is in festive spirits as he sets up a Halloween prank on fellow teammates. \r\r Photograph: Spurs TV",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383323506879/Tottenham-Hotspur-s-Kyle--004.jpg",
+          "typeData":{
+            "source":"Spurs TV",
+            "photographer":"Spurs TV",
+            "altText":"Tottenham Hotspur’s Kyle Walker pulls Halloween prank on teammates - video",
+            "height":"130",
+            "credit":"Spurs TV/Spurs TV",
+            "caption":"Spurs defender Kyle Walker is in festive spirits as he sets up a Halloween prank on fellow teammates. \r\r Photograph: Spurs TV",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383323508086/Tottenham-Hotspur-s-Kyle--005.jpg",
+          "typeData":{
+            "source":"Spurs TV",
+            "photographer":"Spurs TV",
+            "altText":"Tottenham Hotspur’s Kyle Walker pulls Halloween prank on teammates - video",
+            "height":"84",
+            "credit":"Spurs TV/Spurs TV",
+            "caption":"Spurs defender Kyle Walker is in festive spirits as he sets up a Halloween prank on fellow teammates. \r\r Photograph: Spurs TV",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383323509476/Tottenham-Hotspur-s-Kyle--006.jpg",
+          "typeData":{
+            "source":"Spurs TV",
+            "photographer":"Spurs TV",
+            "altText":"Tottenham Hotspur’s Kyle Walker pulls Halloween prank on teammates - video",
+            "height":"132",
+            "credit":"Spurs TV/Spurs TV",
+            "caption":"Spurs defender Kyle Walker is in festive spirits as he sets up a Halloween prank on fellow teammates. \r\r Photograph: Spurs TV",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383323510722/Tottenham-Hotspur-s-Kyle--007.jpg",
+          "typeData":{
+            "source":"Spurs TV",
+            "photographer":"Spurs TV",
+            "altText":"Tottenham Hotspur’s Kyle Walker pulls Halloween prank on teammates - video",
+            "height":"168",
+            "credit":"Spurs TV/Spurs TV",
+            "caption":"Spurs defender Kyle Walker is in festive spirits as he sets up a Halloween prank on fellow teammates. \r\r Photograph: Spurs TV",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383323511953/Tottenham-Hotspur-s-Kyle--008.jpg",
+          "typeData":{
+            "source":"Spurs TV",
+            "photographer":"Spurs TV",
+            "altText":"Tottenham Hotspur’s Kyle Walker pulls Halloween prank on teammates - video",
+            "height":"180",
+            "credit":"Spurs TV/Spurs TV",
+            "caption":"Spurs defender Kyle Walker is in festive spirits as he sets up a Halloween prank on fellow teammates. \r\r Photograph: Spurs TV",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383323513203/Tottenham-Hotspur-s-Kyle--009.jpg",
+          "typeData":{
+            "source":"Spurs TV",
+            "photographer":"Spurs TV",
+            "altText":"Tottenham Hotspur’s Kyle Walker pulls Halloween prank on teammates - video",
+            "height":"228",
+            "credit":"Spurs TV/Spurs TV",
+            "caption":"Spurs defender Kyle Walker is in festive spirits as he sets up a Halloween prank on fellow teammates. \r\r Photograph: Spurs TV",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383323514476/Tottenham-Hotspur-s-Kyle--010.jpg",
+          "typeData":{
+            "source":"Spurs TV",
+            "photographer":"Spurs TV",
+            "altText":"Tottenham Hotspur’s Kyle Walker pulls Halloween prank on teammates - video",
+            "height":"276",
+            "credit":"Spurs TV/Spurs TV",
+            "caption":"Spurs defender Kyle Walker is in festive spirits as he sets up a Halloween prank on fellow teammates. \r\r Photograph: Spurs TV",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383323515983/Tottenham-Hotspur-s-Kyle--011.jpg",
+          "typeData":{
+            "source":"Spurs TV",
+            "photographer":"Spurs TV",
+            "altText":"Tottenham Hotspur’s Kyle Walker pulls Halloween prank on teammates - video",
+            "height":"372",
+            "credit":"Spurs TV/Spurs TV",
+            "caption":"Spurs defender Kyle Walker is in festive spirits as he sets up a Halloween prank on fellow teammates. \r\r Photograph: Spurs TV",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383323517243/Tottenham-Hotspur-s-Kyle--012.jpg",
+          "typeData":{
+            "source":"Spurs TV",
+            "photographer":"Spurs TV",
+            "altText":"Tottenham Hotspur’s Kyle Walker pulls Halloween prank on teammates - video",
+            "height":"90",
+            "credit":"Spurs TV/Spurs TV",
+            "caption":"Spurs defender Kyle Walker is in festive spirits as he sets up a Halloween prank on fellow teammates. \r\r Photograph: Spurs TV",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383323518683/Tottenham-Hotspur-s-Kyle--013.jpg",
+          "typeData":{
+            "source":"Spurs TV",
+            "photographer":"Spurs TV",
+            "altText":"Tottenham Hotspur’s Kyle Walker pulls Halloween prank on teammates - video",
+            "height":"225",
+            "credit":"Spurs TV/Spurs TV",
+            "caption":"Spurs defender Kyle Walker is in festive spirits as he sets up a Halloween prank on fellow teammates. \r\r Photograph: Spurs TV",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383323519905/Tottenham-Hotspur-s-Kyle--014.jpg",
+          "typeData":{
+            "source":"Spurs TV",
+            "photographer":"Spurs TV",
+            "altText":"Tottenham Hotspur’s Kyle Walker pulls Halloween prank on teammates - video",
+            "height":"360",
+            "credit":"Spurs TV/Spurs TV",
+            "caption":"Spurs defender Kyle Walker is in festive spirits as he sets up a Halloween prank on fellow teammates. \r\r Photograph: Spurs TV",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383323521292/Tottenham-Hotspur-s-Kyle--015.jpg",
+          "typeData":{
+            "source":"Spurs TV",
+            "photographer":"Spurs TV",
+            "altText":"Tottenham Hotspur’s Kyle Walker pulls Halloween prank on teammates - video",
+            "height":"360",
+            "credit":"Spurs TV/Spurs TV",
+            "caption":"Spurs defender Kyle Walker is in festive spirits as he sets up a Halloween prank on fellow teammates. \r\r Photograph: Spurs TV",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383323522590/Tottenham-Hotspur-s-Kyle--016.jpg",
+          "typeData":{
+            "source":"Spurs TV",
+            "photographer":"Spurs TV",
+            "altText":"Tottenham Hotspur’s Kyle Walker pulls Halloween prank on teammates - video",
+            "height":"230",
+            "credit":"Spurs TV/Spurs TV",
+            "caption":"Spurs defender Kyle Walker is in festive spirits as he sets up a Halloween prank on fellow teammates. \r\r Photograph: Spurs TV",
+            "width":"300"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/11/1/131101Spurs-16x9.mp4",
+          "typeData":{
+            "source":"Spurs TV",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/11/1/131101Spurs_8270889.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/11/1/131101Spurs_8270889.jpg",
+            "width":"480",
+            "durationSeconds":"18"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/11/1/131101Spurs_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"Spurs TV",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/11/1/131101Spurs_8270889.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/11/1/131101Spurs_8270889.jpg",
+            "width":"480",
+            "durationSeconds":"18"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/11/1/131101Spurs_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Spurs TV",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/11/1/131101Spurs_8270889.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/11/1/131101Spurs_8270889.jpg",
+            "width":"480",
+            "durationSeconds":"18"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/11/1/131101Spurs/131101Spurs.m3u8",
+          "typeData":{
+            "source":"Spurs TV",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/11/1/131101Spurs_8270889.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/11/1/131101Spurs_8270889.jpg",
+            "width":"480",
+            "durationSeconds":"18"
+          }
+        }]
+      },{
+        "id":"gu-image-421472711",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383323508086/Tottenham-Hotspur-s-Kyle--005.jpg",
+          "typeData":{
+            "source":"Spurs TV",
+            "photographer":"Spurs TV",
+            "altText":"Tottenham Hotspur’s Kyle Walker pulls Halloween prank on teammates - video",
+            "height":"84",
+            "credit":"Spurs TV/Spurs TV",
+            "caption":"Spurs defender Kyle Walker is in festive spirits as he sets up a Halloween prank on fellow teammates. \r\r Photograph: Spurs TV",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/19"
+      },{
+        "type":"pa-football-competition",
+        "id":"pa-football-competition/100"
+      }]
+    },{
+      "id":"football/video/2013/nov/01/arsenal-v-liverpool-luis-suarez-arsene-wenger-video",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-11-01T16:37:13Z",
+      "webTitle":"Arsenal v Liverpool: Luis Suárez questions deflected by Arsène Wenger – video",
+      "webUrl":"http://www.theguardian.com/football/video/2013/nov/01/arsenal-v-liverpool-luis-suarez-arsene-wenger-video",
+      "apiUrl":"http://content.guardianapis.com/football/video/2013/nov/01/arsenal-v-liverpool-luis-suarez-arsene-wenger-video",
+      "fields":{
+        "trailText":"<p>Arsenal manager Arsène Wenger says he is not concerned with Luis Suárez ahead of Saturday's Premier League match against Liverpool</p>",
+        "headline":"Arsenal v Liverpool: Luis Suárez questions deflected by Arsène Wenger – video",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3k3hd",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383321425867/Arsenal-s-Ars-ne-Wenger-d-005.jpg",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T16:37:13Z"
+      },
+      "tags":[{
+        "id":"football/premierleague",
+        "type":"keyword",
+        "webTitle":"Premier League",
+        "webUrl":"http://www.theguardian.com/football/premierleague",
+        "apiUrl":"http://content.guardianapis.com/football/premierleague",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-competition",
+          "id":"pa-football-competition/100"
+        }]
+      },{
+        "id":"football/arsene-wenger",
+        "type":"keyword",
+        "webTitle":"Arsène Wenger",
+        "webUrl":"http://www.theguardian.com/football/arsene-wenger",
+        "apiUrl":"http://content.guardianapis.com/football/arsene-wenger",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/arsenal",
+        "type":"keyword",
+        "webTitle":"Arsenal",
+        "webUrl":"http://www.theguardian.com/football/arsenal",
+        "apiUrl":"http://content.guardianapis.com/football/arsenal",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/1006"
+        }]
+      },{
+        "id":"football/liverpool",
+        "type":"keyword",
+        "webTitle":"Liverpool",
+        "webUrl":"http://www.theguardian.com/football/liverpool",
+        "apiUrl":"http://content.guardianapis.com/football/liverpool",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/9"
+        }]
+      },{
+        "id":"football/luis-suarez",
+        "type":"keyword",
+        "webTitle":"Luis Suárez",
+        "webUrl":"http://www.theguardian.com/football/luis-suarez",
+        "apiUrl":"http://content.guardianapis.com/football/luis-suarez",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-421469929",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383321421983/Arsenal-s-Ars-ne-Wenger-d-002.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Toby Melville",
+            "altText":"Arsenal’s Arsène Wenger deflects Luis Suarez question ahead of Liverpool clash - video ",
+            "height":"54",
+            "credit":"Toby Melville/REUTERS",
+            "caption":"Arsenal’s Arsène Wenger deflects Luis Suarez question ahead of Liverpool clash - video  Photograph: Toby Melville/REUTERS",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383321423265/Arsenal-s-Ars-ne-Wenger-d-003.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Toby Melville",
+            "altText":"Arsenal’s Arsène Wenger deflects Luis Suarez question ahead of Liverpool clash - video ",
+            "height":"340",
+            "credit":"Toby Melville/REUTERS",
+            "caption":"Arsenal’s Arsène Wenger deflects Luis Suarez question ahead of Liverpool clash - video  Photograph: Toby Melville/REUTERS",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383321424568/Arsenal-s-Ars-ne-Wenger-d-004.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Toby Melville",
+            "altText":"Arsenal’s Arsène Wenger deflects Luis Suarez question ahead of Liverpool clash - video ",
+            "height":"130",
+            "credit":"Toby Melville/REUTERS",
+            "caption":"Arsenal’s Arsène Wenger deflects Luis Suarez question ahead of Liverpool clash - video  Photograph: Toby Melville/REUTERS",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383321425867/Arsenal-s-Ars-ne-Wenger-d-005.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Toby Melville",
+            "altText":"Arsenal’s Arsène Wenger deflects Luis Suarez question ahead of Liverpool clash - video ",
+            "height":"84",
+            "credit":"Toby Melville/REUTERS",
+            "caption":"Arsenal’s Arsène Wenger deflects Luis Suarez question ahead of Liverpool clash - video  Photograph: Toby Melville/REUTERS",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383321427351/Arsenal-s-Ars-ne-Wenger-d-006.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Toby Melville",
+            "altText":"Arsenal’s Arsène Wenger deflects Luis Suarez question ahead of Liverpool clash - video ",
+            "height":"132",
+            "credit":"Toby Melville/REUTERS",
+            "caption":"Arsenal’s Arsène Wenger deflects Luis Suarez question ahead of Liverpool clash - video  Photograph: Toby Melville/REUTERS",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383321428606/Arsenal-s-Ars-ne-Wenger-d-007.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Toby Melville",
+            "altText":"Arsenal’s Arsène Wenger deflects Luis Suarez question ahead of Liverpool clash - video ",
+            "height":"168",
+            "credit":"Toby Melville/REUTERS",
+            "caption":"Arsenal’s Arsène Wenger deflects Luis Suarez question ahead of Liverpool clash - video  Photograph: Toby Melville/REUTERS",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383321430214/Arsenal-s-Ars-ne-Wenger-d-008.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Toby Melville",
+            "altText":"Arsenal’s Arsène Wenger deflects Luis Suarez question ahead of Liverpool clash - video ",
+            "height":"180",
+            "credit":"Toby Melville/REUTERS",
+            "caption":"Arsenal’s Arsène Wenger deflects Luis Suarez question ahead of Liverpool clash - video  Photograph: Toby Melville/REUTERS",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383321431468/Arsenal-s-Ars-ne-Wenger-d-009.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Toby Melville",
+            "altText":"Arsenal’s Arsène Wenger deflects Luis Suarez question ahead of Liverpool clash - video ",
+            "height":"228",
+            "credit":"Toby Melville/REUTERS",
+            "caption":"Arsenal’s Arsène Wenger deflects Luis Suarez question ahead of Liverpool clash - video  Photograph: Toby Melville/REUTERS",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383321432756/Arsenal-s-Ars-ne-Wenger-d-010.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Toby Melville",
+            "altText":"Arsenal’s Arsène Wenger deflects Luis Suarez question ahead of Liverpool clash - video ",
+            "height":"276",
+            "credit":"Toby Melville/REUTERS",
+            "caption":"Arsenal’s Arsène Wenger deflects Luis Suarez question ahead of Liverpool clash - video  Photograph: Toby Melville/REUTERS",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383321434018/Arsenal-s-Ars-ne-Wenger-d-011.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Toby Melville",
+            "altText":"Arsenal’s Arsène Wenger deflects Luis Suarez question ahead of Liverpool clash - video ",
+            "height":"372",
+            "credit":"Toby Melville/REUTERS",
+            "caption":"Arsenal’s Arsène Wenger deflects Luis Suarez question ahead of Liverpool clash - video  Photograph: Toby Melville/REUTERS",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383321435344/Arsenal-s-Ars-ne-Wenger-d-012.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Toby Melville",
+            "altText":"Arsenal’s Arsène Wenger deflects Luis Suarez question ahead of Liverpool clash - video ",
+            "height":"90",
+            "credit":"Toby Melville/REUTERS",
+            "caption":"Arsenal’s Arsène Wenger deflects Luis Suarez question ahead of Liverpool clash - video  Photograph: Toby Melville/REUTERS",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383321436659/Arsenal-s-Ars-ne-Wenger-d-013.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Toby Melville",
+            "altText":"Arsenal’s Arsène Wenger deflects Luis Suarez question ahead of Liverpool clash - video ",
+            "height":"225",
+            "credit":"Toby Melville/REUTERS",
+            "caption":"Arsenal’s Arsène Wenger deflects Luis Suarez question ahead of Liverpool clash - video  Photograph: Toby Melville/REUTERS",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383321438151/Arsenal-s-Ars-ne-Wenger-d-014.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Toby Melville",
+            "altText":"Arsenal’s Arsène Wenger deflects Luis Suarez question ahead of Liverpool clash - video ",
+            "height":"360",
+            "credit":"Toby Melville/REUTERS",
+            "caption":"Arsenal’s Arsène Wenger deflects Luis Suarez question ahead of Liverpool clash - video  Photograph: Toby Melville/REUTERS",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383321439743/Arsenal-s-Ars-ne-Wenger-d-015.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Toby Melville",
+            "altText":"Arsenal’s Arsène Wenger deflects Luis Suarez question ahead of Liverpool clash - video ",
+            "height":"360",
+            "credit":"Toby Melville/REUTERS",
+            "caption":"Arsenal’s Arsène Wenger deflects Luis Suarez question ahead of Liverpool clash - video  Photograph: Toby Melville/REUTERS",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383321441163/Arsenal-s-Ars-ne-Wenger-d-016.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Toby Melville",
+            "altText":"Arsenal’s Arsène Wenger deflects Luis Suarez question ahead of Liverpool clash - video ",
+            "height":"230",
+            "credit":"Toby Melville/REUTERS",
+            "caption":"Arsenal’s Arsène Wenger deflects Luis Suarez question ahead of Liverpool clash - video  Photograph: Toby Melville/REUTERS",
+            "width":"300"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/11/1/131101ArsenalNEW-16x9.mp4",
+          "typeData":{
+            "source":"SNTV",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/11/1/131101ArsenalNEW_8270566.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/11/1/131101ArsenalNEW_8270566.jpg",
+            "width":"480",
+            "durationSeconds":"4"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/11/1/131101ArsenalNEW_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"SNTV",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/11/1/131101ArsenalNEW_8270566.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/11/1/131101ArsenalNEW_8270566.jpg",
+            "width":"480",
+            "durationSeconds":"4"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/11/1/131101ArsenalNEW_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"SNTV",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/11/1/131101ArsenalNEW_8270566.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/11/1/131101ArsenalNEW_8270566.jpg",
+            "width":"480",
+            "durationSeconds":"4"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/11/1/131101ArsenalNEW/131101ArsenalNEW.m3u8",
+          "typeData":{
+            "source":"SNTV",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/11/1/131101ArsenalNEW_8270566.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/11/1/131101ArsenalNEW_8270566.jpg",
+            "width":"480",
+            "durationSeconds":"4"
+          }
+        }]
+      },{
+        "id":"gu-image-421472447",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383321425867/Arsenal-s-Ars-ne-Wenger-d-005.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Toby Melville",
+            "altText":"Arsenal’s Arsène Wenger deflects Luis Suarez question ahead of Liverpool clash - video ",
+            "height":"84",
+            "credit":"Toby Melville/REUTERS",
+            "caption":"Arsenal's Arsène Wenger deflects Luis Suarez question ahead of Liverpool clash - video  Photograph: Toby Melville/REUTERS",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/9"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/1006"
+      },{
+        "type":"pa-football-competition",
+        "id":"pa-football-competition/100"
+      }]
+    },{
+      "id":"football/2013/nov/01/hull-city-steve-bruce-sunderland",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-11-01T16:26:20Z",
+      "webTitle":"Steve Bruce regrets 'mistake' of taking Sunderland job",
+      "webUrl":"http://www.theguardian.com/football/2013/nov/01/hull-city-steve-bruce-sunderland",
+      "apiUrl":"http://content.guardianapis.com/football/2013/nov/01/hull-city-steve-bruce-sunderland",
+      "fields":{
+        "trailText":"Hull's manager, Steve Bruce, faces his former club Sunderland for the first time since he was sacked by them",
+        "headline":"Steve Bruce regrets 'mistake' of taking Sunderland job",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3k3tb",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2013/11/1/1383323145358/Steve-Bruce-004.jpg",
+        "wordcount":"588",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T16:26:20Z"
+      },
+      "tags":[{
+        "id":"football/steve-bruce",
+        "type":"keyword",
+        "webTitle":"Steve Bruce",
+        "webUrl":"http://www.theguardian.com/football/steve-bruce",
+        "apiUrl":"http://content.guardianapis.com/football/steve-bruce",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/hullcity",
+        "type":"keyword",
+        "webTitle":"Hull City",
+        "webUrl":"http://www.theguardian.com/football/hullcity",
+        "apiUrl":"http://content.guardianapis.com/football/hullcity",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/26"
+        }]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/sunderland",
+        "type":"keyword",
+        "webTitle":"Sunderland",
+        "webUrl":"http://www.theguardian.com/football/sunderland",
+        "apiUrl":"http://content.guardianapis.com/football/sunderland",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/39"
+        }]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/sport/news",
+        "type":"newspaper-book-section",
+        "webTitle":"News & features",
+        "webUrl":"http://www.theguardian.com/theguardian/sport/news",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport/news",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/sport",
+        "type":"newspaper-book",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/theguardian/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421471656",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2013/11/1/1383323140991/Steve-Bruce-001.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Alex Morton",
+            "altText":"Steve Bruce",
+            "height":"54",
+            "credit":"Alex Morton/Action Images",
+            "caption":"Steve Bruce says he is grateful that Hull gave him the opportunity to work again after being sacked by Sunderland two years ago.  Photograph: Alex Morton/Action Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2013/11/1/1383323142812/Steve-Bruce-002.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Alex Morton",
+            "altText":"Steve Bruce",
+            "height":"340",
+            "credit":"Alex Morton/Action Images",
+            "caption":"Steve Bruce says he is grateful that Hull gave him the opportunity to work again after being sacked by Sunderland two years ago.  Photograph: Alex Morton/Action Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2013/11/1/1383323144092/Steve-Bruce-003.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Alex Morton",
+            "altText":"Steve Bruce",
+            "height":"130",
+            "credit":"Alex Morton/Action Images",
+            "caption":"Steve Bruce says he is grateful that Hull gave him the opportunity to work again after being sacked by Sunderland two years ago.  Photograph: Alex Morton/Action Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2013/11/1/1383323145358/Steve-Bruce-004.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Alex Morton",
+            "altText":"Steve Bruce",
+            "height":"84",
+            "credit":"Alex Morton/Action Images",
+            "caption":"Steve Bruce says he is grateful that Hull gave him the opportunity to work again after being sacked by Sunderland two years ago.  Photograph: Alex Morton/Action Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2013/11/1/1383323146625/Steve-Bruce-005.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Alex Morton",
+            "altText":"Steve Bruce",
+            "height":"132",
+            "credit":"Alex Morton/Action Images",
+            "caption":"Steve Bruce says he is grateful that Hull gave him the opportunity to work again after being sacked by Sunderland two years ago.  Photograph: Alex Morton/Action Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2013/11/1/1383323147867/Steve-Bruce-006.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Alex Morton",
+            "altText":"Steve Bruce",
+            "height":"168",
+            "credit":"Alex Morton/Action Images",
+            "caption":"Steve Bruce says he is grateful that Hull gave him the opportunity to work again after being sacked by Sunderland two years ago.  Photograph: Alex Morton/Action Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2013/11/1/1383323149170/Steve-Bruce-007.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Alex Morton",
+            "altText":"Steve Bruce",
+            "height":"180",
+            "credit":"Alex Morton/Action Images",
+            "caption":"Steve Bruce says he is grateful that Hull gave him the opportunity to work again after being sacked by Sunderland two years ago.  Photograph: Alex Morton/Action Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2013/11/1/1383323150708/Steve-Bruce-008.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Alex Morton",
+            "altText":"Steve Bruce",
+            "height":"228",
+            "credit":"Alex Morton/Action Images",
+            "caption":"Steve Bruce says he is grateful that Hull gave him the opportunity to work again after being sacked by Sunderland two years ago.  Photograph: Alex Morton/Action Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2013/11/1/1383323152004/Steve-Bruce-009.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Alex Morton",
+            "altText":"Steve Bruce",
+            "height":"276",
+            "credit":"Alex Morton/Action Images",
+            "caption":"Steve Bruce says he is grateful that Hull gave him the opportunity to work again after being sacked by Sunderland two years ago.  Photograph: Alex Morton/Action Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2013/11/1/1383323153275/Steve-Bruce-010.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Alex Morton",
+            "altText":"Steve Bruce",
+            "height":"372",
+            "credit":"Alex Morton/Action Images",
+            "caption":"Steve Bruce says he is grateful that Hull gave him the opportunity to work again after being sacked by Sunderland two years ago.  Photograph: Alex Morton/Action Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2013/11/1/1383323152004/Steve-Bruce-009.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Alex Morton",
+            "altText":"Steve Bruce",
+            "height":"276",
+            "credit":"Alex Morton/Action Images",
+            "caption":"Steve Bruce says he is grateful that Hull gave him the opportunity to work again after being sacked by Sunderland two years ago.  Photograph: Alex Morton/Action Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421471657",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Clubs/Club_Home/2013/11/1/1383323145358/Steve-Bruce-004.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Alex Morton",
+            "altText":"Steve Bruce",
+            "height":"84",
+            "credit":"Alex Morton/Action Images",
+            "caption":"Steve Bruce says he is grateful that Hull gave him the opportunity to work again after being sacked by Sunderland two years ago.  Photograph: Alex Morton/Action Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/39"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/26"
+      }]
+    },{
+      "id":"football/2013/nov/01/arsenal-liverpool-squad-sheets-premier-league",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-11-01T16:17:55Z",
+      "webTitle":"Arsenal v Liverpool: Squad sheets",
+      "webUrl":"http://www.theguardian.com/football/2013/nov/01/arsenal-liverpool-squad-sheets-premier-league",
+      "apiUrl":"http://content.guardianapis.com/football/2013/nov/01/arsenal-liverpool-squad-sheets-premier-league",
+      "fields":{
+        "trailText":"Two sides riding high in the league and full of attacking talent meet at the Emirates",
+        "headline":"Arsenal v Liverpool: Squad sheets",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3k3tx",
+        "wordcount":"200",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T16:17:55Z"
+      },
+      "tags":[{
+        "id":"football/series/squad-sheets",
+        "type":"series",
+        "webTitle":"Squad sheets",
+        "webUrl":"http://www.theguardian.com/football/series/squad-sheets",
+        "apiUrl":"http://content.guardianapis.com/football/series/squad-sheets",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/arsenal",
+        "type":"keyword",
+        "webTitle":"Arsenal",
+        "webUrl":"http://www.theguardian.com/football/arsenal",
+        "apiUrl":"http://content.guardianapis.com/football/arsenal",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/1006"
+        }]
+      },{
+        "id":"football/liverpool",
+        "type":"keyword",
+        "webTitle":"Liverpool",
+        "webUrl":"http://www.theguardian.com/football/liverpool",
+        "apiUrl":"http://content.guardianapis.com/football/liverpool",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/9"
+        }]
+      },{
+        "id":"football/premierleague",
+        "type":"keyword",
+        "webTitle":"Premier League",
+        "webUrl":"http://www.theguardian.com/football/premierleague",
+        "apiUrl":"http://content.guardianapis.com/football/premierleague",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-competition",
+          "id":"pa-football-competition/100"
+        }]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/sport/news",
+        "type":"newspaper-book-section",
+        "webTitle":"News & features",
+        "webUrl":"http://www.theguardian.com/theguardian/sport/news",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport/news",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/sport",
+        "type":"newspaper-book",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/theguardian/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421470924",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/11/1/1383322546411/Arsenal-v-Liverpool-Proba-001.jpg",
+          "typeData":{
+            "source":"Graphic",
+            "altText":"Arsenal v Liverpool: Probable starters in bold, contenders in light",
+            "height":"525",
+            "credit":"Graphic",
+            "caption":"Arsenal v Liverpool: Probable starters in bold, contenders in light.  Photograph: Graphic",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/9"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/1006"
+      },{
+        "type":"pa-football-competition",
+        "id":"pa-football-competition/100"
+      }]
+    },{
+      "id":"football/2013/nov/01/the-fiver-cardiff-city",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-11-01T16:12:10Z",
+      "webTitle":"The Fiver | A totally unacceptable moustache",
+      "webUrl":"http://www.theguardian.com/football/2013/nov/01/the-fiver-cardiff-city",
+      "apiUrl":"http://content.guardianapis.com/football/2013/nov/01/the-fiver-cardiff-city",
+      "fields":{
+        "trailText":"<strong>In today's Fiver:</strong> the state of Cardiff City, moral levels at Arsenal and Joe Hart axed",
+        "headline":"A totally unacceptable moustache",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3k35h",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/9/1381304963144/Vincent-Tan-006.jpg",
+        "wordcount":"1107",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T16:12:10Z"
+      },
+      "tags":[{
+        "id":"football/series/thefiver",
+        "type":"series",
+        "webTitle":"The Fiver",
+        "webUrl":"http://www.theguardian.com/football/series/thefiver",
+        "apiUrl":"http://content.guardianapis.com/football/series/thefiver",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/scottmurray",
+        "type":"contributor",
+        "webTitle":"Scott Murray",
+        "webUrl":"http://www.theguardian.com/profile/scottmurray",
+        "apiUrl":"http://content.guardianapis.com/profile/scottmurray",
+        "bio":"<p>Scott Murray is the erstwhile sports editor of guardian.co.uk, and co-author of <a href=\" http://www.amazon.co.uk/Phantom-Open-Maurice-Flitcroft-Worlds/dp/0224083163/ref=\"sr_1_1?ie=UTF8&amp;s=books&amp;qid=1276785022&amp;sr=1-1\"\">Phantom of the Open</a>, the preposterous but true story of bad golfer Maurice Flitcroft, the belligerent troublemaker who shot the worst round in 150 years of Open history</p>",
+        "rcsId":"GNL391110",
+        "r2ContributorId":"16426",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421468257",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/10/1381425002061/Vincent-Tan-before-Cardif-011.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Stu Forster",
+            "altText":"Vincent Tan before Cardiff City's home match against Newcastle United on 5 October 2013",
+            "height":"276",
+            "credit":"Stu Forster/Getty Images",
+            "caption":"Po' Cardiff. Photograph: Stu Forster/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421468258",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/9/1381304963144/Vincent-Tan-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Stu Forster",
+            "altText":"Vincent Tan",
+            "height":"84",
+            "credit":"Stu Forster/Getty Images",
+            "caption":"Vincent Tan Photograph: Stu Forster/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"football/video/2013/nov/01/chelsea-jose-mourinho-fernando-torres-bertrand-traore-video",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-11-01T15:54:00Z",
+      "webTitle":"Chelsea's José Mourinho on Fernando Torres and Bertrand Traoré – video",
+      "webUrl":"http://www.theguardian.com/football/video/2013/nov/01/chelsea-jose-mourinho-fernando-torres-bertrand-traore-video",
+      "apiUrl":"http://content.guardianapis.com/football/video/2013/nov/01/chelsea-jose-mourinho-fernando-torres-bertrand-traore-video",
+      "fields":{
+        "trailText":"<p>Chelsea manager José Mourinho says his squad possesses a collective soul</p>",
+        "headline":"Chelsea's José Mourinho on Fernando Torres and Bertrand Traoré – video",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3k3g5",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383320184207/Jos--Mourinho-talks-Ferna-005.jpg",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T15:54:19Z"
+      },
+      "tags":[{
+        "id":"football/chelsea",
+        "type":"keyword",
+        "webTitle":"Chelsea",
+        "webUrl":"http://www.theguardian.com/football/chelsea",
+        "apiUrl":"http://content.guardianapis.com/football/chelsea",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/4"
+        }]
+      },{
+        "id":"football/jose-mourinho",
+        "type":"keyword",
+        "webTitle":"José Mourinho",
+        "webUrl":"http://www.theguardian.com/football/jose-mourinho",
+        "apiUrl":"http://content.guardianapis.com/football/jose-mourinho",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/premierleague",
+        "type":"keyword",
+        "webTitle":"Premier League",
+        "webUrl":"http://www.theguardian.com/football/premierleague",
+        "apiUrl":"http://content.guardianapis.com/football/premierleague",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-competition",
+          "id":"pa-football-competition/100"
+        }]
+      },{
+        "id":"football/fernando-torres",
+        "type":"keyword",
+        "webTitle":"Fernando Torres",
+        "webUrl":"http://www.theguardian.com/football/fernando-torres",
+        "apiUrl":"http://content.guardianapis.com/football/fernando-torres",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-421468385",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383320180015/Jos--Mourinho-talks-Ferna-002.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Matthew Childs",
+            "altText":"José Mourinho talks Fernando Torres, Bertrand Traoré, and the team’s ‘collective soul’ - video ",
+            "height":"54",
+            "credit":"Matthew Childs/Action Images",
+            "caption":"José Mourinho talks Fernando Torres, Bertrand Traoré, and the team’s ‘collective soul’ - video  Photograph: Matthew Childs/Action Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383320181427/Jos--Mourinho-talks-Ferna-003.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Matthew Childs",
+            "altText":"José Mourinho talks Fernando Torres, Bertrand Traoré, and the team’s ‘collective soul’ - video ",
+            "height":"340",
+            "credit":"Matthew Childs/Action Images",
+            "caption":"José Mourinho talks Fernando Torres, Bertrand Traoré, and the team’s ‘collective soul’ - video  Photograph: Matthew Childs/Action Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383320182790/Jos--Mourinho-talks-Ferna-004.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Matthew Childs",
+            "altText":"José Mourinho talks Fernando Torres, Bertrand Traoré, and the team’s ‘collective soul’ - video ",
+            "height":"130",
+            "credit":"Matthew Childs/Action Images",
+            "caption":"José Mourinho talks Fernando Torres, Bertrand Traoré, and the team’s ‘collective soul’ - video  Photograph: Matthew Childs/Action Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383320184207/Jos--Mourinho-talks-Ferna-005.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Matthew Childs",
+            "altText":"José Mourinho talks Fernando Torres, Bertrand Traoré, and the team’s ‘collective soul’ - video ",
+            "height":"84",
+            "credit":"Matthew Childs/Action Images",
+            "caption":"José Mourinho talks Fernando Torres, Bertrand Traoré, and the team’s ‘collective soul’ - video  Photograph: Matthew Childs/Action Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383320186408/Jos--Mourinho-talks-Ferna-006.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Matthew Childs",
+            "altText":"José Mourinho talks Fernando Torres, Bertrand Traoré, and the team’s ‘collective soul’ - video ",
+            "height":"132",
+            "credit":"Matthew Childs/Action Images",
+            "caption":"José Mourinho talks Fernando Torres, Bertrand Traoré, and the team’s ‘collective soul’ - video  Photograph: Matthew Childs/Action Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383320189093/Jos--Mourinho-talks-Ferna-007.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Matthew Childs",
+            "altText":"José Mourinho talks Fernando Torres, Bertrand Traoré, and the team’s ‘collective soul’ - video ",
+            "height":"168",
+            "credit":"Matthew Childs/Action Images",
+            "caption":"José Mourinho talks Fernando Torres, Bertrand Traoré, and the team’s ‘collective soul’ - video  Photograph: Matthew Childs/Action Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383320190430/Jos--Mourinho-talks-Ferna-008.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Matthew Childs",
+            "altText":"José Mourinho talks Fernando Torres, Bertrand Traoré, and the team’s ‘collective soul’ - video ",
+            "height":"180",
+            "credit":"Matthew Childs/Action Images",
+            "caption":"José Mourinho talks Fernando Torres, Bertrand Traoré, and the team’s ‘collective soul’ - video  Photograph: Matthew Childs/Action Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383320191783/Jos--Mourinho-talks-Ferna-009.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Matthew Childs",
+            "altText":"José Mourinho talks Fernando Torres, Bertrand Traoré, and the team’s ‘collective soul’ - video ",
+            "height":"228",
+            "credit":"Matthew Childs/Action Images",
+            "caption":"José Mourinho talks Fernando Torres, Bertrand Traoré, and the team’s ‘collective soul’ - video  Photograph: Matthew Childs/Action Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383320193150/Jos--Mourinho-talks-Ferna-010.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Matthew Childs",
+            "altText":"José Mourinho talks Fernando Torres, Bertrand Traoré, and the team’s ‘collective soul’ - video ",
+            "height":"276",
+            "credit":"Matthew Childs/Action Images",
+            "caption":"José Mourinho talks Fernando Torres, Bertrand Traoré, and the team’s ‘collective soul’ - video  Photograph: Matthew Childs/Action Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383320194570/Jos--Mourinho-talks-Ferna-011.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Matthew Childs",
+            "altText":"José Mourinho talks Fernando Torres, Bertrand Traoré, and the team’s ‘collective soul’ - video ",
+            "height":"372",
+            "credit":"Matthew Childs/Action Images",
+            "caption":"José Mourinho talks Fernando Torres, Bertrand Traoré, and the team’s ‘collective soul’ - video  Photograph: Matthew Childs/Action Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383320195904/Jos--Mourinho-talks-Ferna-012.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Matthew Childs",
+            "altText":"José Mourinho talks Fernando Torres, Bertrand Traoré, and the team’s ‘collective soul’ - video ",
+            "height":"90",
+            "credit":"Matthew Childs/Action Images",
+            "caption":"José Mourinho talks Fernando Torres, Bertrand Traoré, and the team’s ‘collective soul’ - video  Photograph: Matthew Childs/Action Images",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383320197297/Jos--Mourinho-talks-Ferna-013.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Matthew Childs",
+            "altText":"José Mourinho talks Fernando Torres, Bertrand Traoré, and the team’s ‘collective soul’ - video ",
+            "height":"225",
+            "credit":"Matthew Childs/Action Images",
+            "caption":"José Mourinho talks Fernando Torres, Bertrand Traoré, and the team’s ‘collective soul’ - video  Photograph: Matthew Childs/Action Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383320198705/Jos--Mourinho-talks-Ferna-014.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Matthew Childs",
+            "altText":"José Mourinho talks Fernando Torres, Bertrand Traoré, and the team’s ‘collective soul’ - video ",
+            "height":"360",
+            "credit":"Matthew Childs/Action Images",
+            "caption":"José Mourinho talks Fernando Torres, Bertrand Traoré, and the team’s ‘collective soul’ - video  Photograph: Matthew Childs/Action Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383320200191/Jos--Mourinho-talks-Ferna-015.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Matthew Childs",
+            "altText":"José Mourinho talks Fernando Torres, Bertrand Traoré, and the team’s ‘collective soul’ - video ",
+            "height":"360",
+            "credit":"Matthew Childs/Action Images",
+            "caption":"José Mourinho talks Fernando Torres, Bertrand Traoré, and the team’s ‘collective soul’ - video  Photograph: Matthew Childs/Action Images",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383320201595/Jos--Mourinho-talks-Ferna-016.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Matthew Childs",
+            "altText":"José Mourinho talks Fernando Torres, Bertrand Traoré, and the team’s ‘collective soul’ - video ",
+            "height":"230",
+            "credit":"Matthew Childs/Action Images",
+            "caption":"José Mourinho talks Fernando Torres, Bertrand Traoré, and the team’s ‘collective soul’ - video  Photograph: Matthew Childs/Action Images",
+            "width":"300"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/11/1/131101Chelsea-16x9.mp4",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/11/1/131101Chelsea_8270308.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/11/1/131101Chelsea_8270308.jpg",
+            "width":"480",
+            "durationSeconds":"6"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/11/1/131101Chelsea_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/11/1/131101Chelsea_8270308.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/11/1/131101Chelsea_8270308.jpg",
+            "width":"480",
+            "durationSeconds":"6"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/11/1/131101Chelsea_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/11/1/131101Chelsea_8270308.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/11/1/131101Chelsea_8270308.jpg",
+            "width":"480",
+            "durationSeconds":"6"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/11/1/131101Chelsea/131101Chelsea.m3u8",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/11/1/131101Chelsea_8270308.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/11/1/131101Chelsea_8270308.jpg",
+            "width":"480",
+            "durationSeconds":"6"
+          }
+        }]
+      },{
+        "id":"gu-image-421469628",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383320184207/Jos--Mourinho-talks-Ferna-005.jpg",
+          "typeData":{
+            "source":"Action Images",
+            "photographer":"Matthew Childs",
+            "altText":"José Mourinho talks Fernando Torres, Bertrand Traoré, and the team’s ‘collective soul’ - video ",
+            "height":"84",
+            "credit":"Matthew Childs/Action Images",
+            "caption":"José Mourinho talks Fernando Torres, Bertrand Traoré, and the team's 'collective soul' - video  Photograph: Matthew Childs/Action Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/4"
+      },{
+        "type":"pa-football-competition",
+        "id":"pa-football-competition/100"
+      }]
+    },{
+      "id":"football/2013/nov/01/everton-tottenham-squad-sheets-premier-league",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-11-01T15:51:37Z",
+      "webTitle":"Everton v Tottenham Hotspur: Squad sheets",
+      "webUrl":"http://www.theguardian.com/football/2013/nov/01/everton-tottenham-squad-sheets-premier-league",
+      "apiUrl":"http://content.guardianapis.com/football/2013/nov/01/everton-tottenham-squad-sheets-premier-league",
+      "fields":{
+        "trailText":"Everton have not lost a league game at Goodison Park in 2013 but they face a stern challenge in the shape of Tottenham",
+        "headline":"Everton v Tottenham Hotspur: Squad sheets",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3k3gj",
+        "wordcount":"187",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T15:51:37Z"
+      },
+      "tags":[{
+        "id":"football/series/squad-sheets",
+        "type":"series",
+        "webTitle":"Squad sheets",
+        "webUrl":"http://www.theguardian.com/football/series/squad-sheets",
+        "apiUrl":"http://content.guardianapis.com/football/series/squad-sheets",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/premierleague",
+        "type":"keyword",
+        "webTitle":"Premier League",
+        "webUrl":"http://www.theguardian.com/football/premierleague",
+        "apiUrl":"http://content.guardianapis.com/football/premierleague",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-competition",
+          "id":"pa-football-competition/100"
+        }]
+      },{
+        "id":"football/everton",
+        "type":"keyword",
+        "webTitle":"Everton",
+        "webUrl":"http://www.theguardian.com/football/everton",
+        "apiUrl":"http://content.guardianapis.com/football/everton",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/8"
+        }]
+      },{
+        "id":"football/tottenham-hotspur",
+        "type":"keyword",
+        "webTitle":"Tottenham Hotspur",
+        "webUrl":"http://www.theguardian.com/football/tottenham-hotspur",
+        "apiUrl":"http://content.guardianapis.com/football/tottenham-hotspur",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/19"
+        }]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/sport/news",
+        "type":"newspaper-book-section",
+        "webTitle":"News & features",
+        "webUrl":"http://www.theguardian.com/theguardian/sport/news",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport/news",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/sport",
+        "type":"newspaper-book",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/theguardian/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421469244",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/11/1/1383321009408/Everton-v-Tottenham-Hotsp-001.jpg",
+          "typeData":{
+            "source":"Graphic",
+            "altText":"Everton v Tottenham Hotspur: Probable starters in blue, contenders in light",
+            "height":"525",
+            "credit":"Graphic",
+            "caption":"Everton v Tottenham Hotspur: Probable starters in blue, contenders in light. Photograph: Graphic",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/8"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/19"
+      },{
+        "type":"pa-football-competition",
+        "id":"pa-football-competition/100"
+      }]
+    },{
+      "id":"football/2013/nov/01/joe-hart-sweating-manchester-city-place-dropped-norwich-city",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-11-01T14:46:00Z",
+      "webTitle":"Joe Hart dropped by Manchester City for clash with Norwich",
+      "webUrl":"http://www.theguardian.com/football/2013/nov/01/joe-hart-sweating-manchester-city-place-dropped-norwich-city",
+      "apiUrl":"http://content.guardianapis.com/football/2013/nov/01/joe-hart-sweating-manchester-city-place-dropped-norwich-city",
+      "fields":{
+        "trailText":"Joe Hart  has been dropped by Manchester City  for Saturday's Premier League clash against Norwich City",
+        "headline":"Joe Hart dropped by Manchester City for clash with Norwich",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3k34q",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/11/1/1383301081031/Joe-Hart-006.jpg",
+        "wordcount":"212",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T12:57:20Z"
+      },
+      "tags":[{
+        "id":"football/joe-hart",
+        "type":"keyword",
+        "webTitle":"Joe Hart",
+        "webUrl":"http://www.theguardian.com/football/joe-hart",
+        "apiUrl":"http://content.guardianapis.com/football/joe-hart",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/manchestercity",
+        "type":"keyword",
+        "webTitle":"Manchester City",
+        "webUrl":"http://www.theguardian.com/football/manchestercity",
+        "apiUrl":"http://content.guardianapis.com/football/manchestercity",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/11"
+        }]
+      },{
+        "id":"football/manuel-pellegrini",
+        "type":"keyword",
+        "webTitle":"Manuel Pellegrini",
+        "webUrl":"http://www.theguardian.com/football/manuel-pellegrini",
+        "apiUrl":"http://content.guardianapis.com/football/manuel-pellegrini",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/jamiejackson",
+        "type":"contributor",
+        "webTitle":"Jamie Jackson",
+        "webUrl":"http://www.theguardian.com/profile/jamiejackson",
+        "apiUrl":"http://content.guardianapis.com/profile/jamiejackson",
+        "bio":"<p>Jamie Jackson is the Manchester football correspondent for the Guardian and Observer</p>",
+        "r2ContributorId":"19396",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2008/11/11/jamiejacks.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421443651",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/11/1/1383301072527/Joe-Hart-001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Martin Rickett",
+            "altText":"Joe Hart",
+            "height":"54",
+            "credit":"Martin Rickett/PA",
+            "caption":"The Manchester City goalkeeper Joe Hart has come under pressure following a number of errors this season. Photograph: Martin Rickett/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/11/1/1383301074561/Joe-Hart-002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Martin Rickett",
+            "altText":"Joe Hart",
+            "height":"340",
+            "credit":"Martin Rickett/PA",
+            "caption":"The Manchester City goalkeeper Joe Hart has come under pressure following a number of errors this season. Photograph: Martin Rickett/PA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/11/1/1383301075895/Joe-Hart-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Martin Rickett",
+            "altText":"Joe Hart",
+            "height":"130",
+            "credit":"Martin Rickett/PA",
+            "caption":"The Manchester City goalkeeper Joe Hart has come under pressure following a number of errors this season. Photograph: Martin Rickett/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/11/1/1383301077212/Joe-Hart-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Martin Rickett",
+            "altText":"Joe Hart",
+            "height":"720",
+            "credit":"Martin Rickett/PA",
+            "caption":"The Manchester City goalkeeper Joe Hart has come under pressure following a number of errors this season. Photograph: Martin Rickett/PA",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/11/1/1383301079065/Joe-Hart-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Martin Rickett",
+            "altText":"Joe Hart",
+            "height":"1536",
+            "credit":"Martin Rickett/PA",
+            "caption":"The Manchester City goalkeeper Joe Hart has come under pressure following a number of errors this season. Photograph: Martin Rickett/PA",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/11/1/1383301081031/Joe-Hart-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Martin Rickett",
+            "altText":"Joe Hart",
+            "height":"84",
+            "credit":"Martin Rickett/PA",
+            "caption":"The Manchester City goalkeeper Joe Hart has come under pressure following a number of errors this season. Photograph: Martin Rickett/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/11/1/1383301082254/Joe-Hart-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Martin Rickett",
+            "altText":"Joe Hart",
+            "height":"132",
+            "credit":"Martin Rickett/PA",
+            "caption":"The Manchester City goalkeeper Joe Hart has come under pressure following a number of errors this season. Photograph: Martin Rickett/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/11/1/1383301083760/Joe-Hart-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Martin Rickett",
+            "altText":"Joe Hart",
+            "height":"168",
+            "credit":"Martin Rickett/PA",
+            "caption":"The Manchester City goalkeeper Joe Hart has come under pressure following a number of errors this season. Photograph: Martin Rickett/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/11/1/1383301085162/Joe-Hart-009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Martin Rickett",
+            "altText":"Joe Hart",
+            "height":"180",
+            "credit":"Martin Rickett/PA",
+            "caption":"The Manchester City goalkeeper Joe Hart has come under pressure following a number of errors this season. Photograph: Martin Rickett/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/11/1/1383301086388/Joe-Hart-010.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Martin Rickett",
+            "altText":"Joe Hart",
+            "height":"228",
+            "credit":"Martin Rickett/PA",
+            "caption":"The Manchester City goalkeeper Joe Hart has come under pressure following a number of errors this season. Photograph: Martin Rickett/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/11/1/1383301087630/Joe-Hart-011.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Martin Rickett",
+            "altText":"Joe Hart",
+            "height":"276",
+            "credit":"Martin Rickett/PA",
+            "caption":"The Manchester City goalkeeper Joe Hart has come under pressure following a number of errors this season. Photograph: Martin Rickett/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/11/1/1383301088927/Joe-Hart-012.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Martin Rickett",
+            "altText":"Joe Hart",
+            "height":"372",
+            "credit":"Martin Rickett/PA",
+            "caption":"The Manchester City goalkeeper Joe Hart has come under pressure following a number of errors this season. Photograph: Martin Rickett/PA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/11/1/1383301090436/Joe-Hart-013.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Martin Rickett",
+            "altText":"Joe Hart",
+            "height":"1116",
+            "credit":"Martin Rickett/PA",
+            "caption":"The Manchester City goalkeeper Joe Hart has come under pressure following a number of errors this season. Photograph: Martin Rickett/PA",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/11/1/1383301092511/Joe-Hart-014.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Martin Rickett",
+            "altText":"Joe Hart",
+            "height":"1536",
+            "credit":"Martin Rickett/PA",
+            "caption":"The Manchester City goalkeeper Joe Hart has come under pressure following a number of errors this season. Photograph: Martin Rickett/PA",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/11/1/1383301087630/Joe-Hart-011.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Martin Rickett",
+            "altText":"Joe Hart",
+            "height":"276",
+            "credit":"Martin Rickett/PA",
+            "caption":"The Manchester City goalkeeper Joe Hart has come under pressure following a number of errors this season. Photograph: Martin Rickett/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421443652",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/11/1/1383301081031/Joe-Hart-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Martin Rickett",
+            "altText":"Joe Hart",
+            "height":"84",
+            "credit":"Martin Rickett/PA",
+            "caption":"The Manchester City goalkeeper Joe Hart has come under pressure following a number of errors this season. Photograph: Martin Rickett/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/11"
+      }]
+    },{
+      "id":"football/2013/nov/01/stoke-southampton-squad-sheets-premier-league",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-11-01T14:32:27Z",
+      "webTitle":"Stoke City v Southampton: Squad sheets",
+      "webUrl":"http://www.theguardian.com/football/2013/nov/01/stoke-southampton-squad-sheets-premier-league",
+      "apiUrl":"http://content.guardianapis.com/football/2013/nov/01/stoke-southampton-squad-sheets-premier-league",
+      "fields":{
+        "trailText":"Robert Huth is a doubt for Stoke, who face high-flying Southampton having lost four of their last five games",
+        "headline":"Stoke City v Southampton: Squad sheets",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3k3dq",
+        "wordcount":"148",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T14:32:27Z"
+      },
+      "tags":[{
+        "id":"football/series/squad-sheets",
+        "type":"series",
+        "webTitle":"Squad sheets",
+        "webUrl":"http://www.theguardian.com/football/series/squad-sheets",
+        "apiUrl":"http://content.guardianapis.com/football/series/squad-sheets",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/stokecity",
+        "type":"keyword",
+        "webTitle":"Stoke City",
+        "webUrl":"http://www.theguardian.com/football/stokecity",
+        "apiUrl":"http://content.guardianapis.com/football/stokecity",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/38"
+        }]
+      },{
+        "id":"football/southampton",
+        "type":"keyword",
+        "webTitle":"Southampton",
+        "webUrl":"http://www.theguardian.com/football/southampton",
+        "apiUrl":"http://content.guardianapis.com/football/southampton",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/18"
+        }]
+      },{
+        "id":"football/premierleague",
+        "type":"keyword",
+        "webTitle":"Premier League",
+        "webUrl":"http://www.theguardian.com/football/premierleague",
+        "apiUrl":"http://content.guardianapis.com/football/premierleague",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-competition",
+          "id":"pa-football-competition/100"
+        }]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/sport/news",
+        "type":"newspaper-book-section",
+        "webTitle":"News & features",
+        "webUrl":"http://www.theguardian.com/theguardian/sport/news",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport/news",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/sport",
+        "type":"newspaper-book",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/theguardian/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421462313",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/11/1/1383316249824/Stoke-City-v-Southampton--001.jpg",
+          "typeData":{
+            "source":"Graphic",
+            "altText":"Stoke City v Southampton: Probable starters in bold, contenders in light",
+            "height":"525",
+            "credit":"Graphic",
+            "caption":"Stoke City v Southampton: Probable starters in bold, contenders in light.  Photograph: Graphic",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/38"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/18"
+      },{
+        "type":"pa-football-competition",
+        "id":"pa-football-competition/100"
+      }]
+    },{
+      "id":"football/video/2013/nov/01/cristiano-ronaldo-sepp-blatter-hairdresser-video",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-11-01T13:55:00Z",
+      "webTitle":"Cristiano Ronaldo refuses to be drawn on Sepp Blatter's 'hairdresser' comment – video",
+      "webUrl":"http://www.theguardian.com/football/video/2013/nov/01/cristiano-ronaldo-sepp-blatter-hairdresser-video",
+      "apiUrl":"http://content.guardianapis.com/football/video/2013/nov/01/cristiano-ronaldo-sepp-blatter-hairdresser-video",
+      "fields":{
+        "trailText":"<p>Real Madrid's Cristiano Ronaldo says he wants to draw a line under the controversy with Sepp Blatter</p>",
+        "headline":"Cristiano Ronaldo refuses to be drawn on Sepp Blatter's 'hairdresser' comment – video",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3k3am",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383311031520/-I-don-t-want-to-talk-abo-005.jpg",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T13:55:17Z"
+      },
+      "tags":[{
+        "id":"football/ronaldo",
+        "type":"keyword",
+        "webTitle":"Cristiano Ronaldo",
+        "webUrl":"http://www.theguardian.com/football/ronaldo",
+        "apiUrl":"http://content.guardianapis.com/football/ronaldo",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/sepp-blatter",
+        "type":"keyword",
+        "webTitle":"Sepp Blatter",
+        "webUrl":"http://www.theguardian.com/football/sepp-blatter",
+        "apiUrl":"http://content.guardianapis.com/football/sepp-blatter",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/realmadrid",
+        "type":"keyword",
+        "webTitle":"Real Madrid",
+        "webUrl":"http://www.theguardian.com/football/realmadrid",
+        "apiUrl":"http://content.guardianapis.com/football/realmadrid",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/26303"
+        }]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-421455142",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383311027115/-I-don-t-want-to-talk-abo-002.jpg",
+          "typeData":{
+            "source":"Europa Press via Getty Images",
+            "photographer":"Europa Press",
+            "altText":"‘I don’t want to talk about it’, says Cristiano Ronaldo on Blatter’s ‘haridresser’ comment - video ",
+            "height":"54",
+            "credit":"Europa Press/Europa Press via Getty Images",
+            "caption":"‘I don’t want to talk about it’, says Cristiano Ronaldo on Blatter’s ‘haridresser’ comment - video  Photograph: Europa Press/Europa Press via Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383311028574/-I-don-t-want-to-talk-abo-003.jpg",
+          "typeData":{
+            "source":"Europa Press via Getty Images",
+            "photographer":"Europa Press",
+            "altText":"‘I don’t want to talk about it’, says Cristiano Ronaldo on Blatter’s ‘haridresser’ comment - video ",
+            "height":"340",
+            "credit":"Europa Press/Europa Press via Getty Images",
+            "caption":"‘I don’t want to talk about it’, says Cristiano Ronaldo on Blatter’s ‘haridresser’ comment - video  Photograph: Europa Press/Europa Press via Getty Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383311030064/-I-don-t-want-to-talk-abo-004.jpg",
+          "typeData":{
+            "source":"Europa Press via Getty Images",
+            "photographer":"Europa Press",
+            "altText":"‘I don’t want to talk about it’, says Cristiano Ronaldo on Blatter’s ‘haridresser’ comment - video ",
+            "height":"130",
+            "credit":"Europa Press/Europa Press via Getty Images",
+            "caption":"‘I don’t want to talk about it’, says Cristiano Ronaldo on Blatter’s ‘haridresser’ comment - video  Photograph: Europa Press/Europa Press via Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383311031520/-I-don-t-want-to-talk-abo-005.jpg",
+          "typeData":{
+            "source":"Europa Press via Getty Images",
+            "photographer":"Europa Press",
+            "altText":"‘I don’t want to talk about it’, says Cristiano Ronaldo on Blatter’s ‘haridresser’ comment - video ",
+            "height":"84",
+            "credit":"Europa Press/Europa Press via Getty Images",
+            "caption":"‘I don’t want to talk about it’, says Cristiano Ronaldo on Blatter’s ‘haridresser’ comment - video  Photograph: Europa Press/Europa Press via Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383311033114/-I-don-t-want-to-talk-abo-006.jpg",
+          "typeData":{
+            "source":"Europa Press via Getty Images",
+            "photographer":"Europa Press",
+            "altText":"‘I don’t want to talk about it’, says Cristiano Ronaldo on Blatter’s ‘haridresser’ comment - video ",
+            "height":"132",
+            "credit":"Europa Press/Europa Press via Getty Images",
+            "caption":"‘I don’t want to talk about it’, says Cristiano Ronaldo on Blatter’s ‘haridresser’ comment - video  Photograph: Europa Press/Europa Press via Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383311034686/-I-don-t-want-to-talk-abo-007.jpg",
+          "typeData":{
+            "source":"Europa Press via Getty Images",
+            "photographer":"Europa Press",
+            "altText":"‘I don’t want to talk about it’, says Cristiano Ronaldo on Blatter’s ‘haridresser’ comment - video ",
+            "height":"168",
+            "credit":"Europa Press/Europa Press via Getty Images",
+            "caption":"‘I don’t want to talk about it’, says Cristiano Ronaldo on Blatter’s ‘haridresser’ comment - video  Photograph: Europa Press/Europa Press via Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383311036154/-I-don-t-want-to-talk-abo-008.jpg",
+          "typeData":{
+            "source":"Europa Press via Getty Images",
+            "photographer":"Europa Press",
+            "altText":"‘I don’t want to talk about it’, says Cristiano Ronaldo on Blatter’s ‘haridresser’ comment - video ",
+            "height":"180",
+            "credit":"Europa Press/Europa Press via Getty Images",
+            "caption":"‘I don’t want to talk about it’, says Cristiano Ronaldo on Blatter’s ‘haridresser’ comment - video  Photograph: Europa Press/Europa Press via Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383311037623/-I-don-t-want-to-talk-abo-009.jpg",
+          "typeData":{
+            "source":"Europa Press via Getty Images",
+            "photographer":"Europa Press",
+            "altText":"‘I don’t want to talk about it’, says Cristiano Ronaldo on Blatter’s ‘haridresser’ comment - video ",
+            "height":"228",
+            "credit":"Europa Press/Europa Press via Getty Images",
+            "caption":"‘I don’t want to talk about it’, says Cristiano Ronaldo on Blatter’s ‘haridresser’ comment - video  Photograph: Europa Press/Europa Press via Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383311039074/-I-don-t-want-to-talk-abo-010.jpg",
+          "typeData":{
+            "source":"Europa Press via Getty Images",
+            "photographer":"Europa Press",
+            "altText":"‘I don’t want to talk about it’, says Cristiano Ronaldo on Blatter’s ‘haridresser’ comment - video ",
+            "height":"276",
+            "credit":"Europa Press/Europa Press via Getty Images",
+            "caption":"‘I don’t want to talk about it’, says Cristiano Ronaldo on Blatter’s ‘haridresser’ comment - video  Photograph: Europa Press/Europa Press via Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383311040564/-I-don-t-want-to-talk-abo-011.jpg",
+          "typeData":{
+            "source":"Europa Press via Getty Images",
+            "photographer":"Europa Press",
+            "altText":"‘I don’t want to talk about it’, says Cristiano Ronaldo on Blatter’s ‘haridresser’ comment - video ",
+            "height":"372",
+            "credit":"Europa Press/Europa Press via Getty Images",
+            "caption":"‘I don’t want to talk about it’, says Cristiano Ronaldo on Blatter’s ‘haridresser’ comment - video  Photograph: Europa Press/Europa Press via Getty Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383311042095/-I-don-t-want-to-talk-abo-012.jpg",
+          "typeData":{
+            "source":"Europa Press via Getty Images",
+            "photographer":"Europa Press",
+            "altText":"‘I don’t want to talk about it’, says Cristiano Ronaldo on Blatter’s ‘haridresser’ comment - video ",
+            "height":"90",
+            "credit":"Europa Press/Europa Press via Getty Images",
+            "caption":"‘I don’t want to talk about it’, says Cristiano Ronaldo on Blatter’s ‘haridresser’ comment - video  Photograph: Europa Press/Europa Press via Getty Images",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383311043642/-I-don-t-want-to-talk-abo-013.jpg",
+          "typeData":{
+            "source":"Europa Press via Getty Images",
+            "photographer":"Europa Press",
+            "altText":"‘I don’t want to talk about it’, says Cristiano Ronaldo on Blatter’s ‘haridresser’ comment - video ",
+            "height":"225",
+            "credit":"Europa Press/Europa Press via Getty Images",
+            "caption":"‘I don’t want to talk about it’, says Cristiano Ronaldo on Blatter’s ‘haridresser’ comment - video  Photograph: Europa Press/Europa Press via Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383311045200/-I-don-t-want-to-talk-abo-014.jpg",
+          "typeData":{
+            "source":"Europa Press via Getty Images",
+            "photographer":"Europa Press",
+            "altText":"‘I don’t want to talk about it’, says Cristiano Ronaldo on Blatter’s ‘haridresser’ comment - video ",
+            "height":"360",
+            "credit":"Europa Press/Europa Press via Getty Images",
+            "caption":"‘I don’t want to talk about it’, says Cristiano Ronaldo on Blatter’s ‘haridresser’ comment - video  Photograph: Europa Press/Europa Press via Getty Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383311046773/-I-don-t-want-to-talk-abo-015.jpg",
+          "typeData":{
+            "source":"Europa Press via Getty Images",
+            "photographer":"Europa Press",
+            "altText":"‘I don’t want to talk about it’, says Cristiano Ronaldo on Blatter’s ‘haridresser’ comment - video ",
+            "height":"360",
+            "credit":"Europa Press/Europa Press via Getty Images",
+            "caption":"‘I don’t want to talk about it’, says Cristiano Ronaldo on Blatter’s ‘haridresser’ comment - video  Photograph: Europa Press/Europa Press via Getty Images",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383311048267/-I-don-t-want-to-talk-abo-016.jpg",
+          "typeData":{
+            "source":"Europa Press via Getty Images",
+            "photographer":"Europa Press",
+            "altText":"‘I don’t want to talk about it’, says Cristiano Ronaldo on Blatter’s ‘haridresser’ comment - video ",
+            "height":"230",
+            "credit":"Europa Press/Europa Press via Getty Images",
+            "caption":"‘I don’t want to talk about it’, says Cristiano Ronaldo on Blatter’s ‘haridresser’ comment - video  Photograph: Europa Press/Europa Press via Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/11/1/131101Ronaldo-16x9.mp4",
+          "typeData":{
+            "source":"SNTV",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/11/1/131101Ronaldo_8269313.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/11/1/131101Ronaldo_8269313.jpg",
+            "width":"480",
+            "durationSeconds":"31"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/11/1/131101Ronaldo_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"SNTV",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/11/1/131101Ronaldo_8269313.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/11/1/131101Ronaldo_8269313.jpg",
+            "width":"480",
+            "durationSeconds":"31"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/11/1/131101Ronaldo_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"SNTV",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/11/1/131101Ronaldo_8269313.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/11/1/131101Ronaldo_8269313.jpg",
+            "width":"480",
+            "durationSeconds":"31"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/11/1/131101Ronaldo/131101Ronaldo.m3u8",
+          "typeData":{
+            "source":"SNTV",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/11/1/131101Ronaldo_8269313.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/11/1/131101Ronaldo_8269313.jpg",
+            "width":"480",
+            "durationSeconds":"31"
+          }
+        }]
+      },{
+        "id":"gu-image-421459177",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/11/1/1383311031520/-I-don-t-want-to-talk-abo-005.jpg",
+          "typeData":{
+            "source":"Europa Press via Getty Images",
+            "photographer":"Europa Press",
+            "altText":"‘I don’t want to talk about it’, says Cristiano Ronaldo on Blatter’s ‘haridresser’ comment - video ",
+            "height":"84",
+            "credit":"Europa Press/Europa Press via Getty Images",
+            "caption":"'I don't want to talk about it', says Cristiano Ronaldo on Blatter's 'haridresser' comment - video  Photograph: Europa Press/Europa Press via Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/26303"
+      }]
+    }],
+    "storyPackage":[]
+  }
+}

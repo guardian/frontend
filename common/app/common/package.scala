@@ -2,11 +2,15 @@ package common
 
 import com.gu.openplatform.contentapi.ApiError
 import play.api.Logger
-import play.api.mvc.Result
-import play.api.libs.concurrent.Execution.Implicits._
+import play.api.mvc.{ SimpleResult, Result, RequestHeader }
+import play.api.templates.Html
+import model.{NoCache, Cached}
+import com.gu.management.Switchable
 
 object `package` extends implicits.Strings with implicits.Requests with play.api.mvc.Results {
 
+
+  // TODO - we don't need 3 of these surely
   def suppressApi404[T](block: => Option[T])(implicit log: Logger): Option[T] = {
     try {
       block
@@ -14,14 +18,19 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
       case ApiError(404, message) =>
         log.info(s"Got a 404 while calling content api: $message")
         None
+      case ApiError(410, message) =>
+        log.info(s"Got a 410 while calling content api: $message")
+        None
     }
   }
 
-
-  def suppressApiNotFound[T](implicit log: Logger): PartialFunction[Throwable, Either[T, Result]] = {
+  def suppressApiNotFound[T](implicit log: Logger): PartialFunction[Throwable, Either[T, SimpleResult]] = {
     case ApiError(404, message) =>
       log.info(s"Got a 404 while calling content api: $message")
-      Right(NotFound)
+      Right(NoCache(NotFound))
+    case ApiError(410, message) =>
+      log.info(s"Got a 410 while calling content api: $message")
+      Right(NoCache(Gone))
   }
 
   def suppressApi404[T](block: => Either[T, Result])(implicit log: Logger): Either[T, Result] = {
@@ -30,7 +39,10 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
     } catch {
       case ApiError(404, message) =>
         log.info(s"Got a 404 while calling content api: $message")
-        Right(NotFound)
+        Right(NoCache(NotFound))
+      case ApiError(410, message) =>
+        log.info(s"Got a 410 while calling content api: $message")
+        Right(NoCache(Gone))
     }
   }
 
@@ -46,6 +58,37 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
     case e: Throwable =>
       log.error(s"Failing quietly on: ${e.getMessage}", e)
       default
+  }
+
+
+  /*
+    NOTE: The htmlResponse & jsonResponse are () => Html functions so that you do not do all the rendering twice.
+          Only the once you actually render is used
+   */
+
+  def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, metaData: model.MetaData)(implicit request: RequestHeader) = Cached(metaData) {
+    if (request.isJson)
+      JsonComponent(jsonResponse())
+    else
+      Ok(htmlResponse())
+  }
+
+  def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, metaData: model.MetaData, switches: Seq[Switchable])(implicit request: RequestHeader) = Cached(metaData) {
+    if (request.isJson)
+      JsonComponent(metaData, jsonResponse())
+    else
+      Ok(htmlResponse())
+  }
+
+  def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, cacheTime: Integer)(implicit request: RequestHeader) = Cached(cacheTime) {
+    if (request.isJson)
+      JsonComponent(jsonResponse())
+    else
+      Ok(htmlResponse())
+  }
+
+  def renderFormat(html: () => Html, cacheTime: Integer)(implicit request: RequestHeader): SimpleResult = {
+    renderFormat(html, html, cacheTime)(request)
   }
 }
 

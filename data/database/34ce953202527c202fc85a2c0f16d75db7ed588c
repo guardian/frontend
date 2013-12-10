@@ -1,0 +1,1757 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":236,
+    "startIndex":1,
+    "pageSize":10,
+    "currentPage":1,
+    "pages":24,
+    "orderBy":"newest",
+    "tag":{
+      "id":"sport/afl",
+      "type":"keyword",
+      "webTitle":"AFL",
+      "webUrl":"http://www.theguardian.com/sport/afl",
+      "apiUrl":"http://content.guardianapis.com/sport/afl",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "references":[]
+    },
+    "results":[{
+      "id":"sport/blog/2013/oct/31/afl-fixture-list-2014-fans",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-31T01:16:00Z",
+      "webTitle":"AFL fixtures: Operation Couch Potato begins",
+      "webUrl":"http://www.theguardian.com/sport/blog/2013/oct/31/afl-fixture-list-2014-fans",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/oct/31/afl-fixture-list-2014-fans",
+      "fields":{
+        "trailText":"<p><strong>Russell Jackson: </strong>For some fans, too much footy is not enough, but there are limits and the AFL's 2014 list may test the patience of many</p>",
+        "headline":"AFL fixtures: Operation Couch Potato begins",
+        "body":"<p>Remember the time when football fans of every persuasion would scan the new AFL fixture and go running through the streets in glee, kissing strangers and punching the air? No, neither do I but <a href=\"http://www.theguardian.com/sport/2013/oct/30/afl-2014-fixture-list-lance-franklin\">the fixture list for 2014 – released today – is still taking a while to digest</a>. If you love watching footy on TV, it's great. In fact you can pretty much plan on watching football every day of the year for the rest of your life. </p><p>This thing just never ends. On that note, it also might pay to bring any personal relationships to an end before the season starts. If you don't and have a non-football-loving partner like I do, you might find your watching negotiations drag out further than the AFL trade period. Ditto your social life. Got a dinner party on? Sorry, footy's on. Wanting to relax with a Sunday night movie? Sorry, footy's on. </p><p>In an ideal world the release of the AFL fixture would be the dawn of bright new days for football supporters. Fans of struggling sides would have a blank slate to look upon, safe in the knowledge that things could only improve. They would be sold on a sense of hope. It'd be like a nice little tax return, filling them with optimism for the year ahead. This year it does feel a bit like a particularly hefty power bill, and not just due to the amount of Sunday night games.</p><p>Of interest to the cynics and conspiracy theorists will be the league's move to stage the NAB pre-season cup in 18 games across 18 consecutive days, which may well feel like a waterboarding exercise even by about the sixth day. If you watch every single one of those games the AFL themselves should have to mint you some kind of commemorative medal and also foot the therapy bill.</p><p>There are some good things in there too, of course. Indigenous Round will kick off with a deserved and maybe even overdue tribute to Saints legend Nicky Winmar. Also, and at the risk of alienating veterans or monopoly-minded Pies supporters, a three-game, nine hour slot will turn ANZAC Day into a footyathon. In this instance only, I'm all for such a ridiculous amount of football. </p><p>One thing that we can all be glad for is that we don't have to pretend to feel sorry for Carlton supporters. Having finished ninth last season, they were beneficiaries of Essendon's finals expulsion and with an upset win over Richmond in the elimination final, vaulted themselves to sixth in the final analysis. That left them inside the top &quot;seeding&quot; bracket of the competition and destined to double-up on fixtures against the best sides in the competition. All's not lost for Malthouse's side though; they'll only face off twice against Geelong and Port Adelaide. Sympathy rescinded.</p><p>Elsewhere at the top of the tree, the Hawks, Dockers, Power and Geelong will all double-up against three top six teams apiece, but Sydney have a pretty good run, only having to perform that feat against two top-six sides as they attempt to go one step closer in 2014. </p><p>Giants and Suns fans (I think it is safe to use the plural at this point), along with Western Bulldogs and Dees supporters, will not have to rush home from Friday night drinks at any point of the season. All were neglected for a crack at the marquee timeslot. Bulldogs fans in particular have reason to feel aggrieved at this; their team was most enjoyable to watch by the end of season 2013 and you'd think they were deserving of at least one Friday night game. This could have come at the expense of a St Kilda side that promises to be comically dire. At least the Doggies get a soft run against top six times, encountering them all only once.</p><p>Of course one of the most overhyped elements of the fixture every year are the &quot;grudge matches&quot; between star players who have crossed over to the dark side and donned an opposition guernsey. I suppose it will be fun to watch Buddy pit himself against the Hawks for the first time, but I'm placing a moratorium on any hype for GWS's clash with Heath Shaw's old side Collingwood. Ditto Nick Dal Santo's first chance to turn out against the Saints in Round 17. That's hardly Carey v Archer. Actually, name me a genuinely enthralling &quot;grudge match&quot; of the last 15 years other than that one. Go on, I bet you can't.</p><p>The league's 2013 experiment with a split opening round continues next year and they clearly learned nothing from the slowly deflating balloon that was last season's aimless opening fortnight. It appears part of a wider strategy of spreading the AFL news cycle out over the maximum number of calendar squares possible. Contrast the 25 week home-and-away season against, say, the tight 16 game schedule of America's NFL, and it's starting to look more than a little bloated.</p><p>We shouldn't be surprised by the league's attempts to extend their tentacles into every nook and cranny of the sporting year. It's no coincidence that this year's AFL Draft will take place on the opening day of the Ashes. </p><p>For some fans, too much footy is not enough, but there are limits. It will be interesting to see whether this fixture, not always family-friendly (they can't expect massive turn-outs for Thursday night games), will pull in the crowds that form the AFL's bread and butter revenue stream. Maybe it will just make couch potatoes of us all. The scary thing is, we probably already are.</p><!-- Guardian Watermark: internal-code/content/421335385|2013-11-05T11:03:51Z|18355b0859148340a1b79cd1d3763ce6df05a00f -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-31T01:42:11Z",
+        "hasStoryPackage":"false",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/27/1380249465594/6a6db54a-6098-4cf5-b935-a6f5592aeb93-140x84.jpeg",
+        "standfirst":"For some fans, too much footy is not enough, but there are limits and the AFL's 2014 list may test the patience of many",
+        "shortUrl":"http://gu.com/p/3k24h",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/27/1380249465594/6a6db54a-6098-4cf5-b935-a6f5592aeb93-140x84.jpeg",
+        "wordcount":"929",
+        "commentable":"true",
+        "internalContentCode":"421335385",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Russell Jackson",
+        "publication":"theguardian.com",
+        "internalPageCode":"1989566",
+        "productionOffice":"AUS",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-07T01:16:00Z"
+      },
+      "tags":[{
+        "id":"sport/afl",
+        "type":"keyword",
+        "webTitle":"AFL",
+        "webUrl":"http://www.theguardian.com/sport/afl",
+        "apiUrl":"http://content.guardianapis.com/sport/afl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australian-rules-football",
+        "type":"keyword",
+        "webTitle":"Australian rules football",
+        "webUrl":"http://www.theguardian.com/sport/australian-rules-football",
+        "apiUrl":"http://content.guardianapis.com/sport/australian-rules-football",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.theguardian.com/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/russell-jackson",
+        "type":"contributor",
+        "webTitle":"Russell Jackson",
+        "webUrl":"http://www.theguardian.com/profile/russell-jackson",
+        "apiUrl":"http://content.guardianapis.com/profile/russell-jackson",
+        "bio":"<p>Russell Jackson is a Melbourne-based writer who blogs at <a href=\"http://www.thewastedafternoons.blogspot.com\">thewastedafternoons</a> and tweets at @rustyjacko</p>",
+        "r2ContributorId":"56447",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/20/1369028913052/Russell-Jackson-003.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421336513",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/27/1380249466047/6a6db54a-6098-4cf5-b935-a6f5592aeb93-460x276.jpeg",
+          "typeData":{
+            "source":"AAPIMAGE",
+            "photographer":"JULIAN SMITH",
+            "altText":"Hawthorn Hawks supporters gather for the AFL Grand Final parade Collins Street in Melbourne.",
+            "height":"276",
+            "credit":"JULIAN SMITH/AAPIMAGE",
+            "caption":"The 2014 fixture list will include Thursday night games. Photograph: Julian Smith/AAP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421336514",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/27/1380249465594/6a6db54a-6098-4cf5-b935-a6f5592aeb93-140x84.jpeg",
+          "typeData":{
+            "source":"AAPIMAGE",
+            "photographer":"JULIAN SMITH",
+            "altText":"Hawthorn Hawks supporters gather for the AFL Grand Final parade Collins Street in Melbourne.",
+            "height":"84",
+            "credit":"JULIAN SMITH/AAPIMAGE",
+            "caption":"Hawthorn Hawks supporters gather for the AFL Grand Final parade Collins Street in Melbourne. Photograph: Julian Smith/AAP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/oct/30/afl-2014-fixture-list-lance-franklin",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-30T23:35:14Z",
+      "webTitle":"AFL releases fixture list for 2014 season",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/30/afl-2014-fixture-list-lance-franklin",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/30/afl-2014-fixture-list-lance-franklin",
+      "fields":{
+        "trailText":"<p>Lance Franklin is scheduled to play against his old AFL club Hawthorn for the first time in round eight next year</p>",
+        "headline":"AFL releases fixture list for 2014 season",
+        "body":"<p>Lance Franklin is scheduled to play against his old AFL club Hawthorn for the first time in round eight next year.</p><p>The Swans will host the reigning premiers at ANZ Stadium <a href=\"http://www.afl.com.au/fixture\">in the 2014 fixture that was released on Thursday morning</a>.</p><p>The Former Collingwood fan favourite Dale Thomas will go up against his old club in round seven, when Carlton play their fierce rivals on Friday night at the MCG.</p><p>Another prominent Magpies departure during the trade period was Heath Shaw to Greater Western Sydney – he has to wait until round 22 to play his old side.</p><p>Three-time premiership player Paul Chapman is at Essendon after being delisted by Geelong – those two clash at Etihad Stadium in round 15.</p><p>The regular season starts on 14 March with Collingwood hosting Fremantle on Friday night at the MCG. Round one will again be split over two weekends.</p><p>The AFL will introduce a weighting system, with the teams separated into three groups of six according to last year's ladder positions. Under the system, Hawthorn play fellow top-six teams Fremantle, Geelong and Sydney twice. They play middle-six team Collingwood twice and bottom-six team Gold Coast twice.</p><p>Geelong play no bottom-six teams twice, while the Western Bulldogs, who finished 15th, play no top-six teams twice. Fremantle (second) and Geelong (third) also play three other top-six teams twice.</p><p>Carlton originally finished last season ninth, but they made the top eight because of Essendon's supplements scandal penalties.</p><p>The Blues beat Richmond in an elimination final, putting Carlton into the top six but their elevated position on the ladder has not dramatically affected their draw under the weighting system. They play two top-six teams twice, plus two from the middle six and one in the bottom six.</p><p>That is the same mix as Collingwood, who finished eighth. Hawthorn have their grand final rematch against Fremantle at the MCG in round three. Adelaide Oval will replace AAMI Stadium as South Australia's permanent AFL venue.</p><p>The AFL will have six Thursday night games and also experiment with Sunday night football. Tasmania will host six matches - Hawthorn's four home games in Launceston and North Melbourne hosting matches in Hobart.<br /><a href=\"http://www.afl.com.au/fixture\"><br />• Click here for the full 2014 AFL fixture list</a></p><!-- Guardian Watermark: internal-code/content/421332413|2013-11-05T11:03:51Z|0894445c70acb538da2c1ed5b2d6e06287cb2bd1 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-30T23:35:14Z",
+        "hasStoryPackage":"false",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/2/1380689080537/Lance-Franklin-001.jpg",
+        "standfirst":"• Lance Franklin returns to Hawks in round eight<br />• Season starts with Collingwood v Fremantle",
+        "shortUrl":"http://gu.com/p/3k23p",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/2/1380689080537/Lance-Franklin-001.jpg",
+        "wordcount":"359",
+        "commentable":"false",
+        "internalContentCode":"421332413",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Australian Associated Press",
+        "publication":"theguardian.com",
+        "internalPageCode":"1989547",
+        "productionOffice":"AUS",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-02T23:35:14Z"
+      },
+      "tags":[{
+        "id":"sport/afl",
+        "type":"keyword",
+        "webTitle":"AFL",
+        "webUrl":"http://www.theguardian.com/sport/afl",
+        "apiUrl":"http://content.guardianapis.com/sport/afl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australian-rules-football",
+        "type":"keyword",
+        "webTitle":"Australian rules football",
+        "webUrl":"http://www.theguardian.com/sport/australian-rules-football",
+        "apiUrl":"http://content.guardianapis.com/sport/australian-rules-football",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421332441",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/2/1380689094239/Lance-Franklin-006.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"David Crosling",
+            "altText":"Lance Franklin",
+            "height":"276",
+            "credit":"David Crosling/AAP Image",
+            "caption":"Lance Franklin (centre) will meet his former team-mates in round eight.  Photograph: David Crosling/AAP Image",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421332442",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/2/1380689080537/Lance-Franklin-001.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"David Crosling",
+            "altText":"Lance Franklin",
+            "height":"84",
+            "credit":"David Crosling/AAP Image",
+            "caption":"Lance Franklin (centre) says leaving his team-mates will be a wrench.  Photograph: David Crosling/AAP Image",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/blog/2013/oct/28/joy-of-six-australian-sport-books",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-28T20:51:00Z",
+      "webTitle":"The Joy of Six: Australian sport books",
+      "webUrl":"http://www.theguardian.com/sport/blog/2013/oct/28/joy-of-six-australian-sport-books",
+      "apiUrl":"http://content.guardianapis.com/sport/blog/2013/oct/28/joy-of-six-australian-sport-books",
+      "fields":{
+        "trailText":"<p><strong>Russell Jackson: </strong>From Australian football's bible to a tribute to the seamier side of Aussie Rules, our pick of the best reads</p>",
+        "headline":"The Joy of Six: Australian sport books",
+        "body":"<h2><a href=\"http://upload.wikimedia.org/wikipedia/en/8/88/SheilasWogsPoofters.jpg\">1) Johnny Warren – Sheilas, Wogs and Poofters</a></h2><p>Part autobiography, part history of soccer in Australia and part manifesto, upon release Johnny Warren's Sheilas, Wogs and Poofters garnered a lot of attention and debate for more than just its provocative title. His evocations of both the joyous and dark days of the sport's past rang true to many who love the game. </p><p>On the topic of the title, Warren remained steadfast that it would water down his intentions if it were it to be called anything else and where other publishes balked, we have Random House's Jeanne Ryckmans to thank that it remained in place upon release. It's actually an appropriately bombastic title for such a forthright communicator.</p><p>According to Warren: \"'Sheilas', 'wogs' and 'poofters' were considered the second-class citizens of the day and if you played soccer you were considered one of them.\" With no small amount of passion and faith, Warren dedicated the greater bulk of his life to playing, discussing and promoting the games' virtues. To read this book is to take in the lessons he learned along the way. For Warren, soccer \"made me more aware, it has awakened the world citizen inside me … I want the same experience of awakening and awareness for Australia.\"</p><p>He also talks poignantly of the fight soccer has faced in the face of an Australian media often unwilling and unable to accept the global game as being of equal status to local codes. Warren spent hour upon hour hanging on the end of a telephone line to provide updates for radio sports bulletins, only to be shunted to the back of the queue at the last minute and told to \"be quick\" when he was given a chance to talk about the world game. \"There is never any time to talk soccer,\" he lamented.</p><p>Warren's insights were sharp and traverse through every level of the game, from the parents running the canteen at grassroots level all the way up to the administration of the game by Fifa. The book also gives a great glimpse into how hard-won the battles were for the sport in Australia. Despite being beloved throughout the world, the sport needed to find a voice down under and Warren was often that voice. The game was lucky to have him.</p><h2><a href=\"http://www.blaqbooks.com.au/image/cache/afl_20120415_99_0010-500x500.jpg\">2) John Powers – The Coach </a></h2><p>Where US sports has David Halberstam's <a href=\"http://en.wikipedia.org/wiki/The_Breaks_of_the_Game\">The Breaks of the Game</a> and John Feinstein's A Season on the Brink, Aussie Rules has John Powers's classic The Coach, which follows the fortunes of Ron Barassi's 1977 North Melbourne side on their march to the VFL premiership.</p><p>Just as Halberstam was the beneficiary of either impeccable foresight (or a healthy dose of luck, depending on your take) in choosing such a momentous season in the history of his subject, Powers  could not have picked a better year than 1977 to capture a coach and a club at their zenith.</p><p>Benefitting from the kind of access that would make a present-day writer's eyes bulge, Powers gives an unflinching portrait of a time in football history that now seems so distant. Published 35 years ago, there is great contrast between the dying days of amateurism Powers presents and the media-saturated world of millionaire players in 2013. The book digs right under the fingernails of a time and a place; mud-caked training sessions, training room groans and hovering throughout, Barassi and his relentless pursuit of perfection.</p><p>There are time-capsule moments aplenty. There's Barassi demonstrating his ideal tackling method to players by throwing his assistant coach Ray 'Slug' Jordan to the ground, fracturing his ribs. There's Barassi ruthlessly warning his players, \"Anyone on our transfer list has only himself to blame. Anyone on our transfer list is there because he doesn't deserve to be kept.\" At one point the coach hires a hypnotist to extract the best from his players and perhaps most famously of all, there's put-downs like, \"Nobody's got any right to be proud of natural ability – that came to you through the eye of your father's cock.\"</p><p>Barassi might have been an endlessly quotable character, but more insights still come from Powers's keen observations: \"Barassi believes in eye contact. In the few seconds of silence that followed his eyes flick-checked sixty other pairs of eyes, searching for response.\"  </p><p>Barassi once said that there was room in football for gentlemen but not <em>gentle</em> men and this is not a gentle book. Powers puts us right in the faces of players dripping with sweat and gasping for air, desperately trying to please a man who keeps driving them harder. In the end it was worth it – after fighting out the second tied grand final in history, Barassi's Roos claimed their second Premiership. We should be thankful that as a result, one of the great Australian sports books was born.</p><h2><a href=\"http://www.readings.com.au/products/3294001/the-cricket-war-the-inside-story-of-kerry-packers-world-series\">3) Gideon Haigh – The Cricket War </a></h2><p>With no disrespect to his masterful biographies of <a href=\"http://www.amazon.com/The-Big-Ship-Warwick-Armstrong/dp/1854108921\">Warwick Armstrong</a> and the <a href=\"http://www.theguardian.com/books/2002/apr/20/sport.sportandleisure\">Australia \"Mystery Spinner\" Jack Iverson</a>, The Cricket War, Gideon Haigh's account of the tumultuous incursion of Kerry Packer's World Series Cricket remains a seminal piece of Australian sports writing and to my mind the greatest of all his cricket books.</p><p>Weaving together an exhaustive pool of first-hand testimony from the major players involved and with the keen eye of a pernickety historian, Haigh draws all of the colour, controversy and characters together in a razor-sharp account of a game in crisis. In this period of uncomfortable transition the game had changed forever and Haigh ushers us through every boardroom, courtroom and dressing room door for a thrilling insight into the inner workings of the cricket world in the late 1970s.</p><p>More recent print runs of The Cricket War rightly point to Frank Tyson's observation that Haigh \"must have worn out two or three tape recorders\" and the sheer weight of quotable moments makes it pleasingly rereadable. Haigh was the first to pen a thorough retrospective account of the World Series era and it rendered all subsequent attempts redundant.</p><p>Haigh chronicles the rise of the game as a commercial force and it's enthralling to see it being dragged kicking and screaming into the modern era. It was an uncertain future that plainly scared the bejesus out of the game's administrators in the traditional powerbases of England and Australia. Kerry Packer, Tony Greig and Ian Chappell loom appropriately large throughout. Haigh did though take great care in not painting administrators merely as penny-pinching slave-masters, giving due perspective that they were mostly unpaid volunteers whose adherence to increasingly outdated ideals were blinding them to the needs of their players and the game at large.</p><p>It's probably true to say that it is not as lush or lyrical as much of Haigh's other cricket writing, but there's a lot of action to get through and he imparts on us every thrilling moment of glamour and affords us a front row seat to watch these pajama-clad stars blazing such a fascinating trail.  </p><h2><a href=\"http://www.marlowesbooks.com/bookimg2/090394b.jpg\">4) Garry Linnell – Football Ltd</a></h2><p>Books that sharply analyse the board wrangling and administrative cock-ups of Australia's sporting leagues are few and far between these days, but if you have an interest in the way sports operate or even how the AFL came to be the behemoth it is today, Garry Linnell's Football Ltd is required reading. If you haven't read this book yet, consider it your homework for this week.  I guarantee it won't disappoint. </p><p>When Football Ltd appeared in 1995, the public had never before been given such a close-up view of the way Australian Rules Football operated and not everyone involved came up roses. Linnell takes us into the administrative underbelly of a sporting code in transition as the Victorian Football League morphs from a 12-team suburban league into a national competition and a powerful brand in its own right, the AFL. The author labeled it, \"the most turbulent transformation any sporting competition in this country has witnessed.\" The only shame reading it now is the reminder that no-one else has picked up where Linnell left off and fearlessly tackled the colossal, 18-headed monster that is AFL football in the 21st century.</p><p>Perhaps achieving something of the scope Linnell managed here would be near-impossible today. Football Ltd benefits from the insights of a number of deposed insiders with axes to grind and no incentive to \"control the message\". In the decades Linnell walks us through, hubris, pettiness and jealousy formed a near-lethal cocktail that almost sunk some foundation clubs and threatened even the league itself. Television wars, personality clashes, greed, expansion teams – Linnell gives us a warts-and-all account. It now seems amazing that so much of what he uncovered was previously un-documented and the book remains a vital tool in understanding how AFL football came to be a national sport.</p><p>In a similar vein, <a href=\"http://www.goodreads.com/book/show/633703.Super_League\">Mike Colman's Super League: The Inside Story</a> lifted the lid on Australian rugby league's crisis point.</p><h2><a href=\"http://static.cricinfo.com/db/PICTURES/CMS/77900/77904.2.jpg\">5) Ray Robinson – On Top Down Under</a></h2><p>Well-worn cliché has it that captaincy of the Australian Test cricket team is the second most important office in the land and if that is truly the case then Ray Robinson's On Top Down Under must surely be added to the high school syllabus. </p><p>At the very least it sits in the pantheon of Australian sports writing and there is definitely something totemic about it in both appearance and content. Every time I reach for it on my book shelf I feel like I'm delving into a sacred and unimpeachable scripture. It remains the definitive account of the first 34 men who led Australia onto the Test arena and has only ever been improved on by Haigh's addition of the five captains who followed Ian Chappell, the last man Robinson chronicled in his original collection.</p><p><a href=\"http://www.espncricinfo.com/magazine/content/story/333184.html\">From his beginnings at the Melbourne Star in 1930</a>, Robinson wrote about the game with passion and flair for more than half a century. Being such a long-standing fixture of the press box and confidante to so many cricket figures, his authoritative account is augmented by priceless contributions from the family and friends of Australia's cricket leaders.</p><p>Robinson also traces the mood of the country through the medium of cricket, always glancing sideways at the development of a national character that both shaped and was maybe even sometimes <em>shaped by</em> men with baggy green caps on their heads. Unusually for a sports writer of his vintage, Robinson also had a keen interest in the role of women in the history of cricket, though in this instance it primarily served as a device for understanding the way that their lives and marriages were informed by the game, and vice versa.</p><p>His admiration for some of his subjects shines through but never seems cloying. Of Bradman's successor Lindsay Hassett he writes, \"In whatever wing of the heavenly studios the scenario was written casting Hassett as Test captain, deep thought must have been given to the part.\" Monty Noble was \"cut out for strokeplay rather than having his bat hanging around eavesdropping on his boots' squeaks.\" If there's any criticism of Robinson it's that his portraits were almost all complimentary and didn't dig too far into certain uncomfortable truths, but the scope of the book and the sheer dedication involved in piecing together the lineage of such wildly different characters make On Top Down Under a timeless classic.</p><h2>6) Christian Ryan – Golden Boy: Kim Hughes and the bad old days of Australian cricket</h2><p>As Australia's Test team lurches from one crisis to another these days  it pays for Aussies to realise that things really have been this bad before and it wasn't the end of the world. Unless you were Kim Hughes obviously, in which case things got pretty nasty for a while there in the 80s.</p><p>In Golden Boy, Christian Ryan uses the dynamic, cavalier and ultimately frustrating career of former Australian captain Hughes as the framework to explore an inglorious but thoroughly riveting period of cricket history. Hughes gave Ryan his blessing but not his cooperation in piecing together the tale. Neither did the author receive much help from the other key figures (Dennis Lillee, Rod Marsh, Ian and Greg Chappell) in the tale, but his account of the rise and fall of Hughes as Test captain and the shuddering end to the careers of some Australian greats brings an era spectacularly to life. </p><p>The team-mates and onlookers who did give Ryan an insight into what transpired between Hughes and his senior colleagues, though peripheral players in the saga, were probably emotionally divested enough to give a more objective view than the protagonists. Thus we hear tales of bullying, white-anting, practice-session bouncer-thons, back-stabbing and outright fist fights. Mike Whitney's first Test wickets go uncelebrated by team-mates more focused on leadership politics and a drunken pairing of Hughes and Lillee let off steam by wrestling each other to the ground in a car park, naked but for their underwear.</p><p>It's the kind of book that completely alters your perceptions of some giants of the game and the personality dynamics, entrenched hierarchies and unchecked egos that can tear a team apart. In Ryan, Hughes has a sympathetic biographer but the book never rewrites history or shies away from his short-comings. Even some of those foibles endear Hughes to the reader and we're left with the cautionary tale of a potential superstar who never quite lived up to the expectations of the men around him; hard men who were particularly hard on him. Utterly compelling from start to end.</p><h2>Author's note</h2><p>This list is by no means exhaustive and is not an attempt at a definitive \"Top Six\". I think it gives a decent representation of some great writers across a few sports. Are there great books I missed here? You bet. I feel almost sick not including any of David Frith's cricket books or Martin Flanagan's wonderful AFL ones (<a href=\"http://www.readings.com.au/products/3294001/the-cricket-war-the-inside-story-of-kerry-packers-world-series\">actually, get yourself this</a>, which combines three of Flanagan's best). </p><p>The fact is that some Australian sports (cricket in particular) have a vast supply of great books while others are sadly under-represented at this point. I also limited this list to books I've actually read, so don't throw rocks at me if I haven't read your favourite. Throw the book in question at me though, by all means. This isn't a competition but if you really love a book that's not on this list jump in the comments section and tell us about why it's so great.</p><!-- Guardian Watermark: internal-code/content/421097644|2013-11-05T11:03:51Z|d521e081e9cb240a322d9e5266bdb9d159fa1dab -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-28T22:27:07Z",
+        "hasStoryPackage":"false",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2011/9/14/1315995442394/Kim-Hughes-in-action-for--003.jpg",
+        "standfirst":"From Australian football's bible to a tribute to the seamier side of Aussie Rules, our pick of the best reads",
+        "shortUrl":"http://gu.com/p/3jqfc",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2011/9/14/1315995442394/Kim-Hughes-in-action-for--003.jpg",
+        "wordcount":"2386",
+        "commentable":"true",
+        "internalContentCode":"421097644",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Russell Jackson",
+        "publication":"theguardian.com",
+        "internalPageCode":"1987671",
+        "productionOffice":"AUS",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T20:51:00Z"
+      },
+      "tags":[{
+        "id":"sport/series/joyofsix",
+        "type":"series",
+        "webTitle":"The Joy of Six",
+        "webUrl":"http://www.theguardian.com/sport/series/joyofsix",
+        "apiUrl":"http://content.guardianapis.com/sport/series/joyofsix",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-cricket-team",
+        "type":"keyword",
+        "webTitle":"Australia cricket team",
+        "webUrl":"http://www.theguardian.com/sport/australia-cricket-team",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-cricket-team",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australian-rules-football",
+        "type":"keyword",
+        "webTitle":"Australian rules football",
+        "webUrl":"http://www.theguardian.com/sport/australian-rules-football",
+        "apiUrl":"http://content.guardianapis.com/sport/australian-rules-football",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/afl",
+        "type":"keyword",
+        "webTitle":"AFL",
+        "webUrl":"http://www.theguardian.com/sport/afl",
+        "apiUrl":"http://content.guardianapis.com/sport/afl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.theguardian.com/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/russell-jackson",
+        "type":"contributor",
+        "webTitle":"Russell Jackson",
+        "webUrl":"http://www.theguardian.com/profile/russell-jackson",
+        "apiUrl":"http://content.guardianapis.com/profile/russell-jackson",
+        "bio":"<p>Russell Jackson is a Melbourne-based writer who blogs at <a href=\"http://www.thewastedafternoons.blogspot.com\">thewastedafternoons</a> and tweets at @rustyjacko</p>",
+        "r2ContributorId":"56447",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/20/1369028913052/Russell-Jackson-003.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421162457",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2011/9/14/1315995447052/Kim-Hughes-in-action-for--007.jpg",
+          "typeData":{
+            "source":"S&G and Barratts/EMPICS Sport",
+            "photographer":"S.Bent",
+            "altText":"Kim Hughes in action for Australia",
+            "height":"276",
+            "credit":"S.Bent/S&G and Barratts/EMPICS Sport",
+            "caption":"Kim Hughes is the subject of Christian Ryan's Golden Boy. Photograph: S Bent/S&G and Barratts/Empics Sport",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421162458",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2011/9/14/1315995442394/Kim-Hughes-in-action-for--003.jpg",
+          "typeData":{
+            "source":"S&G and Barratts/EMPICS Sport",
+            "photographer":"S.Bent",
+            "altText":"Kim Hughes in action for Australia",
+            "height":"84",
+            "credit":"S.Bent/S&G and Barratts/EMPICS Sport",
+            "caption":"Kim Hughes in action for Australia. Photograph: S.Bent/S&amp;G and Barratts/EMPICS Sport",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/oct/27/australia-ireland-international-rules-test",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-26T22:48:37Z",
+      "webTitle":"Australia humbled by Ireland in second International Rules Test",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/27/australia-ireland-international-rules-test",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/27/australia-ireland-international-rules-test",
+      "fields":{
+        "trailText":"The Indigenous All Stars promised to be 'hard and tough' in the second International Rules Test but instead were embarrassed by Ireland for the second week running, going down 116-37 at Croke Park in Dublin",
+        "headline":"Australia humbled by Ireland in second International Rules Test",
+        "body":"<p>The Indigenous All Stars promised to be \"hard and tough\" in the second International Rules Test but instead were embarrassed by Ireland for the second week running, going down 116-37 at Croke Park in Dublin.</p> <p>The result means Australia lost the two-Test series 173-72 on aggregate which is a worse defeat than the 2011 lopsided affair Down Under which the Irish won 130-65 overall.</p> <p>Australia lost the first Test at Cavan 57-35 which led coach Michael O'Loughlin to slam his players' lack of effort and intensity and vow they would be \"hard and tough at the footy and the man with the footy\" in Dublin.</p> <p>The All Stars got involved in some push and shove before the opening siren on Saturday night but that simply resulted in a free kick to Ireland. Another free within 30 seconds gifted the host's the opening over.</p> <p>The start could have been worse but for keeper Ashley McGrath making two solid goal saves. West Coast's Sharrod Wellingham then booted an over for the All Stars to level at 3-3.</p> <p>But that was as close as it would get. Ireland's class kicked in and, as in the first Test, the All Stars struggled to control the round ball off the boot and turned it over far too easily.</p> <p>Conor McManus scored the first goal of the match for Ireland before North Melbourne's Lindsay Thomas cleaned up Colm Boyle with a heavy front on bump. The 27-year-old was stretchered off the ground as the 28,000-strong crowd jeered.</p> <p>Jack McCaffrey soon snared another six-pointer and Ireland went into the first break leading 27-8 with the series pretty much in the bag.</p> <p>It went from bad to worse in the second quarter leaving the all-indigenous team trailing 53-16 at half time. Australia had few entries into the forward line in the third quarter and went into the final 18 minutes 78-25 behind.</p> <p>Adelaide's new recruit Eddie Betts managed to secure the All Star's first goal with a handball into the back of the net before Jake Neade drove home another six-pointer off the boot.</p> <p>Ireland's comprehensive win means since 1984 they've won nine series to Australia's eight. They lead the Test tally in the hybrid game 20 to 16.</p> <p>The future of the series remains in doubt with the AFL football operations manager, Mark Evans, on Friday refusing to guarantee Australia would host Ireland in 2014.</p><!-- Guardian Watermark: internal-code/content/421042773|2013-11-05T11:03:51Z|0fdaaaa5db8e31c161b97650a4f917c36203f134 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-28T00:53:31Z",
+        "hasStoryPackage":"false",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/26/1382827337845/de011509-2414-4bcc-a1d6-c847b220e839-140x84.jpeg",
+        "standfirst":"&bull; Ireland 116-37 Australia<br />&bull; Indigenous All-Stars lose series 173-72",
+        "shortUrl":"http://gu.com/p/3jq5k",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/26/1382827337845/de011509-2414-4bcc-a1d6-c847b220e839-140x84.jpeg",
+        "wordcount":"1",
+        "commentable":"true",
+        "internalContentCode":"421042773",
+        "allowUgc":"false",
+        "internalComposerCode":"526c4596e4b08f008952240f",
+        "isPremoderated":"false",
+        "byline":"Australian Associated Press",
+        "publication":"theguardian.com",
+        "internalPageCode":"1987409",
+        "productionOffice":"AUS",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-29T22:45:47Z"
+      },
+      "tags":[{
+        "id":"sport/afl",
+        "type":"keyword",
+        "webTitle":"AFL",
+        "webUrl":"http://www.theguardian.com/sport/afl",
+        "apiUrl":"http://content.guardianapis.com/sport/afl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australian-rules-football",
+        "type":"keyword",
+        "webTitle":"Australian rules football",
+        "webUrl":"http://www.theguardian.com/sport/australian-rules-football",
+        "apiUrl":"http://content.guardianapis.com/sport/australian-rules-football",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/matchreports",
+        "type":"tone",
+        "webTitle":"Match reports",
+        "webUrl":"http://www.theguardian.com/tone/matchreports",
+        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-eb91d52c-fe4a-4664-bb1b-732bf459b662",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/26/1382827338343/de011509-2414-4bcc-a1d6-c847b220e839-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/26/1382827338343/de011509-2414-4bcc-a1d6-c847b220e839-460x276.jpeg",
+            "source":"PA",
+            "photographer":"Brian Lawless",
+            "altText":"Lewis Jetta",
+            "height":"276",
+            "credit":"Brian Lawless/PA",
+            "caption":"Australia's Lewis Jetta reflects on defeat to Ireland in the International Rules series. Photograph: Brian Lawless/PA",
+            "mediaId":"gu-fc-eb91d52c-fe4a-4664-bb1b-732bf459b662",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/oct/20/australia-ireland-international-rules-first-test",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-20T00:26:23Z",
+      "webTitle":"Ireland defeat Australia in first International Rules Test",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/20/australia-ireland-international-rules-first-test",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/20/australia-ireland-international-rules-first-test",
+      "fields":{
+        "trailText":"<p>Coach Michael O'Loughlin blasted his Indigenous All Stars for failing to apply pressure on the Irish in the first international rules Test</p>",
+        "headline":"Ireland defeat Australia in first International Rules Test",
+        "body":"<p>Coach Michael O'Loughlin blasted his Indigenous All Stars for failing to apply pressure on the Irish in the first international rules Test which the hosts won easily 57-35 on Saturday night in Cavan.</p><p>Australia were outclassed in the first half trailing 17-4 at quarter-time and 28-9 at the main break.</p><p>Former Sydney Swans star O'Loughlin fired up the all-indigenous team at halftime and Steven Motlop – one of the All Stars' best – should have closed the margin to five points early in the final quarter but he booted the ball into the open goal's crossbar from a few metres out and momentum swung back to Ireland.</p><p>\"Our ability to apply pressure was non-existent in that first half,\" O'Loughlin said. \"For a team that prides itself on being able to chase and tackle and [have] that unrelenting presence out there, it was disappointing.</p><p>\"Our guys got a real big wake-up call tonight. Some guys got found out.\"</p><p>O'Loughlin singled out Lance Franklin for praise as \"absolutely brilliant\".</p><p>The coach admitted it would be tough to win the series on aggregate with the second and final Test to be played in Dublin next Saturday (Sunday morning AEDT). \"But stranger things have happened. These guys have good character and I know they'll respond. They're used to digging their heels in and fighting.\"</p><p>O'Loughlin said the Irish players had steeled themselves for a hard-fought contest and applied constant pressure.</p><p>\"We were simply beaten at our own game. When that happens, blokes panic and make mistakes.\"</p><p>The Australian team at times were confused by the compromise rules taking more than the allowed two bounces or chasing balls to the boundary when leaving it would have resulted in an All Stars possession.</p><p>Captain Daniel Wells said at halftime the coach asked the team to slow play down which helped Australia get back in the match.</p><p>Ireland's Zach Tuohy scored the first six-point goal at the 11-minute mark of the third quarter but, a few minutes later, Jake Neade found the net for the All Stars.</p><p>That was followed by overs from Lewis Jetta and Alwyn Davey to get Australia within 12 at the final break.</p><p>\"I thought it was a great fightback,\" Wells told reporters. \"It was Motey who missed it (the open goal) but his effort tonight was really good. He's a man with many tricks but that's the way he plays.\"</p><p>Looking to Saturday's Croke Park fixture, the reigning North Melbourne best-and-fairest said: \"we need to respond\".</p><p>\"Every man is going to be judged on how they play.\".</p><p>Ireland manager Paul Earley was pleased but not prepared to say the hosts had the series in the bag despite the 2-12-9 to 1-7-8 scoreline.</p><p>\"There's another game to go. You see the way they [Australia] improved in that third quarter - that will give them a lot of confidence. We can't underestimate them next week or take anything for granted.\"</p><!-- Guardian Watermark: internal-code/content/420447934|2013-11-05T11:03:51Z|3457a28b8452128243b754f566073b55bfdb7171 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-20T00:26:23Z",
+        "hasStoryPackage":"false",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/20/1382228401006/International-Rules-001.jpg",
+        "standfirst":"• Ireland 57-35 Indigenous All Stars",
+        "shortUrl":"http://gu.com/p/3jy57",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/20/1382228401006/International-Rules-001.jpg",
+        "wordcount":"469",
+        "commentable":"true",
+        "internalContentCode":"420447934",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Australian Associated Press",
+        "publication":"theguardian.com",
+        "internalPageCode":"1983751",
+        "productionOffice":"AUS",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-23T00:26:23Z"
+      },
+      "tags":[{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/afl",
+        "type":"keyword",
+        "webTitle":"AFL",
+        "webUrl":"http://www.theguardian.com/sport/afl",
+        "apiUrl":"http://content.guardianapis.com/sport/afl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australian-rules-football",
+        "type":"keyword",
+        "webTitle":"Australian rules football",
+        "webUrl":"http://www.theguardian.com/sport/australian-rules-football",
+        "apiUrl":"http://content.guardianapis.com/sport/australian-rules-football",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/matchreports",
+        "type":"tone",
+        "webTitle":"Match reports",
+        "webUrl":"http://www.theguardian.com/tone/matchreports",
+        "apiUrl":"http://content.guardianapis.com/tone/matchreports",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420447937",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/20/1382228421367/International-Rules-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Patrick Bolger",
+            "altText":"International Rules",
+            "height":"276",
+            "credit":"Patrick Bolger/Getty Images",
+            "caption":"Mathew Stokes (right) of Australia is tackled by Michael Shields of Ireland during the International Rules first Test.  Photograph: Patrick Bolger/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420447938",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/10/20/1382228401006/International-Rules-001.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Patrick Bolger",
+            "altText":"International Rules",
+            "height":"84",
+            "credit":"Patrick Bolger/Getty Images",
+            "caption":"Mathew Stokes (right) of Australia is tackled by Michael Shields of Ireland during the International Rules first Test.  Photograph: Patrick Bolger/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/oct/10/essendon-appoint-mark-thompson-new-coach",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-10T07:00:57Z",
+      "webTitle":"Essendon confirm Mark Thompson as coach for next season",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/10/essendon-appoint-mark-thompson-new-coach",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/10/essendon-appoint-mark-thompson-new-coach",
+      "fields":{
+        "trailText":"<p>Essendon have confirmed Mark Thompson will coach the AFL club next season, during James Hird's suspension</p>",
+        "headline":"Essendon confirm Mark Thompson as coach for next season",
+        "body":"<p>Essendon have confirmed Mark Thompson will coach the AFL club next season. Thompson will fill in for the year for James Hird, who is serving a 12-month suspension over last year's supplements saga. </p><p>While Hird's ban ends in late August, the Bombers said Thompson will be in charge for the entire season.</p><p>They have also appointed former Adelaide coach Neil Craig as their head of coaching, development and strategy and upgraded Simon Goodwin to senior assistant.</p><p>Bombers chairman Paul Little guaranteed Hird would return to the top job in 2015. Craig's appointment is for two years.</p><p>Thompson coached Geelong to premierships in 2007 and 2009, but quit the Cats at the end of 2010 and took up a job as Hird's senior assistant at Essendon.</p><p>He has previously said he didn't want to coach again and had expressed reluctance to take over the reins when Hird's suspension was handed down in August, citing a lack of hunger.</p><p>But he said on Thursday his passion to be a senior coach was back and he was not taking the job simply because the Bombers needed him. \"I wouldn't do it if it was just for the club,\" Thompson told reporters.</p><p>He said he had spoken to players and board members before agreeing to take the job. \"Clearly they wanted a coach that wasn't going to just sit idle, that was going to do a great job and give them the best opportunity to be the best they can be,\" he said. They did want to know whether I was committed or not. I've openly stated in the past that I didn't want to coach. Well, I think I really wanted to do it for nine months and that's what I'm going to do.\"</p><p>Little said Hird could return to the club in some capacity late next season, once his ban ends, but had agreed that Thompson should keep the senior job for the entire season.</p><p>Thompson said he wouldn't change the approach from what Hird and he had begun to implement over the past three seasons.</p><p>\"It's just going to be added to,\" he said. \"We're going to take it to a place that's better than it was last year and that was better than the year before and the year before that.\"</p><p>Thompson said it was possible that coaching for a season might reignite his desire to return to a senior coaching role in the longer term. He said he couldn't rule out coaching at a club other than Essendon after next season.</p><p>He added he'll be aiming to lead the Bombers to a premiership next season. \"We're going to try to. Can we do it? We're going to always try to. We're going to try to do things better and we'll see where that takes us,\" he said.</p><p>Thompson said he also wanted to restore Essendon's reputation after the battering it has taken from the supplements scandal. \"The way people are looking at Essendon is not what I wanted them to see,\" he said. \"We're a pretty proud group, a proud club and we just want to build again. We want to build respect, we want our fans to love us.</p><p>\"We want other fans from other clubs to know they're a professional club, they play a fair game and they're pretty decent people and I don't think they're looking at it that way at the moment.\"<br /></p><!-- Guardian Watermark: internal-code/content/419557723|2013-11-05T11:03:51Z|f1a8309178583b0b1e61f8eecd66021b5e29dddd -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-10T07:00:57Z",
+        "hasStoryPackage":"false",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/25/1374733275745/Essendon-003.jpg",
+        "standfirst":"• James Hird currently serving 12-month suspension<br />• Neil Craig also brought in for Bombers",
+        "shortUrl":"http://gu.com/p/3je3e",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/25/1374733275745/Essendon-003.jpg",
+        "wordcount":"554",
+        "commentable":"true",
+        "internalContentCode":"419557723",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Australian Associated Press",
+        "publication":"theguardian.com",
+        "internalPageCode":"1978601",
+        "productionOffice":"AUS",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-13T07:00:57Z"
+      },
+      "tags":[{
+        "id":"sport/essendon",
+        "type":"keyword",
+        "webTitle":"Essendon",
+        "webUrl":"http://www.theguardian.com/sport/essendon",
+        "apiUrl":"http://content.guardianapis.com/sport/essendon",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/james-hird",
+        "type":"keyword",
+        "webTitle":"James Hird",
+        "webUrl":"http://www.theguardian.com/sport/james-hird",
+        "apiUrl":"http://content.guardianapis.com/sport/james-hird",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/afl",
+        "type":"keyword",
+        "webTitle":"AFL",
+        "webUrl":"http://www.theguardian.com/sport/afl",
+        "apiUrl":"http://content.guardianapis.com/sport/afl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australian-rules-football",
+        "type":"keyword",
+        "webTitle":"Australian rules football",
+        "webUrl":"http://www.theguardian.com/sport/australian-rules-football",
+        "apiUrl":"http://content.guardianapis.com/sport/australian-rules-football",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419557724",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/13/1376353065952/222dd2f4-2d4d-4af7-af10-870efd02935c-460x276.jpeg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Joe Castro",
+            "altText":"James Hird",
+            "height":"276",
+            "credit":"Joe Castro/AAP Image",
+            "caption":"James Hird is currently serving a 12-month suspension. Photograph: Joe Castro/AAP Image",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419557725",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/7/25/1374733275745/Essendon-003.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Dean Lewins",
+            "altText":"Essendon",
+            "height":"84",
+            "credit":"Dean Lewins/AAP Image",
+            "caption":"Essendon have been strady this year despite off-field problems.  Photograph: Dean Lewins/AAP Image",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/oct/08/afl-approves-lance-franklin-sydney-swans-move",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-08T04:32:54Z",
+      "webTitle":"AFL approves Lance Franklin's Sydney Swans move ",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/08/afl-approves-lance-franklin-sydney-swans-move",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/08/afl-approves-lance-franklin-sydney-swans-move",
+      "fields":{
+        "trailText":"<p>The AFL has formally approved Sydney's massive nine-year offer for the Hawthorn star Lance Franklin</p>",
+        "headline":"AFL approves Lance Franklin's Sydney Swans move",
+        "body":"<p>The AFL has approved Sydney's massive nine-year offer for the Hawthorn star Lance Franklin.</p><p>It clears the way for Franklin to become a Swan, provided Hawthorn are unwilling to match the deal. The AFL has been investigating the deal since it was lodged by the Swans last week, to ensure it did not breach Sydney's salary cap or break any player movement rules.</p><p>The league demanded the Swans' board provided written guarantees on certain conditions that would be met before approving the deal.</p><p>They included a stipulation that the specific financial commitment for each year of the nine-season contract will count towards the Swans' salary cap, even if Franklin retires earlier.</p><p>The Swans' board will have to meet with the AFL each year to review how the club are managing their total player payment obligations in regard to the contract.</p><p>The AFL also gained assurances from the Swans that they had gained all information needed to properly assess a contract of that length, including medical reviews and long-term financial planning.</p><p>AFL general counsel Andrew Dillon said those guarantees had been needed given the unprecedented commitment of total player payment funds to a single player over such a long term.</p><p>The league also reiterated to the Swans that the 9.8% cost-of-living allowance built into their salary cap, along with that of Greater Western Sydney, was under review and could be removed or varied from 2015 onwards.</p><p>Hawthorn have three days to decide whether they'll match the offer, in which case Franklin would have to either stay with the Hawks or put himself in the national or pre-season drafts.</p><p>But that is expected to be a formality, with Hawthorn having given no indication they will stand in the way of the two-time premiership star's desire to join the Swans.</p><p>Franklin had been widely expected to join the Giants, but shocked the wooden spooners by rebuffing their $7.2m, six-year offer in favour of the Swans' nine-year, $10m.</p><p>The 26-year-old will be 35 by the time his contract with the Swans is completed. The ability of Sydney to fit him into their salary cap sparked a wave of fresh uproar from rivals over their cost-of-living allowance.</p><p>That allowance was already a subject of controversy after the Swans followed their 2012 premiership by recruiting star forward Kurt Tippett from Adelaide last off-season.<br /></p><!-- Guardian Watermark: internal-code/content/419319020|2013-11-05T11:03:51Z|cea7b3ba004fa787424a6c14452a010b6837b9cb -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-08T04:32:54Z",
+        "hasStoryPackage":"false",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/2/1378089329178/lance-franklin-003.jpg",
+        "standfirst":"• Way clear for player to move to New South Wales<br />• Hawthorn not expected to stand in way of deal",
+        "shortUrl":"http://gu.com/p/3jc3a",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/2/1378089329178/lance-franklin-003.jpg",
+        "wordcount":"375",
+        "commentable":"false",
+        "internalContentCode":"419319020",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Australian Associated Press",
+        "publication":"theguardian.com",
+        "internalPageCode":"1977139",
+        "productionOffice":"AUS",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-11T04:32:54Z"
+      },
+      "tags":[{
+        "id":"sport/sydney-swans",
+        "type":"keyword",
+        "webTitle":"Sydney Swans",
+        "webUrl":"http://www.theguardian.com/sport/sydney-swans",
+        "apiUrl":"http://content.guardianapis.com/sport/sydney-swans",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/hawthorn",
+        "type":"keyword",
+        "webTitle":"Hawthorn",
+        "webUrl":"http://www.theguardian.com/sport/hawthorn",
+        "apiUrl":"http://content.guardianapis.com/sport/hawthorn",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/afl",
+        "type":"keyword",
+        "webTitle":"AFL",
+        "webUrl":"http://www.theguardian.com/sport/afl",
+        "apiUrl":"http://content.guardianapis.com/sport/afl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/lance-franklin",
+        "type":"keyword",
+        "webTitle":"Lance Franklin",
+        "webUrl":"http://www.theguardian.com/sport/lance-franklin",
+        "apiUrl":"http://content.guardianapis.com/sport/lance-franklin",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419319021",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/2/1378089327182/lance-franklin-002.jpg",
+          "typeData":{
+            "source":"AAPIMAGE",
+            "photographer":"JOE CASTRO",
+            "altText":"lance franklin",
+            "height":"276",
+            "credit":"JOE CASTRO/AAPIMAGE",
+            "caption":"Lance Franklin's move to Sydney has attracted controversy. Photograph: AAP Image/Joe Castro",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419319022",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/2/1378089329178/lance-franklin-003.jpg",
+          "typeData":{
+            "source":"AAPIMAGE",
+            "photographer":"JOE CASTRO",
+            "altText":"lance franklin",
+            "height":"84",
+            "credit":"JOE CASTRO/AAPIMAGE",
+            "caption":"Lance Franklin of Hawthorn celebrates after kicking a vital goal, during the Round 22 AFL match between the North Melbourne Kangaroos. (AAP Image/Joe Castro) NO ARCHIVING, EDITORIAL USE ONLY ... Photograph: JOE CASTRO/AAPIMAGE",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/oct/08/joy-of-six-remarkable-solo-performances",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-07T23:05:27Z",
+      "webTitle":"The Joy of Six: remarkable solo performances",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/08/joy-of-six-remarkable-solo-performances",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/08/joy-of-six-remarkable-solo-performances",
+      "fields":{
+        "trailText":"<strong>Russell Jackson:</strong> From a marathon innings to an LSD-fuelled pitcher, our pick of individual efforts in sport",
+        "headline":"The Joy of Six: remarkable solo performances",
+        "body":"<h2>1) Brian Lara’s 501 for Warwickshire</h2> <p>The name Chris Scott might not immediately resonate with even hardcore cricket fans, but it should. Scott was the Durham wicketkeeper who dropped Warwickshire’s Brian Lara on a measly 18 before the West Indian went on to <a href=\"http://www.youtube.com/watch?v=l3klZq-iqyM\">post his landmark 501 not out</a>, the greatest run-making feat in first-class cricket history. After the drop Morris supposedly muttered: “Oh dear, he’ll probably go on and get a hundred,” possibly <a href=\"http://www.espncricinfo.com/magazine/content/story/149228.html\">claiming a record of his own for cricket’s greatest understatement</a>.</p> <p>Though it’s almost 20 years ago now, that purple patch in which Lara seemed to set records for fun remains fresh in the memory of many cricket fans. In the wake of his Test record 375 against England only months earlier, <a href=\"http://www.espncricinfo.com/ci/engine/match/462128.html\">the 501</a> was Lara’s seventh hundred in eight successive first-class knocks. That failure was a 26 against Middlesex, where he was dismissed by three-cap England seamer Richard Johnson of Middlesex. Don’t worry: Lara bit back with 140 in the second innings.</p> <p>Durham’s 8 for 556 declared seemed a pittance once Lara got going. His 427 ball, near-eight-hour stay included 62 fours and 10 sixes. <a href=\"http://www.youtube.com/watch?v=bCwgoUalpAE\">Lara was bowled off a no-ball on 12</a> and then Scott grassed the aforementioned chance before the West Indian subjected Durham’s bowlers to hour upon hour of pain.</p> <p>“Brian, as long as you’re at the crease I won’t declare,” said Lara’s captain, Dermot Reeve, having been warned of the batsman’s intention to break the record when he’d only just passed 200. In the end it was the level-headed advice of non-striker Keith Piper that it was the last over and that Lara should get a wriggle on that spurred him on to one last boundary slashed through cover off part-timer John Morris. Morris had seen his first innings double-century well and truly fade from the limelight over the course of the past two days of play.</p> <p>“No matter where you put a fielder, he hit it in a different place and he has this uncanny knack of hitting the gaps all the time,” lamented the Durham skipper, Phil Bainbridge. “To have witnessed it and been on the same field as that innings was probably one of the highlights of my career, really.”</p> <p>On the second day of the innings, Lara piled on 390 runs including 147 in the first session before lunch. For Durham left-arm spinner David Cox, it was a dubious honour to spend his first-class debut supplying Lara with fodder for the record-breaking innings. “I just wanted to get on with my job and see that I could prove that I could bowl at him and I was proven wrong.” Cox’s 30 wicketless overs went for 163 in one of cricket’s great baptisms of fire.</p> <h2>2) Fred Fanning kicks 18 goals</h2> <p>Though Hawthorn’s Jason Dunstall drew breathtakingly close in 1992, <a href=\"http://upload.wikimedia.org/wikipedia/en/7/7a/Fred_Fanning.JPG\">Melbourne full-forward Fred Fanning’s</a> 18-goal haul against St Kilda at the Junction Oval in 1947 remains the single most legendary solo stat in Australian Rules Football. Having warmed up with a lazy 10-goal effort the week before against Footscray, Fanning’s Round 19 performance against the Saints featured only one miss. It was a season in which the burly forward would notch up 97 goals for the year.</p> <p>His opponent that day was St Kilda’s Stan Le Lievre, who recalled 50 years later: “Nobody wants to put their hand up to playing on him but it doesn’t worry me.</p> <p>“The ball was coming down quickly from blokes like Norm Smith and Fred was a very big man, hard to get around. Somebody said I should grab hold of his footy nicks and pull them off every time the ball came down, but they would have run out of nicks.” Fanning’s exploits led the Age to note, “His marking against strong opposition was spectacular and his accurate kicking left little to be desired.”</p> <p>Fanning was more than imposing by the standards of the era, standing <a href=\"http://australianfootball.com/players/player/fred+fanning/6567\">193cm tall and purportedly weighing in at 102kg</a>. He was done at the Demons by the end of that season at the age of 25, but the record stands to this day. In 104 league games for the Dees, Fanning managed 411 goals. As well as the 1945 Best and Fairest award, Fanning claimed a premiership medal in Melbourne’s 1940 triumph over Richmond.</p> <p>Fanning was also long-considered responsible for the mightiest punt in Aussie Rules history with his 105m effort from the centre of the MCG during Melbourne’s 1939 reserves grand final against the Tigers. Upon his disappearance from VFL ranks, Fanning built a lucrative career in various country football leagues and his goal-kicking feats for Hamilton included a Western District record of 22 goals in a game in 1949 and another haul of 20 the following season.</p> <h2>3) Wilt Chamberlain scores 100</h2> <p>In a game that lends itself to all kinds of statistical fetishism, <a href=\"http://www.youtube.com/watch?v=LxMeEzhvNRs\">Wilt ‘The Stilt’ Chamberlain’s 100 point game of 1962</a> remains the most totemic basketball stat of them all. It’s bonkers really, when you think about it.</p> <p>During that 1962 season the center averaged 50 points and 25 rebounds per game, which probably sounded as insane then as it does now. He’d eventually garner a reputation for being more than a little selfish in his pursuit of statistical achievements (<a href=\"http://mentalfloss.com/article/12310/did-wilt-chamberlain-really-sleep-20000-women\">including some frankly implausible off-court exploits</a>) over team success, but some of them are marks that might never be touched again.</p> <p>Coming up against the New York Knicks at Hershey Arena, Pennsylvania, only 4,124 fans would witness the single most breathtaking solo scoring performance in NBA history as Chamberlain’s Philadelphia Warriors overcame the Knicks 169-147. Bizarrely enough, the game featured a curtain-raiser basketball match-up between NFL players of the hometown Philadelphia Eagles and the Baltimore Colts. At that point Chamberlain himself was not considered a sufficient drawcard by team management and the stands remained barely half-full.</p> <p>The landmark was achieved with only 46 seconds remaining on the clock. Radio caller Bill Campbell described the historic moment: “He made it! He made it! He made it! A Dipper Dunk! The most amazing scoring performance of all time! One hundred points for the Big Dipper!”</p> <p>Sadly, no footage exists of the game, <a href=\"http://www.youtube.com/watch?v=LxMeEzhvNRs\">only bits of Campbell’s radio broadcast</a> and an<a href=\"http://25.media.tumblr.com/d2253ce0180df3015c557b310d5653d6/tumblr_mj1qqxIH0b1r70xplo1_1280.jpg\"> iconic photo by AP’s Paul Vathis</a> showing Chamberlain holding up a piece of paper on which Philadelphia Inquirer reporter Harvey Pollack had hastily scrawled the number 100. Amazingly, Vathis was the only press photographer who stayed until game’s end.</p> <p>For the rest of his career Chamberlain shot at barely above 50% from the free-throw line but on that famous night went 28-for-32 to go with his 36-for-63 from the field. The closest anyone has come since was <a href=\"http://www.youtube.com/watch?v=EyAhap7huXI\">Kobe Bryant’s 81 point game against the Toronto Raptors</a> in 2006 but Bryant was operating with the benefit of the 3-point line, which hadn’t appeared yet in professional play when Chamberlain set his record.</p> <p>And what did Wilt do after the game? Merely jumped in his Cadillac and drove back to West Manhattan, presumably shouting the entire bar at his nightclub, <a href=\"http://sportsillustrated.cnn.com/2012/writers/richard_rothschild/03/01/wilt.chamberlain/index.html\">Big Wilt’s Smalls Paradise</a>. </p> <h2>4) Welker and Flutie go it alone</h2> <p>Stats-minded sports fans are particularly well served by US sports and I’ve long held the view that the three primary appeals of baseball to its followers are: 1) Its myriad statistics and associated scope for fantasy leagues, 2) That it provides an excuse to collect baseball cards well beyond the socially accepted age bracket and 3) That it legitimises getting drunk in the bleachers on a work day. Would baseball even still exist if it wasn’t for these things?</p> <p>But I digress. Of equal or possibly more appeal to the stats nerds is American Football and the NFL has seen its fair share of virtuoso solos over the years. Few are as exotic as the efforts of Wes Welker for the Miami Dolphins during their 2004 regular-season game against the New England Patriots, when he became the first player in NFL history <a href=\"http://www.boston.com/sports/football/patriots/articles/2012/02/05/multitalented_wes_welker_is_the_patriots_little_big_man/\">to record a field goal, extra point, kickoff, punt return and kickoff return in the same game</a>. In football parlance players are sometimes said to have “brought their own ball”, but Welker also probably hand-stitched the thing himself. That was in the early stages of Welker’s career, and it showed the determination to be involved that is a large part of his character.</p> <p>In a similar vein, 43-year-old quarterback Doug Flutie became the first man <a href=\"http://www.youtube.com/watch?v=2S_7TT2a1H4\">since the 1940s to score a NFL point with a drop-kick</a> while appearing as a back-up for the New England Patriots in 2006. Earning the Pats an extra point after a touchdown, it was the final act of a career notable for some soaring individual highs. <br />A Heisman Trophy winner who played in the NFL, USFL and CFL in a nomadic 20-year professional career, <a href=\"http://www.youtube.com/watch?v=r-qkpsygNYo\">Flutie’s hail mary touchdown pass</a> for Boston College to snatch a victory with only seconds on the clock remains a college football classic and gave rise to “The Flutie Effect”, where applications for admission to the college rose dramatically after the famous game.</p> <h2>5) Dock Ellis and the LSD-fuelled no-hitter</h2> <figure class=\"element element-video\" data-canonical-url=\"http://www.youtube.com/watch?v=_vUhSYLRw14\"> <iframe width=\"460\" height=\"345\" src=\"https://www.youtube.com/embed/_vUhSYLRw14?wmode=opaque&amp;feature=oembed\" frameborder=\"0\" allowfullscreen=\"\"></iframe> </figure> <p>On his way to becoming a Major League Baseball All-Star and World Series winner, Pittsburgh Pirates pitcher and <a href=\"http://monsterfresh.com/wp-content/uploads/2009/11/dock-ellis-corn-rows.jpg\">fashion maverick</a> Dock Ellis unleashed one of the more notable ‘no-hitters’ in a 1970 game against the San Diego Padres. Of the 282 no-nos in baseball history it’s almost definitely the only instance in which the pitcher himself was high on LSD.</p> <p>No stranger to controversy or incident in his rise from the minor league ranks, Ellis found himself in the Pirates starting rotation towards the end of 1968 with his stock rising steadily until that Padres game on 12 June, 1970. It would make him a darling of Baseball Digest and High Times alike. The general consensus is that no footage exists, <a href=\"http://www.youtube.com/watch?v=_vUhSYLRw14\">though this short animated documentary</a> is the best cartoon about a psychedelic drug-taking baseball player you’ll ever watch.<br />With a mere six hours until the first pitch of the game Ellis, “as high as Georgia pine”, thought he was enjoying an acid-fuelled day off at a friend’s house in Los Angeles when he was rudely awoken by the news he was the starting pitcher for that night’s game. “Dock, you better get up, you gotta go pitch,” <a href=\"http://sports.espn.go.com/espn/eticket/story?page=Dock-Ellis\">said his host</a>.</p> <p>Having taken his last hit of LSD only hours prior, the pitcher immediately flew from LA to San Diego, arriving at the Padres stadium just 90 minutes before the game. Keeping to his standard routine of taking a handful of Benzedrine pills before his first pitch, Ellis later claimed that he could barely feel the ball in his hand. “The ball was small sometimes, the ball was large sometimes, sometimes I saw the catcher, sometimes I didn’t.</p> <p>“I started having a crazy idea in the fourth inning that Richard Nixon was the home plate umpire and once I thought I was pitching a baseball to Jimi Hendrix, who to me was holding a guitar and swinging it over home plate.”</p> <p>Ellis’s efforts at fielding from his own pitching were every bit as memorable: “I remember diving out of the way of a ball I thought was a line drive. I jumped, but the ball wasn’t hit hard and never reached me.” It was the only no-hitter he’d ever pitch.</p> <p>Ellis was an outspoken advocate for the rights of black players, and Jackie Robinson lauded him for his “courage and honesty”. Ellis’s drug dependency ended in 1980 upon his retirement from baseball and he later found work as a substance abuse counselor himself beforehis death in 2008 at the age of 63.</p> <h2>6) Michael Phelps wins eight golds at the 2008 Olympics</h2> <p>Yes it was only five years back and we haven’t given the achievement enough time to air out and be viewed objectively, but Michael Phelps’s <a href=\"http://www.youtube.com/watch?v=MCjWbwv680A\">gold medal spree at the 2008 Beijing Games</a> is going to take some beating as the greatest solo act in Olympic history. Technically speaking three of his eight gold medals came in relays, but it’s still a freakish haul for one athlete.</p> <p>Even more incredible is that seven of those eight wins were in world record times; in the 100m butterfly he had to settle for a mere Olympic record. They sit among the 39 world record performances of his career. A problem with assessing Phelps’s greatness is just getting your head around the sheer weight of wins and records. His 22 medals (18 gold) dwarf the achievements of any other Olympians in Games history.</p> <p>Some of his Beijing feats are best assessed in isolation because they make for amazing reading. His win in the 400m individual medley final shaved almost two seconds of the world record he’d set during the heats. In the 4x100m freestyle relay that followed, Phelps and his US team-mates won a final in which all of the top five teams beat the previous world record. His fourth gold was a world record-breaking 200m butterfly in which Phelps battled through the last 100m as his goggles filled with water. Barely an hour later he joined his 4x200m freestyle relay team-mates to obliterate another world record and become the first team to break the seven minute barrier.</p> <p>Under mounting pressure, his seventh medal of the games came after Milorad Cavic embarked on an ill-advised publicity campaign saying: “it would be nice if historians talk about Michael Phelps winning seven gold medals and losing the eighth to ‘some guy’. I’d like to be that guy.” It only served as motivation for the American, who beat Cavic by one-hundredth of a second to claim the gold and another world record. Finally, in the 400m medley relay, Phelps and his team held off Australia to secure the champion his <a href=\"http://sports.espn.go.com/oly/summer08/columns/story?columnist=forde_pat&amp;id=3539386\">historic eighth gold and sporting immortality</a>.</p> <p>“I wanna be the first Michael Phelps, not the next Marc Spitz,” <a href=\"http://www.youtube.com/watch?v=0THHIc4fwHM\">concluded Phelps</a> upon finally unseating his famous countryman for the single-Games record before adding, “records are always made to be broken.” This one will take some beating</p><!-- Guardian Watermark: internal-code/content/419211573|2013-11-05T11:03:51Z|570008d3cfe1313e1e3ebe4670275c4e70bbf521 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-07T23:19:02Z",
+        "hasStoryPackage":"false",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381123289906/b96951aa-6096-4aec-965b-eec6a01ecc79-140x84.jpeg",
+        "standfirst":"From a marathon innings to an LSD-fuelled pitcher, our pick of individual efforts in sport",
+        "shortUrl":"http://gu.com/p/3jb78",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381123289906/b96951aa-6096-4aec-965b-eec6a01ecc79-140x84.jpeg",
+        "wordcount":"1",
+        "commentable":"true",
+        "internalContentCode":"419211573",
+        "allowUgc":"false",
+        "internalComposerCode":"52523be3e4b01e4020f8d921",
+        "isPremoderated":"false",
+        "byline":"Russell Jackson",
+        "publication":"theguardian.com",
+        "internalPageCode":"1976516",
+        "productionOffice":"AUS",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-14T23:05:27Z"
+      },
+      "tags":[{
+        "id":"sport/series/joyofsix",
+        "type":"series",
+        "webTitle":"The Joy of Six",
+        "webUrl":"http://www.theguardian.com/sport/series/joyofsix",
+        "apiUrl":"http://content.guardianapis.com/sport/series/joyofsix",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/cricket",
+        "type":"keyword",
+        "webTitle":"Cricket",
+        "webUrl":"http://www.theguardian.com/sport/cricket",
+        "apiUrl":"http://content.guardianapis.com/sport/cricket",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/nba",
+        "type":"keyword",
+        "webTitle":"NBA",
+        "webUrl":"http://www.theguardian.com/sport/nba",
+        "apiUrl":"http://content.guardianapis.com/sport/nba",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/mlb",
+        "type":"keyword",
+        "webTitle":"MLB",
+        "webUrl":"http://www.theguardian.com/sport/mlb",
+        "apiUrl":"http://content.guardianapis.com/sport/mlb",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/us-sport",
+        "type":"keyword",
+        "webTitle":"US sports",
+        "webUrl":"http://www.theguardian.com/sport/us-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/us-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/michaelphelps",
+        "type":"keyword",
+        "webTitle":"Michael Phelps",
+        "webUrl":"http://www.theguardian.com/sport/michaelphelps",
+        "apiUrl":"http://content.guardianapis.com/sport/michaelphelps",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/blog",
+        "type":"blog",
+        "webTitle":"Sportblog",
+        "webUrl":"http://www.theguardian.com/sport/blog",
+        "apiUrl":"http://content.guardianapis.com/sport/blog",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/afl",
+        "type":"keyword",
+        "webTitle":"AFL",
+        "webUrl":"http://www.theguardian.com/sport/afl",
+        "apiUrl":"http://content.guardianapis.com/sport/afl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/melbourne-demons",
+        "type":"keyword",
+        "webTitle":"Melbourne Demons",
+        "webUrl":"http://www.theguardian.com/sport/melbourne-demons",
+        "apiUrl":"http://content.guardianapis.com/sport/melbourne-demons",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/russell-jackson",
+        "type":"contributor",
+        "webTitle":"Russell Jackson",
+        "webUrl":"http://www.theguardian.com/profile/russell-jackson",
+        "apiUrl":"http://content.guardianapis.com/profile/russell-jackson",
+        "bio":"<p>Russell Jackson is a Melbourne-based writer who blogs at <a href=\"http://www.thewastedafternoons.blogspot.com\">thewastedafternoons</a> and tweets at @rustyjacko</p>",
+        "r2ContributorId":"56447",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/5/20/1369028913052/Russell-Jackson-003.jpg",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-68c42cc9-46e1-4af8-a4c2-efc11884b874",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381123289060/b96951aa-6096-4aec-965b-eec6a01ecc79-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381123289060/b96951aa-6096-4aec-965b-eec6a01ecc79-380x228.jpeg",
+            "source":"Allsport",
+            "photographer":"Ben Radford",
+            "altText":"Brian Lara",
+            "height":"228",
+            "credit":"Ben Radford/Allsport",
+            "caption":"Brian Lara poses in front of the scoreboard after his world record 501. Photograph: Ben Radford/Allsport",
+            "mediaId":"gu-fc-68c42cc9-46e1-4af8-a4c2-efc11884b874",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381123289488/b96951aa-6096-4aec-965b-eec6a01ecc79-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381123289488/b96951aa-6096-4aec-965b-eec6a01ecc79-540x324.jpeg",
+            "source":"Allsport",
+            "photographer":"Ben Radford",
+            "altText":"Brian Lara",
+            "height":"324",
+            "credit":"Ben Radford/Allsport",
+            "caption":"Brian Lara poses in front of the scoreboard after his world record 501. Photograph: Ben Radford/Allsport",
+            "mediaId":"gu-fc-68c42cc9-46e1-4af8-a4c2-efc11884b874",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381123289663/b96951aa-6096-4aec-965b-eec6a01ecc79-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381123289663/b96951aa-6096-4aec-965b-eec6a01ecc79-220x132.jpeg",
+            "source":"Allsport",
+            "photographer":"Ben Radford",
+            "altText":"Brian Lara",
+            "height":"132",
+            "credit":"Ben Radford/Allsport",
+            "caption":"Brian Lara poses in front of the scoreboard after his world record 501. Photograph: Ben Radford/Allsport",
+            "mediaId":"gu-fc-68c42cc9-46e1-4af8-a4c2-efc11884b874",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381123289906/b96951aa-6096-4aec-965b-eec6a01ecc79-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381123289906/b96951aa-6096-4aec-965b-eec6a01ecc79-140x84.jpeg",
+            "source":"Allsport",
+            "photographer":"Ben Radford",
+            "altText":"Brian Lara",
+            "height":"84",
+            "credit":"Ben Radford/Allsport",
+            "caption":"Brian Lara poses in front of the scoreboard after his world record 501. Photograph: Ben Radford/Allsport",
+            "mediaId":"gu-fc-68c42cc9-46e1-4af8-a4c2-efc11884b874",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381123290035/b96951aa-6096-4aec-965b-eec6a01ecc79-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381123290035/b96951aa-6096-4aec-965b-eec6a01ecc79-620x372.jpeg",
+            "source":"Allsport",
+            "photographer":"Ben Radford",
+            "altText":"Brian Lara",
+            "height":"372",
+            "credit":"Ben Radford/Allsport",
+            "caption":"Brian Lara poses in front of the scoreboard after his world record 501. Photograph: Ben Radford/Allsport",
+            "mediaId":"gu-fc-68c42cc9-46e1-4af8-a4c2-efc11884b874",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381123290198/b96951aa-6096-4aec-965b-eec6a01ecc79-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381123290198/b96951aa-6096-4aec-965b-eec6a01ecc79-460x276.jpeg",
+            "source":"Allsport",
+            "photographer":"Ben Radford",
+            "altText":"Brian Lara",
+            "height":"276",
+            "credit":"Ben Radford/Allsport",
+            "caption":"Brian Lara poses in front of the scoreboard after his world record 501. Photograph: Ben Radford/Allsport",
+            "mediaId":"gu-fc-68c42cc9-46e1-4af8-a4c2-efc11884b874",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381123290323/b96951aa-6096-4aec-965b-eec6a01ecc79-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381123290323/b96951aa-6096-4aec-965b-eec6a01ecc79-300x180.jpeg",
+            "source":"Allsport",
+            "photographer":"Ben Radford",
+            "altText":"Brian Lara",
+            "height":"180",
+            "credit":"Ben Radford/Allsport",
+            "caption":"Brian Lara poses in front of the scoreboard after his world record 501. Photograph: Ben Radford/Allsport",
+            "mediaId":"gu-fc-68c42cc9-46e1-4af8-a4c2-efc11884b874",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381123290566/b96951aa-6096-4aec-965b-eec6a01ecc79-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381123290566/b96951aa-6096-4aec-965b-eec6a01ecc79-1020x612.jpeg",
+            "source":"Allsport",
+            "photographer":"Ben Radford",
+            "altText":"Brian Lara",
+            "height":"612",
+            "credit":"Ben Radford/Allsport",
+            "caption":"Brian Lara poses in front of the scoreboard after his world record 501. Photograph: Ben Radford/Allsport",
+            "mediaId":"gu-fc-68c42cc9-46e1-4af8-a4c2-efc11884b874",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381123290970/b96951aa-6096-4aec-965b-eec6a01ecc79-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/7/1381123290970/b96951aa-6096-4aec-965b-eec6a01ecc79-1024x768.jpeg",
+            "source":"Allsport",
+            "photographer":"Ben Radford",
+            "altText":"Brian Lara",
+            "height":"768",
+            "credit":"Ben Radford/Allsport",
+            "caption":"Brian Lara poses in front of the scoreboard after his world record 501. Photograph: Ben Radford/Allsport",
+            "mediaId":"gu-fc-68c42cc9-46e1-4af8-a4c2-efc11884b874",
+            "width":"1024"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/oct/04/richmond-appoints-female-president",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-04T05:43:13Z",
+      "webTitle":"Richmond appoints AFL’s first female president",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/04/richmond-appoints-female-president",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/04/richmond-appoints-female-president",
+      "fields":{
+        "trailText":"Peggy O&rsquo;Neal immediately pledges Tigers' AFL premiership drought will soon be over",
+        "headline":"Richmond appoints AFL’s first female president",
+        "body":"<p>An American-born lawyer, Peggy O&rsquo;Neal, has become the first woman to head an AFL club after being voted in as president of Richmond.</p> <p>O&rsquo;Neal beat fellow board members Malcolm Speed and Maurice O'Shannassy to the top job and replaces Gary March, who was president for eight years.</p> <p>She immediately pledged that the Tigers' AFL premiership drought would soon be over.</p> <p>Richmond played finals for the first time in 12 years this season, losing an elimination final to Carlton. She said Richmond's next on-field goal was to make consecutive finals appearances, something the Tigers last achieved in 1971-75.</p> <p>O'Neal said being the only woman in a room full of men at meetings with fellow club presidents would be nothing new for her, given her legal background. She said she had never encountered sexism in the AFL and had received support from all quarters since her appointment.</p> <p>\"It's been delightful, the outpouring of support I've received from the other club presidents just in the past few hours, as well as from the AFL and our members and supporters,\" O'Neal said. \"One of the big challenges for me will be returning all the calls and getting through the emails.&rdquo;</p> <p>Asked whether Richmond, whose 10th and most recent premiership was won in 1980, could add another within the next five years, O'Neal was hopeful it wouldn't take that long.</p> <p>\"We're hoping for a premiership in the next year, in the next two years,\" O'Neal told Melbourne's 3AW radio.</p><!-- Guardian Watermark: internal-code/content/419027491|2013-11-05T11:03:51Z|a536fbf5b77062a6bf02803b8e5aebf40e446ba3 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-04T05:43:09Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380864060264/85a5254d-d59e-4a70-a4f6-c180f842b6ef-140x84.jpeg",
+        "standfirst":"Peggy O&rsquo;Neal immediately pledges Tigers' AFL premiership drought will soon be over",
+        "shortUrl":"http://gu.com/p/3j9pv",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380864060264/85a5254d-d59e-4a70-a4f6-c180f842b6ef-140x84.jpeg",
+        "wordcount":"1",
+        "commentable":"false",
+        "internalContentCode":"419027491",
+        "allowUgc":"false",
+        "internalComposerCode":"524e50f7e4b0f459d922d1ae",
+        "isPremoderated":"false",
+        "byline":"Staff and agencies",
+        "publication":"theguardian.com",
+        "internalPageCode":"1975536",
+        "productionOffice":"AUS",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-07T05:43:13Z"
+      },
+      "tags":[{
+        "id":"sport/afl",
+        "type":"keyword",
+        "webTitle":"AFL",
+        "webUrl":"http://www.theguardian.com/sport/afl",
+        "apiUrl":"http://content.guardianapis.com/sport/afl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"world/australia",
+        "type":"keyword",
+        "webTitle":"Australia",
+        "webUrl":"http://www.theguardian.com/world/australia",
+        "apiUrl":"http://content.guardianapis.com/world/australia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/victoria",
+        "type":"keyword",
+        "webTitle":"Victoria",
+        "webUrl":"http://www.theguardian.com/world/victoria",
+        "apiUrl":"http://content.guardianapis.com/world/victoria",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-c4788b52-ffaf-4104-a0c6-5835b5f4fe3c",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380864062463/3e018dae-03d8-4298-9278-5dde8591b244-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380864062463/3e018dae-03d8-4298-9278-5dde8591b244-460x276.jpeg",
+            "source":"AAPImage",
+            "photographer":"Joe Castro",
+            "altText":"Richmond Tigers",
+            "height":"276",
+            "credit":"Joe Castro/AAPImage",
+            "caption":"Richmond Tigers after losing elimination final to Carlton. Photograph: Joe Castro/AAPImage",
+            "mediaId":"gu-fc-c4788b52-ffaf-4104-a0c6-5835b5f4fe3c",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/oct/04/west-coast-eagles-appoint-adam-simpson",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-03T23:07:24Z",
+      "webTitle":"West Coast Eagles appoint Adam Simpson as new coach",
+      "webUrl":"http://www.theguardian.com/sport/2013/oct/04/west-coast-eagles-appoint-adam-simpson",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/oct/04/west-coast-eagles-appoint-adam-simpson",
+      "fields":{
+        "trailText":"<p>West Coast have capped a banner week in Adam Simpson's career by appointing him as their new senior coach</p>",
+        "headline":"West Coast Eagles appoint Adam Simpson as new senior coach",
+        "body":"<p>West Coast have capped a banner week in Adam Simpson's outstanding AFL career by appointing him as their new senior coach.</p><p>The Eagles made the announcement on Thursday night, five days after Simpson was a key member of the Hawthorn coaching panel that masterminded the grand final win over Fremantle. It is the 37-year-old's first senior coaching appointment.</p><p>Simpson has a strong record – a 306-game playing career at North Melbourne that featured two premierships and five years as captain, following by four years as an assistant under the widely-respected Hawthorn senior coach Alastair Clarkson.</p><p>He won the job ahead of a strong field that featured current Eagles assistant Scott Burns, Fremantle deputy Peter Sumich and Sydney assistant Leigh Tudor.<br />Simpson and Sumich were considered the frontrunners. Sumich was a star forward at West Coast and also served there as an assistant coach before going to the Dockers two years ago, and like Simpson,he has been considered a senior coach in waiting.</p><p>Simpson will have a three-year deal and he takes over from John Worsfold, who coached the Eagles for 12 years before leaving the job early last month.</p><p>\"I am grateful for this opportunity and I look forward to moving across to Perth with my family and settling in to the challenge ahead,\" Simpson said in a club statement. \"I have always admired West Coast from afar and I believe the list has an exciting mix of senior and emerging young players.\"</p><p>Simpson worked at Hawthorn as their stoppages coach from 2010-12 and this year was in charge of their forwards.</p><p>He singled out Clarkson and Hawks football manager Chris Fagan for the help they gave him. \"Hawthorn have been fantastic for me in the last four years and it was certainly a great experience to be a part of the coaching group as the club achieved the ultimate success last Saturday,\" he said.</p><p>\"Being so closely involved from a coaching perspective has provided me with a sense of the hard work which has to be done to achieve a premiership. I obviously enjoyed that feeling as a player, but it is different as a coach.</p><p>\"I will move across to Perth as soon as possible and I look forward to meeting the players and working with them from the start of pre-season.\"</p><p>The Hawks coach, Alastair Clarkson, said in a club statement that Simpson was ready for the senior coaching hot seat.</p><p>\"In his four years at Hawthorn, Adam has fostered a terrific relationship with the playing group and displayed a high level of excellence across all facets of his coaching duties,\" Clarkson said. \"He is well-placed for the transition into senior coaching, which is thoroughly deserved on the back of an impressive coaching apprenticeship and a distinguished playing career.\"<br /></p><!-- Guardian Watermark: internal-code/content/419017067|2013-11-05T11:03:51Z|bbd8f11efffc2cf5bbb6771229207f10cc467b8b -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-03T23:07:24Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/8/11/1376207967472/Mark-LeCras-of-West-Coast-001.jpg",
+        "standfirst":"• Coach helped Hawthorn to premiership<br />• John Worsfold left last month",
+        "shortUrl":"http://gu.com/p/3j9nj",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/8/11/1376207967472/Mark-LeCras-of-West-Coast-001.jpg",
+        "wordcount":"450",
+        "commentable":"false",
+        "internalContentCode":"419017067",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Australian Associated Press",
+        "publication":"theguardian.com",
+        "internalPageCode":"1975501",
+        "productionOffice":"AUS",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-06T23:07:24Z"
+      },
+      "tags":[{
+        "id":"sport/west-coast-eagles",
+        "type":"keyword",
+        "webTitle":"West Coast Eagles",
+        "webUrl":"http://www.theguardian.com/sport/west-coast-eagles",
+        "apiUrl":"http://content.guardianapis.com/sport/west-coast-eagles",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/hawthorn",
+        "type":"keyword",
+        "webTitle":"Hawthorn",
+        "webUrl":"http://www.theguardian.com/sport/hawthorn",
+        "apiUrl":"http://content.guardianapis.com/sport/hawthorn",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/afl",
+        "type":"keyword",
+        "webTitle":"AFL",
+        "webUrl":"http://www.theguardian.com/sport/afl",
+        "apiUrl":"http://content.guardianapis.com/sport/afl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australian-rules-football",
+        "type":"keyword",
+        "webTitle":"Australian rules football",
+        "webUrl":"http://www.theguardian.com/sport/australian-rules-football",
+        "apiUrl":"http://content.guardianapis.com/sport/australian-rules-football",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419017068",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/8/11/1376207990629/Mark-LeCras-of-West-Coast-006.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Joe Castro",
+            "altText":"Mark LeCras of West Coast is congratulated by team-mates",
+            "height":"276",
+            "credit":"Joe Castro/AAP Image",
+            "caption":"West Coast endured mixed fortunes last season. Photograph: Joe Castro/AAP Image",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419017069",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/8/11/1376207967472/Mark-LeCras-of-West-Coast-001.jpg",
+          "typeData":{
+            "source":"AAP Image",
+            "photographer":"Joe Castro",
+            "altText":"Mark LeCras of West Coast is congratulated by team-mates",
+            "height":"84",
+            "credit":"Joe Castro/AAP Image",
+            "caption":"Mark LeCras of West Coast is congratulated by team-mates Photograph: Joe Castro/AAP Image",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }],
+    "editorsPicks":[],
+    "storyPackage":[],
+    "leadContent":[{
+      "id":"sport/2013/aug/28/james-hird-essendon-responsibility-penalties",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-08-28T01:14:00Z",
+      "webTitle":"James Hird accepts some responsibility for Essendon penalties",
+      "webUrl":"http://www.theguardian.com/sport/2013/aug/28/james-hird-essendon-responsibility-penalties",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/aug/28/james-hird-essendon-responsibility-penalties",
+      "fields":{
+        "trailText":"<p>Suspended Essendon coach says he should have known more about what was going on with supplements program</p>",
+        "headline":"James Hird accepts some responsibility for Essendon penalties",
+        "body":"<p>The suspended Essendon AFL coach, James Hird, says he accepts some responsibility for the heavy penalties imposed on his club by the AFL.</p><p>Hird faced the media outside his house on Wednesday morning and said he broke no rules, but should have known more about what was going on in the Bombers' controversial 2012 supplements program and should have done more to stop some things.</p><p>He promised he would tell his full side of the story in the coming days.</p><p>\"I do take a level of responsibility for what happened at our football club in 2012,\" Hird said.</p><p>\"I think for the good of the game and the good of our football club and most importantly for our players and supporters, I'm so glad this has finished and our game can move and our players can move on.\"</p><p>The Bombers were on Tuesday hit with the biggest set of sanctions in AFL history over their 2012 supplements program – among them a 12-month ban for Hird.</p><p>Essendon have been thrown out of this year's finals despite having earned a top eight position, fined $2m, stripped of draft picks for the next two years, and had key officials banned or fined for conduct unbecoming and bringing the game into disrepute.</p><p>Hird said it had been a trying time for everybody, especially the club's players.</p><p>\"Speaking to the players last night and speaking to them this morning, I think we're all disappointed at the level of sanctions that have been put on the club,\" he said.</p><p>\"But we understand that some sanctions had to be placed on our club and it's time to move on. From my point of view, it's disappointing not to be coaching next year.</p><p>\"But I should've known what was going on. I should've done more and I'm very disappointed that I didn't.\"</p><p>Hird denied that by accepting the penalties, he conceded that he did break the rules.</p><p>\"I didn't break the rules that I was charged with. Those charges have been dropped,\" he said.</p><p>Asked what he was guilty of, Hird replied: \"There's a level of responsibility you have as a senior coach. A senior coach is responsible for a lot of things at a football club.</p><p>\"There's things that went on at our football club that shouldn't have happened last year and as senior coach I have to take some responsibility for what happened and not doing more to stop it.\"</p><p>Hird confirmed he had dropped his supreme court action against the AFL – launched last week after the AFL released its charge sheet against Essendon and four club officials, including him – because he believed it was \"time to move on\".</p><p>\"I think it wasn't good for anyone in our game, particularly our players and our club,\" he said.</p><p>\"Our players need to be able to go and play football and move on. Fighting a battle in the supreme court against the AFL on a matter of principle, I think, was probably not the right thing to do for our players and even for myself and my family. It's time to move on.\"</p><!-- Guardian Watermark: internal-code/content/415962619|2013-11-05T11:03:51Z|270f0076cd854e7f3500c31bbf87d3166062d9bf -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-08-28T01:19:15Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/28/1377652507581/james-hird-001.jpg",
+        "standfirst":"Suspended Essendon coach says he should have known more about what was going on with supplements program",
+        "shortUrl":"http://gu.com/p/3tb2a",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/28/1377652507581/james-hird-001.jpg",
+        "wordcount":"501",
+        "commentable":"false",
+        "internalContentCode":"415962619",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Australian Associated Press",
+        "publication":"theguardian.com",
+        "internalPageCode":"1956700",
+        "productionOffice":"AUS",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-08-31T01:14:00Z"
+      },
+      "tags":[{
+        "id":"sport/james-hird",
+        "type":"keyword",
+        "webTitle":"James Hird",
+        "webUrl":"http://www.theguardian.com/sport/james-hird",
+        "apiUrl":"http://content.guardianapis.com/sport/james-hird",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/essendon",
+        "type":"keyword",
+        "webTitle":"Essendon",
+        "webUrl":"http://www.theguardian.com/sport/essendon",
+        "apiUrl":"http://content.guardianapis.com/sport/essendon",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australian-rules-football",
+        "type":"keyword",
+        "webTitle":"Australian rules football",
+        "webUrl":"http://www.theguardian.com/sport/australian-rules-football",
+        "apiUrl":"http://content.guardianapis.com/sport/australian-rules-football",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"sport/afl",
+        "type":"keyword",
+        "webTitle":"AFL",
+        "webUrl":"http://www.theguardian.com/sport/afl",
+        "apiUrl":"http://content.guardianapis.com/sport/afl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-415963824",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/28/1377652511138/james-hird-002.jpg",
+          "typeData":{
+            "source":"AAPIMAGE",
+            "photographer":"JOE CASTRO",
+            "altText":"james hird",
+            "height":"276",
+            "credit":"JOE CASTRO/AAPIMAGE",
+            "caption":"Essendon coach James Hird makes a statement outside his house in Melbourne on Wednesday morning. Photograph: AAP/Joe Castro",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-415963825",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/28/1377652507581/james-hird-001.jpg",
+          "typeData":{
+            "source":"AAPIMAGE",
+            "photographer":"JOE CASTRO",
+            "altText":"james hird",
+            "height":"84",
+            "credit":"JOE CASTRO/AAPIMAGE",
+            "caption":"Essendon coach James Hird makes a statement outside him home in Melbourne, Wednesday, Aug. 28, 2013. Hird was suspended for 12 months by the AFL in the ongoing supplements scandal. (AAP Image/Joe Castro) NO ARCHIVING Photograph: JOE CASTRO/AAPIMAGE",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/2013/aug/28/essendon-chairman-asks-players-forgiveness",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-08-27T23:54:19Z",
+      "webTitle":"Essendon chairman asks players for forgiveness over supplements scandal",
+      "webUrl":"http://www.theguardian.com/sport/2013/aug/28/essendon-chairman-asks-players-forgiveness",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/aug/28/essendon-chairman-asks-players-forgiveness",
+      "fields":{
+        "trailText":"<p>Paul Little says players had felt the strain over the last six weeks and 'probably do feel let down'</p>",
+        "headline":"Essendon chairman asks players for forgiveness over supplements scandal",
+        "body":"<p>The Essendon AFL chairman, Paul Little, has asked the club's players for their forgiveness, saying they had been placed under enormous stress during the supplements scandal.</p><p>\"I think the players clearly have felt the strain over the last five or six weeks and there was a lot of pressure on them,\" Little told a media conference on Tuesday night.</p><p>\"It had been building. I think what I can say to the players now is that there is a clear way forward, and ask them to forgive us for the mistakes we've made.</p><p>\"I think the players probably do feel let down.\"</p><p>The Bombers have been dumped from this year's finals despite having earned a top-eight position, fined $2m, stripped of draft picks for the next two years, and senior coach James Hird has been suspended until 25 August 2014.</p><p>The AFL Commission chairman, Mike Fitzpatrick, said the Bombers had set up a supplements program that was experimental and inappropriate.</p><p>He also said it was \"inadequately vetted and controlled\" and failed to protect the health, welfare and safety of players.</p><p>Fitzpatrick says the fact the issue has dragged on for nearly seven months has overshadowed the season.</p><p>Little said the Bombers were placing a high importance on the welfare of their players.</p><p>\"From our players' point of view, there is a significant amount of monitoring going on now to ensure that their health and their welfare is uppermost in our strategic thinking,\" he said.</p><!-- Guardian Watermark: internal-code/content/415960549|2013-11-05T11:03:51Z|6d3da7f74e8e64b8589483baa55105435668d1d8 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-08-27T23:54:19Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/28/1377646679041/paul-little-002.jpg",
+        "standfirst":"Paul Little says players had felt the strain over the last six weeks and 'probably do feel let down'",
+        "shortUrl":"http://gu.com/p/3tb22",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/28/1377646679041/paul-little-002.jpg",
+        "wordcount":"234",
+        "commentable":"false",
+        "internalContentCode":"415960549",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Australian Associated Press",
+        "publication":"theguardian.com",
+        "internalPageCode":"1956692",
+        "productionOffice":"AUS",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-08-30T23:54:19Z"
+      },
+      "tags":[{
+        "id":"sport/essendon",
+        "type":"keyword",
+        "webTitle":"Essendon",
+        "webUrl":"http://www.theguardian.com/sport/essendon",
+        "apiUrl":"http://content.guardianapis.com/sport/essendon",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/afl",
+        "type":"keyword",
+        "webTitle":"AFL",
+        "webUrl":"http://www.theguardian.com/sport/afl",
+        "apiUrl":"http://content.guardianapis.com/sport/afl",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australian-rules-football",
+        "type":"keyword",
+        "webTitle":"Australian rules football",
+        "webUrl":"http://www.theguardian.com/sport/australian-rules-football",
+        "apiUrl":"http://content.guardianapis.com/sport/australian-rules-football",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/australia-sport",
+        "type":"keyword",
+        "webTitle":"Australia sport",
+        "webUrl":"http://www.theguardian.com/sport/australia-sport",
+        "apiUrl":"http://content.guardianapis.com/sport/australia-sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"sport/james-hird",
+        "type":"keyword",
+        "webTitle":"James Hird",
+        "webUrl":"http://www.theguardian.com/sport/james-hird",
+        "apiUrl":"http://content.guardianapis.com/sport/james-hird",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-415961027",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/28/1377646675808/paul-little-001.jpg",
+          "typeData":{
+            "source":"AAPIMAGE",
+            "photographer":"JULIAN SMITH",
+            "altText":"paul little",
+            "height":"276",
+            "credit":"JULIAN SMITH/AAPIMAGE",
+            "caption":"The Essendon chairman, Paul Little, speaks at AFL House in Melbourne on Tuesday night. Photograph: AAP/Julian Smith",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-415961028",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/28/1377646679041/paul-little-002.jpg",
+          "typeData":{
+            "source":"AAPIMAGE",
+            "photographer":"JULIAN SMITH",
+            "altText":"paul little",
+            "height":"84",
+            "credit":"JULIAN SMITH/AAPIMAGE",
+            "caption":"Essendon chairman Paul Little speaks at AFL House in Melbourne on Tuesday night. Photograph: AAP/Julian Smith Photograph: JULIAN SMITH/AAPIMAGE",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

@@ -1,0 +1,353 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"science/gallery/2013/oct/30/2013-nikon-photomicrography-competition-pictures",
+      "sectionId":"science",
+      "sectionName":"Science",
+      "webPublicationDate":"2013-10-30T12:04:00Z",
+      "webTitle":"Life in close-up: photomicrography competition winners - in pictures",
+      "webUrl":"http://www.theguardian.com/science/gallery/2013/oct/30/2013-nikon-photomicrography-competition-pictures",
+      "apiUrl":"http://content.guardianapis.com/science/gallery/2013/oct/30/2013-nikon-photomicrography-competition-pictures",
+      "fields":{
+        "trailText":"<p>Nikon has announced the winners of its 2013 Small World Photomicrography Competition. Winning images were selected for displaying artistic quality and scientific technique</p>",
+        "headline":"Life in close-up: photomicrography competition winners - in pictures",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-30T12:41:53Z",
+        "hasStoryPackage":"false",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/online/2013/10/29/1383060634506/A-Marine-worm-one-of-the--003.jpg",
+        "standfirst":"Nikon has announced the winners of its 2013 <a href=\"http://www.nikonsmallworld.com/\">Small World Photomicrography Competition</a>. Winning images were selected for displaying both artistic quality and scientific technique. Eric Flem at Nikon said: \"After 39 years we are proud to watch the competition continue to grow, allowing us to honor this pool of talented researchers, artists, and photomicrographers, and showcase the importance and beauty of the work they do in the realm of scientific imaging\"",
+        "shortUrl":"http://gu.com/p/3kvy3",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/online/2013/10/29/1383060634506/A-Marine-worm-one-of-the--003.jpg",
+        "commentable":"false",
+        "internalContentCode":"421213836",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "publication":"theguardian.com",
+        "internalPageCode":"1988553",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-02T12:04:03Z"
+      },
+      "tags":[{
+        "id":"science/microbiology",
+        "type":"keyword",
+        "webTitle":"Microbiology",
+        "webUrl":"http://www.theguardian.com/science/microbiology",
+        "apiUrl":"http://content.guardianapis.com/science/microbiology",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/science",
+        "type":"keyword",
+        "webTitle":"Science",
+        "webUrl":"http://www.theguardian.com/science/science",
+        "apiUrl":"http://content.guardianapis.com/science/science",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"artanddesign/photography",
+        "type":"keyword",
+        "webTitle":"Photography",
+        "webUrl":"http://www.theguardian.com/artanddesign/photography",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/photography",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"science/biology",
+        "type":"keyword",
+        "webTitle":"Biology",
+        "webUrl":"http://www.theguardian.com/science/biology",
+        "apiUrl":"http://content.guardianapis.com/science/biology",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"world/animals",
+        "type":"keyword",
+        "webTitle":"Animals",
+        "webUrl":"http://www.theguardian.com/world/animals",
+        "apiUrl":"http://content.guardianapis.com/world/animals",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"environment/wildlife",
+        "type":"keyword",
+        "webTitle":"Wildlife",
+        "webUrl":"http://www.theguardian.com/environment/wildlife",
+        "apiUrl":"http://content.guardianapis.com/environment/wildlife",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"type/gallery",
+        "type":"type",
+        "webTitle":"Gallery",
+        "webUrl":"http://www.theguardian.com/inpictures",
+        "apiUrl":"http://content.guardianapis.com/inpictures",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421283758",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/online/2013/10/29/1383060634506/A-Marine-worm-one-of-the--003.jpg",
+          "typeData":{
+            "source":"Alvaro Migotto",
+            "altText":"A Marine worm, one of the winning images in the 2013 annual Nikon Small World Photomicrography Compe",
+            "height":"84",
+            "credit":"Alvaro Migotto",
+            "caption":"A Marine worm, one of the winning images in the 2013 annual Nikon Small World Photomicrography Competition Photograph: Alvaro Migotto",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-421213803",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":1,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383059414058/Chaetoceros-debilis-marin-008.jpg",
+          "typeData":{
+            "source":"Wim van Egmond",
+            "altText":"Nikon Small World: Chaetoceros debilis (marine diatom), a colonial plankton organism\rDifferent",
+            "height":"480",
+            "credit":"Wim van Egmond",
+            "caption":"<strong>1st: <em>Chaetoceros debilis</em> (marine diatom), a plankton organism that lives in colonies</strong>\r\n<br/>\r\n<br/>\r\nWim van Egmond<br/>\r\nMicropolitan Museum\r\nBerkel en Rodenrijs, Zuid Holland, The Netherlands\r\n<br/>\r\n<em>A freelance photographer and artist with a passion for aquatic microorganisms, Egmond captured the detail of this fragile helical chain in three-dimensions by using a 'partial image stack' of more than 90 pictures</em>",
+            "width":"720"
+          }
+        }]
+      },{
+        "id":"gu-image-421213807",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":2,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383059410790/Chrysemys-picta-painted-t-007.jpg",
+          "typeData":{
+            "source":"Dr Joseph Corbo",
+            "altText":"Nikon Small World: Chrysemys picta (painted turtle) retina\rDifferential Interference Contrast\r",
+            "height":"480",
+            "credit":"Dr Joseph Corbo",
+            "caption":"<strong>2nd: Retina of a painted turtle (<em>Chrysemys picta</em>)</strong>\r\n<br/>\r\n<br/>\r\nDr Joseph Corbo<br/>\r\nWashington University School of Medicine\r\nSt Louis, Missouri, USA\r\n",
+            "width":"637"
+          }
+        }]
+      },{
+        "id":"gu-image-421213813",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":3,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383059408320/Marine-worm-006.jpg",
+          "typeData":{
+            "source":"Dr Alvaro Esteves Migotto",
+            "altText":"Nikon Small World: Marine worm",
+            "height":"480",
+            "credit":"Dr Alvaro Esteves Migotto",
+            "caption":"<strong>3rd: Marine worm</strong>\r\n<br/>\r\n<br/>\r\nDr Alvaro Esteves Migotto<br/>\r\nUniversidade de São Paulo, Centro de Biologia Marinha\r\nSão Paulo, São Paulo, Brazil\r\n",
+            "width":"725"
+          }
+        }]
+      },{
+        "id":"gu-image-421213816",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":4,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383059306260/Paramecium-sp.-showing-th-005.jpg",
+          "typeData":{
+            "source":"Rogelio Moreno Gill",
+            "altText":"Nikon Small World: Paramecium sp. showing the nucleus, mouth and water expulsion vacuoles\rDiff",
+            "height":"480",
+            "credit":"Rogelio Moreno Gill",
+            "caption":"<strong>4th: A paramecium, showing the nucleus, mouth and water expulsion vacuoles</strong>\r\n<br/>\r\n<br/>\r\nRogelio Moreno Gill<br/>\r\nPanama City, Panama\r\n",
+            "width":"611"
+          }
+        }]
+      },{
+        "id":"gu-image-421213800",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":5,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383059297918/Adhesive-pad-on-a-foreleg-002.jpg",
+          "typeData":{
+            "source":"Dr Jan Michels",
+            "altText":"Nikon Small World: Adhesive pad on a foreleg of Coccinella septempunctata (ladybird beetle)  ",
+            "height":"480",
+            "credit":"Dr Jan Michels",
+            "caption":"<strong>Adhesive pad on the foreleg of a ladybird beetle <em>Coccinella septempunctata</em></strong>\r\n<br/>\r\n<br/>\r\nDr Jan Michels<br/>\r\nInstitute of Zoology, Functional Morphology and Biomechanics, Christian-Albrechts-Universität zu Kiel\r\nKiel, Germany\r\n",
+            "width":"480"
+          }
+        }]
+      },{
+        "id":"gu-image-421213810",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":6,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383059303230/Hippocampal-neuron-receiv-004.jpg",
+          "typeData":{
+            "source":"Dr Kieran Boyle",
+            "altText":"Nikon Small World: Hippocampal neuron receiving excitatory contacts.\rFluorescence and Confocal",
+            "height":"480",
+            "credit":"Dr Kieran Boyle",
+            "caption":"<strong>A neuron in the hippocampus of the brain receiving excitatory inputs</strong>\r\n<br/>\r\n<br/>\r\nDr Kieran Boyle<br/>\r\nUniversity of Glasgow, Institute of Neuroscience and Psychology\r\nScotland, UK\r\n",
+            "width":"480"
+          }
+        }]
+      },{
+        "id":"gu-image-421213805",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":7,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383059301045/Chamaeleo-calyptratus-vei-003.jpg",
+          "typeData":{
+            "source":"Dorit Hockman",
+            "altText":"Nikon Small World: Chamaeleo calyptratus (veiled chameleon), embryo showing cartilage (blue) a",
+            "height":"481",
+            "credit":"Dorit Hockman",
+            "caption":"<strong>Embryo of a veiled chameleon (<em>Chamaeleo calyptratus</em>) showing cartilage (blue) and bone (red) </strong>\r\n<br/>\r\n<br/>\r\nDorit Hockman<br/>\r\nUniversity of Cambridge\r\nCambridge, UK\r\n",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-421216324",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":8,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383061319185/Macrobrachium-shrimp-ghos-011.jpg",
+          "typeData":{
+            "source":"Vitoria Tobias Santos",
+            "altText":"Nikon Small World: Macrobrachium shrimp (ghost shrimp) eye Stereomicroscopy 140X              ",
+            "height":"480",
+            "credit":"Vitoria Tobias Santos",
+            "caption":"<strong>The eye of a ghost shrimp (Macrobrachium) </strong>\r\n<br/>\r\n<br/>Vitoria Tobias Santos \r\nUniversidade Federal do Rio de Janeiro, Rodrigo Evo Devo Group<br/>\r\n Macaé, Rio de Janeiro, Brazil ",
+            "width":"630"
+          }
+        }]
+      },{
+        "id":"gu-image-421216326",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":9,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383061321483/Mouse-vertebra-section-Fo-012.jpg",
+          "typeData":{
+            "source":"Dr Michael Paul Nelson and Samantha Smith",
+            "altText":"Nikon Small World: Mouse vertebra section Focus Stacking 200X                                 ",
+            "height":"480",
+            "credit":"Dr Michael Paul Nelson and Samantha Smith",
+            "caption":"<strong>Section through a mouse vertebra</strong> \r\n<br/>\r\n<br/>\r\nDr Michael Paul Nelson and Samantha Smith <br/>\r\nDepartment of Pathology/Neuropathology, University of Alabama at Birmingham\r\nUSA  ",
+            "width":"484"
+          }
+        }]
+      },{
+        "id":"gu-image-421216410",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":10,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383061788472/Pityohyphantes-phrygianus-013.jpg",
+          "typeData":{
+            "source":"Geir Drange",
+            "altText":"Nikon Small World: Pityohyphantes phrygianus (sheet weaver spider) with a parasitic wasp larva",
+            "height":"480",
+            "credit":"Geir Drange",
+            "caption":"<strong>Sheet weaver spider (<em>Pityohyphantes phrygianus</em>) with a parasitic wasp larva on its abdomen</strong><br/>\r\n<br/>\r\nGeir Drange <br/>\r\nAsker, Norway ",
+            "width":"710"
+          }
+        }]
+      },{
+        "id":"gu-image-421216363",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":11,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383061316948/Peripheral-nerves-in-E11.-010.jpg",
+          "typeData":{
+            "source":"Zhong Hua",
+            "altText":"Nikon Small World: Peripheral nerves in E11.5 mouse embryo Confocal 5X                        ",
+            "height":"496",
+            "credit":"Zhong Hua",
+            "caption":"<strong>Peripheral nerves in a mouse embryo</strong>\r\n<br/>\r\n<br/>\r\nZhong Hua<br/>\r\n Department of Molecular Biology & Genetics, Johns Hopkins University School of Medicine\r\n Baltimore, Maryland, USA ",
+            "width":"400"
+          }
+        }]
+      },{
+        "id":"gu-image-421216328",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":12,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383061314181/Nerve-and-muscle-thin-sec-009.jpg",
+          "typeData":{
+            "source":"David G Ward",
+            "altText":"Nikon Small World: Nerve and muscle thin section Brightfield, Image Stacking 40X              ",
+            "height":"480",
+            "credit":"David G Ward",
+            "caption":"<strong>A thin section through nerve and muscle </strong>\r\n<br/>\r\n<br/>\r\nDr David Ward<br/>\r\n dgward.com\r\n Oakdale, California, USA  ",
+            "width":"609"
+          }
+        }]
+      },{
+        "id":"gu-image-421216322",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":13,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383061791801/Insect-wrapped-in-spider--014.jpg",
+          "typeData":{
+            "source":"Mark A Sanders",
+            "altText":"Nikon Small World: Insect wrapped in spider web Confocal, Autofluorescence, Image Stacking 85X",
+            "height":"481",
+            "credit":"Mark A Sanders",
+            "caption":"<strong>An insect wrapped in spider silk</strong>\r\n<br/>\r\n<br/>\r\nMark A Sanders <br/>\r\nUniversity Imaging Centers, University of Minnesota \r\nMinneapolis, USA ",
+            "width":"400"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[]
+  }
+}

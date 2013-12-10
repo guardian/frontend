@@ -81,9 +81,8 @@ define([
                 that.logView.call(that);
             });
 
-            common.mediator.on('module:clickstream:click', function(params) {
-                var isSamePage = params[2];
-                if (!isSamePage && params[0].nodeName.toLowerCase() === 'a') {
+            common.mediator.on('module:clickstream:click', function(clickSpec) {
+                if (!clickSpec.samePage) {
                     that.log.call(that);
                 }
             });

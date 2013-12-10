@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>config tests</title>
+
+<script>
+
+// base config:
+curl = {
+	baseUrl: '.',
+	paths: {
+		curl: '../src/curl',
+		foo: 'first-foo',
+		bar: 'first-bar'
+	},
+	packages: {
+		'dorothy': { location: 'kansas', main: 'toto' },
+		'alice': { location: 'wonderland', main: 'white rabbit' }
+}
+};
+
+</script>
+<script src="../src/curl.js" type="text/javascript"></script>
+
+
+<script type="text/javascript">
+
+curl(['curl/_privileged', 'domReady!'], test1, fail);
+
+function test1 (priv) {
+	var config, paths, packages;
+//	curl.config({
+	curl({
+		baseUrl: 'changed',
+		paths: {
+			// change a path
+			foo: 'second-foo',
+			baz: 'only-baz'
+		},
+		packages: {
+			// change a package
+			dorothy: { location: 'ohio', main: 'fido' },
+			bonny: { location: 'seven-seas', main: 'anne' }
+		}
+	});
+	config = priv.config();
+	paths = config.paths;
+	packages = config.packages;
+	// test for changed values
+	write((config.baseUrl == 'changed' ? 'SUCCESS' : 'FAILED') + ': baseUrl should have been modified.');
+	write((paths.foo == 'second-foo' ? 'SUCCESS' : 'FAILED') + ': path should have been modified.');
+	write((packages.dorothy && packages.dorothy.location == 'ohio' ? 'SUCCESS' : 'FAILED') + ': package main should have been modified.');
+	// test for unchanged values
+	write((paths.bar == 'first-bar' ? 'SUCCESS' : 'FAILED') + ': path should have been preserved.');
+	write((packages.alice && packages.alice.location == 'wonderland' ? 'SUCCESS' : 'FAILED') + ': package should have been preserved.');
+	// test for new values
+	write((paths.baz == 'only-baz' ? 'SUCCESS' : 'FAILED') + ': path should have been added.');
+	write((packages.bonny && packages.bonny.location == 'seven-seas' ? 'SUCCESS' : 'FAILED') + ': package should have been added.');
+
+	// config again
+	curl.config({
+		baseUrl: 'third',
+		paths: {
+			// change a path
+			foo: 'third-foo'
+		},
+		packages: {
+			// change a package
+			dorothy: { location: 'canada', main: 'fido' }
+		}
+	});
+
+	config = priv.config();
+	paths = config.paths;
+	packages = config.packages;
+	// test for changed values
+	write((config.baseUrl == 'third' ? 'SUCCESS' : 'FAILED') + ': baseUrl should have been modified again.');
+	write((paths.foo == 'third-foo' ? 'SUCCESS' : 'FAILED') + ': path should have been modified again.');
+	write((packages.dorothy && packages.dorothy.location == 'canada' ? 'SUCCESS' : 'FAILED') + ': package main should have been modified again.');
+}
+
+function test2 () {
+}
+
+function fail (ex) {
+	write('FAILED: ' + ex.message);
+}
+
+function write (msg) {
+	curl(['domReady!'], function () {
+		document.body.appendChild(document.createElement('div')).innerHTML = msg;
+	});
+}
+
+</script>
+
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,295 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"money/blog/2013/oct/30/entitled-to-work-part-time-rights-child-flexible",
+      "sectionId":"money",
+      "sectionName":"Money",
+      "webPublicationDate":"2013-10-30T07:30:01Z",
+      "webTitle":"Are you entitled to work part-time, and what are your rights if you do?",
+      "webUrl":"http://www.theguardian.com/money/blog/2013/oct/30/entitled-to-work-part-time-rights-child-flexible",
+      "apiUrl":"http://content.guardianapis.com/money/blog/2013/oct/30/entitled-to-work-part-time-rights-child-flexible",
+      "fields":{
+        "trailText":"If you have a minimum of 26 weeks service, and care for a child, you have the right to put in a request for flexible hours",
+        "headline":"Are you entitled to work part-time, and what are your rights if you do?",
+        "body":"<p>Part-time workers are more motivated than full-time employees, <a href=\"https://www.i-l-m.com/Why-ILM/Research-reports/Beyond-the-bonus\" title=\"\">according to a survey by the Institute of Leadership and Management</a> (ILM). When asked about their attitudes to their jobs, 75% of part-time workers classified themselves as \"highly or fairly motivated\", compared with 68% of full-timers. The ILM survey also found that part-time workers are more likely to have a higher respect for their manager, and a more positive attitude towards their employer (57%) than full-time staff (49%).</p><p>There are now more than 8 million part-time workers in the UK, although it's clear from the official figures this month from the Office for National Statistics that almost 1.5 million people are only part-time because they cannot find full-time jobs (this latter statistic apparently being the highest figure since records began in 1992).</p><p>If you do want to alter your full-time working contract to a part-time one, you could approach your employer on an informal basis. Your actual legal right to insist on a change is, however, limited.</p><p>If you have a minimum of 26 weeks service, and are the parent or carer of a child, you do have the right under the <a href=\"http://www.legislation.gov.uk/ukpga/1996/18/contents\" title=\"\">Employment Rights Act 1996</a> to put in a request to your employer to work flexibly. Your employer must then seriously consider your request for working flexibly, which could include reduced or changed hours, or working from home. But there is no automatic right to work flexibly, and challenging a decision that doesn't go your way is likely to be difficult if your employer can show that the request and refusal has been properly considered. If an employer does not justify its refusal with prescribed business reasons, however, it could lay itself open to a claim of indirect sex discrimination (since statistically the majority of carers for children are female).</p><p>If you are allowed to change to part-time working, or start a new job on that basis, you are protected under the <a href=\"http://www.legislation.gov.uk/uksi/2000/1551/regulation/1/made\" title=\"\">Part-Time Workers (Prevention of Less Favourable Treatment) Regulations 2000 (the Regulations)</a>.</p><p>The main protection you have is not to be treated less favourably than a \"comparable full-time worker\" because of your part-time status. A comparable worker is someone engaged by the same employer as you and based at the same establishment (where possible). That person should also have the same type of contract, be involved in broadly similar work and have similar skills, qualification and experience.</p><p>As a part-time worker, you should receive the same treatment for:</p><p>• pay (including sick pay, maternity, paternity and adoption leave and pay);</p><p>• holidays;</p><p>• pension;</p><p>• training and career development;</p><p>• promotion and transfer;</p><p>• redundancy;</p><p>• opportunities for career breaks.</p><p>It isn't unlawful for an employer to take a pro-rata approach, in which a proportion of the full-time benefits are provided in relation to the actual number of hours you work. An employer can also lawfully treat part-time staff differently if it can be \"objectively justified\" – this could include a part-time worker who is denied health insurance available to full-time counterparts, for example, because of the disproportionate cost of providing the benefit.</p><p>If you do think you are being treated less favourably because you are employed for fewer hours, it is wise to first discuss the issue with your line manager or someone in HR. You are entitled to request a written statement explaining the reason for the less favourable treatment, and the response from your employer should be given within 21 days. If you are still not satisfied, you may be able to make a discrimination claim to the employment tribunal, which must be done within three months less one day of the treatment you are complaining about.</p><p>Are you happy being a part-time worker? Have you suffered any detriment compared with full-time employees or been refused part-time work?</p><p></p><p><em>• Philip Landau is an </em><a href=\"http://www.settlementagreements.com/about-us\" title=\"\"><em>employment lawyer at Landau Zeffertt Weir Solicitors</em></a><em>. You can </em><a href=\"https://twitter.com/philiplandau\" title=\"\"><em>follow him on Twitter</em></a><em>.</em></p><!-- Guardian Watermark: internal-code/content/421196027|2013-11-05T11:03:48Z|cd61b340cc515678480019b209ef4ec1e245fe0c -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-30T07:30:01Z",
+        "hasStoryPackage":"false",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383048360880/Office-workers-007.jpg",
+        "standfirst":"If you have a minimum of 26 weeks service, and care for a child, you have the right to put in a request for flexible hours",
+        "shortUrl":"http://gu.com/p/3kvf4",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383048360880/Office-workers-007.jpg",
+        "wordcount":"632",
+        "commentable":"true",
+        "internalContentCode":"421196027",
+        "allowUgc":"false",
+        "internalOctopusCode":"8236147",
+        "isPremoderated":"false",
+        "byline":"Philip Landau",
+        "publication":"theguardian.com",
+        "internalPageCode":"1988392",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-06T07:30:01Z"
+      },
+      "tags":[{
+        "id":"money/blog",
+        "type":"blog",
+        "webTitle":"Money blog",
+        "webUrl":"http://www.theguardian.com/money/blog",
+        "apiUrl":"http://content.guardianapis.com/money/blog",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"law/employment-law",
+        "type":"keyword",
+        "webTitle":"Employment law",
+        "webUrl":"http://www.theguardian.com/law/employment-law",
+        "apiUrl":"http://content.guardianapis.com/law/employment-law",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"money/work-and-careers",
+        "type":"keyword",
+        "webTitle":"Work & careers",
+        "webUrl":"http://www.theguardian.com/money/work-and-careers",
+        "apiUrl":"http://content.guardianapis.com/money/work-and-careers",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/money",
+        "type":"keyword",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/money/money",
+        "apiUrl":"http://content.guardianapis.com/money/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"law/law",
+        "type":"keyword",
+        "webTitle":"Law",
+        "webUrl":"http://www.theguardian.com/law/law",
+        "apiUrl":"http://content.guardianapis.com/law/law",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"lifeandstyle/women",
+        "type":"keyword",
+        "webTitle":"Women",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/women",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/women",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"profile/philip-landau",
+        "type":"contributor",
+        "webTitle":"Philip Landau",
+        "webUrl":"http://www.theguardian.com/profile/philip-landau",
+        "apiUrl":"http://content.guardianapis.com/profile/philip-landau",
+        "bio":"<p>Employment law solicitor Philip Landau is a partner at Landau Zeffertt Weir. He writes on legal issues in the work-place, including redundancy, unfair dismissal, breach of contract and discrimination</p>",
+        "r2ContributorId":"34120",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Admin/BkFill/Default_image_group/2011/10/26/1319648229590/Philip-Landua-001.jpg",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"lifeandstyle/parents-and-parenting",
+        "type":"keyword",
+        "webTitle":"Parents and parenting",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/parents-and-parenting",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/parents-and-parenting",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421196783",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383048356856/Office-workers-004.jpg",
+          "typeData":{
+            "source":"Creasource/Corbis",
+            "altText":"Office workers",
+            "height":"54",
+            "credit":"Creasource/Corbis",
+            "caption":"There are now more than 8 million part-time workers in the UK. Photograph: Creasource/Corbis",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383048358155/Office-workers-005.jpg",
+          "typeData":{
+            "source":"Creasource/Corbis",
+            "altText":"Office workers",
+            "height":"340",
+            "credit":"Creasource/Corbis",
+            "caption":"There are now more than 8 million part-time workers in the UK. Photograph: Creasource/Corbis",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383048359568/Office-workers-006.jpg",
+          "typeData":{
+            "source":"Creasource/Corbis",
+            "altText":"Office workers",
+            "height":"130",
+            "credit":"Creasource/Corbis",
+            "caption":"There are now more than 8 million part-time workers in the UK. Photograph: Creasource/Corbis",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383048360880/Office-workers-007.jpg",
+          "typeData":{
+            "source":"Creasource/Corbis",
+            "altText":"Office workers",
+            "height":"84",
+            "credit":"Creasource/Corbis",
+            "caption":"There are now more than 8 million part-time workers in the UK. Photograph: Creasource/Corbis",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383048362209/Office-workers-008.jpg",
+          "typeData":{
+            "source":"Creasource/Corbis",
+            "altText":"Office workers",
+            "height":"132",
+            "credit":"Creasource/Corbis",
+            "caption":"There are now more than 8 million part-time workers in the UK. Photograph: Creasource/Corbis",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383048363502/Office-workers-009.jpg",
+          "typeData":{
+            "source":"Creasource/Corbis",
+            "altText":"Office workers",
+            "height":"168",
+            "credit":"Creasource/Corbis",
+            "caption":"There are now more than 8 million part-time workers in the UK. Photograph: Creasource/Corbis",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383048364814/Office-workers-010.jpg",
+          "typeData":{
+            "source":"Creasource/Corbis",
+            "altText":"Office workers",
+            "height":"180",
+            "credit":"Creasource/Corbis",
+            "caption":"There are now more than 8 million part-time workers in the UK. Photograph: Creasource/Corbis",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383048366088/Office-workers-011.jpg",
+          "typeData":{
+            "source":"Creasource/Corbis",
+            "altText":"Office workers",
+            "height":"228",
+            "credit":"Creasource/Corbis",
+            "caption":"There are now more than 8 million part-time workers in the UK. Photograph: Creasource/Corbis",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383048367424/Office-workers-012.jpg",
+          "typeData":{
+            "source":"Creasource/Corbis",
+            "altText":"Office workers",
+            "height":"276",
+            "credit":"Creasource/Corbis",
+            "caption":"There are now more than 8 million part-time workers in the UK. Photograph: Creasource/Corbis",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383048368796/Office-workers-013.jpg",
+          "typeData":{
+            "source":"Creasource/Corbis",
+            "altText":"Office workers",
+            "height":"372",
+            "credit":"Creasource/Corbis",
+            "caption":"There are now more than 8 million part-time workers in the UK. Photograph: Creasource/Corbis",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383048367424/Office-workers-012.jpg",
+          "typeData":{
+            "source":"Creasource/Corbis",
+            "altText":"Office workers",
+            "height":"276",
+            "credit":"Creasource/Corbis",
+            "caption":"There are now more than 8 million part-time workers in the UK. Photograph: Creasource/Corbis",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421196784",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383048360880/Office-workers-007.jpg",
+          "typeData":{
+            "source":"Creasource/Corbis",
+            "altText":"Office workers",
+            "height":"84",
+            "credit":"Creasource/Corbis",
+            "caption":"There are now more than 8 million part-time workers in the UK. Photograph: Creasource/Corbis",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[]
+  }
+}

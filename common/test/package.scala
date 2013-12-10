@@ -1,16 +1,19 @@
 package test
 
-import conf.{ ContentApi, Configuration }
+import conf.{ElasticSearchContentApi, Configuration, ContentApi}
+import java.net.URLEncoder
 import play.api.test._
 import play.api.test.Helpers._
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import java.net.{ HttpURLConnection, URL }
 import java.io.File
 import com.gu.openplatform.contentapi.connection.Http
-import recorder.HttpRecorder
+import recorder.ContentApiHttpRecorder
 import com.gu.management.play.InternalManagementPlugin
-import play.api.{GlobalSettings, Play}
+import play.api.GlobalSettings
 import concurrent.Future
+import org.apache.commons.codec.digest.DigestUtils
+import com.gargoylesoftware.htmlunit.BrowserVersion
 
 trait TestSettings {
   def globalSettingsOverride: Option[GlobalSettings] = None
@@ -20,19 +23,54 @@ trait TestSettings {
     "conf.SwitchBoardPlugin"
   )
 
-  val recorder = new HttpRecorder {
+  val recorder = new ContentApiHttpRecorder {
     override lazy val baseDir = new File(System.getProperty("user.dir"), "data/database")
   }
 
-  val originalHttp = ContentApi.http
+  private def verify(property: String, hash: String, message: String) {
+    if (DigestUtils.sha256Hex(property) != hash) {
 
-  ContentApi.http = new Http[Future] {
+      // the println makes it easier to spot what is wrong in tests
+      println()
+      println(s"----------- $message -----------")
+      println()
+
+      throw new RuntimeException(message)
+    }
+
+  }
+
+  private def toRecorderHttp(http: Http[Future]) = new Http[Future] {
+
+    val originalHttp = http
+
+    verify(
+      Configuration.contentApi.host,
+      "b9648d72721756bad977220f11d5c239e17cb5ca34bb346de506f9b145ac39d1",
+      "YOU ARE NOT USING THE CORRECT CONTENT API HOST"
+    )
+
+    verify(
+      Configuration.contentApi.elasticSearchHost,
+      "973dff7baa408e6f2334e3cf4ca36a960f1743b6d09911ff68723db9cbe62163",
+      "YOU ARE NOT USING THE CORRECT ELASTIC SEARCH CONTENT API HOST"
+    )
+
+    verify(
+      Configuration.contentApi.key,
+      "a4eb3e728596c7d6ba43e3885c80afcb16bc24d22fc0215409392bac242bed96",
+      "YOU ARE NOT USING THE CORRECT CONTENT API KEY"
+    )
+
     override def GET(url: String, headers: scala.Iterable[scala.Tuple2[java.lang.String, java.lang.String]]) = {
       recorder.load(url, headers.toMap) {
         originalHttp.GET(url, headers)
       }
     }
   }
+
+  ContentApi.http = toRecorderHttp(ContentApi.http)
+  ElasticSearchContentApi.http = toRecorderHttp(ElasticSearchContentApi.http)
 }
 
 /**
@@ -40,44 +78,36 @@ trait TestSettings {
  */
 class EditionalisedHtmlUnit extends TestSettings {
 
-  val ukHost = "http://localhost:9000"
-  val usHost = "http://127.0.0.1:9000"
+  // the default is I.E 7 which we do not support
+  BrowserVersion.setDefault(BrowserVersion.CHROME)
+
+  val host = "http://localhost:9000"
+
 
   val Port = """.*:(\d*)$""".r
 
   def apply[T](path: String)(block: TestBrowser => T): T = UK(path)(block)
 
-  def UK[T](path: String)(block: TestBrowser => T): T = goTo(path, ukHost)(block)
+  def UK[T](path: String)(block: TestBrowser => T): T = goTo(path, host)(block)
 
-  def US[T](path: String)(block: TestBrowser => T): T = goTo(path, usHost)(block)
-
-  def connection[T](path: String)(block: HttpURLConnection => T): T = {
-    connectionUK(path)(block)
+  def US[T](path: String)(block: TestBrowser => T): T = {
+    val editionPath = if (path.contains("?")) s"$path&_edition=US" else s"$path?_edition=US"
+    goTo(editionPath, host)(block)
   }
 
-  def connectionUK[T](path: String)(block: HttpURLConnection => T): T = {
-    testConnection(ukHost, path)(block)
-  }
+  private def testConnection(url: String): Boolean = {
 
-  def connectionUS[T](path: String)(block: HttpURLConnection => T): T = {
-    testConnection(usHost, path)(block)
-  }
-
-  protected def testConnection[T](host: String, path: String)(block: HttpURLConnection => T): T = {
-
-    val port = host match {
-      case Port(p) => p.toInt
-      case _ => 9000
+    // Check that the test server is accepting connections.
+    val connection = (new URL(url)).openConnection.asInstanceOf[HttpURLConnection]
+    try {
+      connection.connect
+      assert(HttpURLConnection.HTTP_OK == connection.getResponseCode, s"Invalid response: ${connection.getResponseCode}")
+      return true
     }
-    running(TestServer(port,
-      FakeApplication(additionalPlugins = testPlugins, withoutPlugins = disabledPlugins,
-        withGlobal = globalSettingsOverride)), HTMLUNIT) { browser =>
-      // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
-      browser.webDriver.asInstanceOf[HtmlUnitDriver].setJavascriptEnabled(false)
-
-      val connection = (new URL(host + path)).openConnection().asInstanceOf[HttpURLConnection]
-      block(connection)
+    finally {
+      connection.disconnect
     }
+    return false
   }
 
   protected def goTo[T](path: String, host: String)(block: TestBrowser => T): T = {
@@ -86,9 +116,17 @@ class EditionalisedHtmlUnit extends TestSettings {
       case Port(p) => p.toInt
       case _ => 9000
     }
+
     running(TestServer(port,
       FakeApplication(additionalPlugins = testPlugins, withoutPlugins = disabledPlugins,
-        withGlobal = globalSettingsOverride)), HTMLUNIT) { browser =>
+                      withGlobal = globalSettingsOverride)), HTMLUNIT) { browser =>
+
+      // A test to check that the TestServer started by running() is accepting connections.
+      val start = System.currentTimeMillis()
+      while (!testConnection(host + path) && (System.currentTimeMillis - start < 10000)) {
+        println("Waiting for test server to accept connections...")
+        Thread.sleep(2000)
+      }
 
       // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
       browser.webDriver.asInstanceOf[HtmlUnitDriver].setJavascriptEnabled(false)
@@ -105,29 +143,28 @@ object WithHost {
   def US(path: String): String = s"http://127.0.0.1:9000$path"
 }
 
+object DesktopVersionLink {
+  def apply(path: String) = s"http://localhost:9000/preference/platform/desktop?page=${URLEncoder.encode(s"$path?view=desktop", "UTF-8")}"
+}
+
 /**
  * Executes a block of code in a FakeApplication.
  */
-class Fake extends TestSettings {
+trait FakeApp extends TestSettings {
 
   def apply[T](block: => T): T = running(
     FakeApplication(
       withoutPlugins = disabledPlugins,
       withGlobal = globalSettingsOverride,
-      additionalPlugins = testPlugins
+      additionalPlugins = testPlugins,
+      additionalConfiguration = Map("application.secret" -> "test-secret")
     )
   ) { block }
 }
 
-object Fake extends Fake
-
-
 object TestRequest {
-  def apply(): FakeRequest[play.api.mvc.AnyContentAsEmpty.type] = {
-    TestRequest("localhost:9000")
-  }
-
-  def apply(host: String): FakeRequest[play.api.mvc.AnyContentAsEmpty.type] = {
-    FakeRequest().withHeaders("host" -> host)
+  // MOST of the time we do not care what path is set on the request - only need to override where we do
+  def apply(path: String = "/does-not-matter"): FakeRequest[play.api.mvc.AnyContentAsEmpty.type] = {
+    FakeRequest("GET", if (!path.startsWith("/")) s"/$path" else path)
   }
 }

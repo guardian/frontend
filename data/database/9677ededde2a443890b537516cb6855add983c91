@@ -1,0 +1,1894 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"commentisfree/2013/nov/05/mutual-banks-co-op-bank-mutualisation",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-11-05T10:07:12Z",
+      "webTitle":"Mutual banks play an important role in hard times – we must save the Co-op | Elizabeth Chell",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/nov/05/mutual-banks-co-op-bank-mutualisation",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/nov/05/mutual-banks-co-op-bank-mutualisation",
+      "fields":{
+        "trailText":"<strong>Elizabeth Chell:</strong> Circumstances have changed little since the Co-op Bank was founded by the Rochdale pioneers. Mutualisation can be revived",
+        "headline":"Mutual banks play an important role in hard times – we must save the Co-op",
+        "body":"<p>The co-operative movement, started by the <a href=\"http://www.theguardian.com/business/2013/oct/27/co-operative-group-retail\" title=\"\">Rochdale Society of Equitable Pioneers</a> in the 19th century is fascinating in terms of social history. The Rochdale pioneers were a collective of weavers who developed a set of ethical principles which formed the basis for their first co-operative and for the modern movement. These included democratic member-control of the co-operative, which was to be community oriented, in other words, a social enterprise. Membership was open to all, without fear of discrimination in terms of race, religion, ethnicity, sex, sexual orientation or disability.</p><p></p><p>Today, it is easy to dismiss the movement as having little relevance. The <a href=\"http://www.theguardian.com/business/2013/nov/04/co-op-group-rescue-activist-hedge-funds\" title=\"\">takeover of the Co-operative Group's banking arm</a>, with 70% of ownership now in the hands of City investors, appears to have fatally undermined the movement's principles. Is the Co-op Bank even worth saving?</p><p></p><p>Put aside first the dismissive argument that the Co-op Bank was mismanaged and therefore does not deserve to be supported. It is easy to say this <em>in vacuo</em>, but saying it to the 12,000 retail bondholders, the 1,000 people who could lose their jobs, the even larger number who have accounts with the bank, who believe in the co-operative movement and feel disappointed and let down by events, becomes more difficult. The fact is that there is a difference between cherishing a set of values and principles and practical action. We can argue vehemently for both adhering to the founding principles and for a management that can be held to account while implementing them.</p><p></p><p>We need also to look back to the 1980s to understand how mutualisation was undermined and fell out of favour through the privatisation of the building societies. The windfall that members enjoyed at the time seemed so worthwhile; a few hundred pounds each to put towards a new lounge carpet or whatever.</p><p></p><p>Now, the readiness with which we junked the mutual societies seems to be coming back to bite us. The private banking system has let us down badly; the absence of any ethical principles to underpin that system has resulted in mayhem; and a bailout of our main high street banks of an order that borders on incomprehensible. With so few mutualised societies left, people have fewer places to turn to place their hard-earned cash. So what we need is a return to mutualisation. And for this reason alone the Co-operative Bank is worth saving.</p><p></p><p>Circumstances have not changed that markedly since the founding of the Co-operative retail stores and bank. Indeed, we have been reminded recently of the abject poverty that many have fallen into, needing to use food banks or choose between \"eating and heating\" and the need for charitable institutions to step forward and help the needy. Other aspects of the social fabric are of concern. People feel they are having to choose between supporting <a href=\"http://www.theguardian.com/politics/2013/oct/25/ed-davey-green-levy-energy\" title=\"\">green energy policies </a>and paying the fuel bills.</p><p>In a civilised, developed society everyone should be able to eat well, heat their homes and support policies that protect the environment to ensure our long-term wellbeing and future happiness. One way to do that would be to support a financial sector that includes mutualised institutions underpinned by ethical principles similar to those cherished by the Rochdale pioneers. They may not be exciting but banking with community-based, socially oriented institutions would surely enable people to sleep more soundly at night.</p><!-- Guardian Watermark: internal-code/content/421647722|2013-11-05T11:03:48Z|bdeab733c96cc5b5f7d4c85c26ca62425080cdfa -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-05T10:07:12Z",
+        "hasStoryPackage":"true",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/4/1383591239779/Co-operative-Bank-003.jpg",
+        "standfirst":"Circumstances have changed little since the Co-op Bank was founded by the Rochdale pioneers. Mutualisation can be revived",
+        "shortUrl":"http://gu.com/p/3k54z",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/4/1383591239779/Co-operative-Bank-003.jpg",
+        "wordcount":"550",
+        "commentable":"true",
+        "internalContentCode":"421647722",
+        "allowUgc":"false",
+        "internalOctopusCode":"8280278",
+        "isPremoderated":"false",
+        "byline":"Elizabeth Chell",
+        "publication":"theguardian.com",
+        "internalPageCode":"1991760",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-08T10:07:12Z"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"business/co-operative-group",
+        "type":"keyword",
+        "webTitle":"Co-operative Group",
+        "webUrl":"http://www.theguardian.com/business/co-operative-group",
+        "apiUrl":"http://content.guardianapis.com/business/co-operative-group",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"business/retail",
+        "type":"keyword",
+        "webTitle":"Retail industry",
+        "webUrl":"http://www.theguardian.com/business/retail",
+        "apiUrl":"http://content.guardianapis.com/business/retail",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/banking",
+        "type":"keyword",
+        "webTitle":"Banking",
+        "webUrl":"http://www.theguardian.com/business/banking",
+        "apiUrl":"http://content.guardianapis.com/business/banking",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"profile/elizabeth-chell",
+        "type":"contributor",
+        "webTitle":"Elizabeth Chell",
+        "webUrl":"http://www.theguardian.com/profile/elizabeth-chell",
+        "apiUrl":"http://content.guardianapis.com/profile/elizabeth-chell",
+        "bio":"<p>Elizabeth Chell is professor of entrepreneurial behaviour and a research consultant at the Small Business Research Centre, Kingston University</p>",
+        "r2ContributorId":"59456",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/4/1383588778978/Elizabeth-Chell.jpg",
+        "references":[]
+      },{
+        "id":"society/poverty",
+        "type":"keyword",
+        "webTitle":"Poverty",
+        "webUrl":"http://www.theguardian.com/society/poverty",
+        "apiUrl":"http://content.guardianapis.com/society/poverty",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/socialexclusion",
+        "type":"keyword",
+        "webTitle":"Social exclusion",
+        "webUrl":"http://www.theguardian.com/society/socialexclusion",
+        "apiUrl":"http://content.guardianapis.com/society/socialexclusion",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421647957",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/4/1383591236160/Co-operative-Bank-001.jpg",
+          "typeData":{
+            "source":"Don Mcphee",
+            "altText":"Co-operative Bank",
+            "height":"54",
+            "credit":"Don Mcphee",
+            "caption":"The Co-operative Bank guarded by pioneer Robert Owen. Photograph: Don Mcphee",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/4/1383591238387/Co-operative-Bank-002.jpg",
+          "typeData":{
+            "source":"Don Mcphee",
+            "altText":"Co-operative Bank",
+            "height":"130",
+            "credit":"Don Mcphee",
+            "caption":"The Co-operative Bank guarded by pioneer Robert Owen. Photograph: Don Mcphee",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/4/1383591239779/Co-operative-Bank-003.jpg",
+          "typeData":{
+            "source":"Don Mcphee",
+            "altText":"Co-operative Bank",
+            "height":"84",
+            "credit":"Don Mcphee",
+            "caption":"The Co-operative Bank guarded by pioneer Robert Owen. Photograph: Don Mcphee",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/4/1383591241204/Co-operative-Bank-004.jpg",
+          "typeData":{
+            "source":"Don Mcphee",
+            "altText":"Co-operative Bank",
+            "height":"132",
+            "credit":"Don Mcphee",
+            "caption":"The Co-operative Bank guarded by pioneer Robert Owen. Photograph: Don Mcphee",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/4/1383591242596/Co-operative-Bank-005.jpg",
+          "typeData":{
+            "source":"Don Mcphee",
+            "altText":"Co-operative Bank",
+            "height":"168",
+            "credit":"Don Mcphee",
+            "caption":"The Co-operative Bank guarded by pioneer Robert Owen. Photograph: Don Mcphee",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/4/1383591244230/Co-operative-Bank-006.jpg",
+          "typeData":{
+            "source":"Don Mcphee",
+            "altText":"Co-operative Bank",
+            "height":"180",
+            "credit":"Don Mcphee",
+            "caption":"The Co-operative Bank guarded by pioneer Robert Owen. Photograph: Don Mcphee",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/4/1383591245895/Co-operative-Bank-007.jpg",
+          "typeData":{
+            "source":"Don Mcphee",
+            "altText":"Co-operative Bank",
+            "height":"228",
+            "credit":"Don Mcphee",
+            "caption":"The Co-operative Bank guarded by pioneer Robert Owen. Photograph: Don Mcphee",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/4/1383591247992/Co-operative-Bank-008.jpg",
+          "typeData":{
+            "source":"Don Mcphee",
+            "altText":"Co-operative Bank",
+            "height":"276",
+            "credit":"Don Mcphee",
+            "caption":"The Co-operative Bank guarded by pioneer Robert Owen. Photograph: Don Mcphee",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/4/1383591247992/Co-operative-Bank-008.jpg",
+          "typeData":{
+            "source":"Don Mcphee",
+            "altText":"Co-operative Bank",
+            "height":"276",
+            "credit":"Don Mcphee",
+            "caption":"The Co-operative Bank guarded by pioneer Robert Owen. Photograph: Don Mcphee",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421647958",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/4/1383591239779/Co-operative-Bank-003.jpg",
+          "typeData":{
+            "source":"Don Mcphee",
+            "altText":"Co-operative Bank",
+            "height":"84",
+            "credit":"Don Mcphee",
+            "caption":"The Co-operative Bank guarded by pioneer Robert Owen. Photograph: Don Mcphee",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"commentisfree/2013/nov/04/banking-co-op",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-11-04T22:37:41Z",
+      "webTitle":"Banking: Co-opted | Editorial",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/nov/04/banking-co-op",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/nov/04/banking-co-op",
+      "fields":{
+        "newspaperPageNumber":"34",
+        "trailText":"<strong>Editorial:</strong> The real difficulty wasn't that the Co-op Bank was too different – but that it was not different enough",
+        "headline":"Banking: Co-opted",
+        "body":"<p>At the turn of the century, one of the banners student protestors lofted in the City read: \"Replace capitalism with something nice.\" Before the bust, bankers and brokers could look down from their skyscrapers and dismiss this as proof of marijuana-fugged thinking, reaffirming their belief that There Is No Alternative. For a brief period after the catastrophe of 2008, however, a deep but vague conviction that there must be a different way to run financial affairs became entirely mainstream; so mainstream, in fact, that the <a href=\"https://www.gov.uk/government/publications/the-coalition-documentation\" title=\"\">coalition partners</a> made a hazy commitment to promote banking mutuals, a year after the outgoing Brown administration had issued special statutory instruments to allow the Co-operative Bank <a href=\"http://www.theguardian.com/business/2009/jan/21/britannia-cooperative-banks-building-societies\" title=\"\">to merge with the Britannia building society</a>.</p><p>This deal, it was fondly imagined, could create a player to drag a friendly society ethos of finance into the 21st century, and on a scale to put a branch on every high street, really challenging the Big Four's way of doing business. Four years on, the necessity of that challenge has been underlined by scandals involving everything from <a href=\"http://www.telegraph.co.uk/finance/libor-scandal/\" title=\"\">rate-rigging</a> to <a href=\"http://www.bbc.co.uk/news/business-21840052\" title=\"\">money laundering</a> and <a href=\"http://www.theguardian.com/money/payment-protection-insurance\" title=\"\">systematic mis-selling of insurance</a>. Far from thriving, however, the great Co-operative challenger is fighting for life, and this week announced that it was being kept alive – but only with, in the final cruel irony, the <a href=\"http://www.theguardian.com/business/2013/nov/04/co-op-group-rescue-activist-hedge-funds\" title=\"\">help of American hedge funds</a>.</p><p>The details of the deal are depressing first and most acutely for the workers who will lose their job in a run of branch closers. But they are depressing, too, for anyone who wants to see new models of finance, or indeed of business more widely. For the wider Co-op group is going to have to find £462m, which is half a billion pounds that will not be available to invest its mutually owned supermarkets and funeral homes. Assuming enough individual bond holders can be persuaded to acquiesce in the deal, the Co-op group's stake will shrink from 100% to 30%, while it writes ethical values into its articles of association.</p><p>In theory, the Co-op group will be able to blow the whistle on its own bank for any transgressions, but how likely is that? At best, like a declaration of confidence in a club manager, this is an avowal the company would rather it did not have to make. In the very worst case, the pledges could turn out as hollow as <a href=\"http://www.pressgazette.co.uk/node/49344\" title=\"\">the guarantees of editorial freedom</a> that secured Rupert Murdoch's take-over of the Times.</p><p>That, however, is probably melodramatic. For 30% should be enough for control; more fundamentally – as those hedge fund investments make plain – there is a serious market for ethical banking. Co-op Bank's difficulties came from expanding too fast, a hubristic habit learnt from the mainstream. The real difficulty, then, wasn't that Co-op was too different – but that it was not different enough.</p><!-- Guardian Watermark: internal-code/content/421662147|2013-11-05T11:03:48Z|80e9b066be12970bc745fa699dd68f654dca4fcb -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-05T00:06:56Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "standfirst":"The real difficulty wasn't that the Co-op Bank was too different – but that it was not different enough",
+        "shortUrl":"http://gu.com/p/3k57m",
+        "wordcount":"470",
+        "commentable":"true",
+        "internalContentCode":"421662147",
+        "allowUgc":"false",
+        "internalOctopusCode":"8278476",
+        "isPremoderated":"false",
+        "byline":"Editorial",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-11-05",
+        "internalPageCode":"1991839",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-07T22:37:41Z"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"business/co-operative-group",
+        "type":"keyword",
+        "webTitle":"Co-operative Group",
+        "webUrl":"http://www.theguardian.com/business/co-operative-group",
+        "apiUrl":"http://content.guardianapis.com/business/co-operative-group",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/retail",
+        "type":"keyword",
+        "webTitle":"Retail industry",
+        "webUrl":"http://www.theguardian.com/business/retail",
+        "apiUrl":"http://content.guardianapis.com/business/retail",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/banking",
+        "type":"keyword",
+        "webTitle":"Banking",
+        "webUrl":"http://www.theguardian.com/business/banking",
+        "apiUrl":"http://content.guardianapis.com/business/banking",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"profile/editorial",
+        "type":"contributor",
+        "webTitle":"Editorial",
+        "webUrl":"http://www.theguardian.com/profile/editorial",
+        "apiUrl":"http://content.guardianapis.com/profile/editorial",
+        "bio":"<p>Editorials from the Guardian. All Guardian and Observer editorials can be found <a href=\"http://www.guardian.co.uk/tone/editorials\">here</a></p>",
+        "r2ContributorId":"56303",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/5/3/1367609515569/guardianlogo_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/editorials",
+        "type":"tone",
+        "webTitle":"Editorials",
+        "webUrl":"http://www.theguardian.com/tone/editorials",
+        "apiUrl":"http://content.guardianapis.com/tone/editorials",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/editorialsandreply",
+        "type":"newspaper-book-section",
+        "webTitle":"Editorials & reply",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/editorialsandreply",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/editorialsandreply",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[],
+      "references":[]
+    },{
+      "id":"business/2013/nov/04/co-operative-bank-bonds-pibs-new-deal",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2013-11-04T19:13:24Z",
+      "webTitle":"Co-op Bank bondholders offered 'much better solution' to share-swap",
+      "webUrl":"http://www.theguardian.com/business/2013/nov/04/co-operative-bank-bonds-pibs-new-deal",
+      "apiUrl":"http://content.guardianapis.com/business/2013/nov/04/co-operative-bank-bonds-pibs-new-deal",
+      "fields":{
+        "newspaperPageNumber":"4",
+        "trailText":"Estimated 15,000 holders of Pibs, many of whom are pensioners, will be able to retain annual income at lower rates",
+        "headline":"Co-op Bank bondholders offered 'much better solution' to share-swap",
+        "body":"<p>Thousands of pensioners who feared their bonds in Co-operative Bank would be near worthless have been offered a new deal in what campaigners have hailed as a victory for small investors.</p><p>An estimated 15,000 holders of Co-op Bank bonds, called Pibs (permanent interest-bearing securities) saw the price plunge from 160p to just 60p and interest payments suspended as financial crisis engulfed the bank this year.</p><p>Initially it was thought the bonds would be swapped for shares in the bank, of uncertain value and with little or no dividends.</p><p>Outraged pensioners, many of whom bought the bonds to provide a secure retirement income – they paid annual interest ranging from 5% to 13% – formed an action group to fight the proposals. They have now been offered an alternative that will still leave them out of pocket, but by much less than originally feared.</p><p>Holders of the 13% bond will be offered a choice of continuing the 13% income a year until 2025, but losing all their underlying capital, or getting 9.2% a year until 2025 and 84% of their capital back.</p><p>A similar deal is on offer to 9.2% preference share holders, while investors getting 5.5% Pibs will be offered a new bond paying 5.8%, but will lose nearly half of their underlying capital.</p><p>Bond expert Mark Taber, who helped form the action group to fight for a better deal, and signed up 2,500 members, said the outcome is the best small investors could have hoped for. \"It's a very different deal to that offered to us in June and shows that Co-operative Bank were really listening to us. This deal has been extremely hard-fought and is now a much better solution for retail holders and pensioners.\"</p><p>Many Pibs were issued at generous interest rates in the 1990s by building societies such as Britannia (later acquired by Co-op Bank) that made them very attractive for pensioners seeking a steady, reliable income in retirement. But they are not protected by the Financial Services Compensation Scheme if a company gets into financial difficulty, and rank lowly behind other creditors when a company crashes.</p><!-- Guardian Watermark: internal-code/content/421648629|2013-11-05T11:03:48Z|918b580dfbdbf1bab08fcf47a0f1f8bbf599b72c -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-04T19:13:24Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/4/1383592374959/Co-Operative-Bank-branch--004.jpg",
+        "standfirst":"Estimated 15,000 holders of Pibs, many of whom are pensioners, will be able to retain annual income at lower rates",
+        "shortUrl":"http://gu.com/p/3k55a",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/4/1383592374959/Co-Operative-Bank-branch--004.jpg",
+        "wordcount":"344",
+        "commentable":"false",
+        "internalContentCode":"421648629",
+        "allowUgc":"false",
+        "internalOctopusCode":"8279553",
+        "isPremoderated":"false",
+        "byline":"Patrick Collinson",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-11-05",
+        "internalPageCode":"1991773",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-07T19:13:24Z"
+      },
+      "tags":[{
+        "id":"business/co-operative-group",
+        "type":"keyword",
+        "webTitle":"Co-operative Group",
+        "webUrl":"http://www.theguardian.com/business/co-operative-group",
+        "apiUrl":"http://content.guardianapis.com/business/co-operative-group",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/banking",
+        "type":"keyword",
+        "webTitle":"Banking",
+        "webUrl":"http://www.theguardian.com/business/banking",
+        "apiUrl":"http://content.guardianapis.com/business/banking",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/bonds",
+        "type":"keyword",
+        "webTitle":"Bonds",
+        "webUrl":"http://www.theguardian.com/business/bonds",
+        "apiUrl":"http://content.guardianapis.com/business/bonds",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"money/bonds",
+        "type":"keyword",
+        "webTitle":"Bonds",
+        "webUrl":"http://www.theguardian.com/money/bonds",
+        "apiUrl":"http://content.guardianapis.com/money/bonds",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/money",
+        "type":"keyword",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/money/money",
+        "apiUrl":"http://content.guardianapis.com/money/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/patrickcollinson",
+        "type":"contributor",
+        "webTitle":"Patrick Collinson",
+        "webUrl":"http://www.theguardian.com/profile/patrickcollinson",
+        "apiUrl":"http://content.guardianapis.com/profile/patrickcollinson",
+        "bio":"<p>Patrick Collinson is <a href=\"http://www.guardian.co.uk/money\">money</a> editor of the Guardian and the newspaper's personal finance editor</p>",
+        "rcsId":"GNL036830",
+        "r2ContributorId":"16224",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/patrick_collinson_140x140.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421648693",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/4/1383592368186/Co-Operative-Bank-branch--001.jpg",
+          "typeData":{
+            "source":"Christopher Thomond",
+            "altText":"Co-Operative Bank branch in Rochdale",
+            "height":"54",
+            "credit":"Christopher Thomond",
+            "caption":"Bond expert Mark Taber said the outcome was the best the Co-Op's small investors could have hoped for. Photograph: Christopher Thomond",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/4/1383592371223/Co-Operative-Bank-branch--002.jpg",
+          "typeData":{
+            "source":"Christopher Thomond",
+            "altText":"Co-Operative Bank branch in Rochdale",
+            "height":"340",
+            "credit":"Christopher Thomond",
+            "caption":"Bond expert Mark Taber said the outcome was the best the Co-Op's small investors could have hoped for. Photograph: Christopher Thomond",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/4/1383592373244/Co-Operative-Bank-branch--003.jpg",
+          "typeData":{
+            "source":"Christopher Thomond",
+            "altText":"Co-Operative Bank branch in Rochdale",
+            "height":"130",
+            "credit":"Christopher Thomond",
+            "caption":"Bond expert Mark Taber said the outcome was the best the Co-Op's small investors could have hoped for. Photograph: Christopher Thomond",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/4/1383592374959/Co-Operative-Bank-branch--004.jpg",
+          "typeData":{
+            "source":"Christopher Thomond",
+            "altText":"Co-Operative Bank branch in Rochdale",
+            "height":"84",
+            "credit":"Christopher Thomond",
+            "caption":"Bond expert Mark Taber said the outcome was the best the Co-Op's small investors could have hoped for. Photograph: Christopher Thomond",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/4/1383592376724/Co-Operative-Bank-branch--005.jpg",
+          "typeData":{
+            "source":"Christopher Thomond",
+            "altText":"Co-Operative Bank branch in Rochdale",
+            "height":"132",
+            "credit":"Christopher Thomond",
+            "caption":"Bond expert Mark Taber said the outcome was the best the Co-Op's small investors could have hoped for. Photograph: Christopher Thomond",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/4/1383592378434/Co-Operative-Bank-branch--006.jpg",
+          "typeData":{
+            "source":"Christopher Thomond",
+            "altText":"Co-Operative Bank branch in Rochdale",
+            "height":"168",
+            "credit":"Christopher Thomond",
+            "caption":"Bond expert Mark Taber said the outcome was the best the Co-Op's small investors could have hoped for. Photograph: Christopher Thomond",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/4/1383592380162/Co-Operative-Bank-branch--007.jpg",
+          "typeData":{
+            "source":"Christopher Thomond",
+            "altText":"Co-Operative Bank branch in Rochdale",
+            "height":"180",
+            "credit":"Christopher Thomond",
+            "caption":"Bond expert Mark Taber said the outcome was the best the Co-Op's small investors could have hoped for. Photograph: Christopher Thomond",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/4/1383592381648/Co-Operative-Bank-branch--008.jpg",
+          "typeData":{
+            "source":"Christopher Thomond",
+            "altText":"Co-Operative Bank branch in Rochdale",
+            "height":"228",
+            "credit":"Christopher Thomond",
+            "caption":"Bond expert Mark Taber said the outcome was the best the Co-Op's small investors could have hoped for. Photograph: Christopher Thomond",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/4/1383592383384/Co-Operative-Bank-branch--009.jpg",
+          "typeData":{
+            "source":"Christopher Thomond",
+            "altText":"Co-Operative Bank branch in Rochdale",
+            "height":"276",
+            "credit":"Christopher Thomond",
+            "caption":"Bond expert Mark Taber said the outcome was the best the Co-Op's small investors could have hoped for. Photograph: Christopher Thomond",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/4/1383592384926/Co-Operative-Bank-branch--010.jpg",
+          "typeData":{
+            "source":"Christopher Thomond",
+            "altText":"Co-Operative Bank branch in Rochdale",
+            "height":"372",
+            "credit":"Christopher Thomond",
+            "caption":"Bond expert Mark Taber said the outcome was the best the Co-Op's small investors could have hoped for. Photograph: Christopher Thomond",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/4/1383592383384/Co-Operative-Bank-branch--009.jpg",
+          "typeData":{
+            "source":"Christopher Thomond",
+            "altText":"Co-Operative Bank branch in Rochdale",
+            "height":"276",
+            "credit":"Christopher Thomond",
+            "caption":"Bond expert Mark Taber said the outcome was the best the Co-Op's small investors could have hoped for. Photograph: Christopher Thomond",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421648694",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/4/1383592374959/Co-Operative-Bank-branch--004.jpg",
+          "typeData":{
+            "source":"Christopher Thomond",
+            "altText":"Co-Operative Bank branch in Rochdale",
+            "height":"84",
+            "credit":"Christopher Thomond",
+            "caption":"Bond expert Mark Taber said the outcome was the best the Co-Op's small investors could have hoped for. Photograph: Christopher Thomond",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"business/poll/2013/oct/22/co-op-bank-ethical-stance-group-lost-majority-control",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2013-10-29T08:55:00Z",
+      "webTitle":"Can Co-op Bank retain its ethical stance now the group has lost majority control?",
+      "webUrl":"http://www.theguardian.com/business/poll/2013/oct/22/co-op-bank-ethical-stance-group-lost-majority-control",
+      "apiUrl":"http://content.guardianapis.com/business/poll/2013/oct/22/co-op-bank-ethical-stance-group-lost-majority-control",
+      "fields":{
+        "trailText":"<p>UK's largest mutual has been forced to cede majority control in the bank as it battles to plug a £1.5bn capital shortfall</p>",
+        "headline":"Can Co-op Bank retain its ethical stance now group has lost majority control?",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-04T09:26:13Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/21/1382341792952/Co-Operative-Bank-003.jpg",
+        "standfirst":"After months of intense talks with two US hedge funds, the UK's largest mutual – and owner of pharmacies, grocers and funeral homes – was <a href=\"http://www.theguardian.com/business/2013/oct/21/coop-group-bank-us-hedge-funds\">forced to cede majority control in the bank</a> as it battles to plug a £1.5bn capital shortfall",
+        "shortUrl":"http://gu.com/p/3jma3",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/21/1382341792952/Co-Operative-Bank-003.jpg",
+        "commentable":"false",
+        "internalContentCode":"420604007",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "publication":"theguardian.com",
+        "internalPageCode":"1984611",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-25T07:55:19Z"
+      },
+      "tags":[{
+        "id":"business/co-operative-group",
+        "type":"keyword",
+        "webTitle":"Co-operative Group",
+        "webUrl":"http://www.theguardian.com/business/co-operative-group",
+        "apiUrl":"http://content.guardianapis.com/business/co-operative-group",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/banking",
+        "type":"keyword",
+        "webTitle":"Banking",
+        "webUrl":"http://www.theguardian.com/business/banking",
+        "apiUrl":"http://content.guardianapis.com/business/banking",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/ethicalbusiness",
+        "type":"keyword",
+        "webTitle":"Ethical business",
+        "webUrl":"http://www.theguardian.com/business/ethicalbusiness",
+        "apiUrl":"http://content.guardianapis.com/business/ethicalbusiness",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"type/poll",
+        "type":"type",
+        "webTitle":"Poll",
+        "webUrl":"http://www.theguardian.com/polls",
+        "apiUrl":"http://content.guardianapis.com/polls",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421602793",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/21/1382341792952/Co-Operative-Bank-003.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Luke MacGregor",
+            "altText":"Co-Operative Bank",
+            "height":"84",
+            "credit":"Luke MacGregor/Reuters",
+            "caption":"Under the original plan, Co-op Group would retain a 75% stake in the bank – but the hedge fiunds want that cut to under 50%.  Photograph: Luke MacGregor/Reuters",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-421602792",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/10/21/1382341799661/Co-Operative-Bank-008.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Luke MacGregor",
+            "altText":"Co-Operative Bank",
+            "height":"276",
+            "credit":"Luke MacGregor/Reuters",
+            "caption":"Co-op Group will be left with a 30% stake when the bank is floated on the stock market rather than the 75% it had originally hoped for. Photograph: Luke MacGregor/Reuters",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"business/2013/nov/03/co-op-bank-cutting-jobs-and-costs",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2013-11-03T18:48:19Z",
+      "webTitle":"Co-operative Bank to cut hundreds of jobs as new chiefs clamp down on costs",
+      "webUrl":"http://www.theguardian.com/business/2013/nov/03/co-op-bank-cutting-jobs-and-costs",
+      "apiUrl":"http://content.guardianapis.com/business/2013/nov/03/co-op-bank-cutting-jobs-and-costs",
+      "fields":{
+        "newspaperPageNumber":"26",
+        "trailText":"Company has sunk to a loss and aims to return to profit – but also has plans to state its ethical stance officially for first time",
+        "headline":"Co-operative Bank to cut hundreds of jobs as new chiefs clamp down on costs",
+        "body":"<p>Co-operative Bank is expected to signal on Monday that hundreds of jobs could be under threat as part of a pledge by the new management team to cut costs.</p><p>In documents due to be published by the bank, it will signal a need to shed costs from a business that employs 10,000 people as it scrambles to return to profit.</p><p>The bank, which declined to comment, has sunk to a loss and needs to raise £1.5bn under a controversial proposal that will require the Co-operative Group to concede control of the bank after pressure from two major US hedge funds.</p><p>Prospectuses setting out details for bondholders are scheduled to be published on Monday to provide information about the new business plan of the bank and the exact terms being offered to bondholders who are to own 70% of it.</p><p>The Co-operative Group, which owns funeral homes, supermarkets and pharmacies, will set out that it now expects to put between £400m and £500m into the bank, while bondholders will find the remainder.</p><p>Under a previous plan, announced in June, the group planned to put in £1bn and keep a 25% stake, but that sum has now been reduced after protracted discussions with a group of bondholders under the name LT2 – so called because they own lower tier two debt.</p><p>Two hedge funds, Silver Point Capital and Aurelius, have led the LT2 Group and will end up with shares in the Co-op Bank which is to be floated on the stock market.</p><p>The Co-op Group will be the largest single shareholder with a 30% stake and none of the others will own more than 10%.</p><p>The bank hopes to quell concerns that its ethical status will be undermined by the stock market flotation, and the involvement of the hedge funds, by writing its commitment to an ethical stance in its articles of association. This will be the first time its stance has been spelled out so clearly.</p><p>The bank, which is already a plc but owned by a mutual, will also focus on retail and small business banking and pare back costs, although precise details of the scale of job losses are not expected to be published in the prospectuses.</p><p>The failure of the Co-op to take over 631 branches from Lloyds Banking Group in the Project Verde deal will continue to be examined this week when the former chairman of the bank appears before the Treasury select committee of MPs.</p><p>Former chairman Paul Flowers is likely to be asked about his banking qualifications when he gives evidence, which was delayed from last week when former chief executive Barry Tootell appeared.</p><p>The committee has already heard from Peter Marks, who was chief executive of the overall group until May, who described its problems as a \"tragedy\".</p><p>Some of loans that the bank inherited from the 2009 deal to buy the Britannia building society are now being wound down by the Co-op.</p><!-- Guardian Watermark: internal-code/content/421569248|2013-11-05T11:03:48Z|b0223ae98b35279c4e952505ddcdff0aed0b560e -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-04T00:06:20Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/11/3/1383504421508/The-Pyramid-Co-operative--004.jpg",
+        "standfirst":"Company has sunk to a loss and aims to return to profit – but also has plans to state its ethical stance officially for first time",
+        "shortUrl":"http://gu.com/p/3k4bx",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/11/3/1383504421508/The-Pyramid-Co-operative--004.jpg",
+        "wordcount":"477",
+        "commentable":"false",
+        "internalContentCode":"421569248",
+        "allowUgc":"false",
+        "internalOctopusCode":"8276065",
+        "isPremoderated":"false",
+        "byline":"Jill Treanor, city editor",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-11-04",
+        "internalPageCode":"1991197",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-06T18:48:19Z"
+      },
+      "tags":[{
+        "id":"business/co-operative-group",
+        "type":"keyword",
+        "webTitle":"Co-operative Group",
+        "webUrl":"http://www.theguardian.com/business/co-operative-group",
+        "apiUrl":"http://content.guardianapis.com/business/co-operative-group",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/banking",
+        "type":"keyword",
+        "webTitle":"Banking",
+        "webUrl":"http://www.theguardian.com/business/banking",
+        "apiUrl":"http://content.guardianapis.com/business/banking",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/hedge-funds",
+        "type":"keyword",
+        "webTitle":"Hedge funds",
+        "webUrl":"http://www.theguardian.com/business/hedge-funds",
+        "apiUrl":"http://content.guardianapis.com/business/hedge-funds",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/financial-sector",
+        "type":"keyword",
+        "webTitle":"Financial sector",
+        "webUrl":"http://www.theguardian.com/business/financial-sector",
+        "apiUrl":"http://content.guardianapis.com/business/financial-sector",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/retail",
+        "type":"keyword",
+        "webTitle":"Retail industry",
+        "webUrl":"http://www.theguardian.com/business/retail",
+        "apiUrl":"http://content.guardianapis.com/business/retail",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/jilltreanor",
+        "type":"contributor",
+        "webTitle":"Jill Treanor",
+        "webUrl":"http://www.theguardian.com/profile/jilltreanor",
+        "apiUrl":"http://content.guardianapis.com/profile/jilltreanor",
+        "bio":"<p>Jill Treanor is the Guardian's City editor. She specialises in the banking sector</p>",
+        "rcsId":"GNL003510",
+        "r2ContributorId":"15822",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jill_treanor_140x140.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/financial3",
+        "type":"newspaper-book-section",
+        "webTitle":"Financial",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/financial3",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/financial3",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421570294",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/11/3/1383504416810/The-Pyramid-Co-operative--001.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"The Pyramid, Co-operative Bank Building at sunset, Stockport, Greater Manchester, England, UK.",
+            "height":"54",
+            "credit":"Alamy",
+            "caption":"The Co-operative Bank's Pyramid building in Stockport. Photograph: Alamy",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/11/3/1383504418983/The-Pyramid-Co-operative--002.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"The Pyramid, Co-operative Bank Building at sunset, Stockport, Greater Manchester, England, UK.",
+            "height":"340",
+            "credit":"Alamy",
+            "caption":"The Co-operative Bank's Pyramid building in Stockport. Photograph: Alamy",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/11/3/1383504420294/The-Pyramid-Co-operative--003.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"The Pyramid, Co-operative Bank Building at sunset, Stockport, Greater Manchester, England, UK.",
+            "height":"130",
+            "credit":"Alamy",
+            "caption":"The Co-operative Bank's Pyramid building in Stockport. Photograph: Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/11/3/1383504421508/The-Pyramid-Co-operative--004.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"The Pyramid, Co-operative Bank Building at sunset, Stockport, Greater Manchester, England, UK.",
+            "height":"84",
+            "credit":"Alamy",
+            "caption":"The Co-operative Bank's Pyramid building in Stockport. Photograph: Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/11/3/1383504422718/The-Pyramid-Co-operative--005.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"The Pyramid, Co-operative Bank Building at sunset, Stockport, Greater Manchester, England, UK.",
+            "height":"132",
+            "credit":"Alamy",
+            "caption":"The Co-operative Bank's Pyramid building in Stockport. Photograph: Alamy",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/11/3/1383504423954/The-Pyramid-Co-operative--006.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"The Pyramid, Co-operative Bank Building at sunset, Stockport, Greater Manchester, England, UK.",
+            "height":"168",
+            "credit":"Alamy",
+            "caption":"The Co-operative Bank's Pyramid building in Stockport. Photograph: Alamy",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/11/3/1383504425225/The-Pyramid-Co-operative--007.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"The Pyramid, Co-operative Bank Building at sunset, Stockport, Greater Manchester, England, UK.",
+            "height":"180",
+            "credit":"Alamy",
+            "caption":"The Co-operative Bank's Pyramid building in Stockport. Photograph: Alamy",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/11/3/1383504426567/The-Pyramid-Co-operative--008.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"The Pyramid, Co-operative Bank Building at sunset, Stockport, Greater Manchester, England, UK.",
+            "height":"228",
+            "credit":"Alamy",
+            "caption":"The Co-operative Bank's Pyramid building in Stockport. Photograph: Alamy",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/11/3/1383504427947/The-Pyramid-Co-operative--009.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"The Pyramid, Co-operative Bank Building at sunset, Stockport, Greater Manchester, England, UK.",
+            "height":"276",
+            "credit":"Alamy",
+            "caption":"The Co-operative Bank's Pyramid building in Stockport. Photograph: Alamy",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/11/3/1383504429194/The-Pyramid-Co-operative--010.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"The Pyramid, Co-operative Bank Building at sunset, Stockport, Greater Manchester, England, UK.",
+            "height":"372",
+            "credit":"Alamy",
+            "caption":"The Co-operative Bank's Pyramid building in Stockport. Photograph: Alamy",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/11/3/1383504427947/The-Pyramid-Co-operative--009.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"The Pyramid, Co-operative Bank Building at sunset, Stockport, Greater Manchester, England, UK.",
+            "height":"276",
+            "credit":"Alamy",
+            "caption":"The Co-operative Bank's Pyramid building in Stockport. Photograph: Alamy",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421570295",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/11/3/1383504421508/The-Pyramid-Co-operative--004.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"The Pyramid, Co-operative Bank Building at sunset, Stockport, Greater Manchester, England, UK.",
+            "height":"84",
+            "credit":"Alamy",
+            "caption":"The Co-operative Bank's Pyramid building in Stockport. Photograph: Alamy",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"business/nils-pratley-on-finance/2013/nov/04/co-op-bank-losses",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2013-11-04T19:38:39Z",
+      "webTitle":"Co-op Bank could have years of losses ahead | Analysis",
+      "webUrl":"http://www.theguardian.com/business/nils-pratley-on-finance/2013/nov/04/co-op-bank-losses",
+      "apiUrl":"http://content.guardianapis.com/business/nils-pratley-on-finance/2013/nov/04/co-op-bank-losses",
+      "fields":{
+        "newspaperPageNumber":"4",
+        "trailText":"When you've got only 275 branches, making serious money outside the big boys' oligopoly is a challenge, says <strong>Nils Pratley</strong>",
+        "headline":"Co-op Bank could have years of losses ahead",
+        "body":"<p>The popular caricature that the Co-op Bank is being fleeced by a bunch of rapacious US hedge funds is not quite accurate. It is certainly true that the Co-op, having blustered that it needed to retain majority control of the bank, has been forced into a humiliating U-turn. Under the rejigged arrangements to raise capital, the Co-op will emerge with only a 30% stake plus a new \"ethical constitution\" to cover its embarrassment.</p><p>But, as one surveys the financial disaster, another thought occurs: the US funds and their co-travellers in the bank's senior bonds will not enjoy a free lunch. They will own 70% of a bank that is small, loss-making and in need of heavy investment.</p><p>To get a measure of how far the Co-op Bank has fallen, consider this detail in Monday's documents: the colossal sum of £500m will have to be spent \"in connection with the re-engineering of the bank's IT platform\". That is from a bank that has already written off about £300m from past technology misadventures.</p><p>Then there's a closure programme that will see at least 15% of branches shut, plus the continuing burden of bad loans. Add it all up, and the Co-op predicts the bank will be loss-making in 2013 and 2014 and possibly \"for some years thereafter\".</p><p>Why were the US funds so keen to lobby for a greater shareholding, thereby writing off a greater proportion of their bonds? The official answer (or semi-official as the key hedge funds – Silver Point and Aurelius – decline to speak for themselves) is that the bank's recovery could be profitable for owners prepared to be patient.</p><p>Well, yes, if better managers can avoid so many self-inflicted accidents, returns should improve one day. On the other hand, when you've got only 275 branches, making serious money outside the big boys' oligopoly is a challenge. One part of the US funds' thinking may be that shares in a bank listed on the stock market are easier to trade than impaired bonds.</p><p>In day-to-day terms, the hope is that an ethical constitution, policed by a boardroom committee, will keep the Co-op Bank's ethical halo in place and thus encourage loyalty among customers. We'll see. For what it's worth, <a href=\"http://www.theguardian.com/business/poll/2013/oct/22/co-op-bank-ethical-stance-group-lost-majority-control\" title=\"\">respondents to this newspaper's online poll were sceptical</a>: some 88% thought the ethical stance could not be retained without majority control by the Co-op.</p><p>The only winners, relatively speaking, are retail investors in the junior bonds. Thanks to Mark Taber's campaign on behalf of pensioners and others, they have got substantially better terms than a textbook restructuring would have suggested. The outcome is not painless for the pensioners but income, rather than shares, is what the junior bondholders wanted and the Co-op, asked to live up to its ethical mantra, has been persuaded to cough up £129m. Smart negotiating, Mr Taber.</p><!-- Guardian Watermark: internal-code/content/421650029|2013-11-05T11:03:48Z|d93e34e54d53b6bcc4f8cb8aa607dddd7288aa98 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-05T00:02:33Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383593877186/Co-op-Bank-004.jpg",
+        "standfirst":"When you've got only 275 branches, making serious money outside the big boys' oligopoly is a challenge<br /><br />",
+        "shortUrl":"http://gu.com/p/3k55z",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383593877186/Co-op-Bank-004.jpg",
+        "wordcount":"465",
+        "commentable":"true",
+        "internalContentCode":"421650029",
+        "allowUgc":"false",
+        "internalOctopusCode":"8279603",
+        "isPremoderated":"false",
+        "byline":"Nils Pratley",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-11-05",
+        "internalPageCode":"1991787",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-07T19:38:39Z"
+      },
+      "tags":[{
+        "id":"business/nils-pratley-on-finance",
+        "type":"blog",
+        "webTitle":"Nils Pratley on finance",
+        "webUrl":"http://www.theguardian.com/business/nils-pratley-on-finance",
+        "apiUrl":"http://content.guardianapis.com/business/nils-pratley-on-finance",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/co-operative-group",
+        "type":"keyword",
+        "webTitle":"Co-operative Group",
+        "webUrl":"http://www.theguardian.com/business/co-operative-group",
+        "apiUrl":"http://content.guardianapis.com/business/co-operative-group",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/retail",
+        "type":"keyword",
+        "webTitle":"Retail industry",
+        "webUrl":"http://www.theguardian.com/business/retail",
+        "apiUrl":"http://content.guardianapis.com/business/retail",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/banking",
+        "type":"keyword",
+        "webTitle":"Banking",
+        "webUrl":"http://www.theguardian.com/business/banking",
+        "apiUrl":"http://content.guardianapis.com/business/banking",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"tone/analysis",
+        "type":"tone",
+        "webTitle":"Analysis",
+        "webUrl":"http://www.theguardian.com/tone/analysis",
+        "apiUrl":"http://content.guardianapis.com/tone/analysis",
+        "references":[]
+      },{
+        "id":"profile/nilspratley",
+        "type":"contributor",
+        "webTitle":"Nils Pratley",
+        "webUrl":"http://www.theguardian.com/profile/nilspratley",
+        "apiUrl":"http://content.guardianapis.com/profile/nilspratley",
+        "bio":"<p>Nils Pratley is the Guardian's financial editor. Read his opinions on markets, boardroom winner and losers and business values on his <a href=\"http://www.guardian.co.uk/business/nils-pratley-on-finance\">Nils Pratley on Finance blog</a>. Follow him on Twitter at <a href=\"http://twitter.com/nilspratley\">@nilspratley</a></p>",
+        "rcsId":"GNL001064",
+        "r2ContributorId":"16201",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2008/02/06/nilspratleyb140140.jpg",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421650127",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383593870716/Co-op-Bank-001.jpg",
+          "typeData":{
+            "source":"Press Association",
+            "photographer":"John Stillwell",
+            "altText":"Co-op Bank",
+            "height":"54",
+            "credit":"John Stillwell/Press Association",
+            "caption":"The Co-op predicts the bank will be loss-making in 2013 and 2014 and possibly 'for some years thereafter'.\r Photograph: John Stillwell/Press Association",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383593874436/Co-op-Bank-002.jpg",
+          "typeData":{
+            "source":"Press Association",
+            "photographer":"John Stillwell",
+            "altText":"Co-op Bank",
+            "height":"340",
+            "credit":"John Stillwell/Press Association",
+            "caption":"The Co-op predicts the bank will be loss-making in 2013 and 2014 and possibly 'for some years thereafter'.\r Photograph: John Stillwell/Press Association",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383593875854/Co-op-Bank-003.jpg",
+          "typeData":{
+            "source":"Press Association",
+            "photographer":"John Stillwell",
+            "altText":"Co-op Bank",
+            "height":"130",
+            "credit":"John Stillwell/Press Association",
+            "caption":"The Co-op predicts the bank will be loss-making in 2013 and 2014 and possibly 'for some years thereafter'.\r Photograph: John Stillwell/Press Association",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383593877186/Co-op-Bank-004.jpg",
+          "typeData":{
+            "source":"Press Association",
+            "photographer":"John Stillwell",
+            "altText":"Co-op Bank",
+            "height":"84",
+            "credit":"John Stillwell/Press Association",
+            "caption":"The Co-op predicts the bank will be loss-making in 2013 and 2014 and possibly 'for some years thereafter'.\r Photograph: John Stillwell/Press Association",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383593878725/Co-op-Bank-005.jpg",
+          "typeData":{
+            "source":"Press Association",
+            "photographer":"John Stillwell",
+            "altText":"Co-op Bank",
+            "height":"132",
+            "credit":"John Stillwell/Press Association",
+            "caption":"The Co-op predicts the bank will be loss-making in 2013 and 2014 and possibly 'for some years thereafter'.\r Photograph: John Stillwell/Press Association",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383593880035/Co-op-Bank-006.jpg",
+          "typeData":{
+            "source":"Press Association",
+            "photographer":"John Stillwell",
+            "altText":"Co-op Bank",
+            "height":"168",
+            "credit":"John Stillwell/Press Association",
+            "caption":"The Co-op predicts the bank will be loss-making in 2013 and 2014 and possibly 'for some years thereafter'.\r Photograph: John Stillwell/Press Association",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383593881373/Co-op-Bank-007.jpg",
+          "typeData":{
+            "source":"Press Association",
+            "photographer":"John Stillwell",
+            "altText":"Co-op Bank",
+            "height":"180",
+            "credit":"John Stillwell/Press Association",
+            "caption":"The Co-op predicts the bank will be loss-making in 2013 and 2014 and possibly 'for some years thereafter'.\r Photograph: John Stillwell/Press Association",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383593882899/Co-op-Bank-008.jpg",
+          "typeData":{
+            "source":"Press Association",
+            "photographer":"John Stillwell",
+            "altText":"Co-op Bank",
+            "height":"228",
+            "credit":"John Stillwell/Press Association",
+            "caption":"The Co-op predicts the bank will be loss-making in 2013 and 2014 and possibly 'for some years thereafter'.\r Photograph: John Stillwell/Press Association",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383593884147/Co-op-Bank-009.jpg",
+          "typeData":{
+            "source":"Press Association",
+            "photographer":"John Stillwell",
+            "altText":"Co-op Bank",
+            "height":"276",
+            "credit":"John Stillwell/Press Association",
+            "caption":"The Co-op predicts the bank will be loss-making in 2013 and 2014 and possibly 'for some years thereafter'.\r Photograph: John Stillwell/Press Association",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383593885521/Co-op-Bank-010.jpg",
+          "typeData":{
+            "source":"Press Association",
+            "photographer":"John Stillwell",
+            "altText":"Co-op Bank",
+            "height":"372",
+            "credit":"John Stillwell/Press Association",
+            "caption":"The Co-op predicts the bank will be loss-making in 2013 and 2014 and possibly 'for some years thereafter'.\r Photograph: John Stillwell/Press Association",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383593884147/Co-op-Bank-009.jpg",
+          "typeData":{
+            "source":"Press Association",
+            "photographer":"John Stillwell",
+            "altText":"Co-op Bank",
+            "height":"276",
+            "credit":"John Stillwell/Press Association",
+            "caption":"The Co-op predicts the bank will be loss-making in 2013 and 2014 and possibly 'for some years thereafter'.\r Photograph: John Stillwell/Press Association",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421650128",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/4/1383593877186/Co-op-Bank-004.jpg",
+          "typeData":{
+            "source":"Press Association",
+            "photographer":"John Stillwell",
+            "altText":"Co-op Bank",
+            "height":"84",
+            "credit":"John Stillwell/Press Association",
+            "caption":"The Co-op predicts the bank will be loss-making in 2013 and 2014 and possibly 'for some years thereafter'.\r Photograph: John Stillwell/Press Association",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"business/2013/nov/04/co-operative-group-admits-regulators-questioning-financial-strength",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2013-11-04T21:51:58Z",
+      "webTitle":"Co-op Group admits regulators asking about bank's reported financial strength",
+      "webUrl":"http://www.theguardian.com/business/2013/nov/04/co-operative-group-admits-regulators-questioning-financial-strength",
+      "apiUrl":"http://content.guardianapis.com/business/2013/nov/04/co-operative-group-admits-regulators-questioning-financial-strength",
+      "fields":{
+        "trailText":"Co-operative Bank says City regulator has been questioning information in bank's 2012 annual report and accounts",
+        "headline":"Co-op Group admits regulators asking about bank's reported financial strength",
+        "body":"<p><strong> </strong></p><p>The Co-operative Group disclosed on Monday that regulators have been asking questions about information that its bank provided to investors about its financial strength in 2012.</p><p>In legal warnings made in more than 1,000 pages of documents published alongside the £1.5bn rescue deal for the bank, the group said that the City regulator and accountancy bodies had been asking for details about information contained in the bank's 2012 annual report and accounts.</p><p>The bank had examined the information provided and concluded that the statements made could appear inaccurate if read in isolation from other parts of the report and accounts. But when the statements were read alongside the rest of the report this was not the situation and the bank had concluded that it did not need to reissue its report and accounts.</p><p>The bank said the enquiries by the regulators – the Financial Conduct Authority and the Financial Reporting Council – were at a preliminary stage and that it could not determine if a formal investigation might begin.</p><p>It said the FCA and the conduct committee of the FRC had asked about disclosures about the regulatory capital position as well as details about the loan-impairment provision, the impairment charge of its IT systems and the way it had valued its debt.</p><p>As an example, it provided the formal wording used on page 80 of its 2012 report, which related to the intricate detail of rules set out by the then-regulator, the Financial Services Authority, and its approach to individual rules for each bank.</p><p>On page 80 the Co-op bank had said that \"adequate capitalisation can be maintained at all times even under the most severe stress scenarios, including the revised FSA 'anchor' stress scenario\" and also \"a capital buffer above individual capital guidance (ICG) is being maintained to provide the ability to absorb capital shocks and ensure sufficient surplus capital is available at all times to cover the bank's regulatory minimum requirements\".</p><p>After reviewing the statements, the bank's board had concluded that they were inaccurate if read in isolation  but along with the auditors KPMG, it did not believe the formal report should be reissued.</p><p>\"The board of the bank has reviewed the basis for these statements and has concluded that they are inaccurate and, should they be read in isolation, these statements could be misleading, but when taken in the context of the 2012 accounts as a whole, including the disclosures on pages 18, 29 and 30 of the 2012 accounts, a more balanced view can be formed,\" the group said.</p><p>The Co-op Group, which owns supermarkets, pharmacies and funeral homes, made the disclosures as it published details of a plan to inject £1.5bn into the bank – and under which it would lose 100% ownership of the bank. Bondholders, led by US hedge funds, are to take a 70% stake in the bank.</p><!-- Guardian Watermark: internal-code/content/421655544|2013-11-05T11:03:48Z|3e358171c5ff2f96a29784415cace3d0b075f43a -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-04T21:51:58Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Business/Pix/cartoon/2013/11/4/1383599317338/The-Co-operative-Bank.-Li-003.jpg",
+        "standfirst":"Co-operative Bank says City regulator has been questioning information in bank's 2012 annual report and accounts",
+        "shortUrl":"http://gu.com/p/3k57x",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/11/4/1383599317338/The-Co-operative-Bank.-Li-003.jpg",
+        "wordcount":"467",
+        "commentable":"false",
+        "internalContentCode":"421655544",
+        "allowUgc":"false",
+        "internalOctopusCode":"8281134",
+        "isPremoderated":"false",
+        "byline":"Jill Treanor",
+        "publication":"theguardian.com",
+        "internalPageCode":"1991818",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-07T21:51:58Z"
+      },
+      "tags":[{
+        "id":"business/co-operative-group",
+        "type":"keyword",
+        "webTitle":"Co-operative Group",
+        "webUrl":"http://www.theguardian.com/business/co-operative-group",
+        "apiUrl":"http://content.guardianapis.com/business/co-operative-group",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/banking",
+        "type":"keyword",
+        "webTitle":"Banking",
+        "webUrl":"http://www.theguardian.com/business/banking",
+        "apiUrl":"http://content.guardianapis.com/business/banking",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/retail",
+        "type":"keyword",
+        "webTitle":"Retail industry",
+        "webUrl":"http://www.theguardian.com/business/retail",
+        "apiUrl":"http://content.guardianapis.com/business/retail",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/regulators",
+        "type":"keyword",
+        "webTitle":"Regulators",
+        "webUrl":"http://www.theguardian.com/business/regulators",
+        "apiUrl":"http://content.guardianapis.com/business/regulators",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"profile/jilltreanor",
+        "type":"contributor",
+        "webTitle":"Jill Treanor",
+        "webUrl":"http://www.theguardian.com/profile/jilltreanor",
+        "apiUrl":"http://content.guardianapis.com/profile/jilltreanor",
+        "bio":"<p>Jill Treanor is the Guardian's City editor. She specialises in the banking sector</p>",
+        "rcsId":"GNL003510",
+        "r2ContributorId":"15822",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jill_treanor_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"business/financial-conduct-authority",
+        "type":"keyword",
+        "webTitle":"Financial Conduct Authority",
+        "webUrl":"http://www.theguardian.com/business/financial-conduct-authority",
+        "apiUrl":"http://content.guardianapis.com/business/financial-conduct-authority",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421658691",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/11/4/1383599316144/The-Co-operative-Bank.-Li-002.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Martin Argles",
+            "altText":"The Co-operative Bank. Link cash machine",
+            "height":"130",
+            "credit":"Martin Argles/Guardian",
+            "caption":"The Co-op Bank said the enquiries by the City regulators – were at a preliminary stage. It could not determine if a formal investigation might begin Photograph: Martin Argles for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/11/4/1383599317338/The-Co-operative-Bank.-Li-003.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Martin Argles",
+            "altText":"The Co-operative Bank. Link cash machine",
+            "height":"84",
+            "credit":"Martin Argles/Guardian",
+            "caption":"The Co-op Bank said the enquiries by the City regulators – were at a preliminary stage. It could not determine if a formal investigation might begin Photograph: Martin Argles for the Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/11/4/1383599318520/The-Co-operative-Bank.-Li-004.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Martin Argles",
+            "altText":"The Co-operative Bank. Link cash machine",
+            "height":"132",
+            "credit":"Martin Argles/Guardian",
+            "caption":"The Co-op Bank said the enquiries by the City regulators – were at a preliminary stage. It could not determine if a formal investigation might begin Photograph: Martin Argles for the Guardian",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/11/4/1383599319698/The-Co-operative-Bank.-Li-005.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Martin Argles",
+            "altText":"The Co-operative Bank. Link cash machine",
+            "height":"168",
+            "credit":"Martin Argles/Guardian",
+            "caption":"The Co-op Bank said the enquiries by the City regulators – were at a preliminary stage. It could not determine if a formal investigation might begin Photograph: Martin Argles for the Guardian",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/11/4/1383599320898/The-Co-operative-Bank.-Li-006.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Martin Argles",
+            "altText":"The Co-operative Bank. Link cash machine",
+            "height":"180",
+            "credit":"Martin Argles/Guardian",
+            "caption":"The Co-op Bank said the enquiries by the City regulators – were at a preliminary stage. It could not determine if a formal investigation might begin Photograph: Martin Argles for the Guardian",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/11/4/1383599322242/The-Co-operative-Bank.-Li-007.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Martin Argles",
+            "altText":"The Co-operative Bank. Link cash machine",
+            "height":"228",
+            "credit":"Martin Argles/Guardian",
+            "caption":"The Co-op Bank said the enquiries by the City regulators – were at a preliminary stage. It could not determine if a formal investigation might begin Photograph: Martin Argles for the Guardian",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/11/4/1383599323589/The-Co-operative-Bank.-Li-008.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Martin Argles",
+            "altText":"The Co-operative Bank. Link cash machine",
+            "height":"276",
+            "credit":"Martin Argles/Guardian",
+            "caption":"The Co-op Bank said the enquiries by the City regulators – were at a preliminary stage. It could not determine if a formal investigation might begin Photograph: Martin Argles for the Guardian",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/11/4/1383599312438/The-Co-operative-Bank.-Li-001.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Martin Argles",
+            "altText":"The Co-operative Bank. Link cash machine",
+            "height":"54",
+            "credit":"Martin Argles/Guardian",
+            "caption":"The Co-op Bank said the enquiries by the City regulators – were at a preliminary stage. It could not determine if a formal investigation might begin Photograph: Martin Argles for the Guardian",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/11/4/1383599323589/The-Co-operative-Bank.-Li-008.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Martin Argles",
+            "altText":"The Co-operative Bank. Link cash machine",
+            "height":"276",
+            "credit":"Martin Argles/Guardian",
+            "caption":"Co-op Bank said enquiries by City regulators were at a preliminary stage. It could not determine if a formal inquiry might begin. Photo: Martin Argles for the Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421658692",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/cartoon/2013/11/4/1383599317338/The-Co-operative-Bank.-Li-003.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "photographer":"Martin Argles",
+            "altText":"The Co-operative Bank. Link cash machine",
+            "height":"84",
+            "credit":"Martin Argles/Guardian",
+            "caption":"The Co-op Bank said the enquiries by the City regulators – were at a preliminary stage. It could not determine if a formal investigation might begin Photograph: Martin Argles for the Guardian",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"business/2013/nov/04/co-op-group-rescue-activist-hedge-funds",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2013-11-04T20:01:00Z",
+      "webTitle":"Co-op Bank scrambles to convince customers its ethical stance will survive",
+      "webUrl":"http://www.theguardian.com/business/2013/nov/04/co-op-group-rescue-activist-hedge-funds",
+      "apiUrl":"http://content.guardianapis.com/business/2013/nov/04/co-op-group-rescue-activist-hedge-funds",
+      "fields":{
+        "newspaperPageNumber":"4",
+        "trailText":"Sweeping restructuring of bank could see hundreds of jobs lost amid closure of around 15% of 324 branches",
+        "headline":"Co-op Bank scrambles to convince customers its ethical stance will survive",
+        "body":"<p>The Co-operative Group was scrambling late on Monday to convince the 4.6 million customers of its banking arm that its ethical stance could survive aggressive US hedge funds taking a stake in the troubled bank.</p><p>As details of a £1.5bn rescue package were announced, the group disclosed the City regulator, the Financial Conduct Authority, was asking questions about information it provided about its financial strength in its 2012 annual report. The bank had concluded it did not need to reissue the accounts.</p><p>About 50 of the 324 Co-op bank branches are to close and a significant number of jobs from the 10,000-strong workforce are under threat as the new management team attempts to reverse steep losses. It could take five years to make the bank profitable again after losses caused by bad lending and the merger with the Britannia building society in 2009.</p><p>The troubles at the bank are forcing the wider Co-operative Group, which owns supermarkets, pharmacies and funeral homes, to pump £462m into the bank – equivalent to around £60 for each of the group's 7.9 million owner-members.</p><p>While this is less than the £1bn the group originally expected to stump up, it means the UK's largest mutual will own just 30% of the bank; the rest will be owned by its bondholders. Those include a group of hedge funds, led by the US-based Silver Point and Aurelius, that has forced the rewriting of a radical proposal first outlined in June, when the £1.5bn shortfall was identified.</p><p>Despite concerns that the millions of pounds being used to prop up the bank would starve the Co-op of cash to invest in its other businesses, the finance director, Richard Pennycook – part of a new management team installed in the last six months – said the alternative would have been worse.</p><p>\"We are all extremely sorry about what has happened,\" said Pennycook. \"But there is a difference between today and June. In June, if we hadn't taken this action the bank was going to go bust … the impact on the wider group would have been disastrous.\"</p><p>Bondholders including 30,000 retail investors, largely pensioners, still need to back the deal, without which the bank fears it would fall under control of the Bank of England, or could be nationalised.</p><p>In an attempt to demonstrate commitment to the ethical stance the bank has been known for since 1992, the new bank will poll its customers in the spring about the businesses it should turn away on ethical grounds. Since 1992 it has turned away £1.2bn of business, including backing for arms shipments, coalmining and cleaning products tested on animals.</p><p>But Andre Spicer, a professor at Cass Business School, warned: \"With hedge funds at the wheel, the bank will become more ruthlessly commercial. Cutting 1,000 jobs at the same time as you launch an ethics policy is quite a contradiction.\"</p><p>The bank will be able to use the Co-operative name only if it keeps an ethical stance that will be overseen by an independent director who will chair an ethics and values committee. The bank said \"customer power\" would keep it ethical.</p><p>The Co-operative Group on Monday warned its brand could be  damaged by the bank continuing to use the Co-op name. The City regulator the Financial Conduct Authority and the business secretary, Vince Cable, can force the bank to change its name if the description is misleading.</p><p>The bank's constitution will be written from 15 November to force it to take account of the \"highest standards of ethical principles\" and being a \"good corporate citizen … contributing to building a stronger and sustainable society\".</p><p>It will not be able to pay dividends to shareholders unless it also considers its commitment to society and the environment. The group of hedge funds, advised by Caroline Silver of the Wall Street investment bank Moelis, and known as LT2, stressed that it was determined to maintain the ethical stance, which Silver described as a \"unique mission\".</p><p>The hedge funds will put in an extra £125m of capital in addition to their bonds. The secretive group admitted only  on Monday that it included Aurelius  – known for a long-running battle to force Argentina to pay out £800m – and Silver Point, linked to troubled financial firms such as Lehman Brothers. Others, including Beach Point Capital Management, Caspian Capital, Canyon Capital Advisors and Monarch Alternative Capital, then stepped forward.</p><p>Euan Sutherland, who arrived from B&amp;Q to run the Co-op in May, refused to criticise the hedge funds, describing them as \"very economically rational people\" who were investing in the bank because they believed it could become profitable again. He said the bank had lost its way over the previous five years, during which it had expanded rapidly, merging with the Britannia and then attempting the audacious but ill-fated takeover of more than 600 so-called Verde branches <a href=\"http://www.theguardian.com/business/2013/apr/24/coop-pulls-out-talks-buy-lloyds-bank-branches\" title=\"\">from Lloyds Banking Group, in a move that would have given the Co-op a 1,000-strong network</a>.</p><p>Under Niall Booker, who also joined in May, the bank's high-street presence will shrink. At least 15% of the 324 branches are to be shut, and £500m ploughed into investing in IT systems that previous management neglected.</p><p></p><p>Sutherland said it was his idea for Co-op Group would use £130m of the £462m it is pumping into the bank to issue new bonds to some 30,000 private investors who would otherwise have been wiped out.</p><!-- Guardian Watermark: internal-code/content/421599156|2013-11-05T11:03:48Z|6a3ccb4d094a86e375f80aa2115bf19ae007433b -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-05T00:02:33Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/11/3/1383504421508/The-Pyramid-Co-operative--004.jpg",
+        "standfirst":"Sweeping restructuring of bank could see hundreds of jobs lost amid closure of around 15% of 324 branches",
+        "shortUrl":"http://gu.com/p/3k4gx",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/11/3/1383504421508/The-Pyramid-Co-operative--004.jpg",
+        "wordcount":"882",
+        "commentable":"true",
+        "internalContentCode":"421599156",
+        "allowUgc":"false",
+        "internalOctopusCode":"8277408",
+        "isPremoderated":"false",
+        "byline":"Jill Treanor",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-11-05",
+        "internalPageCode":"1991332",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-07T08:34:53Z"
+      },
+      "tags":[{
+        "id":"business/co-operative-group",
+        "type":"keyword",
+        "webTitle":"Co-operative Group",
+        "webUrl":"http://www.theguardian.com/business/co-operative-group",
+        "apiUrl":"http://content.guardianapis.com/business/co-operative-group",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/retail",
+        "type":"keyword",
+        "webTitle":"Retail industry",
+        "webUrl":"http://www.theguardian.com/business/retail",
+        "apiUrl":"http://content.guardianapis.com/business/retail",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/banking",
+        "type":"keyword",
+        "webTitle":"Banking",
+        "webUrl":"http://www.theguardian.com/business/banking",
+        "apiUrl":"http://content.guardianapis.com/business/banking",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"profile/jilltreanor",
+        "type":"contributor",
+        "webTitle":"Jill Treanor",
+        "webUrl":"http://www.theguardian.com/profile/jilltreanor",
+        "apiUrl":"http://content.guardianapis.com/profile/jilltreanor",
+        "bio":"<p>Jill Treanor is the Guardian's City editor. She specialises in the banking sector</p>",
+        "rcsId":"GNL003510",
+        "r2ContributorId":"15822",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jill_treanor_140x140.jpg",
+        "references":[]
+      },{
+        "id":"money/banks",
+        "type":"keyword",
+        "webTitle":"Banks and building societies",
+        "webUrl":"http://www.theguardian.com/money/banks",
+        "apiUrl":"http://content.guardianapis.com/money/banks",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"money/money",
+        "type":"keyword",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/money/money",
+        "apiUrl":"http://content.guardianapis.com/money/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421599392",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/11/3/1383504427947/The-Pyramid-Co-operative--009.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"The Pyramid, Co-operative Bank Building at sunset, Stockport, Greater Manchester, England, UK.",
+            "height":"276",
+            "credit":"Alamy",
+            "caption":"The Co-operative Bank's Pyramid building in Stockport. The bank needs £1.5bn of extra capital. Photograph: Alamy",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421599393",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/cartoons/2013/11/3/1383504421508/The-Pyramid-Co-operative--004.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"The Pyramid, Co-operative Bank Building at sunset, Stockport, Greater Manchester, England, UK.",
+            "height":"84",
+            "credit":"Alamy",
+            "caption":"The Co-operative Bank's Pyramid building in Stockport. Photograph: Alamy",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

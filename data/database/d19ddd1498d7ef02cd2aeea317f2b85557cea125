@@ -1,0 +1,162 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"tv-and-radio/tvandradioblog/2013/oct/30/have-you-been-watching-gogglebox",
+      "sectionId":"tv-and-radio",
+      "sectionName":"Television &amp; radio",
+      "webPublicationDate":"2013-10-30T11:32:11Z",
+      "webTitle":"Have you been watching … Gogglebox?",
+      "webUrl":"http://www.theguardian.com/tv-and-radio/tvandradioblog/2013/oct/30/have-you-been-watching-gogglebox",
+      "apiUrl":"http://content.guardianapis.com/tv-and-radio/tvandradioblog/2013/oct/30/have-you-been-watching-gogglebox",
+      "fields":{
+        "trailText":"<p><strong>Hannah Verdier:</strong> Watching people watching TV sounds boring – but Gogglebox is brilliant entertainment, full of 'I do that!' moments and great characters</p>",
+        "headline":"Have you been watching … Gogglebox?",
+        "body":"<p>Is there anything more boring than watching people watching television? The premise of Gogglebox should be laughable: film ordinary people on their sofas watching the week's TV. But against the odds, this understated show makes surprisingly great entertainment.</p><p>\"The thing is, if this is what Channel 4 are broadcasting,\" sighs a baffled Siddiqui brother as he's glued to Up All Night: The Nightclub Toilet, \"What must be the ideas that they're, like, rejecting?\"</p><p>In a post-postmodern way, his sage sofa wisdom could well apply to the show he's appearing in, if it wasn't for the fact that Gogglebox simply works. Whether the subjects are miming their way through the songs on The X Factor, impersonating the Made in Chelsea set or just sipping their drinks from a Pot Noodle cup, it's proof that TV brings people together.</p><p>Gogglebox gems Sandy and Sandra – of Pot Noodle-cup fame – welcome you to a Brixton flat that oozes unbreakable friendship and empathy for Hayley off Corrie. Then there are sofa legends Stephanie and Dominic, who dish out nuggets of joy from their comfortable home in Sandwich, Kent. They're the posh ones: Stephanie's impressive scarf collection is matched only by her ability to balance a champagne glass on her head, while her husband is the archetypal frisky dad who, three red wines in, might drop a not-very-subtle joke about sucking lollipops.</p><p>Stephanie thrives on the cocktails Dominic expertly mixes each night (he learned his skills on one of their many holidays in the Maldives), so it's no wonder they disapprove of Made in Chelsea's flagrant disregard for spare booze. \"What a waste,\" says Dominic, before Steph knowingly dismisses his concerns: \"It'll be prosecco, darling.\"</p><p>Also splashing out are Chris and Stephen, whose Friday night takeaway with a glass of rosé is rudely interrupted by the sight of whip-wielding Britney Spears on Alan Carr: Chatty Man. It's enough to make them drop their chips. \"She's not the Queen of Pop!\" they exclaim with maximum affront. \"Madonna is.\"</p><p>Gogglebox comes into its own when every sofa has the same talking point, such as <a href=\"http://www.theguardian.com/tv-and-radio/2013/oct/23/coronation-street-hayley-cropper-changed-soaps\">Hayley and Roy's poignant scenes in Corrie</a>, which spark a debate about euthanasia and the best way to \"go\". But the most reassuring thing about how other people watch telly is those \"I do that!\" moments. Who doesn't have a Mastermind face, used at that point when it becomes clear you're not going to get any right tonight? And in every family house, there is a dad with a Quiz Show Finger, ready to point to whoever they decree should know the answer. \"Our Helen would have got that,\" sigh June and Leon, who are in their 70s and claim to have been dogging, despite the fact that they haven't got a clue what it means.</p><p>And of course, Gogglebox shows the full horror of how wrong watching television with your family can go, particularly if <a href=\"http://www.theguardian.com/tv-and-radio/2013/oct/07/sex-box-tv-review\">Sex Box</a> comes on. \"Shut up! Stop saying 'sex'!\" Cue: everyone suddenly having something else to do rather than staying on the sofa.</p><p>Gogglebox's loose-lipped feel harks back to the more innocent days of the first series of Big Brother, before the housemates clocked that there were millions of people watching them and became self-aware. In the early days, like this lot, they couldn't understand why anyone <em>would</em> watch them.</p><p>Have you been hooked on Gogglebox? Let us know below.</p><!-- Guardian Watermark: internal-code/content/421271415|2013-11-05T11:03:48Z|c2b5a06e9b2167094f80d804d8a7df0751f25ab9 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-30T11:32:11Z",
+        "hasStoryPackage":"false",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Lifeandhealth/Pix/pictures/2013/10/30/1383130675158/Gogglebox-June-and-Leon-004.jpg",
+        "standfirst":"Watching people watching TV sounds boring – but Gogglebox is brilliant entertainment, full of 'I do that!' moments and great characters",
+        "shortUrl":"http://gu.com/p/3kx9c",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Lifeandhealth/Pix/pictures/2013/10/30/1383130675158/Gogglebox-June-and-Leon-004.jpg",
+        "wordcount":"555",
+        "commentable":"true",
+        "internalContentCode":"421271415",
+        "allowUgc":"false",
+        "internalOctopusCode":"8257961",
+        "isPremoderated":"false",
+        "byline":"Hannah Verdier",
+        "publication":"theguardian.com",
+        "internalPageCode":"1988967",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-06T11:32:11Z"
+      },
+      "tags":[{
+        "id":"tv-and-radio/series/have-you-been-watching",
+        "type":"series",
+        "webTitle":"Have You Been Watching?",
+        "webUrl":"http://www.theguardian.com/tv-and-radio/series/have-you-been-watching",
+        "apiUrl":"http://content.guardianapis.com/tv-and-radio/series/have-you-been-watching",
+        "sectionId":"tv-and-radio",
+        "sectionName":"Television &amp; radio",
+        "references":[]
+      },{
+        "id":"tv-and-radio/entertainment",
+        "type":"keyword",
+        "webTitle":"Entertainment",
+        "webUrl":"http://www.theguardian.com/tv-and-radio/entertainment",
+        "apiUrl":"http://content.guardianapis.com/tv-and-radio/entertainment",
+        "sectionId":"tv-and-radio",
+        "sectionName":"Television &amp; radio",
+        "references":[]
+      },{
+        "id":"culture/tvandradioblog",
+        "type":"blog",
+        "webTitle":"TV and radio blog",
+        "webUrl":"http://www.theguardian.com/culture/tvandradioblog",
+        "apiUrl":"http://content.guardianapis.com/culture/tvandradioblog",
+        "sectionId":"tv-and-radio",
+        "sectionName":"Television &amp; radio",
+        "references":[]
+      },{
+        "id":"tv-and-radio/tv-and-radio",
+        "type":"keyword",
+        "webTitle":"Television & radio",
+        "webUrl":"http://www.theguardian.com/tv-and-radio/tv-and-radio",
+        "apiUrl":"http://content.guardianapis.com/tv-and-radio/tv-and-radio",
+        "sectionId":"tv-and-radio",
+        "sectionName":"Television &amp; radio",
+        "references":[]
+      },{
+        "id":"culture/television",
+        "type":"keyword",
+        "webTitle":"Television",
+        "webUrl":"http://www.theguardian.com/culture/television",
+        "apiUrl":"http://content.guardianapis.com/culture/television",
+        "sectionId":"tv-and-radio",
+        "sectionName":"Television &amp; radio",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"profile/hannah-verdier",
+        "type":"contributor",
+        "webTitle":"Hannah Verdier",
+        "webUrl":"http://www.theguardian.com/profile/hannah-verdier",
+        "apiUrl":"http://content.guardianapis.com/profile/hannah-verdier",
+        "r2ContributorId":"47270",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421276135",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Lifeandhealth/Pix/pictures/2013/10/30/1383130684986/Gogglebox-June-and-Leon-009.jpg",
+          "typeData":{
+            "source":"Channel 4",
+            "altText":"Gogglebox: June and Leon",
+            "height":"276",
+            "credit":"Channel 4",
+            "caption":"June and Leon on Gogglebox. Photograph: Channel 4",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421276136",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Lifeandhealth/Pix/pictures/2013/10/30/1383130675158/Gogglebox-June-and-Leon-004.jpg",
+          "typeData":{
+            "source":"Channel 4",
+            "altText":"Gogglebox: June and Leon",
+            "height":"84",
+            "credit":"Channel 4",
+            "caption":"June and Leon on Gogglebox. Photograph: Channel 4",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[]
+  }
+}

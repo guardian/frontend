@@ -1,0 +1,923 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"media/2013/oct/29/sky-at-night-bbc-new-slot-petition",
+      "sectionId":"media",
+      "sectionName":"Media",
+      "webPublicationDate":"2013-10-29T19:09:08Z",
+      "webTitle":"The Sky at Night gets new slot on BBC4 following 40,000-signature petition",
+      "webUrl":"http://www.theguardian.com/media/2013/oct/29/sky-at-night-bbc-new-slot-petition",
+      "apiUrl":"http://content.guardianapis.com/media/2013/oct/29/sky-at-night-bbc-new-slot-petition",
+      "fields":{
+        "newspaperPageNumber":"5",
+        "trailText":"The astronomy show – first broadcast in 1957 – will run an expanded 30-minute programme in its new monthly home",
+        "headline":"The Sky at Night gets new slot on BBC4 following 40,000-signature petition",
+        "body":"<p>The sun will not set on the The Sky at Night after the BBC announced the long-running science show would move to a new slot on BBC4 following a petition signed by 40,000 viewers who feared it would be axed.</p><p>The astronomy show, first broadcast in 1957, will lose its slot on BBC1 but will be expanded from 20 to 30 minutes in its new monthly home on BBC4, with a repeat on BBC2.</p><p>The future of the series <a href=\"http://www.theguardian.com/media/2013/sep/24/sky-at-night-faces-bbc-axe\" title=\"\">appeared to be in doubt last month</a> after the corporation declined to confirm its future beyond the end of the year.</p><p>More than 40,000 fans signed an online petition in support of the show, which was presented by Sir Patrick Moore until his death last December, aged 89.</p><p>The programme will be off air in January, when the gap will be filled by BBC2's live astronomy series, Stargazing Live, presented by Professor Brian Cox and Dara O Briain, before returning in February.</p><p>Kim Shillinglaw, head of commissioning science and natural history, said: \"Sir Patrick Moore inspired generations of astronomers and I hope that alongside the BBC's other astronomy content, such as BBC2's Stargazing Live, The Sky at Night will enthuse further generations about the wonder of the night sky.\"</p><p>Losing its BBC1 slot is likely to deprive the show of its biggest audiences. The show's last BBC1 outing, on 6 October, was watched by 655,000 viewers. A programme on BBC1 on 4 September, featuring amateur astronomers in their back gardens, was watched by nearly 1.5 million.</p><p>The Sky at Night's audiences on BBC4, where it is also currently repeated, are more modest, with one recent edition watched by an average of 317,000 viewers.</p><p>No decisions have been made about the presenter's role on the show which has been filled by a series of guest hosts following Moore's death.</p><p>The Sky at Night is one of the BBC's longest running TV shows, its longevity eclipsed by current affairs show Panorama, which began four years earlier in 1953.</p><p>Moore presented a total of 721 episodes, missing just one outing in the programme's history, when he was struck down by food poisoning.</p><!-- Guardian Watermark: internal-code/content/421229831|2013-11-05T11:03:48Z|326299092a7f9335de796bf06577c0dae081f765 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-30T00:06:55Z",
+        "hasStoryPackage":"true",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383073323132/the-sky-at-night-new-slot-003.jpg",
+        "standfirst":"The astronomy show – first broadcast in 1957 – will run an expanded 30-minute programme in its new monthly home",
+        "shortUrl":"http://gu.com/p/3kxxy",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383073323132/the-sky-at-night-new-slot-003.jpg",
+        "wordcount":"348",
+        "commentable":"false",
+        "internalContentCode":"421229831",
+        "allowUgc":"false",
+        "internalOctopusCode":"8255515",
+        "isPremoderated":"false",
+        "byline":"John Plunkett",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-30",
+        "internalPageCode":"1988760",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-01T19:09:08Z"
+      },
+      "tags":[{
+        "id":"media/bbc",
+        "type":"keyword",
+        "webTitle":"BBC",
+        "webUrl":"http://www.theguardian.com/media/bbc",
+        "apiUrl":"http://content.guardianapis.com/media/bbc",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.theguardian.com/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/bbc1",
+        "type":"keyword",
+        "webTitle":"BBC1",
+        "webUrl":"http://www.theguardian.com/media/bbc1",
+        "apiUrl":"http://content.guardianapis.com/media/bbc1",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/television",
+        "type":"keyword",
+        "webTitle":"Television industry",
+        "webUrl":"http://www.theguardian.com/media/television",
+        "apiUrl":"http://content.guardianapis.com/media/television",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/bbc4",
+        "type":"keyword",
+        "webTitle":"BBC4",
+        "webUrl":"http://www.theguardian.com/media/bbc4",
+        "apiUrl":"http://content.guardianapis.com/media/bbc4",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"culture/television",
+        "type":"keyword",
+        "webTitle":"Television",
+        "webUrl":"http://www.theguardian.com/culture/television",
+        "apiUrl":"http://content.guardianapis.com/culture/television",
+        "sectionId":"tv-and-radio",
+        "sectionName":"Television &amp; radio",
+        "references":[]
+      },{
+        "id":"tv-and-radio/tv-and-radio",
+        "type":"keyword",
+        "webTitle":"Television & radio",
+        "webUrl":"http://www.theguardian.com/tv-and-radio/tv-and-radio",
+        "apiUrl":"http://content.guardianapis.com/tv-and-radio/tv-and-radio",
+        "sectionId":"tv-and-radio",
+        "sectionName":"Television &amp; radio",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/johnplunkett",
+        "type":"contributor",
+        "webTitle":"John Plunkett",
+        "webUrl":"http://www.theguardian.com/profile/johnplunkett",
+        "apiUrl":"http://content.guardianapis.com/profile/johnplunkett",
+        "bio":"<p>John Plunkett writes about radio, among many other things, for the Media Guardian and presents the weekly <a href=\"http://www.guardian.co.uk/media/series/mediatalk\">Media Talk podcast</a>. He is also chairman of the <a href=\"http://www.broadcastingpressguild.org\">Broadcasting Press Guild</a></p>",
+        "r2ContributorId":"15874",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/10/03/john_plunkett_140x140.jpg",
+        "references":[]
+      },{
+        "id":"science/astronomy",
+        "type":"keyword",
+        "webTitle":"Astronomy",
+        "webUrl":"http://www.theguardian.com/science/astronomy",
+        "apiUrl":"http://content.guardianapis.com/science/astronomy",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/space",
+        "type":"keyword",
+        "webTitle":"Space",
+        "webUrl":"http://www.theguardian.com/science/space",
+        "apiUrl":"http://content.guardianapis.com/science/space",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421230272",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383073319437/the-sky-at-night-new-slot-001.jpg",
+          "typeData":{
+            "source":"Roger Bamber / Rex Features",
+            "photographer":"Roger Bamber / Rex Features",
+            "altText":"the sky at night new slot bbc4",
+            "height":"54",
+            "credit":"Roger Bamber / Rex Features/Roger Bamber / Rex Features",
+            "caption":"More than 40,000 fans signed an online petition in support of the show, which was presented by Sir Patrick Moore until his death last December. Photograph: Roger Bamber / Rex Features",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383073321895/the-sky-at-night-new-slot-002.jpg",
+          "typeData":{
+            "source":"Roger Bamber / Rex Features",
+            "photographer":"Roger Bamber / Rex Features",
+            "altText":"the sky at night new slot bbc4",
+            "height":"130",
+            "credit":"Roger Bamber / Rex Features/Roger Bamber / Rex Features",
+            "caption":"More than 40,000 fans signed an online petition in support of the show, which was presented by Sir Patrick Moore until his death last December. Photograph: Roger Bamber / Rex Features",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383073323132/the-sky-at-night-new-slot-003.jpg",
+          "typeData":{
+            "source":"Roger Bamber / Rex Features",
+            "photographer":"Roger Bamber / Rex Features",
+            "altText":"the sky at night new slot bbc4",
+            "height":"84",
+            "credit":"Roger Bamber / Rex Features/Roger Bamber / Rex Features",
+            "caption":"More than 40,000 fans signed an online petition in support of the show, which was presented by Sir Patrick Moore until his death last December. Photograph: Roger Bamber / Rex Features",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383073324452/the-sky-at-night-new-slot-004.jpg",
+          "typeData":{
+            "source":"Roger Bamber / Rex Features",
+            "photographer":"Roger Bamber / Rex Features",
+            "altText":"the sky at night new slot bbc4",
+            "height":"132",
+            "credit":"Roger Bamber / Rex Features/Roger Bamber / Rex Features",
+            "caption":"More than 40,000 fans signed an online petition in support of the show, which was presented by Sir Patrick Moore until his death last December. Photograph: Roger Bamber / Rex Features",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383073325809/the-sky-at-night-new-slot-005.jpg",
+          "typeData":{
+            "source":"Roger Bamber / Rex Features",
+            "photographer":"Roger Bamber / Rex Features",
+            "altText":"the sky at night new slot bbc4",
+            "height":"168",
+            "credit":"Roger Bamber / Rex Features/Roger Bamber / Rex Features",
+            "caption":"More than 40,000 fans signed an online petition in support of the show, which was presented by Sir Patrick Moore until his death last December. Photograph: Roger Bamber / Rex Features",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383073327203/the-sky-at-night-new-slot-006.jpg",
+          "typeData":{
+            "source":"Roger Bamber / Rex Features",
+            "photographer":"Roger Bamber / Rex Features",
+            "altText":"the sky at night new slot bbc4",
+            "height":"180",
+            "credit":"Roger Bamber / Rex Features/Roger Bamber / Rex Features",
+            "caption":"More than 40,000 fans signed an online petition in support of the show, which was presented by Sir Patrick Moore until his death last December. Photograph: Roger Bamber / Rex Features",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383073328602/the-sky-at-night-new-slot-007.jpg",
+          "typeData":{
+            "source":"Roger Bamber / Rex Features",
+            "photographer":"Roger Bamber / Rex Features",
+            "altText":"the sky at night new slot bbc4",
+            "height":"228",
+            "credit":"Roger Bamber / Rex Features/Roger Bamber / Rex Features",
+            "caption":"More than 40,000 fans signed an online petition in support of the show, which was presented by Sir Patrick Moore until his death last December. Photograph: Roger Bamber / Rex Features",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383073329899/the-sky-at-night-new-slot-008.jpg",
+          "typeData":{
+            "source":"Roger Bamber / Rex Features",
+            "photographer":"Roger Bamber / Rex Features",
+            "altText":"the sky at night new slot bbc4",
+            "height":"276",
+            "credit":"Roger Bamber / Rex Features/Roger Bamber / Rex Features",
+            "caption":"More than 40,000 fans signed an online petition in support of the show, which was presented by Sir Patrick Moore until his death last December. Photograph: Roger Bamber / Rex Features",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383073329899/the-sky-at-night-new-slot-008.jpg",
+          "typeData":{
+            "source":"Roger Bamber / Rex Features",
+            "photographer":"Roger Bamber / Rex Features",
+            "altText":"the sky at night new slot bbc4",
+            "height":"276",
+            "credit":"Roger Bamber / Rex Features/Roger Bamber / Rex Features",
+            "caption":"Over 40,000 fans signed a petition in support of the show, which was presented by Sir Patrick Moore until his death last December. Photograph: Roger Bamber/Rex Features",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421230273",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383073323132/the-sky-at-night-new-slot-003.jpg",
+          "typeData":{
+            "source":"Roger Bamber / Rex Features",
+            "photographer":"Roger Bamber / Rex Features",
+            "altText":"the sky at night new slot bbc4",
+            "height":"84",
+            "credit":"Roger Bamber / Rex Features/Roger Bamber / Rex Features",
+            "caption":"More than 40,000 fans signed an online petition in support of the show, which was presented by Sir Patrick Moore until his death last December. Photograph: Roger Bamber / Rex Features",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"media/2013/sep/24/sky-at-night-faces-bbc-axe",
+      "sectionId":"media",
+      "sectionName":"Media",
+      "webPublicationDate":"2013-09-24T11:39:55Z",
+      "webTitle":"The Sky at Night faces BBC axe",
+      "webUrl":"http://www.theguardian.com/media/2013/sep/24/sky-at-night-faces-bbc-axe",
+      "apiUrl":"http://content.guardianapis.com/media/2013/sep/24/sky-at-night-faces-bbc-axe",
+      "fields":{
+        "newspaperPageNumber":"14",
+        "trailText":"BBC to review future of astronomy show – first broadcast in 1957 – less than a year after the death of Sir Patrick Moore. By <strong>John Plunkett</strong>",
+        "headline":"The Sky at Night faces BBC axe",
+        "body":"<p>One of the BBC's longest-running TV shows, The Sky at Night, faces the axe less than a year after the death of the man who made it famous, Sir Patrick Moore.</p><p></p><p>The future of the series, which first aired in 1957, will be reviewed at the end of the year, prompting an angry protest from fans on Twitter and an <a href=\"http://www.change.org/en-GB/petitions/the-bbc-please-do-not-axe-the-sky-at-night\" title=\"\">online petition that had attracted more than 2,000 signatures by Tuesday morning</a>.</p><p></p><p>The Sky at Night is now presented by cosmologists Lucie Green and Chris Lintott following Moore's death in December last year, aged 89. It now airs once a month, in a late-night slot on BBC1 and later on BBC4.</p><p></p><p>Moore presented a total of 721 episodes, only ever missing one broadcast, in July 2004, after he suffered food poisoning.</p><p></p><p>A BBC spokesman said: \"Sky at Night is on air until the end of the year. Plans for subsequent series are being discussed.\"</p><p></p><p>As well as looking into space, discussing everything from comets to quasars, the show covered the 1999 solar eclipse and the Apollo moon landings of 1969. It has featured interviews with Neil Armstrong, Buzz Aldrin, and author Arthur C Clarke.</p><p></p><p>The last episode, which looked at black holes, was watched by 202,000 viewers on BBC4, a 1% share of the audience. Although small compared to the audiences who watch peak-time programmes on BBC1 and ITV, it is a not insubstantial audience for BBC4.</p><p></p><p>Next month's programme will feature a \"Moore moon marathon\" and will be filmed on 18 October, the night of the penumbral eclipse.</p><p></p><p>Disgruntled viewers took to Twitter and an online petition, where one unhappy fan, Alan Fleming, wrote: \"An absolute disgrace to axe this show. I have been watching this since the 1970s. I am not a minority market, I don't even own a telescope but as many others have mentioned here, it is the education and entertainment of this show which is important.\"</p><p></p><p>Another, John Hunt, said: \"The Sky at Night inspired me as a child to become a scientist, now I'm a university professor who regards [it] as a vital part of science out-reach and public education.\"</p><p></p><p>Astronomy shows have been a big hit for BBC2 in recent years, with Stargazing Live presented by Professor Brian Cox, one of the BBC's biggest stars, and Dara O Briain, which was credited with generating a boom in interest in astronomy.</p><p></p><p>The Sky at Night is one of the BBC's longest running TV shows, its longevity eclipsed by current affairs show Panorama, which began four years earlier, in 1953.</p><p></p><p><em>• To contact the MediaGuardian news desk email media@theguardian.com or phone 020 3353 3857. For all other inquiries please call the main Guardian switchboard on 020 3353 2000. If you are writing a comment for publication, please mark clearly \"for publication\".</em></p><p><em>• To get the latest media news to your desktop or mobile, follow MediaGuardian on </em><a href=\"http://twitter.com/#!/mediaguardian\" title=\"\"><em>Twitter</em></a><em> and </em><a href=\"http://www.facebook.com/mediaguardian\" title=\"\"><em>Facebook</em></a><em>.</em></p><!-- Guardian Watermark: internal-code/content/418125456|2013-11-05T11:03:48Z|90a18b4b8fbb484b6fa7534529a381b18a5b5877 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-09-25T00:00:50Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/9/24/1380022408211/Sir-Patrick-Moore-003.jpg",
+        "standfirst":"BBC to review future of astronomy show – first broadcast in 1957 – less than a year after the death of Sir Patrick Moore",
+        "shortUrl":"http://gu.com/p/3j2e4",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/24/1380022408211/Sir-Patrick-Moore-003.jpg",
+        "wordcount":"471",
+        "commentable":"true",
+        "internalContentCode":"418125456",
+        "allowUgc":"false",
+        "internalOctopusCode":"8111399",
+        "isPremoderated":"false",
+        "byline":"John Plunkett",
+        "publication":"theguardian.com",
+        "newspaperEditionDate":"2013-09-25",
+        "internalPageCode":"1970140",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-09-27T11:39:55Z"
+      },
+      "tags":[{
+        "id":"media/bbc",
+        "type":"keyword",
+        "webTitle":"BBC",
+        "webUrl":"http://www.theguardian.com/media/bbc",
+        "apiUrl":"http://content.guardianapis.com/media/bbc",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.theguardian.com/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/television",
+        "type":"keyword",
+        "webTitle":"Television industry",
+        "webUrl":"http://www.theguardian.com/media/television",
+        "apiUrl":"http://content.guardianapis.com/media/television",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"science/patrick-moore",
+        "type":"keyword",
+        "webTitle":"Patrick Moore",
+        "webUrl":"http://www.theguardian.com/science/patrick-moore",
+        "apiUrl":"http://content.guardianapis.com/science/patrick-moore",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/science",
+        "type":"keyword",
+        "webTitle":"Science",
+        "webUrl":"http://www.theguardian.com/science/science",
+        "apiUrl":"http://content.guardianapis.com/science/science",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/johnplunkett",
+        "type":"contributor",
+        "webTitle":"John Plunkett",
+        "webUrl":"http://www.theguardian.com/profile/johnplunkett",
+        "apiUrl":"http://content.guardianapis.com/profile/johnplunkett",
+        "bio":"<p>John Plunkett writes about radio, among many other things, for the Media Guardian and presents the weekly <a href=\"http://www.guardian.co.uk/media/series/mediatalk\">Media Talk podcast</a>. He is also chairman of the <a href=\"http://www.broadcastingpressguild.org\">Broadcasting Press Guild</a></p>",
+        "r2ContributorId":"15874",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/10/03/john_plunkett_140x140.jpg",
+        "references":[]
+      },{
+        "id":"science/space",
+        "type":"keyword",
+        "webTitle":"Space",
+        "webUrl":"http://www.theguardian.com/science/space",
+        "apiUrl":"http://content.guardianapis.com/science/space",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418125912",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/24/1380022405769/Sir-Patrick-Moore-001.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Paul Grover",
+            "altText":"Sir Patrick Moore",
+            "height":"54",
+            "credit":"Paul Grover/Rex Features",
+            "caption":"Sir Patrick Moore presented 721 episodes of The Sky at Night – the BBC is to review the show’s future. Photograph: Paul Grover/Rex Features",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/24/1380022407071/Sir-Patrick-Moore-002.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Paul Grover",
+            "altText":"Sir Patrick Moore",
+            "height":"130",
+            "credit":"Paul Grover/Rex Features",
+            "caption":"Sir Patrick Moore presented 721 episodes of The Sky at Night – the BBC is to review the show’s future. Photograph: Paul Grover/Rex Features",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/24/1380022408211/Sir-Patrick-Moore-003.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Paul Grover",
+            "altText":"Sir Patrick Moore",
+            "height":"84",
+            "credit":"Paul Grover/Rex Features",
+            "caption":"Sir Patrick Moore presented 721 episodes of The Sky at Night – the BBC is to review the show’s future. Photograph: Paul Grover/Rex Features",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/24/1380022409261/Sir-Patrick-Moore-004.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Paul Grover",
+            "altText":"Sir Patrick Moore",
+            "height":"132",
+            "credit":"Paul Grover/Rex Features",
+            "caption":"Sir Patrick Moore presented 721 episodes of The Sky at Night – the BBC is to review the show’s future. Photograph: Paul Grover/Rex Features",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/24/1380022410323/Sir-Patrick-Moore-005.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Paul Grover",
+            "altText":"Sir Patrick Moore",
+            "height":"168",
+            "credit":"Paul Grover/Rex Features",
+            "caption":"Sir Patrick Moore presented 721 episodes of The Sky at Night – the BBC is to review the show’s future. Photograph: Paul Grover/Rex Features",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/24/1380022411367/Sir-Patrick-Moore-006.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Paul Grover",
+            "altText":"Sir Patrick Moore",
+            "height":"180",
+            "credit":"Paul Grover/Rex Features",
+            "caption":"Sir Patrick Moore presented 721 episodes of The Sky at Night – the BBC is to review the show’s future. Photograph: Paul Grover/Rex Features",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/24/1380022412491/Sir-Patrick-Moore-007.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Paul Grover",
+            "altText":"Sir Patrick Moore",
+            "height":"228",
+            "credit":"Paul Grover/Rex Features",
+            "caption":"Sir Patrick Moore presented 721 episodes of The Sky at Night – the BBC is to review the show’s future. Photograph: Paul Grover/Rex Features",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/24/1380022413550/Sir-Patrick-Moore-008.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Paul Grover",
+            "altText":"Sir Patrick Moore",
+            "height":"276",
+            "credit":"Paul Grover/Rex Features",
+            "caption":"Sir Patrick Moore presented 721 episodes of The Sky at Night – the BBC is to review the show’s future. Photograph: Paul Grover/Rex Features",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/24/1380022413550/Sir-Patrick-Moore-008.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Paul Grover",
+            "altText":"Sir Patrick Moore",
+            "height":"276",
+            "credit":"Paul Grover/Rex Features",
+            "caption":"Sir Patrick Moore presented 721 episodes of The Sky at Night – the BBC is to review the show’s future. Photograph: Paul Grover/Rex Features",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418125913",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/24/1380022408211/Sir-Patrick-Moore-003.jpg",
+          "typeData":{
+            "source":"Rex Features",
+            "photographer":"Paul Grover",
+            "altText":"Sir Patrick Moore",
+            "height":"84",
+            "credit":"Paul Grover/Rex Features",
+            "caption":"Sir Patrick Moore presented 721 episodes of The Sky at Night – the BBC is to review the show’s future. Photograph: Paul Grover/Rex Features",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"media/2013/oct/29/sky-at-night-bbc-new-slot-petition",
+      "sectionId":"media",
+      "sectionName":"Media",
+      "webPublicationDate":"2013-10-29T19:09:08Z",
+      "webTitle":"The Sky at Night gets new slot on BBC4 following 40,000-signature petition",
+      "webUrl":"http://www.theguardian.com/media/2013/oct/29/sky-at-night-bbc-new-slot-petition",
+      "apiUrl":"http://content.guardianapis.com/media/2013/oct/29/sky-at-night-bbc-new-slot-petition",
+      "fields":{
+        "newspaperPageNumber":"5",
+        "trailText":"The astronomy show – first broadcast in 1957 – will run an expanded 30-minute programme in its new monthly home",
+        "headline":"The Sky at Night gets new slot on BBC4 following 40,000-signature petition",
+        "body":"<p>The sun will not set on the The Sky at Night after the BBC announced the long-running science show would move to a new slot on BBC4 following a petition signed by 40,000 viewers who feared it would be axed.</p><p>The astronomy show, first broadcast in 1957, will lose its slot on BBC1 but will be expanded from 20 to 30 minutes in its new monthly home on BBC4, with a repeat on BBC2.</p><p>The future of the series <a href=\"http://www.theguardian.com/media/2013/sep/24/sky-at-night-faces-bbc-axe\" title=\"\">appeared to be in doubt last month</a> after the corporation declined to confirm its future beyond the end of the year.</p><p>More than 40,000 fans signed an online petition in support of the show, which was presented by Sir Patrick Moore until his death last December, aged 89.</p><p>The programme will be off air in January, when the gap will be filled by BBC2's live astronomy series, Stargazing Live, presented by Professor Brian Cox and Dara O Briain, before returning in February.</p><p>Kim Shillinglaw, head of commissioning science and natural history, said: \"Sir Patrick Moore inspired generations of astronomers and I hope that alongside the BBC's other astronomy content, such as BBC2's Stargazing Live, The Sky at Night will enthuse further generations about the wonder of the night sky.\"</p><p>Losing its BBC1 slot is likely to deprive the show of its biggest audiences. The show's last BBC1 outing, on 6 October, was watched by 655,000 viewers. A programme on BBC1 on 4 September, featuring amateur astronomers in their back gardens, was watched by nearly 1.5 million.</p><p>The Sky at Night's audiences on BBC4, where it is also currently repeated, are more modest, with one recent edition watched by an average of 317,000 viewers.</p><p>No decisions have been made about the presenter's role on the show which has been filled by a series of guest hosts following Moore's death.</p><p>The Sky at Night is one of the BBC's longest running TV shows, its longevity eclipsed by current affairs show Panorama, which began four years earlier in 1953.</p><p>Moore presented a total of 721 episodes, missing just one outing in the programme's history, when he was struck down by food poisoning.</p><!-- Guardian Watermark: internal-code/content/421229831|2013-11-05T11:03:48Z|326299092a7f9335de796bf06577c0dae081f765 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-30T00:06:55Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383073323132/the-sky-at-night-new-slot-003.jpg",
+        "standfirst":"The astronomy show – first broadcast in 1957 – will run an expanded 30-minute programme in its new monthly home",
+        "shortUrl":"http://gu.com/p/3kxxy",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383073323132/the-sky-at-night-new-slot-003.jpg",
+        "wordcount":"348",
+        "commentable":"false",
+        "internalContentCode":"421229831",
+        "allowUgc":"false",
+        "internalOctopusCode":"8255515",
+        "isPremoderated":"false",
+        "byline":"John Plunkett",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-30",
+        "internalPageCode":"1988760",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-01T19:09:08Z"
+      },
+      "tags":[{
+        "id":"media/bbc",
+        "type":"keyword",
+        "webTitle":"BBC",
+        "webUrl":"http://www.theguardian.com/media/bbc",
+        "apiUrl":"http://content.guardianapis.com/media/bbc",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.theguardian.com/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/bbc1",
+        "type":"keyword",
+        "webTitle":"BBC1",
+        "webUrl":"http://www.theguardian.com/media/bbc1",
+        "apiUrl":"http://content.guardianapis.com/media/bbc1",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/television",
+        "type":"keyword",
+        "webTitle":"Television industry",
+        "webUrl":"http://www.theguardian.com/media/television",
+        "apiUrl":"http://content.guardianapis.com/media/television",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/bbc4",
+        "type":"keyword",
+        "webTitle":"BBC4",
+        "webUrl":"http://www.theguardian.com/media/bbc4",
+        "apiUrl":"http://content.guardianapis.com/media/bbc4",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"culture/television",
+        "type":"keyword",
+        "webTitle":"Television",
+        "webUrl":"http://www.theguardian.com/culture/television",
+        "apiUrl":"http://content.guardianapis.com/culture/television",
+        "sectionId":"tv-and-radio",
+        "sectionName":"Television &amp; radio",
+        "references":[]
+      },{
+        "id":"tv-and-radio/tv-and-radio",
+        "type":"keyword",
+        "webTitle":"Television & radio",
+        "webUrl":"http://www.theguardian.com/tv-and-radio/tv-and-radio",
+        "apiUrl":"http://content.guardianapis.com/tv-and-radio/tv-and-radio",
+        "sectionId":"tv-and-radio",
+        "sectionName":"Television &amp; radio",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/johnplunkett",
+        "type":"contributor",
+        "webTitle":"John Plunkett",
+        "webUrl":"http://www.theguardian.com/profile/johnplunkett",
+        "apiUrl":"http://content.guardianapis.com/profile/johnplunkett",
+        "bio":"<p>John Plunkett writes about radio, among many other things, for the Media Guardian and presents the weekly <a href=\"http://www.guardian.co.uk/media/series/mediatalk\">Media Talk podcast</a>. He is also chairman of the <a href=\"http://www.broadcastingpressguild.org\">Broadcasting Press Guild</a></p>",
+        "r2ContributorId":"15874",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/10/03/john_plunkett_140x140.jpg",
+        "references":[]
+      },{
+        "id":"science/astronomy",
+        "type":"keyword",
+        "webTitle":"Astronomy",
+        "webUrl":"http://www.theguardian.com/science/astronomy",
+        "apiUrl":"http://content.guardianapis.com/science/astronomy",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/space",
+        "type":"keyword",
+        "webTitle":"Space",
+        "webUrl":"http://www.theguardian.com/science/space",
+        "apiUrl":"http://content.guardianapis.com/science/space",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421230272",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383073319437/the-sky-at-night-new-slot-001.jpg",
+          "typeData":{
+            "source":"Roger Bamber / Rex Features",
+            "photographer":"Roger Bamber / Rex Features",
+            "altText":"the sky at night new slot bbc4",
+            "height":"54",
+            "credit":"Roger Bamber / Rex Features/Roger Bamber / Rex Features",
+            "caption":"More than 40,000 fans signed an online petition in support of the show, which was presented by Sir Patrick Moore until his death last December. Photograph: Roger Bamber / Rex Features",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383073321895/the-sky-at-night-new-slot-002.jpg",
+          "typeData":{
+            "source":"Roger Bamber / Rex Features",
+            "photographer":"Roger Bamber / Rex Features",
+            "altText":"the sky at night new slot bbc4",
+            "height":"130",
+            "credit":"Roger Bamber / Rex Features/Roger Bamber / Rex Features",
+            "caption":"More than 40,000 fans signed an online petition in support of the show, which was presented by Sir Patrick Moore until his death last December. Photograph: Roger Bamber / Rex Features",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383073323132/the-sky-at-night-new-slot-003.jpg",
+          "typeData":{
+            "source":"Roger Bamber / Rex Features",
+            "photographer":"Roger Bamber / Rex Features",
+            "altText":"the sky at night new slot bbc4",
+            "height":"84",
+            "credit":"Roger Bamber / Rex Features/Roger Bamber / Rex Features",
+            "caption":"More than 40,000 fans signed an online petition in support of the show, which was presented by Sir Patrick Moore until his death last December. Photograph: Roger Bamber / Rex Features",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383073324452/the-sky-at-night-new-slot-004.jpg",
+          "typeData":{
+            "source":"Roger Bamber / Rex Features",
+            "photographer":"Roger Bamber / Rex Features",
+            "altText":"the sky at night new slot bbc4",
+            "height":"132",
+            "credit":"Roger Bamber / Rex Features/Roger Bamber / Rex Features",
+            "caption":"More than 40,000 fans signed an online petition in support of the show, which was presented by Sir Patrick Moore until his death last December. Photograph: Roger Bamber / Rex Features",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383073325809/the-sky-at-night-new-slot-005.jpg",
+          "typeData":{
+            "source":"Roger Bamber / Rex Features",
+            "photographer":"Roger Bamber / Rex Features",
+            "altText":"the sky at night new slot bbc4",
+            "height":"168",
+            "credit":"Roger Bamber / Rex Features/Roger Bamber / Rex Features",
+            "caption":"More than 40,000 fans signed an online petition in support of the show, which was presented by Sir Patrick Moore until his death last December. Photograph: Roger Bamber / Rex Features",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383073327203/the-sky-at-night-new-slot-006.jpg",
+          "typeData":{
+            "source":"Roger Bamber / Rex Features",
+            "photographer":"Roger Bamber / Rex Features",
+            "altText":"the sky at night new slot bbc4",
+            "height":"180",
+            "credit":"Roger Bamber / Rex Features/Roger Bamber / Rex Features",
+            "caption":"More than 40,000 fans signed an online petition in support of the show, which was presented by Sir Patrick Moore until his death last December. Photograph: Roger Bamber / Rex Features",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383073328602/the-sky-at-night-new-slot-007.jpg",
+          "typeData":{
+            "source":"Roger Bamber / Rex Features",
+            "photographer":"Roger Bamber / Rex Features",
+            "altText":"the sky at night new slot bbc4",
+            "height":"228",
+            "credit":"Roger Bamber / Rex Features/Roger Bamber / Rex Features",
+            "caption":"More than 40,000 fans signed an online petition in support of the show, which was presented by Sir Patrick Moore until his death last December. Photograph: Roger Bamber / Rex Features",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383073329899/the-sky-at-night-new-slot-008.jpg",
+          "typeData":{
+            "source":"Roger Bamber / Rex Features",
+            "photographer":"Roger Bamber / Rex Features",
+            "altText":"the sky at night new slot bbc4",
+            "height":"276",
+            "credit":"Roger Bamber / Rex Features/Roger Bamber / Rex Features",
+            "caption":"More than 40,000 fans signed an online petition in support of the show, which was presented by Sir Patrick Moore until his death last December. Photograph: Roger Bamber / Rex Features",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383073329899/the-sky-at-night-new-slot-008.jpg",
+          "typeData":{
+            "source":"Roger Bamber / Rex Features",
+            "photographer":"Roger Bamber / Rex Features",
+            "altText":"the sky at night new slot bbc4",
+            "height":"276",
+            "credit":"Roger Bamber / Rex Features/Roger Bamber / Rex Features",
+            "caption":"Over 40,000 fans signed a petition in support of the show, which was presented by Sir Patrick Moore until his death last December. Photograph: Roger Bamber/Rex Features",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421230273",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383073323132/the-sky-at-night-new-slot-003.jpg",
+          "typeData":{
+            "source":"Roger Bamber / Rex Features",
+            "photographer":"Roger Bamber / Rex Features",
+            "altText":"the sky at night new slot bbc4",
+            "height":"84",
+            "credit":"Roger Bamber / Rex Features/Roger Bamber / Rex Features",
+            "caption":"More than 40,000 fans signed an online petition in support of the show, which was presented by Sir Patrick Moore until his death last December. Photograph: Roger Bamber / Rex Features",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

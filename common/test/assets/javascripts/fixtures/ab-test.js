@@ -1,26 +1,25 @@
 define([], function () {
 
-    var ABTest = function () {
+    var ABTest = function (id) {
 
-        this.id = 'DummyTest';
+        this.id = id;
         this.audience = 1;
+        this.audienceOffset = 0;
+        this.expiry = '2045-01-01';
         this.description = 'Dummy test';
         this.canRun = function(config) {
             return true;
         };
+        this.events = ['most popular | The Guardian | trail ', 'most popular | Section | trail ']
         this.variants = [
             {
                 id: 'control',
-                split: 50,
-                test: function () {
-                    console.log('Control ran');
+                test: function (context) {
                 }
             },
             {
                 id: 'hide',
-                split: 50,
-                test: function () {
-                    console.log('Hide ran');
+                test: function (context) {
                 }
             }
         ];

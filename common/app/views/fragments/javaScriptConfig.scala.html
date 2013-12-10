@@ -1,0 +1,29 @@
+@(item: model.MetaData)(implicit request: RequestHeader)
+@import conf.Configuration
+@import views.support.MetadataJson
+@import views.support.JavaScriptVariableName
+@import common.Edition
+@import org.joda.time.DateTime
+
+{
+    "page": {
+        @{Html(item.metaData.map{ data => MetadataJson(data) }.mkString(","))},
+        @{Html((Configuration.javascript.config ++ Configuration.javascript.pageData).map{ case (key, value) =>
+            s""""${JavaScriptVariableName(key.split('.').last)}":"${value}""""}.mkString(",")
+        )},
+        "edition": "@Edition(request).id",
+        "ajaxUrl": "@Configuration.ajax.url",
+        "isDev": @play.Play.isDev(),
+        "oasHost": "oas.theguardian.com",
+        "oasUrl": "@Configuration.oas.url",
+        "oasSiteIdHost": "www.theguardian.com",
+        "idUrl": "@Configuration.id.url",
+        "beaconUrl": "@Configuration.debug.beaconUrl",
+        "renderTime": "@{(new DateTime).toISODateTimeNoMillisString}"
+    },
+    "switches" : { @{Html(conf.Switches.all.map{ switch =>
+            s""""${JavaScriptVariableName(switch.name)}":${switch.isSwitchedOn}"""
+        }.mkString(","))}
+    },
+    "modules": { }
+}

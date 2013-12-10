@@ -1,6 +1,5 @@
 package common
 
-import play.api.mvc.RequestHeader
 import model.{Tag, MetaData}
 
 case class SectionLink(zone: String, linkName: String, href: String, title: String, newWindow: Boolean = false)
@@ -8,20 +7,20 @@ case class SectionLink(zone: String, linkName: String, href: String, title: Stri
 case class Zone(name: SectionLink, sections: Seq[SectionLink])
 
 case class NavItem(name: SectionLink, links: Seq[SectionLink] = Nil, current: Boolean = false) {
-def currentFor(metadata: MetaData) = {
+  def currentFor(metadata: MetaData) = {
     val sectionId = s"/${metadata.section}"
     sectionId == name.href || name.href == s"/${metadata.id}" || links.exists(_.href == sectionId)
   }
 }
 
 
-object Sections  {
+trait Sections  {
 
   //News
   val home = SectionLink("news", "News", "/", "Home")
   val news  = SectionLink("news", "News", "/", "News")
-  val world = SectionLink("world", "World News", "/world", "World news")
-  val uk    = SectionLink("uk", "UK", "/uk", "UK news")
+  val world = SectionLink("world", "World", "/world", "World")
+  val uk    = SectionLink("uk", "UK", "/uk-news", "UK")
   val us    = SectionLink("us", "US", "/world/usa", "US")
   val politics = SectionLink("politics", "Politics", "/politics", "Politics")
   val technology = SectionLink("technology", "Technology", "/technology", "Technology")
@@ -47,6 +46,8 @@ object Sections  {
 
   //Sport
   val sport = SectionLink("sport", "Sport", "/sport", "Sport")
+  val sports = sport.copy(title = "Sports")
+
   val football = SectionLink("football", "Football", "/football", "Football")
   val cricket = SectionLink("sport", "Cricket", "/sport/cricket", "Cricket")
   val sportblog = SectionLink("sport", "Sport blog", "/sport/blog", "Sport blog")
@@ -65,7 +66,7 @@ object Sections  {
   val nhl = SectionLink("sport", "NHL", "/sport/nhl", "NHL")
 
   //Cif
-  val cif = SectionLink("commentisfree", "Comment is free", "/commentisfree", "Comment is free")
+  val cif = SectionLink("commentisfree", "Comment", "/commentisfree", "Comment")
   val cifbelief = SectionLink("commentisfree", "Cif belief", "/commentisfree/belief", "Cif belief")
   val cifgreen = SectionLink("commentisfree", "Cif green", "/commentisfree/cif-green", "Cif green")
 
@@ -134,41 +135,6 @@ object Sections  {
   val energy = SectionLink("environment", "Energy", "/environment/energy", "Energy")
   val conservation = SectionLink("environment", "Conservation", "/environment/conservation", "Conservation")
   val food = SectionLink("environment", "Food", "/environment/food", "Food")
-}
-
-object Navigation {
-
-  import Sections._
-
-  def ukSections(metadata: MetaData, site: Site) = Seq(
-    NavItem(home),
-    NavItem(uk, Seq(politics, media, science, society, health, education)),
-    NavItem(world, Seq(us, europe, middleeast, asiapacific, africa, americas)),
-    NavItem(cif, Seq(SectionLink("commentisfree", "Cif America", s"http://${site.usHost}/commentisfree", "Cif America"), cifbelief, cifgreen)),
-    NavItem(sport, Seq(football, cricket, tennis, rugbyunion, cycling)),
-    footballNav(metadata),
-    NavItem(lifeandstyle, Seq(foodanddrink, fashion, relationships, healthandwellbeing, women)),
-    NavItem(culture, Seq(film, music, books, televisionandradio, artanddesign, stage)),
-    NavItem(business, Seq(economics, banking, property, workandcareers, savings)),
-    NavItem(travel, Seq(shortbreaks, uktravel, europetravel, hotels, resturants)),
-    NavItem(technology, Seq(internet, games, mobilephones, appsblog)),
-    NavItem(environment, Seq(climatechange, wildlife, energy, conservation, food))
-  )
-
-  def usSections(metadata: MetaData, site: Site) = Seq(
-    NavItem(home),
-    NavItem(us),
-    NavItem(world, Seq(us, europe, middleeast, asiapacific, africa, americas)),
-    NavItem(SectionLink("sport", "Sport", "/sport", "Sports"), Seq(nfl, mlb, nba, mls, nhl, football)),
-    footballNav(metadata),
-    NavItem(cif, Seq(SectionLink("commentisfree", "Cif America", s"http://${site.usHost}/commentisfree", "Cif America"), cifbelief, cifgreen)),
-    NavItem(lifeandstyle, Seq(foodanddrink, fashion, relationships, healthandwellbeing, women)),
-    NavItem(culture, Seq(film, music, books, televisionandradio, artanddesign, stage)),
-    NavItem(business, Seq(economics, banking, property, workandcareers, savings)),
-    NavItem(technology, Seq(internet, games, mobilephones, appsblog)),
-    NavItem(environment, Seq(climatechange, wildlife, energy, conservation, food)),
-    NavItem(media)
-  )
 
   def footballNav(metaData: MetaData) = metaData match {
     case tag: Tag if tag.isFootballTeam => NavItem(football, Seq(
@@ -196,130 +162,49 @@ object Navigation {
       SectionLink("football", "Leagues & competitions", "/football/competitions", "Leagues & competitions")
     ))
   }
-
-  def apply(metaData: MetaData, request: RequestHeader) = Site(request).edition match {
-    case "US" => usSections(metaData, Site(request))
-    case _ => ukSections(metaData, Site(request))
-  }
 }
 
-object Zones {
-
-  import Sections._
-
-  def apply(request: RequestHeader) = {
-
-    val site = Site(request)
-    val edition = site.edition
-
-    var sportSections = List(football, cricket, sportblog, rugbyunion, motorsport, tennis, golf, rugbyleague, horseracing)
+trait Zones extends Sections {
 
 
-    // prepend US sports
-    if (edition == "US") {
-      sportSections :::= List(nfl, mlb, nba, mls, nhl)
-    }
+  val newsZone = Zone(news,
+    Seq(world, uk, us, politics, technology, environment, media, education, society, development,
+      science, law, blogs, inpictures)
+  )
 
-    val zones = Seq(
-      Zone(
-        news,
-        Seq(
-          world, uk,
-          us,
-          politics,
-          technology,
-          environment,
-          media,
-          education,
-          society,
-          development,
-          science,
-          law,
-          blogs,
-          inpictures
-        )), //End News
+  val sportZone = Zone(sport,
+    Seq(football, cricket, sportblog, rugbyunion, motorsport, tennis, golf, rugbyleague, horseracing)
+  )
 
-      Zone(
-        SectionLink("sport", "Sport", "/sport", if (edition == "US") "Sports" else "Sport"),
-        sportSections
-      ),
+  val sportsZone = Zone(sports,
+    Seq(football, cricket, sportblog, rugbyunion, motorsport, tennis, golf, rugbyleague, horseracing)
+  )
 
-      Zone(
-        cif,
-        Seq(
-          SectionLink("commentisfree", "Cif America", s"http://${site.usHost}/commentisfree", "Cif America"),
-          cifbelief,
-          cifgreen
-        )), // end comment is free
+  val cifZone = Zone(cif,
+    Seq(cifbelief, cifgreen)
+  )
 
-      Zone(
-        culture,
-        Seq(
-          artanddesign,
-          books,
-          film,
-          music,
-          stage,
-          televisionandradio
-        )), //End culture
+  val cultureZone = Zone(culture,
+    Seq(artanddesign, books, film, music, stage, televisionandradio)
+  )
 
-      Zone(
-        technology,
-        Seq(
-          technologyblog,
-          games,
-          gamesblog,
-          appsblog,
-          askjack,
-          internet,
-          mobilephones,
-          gadgets
-        )),
+  val technologyZone = Zone(technology,
+    Seq(technologyblog, games, gamesblog, appsblog, askjack, internet, mobilephones, gadgets )
+  )
 
-      Zone(
-        business,
-        Seq(
-          economics,
-          useconomy,
-          recession,
-          investing,
-          banking,
-          marketforceslive,
-          businessblog
-        )), //End Business
+  val businessZone = Zone(business,
+    Seq(economics, useconomy, recession, investing, banking, marketforceslive, businessblog )
+  )
 
-      Zone(
-        money,
-        Seq(
-          property,
-          houseprices,
-          pensions,
-          savings,
-          debt,
-          insurance,
-          workandcareers,
-          consumeraffairs
-        )), //End Money
+  val moneyZone = Zone(money,
+    Seq(property, houseprices, pensions, savings, debt, insurance, workandcareers, consumeraffairs)
+  )
 
-      Zone(
-        lifeandstyle,
-        Seq(
-          fashion,
-          foodanddrink,
-          family,
-          lostinshowbiz
-        )), //End Life and style
+  val lifeandstyleZone = Zone(lifeandstyle,
+    Seq(fashion, foodanddrink, family, lostinshowbiz)
+  )
 
-      Zone(
-        travel,
-        Seq(
-          shortbreaks,
-          hotels,
-          resturants,
-          budget
-        ))
-    ) //End zones
-
-    zones
-  }
+  val travelZone = Zone(travel,
+    Seq(shortbreaks, hotels, resturants, budget)
+  )
 }

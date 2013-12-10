@@ -1,0 +1,45 @@
+@(model: football.controllers.MatchesPage)(implicit request: RequestHeader)
+@import support._
+@import org.joda.time.DateTime
+
+<div class="monocolumn-wrapper tone-news">
+
+    <h2 class="article-zone hide-on-mobile-if-localnav sport-header">
+        <a class="tone-colour" data-link-name="article section" href="@LinkTo{/football}">football</a>
+    </h2>
+
+    @if(model.pageType == "live") {
+        <div class="live-matches-dateline">
+            @fragments.dateline(new DateTime, true)
+        </div>
+    }
+
+    @if(model.pageType == "live") {
+        <div class="is-live">
+            <div class="live-toolbar">
+                <div class="update update-live-matches" data-link-name="autoupdate"></div>
+            </div>
+        </div>
+    }
+
+    @filterBar(model.page.webTitle)
+
+    @filters(model.filters, model.page, model.pageType)
+
+    <div class="matches-container component" role="main">
+        @matchesList(model, model.pageType)
+
+        @if(model.previousPage.isDefined || model.nextPage.isDefined) {
+            <div class="js-matches-nav matches-nav u-cf js-not-ajax" data-link-name="@model.pageType nav">
+                @model.previousPage.map{url => <a href="@LinkTo{@url}" class="type-11 match-prev" data-js-title="Show previous day's matches" data-link-name="previous">Previous day</a>}
+                @model.nextPage.map{url => <a href="@LinkTo{@url}" class="type-11 match-next" data-js-title="Show next day's matches" data-link-name="next">Next day</a>}
+            </div>
+        }
+
+    </div>
+
+    @footballCompetitionNav(model.comp)
+
+    @fragments.mostPopularPlaceholder("sport")
+
+</div>

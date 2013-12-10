@@ -1,14 +1,16 @@
-define(['modules/cookies'], function(Cookies) {
+define([
+    'utils/cookies',
+    'utils/storage'
+], function(
+    Cookies,
+    storage
+) {
 
     var revenueScienceUrl = "js!http://js.revsci.net/gateway/gw.js?csid=E05516";
 
     function getSegments() {
-        var segments = localStorage.getItem("gu.ads.audsci");
-        if (segments) {
-            return JSON.parse(segments);
-        } else {
-            return [];
-        }
+        var segments = storage.local.get("gu.ads.audsci");
+        return (segments) ? segments : [];
     }
 
     function load(config) {
@@ -16,6 +18,7 @@ define(['modules/cookies'], function(Cookies) {
         window.DM_prepClient = function(csid, client) {
             client.DM_addEncToLoc('siteName', "");
             client.DM_addEncToLoc('comFolder', "");
+            client.DM_addEncToLoc('mobile', true);
 
             if(config.audienceScienceData) {
                 for(var i = 0, j = config.audienceScienceData.length; i<j; ++i) {
@@ -25,8 +28,7 @@ define(['modules/cookies'], function(Cookies) {
             }
         };
         window.DM_onSegsAvailable = function(segments, id) {
-            segments = processSegments(segments);
-            localStorage.setItem("gu.ads.audsci", JSON.stringify(segments));
+            storage.local.set("gu.ads.audsci", processSegments(segments));
             // Kill any legacy cookies
             Cookies.cleanUp(["rsi_segs"]);
         };

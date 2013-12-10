@@ -1,0 +1,982 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"world/2013/oct/29/norway-state-date-nights-marriage-lovers",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-29T19:47:02Z",
+      "webTitle":"Norway's mission reposition: state says date nights key to good marriage",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/29/norway-state-date-nights-marriage-lovers",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/29/norway-state-date-nights-marriage-lovers",
+      "fields":{
+        "newspaperPageNumber":"1",
+        "trailText":"Oslo government channels Cupid and Barry White and says parents must make time to be lovers too, as divorce rate rises",
+        "headline":"Norway's mission reposition: state says date nights key to good marriage",
+        "body":"<p>The secret to a long-lasting marriage is not humour, patience, shared interests or an equal division of household chores. It's government intervention.</p><p>That, at least, is the hope of Norway's ruling Populist party, which is promoting date nights as a cure for flagging marriages in an attempt to reduce the country's divorce rate.</p><p>The new minister for children, equality and social inclusion, Solveig Horne, said the government needed to cut divorce rates – and that encouraging couples to try date nights was a good place to start: \"It is important to find small pockets of time where parents can be lovers,\" she said.</p><p>Divorce rates are at <a href=\"http:// www.ssb.no/en/befolkning/statistikker/ekteskap/aar/2013-08-21\" title=\"\">40% in Norway</a>, with those aged 40 to 44 most likely to split from their partners.</p><p>Since taking up her post earlier this month, Horne has announced her intention to campaign for increased funding for family counselling to help prevent divorces. \"With state-run counselling offices, couples can learn more about how to be together before they have problems and talk things through when problems do arise,\" she said.</p><p>There are no plans to implement mandatory date nights for Norwegian couples. Horne said: \"It's not something the government can tell you to do; it's something that couples need to do on their own.\" However, she is an advocate for couples taking time out together.</p><p>\"In a busy life of work and family, the week can feel too short to attend to your relationship with your partner, so each couple needs to decide what sort of a date night they should have, whether it's a night at the movies or a walk together without the kids for a couple of hours,\" she said.</p><p>Having been through a divorce herself, Horne is convinced that allocating time to a partner can have a huge impact on a relationship: \"Maybe I didn't have success [in marriage] because we didn't have any date nights!\" she said.</p><figure data-media-id='gu-image-421233690'><img src='http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383076963990/Solveig-Horne-008.jpg' alt='Solveig Horne' width='460' height='276' class='gu-image'/><figcaption>Minsiter Solveig Horne said perhaps date nights could have saved her own marriage from divorce. Photograph: Stortingnet </figcaption></figure><p>Horne's proposal has been cited by country's media as further proof of the new government's centre-right bias, with many seeing parallels to a date night campaign started up by US conservative groups such as the <a href=\"www.virginia.edu/marriageproject\" title=\"\">National Marriage Project</a>. It claims that married men and women who have \"couple time\" at least weekly were 3.5 times more likely to report being very happy in their marriages than those who struggled to spend time together.</p><p></p><p>Horne said she was more inspired by a 2010 romantic comedy starring Tina Fey and Steve Carell. \"I saw the movie Date Night where an American couple try to go out to keep their relationship alive,\" said Horne. \"In the film, everything goes wrong – but I thought it was a good idea.</p><p>\"My sister lives in the US and she told me that she and her husband have a weekly date night and it really works. Date night isn't really something that's done in Norway, but I think it could be a good way to keep marriages together.\"</p><p>Horne's initiative is the latest headline-grabbing moment for the minister since her appointment earlier this month, with the Norwegian press revisiting two controversial gaffes.</p><p>Horne has been criticised for comments about rape made in 2011 on Norwegian public television when she was recorded as saying: \"<a href=\"http://www.thelocal.no/20131017/New-Norway-equality-minister-triggers-rape-scandal\" title=\"\">Girls are responsible for the situation they put themselves in</a>, but boys also have a responsibility to respect a 'no'. I think both boys and girls have equal responsibility.\"</p><p>Horne also offended Norway's lesbian, gay, bisexual, and transgender community after the re-emergence of a tweet that she sent in 2010 about a children's book that included gay characters: \"<a href=\"http://www.tnp.no/norway/politics/4044-norway_solveig-horne-government-rape-immigrant-immigration-polemic\" title=\"\">I wonder if it's okay that kindergartens are reading gay adventures for young children?</a>\"</p><p>She denied accusations of homophobia, saying: \"I will be the minister for gays, lesbians, transgender and heterosexual people. People should be allowed to judge me when they have got to know me.\"</p><!-- Guardian Watermark: internal-code/content/421231768|2013-11-05T11:03:48Z|efbbfbc9c11876d11cf69ae6e8da404f1265dfa1 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-30T00:23:15Z",
+        "hasStoryPackage":"true",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/29/1383077763363/Date-nights-004.jpg",
+        "standfirst":"Oslo government channels Cupid and Barry White and says parents must make time to be lovers too, as divorce rate rises",
+        "shortUrl":"http://gu.com/p/3kx29",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/29/1383077763363/Date-nights-004.jpg",
+        "wordcount":"624",
+        "commentable":"true",
+        "internalContentCode":"421231768",
+        "allowUgc":"false",
+        "internalOctopusCode":"8255604",
+        "isPremoderated":"false",
+        "byline":"Helen Russell",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-30",
+        "internalPageCode":"1988775",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-01T19:47:02Z"
+      },
+      "tags":[{
+        "id":"world/norway",
+        "type":"keyword",
+        "webTitle":"Norway",
+        "webUrl":"http://www.theguardian.com/world/norway",
+        "apiUrl":"http://content.guardianapis.com/world/norway",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"lifeandstyle/marriage",
+        "type":"keyword",
+        "webTitle":"Marriage",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/marriage",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/marriage",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/sex",
+        "type":"keyword",
+        "webTitle":"Sex",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/sex",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/sex",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"world/europe-news",
+        "type":"keyword",
+        "webTitle":"Europe",
+        "webUrl":"http://www.theguardian.com/world/europe-news",
+        "apiUrl":"http://content.guardianapis.com/world/europe-news",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"lifeandstyle/family",
+        "type":"keyword",
+        "webTitle":"Family",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/family",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/family",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"profile/helen-russell",
+        "type":"contributor",
+        "webTitle":"Helen Russell",
+        "webUrl":"http://www.theguardian.com/profile/helen-russell",
+        "apiUrl":"http://content.guardianapis.com/profile/helen-russell",
+        "bio":"<p>Helen Russell is a freelance journalist based in Denmark. She tweets at <a href=\"https://twitter.com/MsHelenRussell\" >@MsHelenRussell</a> and can be found at<a href=\"http://helenrussell.co.uk\" > helenrussell.co.uk</a></p>",
+        "r2ContributorId":"54968",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/5/1378380141453/HelenRussell.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/topstories",
+        "type":"newspaper-book-section",
+        "webTitle":"Top stories",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/topstories",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/topstories",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421234047",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/29/1383077760357/Date-nights-002.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Date nights",
+            "height":"340",
+            "credit":"Alamy",
+            "caption":"Married couples need to remember how to be lovers, says the Norwegian government – in a bid to lower the high divorce rate.  Photograph: Alamy",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/29/1383077763363/Date-nights-004.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Date nights",
+            "height":"84",
+            "credit":"Alamy",
+            "caption":"Married couples need to remember how to be lovers, says the Norwegian government – in a bid to lower the high divorce rate.  Photograph: Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/29/1383077764710/Date-nights-005.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Date nights",
+            "height":"132",
+            "credit":"Alamy",
+            "caption":"Married couples need to remember how to be lovers, says the Norwegian government – in a bid to lower the high divorce rate.  Photograph: Alamy",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/29/1383077766052/Date-nights-006.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Date nights",
+            "height":"168",
+            "credit":"Alamy",
+            "caption":"Married couples need to remember how to be lovers, says the Norwegian government – in a bid to lower the high divorce rate.  Photograph: Alamy",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/29/1383077767428/Date-nights-007.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Date nights",
+            "height":"180",
+            "credit":"Alamy",
+            "caption":"Married couples need to remember how to be lovers, says the Norwegian government – in a bid to lower the high divorce rate.  Photograph: Alamy",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/29/1383077768858/Date-nights-008.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Date nights",
+            "height":"228",
+            "credit":"Alamy",
+            "caption":"Married couples need to remember how to be lovers, says the Norwegian government – in a bid to lower the high divorce rate.  Photograph: Alamy",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/29/1383077770288/Date-nights-009.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Date nights",
+            "height":"276",
+            "credit":"Alamy",
+            "caption":"Married couples need to remember how to be lovers, says the Norwegian government – in a bid to lower the high divorce rate.  Photograph: Alamy",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/29/1383077771683/Date-nights-010.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Date nights",
+            "height":"372",
+            "credit":"Alamy",
+            "caption":"Married couples need to remember how to be lovers, says the Norwegian government – in a bid to lower the high divorce rate.  Photograph: Alamy",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/29/1383077773275/Date-nights-011.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Date nights",
+            "height":"54",
+            "credit":"Alamy",
+            "caption":"Married couples need to remember how to be lovers, says the Norwegian government – in a bid to lower the high divorce rate.  Photograph: Alamy",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/29/1383077774748/Date-nights-012.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Date nights",
+            "height":"130",
+            "credit":"Alamy",
+            "caption":"Married couples need to remember how to be lovers, says the Norwegian government – in a bid to lower the high divorce rate.  Photograph: Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/29/1383077770288/Date-nights-009.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Date nights",
+            "height":"276",
+            "credit":"Alamy",
+            "caption":"Married couples need to remember how to be lovers, says the Norwegian government – in a bid to lower the high divorce rate.  Photograph: Alamy",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421233690",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383076963990/Solveig-Horne-008.jpg",
+          "typeData":{
+            "source":"Stortingnet ",
+            "altText":"Solveig Horne",
+            "height":"276",
+            "credit":"Stortingnet ",
+            "caption":"Minsiter Solveig Horne said perhaps date nights could have saved her own marriage from divorce. Photograph: Stortingnet ",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421234048",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/29/1383077763363/Date-nights-004.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Date nights",
+            "height":"84",
+            "credit":"Alamy",
+            "caption":"Married couples need to remember how to be lovers, says the Norwegian government – in a bid to lower the high divorce rate.  Photograph: Alamy",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"world/2013/oct/29/norway-state-date-nights-marriage-lovers",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-10-29T19:47:02Z",
+      "webTitle":"Norway's mission reposition: state says date nights key to good marriage",
+      "webUrl":"http://www.theguardian.com/world/2013/oct/29/norway-state-date-nights-marriage-lovers",
+      "apiUrl":"http://content.guardianapis.com/world/2013/oct/29/norway-state-date-nights-marriage-lovers",
+      "fields":{
+        "newspaperPageNumber":"1",
+        "trailText":"Oslo government channels Cupid and Barry White and says parents must make time to be lovers too, as divorce rate rises",
+        "headline":"Norway's mission reposition: state says date nights key to good marriage",
+        "body":"<p>The secret to a long-lasting marriage is not humour, patience, shared interests or an equal division of household chores. It's government intervention.</p><p>That, at least, is the hope of Norway's ruling Populist party, which is promoting date nights as a cure for flagging marriages in an attempt to reduce the country's divorce rate.</p><p>The new minister for children, equality and social inclusion, Solveig Horne, said the government needed to cut divorce rates – and that encouraging couples to try date nights was a good place to start: \"It is important to find small pockets of time where parents can be lovers,\" she said.</p><p>Divorce rates are at <a href=\"http:// www.ssb.no/en/befolkning/statistikker/ekteskap/aar/2013-08-21\" title=\"\">40% in Norway</a>, with those aged 40 to 44 most likely to split from their partners.</p><p>Since taking up her post earlier this month, Horne has announced her intention to campaign for increased funding for family counselling to help prevent divorces. \"With state-run counselling offices, couples can learn more about how to be together before they have problems and talk things through when problems do arise,\" she said.</p><p>There are no plans to implement mandatory date nights for Norwegian couples. Horne said: \"It's not something the government can tell you to do; it's something that couples need to do on their own.\" However, she is an advocate for couples taking time out together.</p><p>\"In a busy life of work and family, the week can feel too short to attend to your relationship with your partner, so each couple needs to decide what sort of a date night they should have, whether it's a night at the movies or a walk together without the kids for a couple of hours,\" she said.</p><p>Having been through a divorce herself, Horne is convinced that allocating time to a partner can have a huge impact on a relationship: \"Maybe I didn't have success [in marriage] because we didn't have any date nights!\" she said.</p><figure data-media-id='gu-image-421233690'><img src='http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383076963990/Solveig-Horne-008.jpg' alt='Solveig Horne' width='460' height='276' class='gu-image'/><figcaption>Minsiter Solveig Horne said perhaps date nights could have saved her own marriage from divorce. Photograph: Stortingnet </figcaption></figure><p>Horne's proposal has been cited by country's media as further proof of the new government's centre-right bias, with many seeing parallels to a date night campaign started up by US conservative groups such as the <a href=\"www.virginia.edu/marriageproject\" title=\"\">National Marriage Project</a>. It claims that married men and women who have \"couple time\" at least weekly were 3.5 times more likely to report being very happy in their marriages than those who struggled to spend time together.</p><p></p><p>Horne said she was more inspired by a 2010 romantic comedy starring Tina Fey and Steve Carell. \"I saw the movie Date Night where an American couple try to go out to keep their relationship alive,\" said Horne. \"In the film, everything goes wrong – but I thought it was a good idea.</p><p>\"My sister lives in the US and she told me that she and her husband have a weekly date night and it really works. Date night isn't really something that's done in Norway, but I think it could be a good way to keep marriages together.\"</p><p>Horne's initiative is the latest headline-grabbing moment for the minister since her appointment earlier this month, with the Norwegian press revisiting two controversial gaffes.</p><p>Horne has been criticised for comments about rape made in 2011 on Norwegian public television when she was recorded as saying: \"<a href=\"http://www.thelocal.no/20131017/New-Norway-equality-minister-triggers-rape-scandal\" title=\"\">Girls are responsible for the situation they put themselves in</a>, but boys also have a responsibility to respect a 'no'. I think both boys and girls have equal responsibility.\"</p><p>Horne also offended Norway's lesbian, gay, bisexual, and transgender community after the re-emergence of a tweet that she sent in 2010 about a children's book that included gay characters: \"<a href=\"http://www.tnp.no/norway/politics/4044-norway_solveig-horne-government-rape-immigrant-immigration-polemic\" title=\"\">I wonder if it's okay that kindergartens are reading gay adventures for young children?</a>\"</p><p>She denied accusations of homophobia, saying: \"I will be the minister for gays, lesbians, transgender and heterosexual people. People should be allowed to judge me when they have got to know me.\"</p><!-- Guardian Watermark: internal-code/content/421231768|2013-11-05T11:03:48Z|efbbfbc9c11876d11cf69ae6e8da404f1265dfa1 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-30T00:23:15Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/29/1383077763363/Date-nights-004.jpg",
+        "standfirst":"Oslo government channels Cupid and Barry White and says parents must make time to be lovers too, as divorce rate rises",
+        "shortUrl":"http://gu.com/p/3kx29",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/29/1383077763363/Date-nights-004.jpg",
+        "wordcount":"624",
+        "commentable":"true",
+        "internalContentCode":"421231768",
+        "allowUgc":"false",
+        "internalOctopusCode":"8255604",
+        "isPremoderated":"false",
+        "byline":"Helen Russell",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-30",
+        "internalPageCode":"1988775",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-01T19:47:02Z"
+      },
+      "tags":[{
+        "id":"world/norway",
+        "type":"keyword",
+        "webTitle":"Norway",
+        "webUrl":"http://www.theguardian.com/world/norway",
+        "apiUrl":"http://content.guardianapis.com/world/norway",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"lifeandstyle/marriage",
+        "type":"keyword",
+        "webTitle":"Marriage",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/marriage",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/marriage",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/sex",
+        "type":"keyword",
+        "webTitle":"Sex",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/sex",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/sex",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"world/europe-news",
+        "type":"keyword",
+        "webTitle":"Europe",
+        "webUrl":"http://www.theguardian.com/world/europe-news",
+        "apiUrl":"http://content.guardianapis.com/world/europe-news",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"lifeandstyle/family",
+        "type":"keyword",
+        "webTitle":"Family",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/family",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/family",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"profile/helen-russell",
+        "type":"contributor",
+        "webTitle":"Helen Russell",
+        "webUrl":"http://www.theguardian.com/profile/helen-russell",
+        "apiUrl":"http://content.guardianapis.com/profile/helen-russell",
+        "bio":"<p>Helen Russell is a freelance journalist based in Denmark. She tweets at <a href=\"https://twitter.com/MsHelenRussell\" >@MsHelenRussell</a> and can be found at<a href=\"http://helenrussell.co.uk\" > helenrussell.co.uk</a></p>",
+        "r2ContributorId":"54968",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/5/1378380141453/HelenRussell.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/topstories",
+        "type":"newspaper-book-section",
+        "webTitle":"Top stories",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/topstories",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/topstories",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421234047",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/29/1383077760357/Date-nights-002.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Date nights",
+            "height":"340",
+            "credit":"Alamy",
+            "caption":"Married couples need to remember how to be lovers, says the Norwegian government – in a bid to lower the high divorce rate.  Photograph: Alamy",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/29/1383077763363/Date-nights-004.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Date nights",
+            "height":"84",
+            "credit":"Alamy",
+            "caption":"Married couples need to remember how to be lovers, says the Norwegian government – in a bid to lower the high divorce rate.  Photograph: Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/29/1383077764710/Date-nights-005.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Date nights",
+            "height":"132",
+            "credit":"Alamy",
+            "caption":"Married couples need to remember how to be lovers, says the Norwegian government – in a bid to lower the high divorce rate.  Photograph: Alamy",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/29/1383077766052/Date-nights-006.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Date nights",
+            "height":"168",
+            "credit":"Alamy",
+            "caption":"Married couples need to remember how to be lovers, says the Norwegian government – in a bid to lower the high divorce rate.  Photograph: Alamy",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/29/1383077767428/Date-nights-007.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Date nights",
+            "height":"180",
+            "credit":"Alamy",
+            "caption":"Married couples need to remember how to be lovers, says the Norwegian government – in a bid to lower the high divorce rate.  Photograph: Alamy",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/29/1383077768858/Date-nights-008.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Date nights",
+            "height":"228",
+            "credit":"Alamy",
+            "caption":"Married couples need to remember how to be lovers, says the Norwegian government – in a bid to lower the high divorce rate.  Photograph: Alamy",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/29/1383077770288/Date-nights-009.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Date nights",
+            "height":"276",
+            "credit":"Alamy",
+            "caption":"Married couples need to remember how to be lovers, says the Norwegian government – in a bid to lower the high divorce rate.  Photograph: Alamy",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/29/1383077771683/Date-nights-010.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Date nights",
+            "height":"372",
+            "credit":"Alamy",
+            "caption":"Married couples need to remember how to be lovers, says the Norwegian government – in a bid to lower the high divorce rate.  Photograph: Alamy",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/29/1383077773275/Date-nights-011.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Date nights",
+            "height":"54",
+            "credit":"Alamy",
+            "caption":"Married couples need to remember how to be lovers, says the Norwegian government – in a bid to lower the high divorce rate.  Photograph: Alamy",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/29/1383077774748/Date-nights-012.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Date nights",
+            "height":"130",
+            "credit":"Alamy",
+            "caption":"Married couples need to remember how to be lovers, says the Norwegian government – in a bid to lower the high divorce rate.  Photograph: Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/29/1383077770288/Date-nights-009.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Date nights",
+            "height":"276",
+            "credit":"Alamy",
+            "caption":"Married couples need to remember how to be lovers, says the Norwegian government – in a bid to lower the high divorce rate.  Photograph: Alamy",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421233690",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383076963990/Solveig-Horne-008.jpg",
+          "typeData":{
+            "source":"Stortingnet ",
+            "altText":"Solveig Horne",
+            "height":"276",
+            "credit":"Stortingnet ",
+            "caption":"Minsiter Solveig Horne said perhaps date nights could have saved her own marriage from divorce. Photograph: Stortingnet ",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421234048",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/29/1383077763363/Date-nights-004.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Date nights",
+            "height":"84",
+            "credit":"Alamy",
+            "caption":"Married couples need to remember how to be lovers, says the Norwegian government – in a bid to lower the high divorce rate.  Photograph: Alamy",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"lifeandstyle/shortcuts/2013/oct/30/date-nights-official-married-couples",
+      "sectionId":"lifeandstyle",
+      "sectionName":"Life and style",
+      "webPublicationDate":"2013-10-30T14:54:11Z",
+      "webTitle":"Why date nights are becoming an official issue",
+      "webUrl":"http://www.theguardian.com/lifeandstyle/shortcuts/2013/oct/30/date-nights-official-married-couples",
+      "apiUrl":"http://content.guardianapis.com/lifeandstyle/shortcuts/2013/oct/30/date-nights-official-married-couples",
+      "fields":{
+        "newspaperPageNumber":"2",
+        "trailText":"Norwegian minister Solveig Horne says couples should schedule nights of pre-planned romance to stem the tide of divorces, in a policy she admits was inspired by the Steve Carrell/Tina Fey movie",
+        "headline":"Why date nights are becoming an official issue",
+        "body":"<p><strong>Appearance:</strong> Shaved my shoulders, changed my pants, put on my least-stained jumper. Now let's go out and save this marriage, dammit!</p><p><strong>What's that smell?</strong> Eau de Desperation, the new fragrance from Lidl. I bought it especially for our big night, darling.</p><p><strong>What, for the love of God, are you on about? </strong>Norway's minister for children, equality and social inclusion, Solveig Horne, says married couples should arrange <a href=\"http://www.theguardian.com/world/2013/oct/29/norway-state-date-nights-marriage-lovers\" title=\"\">regular date nights to stem the tide of divorces</a>. In Norway, 40% of couples divorce.</p><p><strong>Can we make a cheap gag about her surname? </strong>She's so horny she thinks <a href=\"http://www.youtube.com/watch?v=QZbTpANdI54\" title=\"\">Mousse T's 1998 club classic I'm Horny (horny, horny, horny)</a> is about her. Which, in a sense, it is.</p><p><strong>That was your best shot? No wonder our relationship is doomed. </strong>Sorry. But look, lots of couples save their marriages with regular date nights. Think of the Camerons.</p><p><strong>What do they do? </strong>\"We have one night a week where we either stay in and do nothing or go out on our own,\" <a href=\"http://www.telegraph.co.uk/news/politics/david-cameron/9018026/David-Cameron-Samantha-and-I-have-weekly-date-night.html\" title=\"\">Dave told Now magazine.</a></p><p><strong>Where do they go? </strong>Subway on the Edgware Road. The house white is milk. When they get home they <a href=\"http://www.boden.co.uk/en-GB/Womens-Shoes-Boots/Boots/AZ181/Womens-Equestrian-Boot.html\" title=\"\">make out over arousing equestrian-boot photos in the Boden catalogue</a>.</p><p><strong>You're making that up. What do the Obamas do? </strong>They sometimes go to Rasika, an <a href=\"http://www.huffingtonpost.com/2013/08/08/obama-first-lady-date_n_3728812.html\" title=\"\">Indian restaurant in Washington</a>.</p><p><strong>How does Michelle like her dhal? </strong>Rolled.</p><p><strong>Rolled dhal? </strong>No, Roald Dahl.</p><p><strong>Oh God. New grounds for divorce. Perhaps we should go on a date where you don't talk. The pictures, say. </strong>Good point. Horne says she was inspired by the <a href=\"http://www.imdb.com/title/tt1279935/\" title=\"\">2010 film Date Night</a>, starring Steve Carrell and Tina Fey.</p><p><strong>But wasn't that a disaster movie, where a married couple go our for a quiet meal and wind up getting shot at, arrested and embroiled in a degrading pole-dancing sequence? </strong>Yes, but disaster proves bonding. \"Honey, listen to me. You're a beautiful, strong woman. <a href=\"http://www.imdb.com/title/tt1279935/trivia?tab=qt&amp;ref_=tt_trv_qu\" title=\"\">Now, I want you to go in there and pop that coochie</a>.\"</p><p><strong>What was that?</strong> That's what Carrell says before Fey pole dances.</p><p><strong>Is a coochie what I think it is? Because I'm not doing that.</strong></p><p><strong>Do say:</strong> \"We need more quality time.\"</p><p><strong>Don't say:</strong> \"Is this a booty call, SamCam? Because I've got four hours' prep for PMQs and a Skype call with President Karzai before we go up the little hill to Bedfordshire. So count me out.\"</p><!-- Guardian Watermark: internal-code/content/421291008|2013-11-05T11:03:48Z|38bbc6bec715f7eeb8271e7c398b9faa98f5eb17 -->",
+        "showInRelatedContent":"true",
+        "strap":"No 3,210",
+        "lastModified":"2013-10-31T00:06:13Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383140721076/Date-Night-004.jpg",
+        "standfirst":"Norwegian minister Solveig Horne says couples should schedule nights of pre-planned romance to stem the tide of divorces, in a policy she admits was inspired by the Steve Carrell/Tina Fey movie",
+        "shortUrl":"http://gu.com/p/3kxga",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383140721076/Date-Night-004.jpg",
+        "wordcount":"377",
+        "commentable":"true",
+        "internalContentCode":"421291008",
+        "allowUgc":"false",
+        "internalOctopusCode":"8258650",
+        "isPremoderated":"false",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-31",
+        "internalPageCode":"1989154",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-06T14:54:11Z"
+      },
+      "tags":[{
+        "id":"lifeandstyle/marriage",
+        "type":"keyword",
+        "webTitle":"Marriage",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/marriage",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/marriage",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/relationships",
+        "type":"keyword",
+        "webTitle":"Relationships",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/relationships",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/relationships",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/divorce",
+        "type":"keyword",
+        "webTitle":"Divorce",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/divorce",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/divorce",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/family",
+        "type":"keyword",
+        "webTitle":"Family",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/family",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/family",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"world/norway",
+        "type":"keyword",
+        "webTitle":"Norway",
+        "webUrl":"http://www.theguardian.com/world/norway",
+        "apiUrl":"http://content.guardianapis.com/world/norway",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/europe-news",
+        "type":"keyword",
+        "webTitle":"Europe",
+        "webUrl":"http://www.theguardian.com/world/europe-news",
+        "apiUrl":"http://content.guardianapis.com/world/europe-news",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"film/film",
+        "type":"keyword",
+        "webTitle":"Film",
+        "webUrl":"http://www.theguardian.com/film/film",
+        "apiUrl":"http://content.guardianapis.com/film/film",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"theguardian/series/pass-notes",
+        "type":"series",
+        "webTitle":"Pass notes",
+        "webUrl":"http://www.theguardian.com/theguardian/series/pass-notes",
+        "apiUrl":"http://content.guardianapis.com/theguardian/series/pass-notes",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/g2/features",
+        "type":"newspaper-book-section",
+        "webTitle":"Comment & features",
+        "webUrl":"http://www.theguardian.com/theguardian/g2/features",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2/features",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/g2",
+        "type":"newspaper-book",
+        "webTitle":"G2",
+        "webUrl":"http://www.theguardian.com/theguardian/g2",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"theguardian/shortcuts",
+        "type":"blog",
+        "webTitle":"Shortcuts",
+        "webUrl":"http://www.theguardian.com/theguardian/shortcuts",
+        "apiUrl":"http://content.guardianapis.com/theguardian/shortcuts",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421291253",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383140716641/Date-Night-001.jpg",
+          "typeData":{
+            "source":"Snap Stills/Rex Features",
+            "altText":"Date Night",
+            "height":"54",
+            "credit":"Snap Stills/Rex Features",
+            "caption":"Tina Fey and Steve Carell in the 2010 film Date Night: shot at, arrested and degraded. Photograph: Snap Stills/Rex Features",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383140718629/Date-Night-002.jpg",
+          "typeData":{
+            "source":"Snap Stills/Rex Features",
+            "altText":"Date Night",
+            "height":"340",
+            "credit":"Snap Stills/Rex Features",
+            "caption":"Tina Fey and Steve Carell in the 2010 film Date Night: shot at, arrested and degraded. Photograph: Snap Stills/Rex Features",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383140719854/Date-Night-003.jpg",
+          "typeData":{
+            "source":"Snap Stills/Rex Features",
+            "altText":"Date Night",
+            "height":"130",
+            "credit":"Snap Stills/Rex Features",
+            "caption":"Tina Fey and Steve Carell in the 2010 film Date Night: shot at, arrested and degraded. Photograph: Snap Stills/Rex Features",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383140721076/Date-Night-004.jpg",
+          "typeData":{
+            "source":"Snap Stills/Rex Features",
+            "altText":"Date Night",
+            "height":"84",
+            "credit":"Snap Stills/Rex Features",
+            "caption":"Tina Fey and Steve Carell in the 2010 film Date Night: shot at, arrested and degraded. Photograph: Snap Stills/Rex Features",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383140722796/Date-Night-005.jpg",
+          "typeData":{
+            "source":"Snap Stills/Rex Features",
+            "altText":"Date Night",
+            "height":"132",
+            "credit":"Snap Stills/Rex Features",
+            "caption":"Tina Fey and Steve Carell in the 2010 film Date Night: shot at, arrested and degraded. Photograph: Snap Stills/Rex Features",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383140724035/Date-Night-006.jpg",
+          "typeData":{
+            "source":"Snap Stills/Rex Features",
+            "altText":"Date Night",
+            "height":"168",
+            "credit":"Snap Stills/Rex Features",
+            "caption":"Tina Fey and Steve Carell in the 2010 film Date Night: shot at, arrested and degraded. Photograph: Snap Stills/Rex Features",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383140725263/Date-Night-007.jpg",
+          "typeData":{
+            "source":"Snap Stills/Rex Features",
+            "altText":"Date Night",
+            "height":"180",
+            "credit":"Snap Stills/Rex Features",
+            "caption":"Tina Fey and Steve Carell in the 2010 film Date Night: shot at, arrested and degraded. Photograph: Snap Stills/Rex Features",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383140726511/Date-Night-008.jpg",
+          "typeData":{
+            "source":"Snap Stills/Rex Features",
+            "altText":"Date Night",
+            "height":"228",
+            "credit":"Snap Stills/Rex Features",
+            "caption":"Tina Fey and Steve Carell in the 2010 film Date Night: shot at, arrested and degraded. Photograph: Snap Stills/Rex Features",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383140727877/Date-Night-009.jpg",
+          "typeData":{
+            "source":"Snap Stills/Rex Features",
+            "altText":"Date Night",
+            "height":"276",
+            "credit":"Snap Stills/Rex Features",
+            "caption":"Tina Fey and Steve Carell in the 2010 film Date Night: shot at, arrested and degraded. Photograph: Snap Stills/Rex Features",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383140729190/Date-Night-010.jpg",
+          "typeData":{
+            "source":"Snap Stills/Rex Features",
+            "altText":"Date Night",
+            "height":"372",
+            "credit":"Snap Stills/Rex Features",
+            "caption":"Tina Fey and Steve Carell in the 2010 film Date Night: shot at, arrested and degraded. Photograph: Snap Stills/Rex Features",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383140727877/Date-Night-009.jpg",
+          "typeData":{
+            "source":"Snap Stills/Rex Features",
+            "altText":"Date Night",
+            "height":"276",
+            "credit":"Snap Stills/Rex Features",
+            "caption":"Tina Fey and Steve Carell in the 2010 film Date Night: shot at, arrested and degraded. Photograph: Snap Stills/Rex Features",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421291254",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/30/1383140721076/Date-Night-004.jpg",
+          "typeData":{
+            "source":"Snap Stills/Rex Features",
+            "altText":"Date Night",
+            "height":"84",
+            "credit":"Snap Stills/Rex Features",
+            "caption":"Tina Fey and Steve Carell in the 2010 film Date Night: shot at, arrested and degraded. Photograph: Snap Stills/Rex Features",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

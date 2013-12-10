@@ -1,12 +1,12 @@
 package model
 
 import org.scalatest.FlatSpec
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import org.joda.time.DateTime
 import com.gu.openplatform.contentapi.model.{ Content => ApiContent }
 import org.scala_tools.time.Imports._
 
-class DateTimeTest extends FlatSpec with ShouldMatchers {
+class DateTimeTest extends FlatSpec with Matchers {
 
   //http://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.3.1
 

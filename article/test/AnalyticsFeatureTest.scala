@@ -1,13 +1,13 @@
 package test
 
-import org.scalatest.matchers.ShouldMatchers
-import org.scalatest.{ Informer, GivenWhenThen, FeatureSpec }
+import org.scalatest.Matchers
+import org.scalatest.{ GivenWhenThen, FeatureSpec }
 import collection.JavaConversions._
-import collection.JavaConverters._
-import org.fluentlenium.core.domain.{ FluentWebElement, FluentList }
+import org.fluentlenium.core.domain.FluentWebElement
 import conf.Configuration
+import common.UsesElasticSearch
 
-class AnalyticsFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMatchers {
+class AnalyticsFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with UsesElasticSearch {
 
   implicit val config = Configuration
 
@@ -30,7 +30,7 @@ class AnalyticsFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMat
         Then("the Omniture webbug should record my visit")
         val webbug = findFirst("#omnitureNoScript img")
 
-        webbug.getAttribute("src") should startWith("http://hits.guardian.co.uk/b/ss/guardiangu-mobiledev/1/H.24.2/")
+        webbug.getAttribute("src") should startWith("http://hits.theguardian.com/b/ss/guardiangu-frontend-dev/1/H.24.2/")
 
         // test a few token properties in the web bug
         webbug.getAttribute("src") should include("c11=sport")
@@ -44,11 +44,9 @@ class AnalyticsFeatureTest extends FeatureSpec with GivenWhenThen with ShouldMat
       Given("I am on an article entitled 'Olympic opening ceremony will recreate countryside with real animals'")
       HtmlUnit("/sport/2012/jun/12/london-2012-olympic-opening-ceremony") { browser =>
         import browser._
-
         Then("all links on the page should be decorated with the Omniture meta-data attribute")
         val anchorsWithNoDataLink = find("a").filter(hasNoLinkName(_))
         anchorsWithNoDataLink should have length (0)
-
       }
 
     }

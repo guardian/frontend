@@ -1,7 +1,5 @@
 package model
 
-import com.gu.openplatform.contentapi.model.MediaEncoding
-
 case class Encoding(format: String, url: String, rawFormat: String)
 
 object Encoding {
@@ -10,9 +8,9 @@ object Encoding {
     "mp4" -> "video/mp4"
   )
 
-  def apply(delegate: MediaEncoding): Encoding = {
-    val format = typeMapping.get(delegate.format).getOrElse(delegate.format)
-    Encoding(format, delegate.file, delegate.format)
+  def apply(url: String, rawFormat:String): Encoding = {
+    val format = typeMapping.get(rawFormat).getOrElse(rawFormat)
+    Encoding(format, url, rawFormat)
   }
 }
 

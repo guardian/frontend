@@ -1,0 +1,106 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"music/interactive/2013/aug/20/matthew-herbert-quiz-hearing",
+      "sectionId":"music",
+      "sectionName":"Music",
+      "webPublicationDate":"2013-08-20T13:12:00Z",
+      "webTitle":"Matthew Herbert quiz: How sharp is your hearing? ",
+      "webUrl":"http://www.theguardian.com/music/interactive/2013/aug/20/matthew-herbert-quiz-hearing",
+      "apiUrl":"http://content.guardianapis.com/music/interactive/2013/aug/20/matthew-herbert-quiz-hearing",
+      "fields":{
+        "trailText":"<p>Matthew Herbert loves his strange sounds and we should know - he once <a href=\"http://www.theguardian.com/music/video/2010/nov/09/matthew-herbert-one-day\">staged a concert made out of the Guardian newspaper</a>. Below are a selection of other sounds used in his records - can you tell what they are?</p>",
+        "headline":"Matthew Herbert quiz: How sharp is your hearing?",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-08-23T10:01:26Z",
+        "hasStoryPackage":"false",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/19/1376927048821/b09fb9a5-3308-403a-99f4-487ac7fad35e-140x84.jpeg",
+        "standfirst":"Matthew Herbert loves his strange sounds and we should know - he once <a href=\"http://www.theguardian.com/music/video/2010/nov/09/matthew-herbert-one-day\">staged a concert made out of the Guardian newspaper</a>. Below are a selection of other sounds used in his records - can you tell what they are?",
+        "shortUrl":"http://gu.com/p/3t5fq",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/19/1376927048821/b09fb9a5-3308-403a-99f4-487ac7fad35e-140x84.jpeg",
+        "commentable":"false",
+        "internalContentCode":"415339725",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Guardian Interactive Team",
+        "publication":"theguardian.com",
+        "internalPageCode":"1952693",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-08-23T13:12:07Z"
+      },
+      "tags":[{
+        "id":"music/music",
+        "type":"keyword",
+        "webTitle":"Music",
+        "webUrl":"http://www.theguardian.com/music/music",
+        "apiUrl":"http://content.guardianapis.com/music/music",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/popandrock",
+        "type":"keyword",
+        "webTitle":"Pop and rock",
+        "webUrl":"http://www.theguardian.com/music/popandrock",
+        "apiUrl":"http://content.guardianapis.com/music/popandrock",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/matthew-herbert",
+        "type":"keyword",
+        "webTitle":"Matthew Herbert",
+        "webUrl":"http://www.theguardian.com/music/matthew-herbert",
+        "apiUrl":"http://content.guardianapis.com/music/matthew-herbert",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"profile/guardian-interactive-department",
+        "type":"contributor",
+        "webTitle":"Guardian Interactive team",
+        "webUrl":"http://www.theguardian.com/profile/guardian-interactive-department",
+        "apiUrl":"http://content.guardianapis.com/profile/guardian-interactive-department",
+        "bio":"<p>The Guardian Interactive team is a small group of specialist designers, interactive developers and journalists working alongside editorial teams to produce dynamic, data-driven, projects. Its members include: <a href=\"http://www.guardian.co.uk/profile/alastair-dant\">Alastair Dant</a>, <a href=\"http://www.guardian.co.uk/profile/alex-graul\">Alex Graul</a>, <a href=\"http://www.guardian.co.uk/profile/jonathan-richards\">Jonathan Richards</a>, <a href=\"http://www.guardian.co.uk/profile/mariana-santos\">Mariana Santos</a>, <a href=\"http://www.guardian.co.uk/profile/rich-harris?INTCMP=SRCH\">Rich Harris</a> and <a href=\"http://www.guardian.co.uk/profile/robin-beitra?INTCMP=SRCH\">Robin Beitra</a></p>",
+        "r2ContributorId":"45899",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-415688474",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/8/19/1376927048821/b09fb9a5-3308-403a-99f4-487ac7fad35e-140x84.jpeg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"SOCRATES MITSIOS",
+            "altText":"Matthew Herbert",
+            "height":"84",
+            "credit":"SOCRATES MITSIOS/PR",
+            "caption":"Matthew Herbert Photograph: SOCRATES MITSIOS",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[],
+      "isExpired":"false"
+    },
+    "storyPackage":[]
+  }
+}

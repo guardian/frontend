@@ -1,4 +1,4 @@
-define([ 'common', 'ajax', 'modules/navigation/top-stories', 'fixtures'], function (common, ajax, TopStories, fixtures) {
+define([ 'common', 'utils/ajax', 'modules/navigation/top-stories', 'helpers/fixtures'], function (common, ajax, TopStories, fixtures) {
 
     describe("TopStories", function () {
 
@@ -13,17 +13,32 @@ define([ 'common', 'ajax', 'modules/navigation/top-stories', 'fixtures'], functi
                     '</div>'
                 ]
             },
-            config = { pathPrefix: "fixtures", page: { edition: 'uk' }};
+            config = { page: { edition: 'uk' }},
+            server;
 
         beforeEach(function () {
-            ajax.init("");
-            fixtures.render(conf)
+            ajax.init({page: {
+                ajaxUrl: "",
+                edition: "UK"
+            }});
+            fixtures.render(conf);
+            // set up fake server
+            server = sinon.fakeServer.create();
+            server.autoRespond = true;
+            server.autoRespondAfter = 20;
+        });
+
+        afterEach(function () {
+            fixtures.clean(conf.id);
+            server.restore();
         });
 
         it("Should load the current top stories and show the navigation button", function () {
 
             var callback = sinon.stub();
             common.mediator.on('modules:topstories:loaded', callback);
+
+            server.respondWith([200, {}, '{ "html": "<b>top stories</b>" }']);
 
             runs(function () {
                 new TopStories().load(config, document.querySelector('#topstories-context'));
@@ -38,7 +53,7 @@ define([ 'common', 'ajax', 'modules/navigation/top-stories', 'fixtures'], functi
                     button    = document.querySelector('#topstories-context .control');
 
                 expect(callback).toHaveBeenCalledOnce();
-                expect(container.innerHTML).toBe('<h3 class="headline-list__tile type-5">Top stories</h3><div class="headline-list headline-list--top box-indent" data-link-name="top-stories"><b>top stories</b></div>');
+                expect(container.innerHTML).toBe('<h3 class="headline-list__title">Top stories</h3><div class="headline-list box-indent" data-link-name="top-stories"><b>top stories</b></div>');
                 expect(button.className).not.toContain('is-off');
             })
         });

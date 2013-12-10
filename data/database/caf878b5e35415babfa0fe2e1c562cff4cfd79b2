@@ -1,0 +1,428 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"environment/gallery/2013/oct/30/nature-spotting-britain-waterways-in-pictures",
+      "sectionId":"environment",
+      "sectionName":"Environment",
+      "webPublicationDate":"2013-10-30T08:00:05Z",
+      "webTitle":"Nature-spotting on Britain's waterways - in pictures ",
+      "webUrl":"http://www.theguardian.com/environment/gallery/2013/oct/30/nature-spotting-britain-waterways-in-pictures",
+      "apiUrl":"http://content.guardianapis.com/environment/gallery/2013/oct/30/nature-spotting-britain-waterways-in-pictures",
+      "fields":{
+        "trailText":"<p>Some of the species and habitats you can record as part of the Canal &amp; River Trust's Great Nature Watch</p>",
+        "headline":"Nature-spotting on Britain's waterways - in pictures",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-30T08:00:05Z",
+        "hasStoryPackage":"false",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/28/1382960146881/Kingfisher-003.jpg",
+        "standfirst":"The <a href=\"http://canalrivertrust.org.uk/\">Canal &amp; River Trust</a> is calling on the public to take part in its <a href=\"http://canalrivertrust.org.uk/great-nature-watch\">Great Nature Watch</a> this half-term. It wants to create a living map of the habitats that are important for wildlife in and around the nation's waterways, including reedbeds, woodland and hedgerow. Families can record what they see by <a href=\"http://canalrivertrust.org.uk/great-nature-watch\">downloading a free app</a>, which includes a species guide. To start you off, here are some species and habitats to look out for",
+        "shortUrl":"http://gu.com/p/3jqja",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/28/1382960146881/Kingfisher-003.jpg",
+        "commentable":"false",
+        "internalContentCode":"421114263",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Jessica Aldred",
+        "publication":"theguardian.com",
+        "internalPageCode":"1987777",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-02T08:00:05Z"
+      },
+      "tags":[{
+        "id":"environment/wildlife",
+        "type":"keyword",
+        "webTitle":"Wildlife",
+        "webUrl":"http://www.theguardian.com/environment/wildlife",
+        "apiUrl":"http://content.guardianapis.com/environment/wildlife",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/environment",
+        "type":"keyword",
+        "webTitle":"Environment",
+        "webUrl":"http://www.theguardian.com/environment/environment",
+        "apiUrl":"http://content.guardianapis.com/environment/environment",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"environment/birds",
+        "type":"keyword",
+        "webTitle":"Birds",
+        "webUrl":"http://www.theguardian.com/environment/birds",
+        "apiUrl":"http://content.guardianapis.com/environment/birds",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/butterflies",
+        "type":"keyword",
+        "webTitle":"Butterflies",
+        "webUrl":"http://www.theguardian.com/environment/butterflies",
+        "apiUrl":"http://content.guardianapis.com/environment/butterflies",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/insects",
+        "type":"keyword",
+        "webTitle":"Insects",
+        "webUrl":"http://www.theguardian.com/environment/insects",
+        "apiUrl":"http://content.guardianapis.com/environment/insects",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/rivers",
+        "type":"keyword",
+        "webTitle":"Rivers",
+        "webUrl":"http://www.theguardian.com/environment/rivers",
+        "apiUrl":"http://content.guardianapis.com/environment/rivers",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"profile/jessicaaldred",
+        "type":"contributor",
+        "webTitle":"Jessica Aldred",
+        "webUrl":"http://www.theguardian.com/profile/jessicaaldred",
+        "apiUrl":"http://content.guardianapis.com/profile/jessicaaldred",
+        "bio":"<p>Jessica Aldred is the <a href=\"http://www.guardian.co.uk/environment\">environment</a> production editor and writes on wildlife and conservation </p>",
+        "rcsId":"GNL000906",
+        "r2ContributorId":"15817",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/12/14/jessica_aldred_140x140.jpg",
+        "references":[]
+      },{
+        "id":"environment/autumn",
+        "type":"keyword",
+        "webTitle":"Autumn",
+        "webUrl":"http://www.theguardian.com/environment/autumn",
+        "apiUrl":"http://content.guardianapis.com/environment/autumn",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"type/gallery",
+        "type":"type",
+        "webTitle":"Gallery",
+        "webUrl":"http://www.theguardian.com/inpictures",
+        "apiUrl":"http://content.guardianapis.com/inpictures",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421213168",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/28/1382960146881/Kingfisher-003.jpg",
+          "typeData":{
+            "source":"Daniel Trim",
+            "altText":"Kingfisher",
+            "height":"84",
+            "credit":"Daniel Trim",
+            "caption":"A kingfisher exits the water with a fish in its mouth, by Daniel Trim  Photograph: Daniel Trim",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-421113642",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":1,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/28/1382959764817/Kingfisher-005.jpg",
+          "typeData":{
+            "source":"Daniel Trim",
+            "altText":"Great Nature Watch: Kingfisher",
+            "height":"480",
+            "credit":"Daniel Trim",
+            "caption":"Kingfishers are around all winter and as the vegetation dies down and trees lose their leaves, it is much easier to glimpse the unmistakeable flash of blue and orange along the canal corridor. Having had a bumper feeding summer, they will be making the most of the milder weather before the cold winter arrives",
+            "width":"747"
+          }
+        }]
+      },{
+        "id":"gu-image-421113627",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":2,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/28/1382959799336/Caen-Hill-Kennet-and-Avon-015.jpg",
+          "typeData":{
+            "source":"Chris Franklin",
+            "altText":"Great Nature Watch: Caen Hill Kennet and Avon Canal",
+            "height":"480",
+            "credit":"Chris Franklin",
+            "caption":"<strong>Thatcham reed beds, Kennet & Avon Canal, Newbury</strong><br></br>This site, one of the largest inland reed beds in southern England, forms part of the Kennet and Lambourn floodplain special area of conservation designated for its populations of Desmoulin's whorl snails. Along with adjacent alder and willow woodland, the area supports a large population of breeding birds such as reed and sedge warblers, and water rail",
+            "width":"725"
+          }
+        }]
+      },{
+        "id":"gu-image-421113625",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":3,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/28/1382959754867/Blackthorn-002.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Great Nature Watch: Blackthorn",
+            "height":"480",
+            "credit":"Guardian",
+            "caption":"Blackthorn - now is a fantastic time to pick sloe berries, the fruit of the blackthorn, from hedgerows and make some gin. Peter Birch, group environment manager for the Canal & River Trust, says: 'There is still so much to see at this time of the year on our canals, rivers and reservoirs. It could be flocks of wintering birds or squirrels gathering nuts and berries for their winter larder. The beautiful seed heads in the reed beds, or mushrooms and toadstools in adjacent woodland' ",
+            "width":"722"
+          }
+        }]
+      },{
+        "id":"gu-image-421113653",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":4,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/28/1382959776135/Sunrise-on-the-River-Soar-008.jpg",
+          "typeData":{
+            "source":"Steve Cole",
+            "altText":"Great Nature Watch: Sunrise on the River Soar",
+            "height":"480",
+            "credit":"Steve Cole",
+            "caption":"Sunrise on the River Soar – dawn and dusk are the best time to see bats along rivers and canals. Last year’s cold winter meant bats were able to have a proper deep hibernation, and the hot summer meant they had uninterrupted feeding all season so this year has been particularly good for them\r\n ",
+            "width":"731"
+          }
+        }]
+      },{
+        "id":"gu-image-421113674",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":5,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/28/1382959772963/Water-vole-007.jpg",
+          "typeData":{
+            "source":"Daniel Trim",
+            "altText":"Great Nature Watch: Water vole",
+            "height":"480",
+            "credit":"Daniel Trim",
+            "caption":"Water voles don’t hibernate, but they do spend more and more time in their underground burrows as winter sets in so now is the last chance to see these rare animals before they settle in for the cold",
+            "width":"721"
+          }
+        }]
+      },{
+        "id":"gu-image-421113621",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":6,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/28/1382959802830/Aston-Locks-016.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Great Nature Watch: Aston Locks",
+            "height":"480",
+            "credit":"Guardian",
+            "caption":"<strong>Montgomery Canal, Aston Locks to Keeper’s Bridge, Oswestry, Shropshire</strong><br></br>\r\nNestled close to the Welsh border, this section of the canal is designated for its aquatic plants, including fan-leaved water-crowfoot and six species of pondweeds. Its reed fringe is composed of reed sweet-grass, branched bur-reed, greater and lesser pond sedge, common reed and flowering rush. This time of year is good for seeing reed seed heads",
+            "width":"722"
+          }
+        }]
+      },{
+        "id":"gu-image-421113651",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":7,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/28/1382959761562/Red-Admiral-004.jpg",
+          "typeData":{
+            "source":"Helen Davis",
+            "altText":"Great Nature Watch: Red Admiral",
+            "height":"480",
+            "credit":"Helen Davis",
+            "caption":"Canal & River Trust ecologists in the West Midlands have noted that red admiral and comma butterflies are still present on the canals. Paul Wilkinson said: 'The fact we had an unusually warm summer has meant that British wildlife has had ample chance to catch up and now that we are experiencing a mild autumn, many species of plant and animal are around a month behind. This is great news for people wanting to explore nature on their local canal this half-term as, as well as the arrival of wintering migrant birds, you can still find red admiral and comma butterflies, hornets, flowering ivy, elderberries, rowan berries, bats and many flowers that in a normal year would have packed away for the winter by now'",
+            "width":"563"
+          }
+        }]
+      },{
+        "id":"gu-image-421113630",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":8,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/28/1382959796185/Coney-Meadow-Reed-Bed-014.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Great Nature Watch: Coney Meadow Reed Bed",
+            "height":"480",
+            "credit":"Guardian",
+            "caption":"<strong>Coney Meadow reedbed reserve, Droitwich Canal, Salwarpe, Worcestershire</strong><br></br>\r\nA locally important reserve, being used by a host of wildlife, many of which are either protected or priority species, such as otter, grass snakes and slow worms, including well over 120 species of birds. The site is a mosaic of habitats, which includes four broad habitats, reed bed, open water, scrub and wet/dry meadow as well as areas of mature hedges and trees",
+            "width":"640"
+          }
+        }]
+      },{
+        "id":"gu-image-421113672",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":9,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/28/1382959779304/Swan-009.jpg",
+          "typeData":{
+            "source":"Gerald Robinson",
+            "altText":"Great Nature Watch: Swan",
+            "height":"480",
+            "credit":"Gerald Robinson",
+            "caption":"While many of the UK’s plant and animal species are retiring for their winter hibernation, and summer visitors such as swallows are leaving us, there is still plenty to see for those treading the towpaths. Around 17 million birds are thought to migrate to the UK in winter, either as a stopover or from much colder north and easterly climates. These visitors include many species of waterfowl such as Bewick’s and whooper swans, ducks, geese and waders",
+            "width":"607"
+          }
+        }]
+      },{
+        "id":"gu-image-421113644",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":10,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/28/1382959782854/Leeds-and-Liverpool-Canal-010.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Great Nature Watch: Leeds and Liverpool Canal",
+            "height":"480",
+            "credit":"Guardian",
+            "caption":"<strong>Bryn Marsh & Ince Moss, Leeds & Liverpool Canal, Leigh Branch, Wigan</strong><br></br>\r\nThis site forms part of the Wigan Flashes, a 240-hectare reserve formed by mining subsidence. The area has a wide range of habitats including woodland, scrub and fen, marsh and swamp. There is an excellent assemblage of breeding birds there including: little grebe, great crested grebe, mute swan, tufted duck, snipe, redshank, reed and sedge warblers, and the reed bunting",
+            "width":"677"
+          }
+        }]
+      },{
+        "id":"gu-image-421113633",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":11,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/28/1382959748734/Cormorant-001.jpg",
+          "typeData":{
+            "source":"Paul Glendell",
+            "altText":"Great Nature Watch: Cormorant",
+            "height":"480",
+            "credit":"Paul Glendell",
+            "caption":"The cormorant – a distinctive, prehistoric-looking bird and the enemy of the angler, the UK has internationally important wintering numbers of this water bird",
+            "width":"719"
+          }
+        }]
+      },{
+        "id":"gu-image-421113647",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":12,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/28/1382959786353/Montgomery-Canal-011.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Great Nature Watch: Montgomery Canal",
+            "height":"480",
+            "credit":"Guardian",
+            "caption":"Using the free Great Nature Watch app, members of the public can help to record habitats across the 2,000 miles of waterway the trust looks after, so it can better identify areas that need support and protection. Because canals and reservoirs provide such a valuable source of food and shelter for wildlife, you are bound to see something along most stretches of water",
+            "width":"722"
+          }
+        }]
+      },{
+        "id":"gu-image-421113638",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":13,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/28/1382959769649/Heron-006.jpg",
+          "typeData":{
+            "source":"Mike Freeman",
+            "altText":"Great Nature Watch: Heron",
+            "height":"480",
+            "credit":"Mike Freeman",
+            "caption":"A grey heron – these water birds are found all over the canal and river network and will now be finding themselves surrounded by winter visiting migrants",
+            "width":"640"
+          }
+        }]
+      },{
+        "id":"gu-image-421113649",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":14,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/28/1382959789496/Pocklington-Canal-012.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Great Nature Watch: Pocklington Canal",
+            "height":"480",
+            "credit":"Guardian",
+            "caption":"<strong>Pocklington Canal, Lower Derwent Valley, Yorkshire</strong><br></br>The Pocklington Canal is one of the best places on the canal system to spot birds, insects, small mammals and plants. It runs through Melbourne and Thornton Ings, a series of flood meadows, pasture and woodland which supports a large breeding bird community and wildfowl",
+            "width":"640"
+          }
+        }]
+      },{
+        "id":"gu-image-421113640",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":15,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/28/1382959758286/Holly-003.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Great Nature Watch: Holly",
+            "height":"480",
+            "credit":"Guardian",
+            "caption":"Holly – winters berries will be out soon but this year has seen an unusual glut of elderberries and rowan berries, which are usually associated with August and September, so would normally be over by now. Late berries provide an excellent source of food for migrant birds passing through",
+            "width":"722"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[]
+  }
+}

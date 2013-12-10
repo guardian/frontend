@@ -5,35 +5,87 @@ import java.net.URLEncoder._
 import model._
 import org.jsoup.nodes.{ Element, Document }
 import org.jsoup.Jsoup
-import org.jsoup.safety.Whitelist
+import org.jsoup.safety.{ Whitelist, Cleaner }
 import org.jboss.dna.common.text.Inflector
 import play.api.libs.json.Writes
 import play.api.libs.json.Json._
 import play.api.templates.Html
 import scala.collection.JavaConversions._
-
-import scala.Some
 import play.api.mvc.RequestHeader
-import org.joda.time.{ DateTimeZone, DateTime }
+import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
-import conf.Configuration
-import com.gu.openplatform.contentapi.model.MediaAsset
+import org.apache.commons.lang.StringEscapeUtils
+import conf.Switches.ShowUnsupportedEmbedsSwitch
+import model.ImageAsset
+import scala.Some
+import play.api.mvc.SimpleResult
+import model.Tag
+import model.VideoAsset
 
 sealed trait Style {
   val className: String
+  val showMore: Boolean
 }
 
-object Featured extends Style { val className = "featured" }
+object Featured extends Style {
+  val className = "featured"
+  val showMore = false
+}
 
 /**
  * trails display trailText and thumbnail (if available)
  */
-object Thumbnail extends Style { val className = "with-thumbnail" }
+object Thumbnail extends Style {
+  val className = "with-thumbnail"
+  val showMore = false
+}
 
 /**
  * trails only display headline
  */
-object Headline extends Style { val className = "headline-only" }
+object Headline extends Style {
+  val className = "headline-only"
+  val showMore = false
+}
+
+/**
+ * trails for the section fronts
+ */
+object SectionFront extends Style {
+  val className = "section-front"
+  val showMore = false
+}
+
+/**
+ * New 'collection' templates
+ */
+sealed trait Container {
+  val containerType: String
+  val showMore: Boolean
+  val tone: String
+  val headerLink: Boolean
+}
+
+case class NewsContainer(val showMore: Boolean = true, val headerLink: Boolean = true) extends Container {
+  val containerType = "news"
+  val tone = "news"
+}
+case class SportContainer(val showMore: Boolean = true, val headerLink: Boolean = true) extends Container {
+  val containerType = "sport"
+  val tone = "news"
+}
+case class CommentContainer(val showMore: Boolean = true, val headerLink: Boolean = true) extends Container {
+  val containerType = "comment"
+  val tone = "comment"
+}
+case class FeaturesContainer(val showMore: Boolean = true, val headerLink: Boolean = true) extends Container {
+  val containerType = "features"
+  val tone: String = "feature"
+}
+case class SectionContainer(val showMore: Boolean = true, val tone: String = "news", val headerLink: Boolean = true) extends Container {
+  val containerType = "section"
+}
+
 
 object MetadataJson {
 
@@ -41,12 +93,12 @@ object MetadataJson {
     // thank you erasure
     case (key, value) if value.isInstanceOf[Map[_, _]] =>
       val valueJson = value.asInstanceOf[Map[String, Any]].map(MetadataJson(_)).mkString(",")
-      s"'$key': {$valueJson}"
+      s""""$key": {$valueJson}"""
     case (key, value) if value.isInstanceOf[Seq[_]] =>
       val valueJson = value.asInstanceOf[Seq[(String, Any)]].map(v => s"{${MetadataJson(v)}}").mkString(",")
-      s"'$key': [${valueJson}]".format(key, valueJson)
+      s""""$key": [${valueJson}]""".format(key, valueJson)
     case (key, value) =>
-      s"'${JavaScriptVariableName(key)}': ${JavaScriptValue(value)}"
+      s""""${JavaScriptVariableName(key)}": ${JavaScriptValue(value)}"""
   }
 }
 
@@ -79,7 +131,7 @@ object SafeName {
 object JavaScriptValue {
   def apply(value: Any) = value match {
     case b: Boolean => b
-    case s => s"'${s.toString.replace("'", "\\'")}'"
+    case s => s""""${s.toString.replace(""""""", """\"""")}""""
   }
 }
 
@@ -133,45 +185,90 @@ object BlockNumberCleaner extends HtmlCleaner {
   }
 }
 
-case class PictureCleaner(imageHolder: Images) extends HtmlCleaner with implicits.Numbers {
+case class VideoEmbedCleaner(contentVideos: List[VideoElement]) extends HtmlCleaner {
 
-  def clean(body: Document): Document = {
-    body.getElementsByTag("figure").foreach { fig =>
-      fig.attr("itemprop", "associatedMedia")
-      fig.attr("itemscope", "")
-      fig.attr("itemtype", "http://schema.org/ImageObject")
+  override def clean(document: Document): Document = {
+    document.getElementsByClass("element-video").foreach { element: Element =>
+      element.child(0).wrap("<div class=\"element-video__wrap\"></div>")
+    }
 
-      fig.getElementsByTag("img").foreach { img =>
-        img.attr("itemprop", "contentURL")
-        Option(img.attr("width")).filter(_.isInt) foreach { width =>
-          fig.attr("class", width.toInt match {
-            case width if width <= 220 => "img-base inline-image"
-            case width if width < 460 => "img-median inline-image"
-            case width => "img-extended"
-          })
-        }
+    document.getElementsByClass("gu-video").foreach { element: Element =>
+      val flashMediaElement = conf.Static.apply("flash/flashmediaelement.swf").path
+
+      val mediaId = element.attr("data-media-id")
+      val asset = findVideoFromId(mediaId)
+
+      // add the poster url
+      asset.flatMap(_.image).flatMap(ArticleMainPicture.bestFor).foreach{ url =>
+        element.attr("poster", url)
       }
 
-      fig.getElementsByTag("figcaption").foreach(_.attr("itemprop", "description"))
+      asset.foreach( video => {
+        element.append(
+          s"""<object type="application/x-shockwave-flash" data="$flashMediaElement" width="620" height="350">
+                <param name="allowFullScreen" value="true" />
+                <param name="movie" value="$flashMediaElement" />
+                <param name="flashvars" value="controls=true&amp;file=${video.url.getOrElse("")}" />
+                Sorry, your browser is unable to play this video.
+              </object>""")
+
+        element.wrap("<div class=\"media-proportional-container\"></div>")
+      })
     }
-    body
+    document
+  }
+
+  def findVideoFromId(id:String): Option[VideoAsset] = {
+    contentVideos.filter(_.id == id).flatMap(_.videoAssets).filter(_.mimeType == Some("video/mp4")).headOption
   }
 }
 
-case class VideoPosterCleaner(videos: Seq[MediaAsset]) extends HtmlCleaner {
+case class PictureCleaner(contentImages: List[ImageElement]) extends HtmlCleaner with implicits.Numbers {
 
   def clean(body: Document): Document = {
-    body.getElementsByTag("video").filter(_.hasClass("gu-video")).foreach { videoTag =>
-      videoTag.getElementsByTag("source").headOption.foreach{ source =>
-        val file = source.attr("src")
-        videos.find(_.encodings.exists(_.file == file)).foreach{ video =>
-          video.fields.getOrElse(Map.empty).get("stillImageUrl").foreach{ poster =>
-            videoTag.attr("poster", poster)
+    body.getElementsByTag("figure").foreach { fig =>
+      if(!fig.hasClass("element-comment") && !fig.hasClass("element-witness")) {
+        fig.attr("itemprop", "associatedMedia")
+        fig.attr("itemscope", "")
+        fig.attr("itemtype", "http://schema.org/ImageObject")
+        val mediaId = fig.attr("data-media-id")
+        val asset = findImageFromId(mediaId)
+
+        fig.getElementsByTag("img").foreach { img =>
+          fig.addClass("img")
+          img.attr("itemprop", "contentURL")
+          val src = img.attr("src")
+          img.attr("src", ImgSrc(src, Naked))
+
+          asset.foreach { image =>
+            fig.addClass(image.width match {
+              case width if width <= 220 => "img--base img--inline"
+              case width if width < 460 => "img--median"
+              case width => "img--extended"
+            })
+            fig.addClass(image.height match {
+              case height if height > image.width => "img--portrait"
+              case height if height < image.width => "img--landscape"
+              case height => ""
+            })
+          }
+        }
+        fig.getElementsByTag("figcaption").foreach { figcaption =>
+
+          // content api/ tools sometimes pops a &nbsp; in the blank field
+          if (!figcaption.hasText() || figcaption.text().length < 2) {
+            figcaption.remove();
+          } else {
+            figcaption.attr("itemprop", "description")
           }
         }
       }
     }
     body
+  }
+
+  def findImageFromId(id:String): Option[ImageAsset] = {
+    contentImages.filter(_.id == id).headOption.flatMap(_.largestImage)
   }
 }
 
@@ -179,12 +276,20 @@ object BulletCleaner {
   def apply(body: String): String = body.replace("•", """<span class="bullet">•</span>""")
 }
 
-case class InBodyLinkCleaner(dataLinkName: String) extends HtmlCleaner {
+object UnindentBulletParents extends HtmlCleaner with implicits.JSoup {
+  def clean(body: Document): Document = {
+    val bullets = body.getElementsByClass("bullet")
+    bullets flatMap { _.parentTag("p") } foreach { _.addClass("bullet-container") }
+    body
+  }
+}
+
+case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition) extends HtmlCleaner {
   def clean(body: Document): Document = {
     val links = body.getElementsByTag("a")
 
     links.foreach { link =>
-      link.attr("href", InBodyLink(link.attr("href")))
+      link.attr("href", LinkTo(link.attr("href"), edition))
       link.attr("data-link-name", dataLinkName)
     }
     body
@@ -210,10 +315,36 @@ object TweetCleaner extends HtmlCleaner {
   }
 }
 
-case class Summary(ammount: Int) extends HtmlCleaner {
+object InBodyElementCleaner extends HtmlCleaner {
+
+  private val supportedElements = Seq(
+    "element-tweet",
+    "element-video",
+    "element-image",
+    "element-witness",
+    "element-comment"
+  )
+
   override def clean(document: Document): Document = {
-    val paras = document.body().children().toList.drop(ammount)
-    paras.foreach(_.remove())
+    if (ShowUnsupportedEmbedsSwitch.isSwitchedOff) {
+      // this code removes unsupported embeds
+      val embeddedElements = document.getElementsByTag("figure").filter(_.hasClass("element"))
+      val unsupportedElements = embeddedElements.filterNot(e => supportedElements.exists(e.hasClass(_)))
+      unsupportedElements.foreach(_.remove())
+    }
+    document
+  }
+}
+
+case class Summary(amount: Int) extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    val children = document.body().children().toList;
+    val para: Option[Element] = children.filter(_.nodeName() == "p").take(amount).lastOption
+    // if there is are no p's, just take the first n things (could be a blog)
+    para match {
+      case Some(p) => children.drop(children.indexOf(p)).foreach(_.remove())
+      case _ => children.drop(amount).foreach(_.remove())
+    }
     document
   }
 }
@@ -226,7 +357,7 @@ object ContributorLinks {
     tags.foldLeft(text) {
       case (t, tag) =>
         t.replaceFirst(tag.name,
-          <span itemscope="" itemtype="http://schema.org/Person" itemprop="author"><a rel="author" itemprop="url name" data-link-name="auto tag link" href={ s"/${tag.id}" }>{ tag.name }</a></span>.toString)
+          <span itemscope="" itemtype="http://schema.org/Person" itemprop="author"><a rel="author" class="tone-colour" itemprop="url name" data-link-name="auto tag link" href={ s"/${tag.id}" }>{ tag.name }</a></span>.toString)
     }
   }
   def apply(html: Html, tags: Seq[Tag]): Html = apply(html.body, tags)
@@ -241,6 +372,9 @@ object OmnitureAnalyticsData {
     val section = data.get("section").getOrElse("")
     val platform = "frontend"
     val publication = data.get("publication").getOrElse("")
+    val omnitureEvent = data.get("omnitureEvent").getOrElse("")
+    val registrationType = data.get("registrationType").getOrElse("")
+    val omnitureErrorMessage = data.get("omnitureErrorMessage").getOrElse("")
 
     val isContent = page match {
       case c: Content => true
@@ -252,7 +386,7 @@ object OmnitureAnalyticsData {
       ("g", path),
       ("ns", "guardian"),
       ("pageName", pageName),
-      ("cdp", (if (Site(request).isUsEdition) "2" else "3")),
+      ("cdp", "2"),
       ("v7", pageName),
       ("c3", publication),
       ("ch", section),
@@ -269,9 +403,14 @@ object OmnitureAnalyticsData {
       ("c14", data("build-number")),
       ("c19", platform),
       ("v19", platform),
+      ("v67", "nextgen-served"),
       ("c30", (if (isContent) "content" else "non-content")),
-      ("c56", jsSupport)
+      ("c56", jsSupport),
+      ("event", omnitureEvent),
+      ("v23", registrationType),
+      ("e27", omnitureErrorMessage)
     )
+
 
     Html(analyticsData map { case (key, value) => s"$key=${encode(value, "UTF-8")}" } mkString ("&"))
   }
@@ -305,21 +444,75 @@ object `package` extends Formats {
 }
 
 object Format {
-  def apply(date: DateTime, pattern: String, edition: String = "UK"): String = {
-    val timezone = edition match {
-      case "US" => "America/New_York"
-      case _ => "Europe/London"
-    }
-    date.toString(DateTimeFormat.forPattern(pattern).withZone(DateTimeZone.forID(timezone)))
+  def apply(date: DateTime, pattern: String)(implicit request: RequestHeader): String = {
+    val timezone = Edition(request).timezone
+    date.toString(DateTimeFormat.forPattern(pattern).withZone(timezone))
   }
 }
 
 object cleanTrailText {
-  def apply(text: String): Html = {
-    `package`.withJsoup(RemoveOuterParaHtml(BulletCleaner(text)))(InBodyLinkCleaner("in trail text link"))
+  def apply(text: String)(implicit edition: Edition): Html = {
+    withJsoup(RemoveOuterParaHtml(BulletCleaner(text)))(InBodyLinkCleaner("in trail text link"))
   }
 }
 
 object StripHtmlTags {
   def apply(html: String): String = Jsoup.clean(html, Whitelist.none())
+}
+
+object StripHtmlTagsAndUnescapeEntities{
+  def apply(html: String) : String = {
+    val doc = new Cleaner(Whitelist.none()).clean(Jsoup.parse(html))
+    val stripped = doc.body.html
+    val unescaped = StringEscapeUtils.unescapeHtml(stripped)
+    unescaped.replace("\"","&#34;")   //double quotes will break HTML attributes
+  }
+}
+
+object CricketMatch {
+  def apply(trail: Trail): Option[String] = trail match {
+    case c: Content => c.cricketMatch
+    case _ => None
+  }
+}
+
+object VisualTone {
+
+  private val Comment = "comment"
+  private val News = "news"
+  private val Feature = "feature"
+
+  private val toneMappings = Map(
+    ("tone/comment", Comment),
+    ("tone/letters", Comment),
+    ("tone/obituaries", Comment),
+    ("tone/profiles", Comment),
+    ("tone/editorials", Comment),
+    ("tone/analysis", Comment),
+
+    ("tone/features", Feature),
+    ("tone/recipes", Feature),
+    ("tone/interview", Feature),
+    ("tone/performances", Feature),
+    ("tone/extract", Feature),
+    ("tone/reviews", Feature),
+    ("tone/albumreview", Feature),
+    ("tone/livereview", Feature),
+    ("tone/childrens-user-reviews", Feature)
+  )
+
+
+  // tones are all considered to be 'News' it is the default so we do not list news tones explicitly
+  def apply(tags: Tags) = tags.tones.headOption.flatMap(tone => toneMappings.get(tone.id)).getOrElse(News)
+
+}
+
+object RenderOtherStatus {
+  def gonePage(implicit request: RequestHeader) = model.Page(request.path, "news", "Gone", "GFE:Gone")
+  def apply(result: SimpleResult)(implicit request: RequestHeader) = result.header.status match {
+    case 404 => NoCache(NotFound)
+    case 410 if request.isJson => Cached(60)(JsonComponent(gonePage, "status" -> "GONE"))
+    case 410 => Cached(60)(Gone(views.html.expired(gonePage)))
+    case _ => result
+  }
 }

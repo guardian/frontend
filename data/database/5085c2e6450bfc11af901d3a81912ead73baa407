@@ -1,0 +1,161 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"sport/2013/nov/06/tony-mccoy-chepstow-4000-winners",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-11-06T18:33:00Z",
+      "webTitle":"Tony McCoy's Chepstow win leaves him one short of 4,000 career total",
+      "webUrl":"http://www.theguardian.com/sport/2013/nov/06/tony-mccoy-chepstow-4000-winners",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/nov/06/tony-mccoy-chepstow-4000-winners",
+      "fields":{
+        "newspaperPageNumber":"41",
+        "trailText":"Tony McCoy has recorded his 3,999th winner at Chepstow and is optimistic of making it 4,000 from one of two rides at Towcester on Thursday",
+        "headline":"Tony McCoy's Chepstow win leaves him one short of 4,000 career total",
+        "body":"<p>Tony McCoy stands on the brink of a remarkable achievement, which he hopes to complete at Towcester on Thursday. The perennial champion jumps jockey won the 3,999th race of his career here on Wednesday and has two good chances to reach 4,000.</p><p>He arrived expecting little from his two booked mounts and his day appeared likely to be unproductive when Mission Complete became a non-runner, overnight rain having made the ground unsuitably testing. But, after McCoy had trailed home fifth on El Macca in the opening race, news came through that he would be switched on to Minella For Steak in the race Mission Complete had been due to contest.</p><p>His mount was backed into 3-1 favourite and duly battled home, three parts of a length to the good. The winner got a muted reception from a modest crowd in cold, damp conditions and there was only a fraction of the media presence that had pursued McCoy in recent days but this was plainly a big moment for the jockey.</p><p>Having appeared to be feeling the burden of expectation since the weekend and by having to face repeated questions about when, exactly, he was going to reach 4,000, McCoy seemed liberated by the landmark's proximity. \"I hope I don't put the mockers on it but I've actually got quite a good strike-rate at Towcester,\" he said.</p><p>\"It'd be great if one of them won, for everyone's sake, for my sake and for all you guys who follow me around. It's probably the first time in my life that I don't mind saying that I'm proud of what I've achieved because I've worked hard for it.\"</p><p>McCoy felt Towcester's low profile would make it an appropriate venue for his 4,000th. \"We all would love to be turning up for the big day on a Saturday and winning the big races all the time but it doesn't always work like that. I feel that to be champion jockey you have to be prepared to go round the country and ride at all the little meetings and ride for all the different trainers and owners and be versatile.</p><p>\"If you go to Towcester, any day of the week, you know it's a pretty normal racecourse. There's nothing too flashy about it. But, if you want to be champion jockey, that's what you've got to be prepared to do.\"</p><p>McCoy cheerily denied having contrived his 4,000th winner to coincide with Wednesday's publication of his first novel, Taking The Fall. Asked if the contents were as raunchy as rumoured, he agreed enthusiastically.</p><p>\"That's my wife's fault. She said it would help people think that I had an imagination, rather than being really boring. She said, if you want to read about someone that goes to every racecourse and wants to ride all the winners and doesn't go out at night and locks himself in the house, then read my autobiography. But if you want to read about the kind of jockey that we'd all like to be, then read this book.\"</p><p>Wednesday's winner means that five-year-old Eve McCoy will be freed from her primary school on Thursday in the hope of witnessing history. \"She was clever enough to work out yesterday that the longer it could take me, the better because it would mean she would get more days off school to come racing,\" her proud father reported. \"She quite likes the idea of dressing up to go racing.\"</p><p>McCoy was frank about his desire to reach 4,000 on a horse belonging to his main employer and longstanding friend, JP McManus, who owns both his mounts on Thursday, Church Field and Mountain Tunes. \"Obviously, I'd like it to be in the boss's colours.</p><p>\"My daughter's very keen on it being in the green and gold because she thinks that every horse she sees on TV is her daddy's. Those colours mean a lot to us all but they probably mean more to her than anyone else. She thinks the green and gold colours are mine, they're not actually JP's. I haven't taught her any different as yet.\"</p><!-- Guardian Watermark: internal-code/content/421838996|2013-11-11T15:34:05Z|03ba234fd40893a4fd4fa714356a58bc1640a189 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-07T00:06:12Z",
+        "hasStoryPackage":"false",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2013/11/6/1383759360215/McCoy-006.jpg",
+        "standfirst":"• Chepstow success puts jockey on brink of milestone<br />• Rider optimistic of historic winner at Towcester",
+        "shortUrl":"http://gu.com/p/3k7xt",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/11/6/1383759360215/McCoy-006.jpg",
+        "wordcount":"671",
+        "commentable":"false",
+        "internalContentCode":"421838996",
+        "allowUgc":"false",
+        "internalOctopusCode":"8288941",
+        "isPremoderated":"false",
+        "byline":"Chris Cook at Chepstow",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-11-07",
+        "internalPageCode":"1993131",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-09T18:00:56Z"
+      },
+      "tags":[{
+        "id":"sport/tony-mccoy",
+        "type":"keyword",
+        "webTitle":"Tony McCoy",
+        "webUrl":"http://www.theguardian.com/sport/tony-mccoy",
+        "apiUrl":"http://content.guardianapis.com/sport/tony-mccoy",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/horse-racing",
+        "type":"keyword",
+        "webTitle":"Horse racing",
+        "webUrl":"http://www.theguardian.com/sport/horse-racing",
+        "apiUrl":"http://content.guardianapis.com/sport/horse-racing",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/chriscook",
+        "type":"contributor",
+        "webTitle":"Chris Cook",
+        "webUrl":"http://www.theguardian.com/profile/chriscook",
+        "apiUrl":"http://content.guardianapis.com/profile/chriscook",
+        "bio":"<p>Chris Cook is deputy <a href=\"http://www.guardian.co.uk/sport/horse-racing\">racing </a>editor on the <a href=\"http://www.guardian.co.uk/sport\">sport</a> desk at the Guardian</p>",
+        "r2ContributorId":"22559",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/04/01/chris_cook_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/sport",
+        "type":"newspaper-book-section",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421844580",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/11/6/1383759369286/McCoy-011.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Tim Ireland",
+            "altText":"McCoy",
+            "height":"276",
+            "credit":"Tim Ireland/PA",
+            "caption":"Tony McCoy rides Minella For Steak, centre, to victory at Chepstow to leave him one short of 4,000 career winners. Photograph: Tim Ireland/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421844581",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2013/11/6/1383759360215/McCoy-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"Tim Ireland",
+            "altText":"McCoy",
+            "height":"84",
+            "credit":"Tim Ireland/PA",
+            "caption":"Tony McCoy rides Minella for Steak, centre, to victory at Chepstow to leave him one short of 4,000 career winners. Photograph: Tim Ireland/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[]
+  }
+}

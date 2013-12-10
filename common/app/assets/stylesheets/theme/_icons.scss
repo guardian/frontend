@@ -1,86 +1,106 @@
 .top .i-arrow-small-up {
-    margin-left: 5px;
+    margin-left: $baseline*2;
+    position: relative;
+    top: -1px;
 }
 
-.i-arrow-small-down {
-    margin-left: $baseline;
-}
-
-.i-sport-arrow-small {
-    margin: 0 0 -1px $baseline;
-}
-
-.is-active .i-arrow-small-down {
-    @extend .i-arrow-small-up;
-    border-color: transparent !important;
-}
-
-.svg .is-active .i-arrow-small-down {
-    @extend .svg-i-arrow-small-up;
+.i-sport-arrow--small {
+    @include transform(scale(0.6));
+    margin: 3px 0 0 3px;
+    vertical-align: top;
 }
 
 .is-active .i-menu {
-  @extend .i-menu-active;
-}
+    @extend .i-menu-active;
 
-.svg .is-active .i-menu {
-  @extend .svg-i-menu-active;
+    @if ($svg-support) {
+        .svg & {
+            @extend .svg-i-menu-active;
+        }
+    }
 }
 
 .is-active .i-search {
-  @extend .i-search-blue;
-}
+    @extend .i-search-blue;
 
-.svg .is-active .i-top-stories {
-  @extend .svg-i-search-blue;
+    @if ($svg-support) {
+        .svg & {
+            @extend .svg-i-search-blue;
+        }
+    }
 }
 
 .is-active .i-top-stories {
-  @extend .i-top-stories-active;
+    @extend .i-top-stories-active;
+
+    @if ($svg-support) {
+        .svg & {
+            @extend .svg-i-top-stories-active;
+        }
+    }
 }
 
-.svg .is-active .i-top-stories {
-  @extend .svg-i-top-stories-active;
+.is-signed-in .i-profile {
+    @extend .i-profile-signed-in;
+
+    @if ($svg-support) {
+        .svg & {
+            @extend .svg-i-profile-signed-in;
+        }
+    }
+}
+
+.is-active .i-profile {
+    @extend .i-profile-active;
+
+    @if ($svg-support) {
+        .svg & {
+            @extend .svg-i-profile-active;
+        }
+    }
 }
 
 .i-date {
-    margin-right: 5px;
-    margin-bottom: -1px;
+    @if ($svg-support) {
+        .svg & {
+            background-size: 100%;
+            width: 10px;
+            height: 10px;
+        }
+    }
 }
 
-.svg .i-date {
-    background-size: 100%;
-    width: 10px;
-    height: 10px;
-}
+.caption:before,
+figcaption:before {
+    @extend .i;
+    @extend .i-image;
+    display: inline-block;
+    content: '';
+    vertical-align: top;
+    margin: 1px 4px 0 0;
 
+    @if ($svg-support) {
+        .svg & {
+            @extend .svg-i-image;
+        }
+    }
+}
 
 //Quotes
-.from-content-api blockquote:before,
-.from-content-api .block .quoted:before {
+.from-content-api blockquote.quoted:before {
     @extend .i;
-    @extend .i-livequote-before;
-    display: block;
+    @extend .i-quote-marks;
     content: '';
-    margin: 21px 0 $baseline*2 0;
-    clear: both;
-}
+    position: absolute;
+    margin-top: -3px;
 
-.svg .from-content-api blockquote:before,
-.svg .from-content-api .block .quoted:before {
-    @extend .svg-i-livequote-before;
-}
+    @if ($svg-support) {
+        .svg & {
+            @extend .svg-i-quote-marks;
+        }
+    }
 
-.from-content-api blockquote:after,
-.from-content-api .block .quoted:after {
-    @extend .i;
-    @extend .i-livequote-after;
-    display: block;
-    content: '';
-    margin-bottom: 22px;
-}
-
-.svg .from-content-api blockquote:after,
-.svg .from-content-api .block .quoted:after {
-    @extend .svg-i-livequote-after;
+    @include mq($to: tablet) {
+        @include transform(scale(0.8));
+    }
 }

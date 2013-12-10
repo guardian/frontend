@@ -1,0 +1,31 @@
+@(game: pa.FootballMatch)(implicit request: RequestHeader)
+
+@import implicits.Football._
+
+<li class="match @if(game.isLive){live-match}">
+    <a href="@LinkTo{@MatchUrl(game)}" data-link-name="stats" data-match-id="@game.id">
+        <p class="match-desc type-10">
+            <span class="match-desc__team match-desc__team--home">@game.homeTeam.name</span>
+            @if(game.isFixture){
+                <span class="match-desc__result">v</span>
+            } else {
+                <span class="match-desc__result">@game.homeTeam.score-@game.awayTeam.score</span>
+            }
+            <span class="match-desc__team match-desc__team--away">@game.awayTeam.name</span>
+        </p>
+
+        <p class="match-status type-12">
+            @if(game.isFixture){
+                <span class="match-status-desc">Kick-off:</span> @game.date.toString("HH:mm")
+            } else {
+                <abbr class="match-@MatchStatus(game.matchStatus)">@MatchStatus(game.matchStatus)</abbr>
+            }
+        </p>
+
+        @if(game.homeTeam.aggregateScore){
+            <p class="match-aggregate type-10"><span>(agg. <span>@game.homeTeam.aggregateScore-@game.awayTeam.aggregateScore</span>)</span></p>
+        }
+
+        @game.comments.map{ comment => <p class="match-comment type-10"><span>@comment</span></p> }
+    </a>
+</li>

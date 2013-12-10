@@ -1,0 +1,5 @@
+@(front: FrontPage, page: FaciaPage)(implicit request: RequestHeader)
+
+@main(front, projectName = Option("facia")){ }{
+    @fragments.frontBody(front, page)
+}

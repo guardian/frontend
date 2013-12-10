@@ -16,7 +16,7 @@ s.trackDownloadLinks=true;
 s.trackExternalLinks=true;
 s.trackInlineStats=true;
 s.linkDownloadFileTypes="exe,zip,wav,mp3,mov,mpg,avi,wmv,pdf,doc,docx,xls,xlsx,ppt,pptx";
-s.linkInternalFilters="javascript:,guardian.co.uk,adinfo-guardian.co.uk,guardianbooks.co.uk,guardianbookshop.co.uk,guardiandigitalcomparison.co.uk,guardianeatright.co.uk,guardianecostore.co.uk,guardianfashionstore.co.uk,guardiangardencentre.co.uk,guardiangiftexperiences.co.uk,guardianholidayoffers.co.uk,guardianhomeexchange.co.uk,guardianhomeexchange.com,guardianjobs.co.uk,guardianjobs.com,guardianjobsrecruiter.co.uk,guardianoffers.co.uk,guardianprofessional.co.uk,guardianpublic.co.uk,guardiansubscriptions.co.uk,guardianvouchercodes.co.uk,guardianweekly.co.uk,ivebeenthere.co.uk,kable.co.uk,money-deals.co.uk,ogenterprises.co.uk,ogtravelinsurance.co.uk,sixwordmemoirs.co.uk,smarthealthcare.com,sofacinema.co.uk,theguardian.co.uk,guardian.touch-line.com,tvlistings.guardian.co.uk,guardian.pickthescore.co.uk,guardian.oddschecker.com,guardian.lcplc-online.co.uk,mps-expenses.guardian.co.uk,guardian.unbiased.co.uk,guardian.greatgetaways.co.uk,guardian.sportinglife.com,guardianenergycomparison.co.uk,dating.guardian.co.uk,id.guardian.co.uk,sixsongsof.me,jobs.guardian.co.uk,guardiannews.com,guardiancottages.co.uk,guardiantickets.co.uk,guardianinvesting.co.uk,guardiandirectsubs.co.uk,guardianapis.com,guardian-newspaper.com,guardianweekly.com,guardianapps.co.uk,guardianjobs.mobi";
+s.linkInternalFilters="javascript:,adinfo-guardian.co.uk,dating.guardian.co.uk,guardian.co.uk,guardian.greatgetaways.co.uk,guardian.lcplc-online.co.uk,guardian.oddschecker.com,guardian.pickthescore.co.uk,guardian.sportinglife.com,guardian.touch-line.com,guardian.unbiased.co.uk,guardianapis.com,guardianapps.co.uk,guardianbooks.co.uk,guardianbookshop.co.uk,guardiancottages.co.uk,guardiandigitalcomparison.co.uk,guardiandirectsubs.co.uk,guardianeatright.co.uk,guardianecostore.co.uk,guardianenergycomparison.co.uk,guardianenergycomparison.com,guardianfashionstore.co.uk,guardiangardencentre.co.uk,guardiangiftexperiences.co.uk,guardianholidayoffers.co.uk,guardianhomeexchange.co.uk,guardianhomeexchange.com,guardianinvesting.co.uk,guardianjobs.co.uk,guardianjobs.com,guardianjobs.mobi,guardianjobsrecruiter.co.uk,guardiannews.com,guardian-newspaper.com,guardianoffers.co.uk,guardianprofessional.co.uk,guardianpublic.co.uk,guardiansubscriptions.co.uk,guardiantickets.co.uk,guardianvouchercodes.co.uk,guardianweekly.co.uk,guardianweekly.com,id.guardian.co.uk,ivebeenthere.co.uk,jobs.guardian.co.uk,kable.co.uk,money-deals.co.uk,mps-expenses.guardian.co.uk,ogenterprises.co.uk,ogtravelinsurance.co.uk,sixsongsof.me,sixwordmemoirs.co.uk,smarthealthcare.com,sofacinema.co.uk,static.guim.co.uk,theguardian.co.uk,theguardian.com,traffic.outbrain.com,tvlistings.guardian.co.uk";
 s.linkLeaveQueryString=false;
 s.linkTrackVars="None";
 s.linkTrackEvents="None";
@@ -26,16 +26,16 @@ s.linkTrackEvents="None";
 s.usePlugins=true;
 function s_doPlugins(s) {
     /* Make sure s.events is initialised */
-    s.events = s.events ? s.events : '';
+//    s.events = s.events ? s.events : '';
 
     /* s_code version */
-    s.prop62 = "Mdot Guardian H.25.3 v1 20130122";
+//    s.prop62 = "Mdot Guardian H.25.3 v1 20130122";
 
     /* URL */
     s.prop61 = "D=g";
 
     /* Set Page View Event */
-    s.events=s.apl(s.events,'event4',',',2);
+//    s.events=s.apl(s.events,'event4',',',2);
 
     /* External Paid Campaign Tracking */
     if (!s.eVar38){
@@ -44,34 +44,34 @@ function s_doPlugins(s) {
     s.eVar38=s.getValOnce(s.eVar38,'s_eVar38',0);
 
     /* Campaign stacking */
-    s.eVar40=s.crossVisitParticipation(s.campaign,'s_ev40','30','5','>','',1);
+//    s.eVar40=s.crossVisitParticipation(s.campaign,'s_ev40','30','5','>','',1);
 
     /* Days Since Last Visit */
-    s.eVar10=s.getDaysSinceLastVisit('s_lv');
+//    s.eVar10=s.getDaysSinceLastVisit('s_lv');
 
     /* New/Repeat Status */
-    s.prop16=s.eVar16=s.getNewRepeat(365);
+//    s.prop16=s.eVar16=s.getNewRepeat(365);
 
     /* Copy pageName into eVar7 */
-    if (s.pageName && !s.eVar7) {
-        s.eVar7="D=pageName";
-    }
+//    if (s.pageName && !s.eVar7) {
+//        s.eVar7="D=pageName";
+//    }
 
     /* Set prop63 to the load time in seconds, with one decimal value */
-    s.prop63 = s.getLoadTimeDim();
+//    s.prop63 = s.getLoadTimeDim();
 
     /* Retrieve navigation interaction data */
-    var ni = typeof(localStorage) != 'undefined' && typeof(JSON) != 'undefined'? localStorage.getItem(/*storagePrefix + */'referrerVars') : null;
-    if (ni) {
-        ni = JSON.parse(ni);
-        var d = new Date().getTime();
-        if (d - ni.time < 60 * 1000) { // One minute
-            s.eVar24 = ni.pageName;
-            s.eVar37 = ni.tag;
-            s.events = s.apl(s.events,'event37',',');
-        }
-        localStorage.removeItem(/*storagePrefix + */'referrerVars');
-    }
+//    var ni = typeof(localStorage) != 'undefined' && typeof(JSON) != 'undefined'? localStorage.getItem(/*storagePrefix + */'referrerVars') : null;
+//    if (ni) {
+//        ni = JSON.parse(ni);
+//        var d = new Date().getTime();
+//        if (d - ni.time < 60 * 1000) { // One minute
+//            s.eVar24 = ni.pageName;
+//            s.eVar37 = ni.tag;
+//            s.events = s.apl(s.events,'event37',',');
+//        }
+//        localStorage.removeItem(/*storagePrefix + */'referrerVars');
+//    }
 }
 s.doPlugins=s_doPlugins;
 
@@ -112,8 +112,13 @@ s.loadMediaModule = function(provider,restricted) {
         if (media.event == "OPEN") {
             s.eVar7 = s.pageName;
             s.eVar61 = (s._GUVideo.restricted) ? "restricted" : "not restricted";
-            s.eVar47 = "video content";
-            s.eVar56 = s._GUVideo.provider;
+            if (s._GUVideo.ad) {
+                s.eVar47 = "video ad";
+            }
+            else {
+                s.eVar47 = "video content";
+                s.eVar56 = s._GUVideo.provider;
+            }
             s.Media.track(media.name);
         }
     }
@@ -121,6 +126,54 @@ s.loadMediaModule = function(provider,restricted) {
     s._GUVideo.provider = provider;
     s._GUVideo.restricted = restricted;
 }
+
+
+
+s.trackVideoContent = function(provider,restricted) {
+    var s = this;
+    s.Media.autoTrack=false;
+    s.Media.trackVars="events,prop44,eVar7,eVar11,eVar43,eVar44,eVar45,eVar48,eVar61,eVar56,eVar47";
+    s.Media.trackEvents="event17,event18,event21,event22,event23,event57,event63";
+    s.Media.trackMilestones="25,50,75";
+    s.Media.segmentByMilestones = true;
+    s.Media.trackUsingContextData = true;
+    s.Media.contextDataMapping = {
+        "a.media.name":"eVar44,prop44",
+        "a.media.segment":"eVar48",
+        "a.contentType":"eVar43",
+        "a.media.timePlayed":"event57",
+        "a.media.view":"event17",
+        "a.media.segmentView":"event63",
+        "a.media.complete":"event18",
+        "a.media.milestones":{
+            25:"event21",
+            50:"event22",
+            75:"event23"
+        }
+    };
+    s._GUVideo.ad = false;
+    s._GUVideo.provider = provider;
+    s._GUVideo.restricted = restricted;
+}
+
+s.trackVideoAd = function() {
+    var s = this;
+    s.Media.autoTrack=false;
+    s.Media.trackVars="events,prop44,eVar7,eVar11,eVar43,eVar44,eVar45,eVar61,eVar56,eVar47";
+    s.Media.trackEvents="event64,event57,event59";
+    s.Media.segmentByMilestones = false;
+    s.Media.trackUsingContextData = true;
+    s.Media.contextDataMapping = {
+        "a.media.name":"eVar44,prop44",
+        "a.contentType":"eVar43",
+        "a.media.timePlayed":"event57",
+        "a.media.view":"event59",
+        "a.media.complete":"event64"
+    };
+    s._GUVideo.ad = true;
+    s._GUVideo.restricted = false;
+}
+
 
 /* WARNING: Changing any of the below variables will cause drastic
  changes to how your visitor data is collected.  Changes should only be
@@ -175,8 +228,8 @@ s.getDaysSinceLastVisit=new Function("c",""
     +"!=f5) return '';else return cval_s;");
 
 /*
- *	Plug-in: crossVisitParticipation v1.7 - stacks values from
- *	specified variable in cookie and returns value
+ *  Plug-in: crossVisitParticipation v1.7 - stacks values from
+ *  specified variable in cookie and returns value
  */
 s.crossVisitParticipation=new Function("v","cn","ex","ct","dl","ev","dv",""
     +"var s=this,ce;if(typeof(dv)==='undefined')dv=0;if(s.events&&ev){var"
@@ -217,6 +270,7 @@ s.getLoadTimeDim=new Function("",""
 /*
  * Plugin Utility: HTML5Storage v0.11
  */
+/*
 if(typeof Storage!=="undefined"&&typeof JSON!=="undefined"){s.c_rr=s.c_r;s.c_ww=s.c_w;if(s._forceCookies)
 {if(!s.inList("s_cc",s._forceCookies)){s._forceCookies=s.apl(s._forceCookies,"s_cc",",")}
     if(!s.inList("s_sq",s._forceCookies)){s._forceCookies=s.apl(s._forceCookies,"s_sq",",")}}else{s._forceCookies="s_cc,s_sq"}
@@ -228,6 +282,7 @@ if(typeof Storage!=="undefined"&&typeof JSON!=="undefined"){s.c_rr=s.c_r;s.c_ww=
         {e=r.ape(e);i=new Date;if(n&&r.cookieLifetime!="SESSION"){var s=new Date(n.getTime());
             if(!isNaN(r.cookieLifetime)&&s.getTime()>i.getTime()+r.cookieLifetime*1e3){s.setTime(i.getTime()+r.cookieLifetime*1e3)}
             if(s>i){t={expiry:s.getTime(),value:t};t=JSON.stringify(t);localStorage.setItem(e,t)}}else{sessionStorage.setItem(e,t)}}}s.c_r=c_r;s.c_w=c_w}
+*/
 
 /*
  * Utility: inList v1.0 - find out if a value is in a list
@@ -496,4 +551,3 @@ var s_code='',s_objectID;function s_gi(un,pg,ss){var c="s.version='H.25.3';s.an=
         +"'+c.substring(e+1);s=c.indexOf('=function(')}return c;");
     c=s_d(c);if(e>0){a=parseInt(i=v.substring(e+5));if(a>3)a=parseFloat(i)}else if(m>0)a=parseFloat(u.substring(m+10));else a=parseFloat(v);if(a<5||v.indexOf('Opera')>=0||u.indexOf('Opera')>=0)c=s_ft(c);if(!s){s=new Object;if(!w.s_c_in){w.s_c_il=new Array;w.s_c_in=0}s._il=w.s_c_il;s._in=w.s_c_in;s._il[s._in]=s;w.s_c_in++;}s._c='s_c';(new Function("s","un","pg","ss",c))(s,un,pg,ss);return s}
 function s_giqf(){var w=window,q=w.s_giq,i,t,s;if(q)for(i=0;i<q.length;i++){t=q[i];s=s_gi(t.oun);s.sa(t.un);s.setTagContainer(t.tagContainerName)}w.s_giq=0}s_giqf()
-

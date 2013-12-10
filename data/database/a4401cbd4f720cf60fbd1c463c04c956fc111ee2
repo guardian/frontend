@@ -1,0 +1,1300 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"business/2013/nov/11/bt-champions-league-deal-hits-bskyb-shares",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2013-11-11T14:45:00Z",
+      "webTitle":"BT's Champions League deal hits BSkyB shares",
+      "webUrl":"http://www.theguardian.com/business/2013/nov/11/bt-champions-league-deal-hits-bskyb-shares",
+      "apiUrl":"http://content.guardianapis.com/business/2013/nov/11/bt-champions-league-deal-hits-bskyb-shares",
+      "fields":{
+        "trailText":"Nearly £1.5bn wiped from the stock market value of BSkyB, with shares down nearly 10%",
+        "headline":"BT's Champions League deal hits BSkyB shares",
+        "body":"<p>Nearly &pound;1.5bn was wiped from the stock market value of BSkyB on Monday as the City reacted to the loss of its rights to broadcast live Champions League and Europa League football matches.</p><p>BSkyB shares tumbled 10%, making it the biggest FTSE 100 faller, and ITV's were down 3% after rival BT Sport <a href=\"http://www.theguardian.com/media/2013/nov/10/bt-champions-league-price-rises\" title=\"\">revealed an exclusive &pound;897m three-year deal </a>with European governing body Uefa to broadcast all 350 fixtures from 2015.</p><p>It is the first time a single UK broadcaster has won the exclusive live rights to all matches from both tournaments.</p><p>At &pound;299m a year over the three years of the deal, BT is paying more than double the &pound;400m BSkyB and ITV are paying for the current three-year contract.</p><p>The loss of the contract is a major blow for BSkyB and ITV, which currently share the rights. Sky said BT's bid for the deal was &quot;far in excess&quot; of its own, while ITV, said it was &quot;not prepared to pay over the odds&quot;.</p><p>Shares in BT, a newcomer to sports broadcasting, were down 2% down in early trading amid fears in the City that it has massively overpaid. But they later recovered, recouping the early loss and rising by 1.5% to 373.6p as investors considered whether BT's ambitious gamble would pay off.</p><p>Nick Dale-Lace, senior sales trader at CMC Markets, described it as &quot;a huge blow to Sky and a monumental statement of intent from BT as it tries to grab a foothold in the UK TV market.</p><p>&quot;Both Sky and ITV, who have a number of years of experience to draw on, do not think the price represents value, but perhaps in the context of BT's plans it may be worth paying up.</p><p>BT Sport made its debut on 1 August, and the group said its financial outlook was unchanged despite the latest deal, adding the rights would improve revenue and profit in its consumer division in the &quot;medium term&quot;.</p><p>Announcing the deal on Saturday, the newly appointed BT chief executive Gavin Patterson hailed it as &quot;giving sport back to the fans&quot;. He defended the amount paid, saying it injected &quot;a welcome element of competition&quot; into the market.</p><p>BT's consumer chief executive, John Petter, said: &quot;These were the crown jewels properties for Sky. I'm sure they'll be kicking themselves today. I feel for them obviously, but they got it wrong.&quot;</p><p>Meanwhile investors were left questioning <a href=\"http://www.theguardian.com/business/2013/nov/11/bt-wins-champions-league-rights-what-does-it-mean\" title=\"\">what the loss of the rights would mean for Sky</a>, given the prominence of its football coverage.</p><p>Mike van Dulken, head of research at Accendo Markets, said: &quot;Bad news for current broadcaster Sky with football such a key offering within its sports package, itself one of the main attractions for households.</p><p>&quot;Sky still offers two thirds of the all-important UK premier league football (BT offers the other third), so it is not out of the game&quot;.</p><!-- Guardian Watermark: internal-code/content/422167458|2013-11-11T15:34:05Z|06217b88e33947f4de8300f19a3ed80091dc81f1 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-11T14:46:03Z",
+        "hasStoryPackage":"true",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/11/1384159541294/FC-Viktoria-Plzen-v-FC-Ba-003.jpg",
+        "standfirst":"Nearly £1.5bn wiped from the stock market value of BSkyB, with shares down nearly 10%",
+        "shortUrl":"http://gu.com/p/3k9yb",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/11/1384159541294/FC-Viktoria-Plzen-v-FC-Ba-003.jpg",
+        "wordcount":"461",
+        "commentable":"true",
+        "internalContentCode":"422167458",
+        "allowUgc":"false",
+        "internalOctopusCode":"8306789",
+        "isPremoderated":"false",
+        "byline":"Angela Monaghan",
+        "publication":"theguardian.com",
+        "internalPageCode":"1995122",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-14T08:48:41Z"
+      },
+      "tags":[{
+        "id":"business/britishskybroadcastinggroup",
+        "type":"keyword",
+        "webTitle":"BSkyB",
+        "webUrl":"http://www.theguardian.com/business/britishskybroadcastinggroup",
+        "apiUrl":"http://content.guardianapis.com/business/britishskybroadcastinggroup",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"media/bskyb",
+        "type":"keyword",
+        "webTitle":"BSkyB",
+        "webUrl":"http://www.theguardian.com/media/bskyb",
+        "apiUrl":"http://content.guardianapis.com/media/bskyb",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/television",
+        "type":"keyword",
+        "webTitle":"Television industry",
+        "webUrl":"http://www.theguardian.com/media/television",
+        "apiUrl":"http://content.guardianapis.com/media/television",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.theguardian.com/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"football/championsleague",
+        "type":"keyword",
+        "webTitle":"Champions League",
+        "webUrl":"http://www.theguardian.com/football/championsleague",
+        "apiUrl":"http://content.guardianapis.com/football/championsleague",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-competition",
+          "id":"pa-football-competition/500"
+        }]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"business/btgroup",
+        "type":"keyword",
+        "webTitle":"BT",
+        "webUrl":"http://www.theguardian.com/business/btgroup",
+        "apiUrl":"http://content.guardianapis.com/business/btgroup",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"media/bt-sport",
+        "type":"keyword",
+        "webTitle":"BT Sport",
+        "webUrl":"http://www.theguardian.com/media/bt-sport",
+        "apiUrl":"http://content.guardianapis.com/media/bt-sport",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"profile/angela-monaghan",
+        "type":"contributor",
+        "webTitle":"Angela Monaghan",
+        "webUrl":"http://www.theguardian.com/profile/angela-monaghan",
+        "apiUrl":"http://content.guardianapis.com/profile/angela-monaghan",
+        "bio":"<p>Angela Monaghan is a reporter at the Guardian</p>",
+        "r2ContributorId":"56451",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/8/8/1375945830573/Angela-Monaghan-003.jpg",
+        "references":[]
+      },{
+        "id":"business/itv",
+        "type":"keyword",
+        "webTitle":"ITV",
+        "webUrl":"http://www.theguardian.com/business/itv",
+        "apiUrl":"http://content.guardianapis.com/business/itv",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-422167993",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/11/1384159536550/FC-Viktoria-Plzen-v-FC-Ba-001.jpg",
+          "typeData":{
+            "source":"Bongarts/Getty Images",
+            "photographer":"Alexander Hassenstein",
+            "altText":"FC Viktoria Plzen v FC Bayern Munich in the UEFA Champions League",
+            "height":"54",
+            "credit":"Alexander Hassenstein/Bongarts/Getty Images",
+            "caption":"FC Viktoria Plzen v FC Bayern Munich in the UEFA Champions League. BSkyB shares have fallen on news that BT has won the rights to show Champions League games. Photograph: Alexander Hassenstein/Bongarts/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/11/1384159539678/FC-Viktoria-Plzen-v-FC-Ba-002.jpg",
+          "typeData":{
+            "source":"Bongarts/Getty Images",
+            "photographer":"Alexander Hassenstein",
+            "altText":"FC Viktoria Plzen v FC Bayern Munich in the UEFA Champions League",
+            "height":"130",
+            "credit":"Alexander Hassenstein/Bongarts/Getty Images",
+            "caption":"FC Viktoria Plzen v FC Bayern Munich in the UEFA Champions League. BSkyB shares have fallen on news that BT has won the rights to show Champions League games. Photograph: Alexander Hassenstein/Bongarts/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/11/1384159541294/FC-Viktoria-Plzen-v-FC-Ba-003.jpg",
+          "typeData":{
+            "source":"Bongarts/Getty Images",
+            "photographer":"Alexander Hassenstein",
+            "altText":"FC Viktoria Plzen v FC Bayern Munich in the UEFA Champions League",
+            "height":"84",
+            "credit":"Alexander Hassenstein/Bongarts/Getty Images",
+            "caption":"FC Viktoria Plzen v FC Bayern Munich in the UEFA Champions League. BSkyB shares have fallen on news that BT has won the rights to show Champions League games. Photograph: Alexander Hassenstein/Bongarts/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/11/1384159543153/FC-Viktoria-Plzen-v-FC-Ba-004.jpg",
+          "typeData":{
+            "source":"Bongarts/Getty Images",
+            "photographer":"Alexander Hassenstein",
+            "altText":"FC Viktoria Plzen v FC Bayern Munich in the UEFA Champions League",
+            "height":"132",
+            "credit":"Alexander Hassenstein/Bongarts/Getty Images",
+            "caption":"FC Viktoria Plzen v FC Bayern Munich in the UEFA Champions League. BSkyB shares have fallen on news that BT has won the rights to show Champions League games. Photograph: Alexander Hassenstein/Bongarts/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/11/1384159544736/FC-Viktoria-Plzen-v-FC-Ba-005.jpg",
+          "typeData":{
+            "source":"Bongarts/Getty Images",
+            "photographer":"Alexander Hassenstein",
+            "altText":"FC Viktoria Plzen v FC Bayern Munich in the UEFA Champions League",
+            "height":"168",
+            "credit":"Alexander Hassenstein/Bongarts/Getty Images",
+            "caption":"FC Viktoria Plzen v FC Bayern Munich in the UEFA Champions League. BSkyB shares have fallen on news that BT has won the rights to show Champions League games. Photograph: Alexander Hassenstein/Bongarts/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/11/1384159546336/FC-Viktoria-Plzen-v-FC-Ba-006.jpg",
+          "typeData":{
+            "source":"Bongarts/Getty Images",
+            "photographer":"Alexander Hassenstein",
+            "altText":"FC Viktoria Plzen v FC Bayern Munich in the UEFA Champions League",
+            "height":"180",
+            "credit":"Alexander Hassenstein/Bongarts/Getty Images",
+            "caption":"FC Viktoria Plzen v FC Bayern Munich in the UEFA Champions League. BSkyB shares have fallen on news that BT has won the rights to show Champions League games. Photograph: Alexander Hassenstein/Bongarts/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/11/1384159547906/FC-Viktoria-Plzen-v-FC-Ba-007.jpg",
+          "typeData":{
+            "source":"Bongarts/Getty Images",
+            "photographer":"Alexander Hassenstein",
+            "altText":"FC Viktoria Plzen v FC Bayern Munich in the UEFA Champions League",
+            "height":"228",
+            "credit":"Alexander Hassenstein/Bongarts/Getty Images",
+            "caption":"FC Viktoria Plzen v FC Bayern Munich in the UEFA Champions League. BSkyB shares have fallen on news that BT has won the rights to show Champions League games. Photograph: Alexander Hassenstein/Bongarts/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/11/1384159549751/FC-Viktoria-Plzen-v-FC-Ba-008.jpg",
+          "typeData":{
+            "source":"Bongarts/Getty Images",
+            "photographer":"Alexander Hassenstein",
+            "altText":"FC Viktoria Plzen v FC Bayern Munich in the UEFA Champions League",
+            "height":"276",
+            "credit":"Alexander Hassenstein/Bongarts/Getty Images",
+            "caption":"FC Viktoria Plzen v FC Bayern Munich in the UEFA Champions League. BSkyB shares have fallen on news that BT has won the rights to show Champions League games. Photograph: Alexander Hassenstein/Bongarts/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/11/1384159549751/FC-Viktoria-Plzen-v-FC-Ba-008.jpg",
+          "typeData":{
+            "source":"Bongarts/Getty Images",
+            "photographer":"Alexander Hassenstein",
+            "altText":"FC Viktoria Plzen v FC Bayern Munich in the UEFA Champions League",
+            "height":"276",
+            "credit":"Alexander Hassenstein/Bongarts/Getty Images",
+            "caption":"FC Viktoria Plzen v FC Bayern Munich in the UEFA Champions League. BSkyB shares have fallen on news that BT has won the rights to show Champions League games. Photograph: Alexander Hassenstein/Bongarts/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-422167994",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/11/1384159541294/FC-Viktoria-Plzen-v-FC-Ba-003.jpg",
+          "typeData":{
+            "source":"Bongarts/Getty Images",
+            "photographer":"Alexander Hassenstein",
+            "altText":"FC Viktoria Plzen v FC Bayern Munich in the UEFA Champions League",
+            "height":"84",
+            "credit":"Alexander Hassenstein/Bongarts/Getty Images",
+            "caption":"FC Viktoria Plzen v FC Bayern Munich in the UEFA Champions League. BSkyB shares have fallen on news that BT has won the rights to show Champions League games. Photograph: Alexander Hassenstein/Bongarts/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-competition",
+        "id":"pa-football-competition/500"
+      }]
+    },
+    "storyPackage":[{
+      "id":"sport/2013/nov/09/bt-sport-champions-league-exclusive-tv-rights",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-11-09T13:41:34Z",
+      "webTitle":"BT Sport wins £1bn Champions League TV rights off Sky and ITV",
+      "webUrl":"http://www.theguardian.com/sport/2013/nov/09/bt-sport-champions-league-exclusive-tv-rights",
+      "apiUrl":"http://content.guardianapis.com/sport/2013/nov/09/bt-sport-champions-league-exclusive-tv-rights",
+      "fields":{
+        "newspaperPageNumber":"5",
+        "trailText":"BT Sport has won exclusive UK TV broadcast rights for Champions League and Europa League matches from 2015",
+        "headline":"BT Sport wins £900m Champions League TV rights from Sky and ITV",
+        "body":"<p>British sports fans have always loved an upset. Little Wigan's victory against the might of Manchester City in last year's FA Cup final was the most popular triumph for years. Now the prohibitively expensive world of football broadcasting has witnessed its own cup shock.</p><p>BT, the new kid on the block, has scored a major coup in its multibillion-pound sports broadcasting battle with Rupert Murdoch's Sky, after agreeing a dramatic £900m deal for exclusive live rights to European football's blue-riband club competition from 2015-16.</p><p>The deal, perhaps the most significant since Sky transformed its business 21&nbsp;years ago by buying exclusive rights to domestic top-flight football, will see BT pay Uefa £299m a season for three years for all 350 live matches in the Champions League and its sister tournament, the Europa League.</p><p>At a stroke, it gives BT ownership of some of the most prestigious and eagerly anticipated moments of the football season and ends Sky's dominance of a sport that has been crucial to the broadcaster's broader appeal.</p><p>It is the most dramatic twist yet in a bitter battle that began when <a href=\"http://www.theguardian.com/media/2012/jun/13/premier-league-tv-rights-3-billion-sky-bt\" title=\"\">BT paid £738m for 38 live Premier League</a> matches a season and signed up presenters including Jake Humphrey and Clare Balding to broadcast from new studios in the Olympic Park, as part of a £1.5bn foray into sports broadcasting. The move was designed to transform its image from staid telecoms company into a 21st-century multimedia business.</p><p>The existing Champions League deal, under which Sky and ITV share the rights, is worth just £400m. The huge increase is good news for clubs, players and agents, but it remains to be seen whether it will be good value for fans.</p><p>As part of the negotiations, Uefa insisted that some matches, including both finals, were shown free-to-air in order to preserve the value of its sponsorship deals and ensure that they could be seen by a wider audience.</p><p>But there could still be a backlash from fans angry at more matches disappearing from terrestrial TV. Under the current agreement, one game in every round of Champions League matches is shown on ITV, as well as some Europa League games.</p><p>BT promised that every participating British team would be shown free at least once per season to non-subscribers.</p><p>The deal will also set the scene for a titanic struggle over the next set of Premier League rights, from 2016-17, when BT will have to weigh up whether to go head-to-head with Sky for a greater share of matches. At the moment, Sky shows 116 live games a season to BT's 38.</p><p>BT said subscribing to its coverage of the Champions League and Europa League would be \"more accessible and affordable\" than the cost of paying for Sky Sports, which currently has the rights to all but one live Champions League match in each round of games.</p><p>By putting all the Champions League and Europa League matches in one place, it will also open up new possibilities for broadband and interactive services based around its programming.</p><p>It means the end of live European club football on BBC or ITV, but BT's commitment to free matches over satellite, cable and broadband is likely to quell some of the criticism from fans. ITV could yet pick up a highlights package.</p><p>Gavin Patterson, the recently appointed BT chief executive who oversaw the launch of BT Sport in his previous role as head of the retail division, said he was thrilled. \"Both tournaments are world class and firm favourites with many. The live rights will give a major boost to BT Sport and give people yet another reason to take our terrific service,\" he said.</p><p>\"BT Sport has got off to a strong start with customers enjoying what we have to offer. We have attracted millions of customers by giving sport back to the fans, and we can assure people who want to catch all the action that European football will be far more accessible and affordable with BT.\"</p><p>Sky will argue that it forced BT to overpay for the rights, but it will be galling for the Osterley-based broadcaster to be outgunned with the sort of dramatic intervention it has specialised in over the years.</p><p>\"We bid with a clear view of what the rights are worth to us. It seems BT chose to pay far in excess of our valuation,\" said a Sky spokesman. \"We take a disciplined approach and there is always a level at which we will choose to focus on something else. If we thought it was worth more, we'd have paid more.\"</p><p>Since dramatically announcing its arrival in the market with its £738m deal for Premier League games, BT Sport has also announced a joint deal with the BBC for live FA Cup coverage and invested in a new studio at the Olympic Park in east London.</p><p>It has also signed an exclusive deal for Premiership club rugby and is awaiting the outcome of a bitter battle over the future of the European club competition, which it hopes will result in a new breakaway tournament from next season.</p><p>John Petter, chief executive of BT Retail, said that the deal proved BT Sport was \"here to stay\" and rejected Sky's suggestion that it had overpaid for the rights. \"They would say that, wouldn't they? Secretly, I'd expect them to be kicking themselves and full of regrets this morning,\" said Petter.</p><!-- Guardian Watermark: internal-code/content/422073175|2013-11-11T15:34:05Z|fcd80620896959fcf37472124a00350c2b247bfd -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-10T00:15:30Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/11/9/1384004872094/BT-Sport-001.jpg",
+        "standfirst":"• Exclusive three-year contract will run from 2015<br />• Sky feels BT paid 'far in excess' of its own valuation",
+        "shortUrl":"http://gu.com/p/3k97g",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/11/9/1384004872094/BT-Sport-001.jpg",
+        "wordcount":"880",
+        "commentable":"true",
+        "internalContentCode":"422073175",
+        "allowUgc":"false",
+        "internalOctopusCode":"8302837",
+        "isPremoderated":"false",
+        "byline":"Owen Gibson",
+        "publication":"The Observer",
+        "newspaperEditionDate":"2013-11-10",
+        "internalPageCode":"1994749",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-12T13:41:34Z"
+      },
+      "tags":[{
+        "id":"sport/sport-on-tv",
+        "type":"keyword",
+        "webTitle":"Sport on TV",
+        "webUrl":"http://www.theguardian.com/sport/sport-on-tv",
+        "apiUrl":"http://content.guardianapis.com/sport/sport-on-tv",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"media/bt-sport",
+        "type":"keyword",
+        "webTitle":"BT Sport",
+        "webUrl":"http://www.theguardian.com/media/bt-sport",
+        "apiUrl":"http://content.guardianapis.com/media/bt-sport",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.theguardian.com/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"football/championsleague",
+        "type":"keyword",
+        "webTitle":"Champions League",
+        "webUrl":"http://www.theguardian.com/football/championsleague",
+        "apiUrl":"http://content.guardianapis.com/football/championsleague",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-competition",
+          "id":"pa-football-competition/500"
+        }]
+      },{
+        "id":"football/uefa-europa-league",
+        "type":"keyword",
+        "webTitle":"Europa League",
+        "webUrl":"http://www.theguardian.com/football/uefa-europa-league",
+        "apiUrl":"http://content.guardianapis.com/football/uefa-europa-league",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-competition",
+          "id":"pa-football-competition/510"
+        }]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/owengibson",
+        "type":"contributor",
+        "webTitle":"Owen Gibson",
+        "webUrl":"http://www.theguardian.com/profile/owengibson",
+        "apiUrl":"http://content.guardianapis.com/profile/owengibson",
+        "bio":"<p>Owen Gibson is the Guardian's chief sports correspondent. From 2010 to 2012 he was Olympics editor, covering the build up to the London Games and writing on a range of other sporting issues. Prior to that, he was the Guardian's sports news correspondent and, before that, media correspondent for four years. He joined the Guardian in 2001 as new media editor and previously worked for trade title Media Week</p>",
+        "rcsId":"GNL481697",
+        "r2ContributorId":"16214",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/owen_gibson_140x140.jpg",
+        "references":[]
+      },{
+        "id":"media/sky-sports",
+        "type":"keyword",
+        "webTitle":"Sky Sports",
+        "webUrl":"http://www.theguardian.com/media/sky-sports",
+        "apiUrl":"http://content.guardianapis.com/media/sky-sports",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/bskyb",
+        "type":"keyword",
+        "webTitle":"BSkyB",
+        "webUrl":"http://www.theguardian.com/media/bskyb",
+        "apiUrl":"http://content.guardianapis.com/media/bskyb",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/television",
+        "type":"keyword",
+        "webTitle":"Television industry",
+        "webUrl":"http://www.theguardian.com/media/television",
+        "apiUrl":"http://content.guardianapis.com/media/television",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"business/itv",
+        "type":"keyword",
+        "webTitle":"ITV",
+        "webUrl":"http://www.theguardian.com/business/itv",
+        "apiUrl":"http://content.guardianapis.com/business/itv",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"theobserver/news/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/theobserver/news/uknews",
+        "apiUrl":"http://content.guardianapis.com/theobserver/news/uknews",
+        "sectionId":"theobserver",
+        "sectionName":"From the Observer",
+        "references":[]
+      },{
+        "id":"theobserver/news",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theobserver/news",
+        "apiUrl":"http://content.guardianapis.com/theobserver/news",
+        "sectionId":"theobserver",
+        "sectionName":"From the Observer",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theobserver",
+        "type":"publication",
+        "webTitle":"The Observer",
+        "webUrl":"http://www.theguardian.com/theobserver/all",
+        "apiUrl":"http://content.guardianapis.com/theobserver/all",
+        "sectionId":"theobserver",
+        "sectionName":"From the Observer",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-422073656",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/11/9/1384004318552/BT-Sport-001.jpg",
+          "typeData":{
+            "source":"  Friso Gentsch/dpa/Corbis",
+            "photographer":"Friso Gentsch",
+            "altText":"BT Sport",
+            "height":"168",
+            "credit":"Friso Gentsch/  Friso Gentsch/dpa/Corbis",
+            "caption":"BT Sport will show all Champions League and Europa League matches from the beginning of the 2015-16 season. Photograph: Friso Gentsch/  Friso Gentsch/dpa/Corbis",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/11/9/1384004320560/BT-Sport-002.jpg",
+          "typeData":{
+            "source":"  Friso Gentsch/dpa/Corbis",
+            "photographer":"Friso Gentsch",
+            "altText":"BT Sport",
+            "height":"180",
+            "credit":"Friso Gentsch/  Friso Gentsch/dpa/Corbis",
+            "caption":"BT Sport will show all Champions League and Europa League matches from the beginning of the 2015-16 season. Photograph: Friso Gentsch/  Friso Gentsch/dpa/Corbis",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/11/9/1384004322308/BT-Sport-003.jpg",
+          "typeData":{
+            "source":"  Friso Gentsch/dpa/Corbis",
+            "photographer":"Friso Gentsch",
+            "altText":"BT Sport",
+            "height":"228",
+            "credit":"Friso Gentsch/  Friso Gentsch/dpa/Corbis",
+            "caption":"BT Sport will show all Champions League and Europa League matches from the beginning of the 2015-16 season. Photograph: Friso Gentsch/  Friso Gentsch/dpa/Corbis",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/11/9/1384004323581/BT-Sport-004.jpg",
+          "typeData":{
+            "source":"  Friso Gentsch/dpa/Corbis",
+            "photographer":"Friso Gentsch",
+            "altText":"BT Sport",
+            "height":"276",
+            "credit":"Friso Gentsch/  Friso Gentsch/dpa/Corbis",
+            "caption":"BT Sport will show all Champions League and Europa League matches from the beginning of the 2015-16 season. Photograph: Friso Gentsch/  Friso Gentsch/dpa/Corbis",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/11/9/1384004325685/BT-Sport-005.jpg",
+          "typeData":{
+            "source":"  Friso Gentsch/dpa/Corbis",
+            "photographer":"Friso Gentsch",
+            "altText":"BT Sport",
+            "height":"372",
+            "credit":"Friso Gentsch/  Friso Gentsch/dpa/Corbis",
+            "caption":"BT Sport will show all Champions League and Europa League matches from the beginning of the 2015-16 season. Photograph: Friso Gentsch/  Friso Gentsch/dpa/Corbis",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/11/9/1384004323581/BT-Sport-004.jpg",
+          "typeData":{
+            "source":"  Friso Gentsch/dpa/Corbis",
+            "photographer":"Friso Gentsch",
+            "altText":"BT Sport",
+            "height":"276",
+            "credit":"Friso Gentsch/  Friso Gentsch/dpa/Corbis",
+            "caption":"BT Sport will show all Champions League and Europa League matches from the beginning of the 2015-16 season. Photograph: Getty Images/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-422073657",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/11/9/1384004872094/BT-Sport-001.jpg",
+          "typeData":{
+            "source":"Photograph: Friso Gentsch/  Fris",
+            "photographer":"Friso Gentsch",
+            "altText":"BT Sport",
+            "height":"84",
+            "credit":"Friso Gentsch/Photograph: Friso Gentsch/  Fris",
+            "caption":"BT Sport Photograph: Friso Gentsch/Photograph: Friso Gentsch/  Fris",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-competition",
+        "id":"pa-football-competition/510"
+      },{
+        "type":"pa-football-competition",
+        "id":"pa-football-competition/500"
+      }]
+    },{
+      "id":"media/2013/nov/10/bt-champions-league-price-rises",
+      "sectionId":"media",
+      "sectionName":"Media",
+      "webPublicationDate":"2013-11-10T22:17:50Z",
+      "webTitle":"BT defends big bet on Champions League as customers face price rises",
+      "webUrl":"http://www.theguardian.com/media/2013/nov/10/bt-champions-league-price-rises",
+      "apiUrl":"http://content.guardianapis.com/media/2013/nov/10/bt-champions-league-price-rises",
+      "fields":{
+        "newspaperPageNumber":"8",
+        "trailText":"'In difficult times people deserve access to sport,' says head of consumer division",
+        "headline":"BT defends big bet on Champions League as customers face price rises",
+        "body":"<p>BT has defended its lavish spending on international football rights after it dealt a hammer blow to BSkyB by hugely outbidding its rival for the right to screen Champions League matches from 2015, saying it expected consumers to pay for both companies' sports channels.</p><p>The newcomer to sports broadcasting said its deal to pay almost &pound;900m to secure the rights to the glamorous European football tournament injected &quot;a welcome element of competition&quot; into the market.</p><p>It means the BT Sports channels will become the new home of Uefa's Champions League matches, in the most serious challenge yet to the football dominance of Rupert Murdoch's Sky.</p><p><a href=\"http://www.btplc.com/News/Articles/ShowArticle.cfm?ArticleID=15D869F4-C14E-44A2-956E-A2C18B1751A9\" title=\"\">Announcing the deal this weekend</a>, newly appointed BT chief executive Gavin Patterson hailed it as &quot;giving sport back to the fans&quot;. But the former telecoms monopoly quickly faced criticism for pumping yet more millions into the rich world of football while its customers brace themselves for price rises in the new year.</p><p>At &pound;299m a year over the three years of the deal, BT is paying more than double the &pound;400m BSkyB and ITV are paying for the current three-year contract.</p><p>It means BT will be spending &pound;81 a year for each of its 7 million broadband customers on football rights. That includes the &pound;246m a year already spent for 38 Premier League matches and an estimated &pound;25m on FA Cup rights.</p><p>John Petter, head of BT's consumer division, defended the deal for the midweek championship matches as crucial to the business and good news for grassroots fans. &quot;These rights are key ones for football fans and determine if they are going to go with your service or not. I think they are pretty important,&quot; he told the Guardian.</p><p>&quot;It shouldn't be forgotten that Sky is still dominant in premium sport. They have the biggest number of customers paying the most money and we are the new boy. But BT Sport is injecting a very welcome and much needed element of competition into the market. The true sports fan is going to want both services.&quot;</p><p>BT will have to fend off questions from anxious investors when financial markets open this morning over its gamble that exclusive sport can win it lucrative broadband customers. Experts said last night that there were plenty of doubts around the plan and the broader implications for an increasingly cut-throat battle over sports rights.</p><p>Media analyst Claire Enders described BT's deal as an attempted &quot;death strike&quot; on Sky, that could come back to bite it. BT's Premier League deal last year had already inflated the cost of sports rights. There was a real risk of &quot;mutually assured destruction&quot; for the industry, Enders said.</p><p>&quot;Sports rights will continue to spiral upwards&nbsp;... the view that consumers can absorb these massive increases is wrong.</p><p>&quot;Exactly what signal are you sending that you have so much money to burn to your customers that face an increase [in their bills] again this year?&quot;</p><p>Against the backdrop of the longest squeeze on living standards for generations, <a href=\"http://www.theguardian.com/business/2013/sep/27/bt-broadband-cost-rise-users\" title=\"\">BT is raising its broadband prices by up to 6.5% in January</a>. It announced the rises in September, weeks after the launch of its &pound;1bn sports channels presented by Clare Balding, Jake Humphrey and a cast of sporting celebrities including Michael Owen, Matt Dawson and Rio Ferdinand.</p><p>At the moment, the sports channels are free to BT's broadband customers and it said recently <a href=\"http://www.theguardian.com/business/2013/oct/31/bt-sport-channels-attract-2-million-customers\" title=\"\">2 million out of 7m had signed up</a>. When the Uefa matches go to BT in 2015 a selection will be free on BT Sport, including to homes that have not signed up to the channels. Viewers will have to pay for the bulk of matches.</p><p>BT hopes to recoup some of its bold investment with advertising revenues and from business with pubs and clubs. &quot;This service is going to be a must-have because the most difficult time to fill your pub or club is a weekday evening and that is a big revenue market for Sky,&quot; said Petter.</p><p>Asked whether pumping more money into football was good for the economy, he was sanguine.</p><p>&quot;The thing that is good for the economy is to put competition into the market and to reduce the pressure on household budgets,&quot; he said.</p><p>&quot;In difficult times people deserve access to sport; sport brings people together and has a cohesive effect on community.&quot;</p><p>BT's coup is a clear upset for Sky, known over its 21 years in British broadcasting for dramatic moves and a determination to triumph in industry battles.</p><p>Sky made it clear this weekend that BT had enormously outbid it in the Uefa auction, which unusually did not even make it to a second round.</p><p>&quot;We bid with a clear view of what the rights are worth to us. It seems BT chose to pay far in excess of our valuation,&quot; said a Sky spokesperson. &quot;If we thought it was worth more, we'd have paid more.&quot;</p><p>The media group, 39% owned by Murdoch's 20th Century Fox, is now likely to spend its money on other programmes, particularly big budget dramas in the same vein as its well received Dracula, starring Jonathan Rhys Meyers.</p><p>Much of its sports rights deals are secured for the next few years and it put on a brave face around the Champions League defeat.</p><p>&quot;Nothing changes until 2015 and we look forward to 18 more months of live Champions League on Sky Sports,&quot; the spokesperson added.</p><p>For BT, the bet that it can unseat Sky from the top of the football table is a risky one. Irish broadcaster Setanta's attempt to take on Sky ended in the surrender of its premiership rights and a declaration of bankruptcy.</p><p>The big winners may well be footballers. Last year's Sky and BT bidding war pushed the Premier League's broadcast income up 70%.</p><p>Again, Petter was unworried. &quot;I don't see a moral problem with it. Football is a successful business because it offers a great service and its customers enjoy it. There are many businesses in which people earn large sums of money for extraordinary talent,&quot; he said.</p><!-- Guardian Watermark: internal-code/content/422146777|2013-11-11T15:34:05Z|90580c699cb00e0d6d844e5323328c4491bf76a8 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-11T00:06:40Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2013/11/10/1384121827377/Aaron-Ramsey-scores-again-004.jpg",
+        "standfirst":"'In difficult times people deserve access to sport,' says head of consumer division",
+        "shortUrl":"http://gu.com/p/3k9tj",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/10/1384121827377/Aaron-Ramsey-scores-again-004.jpg",
+        "wordcount":"981",
+        "commentable":"true",
+        "internalContentCode":"422146777",
+        "allowUgc":"false",
+        "internalOctopusCode":"8305079",
+        "isPremoderated":"false",
+        "byline":"Katie Allen and Juliette Garside",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-11-11",
+        "internalPageCode":"1995049",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-13T22:17:50Z"
+      },
+      "tags":[{
+        "id":"media/bt-sport",
+        "type":"keyword",
+        "webTitle":"BT Sport",
+        "webUrl":"http://www.theguardian.com/media/bt-sport",
+        "apiUrl":"http://content.guardianapis.com/media/bt-sport",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.theguardian.com/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"business/btgroup",
+        "type":"keyword",
+        "webTitle":"BT",
+        "webUrl":"http://www.theguardian.com/business/btgroup",
+        "apiUrl":"http://content.guardianapis.com/business/btgroup",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/telecoms",
+        "type":"keyword",
+        "webTitle":"Telecommunications industry",
+        "webUrl":"http://www.theguardian.com/business/telecoms",
+        "apiUrl":"http://content.guardianapis.com/business/telecoms",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"football/championsleague",
+        "type":"keyword",
+        "webTitle":"Champions League",
+        "webUrl":"http://www.theguardian.com/football/championsleague",
+        "apiUrl":"http://content.guardianapis.com/football/championsleague",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-competition",
+          "id":"pa-football-competition/500"
+        }]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport-on-tv",
+        "type":"keyword",
+        "webTitle":"Sport on TV",
+        "webUrl":"http://www.theguardian.com/sport/sport-on-tv",
+        "apiUrl":"http://content.guardianapis.com/sport/sport-on-tv",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"money/consumer-affairs",
+        "type":"keyword",
+        "webTitle":"Consumer affairs",
+        "webUrl":"http://www.theguardian.com/money/consumer-affairs",
+        "apiUrl":"http://content.guardianapis.com/money/consumer-affairs",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/money",
+        "type":"keyword",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/money/money",
+        "apiUrl":"http://content.guardianapis.com/money/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"media/bskyb",
+        "type":"keyword",
+        "webTitle":"BSkyB",
+        "webUrl":"http://www.theguardian.com/media/bskyb",
+        "apiUrl":"http://content.guardianapis.com/media/bskyb",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/television",
+        "type":"keyword",
+        "webTitle":"Television industry",
+        "webUrl":"http://www.theguardian.com/media/television",
+        "apiUrl":"http://content.guardianapis.com/media/television",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"business/britishskybroadcastinggroup",
+        "type":"keyword",
+        "webTitle":"BSkyB",
+        "webUrl":"http://www.theguardian.com/business/britishskybroadcastinggroup",
+        "apiUrl":"http://content.guardianapis.com/business/britishskybroadcastinggroup",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"profile/katieallen",
+        "type":"contributor",
+        "webTitle":"Katie Allen",
+        "webUrl":"http://www.theguardian.com/profile/katieallen",
+        "apiUrl":"http://content.guardianapis.com/profile/katieallen",
+        "bio":"<p>Katie Allen is the Guardian's economics reporter.</p>",
+        "r2ContributorId":"19515",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/10/16/katie_allen_140x140.jpg",
+        "references":[]
+      },{
+        "id":"profile/juliette-garside",
+        "type":"contributor",
+        "webTitle":"Juliette Garside",
+        "webUrl":"http://www.theguardian.com/profile/juliette-garside",
+        "apiUrl":"http://content.guardianapis.com/profile/juliette-garside",
+        "bio":"<p>Juliette Garside is telecoms correspondent for the Guardian, covering the telecoms and technology sectors</p>",
+        "r2ContributorId":"44118",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/1/2/1357125846540/Juliette-Garside-telecoms-003.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-422146988",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/10/1384121819420/Aaron-Ramsey-scores-again-001.jpg",
+          "typeData":{
+            "source":"AFP/Getty",
+            "photographer":"Odd Anderson",
+            "altText":"Aaron Ramsey scores against Borussia Dortmund",
+            "height":"54",
+            "credit":"Odd Anderson/AFP/Getty",
+            "caption":"Arsenal’s Aaron Ramsey scores against Borussia Dortmund in last week’s Champions League encounter.  BT will become the main hub for Europe’s elite competition from 2015. Photograph: Odd Anderson/AFP/Getty",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/10/1384121822174/Aaron-Ramsey-scores-again-002.jpg",
+          "typeData":{
+            "source":"AFP/Getty",
+            "photographer":"Odd Anderson",
+            "altText":"Aaron Ramsey scores against Borussia Dortmund",
+            "height":"340",
+            "credit":"Odd Anderson/AFP/Getty",
+            "caption":"Arsenal’s Aaron Ramsey scores against Borussia Dortmund in last week’s Champions League encounter.  BT will become the main hub for Europe’s elite competition from 2015. Photograph: Odd Anderson/AFP/Getty",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/10/1384121825007/Aaron-Ramsey-scores-again-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty",
+            "photographer":"Odd Anderson",
+            "altText":"Aaron Ramsey scores against Borussia Dortmund",
+            "height":"130",
+            "credit":"Odd Anderson/AFP/Getty",
+            "caption":"Arsenal’s Aaron Ramsey scores against Borussia Dortmund in last week’s Champions League encounter.  BT will become the main hub for Europe’s elite competition from 2015. Photograph: Odd Anderson/AFP/Getty",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/10/1384121827377/Aaron-Ramsey-scores-again-004.jpg",
+          "typeData":{
+            "source":"AFP/Getty",
+            "photographer":"Odd Anderson",
+            "altText":"Aaron Ramsey scores against Borussia Dortmund",
+            "height":"84",
+            "credit":"Odd Anderson/AFP/Getty",
+            "caption":"Arsenal’s Aaron Ramsey scores against Borussia Dortmund in last week’s Champions League encounter.  BT will become the main hub for Europe’s elite competition from 2015. Photograph: Odd Anderson/AFP/Getty",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/10/1384121829808/Aaron-Ramsey-scores-again-005.jpg",
+          "typeData":{
+            "source":"AFP/Getty",
+            "photographer":"Odd Anderson",
+            "altText":"Aaron Ramsey scores against Borussia Dortmund",
+            "height":"132",
+            "credit":"Odd Anderson/AFP/Getty",
+            "caption":"Arsenal’s Aaron Ramsey scores against Borussia Dortmund in last week’s Champions League encounter.  BT will become the main hub for Europe’s elite competition from 2015. Photograph: Odd Anderson/AFP/Getty",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/10/1384121831749/Aaron-Ramsey-scores-again-006.jpg",
+          "typeData":{
+            "source":"AFP/Getty",
+            "photographer":"Odd Anderson",
+            "altText":"Aaron Ramsey scores against Borussia Dortmund",
+            "height":"168",
+            "credit":"Odd Anderson/AFP/Getty",
+            "caption":"Arsenal’s Aaron Ramsey scores against Borussia Dortmund in last week’s Champions League encounter.  BT will become the main hub for Europe’s elite competition from 2015. Photograph: Odd Anderson/AFP/Getty",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/10/1384121834443/Aaron-Ramsey-scores-again-007.jpg",
+          "typeData":{
+            "source":"AFP/Getty",
+            "photographer":"Odd Anderson",
+            "altText":"Aaron Ramsey scores against Borussia Dortmund",
+            "height":"180",
+            "credit":"Odd Anderson/AFP/Getty",
+            "caption":"Arsenal’s Aaron Ramsey scores against Borussia Dortmund in last week’s Champions League encounter.  BT will become the main hub for Europe’s elite competition from 2015. Photograph: Odd Anderson/AFP/Getty",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/10/1384121836664/Aaron-Ramsey-scores-again-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty",
+            "photographer":"Odd Anderson",
+            "altText":"Aaron Ramsey scores against Borussia Dortmund",
+            "height":"228",
+            "credit":"Odd Anderson/AFP/Getty",
+            "caption":"Arsenal’s Aaron Ramsey scores against Borussia Dortmund in last week’s Champions League encounter.  BT will become the main hub for Europe’s elite competition from 2015. Photograph: Odd Anderson/AFP/Getty",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/10/1384121838434/Aaron-Ramsey-scores-again-009.jpg",
+          "typeData":{
+            "source":"AFP/Getty",
+            "photographer":"Odd Anderson",
+            "altText":"Aaron Ramsey scores against Borussia Dortmund",
+            "height":"276",
+            "credit":"Odd Anderson/AFP/Getty",
+            "caption":"Arsenal’s Aaron Ramsey scores against Borussia Dortmund in last week’s Champions League encounter.  BT will become the main hub for Europe’s elite competition from 2015. Photograph: Odd Anderson/AFP/Getty",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/10/1384121840351/Aaron-Ramsey-scores-again-010.jpg",
+          "typeData":{
+            "source":"AFP/Getty",
+            "photographer":"Odd Anderson",
+            "altText":"Aaron Ramsey scores against Borussia Dortmund",
+            "height":"372",
+            "credit":"Odd Anderson/AFP/Getty",
+            "caption":"Arsenal’s Aaron Ramsey scores against Borussia Dortmund in last week’s Champions League encounter.  BT will become the main hub for Europe’s elite competition from 2015. Photograph: Odd Anderson/AFP/Getty",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/10/1384121838434/Aaron-Ramsey-scores-again-009.jpg",
+          "typeData":{
+            "source":"AFP/Getty",
+            "photographer":"Odd Anderson",
+            "altText":"Aaron Ramsey scores against Borussia Dortmund",
+            "height":"276",
+            "credit":"Odd Anderson/AFP/Getty",
+            "caption":"Arsenal’s Aaron Ramsey scores against Borussia Dortmund in last week’s Champions League encounter.  BT will become the main hub for Europe’s elite competition from 2015. Photograph: Odd Anderson/AFP/Getty",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-422146989",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/10/1384121827377/Aaron-Ramsey-scores-again-004.jpg",
+          "typeData":{
+            "source":"AFP/Getty",
+            "photographer":"Odd Anderson",
+            "altText":"Aaron Ramsey scores against Borussia Dortmund",
+            "height":"84",
+            "credit":"Odd Anderson/AFP/Getty",
+            "caption":"Arsenal’s Aaron Ramsey scores against Borussia Dortmund in last week’s Champions League encounter.  BT will become the main hub for Europe’s elite competition from 2015. Photograph: Odd Anderson/AFP/Getty",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-competition",
+        "id":"pa-football-competition/500"
+      }]
+    },{
+      "id":"business/2013/nov/11/bt-champions-league-deal-hits-bskyb-shares",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2013-11-11T14:45:00Z",
+      "webTitle":"BT's Champions League deal hits BSkyB shares",
+      "webUrl":"http://www.theguardian.com/business/2013/nov/11/bt-champions-league-deal-hits-bskyb-shares",
+      "apiUrl":"http://content.guardianapis.com/business/2013/nov/11/bt-champions-league-deal-hits-bskyb-shares",
+      "fields":{
+        "trailText":"Nearly £1.5bn wiped from the stock market value of BSkyB, with shares down nearly 10%",
+        "headline":"BT's Champions League deal hits BSkyB shares",
+        "body":"<p>Nearly &pound;1.5bn was wiped from the stock market value of BSkyB on Monday as the City reacted to the loss of its rights to broadcast live Champions League and Europa League football matches.</p><p>BSkyB shares tumbled 10%, making it the biggest FTSE 100 faller, and ITV's were down 3% after rival BT Sport <a href=\"http://www.theguardian.com/media/2013/nov/10/bt-champions-league-price-rises\" title=\"\">revealed an exclusive &pound;897m three-year deal </a>with European governing body Uefa to broadcast all 350 fixtures from 2015.</p><p>It is the first time a single UK broadcaster has won the exclusive live rights to all matches from both tournaments.</p><p>At &pound;299m a year over the three years of the deal, BT is paying more than double the &pound;400m BSkyB and ITV are paying for the current three-year contract.</p><p>The loss of the contract is a major blow for BSkyB and ITV, which currently share the rights. Sky said BT's bid for the deal was &quot;far in excess&quot; of its own, while ITV, said it was &quot;not prepared to pay over the odds&quot;.</p><p>Shares in BT, a newcomer to sports broadcasting, were down 2% down in early trading amid fears in the City that it has massively overpaid. But they later recovered, recouping the early loss and rising by 1.5% to 373.6p as investors considered whether BT's ambitious gamble would pay off.</p><p>Nick Dale-Lace, senior sales trader at CMC Markets, described it as &quot;a huge blow to Sky and a monumental statement of intent from BT as it tries to grab a foothold in the UK TV market.</p><p>&quot;Both Sky and ITV, who have a number of years of experience to draw on, do not think the price represents value, but perhaps in the context of BT's plans it may be worth paying up.</p><p>BT Sport made its debut on 1 August, and the group said its financial outlook was unchanged despite the latest deal, adding the rights would improve revenue and profit in its consumer division in the &quot;medium term&quot;.</p><p>Announcing the deal on Saturday, the newly appointed BT chief executive Gavin Patterson hailed it as &quot;giving sport back to the fans&quot;. He defended the amount paid, saying it injected &quot;a welcome element of competition&quot; into the market.</p><p>BT's consumer chief executive, John Petter, said: &quot;These were the crown jewels properties for Sky. I'm sure they'll be kicking themselves today. I feel for them obviously, but they got it wrong.&quot;</p><p>Meanwhile investors were left questioning <a href=\"http://www.theguardian.com/business/2013/nov/11/bt-wins-champions-league-rights-what-does-it-mean\" title=\"\">what the loss of the rights would mean for Sky</a>, given the prominence of its football coverage.</p><p>Mike van Dulken, head of research at Accendo Markets, said: &quot;Bad news for current broadcaster Sky with football such a key offering within its sports package, itself one of the main attractions for households.</p><p>&quot;Sky still offers two thirds of the all-important UK premier league football (BT offers the other third), so it is not out of the game&quot;.</p><!-- Guardian Watermark: internal-code/content/422167458|2013-11-11T15:34:05Z|06217b88e33947f4de8300f19a3ed80091dc81f1 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-11-11T14:46:03Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/11/1384159541294/FC-Viktoria-Plzen-v-FC-Ba-003.jpg",
+        "standfirst":"Nearly £1.5bn wiped from the stock market value of BSkyB, with shares down nearly 10%",
+        "shortUrl":"http://gu.com/p/3k9yb",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/11/1384159541294/FC-Viktoria-Plzen-v-FC-Ba-003.jpg",
+        "wordcount":"461",
+        "commentable":"true",
+        "internalContentCode":"422167458",
+        "allowUgc":"false",
+        "internalOctopusCode":"8306789",
+        "isPremoderated":"false",
+        "byline":"Angela Monaghan",
+        "publication":"theguardian.com",
+        "internalPageCode":"1995122",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-14T08:48:41Z"
+      },
+      "tags":[{
+        "id":"business/britishskybroadcastinggroup",
+        "type":"keyword",
+        "webTitle":"BSkyB",
+        "webUrl":"http://www.theguardian.com/business/britishskybroadcastinggroup",
+        "apiUrl":"http://content.guardianapis.com/business/britishskybroadcastinggroup",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"media/bskyb",
+        "type":"keyword",
+        "webTitle":"BSkyB",
+        "webUrl":"http://www.theguardian.com/media/bskyb",
+        "apiUrl":"http://content.guardianapis.com/media/bskyb",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/television",
+        "type":"keyword",
+        "webTitle":"Television industry",
+        "webUrl":"http://www.theguardian.com/media/television",
+        "apiUrl":"http://content.guardianapis.com/media/television",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.theguardian.com/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"football/championsleague",
+        "type":"keyword",
+        "webTitle":"Champions League",
+        "webUrl":"http://www.theguardian.com/football/championsleague",
+        "apiUrl":"http://content.guardianapis.com/football/championsleague",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-competition",
+          "id":"pa-football-competition/500"
+        }]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"business/btgroup",
+        "type":"keyword",
+        "webTitle":"BT",
+        "webUrl":"http://www.theguardian.com/business/btgroup",
+        "apiUrl":"http://content.guardianapis.com/business/btgroup",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"media/bt-sport",
+        "type":"keyword",
+        "webTitle":"BT Sport",
+        "webUrl":"http://www.theguardian.com/media/bt-sport",
+        "apiUrl":"http://content.guardianapis.com/media/bt-sport",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"profile/angela-monaghan",
+        "type":"contributor",
+        "webTitle":"Angela Monaghan",
+        "webUrl":"http://www.theguardian.com/profile/angela-monaghan",
+        "apiUrl":"http://content.guardianapis.com/profile/angela-monaghan",
+        "bio":"<p>Angela Monaghan is a reporter at the Guardian</p>",
+        "r2ContributorId":"56451",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/8/8/1375945830573/Angela-Monaghan-003.jpg",
+        "references":[]
+      },{
+        "id":"business/itv",
+        "type":"keyword",
+        "webTitle":"ITV",
+        "webUrl":"http://www.theguardian.com/business/itv",
+        "apiUrl":"http://content.guardianapis.com/business/itv",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-422167993",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/11/1384159536550/FC-Viktoria-Plzen-v-FC-Ba-001.jpg",
+          "typeData":{
+            "source":"Bongarts/Getty Images",
+            "photographer":"Alexander Hassenstein",
+            "altText":"FC Viktoria Plzen v FC Bayern Munich in the UEFA Champions League",
+            "height":"54",
+            "credit":"Alexander Hassenstein/Bongarts/Getty Images",
+            "caption":"FC Viktoria Plzen v FC Bayern Munich in the UEFA Champions League. BSkyB shares have fallen on news that BT has won the rights to show Champions League games. Photograph: Alexander Hassenstein/Bongarts/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/11/1384159539678/FC-Viktoria-Plzen-v-FC-Ba-002.jpg",
+          "typeData":{
+            "source":"Bongarts/Getty Images",
+            "photographer":"Alexander Hassenstein",
+            "altText":"FC Viktoria Plzen v FC Bayern Munich in the UEFA Champions League",
+            "height":"130",
+            "credit":"Alexander Hassenstein/Bongarts/Getty Images",
+            "caption":"FC Viktoria Plzen v FC Bayern Munich in the UEFA Champions League. BSkyB shares have fallen on news that BT has won the rights to show Champions League games. Photograph: Alexander Hassenstein/Bongarts/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/11/1384159541294/FC-Viktoria-Plzen-v-FC-Ba-003.jpg",
+          "typeData":{
+            "source":"Bongarts/Getty Images",
+            "photographer":"Alexander Hassenstein",
+            "altText":"FC Viktoria Plzen v FC Bayern Munich in the UEFA Champions League",
+            "height":"84",
+            "credit":"Alexander Hassenstein/Bongarts/Getty Images",
+            "caption":"FC Viktoria Plzen v FC Bayern Munich in the UEFA Champions League. BSkyB shares have fallen on news that BT has won the rights to show Champions League games. Photograph: Alexander Hassenstein/Bongarts/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/11/1384159543153/FC-Viktoria-Plzen-v-FC-Ba-004.jpg",
+          "typeData":{
+            "source":"Bongarts/Getty Images",
+            "photographer":"Alexander Hassenstein",
+            "altText":"FC Viktoria Plzen v FC Bayern Munich in the UEFA Champions League",
+            "height":"132",
+            "credit":"Alexander Hassenstein/Bongarts/Getty Images",
+            "caption":"FC Viktoria Plzen v FC Bayern Munich in the UEFA Champions League. BSkyB shares have fallen on news that BT has won the rights to show Champions League games. Photograph: Alexander Hassenstein/Bongarts/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/11/1384159544736/FC-Viktoria-Plzen-v-FC-Ba-005.jpg",
+          "typeData":{
+            "source":"Bongarts/Getty Images",
+            "photographer":"Alexander Hassenstein",
+            "altText":"FC Viktoria Plzen v FC Bayern Munich in the UEFA Champions League",
+            "height":"168",
+            "credit":"Alexander Hassenstein/Bongarts/Getty Images",
+            "caption":"FC Viktoria Plzen v FC Bayern Munich in the UEFA Champions League. BSkyB shares have fallen on news that BT has won the rights to show Champions League games. Photograph: Alexander Hassenstein/Bongarts/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/11/1384159546336/FC-Viktoria-Plzen-v-FC-Ba-006.jpg",
+          "typeData":{
+            "source":"Bongarts/Getty Images",
+            "photographer":"Alexander Hassenstein",
+            "altText":"FC Viktoria Plzen v FC Bayern Munich in the UEFA Champions League",
+            "height":"180",
+            "credit":"Alexander Hassenstein/Bongarts/Getty Images",
+            "caption":"FC Viktoria Plzen v FC Bayern Munich in the UEFA Champions League. BSkyB shares have fallen on news that BT has won the rights to show Champions League games. Photograph: Alexander Hassenstein/Bongarts/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/11/1384159547906/FC-Viktoria-Plzen-v-FC-Ba-007.jpg",
+          "typeData":{
+            "source":"Bongarts/Getty Images",
+            "photographer":"Alexander Hassenstein",
+            "altText":"FC Viktoria Plzen v FC Bayern Munich in the UEFA Champions League",
+            "height":"228",
+            "credit":"Alexander Hassenstein/Bongarts/Getty Images",
+            "caption":"FC Viktoria Plzen v FC Bayern Munich in the UEFA Champions League. BSkyB shares have fallen on news that BT has won the rights to show Champions League games. Photograph: Alexander Hassenstein/Bongarts/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/11/1384159549751/FC-Viktoria-Plzen-v-FC-Ba-008.jpg",
+          "typeData":{
+            "source":"Bongarts/Getty Images",
+            "photographer":"Alexander Hassenstein",
+            "altText":"FC Viktoria Plzen v FC Bayern Munich in the UEFA Champions League",
+            "height":"276",
+            "credit":"Alexander Hassenstein/Bongarts/Getty Images",
+            "caption":"FC Viktoria Plzen v FC Bayern Munich in the UEFA Champions League. BSkyB shares have fallen on news that BT has won the rights to show Champions League games. Photograph: Alexander Hassenstein/Bongarts/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/11/1384159549751/FC-Viktoria-Plzen-v-FC-Ba-008.jpg",
+          "typeData":{
+            "source":"Bongarts/Getty Images",
+            "photographer":"Alexander Hassenstein",
+            "altText":"FC Viktoria Plzen v FC Bayern Munich in the UEFA Champions League",
+            "height":"276",
+            "credit":"Alexander Hassenstein/Bongarts/Getty Images",
+            "caption":"FC Viktoria Plzen v FC Bayern Munich in the UEFA Champions League. BSkyB shares have fallen on news that BT has won the rights to show Champions League games. Photograph: Alexander Hassenstein/Bongarts/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-422167994",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/11/11/1384159541294/FC-Viktoria-Plzen-v-FC-Ba-003.jpg",
+          "typeData":{
+            "source":"Bongarts/Getty Images",
+            "photographer":"Alexander Hassenstein",
+            "altText":"FC Viktoria Plzen v FC Bayern Munich in the UEFA Champions League",
+            "height":"84",
+            "credit":"Alexander Hassenstein/Bongarts/Getty Images",
+            "caption":"FC Viktoria Plzen v FC Bayern Munich in the UEFA Champions League. BSkyB shares have fallen on news that BT has won the rights to show Champions League games. Photograph: Alexander Hassenstein/Bongarts/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-competition",
+        "id":"pa-football-competition/500"
+      }]
+    }]
+  }
+}

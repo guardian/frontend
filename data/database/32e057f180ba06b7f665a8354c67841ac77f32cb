@@ -1,0 +1,265 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"culture/2012/aug/07/phill-jupitus-edinburgh-review",
+      "sectionId":"culture",
+      "sectionName":"Culture",
+      "webPublicationDate":"2012-08-07T15:29:24Z",
+      "webTitle":"Phill Jupitus is Porky the Poet in 27 Years On – Edinburgh festival review",
+      "webUrl":"http://www.theguardian.com/culture/2012/aug/07/phill-jupitus-edinburgh-review",
+      "apiUrl":"http://content.guardianapis.com/culture/2012/aug/07/phill-jupitus-edinburgh-review",
+      "fields":{
+        "trailText":"The man from Never Mind the Buzzcocks first made his name in performance poetry – and now he has brought the act to the Edinburgh fringe festival, writes <strong>Brian Logan</strong>",
+        "headline":"Phill Jupitus is Porky the Poet in 27 Years On – Edinburgh festival review",
+        "body":"<p><strong>What's so funny?</strong><br /> The fact that <a href=\"http://www.guardian.co.uk/media/2010/aug/09/phill-jupitus-6-music\" title=\"\">Phill Jupitus</a> first made his name in performance poetry. In the mid-80s, Jupitus traded under the name Porky the Poet, an act that he never brought to the Edinburgh fringe. Until now.</p><p></p><p><strong>So it's the man from </strong><a href=\"http://www.bbc.co.uk/programmes/b006v0dz\" title=\"\"><strong>Never Mind the Buzzcocks</strong></a><strong> reading poems?</strong><br />Not quite. Jupitus's introductions to the poems take up more time than the poems themselves. The show is two parts anecdote to one part verse.</p><p></p><p><strong>I want my money back.</strong><br /> Good luck with that. The show is part of the Free Fringe. Or as Jupitus introduces it, \"it's not worth the money you're not going to give me.\"</p><p></p><p><strong>Sounds like a good deal.</strong><br /> It is. While Jupitus's poems – some old, some new – don't attain the standard of his professed heroes <a href=\"http://www.johnhegley.co.uk/\" title=\"\">John Hegley</a> and <a href=\"http://www.guardian.co.uk/news/2006/mar/07/guardianobituaries.artsobituaries\" title=\"\">Ivor Cutler</a>, they're usually enjoyable.</p><p></p><p><strong>Examples please.</strong><br /> His 80s-era ditty <a href=\"http://www.youtube.com/watch?v=qhLRO-WcTBA\" title=\"\">They're All Grown Up in the Beano</a>, about the adult lives of comic characters, is of its era in all the right ways: punchy, chippy, funny. His White Hunter, Black Vest is a droll vignette about a \"kitchen Hemingway\" swatting a fly.</p><p></p><p><strong>Sounds like a great act to support, say, Madness or Billy Bragg.</strong><br /><strong> </strong>Funny you should say that. That's what Porky the Poet did in the 80s, as Jupitus relates here in both anecdote and verse. On Supporting Madness is a rhyming horror story about an unhappy tour he undertook with Suggs and co.</p><p></p><p><strong>Name dropper.</strong><br /> And some. The central section of the show is his extended tale (too extended – Jupitus doesn't half string it out) of meeting McCartney and the Stones. It's a relief when he ends the preamble, and recites the poems.</p><p></p><p><strong>And how's the newer material?</strong><br /> So-so. It's hard to see what his poem about George Stephenson's rejected inventions (\"the all-purpose, dog-mounted Frenchman botherer\"  etc) has to do with the \"mouth-feel\" – relish of words – that Jupitus claims to love in poetry. But there's a sweet closer about his friendship with Hegley. There were meant to be songs, too, but a guitar string broke.</p><p></p><p><strong>Songs, too? Now that's what I call value for no money. </strong><br />Give this man the <a href=\"http://www.guardian.co.uk/books/ts-eliot-prize-for-poetry\" title=\"\">TS Eliot prize</a> immediately.</p><p></p><p>• Box office: 0131 226 4380. To 25 August.</p><!-- Guardian Watermark: internal-code/content/394327846|2013-11-05T11:04:13Z|b9aad28434586f2bacf20207a7a69b345b8b52ab -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-07-02T12:30:11Z",
+        "hasStoryPackage":"false",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Observer/Columnist/Columnists/2012/8/7/1344351333674/Phil-Jupitus-003.jpg",
+        "standfirst":"The Jam House, Edinburgh",
+        "shortUrl":"http://gu.com/p/39hzg",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2012/8/7/1344351333674/Phil-Jupitus-003.jpg",
+        "wordcount":"362",
+        "commentable":"true",
+        "internalContentCode":"394327846",
+        "starRating":"3",
+        "allowUgc":"false",
+        "internalOctopusCode":"6514972",
+        "isPremoderated":"false",
+        "byline":"Brian Logan",
+        "publication":"theguardian.com",
+        "internalPageCode":"1784527",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2012-08-14T14:38:00Z"
+      },
+      "tags":[{
+        "id":"culture/edinburgh-festival-2012",
+        "type":"keyword",
+        "webTitle":"Edinburgh festival 2012",
+        "webUrl":"http://www.theguardian.com/culture/edinburgh-festival-2012",
+        "apiUrl":"http://content.guardianapis.com/culture/edinburgh-festival-2012",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"culture/edinburghfestival",
+        "type":"keyword",
+        "webTitle":"Edinburgh festival",
+        "webUrl":"http://www.theguardian.com/culture/edinburghfestival",
+        "apiUrl":"http://content.guardianapis.com/culture/edinburghfestival",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"stage/comedy",
+        "type":"keyword",
+        "webTitle":"Comedy",
+        "webUrl":"http://www.theguardian.com/stage/comedy",
+        "apiUrl":"http://content.guardianapis.com/stage/comedy",
+        "sectionId":"stage",
+        "sectionName":"Stage",
+        "references":[]
+      },{
+        "id":"culture/comedy",
+        "type":"keyword",
+        "webTitle":"Comedy",
+        "webUrl":"http://www.theguardian.com/culture/comedy",
+        "apiUrl":"http://content.guardianapis.com/culture/comedy",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"stage/stage",
+        "type":"keyword",
+        "webTitle":"Stage",
+        "webUrl":"http://www.theguardian.com/stage/stage",
+        "apiUrl":"http://content.guardianapis.com/stage/stage",
+        "sectionId":"stage",
+        "sectionName":"Stage",
+        "references":[]
+      },{
+        "id":"culture/festivals",
+        "type":"keyword",
+        "webTitle":"Festivals",
+        "webUrl":"http://www.theguardian.com/culture/festivals",
+        "apiUrl":"http://content.guardianapis.com/culture/festivals",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"tone/reviews",
+        "type":"tone",
+        "webTitle":"Reviews",
+        "webUrl":"http://www.theguardian.com/tone/reviews",
+        "apiUrl":"http://content.guardianapis.com/tone/reviews",
+        "references":[]
+      },{
+        "id":"profile/brianlogan",
+        "type":"contributor",
+        "webTitle":"Brian Logan",
+        "webUrl":"http://www.theguardian.com/profile/brianlogan",
+        "apiUrl":"http://content.guardianapis.com/profile/brianlogan",
+        "bio":"<p>is comedy critic and arts writer for the Guardian. He is a former deputy theatre editor of Time Out London and former editor of the Guardian's Film Unlimited website. He is also a founder member and performer with Cartoon de Salvo theatre company.</p>",
+        "rcsId":"GNL234021",
+        "r2ContributorId":"15444",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/7/23/1279881753462/Brian-Logan.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-394332717",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2012/8/7/1344351330353/Phil-Jupitus-001.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Phil Jupitus",
+            "height":"54",
+            "credit":"PR",
+            "caption":"Phil Jupitus (left) is also appearing in Coalition at the Edinburgh Fringe, here with Thom Tuck.",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2012/8/7/1344351332255/Phil-Jupitus-002.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Phil Jupitus",
+            "height":"130",
+            "credit":"PR",
+            "caption":"Phil Jupitus (left) is also appearing in Coalition at the Edinburgh Fringe, here with Thom Tuck.",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2012/8/7/1344351333674/Phil-Jupitus-003.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Phil Jupitus",
+            "height":"84",
+            "credit":"PR",
+            "caption":"Phil Jupitus (left) is also appearing in Coalition at the Edinburgh Fringe, here with Thom Tuck.",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2012/8/7/1344351335045/Phil-Jupitus-004.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Phil Jupitus",
+            "height":"132",
+            "credit":"PR",
+            "caption":"Phil Jupitus (left) is also appearing in Coalition at the Edinburgh Fringe, here with Thom Tuck.",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2012/8/7/1344351336566/Phil-Jupitus-005.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Phil Jupitus",
+            "height":"168",
+            "credit":"PR",
+            "caption":"Phil Jupitus (left) is also appearing in Coalition at the Edinburgh Fringe, here with Thom Tuck.",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2012/8/7/1344351337956/Phil-Jupitus-006.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Phil Jupitus",
+            "height":"180",
+            "credit":"PR",
+            "caption":"Phil Jupitus (left) is also appearing in Coalition at the Edinburgh Fringe, here with Thom Tuck.",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2012/8/7/1344351339359/Phil-Jupitus-007.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Phil Jupitus",
+            "height":"228",
+            "credit":"PR",
+            "caption":"Phil Jupitus (left) is also appearing in Coalition at the Edinburgh Fringe, here with Thom Tuck.",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2012/8/7/1344351340833/Phil-Jupitus-008.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Phil Jupitus",
+            "height":"276",
+            "credit":"PR",
+            "caption":"Phil Jupitus (left) is also appearing in Coalition at the Edinburgh Fringe, here with Thom Tuck.",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2012/8/7/1344351340833/Phil-Jupitus-008.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Phil Jupitus",
+            "height":"276",
+            "credit":"PR",
+            "caption":"Phill Jupitus (left) is also appearing in Coalition at the Edinburgh fringe, here with Thom Tuck",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-394332718",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Columnist/Columnists/2012/8/7/1344351333674/Phil-Jupitus-003.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Phil Jupitus",
+            "height":"84",
+            "credit":"PR",
+            "caption":"Phil Jupitus (left) is also appearing in Coalition at the Edinburgh Fringe, here with Thom Tuck.",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[],
+      "isExpired":"false"
+    },
+    "storyPackage":[]
+  }
+}

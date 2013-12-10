@@ -1,0 +1,2320 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"film/2013/oct/30/daniel-radcliffe-sebastian-coe-steve-ovett-gold-film",
+      "sectionId":"film",
+      "sectionName":"Film",
+      "webPublicationDate":"2013-10-30T11:35:00Z",
+      "webTitle":"Daniel Radcliffe to play Sebastian Coe in athletics drama",
+      "webUrl":"http://www.theguardian.com/film/2013/oct/30/daniel-radcliffe-sebastian-coe-steve-ovett-gold-film",
+      "apiUrl":"http://content.guardianapis.com/film/2013/oct/30/daniel-radcliffe-sebastian-coe-steve-ovett-gold-film",
+      "fields":{
+        "trailText":"<p>Coe's long-running track rivalry with fellow middle-distance runner Steve Ovett to be focus of Gold</p>",
+        "headline":"Daniel Radcliffe to play Sebastian Coe in athletics drama",
+        "body":"<p>Daniel Radcliffe will play double gold medallist Sebastian Coe in a sporting biopic detailing the British middle distance runner's battles with rival Steve Ovett, <a href=\"http://www.screendaily.com/news/daniel-radcliffe-to-play-sebastian-coe/5063052.article?blocktitle=AFM-News&amp;contentID=1480\">reports Screen Daily</a>.</p><p>The Harry Potter star will reunite with James Watkins, director of last year's supernatural box office hit The Woman in Black, on Gold. Producers have not yet cast Ovett, who was Coe's main British rival in the years leading up to the 1980 Moscow Olympics. Slumdog Millionaire's Oscar-winning writer Simon Beaufoy has written the screenplay with How to Train Your Dragon's Will Davies.</p><p>Coe and Ovett were fierce rivals from their junior days, but rarely raced each other at the pinnacle of their respective careers. Prior to the Moscow Olympics they were recognised as two of the fastest middle distance runners in the world, with Coe favouring the 800m and Ovett the 1500m. Yet on the day, it was Ovett who took gold in the shorter distance, while Coe triumphed over the longer race. Four years later in Los Angeles, Coe took silver in the 800m and retained his 1,500m gold. Ovett, crippled by respiratory problems, was unable to offer serious competition.</p><p>Coe went on to be a Conservative MP, and oversaw last year's hugely successful London Olympics. The former world record holder at 800m and 1500m was made a life peer in 2000. Ovett retired from athletics in 1991 and now live in Australia.</p><p>Gold, which has been developed by BBC Films, the BFI and AL Films, is due to shoot in the UK and Russia in April next year. Christine Langan of BBC Films told Screen Daily: \"Compelling, funny and moving, Gold is a gem of a story and BBC Films is proud to be participating in bringing it to an international audience.\"</p><p><a href=\"http://www.theguardian.com/film/2013/oct/23/daniel-radcliffe-britain-s-richest-young-celebrity\">• Daniel Radcliffe named Britain's richest 'young celebrity'</a><br /><a href=\"http://www.theguardian.com/film/2013/sep/18/daniel-radcliffe-nude-no-more\">• Daniel Radcliffe: nude no more</a></p><!-- Guardian Watermark: internal-code/content/421275893|2013-11-05T11:03:52Z|8092e702c8993d750f25ad1cbbd1e4ce809c9994 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-30T14:30:04Z",
+        "hasStoryPackage":"true",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/4/18/1334747157522/Steve-Ovett--Sebastian-Co-003.jpg",
+        "standfirst":"Coe's long-running track rivalry with fellow middle-distance runner Steve Ovett to be focus of Gold<br /><br /><a href=\"http://www.theguardian.com/film/2013/oct/23/daniel-radcliffe-britain-s-richest-young-celebrity\">• Daniel Radcliffe named Britain's richest 'young celebrity'</a><br /><a href=\"http://www.theguardian.com/film/2013/sep/18/daniel-radcliffe-nude-no-more\">• Daniel Radcliffe: nude no more</a>",
+        "shortUrl":"http://gu.com/p/3kxbv",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/4/18/1334747157522/Steve-Ovett--Sebastian-Co-003.jpg",
+        "wordcount":"300",
+        "commentable":"true",
+        "internalContentCode":"421275893",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Ben Child",
+        "publication":"theguardian.com",
+        "internalPageCode":"1989009",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-02T11:35:00Z"
+      },
+      "tags":[{
+        "id":"film/daniel-radcliffe",
+        "type":"keyword",
+        "webTitle":"Daniel Radcliffe",
+        "webUrl":"http://www.theguardian.com/film/daniel-radcliffe",
+        "apiUrl":"http://content.guardianapis.com/film/daniel-radcliffe",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/film",
+        "type":"keyword",
+        "webTitle":"Film",
+        "webUrl":"http://www.theguardian.com/film/film",
+        "apiUrl":"http://content.guardianapis.com/film/film",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"sport/sebastian-coe",
+        "type":"keyword",
+        "webTitle":"Lord Coe",
+        "webUrl":"http://www.theguardian.com/sport/sebastian-coe",
+        "apiUrl":"http://content.guardianapis.com/sport/sebastian-coe",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/athletics",
+        "type":"keyword",
+        "webTitle":"Athletics",
+        "webUrl":"http://www.theguardian.com/sport/athletics",
+        "apiUrl":"http://content.guardianapis.com/sport/athletics",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"film/drama",
+        "type":"keyword",
+        "webTitle":"Drama",
+        "webUrl":"http://www.theguardian.com/film/drama",
+        "apiUrl":"http://content.guardianapis.com/film/drama",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"sport/olympic-games",
+        "type":"keyword",
+        "webTitle":"Olympic Games",
+        "webUrl":"http://www.theguardian.com/sport/olympic-games",
+        "apiUrl":"http://content.guardianapis.com/sport/olympic-games",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"profile/benchild",
+        "type":"contributor",
+        "webTitle":"Ben Child",
+        "webUrl":"http://www.theguardian.com/profile/benchild",
+        "apiUrl":"http://content.guardianapis.com/profile/benchild",
+        "bio":"<p>Ben Child is a journalist, DJ and producer whose main interests lie in the worlds of film and music</p>",
+        "r2ContributorId":"24984",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421296097",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/4/18/1334747163174/Steve-Ovett--Sebastian-Co-008.jpg",
+          "typeData":{
+            "source":"Sipa Press/Rex Features",
+            "altText":"Steve Ovett & Sebastian Coe",
+            "height":"276",
+            "credit":"Sipa Press/Rex Features",
+            "caption":"Steve Ovett, left, wins gold in the 800m ahead of Sebastian Coe in the 1980 Moscow Games. Photograph: Sipa Press/Rex Features",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421296098",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/4/18/1334747157522/Steve-Ovett--Sebastian-Co-003.jpg",
+          "typeData":{
+            "source":"Sipa Press/Rex Features",
+            "altText":"Steve Ovett & Sebastian Coe",
+            "height":"84",
+            "credit":"Sipa Press/Rex Features",
+            "caption":"Steve Ovett, left, wins gold in the 800m ahead of Sebastian Coe in the 1980 Moscow Games.\r Photograph: Sipa Press/Rex Features",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"film/2013/mar/01/emma-watson-daniel-radcliffe-lead-roles",
+      "sectionId":"film",
+      "sectionName":"Film",
+      "webPublicationDate":"2013-03-01T12:23:16Z",
+      "webTitle":"Emma Watson and Daniel Radcliffe set for starring roles in two classic tales",
+      "webUrl":"http://www.theguardian.com/film/2013/mar/01/emma-watson-daniel-radcliffe-lead-roles",
+      "apiUrl":"http://content.guardianapis.com/film/2013/mar/01/emma-watson-daniel-radcliffe-lead-roles",
+      "fields":{
+        "trailText":"Former Hogwarts alumni in line for two new films: Watson for Kenneth Branagh's Cinderella and Radcliffe for Frankenstein",
+        "headline":"Emma Watson and Daniel Radcliffe set for starring roles in two classic tales",
+        "body":"<p>Harry Potter alumni Emma Watson and Daniel Radcliffe are lining up leading roles in two new versions of well-known tales: Cinderella and Frankenstein respectively.</p><p></p><p>Watson, fresh from the well-liked teen flick <a href=\"http://www.guardian.co.uk/film/2012/oct/04/perks-of-being-wallflower-review\" title=\"\">The Perks of Being a Wallflower</a>, is <a href=\"http://www.variety.com/article/VR1118066680/\" title=\"\">being courted for Disney's live-action version</a> of the Cinderella fairy story, to be directed by Kenneth Branagh.</p><p></p><p>Watson, 22, had a somewhat tentative start to her post-Potter acting career, taking on a <a href=\"http://www.guardian.co.uk/books/booksblog/2008/jan/02/thebbcshouldtakeitsballet\" title=\"\">TV movie of Noel Streatfeild's Ballet Shoes</a> and a small role in <a href=\"http://www.guardian.co.uk/film/movie/142796/my-week-with-marilyn\" title=\"\">My Week With Marilyn</a> as she appeared to concentrate more on fashion-related work. But the success of Perks has seen her sign up to more substantial projects: she has a leading role in <a href=\"http://www.guardian.co.uk/film/2012/mar/01/emma-watson-sofia-coppola-film\" title=\"\">Sofia Coppola's celeb-thief drama The Bling Ring</a>, plays herself opposite James Franco in Evan Goldberg's metatextual comedy <a href=\"http://www.comingsoon.net/news/movienews.php?id=98286\" title=\"\">This Is the End</a>, and is attached to <a href=\"http://www.guardian.co.uk/film/guillermodeltoro\" title=\"\">Guillermo del Toro</a>'s Beauty and the Beast.</p><p></p><p>Cinderella is seen very much in the mould of Disney's <a href=\"http://www.guardian.co.uk/film/movie/131099/alice-in-wonderland\" title=\"\">Alice in Wonderland</a> and <a href=\"http://www.guardian.co.uk/film/movie/151291/oz-the-great-and-powerful\" title=\"\">Oz the Great and Powerful</a>, both highly visual reworkings of familiar tales. Cate Blanchett has already been cast to play the wicked stepmother and filming is likely to be under way later this year, whether or not Watson takes the role.</p><p></p><p>Radcliffe, meanwhile, is <a href=\"http://www.hollywoodreporter.com/heat-vision/daniel-radcliffe-nearing-deal-play-425419\" title=\"\">set to play Igor in Frankenstein</a>, a new take on Mary Shelley's classic gothic horror novel to be directed by Scots film-maker Paul McGuigan.</p><p></p><p>The hunchbacked servant/lab assistant – most memorably portrayed by <a href=\"http://www.guardian.co.uk/film/filmblog/2010/dec/15/clip-joint-henchman\" title=\"\">Marty Feldman in Mel Brooks's parody Young Frankenstein</a> – is the centre of McGuigan's film, even though the character does not appear in Shelley's original. <a href=\"http://www.thewrap.com/movies/column-post/paul-mcguigans-frankenstien-draws-interest-blighty-exclusive-58336\" title=\"\">According to the Wrap</a>, it will be \"a sci-fi take on this classic story about a creature produced through a scientific experiment\", and Radcliffe's character is \"pathologically dirty and dressed in old clown's clothing\".</p><p></p><p>Radcliffe recently proved his chops in period horror with the Susan Hill adaptation <a href=\"http://www.guardian.co.uk/film/2012/feb/09/the-woman-in-black-film-review\" title=\"\">The Woman in Black</a>, and will next be seen as Beat poet Allen Ginsberg in Sundance hit <a href=\"http://www.guardian.co.uk/film/2013/jan/20/sundance-film-festival-review-kill-your-darlings\" title=\"\">Kill Your Darlings</a>.</p><!-- Guardian Watermark: internal-code/content/404850410|2013-11-05T11:03:52Z|2feba737e372bfd4e96ea17d843462e17249c24f -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-07-03T19:00:51Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/3/1/1362139585686/Emma-Watson-and-Daniel-Ra-002.jpg",
+        "standfirst":"Former Hogwarts alumni in line for two new films: Watson for Kenneth Branagh's Cinderella and Radcliffe for Frankenstein<br />",
+        "shortUrl":"http://gu.com/p/3e66g",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/3/1/1362139585686/Emma-Watson-and-Daniel-Ra-002.jpg",
+        "wordcount":"324",
+        "commentable":"true",
+        "internalContentCode":"404850410",
+        "allowUgc":"false",
+        "internalOctopusCode":"7308916",
+        "isPremoderated":"false",
+        "byline":"Andrew Pulver",
+        "publication":"theguardian.com",
+        "internalPageCode":"1874437",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-03-08T11:54:00Z"
+      },
+      "tags":[{
+        "id":"film/film",
+        "type":"keyword",
+        "webTitle":"Film",
+        "webUrl":"http://www.theguardian.com/film/film",
+        "apiUrl":"http://content.guardianapis.com/film/film",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/emma-watson",
+        "type":"keyword",
+        "webTitle":"Emma Watson",
+        "webUrl":"http://www.theguardian.com/film/emma-watson",
+        "apiUrl":"http://content.guardianapis.com/film/emma-watson",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/daniel-radcliffe",
+        "type":"keyword",
+        "webTitle":"Daniel Radcliffe",
+        "webUrl":"http://www.theguardian.com/film/daniel-radcliffe",
+        "apiUrl":"http://content.guardianapis.com/film/daniel-radcliffe",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"culture/kenneth-branagh",
+        "type":"keyword",
+        "webTitle":"Kenneth Branagh",
+        "webUrl":"http://www.theguardian.com/culture/kenneth-branagh",
+        "apiUrl":"http://content.guardianapis.com/culture/kenneth-branagh",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"film/walt-disney-company",
+        "type":"keyword",
+        "webTitle":"Walt Disney Company",
+        "webUrl":"http://www.theguardian.com/film/walt-disney-company",
+        "apiUrl":"http://content.guardianapis.com/film/walt-disney-company",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/cate-blanchett",
+        "type":"keyword",
+        "webTitle":"Cate Blanchett",
+        "webUrl":"http://www.theguardian.com/film/cate-blanchett",
+        "apiUrl":"http://content.guardianapis.com/film/cate-blanchett",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/sciencefictionandfantasy",
+        "type":"keyword",
+        "webTitle":"Science fiction and fantasy",
+        "webUrl":"http://www.theguardian.com/film/sciencefictionandfantasy",
+        "apiUrl":"http://content.guardianapis.com/film/sciencefictionandfantasy",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/horror",
+        "type":"keyword",
+        "webTitle":"Horror",
+        "webUrl":"http://www.theguardian.com/film/horror",
+        "apiUrl":"http://content.guardianapis.com/film/horror",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/film-adaptations",
+        "type":"keyword",
+        "webTitle":"Film adaptations",
+        "webUrl":"http://www.theguardian.com/film/film-adaptations",
+        "apiUrl":"http://content.guardianapis.com/film/film-adaptations",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"books/fairytales",
+        "type":"keyword",
+        "webTitle":"Fairytales",
+        "webUrl":"http://www.theguardian.com/books/fairytales",
+        "apiUrl":"http://content.guardianapis.com/books/fairytales",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/maryshelley",
+        "type":"keyword",
+        "webTitle":"Mary Shelley",
+        "webUrl":"http://www.theguardian.com/books/maryshelley",
+        "apiUrl":"http://content.guardianapis.com/books/maryshelley",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/horror",
+        "type":"keyword",
+        "webTitle":"Horror",
+        "webUrl":"http://www.theguardian.com/books/horror",
+        "apiUrl":"http://content.guardianapis.com/books/horror",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/fiction",
+        "type":"keyword",
+        "webTitle":"Fiction",
+        "webUrl":"http://www.theguardian.com/books/fiction",
+        "apiUrl":"http://content.guardianapis.com/books/fiction",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"profile/andrewpulver",
+        "type":"contributor",
+        "webTitle":"Andrew Pulver",
+        "webUrl":"http://www.theguardian.com/profile/andrewpulver",
+        "apiUrl":"http://content.guardianapis.com/profile/andrewpulver",
+        "bio":"<p>Andrew Pulver is Film editor, guardian.co.uk</p>",
+        "rcsId":"GNL004602",
+        "r2ContributorId":"15370",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/23/1345733137119/AndrewPulver.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-404852386",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/3/1/1362139592219/Emma-Watson-and-Daniel-Ra-007.jpg",
+          "typeData":{
+            "source":"Chris Pizzello/Invision/AP and Theo Kingma/Rex Features",
+            "altText":"Emma Watson and Daniel Radcliffe lining up lead roles in Cinderella and Frankenstein",
+            "height":"276",
+            "credit":"Chris Pizzello/Invision/AP and Theo Kingma/Rex Features",
+            "caption":"Magic roundabout … Emma Watson and Daniel Radcliffe size up Cinderella and Frankenstein respectively. Photograph: Chris Pizzello/Invision/AP and Theo Kingma/Rex Features",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-404852387",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/3/1/1362139585686/Emma-Watson-and-Daniel-Ra-002.jpg",
+          "typeData":{
+            "source":"Chris Pizzello/Invision/AP and Theo Kingma/Rex Features",
+            "altText":"Emma Watson and Daniel Radcliffe lining up lead roles in Cinderella and Frankenstein",
+            "height":"84",
+            "credit":"Chris Pizzello/Invision/AP and Theo Kingma/Rex Features",
+            "caption":"Emma Watson and Daniel Radcliffe lining up lead roles in Cinderella and Frankenstein respectively. Photograph: Chris Pizzello/Invision/AP and Theo Kingma/Rex Features",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"film/2013/jun/02/daniel-radcliffe-cripple-of-inishmaan-interview",
+      "sectionId":"film",
+      "sectionName":"Film",
+      "webPublicationDate":"2013-06-02T18:00:01Z",
+      "webTitle":"Daniel Radcliffe: 'I'm not a one-trick pony'",
+      "webUrl":"http://www.theguardian.com/film/2013/jun/02/daniel-radcliffe-cripple-of-inishmaan-interview",
+      "apiUrl":"http://content.guardianapis.com/film/2013/jun/02/daniel-radcliffe-cripple-of-inishmaan-interview",
+      "fields":{
+        "newspaperPageNumber":"5",
+        "trailText":"As he returns to the stage, the actor talks to <strong>Tim Lewis</strong> about work, tattoos and playing Allen Ginsberg",
+        "headline":"Daniel Radcliffe: 'My drive is to prove I'm not a one-trick pony'",
+        "body":"<p><strong>Your latest role is in Martin McDonagh's play </strong><a href=\"http://www.michaelgrandagecompany.com/whats-on/#the-cripple-of-inishmaan_page0\" title=\"\"><strong><em>The Cripple of Inishmaan</em></strong></a><strong>. What made you want to play Billy, the \"cripple\" of the title?</strong></p><p>Michael Grandage, the director, presented me with three or four plays, and as soon as I read <em>Cripple</em> there was no contest. I'm very much the tragic relief of this play: Billy has a few funny lines but a lot of the comedy comes out of people being incredibly cruel to my character. Which I'm very, very happy with. I've learned that I really enjoy stage violence. I was lucky enough to spend a lot of my lunchtimes as a child choreographing fight scenes on <em>Potter</em>. So I'm quite good at it: the stunt department always said that I bounce.</p><p></p><p><strong>Billy dreams of escaping Inishmaan for the neighbouring island of Inishmore, where they are making a film – the real-life, 1934 </strong><a href=\"http://www.imdb.com/title/tt0025456/\" title=\"\"><strong><em>Man of Aran</em></strong></a><strong>. Did you feel any personal connection to the role? </strong></p><p>Billy's ambition to get away from the island is definitely one of the things I find really attractive. Somebody who's been so beaten down all his life can still say: \"No, you're all wrong. I believe I can make something of myself.\" I absolutely don't relate to being beaten down my whole life – I had amazing opportunities at a young age – but there is still in many, many people's minds the notion that I'll never be able to escape Harry Potter. So my drive is to prove to people that I'm not a one-trick pony, basically. Drive is not something I'm lacking in.</p><p></p><p><strong>You're a fan of the band British Sea Power and in 2009 they did a </strong><a href=\"http://www.youtube.com/watch?v=B0RAdfrQwvo\" title=\"\"><strong>soundtrack for<em> Man of Aran</em></strong></a><strong>. Did you see that version?</strong></p><p>Yeah, that's the only thing I knew about it: I'd watched maybe the first 10 minutes along with the album. I mentioned it to Michael in the hope that I might get to meet British Sea Power, bring them in to soundtrack it.</p><p></p><p><strong>Is it true that you want to have a tattoo  of a British Sea Power lyric?</strong></p><p>Yes: \"Bravery Already Exists\". I want to get a tattoo on my forearm, something on my chest and maybe something on my back. There's various quotes I love. It sounds pretentious but there's something about the Beckett quote: \"Ever tried. Ever failed. No matter. Try Again. Fail again. Fail better.\"</p><p></p><p><strong>But you don't have any tattoos yet?</strong></p><p>No, I've got to get a sustained series of jobs where I don't have to get naked. But I haven't hit one of them yet, for some reason. There was that first few years of my career when I was just doing Potter where there wasn't a huge amount of nudity. But since then it's been almost every job. Recently I had my gay sex scene in <a href=\"http://www.imdb.com/title/tt1311071/\" title=\"\"><em>Kill Your Darlings</em></a>, a skinny-dipping scene in <a href=\"http://www.imdb.com/title/tt1486834/\" title=\"\"><em>The F Word</em></a> and a straight sex scene in <a href=\"http://www.imdb.com/title/tt1528071/\" title=\"\"><em>Horns</em></a>. It's just been a year of it.</p><p></p><p><strong>From <em>Equus</em> onwards, you've picked some intrepid jobs. Do you need to be scared by a new project?</strong></p><p>In a way it's just bad luck. Everything that's really interesting to me happens to involve some massive, scary thing, like getting my dick out or learning to dance [<em>How to Succeed in Business Without Really Trying</em> on Broadway]. Perhaps it's having spent 10 years in what could be described as a comfort zone. Not to just throw these slightly cliched phrases at you, but there's a Henry Ford quote: \"If you always do what you've always done, you will get what you've always got.\"</p><p></p><p><strong>What is it you like about the Beckett quote on failure? The Harry Potter films made billions and both the <em>Woman in Black</em> film and TV drama <em>A Young Doctor's Notebook</em> were hits…</strong></p><p>I know it wouldn't seem like I've had a lot of failure in my career but there are things that I regard as failures, when I look at certain performances and go, \"That's not good enough.\"</p><p></p><p><strong>Are you going to say what those are?</strong></p><p>The sixth Harry Potter film – I don't like my performance in that film at all. There's stuff in <em>The Woman in Black</em>: I'm really glad it did well but I look at that film and there were probably six weeks between finishing Potter and starting that, so I hear the same voice and I see a very similar style of acting.</p><p></p><p><strong>Many people are surprised that you, Emma Watson and Rupert Grint have turned out OK. Why is that?</strong></p><p>It does seem to amaze everyone: \"Why aren't you fucked up?\" It's great when you come in at that place of very low expectations because you'll always be a pleasant surprise. But it's so hard to pin down why we all turned out all right. You know, with my mum be a casting director and my dad a literary agent, I've heard a lot of round-the-dinner-table complaining about certain actors and their behaviour. So when you come to a film set with that in your head, you go, \"Oh God, I don't want anyone to ever talk about me that way.\"</p><p></p><p><strong>You once said you watched a lot of parliament on TV. Do you still? </strong></p><p>Parliament less so nowadays but I watch tons of quiz shows and I'm a little bit of a <em>Come Dine With Me</em> obsessive. I'm always amazed because I'm a very unadventurous eater but why would you go on that show and seemingly eat nothing? They just go round to people's houses for a week going, \"Ooh, I can't eat that.\"</p><p></p><p><strong>In what ways are you an  unadventurous eater?</strong></p><p>This is one of the things I could never admit to while I was on Harry Potter but I'm very bad at fruit and vegetables. I basically have the diet of a 19th-century Irish navvy, apart from the litre of stout a day. It's meat and potatoes and bread and cheese: those are my four food groups. But at the moment I'm doing enough exercise, so it's fine.</p><p></p><p><strong>In your next film to be released, <em>Kill Your Darlings</em>, you're playing Allen Ginsberg. Where was that on the scale of terrifying?</strong></p><p>That was pretty fucking terrifying, I've got to say.</p><p></p><p><strong>Because of the gay sex scenes?</strong></p><p>No, no, no, just because of playing Ginsberg in a film about the Beats. Allen Ginsberg: American, Jewish, working class. Daniel Radcliffe: English, Jewish by the way but not really, upper class, and definitely looks a million miles away from Allen Ginsberg. When you start from that you think: \"I can't just be good in this film. I have to be better than good for people to even actually give me the chance.\" But I think a lot of people are going to see it and see me in a very different way afterwards. Which is a good thing.</p><p></p><p><em>The Cripple of Inishmaan runs at the Noël Coward theatre, London from 8 Jun to 31 Aug </em></p><!-- Guardian Watermark: internal-code/content/409658910|2013-11-05T11:03:52Z|8d0aad23ec0a39912325cbb43be045c1f856057d -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-06-02T18:00:01Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Observer/Pix/pictures/2013/5/28/1369761378975/radcliffe-at-sundance-003.jpg",
+        "standfirst":"As he returns to the stage, the actor sets out his approach to work, tattoos, and the terror of playing Allen Ginsberg",
+        "shortUrl":"http://gu.com/p/3g6y4",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/5/28/1369761378975/radcliffe-at-sundance-003.jpg",
+        "wordcount":"1134",
+        "commentable":"true",
+        "internalContentCode":"409658910",
+        "allowUgc":"false",
+        "internalOctopusCode":"7654288",
+        "isPremoderated":"false",
+        "byline":"Interview by Tim Lewis",
+        "publication":"The Observer",
+        "newspaperEditionDate":"2013-06-02",
+        "internalPageCode":"1914196",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-06-27T23:05:00Z"
+      },
+      "tags":[{
+        "id":"film/daniel-radcliffe",
+        "type":"keyword",
+        "webTitle":"Daniel Radcliffe",
+        "webUrl":"http://www.theguardian.com/film/daniel-radcliffe",
+        "apiUrl":"http://content.guardianapis.com/film/daniel-radcliffe",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"theobserver/series/the-new-review-q-and-a",
+        "type":"series",
+        "webTitle":"The New Review Q&A",
+        "webUrl":"http://www.theguardian.com/theobserver/series/the-new-review-q-and-a",
+        "apiUrl":"http://content.guardianapis.com/theobserver/series/the-new-review-q-and-a",
+        "sectionId":"theobserver",
+        "sectionName":"From the Observer",
+        "references":[]
+      },{
+        "id":"stage/stage",
+        "type":"keyword",
+        "webTitle":"Stage",
+        "webUrl":"http://www.theguardian.com/stage/stage",
+        "apiUrl":"http://content.guardianapis.com/stage/stage",
+        "sectionId":"stage",
+        "sectionName":"Stage",
+        "references":[]
+      },{
+        "id":"fashion/tattoos",
+        "type":"keyword",
+        "webTitle":"Tattoos",
+        "webUrl":"http://www.theguardian.com/fashion/tattoos",
+        "apiUrl":"http://content.guardianapis.com/fashion/tattoos",
+        "sectionId":"fashion",
+        "sectionName":"Fashion",
+        "references":[]
+      },{
+        "id":"culture/martin-mcdonagh",
+        "type":"keyword",
+        "webTitle":"Martin McDonagh",
+        "webUrl":"http://www.theguardian.com/culture/martin-mcdonagh",
+        "apiUrl":"http://content.guardianapis.com/culture/martin-mcdonagh",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"stage/theatre",
+        "type":"keyword",
+        "webTitle":"Theatre",
+        "webUrl":"http://www.theguardian.com/stage/theatre",
+        "apiUrl":"http://content.guardianapis.com/stage/theatre",
+        "sectionId":"stage",
+        "sectionName":"Stage",
+        "references":[]
+      },{
+        "id":"tone/interview",
+        "type":"tone",
+        "webTitle":"Interviews",
+        "webUrl":"http://www.theguardian.com/tone/interview",
+        "apiUrl":"http://content.guardianapis.com/tone/interview",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"profile/timlewis",
+        "type":"contributor",
+        "webTitle":"Tim Lewis",
+        "webUrl":"http://www.theguardian.com/profile/timlewis",
+        "apiUrl":"http://content.guardianapis.com/profile/timlewis",
+        "bio":"<p>Tim Lewis is a writer at the Observer</p>",
+        "r2ContributorId":"20731",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/27/1380276536662/TimLewisprofile.jpg",
+        "references":[]
+      },{
+        "id":"music/british-sea-power",
+        "type":"keyword",
+        "webTitle":"British Sea Power",
+        "webUrl":"http://www.theguardian.com/music/british-sea-power",
+        "apiUrl":"http://content.guardianapis.com/music/british-sea-power",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"film/emma-watson",
+        "type":"keyword",
+        "webTitle":"Emma Watson",
+        "webUrl":"http://www.theguardian.com/film/emma-watson",
+        "apiUrl":"http://content.guardianapis.com/film/emma-watson",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/rupert-grint",
+        "type":"keyword",
+        "webTitle":"Rupert Grint",
+        "webUrl":"http://www.theguardian.com/film/rupert-grint",
+        "apiUrl":"http://content.guardianapis.com/film/rupert-grint",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"books/allen-ginsberg",
+        "type":"keyword",
+        "webTitle":"Allen Ginsberg",
+        "webUrl":"http://www.theguardian.com/books/allen-ginsberg",
+        "apiUrl":"http://content.guardianapis.com/books/allen-ginsberg",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"theobserver/new-review/agenda",
+        "type":"newspaper-book-section",
+        "webTitle":"Agenda",
+        "webUrl":"http://www.theguardian.com/theobserver/new-review/agenda",
+        "apiUrl":"http://content.guardianapis.com/theobserver/new-review/agenda",
+        "sectionId":"theobserver",
+        "sectionName":"From the Observer",
+        "references":[]
+      },{
+        "id":"theobserver/new-review",
+        "type":"newspaper-book",
+        "webTitle":"The New Review",
+        "webUrl":"http://www.theguardian.com/theobserver/new-review",
+        "apiUrl":"http://content.guardianapis.com/theobserver/new-review",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theobserver",
+        "type":"publication",
+        "webTitle":"The Observer",
+        "webUrl":"http://www.theguardian.com/theobserver/all",
+        "apiUrl":"http://content.guardianapis.com/theobserver/all",
+        "sectionId":"theobserver",
+        "sectionName":"From the Observer",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-409659903",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/5/28/1369761376034/radcliffe-at-sundance-001.jpg",
+          "typeData":{
+            "source":"Invision/AP",
+            "photographer":"Victoria Will",
+            "altText":"radcliffe at sundance",
+            "height":"54",
+            "credit":"Victoria Will/Invision/AP",
+            "caption":"'I really enjoy stage violence': Daniel Radcliffe at the Sundance film festival earlier this year. Photograph: Victoria Will/Invision/AP",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/5/28/1369761377835/radcliffe-at-sundance-002.jpg",
+          "typeData":{
+            "source":"Invision/AP",
+            "photographer":"Victoria Will",
+            "altText":"radcliffe at sundance",
+            "height":"130",
+            "credit":"Victoria Will/Invision/AP",
+            "caption":"'I really enjoy stage violence': Daniel Radcliffe at the Sundance film festival earlier this year. Photograph: Victoria Will/Invision/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/5/28/1369761378975/radcliffe-at-sundance-003.jpg",
+          "typeData":{
+            "source":"Invision/AP",
+            "photographer":"Victoria Will",
+            "altText":"radcliffe at sundance",
+            "height":"84",
+            "credit":"Victoria Will/Invision/AP",
+            "caption":"'I really enjoy stage violence': Daniel Radcliffe at the Sundance film festival earlier this year. Photograph: Victoria Will/Invision/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/5/28/1369761380213/radcliffe-at-sundance-004.jpg",
+          "typeData":{
+            "source":"Invision/AP",
+            "photographer":"Victoria Will",
+            "altText":"radcliffe at sundance",
+            "height":"132",
+            "credit":"Victoria Will/Invision/AP",
+            "caption":"'I really enjoy stage violence': Daniel Radcliffe at the Sundance film festival earlier this year. Photograph: Victoria Will/Invision/AP",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/5/28/1369761381365/radcliffe-at-sundance-005.jpg",
+          "typeData":{
+            "source":"Invision/AP",
+            "photographer":"Victoria Will",
+            "altText":"radcliffe at sundance",
+            "height":"168",
+            "credit":"Victoria Will/Invision/AP",
+            "caption":"'I really enjoy stage violence': Daniel Radcliffe at the Sundance film festival earlier this year. Photograph: Victoria Will/Invision/AP",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/5/28/1369761382666/radcliffe-at-sundance-006.jpg",
+          "typeData":{
+            "source":"Invision/AP",
+            "photographer":"Victoria Will",
+            "altText":"radcliffe at sundance",
+            "height":"180",
+            "credit":"Victoria Will/Invision/AP",
+            "caption":"'I really enjoy stage violence': Daniel Radcliffe at the Sundance film festival earlier this year. Photograph: Victoria Will/Invision/AP",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/5/28/1369761383820/radcliffe-at-sundance-007.jpg",
+          "typeData":{
+            "source":"Invision/AP",
+            "photographer":"Victoria Will",
+            "altText":"radcliffe at sundance",
+            "height":"228",
+            "credit":"Victoria Will/Invision/AP",
+            "caption":"'I really enjoy stage violence': Daniel Radcliffe at the Sundance film festival earlier this year. Photograph: Victoria Will/Invision/AP",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/5/28/1369761385521/radcliffe-at-sundance-008.jpg",
+          "typeData":{
+            "source":"Invision/AP",
+            "photographer":"Victoria Will",
+            "altText":"radcliffe at sundance",
+            "height":"276",
+            "credit":"Victoria Will/Invision/AP",
+            "caption":"'I really enjoy stage violence': Daniel Radcliffe at the Sundance film festival earlier this year. Photograph: Victoria Will/Invision/AP",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/5/28/1369761385521/radcliffe-at-sundance-008.jpg",
+          "typeData":{
+            "source":"Invision/AP",
+            "photographer":"Victoria Will",
+            "altText":"radcliffe at sundance",
+            "height":"276",
+            "credit":"Victoria Will/Invision/AP",
+            "caption":"'I really enjoy stage violence': Daniel Radcliffe at the Sundance film festival earlier this year. Photograph: Victoria Will/Invision/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-409659904",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/5/28/1369761378975/radcliffe-at-sundance-003.jpg",
+          "typeData":{
+            "source":"Invision/AP",
+            "photographer":"Victoria Will",
+            "altText":"radcliffe at sundance",
+            "height":"84",
+            "credit":"Victoria Will/Invision/AP",
+            "caption":"'I really enjoy stage violence': Daniel Radcliffe at the Sundance film festival earlier this year. Photograph: Victoria Will/Invision/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"film/video/2013/sep/01/venice-film-festival-kill-your-darlings-finds-right-beat-video",
+      "sectionId":"film",
+      "sectionName":"Film",
+      "webPublicationDate":"2013-09-01T16:00:00Z",
+      "webTitle":"Venice 2013: in Kill Your Darlings, Daniel Radcliffe finds the right Beat - video",
+      "webUrl":"http://www.theguardian.com/film/video/2013/sep/01/venice-film-festival-kill-your-darlings-finds-right-beat-video",
+      "apiUrl":"http://content.guardianapis.com/film/video/2013/sep/01/venice-film-festival-kill-your-darlings-finds-right-beat-video",
+      "fields":{
+        "trailText":"<p>Andrew Pulver takes a look at Beat generation drama Kill Your Darlings, starring Daniel Radcliffe as Allen Ginsberg</p>",
+        "headline":"Venice 2013: in Kill Your Darlings, Daniel Radcliffe finds the right Beat - video",
+        "body":"<video data-media-id=\"gu-video-416273323\" class=\"gu-video\" controls=\"controls\" poster=\"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/1/1378050851268/Daniel-Radcliffe-in-Kill--015.jpg\">\n        <source src=\"http://cdn.theguardian.tv/mainwebsite/2013/9/1/130901Darlings-16x9.mp4\"></source><source src=\"http://cdn.theguardian.tv/connectedTV/1280/2013/9/1/130901Darlings-720.mp4\"></source><source src=\"http://cdn.theguardian.tv/3gp/large/2013/9/1/130901Darlings_3gpLg16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/ad/2013/9/1/130901Darlings/130901Darlings.m3u8\"></source><source src=\"http://cdn.theguardian.tv/3gp/small/2013/9/1/130901Darlings_3gpSml16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/webM/640/2013/9/1/130901Darlings_vpx.webm\"></source>\n      </video><!-- Guardian Watermark: internal-code/content/416273323|2013-11-05T11:03:52Z|ebde0215ca716d63c2e8404b6e9ba2a0274b91f3 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-09-23T14:37:57Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/1/1378050842221/Daniel-Radcliffe-in-Kill--009.jpg",
+        "standfirst":"Andrew Pulver looks at Kill Your Darlings, the latest film to examine the beginnings of the Beat generation. It follows the early exploits of Allen Ginsberg, Lucien Carr, Jack Kerouac and William S Burroughs as they discover their distaste for ordinary life in New York. Their imaginations collide in a frenzy of creative experimentation to liberating and devastating effect<br /><br /><a href=\"http://www.theguardian.com/film/2013/jan/20/sundance-film-festival-review-kill-your-darlings\">• First look review from Sundance</a>",
+        "shortUrl":"http://gu.com/p/3tdqq",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/1/1378050842221/Daniel-Radcliffe-in-Kill--009.jpg",
+        "commentable":"true",
+        "internalContentCode":"416273323",
+        "allowUgc":"false",
+        "internalOctopusCode":"8019646",
+        "isPremoderated":"false",
+        "byline":"Andrew Pulver and Josh Strauss",
+        "publication":"theguardian.com",
+        "internalPageCode":"1958822",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-09-04T16:00:00Z"
+      },
+      "tags":[{
+        "id":"film/venice-film-festival-2013",
+        "type":"keyword",
+        "webTitle":"Venice film festival 2013",
+        "webUrl":"http://www.theguardian.com/film/venice-film-festival-2013",
+        "apiUrl":"http://content.guardianapis.com/film/venice-film-festival-2013",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/venicefilmfestival",
+        "type":"keyword",
+        "webTitle":"Venice film festival",
+        "webUrl":"http://www.theguardian.com/film/venicefilmfestival",
+        "apiUrl":"http://content.guardianapis.com/film/venicefilmfestival",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/film",
+        "type":"keyword",
+        "webTitle":"Film",
+        "webUrl":"http://www.theguardian.com/film/film",
+        "apiUrl":"http://content.guardianapis.com/film/film",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/daniel-radcliffe",
+        "type":"keyword",
+        "webTitle":"Daniel Radcliffe",
+        "webUrl":"http://www.theguardian.com/film/daniel-radcliffe",
+        "apiUrl":"http://content.guardianapis.com/film/daniel-radcliffe",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"profile/andrewpulver",
+        "type":"contributor",
+        "webTitle":"Andrew Pulver",
+        "webUrl":"http://www.theguardian.com/profile/andrewpulver",
+        "apiUrl":"http://content.guardianapis.com/profile/andrewpulver",
+        "bio":"<p>Andrew Pulver is Film editor, guardian.co.uk</p>",
+        "rcsId":"GNL004602",
+        "r2ContributorId":"15370",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/23/1345733137119/AndrewPulver.jpg",
+        "references":[]
+      },{
+        "id":"profile/josh-strauss",
+        "type":"contributor",
+        "webTitle":"Josh Strauss",
+        "webUrl":"http://www.theguardian.com/profile/josh-strauss",
+        "apiUrl":"http://content.guardianapis.com/profile/josh-strauss",
+        "r2ContributorId":"50377",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-416273323",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/1/1378050828539/Daniel-Radcliffe-in-Kill--001.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Daniel Radcliffe in Kill Your Darlings",
+            "height":"230",
+            "credit":"Guardian",
+            "caption":"Daniel Radcliffe in Kill Your Darlings Photograph: Guardian",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/1/1378050830872/Daniel-Radcliffe-in-Kill--002.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Daniel Radcliffe in Kill Your Darlings",
+            "height":"90",
+            "credit":"Guardian",
+            "caption":"Daniel Radcliffe in Kill Your Darlings Photograph: Guardian",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/1/1378050832677/Daniel-Radcliffe-in-Kill--003.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Daniel Radcliffe in Kill Your Darlings",
+            "height":"225",
+            "credit":"Guardian",
+            "caption":"Daniel Radcliffe in Kill Your Darlings Photograph: Guardian",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/1/1378050834384/Daniel-Radcliffe-in-Kill--004.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Daniel Radcliffe in Kill Your Darlings",
+            "height":"360",
+            "credit":"Guardian",
+            "caption":"Daniel Radcliffe in Kill Your Darlings Photograph: Guardian",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/1/1378050837763/Daniel-Radcliffe-in-Kill--006.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Daniel Radcliffe in Kill Your Darlings",
+            "height":"54",
+            "credit":"Guardian",
+            "caption":"Daniel Radcliffe in Kill Your Darlings Photograph: Guardian",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/1/1378050839197/Daniel-Radcliffe-in-Kill--007.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Daniel Radcliffe in Kill Your Darlings",
+            "height":"340",
+            "credit":"Guardian",
+            "caption":"Daniel Radcliffe in Kill Your Darlings Photograph: Guardian",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/1/1378050840666/Daniel-Radcliffe-in-Kill--008.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Daniel Radcliffe in Kill Your Darlings",
+            "height":"130",
+            "credit":"Guardian",
+            "caption":"Daniel Radcliffe in Kill Your Darlings Photograph: Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/1/1378050842221/Daniel-Radcliffe-in-Kill--009.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Daniel Radcliffe in Kill Your Darlings",
+            "height":"84",
+            "credit":"Guardian",
+            "caption":"Daniel Radcliffe in Kill Your Darlings Photograph: Guardian",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/1/1378050843871/Daniel-Radcliffe-in-Kill--010.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Daniel Radcliffe in Kill Your Darlings",
+            "height":"132",
+            "credit":"Guardian",
+            "caption":"Daniel Radcliffe in Kill Your Darlings Photograph: Guardian",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/1/1378050845342/Daniel-Radcliffe-in-Kill--011.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Daniel Radcliffe in Kill Your Darlings",
+            "height":"168",
+            "credit":"Guardian",
+            "caption":"Daniel Radcliffe in Kill Your Darlings Photograph: Guardian",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/1/1378050846813/Daniel-Radcliffe-in-Kill--012.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Daniel Radcliffe in Kill Your Darlings",
+            "height":"180",
+            "credit":"Guardian",
+            "caption":"Daniel Radcliffe in Kill Your Darlings Photograph: Guardian",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/1/1378050848295/Daniel-Radcliffe-in-Kill--013.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Daniel Radcliffe in Kill Your Darlings",
+            "height":"228",
+            "credit":"Guardian",
+            "caption":"Daniel Radcliffe in Kill Your Darlings Photograph: Guardian",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/1/1378050849788/Daniel-Radcliffe-in-Kill--014.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Daniel Radcliffe in Kill Your Darlings",
+            "height":"276",
+            "credit":"Guardian",
+            "caption":"Daniel Radcliffe in Kill Your Darlings Photograph: Guardian",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/1/1378050851268/Daniel-Radcliffe-in-Kill--015.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Daniel Radcliffe in Kill Your Darlings",
+            "height":"372",
+            "credit":"Guardian",
+            "caption":"Daniel Radcliffe in Kill Your Darlings Photograph: Guardian",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/1/1378050852795/Daniel-Radcliffe-in-Kill--016.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Daniel Radcliffe in Kill Your Darlings",
+            "height":"360",
+            "credit":"Guardian",
+            "caption":"Daniel Radcliffe in Kill Your Darlings Photograph: Guardian",
+            "width":"640"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/9/1/130901Darlings-16x9.mp4",
+          "typeData":{
+            "source":"Guardian",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/1/130901Darlings_8019646.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/1/130901Darlings_8019646.jpg",
+            "width":"480",
+            "durationSeconds":"13"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/9/1/130901Darlings_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Guardian",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/1/130901Darlings_8019646.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/1/130901Darlings_8019646.jpg",
+            "width":"480",
+            "durationSeconds":"13"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/9/1/130901Darlings-720.mp4",
+          "typeData":{
+            "source":"Guardian",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/1/130901Darlings_8019646.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/1/130901Darlings_8019646.jpg",
+            "width":"480",
+            "durationSeconds":"13"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/9/1/130901Darlings/130901Darlings.m3u8",
+          "typeData":{
+            "source":"Guardian",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/1/130901Darlings_8019646.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/1/130901Darlings_8019646.jpg",
+            "width":"480",
+            "durationSeconds":"13"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/9/1/130901Darlings_vpx.webm",
+          "typeData":{
+            "source":"Guardian",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/1/130901Darlings_8019646.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/1/130901Darlings_8019646.jpg",
+            "width":"480",
+            "durationSeconds":"13"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/9/1/130901Darlings_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"Guardian",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/1/130901Darlings_8019646.jpg",
+            "height":"360",
+            "durationMinutes":"2",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/1/130901Darlings_8019646.jpg",
+            "width":"480",
+            "durationSeconds":"13"
+          }
+        }]
+      },{
+        "id":"gu-image-418045582",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/1/1378050842221/Daniel-Radcliffe-in-Kill--009.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Daniel Radcliffe in Kill Your Darlings",
+            "height":"84",
+            "credit":"Guardian",
+            "caption":"Daniel Radcliffe in Kill Your Darlings Photograph: Guardian",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"film/2013/sep/11/daniel-radcliffe-toronto-film-festival",
+      "sectionId":"film",
+      "sectionName":"Film",
+      "webPublicationDate":"2013-09-11T14:17:00Z",
+      "webTitle":"Daniel Radcliffe at the Toronto film festival: 'It's not that I feel awkward, it's that I look awkward' ",
+      "webUrl":"http://www.theguardian.com/film/2013/sep/11/daniel-radcliffe-toronto-film-festival",
+      "apiUrl":"http://content.guardianapis.com/film/2013/sep/11/daniel-radcliffe-toronto-film-festival",
+      "fields":{
+        "trailText":"<p>The former Harry Potter star arrives in Toronto with a trio of adventurous new films covering male-female friendship, gay sex and devil worship</p>",
+        "headline":"Daniel Radcliffe at the Toronto film festival: 'It's not that I feel awkward, it's that I look awkward'",
+        "body":"<p>Wallace is a hopeless deadpan dropout, a loser in love and a bumbling muddle. He is also, said Daniel Radcliffe, the character he's played who's closest to himself. \"I think this is definitely the first time I've been allowed to let more of my own personality come though. It's not that I feel awkward, it's that I <em>look</em> awkward.\"</p><p>Radcliffe was speaking to promote The F Word, a romantic comedy set in Toronto and the third film he has playing at the festival, along with Kill Your Darlings, in which he plays Allen Ginsberg and Horns, in which he plays a man accused of rape and murder who starts turning into a demon. The F Word is a hipster romcom in which Wallace finds a connection with a kooky animator played by Zoe Kazan. Rafe Spall plays her boyfriend; Adam Driver is Wallace's libidinous friend.</p><p>At the press conference for the film, Radcliffe gamely fielded questions about his own thoughts on love and sex. \"Have I got female friends?\" he said, in response to an enquiry about whether men and women could ever be pals. \"Yes. Have I slept with all of them? No.\" Radcliffe then added a \"Yet\" at the prompting of his director, Michael Dowse. </p><p>Radcliffe went on to mount a defense of monogomy. \"Hooking up is not fun. Sex is a lot more fun if you're actually enjoying the company of the person you're with.\" He also expressed surprise at being asked whether love had changed over the years. Kazan felt sex tapes had added something different, but Radcliffe pooh-poohed the theory. \"There were probably sex etchings at one point. Really hard on the artist's wrist.\"</p><p>Dowse sold the film as the \"perfect romcom … girls will come see it and boys won't throw up in their own mouths\". The film has been warmly received by north American critics, <a href=\"http://www.theguardian.com/film/2013/sep/10/f-word-daniel-radcliffe-review\">although the Guardian's Henry Barnes was less successfully wooed</a>. Radcliffe downplayed any cultural gap, saying \"I don't think Canadian humour is that different to English.\"</p><p>Radcliffe told reporters he didn't look back at his previous work, but remained conscious of its leverage. \"I wouldn't be sitting here talking to you it wasn't for Harry Potter. I'm under no illusions.\"</p><!-- Guardian Watermark: internal-code/content/417050025|2013-11-05T11:03:52Z|8f1523ac5742ab05bdb9ddf04d4a17799472e0d6 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-09-11T16:17:43Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Film/Pix/pictures/2013/9/11/1378908141062/Daniel-Radcliffe-at-Toron-003.jpg",
+        "standfirst":"The former Harry Potter star arrives in Toronto with a trio of adventurous new films covering male-female friendship, gay sex and devil worship",
+        "shortUrl":"http://gu.com/p/3tkyp",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Film/Pix/pictures/2013/9/11/1378908141062/Daniel-Radcliffe-at-Toron-003.jpg",
+        "wordcount":"367",
+        "commentable":"true",
+        "internalContentCode":"417050025",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Catherine Shoard",
+        "publication":"theguardian.com",
+        "internalPageCode":"1963789",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-09-14T14:17:00Z"
+      },
+      "tags":[{
+        "id":"film/toronto-film-festival-2013",
+        "type":"keyword",
+        "webTitle":"Toronto film festival 2013",
+        "webUrl":"http://www.theguardian.com/film/toronto-film-festival-2013",
+        "apiUrl":"http://content.guardianapis.com/film/toronto-film-festival-2013",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/torontofilmfestival",
+        "type":"keyword",
+        "webTitle":"Toronto film festival",
+        "webUrl":"http://www.theguardian.com/film/torontofilmfestival",
+        "apiUrl":"http://content.guardianapis.com/film/torontofilmfestival",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/daniel-radcliffe",
+        "type":"keyword",
+        "webTitle":"Daniel Radcliffe",
+        "webUrl":"http://www.theguardian.com/film/daniel-radcliffe",
+        "apiUrl":"http://content.guardianapis.com/film/daniel-radcliffe",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"film/film",
+        "type":"keyword",
+        "webTitle":"Film",
+        "webUrl":"http://www.theguardian.com/film/film",
+        "apiUrl":"http://content.guardianapis.com/film/film",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/comedy",
+        "type":"keyword",
+        "webTitle":"Comedy",
+        "webUrl":"http://www.theguardian.com/film/comedy",
+        "apiUrl":"http://content.guardianapis.com/film/comedy",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"profile/catherineshoard",
+        "type":"contributor",
+        "webTitle":"Catherine Shoard",
+        "webUrl":"http://www.theguardian.com/profile/catherineshoard",
+        "apiUrl":"http://content.guardianapis.com/profile/catherineshoard",
+        "bio":"<p>Catherine Shoard is Film Editor, Guardian News &amp; Media</p>",
+        "r2ContributorId":"25520",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Admin/BkFill/Default_image_group/2009/7/21/1248204422292/Catherine-Shoard-001.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417061961",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Film/Pix/pictures/2013/9/11/1378908152206/Daniel-Radcliffe-at-Toron-008.jpg",
+          "typeData":{
+            "source":"WireImage",
+            "photographer":"Peter Bregg",
+            "altText":"Daniel Radcliffe at Toronto",
+            "height":"276",
+            "credit":"Peter Bregg/WireImage",
+            "caption":"Horny boy ... Daniel Radcliffe at the Toronto premiere of Kill Your Darlings. Photograph: Peter Bregg/WireImage",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417061962",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Film/Pix/pictures/2013/9/11/1378908141062/Daniel-Radcliffe-at-Toron-003.jpg",
+          "typeData":{
+            "source":"WireImage",
+            "photographer":"Peter Bregg",
+            "altText":"Daniel Radcliffe at Toronto",
+            "height":"84",
+            "credit":"Peter Bregg/WireImage",
+            "caption":"TORONTO, CANADA - SEPTEMBER 10: Actor Daniel Radcliffe attends the premiere of \"Kill Your Darlings\" during the 2013 Toronto International Film Festival at Roy Thomson Hall on September 10, 2013 in Toronto, Canada. (Photo by Peter Bregg/WireImage)\rCelebrities\rFilm\rOne Person\rtopics\rtopix\rbestof\rtoppics\rtoppix Photograph: Peter Bregg/WireImage",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"film/2013/sep/18/daniel-radcliffe-nude-no-more",
+      "sectionId":"film",
+      "sectionName":"Film",
+      "webPublicationDate":"2013-09-18T17:44:57Z",
+      "webTitle":"Daniel Radcliffe: nude no more",
+      "webUrl":"http://www.theguardian.com/film/2013/sep/18/daniel-radcliffe-nude-no-more",
+      "apiUrl":"http://content.guardianapis.com/film/2013/sep/18/daniel-radcliffe-nude-no-more",
+      "fields":{
+        "newspaperPageNumber":"18",
+        "trailText":"What's the best way to shake off a wholesome image? Take your clothes off – as Daniel Radcliffe well knows. So why is the one-time boy wizard now saying no to nudity, asks <strong>Ryan Gilbey</strong>",
+        "headline":"Daniel Radcliffe: nude no more",
+        "body":"<p>As London Fashion Week draws to a close, it seems a good time to ask what some of the finest actors are wearing this season. And the answer appears to be: nothing. From Scarlett Johansson's copious under-the-clothes scenes in <a href=\"http://www.theguardian.com/film/2013/sep/03/under-the-skin-review\" title=\"\">Under the Skin</a> to Jack O'Connell tackling the tackle-out, full-frontal shot with abandon in the prison drama <a href=\"http://www.youtube.com/watch?v=c_6tVSbFtrI\" title=\"\">Starred Up</a>, the emphasis is firmly on what not to wear. One of the common factors in many acclaimed new films is a willingness to confront nakedness without the usual strategically placed prop to spare an actor's blushes. <a href=\"http://www.theguardian.com/film/2013/may/30/blue-warmest-colour-porn-julie-maroh\" title=\"\">Blue Is the Warmest Colour</a> grabbed headlines not only for scooping the Palme d'Or at Cannes this year, but for the explicit sex scenes between its stars, Léa Seydoux and the 19-year-old newcomer Adèle Exarchopoulos. And Steve McQueen's <a href=\"http://www.theguardian.com/film/movie/156376/12-years-a-slave\" title=\"\">12 Years a Slave</a> finds room for some blink-and-you-miss-it nudity from <a href=\"http://www.theguardian.com/culture/chiwetel-ejiofor\" title=\"\">Chiwetel Ejiofor</a>; that passes for restraint after McQueen's last film, Shame, where there was no limit to what viewers saw of <a href=\"http://www.theguardian.com/film/michael-fassbender\" title=\"\">Michael Fassbender</a>. You might say the actor gave him an inch and McQueen took a&nbsp;mile.</p><p>But one brave soul has made a stand this week against derobing (well, at least his own). After back-to-back movies that have shown him without his invisibility cloak, or clothes of any sort, the Harry Potter star <a href=\"http://www.theguardian.com/film/daniel-radcliffe\" title=\"\">Daniel Radcliffe</a> has decided to place himself back under wraps. In 2007, he appeared naked in horse obsession drama <a href=\"http://www.theguardian.com/stage/2007/feb/28/theatre1\" title=\"\">Equus</a>, while this year alone he shot three pictures that left nothing to the imagination, including <a href=\"http://www.theguardian.com/film/video/2013/sep/01/venice-film-festival-kill-your-darlings-finds-right-beat-video\" title=\"\">Kill Your Darlings</a>, in which he plays the gay beat poet Allen Ginsberg. Talking about his upcoming second season of the Sky series <a href=\"http://www.theguardian.com/tv-and-radio/video/2012/nov/28/radcliffe-hamm-young-doctors-notebook-video\" title=\"\">A Young Doctor's Notebook, in which he co-stars with Mad Men's Jon Hamm</a>, Radcliffe said: \"I think there was a discussion about possible nudity for one scene and I think my comment was, 'I got naked in three films last year, please can I not?' At some point, everyone's going to start assuming I'm an exhibitionist.\"</p><p>The nude scene in cinema can serve any number of purposes, artistic or commercial. It can be titillating bait for otherwise unwilling viewers, or a stamp of authenticity: a kite-mark for the art-house crowd. (In fact, it can be both at once: not for nothing is there an overlap between arthouse audiences and what was once quaintly known as the \"dirty mac brigade\".) But for an actor, it can serve notice of a&nbsp;career change, a maturing.</p><p>The trouble is that Radcliffe's nudity has not yet had the desired effect on his wholesome image. A persona, after all, can be an awfully hard thing to kill off. When <a href=\"http://www.theguardian.com/science/2009/oct/22/julie-andrews-synthetic-vocal-cords\" title=\"\">Julie Andrews</a> exposed her breasts in the 1981 showbiz satire SOB, it amounted to a virtual assassination attempt on her Sound of Music image. But any hoped-for outrage simply refused to materialise. In withdrawing our peeping privileges, Radcliffe seems to have recognised that he risks being caught in a cleft stick: having gone too far in revealing himself without making the much-needed gains in credibility, he now has to relent before his nakedness becomes a running joke. It echoes the gag that Paul Kaye's spoof celebrity pest <a href=\"http://www.youtube.com/watch?v=f-RttNgkaAs\" title=\"\">Dennis Pennis</a> once threw at Demi Moore: if it wasn't gratuitous and it was tastefully done, might Radcliffe consider keeping his clothes on?</p><p>If it's unusual for a male star to find himself in this position, then that speaks volumes about the paucity of male nudity on our screens, at least in English-language cinema. In the 1970s and 1980s, before the advent of no-nudity clauses in contracts, the female body was essentially up for grabs: it was a given that whether it was <a href=\"http://www.theguardian.com/film/michelangeloantonioni\" title=\"\">Antonioni</a> or <a href=\"http://www.theguardian.com/film/movie/132134/animal-house\" title=\"\">Animal House</a>, there would be ample female nudity. This left many women in a misogynistic bind in which they were punished for playing the game. The most obvious example is <a href=\"http://www.theguardian.com/culture/helen-mirren\" title=\"\">Helen Mirren</a>: witness the treatment of her by <a href=\"http://www.youtube.com/watch?v=gmlP_cFOoAM\" title=\"\">Michael Parkinson during his infamous 1975 interview in which he introduces her with the words \"sluttish eroticism\" and goes straight into a discussion of whether her \"equipment\" stops her being taken seriously</a>. \"He completely denies to this day he was being sexist,\" she told me in 2011. \"You can tell when he looks at me that there's all this interference getting in the way of what he's seeing.\"</p><p><a href=\"http://www.theguardian.com/theobserver/2008/jul/20/15\" title=\"\">Greta Scacchi</a> is another actor whose willingness to perform nude scenes somehow worked against her. In 1991, <a href=\"http://www.theguardian.com/film/robertaltman\" title=\"\">Robert Altman</a> tried to make her shoot nude scenes in his film <a href=\"http://www.theguardian.com/film/movie/80857/player\" title=\"\">The Player</a>. She refused, and the resulting restraint was acclaimed by critics. Altman, who had instead persuaded the unknown Cynthia Stevenson to play a topless scene in the same film, spun the situation to his own benefit: he claimed he had frustrated the audience's expectations by keeping clothed the performer they had expected to see naked, while revealing the unfamiliar co-star. Such situations are neither in the past nor limited to male directors. <a href=\"http://www.theguardian.com/film/2011/sep/09/olivia-colman-tyrannosaur-paddy-considine\" title=\"\">Olivia Colman told this paper of her mortification at being shown naked in the 2006 comedy Confetti, directed by Debbie Isitt.</a> \"The betrayal was how much was going to be seen and what was going to be pixelated,\" she said. \"I&nbsp;would not willingly show anybody my muff unless I'm married to them and I love them and they love me.\"</p><p>Though on-screen nudity of either gender is no longer as casual as it once was, it's refreshing that it's Radcliffe, rather than a female performer, who has raised this subject now. This year, after all, saw the release of <a href=\"http://www.theguardian.com/film/movie/92543/trance\" title=\"\">Danny Boyle's Trance</a>, which was deeply suspect on the matter of nudity: <a href=\"http://www.theguardian.com/film/rosario-dawson\" title=\"\">Rosario Dawson</a> was required to be not only fully naked but divested of her pubic hair, while <a href=\"http://www.theguardian.com/film/jamesmcavoy\" title=\"\">James McAvoy</a> and <a href=\"http://www.theguardian.com/film/vincent-cassel\" title=\"\">Vincent Cassel</a> played \"nude\" scenes that were in fact nothing of the sort. It's good, for once, to see a man wondering what else an actor might be relinquishing in the act of shedding&nbsp;clothes.</p><!-- Guardian Watermark: internal-code/content/417670081|2013-11-05T11:03:52Z|f44f3f72f53fe5287be328a387d4abdc0b0cb26b -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-09-18T23:05:20Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/18/1379525213216/Daniel-Radcliffe-in-Equus-005.jpg",
+        "standfirst":"What's the best way to shake off a wholesome image? Take your clothes off – as Daniel Radcliffe well knows. So why is the one-time boy wizard now saying no to nudity?",
+        "shortUrl":"http://gu.com/p/3tq28",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/18/1379525213216/Daniel-Radcliffe-in-Equus-005.jpg",
+        "wordcount":"976",
+        "commentable":"true",
+        "internalContentCode":"417670081",
+        "allowUgc":"false",
+        "internalOctopusCode":"8089693",
+        "isPremoderated":"false",
+        "byline":"Ryan Gilbey",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-09-19",
+        "internalPageCode":"1967633",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-09-26T17:25:00Z"
+      },
+      "tags":[{
+        "id":"film/daniel-radcliffe",
+        "type":"keyword",
+        "webTitle":"Daniel Radcliffe",
+        "webUrl":"http://www.theguardian.com/film/daniel-radcliffe",
+        "apiUrl":"http://content.guardianapis.com/film/daniel-radcliffe",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/film",
+        "type":"keyword",
+        "webTitle":"Film",
+        "webUrl":"http://www.theguardian.com/film/film",
+        "apiUrl":"http://content.guardianapis.com/film/film",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"profile/ryangilbey",
+        "type":"contributor",
+        "webTitle":"Ryan Gilbey",
+        "webUrl":"http://www.theguardian.com/profile/ryangilbey",
+        "apiUrl":"http://content.guardianapis.com/profile/ryangilbey",
+        "bio":"<p>Ryan Gilbey is film critic of the New Statesman and writes on film for the Guardian, Sunday Times and Sight &amp; Sound</p>",
+        "r2ContributorId":"25456",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/5/4/1304527589092/ryan_gilby.jpg",
+        "references":[]
+      },{
+        "id":"stage/theatre",
+        "type":"keyword",
+        "webTitle":"Theatre",
+        "webUrl":"http://www.theguardian.com/stage/theatre",
+        "apiUrl":"http://content.guardianapis.com/stage/theatre",
+        "sectionId":"stage",
+        "sectionName":"Stage",
+        "references":[]
+      },{
+        "id":"stage/stage",
+        "type":"keyword",
+        "webTitle":"Stage",
+        "webUrl":"http://www.theguardian.com/stage/stage",
+        "apiUrl":"http://content.guardianapis.com/stage/stage",
+        "sectionId":"stage",
+        "sectionName":"Stage",
+        "references":[]
+      },{
+        "id":"theguardian/g2/arts",
+        "type":"newspaper-book-section",
+        "webTitle":"Arts",
+        "webUrl":"http://www.theguardian.com/theguardian/g2/arts",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2/arts",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"theguardian/g2",
+        "type":"newspaper-book",
+        "webTitle":"G2",
+        "webUrl":"http://www.theguardian.com/theguardian/g2",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417670813",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/18/1379525209084/Daniel-Radcliffe-in-Equus-002.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Daniel Radcliffe in Equus",
+            "height":"54",
+            "credit":"PR",
+            "caption":"… Daniel Radcliffe in Equus",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/18/1379525210280/Daniel-Radcliffe-in-Equus-003.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Daniel Radcliffe in Equus",
+            "height":"340",
+            "credit":"PR",
+            "caption":"… Daniel Radcliffe in Equus",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/18/1379525211620/Daniel-Radcliffe-in-Equus-004.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Daniel Radcliffe in Equus",
+            "height":"130",
+            "credit":"PR",
+            "caption":"… Daniel Radcliffe in Equus",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/18/1379525213216/Daniel-Radcliffe-in-Equus-005.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Daniel Radcliffe in Equus",
+            "height":"84",
+            "credit":"PR",
+            "caption":"… Daniel Radcliffe in Equus",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/18/1379525214414/Daniel-Radcliffe-in-Equus-006.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Daniel Radcliffe in Equus",
+            "height":"132",
+            "credit":"PR",
+            "caption":"… Daniel Radcliffe in Equus",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/18/1379525215777/Daniel-Radcliffe-in-Equus-007.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Daniel Radcliffe in Equus",
+            "height":"168",
+            "credit":"PR",
+            "caption":"… Daniel Radcliffe in Equus",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/18/1379525217019/Daniel-Radcliffe-in-Equus-008.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Daniel Radcliffe in Equus",
+            "height":"180",
+            "credit":"PR",
+            "caption":"… Daniel Radcliffe in Equus",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/18/1379525218321/Daniel-Radcliffe-in-Equus-009.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Daniel Radcliffe in Equus",
+            "height":"228",
+            "credit":"PR",
+            "caption":"… Daniel Radcliffe in Equus",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/18/1379525219652/Daniel-Radcliffe-in-Equus-010.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Daniel Radcliffe in Equus",
+            "height":"276",
+            "credit":"PR",
+            "caption":"… Daniel Radcliffe in Equus",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/18/1379525220908/Daniel-Radcliffe-in-Equus-011.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Daniel Radcliffe in Equus",
+            "height":"372",
+            "credit":"PR",
+            "caption":"… Daniel Radcliffe in Equus",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/18/1379525219652/Daniel-Radcliffe-in-Equus-010.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Daniel Radcliffe in Equus",
+            "height":"276",
+            "credit":"PR",
+            "caption":"Horse obsessions … Daniel Radcliffe in Equus",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417670814",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Arts/Arts_/Pictures/2013/9/18/1379525213216/Daniel-Radcliffe-in-Equus-005.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Daniel Radcliffe in Equus",
+            "height":"84",
+            "credit":"PR",
+            "caption":"… Daniel Radcliffe in Equus",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"film/2013/sep/25/daniel-radcliffe-freddie-mercury-deny",
+      "sectionId":"film",
+      "sectionName":"Film",
+      "webPublicationDate":"2013-09-25T08:56:16Z",
+      "webTitle":"Daniel Radcliffe shoots down Freddie Mercury casting rumours",
+      "webUrl":"http://www.theguardian.com/film/2013/sep/25/daniel-radcliffe-freddie-mercury-deny",
+      "apiUrl":"http://content.guardianapis.com/film/2013/sep/25/daniel-radcliffe-freddie-mercury-deny",
+      "fields":{
+        "trailText":"<p>The former Harry Potter star has denied that he is to step into Sacha Baron Cohen's shoes as the lead in a biopic of the late Queen singer</p>",
+        "headline":"Daniel Radcliffe shoots down Freddie Mercury casting rumours",
+        "body":"<p>Harry Potter star Daniel Radcliffe has <a href=\"http://www.empireonline.com/news/story.asp?NID=38854\">denied reports </a>he will play the late Queen singer Freddie Mercury in a new biopic.</p><p>Radcliffe had emerged as a favourite with bookmakers to take the high-profile role following a report in the Daily Star. But he told Empire's podcast there was \"no truth\" in the rumour.</p><p>He said: \"Everyone on the internet who I presume is saying I'm totally wrong for that part is correct. I <em>am</em> completely wrong for that part!</p><p>\"If I'd seen a rumour about me playing Iggy Pop, I'd think, 'Hey, I'd have a go at that - that'd be fun!', but Freddie Mercury? No. I don't even know who the director is. They seem to be saying it's Stephen Frears and Tom Hooper on the internet.</p><p>\"This is the kind of thing that happens to me and it happens to Emma (Watson) with multiple 50 Shades Of Grey things. When somebody has column inches to fill, they just sub in one of our names.\"</p><p>Radcliffe had been <a href=\"http://www.theguardian.com/film/2013/jul/23/sacha-baron-cohen-queen-freddie-mercury\">(spuriously) tipped </a>to replace Sacha Baron Cohen in the planned biopic, the latter reportedly having exited over his desire for a racy \"warts and all\" portrayal of the flamboyant singer. Mercury's erstwhile bandmates are said to be planning a more \"family-friendly\" approach.</p><p><a href=\"http://www.theguardian.com/film/2013/jul/23/sacha-baron-cohen-queen-freddie-mercury\">• News: Sacha Baron Cohen quits Mercury biopic</a></p><!-- Guardian Watermark: internal-code/content/418213008|2013-11-05T11:03:52Z|4a852234506ce1afd65ce2f6d90f2d47ec455100 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-09-25T08:56:16Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2011/11/8/1320777082512/Daniel-Radcliffe-003.jpg",
+        "standfirst":"The former Harry Potter star has denied that he is <a href=\"http://www.theguardian.com/film/2013/sep/23/daniel-radcliffe-freddie-mercury-sacha-baron-cohen\">to step into Sacha Baron Cohen's shoes</a> as the lead in a biopic of the late Queen singer",
+        "shortUrl":"http://gu.com/p/3j34f",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2011/11/8/1320777082512/Daniel-Radcliffe-003.jpg",
+        "wordcount":"213",
+        "commentable":"true",
+        "internalContentCode":"418213008",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Ben Child",
+        "publication":"theguardian.com",
+        "internalPageCode":"1970610",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-09-28T08:56:16Z"
+      },
+      "tags":[{
+        "id":"film/daniel-radcliffe",
+        "type":"keyword",
+        "webTitle":"Daniel Radcliffe",
+        "webUrl":"http://www.theguardian.com/film/daniel-radcliffe",
+        "apiUrl":"http://content.guardianapis.com/film/daniel-radcliffe",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/film",
+        "type":"keyword",
+        "webTitle":"Film",
+        "webUrl":"http://www.theguardian.com/film/film",
+        "apiUrl":"http://content.guardianapis.com/film/film",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"music/freddie-mercury",
+        "type":"keyword",
+        "webTitle":"Freddie Mercury",
+        "webUrl":"http://www.theguardian.com/music/freddie-mercury",
+        "apiUrl":"http://content.guardianapis.com/music/freddie-mercury",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"film/sachabaroncohen",
+        "type":"keyword",
+        "webTitle":"Sacha Baron Cohen",
+        "webUrl":"http://www.theguardian.com/film/sachabaroncohen",
+        "apiUrl":"http://content.guardianapis.com/film/sachabaroncohen",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"profile/benchild",
+        "type":"contributor",
+        "webTitle":"Ben Child",
+        "webUrl":"http://www.theguardian.com/profile/benchild",
+        "apiUrl":"http://content.guardianapis.com/profile/benchild",
+        "bio":"<p>Ben Child is a journalist, DJ and producer whose main interests lie in the worlds of film and music</p>",
+        "r2ContributorId":"24984",
+        "references":[]
+      },{
+        "id":"music/queen",
+        "type":"keyword",
+        "webTitle":"Queen",
+        "webUrl":"http://www.theguardian.com/music/queen",
+        "apiUrl":"http://content.guardianapis.com/music/queen",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418213009",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2011/11/8/1320777086089/Daniel-Radcliffe-007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Taylor Hill",
+            "altText":"Daniel Radcliffe",
+            "height":"276",
+            "credit":"Taylor Hill/Getty Images",
+            "caption":"Cast iron fact: Radcliffe isn't Mercury. Photograph: Taylor Hill/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418213010",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2011/11/8/1320777082512/Daniel-Radcliffe-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Taylor Hill",
+            "altText":"Daniel Radcliffe",
+            "height":"84",
+            "credit":"Taylor Hill/Getty Images",
+            "caption":"Harry Potter actor Daniel Radcliffe's parents were among the targets of the surveillance, according to private detective Derek Webb.  Photograph: Taylor Hill/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"film/2013/oct/11/daniel-radcliffe-harry-potter-jk-rowling-fantastic-beasts",
+      "sectionId":"film",
+      "sectionName":"Film",
+      "webPublicationDate":"2013-10-11T09:26:07Z",
+      "webTitle":"Daniel Radcliffe says Harry Potter cameo in Fantastic Beasts not ruled out",
+      "webUrl":"http://www.theguardian.com/film/2013/oct/11/daniel-radcliffe-harry-potter-jk-rowling-fantastic-beasts",
+      "apiUrl":"http://content.guardianapis.com/film/2013/oct/11/daniel-radcliffe-harry-potter-jk-rowling-fantastic-beasts",
+      "fields":{
+        "trailText":"<p>Wizarding schoolboy's appearance in JK Rowling film based on Potter textbook not likely, but not impossible</p>",
+        "headline":"Daniel Radcliffe says Harry Potter cameo in Fantastic Beasts not ruled out",
+        "body":"<p>Daniel Radcliffe has <a href=\"http://www.hollywoodreporter.com/news/jk-rowlings-fantastic-beasts-will-646374\">said he would not rule out a cameo as Harry Potter </a>in JK Rowling's forthcoming big screen return to witchcraft and wizardry, Fantastic Beasts and Where to Find Them.</p><p>Radcliffe told the Hollywood Reporter he could not imagine himself returning and had heard about the new film series from a reporter. Nevertheless, he would wait and see what Rowling comes up with for her debut screenplay before making a final decision.</p><p>\"I don't think I'm going to be coming back\", said Radcliffe. \"We can't be doing these characters when we're 40, so there has to be a line drawn.\"</p><p>But he refused to rule out an appearance, \"because I never know what Jo [Rowling] is going to write, [though] at the moment I'm in the same position that everyone else is in - waiting to hear what information is coming out because I don't know anything about these new films.\"</p><p>Radcliffe had previously said he and his co-stars Rupert Grint and Emma Watson would probably not be returning to Hogwarts for Beasts, which is set 70 years prior to the arrival of Harry, Ron and Hermione at the magical school. Now the actor, currently promoting his role as the poet Allen Ginsberg in <a href=\"http://www.theguardian.com/film/movie/156989/kill-your-darlings\">Kill Your Darlings</a>, says he might just be in line to return if \"time travel rears its head again\", adding: \"I'll be intrigued to see what she does.\"</p><p>Warner Bros, the studio behind the Potter films, announced it is working on a new series with Rowling last month. Fantastic Beasts' title is borrowed from the first-year textbook that Potter uses at Hogwarts in the novel Harry Potter and the Philosopher's Stone. Rowling published the \"magizoology\" compendium in 2001 to raise money for the charity Comic Relief; the films will feature the book's ostensible author, the swashbuckling adventurer Newt Scamander.</p><!-- Guardian Watermark: internal-code/content/419685624|2013-11-05T11:03:52Z|1d30b590e2128ee9f011ea19ecd983fb3655af56 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-11T09:26:07Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Media/Pix/pictures/2012/5/18/1337336413327/Daniel-Radcliffe-003.jpg",
+        "standfirst":"Wizarding schoolboy's appearance in JK Rowling film based on Potter textbook not likely, but not impossible<br /><br /><a href=\"http://www.theguardian.com/film/2013/sep/25/daniel-radcliffe-freddie-mercury-deny\">• Daniel Radcliffe shoots down Freddie Mercury casting rumours</a><br /><a href=\"http://www.theguardian.com/film/2013/sep/12/harry-potter-jk-rowling-fantastic-beasts-film\">• Fantastic Beasts carry Harry Potter back to the silver screen</a>",
+        "shortUrl":"http://gu.com/p/3jf5y",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2012/5/18/1337336413327/Daniel-Radcliffe-003.jpg",
+        "wordcount":"300",
+        "commentable":"true",
+        "internalContentCode":"419685624",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Ben Child",
+        "publication":"theguardian.com",
+        "internalPageCode":"1979391",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-14T09:26:07Z"
+      },
+      "tags":[{
+        "id":"film/film",
+        "type":"keyword",
+        "webTitle":"Film",
+        "webUrl":"http://www.theguardian.com/film/film",
+        "apiUrl":"http://content.guardianapis.com/film/film",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/daniel-radcliffe",
+        "type":"keyword",
+        "webTitle":"Daniel Radcliffe",
+        "webUrl":"http://www.theguardian.com/film/daniel-radcliffe",
+        "apiUrl":"http://content.guardianapis.com/film/daniel-radcliffe",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/harrypotter",
+        "type":"keyword",
+        "webTitle":"Harry Potter",
+        "webUrl":"http://www.theguardian.com/film/harrypotter",
+        "apiUrl":"http://content.guardianapis.com/film/harrypotter",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"books/jkrowling",
+        "type":"keyword",
+        "webTitle":"JK Rowling",
+        "webUrl":"http://www.theguardian.com/books/jkrowling",
+        "apiUrl":"http://content.guardianapis.com/books/jkrowling",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"film/film-adaptations",
+        "type":"keyword",
+        "webTitle":"Film adaptations",
+        "webUrl":"http://www.theguardian.com/film/film-adaptations",
+        "apiUrl":"http://content.guardianapis.com/film/film-adaptations",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/sciencefictionandfantasy",
+        "type":"keyword",
+        "webTitle":"Science fiction and fantasy",
+        "webUrl":"http://www.theguardian.com/film/sciencefictionandfantasy",
+        "apiUrl":"http://content.guardianapis.com/film/sciencefictionandfantasy",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"profile/benchild",
+        "type":"contributor",
+        "webTitle":"Ben Child",
+        "webUrl":"http://www.theguardian.com/profile/benchild",
+        "apiUrl":"http://content.guardianapis.com/profile/benchild",
+        "bio":"<p>Ben Child is a journalist, DJ and producer whose main interests lie in the worlds of film and music</p>",
+        "r2ContributorId":"24984",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419686452",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2012/5/18/1337336419757/Daniel-Radcliffe-008.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Andrew Kelly",
+            "altText":"Daniel Radcliffe",
+            "height":"276",
+            "credit":"Andrew Kelly/Reuters",
+            "caption":"Waiting to hear ... Daniel Radcliffe. Photograph: Andrew Kelly/Reuters",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419686453",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2012/5/18/1337336413327/Daniel-Radcliffe-003.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Andrew Kelly",
+            "altText":"Daniel Radcliffe",
+            "height":"84",
+            "credit":"Andrew Kelly/Reuters",
+            "caption":"Daniel Radcliffe Photograph: Andrew Kelly/Reuters",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"film/2013/oct/23/daniel-radcliffe-britain-s-richest-young-celebrity",
+      "sectionId":"film",
+      "sectionName":"Film",
+      "webPublicationDate":"2013-10-23T08:58:12Z",
+      "webTitle":"Daniel Radcliffe named Britain's richest 'young celebrity'",
+      "webUrl":"http://www.theguardian.com/film/2013/oct/23/daniel-radcliffe-britain-s-richest-young-celebrity",
+      "apiUrl":"http://content.guardianapis.com/film/2013/oct/23/daniel-radcliffe-britain-s-richest-young-celebrity",
+      "fields":{
+        "trailText":"<p>Harry Potter star is highest ranked individual in magazine survey of monetary value of under-30s</p>",
+        "headline":"Daniel Radcliffe named Britain's richest 'young celebrity'",
+        "body":"<p>Harry Potter actor Daniel Radcliffe is Britain's richest \"young celebrity\", <a href=\"http://www.heatworld.com/Celeb-News/2013/10/Find-out-who-Britains-richest-young-celebrities-are-in-the-heat-Rich-List-2013/#image-30\">according to a survey conducted by Heat magazine</a>. Although Radcliffe – whose net worth is estimated at £56.18m – is second on Heat's list, only the combined value of the four-strong band One Direction (£59.33m) outdoes him, making Radcliffe the highest placed individual.</p><p>The other high entries on Heat's Rich List – confined to those under 30 – are also dominated by film actors. Radcliffe's Harry Potter co-stars Emma Watson and Rupert Grint are at 5th and 7th respectively, with £27.93m and £24.08m. Twilight star Robert Pattinson is just behind Radcliffe with £44.16m, and Keira Knightley is the highest placed woman, with £37.28m at number 4. </p><p>Music figures Adele (£27.54m, number 6), Calvin Harris (£22.2m, number 8), Cheryl Cole (£15.5m, number 9) and Leona Lewis (£14.45m) fill out the rest of the top 10.</p><h2>Toronto 2013</h2><p>Reviews of Radcliffe in <a href=\"http://www.theguardian.com/film/2013/sep/10/f-word-daniel-radcliffe-review\">The F Word</a> and <a href=\"http://www.theguardian.com/film/2013/sep/07/horns-review-daniel-radcliffe-toronto\">Horns</a></p><!-- Guardian Watermark: internal-code/content/420728654|2013-11-05T11:03:52Z|1bde8f24bc784b962276c37ce405848bc32a5019 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-23T08:58:12Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2011/11/8/1320777082512/Daniel-Radcliffe-003.jpg",
+        "standfirst":"Harry Potter star is highest ranked individual in magazine survey of monetary value of under-30s<br /><br /><a href=\"http://www.theguardian.com/film/2013/oct/11/daniel-radcliffe-harry-potter-jk-rowling-fantastic-beasts\">• Daniel Radcliffe says Harry Potter cameo in Fantastic Beasts not ruled out</a><br /><a href=\"http://www.theguardian.com/film/2013/sep/18/daniel-radcliffe-nude-no-more\">• Daniel Radcliffe: nude no more</a>",
+        "shortUrl":"http://gu.com/p/3jn79",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2011/11/8/1320777082512/Daniel-Radcliffe-003.jpg",
+        "wordcount":"152",
+        "commentable":"true",
+        "internalContentCode":"420728654",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Andrew Pulver",
+        "publication":"theguardian.com",
+        "internalPageCode":"1985265",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-26T08:58:12Z"
+      },
+      "tags":[{
+        "id":"film/film",
+        "type":"keyword",
+        "webTitle":"Film",
+        "webUrl":"http://www.theguardian.com/film/film",
+        "apiUrl":"http://content.guardianapis.com/film/film",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/daniel-radcliffe",
+        "type":"keyword",
+        "webTitle":"Daniel Radcliffe",
+        "webUrl":"http://www.theguardian.com/film/daniel-radcliffe",
+        "apiUrl":"http://content.guardianapis.com/film/daniel-radcliffe",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/keiraknightley",
+        "type":"keyword",
+        "webTitle":"Keira Knightley",
+        "webUrl":"http://www.theguardian.com/film/keiraknightley",
+        "apiUrl":"http://content.guardianapis.com/film/keiraknightley",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/emma-watson",
+        "type":"keyword",
+        "webTitle":"Emma Watson",
+        "webUrl":"http://www.theguardian.com/film/emma-watson",
+        "apiUrl":"http://content.guardianapis.com/film/emma-watson",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/robert-pattinson",
+        "type":"keyword",
+        "webTitle":"Robert Pattinson",
+        "webUrl":"http://www.theguardian.com/film/robert-pattinson",
+        "apiUrl":"http://content.guardianapis.com/film/robert-pattinson",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"money/money",
+        "type":"keyword",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/money/money",
+        "apiUrl":"http://content.guardianapis.com/money/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/andrewpulver",
+        "type":"contributor",
+        "webTitle":"Andrew Pulver",
+        "webUrl":"http://www.theguardian.com/profile/andrewpulver",
+        "apiUrl":"http://content.guardianapis.com/profile/andrewpulver",
+        "bio":"<p>Andrew Pulver is Film editor, guardian.co.uk</p>",
+        "rcsId":"GNL004602",
+        "r2ContributorId":"15370",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/23/1345733137119/AndrewPulver.jpg",
+        "references":[]
+      },{
+        "id":"media/magazines",
+        "type":"keyword",
+        "webTitle":"Magazines",
+        "webUrl":"http://www.theguardian.com/media/magazines",
+        "apiUrl":"http://content.guardianapis.com/media/magazines",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.theguardian.com/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420732186",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2011/11/8/1320777086089/Daniel-Radcliffe-007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Taylor Hill",
+            "altText":"Daniel Radcliffe",
+            "height":"276",
+            "credit":"Taylor Hill/Getty Images",
+            "caption":"Sitting pretty ... Daniel Radcliffe. Photograph: Taylor Hill/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-420732187",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2011/11/8/1320777082512/Daniel-Radcliffe-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Taylor Hill",
+            "altText":"Daniel Radcliffe",
+            "height":"84",
+            "credit":"Taylor Hill/Getty Images",
+            "caption":"Harry Potter actor Daniel Radcliffe's parents were among the targets of the surveillance, according to private detective Derek Webb.  Photograph: Taylor Hill/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"film/2013/oct/30/daniel-radcliffe-sebastian-coe-steve-ovett-gold-film",
+      "sectionId":"film",
+      "sectionName":"Film",
+      "webPublicationDate":"2013-10-30T11:35:00Z",
+      "webTitle":"Daniel Radcliffe to play Sebastian Coe in athletics drama",
+      "webUrl":"http://www.theguardian.com/film/2013/oct/30/daniel-radcliffe-sebastian-coe-steve-ovett-gold-film",
+      "apiUrl":"http://content.guardianapis.com/film/2013/oct/30/daniel-radcliffe-sebastian-coe-steve-ovett-gold-film",
+      "fields":{
+        "trailText":"<p>Coe's long-running track rivalry with fellow middle-distance runner Steve Ovett to be focus of Gold</p>",
+        "headline":"Daniel Radcliffe to play Sebastian Coe in athletics drama",
+        "body":"<p>Daniel Radcliffe will play double gold medallist Sebastian Coe in a sporting biopic detailing the British middle distance runner's battles with rival Steve Ovett, <a href=\"http://www.screendaily.com/news/daniel-radcliffe-to-play-sebastian-coe/5063052.article?blocktitle=AFM-News&amp;contentID=1480\">reports Screen Daily</a>.</p><p>The Harry Potter star will reunite with James Watkins, director of last year's supernatural box office hit The Woman in Black, on Gold. Producers have not yet cast Ovett, who was Coe's main British rival in the years leading up to the 1980 Moscow Olympics. Slumdog Millionaire's Oscar-winning writer Simon Beaufoy has written the screenplay with How to Train Your Dragon's Will Davies.</p><p>Coe and Ovett were fierce rivals from their junior days, but rarely raced each other at the pinnacle of their respective careers. Prior to the Moscow Olympics they were recognised as two of the fastest middle distance runners in the world, with Coe favouring the 800m and Ovett the 1500m. Yet on the day, it was Ovett who took gold in the shorter distance, while Coe triumphed over the longer race. Four years later in Los Angeles, Coe took silver in the 800m and retained his 1,500m gold. Ovett, crippled by respiratory problems, was unable to offer serious competition.</p><p>Coe went on to be a Conservative MP, and oversaw last year's hugely successful London Olympics. The former world record holder at 800m and 1500m was made a life peer in 2000. Ovett retired from athletics in 1991 and now live in Australia.</p><p>Gold, which has been developed by BBC Films, the BFI and AL Films, is due to shoot in the UK and Russia in April next year. Christine Langan of BBC Films told Screen Daily: \"Compelling, funny and moving, Gold is a gem of a story and BBC Films is proud to be participating in bringing it to an international audience.\"</p><p><a href=\"http://www.theguardian.com/film/2013/oct/23/daniel-radcliffe-britain-s-richest-young-celebrity\">• Daniel Radcliffe named Britain's richest 'young celebrity'</a><br /><a href=\"http://www.theguardian.com/film/2013/sep/18/daniel-radcliffe-nude-no-more\">• Daniel Radcliffe: nude no more</a></p><!-- Guardian Watermark: internal-code/content/421275893|2013-11-05T11:03:52Z|8092e702c8993d750f25ad1cbbd1e4ce809c9994 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-30T14:30:04Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/4/18/1334747157522/Steve-Ovett--Sebastian-Co-003.jpg",
+        "standfirst":"Coe's long-running track rivalry with fellow middle-distance runner Steve Ovett to be focus of Gold<br /><br /><a href=\"http://www.theguardian.com/film/2013/oct/23/daniel-radcliffe-britain-s-richest-young-celebrity\">• Daniel Radcliffe named Britain's richest 'young celebrity'</a><br /><a href=\"http://www.theguardian.com/film/2013/sep/18/daniel-radcliffe-nude-no-more\">• Daniel Radcliffe: nude no more</a>",
+        "shortUrl":"http://gu.com/p/3kxbv",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/4/18/1334747157522/Steve-Ovett--Sebastian-Co-003.jpg",
+        "wordcount":"300",
+        "commentable":"true",
+        "internalContentCode":"421275893",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Ben Child",
+        "publication":"theguardian.com",
+        "internalPageCode":"1989009",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-02T11:35:00Z"
+      },
+      "tags":[{
+        "id":"film/daniel-radcliffe",
+        "type":"keyword",
+        "webTitle":"Daniel Radcliffe",
+        "webUrl":"http://www.theguardian.com/film/daniel-radcliffe",
+        "apiUrl":"http://content.guardianapis.com/film/daniel-radcliffe",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/film",
+        "type":"keyword",
+        "webTitle":"Film",
+        "webUrl":"http://www.theguardian.com/film/film",
+        "apiUrl":"http://content.guardianapis.com/film/film",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"sport/sebastian-coe",
+        "type":"keyword",
+        "webTitle":"Lord Coe",
+        "webUrl":"http://www.theguardian.com/sport/sebastian-coe",
+        "apiUrl":"http://content.guardianapis.com/sport/sebastian-coe",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/athletics",
+        "type":"keyword",
+        "webTitle":"Athletics",
+        "webUrl":"http://www.theguardian.com/sport/athletics",
+        "apiUrl":"http://content.guardianapis.com/sport/athletics",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"film/drama",
+        "type":"keyword",
+        "webTitle":"Drama",
+        "webUrl":"http://www.theguardian.com/film/drama",
+        "apiUrl":"http://content.guardianapis.com/film/drama",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"sport/olympic-games",
+        "type":"keyword",
+        "webTitle":"Olympic Games",
+        "webUrl":"http://www.theguardian.com/sport/olympic-games",
+        "apiUrl":"http://content.guardianapis.com/sport/olympic-games",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"profile/benchild",
+        "type":"contributor",
+        "webTitle":"Ben Child",
+        "webUrl":"http://www.theguardian.com/profile/benchild",
+        "apiUrl":"http://content.guardianapis.com/profile/benchild",
+        "bio":"<p>Ben Child is a journalist, DJ and producer whose main interests lie in the worlds of film and music</p>",
+        "r2ContributorId":"24984",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421296097",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/4/18/1334747163174/Steve-Ovett--Sebastian-Co-008.jpg",
+          "typeData":{
+            "source":"Sipa Press/Rex Features",
+            "altText":"Steve Ovett & Sebastian Coe",
+            "height":"276",
+            "credit":"Sipa Press/Rex Features",
+            "caption":"Steve Ovett, left, wins gold in the 800m ahead of Sebastian Coe in the 1980 Moscow Games. Photograph: Sipa Press/Rex Features",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421296098",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/4/18/1334747157522/Steve-Ovett--Sebastian-Co-003.jpg",
+          "typeData":{
+            "source":"Sipa Press/Rex Features",
+            "altText":"Steve Ovett & Sebastian Coe",
+            "height":"84",
+            "credit":"Sipa Press/Rex Features",
+            "caption":"Steve Ovett, left, wins gold in the 800m ahead of Sebastian Coe in the 1980 Moscow Games.\r Photograph: Sipa Press/Rex Features",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

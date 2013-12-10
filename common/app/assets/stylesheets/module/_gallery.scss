@@ -1,17 +1,21 @@
 @charset "UTF-8";
 
+
+/* ==========================================================================
+   Non-JS Gallery Styles
+   ========================================================================== */
 .gallery-container {
     overflow: hidden;
-    margin: 0px $gutter;
+    margin: 0;
 }
 
 .gallery-caption {
     margin-top: $baseline;
-}
 
-.gallery-caption i {
-    display: inline-block;
-    margin-right: 4px;
+    i {
+        display: inline-block;
+        margin-right: 4px;
+    }
 }
 
 .gallery-container .caption-credit {
@@ -21,23 +25,35 @@
     margin-top: $baseline;
 }
 
-.gallery-swipe li img {
-    width: 100%;
+.gallery-container li {
+    float: left;
+    min-height: 200px;
+
+    img {
+        width: 100%;
+    }
 }
 
-.gallery-swipe li {
-   float: left;
-  min-height: 200px;
-}
 
+
+/* ==========================================================================
+   Gallery nav
+   ========================================================================== */
 .gallery-nav {
+    @include fs-data(3);
     text-align: center;
-    margin-bottom: $baseline;
+    margin-bottom: $baseline*2;
 }
 
 .gallery-prev,
 .gallery-next {
-    width: 75px; // this is to ensure the "Image x of y" is centered. (MA)
+    // this is to ensure the "Image x of y" is centered. (MA)
+    width: 75px;
+
+    &.is-off {
+        display: inline-block;
+        visibility: hidden;
+    }
 }
 
 .gallery-prev {
@@ -48,26 +64,6 @@
     text-align: right;
 }
 
-.gallery-swipe .gallery-prev {
-    @extend .i;
-    @extend .i-filter-arrow-left;
-}
-
-.gallery-swipe .gallery-next {
-    @extend .i;
-    @extend .i-filter-arrow-right;
-}
-
-.gallery-swipe .gallery-prev ,
-.gallery-swipe .gallery-next {
-    text-indent: -1000em;
-    display: inline-block;
-    text-align: left;
-}
-
-.gallery-prev {
-    float: left;
-}
 
 .gallery-prev:before {
     content: "« ";
@@ -83,13 +79,4 @@
 
 .gallery-nav i {
     display: inline-block;
-}
-
-.gallery-fullscreen-toggle {
-    cursor: pointer;
-}
-
-.gallery-swipe .gallery-fullscreen-toggle {
-    display: none;
-    float: right;
 }

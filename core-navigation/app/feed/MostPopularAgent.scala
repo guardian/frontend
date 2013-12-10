@@ -1,47 +1,56 @@
 package feed
 
-import common.{ Logging, AkkaSupport }
-import model.{ Content, Trail }
 import conf.ContentApi
-import com.gu.openplatform.contentapi.model.ItemResponse
-import akka.actor.Cancellable
 import common._
-import play.api.libs.concurrent.Execution.Implicits._
+import model.Content
 import scala.concurrent.duration._
+import akka.util.Timeout
 
-object MostPopularAgent extends AkkaSupport with Logging {
 
-  private val agent = play_akka.agent[Map[String, Seq[Trail]]](Map.empty)
+object MostPopularAgent extends Logging with ExecutionContexts {
 
-  private lazy val schedule = play_akka.scheduler.every(60.seconds, initialDelay = 1.second) {
-    refresh()
-  }
+  private val agent = AkkaAgent[Map[String, Seq[Content]]](Map.empty)
 
-  def mostPopular(edition: String) = agent().get(edition)
-
-  def refresh() {
-    refresh("UK")
-    refresh("US")
-  }
+  def mostPopular(edition: Edition): Seq[Content] = agent().get(edition.id).getOrElse(Nil)
 
   def await() { quietly(agent.await(2.seconds)) }
 
-  private def refresh(edition: String) {
-    ContentApi.item("/", edition).showMostViewed(true).response.foreach{ response =>
-      val mostViewed = response.mostViewed map { new Content(_) } take (10)
-      agent.send{ old =>
-        old + (edition -> mostViewed)
+  def refresh() {
+    log.info("Refreshing most popular.")
+    Edition.all foreach refresh
+  }
+
+  def refresh(edition: Edition) = ContentApi.item("/", edition)
+    .showMostViewed(true)
+    .response.map{ response =>
+      val mostViewed = response.mostViewed map { Content(_) } take 10
+      agent.alter{ old =>
+        old + (edition.id -> mostViewed)
+      }(Timeout(5.seconds))
+    }
+}
+
+
+object MostPopularExpandableAgent extends Logging with ExecutionContexts {
+
+  private val agent = AkkaAgent[Map[String, Seq[Content]]](Map.empty)
+
+  def mostPopular(edition: Edition): Seq[Content] = agent().get(edition.id).getOrElse(Nil)
+
+  def await() { quietly(agent.await(2.seconds)) }
+
+  def refresh() {
+    log.info("Refreshing most popular.")
+    Edition.all foreach { edition =>
+      ContentApi.item("/", edition)
+        .showMostViewed(true)
+        .showFields("headline,trail-text,liveBloggingNow,thumbnail,hasStoryPackage,wordcount,shortUrl,body")
+        .response.foreach{ response =>
+        val mostViewed = response.mostViewed map { Content(_) } take 10
+        agent.send{ old =>
+          old + (edition.id -> mostViewed)
+        }
       }
     }
   }
-
-  def startup() {
-    schedule
-  }
-
-  def shutdown() {
-    schedule.cancel()
-    agent.close()
-  }
-
 }

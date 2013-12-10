@@ -14,8 +14,8 @@
 .table-football-header th,
 .table-football-body .table-football-legend th { // can't get this less specific, sorry (MA)
     background-color: #f4f4ee;
-    color: #777777;
-    font-weight: normal;    
+    color: #777;
+    font-weight: normal;
 }
 
 .table-football th {
@@ -24,13 +24,14 @@
 
 .table-football-body th {
     background: #f4f4ee;
-    font-weight: 500;
-    color: $sportMid;
+    font-weight: bold;
+    color: $c-sportMid;
     border-top: 1px solid #DEDEDD;
-}
 
-.table-football-body th:first-child {
-    border-top: none;
+    &:first-child {
+        border-top: none;
+        padding-left: $gutter/2;
+    }
 }
 
 .table-football th,
@@ -42,33 +43,33 @@
 
 .table-football-header th:first-child,
 .table-football td:first-child {
-    padding: $baseline*2 3% $baseline*2 $baseline*2;
+    padding: $baseline*2 3% $baseline*2 $gutter/2;
 }
 
 .table-football-header th:last-child,
 .table-football td:last-child {
-    padding: $baseline*2 $baseline*2 $baseline*2 3%;
+    padding: $baseline*2 $gutter/2 $baseline*2 3%;
 }
 
 .table-football td:last-child {
-    font-weight: 500;
+    font-weight: bold;
 }
 
 .table-football-body tr {
     border-bottom: 1px solid #DEDEDD;
     background-color: transparent;
-}
 
-.table-football-body tr:last-child {
-    border-bottom: none;
+    &:last-child {
+        border-bottom: none;
+    }
 }
 
 .table-football-body a {
-    color: #000000;
-    font-weight: 500;
+    color: #000;
+    font-weight: bold;
 }
 
-@media (min-width: 40.0625em) {
+@include mq(641px) {
 
     .table-football th,
     .table-football td {
@@ -76,6 +77,7 @@
     }
 
     .table-football-header th:first-child,
+    .table-football-body th:first-child,
     .table-football td:first-child {
         padding-left: 12px;
     }
@@ -84,7 +86,6 @@
     .table-football td:last-child {
         padding-right: 12px;
     }
-    
 }
 
 .table-football-leftaligned {
@@ -92,7 +93,7 @@
 }
 
 .table-football-body {
-    border-bottom: 3px solid #ffffff; // this is a border because margins don't appear
+    border-bottom: 3px solid #fff; // this is a border because margins don't appear
 }
 
 // overriding pasteup :(
@@ -108,7 +109,7 @@
 .table-football-body:hover tr.highlight,
 .table-football-body tr.highlight:nth-child(even),
 .table-football-body:hover tr.highlight:nth-child(even) {
-    background-color: #FAB036 !important;
+    background-color: #f9c83f !important;
     border-bottom: none;
     margin-top: -1px;
 }
@@ -116,20 +117,22 @@
 
 /* These are used to hide columns that we don't display on smaller screens. */
 
-.stats-1, .stats-2, .stats-3 {
+.stats-1,
+.stats-2,
+.stats-3 {
     display: none;
 }
-@media screen and (min-width: 25em) {
+@include mq(400px) {
     .stats-1 {
         display: table-cell;
     }
 }
-@media (min-width: 40.0625em) {
+@include mq(641px) {
     .stats-2 {
         display: table-cell;
     }
 }
-@media screen and (min-width: 53.125em) {
+@include mq(850px) {
     .stats-3 {
         display: table-cell;
     }

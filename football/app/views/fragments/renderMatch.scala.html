@@ -1,6 +1,0 @@
-@(game: pa.FootballMatch)
-
-@game match {
-    case fixture: pa.Fixture    => { @fragments.fixture(fixture) }
-    case theMatch               => { @fragments.liveMatch(theMatch) }
-}

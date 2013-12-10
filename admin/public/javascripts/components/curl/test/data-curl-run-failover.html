@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>data-curl-run test (with failover)</title>
+
+<script>
+
+	function callback (value) {
+		write('SUCCESS: data-curl-run should failover and execute second module.');
+		write((value == 1 ? 'SUCCESS' : 'FAILED') + ': data-curl-run should have loaded a module.');
+		function write (msg) {
+			curl('domReady!', function () {
+				document.body.appendChild(document.createElement('div')).innerHTML = msg;
+			});
+		}
+	}
+
+
+</script>
+<script src="../src/curl.js" data-curl-run="bogus,stuff/run-module"></script>
+
+</head>
+<body>
+
+</body>
+</html>

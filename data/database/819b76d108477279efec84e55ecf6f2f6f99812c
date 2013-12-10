@@ -1,0 +1,2793 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":47436,
+    "startIndex":1,
+    "pageSize":10,
+    "currentPage":1,
+    "pages":4744,
+    "orderBy":"newest",
+    "edition":{
+      "id":"technology",
+      "webTitle":"Technology",
+      "webUrl":"http://www.theguardian.com/technology",
+      "apiUrl":"http://content.guardianapis.com/technology",
+      "code":"default"
+    },
+    "section":{
+      "id":"technology",
+      "webTitle":"Technology",
+      "webUrl":"http://www.theguardian.com/technology",
+      "apiUrl":"http://content.guardianapis.com/technology",
+      "editions":[{
+        "id":"technology",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology",
+        "apiUrl":"http://content.guardianapis.com/technology",
+        "code":"default"
+      }]
+    },
+    "results":[{
+      "id":"technology/appsblog/2013/nov/01/best-iphone-ipad-apps-toca-mini",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-11-01T16:39:33Z",
+      "webTitle":"30 best iPhone and iPad apps this week",
+      "webUrl":"http://www.theguardian.com/technology/appsblog/2013/nov/01/best-iphone-ipad-apps-toca-mini",
+      "apiUrl":"http://content.guardianapis.com/technology/appsblog/2013/nov/01/best-iphone-ipad-apps-toca-mini",
+      "fields":{
+        "trailText":"<p>Toca Mini, Life in the Womb, Papa Sangre II, BBM, The Craftsman, Tweetbot 3, Puzzle &amp; Dragons, Tiny Games, Telegram Messenger, Bandcamp and more. By <strong>Stuart Dredge</strong></p>",
+        "headline":"30 best iPhone and iPad apps this week",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3k3fm",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383323933827/toca-mini-s.jpg",
+        "wordcount":"1686",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T16:39:33Z"
+      },
+      "tags":[{
+        "id":"technology/series/best-iphone-and-ipad-apps",
+        "type":"series",
+        "webTitle":"Best iPhone and iPad apps",
+        "webUrl":"http://www.theguardian.com/technology/series/best-iphone-and-ipad-apps",
+        "apiUrl":"http://content.guardianapis.com/technology/series/best-iphone-and-ipad-apps",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/iphone",
+        "type":"keyword",
+        "webTitle":"iPhone",
+        "webUrl":"http://www.theguardian.com/technology/iphone",
+        "apiUrl":"http://content.guardianapis.com/technology/iphone",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/ipad",
+        "type":"keyword",
+        "webTitle":"iPad",
+        "webUrl":"http://www.theguardian.com/technology/ipad",
+        "apiUrl":"http://content.guardianapis.com/technology/ipad",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/apps",
+        "type":"keyword",
+        "webTitle":"Apps",
+        "webUrl":"http://www.theguardian.com/technology/apps",
+        "apiUrl":"http://content.guardianapis.com/technology/apps",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/appsblog",
+        "type":"blog",
+        "webTitle":"Apps blog",
+        "webUrl":"http://www.theguardian.com/technology/appsblog",
+        "apiUrl":"http://content.guardianapis.com/technology/appsblog",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/smartphones",
+        "type":"keyword",
+        "webTitle":"Smartphones",
+        "webUrl":"http://www.theguardian.com/technology/smartphones",
+        "apiUrl":"http://content.guardianapis.com/technology/smartphones",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/tablet-computer",
+        "type":"keyword",
+        "webTitle":"Tablet computers",
+        "webUrl":"http://www.theguardian.com/technology/tablet-computer",
+        "apiUrl":"http://content.guardianapis.com/technology/tablet-computer",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/mobilephones",
+        "type":"keyword",
+        "webTitle":"Mobile phones",
+        "webUrl":"http://www.theguardian.com/technology/mobilephones",
+        "apiUrl":"http://content.guardianapis.com/technology/mobilephones",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.theguardian.com/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"profile/stuart-dredge",
+        "type":"contributor",
+        "webTitle":"Stuart Dredge",
+        "webUrl":"http://www.theguardian.com/profile/stuart-dredge",
+        "apiUrl":"http://content.guardianapis.com/profile/stuart-dredge",
+        "bio":"<p>Stuart Dredge is a freelance journalist and editor specialising in mobile apps and mobile content</p>",
+        "r2ContributorId":"42685",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2011/2/14/1297684937360/Stuart-Dredge-003.jpg",
+        "references":[]
+      },{
+        "id":"technology/apple",
+        "type":"keyword",
+        "webTitle":"Apple",
+        "webUrl":"http://www.theguardian.com/technology/apple",
+        "apiUrl":"http://content.guardianapis.com/technology/apple",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421472587",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383323920903/toca-mini.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Toca Mini",
+            "height":"276",
+            "credit":"PR",
+            "caption":"Toca Mini gets kids to create animated 3D characters",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421472588",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383323933827/toca-mini-s.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Toca Mini",
+            "height":"84",
+            "credit":"PR",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/2013/nov/01/sony-stock-tokyo-playstation-4",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-11-01T15:59:43Z",
+      "webTitle":"Sony shares drop after it forecasts 40% decrease in year's earnings",
+      "webUrl":"http://www.theguardian.com/technology/2013/nov/01/sony-stock-tokyo-playstation-4",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/nov/01/sony-stock-tokyo-playstation-4",
+      "fields":{
+        "trailText":"<p>The company blames tepid demand for televisions, camcorders, computers and box office flops – weeks before it releases PlayStation 4</p>",
+        "headline":"Sony shares drop after it forecasts 40% decrease in year's earnings",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3k3en",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383320672753/Tokyo-stock-005.jpg",
+        "wordcount":"385",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T15:59:43Z"
+      },
+      "tags":[{
+        "id":"technology/sony",
+        "type":"keyword",
+        "webTitle":"Sony",
+        "webUrl":"http://www.theguardian.com/technology/sony",
+        "apiUrl":"http://content.guardianapis.com/technology/sony",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/playstation-4",
+        "type":"keyword",
+        "webTitle":"PlayStation 4",
+        "webUrl":"http://www.theguardian.com/technology/playstation-4",
+        "apiUrl":"http://content.guardianapis.com/technology/playstation-4",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"business/stock-markets",
+        "type":"keyword",
+        "webTitle":"Stock markets",
+        "webUrl":"http://www.theguardian.com/business/stock-markets",
+        "apiUrl":"http://content.guardianapis.com/business/stock-markets",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"profile/dominic-rushe",
+        "type":"contributor",
+        "webTitle":"Dominic Rushe",
+        "webUrl":"http://www.theguardian.com/profile/dominic-rushe",
+        "apiUrl":"http://content.guardianapis.com/profile/dominic-rushe",
+        "bio":"<p>Dominic Rushe is the US business correspondent for the Guardian</p>",
+        "r2ContributorId":"41799",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/1/1362156653419/doiminixrushe_140x140.jpg",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421469829",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383320682144/Tokyo-stock-010.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Yuya Shino",
+            "altText":"Tokyo stock",
+            "height":"276",
+            "credit":"Yuya Shino/REUTERS",
+            "caption":"A pedestrian walks past an electronic board displaying global share prices in Tokyo 25 October. Japan's share prices fell 126.37 points to close at 14,201.57 points at the Tokyo Stock Exchange, as Sony shares dived 11%. Photo: Yuya Shino/REUTERS",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421469830",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383320672753/Tokyo-stock-005.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Yuya Shino",
+            "altText":"Tokyo stock",
+            "height":"84",
+            "credit":"Yuya Shino/REUTERS",
+            "caption":"A pedestrian walks past an electronic board displaying various countries' share prices outside a brokerage in Tokyo 25 October. Japan's share prices fell 126.37 points to close at 14,201.57 points at the Tokyo Stock Exchange, as Sony shares dived 11%  Photograph: Yuya Shino/REUTERS",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/2013/nov/01/caa-easa-electronic-devices-flight-take-off-landing",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-11-01T14:12:32Z",
+      "webTitle":"Europe looking to follow US to approve in-flight electronics",
+      "webUrl":"http://www.theguardian.com/technology/2013/nov/01/caa-easa-electronic-devices-flight-take-off-landing",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/nov/01/caa-easa-electronic-devices-flight-take-off-landing",
+      "fields":{
+        "trailText":"UK and European regulators are scrutinising use of electronic devices during take-off and landing after US gives approval. By <strong>Samuel Gibbs</strong>",
+        "headline":"Europe looking to follow US to approve in-flight electronics",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3k3c9",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383313877816/55733ef2-6a73-4da0-aa4f-ddc54b00dc49-140x84.jpeg",
+        "wordcount":"1",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T14:15:31Z"
+      },
+      "tags":[{
+        "id":"technology/gadgets",
+        "type":"keyword",
+        "webTitle":"Gadgets",
+        "webUrl":"http://www.theguardian.com/technology/gadgets",
+        "apiUrl":"http://content.guardianapis.com/technology/gadgets",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/smartphones",
+        "type":"keyword",
+        "webTitle":"Smartphones",
+        "webUrl":"http://www.theguardian.com/technology/smartphones",
+        "apiUrl":"http://content.guardianapis.com/technology/smartphones",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/tablet-computer",
+        "type":"keyword",
+        "webTitle":"Tablet computers",
+        "webUrl":"http://www.theguardian.com/technology/tablet-computer",
+        "apiUrl":"http://content.guardianapis.com/technology/tablet-computer",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/internet",
+        "type":"keyword",
+        "webTitle":"Internet",
+        "webUrl":"http://www.theguardian.com/technology/internet",
+        "apiUrl":"http://content.guardianapis.com/technology/internet",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/air-transport",
+        "type":"keyword",
+        "webTitle":"Air transport",
+        "webUrl":"http://www.theguardian.com/world/air-transport",
+        "apiUrl":"http://content.guardianapis.com/world/air-transport",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/theairlineindustry",
+        "type":"keyword",
+        "webTitle":"Airline industry",
+        "webUrl":"http://www.theguardian.com/business/theairlineindustry",
+        "apiUrl":"http://content.guardianapis.com/business/theairlineindustry",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"technology/mobilephones",
+        "type":"keyword",
+        "webTitle":"Mobile phones",
+        "webUrl":"http://www.theguardian.com/technology/mobilephones",
+        "apiUrl":"http://content.guardianapis.com/technology/mobilephones",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/samuel-gibbs",
+        "type":"contributor",
+        "webTitle":"Samuel Gibbs",
+        "webUrl":"http://www.theguardian.com/profile/samuel-gibbs",
+        "apiUrl":"http://content.guardianapis.com/profile/samuel-gibbs",
+        "r2ContributorId":"58582",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/guardian/Pix/pictures/2013/10/18/1382089843887/Samuel-Gibbs.-Guardian-st-003.jpg",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-ecf93148-0d14-48b5-b687-28540a018ed4",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383313877816/55733ef2-6a73-4da0-aa4f-ddc54b00dc49-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383313877816/55733ef2-6a73-4da0-aa4f-ddc54b00dc49-140x84.jpeg",
+            "source":"Alamy",
+            "altText":"The use of electronic devices during all phases of flight is now pending approval from the European Aviation Safety Agency and the UK CAA.",
+            "height":"84",
+            "credit":"Alamy",
+            "caption":"The use of electronic devices during all phases of flight is now pending approval from the European Aviation Safety Agency and the UK CAA. Photograph: Alamy",
+            "mediaId":"gu-fc-ecf93148-0d14-48b5-b687-28540a018ed4",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383313877960/55733ef2-6a73-4da0-aa4f-ddc54b00dc49-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383313877960/55733ef2-6a73-4da0-aa4f-ddc54b00dc49-460x276.jpeg",
+            "source":"Alamy",
+            "altText":"The use of electronic devices during all phases of flight is now pending approval from the European Aviation Safety Agency and the UK CAA.",
+            "height":"276",
+            "credit":"Alamy",
+            "caption":"The use of electronic devices during all phases of flight is now pending approval from the European Aviation Safety Agency and the UK CAA. Photograph: Alamy",
+            "mediaId":"gu-fc-ecf93148-0d14-48b5-b687-28540a018ed4",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383313878178/55733ef2-6a73-4da0-aa4f-ddc54b00dc49-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383313878178/55733ef2-6a73-4da0-aa4f-ddc54b00dc49-220x132.jpeg",
+            "source":"Alamy",
+            "altText":"The use of electronic devices during all phases of flight is now pending approval from the European Aviation Safety Agency and the UK CAA.",
+            "height":"132",
+            "credit":"Alamy",
+            "caption":"The use of electronic devices during all phases of flight is now pending approval from the European Aviation Safety Agency and the UK CAA. Photograph: Alamy",
+            "mediaId":"gu-fc-ecf93148-0d14-48b5-b687-28540a018ed4",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383313878822/55733ef2-6a73-4da0-aa4f-ddc54b00dc49-2060x1236.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383313878822/55733ef2-6a73-4da0-aa4f-ddc54b00dc49-2060x1236.jpeg",
+            "source":"Alamy",
+            "altText":"The use of electronic devices during all phases of flight is now pending approval from the European Aviation Safety Agency and the UK CAA.",
+            "height":"1236",
+            "credit":"Alamy",
+            "caption":"The use of electronic devices during all phases of flight is now pending approval from the European Aviation Safety Agency and the UK CAA. Photograph: Alamy",
+            "mediaId":"gu-fc-ecf93148-0d14-48b5-b687-28540a018ed4",
+            "width":"2060"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383313879528/55733ef2-6a73-4da0-aa4f-ddc54b00dc49-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383313879528/55733ef2-6a73-4da0-aa4f-ddc54b00dc49-1020x612.jpeg",
+            "source":"Alamy",
+            "altText":"The use of electronic devices during all phases of flight is now pending approval from the European Aviation Safety Agency and the UK CAA.",
+            "height":"612",
+            "credit":"Alamy",
+            "caption":"The use of electronic devices during all phases of flight is now pending approval from the European Aviation Safety Agency and the UK CAA. Photograph: Alamy",
+            "mediaId":"gu-fc-ecf93148-0d14-48b5-b687-28540a018ed4",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383313879770/55733ef2-6a73-4da0-aa4f-ddc54b00dc49-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383313879770/55733ef2-6a73-4da0-aa4f-ddc54b00dc49-300x180.jpeg",
+            "source":"Alamy",
+            "altText":"The use of electronic devices during all phases of flight is now pending approval from the European Aviation Safety Agency and the UK CAA.",
+            "height":"180",
+            "credit":"Alamy",
+            "caption":"The use of electronic devices during all phases of flight is now pending approval from the European Aviation Safety Agency and the UK CAA. Photograph: Alamy",
+            "mediaId":"gu-fc-ecf93148-0d14-48b5-b687-28540a018ed4",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383313879927/55733ef2-6a73-4da0-aa4f-ddc54b00dc49-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383313879927/55733ef2-6a73-4da0-aa4f-ddc54b00dc49-540x324.jpeg",
+            "source":"Alamy",
+            "altText":"The use of electronic devices during all phases of flight is now pending approval from the European Aviation Safety Agency and the UK CAA.",
+            "height":"324",
+            "credit":"Alamy",
+            "caption":"The use of electronic devices during all phases of flight is now pending approval from the European Aviation Safety Agency and the UK CAA. Photograph: Alamy",
+            "mediaId":"gu-fc-ecf93148-0d14-48b5-b687-28540a018ed4",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383313880078/55733ef2-6a73-4da0-aa4f-ddc54b00dc49-68x68.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383313880078/55733ef2-6a73-4da0-aa4f-ddc54b00dc49-68x68.jpeg",
+            "source":"Alamy",
+            "altText":"The use of electronic devices during all phases of flight is now pending approval from the European Aviation Safety Agency and the UK CAA.",
+            "height":"68",
+            "credit":"Alamy",
+            "caption":"The use of electronic devices during all phases of flight is now pending approval from the European Aviation Safety Agency and the UK CAA. Photograph: Alamy",
+            "mediaId":"gu-fc-ecf93148-0d14-48b5-b687-28540a018ed4",
+            "width":"68"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383313880534/55733ef2-6a73-4da0-aa4f-ddc54b00dc49-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383313880534/55733ef2-6a73-4da0-aa4f-ddc54b00dc49-380x228.jpeg",
+            "source":"Alamy",
+            "altText":"The use of electronic devices during all phases of flight is now pending approval from the European Aviation Safety Agency and the UK CAA.",
+            "height":"228",
+            "credit":"Alamy",
+            "caption":"The use of electronic devices during all phases of flight is now pending approval from the European Aviation Safety Agency and the UK CAA. Photograph: Alamy",
+            "mediaId":"gu-fc-ecf93148-0d14-48b5-b687-28540a018ed4",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383313881289/55733ef2-6a73-4da0-aa4f-ddc54b00dc49-2048x1536.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383313881289/55733ef2-6a73-4da0-aa4f-ddc54b00dc49-2048x1536.jpeg",
+            "source":"Alamy",
+            "altText":"The use of electronic devices during all phases of flight is now pending approval from the European Aviation Safety Agency and the UK CAA.",
+            "height":"1536",
+            "credit":"Alamy",
+            "caption":"The use of electronic devices during all phases of flight is now pending approval from the European Aviation Safety Agency and the UK CAA. Photograph: Alamy",
+            "mediaId":"gu-fc-ecf93148-0d14-48b5-b687-28540a018ed4",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383313882140/55733ef2-6a73-4da0-aa4f-ddc54b00dc49-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383313882140/55733ef2-6a73-4da0-aa4f-ddc54b00dc49-620x372.jpeg",
+            "source":"Alamy",
+            "altText":"The use of electronic devices during all phases of flight is now pending approval from the European Aviation Safety Agency and the UK CAA.",
+            "height":"372",
+            "credit":"Alamy",
+            "caption":"The use of electronic devices during all phases of flight is now pending approval from the European Aviation Safety Agency and the UK CAA. Photograph: Alamy",
+            "mediaId":"gu-fc-ecf93148-0d14-48b5-b687-28540a018ed4",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383313882397/55733ef2-6a73-4da0-aa4f-ddc54b00dc49-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383313882397/55733ef2-6a73-4da0-aa4f-ddc54b00dc49-1024x768.jpeg",
+            "source":"Alamy",
+            "altText":"The use of electronic devices during all phases of flight is now pending approval from the European Aviation Safety Agency and the UK CAA.",
+            "height":"768",
+            "credit":"Alamy",
+            "caption":"The use of electronic devices during all phases of flight is now pending approval from the European Aviation Safety Agency and the UK CAA. Photograph: Alamy",
+            "mediaId":"gu-fc-ecf93148-0d14-48b5-b687-28540a018ed4",
+            "width":"1024"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/2013/nov/01/google-android-44-kitkat-update",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-11-01T13:38:32Z",
+      "webTitle":"Google Android 4.4 'Kitkat': seven things you need to know",
+      "webUrl":"http://www.theguardian.com/technology/2013/nov/01/google-android-44-kitkat-update",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/nov/01/google-android-44-kitkat-update",
+      "fields":{
+        "trailText":"With its new version of mobile software Google has added always-listening search, motion tracking features and more.&nbsp;By <strong>Samuel Gibbs</strong>",
+        "headline":"Google Android 4.4 'Kitkat': seven things you need to know",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3k37k",
+        "wordcount":"1",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T13:45:32Z"
+      },
+      "tags":[{
+        "id":"technology/google",
+        "type":"keyword",
+        "webTitle":"Google",
+        "webUrl":"http://www.theguardian.com/technology/google",
+        "apiUrl":"http://content.guardianapis.com/technology/google",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/android",
+        "type":"keyword",
+        "webTitle":"Android",
+        "webUrl":"http://www.theguardian.com/technology/android",
+        "apiUrl":"http://content.guardianapis.com/technology/android",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/smartphones",
+        "type":"keyword",
+        "webTitle":"Smartphones",
+        "webUrl":"http://www.theguardian.com/technology/smartphones",
+        "apiUrl":"http://content.guardianapis.com/technology/smartphones",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/mobilephones",
+        "type":"keyword",
+        "webTitle":"Mobile phones",
+        "webUrl":"http://www.theguardian.com/technology/mobilephones",
+        "apiUrl":"http://content.guardianapis.com/technology/mobilephones",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/gadgets",
+        "type":"keyword",
+        "webTitle":"Gadgets",
+        "webUrl":"http://www.theguardian.com/technology/gadgets",
+        "apiUrl":"http://content.guardianapis.com/technology/gadgets",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/samuel-gibbs",
+        "type":"contributor",
+        "webTitle":"Samuel Gibbs",
+        "webUrl":"http://www.theguardian.com/profile/samuel-gibbs",
+        "apiUrl":"http://content.guardianapis.com/profile/samuel-gibbs",
+        "r2ContributorId":"58582",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/guardian/Pix/pictures/2013/10/18/1382089843887/Samuel-Gibbs.-Guardian-st-003.jpg",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-e0f097c4-7d9b-4602-97ef-5a953bfdb6dc",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307160311/01000a9d-eb3d-4c8c-bbe2-b289ef86f2ae-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307160311/01000a9d-eb3d-4c8c-bbe2-b289ef86f2ae-140x84.jpeg",
+            "source":"Google",
+            "altText":"Google's latest version of Android is 4.4 \"Kitkat\".",
+            "height":"84",
+            "credit":"Google",
+            "caption":"Google's latest version of Android 4.4 \"Kitkat\" adds features enhancing search, full-screen reading and NFC payments.",
+            "mediaId":"gu-fc-e0f097c4-7d9b-4602-97ef-5a953bfdb6dc",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307160418/c158471f-224b-4644-b7ef-7a0f0a606d97-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307160418/c158471f-224b-4644-b7ef-7a0f0a606d97-460x276.jpeg",
+            "source":"Google",
+            "altText":"Google's latest version of Android is 4.4 \"Kitkat\".",
+            "height":"276",
+            "credit":"Google",
+            "caption":"Google's latest version of Android 4.4 \"Kitkat\" adds features enhancing search, full-screen reading and NFC payments.",
+            "mediaId":"gu-fc-e0f097c4-7d9b-4602-97ef-5a953bfdb6dc",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307160606/8ed9a8fe-aa23-4e49-9fc7-4bc86905be7d-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307160606/8ed9a8fe-aa23-4e49-9fc7-4bc86905be7d-220x132.jpeg",
+            "source":"Google",
+            "altText":"Google's latest version of Android is 4.4 \"Kitkat\".",
+            "height":"132",
+            "credit":"Google",
+            "caption":"Google's latest version of Android 4.4 \"Kitkat\" adds features enhancing search, full-screen reading and NFC payments.",
+            "mediaId":"gu-fc-e0f097c4-7d9b-4602-97ef-5a953bfdb6dc",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307160845/665ce052-d05e-4b59-ac63-fabbb1356822-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307160845/665ce052-d05e-4b59-ac63-fabbb1356822-1020x612.jpeg",
+            "source":"Google",
+            "altText":"Google's latest version of Android is 4.4 \"Kitkat\".",
+            "height":"612",
+            "credit":"Google",
+            "caption":"Google's latest version of Android 4.4 \"Kitkat\" adds features enhancing search, full-screen reading and NFC payments.",
+            "mediaId":"gu-fc-e0f097c4-7d9b-4602-97ef-5a953bfdb6dc",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307161241/09af6537-55db-4ccf-a50d-84bf28a7681a-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307161241/09af6537-55db-4ccf-a50d-84bf28a7681a-300x180.jpeg",
+            "source":"Google",
+            "altText":"Google's latest version of Android is 4.4 \"Kitkat\".",
+            "height":"180",
+            "credit":"Google",
+            "caption":"Google's latest version of Android 4.4 \"Kitkat\" adds features enhancing search, full-screen reading and NFC payments.",
+            "mediaId":"gu-fc-e0f097c4-7d9b-4602-97ef-5a953bfdb6dc",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307161378/880ddf4b-6f67-4e7a-b034-dfeff744bd37-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307161378/880ddf4b-6f67-4e7a-b034-dfeff744bd37-540x324.jpeg",
+            "source":"Google",
+            "altText":"Google's latest version of Android is 4.4 \"Kitkat\".",
+            "height":"324",
+            "credit":"Google",
+            "caption":"Google's latest version of Android 4.4 \"Kitkat\" adds features enhancing search, full-screen reading and NFC payments.",
+            "mediaId":"gu-fc-e0f097c4-7d9b-4602-97ef-5a953bfdb6dc",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307161517/559b10fa-b2bb-404c-8723-6338e4417a21-68x68.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307161517/559b10fa-b2bb-404c-8723-6338e4417a21-68x68.jpeg",
+            "source":"Google",
+            "altText":"Google's latest version of Android is 4.4 \"Kitkat\".",
+            "height":"68",
+            "credit":"Google",
+            "caption":"Google's latest version of Android 4.4 \"Kitkat\" adds features enhancing search, full-screen reading and NFC payments.",
+            "mediaId":"gu-fc-e0f097c4-7d9b-4602-97ef-5a953bfdb6dc",
+            "width":"68"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307161618/dbe87572-1380-4296-a443-0f4bbd390752-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307161618/dbe87572-1380-4296-a443-0f4bbd390752-380x228.jpeg",
+            "source":"Google",
+            "altText":"Google's latest version of Android is 4.4 \"Kitkat\".",
+            "height":"228",
+            "credit":"Google",
+            "caption":"Google's latest version of Android 4.4 \"Kitkat\" adds features enhancing search, full-screen reading and NFC payments.",
+            "mediaId":"gu-fc-e0f097c4-7d9b-4602-97ef-5a953bfdb6dc",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307161769/4a2ca720-e4bf-4b5a-9a97-b5e8344e62eb-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307161769/4a2ca720-e4bf-4b5a-9a97-b5e8344e62eb-620x372.jpeg",
+            "source":"Google",
+            "altText":"Google's latest version of Android is 4.4 \"Kitkat\".",
+            "height":"372",
+            "credit":"Google",
+            "caption":"Google's latest version of Android 4.4 \"Kitkat\" adds features enhancing search, full-screen reading and NFC payments.",
+            "mediaId":"gu-fc-e0f097c4-7d9b-4602-97ef-5a953bfdb6dc",
+            "width":"620"
+          }
+        }]
+      },{
+        "id":"gu-fc-be6311aa-b1a8-4205-bd78-7cdbae2ffc1c",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307324327/0949e0fb-17b0-42ed-ad4a-9d377d3b7b98-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307324327/0949e0fb-17b0-42ed-ad4a-9d377d3b7b98-140x84.jpeg",
+            "source":"Reuters",
+            "photographer":"Denis Balibouse",
+            "altText":"Android is now named after the Kitkat Nestle chocolate biscuit.",
+            "height":"84",
+            "credit":"Denis Balibouse/Reuters",
+            "caption":"Android is now named after the Kitkat Nestle chocolate biscuit. Photograph: Denis Balibouse/Reuters",
+            "mediaId":"gu-fc-be6311aa-b1a8-4205-bd78-7cdbae2ffc1c",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307324966/0949e0fb-17b0-42ed-ad4a-9d377d3b7b98-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307324966/0949e0fb-17b0-42ed-ad4a-9d377d3b7b98-460x276.jpeg",
+            "source":"Reuters",
+            "photographer":"Denis Balibouse",
+            "altText":"Android is now named after the Kitkat Nestle chocolate biscuit.",
+            "height":"276",
+            "credit":"Denis Balibouse/Reuters",
+            "caption":"Android is now named after the Kitkat Nestle chocolate biscuit. Photograph: Denis Balibouse/Reuters",
+            "mediaId":"gu-fc-be6311aa-b1a8-4205-bd78-7cdbae2ffc1c",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307325114/0949e0fb-17b0-42ed-ad4a-9d377d3b7b98-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307325114/0949e0fb-17b0-42ed-ad4a-9d377d3b7b98-220x132.jpeg",
+            "source":"Reuters",
+            "photographer":"Denis Balibouse",
+            "altText":"Android is now named after the Kitkat Nestle chocolate biscuit.",
+            "height":"132",
+            "credit":"Denis Balibouse/Reuters",
+            "caption":"Android is now named after the Kitkat Nestle chocolate biscuit. Photograph: Denis Balibouse/Reuters",
+            "mediaId":"gu-fc-be6311aa-b1a8-4205-bd78-7cdbae2ffc1c",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307325646/0949e0fb-17b0-42ed-ad4a-9d377d3b7b98-2060x1236.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307325646/0949e0fb-17b0-42ed-ad4a-9d377d3b7b98-2060x1236.jpeg",
+            "source":"Reuters",
+            "photographer":"Denis Balibouse",
+            "altText":"Android is now named after the Kitkat Nestle chocolate biscuit.",
+            "height":"1236",
+            "credit":"Denis Balibouse/Reuters",
+            "caption":"Android is now named after the Kitkat Nestle chocolate biscuit. Photograph: Denis Balibouse/Reuters",
+            "mediaId":"gu-fc-be6311aa-b1a8-4205-bd78-7cdbae2ffc1c",
+            "width":"2060"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307327148/0949e0fb-17b0-42ed-ad4a-9d377d3b7b98-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307327148/0949e0fb-17b0-42ed-ad4a-9d377d3b7b98-1020x612.jpeg",
+            "source":"Reuters",
+            "photographer":"Denis Balibouse",
+            "altText":"Android is now named after the Kitkat Nestle chocolate biscuit.",
+            "height":"612",
+            "credit":"Denis Balibouse/Reuters",
+            "caption":"Android is now named after the Kitkat Nestle chocolate biscuit. Photograph: Denis Balibouse/Reuters",
+            "mediaId":"gu-fc-be6311aa-b1a8-4205-bd78-7cdbae2ffc1c",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307327523/0949e0fb-17b0-42ed-ad4a-9d377d3b7b98-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307327523/0949e0fb-17b0-42ed-ad4a-9d377d3b7b98-300x180.jpeg",
+            "source":"Reuters",
+            "photographer":"Denis Balibouse",
+            "altText":"Android is now named after the Kitkat Nestle chocolate biscuit.",
+            "height":"180",
+            "credit":"Denis Balibouse/Reuters",
+            "caption":"Android is now named after the Kitkat Nestle chocolate biscuit. Photograph: Denis Balibouse/Reuters",
+            "mediaId":"gu-fc-be6311aa-b1a8-4205-bd78-7cdbae2ffc1c",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307327693/0949e0fb-17b0-42ed-ad4a-9d377d3b7b98-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307327693/0949e0fb-17b0-42ed-ad4a-9d377d3b7b98-540x324.jpeg",
+            "source":"Reuters",
+            "photographer":"Denis Balibouse",
+            "altText":"Android is now named after the Kitkat Nestle chocolate biscuit.",
+            "height":"324",
+            "credit":"Denis Balibouse/Reuters",
+            "caption":"Android is now named after the Kitkat Nestle chocolate biscuit. Photograph: Denis Balibouse/Reuters",
+            "mediaId":"gu-fc-be6311aa-b1a8-4205-bd78-7cdbae2ffc1c",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307327862/0949e0fb-17b0-42ed-ad4a-9d377d3b7b98-68x68.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307327862/0949e0fb-17b0-42ed-ad4a-9d377d3b7b98-68x68.jpeg",
+            "source":"Reuters",
+            "photographer":"Denis Balibouse",
+            "altText":"Android is now named after the Kitkat Nestle chocolate biscuit.",
+            "height":"68",
+            "credit":"Denis Balibouse/Reuters",
+            "caption":"Android is now named after the Kitkat Nestle chocolate biscuit. Photograph: Denis Balibouse/Reuters",
+            "mediaId":"gu-fc-be6311aa-b1a8-4205-bd78-7cdbae2ffc1c",
+            "width":"68"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307327995/0949e0fb-17b0-42ed-ad4a-9d377d3b7b98-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307327995/0949e0fb-17b0-42ed-ad4a-9d377d3b7b98-380x228.jpeg",
+            "source":"Reuters",
+            "photographer":"Denis Balibouse",
+            "altText":"Android is now named after the Kitkat Nestle chocolate biscuit.",
+            "height":"228",
+            "credit":"Denis Balibouse/Reuters",
+            "caption":"Android is now named after the Kitkat Nestle chocolate biscuit. Photograph: Denis Balibouse/Reuters",
+            "mediaId":"gu-fc-be6311aa-b1a8-4205-bd78-7cdbae2ffc1c",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307328612/0949e0fb-17b0-42ed-ad4a-9d377d3b7b98-2048x1536.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307328612/0949e0fb-17b0-42ed-ad4a-9d377d3b7b98-2048x1536.jpeg",
+            "source":"Reuters",
+            "photographer":"Denis Balibouse",
+            "altText":"Android is now named after the Kitkat Nestle chocolate biscuit.",
+            "height":"1536",
+            "credit":"Denis Balibouse/Reuters",
+            "caption":"Android is now named after the Kitkat Nestle chocolate biscuit. Photograph: Denis Balibouse/Reuters",
+            "mediaId":"gu-fc-be6311aa-b1a8-4205-bd78-7cdbae2ffc1c",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307329567/0949e0fb-17b0-42ed-ad4a-9d377d3b7b98-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307329567/0949e0fb-17b0-42ed-ad4a-9d377d3b7b98-620x372.jpeg",
+            "source":"Reuters",
+            "photographer":"Denis Balibouse",
+            "altText":"Android is now named after the Kitkat Nestle chocolate biscuit.",
+            "height":"372",
+            "credit":"Denis Balibouse/Reuters",
+            "caption":"Android is now named after the Kitkat Nestle chocolate biscuit. Photograph: Denis Balibouse/Reuters",
+            "mediaId":"gu-fc-be6311aa-b1a8-4205-bd78-7cdbae2ffc1c",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307330049/0949e0fb-17b0-42ed-ad4a-9d377d3b7b98-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307330049/0949e0fb-17b0-42ed-ad4a-9d377d3b7b98-1024x768.jpeg",
+            "source":"Reuters",
+            "photographer":"Denis Balibouse",
+            "altText":"Android is now named after the Kitkat Nestle chocolate biscuit.",
+            "height":"768",
+            "credit":"Denis Balibouse/Reuters",
+            "caption":"Android is now named after the Kitkat Nestle chocolate biscuit. Photograph: Denis Balibouse/Reuters",
+            "mediaId":"gu-fc-be6311aa-b1a8-4205-bd78-7cdbae2ffc1c",
+            "width":"1024"
+          }
+        }]
+      },{
+        "id":"gu-fc-90d802dd-5df5-4df6-9920-b7843c3aae9b",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307716802/40c05550-34fd-4f98-b95b-37d7b3f225c5-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307716802/40c05550-34fd-4f98-b95b-37d7b3f225c5-140x84.jpeg",
+            "source":"Google",
+            "altText":"Google Now is constantly listening out for \"OK Google\".",
+            "height":"84",
+            "credit":"Google",
+            "caption":"Google Now is constantly listening out for \"OK Google\".",
+            "mediaId":"gu-fc-90d802dd-5df5-4df6-9920-b7843c3aae9b",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307716913/246fb148-a2d7-4368-88cf-be1b88a61265-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307716913/246fb148-a2d7-4368-88cf-be1b88a61265-460x276.jpeg",
+            "source":"Google",
+            "altText":"Google Now is constantly listening out for \"OK Google\".",
+            "height":"276",
+            "credit":"Google",
+            "caption":"Google Now is constantly listening out for \"OK Google\".",
+            "mediaId":"gu-fc-90d802dd-5df5-4df6-9920-b7843c3aae9b",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307717081/0f2147ad-aba6-4720-895a-f50ca903eda2-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307717081/0f2147ad-aba6-4720-895a-f50ca903eda2-220x132.jpeg",
+            "source":"Google",
+            "altText":"Google Now is constantly listening out for \"OK Google\".",
+            "height":"132",
+            "credit":"Google",
+            "caption":"Google Now is constantly listening out for \"OK Google\".",
+            "mediaId":"gu-fc-90d802dd-5df5-4df6-9920-b7843c3aae9b",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307717195/5d3eff35-0964-46a3-8c70-11ccd0dd8514-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307717195/5d3eff35-0964-46a3-8c70-11ccd0dd8514-300x180.jpeg",
+            "source":"Google",
+            "altText":"Google Now is constantly listening out for \"OK Google\".",
+            "height":"180",
+            "credit":"Google",
+            "caption":"Google Now is constantly listening out for \"OK Google\".",
+            "mediaId":"gu-fc-90d802dd-5df5-4df6-9920-b7843c3aae9b",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307717334/a8e7c3d7-f2e0-4e60-8d4b-4bd939eb73cf-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307717334/a8e7c3d7-f2e0-4e60-8d4b-4bd939eb73cf-540x324.jpeg",
+            "source":"Google",
+            "altText":"Google Now is constantly listening out for \"OK Google\".",
+            "height":"324",
+            "credit":"Google",
+            "caption":"Google Now is constantly listening out for \"OK Google\".",
+            "mediaId":"gu-fc-90d802dd-5df5-4df6-9920-b7843c3aae9b",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307717520/b4145055-9254-4772-8841-092bc48dd07e-68x68.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307717520/b4145055-9254-4772-8841-092bc48dd07e-68x68.jpeg",
+            "source":"Google",
+            "altText":"Google Now is constantly listening out for \"OK Google\".",
+            "height":"68",
+            "credit":"Google",
+            "caption":"Google Now is constantly listening out for \"OK Google\".",
+            "mediaId":"gu-fc-90d802dd-5df5-4df6-9920-b7843c3aae9b",
+            "width":"68"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307717633/0a3be0f0-2318-4383-8aa5-20264eda2a79-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307717633/0a3be0f0-2318-4383-8aa5-20264eda2a79-380x228.jpeg",
+            "source":"Google",
+            "altText":"Google Now is constantly listening out for \"OK Google\".",
+            "height":"228",
+            "credit":"Google",
+            "caption":"Google Now is constantly listening out for \"OK Google\".",
+            "mediaId":"gu-fc-90d802dd-5df5-4df6-9920-b7843c3aae9b",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307717775/ac2b64f2-392f-4084-9955-210206951d14-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307717775/ac2b64f2-392f-4084-9955-210206951d14-620x372.jpeg",
+            "source":"Google",
+            "altText":"Google Now is constantly listening out for \"OK Google\".",
+            "height":"372",
+            "credit":"Google",
+            "caption":"Google Now is constantly listening out for \"OK Google\".",
+            "mediaId":"gu-fc-90d802dd-5df5-4df6-9920-b7843c3aae9b",
+            "width":"620"
+          }
+        }]
+      },{
+        "id":"gu-fc-7de04f3a-4f1b-4b13-affc-a2df833b1286",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307780200/5313b5c3-0863-4fcc-9e2e-d1c1b1b5ae64-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307780200/5313b5c3-0863-4fcc-9e2e-d1c1b1b5ae64-140x84.jpeg",
+            "source":"Google",
+            "altText":"Kitkat hides the status bar and menu bar when in full screen mode.",
+            "height":"84",
+            "credit":"Google",
+            "caption":"Kitkat hides the status bar and menu bar when in full screen mode.",
+            "mediaId":"gu-fc-7de04f3a-4f1b-4b13-affc-a2df833b1286",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307780304/0ffa3869-3535-4905-a336-1c253e11bd26-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307780304/0ffa3869-3535-4905-a336-1c253e11bd26-460x276.jpeg",
+            "source":"Google",
+            "altText":"Kitkat hides the status bar and menu bar when in full screen mode.",
+            "height":"276",
+            "credit":"Google",
+            "caption":"Kitkat hides the status bar and menu bar when in full screen mode.",
+            "mediaId":"gu-fc-7de04f3a-4f1b-4b13-affc-a2df833b1286",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307780447/9a622976-9509-4d97-b55b-53ab08425cbe-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307780447/9a622976-9509-4d97-b55b-53ab08425cbe-220x132.jpeg",
+            "source":"Google",
+            "altText":"Kitkat hides the status bar and menu bar when in full screen mode.",
+            "height":"132",
+            "credit":"Google",
+            "caption":"Kitkat hides the status bar and menu bar when in full screen mode.",
+            "mediaId":"gu-fc-7de04f3a-4f1b-4b13-affc-a2df833b1286",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307780622/98d96198-fcc3-476d-a71c-57fa6c709ff6-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307780622/98d96198-fcc3-476d-a71c-57fa6c709ff6-1020x612.jpeg",
+            "source":"Google",
+            "altText":"Kitkat hides the status bar and menu bar when in full screen mode.",
+            "height":"612",
+            "credit":"Google",
+            "caption":"Kitkat hides the status bar and menu bar when in full screen mode.",
+            "mediaId":"gu-fc-7de04f3a-4f1b-4b13-affc-a2df833b1286",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307780835/b41791a5-2aaf-4519-9c91-649498f35491-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307780835/b41791a5-2aaf-4519-9c91-649498f35491-300x180.jpeg",
+            "source":"Google",
+            "altText":"Kitkat hides the status bar and menu bar when in full screen mode.",
+            "height":"180",
+            "credit":"Google",
+            "caption":"Kitkat hides the status bar and menu bar when in full screen mode.",
+            "mediaId":"gu-fc-7de04f3a-4f1b-4b13-affc-a2df833b1286",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307781027/6031bda1-a109-4ffe-af71-0eeae4790459-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307781027/6031bda1-a109-4ffe-af71-0eeae4790459-540x324.jpeg",
+            "source":"Google",
+            "altText":"Kitkat hides the status bar and menu bar when in full screen mode.",
+            "height":"324",
+            "credit":"Google",
+            "caption":"Kitkat hides the status bar and menu bar when in full screen mode.",
+            "mediaId":"gu-fc-7de04f3a-4f1b-4b13-affc-a2df833b1286",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307781167/336fc28b-380e-4f71-b15c-9768a8c42ca5-68x68.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307781167/336fc28b-380e-4f71-b15c-9768a8c42ca5-68x68.jpeg",
+            "source":"Google",
+            "altText":"Kitkat hides the status bar and menu bar when in full screen mode.",
+            "height":"68",
+            "credit":"Google",
+            "caption":"Kitkat hides the status bar and menu bar when in full screen mode.",
+            "mediaId":"gu-fc-7de04f3a-4f1b-4b13-affc-a2df833b1286",
+            "width":"68"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307781288/5a363c34-6c55-4180-be95-9e5c83b2afcf-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307781288/5a363c34-6c55-4180-be95-9e5c83b2afcf-380x228.jpeg",
+            "source":"Google",
+            "altText":"Kitkat hides the status bar and menu bar when in full screen mode.",
+            "height":"228",
+            "credit":"Google",
+            "caption":"Kitkat hides the status bar and menu bar when in full screen mode.",
+            "mediaId":"gu-fc-7de04f3a-4f1b-4b13-affc-a2df833b1286",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307781479/16779054-acc4-4187-819f-9977e1ca7e14-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383307781479/16779054-acc4-4187-819f-9977e1ca7e14-620x372.jpeg",
+            "source":"Google",
+            "altText":"Kitkat hides the status bar and menu bar when in full screen mode.",
+            "height":"372",
+            "credit":"Google",
+            "caption":"Kitkat hides the status bar and menu bar when in full screen mode.",
+            "mediaId":"gu-fc-7de04f3a-4f1b-4b13-affc-a2df833b1286",
+            "width":"620"
+          }
+        }]
+      },{
+        "id":"gu-fc-2e5b8f21-018c-4e63-91bf-785f41fcc307",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383308075858/d6206e2d-3463-433a-b62f-bacf6e8fd287-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383308075858/d6206e2d-3463-433a-b62f-bacf6e8fd287-140x84.jpeg",
+            "source":"Google",
+            "altText":"Kitkat uses batch processing to reduce the battery drain while still allowing your phone to track your movements and use other sensors.",
+            "height":"84",
+            "credit":"Google",
+            "caption":"Kitkat uses batch processing to reduce the battery drain while still allowing your phone to track your movements and use other sensors.",
+            "mediaId":"gu-fc-2e5b8f21-018c-4e63-91bf-785f41fcc307",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383308076042/93431389-ecee-4c25-ae23-f4bfa695fe65-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383308076042/93431389-ecee-4c25-ae23-f4bfa695fe65-460x276.jpeg",
+            "source":"Google",
+            "altText":"Kitkat uses batch processing to reduce the battery drain while still allowing your phone to track your movements and use other sensors.",
+            "height":"276",
+            "credit":"Google",
+            "caption":"Kitkat uses batch processing to reduce the battery drain while still allowing your phone to track your movements and use other sensors.",
+            "mediaId":"gu-fc-2e5b8f21-018c-4e63-91bf-785f41fcc307",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383308076231/583ecad0-9a57-4e37-88c7-57fd5fc6f712-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383308076231/583ecad0-9a57-4e37-88c7-57fd5fc6f712-220x132.jpeg",
+            "source":"Google",
+            "altText":"Kitkat uses batch processing to reduce the battery drain while still allowing your phone to track your movements and use other sensors.",
+            "height":"132",
+            "credit":"Google",
+            "caption":"Kitkat uses batch processing to reduce the battery drain while still allowing your phone to track your movements and use other sensors.",
+            "mediaId":"gu-fc-2e5b8f21-018c-4e63-91bf-785f41fcc307",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383308076335/1a9df5bf-724a-46a9-97a9-7c26cf875c32-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383308076335/1a9df5bf-724a-46a9-97a9-7c26cf875c32-300x180.jpeg",
+            "source":"Google",
+            "altText":"Kitkat uses batch processing to reduce the battery drain while still allowing your phone to track your movements and use other sensors.",
+            "height":"180",
+            "credit":"Google",
+            "caption":"Kitkat uses batch processing to reduce the battery drain while still allowing your phone to track your movements and use other sensors.",
+            "mediaId":"gu-fc-2e5b8f21-018c-4e63-91bf-785f41fcc307",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383308076562/76f08bab-d065-44c6-ad8c-01732e34fdf9-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383308076562/76f08bab-d065-44c6-ad8c-01732e34fdf9-540x324.jpeg",
+            "source":"Google",
+            "altText":"Kitkat uses batch processing to reduce the battery drain while still allowing your phone to track your movements and use other sensors.",
+            "height":"324",
+            "credit":"Google",
+            "caption":"Kitkat uses batch processing to reduce the battery drain while still allowing your phone to track your movements and use other sensors.",
+            "mediaId":"gu-fc-2e5b8f21-018c-4e63-91bf-785f41fcc307",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383308076730/289658e8-ec4c-42e0-88c1-41451095f7d6-68x68.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383308076730/289658e8-ec4c-42e0-88c1-41451095f7d6-68x68.jpeg",
+            "source":"Google",
+            "altText":"Kitkat uses batch processing to reduce the battery drain while still allowing your phone to track your movements and use other sensors.",
+            "height":"68",
+            "credit":"Google",
+            "caption":"Kitkat uses batch processing to reduce the battery drain while still allowing your phone to track your movements and use other sensors.",
+            "mediaId":"gu-fc-2e5b8f21-018c-4e63-91bf-785f41fcc307",
+            "width":"68"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383308076882/c5f06555-a7f8-48a9-994f-2d55e5d7fabb-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383308076882/c5f06555-a7f8-48a9-994f-2d55e5d7fabb-380x228.jpeg",
+            "source":"Google",
+            "altText":"Kitkat uses batch processing to reduce the battery drain while still allowing your phone to track your movements and use other sensors.",
+            "height":"228",
+            "credit":"Google",
+            "caption":"Kitkat uses batch processing to reduce the battery drain while still allowing your phone to track your movements and use other sensors.",
+            "mediaId":"gu-fc-2e5b8f21-018c-4e63-91bf-785f41fcc307",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383308077050/0a71d73e-2f21-43dc-8aad-d05108bc3d51-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383308077050/0a71d73e-2f21-43dc-8aad-d05108bc3d51-620x372.jpeg",
+            "source":"Google",
+            "altText":"Kitkat uses batch processing to reduce the battery drain while still allowing your phone to track your movements and use other sensors.",
+            "height":"372",
+            "credit":"Google",
+            "caption":"Kitkat uses batch processing to reduce the battery drain while still allowing your phone to track your movements and use other sensors.",
+            "mediaId":"gu-fc-2e5b8f21-018c-4e63-91bf-785f41fcc307",
+            "width":"620"
+          }
+        }]
+      },{
+        "id":"gu-fc-fb2c0859-f178-448f-829d-13793886b98c",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383308172406/8126d698-d005-4ed6-8052-9effee746a70-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383308172406/8126d698-d005-4ed6-8052-9effee746a70-140x84.jpeg",
+            "source":"Google",
+            "altText":"Kitkat simplifies the use of NFC for payments and other functions.",
+            "height":"84",
+            "credit":"Google",
+            "caption":"Kitkat simplifies the use of NFC for payments and other functions.",
+            "mediaId":"gu-fc-fb2c0859-f178-448f-829d-13793886b98c",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383308172556/919775ed-3304-46ba-9008-c5e68002f0f8-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383308172556/919775ed-3304-46ba-9008-c5e68002f0f8-220x132.jpeg",
+            "source":"Google",
+            "altText":"Kitkat simplifies the use of NFC for payments and other functions.",
+            "height":"132",
+            "credit":"Google",
+            "caption":"Kitkat simplifies the use of NFC for payments and other functions.",
+            "mediaId":"gu-fc-fb2c0859-f178-448f-829d-13793886b98c",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383308172710/6af84ce5-4201-4b1a-9f39-e3a99dc83dc8-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383308172710/6af84ce5-4201-4b1a-9f39-e3a99dc83dc8-300x180.jpeg",
+            "source":"Google",
+            "altText":"Kitkat simplifies the use of NFC for payments and other functions.",
+            "height":"180",
+            "credit":"Google",
+            "caption":"Kitkat simplifies the use of NFC for payments and other functions.",
+            "mediaId":"gu-fc-fb2c0859-f178-448f-829d-13793886b98c",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383308172935/d04ba39a-78cd-4e8d-bbf2-2d8895d6cf02-bestSizeAvailable.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383308172935/d04ba39a-78cd-4e8d-bbf2-2d8895d6cf02-bestSizeAvailable.jpeg",
+            "source":"Google",
+            "altText":"Kitkat simplifies the use of NFC for payments and other functions.",
+            "height":"189",
+            "credit":"Google",
+            "caption":"Kitkat simplifies the use of NFC for payments and other functions.",
+            "mediaId":"gu-fc-fb2c0859-f178-448f-829d-13793886b98c",
+            "width":"315"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383308173161/f2ffa93b-110e-43fc-ac89-a8010adc0570-68x68.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383308173161/f2ffa93b-110e-43fc-ac89-a8010adc0570-68x68.jpeg",
+            "source":"Google",
+            "altText":"Kitkat simplifies the use of NFC for payments and other functions.",
+            "height":"68",
+            "credit":"Google",
+            "caption":"Kitkat simplifies the use of NFC for payments and other functions.",
+            "mediaId":"gu-fc-fb2c0859-f178-448f-829d-13793886b98c",
+            "width":"68"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/2013/nov/01/hailo-self-driving-cabs-taxi-app-google-cars",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-11-01T12:56:46Z",
+      "webTitle":"Hailo's future is in self-driving cabs, says co-founder",
+      "webUrl":"http://www.theguardian.com/technology/2013/nov/01/hailo-self-driving-cabs-taxi-app-google-cars",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/nov/01/hailo-self-driving-cabs-taxi-app-google-cars",
+      "fields":{
+        "trailText":"Taxi ordering app will still need skilled professionals but Google cars would be 'the best recruitment tool ever'. By <strong>Jemima Kiss</strong>",
+        "headline":"Hailo's future is in self-driving cabs, says co-founder",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3k36f",
+        "wordcount":"1",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T12:00:45Z"
+      },
+      "tags":[{
+        "id":"technology/apps",
+        "type":"keyword",
+        "webTitle":"Apps",
+        "webUrl":"http://www.theguardian.com/technology/apps",
+        "apiUrl":"http://content.guardianapis.com/technology/apps",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/appsblog",
+        "type":"blog",
+        "webTitle":"Apps blog",
+        "webUrl":"http://www.theguardian.com/technology/appsblog",
+        "apiUrl":"http://content.guardianapis.com/technology/appsblog",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"uk/transport",
+        "type":"keyword",
+        "webTitle":"Transport",
+        "webUrl":"http://www.theguardian.com/uk/transport",
+        "apiUrl":"http://content.guardianapis.com/uk/transport",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"technology/smartphones",
+        "type":"keyword",
+        "webTitle":"Smartphones",
+        "webUrl":"http://www.theguardian.com/technology/smartphones",
+        "apiUrl":"http://content.guardianapis.com/technology/smartphones",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/google",
+        "type":"keyword",
+        "webTitle":"Google",
+        "webUrl":"http://www.theguardian.com/technology/google",
+        "apiUrl":"http://content.guardianapis.com/technology/google",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/jemimakiss",
+        "type":"contributor",
+        "webTitle":"Jemima Kiss",
+        "webUrl":"http://www.theguardian.com/profile/jemimakiss",
+        "apiUrl":"http://content.guardianapis.com/profile/jemimakiss",
+        "bio":"<p><strong>Head of technology</strong> <br />Jemima Kiss joined the Guardian in 2006 and covers big tech businesses, startups and technology trends.<br />She is a permanent fixture on the <a href=\"http://www.guardian.co.uk/technology/series/techweekly\">Tech Weekly</a> podcast and sits on the <a href=\"http://www.bjr.org.uk\">British Journalism Review</a> editorial board. <br />A proud graduate of <a href=\"http://www.guardian.co.uk/education/2010/jun/01/dartington-college-arts-relocation-falmouth\">Dartington College of Arts</a>, Jemima has covered technology and media online since 2002. So if the internet dies, everything she has ever done goes up in smoke.</p>",
+        "r2ContributorId":"19589",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jemima_kiss_140x140.jpg",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-59278015-10e6-4daf-8fab-8b00b7da7c52",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383306896576/7404317348_6d2d3dcc16_o-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383306896576/7404317348_6d2d3dcc16_o-140x84.jpeg",
+            "source":"flickr",
+            "photographer":"OFFICIAL LEWEB PHOTOS",
+            "altText":"Hailo co-founder Jay Bregman",
+            "height":"84",
+            "credit":"OFFICIAL LEWEB PHOTOS/flickr",
+            "caption":"Co-founder Jay Bregman says Hailo is a brand that is on-demand and mobile native. <a href=\"http://www.flickr.com/photos/leweb3/7404317348/\">Photograph: Official LeWeb Photos/flickr</a>",
+            "mediaId":"gu-fc-59278015-10e6-4daf-8fab-8b00b7da7c52",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383306896778/7404317348_6d2d3dcc16_o-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383306896778/7404317348_6d2d3dcc16_o-460x276.jpeg",
+            "source":"flickr",
+            "photographer":"OFFICIAL LEWEB PHOTOS",
+            "altText":"Hailo co-founder Jay Bregman",
+            "height":"276",
+            "credit":"OFFICIAL LEWEB PHOTOS/flickr",
+            "caption":"Co-founder Jay Bregman says Hailo is a brand that is on-demand and mobile native. <a href=\"http://www.flickr.com/photos/leweb3/7404317348/\">Photograph: Official LeWeb Photos/flickr</a>",
+            "mediaId":"gu-fc-59278015-10e6-4daf-8fab-8b00b7da7c52",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383306897085/7404317348_6d2d3dcc16_o-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383306897085/7404317348_6d2d3dcc16_o-220x132.jpeg",
+            "source":"flickr",
+            "photographer":"OFFICIAL LEWEB PHOTOS",
+            "altText":"Hailo co-founder Jay Bregman",
+            "height":"132",
+            "credit":"OFFICIAL LEWEB PHOTOS/flickr",
+            "caption":"Co-founder Jay Bregman says Hailo is a brand that is on-demand and mobile native. <a href=\"http://www.flickr.com/photos/leweb3/7404317348/\">Photograph: Official LeWeb Photos/flickr</a>",
+            "mediaId":"gu-fc-59278015-10e6-4daf-8fab-8b00b7da7c52",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383306897626/7404317348_6d2d3dcc16_o-2060x1236.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383306897626/7404317348_6d2d3dcc16_o-2060x1236.jpeg",
+            "source":"flickr",
+            "photographer":"OFFICIAL LEWEB PHOTOS",
+            "altText":"Hailo co-founder Jay Bregman",
+            "height":"1236",
+            "credit":"OFFICIAL LEWEB PHOTOS/flickr",
+            "caption":"Co-founder Jay Bregman says Hailo is a brand that is on-demand and mobile native. <a href=\"http://www.flickr.com/photos/leweb3/7404317348/\">Photograph: Official LeWeb Photos/flickr</a>",
+            "mediaId":"gu-fc-59278015-10e6-4daf-8fab-8b00b7da7c52",
+            "width":"2060"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383306898388/7404317348_6d2d3dcc16_o-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383306898388/7404317348_6d2d3dcc16_o-1020x612.jpeg",
+            "source":"flickr",
+            "photographer":"OFFICIAL LEWEB PHOTOS",
+            "altText":"Hailo co-founder Jay Bregman",
+            "height":"612",
+            "credit":"OFFICIAL LEWEB PHOTOS/flickr",
+            "caption":"Co-founder Jay Bregman says Hailo is a brand that is on-demand and mobile native. <a href=\"http://www.flickr.com/photos/leweb3/7404317348/\">Photograph: Official LeWeb Photos/flickr</a>",
+            "mediaId":"gu-fc-59278015-10e6-4daf-8fab-8b00b7da7c52",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383306898681/7404317348_6d2d3dcc16_o-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383306898681/7404317348_6d2d3dcc16_o-300x180.jpeg",
+            "source":"flickr",
+            "photographer":"OFFICIAL LEWEB PHOTOS",
+            "altText":"Hailo co-founder Jay Bregman",
+            "height":"180",
+            "credit":"OFFICIAL LEWEB PHOTOS/flickr",
+            "caption":"Co-founder Jay Bregman says Hailo is a brand that is on-demand and mobile native. <a href=\"http://www.flickr.com/photos/leweb3/7404317348/\">Photograph: Official LeWeb Photos/flickr</a>",
+            "mediaId":"gu-fc-59278015-10e6-4daf-8fab-8b00b7da7c52",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383306898866/7404317348_6d2d3dcc16_o-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383306898866/7404317348_6d2d3dcc16_o-540x324.jpeg",
+            "source":"flickr",
+            "photographer":"OFFICIAL LEWEB PHOTOS",
+            "altText":"Hailo co-founder Jay Bregman",
+            "height":"324",
+            "credit":"OFFICIAL LEWEB PHOTOS/flickr",
+            "caption":"Co-founder Jay Bregman says Hailo is a brand that is on-demand and mobile native. <a href=\"http://www.flickr.com/photos/leweb3/7404317348/\">Photograph: Official LeWeb Photos/flickr</a>",
+            "mediaId":"gu-fc-59278015-10e6-4daf-8fab-8b00b7da7c52",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383306899052/7404317348_6d2d3dcc16_o-68x68.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383306899052/7404317348_6d2d3dcc16_o-68x68.jpeg",
+            "source":"flickr",
+            "photographer":"OFFICIAL LEWEB PHOTOS",
+            "altText":"Hailo co-founder Jay Bregman",
+            "height":"68",
+            "credit":"OFFICIAL LEWEB PHOTOS/flickr",
+            "caption":"Co-founder Jay Bregman says Hailo is a brand that is on-demand and mobile native. <a href=\"http://www.flickr.com/photos/leweb3/7404317348/\">Photograph: Official LeWeb Photos/flickr</a>",
+            "mediaId":"gu-fc-59278015-10e6-4daf-8fab-8b00b7da7c52",
+            "width":"68"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383306899182/7404317348_6d2d3dcc16_o-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383306899182/7404317348_6d2d3dcc16_o-380x228.jpeg",
+            "source":"flickr",
+            "photographer":"OFFICIAL LEWEB PHOTOS",
+            "altText":"Hailo co-founder Jay Bregman",
+            "height":"228",
+            "credit":"OFFICIAL LEWEB PHOTOS/flickr",
+            "caption":"Co-founder Jay Bregman says Hailo is a brand that is on-demand and mobile native. <a href=\"http://www.flickr.com/photos/leweb3/7404317348/\">Photograph: Official LeWeb Photos/flickr</a>",
+            "mediaId":"gu-fc-59278015-10e6-4daf-8fab-8b00b7da7c52",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383306899806/7404317348_6d2d3dcc16_o-2048x1536.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383306899806/7404317348_6d2d3dcc16_o-2048x1536.jpeg",
+            "source":"flickr",
+            "photographer":"OFFICIAL LEWEB PHOTOS",
+            "altText":"Hailo co-founder Jay Bregman",
+            "height":"1536",
+            "credit":"OFFICIAL LEWEB PHOTOS/flickr",
+            "caption":"Co-founder Jay Bregman says Hailo is a brand that is on-demand and mobile native. <a href=\"http://www.flickr.com/photos/leweb3/7404317348/\">Photograph: Official LeWeb Photos/flickr</a>",
+            "mediaId":"gu-fc-59278015-10e6-4daf-8fab-8b00b7da7c52",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383306900643/7404317348_6d2d3dcc16_o-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383306900643/7404317348_6d2d3dcc16_o-620x372.jpeg",
+            "source":"flickr",
+            "photographer":"OFFICIAL LEWEB PHOTOS",
+            "altText":"Hailo co-founder Jay Bregman",
+            "height":"372",
+            "credit":"OFFICIAL LEWEB PHOTOS/flickr",
+            "caption":"Co-founder Jay Bregman says Hailo is a brand that is on-demand and mobile native. <a href=\"http://www.flickr.com/photos/leweb3/7404317348/\">Photograph: Official LeWeb Photos/flickr</a>",
+            "mediaId":"gu-fc-59278015-10e6-4daf-8fab-8b00b7da7c52",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383306900928/7404317348_6d2d3dcc16_o-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383306900928/7404317348_6d2d3dcc16_o-1024x768.jpeg",
+            "source":"flickr",
+            "photographer":"OFFICIAL LEWEB PHOTOS",
+            "altText":"Hailo co-founder Jay Bregman",
+            "height":"768",
+            "credit":"OFFICIAL LEWEB PHOTOS/flickr",
+            "caption":"Co-founder Jay Bregman says Hailo is a brand that is on-demand and mobile native. <a href=\"http://www.flickr.com/photos/leweb3/7404317348/\">Photograph: Official LeWeb Photos/flickr</a>",
+            "mediaId":"gu-fc-59278015-10e6-4daf-8fab-8b00b7da7c52",
+            "width":"1024"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/2013/nov/01/proteus-games-playstation-3-vita",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-11-01T12:48:00Z",
+      "webTitle":"Proteus: adventure game is a meditation on place and nature",
+      "webUrl":"http://www.theguardian.com/technology/2013/nov/01/proteus-games-playstation-3-vita",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/nov/01/proteus-games-playstation-3-vita",
+      "fields":{
+        "trailText":"<p>Developer describes new features added by Curve to game's old-school visuals in PlayStation 3 and Vita version. By <strong>Keith Stuart</strong></p>",
+        "headline":"Proteus: adventure game is a meditation on place and nature",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3k38g",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/1/1383302332717/Proteus-1-003.jpg",
+        "wordcount":"1267",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T12:48:20Z"
+      },
+      "tags":[{
+        "id":"technology/games",
+        "type":"keyword",
+        "webTitle":"Games",
+        "webUrl":"http://www.theguardian.com/technology/games",
+        "apiUrl":"http://content.guardianapis.com/technology/games",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/playstation",
+        "type":"keyword",
+        "webTitle":"PlayStation",
+        "webUrl":"http://www.theguardian.com/technology/playstation",
+        "apiUrl":"http://content.guardianapis.com/technology/playstation",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"profile/keithstuart",
+        "type":"contributor",
+        "webTitle":"Keith Stuart",
+        "webUrl":"http://www.theguardian.com/profile/keithstuart",
+        "apiUrl":"http://content.guardianapis.com/profile/keithstuart",
+        "bio":"<p>Keith has worked for videogame industry bible Edge Magazine, Official PlayStation Magazine and Pocket Gamer</p>",
+        "rcsId":"GNL007878",
+        "r2ContributorId":"15953",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2008/09/03/keith_stuart_140x140.jpg",
+        "references":[]
+      },{
+        "id":"technology/ps3",
+        "type":"keyword",
+        "webTitle":"PS3",
+        "webUrl":"http://www.theguardian.com/technology/ps3",
+        "apiUrl":"http://content.guardianapis.com/technology/ps3",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/ps-vita",
+        "type":"keyword",
+        "webTitle":"PS Vita",
+        "webUrl":"http://www.theguardian.com/technology/ps-vita",
+        "apiUrl":"http://content.guardianapis.com/technology/ps-vita",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421456404",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/1/1383302341511/Proteus-1-008.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Proteus 1",
+            "height":"276",
+            "credit":"PR",
+            "caption":"Proteus' chunky, luxuriously coloured visuals are reminiscent of old Atari and Commodore 64 games, when digital landscapes were minimalistic and subjective.",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421456405",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/1/1383302332717/Proteus-1-003.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Proteus 1",
+            "height":"84",
+            "credit":"PR",
+            "caption":"Proteus 1",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/2013/nov/01/evernote-phil-libin-nsa-consumer-confidence",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-11-01T11:34:24Z",
+      "webTitle":"Evernote founder Phil Libin: NSA is undermining consumer confidence",
+      "webUrl":"http://www.theguardian.com/technology/2013/nov/01/evernote-phil-libin-nsa-consumer-confidence",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/nov/01/evernote-phil-libin-nsa-consumer-confidence",
+      "fields":{
+        "trailText":"The popular productivity tool has 80 million users and fiercely defends its users' data, says its founder. By <strong>Jemima Kiss</strong>",
+        "headline":"Evernote founder Phil Libin: NSA is undermining consumer confidence",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3k352",
+        "wordcount":"1",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T11:30:22Z"
+      },
+      "tags":[{
+        "id":"technology/apps",
+        "type":"keyword",
+        "webTitle":"Apps",
+        "webUrl":"http://www.theguardian.com/technology/apps",
+        "apiUrl":"http://content.guardianapis.com/technology/apps",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/data-protection",
+        "type":"keyword",
+        "webTitle":"Data protection",
+        "webUrl":"http://www.theguardian.com/technology/data-protection",
+        "apiUrl":"http://content.guardianapis.com/technology/data-protection",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/appsblog",
+        "type":"blog",
+        "webTitle":"Apps blog",
+        "webUrl":"http://www.theguardian.com/technology/appsblog",
+        "apiUrl":"http://content.guardianapis.com/technology/appsblog",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"world/nsa",
+        "type":"keyword",
+        "webTitle":"NSA",
+        "webUrl":"http://www.theguardian.com/world/nsa",
+        "apiUrl":"http://content.guardianapis.com/world/nsa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/surveillance",
+        "type":"keyword",
+        "webTitle":"Surveillance",
+        "webUrl":"http://www.theguardian.com/world/surveillance",
+        "apiUrl":"http://content.guardianapis.com/world/surveillance",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/jemimakiss",
+        "type":"contributor",
+        "webTitle":"Jemima Kiss",
+        "webUrl":"http://www.theguardian.com/profile/jemimakiss",
+        "apiUrl":"http://content.guardianapis.com/profile/jemimakiss",
+        "bio":"<p><strong>Head of technology</strong> <br />Jemima Kiss joined the Guardian in 2006 and covers big tech businesses, startups and technology trends.<br />She is a permanent fixture on the <a href=\"http://www.guardian.co.uk/technology/series/techweekly\">Tech Weekly</a> podcast and sits on the <a href=\"http://www.bjr.org.uk\">British Journalism Review</a> editorial board. <br />A proud graduate of <a href=\"http://www.guardian.co.uk/education/2010/jun/01/dartington-college-arts-relocation-falmouth\">Dartington College of Arts</a>, Jemima has covered technology and media online since 2002. So if the internet dies, everything she has ever done goes up in smoke.</p>",
+        "r2ContributorId":"19589",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/jemima_kiss_140x140.jpg",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-ebd2af72-1066-478a-b140-b3798acdc1c5",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383303767831/5d6fa5f4-89d3-452d-88b6-15fe37e5b113-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383303767831/5d6fa5f4-89d3-452d-88b6-15fe37e5b113-140x84.jpeg",
+            "source":"PA",
+            "photographer":"Niall Carson",
+            "altText":"Evernote founder Phil Libin",
+            "height":"84",
+            "credit":"Niall Carson/PA",
+            "caption":"Phil Libin, founder of Evernote, speaking at the web summit being held at the RDS in Dublin. Photograph: Niall Carson/PA",
+            "mediaId":"gu-fc-ebd2af72-1066-478a-b140-b3798acdc1c5",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383303767955/5d6fa5f4-89d3-452d-88b6-15fe37e5b113-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383303767955/5d6fa5f4-89d3-452d-88b6-15fe37e5b113-460x276.jpeg",
+            "source":"PA",
+            "photographer":"Niall Carson",
+            "altText":"Evernote founder Phil Libin",
+            "height":"276",
+            "credit":"Niall Carson/PA",
+            "caption":"Phil Libin, founder of Evernote, speaking at the web summit being held at the RDS in Dublin. Photograph: Niall Carson/PA",
+            "mediaId":"gu-fc-ebd2af72-1066-478a-b140-b3798acdc1c5",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383303768103/5d6fa5f4-89d3-452d-88b6-15fe37e5b113-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383303768103/5d6fa5f4-89d3-452d-88b6-15fe37e5b113-220x132.jpeg",
+            "source":"PA",
+            "photographer":"Niall Carson",
+            "altText":"Evernote founder Phil Libin",
+            "height":"132",
+            "credit":"Niall Carson/PA",
+            "caption":"Phil Libin, founder of Evernote, speaking at the web summit being held at the RDS in Dublin. Photograph: Niall Carson/PA",
+            "mediaId":"gu-fc-ebd2af72-1066-478a-b140-b3798acdc1c5",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383303768554/5d6fa5f4-89d3-452d-88b6-15fe37e5b113-2060x1236.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383303768554/5d6fa5f4-89d3-452d-88b6-15fe37e5b113-2060x1236.jpeg",
+            "source":"PA",
+            "photographer":"Niall Carson",
+            "altText":"Evernote founder Phil Libin",
+            "height":"1236",
+            "credit":"Niall Carson/PA",
+            "caption":"Phil Libin, founder of Evernote, speaking at the web summit being held at the RDS in Dublin. Photograph: Niall Carson/PA",
+            "mediaId":"gu-fc-ebd2af72-1066-478a-b140-b3798acdc1c5",
+            "width":"2060"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383303769259/5d6fa5f4-89d3-452d-88b6-15fe37e5b113-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383303769259/5d6fa5f4-89d3-452d-88b6-15fe37e5b113-1020x612.jpeg",
+            "source":"PA",
+            "photographer":"Niall Carson",
+            "altText":"Evernote founder Phil Libin",
+            "height":"612",
+            "credit":"Niall Carson/PA",
+            "caption":"Phil Libin, founder of Evernote, speaking at the web summit being held at the RDS in Dublin. Photograph: Niall Carson/PA",
+            "mediaId":"gu-fc-ebd2af72-1066-478a-b140-b3798acdc1c5",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383303769469/5d6fa5f4-89d3-452d-88b6-15fe37e5b113-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383303769469/5d6fa5f4-89d3-452d-88b6-15fe37e5b113-300x180.jpeg",
+            "source":"PA",
+            "photographer":"Niall Carson",
+            "altText":"Evernote founder Phil Libin",
+            "height":"180",
+            "credit":"Niall Carson/PA",
+            "caption":"Phil Libin, founder of Evernote, speaking at the web summit being held at the RDS in Dublin. Photograph: Niall Carson/PA",
+            "mediaId":"gu-fc-ebd2af72-1066-478a-b140-b3798acdc1c5",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383303769811/5d6fa5f4-89d3-452d-88b6-15fe37e5b113-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383303769811/5d6fa5f4-89d3-452d-88b6-15fe37e5b113-540x324.jpeg",
+            "source":"PA",
+            "photographer":"Niall Carson",
+            "altText":"Evernote founder Phil Libin",
+            "height":"324",
+            "credit":"Niall Carson/PA",
+            "caption":"Phil Libin, founder of Evernote, speaking at the web summit being held at the RDS in Dublin. Photograph: Niall Carson/PA",
+            "mediaId":"gu-fc-ebd2af72-1066-478a-b140-b3798acdc1c5",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383303769974/5d6fa5f4-89d3-452d-88b6-15fe37e5b113-68x68.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383303769974/5d6fa5f4-89d3-452d-88b6-15fe37e5b113-68x68.jpeg",
+            "source":"PA",
+            "photographer":"Niall Carson",
+            "altText":"Evernote founder Phil Libin",
+            "height":"68",
+            "credit":"Niall Carson/PA",
+            "caption":"Phil Libin, founder of Evernote, speaking at the web summit being held at the RDS in Dublin. Photograph: Niall Carson/PA",
+            "mediaId":"gu-fc-ebd2af72-1066-478a-b140-b3798acdc1c5",
+            "width":"68"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383303770078/5d6fa5f4-89d3-452d-88b6-15fe37e5b113-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383303770078/5d6fa5f4-89d3-452d-88b6-15fe37e5b113-380x228.jpeg",
+            "source":"PA",
+            "photographer":"Niall Carson",
+            "altText":"Evernote founder Phil Libin",
+            "height":"228",
+            "credit":"Niall Carson/PA",
+            "caption":"Phil Libin, founder of Evernote, speaking at the web summit being held at the RDS in Dublin. Photograph: Niall Carson/PA",
+            "mediaId":"gu-fc-ebd2af72-1066-478a-b140-b3798acdc1c5",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383303770631/5d6fa5f4-89d3-452d-88b6-15fe37e5b113-2048x1536.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383303770631/5d6fa5f4-89d3-452d-88b6-15fe37e5b113-2048x1536.jpeg",
+            "source":"PA",
+            "photographer":"Niall Carson",
+            "altText":"Evernote founder Phil Libin",
+            "height":"1536",
+            "credit":"Niall Carson/PA",
+            "caption":"Phil Libin, founder of Evernote, speaking at the web summit being held at the RDS in Dublin. Photograph: Niall Carson/PA",
+            "mediaId":"gu-fc-ebd2af72-1066-478a-b140-b3798acdc1c5",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383303771340/5d6fa5f4-89d3-452d-88b6-15fe37e5b113-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383303771340/5d6fa5f4-89d3-452d-88b6-15fe37e5b113-620x372.jpeg",
+            "source":"PA",
+            "photographer":"Niall Carson",
+            "altText":"Evernote founder Phil Libin",
+            "height":"372",
+            "credit":"Niall Carson/PA",
+            "caption":"Phil Libin, founder of Evernote, speaking at the web summit being held at the RDS in Dublin. Photograph: Niall Carson/PA",
+            "mediaId":"gu-fc-ebd2af72-1066-478a-b140-b3798acdc1c5",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383303771632/5d6fa5f4-89d3-452d-88b6-15fe37e5b113-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/11/1/1383303771632/5d6fa5f4-89d3-452d-88b6-15fe37e5b113-1024x768.jpeg",
+            "source":"PA",
+            "photographer":"Niall Carson",
+            "altText":"Evernote founder Phil Libin",
+            "height":"768",
+            "credit":"Niall Carson/PA",
+            "caption":"Phil Libin, founder of Evernote, speaking at the web summit being held at the RDS in Dublin. Photograph: Niall Carson/PA",
+            "mediaId":"gu-fc-ebd2af72-1066-478a-b140-b3798acdc1c5",
+            "width":"1024"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/2013/nov/01/rockstar-sues-google-samsung-patent-infringements",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-11-01T09:19:56Z",
+      "webTitle":"Rockstar group sues Google, Samsung and others over patents",
+      "webUrl":"http://www.theguardian.com/technology/2013/nov/01/rockstar-sues-google-samsung-patent-infringements",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/nov/01/rockstar-sues-google-samsung-patent-infringements",
+      "fields":{
+        "trailText":"Group that owns Nortel patents files lawsuit against Samsung, HTC Huawei and three other companies",
+        "headline":"Rockstar group sues Google, Samsung and others over patents",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3k347",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/1/1383297285731/Google-003.jpg",
+        "wordcount":"223",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T09:19:56Z"
+      },
+      "tags":[{
+        "id":"technology/smartphone-patent-wars",
+        "type":"keyword",
+        "webTitle":"Smartphone patent wars",
+        "webUrl":"http://www.theguardian.com/technology/smartphone-patent-wars",
+        "apiUrl":"http://content.guardianapis.com/technology/smartphone-patent-wars",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/google",
+        "type":"keyword",
+        "webTitle":"Google",
+        "webUrl":"http://www.theguardian.com/technology/google",
+        "apiUrl":"http://content.guardianapis.com/technology/google",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/android",
+        "type":"keyword",
+        "webTitle":"Android",
+        "webUrl":"http://www.theguardian.com/technology/android",
+        "apiUrl":"http://content.guardianapis.com/technology/android",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/mobilephones",
+        "type":"keyword",
+        "webTitle":"Mobile phones",
+        "webUrl":"http://www.theguardian.com/technology/mobilephones",
+        "apiUrl":"http://content.guardianapis.com/technology/mobilephones",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/software",
+        "type":"keyword",
+        "webTitle":"Software",
+        "webUrl":"http://www.theguardian.com/technology/software",
+        "apiUrl":"http://content.guardianapis.com/technology/software",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/samsung",
+        "type":"keyword",
+        "webTitle":"Samsung",
+        "webUrl":"http://www.theguardian.com/technology/samsung",
+        "apiUrl":"http://content.guardianapis.com/technology/samsung",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/computing",
+        "type":"keyword",
+        "webTitle":"Computing",
+        "webUrl":"http://www.theguardian.com/technology/computing",
+        "apiUrl":"http://content.guardianapis.com/technology/computing",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/smartphones",
+        "type":"keyword",
+        "webTitle":"Smartphones",
+        "webUrl":"http://www.theguardian.com/technology/smartphones",
+        "apiUrl":"http://content.guardianapis.com/technology/smartphones",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/apple",
+        "type":"keyword",
+        "webTitle":"Apple",
+        "webUrl":"http://www.theguardian.com/technology/apple",
+        "apiUrl":"http://content.guardianapis.com/technology/apple",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/microsoft",
+        "type":"keyword",
+        "webTitle":"Microsoft",
+        "webUrl":"http://www.theguardian.com/technology/microsoft",
+        "apiUrl":"http://content.guardianapis.com/technology/microsoft",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/blackberry-corporation",
+        "type":"keyword",
+        "webTitle":"BlackBerry corporation",
+        "webUrl":"http://www.theguardian.com/technology/blackberry-corporation",
+        "apiUrl":"http://content.guardianapis.com/technology/blackberry-corporation",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/sony",
+        "type":"keyword",
+        "webTitle":"Sony",
+        "webUrl":"http://www.theguardian.com/technology/sony",
+        "apiUrl":"http://content.guardianapis.com/technology/sony",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/htc",
+        "type":"keyword",
+        "webTitle":"HTC",
+        "webUrl":"http://www.theguardian.com/technology/htc",
+        "apiUrl":"http://content.guardianapis.com/technology/htc",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421439795",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/1/1383297281592/Google-001.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Paul Sakuma",
+            "altText":"Google",
+            "height":"54",
+            "credit":"Paul Sakuma/AP",
+            "caption":"Rockstar is suing Google, Samsung, HTC, Huawei and three other companies over alleged patent infringement. Photograph: Paul Sakuma/AP",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/1/1383297284019/Google-002.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Paul Sakuma",
+            "altText":"Google",
+            "height":"130",
+            "credit":"Paul Sakuma/AP",
+            "caption":"Rockstar is suing Google, Samsung, HTC, Huawei and three other companies over alleged patent infringement. Photograph: Paul Sakuma/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/1/1383297285731/Google-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Paul Sakuma",
+            "altText":"Google",
+            "height":"84",
+            "credit":"Paul Sakuma/AP",
+            "caption":"Rockstar is suing Google, Samsung, HTC, Huawei and three other companies over alleged patent infringement. Photograph: Paul Sakuma/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/1/1383297287825/Google-004.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Paul Sakuma",
+            "altText":"Google",
+            "height":"132",
+            "credit":"Paul Sakuma/AP",
+            "caption":"Rockstar is suing Google, Samsung, HTC, Huawei and three other companies over alleged patent infringement. Photograph: Paul Sakuma/AP",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/1/1383297289521/Google-005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Paul Sakuma",
+            "altText":"Google",
+            "height":"168",
+            "credit":"Paul Sakuma/AP",
+            "caption":"Rockstar is suing Google, Samsung, HTC, Huawei and three other companies over alleged patent infringement. Photograph: Paul Sakuma/AP",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/1/1383297291190/Google-006.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Paul Sakuma",
+            "altText":"Google",
+            "height":"180",
+            "credit":"Paul Sakuma/AP",
+            "caption":"Rockstar is suing Google, Samsung, HTC, Huawei and three other companies over alleged patent infringement. Photograph: Paul Sakuma/AP",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/1/1383297292979/Google-007.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Paul Sakuma",
+            "altText":"Google",
+            "height":"228",
+            "credit":"Paul Sakuma/AP",
+            "caption":"Rockstar is suing Google, Samsung, HTC, Huawei and three other companies over alleged patent infringement. Photograph: Paul Sakuma/AP",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/1/1383297294681/Google-008.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Paul Sakuma",
+            "altText":"Google",
+            "height":"276",
+            "credit":"Paul Sakuma/AP",
+            "caption":"Rockstar is suing Google, Samsung, HTC, Huawei and three other companies over alleged patent infringement. Photograph: Paul Sakuma/AP",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/1/1383297294681/Google-008.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Paul Sakuma",
+            "altText":"Google",
+            "height":"276",
+            "credit":"Paul Sakuma/AP",
+            "caption":"Rockstar is suing Google, Samsung, HTC, Huawei and three other companies over alleged patent infringement. Photograph: Paul Sakuma/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421439796",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/1/1383297285731/Google-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Paul Sakuma",
+            "altText":"Google",
+            "height":"84",
+            "credit":"Paul Sakuma/AP",
+            "caption":"Rockstar is suing Google, Samsung, HTC, Huawei and three other companies over alleged patent infringement. Photograph: Paul Sakuma/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/2013/nov/01/best-android-apps-call-of-duty-ifruit",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-11-01T08:38:29Z",
+      "webTitle":"20 best Android apps this week",
+      "webUrl":"http://www.theguardian.com/technology/2013/nov/01/best-android-apps-call-of-duty-ifruit",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/nov/01/best-android-apps-call-of-duty-ifruit",
+      "fields":{
+        "trailText":"Call of Duty: Strike Team,&nbsp;Telegram,&nbsp;Juice Cubes,&nbsp;Grand Theft Auto: iFruit,&nbsp;Strikr,&nbsp;Jelly Splash,&nbsp;Virgin Media SmartCall,&nbsp;Stack Rabbit,&nbsp;Crunchyroll Manga,&nbsp;Pocket Harvest, Flyne and more",
+        "headline":"20 best Android apps this week",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3k33m",
+        "wordcount":"1",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T08:45:27Z"
+      },
+      "tags":[{
+        "id":"technology/series/best-android-apps",
+        "type":"series",
+        "webTitle":"Best Android apps",
+        "webUrl":"http://www.theguardian.com/technology/series/best-android-apps",
+        "apiUrl":"http://content.guardianapis.com/technology/series/best-android-apps",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/android",
+        "type":"keyword",
+        "webTitle":"Android",
+        "webUrl":"http://www.theguardian.com/technology/android",
+        "apiUrl":"http://content.guardianapis.com/technology/android",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/apps",
+        "type":"keyword",
+        "webTitle":"Apps",
+        "webUrl":"http://www.theguardian.com/technology/apps",
+        "apiUrl":"http://content.guardianapis.com/technology/apps",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/appsblog",
+        "type":"blog",
+        "webTitle":"Apps blog",
+        "webUrl":"http://www.theguardian.com/technology/appsblog",
+        "apiUrl":"http://content.guardianapis.com/technology/appsblog",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/smartphones",
+        "type":"keyword",
+        "webTitle":"Smartphones",
+        "webUrl":"http://www.theguardian.com/technology/smartphones",
+        "apiUrl":"http://content.guardianapis.com/technology/smartphones",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/tablet-computer",
+        "type":"keyword",
+        "webTitle":"Tablet computers",
+        "webUrl":"http://www.theguardian.com/technology/tablet-computer",
+        "apiUrl":"http://content.guardianapis.com/technology/tablet-computer",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/mobilephones",
+        "type":"keyword",
+        "webTitle":"Mobile phones",
+        "webUrl":"http://www.theguardian.com/technology/mobilephones",
+        "apiUrl":"http://content.guardianapis.com/technology/mobilephones",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/mobile",
+        "type":"keyword",
+        "webTitle":"Mobile",
+        "webUrl":"http://www.theguardian.com/technology/mobile",
+        "apiUrl":"http://content.guardianapis.com/technology/mobile",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/games",
+        "type":"keyword",
+        "webTitle":"Games",
+        "webUrl":"http://www.theguardian.com/technology/games",
+        "apiUrl":"http://content.guardianapis.com/technology/games",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/google",
+        "type":"keyword",
+        "webTitle":"Google",
+        "webUrl":"http://www.theguardian.com/technology/google",
+        "apiUrl":"http://content.guardianapis.com/technology/google",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/call-of-duty",
+        "type":"keyword",
+        "webTitle":"Call of Duty",
+        "webUrl":"http://www.theguardian.com/technology/call-of-duty",
+        "apiUrl":"http://content.guardianapis.com/technology/call-of-duty",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/grand-theft-auto-5",
+        "type":"keyword",
+        "webTitle":"Grand Theft Auto 5",
+        "webUrl":"http://www.theguardian.com/technology/grand-theft-auto-5",
+        "apiUrl":"http://content.guardianapis.com/technology/grand-theft-auto-5",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"media/virginmedia",
+        "type":"keyword",
+        "webTitle":"Virgin Media",
+        "webUrl":"http://www.theguardian.com/media/virginmedia",
+        "apiUrl":"http://content.guardianapis.com/media/virginmedia",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.theguardian.com/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"profile/stuart-dredge",
+        "type":"contributor",
+        "webTitle":"Stuart Dredge",
+        "webUrl":"http://www.theguardian.com/profile/stuart-dredge",
+        "apiUrl":"http://content.guardianapis.com/profile/stuart-dredge",
+        "bio":"<p>Stuart Dredge is a freelance journalist and editor specialising in mobile apps and mobile content</p>",
+        "r2ContributorId":"42685",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2011/2/14/1297684937360/Stuart-Dredge-003.jpg",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-ffbd0142-0188-42c0-95f0-7545949dfc33",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/28/1382964508356/call-of-duty-strike-team-android.jpg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/28/1382964508356/call-of-duty-strike-team-android.jpg",
+            "source":"Activision",
+            "altText":"Call of Duty: Strike Team for Android",
+            "height":"276",
+            "credit":"Activision",
+            "caption":"Call of Duty: Strike Team is a brand new game in the series for Android",
+            "mediaId":"gu-fc-ffbd0142-0188-42c0-95f0-7545949dfc33",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/2013/nov/01/boot-up-steam-rising-nokia-banning-htc-in-the-uk-gta-5-marketing-genius-and-more",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-11-01T07:00:12Z",
+      "webTitle":"Boot up: Steam rising, Nokia banning HTC in the UK, GTA 5 marketing genius and more",
+      "webUrl":"http://www.theguardian.com/technology/2013/nov/01/boot-up-steam-rising-nokia-banning-htc-in-the-uk-gta-5-marketing-genius-and-more",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/nov/01/boot-up-steam-rising-nokia-banning-htc-in-the-uk-gta-5-marketing-genius-and-more",
+      "fields":{
+        "trailText":"<strong>Samuel Gibbs:&nbsp;</strong>Plus Apple suggests turning your laptop off and on again if it's behaving badly, Samsung sells more phones than Apple, Nokia and BlackBerry combines, flying drones get a roll cage, and more",
+        "headline":"Boot up: Steam rising, Nokia banning HTC in the UK, GTA 5 marketing genius and more",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3k2np",
+        "wordcount":"1",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-02T07:00:00Z"
+      },
+      "tags":[{
+        "id":"technology/blog",
+        "type":"blog",
+        "webTitle":"Technology blog",
+        "webUrl":"http://www.theguardian.com/technology/blog",
+        "apiUrl":"http://content.guardianapis.com/technology/blog",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/apple",
+        "type":"keyword",
+        "webTitle":"Apple",
+        "webUrl":"http://www.theguardian.com/technology/apple",
+        "apiUrl":"http://content.guardianapis.com/technology/apple",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"media/series/newsbucket",
+        "type":"series",
+        "webTitle":"Newsbucket",
+        "webUrl":"http://www.theguardian.com/media/series/newsbucket",
+        "apiUrl":"http://content.guardianapis.com/media/series/newsbucket",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"technology/iphone-5s",
+        "type":"keyword",
+        "webTitle":"iPhone 5s",
+        "webUrl":"http://www.theguardian.com/technology/iphone-5s",
+        "apiUrl":"http://content.guardianapis.com/technology/iphone-5s",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/iphone",
+        "type":"keyword",
+        "webTitle":"iPhone",
+        "webUrl":"http://www.theguardian.com/technology/iphone",
+        "apiUrl":"http://content.guardianapis.com/technology/iphone",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/iphone-5c",
+        "type":"keyword",
+        "webTitle":"iPhone 5c",
+        "webUrl":"http://www.theguardian.com/technology/iphone-5c",
+        "apiUrl":"http://content.guardianapis.com/technology/iphone-5c",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/games",
+        "type":"keyword",
+        "webTitle":"Games",
+        "webUrl":"http://www.theguardian.com/technology/games",
+        "apiUrl":"http://content.guardianapis.com/technology/games",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/samsung",
+        "type":"keyword",
+        "webTitle":"Samsung",
+        "webUrl":"http://www.theguardian.com/technology/samsung",
+        "apiUrl":"http://content.guardianapis.com/technology/samsung",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/smartphones",
+        "type":"keyword",
+        "webTitle":"Smartphones",
+        "webUrl":"http://www.theguardian.com/technology/smartphones",
+        "apiUrl":"http://content.guardianapis.com/technology/smartphones",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/mobilephones",
+        "type":"keyword",
+        "webTitle":"Mobile phones",
+        "webUrl":"http://www.theguardian.com/technology/mobilephones",
+        "apiUrl":"http://content.guardianapis.com/technology/mobilephones",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/nokia",
+        "type":"keyword",
+        "webTitle":"Nokia",
+        "webUrl":"http://www.theguardian.com/technology/nokia",
+        "apiUrl":"http://content.guardianapis.com/technology/nokia",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/htc",
+        "type":"keyword",
+        "webTitle":"HTC",
+        "webUrl":"http://www.theguardian.com/technology/htc",
+        "apiUrl":"http://content.guardianapis.com/technology/htc",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/grand-theft-auto-5",
+        "type":"keyword",
+        "webTitle":"Grand Theft Auto 5",
+        "webUrl":"http://www.theguardian.com/technology/grand-theft-auto-5",
+        "apiUrl":"http://content.guardianapis.com/technology/grand-theft-auto-5",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/samuel-gibbs",
+        "type":"contributor",
+        "webTitle":"Samuel Gibbs",
+        "webUrl":"http://www.theguardian.com/profile/samuel-gibbs",
+        "apiUrl":"http://content.guardianapis.com/profile/samuel-gibbs",
+        "r2ContributorId":"58582",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/guardian/Pix/pictures/2013/10/18/1382089843887/Samuel-Gibbs.-Guardian-st-003.jpg",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-bec2c935-0596-4670-93d0-abf3983c2c31",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/25/1380138263898/Valve-Steam-010.jpg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/25/1380138263898/Valve-Steam-010.jpg",
+            "source":"PR",
+            "altText":"Valve Steam",
+            "height":"276",
+            "credit":"PR",
+            "caption":"Valve's Steam gaming service trumps Xbox Live with 65m subscribers.",
+            "mediaId":"gu-fc-bec2c935-0596-4670-93d0-abf3983c2c31",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    }],
+    "storyPackage":[]
+  }
+}

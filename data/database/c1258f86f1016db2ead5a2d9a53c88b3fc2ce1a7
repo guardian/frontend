@@ -1,0 +1,4321 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":12729,
+    "startIndex":1,
+    "pageSize":10,
+    "currentPage":1,
+    "pages":1273,
+    "orderBy":"newest",
+    "tag":{
+      "id":"technology/games",
+      "type":"keyword",
+      "webTitle":"Games",
+      "webUrl":"http://www.theguardian.com/technology/games",
+      "apiUrl":"http://content.guardianapis.com/technology/games",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "references":[]
+    },
+    "results":[{
+      "id":"technology/2013/nov/01/proteus-games-playstation-3-vita",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-11-01T12:48:00Z",
+      "webTitle":"Proteus: adventure game is a meditation on place and nature",
+      "webUrl":"http://www.theguardian.com/technology/2013/nov/01/proteus-games-playstation-3-vita",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/nov/01/proteus-games-playstation-3-vita",
+      "fields":{
+        "trailText":"<p>Developer describes new features added by Curve to game's old-school visuals in PlayStation 3 and Vita version. By <strong>Keith Stuart</strong></p>",
+        "headline":"Proteus: adventure game is a meditation on place and nature",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3k38g",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/1/1383302332717/Proteus-1-003.jpg",
+        "wordcount":"1267",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T12:48:20Z"
+      },
+      "tags":[{
+        "id":"technology/games",
+        "type":"keyword",
+        "webTitle":"Games",
+        "webUrl":"http://www.theguardian.com/technology/games",
+        "apiUrl":"http://content.guardianapis.com/technology/games",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/playstation",
+        "type":"keyword",
+        "webTitle":"PlayStation",
+        "webUrl":"http://www.theguardian.com/technology/playstation",
+        "apiUrl":"http://content.guardianapis.com/technology/playstation",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"profile/keithstuart",
+        "type":"contributor",
+        "webTitle":"Keith Stuart",
+        "webUrl":"http://www.theguardian.com/profile/keithstuart",
+        "apiUrl":"http://content.guardianapis.com/profile/keithstuart",
+        "bio":"<p>Keith has worked for videogame industry bible Edge Magazine, Official PlayStation Magazine and Pocket Gamer</p>",
+        "rcsId":"GNL007878",
+        "r2ContributorId":"15953",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2008/09/03/keith_stuart_140x140.jpg",
+        "references":[]
+      },{
+        "id":"technology/ps3",
+        "type":"keyword",
+        "webTitle":"PS3",
+        "webUrl":"http://www.theguardian.com/technology/ps3",
+        "apiUrl":"http://content.guardianapis.com/technology/ps3",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/ps-vita",
+        "type":"keyword",
+        "webTitle":"PS Vita",
+        "webUrl":"http://www.theguardian.com/technology/ps-vita",
+        "apiUrl":"http://content.guardianapis.com/technology/ps-vita",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421456404",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/1/1383302341511/Proteus-1-008.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Proteus 1",
+            "height":"276",
+            "credit":"PR",
+            "caption":"Proteus' chunky, luxuriously coloured visuals are reminiscent of old Atari and Commodore 64 games, when digital landscapes were minimalistic and subjective.",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421456405",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/11/1/1383302332717/Proteus-1-003.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Proteus 1",
+            "height":"84",
+            "credit":"PR",
+            "caption":"Proteus 1",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/2013/nov/01/best-android-apps-call-of-duty-ifruit",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-11-01T08:38:29Z",
+      "webTitle":"20 best Android apps this week",
+      "webUrl":"http://www.theguardian.com/technology/2013/nov/01/best-android-apps-call-of-duty-ifruit",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/nov/01/best-android-apps-call-of-duty-ifruit",
+      "fields":{
+        "trailText":"Call of Duty: Strike Team,&nbsp;Telegram,&nbsp;Juice Cubes,&nbsp;Grand Theft Auto: iFruit,&nbsp;Strikr,&nbsp;Jelly Splash,&nbsp;Virgin Media SmartCall,&nbsp;Stack Rabbit,&nbsp;Crunchyroll Manga,&nbsp;Pocket Harvest, Flyne and more",
+        "headline":"20 best Android apps this week",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3k33m",
+        "wordcount":"1",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-04T08:45:27Z"
+      },
+      "tags":[{
+        "id":"technology/series/best-android-apps",
+        "type":"series",
+        "webTitle":"Best Android apps",
+        "webUrl":"http://www.theguardian.com/technology/series/best-android-apps",
+        "apiUrl":"http://content.guardianapis.com/technology/series/best-android-apps",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/android",
+        "type":"keyword",
+        "webTitle":"Android",
+        "webUrl":"http://www.theguardian.com/technology/android",
+        "apiUrl":"http://content.guardianapis.com/technology/android",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/apps",
+        "type":"keyword",
+        "webTitle":"Apps",
+        "webUrl":"http://www.theguardian.com/technology/apps",
+        "apiUrl":"http://content.guardianapis.com/technology/apps",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/appsblog",
+        "type":"blog",
+        "webTitle":"Apps blog",
+        "webUrl":"http://www.theguardian.com/technology/appsblog",
+        "apiUrl":"http://content.guardianapis.com/technology/appsblog",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/smartphones",
+        "type":"keyword",
+        "webTitle":"Smartphones",
+        "webUrl":"http://www.theguardian.com/technology/smartphones",
+        "apiUrl":"http://content.guardianapis.com/technology/smartphones",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/tablet-computer",
+        "type":"keyword",
+        "webTitle":"Tablet computers",
+        "webUrl":"http://www.theguardian.com/technology/tablet-computer",
+        "apiUrl":"http://content.guardianapis.com/technology/tablet-computer",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/mobilephones",
+        "type":"keyword",
+        "webTitle":"Mobile phones",
+        "webUrl":"http://www.theguardian.com/technology/mobilephones",
+        "apiUrl":"http://content.guardianapis.com/technology/mobilephones",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/mobile",
+        "type":"keyword",
+        "webTitle":"Mobile",
+        "webUrl":"http://www.theguardian.com/technology/mobile",
+        "apiUrl":"http://content.guardianapis.com/technology/mobile",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/games",
+        "type":"keyword",
+        "webTitle":"Games",
+        "webUrl":"http://www.theguardian.com/technology/games",
+        "apiUrl":"http://content.guardianapis.com/technology/games",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/google",
+        "type":"keyword",
+        "webTitle":"Google",
+        "webUrl":"http://www.theguardian.com/technology/google",
+        "apiUrl":"http://content.guardianapis.com/technology/google",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/call-of-duty",
+        "type":"keyword",
+        "webTitle":"Call of Duty",
+        "webUrl":"http://www.theguardian.com/technology/call-of-duty",
+        "apiUrl":"http://content.guardianapis.com/technology/call-of-duty",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/grand-theft-auto-5",
+        "type":"keyword",
+        "webTitle":"Grand Theft Auto 5",
+        "webUrl":"http://www.theguardian.com/technology/grand-theft-auto-5",
+        "apiUrl":"http://content.guardianapis.com/technology/grand-theft-auto-5",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"media/virginmedia",
+        "type":"keyword",
+        "webTitle":"Virgin Media",
+        "webUrl":"http://www.theguardian.com/media/virginmedia",
+        "apiUrl":"http://content.guardianapis.com/media/virginmedia",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.theguardian.com/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"profile/stuart-dredge",
+        "type":"contributor",
+        "webTitle":"Stuart Dredge",
+        "webUrl":"http://www.theguardian.com/profile/stuart-dredge",
+        "apiUrl":"http://content.guardianapis.com/profile/stuart-dredge",
+        "bio":"<p>Stuart Dredge is a freelance journalist and editor specialising in mobile apps and mobile content</p>",
+        "r2ContributorId":"42685",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2011/2/14/1297684937360/Stuart-Dredge-003.jpg",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-ffbd0142-0188-42c0-95f0-7545949dfc33",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/28/1382964508356/call-of-duty-strike-team-android.jpg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/28/1382964508356/call-of-duty-strike-team-android.jpg",
+            "source":"Activision",
+            "altText":"Call of Duty: Strike Team for Android",
+            "height":"276",
+            "credit":"Activision",
+            "caption":"Call of Duty: Strike Team is a brand new game in the series for Android",
+            "mediaId":"gu-fc-ffbd0142-0188-42c0-95f0-7545949dfc33",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/2013/nov/01/boot-up-steam-rising-nokia-banning-htc-in-the-uk-gta-5-marketing-genius-and-more",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-11-01T07:00:12Z",
+      "webTitle":"Boot up: Steam rising, Nokia banning HTC in the UK, GTA 5 marketing genius and more",
+      "webUrl":"http://www.theguardian.com/technology/2013/nov/01/boot-up-steam-rising-nokia-banning-htc-in-the-uk-gta-5-marketing-genius-and-more",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/nov/01/boot-up-steam-rising-nokia-banning-htc-in-the-uk-gta-5-marketing-genius-and-more",
+      "fields":{
+        "trailText":"<strong>Samuel Gibbs:&nbsp;</strong>Plus Apple suggests turning your laptop off and on again if it's behaving badly, Samsung sells more phones than Apple, Nokia and BlackBerry combines, flying drones get a roll cage, and more",
+        "headline":"Boot up: Steam rising, Nokia banning HTC in the UK, GTA 5 marketing genius and more",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3k2np",
+        "wordcount":"1",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-02T07:00:00Z"
+      },
+      "tags":[{
+        "id":"technology/blog",
+        "type":"blog",
+        "webTitle":"Technology blog",
+        "webUrl":"http://www.theguardian.com/technology/blog",
+        "apiUrl":"http://content.guardianapis.com/technology/blog",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/apple",
+        "type":"keyword",
+        "webTitle":"Apple",
+        "webUrl":"http://www.theguardian.com/technology/apple",
+        "apiUrl":"http://content.guardianapis.com/technology/apple",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"media/series/newsbucket",
+        "type":"series",
+        "webTitle":"Newsbucket",
+        "webUrl":"http://www.theguardian.com/media/series/newsbucket",
+        "apiUrl":"http://content.guardianapis.com/media/series/newsbucket",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"technology/iphone-5s",
+        "type":"keyword",
+        "webTitle":"iPhone 5s",
+        "webUrl":"http://www.theguardian.com/technology/iphone-5s",
+        "apiUrl":"http://content.guardianapis.com/technology/iphone-5s",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/iphone",
+        "type":"keyword",
+        "webTitle":"iPhone",
+        "webUrl":"http://www.theguardian.com/technology/iphone",
+        "apiUrl":"http://content.guardianapis.com/technology/iphone",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/iphone-5c",
+        "type":"keyword",
+        "webTitle":"iPhone 5c",
+        "webUrl":"http://www.theguardian.com/technology/iphone-5c",
+        "apiUrl":"http://content.guardianapis.com/technology/iphone-5c",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/games",
+        "type":"keyword",
+        "webTitle":"Games",
+        "webUrl":"http://www.theguardian.com/technology/games",
+        "apiUrl":"http://content.guardianapis.com/technology/games",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/samsung",
+        "type":"keyword",
+        "webTitle":"Samsung",
+        "webUrl":"http://www.theguardian.com/technology/samsung",
+        "apiUrl":"http://content.guardianapis.com/technology/samsung",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/smartphones",
+        "type":"keyword",
+        "webTitle":"Smartphones",
+        "webUrl":"http://www.theguardian.com/technology/smartphones",
+        "apiUrl":"http://content.guardianapis.com/technology/smartphones",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/mobilephones",
+        "type":"keyword",
+        "webTitle":"Mobile phones",
+        "webUrl":"http://www.theguardian.com/technology/mobilephones",
+        "apiUrl":"http://content.guardianapis.com/technology/mobilephones",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/nokia",
+        "type":"keyword",
+        "webTitle":"Nokia",
+        "webUrl":"http://www.theguardian.com/technology/nokia",
+        "apiUrl":"http://content.guardianapis.com/technology/nokia",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/htc",
+        "type":"keyword",
+        "webTitle":"HTC",
+        "webUrl":"http://www.theguardian.com/technology/htc",
+        "apiUrl":"http://content.guardianapis.com/technology/htc",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/grand-theft-auto-5",
+        "type":"keyword",
+        "webTitle":"Grand Theft Auto 5",
+        "webUrl":"http://www.theguardian.com/technology/grand-theft-auto-5",
+        "apiUrl":"http://content.guardianapis.com/technology/grand-theft-auto-5",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"profile/samuel-gibbs",
+        "type":"contributor",
+        "webTitle":"Samuel Gibbs",
+        "webUrl":"http://www.theguardian.com/profile/samuel-gibbs",
+        "apiUrl":"http://content.guardianapis.com/profile/samuel-gibbs",
+        "r2ContributorId":"58582",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/guardian/Pix/pictures/2013/10/18/1382089843887/Samuel-Gibbs.-Guardian-st-003.jpg",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-bec2c935-0596-4670-93d0-abf3983c2c31",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/25/1380138263898/Valve-Steam-010.jpg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/9/25/1380138263898/Valve-Steam-010.jpg",
+            "source":"PR",
+            "altText":"Valve Steam",
+            "height":"276",
+            "credit":"PR",
+            "caption":"Valve's Steam gaming service trumps Xbox Live with 65m subscribers.",
+            "mediaId":"gu-fc-bec2c935-0596-4670-93d0-abf3983c2c31",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/gamesblog/2013/nov/01/chatterbox-friday",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-11-01T07:00:00Z",
+      "webTitle":"Chatterbox: Friday",
+      "webUrl":"http://www.theguardian.com/technology/gamesblog/2013/nov/01/chatterbox-friday",
+      "apiUrl":"http://content.guardianapis.com/technology/gamesblog/2013/nov/01/chatterbox-friday",
+      "fields":{
+        "trailText":"<p>The place to talk about games and other things that matter</p>",
+        "headline":"Chatterbox: Friday",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jqdx",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2011/9/30/1317400674722/Chatterbox-Friday-logo-001.jpg",
+        "wordcount":"2",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-08T07:00:00Z"
+      },
+      "tags":[{
+        "id":"technology/series/chatterbox",
+        "type":"series",
+        "webTitle":"Chatterbox",
+        "webUrl":"http://www.theguardian.com/technology/series/chatterbox",
+        "apiUrl":"http://content.guardianapis.com/technology/series/chatterbox",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/gamesblog",
+        "type":"blog",
+        "webTitle":"Games blog",
+        "webUrl":"http://www.theguardian.com/technology/gamesblog",
+        "apiUrl":"http://content.guardianapis.com/technology/gamesblog",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/games",
+        "type":"keyword",
+        "webTitle":"Games",
+        "webUrl":"http://www.theguardian.com/technology/games",
+        "apiUrl":"http://content.guardianapis.com/technology/games",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"profile/keithstuart",
+        "type":"contributor",
+        "webTitle":"Keith Stuart",
+        "webUrl":"http://www.theguardian.com/profile/keithstuart",
+        "apiUrl":"http://content.guardianapis.com/profile/keithstuart",
+        "bio":"<p>Keith has worked for videogame industry bible Edge Magazine, Official PlayStation Magazine and Pocket Gamer</p>",
+        "rcsId":"GNL007878",
+        "r2ContributorId":"15953",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2008/09/03/keith_stuart_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421084033",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2011/9/30/1317400674722/Chatterbox-Friday-logo-001.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Chatterbox Friday logo",
+            "height":"84",
+            "credit":"Guardian",
+            "caption":"Chatterbox Friday logo Photograph: Guardian",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/2013/oct/31/ps4-playstation-4-xbox-one-consoles-call-of-duty-ghostss",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-10-31T17:59:17Z",
+      "webTitle":"The PS4 trumps the Xbox One for Call of Duty: Ghosts",
+      "webUrl":"http://www.theguardian.com/technology/2013/oct/31/ps4-playstation-4-xbox-one-consoles-call-of-duty-ghostss",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/oct/31/ps4-playstation-4-xbox-one-consoles-call-of-duty-ghostss",
+      "fields":{
+        "trailText":"Mounting evidence points to Xbox One graphics power shortage compared to the PS4. By <strong>Samuel Gibbs</strong>",
+        "headline":"The PS4 trumps the Xbox One for Call of Duty: Ghosts",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3k2kx",
+        "wordcount":"1",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-03T17:00:17Z"
+      },
+      "tags":[{
+        "id":"technology/call-of-duty",
+        "type":"keyword",
+        "webTitle":"Call of Duty",
+        "webUrl":"http://www.theguardian.com/technology/call-of-duty",
+        "apiUrl":"http://content.guardianapis.com/technology/call-of-duty",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/games",
+        "type":"keyword",
+        "webTitle":"Games",
+        "webUrl":"http://www.theguardian.com/technology/games",
+        "apiUrl":"http://content.guardianapis.com/technology/games",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/microsoft",
+        "type":"keyword",
+        "webTitle":"Microsoft",
+        "webUrl":"http://www.theguardian.com/technology/microsoft",
+        "apiUrl":"http://content.guardianapis.com/technology/microsoft",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/sony",
+        "type":"keyword",
+        "webTitle":"Sony",
+        "webUrl":"http://www.theguardian.com/technology/sony",
+        "apiUrl":"http://content.guardianapis.com/technology/sony",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/xbox",
+        "type":"keyword",
+        "webTitle":"Xbox",
+        "webUrl":"http://www.theguardian.com/technology/xbox",
+        "apiUrl":"http://content.guardianapis.com/technology/xbox",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/xbox-one",
+        "type":"keyword",
+        "webTitle":"Xbox One",
+        "webUrl":"http://www.theguardian.com/technology/xbox-one",
+        "apiUrl":"http://content.guardianapis.com/technology/xbox-one",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/playstation",
+        "type":"keyword",
+        "webTitle":"PlayStation",
+        "webUrl":"http://www.theguardian.com/technology/playstation",
+        "apiUrl":"http://content.guardianapis.com/technology/playstation",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/playstation-4",
+        "type":"keyword",
+        "webTitle":"PlayStation 4",
+        "webUrl":"http://www.theguardian.com/technology/playstation-4",
+        "apiUrl":"http://content.guardianapis.com/technology/playstation-4",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/computing",
+        "type":"keyword",
+        "webTitle":"Computing",
+        "webUrl":"http://www.theguardian.com/technology/computing",
+        "apiUrl":"http://content.guardianapis.com/technology/computing",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/samuel-gibbs",
+        "type":"contributor",
+        "webTitle":"Samuel Gibbs",
+        "webUrl":"http://www.theguardian.com/profile/samuel-gibbs",
+        "apiUrl":"http://content.guardianapis.com/profile/samuel-gibbs",
+        "r2ContributorId":"58582",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/guardian/Pix/pictures/2013/10/18/1382089843887/Samuel-Gibbs.-Guardian-st-003.jpg",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-b1cbc979-2330-4c7d-86e0-7a06eb757b35",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/25/1366872677374/codghosts_main.jpg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/25/1366872677374/codghosts_main.jpg",
+            "source":"Public domain",
+            "altText":"Call of Duty: Ghosts",
+            "height":"276",
+            "credit":"Public domain",
+            "caption":"Call of Duty: Ghosts can only run at 720p on the Xbox One versus full 1080p on the PS4.",
+            "mediaId":"gu-fc-b1cbc979-2330-4c7d-86e0-7a06eb757b35",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/2013/oct/31/jane-austen-mobile-game-virtual-world",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-10-31T13:19:02Z",
+      "webTitle":"Jane Austen gets her game on",
+      "webUrl":"http://www.theguardian.com/technology/2013/oct/31/jane-austen-mobile-game-virtual-world",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/oct/31/jane-austen-mobile-game-virtual-world",
+      "fields":{
+        "trailText":"Stride &amp; Prejudice endless-runner game launches for iPhone and iPad while virtual world Ever, Jane seeks $100k funding on crowdfunding site Kickstarter",
+        "headline":"Jane Austen gets her game on",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3k26b",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383208825538/7a89db44-deab-4c7e-a0e6-6019ba950533-140x84.png",
+        "wordcount":"1",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-03T13:15:59Z"
+      },
+      "tags":[{
+        "id":"technology/games",
+        "type":"keyword",
+        "webTitle":"Games",
+        "webUrl":"http://www.theguardian.com/technology/games",
+        "apiUrl":"http://content.guardianapis.com/technology/games",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"books/janeausten",
+        "type":"keyword",
+        "webTitle":"Jane Austen",
+        "webUrl":"http://www.theguardian.com/books/janeausten",
+        "apiUrl":"http://content.guardianapis.com/books/janeausten",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"technology/apps",
+        "type":"keyword",
+        "webTitle":"Apps",
+        "webUrl":"http://www.theguardian.com/technology/apps",
+        "apiUrl":"http://content.guardianapis.com/technology/apps",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/smartphones",
+        "type":"keyword",
+        "webTitle":"Smartphones",
+        "webUrl":"http://www.theguardian.com/technology/smartphones",
+        "apiUrl":"http://content.guardianapis.com/technology/smartphones",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/tablet-computer",
+        "type":"keyword",
+        "webTitle":"Tablet computers",
+        "webUrl":"http://www.theguardian.com/technology/tablet-computer",
+        "apiUrl":"http://content.guardianapis.com/technology/tablet-computer",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/iphone",
+        "type":"keyword",
+        "webTitle":"iPhone",
+        "webUrl":"http://www.theguardian.com/technology/iphone",
+        "apiUrl":"http://content.guardianapis.com/technology/iphone",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/ipad",
+        "type":"keyword",
+        "webTitle":"iPad",
+        "webUrl":"http://www.theguardian.com/technology/ipad",
+        "apiUrl":"http://content.guardianapis.com/technology/ipad",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/kickstarter",
+        "type":"keyword",
+        "webTitle":"Kickstarter",
+        "webUrl":"http://www.theguardian.com/technology/kickstarter",
+        "apiUrl":"http://content.guardianapis.com/technology/kickstarter",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.theguardian.com/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"technology/virtualworlds",
+        "type":"keyword",
+        "webTitle":"Virtual worlds",
+        "webUrl":"http://www.theguardian.com/technology/virtualworlds",
+        "apiUrl":"http://content.guardianapis.com/technology/virtualworlds",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/mobile",
+        "type":"keyword",
+        "webTitle":"Mobile",
+        "webUrl":"http://www.theguardian.com/technology/mobile",
+        "apiUrl":"http://content.guardianapis.com/technology/mobile",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"profile/stuart-dredge",
+        "type":"contributor",
+        "webTitle":"Stuart Dredge",
+        "webUrl":"http://www.theguardian.com/profile/stuart-dredge",
+        "apiUrl":"http://content.guardianapis.com/profile/stuart-dredge",
+        "bio":"<p>Stuart Dredge is a freelance journalist and editor specialising in mobile apps and mobile content</p>",
+        "r2ContributorId":"42685",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2011/2/14/1297684937360/Stuart-Dredge-003.jpg",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-b9ae51df-4eff-4399-bb35-0eed209fcc0d",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383208825538/7a89db44-deab-4c7e-a0e6-6019ba950533-140x84.png",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383208825538/7a89db44-deab-4c7e-a0e6-6019ba950533-140x84.png",
+            "source":"App Store",
+            "altText":"Jane Austen Stride & Prejudice",
+            "height":"84",
+            "credit":"App Store",
+            "caption":"Stride &amp; Prejudice turns Jane Austen's novel into an endless-runner game.",
+            "mediaId":"gu-fc-b9ae51df-4eff-4399-bb35-0eed209fcc0d",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383208825678/c955dd14-b632-420f-a75f-3586fc41ba81-460x276.png",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383208825678/c955dd14-b632-420f-a75f-3586fc41ba81-460x276.png",
+            "source":"App Store",
+            "altText":"Jane Austen Stride & Prejudice",
+            "height":"276",
+            "credit":"App Store",
+            "caption":"Stride &amp; Prejudice turns Jane Austen's novel into an endless-runner game.",
+            "mediaId":"gu-fc-b9ae51df-4eff-4399-bb35-0eed209fcc0d",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383208825821/b835b292-11ec-43f3-9b2a-a87211ee2111-220x132.png",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383208825821/b835b292-11ec-43f3-9b2a-a87211ee2111-220x132.png",
+            "source":"App Store",
+            "altText":"Jane Austen Stride & Prejudice",
+            "height":"132",
+            "credit":"App Store",
+            "caption":"Stride &amp; Prejudice turns Jane Austen's novel into an endless-runner game.",
+            "mediaId":"gu-fc-b9ae51df-4eff-4399-bb35-0eed209fcc0d",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383208826001/740280f6-2432-4025-94ce-2db3af892314-300x180.png",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383208826001/740280f6-2432-4025-94ce-2db3af892314-300x180.png",
+            "source":"App Store",
+            "altText":"Jane Austen Stride & Prejudice",
+            "height":"180",
+            "credit":"App Store",
+            "caption":"Stride &amp; Prejudice turns Jane Austen's novel into an endless-runner game.",
+            "mediaId":"gu-fc-b9ae51df-4eff-4399-bb35-0eed209fcc0d",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383208826233/778b9dac-5a44-4209-8c30-fc662276c0b3-540x324.png",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383208826233/778b9dac-5a44-4209-8c30-fc662276c0b3-540x324.png",
+            "source":"App Store",
+            "altText":"Jane Austen Stride & Prejudice",
+            "height":"324",
+            "credit":"App Store",
+            "caption":"Stride &amp; Prejudice turns Jane Austen's novel into an endless-runner game.",
+            "mediaId":"gu-fc-b9ae51df-4eff-4399-bb35-0eed209fcc0d",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383208826498/0fad4d13-4bbe-4cd2-8d3f-d2098f8b02c4-68x68.png",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383208826498/0fad4d13-4bbe-4cd2-8d3f-d2098f8b02c4-68x68.png",
+            "source":"App Store",
+            "altText":"Jane Austen Stride & Prejudice",
+            "height":"68",
+            "credit":"App Store",
+            "caption":"Stride &amp; Prejudice turns Jane Austen's novel into an endless-runner game.",
+            "mediaId":"gu-fc-b9ae51df-4eff-4399-bb35-0eed209fcc0d",
+            "width":"68"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383208826837/44790bb7-250c-4d89-adae-c79fc123458d-bestSizeAvailable.png",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383208826837/44790bb7-250c-4d89-adae-c79fc123458d-bestSizeAvailable.png",
+            "source":"App Store",
+            "altText":"Jane Austen Stride & Prejudice",
+            "height":"369",
+            "credit":"App Store",
+            "caption":"Stride &amp; Prejudice turns Jane Austen's novel into an endless-runner game.",
+            "mediaId":"gu-fc-b9ae51df-4eff-4399-bb35-0eed209fcc0d",
+            "width":"615"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383208826995/c36f3be3-92bc-4a36-9883-8c0ff59cf67f-380x228.png",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383208826995/c36f3be3-92bc-4a36-9883-8c0ff59cf67f-380x228.png",
+            "source":"App Store",
+            "altText":"Jane Austen Stride & Prejudice",
+            "height":"228",
+            "credit":"App Store",
+            "caption":"Stride &amp; Prejudice turns Jane Austen's novel into an endless-runner game.",
+            "mediaId":"gu-fc-b9ae51df-4eff-4399-bb35-0eed209fcc0d",
+            "width":"380"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/2013/oct/31/ps4-sony-playstation-cant-play-audio-cds-mp3s",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-10-31T12:38:46Z",
+      "webTitle":"PS4: five new things we've learned",
+      "webUrl":"http://www.theguardian.com/technology/2013/oct/31/ps4-sony-playstation-cant-play-audio-cds-mp3s",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/oct/31/ps4-sony-playstation-cant-play-audio-cds-mp3s",
+      "fields":{
+        "trailText":"Sony's PlayStation 4 can&rsquo;t play audio CDs or MP3s, will allow you to use two machines simultaneously, and other facts. By <strong>Samuel Gibbs</strong>",
+        "headline":"PS4: five new things we've learned",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3k28v",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383216694362/739e58d6-909a-408a-941d-d3ca724c5317-140x84.jpeg",
+        "wordcount":"1",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-03T12:45:45Z"
+      },
+      "tags":[{
+        "id":"technology/playstation-4",
+        "type":"keyword",
+        "webTitle":"PlayStation 4",
+        "webUrl":"http://www.theguardian.com/technology/playstation-4",
+        "apiUrl":"http://content.guardianapis.com/technology/playstation-4",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/playstation",
+        "type":"keyword",
+        "webTitle":"PlayStation",
+        "webUrl":"http://www.theguardian.com/technology/playstation",
+        "apiUrl":"http://content.guardianapis.com/technology/playstation",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/sony",
+        "type":"keyword",
+        "webTitle":"Sony",
+        "webUrl":"http://www.theguardian.com/technology/sony",
+        "apiUrl":"http://content.guardianapis.com/technology/sony",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/xbox-one",
+        "type":"keyword",
+        "webTitle":"Xbox One",
+        "webUrl":"http://www.theguardian.com/technology/xbox-one",
+        "apiUrl":"http://content.guardianapis.com/technology/xbox-one",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/microsoft",
+        "type":"keyword",
+        "webTitle":"Microsoft",
+        "webUrl":"http://www.theguardian.com/technology/microsoft",
+        "apiUrl":"http://content.guardianapis.com/technology/microsoft",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/games",
+        "type":"keyword",
+        "webTitle":"Games",
+        "webUrl":"http://www.theguardian.com/technology/games",
+        "apiUrl":"http://content.guardianapis.com/technology/games",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/samuel-gibbs",
+        "type":"contributor",
+        "webTitle":"Samuel Gibbs",
+        "webUrl":"http://www.theguardian.com/profile/samuel-gibbs",
+        "apiUrl":"http://content.guardianapis.com/profile/samuel-gibbs",
+        "r2ContributorId":"58582",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/guardian/Pix/pictures/2013/10/18/1382089843887/Samuel-Gibbs.-Guardian-st-003.jpg",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-53f5b19a-3f44-4fd7-b11e-3f36204ce277",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383216694362/739e58d6-909a-408a-941d-d3ca724c5317-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383216694362/739e58d6-909a-408a-941d-d3ca724c5317-140x84.jpeg",
+            "source":"Sony",
+            "altText":"PlayStation 4 will not play audio CDs or MP3s.",
+            "height":"84",
+            "credit":"Sony",
+            "caption":"PlayStation 4 will not play audio CDs or MP3s.",
+            "mediaId":"gu-fc-53f5b19a-3f44-4fd7-b11e-3f36204ce277",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383216694532/fd2c5fc3-e56d-4d4f-bf32-420b0f55eabd-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383216694532/fd2c5fc3-e56d-4d4f-bf32-420b0f55eabd-460x276.jpeg",
+            "source":"Sony",
+            "altText":"PlayStation 4 will not play audio CDs or MP3s.",
+            "height":"276",
+            "credit":"Sony",
+            "caption":"PlayStation 4 will not play audio CDs or MP3s.",
+            "mediaId":"gu-fc-53f5b19a-3f44-4fd7-b11e-3f36204ce277",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383216694750/6f32c757-10c4-4db7-94d7-7b92d3f5e05c-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383216694750/6f32c757-10c4-4db7-94d7-7b92d3f5e05c-220x132.jpeg",
+            "source":"Sony",
+            "altText":"PlayStation 4 will not play audio CDs or MP3s.",
+            "height":"132",
+            "credit":"Sony",
+            "caption":"PlayStation 4 will not play audio CDs or MP3s.",
+            "mediaId":"gu-fc-53f5b19a-3f44-4fd7-b11e-3f36204ce277",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383216695328/5faa1221-b1e4-4c27-a555-113553335e8e-2060x1236.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383216695328/5faa1221-b1e4-4c27-a555-113553335e8e-2060x1236.jpeg",
+            "source":"Sony",
+            "altText":"PlayStation 4 will not play audio CDs or MP3s.",
+            "height":"1236",
+            "credit":"Sony",
+            "caption":"PlayStation 4 will not play audio CDs or MP3s.",
+            "mediaId":"gu-fc-53f5b19a-3f44-4fd7-b11e-3f36204ce277",
+            "width":"2060"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383216696096/79ac8dc4-b452-4bf6-ae76-95ff661558fe-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383216696096/79ac8dc4-b452-4bf6-ae76-95ff661558fe-1020x612.jpeg",
+            "source":"Sony",
+            "altText":"PlayStation 4 will not play audio CDs or MP3s.",
+            "height":"612",
+            "credit":"Sony",
+            "caption":"PlayStation 4 will not play audio CDs or MP3s.",
+            "mediaId":"gu-fc-53f5b19a-3f44-4fd7-b11e-3f36204ce277",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383216696357/f9e41099-2c2b-42f3-a44c-ee338f99d206-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383216696357/f9e41099-2c2b-42f3-a44c-ee338f99d206-300x180.jpeg",
+            "source":"Sony",
+            "altText":"PlayStation 4 will not play audio CDs or MP3s.",
+            "height":"180",
+            "credit":"Sony",
+            "caption":"PlayStation 4 will not play audio CDs or MP3s.",
+            "mediaId":"gu-fc-53f5b19a-3f44-4fd7-b11e-3f36204ce277",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383216696517/18784d7c-3324-45d1-a4a9-decb90a798c9-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383216696517/18784d7c-3324-45d1-a4a9-decb90a798c9-540x324.jpeg",
+            "source":"Sony",
+            "altText":"PlayStation 4 will not play audio CDs or MP3s.",
+            "height":"324",
+            "credit":"Sony",
+            "caption":"PlayStation 4 will not play audio CDs or MP3s.",
+            "mediaId":"gu-fc-53f5b19a-3f44-4fd7-b11e-3f36204ce277",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383216696641/c953555e-bb38-4d75-a2c8-8dfe1602b675-68x68.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383216696641/c953555e-bb38-4d75-a2c8-8dfe1602b675-68x68.jpeg",
+            "source":"Sony",
+            "altText":"PlayStation 4 will not play audio CDs or MP3s.",
+            "height":"68",
+            "credit":"Sony",
+            "caption":"PlayStation 4 will not play audio CDs or MP3s.",
+            "mediaId":"gu-fc-53f5b19a-3f44-4fd7-b11e-3f36204ce277",
+            "width":"68"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383216696757/0d7ee1cf-1208-4433-8527-b45d7d5fdf5f-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383216696757/0d7ee1cf-1208-4433-8527-b45d7d5fdf5f-380x228.jpeg",
+            "source":"Sony",
+            "altText":"PlayStation 4 will not play audio CDs or MP3s.",
+            "height":"228",
+            "credit":"Sony",
+            "caption":"PlayStation 4 will not play audio CDs or MP3s.",
+            "mediaId":"gu-fc-53f5b19a-3f44-4fd7-b11e-3f36204ce277",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383216696913/cc5fa045-428a-4a8a-935a-b094e1203e38-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383216696913/cc5fa045-428a-4a8a-935a-b094e1203e38-620x372.jpeg",
+            "source":"Sony",
+            "altText":"PlayStation 4 will not play audio CDs or MP3s.",
+            "height":"372",
+            "credit":"Sony",
+            "caption":"PlayStation 4 will not play audio CDs or MP3s.",
+            "mediaId":"gu-fc-53f5b19a-3f44-4fd7-b11e-3f36204ce277",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383216697143/6bee2ecf-f7f7-44eb-b6d5-709ba4024c93-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383216697143/6bee2ecf-f7f7-44eb-b6d5-709ba4024c93-1024x768.jpeg",
+            "source":"Sony",
+            "altText":"PlayStation 4 will not play audio CDs or MP3s.",
+            "height":"768",
+            "credit":"Sony",
+            "caption":"PlayStation 4 will not play audio CDs or MP3s.",
+            "mediaId":"gu-fc-53f5b19a-3f44-4fd7-b11e-3f36204ce277",
+            "width":"1024"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/2013/oct/31/papa-sangre-ii-halloween",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-10-31T11:21:37Z",
+      "webTitle":"Papa Sangre II: alone in the dark on Halloween, with sound your only guide",
+      "webUrl":"http://www.theguardian.com/technology/2013/oct/31/papa-sangre-ii-halloween",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/oct/31/papa-sangre-ii-halloween",
+      "fields":{
+        "trailText":"<p>Take two of this sound-only game is a sinister fairground haunted house ride, mixed with a well-narrated ghost story</p>",
+        "headline":"Papa Sangre II: alone in the dark on Halloween, with sound your only guide",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3k28p",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383218070468/Papa-Sangre-II-004.jpg",
+        "wordcount":"1098",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-03T11:21:00Z"
+      },
+      "tags":[{
+        "id":"technology/games",
+        "type":"keyword",
+        "webTitle":"Games",
+        "webUrl":"http://www.theguardian.com/technology/games",
+        "apiUrl":"http://content.guardianapis.com/technology/games",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/apps",
+        "type":"keyword",
+        "webTitle":"Apps",
+        "webUrl":"http://www.theguardian.com/technology/apps",
+        "apiUrl":"http://content.guardianapis.com/technology/apps",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/iphone",
+        "type":"keyword",
+        "webTitle":"iPhone",
+        "webUrl":"http://www.theguardian.com/technology/iphone",
+        "apiUrl":"http://content.guardianapis.com/technology/iphone",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/smartphones",
+        "type":"keyword",
+        "webTitle":"Smartphones",
+        "webUrl":"http://www.theguardian.com/technology/smartphones",
+        "apiUrl":"http://content.guardianapis.com/technology/smartphones",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/tablet-computer",
+        "type":"keyword",
+        "webTitle":"Tablet computers",
+        "webUrl":"http://www.theguardian.com/technology/tablet-computer",
+        "apiUrl":"http://content.guardianapis.com/technology/tablet-computer",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/ipad",
+        "type":"keyword",
+        "webTitle":"iPad",
+        "webUrl":"http://www.theguardian.com/technology/ipad",
+        "apiUrl":"http://content.guardianapis.com/technology/ipad",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/virtualworlds",
+        "type":"keyword",
+        "webTitle":"Virtual worlds",
+        "webUrl":"http://www.theguardian.com/technology/virtualworlds",
+        "apiUrl":"http://content.guardianapis.com/technology/virtualworlds",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/mobile",
+        "type":"keyword",
+        "webTitle":"Mobile",
+        "webUrl":"http://www.theguardian.com/technology/mobile",
+        "apiUrl":"http://content.guardianapis.com/technology/mobile",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"profile/keithstuart",
+        "type":"contributor",
+        "webTitle":"Keith Stuart",
+        "webUrl":"http://www.theguardian.com/profile/keithstuart",
+        "apiUrl":"http://content.guardianapis.com/profile/keithstuart",
+        "bio":"<p>Keith has worked for videogame industry bible Edge Magazine, Official PlayStation Magazine and Pocket Gamer</p>",
+        "rcsId":"GNL007878",
+        "r2ContributorId":"15953",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2008/09/03/keith_stuart_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421366445",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383218065022/Papa-Sangre-II-001.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Somethin' Else",
+            "altText":"Papa Sangre II",
+            "height":"54",
+            "credit":"Somethin' Else/PR",
+            "caption":"Papa Sangre II is  a game about navigation and memory, all within a sort of faux Victorian ghost story. Photograph: Somethin' Else",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383218067916/Papa-Sangre-II-002.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Somethin' Else",
+            "altText":"Papa Sangre II",
+            "height":"340",
+            "credit":"Somethin' Else/PR",
+            "caption":"Papa Sangre II is  a game about navigation and memory, all within a sort of faux Victorian ghost story. Photograph: Somethin' Else",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383218069162/Papa-Sangre-II-003.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Somethin' Else",
+            "altText":"Papa Sangre II",
+            "height":"130",
+            "credit":"Somethin' Else/PR",
+            "caption":"Papa Sangre II is  a game about navigation and memory, all within a sort of faux Victorian ghost story. Photograph: Somethin' Else",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383218070468/Papa-Sangre-II-004.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Somethin' Else",
+            "altText":"Papa Sangre II",
+            "height":"84",
+            "credit":"Somethin' Else/PR",
+            "caption":"Papa Sangre II is  a game about navigation and memory, all within a sort of faux Victorian ghost story. Photograph: Somethin' Else",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383218071700/Papa-Sangre-II-005.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Somethin' Else",
+            "altText":"Papa Sangre II",
+            "height":"132",
+            "credit":"Somethin' Else/PR",
+            "caption":"Papa Sangre II is  a game about navigation and memory, all within a sort of faux Victorian ghost story. Photograph: Somethin' Else",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383218072946/Papa-Sangre-II-006.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Somethin' Else",
+            "altText":"Papa Sangre II",
+            "height":"168",
+            "credit":"Somethin' Else/PR",
+            "caption":"Papa Sangre II is  a game about navigation and memory, all within a sort of faux Victorian ghost story. Photograph: Somethin' Else",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383218074269/Papa-Sangre-II-007.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Somethin' Else",
+            "altText":"Papa Sangre II",
+            "height":"180",
+            "credit":"Somethin' Else/PR",
+            "caption":"Papa Sangre II is  a game about navigation and memory, all within a sort of faux Victorian ghost story. Photograph: Somethin' Else",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383218075543/Papa-Sangre-II-008.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Somethin' Else",
+            "altText":"Papa Sangre II",
+            "height":"228",
+            "credit":"Somethin' Else/PR",
+            "caption":"Papa Sangre II is  a game about navigation and memory, all within a sort of faux Victorian ghost story. Photograph: Somethin' Else",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383218076825/Papa-Sangre-II-009.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Somethin' Else",
+            "altText":"Papa Sangre II",
+            "height":"276",
+            "credit":"Somethin' Else/PR",
+            "caption":"Papa Sangre II is  a game about navigation and memory, all within a sort of faux Victorian ghost story. Photograph: Somethin' Else",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383218078105/Papa-Sangre-II-010.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Somethin' Else",
+            "altText":"Papa Sangre II",
+            "height":"372",
+            "credit":"Somethin' Else/PR",
+            "caption":"Papa Sangre II is  a game about navigation and memory, all within a sort of faux Victorian ghost story. Photograph: Somethin' Else",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383218076825/Papa-Sangre-II-009.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Somethin' Else",
+            "altText":"Papa Sangre II",
+            "height":"276",
+            "credit":"Somethin' Else/PR",
+            "caption":"Papa Sangre II is  a game about navigation and memory, all within a sort of faux Victorian ghost story. Photograph: Somethin' Else",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421366446",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383218070468/Papa-Sangre-II-004.jpg",
+          "typeData":{
+            "source":"PR",
+            "photographer":"Somethin' Else",
+            "altText":"Papa Sangre II",
+            "height":"84",
+            "credit":"Somethin' Else/PR",
+            "caption":"Papa Sangre II is  a game about navigation and memory, all within a sort of faux Victorian ghost story. Photograph: Somethin' Else",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/gamesblog/2013/oct/31/game-links-press-start",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-10-31T08:38:00Z",
+      "webTitle":"Press Start: Titanfall won't ever come to PS4, Assassin's Creed IV UPlay requirements and more",
+      "webUrl":"http://www.theguardian.com/technology/gamesblog/2013/oct/31/game-links-press-start",
+      "apiUrl":"http://content.guardianapis.com/technology/gamesblog/2013/oct/31/game-links-press-start",
+      "fields":{
+        "trailText":"<p><strong>Keith Stuart</strong>: Plus, EA reckons next-gen consoles will shift 10 million units before March 2014, but Wii U sales still struggling. Oh and who's the veteran indie coder spying on party guests?</p>",
+        "headline":"Press Start: Titanfall won't ever come to PS4, Assassin's Creed IV UPlay requirements and more",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3k23m",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/6/21/1371817758403/Titanfall-1-003.jpg",
+        "wordcount":"958",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-07T08:38:00Z"
+      },
+      "tags":[{
+        "id":"technology/series/press-start",
+        "type":"series",
+        "webTitle":"Press start",
+        "webUrl":"http://www.theguardian.com/technology/series/press-start",
+        "apiUrl":"http://content.guardianapis.com/technology/series/press-start",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/gamesblog",
+        "type":"blog",
+        "webTitle":"Games blog",
+        "webUrl":"http://www.theguardian.com/technology/gamesblog",
+        "apiUrl":"http://content.guardianapis.com/technology/gamesblog",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/games",
+        "type":"keyword",
+        "webTitle":"Games",
+        "webUrl":"http://www.theguardian.com/technology/games",
+        "apiUrl":"http://content.guardianapis.com/technology/games",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/indiegames",
+        "type":"keyword",
+        "webTitle":"Indie games",
+        "webUrl":"http://www.theguardian.com/technology/indiegames",
+        "apiUrl":"http://content.guardianapis.com/technology/indiegames",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"profile/keithstuart",
+        "type":"contributor",
+        "webTitle":"Keith Stuart",
+        "webUrl":"http://www.theguardian.com/profile/keithstuart",
+        "apiUrl":"http://content.guardianapis.com/profile/keithstuart",
+        "bio":"<p>Keith has worked for videogame industry bible Edge Magazine, Official PlayStation Magazine and Pocket Gamer</p>",
+        "rcsId":"GNL007878",
+        "r2ContributorId":"15953",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2008/09/03/keith_stuart_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"technology/wii",
+        "type":"keyword",
+        "webTitle":"Wii",
+        "webUrl":"http://www.theguardian.com/technology/wii",
+        "apiUrl":"http://content.guardianapis.com/technology/wii",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/xbox",
+        "type":"keyword",
+        "webTitle":"Xbox",
+        "webUrl":"http://www.theguardian.com/technology/xbox",
+        "apiUrl":"http://content.guardianapis.com/technology/xbox",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/playstation",
+        "type":"keyword",
+        "webTitle":"PlayStation",
+        "webUrl":"http://www.theguardian.com/technology/playstation",
+        "apiUrl":"http://content.guardianapis.com/technology/playstation",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/pc",
+        "type":"keyword",
+        "webTitle":"PC",
+        "webUrl":"http://www.theguardian.com/technology/pc",
+        "apiUrl":"http://content.guardianapis.com/technology/pc",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421349757",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/6/21/1371817765094/Titanfall-1-008.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Titanfall 1",
+            "height":"276",
+            "credit":"PR",
+            "caption":"Titanfall – never, ever, ever coming to PlayStation 4 apparently",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421349758",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/6/21/1371817758403/Titanfall-1-003.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Titanfall 1",
+            "height":"84",
+            "credit":"PR",
+            "caption":"The action in Titanfall looks and feels overwhelmingly fast-paced and brutal – see if you can guess which one is the Titan in this picture",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/gamesblog/2013/oct/31/chatterbox-thursday",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-10-31T07:00:00Z",
+      "webTitle":"Chatterbox: Thursday",
+      "webUrl":"http://www.theguardian.com/technology/gamesblog/2013/oct/31/chatterbox-thursday",
+      "apiUrl":"http://content.guardianapis.com/technology/gamesblog/2013/oct/31/chatterbox-thursday",
+      "fields":{
+        "trailText":"<p>The place to talk about games and other things that matter</p>",
+        "headline":"Chatterbox: Thursday",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jqdv",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2011/9/30/1317400989332/Chatterbox-Thursday-logo-001.jpg",
+        "wordcount":"2",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-07T07:00:00Z"
+      },
+      "tags":[{
+        "id":"technology/series/chatterbox",
+        "type":"series",
+        "webTitle":"Chatterbox",
+        "webUrl":"http://www.theguardian.com/technology/series/chatterbox",
+        "apiUrl":"http://content.guardianapis.com/technology/series/chatterbox",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/gamesblog",
+        "type":"blog",
+        "webTitle":"Games blog",
+        "webUrl":"http://www.theguardian.com/technology/gamesblog",
+        "apiUrl":"http://content.guardianapis.com/technology/gamesblog",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/games",
+        "type":"keyword",
+        "webTitle":"Games",
+        "webUrl":"http://www.theguardian.com/technology/games",
+        "apiUrl":"http://content.guardianapis.com/technology/games",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"profile/keithstuart",
+        "type":"contributor",
+        "webTitle":"Keith Stuart",
+        "webUrl":"http://www.theguardian.com/profile/keithstuart",
+        "apiUrl":"http://content.guardianapis.com/profile/keithstuart",
+        "bio":"<p>Keith has worked for videogame industry bible Edge Magazine, Official PlayStation Magazine and Pocket Gamer</p>",
+        "rcsId":"GNL007878",
+        "r2ContributorId":"15953",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2008/09/03/keith_stuart_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421083986",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2011/9/30/1317400989332/Chatterbox-Thursday-logo-001.jpg",
+          "typeData":{
+            "source":"Guardian",
+            "altText":"Chatterbox Thursday logo",
+            "height":"84",
+            "credit":"Guardian",
+            "caption":"Chatterbox Thursday logo Photograph: Guardian",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }],
+    "storyPackage":[],
+    "leadContent":[{
+      "id":"technology/gamesblog/2013/oct/08/ireland-games-scene",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-10-08T09:31:14Z",
+      "webTitle":"Ireland's game scene back on its feet",
+      "webUrl":"http://www.theguardian.com/technology/gamesblog/2013/oct/08/ireland-games-scene",
+      "apiUrl":"http://content.guardianapis.com/technology/gamesblog/2013/oct/08/ireland-games-scene",
+      "fields":{
+        "trailText":"<p>The industry is only a few years old, but it's already had its share of triumphs and disappointments. By <strong>Joe Griffin</strong></p>",
+        "headline":"Ireland's game scene back on its feet",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3jc5q",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/8/1381224148881/Honour-Bound-003.jpg",
+        "wordcount":"1779",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-15T09:31:00Z"
+      },
+      "tags":[{
+        "id":"technology/games",
+        "type":"keyword",
+        "webTitle":"Games",
+        "webUrl":"http://www.theguardian.com/technology/games",
+        "apiUrl":"http://content.guardianapis.com/technology/games",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/gamesblog",
+        "type":"blog",
+        "webTitle":"Games blog",
+        "webUrl":"http://www.theguardian.com/technology/gamesblog",
+        "apiUrl":"http://content.guardianapis.com/technology/gamesblog",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"world/ireland",
+        "type":"keyword",
+        "webTitle":"Ireland",
+        "webUrl":"http://www.theguardian.com/world/ireland",
+        "apiUrl":"http://content.guardianapis.com/world/ireland",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-419341779",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/8/1381224145296/Honour-Bound-001.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Honour Bound",
+            "height":"54",
+            "credit":"PR",
+            "caption":"BatCat, which made twin-stick shooter P-3 Biotic, is developing a hack and slash game called Honour Bound.",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/8/1381224147539/Honour-Bound-002.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Honour Bound",
+            "height":"130",
+            "credit":"PR",
+            "caption":"BatCat, which made twin-stick shooter P-3 Biotic, is developing a hack and slash game called Honour Bound.",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/8/1381224148881/Honour-Bound-003.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Honour Bound",
+            "height":"84",
+            "credit":"PR",
+            "caption":"BatCat, which made twin-stick shooter P-3 Biotic, is developing a hack and slash game called Honour Bound.",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/8/1381224150280/Honour-Bound-004.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Honour Bound",
+            "height":"132",
+            "credit":"PR",
+            "caption":"BatCat, which made twin-stick shooter P-3 Biotic, is developing a hack and slash game called Honour Bound.",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/8/1381224151751/Honour-Bound-005.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Honour Bound",
+            "height":"168",
+            "credit":"PR",
+            "caption":"BatCat, which made twin-stick shooter P-3 Biotic, is developing a hack and slash game called Honour Bound.",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/8/1381224153079/Honour-Bound-006.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Honour Bound",
+            "height":"180",
+            "credit":"PR",
+            "caption":"BatCat, which made twin-stick shooter P-3 Biotic, is developing a hack and slash game called Honour Bound.",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/8/1381224154560/Honour-Bound-007.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Honour Bound",
+            "height":"228",
+            "credit":"PR",
+            "caption":"BatCat, which made twin-stick shooter P-3 Biotic, is developing a hack and slash game called Honour Bound.",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/8/1381224155943/Honour-Bound-008.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Honour Bound",
+            "height":"276",
+            "credit":"PR",
+            "caption":"BatCat, which made twin-stick shooter P-3 Biotic, is developing a hack and slash game called Honour Bound.",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/8/1381224155943/Honour-Bound-008.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Honour Bound",
+            "height":"276",
+            "credit":"PR",
+            "caption":"BatCat, which made twin-stick shooter P-3 Biotic, is developing a hack and slash game called Honour Bound.",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419341780",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/8/1381224272985/Kings-of-the-Realm-008.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Kings of the Realm",
+            "height":"276",
+            "credit":"PR",
+            "caption":"Kings of the Realm",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-419341781",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/10/8/1381224148881/Honour-Bound-003.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Honour Bound",
+            "height":"84",
+            "credit":"PR",
+            "caption":"BatCat, which made twin-stick shooter P-3 Biotic, is developing a hack and slash game called Honour Bound.",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/2013/oct/01/grand-theft-auto-online-launch",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-10-02T10:12:00Z",
+      "webTitle":"Rockstar says sorry for Grand Theft Auto Online launch problems",
+      "webUrl":"http://www.theguardian.com/technology/2013/oct/01/grand-theft-auto-online-launch",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/oct/01/grand-theft-auto-online-launch",
+      "fields":{
+        "trailText":"<p>GTA makers Rockstar forced to apologise after gamers said they were unable to connect because of server issues</p>",
+        "headline":"Rockstar says sorry for Grand Theft Auto Online launch problems",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3j7zh",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/1/1380664713035/Grand-Theft-Auto-V-005.jpg",
+        "wordcount":"428",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-04T22:04:00Z"
+      },
+      "tags":[{
+        "id":"technology/grand-theft-auto-5",
+        "type":"keyword",
+        "webTitle":"Grand Theft Auto 5",
+        "webUrl":"http://www.theguardian.com/technology/grand-theft-auto-5",
+        "apiUrl":"http://content.guardianapis.com/technology/grand-theft-auto-5",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"profile/amanda-holpuch",
+        "type":"contributor",
+        "webTitle":"Amanda Holpuch",
+        "webUrl":"http://www.theguardian.com/profile/amanda-holpuch",
+        "apiUrl":"http://content.guardianapis.com/profile/amanda-holpuch",
+        "bio":"<p>Amanda is a reporter at the Guardian US. She graduated from NYU's Gallatin School of Individualized Study with a self-designed degree in The Reconstruction of American Journalism and has worked at the New York Daily News and Rodale.</p>",
+        "r2ContributorId":"50290",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/28/1359390632771/Amanda_Holpuch.jpg",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/games",
+        "type":"keyword",
+        "webTitle":"Games",
+        "webUrl":"http://www.theguardian.com/technology/games",
+        "apiUrl":"http://content.guardianapis.com/technology/games",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/internet",
+        "type":"keyword",
+        "webTitle":"Internet",
+        "webUrl":"http://www.theguardian.com/technology/internet",
+        "apiUrl":"http://content.guardianapis.com/technology/internet",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-418833349",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/1/1380664721459/Grand-Theft-Auto-V-010.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Mario Tama",
+            "altText":"Grand Theft Auto V",
+            "height":"276",
+            "credit":"Mario Tama/Getty Images",
+            "caption":"The console version of GTA made $1bn in its first three days on sale. Photograph: Mario Tama/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-418833350",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/1/1380664713035/Grand-Theft-Auto-V-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Mario Tama",
+            "altText":"Grand Theft Auto V",
+            "height":"84",
+            "credit":"Mario Tama/Getty Images",
+            "caption":"Grand Theft Auto V. Photograph: Mario Tama/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/2013/sep/22/grand-theft-auto-5-review",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-09-21T23:07:01Z",
+      "webTitle":"Grand Theft Auto 5 – review",
+      "webUrl":"http://www.theguardian.com/technology/2013/sep/22/grand-theft-auto-5-review",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/sep/22/grand-theft-auto-5-review",
+      "fields":{
+        "trailText":"Sophisticated savagery remains at the heart of Grand Theft Auto, says <strong>Nathan Ditum</strong>",
+        "headline":"Grand Theft Auto 5 – review",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tqy7",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/19/1379604215320/Another-quiet-day-in-Los--003.jpg",
+        "wordcount":"316",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-09-12T16:02:00Z"
+      },
+      "tags":[{
+        "id":"technology/grand-theft-auto-5",
+        "type":"keyword",
+        "webTitle":"Grand Theft Auto 5",
+        "webUrl":"http://www.theguardian.com/technology/grand-theft-auto-5",
+        "apiUrl":"http://content.guardianapis.com/technology/grand-theft-auto-5",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/grand-theft-auto",
+        "type":"keyword",
+        "webTitle":"Grand Theft Auto",
+        "webUrl":"http://www.theguardian.com/technology/grand-theft-auto",
+        "apiUrl":"http://content.guardianapis.com/technology/grand-theft-auto",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/games",
+        "type":"keyword",
+        "webTitle":"Games",
+        "webUrl":"http://www.theguardian.com/technology/games",
+        "apiUrl":"http://content.guardianapis.com/technology/games",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/shoot-em-up",
+        "type":"keyword",
+        "webTitle":"Shoot 'em ups",
+        "webUrl":"http://www.theguardian.com/technology/shoot-em-up",
+        "apiUrl":"http://content.guardianapis.com/technology/shoot-em-up",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"tone/reviews",
+        "type":"tone",
+        "webTitle":"Reviews",
+        "webUrl":"http://www.theguardian.com/tone/reviews",
+        "apiUrl":"http://content.guardianapis.com/tone/reviews",
+        "references":[]
+      },{
+        "id":"theobserver/new-review/critics",
+        "type":"newspaper-book-section",
+        "webTitle":"Critics",
+        "webUrl":"http://www.theguardian.com/theobserver/new-review/critics",
+        "apiUrl":"http://content.guardianapis.com/theobserver/new-review/critics",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"theobserver/new-review",
+        "type":"newspaper-book",
+        "webTitle":"The New Review",
+        "webUrl":"http://www.theguardian.com/theobserver/new-review",
+        "apiUrl":"http://content.guardianapis.com/theobserver/new-review",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"profile/nathan-ditum",
+        "type":"contributor",
+        "webTitle":"Nathan Ditum",
+        "webUrl":"http://www.theguardian.com/profile/nathan-ditum",
+        "apiUrl":"http://content.guardianapis.com/profile/nathan-ditum",
+        "bio":"<p>Nathan Ditum is a freelance video game writer and contributes regularly to<br />the Observer</p>",
+        "r2ContributorId":"47687",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theobserver",
+        "type":"publication",
+        "webTitle":"The Observer",
+        "webUrl":"http://www.theguardian.com/theobserver/all",
+        "apiUrl":"http://content.guardianapis.com/theobserver/all",
+        "sectionId":"theobserver",
+        "sectionName":"From the Observer",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417771788",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/19/1379604210112/Another-quiet-day-in-Los--001.jpg",
+          "typeData":{
+            "source":"screenshot",
+            "altText":"Another quiet day in Los Santos",
+            "height":"54",
+            "credit":"screenshot",
+            "caption":"Another quiet day in Los Santos, Grand Theft Auto 5's version of Los Angeles. Photograph: screenshot",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/19/1379604214119/Another-quiet-day-in-Los--002.jpg",
+          "typeData":{
+            "source":"screenshot",
+            "altText":"Another quiet day in Los Santos",
+            "height":"130",
+            "credit":"screenshot",
+            "caption":"Another quiet day in Los Santos, Grand Theft Auto 5's version of Los Angeles. Photograph: screenshot",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/19/1379604215320/Another-quiet-day-in-Los--003.jpg",
+          "typeData":{
+            "source":"screenshot",
+            "altText":"Another quiet day in Los Santos",
+            "height":"84",
+            "credit":"screenshot",
+            "caption":"Another quiet day in Los Santos, Grand Theft Auto 5's version of Los Angeles. Photograph: screenshot",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/19/1379604216595/Another-quiet-day-in-Los--004.jpg",
+          "typeData":{
+            "source":"screenshot",
+            "altText":"Another quiet day in Los Santos",
+            "height":"132",
+            "credit":"screenshot",
+            "caption":"Another quiet day in Los Santos, Grand Theft Auto 5's version of Los Angeles. Photograph: screenshot",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/19/1379604218380/Another-quiet-day-in-Los--005.jpg",
+          "typeData":{
+            "source":"screenshot",
+            "altText":"Another quiet day in Los Santos",
+            "height":"168",
+            "credit":"screenshot",
+            "caption":"Another quiet day in Los Santos, Grand Theft Auto 5's version of Los Angeles. Photograph: screenshot",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/19/1379604220005/Another-quiet-day-in-Los--006.jpg",
+          "typeData":{
+            "source":"screenshot",
+            "altText":"Another quiet day in Los Santos",
+            "height":"180",
+            "credit":"screenshot",
+            "caption":"Another quiet day in Los Santos, Grand Theft Auto 5's version of Los Angeles. Photograph: screenshot",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/19/1379604221941/Another-quiet-day-in-Los--007.jpg",
+          "typeData":{
+            "source":"screenshot",
+            "altText":"Another quiet day in Los Santos",
+            "height":"228",
+            "credit":"screenshot",
+            "caption":"Another quiet day in Los Santos, Grand Theft Auto 5's version of Los Angeles. Photograph: screenshot",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/19/1379604223715/Another-quiet-day-in-Los--008.jpg",
+          "typeData":{
+            "source":"screenshot",
+            "altText":"Another quiet day in Los Santos",
+            "height":"276",
+            "credit":"screenshot",
+            "caption":"Another quiet day in Los Santos, Grand Theft Auto 5's version of Los Angeles. Photograph: screenshot",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/19/1379604223715/Another-quiet-day-in-Los--008.jpg",
+          "typeData":{
+            "source":"screenshot",
+            "altText":"Another quiet day in Los Santos",
+            "height":"276",
+            "credit":"screenshot",
+            "caption":"Another quiet day in Los Santos, Grand Theft Auto 5's version of Los Angeles. Photograph: screenshot",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417771789",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/19/1379604215320/Another-quiet-day-in-Los--003.jpg",
+          "typeData":{
+            "source":"screenshot",
+            "altText":"Another quiet day in Los Santos",
+            "height":"84",
+            "credit":"screenshot",
+            "caption":"Another quiet day in Los Santos, Grand Theft Auto 5's version of Los Angeles. Photograph: screenshot",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/2013/sep/21/grand-theft-auto-5-women-misogynistic-violent",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-09-21T22:28:48Z",
+      "webTitle":"Yes, it's misogynistic and violent, but I still admire Grand Theft Auto",
+      "webUrl":"http://www.theguardian.com/technology/2013/sep/21/grand-theft-auto-5-women-misogynistic-violent",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/sep/21/grand-theft-auto-5-women-misogynistic-violent",
+      "fields":{
+        "trailText":"<strong>Helen Lewis:</strong> The world's most successful video game has, once again, pushed women to the margins. It's time that it faced proper critical scrutiny",
+        "headline":"Yes, it's misogynistic and violent, but I still admire Grand Theft Auto",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jvz6",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/20/1379703537306/A-screenshot-from-GTA-5-003.jpg",
+        "wordcount":"1365",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-09-24T22:28:48Z"
+      },
+      "tags":[{
+        "id":"technology/grand-theft-auto-5",
+        "type":"keyword",
+        "webTitle":"Grand Theft Auto 5",
+        "webUrl":"http://www.theguardian.com/technology/grand-theft-auto-5",
+        "apiUrl":"http://content.guardianapis.com/technology/grand-theft-auto-5",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"lifeandstyle/women",
+        "type":"keyword",
+        "webTitle":"Women",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/women",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/women",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"technology/grand-theft-auto",
+        "type":"keyword",
+        "webTitle":"Grand Theft Auto",
+        "webUrl":"http://www.theguardian.com/technology/grand-theft-auto",
+        "apiUrl":"http://content.guardianapis.com/technology/grand-theft-auto",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/games",
+        "type":"keyword",
+        "webTitle":"Games",
+        "webUrl":"http://www.theguardian.com/technology/games",
+        "apiUrl":"http://content.guardianapis.com/technology/games",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"theobserver/news/focus",
+        "type":"newspaper-book-section",
+        "webTitle":"In focus",
+        "webUrl":"http://www.theguardian.com/theobserver/news/focus",
+        "apiUrl":"http://content.guardianapis.com/theobserver/news/focus",
+        "sectionId":"theobserver",
+        "sectionName":"From the Observer",
+        "references":[]
+      },{
+        "id":"theobserver/news",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theobserver/news",
+        "apiUrl":"http://content.guardianapis.com/theobserver/news",
+        "sectionId":"theobserver",
+        "sectionName":"From the Observer",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"world/gender",
+        "type":"keyword",
+        "webTitle":"Gender",
+        "webUrl":"http://www.theguardian.com/world/gender",
+        "apiUrl":"http://content.guardianapis.com/world/gender",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/helen-lewis-hasteley",
+        "type":"contributor",
+        "webTitle":"Helen Lewis",
+        "webUrl":"http://www.theguardian.com/profile/helen-lewis-hasteley",
+        "apiUrl":"http://content.guardianapis.com/profile/helen-lewis-hasteley",
+        "bio":"<p>Helen Lewis is deputy editor of the New Statesman</p>",
+        "r2ContributorId":"47179",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/11/7/1320679498512/Helen_Lewis_Hasteley.jpg",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theobserver",
+        "type":"publication",
+        "webTitle":"The Observer",
+        "webUrl":"http://www.theguardian.com/theobserver/all",
+        "apiUrl":"http://content.guardianapis.com/theobserver/all",
+        "sectionId":"theobserver",
+        "sectionName":"From the Observer",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417889899",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/20/1379703534180/A-screenshot-from-GTA-5-001.jpg",
+          "typeData":{
+            "source":"Rockstar Games",
+            "altText":"A screenshot from GTA 5",
+            "height":"54",
+            "credit":"Rockstar Games",
+            "caption":"A screenshot from GTA 5: ‘Games are a thrilling medium, but individual titles are littered with stereotypes. Photograph: Rockstar Games",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/20/1379703536232/A-screenshot-from-GTA-5-002.jpg",
+          "typeData":{
+            "source":"Rockstar Games",
+            "altText":"A screenshot from GTA 5",
+            "height":"130",
+            "credit":"Rockstar Games",
+            "caption":"A screenshot from GTA 5: ‘Games are a thrilling medium, but individual titles are littered with stereotypes. Photograph: Rockstar Games",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/20/1379703537306/A-screenshot-from-GTA-5-003.jpg",
+          "typeData":{
+            "source":"Rockstar Games",
+            "altText":"A screenshot from GTA 5",
+            "height":"84",
+            "credit":"Rockstar Games",
+            "caption":"A screenshot from GTA 5: ‘Games are a thrilling medium, but individual titles are littered with stereotypes. Photograph: Rockstar Games",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/20/1379703538315/A-screenshot-from-GTA-5-004.jpg",
+          "typeData":{
+            "source":"Rockstar Games",
+            "altText":"A screenshot from GTA 5",
+            "height":"132",
+            "credit":"Rockstar Games",
+            "caption":"A screenshot from GTA 5: ‘Games are a thrilling medium, but individual titles are littered with stereotypes. Photograph: Rockstar Games",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/20/1379703539317/A-screenshot-from-GTA-5-005.jpg",
+          "typeData":{
+            "source":"Rockstar Games",
+            "altText":"A screenshot from GTA 5",
+            "height":"168",
+            "credit":"Rockstar Games",
+            "caption":"A screenshot from GTA 5: ‘Games are a thrilling medium, but individual titles are littered with stereotypes. Photograph: Rockstar Games",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/20/1379703540466/A-screenshot-from-GTA-5-006.jpg",
+          "typeData":{
+            "source":"Rockstar Games",
+            "altText":"A screenshot from GTA 5",
+            "height":"180",
+            "credit":"Rockstar Games",
+            "caption":"A screenshot from GTA 5: ‘Games are a thrilling medium, but individual titles are littered with stereotypes. Photograph: Rockstar Games",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/20/1379703541489/A-screenshot-from-GTA-5-007.jpg",
+          "typeData":{
+            "source":"Rockstar Games",
+            "altText":"A screenshot from GTA 5",
+            "height":"228",
+            "credit":"Rockstar Games",
+            "caption":"A screenshot from GTA 5: ‘Games are a thrilling medium, but individual titles are littered with stereotypes. Photograph: Rockstar Games",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/20/1379703542503/A-screenshot-from-GTA-5-008.jpg",
+          "typeData":{
+            "source":"Rockstar Games",
+            "altText":"A screenshot from GTA 5",
+            "height":"276",
+            "credit":"Rockstar Games",
+            "caption":"A screenshot from GTA 5: ‘Games are a thrilling medium, but individual titles are littered with stereotypes. Photograph: Rockstar Games",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/20/1379703543566/A-screenshot-from-GTA-5-009.jpg",
+          "typeData":{
+            "source":"Rockstar Games",
+            "altText":"A screenshot from GTA 5",
+            "height":"372",
+            "credit":"Rockstar Games",
+            "caption":"A screenshot from GTA 5: ‘Games are a thrilling medium, but individual titles are littered with stereotypes. Photograph: Rockstar Games",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/20/1379703542503/A-screenshot-from-GTA-5-008.jpg",
+          "typeData":{
+            "source":"Rockstar Games",
+            "altText":"A screenshot from GTA 5",
+            "height":"276",
+            "credit":"Rockstar Games",
+            "caption":"A screenshot from GTA 5: ‘Games are a thrilling medium, but individual titles are littered with stereotypes.' Photograph: Rockstar Games",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417889900",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2013/9/20/1379703537306/A-screenshot-from-GTA-5-003.jpg",
+          "typeData":{
+            "source":"Rockstar Games",
+            "altText":"A screenshot from GTA 5",
+            "height":"84",
+            "credit":"Rockstar Games",
+            "caption":"A screenshot from GTA 5: 'Games are a thrilling medium, but individual titles are littered with stereotypes. Photograph: Rockstar Games",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/2013/sep/19/mario-nintendo-hiroshi-yamauchi-dies",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-09-19T19:55:45Z",
+      "webTitle":"Farewell, Mr Mario – former Nintendo head Hiroshi Yamauchi dies",
+      "webUrl":"http://www.theguardian.com/technology/2013/sep/19/mario-nintendo-hiroshi-yamauchi-dies",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/sep/19/mario-nintendo-hiroshi-yamauchi-dies",
+      "fields":{
+        "trailText":"Games industry unites to honour role at firm that dominated 'golden age' of console gaming",
+        "headline":"Farewell, Mr Mario – former Nintendo head Hiroshi Yamauchi dies",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jvx6",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/19/1379620501450/Former-Nintendo-president-005.jpg",
+        "wordcount":"662",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-09-22T19:55:45Z"
+      },
+      "tags":[{
+        "id":"technology/nintendo",
+        "type":"keyword",
+        "webTitle":"Nintendo",
+        "webUrl":"http://www.theguardian.com/technology/nintendo",
+        "apiUrl":"http://content.guardianapis.com/technology/nintendo",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/games",
+        "type":"keyword",
+        "webTitle":"Games",
+        "webUrl":"http://www.theguardian.com/technology/games",
+        "apiUrl":"http://content.guardianapis.com/technology/games",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"world/japan",
+        "type":"keyword",
+        "webTitle":"Japan",
+        "webUrl":"http://www.theguardian.com/world/japan",
+        "apiUrl":"http://content.guardianapis.com/world/japan",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/asia-pacific",
+        "type":"keyword",
+        "webTitle":"Asia Pacific",
+        "webUrl":"http://www.theguardian.com/world/asia-pacific",
+        "apiUrl":"http://content.guardianapis.com/world/asia-pacific",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/keithstuart",
+        "type":"contributor",
+        "webTitle":"Keith Stuart",
+        "webUrl":"http://www.theguardian.com/profile/keithstuart",
+        "apiUrl":"http://content.guardianapis.com/profile/keithstuart",
+        "bio":"<p>Keith has worked for videogame industry bible Edge Magazine, Official PlayStation Magazine and Pocket Gamer</p>",
+        "rcsId":"GNL007878",
+        "r2ContributorId":"15953",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2008/09/03/keith_stuart_140x140.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417792890",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/19/1379620497806/Former-Nintendo-president-002.jpg",
+          "typeData":{
+            "source":"The Asahi Shimbun",
+            "altText":"Former Nintendo president Hiroshi Yamauchi ",
+            "height":"54",
+            "credit":"The Asahi Shimbun",
+            "caption":"Tributes have been paid to former Nintendo president Hiroshi Yamauchi – pictured in Kyoto in 1997 – who has died aged 85.   Photograph: The Asahi Shimbun",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/19/1379620499062/Former-Nintendo-president-003.jpg",
+          "typeData":{
+            "source":"The Asahi Shimbun",
+            "altText":"Former Nintendo president Hiroshi Yamauchi ",
+            "height":"340",
+            "credit":"The Asahi Shimbun",
+            "caption":"Tributes have been paid to former Nintendo president Hiroshi Yamauchi – pictured in Kyoto in 1997 – who has died aged 85.   Photograph: The Asahi Shimbun",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/19/1379620500287/Former-Nintendo-president-004.jpg",
+          "typeData":{
+            "source":"The Asahi Shimbun",
+            "altText":"Former Nintendo president Hiroshi Yamauchi ",
+            "height":"130",
+            "credit":"The Asahi Shimbun",
+            "caption":"Tributes have been paid to former Nintendo president Hiroshi Yamauchi – pictured in Kyoto in 1997 – who has died aged 85.   Photograph: The Asahi Shimbun",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/19/1379620501450/Former-Nintendo-president-005.jpg",
+          "typeData":{
+            "source":"The Asahi Shimbun",
+            "altText":"Former Nintendo president Hiroshi Yamauchi ",
+            "height":"84",
+            "credit":"The Asahi Shimbun",
+            "caption":"Tributes have been paid to former Nintendo president Hiroshi Yamauchi – pictured in Kyoto in 1997 – who has died aged 85.   Photograph: The Asahi Shimbun",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/19/1379620502591/Former-Nintendo-president-006.jpg",
+          "typeData":{
+            "source":"The Asahi Shimbun",
+            "altText":"Former Nintendo president Hiroshi Yamauchi ",
+            "height":"132",
+            "credit":"The Asahi Shimbun",
+            "caption":"Tributes have been paid to former Nintendo president Hiroshi Yamauchi – pictured in Kyoto in 1997 – who has died aged 85.   Photograph: The Asahi Shimbun",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/19/1379620503825/Former-Nintendo-president-007.jpg",
+          "typeData":{
+            "source":"The Asahi Shimbun",
+            "altText":"Former Nintendo president Hiroshi Yamauchi ",
+            "height":"168",
+            "credit":"The Asahi Shimbun",
+            "caption":"Tributes have been paid to former Nintendo president Hiroshi Yamauchi – pictured in Kyoto in 1997 – who has died aged 85.   Photograph: The Asahi Shimbun",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/19/1379620505305/Former-Nintendo-president-008.jpg",
+          "typeData":{
+            "source":"The Asahi Shimbun",
+            "altText":"Former Nintendo president Hiroshi Yamauchi ",
+            "height":"180",
+            "credit":"The Asahi Shimbun",
+            "caption":"Tributes have been paid to former Nintendo president Hiroshi Yamauchi – pictured in Kyoto in 1997 – who has died aged 85.   Photograph: The Asahi Shimbun",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/19/1379620506475/Former-Nintendo-president-009.jpg",
+          "typeData":{
+            "source":"The Asahi Shimbun",
+            "altText":"Former Nintendo president Hiroshi Yamauchi ",
+            "height":"228",
+            "credit":"The Asahi Shimbun",
+            "caption":"Tributes have been paid to former Nintendo president Hiroshi Yamauchi – pictured in Kyoto in 1997 – who has died aged 85.   Photograph: The Asahi Shimbun",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/19/1379620507709/Former-Nintendo-president-010.jpg",
+          "typeData":{
+            "source":"The Asahi Shimbun",
+            "altText":"Former Nintendo president Hiroshi Yamauchi ",
+            "height":"276",
+            "credit":"The Asahi Shimbun",
+            "caption":"Tributes have been paid to former Nintendo president Hiroshi Yamauchi – pictured in Kyoto in 1997 – who has died aged 85.   Photograph: The Asahi Shimbun",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/19/1379620508972/Former-Nintendo-president-011.jpg",
+          "typeData":{
+            "source":"The Asahi Shimbun",
+            "altText":"Former Nintendo president Hiroshi Yamauchi ",
+            "height":"372",
+            "credit":"The Asahi Shimbun",
+            "caption":"Tributes have been paid to former Nintendo president Hiroshi Yamauchi – pictured in Kyoto in 1997 – who has died aged 85.   Photograph: The Asahi Shimbun",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/19/1379620507709/Former-Nintendo-president-010.jpg",
+          "typeData":{
+            "source":"The Asahi Shimbun",
+            "altText":"Former Nintendo president Hiroshi Yamauchi ",
+            "height":"276",
+            "credit":"The Asahi Shimbun",
+            "caption":"Tributes have been paid to former Nintendo president Hiroshi Yamauchi – pictured in Kyoto in 1997 – who has died aged 85.   Photograph: The Asahi Shimbun",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417792891",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/19/1379620501450/Former-Nintendo-president-005.jpg",
+          "typeData":{
+            "source":"The Asahi Shimbun",
+            "altText":"Former Nintendo president Hiroshi Yamauchi ",
+            "height":"84",
+            "credit":"The Asahi Shimbun",
+            "caption":"Tributes have been paid to former Nintendo president Hiroshi Yamauchi – pictured in Kyoto in 1997 – who has died aged 85.   Photograph: The Asahi Shimbun",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/2013/sep/19/grand-theft-auto-5-first-day-record",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-09-19T16:09:31Z",
+      "webTitle":"Grand Theft Auto 5 sees biggest ever first-day takings for a video game",
+      "webUrl":"http://www.theguardian.com/technology/2013/sep/19/grand-theft-auto-5-first-day-record",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/sep/19/grand-theft-auto-5-first-day-record",
+      "fields":{
+        "trailText":"Latest instalment of franchise causes stir in gaming industry by making more than $800m on first day of release",
+        "headline":"Grand Theft Auto 5 sees biggest ever first-day takings for a video game",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3tqmv",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379606402676/Grand-Theft-Auto-5-sales--003.jpg",
+        "wordcount":"567",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-09-22T16:09:31Z"
+      },
+      "tags":[{
+        "id":"technology/grand-theft-auto-5",
+        "type":"keyword",
+        "webTitle":"Grand Theft Auto 5",
+        "webUrl":"http://www.theguardian.com/technology/grand-theft-auto-5",
+        "apiUrl":"http://content.guardianapis.com/technology/grand-theft-auto-5",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/grand-theft-auto",
+        "type":"keyword",
+        "webTitle":"Grand Theft Auto",
+        "webUrl":"http://www.theguardian.com/technology/grand-theft-auto",
+        "apiUrl":"http://content.guardianapis.com/technology/grand-theft-auto",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/games",
+        "type":"keyword",
+        "webTitle":"Games",
+        "webUrl":"http://www.theguardian.com/technology/games",
+        "apiUrl":"http://content.guardianapis.com/technology/games",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"profile/juliette-garside",
+        "type":"contributor",
+        "webTitle":"Juliette Garside",
+        "webUrl":"http://www.theguardian.com/profile/juliette-garside",
+        "apiUrl":"http://content.guardianapis.com/profile/juliette-garside",
+        "bio":"<p>Juliette Garside is telecoms correspondent for the Guardian, covering the telecoms and technology sectors</p>",
+        "r2ContributorId":"44118",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Business/Pix/pictures/2013/1/2/1357125846540/Juliette-Garside-telecoms-003.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417774623",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379606400149/Grand-Theft-Auto-5-sales--001.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Leon Neal",
+            "altText":"Grand Theft Auto 5 sales ",
+            "height":"54",
+            "credit":"Leon Neal/AFP/Getty Images",
+            "caption":"Grand Theft Auto 5 has beaten in a single day the $500m in revenue which the fourth instalment generated in its first week.  Photograph: Leon Neal/AFP/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379606401521/Grand-Theft-Auto-5-sales--002.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Leon Neal",
+            "altText":"Grand Theft Auto 5 sales ",
+            "height":"130",
+            "credit":"Leon Neal/AFP/Getty Images",
+            "caption":"Grand Theft Auto 5 has beaten in a single day the $500m in revenue which the fourth instalment generated in its first week.  Photograph: Leon Neal/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379606402676/Grand-Theft-Auto-5-sales--003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Leon Neal",
+            "altText":"Grand Theft Auto 5 sales ",
+            "height":"84",
+            "credit":"Leon Neal/AFP/Getty Images",
+            "caption":"Grand Theft Auto 5 has beaten in a single day the $500m in revenue which the fourth instalment generated in its first week.  Photograph: Leon Neal/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379606403750/Grand-Theft-Auto-5-sales--004.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Leon Neal",
+            "altText":"Grand Theft Auto 5 sales ",
+            "height":"132",
+            "credit":"Leon Neal/AFP/Getty Images",
+            "caption":"Grand Theft Auto 5 has beaten in a single day the $500m in revenue which the fourth instalment generated in its first week.  Photograph: Leon Neal/AFP/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379606404873/Grand-Theft-Auto-5-sales--005.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Leon Neal",
+            "altText":"Grand Theft Auto 5 sales ",
+            "height":"168",
+            "credit":"Leon Neal/AFP/Getty Images",
+            "caption":"Grand Theft Auto 5 has beaten in a single day the $500m in revenue which the fourth instalment generated in its first week.  Photograph: Leon Neal/AFP/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379606405871/Grand-Theft-Auto-5-sales--006.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Leon Neal",
+            "altText":"Grand Theft Auto 5 sales ",
+            "height":"180",
+            "credit":"Leon Neal/AFP/Getty Images",
+            "caption":"Grand Theft Auto 5 has beaten in a single day the $500m in revenue which the fourth instalment generated in its first week.  Photograph: Leon Neal/AFP/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379606406974/Grand-Theft-Auto-5-sales--007.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Leon Neal",
+            "altText":"Grand Theft Auto 5 sales ",
+            "height":"228",
+            "credit":"Leon Neal/AFP/Getty Images",
+            "caption":"Grand Theft Auto 5 has beaten in a single day the $500m in revenue which the fourth instalment generated in its first week.  Photograph: Leon Neal/AFP/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379606408174/Grand-Theft-Auto-5-sales--008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Leon Neal",
+            "altText":"Grand Theft Auto 5 sales ",
+            "height":"276",
+            "credit":"Leon Neal/AFP/Getty Images",
+            "caption":"Grand Theft Auto 5 has beaten in a single day the $500m in revenue which the fourth instalment generated in its first week.  Photograph: Leon Neal/AFP/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379606408174/Grand-Theft-Auto-5-sales--008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Leon Neal",
+            "altText":"Grand Theft Auto 5 sales ",
+            "height":"276",
+            "credit":"Leon Neal/AFP/Getty Images",
+            "caption":"Grand Theft Auto 5 has beaten in a single day the $500m in revenue which the fourth instalment generated in its first week.  Photograph: Leon Neal/AFP/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417774624",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/9/19/1379606402676/Grand-Theft-Auto-5-sales--003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Leon Neal",
+            "altText":"Grand Theft Auto 5 sales ",
+            "height":"84",
+            "credit":"Leon Neal/AFP/Getty Images",
+            "caption":"Grand Theft Auto 5 has beaten in a single day the $500m in revenue which the fourth instalment generated in its first week.  Photograph: Leon Neal/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/2013/sep/16/gta-5-review-grand-theft-auto-v",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-09-16T19:00:00Z",
+      "webTitle":"GTA 5 review: a dazzling but monstrous parody of modern life",
+      "webUrl":"http://www.theguardian.com/technology/2013/sep/16/gta-5-review-grand-theft-auto-v",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/sep/16/gta-5-review-grand-theft-auto-v",
+      "fields":{
+        "trailText":"<p>Rockstar North's Grand Theft Auto update is a freewheeling, nihilistic satire on western society – as well as ridiculous fun</p>",
+        "headline":"GTA 5 review: a dazzling but monstrous parody of modern life",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3tnp2",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/9/16/1379335601178/GTA-5-screenshot-003.jpg",
+        "wordcount":"1971",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-09-19T14:00:00Z"
+      },
+      "tags":[{
+        "id":"technology/grand-theft-auto",
+        "type":"keyword",
+        "webTitle":"Grand Theft Auto",
+        "webUrl":"http://www.theguardian.com/technology/grand-theft-auto",
+        "apiUrl":"http://content.guardianapis.com/technology/grand-theft-auto",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/games",
+        "type":"keyword",
+        "webTitle":"Games",
+        "webUrl":"http://www.theguardian.com/technology/games",
+        "apiUrl":"http://content.guardianapis.com/technology/games",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/keithstuart",
+        "type":"contributor",
+        "webTitle":"Keith Stuart",
+        "webUrl":"http://www.theguardian.com/profile/keithstuart",
+        "apiUrl":"http://content.guardianapis.com/profile/keithstuart",
+        "bio":"<p>Keith has worked for videogame industry bible Edge Magazine, Official PlayStation Magazine and Pocket Gamer</p>",
+        "rcsId":"GNL007878",
+        "r2ContributorId":"15953",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2008/09/03/keith_stuart_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417558271",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/9/16/1379335601178/GTA-5-screenshot-003.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"GTA 5 screenshot",
+            "height":"84",
+            "credit":"PR",
+            "caption":"GTA 5 screenshot",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-417558272",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/9/16/1379335926701/GTA-5-screenshot-008.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"GTA 5 screenshot",
+            "height":"276",
+            "credit":"PR",
+            "caption":"GTA 5: Trevor feels the Heat",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417558273",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/9/16/1379336812314/GTA-5-screenshot-008.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"GTA 5 screenshot",
+            "height":"276",
+            "credit":"PR",
+            "caption":"GTA 5: sharp-suited Michael",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417558274",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/9/16/1379334561650/GTA-5-screenshot-008.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"GTA 5 screenshot",
+            "height":"276",
+            "credit":"PR",
+            "caption":"GTA 5: there's a lot of driving",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417558275",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/9/16/1379336519788/GTA-5-screenshot-008.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"GTA 5 screenshot",
+            "height":"276",
+            "credit":"PR",
+            "caption":"GTA 5: Los Santos is glitzily superficial",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417558276",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Pix/pictures/2013/9/16/1379336675892/GTA-5-screenshot-008.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"GTA 5 screenshot",
+            "height":"276",
+            "credit":"PR",
+            "caption":"GTA 5: explosive action",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-video-417432152",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/9/16/160913GTA5gameplay-16x9.mp4",
+          "typeData":{
+            "source":"Guardian / Rockstar Games",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/16/160913GTA5gameplay_8080801.jpg",
+            "height":"360",
+            "durationMinutes":"16",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/16/160913GTA5gameplay_8080801.jpg",
+            "width":"480",
+            "durationSeconds":"39"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/9/16/160913GTA5gameplay_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Guardian / Rockstar Games",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/9/16/160913GTA5gameplay_8080801.jpg",
+            "height":"360",
+            "durationMinutes":"16",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/9/16/160913GTA5gameplay_8080801.jpg",
+            "width":"480",
+            "durationSeconds":"39"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/2013/sep/13/grand-theft-auto-5-uk-launch",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-09-13T18:38:18Z",
+      "webTitle":"Grand Theft Auto 5 has gamers and industry gushing ahead of launch",
+      "webUrl":"http://www.theguardian.com/technology/2013/sep/13/grand-theft-auto-5-uk-launch",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/sep/13/grand-theft-auto-5-uk-launch",
+      "fields":{
+        "trailText":"<p>Rockstar's latest version is hailed for its vast 'next generation' design and is predicted to become Britain's fastest-selling game</p>",
+        "headline":"Grand Theft Auto 5 has gamers and industry gushing ahead of launch",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3typj",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/12/1379002282810/Grand-Theft-Auto-V-005.jpg",
+        "wordcount":"943",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-09-16T18:38:00Z"
+      },
+      "tags":[{
+        "id":"technology/grand-theft-auto",
+        "type":"keyword",
+        "webTitle":"Grand Theft Auto",
+        "webUrl":"http://www.theguardian.com/technology/grand-theft-auto",
+        "apiUrl":"http://content.guardianapis.com/technology/grand-theft-auto",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/games",
+        "type":"keyword",
+        "webTitle":"Games",
+        "webUrl":"http://www.theguardian.com/technology/games",
+        "apiUrl":"http://content.guardianapis.com/technology/games",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"profile/keithstuart",
+        "type":"contributor",
+        "webTitle":"Keith Stuart",
+        "webUrl":"http://www.theguardian.com/profile/keithstuart",
+        "apiUrl":"http://content.guardianapis.com/profile/keithstuart",
+        "bio":"<p>Keith has worked for videogame industry bible Edge Magazine, Official PlayStation Magazine and Pocket Gamer</p>",
+        "rcsId":"GNL007878",
+        "r2ContributorId":"15953",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2008/09/03/keith_stuart_140x140.jpg",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"technology/grand-theft-auto-5",
+        "type":"keyword",
+        "webTitle":"Grand Theft Auto 5",
+        "webUrl":"http://www.theguardian.com/technology/grand-theft-auto-5",
+        "apiUrl":"http://content.guardianapis.com/technology/grand-theft-auto-5",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417384701",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/12/1379002282810/Grand-Theft-Auto-V-005.jpg",
+          "typeData":{
+            "source":"Rockstar",
+            "altText":"Grand Theft Auto V",
+            "height":"84",
+            "credit":"Rockstar",
+            "caption":"Grand Theft Auto V's appeal, and that of the rest of the series, is as much to do with the extracurricular detail that creates a world full of diversions, say fans. Photograph: Rockstar",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-417384702",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/12/1379002664335/Grand-Theft-Auto-V-010.jpg",
+          "typeData":{
+            "source":"Rockstar",
+            "altText":"Grand Theft Auto V",
+            "height":"276",
+            "credit":"Rockstar",
+            "caption":"GTA V is more than a car game or a shoot-em-up, say industry experts and gamers. Photograph: Rockstar",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-video-416095183",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/8/29/130829GTAVtrailer-16x9.mp4",
+          "typeData":{
+            "source":"Rockstar Games",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/8/29/130829GTAVtrailer_8009374.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/8/29/130829GTAVtrailer_8009374.jpg",
+            "width":"480",
+            "durationSeconds":"10"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/8/29/130829GTAVtrailer_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"Rockstar Games",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/8/29/130829GTAVtrailer_8009374.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/8/29/130829GTAVtrailer_8009374.jpg",
+            "width":"480",
+            "durationSeconds":"10"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/8/29/130829GTAVtrailer_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Rockstar Games",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/8/29/130829GTAVtrailer_8009374.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/8/29/130829GTAVtrailer_8009374.jpg",
+            "width":"480",
+            "durationSeconds":"10"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/8/29/130829GTAVtrailer/130829GTAVtrailer.m3u8",
+          "typeData":{
+            "source":"Rockstar Games",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/8/29/130829GTAVtrailer_8009374.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/8/29/130829GTAVtrailer_8009374.jpg",
+            "width":"480",
+            "durationSeconds":"10"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/8/29/130829GTAVtrailer-720.mp4",
+          "typeData":{
+            "source":"Rockstar Games",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/8/29/130829GTAVtrailer_8009374.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/8/29/130829GTAVtrailer_8009374.jpg",
+            "width":"480",
+            "durationSeconds":"10"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/8/29/130829GTAVtrailer_vpx.webm",
+          "typeData":{
+            "source":"Rockstar Games",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/8/29/130829GTAVtrailer_8009374.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/8/29/130829GTAVtrailer_8009374.jpg",
+            "width":"480",
+            "durationSeconds":"10"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/2013/sep/13/sonic-the-hedgehog-sonic-lost-world",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-09-13T15:09:38Z",
+      "webTitle":"Sonic the Hedgehog: past, present and future",
+      "webUrl":"http://www.theguardian.com/technology/2013/sep/13/sonic-the-hedgehog-sonic-lost-world",
+      "apiUrl":"http://content.guardianapis.com/technology/2013/sep/13/sonic-the-hedgehog-sonic-lost-world",
+      "fields":{
+        "trailText":"On the eve of Sonic Lost World's launch,  leader of team Sonic Takashi Iizuka discusses the evolution of Sega's mascot. By <strong>Simon Parkin</strong>",
+        "headline":"Sonic the Hedgehog: past, present and future",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3tmk3",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2013/9/13/1379084408367/Sonic-Lost-World-003.jpg",
+        "wordcount":"1206",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-09-16T15:09:38Z"
+      },
+      "tags":[{
+        "id":"technology/sonic-the-hedgehog",
+        "type":"keyword",
+        "webTitle":"Sonic the Hedgehog",
+        "webUrl":"http://www.theguardian.com/technology/sonic-the-hedgehog",
+        "apiUrl":"http://content.guardianapis.com/technology/sonic-the-hedgehog",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/games",
+        "type":"keyword",
+        "webTitle":"Games",
+        "webUrl":"http://www.theguardian.com/technology/games",
+        "apiUrl":"http://content.guardianapis.com/technology/games",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"profile/simon-parkin",
+        "type":"contributor",
+        "webTitle":"Simon Parkin",
+        "webUrl":"http://www.theguardian.com/profile/simon-parkin",
+        "apiUrl":"http://content.guardianapis.com/profile/simon-parkin",
+        "bio":"<p>Simon is an author and video games journalist for a variety of print and online publications</p>",
+        "r2ContributorId":"48001",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Technology/Pix/columnists/2011/12/23/1324632667436/Simon-Parkin-003.jpg",
+        "references":[]
+      },{
+        "id":"technology/playstation",
+        "type":"keyword",
+        "webTitle":"PlayStation",
+        "webUrl":"http://www.theguardian.com/technology/playstation",
+        "apiUrl":"http://content.guardianapis.com/technology/playstation",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/xbox",
+        "type":"keyword",
+        "webTitle":"Xbox",
+        "webUrl":"http://www.theguardian.com/technology/xbox",
+        "apiUrl":"http://content.guardianapis.com/technology/xbox",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/pc",
+        "type":"keyword",
+        "webTitle":"PC",
+        "webUrl":"http://www.theguardian.com/technology/pc",
+        "apiUrl":"http://content.guardianapis.com/technology/pc",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417233228",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2013/9/13/1379084405527/Sonic-Lost-World-001.jpg",
+          "typeData":{
+            "source":"Sega",
+            "altText":"Sonic Lost World",
+            "height":"54",
+            "credit":"Sega",
+            "caption":"Sonic Lost World: 'It’s a rethink of all that a platform game is and can be.' Photograph: Sega",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2013/9/13/1379084407312/Sonic-Lost-World-002.jpg",
+          "typeData":{
+            "source":"Sega",
+            "altText":"Sonic Lost World",
+            "height":"130",
+            "credit":"Sega",
+            "caption":"Sonic Lost World: 'It’s a rethink of all that a platform game is and can be.' Photograph: Sega",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2013/9/13/1379084408367/Sonic-Lost-World-003.jpg",
+          "typeData":{
+            "source":"Sega",
+            "altText":"Sonic Lost World",
+            "height":"84",
+            "credit":"Sega",
+            "caption":"Sonic Lost World: 'It’s a rethink of all that a platform game is and can be.' Photograph: Sega",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2013/9/13/1379084409366/Sonic-Lost-World-004.jpg",
+          "typeData":{
+            "source":"Sega",
+            "altText":"Sonic Lost World",
+            "height":"132",
+            "credit":"Sega",
+            "caption":"Sonic Lost World: 'It’s a rethink of all that a platform game is and can be.' Photograph: Sega",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2013/9/13/1379084410816/Sonic-Lost-World-005.jpg",
+          "typeData":{
+            "source":"Sega",
+            "altText":"Sonic Lost World",
+            "height":"168",
+            "credit":"Sega",
+            "caption":"Sonic Lost World: 'It’s a rethink of all that a platform game is and can be.' Photograph: Sega",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2013/9/13/1379084411888/Sonic-Lost-World-006.jpg",
+          "typeData":{
+            "source":"Sega",
+            "altText":"Sonic Lost World",
+            "height":"180",
+            "credit":"Sega",
+            "caption":"Sonic Lost World: 'It’s a rethink of all that a platform game is and can be.' Photograph: Sega",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2013/9/13/1379084414003/Sonic-Lost-World-007.jpg",
+          "typeData":{
+            "source":"Sega",
+            "altText":"Sonic Lost World",
+            "height":"228",
+            "credit":"Sega",
+            "caption":"Sonic Lost World: 'It’s a rethink of all that a platform game is and can be.' Photograph: Sega",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2013/9/13/1379084415138/Sonic-Lost-World-008.jpg",
+          "typeData":{
+            "source":"Sega",
+            "altText":"Sonic Lost World",
+            "height":"276",
+            "credit":"Sega",
+            "caption":"Sonic Lost World: 'It’s a rethink of all that a platform game is and can be.' Photograph: Sega",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2013/9/13/1379084415138/Sonic-Lost-World-008.jpg",
+          "typeData":{
+            "source":"Sega",
+            "altText":"Sonic Lost World",
+            "height":"276",
+            "credit":"Sega",
+            "caption":"Sonic Lost World: 'It’s a rethink of all that a platform game is and can be'",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-417233229",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2013/9/13/1379084408367/Sonic-Lost-World-003.jpg",
+          "typeData":{
+            "source":"Sega",
+            "altText":"Sonic Lost World",
+            "height":"84",
+            "credit":"Sega",
+            "caption":"Sonic Lost World: 'It's a rethink of all that a platform game is and can be.' Photograph: Sega",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"technology/gamesblog/2013/sep/13/grand-theft-auto-5-dan-houser",
+      "sectionId":"technology",
+      "sectionName":"Technology",
+      "webPublicationDate":"2013-09-13T10:27:00Z",
+      "webTitle":"Grand Theft Auto 5 – inside the creative process with Dan Houser",
+      "webUrl":"http://www.theguardian.com/technology/gamesblog/2013/sep/13/grand-theft-auto-5-dan-houser",
+      "apiUrl":"http://content.guardianapis.com/technology/gamesblog/2013/sep/13/grand-theft-auto-5-dan-houser",
+      "fields":{
+        "trailText":"<p><strong>Keith Stuart:</strong> Rockstar co-founder Dan Houser discusses how the studio approaches a new GTA title and the vast collaboration involved</p>",
+        "headline":"Grand Theft Auto 5 – inside the creative process with Dan Houser",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3tm98",
+        "wordcount":"3223",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-09-20T10:27:00Z"
+      },
+      "tags":[{
+        "id":"technology/games",
+        "type":"keyword",
+        "webTitle":"Games",
+        "webUrl":"http://www.theguardian.com/technology/games",
+        "apiUrl":"http://content.guardianapis.com/technology/games",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/gamesblog",
+        "type":"blog",
+        "webTitle":"Games blog",
+        "webUrl":"http://www.theguardian.com/technology/gamesblog",
+        "apiUrl":"http://content.guardianapis.com/technology/gamesblog",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/grand-theft-auto",
+        "type":"keyword",
+        "webTitle":"Grand Theft Auto",
+        "webUrl":"http://www.theguardian.com/technology/grand-theft-auto",
+        "apiUrl":"http://content.guardianapis.com/technology/grand-theft-auto",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/ps3",
+        "type":"keyword",
+        "webTitle":"PS3",
+        "webUrl":"http://www.theguardian.com/technology/ps3",
+        "apiUrl":"http://content.guardianapis.com/technology/ps3",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/xbox",
+        "type":"keyword",
+        "webTitle":"Xbox",
+        "webUrl":"http://www.theguardian.com/technology/xbox",
+        "apiUrl":"http://content.guardianapis.com/technology/xbox",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"profile/keithstuart",
+        "type":"contributor",
+        "webTitle":"Keith Stuart",
+        "webUrl":"http://www.theguardian.com/profile/keithstuart",
+        "apiUrl":"http://content.guardianapis.com/profile/keithstuart",
+        "bio":"<p>Keith has worked for videogame industry bible Edge Magazine, Official PlayStation Magazine and Pocket Gamer</p>",
+        "rcsId":"GNL007878",
+        "r2ContributorId":"15953",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Technology/Pix/pictures/2008/09/03/keith_stuart_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"technology/grand-theft-auto-5",
+        "type":"keyword",
+        "webTitle":"Grand Theft Auto 5",
+        "webUrl":"http://www.theguardian.com/technology/grand-theft-auto-5",
+        "apiUrl":"http://content.guardianapis.com/technology/grand-theft-auto-5",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-417225384",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2013/9/12/1379002289829/Grand-Theft-Auto-V-010.jpg",
+          "typeData":{
+            "source":"Rockstar",
+            "altText":"Grand Theft Auto V",
+            "height":"276",
+            "credit":"Rockstar",
+            "caption":"Grand Theft Auto V's appeal, and that of the rest of the series, is as much to do with the extracurricular detail that creates a world full of diversions, say fans. Photograph: Rockstar",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-video-416095183",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/8/29/130829GTAVtrailer-16x9.mp4",
+          "typeData":{
+            "source":"Rockstar Games",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/8/29/130829GTAVtrailer_8009374.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/8/29/130829GTAVtrailer_8009374.jpg",
+            "width":"480",
+            "durationSeconds":"10"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/8/29/130829GTAVtrailer_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"Rockstar Games",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/8/29/130829GTAVtrailer_8009374.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/8/29/130829GTAVtrailer_8009374.jpg",
+            "width":"480",
+            "durationSeconds":"10"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/8/29/130829GTAVtrailer_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"Rockstar Games",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/8/29/130829GTAVtrailer_8009374.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/8/29/130829GTAVtrailer_8009374.jpg",
+            "width":"480",
+            "durationSeconds":"10"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/8/29/130829GTAVtrailer/130829GTAVtrailer.m3u8",
+          "typeData":{
+            "source":"Rockstar Games",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/8/29/130829GTAVtrailer_8009374.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/8/29/130829GTAVtrailer_8009374.jpg",
+            "width":"480",
+            "durationSeconds":"10"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4:720",
+          "file":"http://cdn.theguardian.tv/connectedTV/1280/2013/8/29/130829GTAVtrailer-720.mp4",
+          "typeData":{
+            "source":"Rockstar Games",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/8/29/130829GTAVtrailer_8009374.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/8/29/130829GTAVtrailer_8009374.jpg",
+            "width":"480",
+            "durationSeconds":"10"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/8/29/130829GTAVtrailer_vpx.webm",
+          "typeData":{
+            "source":"Rockstar Games",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/8/29/130829GTAVtrailer_8009374.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/8/29/130829GTAVtrailer_8009374.jpg",
+            "width":"480",
+            "durationSeconds":"10"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

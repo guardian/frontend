@@ -1,224 +1,400 @@
 define([
     //Commmon libraries
-    'common',
+    '$',
+    'utils/mediator',
+    'utils/deferToLoad',
+    'utils/ajax',
     'modules/userPrefs',
     //Vendor libraries
     'domReady',
-    'qwery',
+    'bonzo',
+    'bean',
+    'lodash/functions/debounce',
     //Modules
-    'modules/popular',
-    'modules/related',
+    'utils/storage',
+    'utils/detect',
+    'modules/onward/popular',
+    'modules/onward/related',
     'modules/router',
-    'modules/images',
+    'modules/ui/images',
     'modules/navigation/top-stories',
+    'modules/navigation/profile',
     'modules/navigation/sections',
     'modules/navigation/search',
-    'modules/navigation/control',
-    'modules/tabs',
-    'modules/relativedates',
+    'modules/ui/tabs',
+    'modules/ui/toggles',
+    'modules/ui/relativedates',
     'modules/analytics/clickstream',
     'modules/analytics/omniture',
-    'modules/analytics/optimizely',
     'modules/adverts/adverts',
-    'modules/cookies',
+    'utils/cookies',
     'modules/analytics/omnitureMedia',
-    'modules/debug',
-    'modules/experiments/ab'
+    'modules/analytics/adverts',
+    'modules/experiments/ab',
+    "modules/adverts/video",
+    "modules/discussion/comment-count",
+    "modules/gallery/lightbox",
+    "modules/onward/history",
+    "modules/onward/sequence",
+    "modules/ui/message",
+    "modules/identity/autosignin"
 ], function (
-    common,
+    $,
+    mediator,
+    deferToLoadEvent,
+    ajax,
     userPrefs,
 
     domReady,
-    qwery,
+    bonzo,
+    bean,
+    debounce,
 
+    storage,
+    detect,
     popular,
     related,
     Router,
-    Images,
+    images,
     TopStories,
+    Profile,
     Sections,
     Search,
-    NavControl,
+
     Tabs,
+    Toggles,
     RelativeDates,
     Clickstream,
     Omniture,
-    optimizely,
     Adverts,
     Cookies,
-    Video,
-    Debug,
-    AB
+    OmnitureMedia,
+    AdvertsAnalytics,
+    ab,
+    VideoAdvert,
+    CommentCount,
+    LightboxGallery,
+    History,
+    sequence,
+    Message,
+    AutoSignin
 ) {
 
     var modules = {
 
         upgradeImages: function () {
-            var images = new Images();
-            common.mediator.on('page:common:ready', function(config, context) {
-                images.upgrade(context);
-            });
-            common.mediator.on('fragment:ready:images', function(context) {
-                images.upgrade(context);
-            });
+            images.upgrade();
+            images.listen();
         },
 
         initialiseNavigation: function (config) {
-            var navControl = new NavControl();
-            var sections = new Sections();
-            var search = new Search(config);
-            common.mediator.on('page:common:ready', function(config, context) {
-                navControl.init(context);
-                sections.init(context);
-                search.init(context);
-            });
+             var topStories = new TopStories(),
+                sections = new Sections(config),
+                search = new Search(config),
+                header = document.getElementById('header'),
+                profile;
+
+            if (config.switches.idProfileNavigation) {
+                profile = new Profile(header, {
+                    url: config.page.idUrl
+                });
+                profile.init();
+            }
+
+            sections.init(document);
+            topStories.load(config, header);
+            search.init(header);
         },
 
-        transcludeTopStories: function () {
-            var topStories = new TopStories();
-            common.mediator.on('page:common:ready', function(config, context) {
-                topStories.load(config, context);
-            });
-        },
-
-        transcludeRelated: function () {
-            common.mediator.on("page:common:ready", function(config, context){
-                related(config, context);
-            });
+        transcludeRelated: function (config, context) {
+            related(config, context);
         },
 
         transcludePopular: function () {
-            common.mediator.on('page:common:ready', function(config, context) {
+            mediator.on('page:common:ready', function(config, context) {
                 popular(config, context);
             });
         },
 
         showTabs: function() {
             var tabs = new Tabs();
-            common.mediator.on('modules:popular:loaded', function(el) {
+            mediator.on('modules:popular:loaded', function(el) {
                 tabs.init(el);
+            });
+        },
+
+        showToggles: function() {
+            var toggles = new Toggles();
+            toggles.init(document);
+            mediator.on('page:common:ready', function(config, context) {
+                toggles.reset();
             });
         },
 
         showRelativeDates: function () {
             var dates = RelativeDates;
-            common.mediator.on('page:common:ready', function(config, context) {
+            mediator.on('page:common:ready', function(config, context) {
                 dates.init(context);
             });
-            common.mediator.on('fragment:ready:dates', function(el) {
+            mediator.on('fragment:ready:dates', function(el) {
                 dates.init(el);
             });
         },
 
-        loadOmnitureAnalytics: function (config) {
-            common.mediator.on('module:omniture:loaded', function() {
-                var videos = document.getElementsByTagName("video");
-                if(videos) {
-                    for(var i = 0, l = videos.length; i < l; i++) {
-                        var v = new Video({
-                            el: videos[i],
+        initClickstream: function () {
+            var cs = new Clickstream({filter: ["a", "button"]});
+        },
+
+        transcludeCommentCounts: function () {
+            mediator.on('page:common:ready', function(config, context) {
+                CommentCount.init(context);
+            });
+        },
+
+        initLightboxGalleries: function () {
+            var thisPageId;
+            mediator.on('page:common:ready', function(config, context) {
+                var galleries = new LightboxGallery(config, context);
+                thisPageId = config.page.pageId;
+                galleries.init();
+            });
+
+            // Register as a page view if invoked from elsewhere than its gallery page (like a trailblock)
+            mediator.on('module:lightbox-gallery:loaded', function(config, context) {
+                if (thisPageId !== config.page.pageId) {
+                    mediator.emit('page:common:deferred:loaded', config, context);
+                }
+            });
+        },
+
+        initAbTests: function (config) {
+            ab.segmentUser(config);
+        },
+
+        runAbTests: function (config, context) {
+            ab.run(config, context);
+        },
+
+        loadAnalytics: function (config, context) {
+            var omniture = new Omniture();
+
+            omniture.go(config, function(){
+                // callback:
+
+                Array.prototype.forEach.call(context.getElementsByTagName("video"), function(video){
+                    if (!bonzo(video).hasClass('tracking-applied')) {
+                        bonzo(video).addClass('tracking-applied');
+                        var v = new OmnitureMedia({
+                            el: video,
                             config: config
                         }).init();
                     }
+                });
+
+                if (config.switches.adslotImpressionStats) {
+                    var advertsAnalytics = new AdvertsAnalytics(config, context);
                 }
             });
 
-            var cs = new Clickstream({ filter: ["a", "span", "button"] }),
-                o = new Omniture(null, config).init();
-        },
-
-        loadOphanAnalytics: function (config) {
             require(config.page.ophanUrl, function (Ophan) {
-                    if(AB.inTest(config.switches)) {
-                        Ophan.additionalViewData(function() {
-                            var test = AB.getTest(),
-                                data = [
-                                    {
-                                        id: test.id,
-                                        variant: test.variant
-                                    }
-                                ];
-                            return {
-                                "experiments": JSON.stringify(data)
-                            };
-                        });
+
+                if (!Ophan.isInitialised) {
+                    Ophan.isInitialised = true;
+                    Ophan.initLog();
+                }
+
+                Ophan.additionalViewData(function() {
+
+                    var viewData = {};
+
+                    var audsci = storage.local.get('gu.ads.audsci');
+                    if (audsci) {
+                        viewData.audsci_json = JSON.stringify(audsci);
                     }
-                Ophan.startLog();
+
+                    var participations = ab.getParticipations(),
+                        participationsKeys = Object.keys(participations);
+
+                    if (participationsKeys.length > 0) {
+                        var testData = participationsKeys.map(function(k) {
+                            return { id: k, variant: participations[k].variant };
+                        });
+                        viewData.experiments_json = JSON.stringify(testData);
+                    }
+
+                    return viewData;
+                });
+
+                Ophan.sendLog(config.swipe ? config.swipe.referrer : undefined, true);
             });
         },
 
-        loadAdverts: function (config) {
+        loadAdverts: function () {
+            if (!userPrefs.isOff('adverts')){
+                mediator.on('page:common:deferred:loaded', function(config, context) {
+                    if (config.switches && config.switches.adverts && !config.page.blockAds) {
+                        Adverts.init(config, context);
+                    }
+                });
+                mediator.on('modules:adverts:docwrite:loaded', function(){
+                    Adverts.loadAds();
+                });
 
-            if (config.switches.adverts) {
-                Adverts.init(config);
-                common.mediator.on('modules:adverts:docwrite:loaded', Adverts.loadAds);
-            }
-        },
-
-        cleanupCookies: function() {
-            Cookies.cleanUp(["mmcore.pd", "mmcore.srv", "mmid"]);
-        },
-
-        initialiseSearch: function(config) {
-            var s = new Search(config);
-            common.mediator.on('modules:control:change:sections-control-header:true', function(args) {
-                s.init();
-            });
-        },
-
-        showSharedWisdomToolbar: function(config) {
-            // only display if switched on
-            if (userPrefs.isOn('shared-wisdom-toolbar')) {
-                require('modules/shared-wisdom-toolbar', function(sharedWisdomToolbar) {
-                    sharedWisdomToolbar.init(function() {
-                        sharedWisdomToolbar.show();
-                    }, config.modules.sharedWisdomToolbar);
+                mediator.on('window:resize', function () {
+                    Adverts.hideAds();
+                });
+                mediator.on('window:orientationchange', function () {
+                    Adverts.hideAds();
                 });
             }
         },
 
-        initialiseAbTesting: function(config, context) {
-            common.mediator.on('ab:loaded', function() {
-                modules.loadOmnitureAnalytics(config);
-                modules.loadOphanAnalytics(config);
+        loadVideoAdverts: function(config) {
+            mediator.on('page:common:ready', function(config, context) {
+                if(config.switches.videoAdverts && !config.page.blockAds) {
+                    Array.prototype.forEach.call(context.querySelectorAll('video'), function(el) {
+                        var support = detect.getVideoFormatSupport();
+                        var a = new VideoAdvert({
+                            el: el,
+                            support: support,
+                            config: config,
+                            context: context
+                        }).init(config.page);
+                    });
+                } else {
+                    mediator.emit("video:ads:finished", config, context);
+                }
             });
+        },
 
-            AB.init(config, context);
+        cleanupCookies: function() {
+            Cookies.cleanUp(["mmcore.pd", "mmcore.srv", "mmid", 'GU_ABFACIA', 'GU_FACIA']);
+        },
+
+        // opt-in to the responsive alpha
+        optIn: function () {
+            var countMeIn = /#countmein/.test(window.location.hash);
+            if (countMeIn) {
+                Cookies.add("GU_VIEW", "mobile", 365);
+            }
+        },
+
+        // display a flash message to devices over 600px who don't have the mobile cookie
+        displayReleaseMessage: function (config) {
+
+            var path = (document.location.pathname) ? document.location.pathname : '/',
+                exitLink = '/preference/platform/desktop?page=' + encodeURIComponent(path + '?view=desktop'),
+                msg = '<p class="site-message__message">' +
+                            'You’re viewing an alpha release of the Guardian’s responsive website. <a href="/help/2013/oct/04/alpha-testing-and-evolution-of-our-mobile-site">Find out more</a>' +
+                      '</p>' +
+                      '<ul class="site-message__actions unstyled">' +
+                           '<li class="site-message__actions__item">' +
+                               '<i class="i i-comment-grey"></i>' +
+                               '<a href="http://survey.omniture.com/d1/hosted/815f9cfba1" data-link-name="feedback" target="_blank">We’d love to hear your feedback</a>' +
+                           '</li>' +
+                           '<li class="site-message__actions__item">' +
+                               '<i class="i i-back"></i>' +
+                                   '<a class="js-main-site-link" rel="nofollow" href="' + exitLink + '"' +
+                                       'data-link-name="opt-out">Opt-out and return to standard desktop site </a>' +
+                           '</li>' +
+                      '</ul>';
+
+            var releaseMessage = new Message('alpha');
+            var alreadyOptedIn = !!releaseMessage.hasSeen('releaseMessage');
+
+            if (config.switches.releaseMessage && !alreadyOptedIn && (detect.getBreakpoint() !== 'mobile')) {
+                // force the visitor in to the alpha release for subsequent visits
+                Cookies.add("GU_VIEW", "mobile", 365);
+                releaseMessage.show(msg);
+            }
+        },
+
+        unshackleParagraphs: function (config, context) {
+            if (userPrefs.isOff('para-indents')) {
+                $('.paragraph-spacing--indents', context).removeClass('paragraph-spacing--indents');
+            }
+        },
+
+        logReadingHistory : function() {
+            mediator.on('page:common:ready', function(config) {
+                 if(/Article|Video|Gallery|Interactive/.test(config.page.contentType)) {
+                    new History().log({
+                        id: '/' + config.page.pageId,
+                        meta: {
+                            section: config.page.section,
+                            keywords: config.page.keywordIds.split(',').slice(0, 5)
+                        }
+                    });
+                }
+                sequence.init();
+            });
+        },
+
+        initAutoSignin : function() {
+           mediator.on('page:common:ready', function(config) {
+                if (config.switches && config.switches.facebookAutosignin && detect.getBreakpoint() !== 'mobile') {
+                    new AutoSignin(config).init();
+                }
+            });
+        },
+
+        windowEventListeners: function() {
+            var events = {
+                    resize: 'window:resize',
+                    orientationchange: 'window:orientationchange'
+                },
+                emitEvent = function(eventName) {
+                    return function(e) {
+                        mediator.emit(eventName, e);
+                    };
+                };
+            for (var event in events) {
+                bean.on(window, event, debounce(emitEvent(events[event]), 200));
+            }
         }
     };
 
     var deferrable = function (config, context) {
-        deferrable = function (config, context) {
-            // TODO: move these up into the first-call scope by making them singletons
-            modules.initialiseAbTesting(config, context);
-            modules.loadAdverts(config, context);
-            modules.cleanupCookies(context);
-            modules.showSharedWisdomToolbar(config);
-            
-            common.mediator.emit("page:common:loaded", config, context);
-        };
-        common.deferToLoadEvent(function() {
-            deferrable(config, context);
+        var self = this;
+        deferToLoadEvent(function() {
+            if (!self.initialisedDeferred) {
+                self.initialisedDeferred = true;
+                modules.initAbTests(config);
+                modules.loadAdverts();
+                modules.loadAnalytics(config, context);
+                modules.cleanupCookies(context);
+                modules.runAbTests(config, context);
+                modules.transcludeRelated(config, context);
+            }
+            mediator.emit("page:common:deferred:loaded", config, context);
         });
     };
 
-    var ready = function (config, context) {
-        ready = function (config, context) {
-            common.mediator.emit("page:common:ready", config, context);
-        };
-        modules.upgradeImages();
-        modules.showTabs();
-        modules.showRelativeDates();
-        modules.transcludeRelated();
-        modules.transcludePopular();
-        modules.transcludeTopStories();
-        modules.initialiseNavigation(config);
-
-        ready(config, context);
+    var ready = function (config, context, contextHtml) {
+        if (!this.initialised) {
+            this.initialised = true;
+            modules.windowEventListeners();
+            modules.upgradeImages();
+            modules.showTabs();
+            modules.initialiseNavigation(config);
+            modules.showToggles();
+            modules.showRelativeDates();
+            modules.transcludePopular();
+            modules.loadVideoAdverts(config);
+            modules.initClickstream();
+            modules.transcludeCommentCounts();
+            modules.initLightboxGalleries();
+            modules.optIn();
+            modules.displayReleaseMessage(config);
+            modules.logReadingHistory();
+            modules.unshackleParagraphs(config, context);
+            modules.initAutoSignin(config);
+        }
+        mediator.emit("page:common:ready", config, context);
     };
 
-    var init = function (config, context) {
-        ready(config, context);
+    var init = function (config, context, contextHtml) {
+        ready(config, context, contextHtml);
         deferrable(config, context);
     };
 

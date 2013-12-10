@@ -10,6 +10,7 @@
     var fs = require('fs');
     var spawn = require('child_process').spawn;
     var crypto = require('crypto');
+    var mkdirp = require('../../node_modules/mkdirp/index');
     var SVGO = require('../../node_modules/svgo/lib/svgo');
     var utils = {};
     var config;
@@ -44,11 +45,10 @@
     processSVG = function(files, file, callback) {
         if(files[file].match( /\.svg$/i )){
             // optimize SVG from current file
-            var svgo = new SVGO();
-            svgo.fromFile(files[file])
-                .then(function(result) {
-                    var inBytes =  (Math.round((result.info.inBytes / 1024) * 1000) / 1000),
-                        outBytes = (Math.round((result.info.outBytes / 1024) * 1000) / 1000);
+            fs.readFile(files[file], 'utf8', function(err, data) {
+                var inBytes = Buffer.byteLength(data, 'utf8');
+                new SVGO().optimize(data, function(result) {
+                    var outBytes = Buffer.byteLength(result.data, 'utf8');
 
                     fs.writeFileSync(files[file], result.data);
 
@@ -60,7 +60,8 @@
                         console.log("Total savings: " + Math.round(savings) + "kb");
                         callback();
                     }
-                }).done();
+                });
+            });
         } else {
             if(file < files.length-1){
                 processSVG(files, file + 1, callback);
@@ -120,24 +121,22 @@
         // css class prefix
         var cssprefix = config.cssprefix || "i-";
 
-        // location of styleguide HTML fragment
-        var styleguidepath = config.styleguidepath || "/";
-        var styleguidefilename = config.styleguidefilename || "sprites.scala.html";
-
         // create the output directory
-        fs.mkdir( config.imgDest );
+        if (!fs.existsSync( config.imgDest )) {
+            mkdirp.sync( config.imgDest );
+        }
 
         console.info( "Ouput css file created." );
 
         console.info( "Cleaning SVG" );
-        cleanSVG(config.imgDest, function(){
+        cleanSVG(config.src, function(){
 
 
                 // take it to phantomjs to do the rest
                 console.info( "Now spawning phantomjs..." );
 
                 utils.spawn({
-                  cmd: 'phantomjs',
+                  cmd: '../../node_modules/phantomjs/bin/phantomjs',
                   args: [
                     'spricon-phantom.js',
                     config.src,
@@ -150,9 +149,7 @@
                     spritepath,
                     cssprefix,
                     cssbasepath,
-                    generatesvg,
-                    styleguidepath,
-                    styleguidefilename
+                    generatesvg
                   ],
                   fallback: ''
                 }, function(err, result, code) {

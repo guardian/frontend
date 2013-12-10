@@ -1,0 +1,1168 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"sport/interactive/2013/oct/23/yorkshire-paris-tour-de-france-2014-route-map",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-23T10:10:00Z",
+      "webTitle":"From Yorkshire to Paris: Tour de France 2014 route map",
+      "webUrl":"http://www.theguardian.com/sport/interactive/2013/oct/23/yorkshire-paris-tour-de-france-2014-route-map",
+      "apiUrl":"http://content.guardianapis.com/sport/interactive/2013/oct/23/yorkshire-paris-tour-de-france-2014-route-map",
+      "fields":{
+        "trailText":"<p>With a detailed breakdown from the Grand Départ in Yorkshire and the first three stages in England, to the rest of the route via Ypres, Nancy, Besançon, Nîmes and Pau on the road to Paris</p>",
+        "headline":"From Yorkshire to Paris: Tour de France 2014 route map",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-23T14:35:32Z",
+        "hasStoryPackage":"true",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2011/7/9/1310207020311/A-classic-Tour-de-France--003.jpg",
+        "standfirst":"With a detailed breakdown from the Grand Départ in Yorkshire and the first three stages in England, to the rest of the route via Ypres, Nancy, Besançon, Nîmes and Pau on the road to Paris",
+        "shortUrl":"http://gu.com/p/3jn7f",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2011/7/9/1310207020311/A-classic-Tour-de-France--003.jpg",
+        "commentable":"false",
+        "internalContentCode":"420729906",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Paddy Allen and Finbarr Sheehy",
+        "publication":"theguardian.com",
+        "internalPageCode":"1985271",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-26T10:10:08Z"
+      },
+      "tags":[{
+        "id":"sport/tour-de-france-2014",
+        "type":"keyword",
+        "webTitle":"Tour de France 2014",
+        "webUrl":"http://www.theguardian.com/sport/tour-de-france-2014",
+        "apiUrl":"http://content.guardianapis.com/sport/tour-de-france-2014",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/tourdefrance",
+        "type":"keyword",
+        "webTitle":"Tour de France",
+        "webUrl":"http://www.theguardian.com/sport/tourdefrance",
+        "apiUrl":"http://content.guardianapis.com/sport/tourdefrance",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/cycling",
+        "type":"keyword",
+        "webTitle":"Cycling",
+        "webUrl":"http://www.theguardian.com/sport/cycling",
+        "apiUrl":"http://content.guardianapis.com/sport/cycling",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/paddyallen",
+        "type":"contributor",
+        "webTitle":"Paddy Allen",
+        "webUrl":"http://www.theguardian.com/profile/paddyallen",
+        "apiUrl":"http://content.guardianapis.com/profile/paddyallen",
+        "bio":"<p>Paddy Allen is guardian.co.uk's infographics editor. Previously the graphics editor of the Guardian newspaper he has also worked for the Natural History Museum and Gemini News service</p>",
+        "r2ContributorId":"20166",
+        "references":[]
+      },{
+        "id":"profile/finbarrsheehy",
+        "type":"contributor",
+        "webTitle":"Finbarr Sheehy",
+        "webUrl":"http://www.theguardian.com/profile/finbarrsheehy",
+        "apiUrl":"http://content.guardianapis.com/profile/finbarrsheehy",
+        "bio":"<p>Finbarr Sheehy is a graphic artist for the Guardian</p>",
+        "r2ContributorId":"24442",
+        "references":[]
+      },{
+        "id":"type/interactive",
+        "type":"type",
+        "webTitle":"Interactive",
+        "webUrl":"http://www.theguardian.com/interactive",
+        "apiUrl":"http://content.guardianapis.com/interactive",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420774773",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2011/7/9/1310207020311/A-classic-Tour-de-France--003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Laurent Cipriani",
+            "altText":"A classic Tour de France sunflower shot",
+            "height":"84",
+            "credit":"Laurent Cipriani/AP",
+            "caption":"A classic Tour de France sunflower shot. Tune in tomorrow for the obligatory two-donkeys-standing-in-a-field shot  Photograph: Laurent Cipriani/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"sport/video/2013/oct/24/tour-de-france-2014-video",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-24T12:39:51Z",
+      "webTitle":"Tour de France 2014: cyclists react to route and Yorkshire start – video",
+      "webUrl":"http://www.theguardian.com/sport/video/2013/oct/24/tour-de-france-2014-video",
+      "apiUrl":"http://content.guardianapis.com/sport/video/2013/oct/24/tour-de-france-2014-video",
+      "fields":{
+        "trailText":"<p>The route for Tour de France 2014 is unveiled on Wednesday, revealing the route</p>",
+        "headline":"Tour de France 2014: cyclists react to route and Yorkshire start – video",
+        "body":"<video data-media-id=\"gu-video-420854089\" class=\"gu-video\" controls=\"controls\" poster=\"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/24/1382615819083/Tour-de-France-2014-Cycli-011.jpg\">\n        <source src=\"http://cdn.theguardian.tv/mainwebsite/2013/10/24/131024TourDeFrance-16x9.mp4\"></source><source src=\"http://cdn.theguardian.tv/3gp/small/2013/10/24/131024TourDeFrance_3gpSml16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/ad/2013/10/24/131024TourDeFrance/131024TourDeFrance.m3u8\"></source><source src=\"http://cdn.theguardian.tv/3gp/large/2013/10/24/131024TourDeFrance_3gpLg16x9.3gp\"></source>\n      </video><!-- Guardian Watermark: internal-code/content/420854089|2013-11-05T11:03:48Z|48ab66913dabaedf377e5d8a66296ce5a46d2955 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-30T18:50:14Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/24/1382615811613/Tour-de-France-2014-Cycli-005.jpg",
+        "standfirst":"The route for Tour de France 2014 is unveiled on Wednesday, revealing the route. Team Sky cyclist Chris Froome says it's a privilege to have the tour begin in the United Kingdom, and adds that it's 'going to be massive'. Team Saxo-Tinkoff cyclist Alberto Contador says the route will prove to be a good, but difficult, tour. Mark Cavendish, cyclist for Team Omega Pharma-Quick Step, expresses his delight over the first stage finishing in his mother's hometown",
+        "shortUrl":"http://gu.com/p/3jzfh",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/24/1382615811613/Tour-de-France-2014-Cycli-005.jpg",
+        "commentable":"false",
+        "internalContentCode":"420854089",
+        "allowUgc":"false",
+        "internalOctopusCode":"8235879",
+        "isPremoderated":"false",
+        "publication":"theguardian.com",
+        "internalPageCode":"1986218",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-27T13:39:51Z"
+      },
+      "tags":[{
+        "id":"sport/tourdefrance",
+        "type":"keyword",
+        "webTitle":"Tour de France",
+        "webUrl":"http://www.theguardian.com/sport/tourdefrance",
+        "apiUrl":"http://content.guardianapis.com/sport/tourdefrance",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/cycling",
+        "type":"keyword",
+        "webTitle":"Cycling",
+        "webUrl":"http://www.theguardian.com/sport/cycling",
+        "apiUrl":"http://content.guardianapis.com/sport/cycling",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/team-sky",
+        "type":"keyword",
+        "webTitle":"Team Sky",
+        "webUrl":"http://www.theguardian.com/sport/team-sky",
+        "apiUrl":"http://content.guardianapis.com/sport/team-sky",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/chris-froome",
+        "type":"keyword",
+        "webTitle":"Chris Froome",
+        "webUrl":"http://www.theguardian.com/sport/chris-froome",
+        "apiUrl":"http://content.guardianapis.com/sport/chris-froome",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/markcavendish",
+        "type":"keyword",
+        "webTitle":"Mark Cavendish",
+        "webUrl":"http://www.theguardian.com/sport/markcavendish",
+        "apiUrl":"http://content.guardianapis.com/sport/markcavendish",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/alberto-contador",
+        "type":"keyword",
+        "webTitle":"Alberto Contador",
+        "webUrl":"http://www.theguardian.com/sport/alberto-contador",
+        "apiUrl":"http://content.guardianapis.com/sport/alberto-contador",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-420854089",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/24/1382615807941/Tour-de-France-2014-Cycli-002.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Christophe Ena",
+            "altText":"Tour de France 2014: Cyclists react to route and Britain start - video ",
+            "height":"54",
+            "credit":"Christophe Ena/AP",
+            "caption":"Tour de France 2014: Cyclists react to route and Britain start - video  Photograph: Christophe Ena/AP",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/24/1382615809137/Tour-de-France-2014-Cycli-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Christophe Ena",
+            "altText":"Tour de France 2014: Cyclists react to route and Britain start - video ",
+            "height":"340",
+            "credit":"Christophe Ena/AP",
+            "caption":"Tour de France 2014: Cyclists react to route and Britain start - video  Photograph: Christophe Ena/AP",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/24/1382615810371/Tour-de-France-2014-Cycli-004.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Christophe Ena",
+            "altText":"Tour de France 2014: Cyclists react to route and Britain start - video ",
+            "height":"130",
+            "credit":"Christophe Ena/AP",
+            "caption":"Tour de France 2014: Cyclists react to route and Britain start - video  Photograph: Christophe Ena/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/24/1382615811613/Tour-de-France-2014-Cycli-005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Christophe Ena",
+            "altText":"Tour de France 2014: Cyclists react to route and Britain start - video ",
+            "height":"84",
+            "credit":"Christophe Ena/AP",
+            "caption":"Tour de France 2014: Cyclists react to route and Britain start - video  Photograph: Christophe Ena/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/24/1382615812938/Tour-de-France-2014-Cycli-006.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Christophe Ena",
+            "altText":"Tour de France 2014: Cyclists react to route and Britain start - video ",
+            "height":"132",
+            "credit":"Christophe Ena/AP",
+            "caption":"Tour de France 2014: Cyclists react to route and Britain start - video  Photograph: Christophe Ena/AP",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/24/1382615814149/Tour-de-France-2014-Cycli-007.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Christophe Ena",
+            "altText":"Tour de France 2014: Cyclists react to route and Britain start - video ",
+            "height":"168",
+            "credit":"Christophe Ena/AP",
+            "caption":"Tour de France 2014: Cyclists react to route and Britain start - video  Photograph: Christophe Ena/AP",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/24/1382615815353/Tour-de-France-2014-Cycli-008.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Christophe Ena",
+            "altText":"Tour de France 2014: Cyclists react to route and Britain start - video ",
+            "height":"180",
+            "credit":"Christophe Ena/AP",
+            "caption":"Tour de France 2014: Cyclists react to route and Britain start - video  Photograph: Christophe Ena/AP",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/24/1382615816645/Tour-de-France-2014-Cycli-009.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Christophe Ena",
+            "altText":"Tour de France 2014: Cyclists react to route and Britain start - video ",
+            "height":"228",
+            "credit":"Christophe Ena/AP",
+            "caption":"Tour de France 2014: Cyclists react to route and Britain start - video  Photograph: Christophe Ena/AP",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/24/1382615817827/Tour-de-France-2014-Cycli-010.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Christophe Ena",
+            "altText":"Tour de France 2014: Cyclists react to route and Britain start - video ",
+            "height":"276",
+            "credit":"Christophe Ena/AP",
+            "caption":"Tour de France 2014: Cyclists react to route and Britain start - video  Photograph: Christophe Ena/AP",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/24/1382615819083/Tour-de-France-2014-Cycli-011.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Christophe Ena",
+            "altText":"Tour de France 2014: Cyclists react to route and Britain start - video ",
+            "height":"372",
+            "credit":"Christophe Ena/AP",
+            "caption":"Tour de France 2014: Cyclists react to route and Britain start - video  Photograph: Christophe Ena/AP",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/24/1382615820312/Tour-de-France-2014-Cycli-012.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Christophe Ena",
+            "altText":"Tour de France 2014: Cyclists react to route and Britain start - video ",
+            "height":"90",
+            "credit":"Christophe Ena/AP",
+            "caption":"Tour de France 2014: Cyclists react to route and Britain start - video  Photograph: Christophe Ena/AP",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/24/1382615821559/Tour-de-France-2014-Cycli-013.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Christophe Ena",
+            "altText":"Tour de France 2014: Cyclists react to route and Britain start - video ",
+            "height":"225",
+            "credit":"Christophe Ena/AP",
+            "caption":"Tour de France 2014: Cyclists react to route and Britain start - video  Photograph: Christophe Ena/AP",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/24/1382615822896/Tour-de-France-2014-Cycli-014.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Christophe Ena",
+            "altText":"Tour de France 2014: Cyclists react to route and Britain start - video ",
+            "height":"360",
+            "credit":"Christophe Ena/AP",
+            "caption":"Tour de France 2014: Cyclists react to route and Britain start - video  Photograph: Christophe Ena/AP",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/24/1382615824350/Tour-de-France-2014-Cycli-015.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Christophe Ena",
+            "altText":"Tour de France 2014: Cyclists react to route and Britain start - video ",
+            "height":"360",
+            "credit":"Christophe Ena/AP",
+            "caption":"Tour de France 2014: Cyclists react to route and Britain start - video  Photograph: Christophe Ena/AP",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/24/1382615825577/Tour-de-France-2014-Cycli-016.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Christophe Ena",
+            "altText":"Tour de France 2014: Cyclists react to route and Britain start - video ",
+            "height":"230",
+            "credit":"Christophe Ena/AP",
+            "caption":"Tour de France 2014: Cyclists react to route and Britain start - video  Photograph: Christophe Ena/AP",
+            "width":"300"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/24/131024TourDeFrance-16x9.mp4",
+          "typeData":{
+            "source":"SNTV",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/24/131024TourDeFrance_8235879.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/24/131024TourDeFrance_8235879.jpg",
+            "width":"480",
+            "durationSeconds":"35"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/10/24/131024TourDeFrance_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"SNTV",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/24/131024TourDeFrance_8235879.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/24/131024TourDeFrance_8235879.jpg",
+            "width":"480",
+            "durationSeconds":"35"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/24/131024TourDeFrance_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"SNTV",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/24/131024TourDeFrance_8235879.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/24/131024TourDeFrance_8235879.jpg",
+            "width":"480",
+            "durationSeconds":"35"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/24/131024TourDeFrance/131024TourDeFrance.m3u8",
+          "typeData":{
+            "source":"SNTV",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/24/131024TourDeFrance_8235879.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/24/131024TourDeFrance_8235879.jpg",
+            "width":"480",
+            "durationSeconds":"35"
+          }
+        }]
+      },{
+        "id":"gu-image-420855326",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/24/1382615811613/Tour-de-France-2014-Cycli-005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Christophe Ena",
+            "altText":"Tour de France 2014: Cyclists react to route and Britain start - video ",
+            "height":"84",
+            "credit":"Christophe Ena/AP",
+            "caption":"Tour de France 2014: Cyclists react to route and Britain start - video  Photograph: Christophe Ena/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"sport/interactive/2013/oct/23/yorkshire-paris-tour-de-france-2014-route-map",
+      "sectionId":"sport",
+      "sectionName":"Sport",
+      "webPublicationDate":"2013-10-23T10:10:00Z",
+      "webTitle":"From Yorkshire to Paris: Tour de France 2014 route map",
+      "webUrl":"http://www.theguardian.com/sport/interactive/2013/oct/23/yorkshire-paris-tour-de-france-2014-route-map",
+      "apiUrl":"http://content.guardianapis.com/sport/interactive/2013/oct/23/yorkshire-paris-tour-de-france-2014-route-map",
+      "fields":{
+        "trailText":"<p>With a detailed breakdown from the Grand Départ in Yorkshire and the first three stages in England, to the rest of the route via Ypres, Nancy, Besançon, Nîmes and Pau on the road to Paris</p>",
+        "headline":"From Yorkshire to Paris: Tour de France 2014 route map",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-23T14:35:32Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/pictures/2011/7/9/1310207020311/A-classic-Tour-de-France--003.jpg",
+        "standfirst":"With a detailed breakdown from the Grand Départ in Yorkshire and the first three stages in England, to the rest of the route via Ypres, Nancy, Besançon, Nîmes and Pau on the road to Paris",
+        "shortUrl":"http://gu.com/p/3jn7f",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2011/7/9/1310207020311/A-classic-Tour-de-France--003.jpg",
+        "commentable":"false",
+        "internalContentCode":"420729906",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Paddy Allen and Finbarr Sheehy",
+        "publication":"theguardian.com",
+        "internalPageCode":"1985271",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-26T10:10:08Z"
+      },
+      "tags":[{
+        "id":"sport/tour-de-france-2014",
+        "type":"keyword",
+        "webTitle":"Tour de France 2014",
+        "webUrl":"http://www.theguardian.com/sport/tour-de-france-2014",
+        "apiUrl":"http://content.guardianapis.com/sport/tour-de-france-2014",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/tourdefrance",
+        "type":"keyword",
+        "webTitle":"Tour de France",
+        "webUrl":"http://www.theguardian.com/sport/tourdefrance",
+        "apiUrl":"http://content.guardianapis.com/sport/tourdefrance",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/cycling",
+        "type":"keyword",
+        "webTitle":"Cycling",
+        "webUrl":"http://www.theguardian.com/sport/cycling",
+        "apiUrl":"http://content.guardianapis.com/sport/cycling",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"profile/paddyallen",
+        "type":"contributor",
+        "webTitle":"Paddy Allen",
+        "webUrl":"http://www.theguardian.com/profile/paddyallen",
+        "apiUrl":"http://content.guardianapis.com/profile/paddyallen",
+        "bio":"<p>Paddy Allen is guardian.co.uk's infographics editor. Previously the graphics editor of the Guardian newspaper he has also worked for the Natural History Museum and Gemini News service</p>",
+        "r2ContributorId":"20166",
+        "references":[]
+      },{
+        "id":"profile/finbarrsheehy",
+        "type":"contributor",
+        "webTitle":"Finbarr Sheehy",
+        "webUrl":"http://www.theguardian.com/profile/finbarrsheehy",
+        "apiUrl":"http://content.guardianapis.com/profile/finbarrsheehy",
+        "bio":"<p>Finbarr Sheehy is a graphic artist for the Guardian</p>",
+        "r2ContributorId":"24442",
+        "references":[]
+      },{
+        "id":"type/interactive",
+        "type":"type",
+        "webTitle":"Interactive",
+        "webUrl":"http://www.theguardian.com/interactive",
+        "apiUrl":"http://content.guardianapis.com/interactive",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-420774773",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/pictures/2011/7/9/1310207020311/A-classic-Tour-de-France--003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Laurent Cipriani",
+            "altText":"A classic Tour de France sunflower shot",
+            "height":"84",
+            "credit":"Laurent Cipriani/AP",
+            "caption":"A classic Tour de France sunflower shot. Tune in tomorrow for the obligatory two-donkeys-standing-in-a-field shot  Photograph: Laurent Cipriani/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"travel/2013/oct/29/yorkshire-third-best-region-in-the-world-2014-lonely-planet",
+      "sectionId":"travel",
+      "sectionName":"Travel",
+      "webPublicationDate":"2013-10-29T14:07:00Z",
+      "webTitle":"Yorkshire – it's even better than we thought!",
+      "webUrl":"http://www.theguardian.com/travel/2013/oct/29/yorkshire-third-best-region-in-the-world-2014-lonely-planet",
+      "apiUrl":"http://content.guardianapis.com/travel/2013/oct/29/yorkshire-third-best-region-in-the-world-2014-lonely-planet",
+      "fields":{
+        "trailText":"<p>Yorkshire is the third best region in the world, better than Texas, Mallorca and Hunan in China, according to Lonely Planet's 2014 Best in Travel list</p>",
+        "headline":"Yorkshire – it's even better than we thought!",
+        "body":"<p>Only last month Yorkshire <a href=\"http://www.theguardian.com/travel/2013/sep/03/yorkshire\" title=\"\">was declared the best place in Europe</a>. Now it's been declared one of the best regions in the world. Better than Texas, Mallorca and Hunan in China according to Lonely Planet's annual hotlist, the Best in Travel, which has declared Yorkshire the third best region in the world, after the Kimberley in Australia and Sikkim in India.</p><p>Despite being one of Britain's most popular holiday destinations, the guidebook publisher says the region is underrated: \"It's only a matter of time before this rough-around-the-edges gentleman of the north gets the traveller attention it deserves.\"</p><p>It points out that Yorkshire's athletes helped the region clock up more medals in the 2012 London Olympics than entire countries such as South Africa, Spain and 2016 hosts, Brazil. Even before accolades started being bestowed on the region, locals were feeling pretty chipper - a poll last year revealed <a href=\"http://www.theguardian.com/money/2013/mar/27/harrogate-happiest-town-live-uk-rightmove\" title=\"\">Harrogate</a> to be the happiest place in Britain.</p><p>Lonely Planet also points out that <a href=\"http://news.bbc.co.uk/1/hi/uk/8096433.stm\" title=\"\">\"Bradford has become the world's first Unesco City of Film</a>, <a href=\"http://www.hepworthwakefield.org/\" title=\"\">a new state-of-the-art gallery in Wakefield</a> [The Hepworth Wakefield] is giving London a run for its money, and Yorkshire now has more Michelin-starred restaurants than any other county [sic: it's actually made up of four counties] outside London. In 2014, this welcoming region of rugged moorlands, heritage homes and cosy pubs will be able to hold its head even higher when the <a href=\"http://www.letour.com/le-tour/2013/us/grand-depart-2014.html\" title=\"\">Tour de France begins its grand départ from Leeds</a>.\"</p><p>Sikkim in northern India – the country's cleanest state – topped the best regions list for \"setting new benchmarks for responsible travel in the country\", while the Kimberley, Western Australia, is described as the one of the most starkly beautiful places in the world.</p><p>Brazil topped the list of best countries, with next year's World Cup and the 2016 summer Olympics only adding to its already huge allure. In second place was Antarctica (actually a continent), where 100 years ago next year, Shackelton began his attempted crossing. Scotland takes third place, thanks to a massive regenetation programme with new sports venues, improved transport links and a revamp of Glasgow harbour ahead of the 2014 Commonwealth Games.</p><p>Anyone wanting to visit these regions is going to have to start planning now. The cost of flights and hotels to Brazil have gone through the roof, and availability of accommodation in Yorkshire during the Tour de France and Glasgow during the Games is going to be extremely tight.</p><p>If these hotspot regions don't appeal, Lonely Planet's lists of best value destinations may be more tempting. According to the guidebook publisher, a fall in visitor numbers to Greece has meant prices have come down and the country now tops the list of best value destinations, while southern Italy (Puglia, Basilicata and Calabria) is in second place with \"arguably the best beaches, hilltop towns and ancient sights in the country\", and of-course simple, cheap food; and if you want Latin American exoticism without the price tag, in third place is Nicaragua, where travellers can still get by on $20 a day, according to Lonely Planet.</p><h2>Top 10 countries </h2><p>1 Brazil <br />2 Antarctica<br />3 Scotland<br />4 Sweden<br />5 Malawi<br />6 Mexico<br />7 Seychelles<br />8 Belgium<br />9 Macedonia<br />10 Malaysia</p><h2>Top 10 regions</h2><p>1 Sikkim, India <br />2 The Kimberley, Australia<br />3 Yorkshire, UK<br />4 Hokuriku, Japan <br />5 Texas, USA<br />6 Victoria Falls, Zimbabwe &amp; Zambia<br />7 Mallorca, Spain<br />8 West Coast, New Zealand<br />9 Hunan, China<br />10 Ha'apai, Tonga</p><h2>Best value destinations</h2><p>1 Greek Islands<br />2 Italy's heel<br />3 Nicaragua<br />4 Bulgaria<br />5 Portugal<br />6 Fiji<br />7 Mexico <br />8 Karnataka, India<br />9 Palawan, the Philippines<br />10 Ethiopia</p><h2>Best family destinations</h2><p>1 Denmark <br />2 Thailand<br />3 Belize<br />4 Kerala, India <br />5 New York City <br />6 Hawaii <br />7 Prague <br />8 Italy <br />9 Iceland <br />10 Lapland</p><p>• <a href=\"http://www.lonelyplanet.com/travel-tips-and-articles/best-in-travel-2014\" title=\"\"><strong><em>See the full lists here</em></strong></a></p><!-- Guardian Watermark: internal-code/content/421195412|2013-11-05T11:03:48Z|ba4c616dc311f5fe887ccfe2056958c10a41c573 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-29T14:47:45Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Travel/Pix/pictures/2012/5/11/1336748882260/Ingleborough-Yorkshire-Da-001.jpg",
+        "standfirst":"Yorkshire is the third best region in the world, better than Texas, Mallorca and Hunan in China, according to Lonely Planet's 2014 Best in Travel list",
+        "shortUrl":"http://gu.com/p/3kveg",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2012/5/11/1336748882260/Ingleborough-Yorkshire-Da-001.jpg",
+        "wordcount":"594",
+        "commentable":"true",
+        "internalContentCode":"421195412",
+        "allowUgc":"false",
+        "internalOctopusCode":"8253416",
+        "isPremoderated":"false",
+        "byline":"Isabel Choat",
+        "publication":"theguardian.com",
+        "internalPageCode":"1988377",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-01T14:07:00Z"
+      },
+      "tags":[{
+        "id":"travel/yorkshire",
+        "type":"keyword",
+        "webTitle":"Yorkshire",
+        "webUrl":"http://www.theguardian.com/travel/yorkshire",
+        "apiUrl":"http://content.guardianapis.com/travel/yorkshire",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"travel/travel",
+        "type":"keyword",
+        "webTitle":"Travel",
+        "webUrl":"http://www.theguardian.com/travel/travel",
+        "apiUrl":"http://content.guardianapis.com/travel/travel",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"profile/isabelchoat",
+        "type":"contributor",
+        "webTitle":"Isabel Choat",
+        "webUrl":"http://www.theguardian.com/profile/isabelchoat",
+        "apiUrl":"http://content.guardianapis.com/profile/isabelchoat",
+        "bio":"<p>Isabel Choat is a <a href=\"http://www.guardian.co.uk/travel\">travel</a> editor for the Guardian</p>",
+        "rcsId":"GNL394395",
+        "r2ContributorId":"15758",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421210305",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Travel/Pix/gallery/2012/4/25/1335366049975/Ingleborough-Yorkshire-Da-008.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Ingleborough, Yorkshire Dales National Park",
+            "height":"276",
+            "credit":"Alamy",
+            "caption":"Ingleborough in the Yorkshire Dales. Photograph: Alamy",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421210306",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2012/5/11/1336748882260/Ingleborough-Yorkshire-Da-001.jpg",
+          "typeData":{
+            "source":"Photograph: Alamy",
+            "altText":"Ingleborough, Yorkshire Dales National Park",
+            "height":"84",
+            "credit":"Photograph: Alamy",
+            "caption":"Ingleborough, Yorkshire Dales National Park Photograph: Photograph: Alamy",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"travel/2013/oct/29/lonely-planet-whats-so-great-about-yorkshire",
+      "sectionId":"travel",
+      "sectionName":"Travel",
+      "webPublicationDate":"2013-10-29T18:20:00Z",
+      "webTitle":"By 'eck Lonely Planet! What's so chuffing great about Yorkshire?",
+      "webUrl":"http://www.theguardian.com/travel/2013/oct/29/lonely-planet-whats-so-great-about-yorkshire",
+      "apiUrl":"http://content.guardianapis.com/travel/2013/oct/29/lonely-planet-whats-so-great-about-yorkshire",
+      "fields":{
+        "newspaperPageNumber":"6",
+        "trailText":"<p>'God's Own County' has been named the third best holiday destination in the world – but while it deserves acclaim, not everything in Yorkshire smells of white roses, argues <strong>Helen Pidd</strong></p>",
+        "headline":"By 'eck Lonely Planet! What's so chuffing great about Yorkshire?",
+        "body":"<p>Hearing that <a href=\"http://www.theguardian.com/travel/2013/oct/29/yorkshire-third-best-region-in-the-world-2014-lonely-planet\" title=\"\">Yorkshire had been voted the third best place to visit in the world by the Lonely Planet</a> – yes, that Lonely Planet and this whole, massive world – I had an instant reaction: oh no. Not that Yorkshire isn't a beautiful and fascinating part of the country. It is. But because everyone who lives there – or once lived there, however long ago – already blimmin' well knows it.</p><p>In January I found myself at Leeds town hall, watching Welcome to Yorkshire's head honcho, master marketeer Gary Verity, unveil the route of next year's Tour de France, <a href=\"http://www.theguardian.com/sport/2013/jan/17/tour-de-france-yorkshire\" title=\"\">which begins in the city</a>. Standing next to Christian Prudhomme, director of the world's most famous bike race, Verity acted like Yorkshire was doing France a favour as he reeled off an exhausting list of reasons why there is no place on Earth like God's Own County – more Michelin-starred restaurants than anywhere in Britain apart from London, cracking pubs, castles to rival the fanciest French chateaux, a coast as spectacular as that on the other side of the Channel. Not to mention cycling terrain, such as the wonderfully named <a href=\"http://www.cyclethedales.org.uk/great-climbs\" title=\"\">Buttertubs Pass</a> between Swaledale and Hawes, that will push the peloton to the limit next July.</p><video data-media-id=\"gu-video-420854089\" class=\"gu-video\" controls=\"controls\" poster=\"\">\n        <source src=\"http://cdn.theguardian.tv/mainwebsite/2013/10/24/131024TourDeFrance-16x9.mp4\"></source><source src=\"http://cdn.theguardian.tv/3gp/large/2013/10/24/131024TourDeFrance_3gpLg16x9.3gp\"></source><source src=\"http://cdn.theguardian.tv/ad/2013/10/24/131024TourDeFrance/131024TourDeFrance.m3u8\"></source><source src=\"http://cdn.theguardian.tv/3gp/small/2013/10/24/131024TourDeFrance_3gpSml16x9.3gp\"></source>\n      </video><p>One of Verity's favourite facts is that around 40 million visitors come to Yorkshire every year for heritage-related tourism, which is more than the typical number of visitors to Times Square, the most visited tourist attraction in the world. \"Yorkshire's will be the greatest Grand Départ in the history of the Tour de France,\" said Verity in Paris the other week, with absolute conviction.</p><p>When I sat down to write this piece, I put a call out on Twitter for suggestions of the best and worst places to visit in Yorkshire. A man called  @davelee1968 was one of the first to respond: \"Stick a pin in the map,\" he wrote. \"It's all good.\" A university pal from Hebden Bridge I hadn't heard a peep out of for a decade popped up to suggest Yorkshire ought to be No&nbsp;1. \"Has anyone heard of the other two places?\" he asked. For fairness, I should point out that someone else chipped in: \"The best place in Yorkshire is the start of any road to&nbsp;Lancashire.\"</p><figure data-media-id='gu-image-421318033'><img src='http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383070269737/The-Hepworth-Gallery-in-W-009.jpg' alt='The Hepworth Gallery in Wakefield' width='460' height='276' class='gu-image'/><figcaption>The Hepworth Gallery in Wakefield: 'giving London a run for its money'. Photograph: Sarah Lee for the Guardian</figcaption></figure><p>Before I continue, a disclaimer. I'm from the furthest reaches of the Red Rose County. The seaside town of Morecambe, to be precise. That's in Lancashire, for those of you who aren't hot on geography. But at the risk of sounding like someone who excuses her racist remarks by saying some of her best friends are black, my dad is from Sheffield. I did my journalism training in the Steel City, which is, for my money, the friendliest place in the country. And my other half is from Goole, an inland port in east Yorkshire yet to make it on any must-visit list. I&nbsp;really like Yorkshire and Yorkshire folk. I just don't think we need to encourage them.</p><p>Alas, it's too late. The Lonely Planet <a href=\"http://www.lonelyplanet.com/travel-tips-and-articles/lonely-planets-best-in-travel-2014-top-10-regions\" title=\"\">Best in Travel 2014</a> has already been published, inflating Yorkshire's ego even further by claiming: \"If the good people of Yorkshire were proud of their heritage before, the London 2012 Olympics only served to cement what they have always thought: that their county is better than – and really the best of – all the English counties.\"</p><p>But how did Yorkshire end up on the&nbsp;Lonely Planet's list? Tom Hall, editor of the website, explains: \"The&nbsp;No&nbsp;1 reason we are recommending Yorkshire next year is the Tour de France. The second one is the <a href=\"http://www.hepworthwakefield.org/\" title=\"\">Hepworth</a> Gallery in Wakefield, which is giving London a run for its money. Thirdly, the eating and drinking&nbsp;scene.\"</p><p>A Londoner, Hall rejects the suggestion he is in some way biased after studying at Leeds University. He says he and five other experts decided on the list after taking into account recommendations from the firm's guidebook writers and readers around the globe. \"We then ranked the suggestions according to topicality, value for money, and the 'X factor'. It was vaguely scientific,\" he said.</p><p>There is no doubt that Yorkshire is going through a purple patch. Last week <a href=\"http://www.theguardian.com/commentisfree/2013/oct/24/educating-yorkshire-channel-4-stammer\" title=\"\">a stuttering teenager</a> from a Dewsbury comprehensive won the nation's hearts in Educating Yorkshire: his humour and resilience the best modern example of his county's charm. And at the London Olympics last year, Yorkshire would have come <a href=\"http://www.theguardian.com/uk/the-northerner/2012/aug/13/yorkshire-olympic-medals-gold-tourism-leeds-york-dales-sheffield-hull\" title=\"\">12th in the overall medals table</a>, ahead of of Jamaica, Spain, South Africa and the 2016 hosts, Brazil. All thanks to the county's indefatigable sports stars – <sup></sup>including Jessica Ennis-Hill (Sheffield), the Brownlee brothers (Horsforth near Leeds), cyclists Ed Clancy (Huddersfield) and Lizzie Armitstead (Otley), Yorkshire Dales rower Andy Triggs-Hodge and North Yorkshire rower Kat&nbsp;Copeland.</p><p>The Brownlees never miss a chance to say that growing up and training in Yorkshire has made them world-class athletes. Last year their dad claimed his sons' secret was a diet of roast beef and <a href=\"http://www.bbc.co.uk/sport/0/triathlon/20020033\" title=\"\">Yorkshire pudding</a>. But Alistair and Jonny tend to credit their home county with making them tough. Just last month Alistair, who has white rose wallpaper as his Twitter background, was taking the mick out of his younger brother for spending too long in London and looking like a \"numpty\" (he was wearing <a href=\"https://twitter.com/AliBrownleetri/status/380318249339985920/photo/1\" title=\"\">a tight vest</a>).</p><figure data-media-id='gu-image-421318034'><img src='http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383070346857/York-Minster-009.jpg' alt='York Minster' width='460' height='276' class='gu-image'/><figcaption>York Minster, York: awe-inspiring. Photograph: UK City Images/Alamy</figcaption></figure><p>Even Hollywood is charmed. On Monday it was revealed that Diane Keaton is planning <a href=\"v\" title=\"\">a US TV remake of Last Tango in Halifax</a>, a romantic drama about two widowed and retired septuagenarians who were childhood sweethearts rekindling their romance via Facebook.</p><p>Yorkshire folk like to point out that London, despite hogging most of the tourists who visit Britain each year, is just one city, with no hills, no seaside, no forests. They'll tell you Beverley Minster was copied by Westminster and that York Minster knocks phoney St Paul's into a cocked hat.</p><p>Doing little to dispel the reputation of Tykes as a chippy breed, a commenter on the <a href=\"http://discussion.theguardian.com/comment-permalink/17776604\" title=\"\">Guardian's Northerner blog</a> notes that Yorkshire boasts five big cities: Leeds, Sheffield, Hull, Bradford and York (as well as the smaller cathedral cities of Wakefield and Ripon). That it has the Dales, North York Moors, the Pennines and the Wolds. Not to mention the coast – Whitby, Robin Hood's Bay, Scarborough. Bempton, the Humber Bridge. London, in comparison, has the M25. Even Emley Moor Tower, a telecommunications and broadcasting facility in West Yorkshire, is 330m high, 21m taller than the Shard in London, boasted the contributor.</p><p>We asked the people at Welcome to Yorkshire for a list of their top 10 places to visit, and they replied saying they couldn't produce a definitive list because there are \"too many\". But Verity, the chief executive, is clearly delighted at being noticed by the Lonely Planet, saying: \"Endorsements rarely come much better than this, from a guide that has a worldwide reputation across tourism and informing visitors. This is massive for&nbsp;Yorkshire and our thousands of amazing tourism businesses, destinations and events.\"</p><p>This latest accolade comes barely a month after Yorkshire was voted European destination 2013 at the World travel awards, beating competition from cities including Amsterdam, Barcelona, Paris, Venice, Istanbul and Edinburgh. The Scottish capital also lost out to Yorkshire in the fight to host next year's Tour de France Grand Départ. Edinburgh's bid was supported by the UK government and British Cycling, but their combined might was no match for Yorkshire chutzpah and self-belief.</p><p>But it's worth remembering that not everything in Yorkshire smells of roses of any colour. According to the <a href=\"http://www.ons.gov.uk/ons/rel/regional-trends/region-and-country-profiles/region-and-country-profiles---key-statistics-and-profiles--october-2013/key-statistics-and-profiles---yorkshire-and-the-humber--october-2013.html\" title=\"\">Office for National Statistics</a>, the percentage of Yorkshire's population aged 16 to 64 having no qualifications in 2012 was 11.5%, compared with 9.9% for the UK as a whole. The unemployment rate was 8.9% in the second quarter of 2013, compared with 7.8% for the UK. And the famously thrifty residents have less in their wallets then the average Brit, with gross disposable household income (GDHI) of Yorkshire and the Humber residents £13,800 per head in 2011, compared with £16,000 for the UK for the same period.</p><figure data-media-id='gu-image-421318035'><img src='http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383070531610/Humber-Bridge-009.jpg' alt='Humber Bridge' width='460' height='276' class='gu-image'/><figcaption>The Humber Bridge: the fifth-largest single-span suspension bridge in the world. Photograph: Christopher Bailey/Alamy</figcaption></figure><p>Sam Jordison, <a href=\"http://www.theguardian.com/uk-news/2013/oct/05/crap-towns-london-bradford-chipping-norton\" title=\"\">co-author of the book Crap Towns</a> (who grew up over the border in Lancaster), admits that \"parts of Yorkshire might have something going for them\". Yet he argues that the Lonely Planet endorsement will only exacerbate Yorkshire's main problem: \"Which is to say, how unbelievably chuffing smug so many of its residents are. York was recently voted the fifth worst place to live in Britain in my Crap Towns survey, primarily because the people there are so very pleased at coming from York. Lonely Planet highlight York Minster as one of&nbsp;the&nbsp;world's top 10 'sights to make you feel small'. They omit to include the large number of Geoffrey-Boycottian locals who can do the same without even making you crane&nbsp;your&nbsp;neck.</p><p>\"The other problem is that you have to be so careful about what part of Yorkshire you go to. Even the prettiest parts have dark secrets. Did you know, for instance, that as well as being the Cath Kidston and net-curtain capital of the UK, Harrogate boasts the <a href=\"http://www.harrogateadvertiser.co.uk/news/local/porn-harrogate-loves-it-1-2669845\" title=\"\">most internet-porn-watchers</a> in the UK? And that's not to mention the <a href=\"http://news.bbc.co.uk/1/hi/health/7045830.stm\" title=\"\">biggest drinkers</a> and the highest concentration of <a href=\"ttp://www.bbc.co.uk/news/uk-england-york-north-yorkshire-20641988\" title=\"\">drink drivers</a>. We also shouldn't gloss over the fact that Yorkshire contains places like Bradford.</p><p>\"Bradford has the potential to be great – but that only makes it all the more galling that it sits at the wrong end of just about every national league table, that its grand Victorian and early-20th-century buildings are under constant threat of demolition, and that there's <a href=\"http://www.city-of-bradford.com/wastefield.html\" title=\"\">a 15-acre hole</a> right in the middle of the city centre. Then there's Pontefract, a town that Shakespeare called a 'bloody prison' even before the liquorice industry died away. And there's Wakefield. And Keighley ... You get the impression. I suppose I'd be even more perplexed if the Lonely Planet had plumped for somewhere down south. But what's wrong with the Lake District?\"</p><p><em>Additional reporting by Lizzie Deane</em></p><h2><a name=\"1\">Yorkshire highlights: your must-visit list</a></h2><figure data-media-id='gu-image-421318036'><img src='http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383070149036/Helen-Pidd-on-a-visit-to--009.jpg' alt='Helen Pidd on a visit to Wetwang' width='460' height='276' class='gu-image'/><figcaption>Helen Pidd on a visit to Wetwang, where Richard Whiteley was once mayor. Photograph: Helen Pidd</figcaption></figure><p><strong>The walk from Sewerby into Bridlington</strong><br />My boyfriend's dad, a typical Yorkshireman and far from sentimental, loves this walk, which runs from the village of Sewerby in east Yorkshire along the coastal path to Bridlington. He likes the inscriptions on the benches looking out to sea, commemorating others who enjoyed the view. We're ordered to push him off the edge when we've had enough of him.</p><p><strong>The Yorkshire Wolds</strong><br />Often overshadowed by the Dales, the rolling Wolds in East Riding have gained a new audience after featuring in David Hockney's recent work. Home to Wetwang, where Countdown's Richard Whiteley was once mayor. And Huggate (pronounced Hug-it, or more often, 'Ug-it), where the best pub chips in the country are served at the Wolds Inn.</p><p><strong>Todmorden and Hebden&nbsp;Bridge</strong><br />Lovely valley towns with top-class art scenes, famously well populated by lesbians. Hosts of numerous jamborees, such as the upcoming Lamplighter festival, which will see fire performers, illuminated installations, street bands, shadow puppets and torch-lit belly dancers parade through the pretty streets.</p><p><strong>Sheffield</strong><br />Friendliest city in Yorkshire – more humble than Leeds, less twee than York and with a far better music scene than either. Bus drivers call you \"duck\" and they serve the best hot pork rolls with crackling.</p><p><strong>Harrogate</strong><br />A bit snooty, yes. But worth a visit for the beautifully restored and fully functioning Turkish baths.</p><p><strong>The Hole of Horcum</strong><br />A 400ft-deep hollow in the North York Moors that stretches three-quarters of a mile across, said to be made by a giant, who scooped up a large ball of earth and tossed it aside to create a nearby hill, Blakey Topping. Loads of lovely places nearby, including the honestly-not-fictional Great Fryupdale.</p><p><strong>Bradford</strong><br />Ignore the haters. Yes, there are way too many pawn shops, pound shops and bookies. And yes, there is a big hole where a Westfield shopping centre has failed to materialise. But you won't find a better curry anywhere else in Yorkshire. I recommend the lamb chops at the Sweet Centre on Lumb Lane. A whole plate full for under a fiver.</p><p>• This article was amended on 30 October 2013 to correct the spelling of the town Sewerby, and the location of Sewerby and Bridlington.</p><!-- Guardian Watermark: internal-code/content/421225864|2013-11-05T11:03:48Z|1cd09c51e726351a23fef6cb421524b6fe464b9b -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-30T18:50:14Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383069504101/Yorkshire-Dales-004.jpg",
+        "standfirst":"'God's Own County' has been named the third best holiday destination in the world – but while it deserves acclaim, not everything in Yorkshire smells of white roses<br /><br />• Below – <a href=\"http://www.theguardian.com/travel/2013/oct/29/lonely-planet-whats-so-great-about-yorkshire#1\" title=\"\">Yorkshire highlights: your must-visit list</a>",
+        "shortUrl":"http://gu.com/p/3kxv6",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383069504101/Yorkshire-Dales-004.jpg",
+        "wordcount":"1981",
+        "commentable":"true",
+        "internalContentCode":"421225864",
+        "allowUgc":"false",
+        "internalOctopusCode":"8253971",
+        "isPremoderated":"false",
+        "byline":"Helen Pidd, northern editor",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-30",
+        "internalPageCode":"1988718",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-01T18:20:00Z"
+      },
+      "tags":[{
+        "id":"travel/yorkshire",
+        "type":"keyword",
+        "webTitle":"Yorkshire",
+        "webUrl":"http://www.theguardian.com/travel/yorkshire",
+        "apiUrl":"http://content.guardianapis.com/travel/yorkshire",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"travel/uk",
+        "type":"keyword",
+        "webTitle":"United Kingdom",
+        "webUrl":"http://www.theguardian.com/travel/uk",
+        "apiUrl":"http://content.guardianapis.com/travel/uk",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"travel/europe",
+        "type":"keyword",
+        "webTitle":"Europe",
+        "webUrl":"http://www.theguardian.com/travel/europe",
+        "apiUrl":"http://content.guardianapis.com/travel/europe",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"travel/england",
+        "type":"keyword",
+        "webTitle":"England",
+        "webUrl":"http://www.theguardian.com/travel/england",
+        "apiUrl":"http://content.guardianapis.com/travel/england",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"travel/travel",
+        "type":"keyword",
+        "webTitle":"Travel",
+        "webUrl":"http://www.theguardian.com/travel/travel",
+        "apiUrl":"http://content.guardianapis.com/travel/travel",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"theguardian/g2/features",
+        "type":"newspaper-book-section",
+        "webTitle":"Comment & features",
+        "webUrl":"http://www.theguardian.com/theguardian/g2/features",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2/features",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/g2",
+        "type":"newspaper-book",
+        "webTitle":"G2",
+        "webUrl":"http://www.theguardian.com/theguardian/g2",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"profile/helenpidd",
+        "type":"contributor",
+        "webTitle":"Helen Pidd",
+        "webUrl":"http://www.theguardian.com/profile/helenpidd",
+        "apiUrl":"http://content.guardianapis.com/profile/helenpidd",
+        "bio":"<p>Helen Pidd is northern editor of the Guardian, based in Manchester. She joined the paper in 2004 to edit the now defunct Office Hours and was a commissioning editor on G2 before joining the home news team in 2007, going on to spend 2011 in Germany as Berlin correspondent followed by a stint in Delhi. She is the author of <a href=\"http://www.guardianbookshop.co.uk/BerteShopWeb/viewProduct.do?ISBN=9781905490530\">Bicycle – The Complete<br />Guide to Everyday Cycling</a>.</p>",
+        "r2ContributorId":"19855",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/6/22/1277217764498/Helen-Pidd-byline.-003.jpg",
+        "references":[]
+      },{
+        "id":"profile/lizzie-deane",
+        "type":"contributor",
+        "webTitle":"Lizzie Deane",
+        "webUrl":"http://www.theguardian.com/profile/lizzie-deane",
+        "apiUrl":"http://content.guardianapis.com/profile/lizzie-deane",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "bio":"<p>Lizzie Deane lives in south Manchester and is currently in college</p>",
+        "r2ContributorId":"55603",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/3/19/1363698054094/Lizzie-Deane-muggie-003.jpg",
+        "references":[]
+      },{
+        "id":"uk-news/yorkshire",
+        "type":"keyword",
+        "webTitle":"Yorkshire",
+        "webUrl":"http://www.theguardian.com/uk-news/yorkshire",
+        "apiUrl":"http://content.guardianapis.com/uk-news/yorkshire",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421318031",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383069499124/Yorkshire-Dales-001.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Yorkshire Dales",
+            "height":"54",
+            "credit":"Alamy",
+            "caption":"The glorious Dales: Gunnerside village, Swaledale, Yorkshire. Photograph: Alamy",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383069501590/Yorkshire-Dales-002.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Yorkshire Dales",
+            "height":"340",
+            "credit":"Alamy",
+            "caption":"The glorious Dales: Gunnerside village, Swaledale, Yorkshire. Photograph: Alamy",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383069502850/Yorkshire-Dales-003.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Yorkshire Dales",
+            "height":"130",
+            "credit":"Alamy",
+            "caption":"The glorious Dales: Gunnerside village, Swaledale, Yorkshire. Photograph: Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383069504101/Yorkshire-Dales-004.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Yorkshire Dales",
+            "height":"84",
+            "credit":"Alamy",
+            "caption":"The glorious Dales: Gunnerside village, Swaledale, Yorkshire. Photograph: Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383069505293/Yorkshire-Dales-005.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Yorkshire Dales",
+            "height":"132",
+            "credit":"Alamy",
+            "caption":"The glorious Dales: Gunnerside village, Swaledale, Yorkshire. Photograph: Alamy",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383069506513/Yorkshire-Dales-006.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Yorkshire Dales",
+            "height":"168",
+            "credit":"Alamy",
+            "caption":"The glorious Dales: Gunnerside village, Swaledale, Yorkshire. Photograph: Alamy",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383069507730/Yorkshire-Dales-007.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Yorkshire Dales",
+            "height":"180",
+            "credit":"Alamy",
+            "caption":"The glorious Dales: Gunnerside village, Swaledale, Yorkshire. Photograph: Alamy",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383069508982/Yorkshire-Dales-008.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Yorkshire Dales",
+            "height":"228",
+            "credit":"Alamy",
+            "caption":"The glorious Dales: Gunnerside village, Swaledale, Yorkshire. Photograph: Alamy",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383069510447/Yorkshire-Dales-009.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Yorkshire Dales",
+            "height":"276",
+            "credit":"Alamy",
+            "caption":"The glorious Dales: Gunnerside village, Swaledale, Yorkshire. Photograph: Alamy",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383069511922/Yorkshire-Dales-010.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Yorkshire Dales",
+            "height":"372",
+            "credit":"Alamy",
+            "caption":"The glorious Dales: Gunnerside village, Swaledale, Yorkshire. Photograph: Alamy",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383069510447/Yorkshire-Dales-009.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Yorkshire Dales",
+            "height":"276",
+            "credit":"Alamy",
+            "caption":"The glorious Dales: Gunnerside village, Swaledale, Yorkshire. Photograph: Alamy",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421318032",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383069504101/Yorkshire-Dales-004.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Yorkshire Dales",
+            "height":"84",
+            "credit":"Alamy",
+            "caption":"The glorious Dales: Gunnerside village, Swaledale, Yorkshire. Photograph: Alamy",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-421318033",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383070269737/The-Hepworth-Gallery-in-W-009.jpg",
+          "typeData":{
+            "source":"Sarah Lee for the Guardian",
+            "altText":"The Hepworth Gallery in Wakefield",
+            "height":"276",
+            "credit":"Sarah Lee for the Guardian",
+            "caption":"The Hepworth Gallery in Wakefield: 'giving London a run for its money'. Photograph: Sarah Lee for the Guardian",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421318034",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383070346857/York-Minster-009.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"UK City Images",
+            "altText":"York Minster",
+            "height":"276",
+            "credit":"UK City Images/Alamy",
+            "caption":"York Minster, York: awe-inspiring. Photograph: UK City Images/Alamy",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421318035",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383070531610/Humber-Bridge-009.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Christopher Bailey",
+            "altText":"Humber Bridge",
+            "height":"276",
+            "credit":"Christopher Bailey/Alamy",
+            "caption":"The Humber Bridge: the fifth-largest single-span suspension bridge in the world. Photograph: Christopher Bailey/Alamy",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421318036",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/29/1383070149036/Helen-Pidd-on-a-visit-to--009.jpg",
+          "typeData":{
+            "source":"Helen Pidd",
+            "altText":"Helen Pidd on a visit to Wetwang",
+            "height":"276",
+            "credit":"Helen Pidd",
+            "caption":"Helen Pidd on a visit to Wetwang, where Richard Whiteley was once mayor. Photograph: Helen Pidd",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-video-420854089",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/24/131024TourDeFrance-16x9.mp4",
+          "typeData":{
+            "source":"SNTV",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/24/131024TourDeFrance_8235879.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/24/131024TourDeFrance_8235879.jpg",
+            "width":"480",
+            "durationSeconds":"35"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/10/24/131024TourDeFrance_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"SNTV",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/24/131024TourDeFrance_8235879.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/24/131024TourDeFrance_8235879.jpg",
+            "width":"480",
+            "durationSeconds":"35"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/24/131024TourDeFrance_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"SNTV",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/24/131024TourDeFrance_8235879.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/24/131024TourDeFrance_8235879.jpg",
+            "width":"480",
+            "durationSeconds":"35"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/24/131024TourDeFrance/131024TourDeFrance.m3u8",
+          "typeData":{
+            "source":"SNTV",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/24/131024TourDeFrance_8235879.jpg",
+            "height":"360",
+            "durationMinutes":"1",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/24/131024TourDeFrance_8235879.jpg",
+            "width":"480",
+            "durationSeconds":"35"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

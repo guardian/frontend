@@ -1,112 +1,117 @@
-$tabBorderWidth: 2px;
+/* ==========================================================================
+   Tabs
+   ========================================================================== */
 
-.tabs-container {
-  padding: 0 $gutter;
-}
+/* Default tabs
+   ========================================================================== */
 
 .tabs {
-  margin: 0;
-  padding: 0;
-  border-bottom: none;
-  list-style-type: none;
-  overflow: hidden;
-  background: #ffffff;
-}
-
-.tabs li {
-  width: 50%;
-  float: left;
-  margin: 0px;
-  background: $mushroom;
-}
-
-.tabs a {
-  text-align: center;
-  color: #545454;
-  margin: $tabBorderWidth $tabBorderWidth 0 $tabBorderWidth;
-  padding: $baseline*2;
-  display: block;
-  font-weight: normal;
-  text-decoration: none;
-}
-
-@media screen and (max-width: 18.75em) {
-  .tabs li a {
-    font-size: 14px;
-    font-size: 1.4rem;
-  }
-}
-
-.tabs a:active,
-.tabs a:focus {
-  text-decoration: none;
-}
-
-.tabs .tabs-selected a {
-  background: #ffffff;
-  color: #333333;
-  font-weight: 500;
-}
-
-.tabs a:active {
-  background-color: #ffffff;
-}
-
-.tabs-content {
-  clear: both;
-  border: $tabBorderWidth solid $mushroom;
-  border-top: none;
-}
-
-// used for cases where more than 2 tabs are wanted (eg not two 50% width tabs)
-
-.tabs-multiple {
-  display: table;
-  table-layout: fixed;
-  width: 100%;
-  margin: 0;
-  margin-bottom: 10px;
-}
-
-.tabs-multiple li {
-  display: table-cell;
-  border-left: $tabBorderWidth solid #ffffff;
-  width: auto;
-  float: none;
-}
-
-.tabs-multiple li:first-child,
-.tabs-multiple li:last-child {
-  border-left: none;
-}
-
-@media (max-width: 40em) {
-
-  .tabs-fixable {
-    position: relative;
-  }
-
-  .tabs-fixable .tabs {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 42px;
-    padding: 0px $gutter;
-    z-index: 2;
-  }
-
-  .tabs-fixable .tabs.tabs-fixed {
-    position: fixed;
-    @include box-shadow(0 8px 6px -6px #999);
-  }
-
-  .tabs-fixable .tabs li {
-    height: 42px;
-  }
-
-  .tabs-fixable .tabs-content {
-    padding-top: 42px;
-  }
 
 }
+
+.tabs__container {
+    margin: 0;
+    padding: 0;
+    border-bottom: none;
+    list-style-type: none;
+    overflow: hidden;
+    background: #fff;
+
+    @include mq(tablet) {
+        margin-bottom: -1px;
+    }
+}
+
+.tabs__tab {
+    width: 50%;
+    float: left;
+    margin: 0;
+    border-top: 3px solid $c-neutral6;
+
+    @include mq(tablet) {
+        max-width: gs-span(3);
+        border-bottom: 1px solid $c-neutral5;
+    }
+
+    a {
+        @include fs-headline(1);
+        @include box-sizing(border-box);
+        min-height: $gs-column-height;
+        text-align: left;
+        color: inherit;
+        padding: $baseline 8px 0;
+        display: block;
+        text-decoration: none;
+        background-color: $c-neutral6;
+
+        &:active,
+        &:focus {
+            background-color: #fff;
+            text-decoration: none;
+        }
+
+        @include mq($to: tablet) {
+            font-size: 14px;
+            font-size: 1.4rem;
+        }
+
+        @include mq(tablet) {
+            padding: $baseline $gs-gutter/2 0;
+        }
+    }
+    & + & a {
+        border-left: 1px solid rgba(255, 255, 255, 0.5);
+        padding-left: 7px;
+    }
+}
+
+.tabs__content {
+    clear: both;
+    padding-top: $baseline*2;
+
+    @include mq(tablet) {
+        border-top: 1px solid $c-neutral5;
+    }
+}
+
+.tabs__heading {
+    display: none;
+}
+
+.tabs__tab--selected {
+    @include mq(tablet) {
+        border-bottom-color: #ffffff !important;
+    }
+    a {
+        background: #ffffff;
+    }
+    & + .tabs__tab a {
+        border-left: 0;
+        padding-left: 8px;
+    }
+}
+
+/* Multiple tabs
+ *
+ * used for cases where more than 2 tabs are wanted (eg not two 50% width tabs)
+ *
+   ========================================================================== */
+
+.tabs__continer--multiple {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    margin: 0;
+    margin-bottom: 10px;
+
+    .tabs__tab {
+        display: table-cell;
+        width: auto;
+        float: none;
+    }
+}
+
+
+
+
+

@@ -1,0 +1,886 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"film/2013/oct/30/dennis-lehane-a-prophet-remake-crime",
+      "sectionId":"film",
+      "sectionName":"Film",
+      "webPublicationDate":"2013-10-30T10:02:55Z",
+      "webTitle":"Dennis Lehane to script Hollywood remake of A Prophet",
+      "webUrl":"http://www.theguardian.com/film/2013/oct/30/dennis-lehane-a-prophet-remake-crime",
+      "apiUrl":"http://content.guardianapis.com/film/2013/oct/30/dennis-lehane-a-prophet-remake-crime",
+      "fields":{
+        "trailText":"<p>Crime novelist called in to work on American version of award-winning prison epic</p>",
+        "headline":"Dennis Lehane to script Hollywood remake of A Prophet",
+        "body":"<video data-media-id=\"gu-video-358391935\" class=\"gu-video\" controls=\"controls\" poster=\"\">\n        <source src=\"http://cdn.theguardian.tv/bc/281851582/281851582_62834466001_UneProphete-16x9.mp4\"></source>\n      </video><p>Mystic River author Dennis Lehane <a href=\"http://variety.com/2013/film/news/dennis-lehane-a-prophet-sony-1200772465/\">has been hired to write the American remake</a> of Jacques Audiard's award-winning crime drama A Prophet.</p><p>Lehane, several of whose novels have been adapted successfully for the screen, including Gone Baby Gone and Shutter Island as well as Mystic River, has been taken on by Sony, as according to Variety, the material was considered to \"fit Lehane's style\". </p><p>A Prophet premiered at Cannes in 2009, winning the runner-up grand prix award. Co-written by Audiard, Thomas Bidegain, Abdel Raouf Dafri and Nicolas Peufaillit, it is the epic tale of a French-Algerian teenager who falls in with the Corsican mafia while in jail, and eventually becomes a top-level gangster in his own right. The film starred Tahar Rahim in a breakout role.</p><p>Plans for a remake were<a href=\"http://www.theguardian.com/film/2013/jun/06/a-prophet-hollywood-remake-sony\"> announced earller this year</a>, under the stewardship of Fast and Furious producer Neal Moritz. No word is forthcoming on any potential directors or actors, but Lehane  enjoys a close working relationship with Ben Affleck, who directed and starred in the film of Gone Baby Gone, and is currently working on an adaptation of Lehane's 2012 novel Live by Night.</p><p><a href=\"http://www.theguardian.com/film/2013/jun/06/a-prophet-hollywood-remake-sony\">• A Prophet set for Hollywood remake</a><br /><a href=\"http://www.theguardian.com/film/video/2010/jan/22/a-prophet-jacques-audiard\">• Xan Brooks on A Prophet: 'An electrifying tale of survival against the odds'</a></p><!-- Guardian Watermark: internal-code/content/421257777|2013-11-05T11:03:48Z|deecb9b44bac372d780687cec7c4b15e02c9c439 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-30T10:02:55Z",
+        "hasStoryPackage":"true",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2010/6/3/1275563626448/A-Prophet-002.jpg",
+        "standfirst":"Crime novelist called in to work on American version of award-winning prison epic<br /><br /><a href=\"http://www.theguardian.com/film/2013/jun/06/a-prophet-hollywood-remake-sony\">• A Prophet set for Hollywood remake</a><br /><a href=\"http://www.theguardian.com/film/video/2010/jan/22/a-prophet-jacques-audiard\">• Xan Brooks on A Prophet: 'An electrifying tale of survival against the odds'</a>",
+        "shortUrl":"http://gu.com/p/3kx73",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2010/6/3/1275563626448/A-Prophet-002.jpg",
+        "wordcount":"206",
+        "commentable":"true",
+        "internalContentCode":"421257777",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Andrew Pulver",
+        "publication":"theguardian.com",
+        "internalPageCode":"1988904",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-02T10:02:55Z"
+      },
+      "tags":[{
+        "id":"film/film",
+        "type":"keyword",
+        "webTitle":"Film",
+        "webUrl":"http://www.theguardian.com/film/film",
+        "apiUrl":"http://content.guardianapis.com/film/film",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/world-cinema",
+        "type":"keyword",
+        "webTitle":"World cinema",
+        "webUrl":"http://www.theguardian.com/film/world-cinema",
+        "apiUrl":"http://content.guardianapis.com/film/world-cinema",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/jacques-audiard",
+        "type":"keyword",
+        "webTitle":"Jacques Audiard",
+        "webUrl":"http://www.theguardian.com/film/jacques-audiard",
+        "apiUrl":"http://content.guardianapis.com/film/jacques-audiard",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/crime",
+        "type":"keyword",
+        "webTitle":"Crime",
+        "webUrl":"http://www.theguardian.com/film/crime",
+        "apiUrl":"http://content.guardianapis.com/film/crime",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"books/crime",
+        "type":"keyword",
+        "webTitle":"Crime fiction",
+        "webUrl":"http://www.theguardian.com/books/crime",
+        "apiUrl":"http://content.guardianapis.com/books/crime",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"film/film-adaptations",
+        "type":"keyword",
+        "webTitle":"Film adaptations",
+        "webUrl":"http://www.theguardian.com/film/film-adaptations",
+        "apiUrl":"http://content.guardianapis.com/film/film-adaptations",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/france",
+        "type":"keyword",
+        "webTitle":"France",
+        "webUrl":"http://www.theguardian.com/world/france",
+        "apiUrl":"http://content.guardianapis.com/world/france",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/andrewpulver",
+        "type":"contributor",
+        "webTitle":"Andrew Pulver",
+        "webUrl":"http://www.theguardian.com/profile/andrewpulver",
+        "apiUrl":"http://content.guardianapis.com/profile/andrewpulver",
+        "bio":"<p>Andrew Pulver is Film editor, guardian.co.uk</p>",
+        "rcsId":"GNL004602",
+        "r2ContributorId":"15370",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/23/1345733137119/AndrewPulver.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421266387",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2010/6/3/1275563626448/A-Prophet-002.jpg",
+          "typeData":{
+            "source":"Rex",
+            "altText":"A Prophet",
+            "height":"84",
+            "credit":"Rex",
+            "caption":"A Prophet. Photograph: Rex",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-video-358391935",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/bc/281851582/281851582_62834466001_UneProphete-16x9.mp4",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"false",
+            "blockAds":"false",
+            "height":"360",
+            "durationMinutes":"3",
+            "width":"480",
+            "durationSeconds":"23"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "storyPackage":[{
+      "id":"film/video/2010/jun/04/a-prophet-jacques-audiard",
+      "sectionId":"film",
+      "sectionName":"Film",
+      "webPublicationDate":"2010-06-04T08:17:00Z",
+      "webTitle":"Video: Jacques Audiard's A Prophet: exclusive deleted scenes",
+      "webUrl":"http://www.theguardian.com/film/video/2010/jun/04/a-prophet-jacques-audiard",
+      "apiUrl":"http://content.guardianapis.com/film/video/2010/jun/04/a-prophet-jacques-audiard",
+      "fields":{
+        "trailText":"<p>The director talks us through scenes he cut from the 2009 Cannes Grand Prix winner and explains why they had to go</p>",
+        "headline":"Jacques Audiard's A Prophet: exclusive deleted scenes",
+        "body":"<video data-media-id=\"gu-video-363328419\" class=\"gu-video\" controls=\"controls\" poster=\"\">\n        <source src=\"http://cdn.theguardian.tv/bc/281851582/281851582_89755581001_Prophet-4x3.mp4\"></source>\n      </video><!-- Guardian Watermark: internal-code/content/363328419|2013-11-05T11:03:48Z|19150da24499ea5202ef32225b298c90ecb90b08 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2012-08-23T08:28:27Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2010/6/3/1275563626448/A-Prophet-002.jpg",
+        "standfirst":"Director Jacques Audiard talks us through some deleted scenes from his film A Prophet, which won the Grand Prix at Cannes last year. In this sequence, he explains why footage deepening the relationship between our hero, Malik (Tahar Rahim), and Corsican kingpin, Cesar (Niels Arestrup), didn't make the final cut. A Prophet is out on DVD and Blu-ray on 7 June",
+        "shortUrl":"http://gu.com/p/2he6x",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2010/6/3/1275563626448/A-Prophet-002.jpg",
+        "commentable":"false",
+        "internalContentCode":"363328419",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "publication":"theguardian.com",
+        "internalPageCode":"1407862",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2010-06-07T08:52:58Z"
+      },
+      "tags":[{
+        "id":"film/jacques-audiard",
+        "type":"keyword",
+        "webTitle":"Jacques Audiard",
+        "webUrl":"http://www.theguardian.com/film/jacques-audiard",
+        "apiUrl":"http://content.guardianapis.com/film/jacques-audiard",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/drama",
+        "type":"keyword",
+        "webTitle":"Drama",
+        "webUrl":"http://www.theguardian.com/film/drama",
+        "apiUrl":"http://content.guardianapis.com/film/drama",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/film",
+        "type":"keyword",
+        "webTitle":"Film",
+        "webUrl":"http://www.theguardian.com/film/film",
+        "apiUrl":"http://content.guardianapis.com/film/film",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"film/crime",
+        "type":"keyword",
+        "webTitle":"Crime",
+        "webUrl":"http://www.theguardian.com/film/crime",
+        "apiUrl":"http://content.guardianapis.com/film/crime",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/cannesfilmfestival",
+        "type":"keyword",
+        "webTitle":"Cannes film festival",
+        "webUrl":"http://www.theguardian.com/film/cannesfilmfestival",
+        "apiUrl":"http://content.guardianapis.com/film/cannesfilmfestival",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-363328419",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/bc/281851582/281851582_89755581001_Prophet-4x3.mp4",
+          "typeData":{
+            "source":"Optimum Releasing",
+            "embeddable":"false",
+            "blockAds":"false",
+            "height":"360",
+            "durationMinutes":"4",
+            "width":"480",
+            "durationSeconds":"17"
+          }
+        }]
+      },{
+        "id":"gu-image-363375650",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2010/6/3/1275563626448/A-Prophet-002.jpg",
+          "typeData":{
+            "source":"Rex",
+            "altText":"A Prophet",
+            "height":"84",
+            "credit":"Rex",
+            "caption":"A Prophet. Photograph: Rex",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"film/2010/jan/21/a-prophet-review",
+      "sectionId":"film",
+      "sectionName":"Film",
+      "webPublicationDate":"2010-01-21T22:30:01Z",
+      "webTitle":"A Prophet | Film review",
+      "webUrl":"http://www.theguardian.com/film/2010/jan/21/a-prophet-review",
+      "apiUrl":"http://content.guardianapis.com/film/2010/jan/21/a-prophet-review",
+      "fields":{
+        "newspaperPageNumber":"7",
+        "trailText":"<p>A classic French thriller with racial overtones from the director of The Beat That My Heart Skipped. By <strong>Peter Bradshaw</strong></p>",
+        "headline":"A Prophet",
+        "body":"<video data-media-id=\"gu-video-348005111\" class=\"gu-video\" controls=\"controls\" poster=\"\">\n        <source src=\"http://cdn.theguardian.tv/bc/281851582/281851582_24406235001_gdn-nat-090527-cb-une-prophet-02-VFa-16x9.flv\"></source>\n      </video><p>Du Rififi Chez les Hommes was the full title of Jules Dassin's classic tough-guy thriller from 1955 – aggro among men. Here, it is more a case of Rififi Among Men and God alike, in a blisteringly ­powerful prison-gangster picture from the French director Jacques Audiard. It comports itself like a modern classic from the very first frames, instantly ­hitting its massively confident stride. This is the work of the rarest kind of film-maker, the kind who knows ­precisely what he is doing and where he is going. The film's every effect is ­entirely intentional.</p><p>Newcomer Tahar Rahim plays Malik El Djebena, a young Arab guy about to start a six-year stretch in prison for what appears to be violence against police ­officers. He is a 19-year-old petty ­criminal, and this is his debut in adult detention. Malik is very frightened, cringing almost visibly into his clothes on walking the grim corridors of jail, and into his nakedness when he is inspected by medical officers.</p><p>On what is apparently his very first day in the exercise yard, Malik's ­vulnerability and his very blankness attract the hooded eye of César, the Corsican mobster with the guards in his pocket – incomparably played by Niels Arestrup. César needs someone to whack a fellow prisoner, who is about to incriminate his ­associates on the outside by turning state's ­witness. Surrounded by his thuggish courtiers, César curtly summons bewildered small-timer Malik and informs him that he must kill this switch, or be killed himself by César's lieutenants. He will be given ­instruction on how to do the job, and protection from César's crew for the rest of his term. No ­arguments: Malik is \"in\", a murderer. There is no way out.</p><p>Trembling Malik now finds himself in a terrifying, almost Greeneian dilemma. Should he refuse? Should he simply ­submit to death rather than ­become a murderer? The plan is that Malik must kill his victim, Reyeb (Hichem Yacoubi) with a razor-blade concealed in the roof of his mouth. Pretending to offer him a blowjob in his cell, he must work it out with his tongue and push it forward between his teeth while his face is invisibly at crotch-level, and then stand up and cut the man's throat. The scenes in which Malik must practise doing this in front of the mirror, retching and spitting blood into the sink, are the stuff of pure, scalp-prickling fear: I just can't remember ­being so tense in the cinema.</p><p>This nauseous forced deal between Malik and César appears to become the basis of a strange, unknowable spiritual bargain between Malik and God – or does it? Audiard makes the haunted Malik the centre of an internal crisis, part ­psychological, part ­supernatural. The terrible unsought burden of ­assassinhood transforms him into a grotesque, parodic \"prophet\" and the agent of César's downfall. Intent on self-betterment, ­Malik takes classes, learns Corsican-dialect Italian and, to the contemptuous disgust of the Muslim prisoners, becomes the Corsicans' Uncle Tom-ish servant boy.</p><p>But poker-faced Malik has big plans; he is rising through the ranks – and laws from the new Sarkozy ­government about repatriating Corsican ­prisoners away from mainland French jails now leave César exposed, with no ­bodyguards. ­Malik, whom César fears and suspects more than anyone, is his Quisling ­nemesis, his only companion, and the son he never had or wanted to have.</p><p>Audiard has created a long, involved, relentlessly brutal but gripping and thrilling picture; it has the rangy, ­anecdotal feel of something drawn from real life, but its realism somehow ­accommodates an eerie supernatural shimmer. Malik has visions which are partly, but apparently only partly, ­explicable as trauma. The sweat and the machismo are very familiar from the French crime genre, which was ­revived only&nbsp;­recently in the 70s-era Mesrine films. The passing of contraband, the ­defiant songs and shouts and ­burning garbage being flung from the high ­courtyard walls surely also ­summon up ­memories of Pontecorvo's The Battle of Algiers. But the movie has its own ­muscular&nbsp;originality.</p><p>Niels Arestrup is all too plausible as the jail gang-boss, coolly ­proprietorial with prisoners and guards alike, ­sporting a mask of impassive disdain through which world-weariness and fear gradually surface. But Arestrup and ­Audiard have found something new in this classic persona. What we see  etched on César's face is pathetic ­loneliness &nbsp;and the horror of dying alone in prison. His weakness and Malik's future strength – this is the emotional ­fulcrum on which this tremendous film is ­structured.</p><p>Arestrup was outstanding in ­Audiard's previous film, The Beat That My Heart Skipped – also, intriguingly, in a tense, mutually resentful relationship with a younger man – but here he brings out new strains of desolation. Rahim, too, is a tremendous casting find for Audiard. The film returns us to what should be the biggest cliche in the book: the prison film, with its cells, its shouts, its ­corrupt guards, its boxes full of ­prisoners' heartrendingly meagre ­personal effects. But Audiard also revives the hidden source of our ­fascination with prisons. They are places of violence and fear, but also of ­paradoxical freedom – freedom from the ties of outside lives. They are places you can remake yourself, for good or ill, ­hellish furnaces in which you can smelt a new identity.</p><!-- Guardian Watermark: internal-code/content/358320684|2013-11-05T11:03:48Z|f8141bd2c707bf1c7261267102c0bdf9457cc880 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-07-11T00:10:52Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/1/20/1264010773467/A-Prophet-004.jpg",
+        "standfirst":"A classic French thriller with racial overtones from the director of The Beat That My Heart Skipped. By Peter Bradshaw",
+        "shortUrl":"http://gu.com/p/2exkt",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/1/20/1264010773467/A-Prophet-004.jpg",
+        "wordcount":"869",
+        "commentable":"true",
+        "internalContentCode":"358320684",
+        "starRating":"5",
+        "allowUgc":"false",
+        "internalOctopusCode":"2938055",
+        "isPremoderated":"false",
+        "byline":"Peter Bradshaw",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2010-01-22",
+        "internalPageCode":"1339731",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2010-02-12T17:55:00Z"
+      },
+      "tags":[{
+        "id":"film/crime",
+        "type":"keyword",
+        "webTitle":"Crime",
+        "webUrl":"http://www.theguardian.com/film/crime",
+        "apiUrl":"http://content.guardianapis.com/film/crime",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"society/prisons-and-probation",
+        "type":"keyword",
+        "webTitle":"Prisons and probation",
+        "webUrl":"http://www.theguardian.com/society/prisons-and-probation",
+        "apiUrl":"http://content.guardianapis.com/society/prisons-and-probation",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"world/france",
+        "type":"keyword",
+        "webTitle":"France",
+        "webUrl":"http://www.theguardian.com/world/france",
+        "apiUrl":"http://content.guardianapis.com/world/france",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"film/film",
+        "type":"keyword",
+        "webTitle":"Film",
+        "webUrl":"http://www.theguardian.com/film/film",
+        "apiUrl":"http://content.guardianapis.com/film/film",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"tone/reviews",
+        "type":"tone",
+        "webTitle":"Reviews",
+        "webUrl":"http://www.theguardian.com/tone/reviews",
+        "apiUrl":"http://content.guardianapis.com/tone/reviews",
+        "references":[]
+      },{
+        "id":"theguardian/filmandmusic/filmandmusic1",
+        "type":"newspaper-book-section",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/theguardian/filmandmusic/filmandmusic1",
+        "apiUrl":"http://content.guardianapis.com/theguardian/filmandmusic/filmandmusic1",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"theguardian/filmandmusic",
+        "type":"newspaper-book",
+        "webTitle":"Film & music",
+        "webUrl":"http://www.theguardian.com/theguardian/filmandmusic",
+        "apiUrl":"http://content.guardianapis.com/theguardian/filmandmusic",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"profile/peterbradshaw",
+        "type":"contributor",
+        "webTitle":"Peter Bradshaw",
+        "webUrl":"http://www.theguardian.com/profile/peterbradshaw",
+        "apiUrl":"http://content.guardianapis.com/profile/peterbradshaw",
+        "bio":"<p>Peter Bradshaw is the Guardian's film critic.</p>",
+        "rcsId":"GNL378000",
+        "r2ContributorId":"16262",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/peter_bradshaw_140x140.jpg",
+        "references":[]
+      },{
+        "id":"film/jacques-audiard",
+        "type":"keyword",
+        "webTitle":"Jacques Audiard",
+        "webUrl":"http://www.theguardian.com/film/jacques-audiard",
+        "apiUrl":"http://content.guardianapis.com/film/jacques-audiard",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"world/europe-news",
+        "type":"keyword",
+        "webTitle":"Europe",
+        "webUrl":"http://www.theguardian.com/world/europe-news",
+        "apiUrl":"http://content.guardianapis.com/world/europe-news",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-358386834",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/1/20/1264010773467/A-Prophet-004.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"A Prophet",
+            "height":"84",
+            "credit":"PR",
+            "caption":"A Prophet",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-video-348005111",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/x-flv",
+          "file":"http://cdn.theguardian.tv/bc/281851582/281851582_24406235001_gdn-nat-090527-cb-une-prophet-02-VFa-16x9.flv",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"false",
+            "blockAds":"false",
+            "height":"360",
+            "durationMinutes":"5",
+            "width":"480",
+            "durationSeconds":"27"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"film/2013/jun/06/a-prophet-hollywood-remake-sony",
+      "sectionId":"film",
+      "sectionName":"Film",
+      "webPublicationDate":"2013-06-06T09:46:55Z",
+      "webTitle":"A Prophet set for Hollywood remake",
+      "webUrl":"http://www.theguardian.com/film/2013/jun/06/a-prophet-hollywood-remake-sony",
+      "apiUrl":"http://content.guardianapis.com/film/2013/jun/06/a-prophet-hollywood-remake-sony",
+      "fields":{
+        "trailText":"<p>Sony to make English-language version of French crime film, with Fast &amp; Furious producer Neal Moritz at helm</p>",
+        "headline":"A Prophet set for Hollywood remake",
+        "body":"<video data-media-id=\"gu-video-348005111\" class=\"gu-video\" controls=\"controls\" poster=\"\">\n        <source src=\"http://cdn.theguardian.tv/bc/281851582/281851582_24406235001_gdn-nat-090527-cb-une-prophet-02-VFa-16x9.flv\"></source>\n      </video><p>Hollywood producers are planning a remake of the 2009 Cannes film festival smash <a href=\"http://www.guardian.co.uk/film/movie/129970/prophet\" title=\"\">A Prophet</a>, from French director Jacques Audiard.</p><p><a href=\"http://www.hollywoodreporter.com/news/sony-picks-up-remake-rights-563555\" title=\"\">Studio Sony has bought the rights</a> to Audiard's unorthodox gangster flick, the tale of a young and guileless French-Algerian felon who flourishes after becoming the prison pet of a greasy Corsican gangster. <a href=\"http://www.guardian.co.uk/film/2013/may/09/tahar-rahim-not-everybody-is-crazy\" title=\"\">Tahar Rahim</a> and Niels Arestrup took the lead roles in the original film, which won the Grand Prix at Cannes and was France's entry for the foreign-language Oscar as well as the winner of a <a href=\"http://www.guardian.co.uk/film/2010/mar/01/a-prophet-jacques-audiard-cesars\">remarkable nine prizes</a> at the Césars, the nation's top film award ceremony.</p><p>The US version is being put together by producer Neal Moritz, who is best known for the enduringly popular Fast &amp; Furious movies. Moritz has history, good and bad, in the remake game: he oversaw the poorly received <a href=\"http://www.guardian.co.uk/film/2012/aug/25/total-recall-remake-forget-it\" title=\"\">reworking of classic Paul Verhoeven sci-fi romp Total Recall</a> as well as the rather more watchable big-screen comedic update of teen-oriented TV show <a href=\"http://www.guardian.co.uk/film/2012/mar/15/21-jump-street-review\" title=\"\">21 Jump Street</a> last year. No cast or director information has been announced.</p><p>Audiard caught the eye of US tastemakers once again earlier this year when his elliptical romance <a href=\"http://www.guardian.co.uk/film/movie/146658/rust-and-bone\" title=\"\">Rust and Bone</a> saw star Marion Cotillard nominated for a best actress Golden Globe.</p><!-- Guardian Watermark: internal-code/content/410222513|2013-11-05T11:03:48Z|50d38d9c93a2577fe2f36ea03ec750b61dfce7a0 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-06-06T09:46:55Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/1/16/1263673305931/A-Prophet-AKA-Un-Prophete-004.jpg",
+        "standfirst":"Sony to make English-language version of French crime film, with Fast &amp; Furious producer Neal Moritz at helm",
+        "shortUrl":"http://gu.com/p/3gcc9",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/1/16/1263673305931/A-Prophet-AKA-Un-Prophete-004.jpg",
+        "wordcount":"200",
+        "commentable":"true",
+        "internalContentCode":"410222513",
+        "allowUgc":"false",
+        "internalOctopusCode":"7688087",
+        "isPremoderated":"false",
+        "byline":"Ben Child",
+        "publication":"theguardian.com",
+        "internalPageCode":"1918332",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-06-13T09:20:00Z"
+      },
+      "tags":[{
+        "id":"film/jacques-audiard",
+        "type":"keyword",
+        "webTitle":"Jacques Audiard",
+        "webUrl":"http://www.theguardian.com/film/jacques-audiard",
+        "apiUrl":"http://content.guardianapis.com/film/jacques-audiard",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/sony-pictures",
+        "type":"keyword",
+        "webTitle":"Sony Pictures",
+        "webUrl":"http://www.theguardian.com/film/sony-pictures",
+        "apiUrl":"http://content.guardianapis.com/film/sony-pictures",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/crime",
+        "type":"keyword",
+        "webTitle":"Crime",
+        "webUrl":"http://www.theguardian.com/film/crime",
+        "apiUrl":"http://content.guardianapis.com/film/crime",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/thriller",
+        "type":"keyword",
+        "webTitle":"Thriller",
+        "webUrl":"http://www.theguardian.com/film/thriller",
+        "apiUrl":"http://content.guardianapis.com/film/thriller",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/world-cinema",
+        "type":"keyword",
+        "webTitle":"World cinema",
+        "webUrl":"http://www.theguardian.com/film/world-cinema",
+        "apiUrl":"http://content.guardianapis.com/film/world-cinema",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/film",
+        "type":"keyword",
+        "webTitle":"Film",
+        "webUrl":"http://www.theguardian.com/film/film",
+        "apiUrl":"http://content.guardianapis.com/film/film",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/cannesfilmfestival",
+        "type":"keyword",
+        "webTitle":"Cannes film festival",
+        "webUrl":"http://www.theguardian.com/film/cannesfilmfestival",
+        "apiUrl":"http://content.guardianapis.com/film/cannesfilmfestival",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"culture/festivals",
+        "type":"keyword",
+        "webTitle":"Festivals",
+        "webUrl":"http://www.theguardian.com/culture/festivals",
+        "apiUrl":"http://content.guardianapis.com/culture/festivals",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"profile/benchild",
+        "type":"contributor",
+        "webTitle":"Ben Child",
+        "webUrl":"http://www.theguardian.com/profile/benchild",
+        "apiUrl":"http://content.guardianapis.com/profile/benchild",
+        "bio":"<p>Ben Child is a journalist, DJ and producer whose main interests lie in the worlds of film and music</p>",
+        "r2ContributorId":"24984",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/france",
+        "type":"keyword",
+        "webTitle":"France",
+        "webUrl":"http://www.theguardian.com/world/france",
+        "apiUrl":"http://content.guardianapis.com/world/france",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-410225052",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/1/16/1263673305931/A-Prophet-AKA-Un-Prophete-004.jpg",
+          "typeData":{
+            "source":"c.Sony Pics/Everett / Rex Featur",
+            "photographer":"Sony Pics/Everett/Rex Features",
+            "altText":"'A Prophet', (AKA Un Prophete) Film - 2009",
+            "height":"84",
+            "credit":"Sony Pics/Everett/Rex Features/c.Sony Pics/Everett / Rex Featur",
+            "caption":"No Merchandising. Editorial Use Only.Mandatory Credit: Photo by c.Sony Pics/Everett / Rex Features ( 938654t ).A PROPHET, (aka UN PROPHETE), Tahar Rahim.'A Prophet', (AKA Un Prophete) Film - 2009.. Photograph: Sony Pics/Everett/Rex Features/c.Sony Pics/Everett / Rex Featur",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-video-348005111",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/x-flv",
+          "file":"http://cdn.theguardian.tv/bc/281851582/281851582_24406235001_gdn-nat-090527-cb-une-prophet-02-VFa-16x9.flv",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"false",
+            "blockAds":"false",
+            "height":"360",
+            "durationMinutes":"5",
+            "width":"480",
+            "durationSeconds":"27"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"film/2013/oct/30/dennis-lehane-a-prophet-remake-crime",
+      "sectionId":"film",
+      "sectionName":"Film",
+      "webPublicationDate":"2013-10-30T10:02:55Z",
+      "webTitle":"Dennis Lehane to script Hollywood remake of A Prophet",
+      "webUrl":"http://www.theguardian.com/film/2013/oct/30/dennis-lehane-a-prophet-remake-crime",
+      "apiUrl":"http://content.guardianapis.com/film/2013/oct/30/dennis-lehane-a-prophet-remake-crime",
+      "fields":{
+        "trailText":"<p>Crime novelist called in to work on American version of award-winning prison epic</p>",
+        "headline":"Dennis Lehane to script Hollywood remake of A Prophet",
+        "body":"<video data-media-id=\"gu-video-358391935\" class=\"gu-video\" controls=\"controls\" poster=\"\">\n        <source src=\"http://cdn.theguardian.tv/bc/281851582/281851582_62834466001_UneProphete-16x9.mp4\"></source>\n      </video><p>Mystic River author Dennis Lehane <a href=\"http://variety.com/2013/film/news/dennis-lehane-a-prophet-sony-1200772465/\">has been hired to write the American remake</a> of Jacques Audiard's award-winning crime drama A Prophet.</p><p>Lehane, several of whose novels have been adapted successfully for the screen, including Gone Baby Gone and Shutter Island as well as Mystic River, has been taken on by Sony, as according to Variety, the material was considered to \"fit Lehane's style\". </p><p>A Prophet premiered at Cannes in 2009, winning the runner-up grand prix award. Co-written by Audiard, Thomas Bidegain, Abdel Raouf Dafri and Nicolas Peufaillit, it is the epic tale of a French-Algerian teenager who falls in with the Corsican mafia while in jail, and eventually becomes a top-level gangster in his own right. The film starred Tahar Rahim in a breakout role.</p><p>Plans for a remake were<a href=\"http://www.theguardian.com/film/2013/jun/06/a-prophet-hollywood-remake-sony\"> announced earller this year</a>, under the stewardship of Fast and Furious producer Neal Moritz. No word is forthcoming on any potential directors or actors, but Lehane  enjoys a close working relationship with Ben Affleck, who directed and starred in the film of Gone Baby Gone, and is currently working on an adaptation of Lehane's 2012 novel Live by Night.</p><p><a href=\"http://www.theguardian.com/film/2013/jun/06/a-prophet-hollywood-remake-sony\">• A Prophet set for Hollywood remake</a><br /><a href=\"http://www.theguardian.com/film/video/2010/jan/22/a-prophet-jacques-audiard\">• Xan Brooks on A Prophet: 'An electrifying tale of survival against the odds'</a></p><!-- Guardian Watermark: internal-code/content/421257777|2013-11-05T11:03:48Z|deecb9b44bac372d780687cec7c4b15e02c9c439 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-30T10:02:55Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2010/6/3/1275563626448/A-Prophet-002.jpg",
+        "standfirst":"Crime novelist called in to work on American version of award-winning prison epic<br /><br /><a href=\"http://www.theguardian.com/film/2013/jun/06/a-prophet-hollywood-remake-sony\">• A Prophet set for Hollywood remake</a><br /><a href=\"http://www.theguardian.com/film/video/2010/jan/22/a-prophet-jacques-audiard\">• Xan Brooks on A Prophet: 'An electrifying tale of survival against the odds'</a>",
+        "shortUrl":"http://gu.com/p/3kx73",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2010/6/3/1275563626448/A-Prophet-002.jpg",
+        "wordcount":"206",
+        "commentable":"true",
+        "internalContentCode":"421257777",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Andrew Pulver",
+        "publication":"theguardian.com",
+        "internalPageCode":"1988904",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-02T10:02:55Z"
+      },
+      "tags":[{
+        "id":"film/film",
+        "type":"keyword",
+        "webTitle":"Film",
+        "webUrl":"http://www.theguardian.com/film/film",
+        "apiUrl":"http://content.guardianapis.com/film/film",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/world-cinema",
+        "type":"keyword",
+        "webTitle":"World cinema",
+        "webUrl":"http://www.theguardian.com/film/world-cinema",
+        "apiUrl":"http://content.guardianapis.com/film/world-cinema",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/jacques-audiard",
+        "type":"keyword",
+        "webTitle":"Jacques Audiard",
+        "webUrl":"http://www.theguardian.com/film/jacques-audiard",
+        "apiUrl":"http://content.guardianapis.com/film/jacques-audiard",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"film/crime",
+        "type":"keyword",
+        "webTitle":"Crime",
+        "webUrl":"http://www.theguardian.com/film/crime",
+        "apiUrl":"http://content.guardianapis.com/film/crime",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"books/crime",
+        "type":"keyword",
+        "webTitle":"Crime fiction",
+        "webUrl":"http://www.theguardian.com/books/crime",
+        "apiUrl":"http://content.guardianapis.com/books/crime",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"film/film-adaptations",
+        "type":"keyword",
+        "webTitle":"Film adaptations",
+        "webUrl":"http://www.theguardian.com/film/film-adaptations",
+        "apiUrl":"http://content.guardianapis.com/film/film-adaptations",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/france",
+        "type":"keyword",
+        "webTitle":"France",
+        "webUrl":"http://www.theguardian.com/world/france",
+        "apiUrl":"http://content.guardianapis.com/world/france",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/andrewpulver",
+        "type":"contributor",
+        "webTitle":"Andrew Pulver",
+        "webUrl":"http://www.theguardian.com/profile/andrewpulver",
+        "apiUrl":"http://content.guardianapis.com/profile/andrewpulver",
+        "bio":"<p>Andrew Pulver is Film editor, guardian.co.uk</p>",
+        "rcsId":"GNL004602",
+        "r2ContributorId":"15370",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/8/23/1345733137119/AndrewPulver.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421266387",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2010/6/3/1275563626448/A-Prophet-002.jpg",
+          "typeData":{
+            "source":"Rex",
+            "altText":"A Prophet",
+            "height":"84",
+            "credit":"Rex",
+            "caption":"A Prophet. Photograph: Rex",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-video-358391935",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/bc/281851582/281851582_62834466001_UneProphete-16x9.mp4",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"false",
+            "blockAds":"false",
+            "height":"360",
+            "durationMinutes":"3",
+            "width":"480",
+            "durationSeconds":"23"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

@@ -1,33 +1,36 @@
 package model
 
+import conf.Switches.DoubleCacheTimesSwitch
 import org.joda.time.DateTime
-
 import org.scala_tools.time.Imports._
-import play.api.mvc.{ Result, SimpleResult, Results }
-import conf.CommonSwitches.DoubleCacheTimesSwitch
+import play.api.mvc.{ SimpleResult, Results }
 
 object Cached extends Results {
 
-  def apply[A](seconds: Int)(result: Result): Result = result match {
-    case ok: SimpleResult[_] if ok.header.status == 200 => cacheHeaders(seconds, ok)
-    case other => other
+  def apply(seconds: Int)(result: SimpleResult): SimpleResult = {
+    if (result.header.status == 200) cacheHeaders(seconds, result) else result
   }
 
-  def apply[A](metaData: MetaData)(result: Result): Result = result match {
-    case ok: SimpleResult[_] if ok.header.status == 200 => cacheHeaders(metaData.cacheSeconds, ok)
-    case other => other
+  def apply(metaData: MetaData)(result: SimpleResult): SimpleResult = {
+    if (result.header.status == 200) cacheHeaders(metaData.cacheSeconds, result) else result
   }
 
-  private def cacheHeaders[A](seconds: Int, result: SimpleResult[A]) = {
+  private def cacheHeaders(seconds: Int, result: SimpleResult) = {
     val now = DateTime.now
     val expiresTime = now + seconds.seconds
     val maxAge = if (DoubleCacheTimesSwitch.isSwitchedOn) seconds * 2 else seconds
 
+    // NOTE, if you change these headers make sure they are compatible with our Edge Cache
+
     // see http://tools.ietf.org/html/rfc5861 for definitions of these headers
     result.withHeaders(
-      "Cache-Control" -> s"public, max-age=$maxAge, stale-while-revalidate=$maxAge, stale-if-error=345600",
+      "Cache-Control" -> s"max-age=$maxAge",
       "Expires" -> expiresTime.toHttpDateTimeString,
       "Date" -> now.toHttpDateTimeString
     )
   }
+}
+
+object NoCache extends Results {
+  def apply(result: SimpleResult): SimpleResult = result.withHeaders("Cache-Control" -> "no-cache", "Pragma" -> "no-cache")
 }
