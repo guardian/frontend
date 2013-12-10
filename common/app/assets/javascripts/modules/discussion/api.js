@@ -22,8 +22,7 @@ var Api = {
  */
 Api.init = function(config) {
     if ("https:" === document.location.protocol) {
-//        Api.root = config.page.secureDiscussionApiRoot;
-        Api.root = config.page.discussionApiRoot;
+        Api.root = config.page.secureDiscussionApiRoot;
     } else {
         Api.root = config.page.discussionApiRoot;
     }
@@ -45,7 +44,7 @@ Api.send = function(endpoint, method, data, anon) {
 
     var request = ajax({
         url: Api.root + endpoint,
-        type: 'json',
+        type: ("get" === method) ? 'jsonp' : 'json',
         method: method,
         crossOrigin: true,
         data: data,
