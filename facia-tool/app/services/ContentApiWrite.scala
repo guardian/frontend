@@ -9,6 +9,7 @@ import play.api.libs.ws.{Response, WS}
 import common.ExecutionContexts
 import com.ning.http.client.Realm
 import conf.Configuration
+import play.Play
 
 trait ContentApiWrite extends ExecutionContexts {
 
@@ -41,7 +42,7 @@ trait ContentApiWrite extends ExecutionContexts {
   lazy val endpoint = Configuration.contentApi.write.endpoint
 
   def getCollectionUrlForWrite(id: String): Option[String] = endpoint
-    .filter(_.startsWith("https://"))
+    .filter(_.startsWith("https://") || Play.isDev)
     .map(_ + s"/collections/${id.replace('/', '-')}")
 
   def writeToContentapi(config: Config): Future[Response] = {
