@@ -1,7 +1,8 @@
 define([
     'knockout',
     'modules/vars',
-    'modules/utils',
+    'utils/as-observable-props',
+    'utils/populate-observables',
     'modules/authed-ajax',
     'models/article',
     'modules/content-api',
@@ -10,7 +11,8 @@ define([
 ], function(
     ko,
     vars,
-    utils,
+    asObservableProps,
+    populateObservables,
     authedAjax,
     Article,
     contentApi,
@@ -26,19 +28,19 @@ define([
         this.groups = this.createGroups(opts.groups);
 
         // properties from the config, about this collection
-        this.configMeta   = utils.asObservableProps([
+        this.configMeta   = asObservableProps([
             'displayName',
             'roleName']);
-        utils.populateObservables(this.configMeta, opts);
+        populateObservables(this.configMeta, opts);
 
         // properties from the collection itself
-        this.collectionMeta = utils.asObservableProps([
+        this.collectionMeta = asObservableProps([
             'displayName',
             'lastUpdated',
             'updatedBy',
             'updatedEmail']);
 
-        this.state  = utils.asObservableProps([
+        this.state  = asObservableProps([
             'hasDraft',
             'loadIsPending',
             'editingConfig',
@@ -133,7 +135,7 @@ define([
             }
 
             if (!self.state.editingConfig()) {
-                utils.populateObservables(self.collectionMeta, self.response)
+                populateObservables(self.collectionMeta, self.response)
                 self.state.timeAgo(self.getTimeAgo(self.response.lastUpdated));
             }
         });

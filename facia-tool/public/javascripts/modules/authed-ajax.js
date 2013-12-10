@@ -1,9 +1,4 @@
-define([
-    'modules/vars'
-], function (
-    vars
-) {
-
+define(['modules/vars'], function(vars) {
     function request(opts) {
         return $.ajax(
             _.extend({}, {dataType: !opts.type || opts.type === 'get' ? 'json' : undefined, contentType: 'application/json'}, opts)

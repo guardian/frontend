@@ -1,8 +1,4 @@
-define([
-    'knockout'
-], function(
-    ko
-) {
+define(['knockout'], function(ko) {
     return {
         CONST: {
             viewer: 'http://s3-eu-west-1.amazonaws.com/facia/responsive-viewer.html',

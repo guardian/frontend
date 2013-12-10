@@ -1,7 +1,8 @@
 define([
     'knockout',
     'modules/vars',
-    'modules/utils',
+    'utils/parse-query-params',
+    'utils/url-abs-path',
     'modules/authed-ajax',
     'models/article',
     'modules/content-api',
@@ -9,7 +10,8 @@ define([
 ], function(
     ko,
     vars,
-    utils,
+    parseQueryParams,
+    urlAbsPath,
     authedAjax,
     Article,
     contentApi,
@@ -105,13 +107,13 @@ define([
 
                     position = targetArticle && targetArticle.props ? targetArticle.props.id() : undefined;
 
-                    _.each(utils.parseQueryParams(item), function(url){
+                    _.each(parseQueryParams(item), function(url){
                         if (url && url.match(/^http:\/\/www.theguardian.com/)) {
                             item = url;
                         }
                     });
 
-                    item = utils.urlAbsPath(item);
+                    item = urlAbsPath(item);
 
                     if (!item) {
                         alertBadContent();

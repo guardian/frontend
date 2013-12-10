@@ -1,13 +1,17 @@
 define([
     'modules/vars',
-    'modules/utils',
+    'utils/as-observable-props',
+    'utils/populate-observables',
+    'utils/number-with-commas',
     'modules/authed-ajax',
     'knockout',
     'js!humanized-time-span'
 ],
 function (
     vars,
-    utils,
+    asObservableProps,
+    populateObservables,
+    numberWithCommas,
     authedAjax,
     ko
 ){
@@ -18,11 +22,11 @@ function (
 
         this.collection = collection;
 
-        this.props = utils.asObservableProps([
+        this.props = asObservableProps([
             'id',
             'webPublicationDate']);
 
-        this.fields = utils.asObservableProps([
+        this.fields = asObservableProps([
             'headline',
             'thumbnail',
             'trailText',
@@ -30,11 +34,11 @@ function (
 
         this.fields.headline('...');
 
-        this.meta = utils.asObservableProps([
+        this.meta = asObservableProps([
             'headline',
             'group']);
 
-        this.state = utils.asObservableProps([
+        this.state = asObservableProps([
             'underDrag',
             'editingTitle',
             'shares',
@@ -48,7 +52,7 @@ function (
         }, this);
 
         this.totalHitsFormatted = ko.computed(function(){
-            return utils.numberWithCommas(this.state.totalHits());
+            return numberWithCommas(this.state.totalHits());
         }, this);
 
         this.headlineInput = ko.computed({
@@ -67,9 +71,9 @@ function (
     };
 
     Article.prototype.populate = function(opts) {
-        utils.populateObservables(this.props, opts);
-        utils.populateObservables(this.meta, opts.meta);
-        utils.populateObservables(this.fields, opts.fields);
+        populateObservables(this.props, opts);
+        populateObservables(this.meta, opts.meta);
+        populateObservables(this.fields, opts.fields);
     };
 
     Article.prototype.startTitleEdit = function() {

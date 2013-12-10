@@ -2,7 +2,8 @@ define([
     'config',
     'knockout',
     'modules/vars',
-    'modules/utils',
+    'utils/query-params',
+    'utils/ammended-query-str',
     'bindings/droppable',
     'modules/authed-ajax',
     'models/collection',
@@ -12,7 +13,8 @@ define([
     config,
     ko,
     vars,
-    utils,
+    queryParams,
+    ammendedQueryStr,
     droppable,
     authedAjax,
     Collection,
@@ -82,7 +84,7 @@ define([
         };
 
         function getFront() {
-            return utils.queryParams().front;
+            return queryParams().front;
         }
 
         function setfront() {
@@ -90,7 +92,7 @@ define([
         }
 
         function renderFront(id) {
-            history.pushState({}, "", window.location.pathname + '?' + utils.ammendedQueryStr('front', id));
+            history.pushState({}, "", window.location.pathname + '?' + ammendedQueryStr('front', id));
             model.collections(
                 ((model.config.fronts[getFront()] || {}).collections || [])
                 .filter(function(id){ return !!model.config.collections[id]; })

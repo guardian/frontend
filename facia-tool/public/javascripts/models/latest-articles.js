@@ -1,6 +1,7 @@
 define([
     'modules/vars',
-    'modules/utils',
+    'utils/query-params',
+    'utils/url-abs-path',
     'modules/auto-complete',
     'models/article',
     'modules/ophan-api',
@@ -9,7 +10,8 @@ define([
     'knockout'
 ], function (
     vars,
-    utils,
+    queryParams,
+    urlAbsPath,
     autoComplete,
     Article,
     ophanApi,
@@ -27,7 +29,7 @@ define([
 
         this.articles   = ko.observableArray();
 
-        this.term       = ko.observable(utils.queryParams().q || '');
+        this.term       = ko.observable(queryParams().q || '');
         this.suggestions= ko.observableArray();
 
         this.filter     = ko.observable();
@@ -91,7 +93,7 @@ define([
 
                 // If term contains slashes, assume it's an article id (and first convert it to a path)
                 if (self.isTermAnItem()) {
-                    self.term(utils.urlAbsPath(self.term()));
+                    self.term(urlAbsPath(self.term()));
                     url = vars.CONST.apiSearchBase + '/' + self.term() + '?show-fields=all&format=json';
                     propName = 'content';
                 } else {
