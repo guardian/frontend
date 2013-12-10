@@ -2,9 +2,7 @@
 
   var numbers = [];
   for (var i=0; i<1000; i++) numbers.push(i);
-  var objArray = _.map(numbers, function(n){ return {num : n}; });
-  var bigObj = {};
-  _.times(1000, function(n){ bigObj['key' + n] = n; });
+  var objects = _.map(numbers, function(n){ return {num : n}; });
   var randomized = _.sortBy(numbers, function(){ return Math.random(); });
   var deep = _.map(_.range(100), function() { return _.range(1000); });
 
@@ -27,15 +25,15 @@
   });
 
   JSLitmus.test('_.map()', function() {
-    return _.map(objArray, function(obj){ return obj.num; });
+    return _.map(objects, function(obj){ return obj.num; });
   });
 
   JSLitmus.test('jQuery.map()', function() {
-    return jQuery.map(objArray, function(obj){ return obj.num; });
+    return jQuery.map(objects, function(obj){ return obj.num; });
   });
 
   JSLitmus.test('_.pluck()', function() {
-    return _.pluck(objArray, 'num');
+    return _.pluck(objects, 'num');
   });
 
   JSLitmus.test('_.uniq()', function() {
@@ -55,11 +53,11 @@
   });
 
   JSLitmus.test('_.keys()', function() {
-    return _.keys(bigObj);
+    return _.keys(objects);
   });
 
   JSLitmus.test('_.values()', function() {
-    return _.values(bigObj);
+    return _.values(objects);
   });
 
   JSLitmus.test('_.intersection()', function() {
@@ -74,7 +72,4 @@
     return _.flatten(deep);
   });
 
-  JSLitmus.test('_.flatten() (shallow)', function() {
-    return _.flatten(deep, true);
-  });
 })();

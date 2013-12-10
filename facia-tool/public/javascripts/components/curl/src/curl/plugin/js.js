@@ -36,7 +36,7 @@ define(/*=='curl/plugin/js',==*/ ['curl/_privileged'], function (priv) {
 		supportsAsyncFalse = doc && doc.createElement('script').async == true,
 		Promise,
 		waitForOrderedScript,
-		dontAddExtRx = /\?|\.js\b/;
+		undef;
 
 	Promise = priv['Promise'];
 
@@ -124,31 +124,17 @@ define(/*=='curl/plugin/js',==*/ ['curl/_privileged'], function (priv) {
 			return end >= 0 ? toAbsId(id.substr(0, end)) + id.substr(end) : toAbsId(id);
 		},
 
-		'load': function (resId, require, callback, config) {
+		'load': function (name, require, callback, config) {
 
-			var order, exportsPos, exports, prefetch, dontAddFileExt,
-				url, def, promise;
+			var order, exportsPos, exports, prefetch, url, def, promise;
 
-			order = resId.indexOf('!order') > 0; // can't be zero
-			exportsPos = resId.indexOf('!exports=');
-			exports = exportsPos > 0
-				? resId.substr(exportsPos + 9) // must be last option!
-				: config.exports;
+			order = name.indexOf('!order') > 0; // can't be zero
+			exportsPos = name.indexOf('!exports=');
+			exports = exportsPos > 0 && name.substr(exportsPos + 9); // must be last option!
 			prefetch = 'prefetch' in config ? config['prefetch'] : true;
-			resId = order || exportsPos > 0
-				? resId.substr(0, resId.indexOf('!'))
-				: resId;
-			// add extension afterwards so js!-specific path mappings don't
-			// need extension, too.
-			dontAddFileExt = config['dontAddFileExt'] || config.dontAddFileExt;
-			dontAddFileExt = dontAddFileExt
-				? new RegExp(dontAddFileExt)
-				: dontAddExtRx;
-
-			url = require['toUrl'](resId);
-			if (!dontAddFileExt.test(url)) {
-				url = nameWithExt(url, 'js');
-			}
+			name = order || exportsPos > 0 ? name.substr(0, name.indexOf('!')) : name;
+			// add extension afterwards so js!-specific path mappings don't need extension, too
+			url = nameWithExt(require['toUrl'](name), 'js');
 
 			function reject (ex) {
 				(callback['error'] || function (ex) { throw ex; })(ex);
@@ -165,7 +151,7 @@ define(/*=='curl/plugin/js',==*/ ['curl/_privileged'], function (priv) {
 			}
 			else {
 				def = {
-					name: resId,
+					name: name,
 					url: url,
 					order: order,
 					exports: exports,

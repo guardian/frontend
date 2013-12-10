@@ -165,10 +165,6 @@ var sinon = (function (buster) {
                 return true;
             }
 
-            if (aString == "[object Date]") {
-                return a.valueOf() === b.valueOf();
-            }
-
             var prop, aLength = 0, bLength = 0;
 
             for (prop in a) {

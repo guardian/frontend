@@ -2,12 +2,13 @@
 
 /**
  * curl js! cram plugin
+ *
+ * TODO: figure out when to return window.<exported-thing> vs. global.<exported-thing> vs just <exported-thing>
  */
-define(function (require) {
+define(['./jsEncode'], function (jsEncode) {
+	var stripOrderOptionRx;
 
-	var _define = require('./_define');
-
-	var stripOrderOptionRx = /!order/;
+	stripOrderOptionRx = /!order/;
 
 	return {
 
@@ -32,8 +33,14 @@ define(function (require) {
 			io.read(resId, function (text) {
 				var moduleText;
 
-				moduleText = text + ';\n'
-					+ _define(absId, '', '', '', exports);
+				moduleText = jsEncode(text) + ';\n'
+					+ 'define("' + absId + '", function () {\n';
+
+				moduleText += exports
+					? '\treturn ' + exports
+					: '\treturn void 0';
+
+				moduleText += ';\n});\n';
 
 				io.write(moduleText);
 
