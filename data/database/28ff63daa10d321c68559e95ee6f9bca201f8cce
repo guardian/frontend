@@ -1,0 +1,28 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":2,
+    "startIndex":1,
+    "pageSize":50,
+    "currentPage":1,
+    "pages":1,
+    "results":[{
+      "id":"travel/ireland",
+      "type":"keyword",
+      "webTitle":"Ireland",
+      "webUrl":"http://www.theguardian.com/travel/ireland",
+      "apiUrl":"http://content.guardianapis.com/travel/ireland",
+      "sectionId":"travel",
+      "sectionName":"Travel"
+    },{
+      "id":"travel/northern-ireland",
+      "type":"keyword",
+      "webTitle":"Northern Ireland",
+      "webUrl":"http://www.theguardian.com/travel/northern-ireland",
+      "apiUrl":"http://content.guardianapis.com/travel/northern-ireland",
+      "sectionId":"travel",
+      "sectionName":"Travel"
+    }]
+  }
+}
