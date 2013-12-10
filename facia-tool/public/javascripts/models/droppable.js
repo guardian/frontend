@@ -155,8 +155,8 @@ define([
 
                         ophanApi.decorateItems([article]);
 
-                        if (_.isFunction(targetList.callback)) {
-                            targetList.callback();
+                        if (_.isFunction(targetList.reflow)) {
+                            targetList.reflow();
                         }
 
                         if (!targetList.collection) { // this is a non-collection list, e.g. a clipboard, so no need for persistence
