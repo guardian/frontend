@@ -50,23 +50,25 @@
         </script>
 
     </head>
-    <body>
+    <body class="@if(isAuthed){is-authed}">
 
-    <h1 class="tool-title">Fronts Editor</h1>
-
-    @if(Play.isDev && Configuration.facia.stage.toLowerCase != "dev") {
-        <div class="message message--important">editing @Configuration.facia.stage.toUpperCase!</div>
-    }
-
+    <img class="logo" src="@routes.Assets.at("images/logo.png")" />
+ 
+    <h1 class="tool-title">
+        Fronts Editor
+        <span class="message message--loading" data-bind="visible: false">loading...</span>
+        @if(Play.isDev && Configuration.facia.stage.toLowerCase != "dev") {
+            <span class="message message--important">editing @Configuration.facia.stage.toUpperCase!</span>
+        }
+    </h1>
+    
     @if(isAuthed) {
-        <div class="message" data-bind="visible: false">loading...</div>
+        @content
     } else {
         <form action="@routes.Login.loginPost()" method="post" class="login-form">
             <input value="Log In" class="tool" type="submit" id="login-button">
         </form>
     }
-
-    @content
 
     <link href='//fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>
     <link href='//fonts.googleapis.com/css?family=Open+Sans:800' rel='stylesheet' type='text/css'>
