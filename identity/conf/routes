@@ -13,3 +13,6 @@ GET     /register                                       @controllers.Registratio
 POST    /register                                       @controllers.RegistrationController.processForm
 GET     /email-prefs                                    @controllers.EmailController.preferences
 POST    /email-prefs                                    @controllers.EmailController.savePreferences
+
+GET     /ethical-awards/:formId                         @controllers.EthicalAwardsController.ethicalAwardsForm(formId: String)
+GET     /form/:formId                                   @controllers.FormstackController.formstackForm(formId: String)

@@ -1,0 +1,6 @@
+@(page: model.MetaData, formId: String, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder)(implicit request: RequestHeader)
+
+@identityMain(page, conf.Switches.all) {
+} {
+    <iframe src="@idUrlBuilder.buildUrl(s"/form/$formId")"></iframe>
+}
