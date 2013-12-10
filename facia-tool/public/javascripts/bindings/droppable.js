@@ -23,8 +23,6 @@ define([
 
     function init() {
 
-        init = function() {}; // make idempotent
-
         window.addEventListener("dragover", function(event) {
             event.preventDefault();
         },false);
@@ -213,6 +211,6 @@ define([
     }
 
     return {
-        init: init
+        init: _.once(init)
     };
 });

@@ -112,7 +112,7 @@ define([
             );
         }
 
-        function startPoller() {
+        var startPoller = _.once(function() {
             var period = vars.CONST.collectionsPollMs || 60000;
 
             setInterval(function(){
@@ -122,9 +122,7 @@ define([
                     }, index * period / (model.collections().length + 1)); // stagger requests
                 });
             }, period);
-
-            startPoller = function() {}; // make idempotent
-        }
+        });
 
         ko.bindingHandlers.sparkline = {
             update: function (element, valueAccessor, allBindingsAccessor, model) {
