@@ -2,26 +2,21 @@ package controllers
 
 import org.scalatest._
 import org.scalatest.mock.MockitoSugar
-import services.{IdentityRequest, AuthenticationService, IdRequestParser, IdentityUrlBuilder}
-import actions.{AuthActionWithUser, AuthRequest}
+import services.{AuthenticationService, IdRequestParser, IdentityUrlBuilder}
+import actions.AuthActionWithUser
 import idapiclient._
 import org.mockito.Mockito._
 import org.mockito.{ArgumentCaptor, Matchers}
-import play.api.mvc.{RequestHeader, Request, SimpleResult}
+import play.api.mvc.{RequestHeader, Request}
 import scala.concurrent.Future
 import com.gu.identity.model.{StatusFields, User}
-import test.FakeCSRFRequest
 import play.api.test.Helpers._
-import actions.AuthRequest
-import services.IdentityRequest
-import scala.Some
-import play.api.mvc.SimpleResult
 import actions.AuthRequest
 import scala.Some
 import play.api.mvc.SimpleResult
 import services.IdentityRequest
 import idapiclient.TrackingData
-import test.{FakeCSRFRequest, TestRequest, Fake}
+import test.{FakeCSRFRequest, Fake}
 import play.api.test.FakeRequest
 import client.Auth
 
@@ -62,7 +57,7 @@ class PublicProfileControllerTest extends path.FreeSpec with ShouldMatchers with
         "publicFields.aboutMe" -> aboutMe,
         "publicFields.interests" -> interests,
         "publicFields.webPage" -> webPage,
-      "privateFields.gender" -> gender
+        "privateFields.gender" -> gender
       )
       when(api.saveUser(Matchers.any[String], Matchers.any[UserUpdate], Matchers.any[Auth]))
         .thenReturn(Future.successful(Right(user)))
