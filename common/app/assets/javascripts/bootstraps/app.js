@@ -25,7 +25,8 @@ define('bootstraps/app', [
     'bootstraps/video',
     'bootstraps/gallery',
     'bootstraps/interactive',
-    'bootstraps/identity'
+    'bootstraps/identity',
+    'bootstraps/form'
 ], function (
     common,
     qwery,
@@ -51,7 +52,8 @@ define('bootstraps/app', [
     Video,
     Gallery,
     Interactive,
-    Identity
+    Identity,
+    Form
 ) {
 
     var modules = {
@@ -162,6 +164,10 @@ define('bootstraps/app', [
 
                 if (config.page.contentType === 'ImageContent') {
                     ImageContent.init(config, context);
+                }
+
+                if (config.page.contentType === 'Form') {
+                    Form.init(config, context);
                 }
 
                 //Kick it all off

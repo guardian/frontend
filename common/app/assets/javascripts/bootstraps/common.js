@@ -91,18 +91,19 @@ define([
              var topStories = new TopStories(),
                 sections = new Sections(config),
                 search = new Search(config),
-                header = document.getElementById('header'),
-                profile;
+                header = document.getElementById('header');
 
-            if (config.switches.idProfileNavigation) {
-                profile = new Profile(header, {
-                    url: config.page.idUrl
-                });
-                profile.init();
+            if (header) {
+                if (config.switches.idProfileNavigation) {
+                    var profile = new Profile(header, {
+                        url: config.page.idUrl
+                    });
+                    profile.init();
+                }
+                topStories.load(config, header);
             }
 
             sections.init(document);
-            topStories.load(config, header);
             search.init(header);
         },
 
