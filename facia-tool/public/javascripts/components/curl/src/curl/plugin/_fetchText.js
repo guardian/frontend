@@ -1,4 +1,4 @@
-define([], function () {
+define(/*=='curl/plugin/_fetchText',==*/ [], function () {
 
 	var xhr, progIds;
 

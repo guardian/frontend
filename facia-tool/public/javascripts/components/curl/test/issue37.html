@@ -13,11 +13,11 @@
 		{
 			baseUrl: '../src', // default path
 			paths: {
-				'css!': '/curl/test/stuff' // default path for css! resources
+				'css!': '../test/stuff' // default path for css! resources
 			}
 		},
 		[
-			'css!/curl/test/stuff/second.css',
+			'css!second.css',
 			'domReady!'
 		]
 	).then(
