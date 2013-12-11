@@ -25,13 +25,12 @@
             var curl = {
                 baseUrl: '/assets/javascripts',
                 paths: {
-                    models:       'models',
-                    knockout:     'components/knockout.js/knockout.js',
-                    Reqwest:      'components/reqwest/reqwest',
-                    EventEmitter: 'components/eventEmitter/EventEmitter',
-                    bean:         'components/bean/bean',
-                    bonzo:        'components/bonzo/bonzo',
-                    omniture:     'components/omniture'
+                    knockout:              'components/knockout.js/knockout.js',
+                    reqwest:               'components/reqwest/reqwest',
+                    bean:                  'components/bean/bean',
+                    bonzo:                 'components/bonzo/bonzo',
+                    'humanized-time-span': 'components/js_humanized_time_span/humanized_time_span',
+                    omniture:              'omniture.js'
                 }
             }
         </script>
@@ -42,7 +41,7 @@
         <script src="@routes.Assets.at("javascripts/components/underscore/underscore.js")" type="text/javascript"></script>
 
         <script>
-            define('Config', function() {
+            define('config', function() {
                 return {
                     env:    '@env.toLowerCase'
                 }
@@ -53,7 +52,7 @@
     <body class="@if(isAuthed){is-authed}">
 
     <img class="logo" src="@routes.Assets.at("images/logo.png")" />
- 
+
     <h1 class="tool-title">
         Fronts Editor
         <span class="message message--loading" data-bind="visible: false">loading...</span>
@@ -61,7 +60,7 @@
             <span class="message message--important">editing @Configuration.facia.stage.toUpperCase!</span>
         }
     </h1>
-    
+
     @if(isAuthed) {
         @content
     } else {

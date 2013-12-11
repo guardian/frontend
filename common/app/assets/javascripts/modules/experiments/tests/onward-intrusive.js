@@ -1,10 +1,14 @@
 define([
     "modules/onward/sequence",
-    "modules/onward/right-ear"
+    "modules/onward/right-ear",
+    'utils/mediator'
 ], function(
     sequence,
-    RightEar
+    RightEar,
+    mediator
     ) {
+
+    var rendered = false;
 
     return function() {
 
@@ -20,12 +24,16 @@ define([
             {
                 id: 'RightEar',
                 test: function (context) {
+
+                    mediator.on('modules:sequence:loaded', function(currentSequence) {
+                        if (currentSequence && currentSequence.items.length > 0 && !rendered) {
+                            var rightEar = new RightEar(currentSequence.items, {});
+                            rightEar.render();
+                            rendered = true;
+                        }
+                    });
+
                     sequence.init();
-                    var currentSequence = sequence.getSequence();
-                    if (currentSequence && currentSequence.items.length > 0) {
-                        var rightEar = new RightEar(currentSequence.items, {});
-                        rightEar.render();
-                    }
                 }
             }
         ];

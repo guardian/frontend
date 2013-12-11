@@ -7,6 +7,7 @@ define([
     // Modules
     'utils/detect',
     'utils/storage',
+    'utils/to-array',
     'modules/facia/popular',
     'modules/facia/collection-show-more',
     'modules/facia/container-toggle',
@@ -19,6 +20,7 @@ define([
     qwery,
     detect,
     storage,
+    toArray,
     popular,
     CollectionShowMore,
     ContainerToggle,
@@ -93,6 +95,16 @@ define([
                 // put popular after the first container if this is us-alpha front
                 if (config.page.pageId === 'us-alpha') {
                     opts.insertAfter = $('.container').first();
+                } else if (config.page.pageId === 'uk-alpha') {
+                    // place before the contributors container
+                    var containers = toArray(context.getElementsByClassName('container'));
+                    containers.some(function(container, i) {
+                        if ($(container).hasClass('container--comment')) {
+                            opts.insertAfter = containers[i -1];
+                            return true;
+                        }
+                    });
+
                 }
                 popular.render(config, opts);
             });

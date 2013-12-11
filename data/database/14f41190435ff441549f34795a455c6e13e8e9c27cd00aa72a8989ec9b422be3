@@ -1,0 +1,20 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "startIndex":1,
+    "pageSize":50,
+    "currentPage":1,
+    "pages":1,
+    "results":[{
+      "id":"travel/malta",
+      "type":"keyword",
+      "webTitle":"Malta",
+      "webUrl":"http://www.theguardian.com/travel/malta",
+      "apiUrl":"http://content.guardianapis.com/travel/malta",
+      "sectionId":"travel",
+      "sectionName":"Travel"
+    }]
+  }
+}

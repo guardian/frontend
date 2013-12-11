@@ -1,0 +1,20 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "startIndex":1,
+    "pageSize":50,
+    "currentPage":1,
+    "pages":1,
+    "results":[{
+      "id":"travel/oman",
+      "type":"keyword",
+      "webTitle":"Oman",
+      "webUrl":"http://www.theguardian.com/travel/oman",
+      "apiUrl":"http://content.guardianapis.com/travel/oman",
+      "sectionId":"travel",
+      "sectionName":"Travel"
+    }]
+  }
+}

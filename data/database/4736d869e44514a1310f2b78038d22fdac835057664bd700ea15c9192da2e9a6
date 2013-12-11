@@ -1,0 +1,28 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":2,
+    "startIndex":1,
+    "pageSize":50,
+    "currentPage":1,
+    "pages":1,
+    "results":[{
+      "id":"travel/peru",
+      "type":"keyword",
+      "webTitle":"Peru",
+      "webUrl":"http://www.theguardian.com/travel/peru",
+      "apiUrl":"http://content.guardianapis.com/travel/peru",
+      "sectionId":"travel",
+      "sectionName":"Travel"
+    },{
+      "id":"travel/machupicchu",
+      "type":"keyword",
+      "webTitle":"Machu Picchu, Peru",
+      "webUrl":"http://www.theguardian.com/travel/machupicchu",
+      "apiUrl":"http://content.guardianapis.com/travel/machupicchu",
+      "sectionId":"travel",
+      "sectionName":"Travel"
+    }]
+  }
+}

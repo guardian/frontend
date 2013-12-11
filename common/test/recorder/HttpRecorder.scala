@@ -4,8 +4,9 @@ import java.io._
 import org.apache.commons.codec.digest.DigestUtils
 import io.Source
 import com.gu.openplatform.contentapi.connection.HttpResponse
-import concurrent.Future
+import scala.concurrent.Future
 import common.ExecutionContexts
+import conf.Configuration
 
 
 trait HttpRecorder[A] extends ExecutionContexts {
@@ -13,16 +14,22 @@ trait HttpRecorder[A] extends ExecutionContexts {
   def baseDir: File
 
   // loads api call from disk. if it cannot be found on disk go get it and save to disk
-  def load(url: String, headers: Map[String, String] = Map.empty)(fetch: => Future[A]):Future[A] = {
+  final def load(url: String, headers: Map[String, String] = Map.empty)(fetch: => Future[A]):Future[A] = {
 
     val fileName = name(url, headers)
+
+    // integration test environment
+    // make sure people have checked in test files
+    if (Configuration.environment.stage.equalsIgnoreCase("DEVINFRA") && !new File(baseDir, fileName).exists()) {
+      throw new IllegalStateException(s"Data file has not been checked in for: $url")
+    }
 
     get(fileName).map { f =>
       val response = toResponse(f)
       Future(response)
     }.getOrElse {
       val response = fetch
-      response.foreach(r => put(fileName, fromResponse(r)));
+      response.foreach(r => put(fileName, fromResponse(r)))
       response
     }
   }
@@ -42,7 +49,7 @@ trait HttpRecorder[A] extends ExecutionContexts {
   private [recorder] def get(name: String): Option[String] = {
     val file = new File(baseDir, name)
     if (file.exists()) {
-      Some(Source.fromFile(file, "UTF-8").getLines.mkString)
+      Some(Source.fromFile(file, "UTF-8").getLines().mkString)
     } else {
       None
     }
@@ -53,9 +60,8 @@ trait HttpRecorder[A] extends ExecutionContexts {
   def fromResponse(response: A): String
 
   private [recorder] def name(url: String, headers: Map[String, String]) = {
-    val urlPart = url.split("\\?").flatMap(_.split("\\&")).sorted.mkString
-    val headerPart = headers.toList.map { case (key, value) => key + value }.sorted.mkString
-    DigestUtils.shaHex((urlPart + headerPart).getBytes)
+    val headersString = headers.map{ case (key, value) => key + value }.mkString
+    DigestUtils.sha256Hex(url.sorted +  headersString.sorted)
   }
 }
 

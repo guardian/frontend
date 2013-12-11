@@ -22,7 +22,8 @@ object TrailToJson {
         ("timestamp", trail.webPublicationDate.getMillis),
         ("datetime",trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")),
         ("datetimeShort", trail.webPublicationDate.toString("d MMM y"))
-      ))
+      )),
+      ("sectionName", trail.sectionName)
     )
   }
 }

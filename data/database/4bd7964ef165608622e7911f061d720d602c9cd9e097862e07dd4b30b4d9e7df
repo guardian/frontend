@@ -1,0 +1,28 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":2,
+    "startIndex":1,
+    "pageSize":50,
+    "currentPage":1,
+    "pages":1,
+    "results":[{
+      "id":"travel/spain",
+      "type":"keyword",
+      "webTitle":"Spain",
+      "webUrl":"http://www.theguardian.com/travel/spain",
+      "apiUrl":"http://content.guardianapis.com/travel/spain",
+      "sectionId":"travel",
+      "sectionName":"Travel"
+    },{
+      "id":"travel/learn-latin-american-spanish",
+      "type":"keyword",
+      "webTitle":"Learn Latin American Spanish",
+      "webUrl":"http://www.theguardian.com/travel/learn-latin-american-spanish",
+      "apiUrl":"http://content.guardianapis.com/travel/learn-latin-american-spanish",
+      "sectionId":"travel",
+      "sectionName":"Travel"
+    }]
+  }
+}

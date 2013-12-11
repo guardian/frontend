@@ -1,0 +1,44 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":4,
+    "startIndex":1,
+    "pageSize":50,
+    "currentPage":1,
+    "pages":1,
+    "results":[{
+      "id":"business/retail",
+      "type":"keyword",
+      "webTitle":"Retail industry",
+      "webUrl":"http://www.theguardian.com/business/retail",
+      "apiUrl":"http://content.guardianapis.com/business/retail",
+      "sectionId":"business",
+      "sectionName":"Business"
+    },{
+      "id":"business/homeretailgroup",
+      "type":"keyword",
+      "webTitle":"Home Retail",
+      "webUrl":"http://www.theguardian.com/business/homeretailgroup",
+      "apiUrl":"http://content.guardianapis.com/business/homeretailgroup",
+      "sectionId":"business",
+      "sectionName":"Business"
+    },{
+      "id":"business/dsginternational",
+      "type":"keyword",
+      "webTitle":"Dixons Retail",
+      "webUrl":"http://www.theguardian.com/business/dsginternational",
+      "apiUrl":"http://content.guardianapis.com/business/dsginternational",
+      "sectionId":"business",
+      "sectionName":"Business"
+    },{
+      "id":"media-network/technology-in-retail",
+      "type":"keyword",
+      "webTitle":"Technology in retail",
+      "webUrl":"http://www.theguardian.com/media-network/technology-in-retail",
+      "apiUrl":"http://content.guardianapis.com/media-network/technology-in-retail",
+      "sectionId":"media-network",
+      "sectionName":"Media Network"
+    }]
+  }
+}
