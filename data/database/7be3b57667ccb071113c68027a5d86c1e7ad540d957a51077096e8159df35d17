@@ -1,0 +1,300 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":36,
+    "startIndex":1,
+    "pageSize":50,
+    "currentPage":1,
+    "pages":1,
+    "results":[{
+      "id":"advertising/education",
+      "type":"keyword",
+      "webTitle":"Education",
+      "webUrl":"http://www.theguardian.com/advertising/education",
+      "apiUrl":"http://content.guardianapis.com/advertising/education",
+      "sectionId":"advertising",
+      "sectionName":"Advertising"
+    },{
+      "id":"government-computing-network/education",
+      "type":"keyword",
+      "webTitle":"Education",
+      "webUrl":"http://www.theguardian.com/government-computing-network/education",
+      "apiUrl":"http://content.guardianapis.com/government-computing-network/education",
+      "sectionId":"government-computing-network",
+      "sectionName":"Guardian Government Computing"
+    },{
+      "id":"katine/education",
+      "type":"keyword",
+      "webTitle":"Education",
+      "webUrl":"http://www.theguardian.com/katine/education",
+      "apiUrl":"http://content.guardianapis.com/katine/education",
+      "sectionId":"katine",
+      "sectionName":"Katine"
+    },{
+      "id":"education/education",
+      "type":"keyword",
+      "webTitle":"Education",
+      "webUrl":"http://www.theguardian.com/education/education",
+      "apiUrl":"http://content.guardianapis.com/education/education",
+      "sectionId":"education",
+      "sectionName":"Education"
+    },{
+      "id":"innovation-education/innovation-education",
+      "type":"keyword",
+      "webTitle":"Innovation in Education",
+      "webUrl":"http://www.theguardian.com/innovation-education/innovation-education",
+      "apiUrl":"http://content.guardianapis.com/innovation-education/innovation-education",
+      "sectionId":"innovation-education",
+      "sectionName":"Innovation in Education"
+    },{
+      "id":"education/educationincrisis",
+      "type":"keyword",
+      "webTitle":"Education in crisis",
+      "webUrl":"http://www.theguardian.com/education/educationincrisis",
+      "apiUrl":"http://content.guardianapis.com/education/educationincrisis",
+      "sectionId":"education",
+      "sectionName":"Education"
+    },{
+      "id":"media/journalism-education",
+      "type":"keyword",
+      "webTitle":"Journalism education",
+      "webUrl":"http://www.theguardian.com/media/journalism-education",
+      "apiUrl":"http://content.guardianapis.com/media/journalism-education",
+      "sectionId":"media",
+      "sectionName":"Media"
+    },{
+      "id":"education/institute-of-education",
+      "type":"keyword",
+      "webTitle":"Institute of Education",
+      "webUrl":"http://www.theguardian.com/education/institute-of-education",
+      "apiUrl":"http://content.guardianapis.com/education/institute-of-education",
+      "sectionId":"education",
+      "sectionName":"Education"
+    },{
+      "id":"education/education-us",
+      "type":"keyword",
+      "webTitle":"US education",
+      "webUrl":"http://www.theguardian.com/education/education-us",
+      "apiUrl":"http://content.guardianapis.com/education/education-us",
+      "sectionId":"education",
+      "sectionName":"Education"
+    },{
+      "id":"culture-professionals-network/arts-education",
+      "type":"keyword",
+      "webTitle":"Arts education",
+      "webUrl":"http://www.theguardian.com/culture-professionals-network/arts-education",
+      "apiUrl":"http://content.guardianapis.com/culture-professionals-network/arts-education",
+      "sectionId":"culture-professionals-network",
+      "sectionName":"Culture professionals network"
+    },{
+      "id":"education/raceineducation",
+      "type":"keyword",
+      "webTitle":"Race in education",
+      "webUrl":"http://www.theguardian.com/education/raceineducation",
+      "apiUrl":"http://content.guardianapis.com/education/raceineducation",
+      "sectionId":"education",
+      "sectionName":"Education"
+    },{
+      "id":"resource/education-show",
+      "type":"keyword",
+      "webTitle":"Education show",
+      "webUrl":"http://www.theguardian.com/resource/education-show",
+      "apiUrl":"http://content.guardianapis.com/resource/education-show",
+      "sectionId":"resource",
+      "sectionName":"Resource"
+    },{
+      "id":"politics/education",
+      "type":"keyword",
+      "webTitle":"Education policy",
+      "webUrl":"http://www.theguardian.com/politics/education",
+      "apiUrl":"http://content.guardianapis.com/politics/education",
+      "sectionId":"politics",
+      "sectionName":"Politics"
+    },{
+      "id":"education/sexeducation",
+      "type":"keyword",
+      "webTitle":"Sex education",
+      "webUrl":"http://www.theguardian.com/education/sexeducation",
+      "apiUrl":"http://content.guardianapis.com/education/sexeducation",
+      "sectionId":"education",
+      "sectionName":"Education"
+    },{
+      "id":"education/vocational-education",
+      "type":"keyword",
+      "webTitle":"Vocational education",
+      "webUrl":"http://www.theguardian.com/education/vocational-education",
+      "apiUrl":"http://content.guardianapis.com/education/vocational-education",
+      "sectionId":"education",
+      "sectionName":"Education"
+    },{
+      "id":"institute-of-education/institute-of-education",
+      "type":"keyword",
+      "webTitle":"Institute of Education",
+      "webUrl":"http://www.theguardian.com/institute-of-education/institute-of-education",
+      "apiUrl":"http://content.guardianapis.com/institute-of-education/institute-of-education",
+      "sectionId":"institute-of-education",
+      "sectionName":"Institute of Education"
+    },{
+      "id":"education/higher-education",
+      "type":"keyword",
+      "webTitle":"Higher education",
+      "webUrl":"http://www.theguardian.com/education/higher-education",
+      "apiUrl":"http://content.guardianapis.com/education/higher-education",
+      "sectionId":"education",
+      "sectionName":"Education"
+    },{
+      "id":"education/further-education",
+      "type":"keyword",
+      "webTitle":"Further education",
+      "webUrl":"http://www.theguardian.com/education/further-education",
+      "apiUrl":"http://content.guardianapis.com/education/further-education",
+      "sectionId":"education",
+      "sectionName":"Education"
+    },{
+      "id":"gnmeducationcentre/gnmeducationcentre",
+      "type":"keyword",
+      "webTitle":"GNM education centre",
+      "webUrl":"http://www.theguardian.com/gnmeducationcentre/gnmeducationcentre",
+      "apiUrl":"http://content.guardianapis.com/gnmeducationcentre/gnmeducationcentre",
+      "sectionId":"gnmeducationcentre",
+      "sectionName":"GNM education centre"
+    },{
+      "id":"higher-education-network/higher-education-summit-2012",
+      "type":"keyword",
+      "webTitle":"Higher Education Summit 2012",
+      "webUrl":"http://www.theguardian.com/higher-education-network/higher-education-summit-2012",
+      "apiUrl":"http://content.guardianapis.com/higher-education-network/higher-education-summit-2012",
+      "sectionId":"higher-education-network",
+      "sectionName":"Higher Education Network"
+    },{
+      "id":"education/careers",
+      "type":"keyword",
+      "webTitle":"Careers in higher education",
+      "webUrl":"http://www.theguardian.com/education/careers",
+      "apiUrl":"http://content.guardianapis.com/education/careers",
+      "sectionId":"education",
+      "sectionName":"Education"
+    },{
+      "id":"innovation-education/innovation-in-education-2010",
+      "type":"keyword",
+      "webTitle":"Innovation in education 2010",
+      "webUrl":"http://www.theguardian.com/innovation-education/innovation-in-education-2010",
+      "apiUrl":"http://content.guardianapis.com/innovation-education/innovation-in-education-2010",
+      "sectionId":"innovation-education",
+      "sectionName":"Innovation in Education"
+    },{
+      "id":"education/education-maintenance-allowance-ema",
+      "type":"keyword",
+      "webTitle":"Education Maintenance Allowance (EMA)",
+      "webUrl":"http://www.theguardian.com/education/education-maintenance-allowance-ema",
+      "apiUrl":"http://content.guardianapis.com/education/education-maintenance-allowance-ema",
+      "sectionId":"education",
+      "sectionName":"Education"
+    },{
+      "id":"higher-education/higher-education-2011",
+      "type":"keyword",
+      "webTitle":"future of higher education 2011",
+      "webUrl":"http://www.theguardian.com/higher-education/higher-education-2011",
+      "apiUrl":"http://content.guardianapis.com/higher-education/higher-education-2011",
+      "sectionId":"higher-education",
+      "sectionName":"Higher Education Summit"
+    },{
+      "id":"global-development/universal-primary-education",
+      "type":"keyword",
+      "webTitle":"Universal primary education",
+      "webUrl":"http://www.theguardian.com/global-development/universal-primary-education",
+      "apiUrl":"http://content.guardianapis.com/global-development/universal-primary-education",
+      "sectionId":"global-development",
+      "sectionName":"Global development"
+    },{
+      "id":"education/14-19-education",
+      "type":"keyword",
+      "webTitle":"14 - 19 education",
+      "webUrl":"http://www.theguardian.com/education/14-19-education",
+      "apiUrl":"http://content.guardianapis.com/education/14-19-education",
+      "sectionId":"education",
+      "sectionName":"Education"
+    },{
+      "id":"higher-education-network/higher-education-summit",
+      "type":"keyword",
+      "webTitle":"Higher Education Summit",
+      "webUrl":"http://www.theguardian.com/higher-education-network/higher-education-summit",
+      "apiUrl":"http://content.guardianapis.com/higher-education-network/higher-education-summit",
+      "sectionId":"higher-education-network",
+      "sectionName":"Higher Education Network"
+    },{
+      "id":"education/educationdegreecourses",
+      "type":"keyword",
+      "webTitle":"Education degree courses",
+      "webUrl":"http://www.theguardian.com/education/educationdegreecourses",
+      "apiUrl":"http://content.guardianapis.com/education/educationdegreecourses",
+      "sectionId":"education",
+      "sectionName":"Education"
+    },{
+      "id":"education/personal-social-health-education",
+      "type":"keyword",
+      "webTitle":"Personal, social and health education",
+      "webUrl":"http://www.theguardian.com/education/personal-social-health-education",
+      "apiUrl":"http://content.guardianapis.com/education/personal-social-health-education",
+      "sectionId":"education",
+      "sectionName":"Education"
+    },{
+      "id":"education/earlyyearseducation",
+      "type":"keyword",
+      "webTitle":"Early years education",
+      "webUrl":"http://www.theguardian.com/education/earlyyearseducation",
+      "apiUrl":"http://content.guardianapis.com/education/earlyyearseducation",
+      "sectionId":"education",
+      "sectionName":"Education"
+    },{
+      "id":"higher-education/higher-education",
+      "type":"keyword",
+      "webTitle":"The Future of Higher Education",
+      "webUrl":"http://www.theguardian.com/higher-education/higher-education",
+      "apiUrl":"http://content.guardianapis.com/higher-education/higher-education",
+      "sectionId":"higher-education",
+      "sectionName":"Higher Education Summit"
+    },{
+      "id":"higher-education-network/higher-education-network",
+      "type":"keyword",
+      "webTitle":"Higher Education Network",
+      "webUrl":"http://www.theguardian.com/higher-education-network/higher-education-network",
+      "apiUrl":"http://content.guardianapis.com/higher-education-network/higher-education-network",
+      "sectionId":"higher-education-network",
+      "sectionName":"Higher Education Network"
+    },{
+      "id":"higher-education-ets-partner-zone/higher-education-ets-partner-zone",
+      "type":"keyword",
+      "webTitle":"Higher education - ETS partner zone",
+      "webUrl":"http://www.theguardian.com/higher-education-ets-partner-zone/higher-education-ets-partner-zone",
+      "apiUrl":"http://content.guardianapis.com/higher-education-ets-partner-zone/higher-education-ets-partner-zone",
+      "sectionId":"higher-education-ets-partner-zone",
+      "sectionName":"Higher education - ETS partner zone"
+    },{
+      "id":"higher-education-hea-partner-zone/higher-education-hea-partner-zone",
+      "type":"keyword",
+      "webTitle":"Higher education - HEA partner zone",
+      "webUrl":"http://www.theguardian.com/higher-education-hea-partner-zone/higher-education-hea-partner-zone",
+      "apiUrl":"http://content.guardianapis.com/higher-education-hea-partner-zone/higher-education-hea-partner-zone",
+      "sectionId":"higher-education-hea-partner-zone",
+      "sectionName":"Higher education - HEA partner zone"
+    },{
+      "id":"higher-education-ets-toefl-partner-zone/higher-education-ets-toefl-partner-zone",
+      "type":"keyword",
+      "webTitle":"Higher education - ETS TOEFL partner zone",
+      "webUrl":"http://www.theguardian.com/higher-education-ets-toefl-partner-zone/higher-education-ets-toefl-partner-zone",
+      "apiUrl":"http://content.guardianapis.com/higher-education-ets-toefl-partner-zone/higher-education-ets-toefl-partner-zone",
+      "sectionId":"higher-education-ets-toefl-partner-zone",
+      "sectionName":"Higher education - ETS TOEFL partner zone"
+    },{
+      "id":"education/the-faculty-of-health-social-care-and-education-kingston-university-and-st-george-s-university-of-london",
+      "type":"keyword",
+      "webTitle":"The faculty of health, social care and education, Kingston University and St George's, University of London",
+      "webUrl":"http://www.theguardian.com/education/the-faculty-of-health-social-care-and-education-kingston-university-and-st-george-s-university-of-london",
+      "apiUrl":"http://content.guardianapis.com/education/the-faculty-of-health-social-care-and-education-kingston-university-and-st-george-s-university-of-london",
+      "sectionId":"education",
+      "sectionName":"Education"
+    }]
+  }
+}
