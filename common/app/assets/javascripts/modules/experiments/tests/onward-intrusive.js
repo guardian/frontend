@@ -1,11 +1,13 @@
 define([
     "modules/onward/sequence",
     "modules/onward/right-ear",
-    'utils/mediator'
+    'utils/mediator',
+    'utils/detect'
 ], function(
     sequence,
     RightEar,
-    mediator
+    mediator,
+    detect
     ) {
 
     var rendered = false;
@@ -18,7 +20,8 @@ define([
         this.audienceOffset = 0.3;
         this.description = 'Test whether onward components increase page views per session';
         this.canRun = function(config) {
-            return config.page.contentType === 'Article';
+            return detect.getBreakpoint() === 'wide' && detect.hasCSSSupport('position', 'fixed', true) &&
+            config.page.contentType === 'Article';
         };
         this.variants = [
             {
