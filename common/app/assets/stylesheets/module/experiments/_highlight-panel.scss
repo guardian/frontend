@@ -82,6 +82,7 @@
     display: block;
     position: relative;
     color: $c-neutral1;
+    word-break: break-all;
     @include fs-headline(1);
     @include text-clamp(3, 20);
 
