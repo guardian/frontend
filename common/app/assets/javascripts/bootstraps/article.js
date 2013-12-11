@@ -12,7 +12,8 @@ define([
     "modules/ui/notification-counter",
     "utils/detect",
     "modules/experiments/left-hand-card",
-    "modules/open/cta"
+    "modules/open/cta",
+    "modules/commercial/loader"
 ], function (
     common,
     $,
@@ -27,7 +28,8 @@ define([
     NotificationCounter,
     detect,
     LeftHandCard,
-    OpenCta
+    OpenCta,
+    CommercialLoader
 ) {
 
     var modules = {
