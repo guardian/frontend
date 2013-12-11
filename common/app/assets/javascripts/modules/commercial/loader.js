@@ -34,7 +34,7 @@ define([
         this.keywords       = options.config.page.keywords;
         this.section        = options.config.page.section;
         this.userSegments   = 'seg=' + (storage.local.get('gu.history').length <= 1 ? 'new' : 'repeat');
-        this.host           = 'http://api.nextgen.guardianapps.co.uk/commercial/';
+        this.host           = options.config.page.ajaxUrl + '/commercial/';
         this.breakPoints    = [300, 400, 500, 600];
         this.className      = 'commercial';
         this.context        = context || document;
