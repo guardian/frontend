@@ -1,5 +1,5 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize underscore exports="amd" -o ./underscore/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -24,18 +24,20 @@ define(['../internals/baseCreateCallback', '../internals/indicatorObject', '../i
    * @returns {Object} Returns `object`.
    * @example
    *
-   * function Dog(name) {
-   *   this.name = name;
+   * function Shape() {
+   *   this.x = 0;
+   *   this.y = 0;
    * }
    *
-   * Dog.prototype.bark = function() {
-   *   console.log('Woof, woof!');
+   * Shape.prototype.move = function(x, y) {
+   *   this.x += x;
+   *   this.y += y;
    * };
    *
-   * _.forIn(new Dog('Dagny'), function(value, key) {
+   * _.forIn(new Shape, function(value, key) {
    *   console.log(key);
    * });
-   * // => logs 'bark' and 'name' (property order is not guaranteed across environments)
+   * // => logs 'x', 'y', and 'move' (property order is not guaranteed across environments)
    */
   var forIn = function(collection, callback) {
     var index, iterable = collection, result = iterable;

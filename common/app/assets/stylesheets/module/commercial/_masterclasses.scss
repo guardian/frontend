@@ -4,35 +4,25 @@
 
 .masterclasses-component {
 
-    background-color: #A7006F;
-    color: #ffffff;
-
-    .commercial__title span {
-        color: #FF97DC;
+    .lineitem__image {
+        margin-right: $baseline;
+        outline: 1px solid $c-neutral7;
+        float: left;
     }
 
-    .lineitem__title {
-        @include fs-header(1);
-
-        a {
-            color: #ffffff;
-        }
+    .lineitem__link {
+        display: block;
     }
 
     &.commercial--w600 {
-
-        .items {
-            width: 100%;
-        }
-
         .lineitem {
-            width: 25%;
+            @include box-sizing(border-box);
             padding-right: $gs-gutter/2;
-            padding-bottom: $gs-baseline/2;
+            width: 25%;
+            float: left;
         }
-
-        .commercial__promo {
-            display: none;
+        .lineitem__image {
+            float: none;
         }
     }
 }

@@ -1,5 +1,5 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="amd" -o ./modern/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -27,13 +27,13 @@ define(['../internals/baseFlatten', '../functions/createCallback', './forIn', '.
    * @returns {Object} Returns an object composed of the picked properties.
    * @example
    *
-   * _.pick({ 'name': 'moe', '_userid': 'moe1' }, 'name');
-   * // => { 'name': 'moe' }
+   * _.pick({ 'name': 'fred', '_userid': 'fred1' }, 'name');
+   * // => { 'name': 'fred' }
    *
-   * _.pick({ 'name': 'moe', '_userid': 'moe1' }, function(value, key) {
+   * _.pick({ 'name': 'fred', '_userid': 'fred1' }, function(value, key) {
    *   return key.charAt(0) != '_';
    * });
-   * // => { 'name': 'moe' }
+   * // => { 'name': 'fred' }
    */
   function pick(object, callback, thisArg) {
     var result = {};

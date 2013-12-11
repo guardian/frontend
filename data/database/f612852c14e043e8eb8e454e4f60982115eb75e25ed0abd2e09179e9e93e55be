@@ -1,0 +1,20 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "startIndex":1,
+    "pageSize":50,
+    "currentPage":1,
+    "pages":1,
+    "results":[{
+      "id":"travel/norway",
+      "type":"keyword",
+      "webTitle":"Norway",
+      "webUrl":"http://www.theguardian.com/travel/norway",
+      "apiUrl":"http://content.guardianapis.com/travel/norway",
+      "sectionId":"travel",
+      "sectionName":"Travel"
+    }]
+  }
+}

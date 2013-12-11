@@ -1,5 +1,5 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize underscore exports="amd" -o ./underscore/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -14,7 +14,7 @@ define([], function() {
   /** Used for native method references */
   var objectProto = Object.prototype;
 
-  /** Native method shortcuts */
+  /** Used to resolve the internal [[Class]] of values */
   var toString = objectProto.toString;
 
   /**
@@ -31,7 +31,7 @@ define([], function() {
    * // => true
    */
   function isDate(value) {
-    return value ? (typeof value == 'object' && toString.call(value) == dateClass) : false;
+    return value && typeof value == 'object' && toString.call(value) == dateClass || false;
   }
 
   return isDate;

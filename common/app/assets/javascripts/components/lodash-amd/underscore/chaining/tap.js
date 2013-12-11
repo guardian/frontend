@@ -1,5 +1,5 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize underscore exports="amd" -o ./underscore/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -23,12 +23,10 @@ define([], function() {
    * @example
    *
    * _([1, 2, 3, 4])
-   *  .filter(function(num) { return num % 2 == 0; })
-   *  .tap(function(array) { console.log(array); })
-   *  .map(function(num) { return num * num; })
+   *  .tap(function(array) { array.pop(); })
+   *  .reverse()
    *  .value();
-   * // => // [2, 4] (logged)
-   * // => [4, 16]
+   * // => [3, 2, 1]
    */
   function tap(value, interceptor) {
     interceptor(value);

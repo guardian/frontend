@@ -35,7 +35,7 @@ class TagFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with U
         import browser._
         Then("I should see her profile image")
         val profileImage = findFirst(".profile-img img")
-        profileImage.getAttribute("src") should be(s"${Configuration.images.path}/c/sys-images/Guardian/Pix/contributor/2007/09/28/jemima_kiss_140x140.jpg")
+        profileImage.getAttribute("src") should be(s"${Configuration.images.path}/c/sys-images/Media/Columnists/Columnists/2013/11/8/1383915783233/Jemima-Kiss-2-003.jpg")
       }
     }
 

@@ -7,6 +7,14 @@ import model.Cached
 
 object TravelOffers extends Controller {
 
+  def renderOffer = Action {
+    implicit request =>
+      OffersAgent.adsTargetedAt(segment) match {
+        case Nil => NotFound
+        case offers => Cached(60)(Ok(views.html.travelOffers(offers take 4)))
+      }
+  }
+
   def listOffers = Action {
     implicit request =>
       OffersAgent.adsTargetedAt(segment) match {

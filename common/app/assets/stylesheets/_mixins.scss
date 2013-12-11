@@ -213,6 +213,14 @@
 }
 
 @mixin simple-gradient($from, $to) {
+    // Fix for browsers not understanding transparent
+    @if $from == transparent {
+        $from: transparentize($to, 1);
+    }
+
+    @if $to == transparent {
+        $to: transparentize($from, 1);
+    }
     background-color: $from;
     background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from($from), to($to));
     background-image: -webkit-linear-gradient($from, $to);

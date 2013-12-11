@@ -8,9 +8,9 @@ import common.UsesElasticSearch
 
 class ArticleControllerTest extends FlatSpec with Matchers  with UsesElasticSearch {
   
-  val articleUrl = "/environment/2012/feb/22/capitalise-low-carbon-future"
-  val liveBlogUrl = "/global/middle-east-live/2013/sep/09/syria-crisis-russia-kerry-us-live"
-  val sudokuUrl = "/lifeandstyle/2013/sep/09/sudoku-2599-easy"
+  val articleUrl = "environment/2012/feb/22/capitalise-low-carbon-future"
+  val liveBlogUrl = "global/middle-east-live/2013/sep/09/syria-crisis-russia-kerry-us-live"
+  val sudokuUrl = "lifeandstyle/2013/sep/09/sudoku-2599-easy"
   val callbackName = "aFunction"
 
   "Article Controller" should "200 when content type is article" in Fake {
@@ -29,7 +29,7 @@ class ArticleControllerTest extends FlatSpec with Matchers  with UsesElasticSear
   }
 
   it should "not cache 404s" in Fake {
-    val result = controllers.ArticleController.renderArticle("/oops")(TestRequest())
+    val result = controllers.ArticleController.renderArticle("oops")(TestRequest())
     status(result) should be(404)
     header("Cache-Control", result).head should be ("no-cache")
   }
@@ -67,7 +67,7 @@ class ArticleControllerTest extends FlatSpec with Matchers  with UsesElasticSear
   }
 
   it should "redirect to desktop when content type is not supported in app" in Fake {
-    val result = controllers.ArticleController.renderArticle("/world/interactive/2013/mar/04/choose-a-pope-interactive-guide")(TestRequest("/world/interactive/2013/mar/04/choose-a-pope-interactive-guide"))
+    val result = controllers.ArticleController.renderArticle("world/interactive/2013/mar/04/choose-a-pope-interactive-guide")(TestRequest("/world/interactive/2013/mar/04/choose-a-pope-interactive-guide"))
     status(result) should be(303)
     header("Location", result).get should be("http://www.theguardian.com/world/interactive/2013/mar/04/choose-a-pope-interactive-guide?view=desktop")
   }
@@ -99,7 +99,7 @@ class ArticleControllerTest extends FlatSpec with Matchers  with UsesElasticSear
   }
 
   it should "return the latest blocks of a live blog" in Fake {
-    val fakeRequest = FakeRequest(GET, "environment/blog/2013/jun/26/barack-obama-climate-action-plan.json?lastUpdate=block-51cae3aee4b02dad15c7494e")
+    val fakeRequest = FakeRequest(GET, "/environment/blog/2013/jun/26/barack-obama-climate-action-plan.json?lastUpdate=block-51cae3aee4b02dad15c7494e")
       .withHeaders("host" -> "localhost:9000")
 
     val result = controllers.ArticleController.renderLatest("environment/blog/2013/jun/26/barack-obama-climate-action-plan", Some("block-51cae3aee4b02dad15c7494e"))(fakeRequest)

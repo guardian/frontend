@@ -1,0 +1,20 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "startIndex":1,
+    "pageSize":50,
+    "currentPage":1,
+    "pages":1,
+    "results":[{
+      "id":"travel/hongkong",
+      "type":"keyword",
+      "webTitle":"Hong Kong",
+      "webUrl":"http://www.theguardian.com/travel/hongkong",
+      "apiUrl":"http://content.guardianapis.com/travel/hongkong",
+      "sectionId":"travel",
+      "sectionName":"Travel"
+    }]
+  }
+}

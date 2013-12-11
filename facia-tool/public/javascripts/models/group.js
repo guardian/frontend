@@ -1,3 +1,4 @@
+/* global _: true */
 define([
     'knockout'
 ], function(
@@ -19,7 +20,7 @@ define([
 
         this.reflow = opts.reflow  || function() {};
 
-        this.dropItem =   opts.dropItem || function(item) { 
+        this.dropItem =   opts.dropItem || function(item) {
             self.items.remove(item);
             self.reflow();
         };

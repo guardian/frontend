@@ -9,9 +9,9 @@ body {
     min-width: 320px;
     color: #000000;
     -webkit-touch-callout: none;
-      -webkit-user-select: none;
-         -moz-user-select: none;
-              user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
 }
 
 a {
@@ -117,8 +117,16 @@ input[type=text] {
     box-sizing: border-box;
     padding: 0 0 15px 0;
     -webkit-transition: background-color 50ms;
-       -moz-transition: background-color 50ms;
-            transition: background-color 50ms;
+    -moz-transition: background-color 50ms;
+    transition: background-color 50ms;
+}
+
+.sublinks  .droppable {
+    padding: 0 0 27px 0;
+}
+
+.droppable.underDrag {
+    background-color: #a7d9a0;
 }
 
 .sublinks  .droppable {
@@ -223,7 +231,7 @@ input[type=text] {
 }
 
 .headline {
-    display: block;    
+    display: block;
     text-decoration: none;
     font-size: 15px;
     line-height: 17px;
@@ -592,7 +600,7 @@ button {
     }
     .finder .trail .headline {
         margin: 0 0 0 80px;
-    } 
+    }
     .finder .trail .trail_stats,
     .finder .trail .trail__meta {
         display: none;
@@ -631,7 +639,7 @@ button {
 @media (max-width: 525px) {
     .trail .headline {
         margin: 0 0 0 80px;
-    } 
+    }
     .trail .trail_stats,
     .trail .trail__meta {
         display: none;
@@ -641,7 +649,7 @@ button {
 @media (max-width: 350px) {
     .trail .headline {
         margin: 5px 0 0 0;
-    } 
+    }
     .trail img {
         display: none;
     }
@@ -649,5 +657,3 @@ button {
         margin: 0;
     }
 }
-
-

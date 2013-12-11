@@ -1,0 +1,84 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":9,
+    "startIndex":1,
+    "pageSize":50,
+    "currentPage":1,
+    "pages":1,
+    "results":[{
+      "id":"media/marketingandpr",
+      "type":"keyword",
+      "webTitle":"Marketing & PR",
+      "webUrl":"http://www.theguardian.com/media/marketingandpr",
+      "apiUrl":"http://content.guardianapis.com/media/marketingandpr",
+      "sectionId":"media",
+      "sectionName":"Media"
+    },{
+      "id":"public-leaders-network/comms-and-pr",
+      "type":"keyword",
+      "webTitle":"Comms and PR",
+      "webUrl":"http://www.theguardian.com/public-leaders-network/comms-and-pr",
+      "apiUrl":"http://content.guardianapis.com/public-leaders-network/comms-and-pr",
+      "sectionId":"public-leaders-network",
+      "sectionName":"Public Leaders Network"
+    },{
+      "id":"higher-education-network/communications-marketing",
+      "type":"keyword",
+      "webTitle":"Communications and marketing",
+      "webUrl":"http://www.theguardian.com/higher-education-network/communications-marketing",
+      "apiUrl":"http://content.guardianapis.com/higher-education-network/communications-marketing",
+      "sectionId":"higher-education-network",
+      "sectionName":"Higher Education Network"
+    },{
+      "id":"media-network/brand-marketing",
+      "type":"keyword",
+      "webTitle":"Brand marketing",
+      "webUrl":"http://www.theguardian.com/media-network/brand-marketing",
+      "apiUrl":"http://content.guardianapis.com/media-network/brand-marketing",
+      "sectionId":"media-network",
+      "sectionName":"Media Network"
+    },{
+      "id":"mobile-marketing/mobile-marketing",
+      "type":"keyword",
+      "webTitle":"Mobile marketing",
+      "webUrl":"http://www.theguardian.com/mobile-marketing/mobile-marketing",
+      "apiUrl":"http://content.guardianapis.com/mobile-marketing/mobile-marketing",
+      "sectionId":"mobile-marketing",
+      "sectionName":"Mobile marketing"
+    },{
+      "id":"media-network/digital-marketing",
+      "type":"keyword",
+      "webTitle":"Digital marketing",
+      "webUrl":"http://www.theguardian.com/media-network/digital-marketing",
+      "apiUrl":"http://content.guardianapis.com/media-network/digital-marketing",
+      "sectionId":"media-network",
+      "sectionName":"Media Network"
+    },{
+      "id":"mobile-marketing-2011/mobile-marketing-2011",
+      "type":"keyword",
+      "webTitle":"Mobile Marketing 2011",
+      "webUrl":"http://www.theguardian.com/mobile-marketing-2011/mobile-marketing-2011",
+      "apiUrl":"http://content.guardianapis.com/mobile-marketing-2011/mobile-marketing-2011",
+      "sectionId":"mobile-marketing-2011",
+      "sectionName":"Mobile Marketing 2011"
+    },{
+      "id":"social-media-marketing/social-media-marketing",
+      "type":"keyword",
+      "webTitle":"Social media marketing",
+      "webUrl":"http://www.theguardian.com/social-media-marketing/social-media-marketing",
+      "apiUrl":"http://content.guardianapis.com/social-media-marketing/social-media-marketing",
+      "sectionId":"social-media-marketing",
+      "sectionName":"Social media marketing"
+    },{
+      "id":"marketing-agencies-association-partner-zone/marketing-agencies-association-partner-zone",
+      "type":"keyword",
+      "webTitle":"Marketing Agencies Association partner zone",
+      "webUrl":"http://www.theguardian.com/marketing-agencies-association-partner-zone/marketing-agencies-association-partner-zone",
+      "apiUrl":"http://content.guardianapis.com/marketing-agencies-association-partner-zone/marketing-agencies-association-partner-zone",
+      "sectionId":"media-network/marketing-agencies-association-partner-zone",
+      "sectionName":"Marketing Agencies Association partner zone"
+    }]
+  }
+}

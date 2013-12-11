@@ -1,0 +1,84 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":9,
+    "startIndex":1,
+    "pageSize":50,
+    "currentPage":1,
+    "pages":1,
+    "results":[{
+      "id":"technology/engineering",
+      "type":"keyword",
+      "webTitle":"Engineering",
+      "webUrl":"http://www.theguardian.com/technology/engineering",
+      "apiUrl":"http://content.guardianapis.com/technology/engineering",
+      "sectionId":"technology",
+      "sectionName":"Technology"
+    },{
+      "id":"education/mechanicalengineering",
+      "type":"keyword",
+      "webTitle":"Mechanical engineering",
+      "webUrl":"http://www.theguardian.com/education/mechanicalengineering",
+      "apiUrl":"http://content.guardianapis.com/education/mechanicalengineering",
+      "sectionId":"education",
+      "sectionName":"Education"
+    },{
+      "id":"science/tissue-engineering",
+      "type":"keyword",
+      "webTitle":"Tissue engineering",
+      "webUrl":"http://www.theguardian.com/science/tissue-engineering",
+      "apiUrl":"http://content.guardianapis.com/science/tissue-engineering",
+      "sectionId":"science",
+      "sectionName":"Science"
+    },{
+      "id":"education/engineeringgeneral",
+      "type":"keyword",
+      "webTitle":"Engineering general",
+      "webUrl":"http://www.theguardian.com/education/engineeringgeneral",
+      "apiUrl":"http://content.guardianapis.com/education/engineeringgeneral",
+      "sectionId":"education",
+      "sectionName":"Education"
+    },{
+      "id":"education/chemicalengineering",
+      "type":"keyword",
+      "webTitle":"Chemical engineering",
+      "webUrl":"http://www.theguardian.com/education/chemicalengineering",
+      "apiUrl":"http://content.guardianapis.com/education/chemicalengineering",
+      "sectionId":"education",
+      "sectionName":"Education"
+    },{
+      "id":"education/civilengineering",
+      "type":"keyword",
+      "webTitle":"Civil engineering",
+      "webUrl":"http://www.theguardian.com/education/civilengineering",
+      "apiUrl":"http://content.guardianapis.com/education/civilengineering",
+      "sectionId":"education",
+      "sectionName":"Education"
+    },{
+      "id":"education/electronicsandelectricalengineering",
+      "type":"keyword",
+      "webTitle":"Electronics and electrical engineering",
+      "webUrl":"http://www.theguardian.com/education/electronicsandelectricalengineering",
+      "apiUrl":"http://content.guardianapis.com/education/electronicsandelectricalengineering",
+      "sectionId":"education",
+      "sectionName":"Education"
+    },{
+      "id":"education/materialsandmineralengineering",
+      "type":"keyword",
+      "webTitle":"Materials and mineral engineering",
+      "webUrl":"http://www.theguardian.com/education/materialsandmineralengineering",
+      "apiUrl":"http://content.guardianapis.com/education/materialsandmineralengineering",
+      "sectionId":"education",
+      "sectionName":"Education"
+    },{
+      "id":"business/spiraxsarcoengineering",
+      "type":"keyword",
+      "webTitle":"Spirax-Sarco Engineering",
+      "webUrl":"http://www.theguardian.com/business/spiraxsarcoengineering",
+      "apiUrl":"http://content.guardianapis.com/business/spiraxsarcoengineering",
+      "sectionId":"business",
+      "sectionName":"Business"
+    }]
+  }
+}

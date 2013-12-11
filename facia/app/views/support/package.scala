@@ -19,11 +19,20 @@ object GetContainer {
   val specificContainers: Map[String, Map[String, Container]] = Map(
     ("au", Map(
       ("au/news/regular-stories", NewsContainer()),
+      ("au/news/special-story", SectionContainer(headerLink = false)),
       ("au/sport/regular-stories", SportContainer()),
       ("au/tone/features/feature-stories", FeaturesContainer()),
       ("au/commentisfree/regular-stories", CommentContainer()),
       ("au/culture/regular-stories", FeaturesContainer()),
       ("au/contributors/feature-stories", CommentContainer())
+    )),
+    ("au-alpha", Map(
+      ("au-alpha/news/regular-stories", NewsContainer()),
+      ("au-alpha/features/feature-stories", FeaturesContainer(headerLink = false)),
+      ("au-alpha/special/special-story", SportContainer(headerLink = false)),
+      ("au-alpha/contributors/feature-stories", CommentContainer(headerLink = false)),
+      ("au-alpha/people-in-the-news/feature-stories", SportContainer(headerLink = false)),
+      ("au-alpha/special-other/special-story", SportContainer(headerLink = false))
     )),
     ("au/business", Map(
       ("au/business/regular-stories", SportContainer(showMore = false))
@@ -42,6 +51,7 @@ object GetContainer {
     )),
     ("uk", Map(
       ("uk/news/regular-stories", NewsContainer()),
+      ("uk/news/special-story", SectionContainer(headerLink = false)),
       ("uk/sport/regular-stories", SportContainer()),
       ("uk/tone/features/feature-stories", FeaturesContainer()),
       ("uk/commentisfree/regular-stories", CommentContainer()),
@@ -73,11 +83,20 @@ object GetContainer {
     )),
     ("us", Map(
       ("us/news/regular-stories", NewsContainer()),
+      ("us/news/special-story", SectionContainer(headerLink = false)),
       ("us/sport/regular-stories", SportContainer()),
       ("us/tone/features/feature-stories", FeaturesContainer()),
       ("us/commentisfree/regular-stories", CommentContainer()),
       ("us/culture/regular-stories", FeaturesContainer()),
       ("us/contributors/feature-stories", CommentContainer())
+    )),
+    ("us-alpha", Map(
+      ("us-alpha/news/regular-stories", NewsContainer()),
+      ("us-alpha/features/feature-stories", FeaturesContainer(headerLink = false)),
+      ("us-alpha/special/special-story", SportContainer(headerLink = false)),
+      ("us-alpha/contributors/feature-stories", CommentContainer(headerLink = false)),
+      ("us-alpha/people-in-the-news/feature-stories", SportContainer(headerLink = false)),
+      ("us-alpha/special-other/special-story", SportContainer(headerLink = false))
     )),
     ("us/business", Map(
       ("us/business/regular-stories", SportContainer(showMore = false))

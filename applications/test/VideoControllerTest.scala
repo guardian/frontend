@@ -6,7 +6,7 @@ import org.scalatest.FlatSpec
 
 class VideoControllerTest extends FlatSpec with Matchers {
 
-  val videoUrl = "/uk/video/2012/jun/26/queen-enniskillen-northern-ireland-video"
+  val videoUrl = "uk/video/2012/jun/26/queen-enniskillen-northern-ireland-video"
   val callbackName = "aFunction"
 
   "Video Controller" should "200 when content type is video" in Fake {

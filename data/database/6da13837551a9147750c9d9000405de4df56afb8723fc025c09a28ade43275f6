@@ -1,0 +1,196 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":23,
+    "startIndex":1,
+    "pageSize":50,
+    "currentPage":1,
+    "pages":1,
+    "results":[{
+      "id":"culture/heritage",
+      "type":"keyword",
+      "webTitle":"Heritage",
+      "webUrl":"http://www.theguardian.com/culture/heritage",
+      "apiUrl":"http://content.guardianapis.com/culture/heritage",
+      "sectionId":"culture",
+      "sectionName":"Culture"
+    },{
+      "id":"travel/heritage",
+      "type":"keyword",
+      "webTitle":"Heritage",
+      "webUrl":"http://www.theguardian.com/travel/heritage",
+      "apiUrl":"http://content.guardianapis.com/travel/heritage",
+      "sectionId":"travel",
+      "sectionName":"Travel"
+    },{
+      "id":"education/arts",
+      "type":"keyword",
+      "webTitle":"Arts",
+      "webUrl":"http://www.theguardian.com/education/arts",
+      "apiUrl":"http://content.guardianapis.com/education/arts",
+      "sectionId":"education",
+      "sectionName":"Education"
+    },{
+      "id":"extra/english-heritage",
+      "type":"keyword",
+      "webTitle":"English Heritage",
+      "webUrl":"http://www.theguardian.com/extra/english-heritage",
+      "apiUrl":"http://content.guardianapis.com/extra/english-heritage",
+      "sectionId":"extra",
+      "sectionName":"Extra"
+    },{
+      "id":"think-of-england/heritage-gems",
+      "type":"keyword",
+      "webTitle":"Heritage gems",
+      "webUrl":"http://www.theguardian.com/think-of-england/heritage-gems",
+      "apiUrl":"http://content.guardianapis.com/think-of-england/heritage-gems",
+      "sectionId":"think-of-england",
+      "sectionName":"Think of England"
+    },{
+      "id":"education/artsandhumanities",
+      "type":"keyword",
+      "webTitle":"Arts and humanities",
+      "webUrl":"http://www.theguardian.com/education/artsandhumanities",
+      "apiUrl":"http://content.guardianapis.com/education/artsandhumanities",
+      "sectionId":"education",
+      "sectionName":"Education"
+    },{
+      "id":"culture-professionals-network/arts-education",
+      "type":"keyword",
+      "webTitle":"Arts education",
+      "webUrl":"http://www.theguardian.com/culture-professionals-network/arts-education",
+      "apiUrl":"http://content.guardianapis.com/culture-professionals-network/arts-education",
+      "sectionId":"culture-professionals-network",
+      "sectionName":"Culture professionals network"
+    },{
+      "id":"culture/arts-policy",
+      "type":"keyword",
+      "webTitle":"Arts policy",
+      "webUrl":"http://www.theguardian.com/culture/arts-policy",
+      "apiUrl":"http://content.guardianapis.com/culture/arts-policy",
+      "sectionId":"culture",
+      "sectionName":"Culture"
+    },{
+      "id":"education/artsinschools",
+      "type":"keyword",
+      "webTitle":"Arts in schools",
+      "webUrl":"http://www.theguardian.com/education/artsinschools",
+      "apiUrl":"http://content.guardianapis.com/education/artsinschools",
+      "sectionId":"education",
+      "sectionName":"Education"
+    },{
+      "id":"media/sky-arts",
+      "type":"keyword",
+      "webTitle":"Sky Arts",
+      "webUrl":"http://www.theguardian.com/media/sky-arts",
+      "apiUrl":"http://content.guardianapis.com/media/sky-arts",
+      "sectionId":"media",
+      "sectionName":"Media"
+    },{
+      "id":"culture/arts-funding",
+      "type":"keyword",
+      "webTitle":"Arts funding",
+      "webUrl":"http://www.theguardian.com/culture/arts-funding",
+      "apiUrl":"http://content.guardianapis.com/culture/arts-funding",
+      "sectionId":"culture",
+      "sectionName":"Culture"
+    },{
+      "id":"education/liverpoolinstituteforperformingarts",
+      "type":"keyword",
+      "webTitle":"Liverpool Institute for Performing Arts",
+      "webUrl":"http://www.theguardian.com/education/liverpoolinstituteforperformingarts",
+      "apiUrl":"http://content.guardianapis.com/education/liverpoolinstituteforperformingarts",
+      "sectionId":"education",
+      "sectionName":"Education"
+    },{
+      "id":"education/universityoftheartslondon",
+      "type":"keyword",
+      "webTitle":"University of the Arts London",
+      "webUrl":"http://www.theguardian.com/education/universityoftheartslondon",
+      "apiUrl":"http://content.guardianapis.com/education/universityoftheartslondon",
+      "sectionId":"education",
+      "sectionName":"Education"
+    },{
+      "id":"extra/blackwell-the-arts-crafts-house",
+      "type":"keyword",
+      "webTitle":"Blackwell, The Arts & Crafts House",
+      "webUrl":"http://www.theguardian.com/extra/blackwell-the-arts-crafts-house",
+      "apiUrl":"http://content.guardianapis.com/extra/blackwell-the-arts-crafts-house",
+      "sectionId":"extra",
+      "sectionName":"Extra"
+    },{
+      "id":"education/norwich-university-college-arts",
+      "type":"keyword",
+      "webTitle":"Norwich University of the Arts",
+      "webUrl":"http://www.theguardian.com/education/norwich-university-college-arts",
+      "apiUrl":"http://content.guardianapis.com/education/norwich-university-college-arts",
+      "sectionId":"education",
+      "sectionName":"Education"
+    },{
+      "id":"artanddesign/royal-academy-of-arts",
+      "type":"keyword",
+      "webTitle":"Royal Academy of Arts",
+      "webUrl":"http://www.theguardian.com/artanddesign/royal-academy-of-arts",
+      "apiUrl":"http://content.guardianapis.com/artanddesign/royal-academy-of-arts",
+      "sectionId":"artanddesign",
+      "sectionName":"Art and design"
+    },{
+      "id":"culture/chinaarts2008",
+      "type":"keyword",
+      "webTitle":"China arts 2008",
+      "webUrl":"http://www.theguardian.com/culture/chinaarts2008",
+      "apiUrl":"http://content.guardianapis.com/culture/chinaarts2008",
+      "sectionId":"culture",
+      "sectionName":"Culture"
+    },{
+      "id":"education/universitycollegeforthecreativearts",
+      "type":"keyword",
+      "webTitle":"University for the Creative Arts",
+      "webUrl":"http://www.theguardian.com/education/universitycollegeforthecreativearts",
+      "apiUrl":"http://content.guardianapis.com/education/universitycollegeforthecreativearts",
+      "sectionId":"education",
+      "sectionName":"Education"
+    },{
+      "id":"education/arts-university-college-at-bournemouth",
+      "type":"keyword",
+      "webTitle":"Arts University Bournemouth",
+      "webUrl":"http://www.theguardian.com/education/arts-university-college-at-bournemouth",
+      "apiUrl":"http://content.guardianapis.com/education/arts-university-college-at-bournemouth",
+      "sectionId":"education",
+      "sectionName":"Education"
+    },{
+      "id":"culture/arts-council-england",
+      "type":"keyword",
+      "webTitle":"Arts Council England",
+      "webUrl":"http://www.theguardian.com/culture/arts-council-england",
+      "apiUrl":"http://content.guardianapis.com/culture/arts-council-england",
+      "sectionId":"culture",
+      "sectionName":"Culture"
+    },{
+      "id":"university-arts-london-partner-zone/university-arts-london-partner-zone",
+      "type":"keyword",
+      "webTitle":"University of the Arts London partner zone",
+      "webUrl":"http://www.theguardian.com/university-arts-london-partner-zone/university-arts-london-partner-zone",
+      "apiUrl":"http://content.guardianapis.com/university-arts-london-partner-zone/university-arts-london-partner-zone",
+      "sectionId":"university-arts-london-partner-zone",
+      "sectionName":"University of the Arts London partner zone"
+    },{
+      "id":"culture/observer-anthony-burgess-prize-for-arts-journalism",
+      "type":"keyword",
+      "webTitle":"The Observer/Anthony Burgess Prize for Arts Journalism",
+      "webUrl":"http://www.theguardian.com/culture/observer-anthony-burgess-prize-for-arts-journalism",
+      "apiUrl":"http://content.guardianapis.com/culture/observer-anthony-burgess-prize-for-arts-journalism",
+      "sectionId":"culture",
+      "sectionName":"Culture"
+    },{
+      "id":"young-arts-critic-competition/young-arts-critic-competition",
+      "type":"keyword",
+      "webTitle":"The Guardian young arts critic competition 2010",
+      "webUrl":"http://www.theguardian.com/young-arts-critic-competition/young-arts-critic-competition",
+      "apiUrl":"http://content.guardianapis.com/young-arts-critic-competition/young-arts-critic-competition",
+      "sectionId":"young-arts-critic-competition",
+      "sectionName":"The Guardian young arts critic competition"
+    }]
+  }
+}

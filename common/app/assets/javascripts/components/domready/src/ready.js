@@ -15,7 +15,8 @@
     , addEventListener = 'addEventListener'
     , onreadystatechange = 'onreadystatechange'
     , readyState = 'readyState'
-    , loaded = /^loade|c/.test(doc[readyState])
+    , loadedRgx = hack ? /^loaded|^c/ : /^loaded|c/
+    , loaded = loadedRgx.test(doc[readyState])
 
   function flush(f) {
     loaded = 1
