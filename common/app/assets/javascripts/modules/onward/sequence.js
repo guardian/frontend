@@ -16,7 +16,6 @@ define([
 
     var context,
         store = storage.session,
-        sequence = [],
         prefixes = {
             contextName: 'gu.context.name',
             contextPath: 'gu.context.path',
@@ -32,9 +31,19 @@ define([
         return store.get(prefixes[type]);
     }
 
-    function getSequence() { return get('sequence'); }
+    function getSequence() {
+        var currentSequence = get('sequence');
+        return {
+            name: currentSequence.name,
+            items: dedupeSequence(currentSequence.items)
+        };
+    }
+
     function getContext() { return { name: get('contextName'), path: get('contextPath') }; }
-    function removeContext() { return store.remove(prefixes.contextPath); }
+    function removeContext() {
+        store.remove(prefixes.contextName);
+        store.remove(prefixes.contextPath);
+    }
 
     function dedupeSequence(sequence) {
         var history = new History({}).get().map(function(i){
