@@ -23,7 +23,7 @@ define([
         this.variants = [
             {
                 id: 'RightEar',
-                test: function (context) {
+                test: function (context, config) {
 
                     mediator.on('modules:sequence:loaded', function(currentSequence) {
                         if (currentSequence && currentSequence.items.length > 0 && !rendered) {
@@ -33,7 +33,7 @@ define([
                         }
                     });
 
-                    sequence.init();
+                    sequence.init('/' + config.page.pageId);
                 }
             }
         ];

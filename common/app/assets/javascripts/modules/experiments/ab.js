@@ -112,7 +112,7 @@ define([
             variantId = participations[test.id].variant;
             test.variants.some(function(variant) {
                 if (variant.id === variantId) {
-                    variant.test(context);
+                    variant.test(context, config);
                     return true;
                 }
         });
