@@ -1,8 +1,8 @@
 package conf
 
 import common.Metrics
-import com.gu.management.{ PropertiesPage, StatusPage, ManifestPage }
-import com.gu.management.play.{ Management => GuManagement }
+import com.gu.management.{PropertiesPage, StatusPage, ManifestPage}
+import com.gu.management.play.{Management => GuManagement}
 import com.gu.management.logback.LogbackLevelPage
 
 object Management extends GuManagement {
@@ -12,7 +12,8 @@ object Management extends GuManagement {
   lazy val pages = List(
     new ManifestPage,
     new UrlPagesHealthcheckManagementPage(
-      "/login"
+      "/login",
+      "/radiator"
     ),
     StatusPage(applicationName, metrics),
     new PropertiesPage(Configuration.toString),
