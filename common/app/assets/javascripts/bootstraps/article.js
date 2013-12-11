@@ -13,7 +13,6 @@ define([
     "modules/ui/notification-counter",
     "modules/onward/sequence",
     "modules/experiments/left-hand-card",
-    "modules/experiments/highlight-panel",
     "modules/open/cta"
 ], function (
     common,
@@ -30,7 +29,6 @@ define([
     NotificationCounter,
     sequence,
     LeftHandCard,
-    HighlightPanel,
     OpenCta
 ) {
 
@@ -144,17 +142,6 @@ define([
             });
         },
 
-        initHighlightsPanel: function(config) {
-            var rendered = false;
-            mediator.on('modules:sequence:loaded', function(data){
-                if(data !== null && !rendered) {
-                    var h = new HighlightPanel(data.items, mediator);
-                    rendered = true;
-                }
-            });
-            sequence.init('/' + config.page.pageId);
-        },
-
         initOpen: function() {
             common.mediator.on('page:article:ready', function(config, context) {
                 if (config.switches.openCta && config.page.commentable) {
@@ -180,7 +167,6 @@ define([
             modules.initDiscussion();
             modules.initCricket();
             modules.externalLinksCards();
-            modules.initHighlightsPanel(config);
             modules.initOpen();
         }
         common.mediator.emit("page:article:ready", config, context);

@@ -256,6 +256,10 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to test intrusive onward components",
     safeState = Off)
 
+  val ABOnwardHighlightsPanel = Switch("A/B Tests", "ab-onward-highlights-panel",
+    "If this is switched on an AB test runs to test onward highlights panel",
+    safeState = Off)
+
   // Sport Switch
 
   val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
@@ -339,6 +343,7 @@ object Switches extends Collections {
     FacebookAutoSigninSwitch,
     ABImproveOnwardTrails,
     ABOnwardIntrusive,
+    ABOnwardHighlightsPanel,
     ABInitialShowMore,
     AdDwellTimeLoggerSwitch,
     ABShowMoreLayout,
