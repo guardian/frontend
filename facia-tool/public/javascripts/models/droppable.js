@@ -71,7 +71,7 @@ define([
                 element.addEventListener('drop', function(event) {
                     var targetList = ko.dataFor(element),
                         targetItem = ko.dataFor(event.target),
-                        item = event.testData ? event.testData : event.dataTransfer.getData('Text'),
+                        id = event.testData ? event.testData : event.dataTransfer.getData('Text'),
                         position,
                         article,
                         groups,
@@ -95,7 +95,7 @@ define([
                             isAfter = true;
                         // or if there arent't any other items, after those in the first preceding group that contains items.
                         } else if (targetList.collection) {
-                            var groups = targetList.collection.groups; 
+                            groups = targetList.collection.groups; 
                             for (var i = groups.indexOf(targetList) - 1; i >= 0; i -= 1) {
                                 targetItem = _.last(groups[i].items());
                                 if (targetItem) {
@@ -108,15 +108,15 @@ define([
 
                     position = targetItem && targetItem.props ? targetItem.props.id() : undefined;
 
-                    _.each(common.util.parseQueryParams(item), function(url){
+                    _.each(common.util.parseQueryParams(id), function(url){
                         if (url && url.match(/^http:\/\/www.theguardian.com/)) {
-                            item = url;
+                            id = url;
                         }
                     });
 
-                    item = common.util.urlAbsPath(item);
+                    id = common.util.urlAbsPath(id);
 
-                    if (!item) { 
+                    if (!id) { 
                         alertBadContent();
                         return;
                     }
@@ -125,17 +125,20 @@ define([
                         targetList.collection.state.loadIsPending(true);
                     }
 
-                    // sourceItem doesn't exist when the drag was from an arbitrary link elsewhere.
-                    // garbage collect it, if it's a leftover from a previous drag. 
-                    if(sourceItem && sourceItem.props.id() !== item) {
+                    // sourceItem var doesn't get repopulated when the drag was from an arbitrary link elsewhere
+                    // so garbage collect it - if it's a leftover from a previous drag.
+                    if(sourceItem && sourceItem.props.id() !== id) {
                         sourceItem = undefined;
+                        sourceList = undefined;
                     }
+
+                    removeMatchingItems(targetList, id)
 
                     insertAt = targetList.items().indexOf(targetItem) + isAfter;
                     insertAt = insertAt === -1 ? targetList.items().length : insertAt;
  
                     article = new Article({
-                        id: item,
+                        id: id,
                         meta: sourceItem ? sourceItem.getMeta() : undefined
                     });
 
@@ -144,10 +147,10 @@ define([
 
                     contentApi.validateItem(article)
                     .fail(function() {
+                        removeMatchingItems(targetList, id);
                         if (targetList.collection) {
                             targetList.collection.state.loadIsPending(false);
                         }
-                        targetList.items.remove(article);
                         alertBadContent();
                     })
                     .done(function() {
@@ -170,7 +173,7 @@ define([
                             'post',
                             targetList.collection,
                             {
-                                item:     item,
+                                item:     id,
                                 position: position,
                                 after:    isAfter,
                                 live:     common.state.liveMode(),
@@ -198,7 +201,7 @@ define([
                             'delete',
                             sourceList.collection,
                             {
-                                item:   item,
+                                item:   id,
                                 live:   common.state.liveMode(),
                                 draft: !common.state.liveMode()
                             }
@@ -208,6 +211,12 @@ define([
             }
         };
     };
+
+    function removeMatchingItems(list, id) {
+        list.items.remove(function(item) {
+            return item.props.id() === id;
+        });
+    }
 
     function alertBadContent() {
         window.alert('Sorry, that isn\'t a Guardian article!')
