@@ -361,7 +361,7 @@ module.exports = function (grunt) {
                     src: ['**/*.js', '!components/**', '!utils/atob.js']
                 }]
             },
-            frontsTool: {
+            faciaTool: {
                 files: [{
                     expand: true,
                     cwd: 'facia-tool/public/javascripts/',
