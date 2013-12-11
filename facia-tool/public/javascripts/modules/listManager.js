@@ -94,7 +94,7 @@ define([
         function renderFront(id) {
             history.pushState({}, "", window.location.pathname + '?' + common.util.ammendedQueryStr('front', id));
             model.collections(
-                (model.config.fronts[getFront()] || {}).collections
+                ((model.config.fronts[getFront()] || {}).collections || [])
                 .filter(function(id){ return !!model.config.collections[id]; })
                 .map(function(id){
                     return new Collection(

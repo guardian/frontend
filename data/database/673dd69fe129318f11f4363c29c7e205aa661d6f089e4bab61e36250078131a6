@@ -1,0 +1,332 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":40,
+    "startIndex":1,
+    "pageSize":50,
+    "currentPage":1,
+    "pages":1,
+    "results":[{
+      "id":"education/science",
+      "type":"keyword",
+      "webTitle":"Science",
+      "webUrl":"http://www.theguardian.com/education/science",
+      "apiUrl":"http://content.guardianapis.com/education/science",
+      "sectionId":"education",
+      "sectionName":"Education"
+    },{
+      "id":"science/science",
+      "type":"keyword",
+      "webTitle":"Science",
+      "webUrl":"http://www.theguardian.com/science/science",
+      "apiUrl":"http://content.guardianapis.com/science/science",
+      "sectionId":"science",
+      "sectionName":"Science"
+    },{
+      "id":"science/scienceprizes",
+      "type":"keyword",
+      "webTitle":"Science prizes",
+      "webUrl":"http://www.theguardian.com/science/scienceprizes",
+      "apiUrl":"http://content.guardianapis.com/science/scienceprizes",
+      "sectionId":"science",
+      "sectionName":"Science"
+    },{
+      "id":"science/science-policy",
+      "type":"keyword",
+      "webTitle":"Science policy",
+      "webUrl":"http://www.theguardian.com/science/science-policy",
+      "apiUrl":"http://content.guardianapis.com/science/science-policy",
+      "sectionId":"science",
+      "sectionName":"Science"
+    },{
+      "id":"tv-and-radio/science-fiction",
+      "type":"keyword",
+      "webTitle":"Science fiction",
+      "webUrl":"http://www.theguardian.com/tv-and-radio/science-fiction",
+      "apiUrl":"http://content.guardianapis.com/tv-and-radio/science-fiction",
+      "sectionId":"tv-and-radio",
+      "sectionName":"Television &amp; radio"
+    },{
+      "id":"education/computerscienceandit",
+      "type":"keyword",
+      "webTitle":"Computer science and IT",
+      "webUrl":"http://www.theguardian.com/education/computerscienceandit",
+      "apiUrl":"http://content.guardianapis.com/education/computerscienceandit",
+      "sectionId":"education",
+      "sectionName":"Education"
+    },{
+      "id":"books/scienceandnature",
+      "type":"keyword",
+      "webTitle":"Science and nature",
+      "webUrl":"http://www.theguardian.com/books/scienceandnature",
+      "apiUrl":"http://content.guardianapis.com/books/scienceandnature",
+      "sectionId":"books",
+      "sectionName":"Books"
+    },{
+      "id":"science/forensicscience",
+      "type":"keyword",
+      "webTitle":"Forensic science",
+      "webUrl":"http://www.theguardian.com/science/forensicscience",
+      "apiUrl":"http://content.guardianapis.com/science/forensicscience",
+      "sectionId":"science",
+      "sectionName":"Science"
+    },{
+      "id":"science/science-scepticism",
+      "type":"keyword",
+      "webTitle":"Science and scepticism",
+      "webUrl":"http://www.theguardian.com/science/science-scepticism",
+      "apiUrl":"http://content.guardianapis.com/science/science-scepticism",
+      "sectionId":"science",
+      "sectionName":"Science"
+    },{
+      "id":"science/people-in-science",
+      "type":"keyword",
+      "webTitle":"People in science",
+      "webUrl":"http://www.theguardian.com/science/people-in-science",
+      "apiUrl":"http://content.guardianapis.com/science/people-in-science",
+      "sectionId":"science",
+      "sectionName":"Science"
+    },{
+      "id":"education/sportsscience",
+      "type":"keyword",
+      "webTitle":"Sports science",
+      "webUrl":"http://www.theguardian.com/education/sportsscience",
+      "apiUrl":"http://content.guardianapis.com/education/sportsscience",
+      "sectionId":"education",
+      "sectionName":"Education"
+    },{
+      "id":"science/history-science",
+      "type":"keyword",
+      "webTitle":"History of science",
+      "webUrl":"http://www.theguardian.com/science/history-science",
+      "apiUrl":"http://content.guardianapis.com/science/history-science",
+      "sectionId":"science",
+      "sectionName":"Science"
+    },{
+      "id":"education/socialsciences",
+      "type":"keyword",
+      "webTitle":"Social sciences",
+      "webUrl":"http://www.theguardian.com/education/socialsciences",
+      "apiUrl":"http://content.guardianapis.com/education/socialsciences",
+      "sectionId":"education",
+      "sectionName":"Education"
+    },{
+      "id":"science/food-science",
+      "type":"keyword",
+      "webTitle":"Food science",
+      "webUrl":"http://www.theguardian.com/science/food-science",
+      "apiUrl":"http://content.guardianapis.com/science/food-science",
+      "sectionId":"science",
+      "sectionName":"Science"
+    },{
+      "id":"books/science-fiction",
+      "type":"keyword",
+      "webTitle":"Science fiction",
+      "webUrl":"http://www.theguardian.com/books/science-fiction",
+      "apiUrl":"http://content.guardianapis.com/books/science-fiction",
+      "sectionId":"books",
+      "sectionName":"Books"
+    },{
+      "id":"education/veterinaryscience",
+      "type":"keyword",
+      "webTitle":"Veterinary science",
+      "webUrl":"http://www.theguardian.com/education/veterinaryscience",
+      "apiUrl":"http://content.guardianapis.com/education/veterinaryscience",
+      "sectionId":"education",
+      "sectionName":"Education"
+    },{
+      "id":"business/huntingdon-life-sciences",
+      "type":"keyword",
+      "webTitle":"Huntingdon Life Sciences",
+      "webUrl":"http://www.theguardian.com/business/huntingdon-life-sciences",
+      "apiUrl":"http://content.guardianapis.com/business/huntingdon-life-sciences",
+      "sectionId":"business",
+      "sectionName":"Business"
+    },{
+      "id":"film/sciencefictionspecial",
+      "type":"keyword",
+      "webTitle":"Science fiction special",
+      "webUrl":"http://www.theguardian.com/film/sciencefictionspecial",
+      "apiUrl":"http://content.guardianapis.com/film/sciencefictionspecial",
+      "sectionId":"film",
+      "sectionName":"Film"
+    },{
+      "id":"science/science-funding-crisis",
+      "type":"keyword",
+      "webTitle":"Science funding crisis",
+      "webUrl":"http://www.theguardian.com/science/science-funding-crisis",
+      "apiUrl":"http://content.guardianapis.com/science/science-funding-crisis",
+      "sectionId":"science",
+      "sectionName":"Science"
+    },{
+      "id":"science/british-science-festival-2011",
+      "type":"keyword",
+      "webTitle":"British Science Festival 2011",
+      "webUrl":"http://www.theguardian.com/science/british-science-festival-2011",
+      "apiUrl":"http://content.guardianapis.com/science/british-science-festival-2011",
+      "sectionId":"science",
+      "sectionName":"Science"
+    },{
+      "id":"tv-and-radio/science-and-nature-tv",
+      "type":"keyword",
+      "webTitle":"Science and nature TV",
+      "webUrl":"http://www.theguardian.com/tv-and-radio/science-and-nature-tv",
+      "apiUrl":"http://content.guardianapis.com/tv-and-radio/science-and-nature-tv",
+      "sectionId":"tv-and-radio",
+      "sectionName":"Television &amp; radio"
+    },{
+      "id":"education/earthandmarinesciences",
+      "type":"keyword",
+      "webTitle":"Earth and marine sciences",
+      "webUrl":"http://www.theguardian.com/education/earthandmarinesciences",
+      "apiUrl":"http://content.guardianapis.com/education/earthandmarinesciences",
+      "sectionId":"education",
+      "sectionName":"Education"
+    },{
+      "id":"science/british-science-festival",
+      "type":"keyword",
+      "webTitle":"British Science Festival",
+      "webUrl":"http://www.theguardian.com/science/british-science-festival",
+      "apiUrl":"http://content.guardianapis.com/science/british-science-festival",
+      "sectionId":"science",
+      "sectionName":"Science"
+    },{
+      "id":"science/science-writing-prize",
+      "type":"keyword",
+      "webTitle":"Science writing prize",
+      "webUrl":"http://www.theguardian.com/science/science-writing-prize",
+      "apiUrl":"http://content.guardianapis.com/science/science-writing-prize",
+      "sectionId":"science",
+      "sectionName":"Science"
+    },{
+      "id":"film/sciencefictionandfantasy",
+      "type":"keyword",
+      "webTitle":"Science fiction and fantasy",
+      "webUrl":"http://www.theguardian.com/film/sciencefictionandfantasy",
+      "apiUrl":"http://content.guardianapis.com/film/sciencefictionandfantasy",
+      "sectionId":"film",
+      "sectionName":"Film"
+    },{
+      "id":"environment/hacked-climate-science-emails",
+      "type":"keyword",
+      "webTitle":"Hacked climate science emails",
+      "webUrl":"http://www.theguardian.com/environment/hacked-climate-science-emails",
+      "apiUrl":"http://content.guardianapis.com/environment/hacked-climate-science-emails",
+      "sectionId":"environment",
+      "sectionName":"Environment"
+    },{
+      "id":"science/britishassociationfestivalofscience2008",
+      "type":"keyword",
+      "webTitle":"BA Festival of Science 2008",
+      "webUrl":"http://www.theguardian.com/science/britishassociationfestivalofscience2008",
+      "apiUrl":"http://content.guardianapis.com/science/britishassociationfestivalofscience2008",
+      "sectionId":"science",
+      "sectionName":"Science"
+    },{
+      "id":"science/british-science-festival-2009",
+      "type":"keyword",
+      "webTitle":"British Science Festival 2009",
+      "webUrl":"http://www.theguardian.com/science/british-science-festival-2009",
+      "apiUrl":"http://content.guardianapis.com/science/british-science-festival-2009",
+      "sectionId":"science",
+      "sectionName":"Science"
+    },{
+      "id":"science/ba2007",
+      "type":"keyword",
+      "webTitle":"BA Festival of Science 2007",
+      "webUrl":"http://www.theguardian.com/science/ba2007",
+      "apiUrl":"http://content.guardianapis.com/science/ba2007",
+      "sectionId":"science",
+      "sectionName":"Science"
+    },{
+      "id":"science/british-science-festival-2010",
+      "type":"keyword",
+      "webTitle":"British Science Festival 2010",
+      "webUrl":"http://www.theguardian.com/science/british-science-festival-2010",
+      "apiUrl":"http://content.guardianapis.com/science/british-science-festival-2010",
+      "sectionId":"science",
+      "sectionName":"Science"
+    },{
+      "id":"education/londonschoolofeconomics",
+      "type":"keyword",
+      "webTitle":"London School of Economics and Political Science",
+      "webUrl":"http://www.theguardian.com/education/londonschoolofeconomics",
+      "apiUrl":"http://content.guardianapis.com/education/londonschoolofeconomics",
+      "sectionId":"education",
+      "sectionName":"Education"
+    },{
+      "id":"books/royal-society-science-book-prize",
+      "type":"keyword",
+      "webTitle":"Royal Society Science Book Prize",
+      "webUrl":"http://www.theguardian.com/books/royal-society-science-book-prize",
+      "apiUrl":"http://content.guardianapis.com/books/royal-society-science-book-prize",
+      "sectionId":"books",
+      "sectionName":"Books"
+    },{
+      "id":"books/royalsocietyprizesforsciencebooks2004",
+      "type":"keyword",
+      "webTitle":"Aventis prizes for science books 2004",
+      "webUrl":"http://www.theguardian.com/books/royalsocietyprizesforsciencebooks2004",
+      "apiUrl":"http://content.guardianapis.com/books/royalsocietyprizesforsciencebooks2004",
+      "sectionId":"books",
+      "sectionName":"Books"
+    },{
+      "id":"books/royalsocietyprizesforsciencebooks2006",
+      "type":"keyword",
+      "webTitle":"Aventis prizes for science books 2006",
+      "webUrl":"http://www.theguardian.com/books/royalsocietyprizesforsciencebooks2006",
+      "apiUrl":"http://content.guardianapis.com/books/royalsocietyprizesforsciencebooks2006",
+      "sectionId":"books",
+      "sectionName":"Books"
+    },{
+      "id":"books/royalsocietyprizesforsciencebooks2005",
+      "type":"keyword",
+      "webTitle":"Aventis prizes for science books 2005",
+      "webUrl":"http://www.theguardian.com/books/royalsocietyprizesforsciencebooks2005",
+      "apiUrl":"http://content.guardianapis.com/books/royalsocietyprizesforsciencebooks2005",
+      "sectionId":"books",
+      "sectionName":"Books"
+    },{
+      "id":"books/royalsocietyprizesforsciencebooks",
+      "type":"keyword",
+      "webTitle":"Royal Society prizes for science books",
+      "webUrl":"http://www.theguardian.com/books/royalsocietyprizesforsciencebooks",
+      "apiUrl":"http://content.guardianapis.com/books/royalsocietyprizesforsciencebooks",
+      "sectionId":"books",
+      "sectionName":"Books"
+    },{
+      "id":"books/royalsocietyprizes2007",
+      "type":"keyword",
+      "webTitle":"Royal Society prizes for science books 2007",
+      "webUrl":"http://www.theguardian.com/books/royalsocietyprizes2007",
+      "apiUrl":"http://content.guardianapis.com/books/royalsocietyprizes2007",
+      "sectionId":"books",
+      "sectionName":"Books"
+    },{
+      "id":"books/royalsocietyprizesforsciencebooks2003",
+      "type":"keyword",
+      "webTitle":"Royal Society prizes for science books 2003",
+      "webUrl":"http://www.theguardian.com/books/royalsocietyprizesforsciencebooks2003",
+      "apiUrl":"http://content.guardianapis.com/books/royalsocietyprizesforsciencebooks2003",
+      "sectionId":"books",
+      "sectionName":"Books"
+    },{
+      "id":"books/royal-society-prizes-for-science-books-2009",
+      "type":"keyword",
+      "webTitle":"Royal Society prizes for science books 2009",
+      "webUrl":"http://www.theguardian.com/books/royal-society-prizes-for-science-books-2009",
+      "apiUrl":"http://content.guardianapis.com/books/royal-society-prizes-for-science-books-2009",
+      "sectionId":"books",
+      "sectionName":"Books"
+    },{
+      "id":"books/royal-society-prizes-2008",
+      "type":"keyword",
+      "webTitle":"Royal Society prizes for science books 2008",
+      "webUrl":"http://www.theguardian.com/books/royal-society-prizes-2008",
+      "apiUrl":"http://content.guardianapis.com/books/royal-society-prizes-2008",
+      "sectionId":"books",
+      "sectionName":"Books"
+    }]
+  }
+}

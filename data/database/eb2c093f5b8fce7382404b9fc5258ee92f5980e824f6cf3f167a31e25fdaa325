@@ -1,0 +1,20 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "startIndex":1,
+    "pageSize":50,
+    "currentPage":1,
+    "pages":1,
+    "results":[{
+      "id":"travel/uk",
+      "type":"keyword",
+      "webTitle":"United Kingdom",
+      "webUrl":"http://www.theguardian.com/travel/uk",
+      "apiUrl":"http://content.guardianapis.com/travel/uk",
+      "sectionId":"travel",
+      "sectionName":"Travel"
+    }]
+  }
+}

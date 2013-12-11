@@ -1,12 +1,12 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize underscore exports="amd" -o ./underscore/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
  * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  * Available under MIT license <http://lodash.com/license>
  */
-define(['../internals/compareAscending', '../functions/createCallback', './forEach'], function(compareAscending, createCallback, forEach) {
+define(['../internals/compareAscending', '../functions/createCallback', './forEach', '../objects/isArray', './map'], function(compareAscending, createCallback, forEach, isArray, map) {
 
   /**
    * Creates an array of elements, sorted in ascending order by the results of
@@ -18,6 +18,9 @@ define(['../internals/compareAscending', '../functions/createCallback', './forEa
    * If a property name is provided for `callback` the created "_.pluck" style
    * callback will return the property value of the given element.
    *
+   * If an array of property names is provided for `callback` the collection
+   * will be sorted by each property value.
+   *
    * If an object is provided for `callback` the created "_.where" style callback
    * will return `true` for elements that have the properties of the given object,
    * else `false`.
@@ -26,7 +29,7 @@ define(['../internals/compareAscending', '../functions/createCallback', './forEa
    * @memberOf _
    * @category Collections
    * @param {Array|Object|string} collection The collection to iterate over.
-   * @param {Function|Object|string} [callback=identity] The function called
+   * @param {Array|Function|Object|string} [callback=identity] The function called
    *  per iteration. If a property name or object is provided it will be used
    *  to create a "_.pluck" or "_.where" style callback, respectively.
    * @param {*} [thisArg] The `this` binding of `callback`.
@@ -39,9 +42,20 @@ define(['../internals/compareAscending', '../functions/createCallback', './forEa
    * _.sortBy([1, 2, 3], function(num) { return this.sin(num); }, Math);
    * // => [3, 1, 2]
    *
+   * var characters = [
+   *   { 'name': 'barney',  'age': 36 },
+   *   { 'name': 'fred',    'age': 40 },
+   *   { 'name': 'barney',  'age': 26 },
+   *   { 'name': 'fred',    'age': 30 }
+   * ];
+   *
    * // using "_.pluck" callback shorthand
-   * _.sortBy(['banana', 'strawberry', 'apple'], 'length');
-   * // => ['apple', 'banana', 'strawberry']
+   * _.map(_.sortBy(characters, 'age'), _.values);
+   * // => [['barney', 26], ['fred', 30], ['barney', 36], ['fred', 40]]
+   *
+   * // sorting by multiple properties
+   * _.map(_.sortBy(characters, ['name', 'age']), _.values);
+   * // = > [['barney', 26], ['barney', 36], ['fred', 30], ['fred', 40]]
    */
   function sortBy(collection, callback, thisArg) {
     var index = -1,
@@ -51,7 +65,7 @@ define(['../internals/compareAscending', '../functions/createCallback', './forEa
     callback = createCallback(callback, thisArg, 3);
     forEach(collection, function(value, key, collection) {
       result[++index] = {
-        'criteria': callback(value, key, collection),
+        'criteria': [callback(value, key, collection)],
         'index': index,
         'value': value
       };

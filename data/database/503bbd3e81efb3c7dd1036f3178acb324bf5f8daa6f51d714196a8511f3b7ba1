@@ -1,0 +1,28 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":2,
+    "startIndex":1,
+    "pageSize":50,
+    "currentPage":1,
+    "pages":1,
+    "results":[{
+      "id":"travel/egypt",
+      "type":"keyword",
+      "webTitle":"Egypt",
+      "webUrl":"http://www.theguardian.com/travel/egypt",
+      "apiUrl":"http://content.guardianapis.com/travel/egypt",
+      "sectionId":"travel",
+      "sectionName":"Travel"
+    },{
+      "id":"travel/gizapyramid",
+      "type":"keyword",
+      "webTitle":"The Great Pyramid of Giza, Egypt",
+      "webUrl":"http://www.theguardian.com/travel/gizapyramid",
+      "apiUrl":"http://content.guardianapis.com/travel/gizapyramid",
+      "sectionId":"travel",
+      "sectionName":"Travel"
+    }]
+  }
+}

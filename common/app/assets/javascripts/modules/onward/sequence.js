@@ -16,7 +16,6 @@ define([
 
     var context,
         store = storage.session,
-        sequence = [],
         prefixes = {
             contextName: 'gu.context.name',
             contextPath: 'gu.context.path',
@@ -32,9 +31,23 @@ define([
         return store.get(prefixes[type]);
     }
 
-    function getSequence() { return get('sequence'); }
+    function getSequence() {
+        var currentSequence = get('sequence');
+        if (currentSequence) {
+            return {
+                name: currentSequence.name,
+                items: dedupeSequence(currentSequence.items)
+            };
+        } else {
+            return null;
+        }
+    }
+
     function getContext() { return { name: get('contextName'), path: get('contextPath') }; }
-    function removeContext() { return store.remove(prefixes.contextPath); }
+    function removeContext() {
+        store.remove(prefixes.contextName);
+        store.remove(prefixes.contextPath);
+    }
 
     function dedupeSequence(sequence) {
         var history = new History({}).get().map(function(i){
@@ -66,8 +79,8 @@ define([
     function bindListeners() {
         mediator.on('module:clickstream:click', function(clickSpec){
             if (clickSpec.sameHost && !clickSpec.samePage && clickSpec.linkContextPath) {
-                set('context.path', clickSpec.linkContextPath);
-                set('context.name', clickSpec.linkContextName);
+                set('contextPath', clickSpec.linkContextPath);
+                set('contextName', clickSpec.linkContextName);
             }
         });
     }

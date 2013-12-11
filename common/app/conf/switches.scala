@@ -106,10 +106,6 @@ object Switches extends Collections {
     "If this switch is on, comments are displayed on articles.",
     safeState = Off)
 
-  val ShortDiscussionSwitch = Switch("Discussion", "short-discussion",
-    "If this switch is on, only 10 top level comments are requested from discussion api.",
-    safeState = Off)
-
   val DiscussionCommentRecommend = Switch("Discussion", "discussion-comment-recommend",
     "If this switch is on, users can recommend comments",
     safeState = Off)
@@ -228,11 +224,11 @@ object Switches extends Collections {
     "If this is switched on an AA test runs to prove the assignment of users in to segments is working reliably.",
     safeState = Off)
 
-  val ABLiveBlogShowMore = Switch("A/B Tests", "ab-live-blog-show-more",
-    "If this is switched on an AB test runs to trial the impact of only displaying 10 live blog blocks with a show more cta",
-    safeState = Off)
-
   val ABAlphaAdverts = Switch("A/B Tests", "ab-alpha-adverts",
+    "If this is switched on an AB test runs to trial new advertising user experiences and commercial models",
+    safeState = Off)
+  
+  val ABAlphaComm = Switch("A/B Tests - second tranche", "ab-alpha-comm",
     "If this is switched on an AB test runs to trial new advertising user experiences and commercial models",
     safeState = Off)
 
@@ -303,7 +299,6 @@ object Switches extends Collections {
     DiscussionPostCommentSwitch,
     DiscussionTopCommentsSwitch,
     OpenCtaSwitch,
-    ShortDiscussionSwitch,
     SwipeNav,
     SwipeNavOnClick,
     FontSwitch,
@@ -332,13 +327,13 @@ object Switches extends Collections {
     UserzoomSwitch,
     FaciaSwitch,
     AdSlotImpressionStatsSwitch,
-    ABLiveBlogShowMore,
     CssFromStorageSwitch,
     ElasticSearchSwitch,
     ShowUnsupportedEmbedsSwitch,
     ServeWebPImagesSwitch,
     ArticleKeywordsSwitch,
     ABAlphaAdverts,
+    ABAlphaComm,
     ABCommercialComponents,
     EditionRedirectLoggingSwitch,
     FacebookAutoSigninSwitch,

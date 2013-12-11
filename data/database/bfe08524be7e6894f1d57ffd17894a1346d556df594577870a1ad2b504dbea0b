@@ -1,0 +1,20 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "startIndex":1,
+    "pageSize":50,
+    "currentPage":1,
+    "pages":1,
+    "results":[{
+      "id":"travel/denmark",
+      "type":"keyword",
+      "webTitle":"Denmark",
+      "webUrl":"http://www.theguardian.com/travel/denmark",
+      "apiUrl":"http://content.guardianapis.com/travel/denmark",
+      "sectionId":"travel",
+      "sectionName":"Travel"
+    }]
+  }
+}

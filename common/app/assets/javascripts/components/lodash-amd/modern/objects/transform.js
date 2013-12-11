@@ -1,25 +1,25 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="amd" -o ./modern/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
  * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  * Available under MIT license <http://lodash.com/license>
  */
-define(['../internals/baseCreateCallback', '../internals/createObject', '../collections/forEach', './forOwn', './isArray'], function(baseCreateCallback, createObject, forEach, forOwn, isArray) {
+define(['../internals/baseCreate', '../functions/createCallback', '../collections/forEach', './forOwn', './isArray'], function(baseCreate, createCallback, forEach, forOwn, isArray) {
 
   /**
    * An alternative to `_.reduce` this method transforms `object` to a new
-   * `accumulator` object which is the result of running each of its elements
-   * through a callback, with each callback execution potentially mutating
-   * the `accumulator` object. The callback is bound to `thisArg` and invoked
-   * with four arguments; (accumulator, value, key, object). Callbacks may exit
-   * iteration early by explicitly returning `false`.
+   * `accumulator` object which is the result of running each of its own
+   * enumerable properties through a callback, with each callback execution
+   * potentially mutating the `accumulator` object. The callback is bound to
+   * `thisArg` and invoked with four arguments; (accumulator, value, key, object).
+   * Callbacks may exit iteration early by explicitly returning `false`.
    *
    * @static
    * @memberOf _
    * @category Objects
-   * @param {Array|Object} collection The collection to iterate over.
+   * @param {Array|Object} object The object to iterate over.
    * @param {Function} [callback=identity] The function called per iteration.
    * @param {*} [accumulator] The custom accumulator value.
    * @param {*} [thisArg] The `this` binding of `callback`.
@@ -41,8 +41,6 @@ define(['../internals/baseCreateCallback', '../internals/createObject', '../coll
    */
   function transform(object, callback, accumulator, thisArg) {
     var isArr = isArray(object);
-    callback = baseCreateCallback(callback, thisArg, 4);
-
     if (accumulator == null) {
       if (isArr) {
         accumulator = [];
@@ -50,12 +48,15 @@ define(['../internals/baseCreateCallback', '../internals/createObject', '../coll
         var ctor = object && object.constructor,
             proto = ctor && ctor.prototype;
 
-        accumulator = createObject(proto);
+        accumulator = baseCreate(proto);
       }
     }
-    (isArr ? forEach : forOwn)(object, function(value, index, object) {
-      return callback(accumulator, value, index, object);
-    });
+    if (callback) {
+      callback = createCallback(callback, thisArg, 4);
+      (isArr ? forEach : forOwn)(object, function(value, index, object) {
+        return callback(accumulator, value, index, object);
+      });
+    }
     return accumulator;
   }
 

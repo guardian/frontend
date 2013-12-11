@@ -1,5 +1,5 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="amd" -o ./modern/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -21,8 +21,8 @@ define(['../collections/max', '../collections/pluck'], function(max, pluck) {
    * @returns {Array} Returns a new array of grouped elements.
    * @example
    *
-   * _.zip(['moe', 'larry'], [30, 40], [true, false]);
-   * // => [['moe', 30, true], ['larry', 40, false]]
+   * _.zip(['fred', 'barney'], [30, 40], [true, false]);
+   * // => [['fred', 30, true], ['barney', 40, false]]
    */
   function zip() {
     var array = arguments.length > 1 ? arguments : arguments[0],

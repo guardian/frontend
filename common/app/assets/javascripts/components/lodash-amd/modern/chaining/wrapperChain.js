@@ -1,5 +1,5 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="amd" -o ./modern/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -17,21 +17,21 @@ define([], function() {
    * @returns {*} Returns the wrapper object.
    * @example
    *
-   * var stooges = [
-   *   { 'name': 'moe', 'age': 40 },
-   *   { 'name': 'larry', 'age': 50 }
+   * var characters = [
+   *   { 'name': 'barney', 'age': 36 },
+   *   { 'name': 'fred',   'age': 40 }
    * ];
    *
    * // without explicit chaining
-   * _(stooges).first();
-   * // => { 'name': 'moe', 'age': 40 }
+   * _(characters).first();
+   * // => { 'name': 'barney', 'age': 36 }
    *
    * // with explicit chaining
-   * _(stooges).chain()
+   * _(characters).chain()
    *   .first()
    *   .pick('age')
-   *   .value()
-   * // => { 'age': 40 }
+   *   .value();
+   * // => { 'age': 36 }
    */
   function wrapperChain() {
     this.__chain__ = true;

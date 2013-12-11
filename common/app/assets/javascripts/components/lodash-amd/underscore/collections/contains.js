@@ -1,5 +1,5 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize underscore exports="amd" -o ./underscore/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -29,10 +29,10 @@ define(['../internals/baseIndexOf', '../objects/forOwn', '../internals/indicator
    * _.contains([1, 2, 3], 1, 2);
    * // => false
    *
-   * _.contains({ 'name': 'moe', 'age': 40 }, 'moe');
+   * _.contains({ 'name': 'fred', 'age': 40 }, 'fred');
    * // => true
    *
-   * _.contains('curly', 'ur');
+   * _.contains('pebbles', 'eb');
    * // => true
    */
   function contains(collection, target) {

@@ -15,7 +15,7 @@ trait CommentPageController extends DiscussionController {
     implicit request =>
       discussionApi.commentContext(id) map {
         page =>
-          Redirect("/discussion"+ page._1 + (if (request.isJson) ".json" else "") +"?page="+ page._2 + "#comment-"+ id).withHeaders("Access-Control-Allow-Origin" -> "*")
+          Redirect("/discussion"+ page._1 + (if (request.isJson) ".json" else "") +"?page="+ page._2 + "&allResponses=true#comment-"+ id).withHeaders("Access-Control-Allow-Origin" -> "*")
       }
   }
 
@@ -23,7 +23,8 @@ trait CommentPageController extends DiscussionController {
   def commentPage(key: DiscussionKey) = Action.async {
     implicit request =>
       val page = request.getQueryString("page").getOrElse("1")
-      val commentPage = discussionApi.commentsFor(key, page)
+      val allResponses = request.getQueryString("allResponses").exists( _ == "true")
+      val commentPage = discussionApi.commentsFor(key, page, allResponses)
       val blankComment = Comment(Json.parse("""{
         "id": 5,
         "body": "",

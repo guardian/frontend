@@ -1,22 +1,29 @@
-@(jobs: Seq[model.commercial.jobs.Job])
+@(jobs: Seq[model.commercial.jobs.Job])(implicit request: RequestHeader)
 
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
 <div class="commercial jobs-component">
     <div class="commercial__head">
-        <h3 class="commercial__title">guardian<span>jobs</span></h3>
+        <h3 class="commercial__title">
+            <a href="http://jobs.theguardian.com/">
+                <span class="u-h">Guardian Jobs</span>
+                <i class="i i-guardian-jobs-logo"></i>
+            </a>
+        </h3>
     </div>
     <div class="commercial__body">
-        <ul class="items">
-            @for(job <- jobs) {
+        <ul class="lineitems">
+            @jobs.take(1).map { job =>
                 <li class="lineitem">
-                    @job.recruiterLogoUrl.map{ url => <img src="@url" />}
                     <h4 class="lineitem__title"><a href="@job.listingUrl">@job.title</a></h4>
-                    <p class="lineitem__description">@job.shortDescription</p>
-                    <a href="@job.listingUrl" class="lineitem__link cta">Apply</a>
+                    <p class="lineitem__description">@job.recruiterLogoUrl.map{ url => <img class="lineitem__image lineitem__image-logo" src="@url" />} @job.shortDescription</p>
                 </li>
             }
         </ul>
     </div>
-    <div class="commercial__foot"></div>
+    <div class="commercial__foot">
+        @jobs.take(1).map { job =>
+            <a class="commercial__link" href="#">Find your next @job.mainIndustry job on Guardian Jobs <i class="i i-double-arrow-right-blue"></i></a>
+        }
+    </div>
 </div>

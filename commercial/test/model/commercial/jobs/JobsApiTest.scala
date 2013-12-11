@@ -13,4 +13,10 @@ class JobsApiTest extends FlatSpec with Matchers with ExecutionContexts {
     jobs should be(Fixtures.jobs)
   }
 
+  "parsed Jobs" should "figure out their industries" in {
+    val jobs: Seq[Job] = JobsApi.parse(XML.loadString(Fixtures.xml))
+
+    jobs.head.mainIndustry should be(Some("Finance & Accounting"))
+  }
+
 }

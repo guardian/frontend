@@ -1,7 +1,7 @@
 {
     "name": "bean"
   , "description": "A small, fast, framework-agnostic event manager"
-  , "version": "1.0.3"
+  , "version": "1.0.4"
   , "homepage": "https://github.com/fat/bean"
   , "authors": [
         "Jacob Thornton <@fat>"

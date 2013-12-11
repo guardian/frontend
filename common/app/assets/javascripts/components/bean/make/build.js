@@ -22,8 +22,6 @@ require("smoosh").config({
       , "regexp": false
       , "undef": true
       , "sub": true
-      , "white": false
-      , "indent": 2
       , "asi": true
       , "laxbreak": true
       , "eqnull": true
@@ -32,7 +30,7 @@ require("smoosh").config({
       , "laxcomma": true
       , "proto": true
       , "expr": true
-      , "es5": true
+      , "es5": false
       , "strict": false
       , "quotmark": true
       , "camelcase": true
