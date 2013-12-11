@@ -9,9 +9,9 @@ body {
     min-width: 320px;
     color: #000000;
     -webkit-touch-callout: none;
-      -webkit-user-select: none;
-         -moz-user-select: none;
-              user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
 }
 
 a {
@@ -113,10 +113,20 @@ input[type=text] {
 }
 
 .droppable {
-    padding: 0 0 25px 0;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0 0 15px 0;
     -webkit-transition: background-color 50ms;
-       -moz-transition: background-color 50ms;
-            transition: background-color 50ms;
+    -moz-transition: background-color 50ms;
+    transition: background-color 50ms;
+}
+
+.sublinks  .droppable {
+    padding: 0 0 27px 0;
+}
+
+.droppable.underDrag {
+    background-color: #a7d9a0;
 }
 
 .pending {
@@ -127,7 +137,7 @@ input[type=text] {
 .list-header {
     color: #999999;
     overflow: hidden;
-    padding: 5px 0 0 0;
+    padding: 5px 0 1px 0;
     min-width: 300px;
 }
 
@@ -154,6 +164,10 @@ input[type=text] {
     padding: 10px 15px 0 15px;
 }
 
+.collections.live-mode {
+    background: #f6FFE8;
+}
+
 .collections__inner {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -161,11 +175,7 @@ input[type=text] {
 }
 
 .collection {
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    width: 100%;
-    float: left;
-    position: relative;
+    padding: 0 0 3px 0;
     border-bottom: 1px solid #CCCCCC;
 }
 
@@ -173,22 +183,23 @@ input[type=text] {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     overflow: hidden;
-    padding: 1px 3px 4px 4px;
+    padding: 0 0 3px 4px;
     position: relative;
-    background: #FFFFFF;
-    -webkit-transition: background-color 100ms;
-       -moz-transition: background-color 100ms;
-            transition: background-color 100ms;
+    background-color: #FFFFFF;
+    border-top: 5px solid #FFFFFF;
+    -webkit-transition: border-color 150ms;
+    -moz-transition: border-color 150ms;
+    transition: border-color 150ms;
 }
+
 .sublinks .trail {
+    border-top-color: #EEEEEE;
     background: #EEEEEE;
 }
 
-.collections.live-mode, 
-.collections.live-mode .trail {
-    background: #EEFFEE;
+.trail.underDrag {
+    border-top-color: #a7d9a0;
 }
-
 
 .trail:last-child {
     border-bottom: 0;
@@ -211,51 +222,18 @@ input[type=text] {
     opacity: 0.25;
 }
 
-.web-title {
-    margin: 0 190px 0 80px;
-    display: block;    
-}
-
-.web-title a {
+.headline {
+    display: block;
     text-decoration: none;
     font-size: 15px;
-    line-height: 16px;
+    line-height: 17px;
     color: #000000;
     cursor: move;
+    margin: 0 190px 0 80px;
 }
 
-.web-title:hover a {
+.headline:hover {
     color: #438835;
-}
-
-.web-title--editor {
-    display: none;
-}
-
-.latest-articles .web-title--editor {
-    display: none !important;
-}
-
-.web-title:hover .web-title--editor {
-    opacity: 0.5;
-    display: inline-block;
-}
-
-.web-title--editor:hover {
-    opacity: 1;
-}
-
-.web-title--edited {
-    opacity: 0.75;
-    display: inline-block;
-    background-color: #CCCCCC;
-    border: 2px solid #CCCCCC;
-    border-radius: 4px;
-    margin: 0;
-}
-
-.web-title--edited:hover {
-    opacity: 1;
 }
 
 .trail .trail__meta {
@@ -272,7 +250,7 @@ input[type=text] {
     display: none;
     position: absolute;
     top: 4px;
-    right: 0;
+    right: 3px;
     background: #CCCCCC;
     width: 14px;
     height: 20px;
@@ -291,7 +269,7 @@ input[type=text] {
 }
 
 .trail_tweaks {
-    margin: 0 0 0 80px;
+    margin: 1px 3px 0 80px;
     color: #CCCCCC;
 }
 
@@ -402,12 +380,9 @@ button {
     text-transform: uppercase;
 }
 
-.underDrag {
-    background: #a7d9a0 !important;
-}
-
-.editingMeta {
+.trail.editingMeta {
     background: #EEEEEE !important;
+    border-bottom: 5px solid #FFFFFF;
 }
 
 .search-form {
@@ -535,7 +510,7 @@ button {
     color: #999999;
 }
 
-.collection .tools {
+.list-header .tools {
     margin: 0 0 2px 4px;
 }
 
@@ -588,7 +563,7 @@ button {
 }
 
 .sublinks {
-    margin: 4px -4px -4px -4px;
+    margin: 4px 0 0 -4px;
 }
 
 .sublinks-message {
@@ -603,7 +578,7 @@ button {
 .trail .tools {
     position: absolute;
     bottom: 2px;
-    right: 2px;
+    right: 3px;
 }
 
 @media (max-width: 1100px) {
@@ -615,9 +590,9 @@ button {
     .finder {
         width: 40%;
     }
-    .finder .trail .web-title {
+    .finder .trail .headline {
         margin: 0 0 0 80px;
-    } 
+    }
     .finder .trail .trail_stats,
     .finder .trail .trail__meta {
         display: none;
@@ -654,9 +629,9 @@ button {
 }
 
 @media (max-width: 525px) {
-    .trail .web-title {
+    .trail .headline {
         margin: 0 0 0 80px;
-    } 
+    }
     .trail .trail_stats,
     .trail .trail__meta {
         display: none;
@@ -664,9 +639,9 @@ button {
 }
 
 @media (max-width: 350px) {
-    .trail .web-title {
+    .trail .headline {
         margin: 5px 0 0 0;
-    } 
+    }
     .trail img {
         display: none;
     }
@@ -674,5 +649,3 @@ button {
         margin: 0;
     }
 }
-
-
