@@ -28,6 +28,7 @@
     <div class="identity-section">
 
         <form class="form" novalidate action="@idUrlBuilder.buildUrl("/profile/public", idRequest)" role="main" method="post">
+            @views.html.helper.CSRF.formField
             @if(profileForm.globalError.isDefined) {
                 <div class="form__error">@profileForm.globalErrors.map(_.message).mkString(", ")</div>
             }
