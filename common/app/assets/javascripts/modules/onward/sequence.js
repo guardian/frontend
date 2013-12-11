@@ -93,7 +93,7 @@ define([
         if(context.path !== null) {
             loadSequence(context);
         } else {
-            mediator.emit('modules:sequence:loaded', dedupeSequence(getSequence()));
+            mediator.emit('modules:sequence:loaded', getSequence());
         }
         bindListeners();
     }
