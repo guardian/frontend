@@ -33,10 +33,14 @@ define([
 
     function getSequence() {
         var currentSequence = get('sequence');
-        return {
-            name: currentSequence.name,
-            items: dedupeSequence(currentSequence.items)
-        };
+        if (currentSequence) {
+            return {
+                name: currentSequence.name,
+                items: dedupeSequence(currentSequence.items)
+            };
+        } else {
+            return null;
+        }
     }
 
     function getContext() { return { name: get('contextName'), path: get('contextPath') }; }
