@@ -188,7 +188,7 @@
                     </div>
 
                     <a class="trail_stats u-cf" target="ophan" data-bind="attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + props.id()}">
-                        <div class="pageviews" data-bind="if: totalHitsFormatted(), text: totalHitsFormatted"></div>
+                        <div class="pageviews" data-bind="if: totalHitsFormatted()"><span data-bind="text: totalHitsFormatted"></span></div>
                         <div class="pageviews-graph" data-bind="if: state.pageViewsSeries(), sparkline: state.pageViewsSeries"></div>
                     </a>
 
@@ -236,5 +236,5 @@
 
     </div>
 
-    <script src="@routes.Assets.at("javascripts/fronts.js")"></script>
+    <script src="@routes.Assets.at("javascripts/app.js")"></script>
 }

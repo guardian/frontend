@@ -1,26 +1,29 @@
+/* global _: true */
 define([
     'knockout',
-    'models/common',
-    'models/authedAjax',
+    'utils/parse-query-params',
+    'utils/url-abs-path',
+    'modules/authed-ajax',
     'models/group',
     'models/article',
-    'models/contentApi',
-    'models/ophanApi'
+    'modules/content-api',
+    'modules/ophan-api',
+    'modules/vars'
 ], function(
     ko,
-    common,
+    parseQueryParams,
+    urlAbsPath,
     authedAjax,
     Group,
     Article,
     contentApi,
-    ophanApi
+    ophanApi,
+    vars
     ) {
     var sourceList,
         sourceItem;
 
     function init() {
-
-        init = function() {}; // make idempotent
 
         window.addEventListener("dragover", function(event) {
             event.preventDefault();
@@ -74,7 +77,6 @@ define([
                         item = event.testData ? event.testData : event.dataTransfer.getData('Text'),
                         position,
                         article,
-                        groups,
                         insertAt,
                         isAfter = false;
 
@@ -108,13 +110,13 @@ define([
 
                     position = targetItem && targetItem.props ? targetItem.props.id() : undefined;
 
-                    _.each(common.util.parseQueryParams(item), function(url){
+                    _.each(parseQueryParams(item), function(url){
                         if (url && url.match(/^http:\/\/www.theguardian.com/)) {
                             item = url;
                         }
                     });
 
-                    item = common.util.urlAbsPath(item);
+                    item = urlAbsPath(item);
 
                     if (!item) {
                         alertBadContent();
@@ -140,7 +142,7 @@ define([
                     });
 
                     // just for UI
-                    targetList.items.splice(insertAt, 0, article)
+                    targetList.items.splice(insertAt, 0, article);
 
                     contentApi.validateItem(article)
                         .fail(function() {
@@ -173,11 +175,11 @@ define([
                                     item:     item,
                                     position: position,
                                     after:    isAfter,
-                                    live:     common.state.liveMode(),
-                                    draft:   !common.state.liveMode(),
+                                    live:     vars.state.liveMode(),
+                                    draft:   !vars.state.liveMode(),
                                     itemMeta: itemMeta
                                 }
-                            )
+                            );
 
                             if (!sourceList || !sourceList.collection || sourceList.keepCopy) {
                                 return;
@@ -192,28 +194,28 @@ define([
                             // just for UI
                             sourceList.items.remove(function(article) {
                                 return article === sourceItem;
-                            })
+                            });
 
                             authedAjax.updateCollection(
                                 'delete',
                                 sourceList.collection,
                                 {
                                     item:   item,
-                                    live:   common.state.liveMode(),
-                                    draft: !common.state.liveMode()
+                                    live:   vars.state.liveMode(),
+                                    draft: !vars.state.liveMode()
                                 }
-                            )
+                            );
                         });
                 }, false);
             }
         };
-    };
+    }
 
     function alertBadContent() {
-        window.alert('Sorry, that isn\'t a Guardian article!')
+        window.alert('Sorry, that isn\'t a Guardian article!');
     }
 
     return {
-        init: init
+        init: _.once(init)
     };
 });

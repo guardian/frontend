@@ -1,29 +1,33 @@
+/* global _: true, humanized_time_span: true */
 define([
     'knockout',
-    'models/common',
+    'utils/as-observable-props',
+    'utils/number-with-commas',
+    'utils/populate-observables',
     'models/group',
-    'models/humanizedTimeSpan',
-    'models/authedAjax',
-    'models/contentApi'
+    'modules/authed-ajax',
+    'js!humanized-time-span',
+    'modules/vars'
 ],
     function (
         ko,
-        common,
+        asObservableProps,
+        numberWithCommas,
+        populateObservables,
         Group,
-        humanizedTimeSpan,
         authedAjax,
-        contentApi
+        vars
         ){
-        function Article(opts, collection) {
-            var opts = opts || {};
+        function Article(options, collection) {
+            var opts = options || {};
 
             this.collection = collection;
 
-            this.props = common.util.asObservableProps([
+            this.props = asObservableProps([
                 'id',
                 'webPublicationDate']);
 
-            this.fields = common.util.asObservableProps([
+            this.fields = asObservableProps([
                 'headline',
                 'thumbnail',
                 'trailText',
@@ -31,13 +35,13 @@ define([
 
             this.fields.headline('...');
 
-            this.meta = common.util.asObservableProps([
+            this.meta = asObservableProps([
                 'sublinks',
                 'headline',
                 'group']);
 
 
-            this.state = common.util.asObservableProps([
+            this.state = asObservableProps([
                 'underDrag',
                 'editingMeta',
                 'shares',
@@ -47,11 +51,11 @@ define([
 
             // Computeds
             this.humanDate = ko.computed(function(){
-                return this.props.webPublicationDate() ? humanizedTimeSpan(this.props.webPublicationDate()) : '';
+                return this.props.webPublicationDate() ? humanized_time_span(this.props.webPublicationDate()) : '';
             }, this);
 
             this.totalHitsFormatted = ko.computed(function(){
-                return common.util.numberWithCommas(this.state.totalHits());
+                return numberWithCommas(this.state.totalHits());
             }, this);
 
             this.headlineInput = ko.computed({
@@ -67,16 +71,16 @@ define([
             this.provisionalHeadline = null;
 
             this.populate(opts);
-        };
+        }
 
         Article.prototype.populate = function(opts) {
-            common.util.populateObservables(this.props, opts);
-            common.util.populateObservables(this.meta, opts.meta);
-            common.util.populateObservables(this.fields, opts.fields);
+            populateObservables(this.props, opts);
+            populateObservables(this.meta, opts.meta);
+            populateObservables(this.fields, opts.fields);
 
             this.meta.sublinks = new Group ({
                 items: _.map((opts.meta || {}).sublinks, function(sublink) {
-                    return new Article(sublink)
+                    return new Article(sublink);
                 })
             });
         };
@@ -105,7 +109,7 @@ define([
                 result = _.chain(this.meta)
                     .pairs()
                     // do sublinks separately
-                    .filter(function(p){ return p[0] !== 'sublinks'})
+                    .filter(function(p){ return p[0] !== 'sublinks'; })
                     // is the meta property a not a whitespace-only string ?
                     .filter(function(p){ return !_.isUndefined(p[1]()) && ("" + p[1]()).replace(/\s*/g, '').length > 0; })
                     // does it actually differ from the props value (if any) that it's overwriting ?
@@ -119,7 +123,7 @@ define([
                     return {
                         id:   sublink.props.id(),
                         meta: sublink.meta.headline() ? {headline: sublink.meta.headline()} : undefined
-                    }
+                    };
                 });
             }
 
@@ -136,11 +140,11 @@ define([
                     item:     this.props.id(),
                     position: this.props.id(),
                     itemMeta: this.getMeta(),
-                    live:     common.state.liveMode(),
-                    draft:   !common.state.liveMode(),
+                    live:     vars.state.liveMode(),
+                    draft:   !vars.state.liveMode()
                 }
             );
-            this.collection.state.loadIsPending(true)
+            this.collection.state.loadIsPending(true);
         };
 
         return Article;
