@@ -113,10 +113,20 @@ input[type=text] {
 }
 
 .droppable {
-    padding: 0 0 25px 0;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0 0 15px 0;
     -webkit-transition: background-color 50ms;
        -moz-transition: background-color 50ms;
             transition: background-color 50ms;
+}
+
+.sublinks  .droppable {
+    padding: 0 0 27px 0;
+}
+
+.droppable.underDrag {
+    background-color: #a7d9a0;
 }
 
 .pending {
@@ -127,7 +137,7 @@ input[type=text] {
 .list-header {
     color: #999999;
     overflow: hidden;
-    padding: 5px 0 0 0;
+    padding: 5px 0 1px 0;
     min-width: 300px;
 }
 
@@ -165,11 +175,7 @@ input[type=text] {
 }
 
 .collection {
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    width: 100%;
-    float: left;
-    position: relative;
+    padding: 0 0 3px 0;
     border-bottom: 1px solid #CCCCCC;
 }
 
@@ -177,14 +183,22 @@ input[type=text] {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     overflow: hidden;
-    padding: 1px 3px 4px 4px;
+    padding: 0 0 3px 4px;
     position: relative;
-    -webkit-transition: background-color 100ms;
-       -moz-transition: background-color 100ms;
-            transition: background-color 100ms;
+    background-color: #FFFFFF;
+    border-top: 5px solid #FFFFFF;
+    -webkit-transition: border-color 150ms;
+       -moz-transition: border-color 150ms;
+            transition: border-color 150ms;
 }
+
 .sublinks .trail {
+    border-top-color: #EEEEEE;
     background: #EEEEEE;
+}
+
+.trail.underDrag {
+    border-top-color: #a7d9a0;
 }
 
 .trail:last-child {
@@ -212,7 +226,7 @@ input[type=text] {
     display: block;    
     text-decoration: none;
     font-size: 15px;
-    line-height: 16px;
+    line-height: 17px;
     color: #000000;
     cursor: move;
     margin: 0 190px 0 80px;
@@ -236,7 +250,7 @@ input[type=text] {
     display: none;
     position: absolute;
     top: 4px;
-    right: 0;
+    right: 4px;
     background: #CCCCCC;
     width: 14px;
     height: 20px;
@@ -255,7 +269,7 @@ input[type=text] {
 }
 
 .trail_tweaks {
-    margin: 0 0 0 80px;
+    margin: 1px 2px 0 80px;
     color: #CCCCCC;
 }
 
@@ -366,12 +380,9 @@ button {
     text-transform: uppercase;
 }
 
-.underDrag {
-    background: #a7d9a0 !important;
-}
-
-.editingMeta {
+.trail.editingMeta {
     background: #EEEEEE !important;
+    border-bottom: 5px solid #FFFFFF;
 }
 
 .search-form {
@@ -499,7 +510,7 @@ button {
     color: #999999;
 }
 
-.collection .tools {
+.list-header .tools {
     margin: 0 0 2px 4px;
 }
 
@@ -567,7 +578,7 @@ button {
 .trail .tools {
     position: absolute;
     bottom: 2px;
-    right: 2px;
+    right: 3px;
 }
 
 @media (max-width: 1100px) {
