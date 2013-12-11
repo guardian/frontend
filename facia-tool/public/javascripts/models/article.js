@@ -1,22 +1,22 @@
 /* global _: true, humanized_time_span: true */
 define([
-    'knockout',
+    'modules/vars',
     'utils/as-observable-props',
-    'utils/number-with-commas',
     'utils/populate-observables',
+    'utils/number-with-commas',
     'models/group',
     'modules/authed-ajax',
-    'js!humanized-time-span',
-    'modules/vars'
+    'knockout',
+    'js!humanized-time-span'
 ],
     function (
-        ko,
+        vars,
         asObservableProps,
         numberWithCommas,
         populateObservables,
         Group,
         authedAjax,
-        vars
+        ko
         ){
         function Article(options, collection) {
             var opts = options || {};

@@ -1,6 +1,7 @@
 /* global _: true, humanized_time_span: true */
 define([
     'knockout',
+    'modules/vars',
     'utils/as-observable-props',
     'utils/populate-observables',
     'modules/authed-ajax',
@@ -8,18 +9,17 @@ define([
     'models/article',
     'modules/content-api',
     'modules/ophan-api',
-    'modules/vars',
     'js!humanized-time-span'
 ], function(
     ko,
+    vars,
     asObservableProps,
     populateObservables,
     authedAjax,
     Group,
     Article,
     contentApi,
-    ophanApi,
-    vars
+    ophanApi
     ) {
     function Collection(opts) {
         var self = this;

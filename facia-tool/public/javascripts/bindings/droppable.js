@@ -1,24 +1,24 @@
 /* global _: true */
 define([
     'knockout',
+    'modules/vars',
     'utils/parse-query-params',
     'utils/url-abs-path',
     'modules/authed-ajax',
     'models/group',
     'models/article',
     'modules/content-api',
-    'modules/ophan-api',
-    'modules/vars'
+    'modules/ophan-api'
 ], function(
     ko,
+    vars,
     parseQueryParams,
     urlAbsPath,
     authedAjax,
     Group,
     Article,
     contentApi,
-    ophanApi,
-    vars
+    ophanApi
     ) {
     var sourceList,
         sourceItem;
