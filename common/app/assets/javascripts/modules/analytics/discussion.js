@@ -52,11 +52,35 @@ define([
         s.tl(true, 'o', 'Recommend a comment');
     };
 
+    Track.prototype.jumpedToComments = function(e) {
+        s.events = 'event72';
+        s.eVar65 = 'seen jump-to-comments';
+        s.eVar66 = Id.getUserFromCookie() ? Id.getUserFromCookie().id : null;
+        s.linkTrackVars = this.getLinkTrackVars(['eVar65']);
+        s.linkTrackEvents = 'event72';
+        s.tl(true, 'o', 'seen jump-to-comments');
+    };
+
+    Track.prototype.commentPermalink = function(e) {
+        s.events = 'event72';
+        s.eVar65 = 'seen comment-permalink';
+        s.eVar66 = Id.getUserFromCookie() ? Id.getUserFromCookie().id : null;
+        s.linkTrackVars = this.getLinkTrackVars(['eVar65']);
+        s.linkTrackEvents = 'event72';
+        s.tl(true, 'o', 'seen comment-permalink');
+    };
+
+    Track.prototype.scrolledToComments = function() {
+
+    };
 
     var init = function() {
         var track = new Track();
         common.mediator.on('discussion:commentbox:post:success', track.comment.bind(track));
         common.mediator.on('discussion:comment:recommend:success', track.recommend.bind(track));
+        common.mediator.on('discussion:seen:comment-permalink', track.commentPermalink.bind(track));
+        common.mediator.on('discussion:seen:comments-anchor', track.jumpedToComments.bind(track));
+        common.mediator.on('discussion:seen:comments-scrolled-to', track.scrolledToComments.bind(track));
     };
 
     return { init: init };
