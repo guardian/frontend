@@ -1,29 +1,37 @@
+/* global _: true */
 define([
-    'Config',
+    'config',
     'knockout',
-    'models/common',
-    'models/droppable',
-    'models/authedAjax',
+    'modules/vars',
+    'utils/query-params',
+    'utils/ammended-query-str',
+    'bindings/droppable',
+    'modules/authed-ajax',
     'models/collection',
     'models/article',
-    'models/latestArticles',
-    'models/contentApi',
-    'models/ophanApi'
+    'models/latest-articles'
 ], function(
-    Config,
+    config,
     ko,
-    common,
+    vars,
+    queryParams,
+    ammendedQueryStr,
     droppable,
     authedAjax,
     Collection,
     Article,
-    LatestArticles,
-    contentApi,
-    ophanApi
+    LatestArticles
 ) {
     var prefKeyDefaultMode = 'gu.frontsTool.defaultToLiveMode';
 
     return function(selector) {
+
+        function updateLayout() {
+            var height = $(window).height();
+            $('.scrollable').each(function() {
+                $(this).height(Math.max(100, height - $(this).offset().top) - 2);
+            });
+        }
 
         var self = this,
             model = {
@@ -34,7 +42,7 @@ define([
                 front:  ko.observable(),
 
                 latestArticles: new LatestArticles({
-                    filterTypes: common.config.filterTypes
+                    filterTypes: vars.CONST.filterTypes
                 }),
 
                 clipboard: {
@@ -48,28 +56,28 @@ define([
                     keepCopy:  true
                 },
 
-                liveMode: common.state.liveMode
+                liveMode: vars.state.liveMode
             };
 
         model.setModeLive = function() {
             model.liveMode(true);
-        }
+        };
 
         model.setModeDraft = function() {
             model.liveMode(false);
-        }
+        };
 
         model.previewUrl = ko.computed(function() {
-            return common.config.viewer + '#env=' + Config.env + '&url=' + model.front() + encodeURIComponent('?view=mobile');
-        })
+            return vars.CONST.viewer + '#env=' + config.env + '&url=' + model.front() + encodeURIComponent('?view=mobile');
+        });
 
         function fetchFronts() {
             return authedAjax.request({
-                url: common.config.apiBase + '/config'
+                url: vars.CONST.apiBase + '/config'
             })
             .fail(function () {
                 window.alert("Oops, the fronts configuration was not available! Please contact support.");
-                return;                                
+                return;
             })
             .done(function(resp) {
 
@@ -79,12 +87,12 @@ define([
                 }
 
                 model.config = resp;
-                model.fronts(_.keys(resp.fronts).sort());;
+                model.fronts(_.keys(resp.fronts).sort());
             });
-        };
+        }
 
         function getFront() {
-            return common.util.queryParams().front;
+            return queryParams().front;
         }
 
         function setfront() {
@@ -92,7 +100,7 @@ define([
         }
 
         function renderFront(id) {
-            history.pushState({}, "", window.location.pathname + '?' + common.util.ammendedQueryStr('front', id));
+            history.pushState({}, "", window.location.pathname + '?' + ammendedQueryStr('front', id));
             model.collections(
                 ((model.config.fronts[getFront()] || {}).collections || [])
                 .filter(function(id){ return !!model.config.collections[id]; })
@@ -104,8 +112,8 @@ define([
             );
         }
 
-        function startPoller() {
-            var period = common.config.collectionsPollMs || 60000;
+        var startPoller = _.once(function() {
+            var period = vars.CONST.collectionsPollMs || 60000;
 
             setInterval(function(){
                 model.collections().forEach(function(list, index){
@@ -114,18 +122,16 @@ define([
                     }, index * period / (model.collections().length + 1)); // stagger requests
                 });
             }, period);
-
-            startPoller = function() {}; // make idempotent
-        }
+        });
 
         ko.bindingHandlers.sparkline = {
             update: function (element, valueAccessor, allBindingsAccessor, model) {
                 var graphs = ko.utils.unwrapObservable(valueAccessor()),
                     max;
 
-                if (!_.isArray(graphs)) { return; };
+                if (!_.isArray(graphs)) { return; }
                 max = _.max(_.pluck(graphs, 'max'));
-                if (!max) { return; };
+                if (!max) { return; }
 
                 _.each(_.toArray(graphs).reverse(), function(graph, i){
                     $(element).sparkline(graph.data, {
@@ -153,13 +159,6 @@ define([
                 collection.populateLists();
             });
         });
-        
-        function updateLayout() {
-            var height = $(window).height();
-            $('.scrollable').each(function() {
-                $(this).height(Math.max(100, height - $(this).offset().top) - 2)
-            });
-        };
 
         this.init = function() {
             droppable.init();

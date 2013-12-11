@@ -1,13 +1,18 @@
+/* global _: true */
 define([
-    'models/common',
-    'models/autoComplete',
+    'modules/vars',
+    'utils/query-params',
+    'utils/url-abs-path',
+    'modules/auto-complete',
     'models/article',
-    'models/ophanApi',
-    'models/cache',
-    'models/authedAjax',
+    'modules/ophan-api',
+    'modules/cache',
+    'modules/authed-ajax',
     'knockout'
 ], function (
-    common,
+    vars,
+    queryParams,
+    urlAbsPath,
     autoComplete,
     Article,
     ophanApi,
@@ -15,28 +20,28 @@ define([
     authedAjax,
     ko
 ) {
-    return function(opts) {
+    return function(options) {
 
         var self = this,
             deBounced,
-            opts = opts || {},
+            opts = options || {},
             counter = 0,
             container = document.querySelector('.latest-articles');
 
         this.articles   = ko.observableArray();
 
-        this.term       = ko.observable(common.util.queryParams().q || '');
+        this.term       = ko.observable(queryParams().q || '');
         this.suggestions= ko.observableArray();
 
         this.filter     = ko.observable();
         this.filterType = ko.observable();
-        this.filterTypes= ko.observableArray(_.values(opts.filterTypes) || []),
+        this.filterTypes= ko.observableArray(_.values(opts.filterTypes) || []);
 
         this.page       = ko.observable(1);
 
         this.isTermAnItem = function() {
             return (self.term() || '').match(/\//);
-        }
+        };
 
         this.term.subscribe(function(){
             self.search();
@@ -85,16 +90,16 @@ define([
 
                 if (!opts.noFlushFirst) {
                     self.flush('searching...');
-                };
+                }
 
                 // If term contains slashes, assume it's an article id (and first convert it to a path)
                 if (self.isTermAnItem()) {
-                    self.term(common.util.urlAbsPath(self.term()));
-                    url = common.config.apiSearchBase + '/' + self.term() + '?show-fields=all&format=json';
+                    self.term(urlAbsPath(self.term()));
+                    url = vars.CONST.apiSearchBase + '/' + self.term() + '?show-fields=all&format=json';
                     propName = 'content';
                 } else {
-                    url  = common.config.apiSearchBase + '/search?show-fields=all&format=json';
-                    url += '&page-size=' + (common.config.searchPageSize || 25);
+                    url  = vars.CONST.apiSearchBase + '/search?show-fields=all&format=json';
+                    url += '&page-size=' + (vars.CONST.searchPageSize || 25);
                     url += '&page=' + self.page();
                     url += self.term() ? '&q=' + encodeURIComponent(self.term()) : '';
                     url += '&' + self.filterType().param + '=' + encodeURIComponent(self.filter());
@@ -114,7 +119,7 @@ define([
                         article.index = index;
                         self.articles.push(new Article(article));
                         cache.put('contentApi', article.id, article);
-                    })
+                    });
 
                     ophanApi.decorateItems(self.articles());
                 });
@@ -149,7 +154,7 @@ define([
                 if (self.page() === 1) {
                     self.search({noFlushFirst: true});
                 }
-            }, common.config.latestArticlesPollMs || 60000);
+            }, vars.CONST.latestArticlesPollMs || 60000);
 
             this.startPoller = function() {}; // make idempotent
         };

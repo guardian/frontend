@@ -1,9 +1,5 @@
-define([
-    'models/common'
-], function (
-    common
-) {
-
+/* global _: true */
+define(['modules/vars'], function(vars) {
     function request(opts) {
         return $.ajax(
             _.extend({}, {dataType: !opts.type || opts.type === 'get' ? 'json' : undefined, contentType: 'application/json'}, opts)
@@ -12,11 +8,11 @@ define([
                 window.location.href = window.location.href;
             }
         });
-    };
+    }
 
     function updateCollection(method, collection, data) {
         return request({
-            url: common.config.apiBase + '/collection/' + collection.id,
+            url: vars.CONST.apiBase + '/collection/' + collection.id,
             type: method,
             data: JSON.stringify(data)
         }).fail(function(xhr) {
@@ -24,10 +20,10 @@ define([
         }).always(function() {
             collection.load();
         });
-    };
+    }
 
     return {
         request: request,
         updateCollection: updateCollection
-    }
+    };
 });

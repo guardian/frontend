@@ -1,5 +1,6 @@
+/* global curl: true */
 curl([
-    'modules/listManager'
+    'models/list-manager'
 ]).then(function(
     ListManager
 ){

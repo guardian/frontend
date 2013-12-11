@@ -1,39 +1,45 @@
+/* global _: true, humanized_time_span: true */
 define([
-    'models/common',
-    'models/humanizedTimeSpan',
-    'models/authedAjax',
-    'knockout'
+    'modules/vars',
+    'utils/as-observable-props',
+    'utils/populate-observables',
+    'utils/number-with-commas',
+    'modules/authed-ajax',
+    'knockout',
+    'js!humanized-time-span'
 ],
 function (
-    common,
-    humanizedTimeSpan,
+    vars,
+    asObservableProps,
+    populateObservables,
+    numberWithCommas,
     authedAjax,
     ko
 ){
     var absUrlHost = 'http://m.guardian.co.uk/';
 
-    function Article(opts, collection) {
-        var opts = opts || {};
+    function Article(options, collection) {
+        var opts = options || {};
 
         this.collection = collection;
 
-        this.props = common.util.asObservableProps([
+        this.props = asObservableProps([
             'id',
             'webPublicationDate']);
 
-        this.fields = common.util.asObservableProps([
+        this.fields = asObservableProps([
             'headline',
             'thumbnail',
             'trailText',
             'shortId']);
 
-        this.fields.headline('...'); 
+        this.fields.headline('...');
 
-        this.meta = common.util.asObservableProps([
+        this.meta = asObservableProps([
             'headline',
             'group']);
 
-        this.state = common.util.asObservableProps([
+        this.state = asObservableProps([
             'underDrag',
             'editingTitle',
             'shares',
@@ -43,11 +49,11 @@ function (
 
         // Computeds
         this.humanDate = ko.computed(function(){
-            return this.props.webPublicationDate() ? humanizedTimeSpan(this.props.webPublicationDate()) : '';
+            return this.props.webPublicationDate() ? humanized_time_span(this.props.webPublicationDate()) : '';
         }, this);
-        
+
         this.totalHitsFormatted = ko.computed(function(){
-            return common.util.numberWithCommas(this.state.totalHits());
+            return numberWithCommas(this.state.totalHits());
         }, this);
 
         this.headlineInput = ko.computed({
@@ -63,12 +69,12 @@ function (
         this.provisionalHeadline = null;
 
         this.populate(opts);
-    };
+    }
 
     Article.prototype.populate = function(opts) {
-        common.util.populateObservables(this.props, opts);
-        common.util.populateObservables(this.meta, opts.meta);
-        common.util.populateObservables(this.fields, opts.fields);
+        populateObservables(this.props, opts);
+        populateObservables(this.meta, opts.meta);
+        populateObservables(this.fields, opts.fields);
     };
 
     Article.prototype.startTitleEdit = function() {
@@ -79,7 +85,7 @@ function (
     Article.prototype.saveTitleEdit = function() {
         if(this.meta.headline()) {
             this.save();
-        };
+        }
         this.state.editingTitle(false);
     };
 
@@ -118,11 +124,11 @@ function (
                 item:     this.props.id(),
                 position: this.props.id(),
                 itemMeta: this.getMeta(),
-                live:     common.state.liveMode(),
-                draft:   !common.state.liveMode(),
+                live:     vars.state.liveMode(),
+                draft:   !vars.state.liveMode()
             }
         );
-        this.collection.state.loadIsPending(true)
+        this.collection.state.loadIsPending(true);
     };
 
     return Article;

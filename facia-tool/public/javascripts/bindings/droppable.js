@@ -1,13 +1,18 @@
+/* global _: true */
 define([
     'knockout',
-    'models/common',
-    'models/authedAjax',
+    'modules/vars',
+    'utils/parse-query-params',
+    'utils/url-abs-path',
+    'modules/authed-ajax',
     'models/article',
-    'models/contentApi',
-    'models/ophanApi'
+    'modules/content-api',
+    'modules/ophan-api'
 ], function(
     ko,
-    common,
+    vars,
+    parseQueryParams,
+    urlAbsPath,
     authedAjax,
     Article,
     contentApi,
@@ -17,8 +22,6 @@ define([
         sourceArticle;
 
     function init() {
-
-        init = function() {}; // make idempotent
 
         window.addEventListener("dragover", function(event) {
             event.preventDefault();
@@ -70,7 +73,6 @@ define([
                         item = event.testData ? event.testData : event.dataTransfer.getData('Text'),
                         position,
                         article,
-                        groups,
                         insertAt,
                         isAfter = false;
 
@@ -90,7 +92,7 @@ define([
                             isAfter = true;
                         // or if there arent't any other articles, after those in the first preceding group that contains articles.
                         } else if (targetList.collection) {
-                            var groups = targetList.collection.groups; 
+                            var groups = targetList.collection.groups;
                             for (var i = groups.indexOf(targetList) - 1; i >= 0; i -= 1) {
                                 targetArticle = _.last(groups[i].articles());
                                 if (targetArticle) {
@@ -103,15 +105,15 @@ define([
 
                     position = targetArticle && targetArticle.props ? targetArticle.props.id() : undefined;
 
-                    _.each(common.util.parseQueryParams(item), function(url){
+                    _.each(parseQueryParams(item), function(url){
                         if (url && url.match(/^http:\/\/www.theguardian.com/)) {
                             item = url;
                         }
                     });
 
-                    item = common.util.urlAbsPath(item);
+                    item = urlAbsPath(item);
 
-                    if (!item) { 
+                    if (!item) {
                         alertBadContent();
                         return;
                     }
@@ -121,21 +123,21 @@ define([
                     }
 
                     // sourceArticle doesn't exist when the drag was from an arbitrary link elsewhere.
-                    // garbage collect it, if it's a leftover from a previous drag. 
+                    // garbage collect it, if it's a leftover from a previous drag.
                     if(sourceArticle && sourceArticle.props.id() !== item) {
                         sourceArticle = undefined;
                     }
 
                     insertAt = targetList.articles().indexOf(targetArticle) + isAfter;
                     insertAt = insertAt === -1 ? targetList.articles().length : insertAt;
- 
+
                     article = new Article({
                         id: item,
                         meta: sourceArticle ? sourceArticle.getMeta() : undefined
                     });
 
                     // just for UI
-                    targetList.articles.splice(insertAt, 0, article)
+                    targetList.articles.splice(insertAt, 0, article);
 
                     contentApi.validateItem(article)
                     .fail(function() {
@@ -168,11 +170,11 @@ define([
                                 item:     item,
                                 position: position,
                                 after:    isAfter,
-                                live:     common.state.liveMode(),
-                                draft:   !common.state.liveMode(),
+                                live:     vars.state.liveMode(),
+                                draft:   !vars.state.liveMode(),
                                 itemMeta: itemMeta
                             }
-                        )
+                        );
 
                         if (!sourceList || !sourceList.collection || sourceList.keepCopy) {
                             return;
@@ -187,28 +189,28 @@ define([
                         // just for UI
                         sourceList.articles.remove(function(article) {
                             return article === sourceArticle;
-                        })
+                        });
 
                         authedAjax.updateCollection(
                             'delete',
                             sourceList.collection,
                             {
                                 item:   item,
-                                live:   common.state.liveMode(),
-                                draft: !common.state.liveMode()
+                                live:   vars.state.liveMode(),
+                                draft: !vars.state.liveMode()
                             }
-                        )
+                        );
                     });
                 }, false);
             }
         };
-    };
+    }
 
     function alertBadContent() {
-        window.alert('Sorry, that isn\'t a Guardian article!')
+        window.alert('Sorry, that isn\'t a Guardian article!');
     }
 
     return {
-        init: init
+        init: _.once(init)
     };
 });

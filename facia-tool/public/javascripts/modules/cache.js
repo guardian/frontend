@@ -1,10 +1,6 @@
-define([
-    'models/common',
-], function(
-    common
-) {
+define(['modules/vars'], function(vars) {
     var cache = {},
-        expiry = common.config.cacheExpiryMs || 300000; // 300000 == 5 mins
+        expiry = vars.CONST.cacheExpiryMs || 300000; // 300000 == 5 mins
 
     function put(pot, key, data) {
         var p;
@@ -19,7 +15,7 @@ define([
 
         p[key] = {
             data: JSON.stringify(data),
-            
+
             // Spread actual timeouts into the range of "two-times expiry"
             time: +new Date() + expiry * Math.random()
         };
@@ -39,7 +35,6 @@ define([
         if (!obj) { return; }
 
         if (+new Date() - obj.time > expiry) {
-            delete obj;
             return;
         }
 
@@ -49,5 +44,5 @@ define([
     return {
         put: put,
         get: get
-    }
+    };
 });
