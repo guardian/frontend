@@ -4,10 +4,12 @@
 */
 define([
     'bonzo',
+    'utils/request-animation-frame',
     'modules/component',
     'modules/experiments/highlight-item'
 ], function (
     bonzo,
+    requestAnimationFrame,
     Component,
     Item
 ) {
@@ -42,14 +44,16 @@ define([
             pos;
 
         this.mediator.on('window:scroll', function(e) {
-            var scrollTop = bonzo(document.body).scrollTop();
-            if(pos > scrollTop) {
-                self.setState('is-open');
-            } else {
-                self.removeState('is-open');
-            }
-            pos = scrollTop;
-        }) ;
+            requestAnimationFrame(function() {
+                var scrollTop = bonzo(document.body).scrollTop();
+                if(pos > scrollTop) {
+                    self.setState('is-open');
+                } else {
+                    self.removeState('is-open');
+                }
+                pos = scrollTop;
+            });
+        });
     };
 
     return HighlightPanel;
