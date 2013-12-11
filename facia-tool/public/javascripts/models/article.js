@@ -12,8 +12,8 @@ define([
     function (
         vars,
         asObservableProps,
-        numberWithCommas,
         populateObservables,
+        numberWithCommas,
         Group,
         authedAjax,
         ko
