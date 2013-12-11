@@ -147,7 +147,7 @@ define([
         initHighlightsPanel: function(config) {
             mediator.on('modules:sequence:loaded', function(data){
                 if(data !== null) {
-                    var h = new HighlightPanel(data, mediator);
+                    var h = new HighlightPanel(data.items, mediator);
                 }
             });
             sequence.init('/' + config.page.pageId);

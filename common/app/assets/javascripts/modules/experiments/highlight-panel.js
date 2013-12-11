@@ -20,22 +20,18 @@ define([
 
     Component.define(HighlightPanel);
 
-    HighlightPanel.CONFIG = {
-        maxTrails: 3,
-        templateName: 'highlight-panel',
-        componentClass: 'highlight-panel',
-        classes: {
-            items: 'items'
-        },
-        useBem: true
-    };
+    HighlightPanel.prototype.maxTrails = 3;
+    HighlightPanel.prototype.templateName = 'highlight-panel';
+    HighlightPanel.prototype.componentClass = 'highlight-panel';
+    HighlightPanel.prototype.classes = { items: 'items' };
+    HighlightPanel.prototype.useBem = true;
 
     HighlightPanel.prototype.template = '<div class="highlight-panel"><div class="gs-container">' +
          '<h3 class="highlight-panel__title"></h3><ul class="highlight-panel__items u-unstyled"></ul></div></div>';
 
     HighlightPanel.prototype.prerender = function() {
-        var container = this.getElem(this.conf().classes.items);
-        this.data.slice(0, this.conf().maxTrails).forEach(function(item) {
+        var container = this.getElem(this.classes.items);
+        this.data.slice(0, this.maxTrails).forEach(function(item) {
             new Item(item).render(container);
         });
         this.bindListeners();
