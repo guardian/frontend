@@ -5,7 +5,7 @@
 <div class="commercial travel-component">
     <div class="commercial__head">
         <h3 class="commercial__title">
-            <a href="http://www.guardianholidayoffers.co.uk">
+            <a href="%OASToken%http://www.guardianholidayoffers.co.uk">
                 <span class="u-h">Guardian Holiday Offers</span>
                 <i class="i i-guardian-holidayoffers-logo"></i>
             </a>
@@ -16,7 +16,7 @@
         <ul class="lineitems">
             @offers.take(1).map { offer =>
                 <li class="lineitem">
-                    <a class="lineitem__link" href="@offer.offerUrl?INTCMP=ILCTOFFTXT5263I">
+                    <a class="lineitem__link" href="%OASToken%@offer.offerUrl?INTCMP=ILCTOFFTXT5263I">
                         <img class="lineitem__image" src="@offer.imageUrl&amp;INTCMP=ILCTOFFTXT5263I" alt="@offer.title" />
                         <div class="lineitem__offer">
                             <h4 class="lineitem__title">@offer.title</h4>
