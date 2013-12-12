@@ -173,7 +173,7 @@ input[type=text] {
 }
 
 .collections.live-mode {
-    background: #f6FFE8;
+    background: #CCFFCC;
 }
 
 .collections__inner {
@@ -193,20 +193,38 @@ input[type=text] {
     overflow: hidden;
     padding: 0 0 3px 4px;
     position: relative;
-    background-color: #FFFFFF;
+    background: #FFFFFF;
     border-top: 5px solid #FFFFFF;
     -webkit-transition: border-color 150ms;
        -moz-transition: border-color 150ms;
             transition: border-color 150ms;
 }
 
+.live-mode .trail {
+    border-color: #CCFFCC;
+    background: #CCFFCC;        
+}
+
 .sublinks .trail {
-    border-top-color: #EEEEEE;
+    border-color: #EEEEEE;
     background: #EEEEEE;
 }
 
+.live-mode .sublinks .trail {
+    border-color: #FFFFFF;
+    background: #FFFFFF;
+}
+
+.trail.editingMeta {
+    background: #EEEEEE;
+}
+
+.live-mode .trail.editingMeta {
+    background: #FFFFFF;
+}
+
 .trail.underDrag {
-    border-top-color: #a7d9a0;
+    border-top-color: #a7d9a0 !important; 
 }
 
 .trail:last-child {
@@ -386,11 +404,6 @@ button {
     line-height: 12px;
     color: #999999;
     text-transform: uppercase;
-}
-
-.trail.editingMeta {
-    background: #EEEEEE !important;
-    border-bottom: 5px solid #FFFFFF;
 }
 
 .search-form {
