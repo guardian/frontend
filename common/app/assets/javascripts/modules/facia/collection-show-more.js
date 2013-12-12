@@ -49,6 +49,7 @@ define([
         };
 
         this._removeButton = function() {
+            // TODO - fix remove when it should be removed straight after ajax call
             var that = this;
             // listen to the clickstream, as happens later, before removing
             mediator.on('module:clickstream:click', function(clickSpec) {
@@ -66,13 +67,16 @@ define([
             this._$button.attr('data-link-name', newDataAttr);
         };
 
-        this._showItems = function() {
-            var itemsToShow = this._items.splice(0, getShowMoreSize());
+        this._enrichItems = function() {
             // NOTE: wrapping in div so can be passed to commentCount, relativeDates, etc.
             var wrappedItems = bonzo(bonzo.create('<div></div>'))
-                .append(itemsToShow)[0];
+                .append(this._items)[0];
             relativeDates.init(wrappedItems);
             commentCount.init(wrappedItems);
+        };
+
+        this._showItems = function() {
+            var itemsToShow = this._items.splice(0, getShowMoreSize());
             this._$collection.append(itemsToShow);
             this._$button.attr('disabled', false);
             this._incrementButtonCounter();
@@ -112,6 +116,7 @@ define([
         };
 
         this.showMore = function() {
+            // get items, if we don't have them already
             if (this._items === null) {
                 var hiddenItems = [];
                 // get hidden items
@@ -124,7 +129,6 @@ define([
                 if (this._$collection.attr('data-can-show-more') === 'false') {
                     bonzo(hiddenItems).detach();
                     this._items = hiddenItems;
-                    this._showItems();
                 } else {
                     bonzo(hiddenItems).remove();
                     var that = this;
@@ -144,6 +148,7 @@ define([
                         that._items = newItems.filter(function(newItem) {
                             return itemsHrefs.indexOf($('.item__link', newItem).attr('href')) === -1;
                         });
+                        that._enrichItems();
                         that._showItems();
                     }).always(function() {
                         that._$button.attr('disabled', false);
@@ -151,9 +156,8 @@ define([
                 }
                 // remove class
                 this._$collection.removeClass('js-collection--show-more');
-            } else {
-                this._showItems();
             }
+            this._showItems();
         };
 
     };
