@@ -1,13 +1,12 @@
+/* global _: true */
 define([
-    'Config',
-    'models/authedAjax',
-    'models/common',
-    'models/cache'
+    'modules/authed-ajax',
+    'modules/vars',
+    'modules/cache'
 ],
 function (
-    Config,
     authedAjax,
-    common,
+    vars,
     cache
 ){
     function decorateItems(items) {
@@ -35,9 +34,9 @@ function (
                         })
                     );
                 });
-            }, index * 1000/(common.config.ophanCallsPerSecond || 4)); // stagger requests
+            }, index * 1000/(vars.CONST.ophanCallsPerSecond || 4)); // stagger requests
         });
-    };
+    }
 
     function decorateItem(item, opts) {
         if(opts.totalHits !== item.state.totalHits()) {
@@ -76,9 +75,9 @@ function (
 
             return _.map(graphs, function(graph){
                 // recent pageviews per minute average
-                var pvm = _.reduce(_.last(graph.data, common.config.pvmPeriod), function(m, n){ return m + n; }, 0) / common.config.pvmPeriod;
+                var pvm = _.reduce(_.last(graph.data, vars.CONST.pvmPeriod), function(m, n){ return m + n; }, 0) / vars.CONST.pvmPeriod;
                 // classify activity on scale of 1,2,3
-                graph.activity = pvm < common.config.pvmHot ? pvm < common.config.pvmWarm ? 1 : 2 : 3;
+                graph.activity = pvm < vars.CONST.pvmHot ? pvm < vars.CONST.pvmWarm ? 1 : 2 : 3;
                 // Round the datapoints
                 graph.data = _.map(graph.data, function(d) { return Math.round(d*10)/10; });
                 return graph;
@@ -92,13 +91,13 @@ function (
         }).then(function (resp) {
             _.each(resp.seriesData, function(s){
                 s.data.pop(); // Drop the last data point
-            })
+            });
             return resp;
         });
     }
 
     return {
         decorateItems: decorateItems
-    }
+    };
 
 });

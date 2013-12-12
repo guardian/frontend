@@ -53,7 +53,8 @@ define([
         var startTime = new Date().getTime(),
             $trackedAdSlots = common.$g('.ad-slot'),
             firstRun = true;
-        
+       
+
         // a timer to submit the data to diagnostics every nth second
         if (config.switches.liveStats) {
             var beaconInterval = setInterval(function() {
@@ -120,7 +121,7 @@ define([
             supportsFixed  = detect.hasCSSSupport('position', 'fixed', true);
 
         this.id = 'AlphaComm';
-        this.expiry = '2013-12-20';
+        this.expiry = '2013-12-24';
         this.audience = 0.1;
         this.audienceOffset = 0;
         this.description = 'Test new advert formats for alpha release';
@@ -152,6 +153,7 @@ define([
                     });
 
                     bonzo(qwery('.ad-slot--bottom-banner-ad')).attr('data-inview-name', 'Bottom');
+                    bonzo(qwery('.ad-slot--top-banner-ad')).attr('data-inview-name', 'Top');
 
                     // The timer for the 'Both' variant is setup only once in the variant itself
                     if (!isBoth) {
@@ -181,8 +183,14 @@ define([
                         }
                     } else {
                         inviewName = 'MPU';
+                        
                         bonzo(qwery('.js-mpu-ad-slot .social-wrapper')).after(bonzo.create(mpuTemp)[0]);
                         bonzo(qwery('.ad-slot--mpu-banner-ad')).attr('data-inview-name', inviewName);
+                        bonzo(qwery('.js-mpu-ad-slot')).addClass('is-sticky');
+                        
+                        // Mwahahaha 
+                        bonzo(qwery('.mpu-container .open-cta')).remove();
+
                         if(!supportsSticky && supportsFixed) {
                             s = new Sticky({
                                 elCls: 'js-mpu-ad-slot',
@@ -226,6 +234,9 @@ define([
                 test: function() {
                     variantName = 'Static';
                     guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha4.com';
+                    
+                    bonzo(qwery('.ad-slot--bottom-banner-ad')).attr('data-inview-name', 'Bottom');
+                    
                     var viewport = detect.getBreakpoint(),
                         inviewName,
                         s;
@@ -236,6 +247,7 @@ define([
                         inviewName = 'MPU';
                         bonzo(qwery('.js-mpu-ad-slot .social-wrapper')).after(bonzo.create(mpuTemp)[0]);
                         bonzo(qwery('.ad-slot--mpu-banner-ad')).attr('data-inview-name', inviewName);
+                        bonzo(qwery('.ad-slot--top-banner-ad')).attr('data-inview-name', 'Top');
                     }
                     // This needs to be last as the previous calls set their own variant hosts
                     initAdDwellTracking(_config, this.id);
@@ -248,6 +260,7 @@ define([
                     variantName = 'Control';
                     guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha.com';
                     bonzo(qwery('.ad-slot--bottom-banner-ad')).attr('data-inview-name', 'Bottom');
+                    bonzo(qwery('.ad-slot--top-banner-ad')).attr('data-inview-name', 'Top');
 
                     initAdDwellTracking(_config, this.id);
 

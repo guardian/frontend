@@ -1,5 +1,7 @@
 define([
     "common",
+    "utils/mediator",
+    "utils/detect",
     "$",
     "modules/ui/autoupdate",
     "modules/live/filter",
@@ -9,11 +11,12 @@ define([
     "modules/discussion/loader",
     "modules/sport/cricket",
     "modules/ui/notification-counter",
-    "utils/detect",
     "modules/experiments/left-hand-card",
     "modules/open/cta"
 ], function (
     common,
+    mediator,
+    detect,
     $,
     AutoUpdate,
     LiveFilter,
@@ -23,7 +26,6 @@ define([
     DiscussionLoader,
     Cricket,
     NotificationCounter,
-    detect,
     LeftHandCard,
     OpenCta
 ) {
