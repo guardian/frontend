@@ -16,6 +16,7 @@ define([
         this.group =      opts.group;
         this.name =       opts.name;
         this.collection = opts.collection;
+        this.article =    opts.article;
         this.keepCopy =   opts.keepCopy;
 
         this.reflow = opts.reflow  || function() {};

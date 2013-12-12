@@ -165,6 +165,11 @@ define([
                             targetList.reflow();
                         }
 
+                        if (targetList.article) {
+                            targetList.article.save();
+                            return;
+                        }
+
                         if (!targetList.collection) { // this is a non-collection list, e.g. a clipboard, so no need for persistence
                             return;
                         }

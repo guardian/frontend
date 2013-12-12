@@ -74,14 +74,17 @@ define([
         }
 
         Article.prototype.populate = function(opts) {
+            var self = this;
+
             populateObservables(this.props, opts);
             populateObservables(this.meta, opts.meta);
             populateObservables(this.fields, opts.fields);
 
             this.meta.sublinks = new Group ({
                 items: _.map((opts.meta || {}).sublinks, function(sublink) {
-                    return new Article(sublink);
-                })
+                    return new Article(sublink, self.collection);
+                }),
+                article: self
             });
         };
 
@@ -107,34 +110,43 @@ define([
         };
 
         Article.prototype.getMeta = function() {
-            var self = this,
-                result = _.chain(this.meta)
-                    .pairs()
-                    // do sublinks separately
-                    .filter(function(p){ return p[0] !== 'sublinks'; })
-                    // is the meta property a not a whitespace-only string ?
-                    .filter(function(p){ return !_.isUndefined(p[1]()) && ("" + p[1]()).replace(/\s*/g, '').length > 0; })
-                    // does it actually differ from the props value (if any) that it's overwriting ?
-                    .filter(function(p){ return  _.isUndefined(self.props[p[0]]) || self.props[p[0]]() !== p[1](); })
-                    .map(function(p){ return [p[0], p[1]()]; })
-                    .object()
-                    .value();
+            var self = this;
 
-            if (this.meta.sublinks && this.meta.sublinks.items().length) {
-                result.sublinks = _.map(this.meta.sublinks.items(), function(sublink) {
-                    return {
-                        id:   sublink.props.id(),
-                        meta: sublink.meta.headline() ? {headline: sublink.meta.headline()} : undefined
-                    };
-                });
-            }
-
-            return result;
+            return _.chain(this.meta)
+                .pairs()
+                // execute any knockout values:
+                .map(function(p){ return [p[0], _.isFunction(p[1]) ? p[1]() : p[1]]; })
+                // only keep defined properties:
+                .filter(function(p){ return !_.isUndefined(p[1]); })
+                // discount whitespace-only strings:
+                .filter(function(p){ return _.isString(p[1]) ? p[1].replace(/\s*/g, '').length > 0 : true; })
+                // only vals that differ from the props val (if any) they're overwriting:
+                .filter(function(p){ return _.isUndefined(self.props[p[0]]) || self.props[p[0]]() !== p[1]; })
+                // serialise sublinks
+                .map(function(p) {
+                    if (p[0] === 'sublinks') {
+                        return [p[0], _.map(p[1].items(), function(sublink) {
+                            return {
+                                id:   sublink.props.id(),
+                                meta: sublink.getMeta()
+                            };
+                        })];
+                    }
+                    return [p[0], p[1]];
+                })
+                // drop empty array (e.g .sublinks):
+                .filter(function(p){ return _.isArray(p[1]) ? p[1].length : true; })
+                .object()
+                // return undefined if the object is empty (better way to achieve this?)
+                .reduce(function(obj, val, key) {
+                    obj = obj || {};
+                    obj[key] = val;
+                    return obj;
+                }, undefined)
+                .value();
         };
 
         Article.prototype.save = function() {
-            if (!this.collection) { return; }
-
             authedAjax.updateCollection(
                 'post',
                 this.collection,

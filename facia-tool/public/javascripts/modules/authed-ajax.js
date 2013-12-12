@@ -2,7 +2,10 @@
 define(['modules/vars'], function(vars) {
     function request(opts) {
         return $.ajax(
-            _.extend({}, {dataType: !opts.type || opts.type === 'get' ? 'json' : undefined, contentType: 'application/json'}, opts)
+            _.extend({}, {
+                dataType: !opts.type || opts.type === 'get' ? 'json' : undefined,
+                contentType: 'application/json'
+            }, opts)
         ).fail(function(xhr) {
             if (xhr.status === 403) {
                 window.location.href = window.location.href;
@@ -19,6 +22,7 @@ define(['modules/vars'], function(vars) {
             window.console.log(['Failed', method.toUpperCase(), ":", xhr.status, xhr.statusText, JSON.stringify(data)].join(' '));
         }).always(function() {
             collection.load();
+            //collection.state.loadIsPending(false);
         });
     }
 
