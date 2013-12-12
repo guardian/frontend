@@ -33,6 +33,7 @@ define([
     var Loader = function(context, options) {
         this.keywords       = options.config.page.keywords;
         this.section        = options.config.page.section;
+        this.oastoken       = options.oastoken || '';
         this.userSegments   = 'seg=' + (storage.local.get('gu.history').length <= 1 ? 'new' : 'repeat');
         this.host           = options.config.page.ajaxUrl + '/commercial/';
         this.breakPoints    = [300, 400, 500, 600];
@@ -63,7 +64,8 @@ define([
         new LazyLoad({
             url: url,
             container: target,
-            success: function (response) {
+            beforeInsert: function (html) {
+                return html.replace(/%OASToken%/g, this.oastoken)
             },
             error: function (req) {
                 mediator.emit('module:error', 'Failed to load related: ' + req.statusText, 'modules/commercial/loader.js');
