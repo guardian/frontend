@@ -20,25 +20,30 @@ define([
      * Loads commercial components.
      * 
      * ```
-     *  require('modules/commercial/loader', function (CommercialComponent) {
-     *   CommercialComponent.masterclasses().load();
-     *  }
+     * require('modules/commercial/loader', function (CommercialComponent) {
+     *    var c = new CommercialComponent(document, {
+     *          config: guardian.config
+     *    }).load('travel', document.getElementById('header'));
+     * })
      * ```
      *
+     * BEWARE that this code is depended upon by the ad server, so  
+     *
+     *
+     * 
      * @constructor
      * @extends Component
      * @param {Element=} context
      * @param {Object=} options
      */
-    var Loader = function(context, options) {
-        this.keywords       = options.config.page.keywords;
-        this.section        = options.config.page.section;
-        this.oastoken       = options.oastoken || '';
+    var Loader = function(options) {
+        var opt = options || {config:{page:{}}};
+        this.keywords       = opt.keywords || '';
+        this.section        = opt.section;
+        this.oastoken       = opt.oastoken || '';
         this.userSegments   = 'seg=' + (storage.local.get('gu.history').length <= 1 ? 'new' : 'repeat');
-        this.host           = options.config.page.ajaxUrl + '/commercial/';
-        this.breakPoints    = [300, 400, 500, 600];
-        this.className      = 'commercial';
-        this.context        = context || document;
+        this.host           = opt.ajaxUrl + '/commercial/';
+        this.context        = opt.context || document;
         this.components     = {
           masterclasses: this.host + 'masterclasses.json?' + this.userSegments + '&' + this.section,
           travel:        this.host + 'travel/offers.json?' + this.userSegments + '&' + this.section + '&' + this.getKeywords(),
