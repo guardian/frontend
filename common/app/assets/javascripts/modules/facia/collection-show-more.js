@@ -20,15 +20,13 @@ define([
             }[detect.getBreakpoint()];
         };
 
-    return function(collection, items) {
+    return function(collection) {
 
         this._collection = collection;
 
         this._$collection = bonzo(collection);
 
-        this._items = items;
-
-        this._initialised = false;
+        this._items = null;
 
         this._$button = bonzo(bonzo.create(
             '<button class="collection__show-more tone-background" data-link-name="' + buttonText + ' | 0">' +
@@ -77,48 +75,85 @@ define([
             commentCount.init(wrappedItems);
             this._$collection.append(itemsToShow);
             this._$button.attr('disabled', false);
+            this._incrementButtonCounter();
             if (this._items.length === 0) {
                 this._removeButton();
             }
         };
 
+        this._buttonVisibility = function() {
+            // are any hidden?
+            var hasHidden = false;
+            $('.item', this._collection).map(function(item) {
+                if ($(item).css('display') === 'none') {
+                    hasHidden = true;
+                }
+            });
+            if (!this._items && !hasHidden) {
+                this._$button.hide();
+            } else {
+                this._$button.show();
+            }
+        };
+
         this.addShowMore = function() {
             this._renderButton();
+            if (this._$collection.attr('data-can-show-more') === 'false') {
+                this._buttonVisibility();
+                // handle browser sizing
+                var hasBreakpointChanged = detect.hasCrossedBreakpoint(),
+                    that = this;
+                mediator.on('window:resize', function() {
+                    hasBreakpointChanged(function() {
+                        that._buttonVisibility();
+                    });
+                });
+            }
         };
 
         this.showMore = function() {
-            if (!this._initialised) {
-                // delete hidden items
+            if (this._items === null) {
+                var hiddenItems = [];
+                // get hidden items
                 $('.item', this._collection).each(function(item) {
                     var $item = $(item);
                     if ($item.css('display') === 'none') {
-                        $item.remove();
+                        hiddenItems.push(item);
                     }
                 });
+                if (this._$collection.attr('data-can-show-more') === 'false') {
+                    bonzo(hiddenItems).detach();
+                    this._items = hiddenItems;
+                    this._showItems();
+                } else {
+                    bonzo(hiddenItems).remove();
+                    var that = this;
+                    ajax({
+                        url: this._$collection.attr('data-link-context-path') + '.json',
+                        type: 'json',
+                        crossOrigin: true
+                    }).then(function(data) {
+                        // get hrefs of items we're showing
+                        var itemsHrefs = $('.item__link', that._collection).map(function(item) {
+                            return $(item).attr('href');
+                        });
+                        var newItems = bonzo.create(
+                            $('.collection', bonzo.create('<div>' + data.html + '</div>')).html()
+                        );
+                        // filter items we're showing
+                        that._items = newItems.filter(function(newItem) {
+                            return itemsHrefs.indexOf($('.item__link', newItem).attr('href')) === -1;
+                        });
+                        that._showItems();
+                    }).always(function() {
+                        that._$button.attr('disabled', false);
+                    });
+                }
                 // remove class
                 this._$collection.removeClass('js-collection--show-more');
-            }
-            var that = this;
-            if (!this._items) {
-                ajax({
-                    url: this._$collection.attr('data-link-context-path') + '.json',
-                    type: 'json',
-                    crossOrigin: true
-                }).then(function(data) {
-                    var newItems = bonzo.create(
-                        $('.collection', bonzo.create('<div>' + data.html + '</div>')).html()
-                    );
-                    // remove items we're showing
-                    var itemsSize = $('.item', that._collection).length;
-                    that._items = newItems.slice(itemsSize);
-                    that._showItems();
-                }).always(function() {
-                    that._$button.attr('disabled', false);
-                });
             } else {
                 this._showItems();
             }
-            this._initialised = true;
         };
 
     };
