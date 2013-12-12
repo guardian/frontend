@@ -21,8 +21,8 @@ define(['modules/vars'], function(vars) {
         }).fail(function(xhr) {
             window.console.log(['Failed', method.toUpperCase(), ":", xhr.status, xhr.statusText, JSON.stringify(data)].join(' '));
         }).always(function() {
-            collection.load();
-            //collection.state.loadIsPending(false);
+            //collection.load();
+            collection.state.loadIsPending(false);
         });
     }
 

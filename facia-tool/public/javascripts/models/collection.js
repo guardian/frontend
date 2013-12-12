@@ -120,6 +120,7 @@ define([
 
     Collection.prototype.load = function(opts) {
         var self = this;
+
         opts = opts || {};
 
         return authedAjax.request({
@@ -153,17 +154,21 @@ define([
     };
 
     Collection.prototype.importList = function(source) {
-        var self = this;
+        var self = this,
+            editingMetas = {};
 
         _.each(this.groups, function(group) {
+            _.each(group.items(), function(item) {
+                editingMetas[item.props.id()] = item.state.editingMeta();
+            });
             group.items.removeAll();
         });
 
-        _.toArray(source).forEach(function(item, index) {
+        _.each(source, function(item) {
             var groupInt,
                 group;
 
-            //item.sublinks = [{id: 'politics/blog/2013/dec/05/george-osbornes-autumn-statement-live'}]
+            item.state = _.extend({}, item.state, {editingMeta: editingMetas[item.id]});
 
             groupInt = parseInt((item.meta || {}).group, 10) || 0;
 

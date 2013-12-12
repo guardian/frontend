@@ -19,7 +19,8 @@ define([
         ko
         ){
         function Article(options, collection) {
-            var opts = options || {};
+            var opts = options || {},
+                self = this;
 
             this.collection = collection;
 
@@ -68,8 +69,6 @@ define([
                 owner: this
             });
 
-            this.provisionalHeadline = null;
-
             this.populate(opts);
         }
 
@@ -79,6 +78,7 @@ define([
             populateObservables(this.props, opts);
             populateObservables(this.meta, opts.meta);
             populateObservables(this.fields, opts.fields);
+            populateObservables(this.state, opts.state);
 
             this.meta.sublinks = new Group ({
                 items: _.map((opts.meta || {}).sublinks, function(sublink) {
@@ -89,24 +89,20 @@ define([
         };
 
         Article.prototype.startMetaEdit = function() {
-            this.provisionalHeadline = this.meta.headline();
             this.state.editingMeta(true);
+        };
+
+        Article.prototype.stopMetaEdit = function() {
+            this.state.editingMeta(false);
         };
 
         Article.prototype.saveMetaEdit = function() {
             this.save();
-            this.state.editingMeta(false);
         };
 
-        Article.prototype.cancelMetaEdit = function() {
-            this.state.editingMeta(false);
-            if (this.collection) {
-                this.collection.load();
-            }
-        };
-
-        Article.prototype.revertMetaEdit = function() {
+        Article.prototype.revertHeadline = function() {
             this.meta.headline(undefined);
+            this.saveMetaEdit();
         };
 
         Article.prototype.getMeta = function() {
@@ -116,13 +112,13 @@ define([
                 .pairs()
                 // execute any knockout values:
                 .map(function(p){ return [p[0], _.isFunction(p[1]) ? p[1]() : p[1]]; })
-                // only keep defined properties:
+                // reject undefined properties:
                 .filter(function(p){ return !_.isUndefined(p[1]); })
-                // discount whitespace-only strings:
+                // reject whitespace-only strings:
                 .filter(function(p){ return _.isString(p[1]) ? p[1].replace(/\s*/g, '').length > 0 : true; })
-                // only vals that differ from the props val (if any) they're overwriting:
+                // reject vals that don't differ from the props (if any) that they're overwriting:
                 .filter(function(p){ return _.isUndefined(self.props[p[0]]) || self.props[p[0]]() !== p[1]; })
-                // serialise sublinks
+                // serialise sublinks recursively
                 .map(function(p) {
                     if (p[0] === 'sublinks') {
                         return [p[0], _.map(p[1].items(), function(sublink) {
@@ -134,7 +130,7 @@ define([
                     }
                     return [p[0], p[1]];
                 })
-                // drop empty array (e.g .sublinks):
+                // drop empty arrays (e.g .sublinks):
                 .filter(function(p){ return _.isArray(p[1]) ? p[1].length : true; })
                 .object()
                 // return undefined if the object is empty (better way to achieve this?)
