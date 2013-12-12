@@ -96,7 +96,7 @@ define([
      */
     Component.prototype.render = function(parent) {
         this.checkAttached();
-        var template = bonzo.create(document.getElementById('tmpl-'+ this.templateName).innerHTML)[0],
+        var template = bonzo.create((this.template) ? this.template : document.getElementById('tmpl-'+ this.templateName).innerHTML)[0],
             container = parent || document.body;
 
         this.elem = template;
