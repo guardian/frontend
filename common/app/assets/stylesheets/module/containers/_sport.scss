@@ -72,6 +72,16 @@
                 }
             }
         }
+        .js-collection--show-more {
+            .item:nth-child(n+6) {
+                display: none;
+            }
+            &.collection--with-sport-stats {
+                .item:nth-child(n+5) {
+                    display: none;
+                }
+            }
+        }
     }
     @include mq(tablet) {
         .item:first-child {
@@ -97,6 +107,16 @@
                 @include card-image;
             }
         }
+        .js-collection--show-more {
+            .item:nth-child(n+7) {
+                display: none;
+            }
+            &.collection--with-sport-stats {
+                .item:nth-child(n+6) {
+                    display: none;
+                }
+            }
+        }
     }
     @include mq(desktop) {
         @include first-row(3);
@@ -106,6 +126,16 @@
         .collection--without-sport-stats {
             .item:nth-child(2) {
                 @include card-image;
+            }
+        }
+        .js-collection--show-more {
+            .item:nth-child(n+6) {
+                display: none;
+            }
+            &.collection--with-sport-stats {
+                .item:nth-child(n+5) {
+                    display: none;
+                }
             }
         }
     }

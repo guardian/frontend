@@ -162,7 +162,7 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
-            modules.showCollectionShowMore();
+//            modules.showCollectionShowMore();
             modules.showContainerToggle();
             modules.showFootballFixtures();
             modules.showPopular();
