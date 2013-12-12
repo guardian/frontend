@@ -11,7 +11,6 @@ define([
     "modules/discussion/loader",
     "modules/sport/cricket",
     "modules/ui/notification-counter",
-    "modules/onward/sequence",
     "modules/experiments/left-hand-card",
     "modules/open/cta"
 ], function (
@@ -27,7 +26,6 @@ define([
     DiscussionLoader,
     Cricket,
     NotificationCounter,
-    sequence,
     LeftHandCard,
     OpenCta
 ) {
