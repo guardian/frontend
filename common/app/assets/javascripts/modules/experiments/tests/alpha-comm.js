@@ -178,7 +178,7 @@ define([
                         if(!supportsSticky && supportsFixed) {
                             s = new Sticky({
                                 elCls: 'ad-slot--top-banner-ad',
-                                id: 'Top'
+                                id: 'Top2'
                             });
                         }
                     } else {
