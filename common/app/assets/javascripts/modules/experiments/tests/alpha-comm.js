@@ -189,7 +189,7 @@ define([
                         bonzo(qwery('.js-mpu-ad-slot')).addClass('is-sticky');
                         
                         // Mwahahaha 
-                        bonzo(qwery('.mpu-container .open-cta')).remove();
+                        bonzo(qwery('.mpu-context .open-cta')).remove();
 
                         if(!supportsSticky && supportsFixed) {
                             s = new Sticky({
