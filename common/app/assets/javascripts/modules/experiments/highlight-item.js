@@ -3,9 +3,11 @@
  Description: Item for hightlight panel
  */
 define([
-    'modules/component'
+    'modules/component',
+    'bonzo'
 ], function (
-    Component
+    Component,
+    bonzo
     ) {
 
     function Highlight(data) {
@@ -31,7 +33,7 @@ define([
         if (this.data.itemPicture) {
             var container = this.getElem(this.classes.image);
             container.setAttribute("data-src", this.data.itemPicture);
-            container.classList.add("item__image-container");
+            bonzo(container).addClass("item__image-container");
         }
         this.getElem(this.classes.link).href = this.data.url;
         this.getElem(this.classes.headline).innerHTML = this.data.headline;
