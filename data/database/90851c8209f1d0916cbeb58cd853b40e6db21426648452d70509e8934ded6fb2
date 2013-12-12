@@ -1,0 +1,20 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "startIndex":1,
+    "pageSize":50,
+    "currentPage":1,
+    "pages":1,
+    "results":[{
+      "id":"travel/iceland",
+      "type":"keyword",
+      "webTitle":"Iceland",
+      "webUrl":"http://www.theguardian.com/travel/iceland",
+      "apiUrl":"http://content.guardianapis.com/travel/iceland",
+      "sectionId":"travel",
+      "sectionName":"Travel"
+    }]
+  }
+}

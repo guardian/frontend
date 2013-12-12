@@ -149,6 +149,13 @@ define([
                     s.eVar51  = alphaTag + s.eVar51;
                 }
 
+                // is user is viewing uk-alpha front
+                if (config.page.pageId === 'uk-alpha') {
+                    var ukAlphaTag = 'uk-alpha,';
+                    s.prop51  = ukAlphaTag + s.prop51;
+                    s.eVar51  = ukAlphaTag + s.eVar51;
+                }
+
                 s.events = s.apl(s.events,'event58',',');
             }
 

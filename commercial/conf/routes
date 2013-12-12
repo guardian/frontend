@@ -6,13 +6,17 @@
 GET        /assets/*path                           dev.DevAssetsController.at(path)
 
 # Travel offers
+GET        /commercial/travel/offers               controllers.commercial.TravelOffers.renderOffer
 GET        /commercial/travel/offers.json          controllers.commercial.TravelOffers.listOffers
 
 # Jobs
+GET        /commercial/jobs                        controllers.commercial.JobAds.renderAds
 GET        /commercial/jobs.json                   controllers.commercial.JobAds.jobs
 
 # Masterclasses
+GET        /commercial/masterclasses               controllers.commercial.MasterClasses.renderMasterclass
 GET        /commercial/masterclasses.json          controllers.commercial.MasterClasses.list
 
 # Soulmates
+GET        /commercial/soulmates/mixed             controllers.commercial.SoulmateAds.renderAds
 GET        /commercial/soulmates/mixed.json        controllers.commercial.SoulmateAds.mixed

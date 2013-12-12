@@ -787,12 +787,14 @@
           iter[o] = opt_v
         }
 
-        if (ie && iter.opacity) {
+        if (!features.opasity && 'opacity' in iter) {
           // oh this 'ol gamut
-          iter.filter = 'alpha(opacity=' + (iter.opacity * 100) + ')'
+          iter.filter = iter.opacity != null && iter.opacity !== ''
+            ? 'alpha(opacity=' + (iter.opacity * 100) + ')'
+            : ''
           // give it layout
-          iter.zoom = o.zoom || 1;
-          delete iter.opacity;
+          iter.zoom = o.zoom || 1
+          ;delete iter.opacity
         }
 
         function fn(el, p, v) {
@@ -929,7 +931,7 @@
        * @return {Bonzo|string}
        */
     , val: function (s) {
-        return (typeof s == 'string') ?
+        return (typeof s == 'string' || typeof s == 'number') ?
           this.attr('value', s) :
           this.length ? this[0].value : null
       }

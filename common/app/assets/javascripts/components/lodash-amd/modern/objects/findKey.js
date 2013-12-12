@@ -1,5 +1,5 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="amd" -o ./modern/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -12,6 +12,13 @@ define(['../functions/createCallback', './forOwn'], function(createCallback, for
    * This method is like `_.findIndex` except that it returns the key of the
    * first element that passes the callback check, instead of the element itself.
    *
+   * If a property name is provided for `callback` the created "_.pluck" style
+   * callback will return the property value of the given element.
+   *
+   * If an object is provided for `callback` the created "_.where" style callback
+   * will return `true` for elements that have the properties of the given object,
+   * else `false`.
+   *
    * @static
    * @memberOf _
    * @category Objects
@@ -23,10 +30,24 @@ define(['../functions/createCallback', './forOwn'], function(createCallback, for
    * @returns {string|undefined} Returns the key of the found element, else `undefined`.
    * @example
    *
-   * _.findKey({ 'a': 1, 'b': 2, 'c': 3, 'd': 4 }, function(num) {
-   *   return num % 2 == 0;
+   * var characters = {
+   *   'barney': {  'age': 36, 'blocked': false },
+   *   'fred': {    'age': 40, 'blocked': true },
+   *   'pebbles': { 'age': 1,  'blocked': false }
+   * };
+   *
+   * _.findKey(characters, function(chr) {
+   *   return chr.age < 40;
    * });
-   * // => 'b' (property order is not guaranteed across environments)
+   * // => 'barney' (property order is not guaranteed across environments)
+   *
+   * // using "_.where" callback shorthand
+   * _.findKey(characters, { 'age': 1 });
+   * // => 'pebbles'
+   *
+   * // using "_.pluck" callback shorthand
+   * _.findKey(characters, 'blocked');
+   * // => 'fred'
    */
   function findKey(object, callback, thisArg) {
     var result;

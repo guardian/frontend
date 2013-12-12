@@ -1,0 +1,204 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":24,
+    "startIndex":1,
+    "pageSize":50,
+    "currentPage":1,
+    "pages":1,
+    "results":[{
+      "id":"society/housing",
+      "type":"keyword",
+      "webTitle":"Housing",
+      "webUrl":"http://www.theguardian.com/society/housing",
+      "apiUrl":"http://content.guardianapis.com/society/housing",
+      "sectionId":"society",
+      "sectionName":"Society"
+    },{
+      "id":"housinghorizons/housinghorizons",
+      "type":"keyword",
+      "webTitle":"Housing horizons",
+      "webUrl":"http://www.theguardian.com/housinghorizons/housinghorizons",
+      "apiUrl":"http://content.guardianapis.com/housinghorizons/housinghorizons",
+      "sectionId":"housinghorizons",
+      "sectionName":"Housing horizons"
+    },{
+      "id":"money/housing-in-retirement",
+      "type":"keyword",
+      "webTitle":"Housing in retirement",
+      "webUrl":"http://www.theguardian.com/money/housing-in-retirement",
+      "apiUrl":"http://content.guardianapis.com/money/housing-in-retirement",
+      "sectionId":"money",
+      "sectionName":"Money"
+    },{
+      "id":"business/housingmarket",
+      "type":"keyword",
+      "webTitle":"Housing market",
+      "webUrl":"http://www.theguardian.com/business/housingmarket",
+      "apiUrl":"http://content.guardianapis.com/business/housingmarket",
+      "sectionId":"business",
+      "sectionName":"Business"
+    },{
+      "id":"housing-network/housing-management",
+      "type":"keyword",
+      "webTitle":"Housing management",
+      "webUrl":"http://www.theguardian.com/housing-network/housing-management",
+      "apiUrl":"http://content.guardianapis.com/housing-network/housing-management",
+      "sectionId":"housing-network",
+      "sectionName":"Housing Network"
+    },{
+      "id":"housing-network/housing-careers",
+      "type":"keyword",
+      "webTitle":"Housing careers",
+      "webUrl":"http://www.theguardian.com/housing-network/housing-careers",
+      "apiUrl":"http://content.guardianapis.com/housing-network/housing-careers",
+      "sectionId":"housing-network",
+      "sectionName":"Housing Network"
+    },{
+      "id":"housing-reform/housing-reform",
+      "type":"keyword",
+      "webTitle":"Housing reform",
+      "webUrl":"http://www.theguardian.com/housing-reform/housing-reform",
+      "apiUrl":"http://content.guardianapis.com/housing-reform/housing-reform",
+      "sectionId":"housing-reform",
+      "sectionName":"Housing reform"
+    },{
+      "id":"education/studenthousing",
+      "type":"keyword",
+      "webTitle":"Student housing",
+      "webUrl":"http://www.theguardian.com/education/studenthousing",
+      "apiUrl":"http://content.guardianapis.com/education/studenthousing",
+      "sectionId":"education",
+      "sectionName":"Education"
+    },{
+      "id":"futurehousing/futurehousing",
+      "type":"keyword",
+      "webTitle":"Future housing",
+      "webUrl":"http://www.theguardian.com/futurehousing/futurehousing",
+      "apiUrl":"http://content.guardianapis.com/futurehousing/futurehousing",
+      "sectionId":"futurehousing",
+      "sectionName":"Future housing"
+    },{
+      "id":"housing-network/housing-and-care",
+      "type":"keyword",
+      "webTitle":"Housing and care",
+      "webUrl":"http://www.theguardian.com/housing-network/housing-and-care",
+      "apiUrl":"http://content.guardianapis.com/housing-network/housing-and-care",
+      "sectionId":"housing-network",
+      "sectionName":"Housing Network"
+    },{
+      "id":"housing-network/housing-benefit",
+      "type":"keyword",
+      "webTitle":"Housing benefit",
+      "webUrl":"http://www.theguardian.com/housing-network/housing-benefit",
+      "apiUrl":"http://content.guardianapis.com/housing-network/housing-benefit",
+      "sectionId":"housing-network",
+      "sectionName":"Housing Network"
+    },{
+      "id":"select/select-housing",
+      "type":"keyword",
+      "webTitle":"Select Housing",
+      "webUrl":"http://www.theguardian.com/select/select-housing",
+      "apiUrl":"http://content.guardianapis.com/select/select-housing",
+      "sectionId":"select",
+      "sectionName":"Select"
+    },{
+      "id":"housing-network/sustainable-housing",
+      "type":"keyword",
+      "webTitle":"Sustainable housing",
+      "webUrl":"http://www.theguardian.com/housing-network/sustainable-housing",
+      "apiUrl":"http://content.guardianapis.com/housing-network/sustainable-housing",
+      "sectionId":"housing-network",
+      "sectionName":"Housing Network"
+    },{
+      "id":"society/social-housing",
+      "type":"keyword",
+      "webTitle":"Social housing",
+      "webUrl":"http://www.theguardian.com/society/social-housing",
+      "apiUrl":"http://content.guardianapis.com/society/social-housing",
+      "sectionId":"society",
+      "sectionName":"Society"
+    },{
+      "id":"society/housing-benefit",
+      "type":"keyword",
+      "webTitle":"Housing benefit",
+      "webUrl":"http://www.theguardian.com/society/housing-benefit",
+      "apiUrl":"http://content.guardianapis.com/society/housing-benefit",
+      "sectionId":"society",
+      "sectionName":"Society"
+    },{
+      "id":"housing-network/housing-law",
+      "type":"keyword",
+      "webTitle":"Housing law",
+      "webUrl":"http://www.theguardian.com/housing-network/housing-law",
+      "apiUrl":"http://content.guardianapis.com/housing-network/housing-law",
+      "sectionId":"housing-network",
+      "sectionName":"Housing Network"
+    },{
+      "id":"housing-network/housing-network",
+      "type":"keyword",
+      "webTitle":"Housing Network",
+      "webUrl":"http://www.theguardian.com/housing-network/housing-network",
+      "apiUrl":"http://content.guardianapis.com/housing-network/housing-network",
+      "sectionId":"housing-network",
+      "sectionName":"Housing Network"
+    },{
+      "id":"housing-network/older-people-housing",
+      "type":"keyword",
+      "webTitle":"Older people's housing",
+      "webUrl":"http://www.theguardian.com/housing-network/older-people-housing",
+      "apiUrl":"http://content.guardianapis.com/housing-network/older-people-housing",
+      "sectionId":"housing-network",
+      "sectionName":"Housing Network"
+    },{
+      "id":"housing-network/future-of-housing",
+      "type":"keyword",
+      "webTitle":"Future of housing hub",
+      "webUrl":"http://www.theguardian.com/housing-network/future-of-housing",
+      "apiUrl":"http://content.guardianapis.com/housing-network/future-of-housing",
+      "sectionId":"housing-network",
+      "sectionName":"Housing Network"
+    },{
+      "id":"housing-network/housing-network-blog",
+      "type":"keyword",
+      "webTitle":"Housing network blog",
+      "webUrl":"http://www.theguardian.com/housing-network/housing-network-blog",
+      "apiUrl":"http://content.guardianapis.com/housing-network/housing-network-blog",
+      "sectionId":"housing-network",
+      "sectionName":"Housing Network"
+    },{
+      "id":"housing-network-eac-partner-zone/housing-network-eac-partner-zone",
+      "type":"keyword",
+      "webTitle":"Housing network - EAC partner zone",
+      "webUrl":"http://www.theguardian.com/housing-network-eac-partner-zone/housing-network-eac-partner-zone",
+      "apiUrl":"http://content.guardianapis.com/housing-network-eac-partner-zone/housing-network-eac-partner-zone",
+      "sectionId":"housing-network-eac-partner-zone",
+      "sectionName":"Housing network - EAC partner zone"
+    },{
+      "id":"housing-network-partner-zone-home-group/housing-network-partner-zone-home-group",
+      "type":"keyword",
+      "webTitle":"Housing Network - partner zone Home Group",
+      "webUrl":"http://www.theguardian.com/housing-network-partner-zone-home-group/housing-network-partner-zone-home-group",
+      "apiUrl":"http://content.guardianapis.com/housing-network-partner-zone-home-group/housing-network-partner-zone-home-group",
+      "sectionId":"housing-network/partner-zone-home-group",
+      "sectionName":"Housing Network - partner zone Home Group"
+    },{
+      "id":"business/subprimecrisis",
+      "type":"keyword",
+      "webTitle":"US housing and sub-prime crisis",
+      "webUrl":"http://www.theguardian.com/business/subprimecrisis",
+      "apiUrl":"http://content.guardianapis.com/business/subprimecrisis",
+      "sectionId":"business",
+      "sectionName":"Business"
+    },{
+      "id":"housing-network-partner-zone-pinnacle/housing-network-partner-zone-pinnacle",
+      "type":"keyword",
+      "webTitle":"Housing Network - partner zone Pinnacle PSG",
+      "webUrl":"http://www.theguardian.com/housing-network-partner-zone-pinnacle/housing-network-partner-zone-pinnacle",
+      "apiUrl":"http://content.guardianapis.com/housing-network-partner-zone-pinnacle/housing-network-partner-zone-pinnacle",
+      "sectionId":"housing-network/partner-zone-pinnacle-PSG",
+      "sectionName":"Housing Network - partner zone Pinnacle PSG"
+    }]
+  }
+}

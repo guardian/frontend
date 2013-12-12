@@ -27,7 +27,8 @@ object OffersApi extends XmlAdsApi[Offer] {
       (node \ "@fromprice").text.replace(".00", ""),
       dateFormat.parseDateTime((node \ "@earliestdeparture").text),
       Nil,
-      (node \\ "country").map(_.text).toList
+      (node \\ "country").map(_.text).toList,
+      (node \ "@duration").text
     )
   }
 

@@ -2,7 +2,7 @@ package model.commercial.soulmates
 
 import model.commercial.{Ad, Segment}
 
-case class Member(username: String, gender: Gender, age: Int, profilePhoto: String) extends Ad {
+case class Member(username: String, gender: Gender, age: Int, profilePhoto: String, location: String) extends Ad {
 
   def isTargetedAt(segment: Segment) = segment.context.isInSection("lifeandstyle")
 }

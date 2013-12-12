@@ -6,7 +6,9 @@ define([
     //Current tests
     'modules/experiments/tests/aa',
     'modules/experiments/tests/mobile-facebook-autosignin',
-    'modules/experiments/tests/onward-intrusive'
+    'modules/experiments/tests/onward-intrusive',
+    'modules/experiments/tests/onward-highlights-panel',
+    'modules/experiments/tests/alpha-comm'
 ], function (
     common,
     store,
@@ -14,13 +16,17 @@ define([
 
     Aa,
     MobileFacebookAutosignin,
-    OnwardIntrusive
+    OnwardIntrusive,
+    OnwardHighlightsPanel,
+    AlphaComm
     ) {
 
     var TESTS = [
             new Aa(),
             new MobileFacebookAutosignin(),
-            new OnwardIntrusive()
+            new OnwardIntrusive(),
+            new OnwardHighlightsPanel(),
+            new AlphaComm()
         ],
         participationsKey = 'gu.ab.participations';
 
@@ -109,7 +115,7 @@ define([
             variantId = participations[test.id].variant;
             test.variants.some(function(variant) {
                 if (variant.id === variantId) {
-                    variant.test(context);
+                    variant.test(context, config);
                     return true;
                 }
         });

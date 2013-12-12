@@ -1,12 +1,12 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize underscore exports="amd" -o ./underscore/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
  * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  * Available under MIT license <http://lodash.com/license>
  */
-define(['../internals/baseFlatten', '../internals/baseIndexOf', './forIn'], function(baseFlatten, baseIndexOf, forIn) {
+define(['../internals/baseDifference', '../internals/baseFlatten', './forIn'], function(baseDifference, baseFlatten, forIn) {
 
   /**
    * Creates a shallow clone of `object` excluding the specified properties.
@@ -26,24 +26,29 @@ define(['../internals/baseFlatten', '../internals/baseIndexOf', './forIn'], func
    * @returns {Object} Returns an object without the omitted properties.
    * @example
    *
-   * _.omit({ 'name': 'moe', 'age': 40 }, 'age');
-   * // => { 'name': 'moe' }
+   * _.omit({ 'name': 'fred', 'age': 40 }, 'age');
+   * // => { 'name': 'fred' }
    *
-   * _.omit({ 'name': 'moe', 'age': 40 }, function(value) {
+   * _.omit({ 'name': 'fred', 'age': 40 }, function(value) {
    *   return typeof value == 'number';
    * });
-   * // => { 'name': 'moe' }
+   * // => { 'name': 'fred' }
    */
   function omit(object) {
-    var indexOf = baseIndexOf,
-        props = baseFlatten(arguments, true, false, 1),
+    var props = [];
+    forIn(object, function(value, key) {
+      props.push(key);
+    });
+    props = baseDifference(props, baseFlatten(arguments, true, false, 1));
+
+    var index = -1,
+        length = props.length,
         result = {};
 
-    forIn(object, function(value, key) {
-      if (indexOf(props, key) < 0) {
-        result[key] = value;
-      }
-    });
+    while (++index < length) {
+      var key = props[index];
+      result[key] = object[key];
+    }
     return result;
   }
 

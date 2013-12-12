@@ -96,7 +96,7 @@ define([
      */
     Component.prototype.render = function(parent) {
         this.checkAttached();
-        var template = bonzo.create(document.getElementById('tmpl-'+ this.templateName).innerHTML)[0],
+        var template = bonzo.create((this.template) ? this.template : document.getElementById('tmpl-'+ this.templateName).innerHTML)[0],
             container = parent || document.body;
 
         this.elem = template;
@@ -274,17 +274,17 @@ define([
      */
     Component.prototype.detach = function() {
         bean.off(this.elem);
-        delete this.elem;
     };
 
     /**
      * Removes all event listeners and removes the DOM elem
      */
     Component.prototype.destroy = function() {
-        this.detach();
         if (this.elem) {
             bonzo(this.elem).remove();
+            delete this.elem;
         }
+        this.detach();
         this.destroyed = true;
     };
 

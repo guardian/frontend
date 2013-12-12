@@ -112,6 +112,9 @@
 
     .item--sport-stats {
         padding-bottom: 0 !important;
+        @include mq($to: tablet) {
+            width: 100% !important;
+        }
         .matches {
             margin-bottom: 0;
         }

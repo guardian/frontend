@@ -360,6 +360,13 @@ module.exports = function (grunt) {
                     cwd: 'common/app/assets/javascripts/',
                     src: ['**/*.js', '!components/**', '!utils/atob.js']
                 }]
+            },
+            faciaTool: {
+                files: [{
+                    expand: true,
+                    cwd: 'facia-tool/public/javascripts/',
+                    src: ['**/*.js', '!components/**', '!omniture.js']
+                }]
             }
         },
 

@@ -708,6 +708,7 @@
         , remove            : off
         , clone             : clone
         , fire              : fire
+        , Event             : Event
         , setSelectorEngine : setSelectorEngine
         , noConflict        : function () {
             context[name] = old

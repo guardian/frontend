@@ -7,6 +7,7 @@ define([
     // Modules
     'utils/detect',
     'utils/storage',
+    'utils/to-array',
     'modules/facia/popular',
     'modules/facia/collection-show-more',
     'modules/facia/container-toggle',
@@ -19,6 +20,7 @@ define([
     qwery,
     detect,
     storage,
+    toArray,
     popular,
     CollectionShowMore,
     ContainerToggle,
@@ -93,6 +95,16 @@ define([
                 // put popular after the first container if this is us-alpha front
                 if (config.page.pageId === 'us-alpha') {
                     opts.insertAfter = $('.container').first();
+                } else if (config.page.pageId === 'uk-alpha') {
+                    // place before the contributors container
+                    var containers = toArray(context.getElementsByClassName('container'));
+                    containers.some(function(container, i) {
+                        if ($(container).hasClass('container--comment')) {
+                            opts.insertAfter = containers[i -1];
+                            return true;
+                        }
+                    });
+
                 }
                 popular.render(config, opts);
             });
@@ -106,25 +118,42 @@ define([
 
         showUserzoom: function(config) {
             var path,
-                load;
+                steps;
 
-            if (config.switches.userzoom) {
+            if (config.switches.userzoom && config.switches.faciaUkAlpha) {
                 path = window.location.pathname.substring(1);
-                load = {
-                    'uk': {vistsRequired: 2, script: 'userzoom-uk'},
-                    'uk-alpha': {vistsRequired: 0, script: 'userzoom-uk-alpha'}
-                }[path];
 
-                if(!load) { return; }
+                if (path !== 'uk' && path !=='uk-alpha') { return; }
+
+                steps = [
+                    {
+                        pageId: 'uk-alpha',
+                        visits: 0,
+                        script: 'userzoom-uk-alpha'
+                    },
+                    {
+                        pageId: '',
+                        visits: 2,
+                        script: 'userzoom-uk'
+                    }
+                ];
 
                 mediator.on('page:front:ready', function(config, context) {
-                    var visits = parseInt(storage.local.get('gu.userzoom.visits.' + path) || 0, 10);
+                    steps.some(function(step) {
+                        var storeKey,
+                            visits;
 
-                    if(visits >= load.vistsRequired) {
-                        require(['js!' + load.script]);
-                    } else {
-                        storage.local.set('gu.userzoom.visits.' + path, visits + 1);
-                    }
+                        if (step.pageId === config.page.pageId) {
+                            storeKey = 'gu.userzoom.uk.' + step.pageId;
+                            visits = parseInt(storage.local.get(storeKey) || 0, 10);
+                            if(visits >= step.visits) {
+                                require(['js!' + step.script]);
+                            } else {
+                                storage.local.set(storeKey, visits + 1);
+                            }
+                            return true;
+                        }
+                    });
                 });
             }
         }
