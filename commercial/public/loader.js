@@ -81,7 +81,7 @@ require([], function() {
             xhr.addEventListener("load", function () {
                 var ad = JSON.parse(xhr.response).html;
                 //console.log('***', targetSelector, ad);
-                // console.log(prependTrackerToAllLinks(ad));
+                console.log(prependTrackerToAllLinks(ad));
                 targetSelector.innerHTML = (ad);
                 //self.applyBreakpointClassnames(); - TODO need to unjquery this
             }, false);
