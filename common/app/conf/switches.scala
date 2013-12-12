@@ -208,49 +208,17 @@ object Switches extends Collections {
 
   // A/B Test Switches
 
-  val FontDelaySwitch = Switch("A/B Tests", "web-fonts-delay",
-    "If this is switched on an AB test runs to measure the impact of not showing fallback fonts while fonts download.",
-    safeState = Off)
-
-  val ABParagraphSpacingSwitch = Switch("A/B Tests", "ab-paragraph-spacing",
-    "If this is switched on an AB test runs to measure the impact of macro typography tweaks on readability.",
-    safeState = Off)
-
-  val ABInlineLinkCardSwitch = Switch("A/B Tests", "ab-inline-link-card",
-    "If this is switched on an AB test runs to measure the impact of cardifying inline links on number of linked stories read.",
-    safeState = Off)
-
   val ABAa = Switch("A/B Tests", "ab-abcd",
     "If this is switched on an AA test runs to prove the assignment of users in to segments is working reliably.",
     safeState = Off)
 
-  val ABAlphaAdverts = Switch("A/B Tests", "ab-alpha-adverts",
-    "If this is switched on an AB test runs to trial new advertising user experiences and commercial models",
-    safeState = Off)
-  
   val ABAlphaComm = Switch("A/B Tests - second tranche", "ab-alpha-comm",
     "If this is switched on an AB test runs to trial new advertising user experiences and commercial models",
-    safeState = Off)
-
-  val ABCommercialComponents = Switch("A/B Tests", "ab-commercial-components",
-    "If this is switched on an AB test runs to test the new commercial components",
     safeState = Off)
 
   val ABMobileFacebookAutosignin = Switch("A/B Tests", "ab-mobile-facebook-autosignin",
     "If this is switched on an AB test runs to test facebook autosignin for mobile users",
    safeState = Off)
-
-  val ABImproveOnwardTrails = Switch("A/B Tests", "ab-improve-onward-trails",
-    "If this is switched on an AB test runs to test re-ordering story packages",
-    safeState = Off)
-
-  val ABInitialShowMore = Switch("A/B Tests", "ab-initial-show-more",
-    "If this is switched on an AB test runs to test how many items to initially show in news container",
-    safeState = Off)
-
-  val ABShowMoreLayout = Switch("A/B Tests", "ab-show-more-layout",
-    "If this is switched on an AB test runs that presents the 'show more' layout of a collection",
-    safeState = Off)
 
   val ABOnwardIntrusive = Switch("A/B Tests", "ab-onward-intrusive",
     "If this is switched on an AB test runs to test intrusive onward components",
@@ -314,14 +282,10 @@ object Switches extends Collections {
     ReleaseMessageSwitch,
     AustraliaFrontSwitch,
     NewsContainerSwitch,
-    FontDelaySwitch,
-    ABParagraphSpacingSwitch,
-    ABInlineLinkCardSwitch,
     IntegrationTestSwitch,
     iPhoneAppSwitch,
     ClientSideErrorSwitch,
     LocalNavSwitch,
-    ABAa,
     LightboxGalleriesSwitch,
     IdentityProfileNavigationSwitch,
     ExternalLinksCardsSwitch,
@@ -336,18 +300,14 @@ object Switches extends Collections {
     ShowUnsupportedEmbedsSwitch,
     ServeWebPImagesSwitch,
     ArticleKeywordsSwitch,
-    ABAlphaAdverts,
-    ABAlphaComm,
-    ABCommercialComponents,
     EditionRedirectLoggingSwitch,
     FacebookAutoSigninSwitch,
-    ABImproveOnwardTrails,
+    ABAa,
     ABOnwardIntrusive,
     ABOnwardHighlightsPanel,
-    ABInitialShowMore,
-    AdDwellTimeLoggerSwitch,
-    ABShowMoreLayout,
+    ABAlphaComm,
     ABMobileFacebookAutosignin,
+    AdDwellTimeLoggerSwitch,
     UkAlphaSwitch
   )
 
