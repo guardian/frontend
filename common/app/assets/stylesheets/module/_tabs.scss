@@ -36,7 +36,7 @@
     a {
         @include fs-headline(1);
         @include box-sizing(border-box);
-        min-height: $gs-column-height;
+        min-height: $gs-row-height;
         text-align: left;
         color: inherit;
         padding: $baseline 8px 0;
