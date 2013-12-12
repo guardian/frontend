@@ -317,7 +317,7 @@ define([
 
         logReadingHistory : function() {
             mediator.on('page:common:ready', function(config) {
-                 if(/Article|Video|Gallery|Interactive/.test(config.page.contentType)) {
+                if(/Article|Video|Gallery|Interactive/.test(config.page.contentType)) {
                     new History().log({
                         id: '/' + config.page.pageId,
                         meta: {
@@ -326,7 +326,7 @@ define([
                         }
                     });
                 }
-                sequence.init();
+                sequence.init('/' + config.page.pageId);
             });
         },
 
@@ -341,7 +341,8 @@ define([
         windowEventListeners: function() {
             var events = {
                     resize: 'window:resize',
-                    orientationchange: 'window:orientationchange'
+                    orientationchange: 'window:orientationchange',
+                    scroll: 'window:scroll'
                 },
                 emitEvent = function(eventName) {
                     return function(e) {
