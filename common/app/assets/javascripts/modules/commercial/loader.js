@@ -65,7 +65,7 @@ define([
             url: url,
             container: target,
             beforeInsert: function (html) {
-                return html.replace(/%OASToken%/g, this.oastoken)
+                return html.replace(/%OASToken%/g, this.oastoken);
             },
             error: function (req) {
                 mediator.emit('module:error', 'Failed to load related: ' + req.statusText, 'modules/commercial/loader.js');
