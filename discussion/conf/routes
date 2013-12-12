@@ -16,8 +16,8 @@ GET     /discussion/top/*discussionKey            		controllers.DiscussionApp.to
 GET    	/discussion/comment/*id.json       		  		controllers.DiscussionApp.commentJson(id: String)
 GET     /discussion/comment/*id            		  		controllers.DiscussionApp.comment(id: String)
 
-GET     /discussion/comment-redirect/*commentId.json    controllers.DiscussionApp.commentRedirectJson(commentId: Int)
-GET     /discussion/comment-redirect/*commentId         controllers.DiscussionApp.commentRedirect(commentId: Int)
+GET     /discussion/comment-permalink/*commentId.json    controllers.DiscussionApp.commentPermalinkJson(commentId: Int)
+GET     /discussion/comment-permalink/*commentId         controllers.DiscussionApp.commentPermalink(commentId: Int)
 
 
 GET     /discussion/*discussionKey.json           		controllers.DiscussionApp.commentPageJson(discussionKey: discussion.model.DiscussionKey)

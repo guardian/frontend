@@ -39,7 +39,7 @@ var Comments = function(context, mediator, options) {
     this.setOptions(options);
 
     if (this.options.commentId) {
-        this.endpoint = '/discussion/comment-redirect/'+ this.options.commentId +'.json';
+        this.endpoint = '/discussion/comment-permalink/'+ this.options.commentId +'.json';
     }
 };
 Component.define(Comments);
