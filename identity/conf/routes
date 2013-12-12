@@ -15,4 +15,5 @@ GET     /email-prefs                                    @controllers.EmailContro
 POST    /email-prefs                                    @controllers.EmailController.savePreferences
 
 GET     /ethical-awards/:formId                         @controllers.EthicalAwardsController.ethicalAwardsForm(formId: String)
+GET     /form/complete                                  @controllers.FormstackController.complete
 GET     /form/:formId                                   @controllers.FormstackController.formstackForm(formId: String)

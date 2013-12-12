@@ -20,4 +20,8 @@ class FormstackController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
   def formstackForm(formId: String) = authAction.apply { implicit request =>
     Ok(views.html.formstack.formstackForm(page, formId))
   }
+
+  def complete = Action { implicit request =>
+    Ok(views.html.formstack.formstackComplete(page))
+  }
 }
