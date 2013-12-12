@@ -55,7 +55,7 @@ define([
                     if (!resp || !resp.trails || resp.trails.length === 0) {
                         return;
                     }
-                    var $collection = bonzo(bonzo.create('<ul class="unstyled collection" data-tone="news"></ul>'));
+                    var $collection = bonzo(bonzo.create('<ul class="unstyled collection js-collection--show-more" data-tone="news"></ul>'));
                     resp.trails.forEach(function(trail, index) {
                         var $item = bonzo(bonzo.create(
                             itemTmpl(trail)
@@ -75,8 +75,8 @@ define([
                         .append($collection)
                         .insertAfter(insertAfter);
                     // add show more button
-                    new CollectionShowMore($collection[0])
-                        .addShowMore();
+//                    new CollectionShowMore($collection[0])
+//                        .addShowMore();
                     // relativise timestamps
                     relativeDates.init($collection[0]);
                     // upgrade image
