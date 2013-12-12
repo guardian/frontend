@@ -117,6 +117,10 @@
     }
 }
 
+.textarea {
+    resize: vertical;
+}
+
 .submit-input {
     background: $c-newsDefault;
     border: 0 none;

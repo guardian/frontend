@@ -11,9 +11,12 @@ define([
     var modules = {
             enhanceFormstack: function () {
                 mediator.on('page:form:ready', function(config, context) {
-                    var $form = $('[data-formstack-id]');
+                    var attr = 'data-formstack-id',
+                        $form = $('[' + attr + ']');
+
                     $form.each(function(el, a) {
-                        new Formstack(el, context, config).init();
+                        var formId = el.getAttribute(attr);
+                        new Formstack(el, formId, context, config).init();
                     });
                 });
             }
