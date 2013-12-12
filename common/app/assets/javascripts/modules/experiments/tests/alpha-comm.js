@@ -183,9 +183,14 @@ define([
                         }
                     } else {
                         inviewName = 'MPU';
-                        bonzo(qwery('.ad-slot--top-banner-ad')).attr('data-inview-name', 'Top');
+                        
                         bonzo(qwery('.js-mpu-ad-slot .social-wrapper')).after(bonzo.create(mpuTemp)[0]);
                         bonzo(qwery('.ad-slot--mpu-banner-ad')).attr('data-inview-name', inviewName);
+                        bonzo(qwery('.js-mpu-ad-slot')).addClass('is-sticky');
+                        
+                        // Mwahahaha 
+                        bonzo(qwery('.mpu-container .open-cta')).remove();
+
                         if(!supportsSticky && supportsFixed) {
                             s = new Sticky({
                                 elCls: 'js-mpu-ad-slot',
@@ -229,6 +234,9 @@ define([
                 test: function() {
                     variantName = 'Static';
                     guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha4.com';
+                    
+                    bonzo(qwery('.ad-slot--bottom-banner-ad')).attr('data-inview-name', 'Bottom');
+                    
                     var viewport = detect.getBreakpoint(),
                         inviewName,
                         s;
