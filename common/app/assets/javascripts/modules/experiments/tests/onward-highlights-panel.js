@@ -1,11 +1,13 @@
 define([
     "modules/onward/sequence",
     "modules/experiments/highlight-panel",
-    'utils/mediator'
+    'utils/mediator',
+    'utils/detect'
 ], function(
     sequence,
     HighlightPanel,
-    mediator
+    mediator,
+    detect
     ) {
 
     var rendered = false;
@@ -18,7 +20,7 @@ define([
         this.audienceOffset = 0.6;
         this.description = 'Test whether an onward highlights panel increases page views per session';
         this.canRun = function(config) {
-            return config.page.contentType === 'Article';
+            return config.page.contentType === 'Article' && detect.hasCSSSupport('position', 'fixed', true);
         };
         this.variants = [
             {
