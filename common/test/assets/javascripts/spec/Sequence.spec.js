@@ -25,7 +25,7 @@ define(['utils/mediator', 'utils/ajax', 'modules/onward/sequence'], function(med
             }});
             sequenceLoadedCallback = sinon.stub();
             mediator.on('modules:sequence:sequence:loaded', sequenceLoadedCallback);
-            
+
             //Set up fake server
             server = sinon.fakeServer.create();
             server.autoRespond = true;
@@ -65,6 +65,18 @@ define(['utils/mediator', 'utils/ajax', 'modules/onward/sequence'], function(med
             waitsFor(function () {
                 return sequenceLoadedCallback.calledWith({name: 'uk news', items: [{url: "/p/3k4vt"},{url: "/p/3k44f"},{url: "/p/3k44b"}]});
             }, 'sequence was not deduped', 500);
+
+        });
+
+        it("should remove current page from sequence", function(){
+
+            runs(function() {
+                sequence.init("/p/3k44f");
+            });
+
+            waitsFor(function () {
+                return sequenceLoadedCallback.calledWith({name: 'uk news', items: [{url: "/p/3k4vt"},{url: "/p/3k44b"}]});
+            }, 'sequence did not remove current page from sequence', 500);
 
         });
 

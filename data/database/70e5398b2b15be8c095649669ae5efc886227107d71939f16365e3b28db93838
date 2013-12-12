@@ -1,0 +1,44 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":4,
+    "startIndex":1,
+    "pageSize":50,
+    "currentPage":1,
+    "pages":1,
+    "results":[{
+      "id":"business/blacks-leisure",
+      "type":"keyword",
+      "webTitle":"Blacks Leisure",
+      "webUrl":"http://www.theguardian.com/business/blacks-leisure",
+      "apiUrl":"http://content.guardianapis.com/business/blacks-leisure",
+      "sectionId":"business",
+      "sectionName":"Business"
+    },{
+      "id":"books/sportandleisure",
+      "type":"keyword",
+      "webTitle":"Sport and leisure",
+      "webUrl":"http://www.theguardian.com/books/sportandleisure",
+      "apiUrl":"http://content.guardianapis.com/books/sportandleisure",
+      "sectionId":"books",
+      "sectionName":"Books"
+    },{
+      "id":"business/travelleisure",
+      "type":"keyword",
+      "webTitle":"Travel & leisure",
+      "webUrl":"http://www.theguardian.com/business/travelleisure",
+      "apiUrl":"http://content.guardianapis.com/business/travelleisure",
+      "sectionId":"business",
+      "sectionName":"Business"
+    },{
+      "id":"music/the-leisure-society",
+      "type":"keyword",
+      "webTitle":"The Leisure Society",
+      "webUrl":"http://www.theguardian.com/music/the-leisure-society",
+      "apiUrl":"http://content.guardianapis.com/music/the-leisure-society",
+      "sectionId":"music",
+      "sectionName":"Music"
+    }]
+  }
+}
