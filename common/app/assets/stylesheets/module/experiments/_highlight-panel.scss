@@ -7,22 +7,17 @@
     height: gs-height(2);
     white-space: nowrap;
 
-    @include transition(-webkit-transform 0.6s ease-out);
-    @include transition(-moz-transform 0.6s ease-out);
-    @include transition(-o-transform 0.6s ease-out);
-    @include transition(-ms-transform 0.6s ease-out);
-    @include transition(transform 0.6s ease-out);
+    -webkit-transition: -webkit-transform 0.6s ease-out;
+    transition: transform 0.6s ease-out;
 
-    @include transform(translateY(132px));
+    @include box-sizing(border-box);
+    @include transform(translateY(gs-height(2)));
 }
 
 .highlight-panel--is-open {
-    @include transition(-webkit-transform 0.3s ease-out);
-    @include transition(-moz-transform 0.3s ease-out);
-    @include transition(-o-transform 0.3s ease-out);
-    @include transition(-ms-transform 0.3s ease-out);
-    @include transition(transform 0.3s ease-out);
-    @include transform(translateX(0));
+    -webkit-transition: -webkit-transform 0.3s ease-out;
+    transition: transform 0.3s ease-out;
+    @include transform(translateY(0));
 }
 
 .highlight-panel__title {
@@ -57,7 +52,8 @@
 
 .highlight-item {
     float: left;
-    margin-top: $baseline*3;
+    height: gs-height(2) - 2px;
+    padding-top: $baseline*3 - 2px;
     padding-bottom: $baseline*3;
     @include box-sizing(border-box);
 
@@ -82,15 +78,10 @@
     display: block;
     position: relative;
     color: $c-neutral1;
-    word-break: break-all;
     @include fs-headline(1);
     @include text-clamp(3, 20);
 
     @include mq(tablet) {
         width: 196px;
     }
-
-
 }
-
-
