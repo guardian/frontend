@@ -6,12 +6,14 @@ define([
     'bonzo',
     'utils/request-animation-frame',
     'modules/component',
-    'modules/experiments/highlight-item'
+    'modules/experiments/highlight-item',
+    'modules/ui/images'
 ], function (
     bonzo,
     requestAnimationFrame,
     Component,
-    Item
+    Item,
+    images
 ) {
 
     function HighlightPanel(data, mediator) {
@@ -36,6 +38,7 @@ define([
         this.data.slice(0, this.maxTrails).forEach(function(item) {
             new Item(item).render(container);
         });
+        images.upgrade(container);
         this.bindListeners();
     };
 
