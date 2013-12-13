@@ -41,9 +41,8 @@ define([
         },
         passwordStrength: function () {
             mediator.on('page:identity:ready', function(config, context) {
-                var passwords = context.querySelectorAll('.js-password-strength');
-                Array.prototype.forEach.call(passwords, function (i) {
-                    new PasswordStrength(i, context, config).init();
+                $('.js-password-strength').each(function(el) {
+                    new PasswordStrength(el, context, config).init();
                 });
             });
         },
