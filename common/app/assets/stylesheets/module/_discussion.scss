@@ -63,40 +63,12 @@ $side-meta-breakpoint: desktop;
 }
 
 .d-comment--top-level {
-    border-top: 1px solid $c-neutral1;
+    border-top: 1px solid black;
 }
 
 .d-comment {
     //padding-top: $baseline;
     clear: both;
-}
-
-.d-comment--response {
-    .d-comment__content {
-        border-top: 1px dotted $c-neutral3;
-        // &:before { // ???
-        //     overflow: hidden;
-        //     content:"..............................................................................................................................................";
-        //     display: block;
-        //     width: 100%;
-        //     color: $c-neutral3;
-        //     font-size: 10px;
-        //     letter-spacing: 3px;
-        //     margin-top: -$baseline*2;
-        // }
-    }
-    .d-comment__body {
-        color: $c-neutral2;
-        @include mq(tablet) {
-            margin-top: $baseline*2;
-        }
-    }   
-    .d-comment__recommend {
-        top: $baseline;
-    }
-    .d-comment__meta {
-        display: none;
-    }
 }
 
 /* META */
@@ -166,7 +138,7 @@ $c-commentPickGrey: #f3f3f1;
 }
 
 .d-comment__timestamp {
-    color: $c-commentGrey;
+    color: $c-neutral5;
     @include fs-data(2);
     margin-bottom: $baseline;
     display: inline-block;
@@ -190,7 +162,9 @@ $c-commentPickGrey: #f3f3f1;
 }
 
 
-/* BODY */
+/* Comment body
+   ======================================================= */
+
 
 .d-comment__content {
     @include mq($side-meta-breakpoint) {
@@ -277,7 +251,8 @@ $c-commentPickGrey: #f3f3f1;
     }
 }
 
-/* ACTIONS */
+/* Comment actions
+   ======================================================= */
 
 .d-comment__actions {
     margin-top: $baseline*2;
@@ -319,6 +294,57 @@ $c-commentPickGrey: #f3f3f1;
 
 /* Reply comment
    ========================================================================== */
+
+.d-comment--response {
+    .d-comment__content {
+        border-top: 1px dotted $c-neutral5;
+    }
+    .d-comment__body {
+        color: $c-neutral3;
+        @include mq(tablet) {
+            margin-top: $baseline*2;
+        }
+    }   
+    .d-comment__recommend {
+        top: $baseline;
+    }
+    .d-comment__meta {
+        display: none;
+    }
+}
+
+.js-show-more-replies {
+    
+    @include mq($side-meta-breakpoint) {
+        margin-left: 160px;
+    }
+    @include mq(leftCol) {
+        margin-left: $a-leftCol-width + $gs-gutter;
+    }
+    @include mq(wide) {
+        margin-left:  $a-leftColWide-width + $gs-gutter;
+    }
+
+    color: $c-newsDefault;
+    background-color: transparent;
+    @include fs-data(1);
+    font-weight: bold;
+
+    border-top: 1px dotted $c-neutral5;
+    padding-top: $baseline;
+
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline;
+    }
+
+    span {
+        @include icon-button(18px, 18px);
+        background-color: $c-newsDefault;
+        margin-bottom: -4px;
+        margin-right: $baseline*2;
+    }
+}
 
 
 /* Top Comments
