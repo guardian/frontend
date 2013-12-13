@@ -26,7 +26,7 @@ define([
     RightMostPopularItem.prototype.useBem = true;
 
     RightMostPopularItem.prototype.template = '<li class="right-most-popular-item"><a class="right-most-popular-item__url media u-cf" href="">'
-        + '<span class="right-most-popular-item__count"></span>'
+        + '<span class="right-most-popular-item__count media__img"></span>'
         + '<h3 class="right-most-popular-item__headline media__body"></h3></a></li>';
 
     RightMostPopularItem.prototype.prerender = function() {
