@@ -72,6 +72,10 @@
 .highlight-item__img {
     width: 94px;
     margin-right: $gs-gutter/2;
+
+    img {
+      width: 100%;
+    }
 }
 
 .highlight-item__headline {

@@ -73,7 +73,7 @@ require([], function() {
             }
 
             function prependTrackerToAllLinks(text) {
-                return text.replace('%OASToken%', getOasTracker())
+                return text.replace(/%OASToken%/g, getOasTracker())
             }
             //console.log('loading... ', endpoint, targetSelector)
 
@@ -82,7 +82,7 @@ require([], function() {
                 var ad = JSON.parse(xhr.response).html;
                 //console.log('***', targetSelector, ad);
 //                console.log(prependTrackerToAllLinks(ad));
-                targetSelector.innerHTML = (ad);
+                targetSelector.innerHTML = prependTrackerToAllLinks(ad);
                 //self.applyBreakpointClassnames(); - TODO need to unjquery this
             }, false);
             xhr.open('GET', endpoint, true);
