@@ -31,7 +31,7 @@ define([
     HighlightPanel.prototype.useBem = true;
 
     HighlightPanel.prototype.template = '<div class="highlight-panel"><div class="gs-container">' +
-         '<h3 class="highlight-panel__title"></h3><ul class="highlight-panel__items u-unstyled"></ul></div></div>';
+         '<h3 class="highlight-panel__title">Read next&#8230;</h3><ul class="highlight-panel__items u-unstyled"></ul></div></div>';
 
     HighlightPanel.prototype.prerender = function() {
         var container = this.getElem(this.classes.items);
