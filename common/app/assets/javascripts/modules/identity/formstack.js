@@ -16,8 +16,7 @@ define([
             classes: {
                 form: 'form',
                 field: 'form-field',
-                note: 'form-field__note',
-                noteBelow: 'form-field__note--below',
+                note: 'form-field__note form-field__note--below',
                 label: 'label',
                 textInput: 'text-input',
                 textArea: 'textarea',
@@ -32,8 +31,7 @@ define([
                 fsHeader: '.fsSectionHeader',
                 fsBody: '.fsBody',
                 fsField: '.fsRow',
-                fsNote: '.fsSupporting',
-                fsNoteBelow: '.showMobile',
+                fsNote: '.fsSupporting, .showMobile',
                 fsLabel: '.fsLabel',
                 fsTextInput: '.fsField[type="text"], .fsField[type="email"], .fsField[type="number"], .fsField[type="tel"]',
                 fsTextArea: 'textarea.fsField',
@@ -69,7 +67,6 @@ define([
 
             dom.$fields = $(config.selectors.fsField, dom.$form);
             dom.$notes = $(config.selectors.fsNote, dom.$form);
-            dom.$notesBelow = $(config.selectors.fsNoteBelow, dom.$form);
             dom.$labels = $(config.selectors.fsLabel, dom.$form);
 
             dom.$textInput = $(config.selectors.fsTextInput, dom.$form);
@@ -91,7 +88,6 @@ define([
             dom.$form.addClass(config.classes.form);
             dom.$fields.addClass(config.classes.field);
             dom.$notes.addClass(config.classes.note);
-            dom.$notesBelow.addClass(config.classes.note + ' ' + config.classes.noteBelow);
             dom.$labels.addClass(config.classes.label);
 
             dom.$textInput.addClass(config.classes.textInput);
