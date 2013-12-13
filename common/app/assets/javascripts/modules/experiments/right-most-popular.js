@@ -6,17 +6,20 @@ define([
     'qwery',
     'utils/ajax',
     'modules/component',
-    'modules/experiments/right-most-popular-item',
+    'modules/experiments/right-most-popular-image-item',
+    'modules/experiments/right-most-popular-list-item',
     'modules/ui/images'
 ], function (
     qwery,
     ajax,
     Component,
-    Item,
+    ImageItem,
+    ListItem,
     images
     ) {
 
-    function RightMostPopular(mediator) {
+    function RightMostPopular(mediator, type) {
+        this.type = type;
         this.mediator = mediator;
         this.fetch();
     }
@@ -48,6 +51,7 @@ define([
             type: 'json',
             method: 'get',
             crossOrigin: true
+
         }).then(
             function render(resp) {
                 if(resp && 'trails' in resp) {
@@ -59,9 +63,15 @@ define([
     };
 
     RightMostPopular.prototype.prerender = function() {
+        var self = this;
+        this.setState(this.type);
         var container = this.getElem(this.classes.items);
         this.data.slice(0, this.maxTrails).forEach(function(item) {
-            new Item(item).render(container);
+            if(self.type === 'image') {
+                new ImageItem(item).render(container);
+            } else {
+               new ListItem(item).render(container);
+            }
         });
         images.upgrade(container);
     };
