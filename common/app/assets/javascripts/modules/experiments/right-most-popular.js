@@ -66,11 +66,11 @@ define([
         var self = this;
         this.setState(this.type);
         var container = this.getElem(this.classes.items);
-        this.data.slice(0, this.maxTrails).forEach(function(item) {
+        this.data.slice(0, this.maxTrails).forEach(function(item, index) {
             if(self.type === 'image') {
                 new ImageItem(item).render(container);
             } else {
-               new ListItem(item).render(container);
+               new ListItem(item, index).render(container);
             }
         });
         images.upgrade(container);
