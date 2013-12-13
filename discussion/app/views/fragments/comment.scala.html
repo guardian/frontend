@@ -17,7 +17,7 @@
         <div class="d-comment__meta">
             @if(!isResponse){
                 <span class="d-comment__avatar-wrapper">
-                    <img src="@comment.profile.avatar" alt="" class="d-comment__avatar" width="44" height="44" />
+                    <img src="@comment.profile.avatar" alt="" class="d-comment__avatar"/>
                 </span>
                 <div class="d-comment__meta-text">
                     <span class="d-comment__author">@comment.profile.displayName</span>
@@ -55,7 +55,7 @@
                 @if(isResponse){
                     <div class="d-comment__reply-authors">
                         <span class="d-comment__reply-author">@comment.profile.displayName</span>
-                        <span class="i i-comment-in-reply-to"></span>
+                        <span class="i i-in-reply-arrow"></span>
                         <span class="d-comment__reply-to-author">@if(!comment.responseTo.isEmpty){ @comment.responseTo.orNull.displayName }</span>
                     </div>
                     <div>
@@ -90,7 +90,7 @@
                         <div class="d-comment__actions__main u-cf">
                             <div class="d-comment__reply-wrapper sign-in-required">
                                 <span class="d-comment__reply-button">
-                                    <i class="i i-reply"></i>
+                                    <i class="i i-reply-button"></i>
                                 </span>
                                 <span class="u-fauxlink d-comment__action d-comment__action--reply" role="button" data-link-name="reply to comment" data-comment-id="@comment.id">Reply</span>
                             </div>
