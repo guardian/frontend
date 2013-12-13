@@ -1,0 +1,28 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":2,
+    "startIndex":1,
+    "pageSize":50,
+    "currentPage":1,
+    "pages":1,
+    "results":[{
+      "id":"travel/jordan",
+      "type":"keyword",
+      "webTitle":"Jordan",
+      "webUrl":"http://www.theguardian.com/travel/jordan",
+      "apiUrl":"http://content.guardianapis.com/travel/jordan",
+      "sectionId":"travel",
+      "sectionName":"Travel"
+    },{
+      "id":"travel/petra",
+      "type":"keyword",
+      "webTitle":"Petra, Jordan",
+      "webUrl":"http://www.theguardian.com/travel/petra",
+      "apiUrl":"http://content.guardianapis.com/travel/petra",
+      "sectionId":"travel",
+      "sectionName":"Travel"
+    }]
+  }
+}

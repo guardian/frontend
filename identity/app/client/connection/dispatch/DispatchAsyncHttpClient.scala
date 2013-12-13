@@ -74,7 +74,7 @@ trait DispatchAsyncHttpClient extends Http {
     logger.debug("POST request %s; params: %s; headers: %s".format(uri, formatParams(urlParameters), formatParams(headers)))
     logger.trace("POST body %s".format(body))
     val req = buildRequest(url(uri).POST, urlParameters, headers)
-    val request = body.map(req.setBody).getOrElse(req).toRequest
+    val request = body.map(b => req.setBody(b.getBytes("UTF-8"))).getOrElse(req).toRequest
     val futureResponse = new EnrichedFuture(client(request, httpResponseHandler)).either
     futureResponse.onFailure{ case t: Throwable =>
       logger.error("Exception POSTing on %s, params: %s, headers: %s".format(uri, formatParams(urlParameters), formatParams(headers)), t)

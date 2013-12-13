@@ -39,7 +39,7 @@ var Comments = function(context, mediator, options) {
     this.setOptions(options);
 
     if (this.options.commentId) {
-        this.endpoint = '/discussion/comment-redirect/'+ this.options.commentId +'.json';
+        this.endpoint = '/discussion/comment-permalink/'+ this.options.commentId +'.json';
     }
 };
 Component.define(Comments);
@@ -543,8 +543,8 @@ Comments.prototype.replyToComment = function(e) {
             responses = bonzo.create('<ul class="d-thread d-thread--responses"></ul>')[0];
             bonzo(parentCommentEl).append(responses);
         }
-        self.addComment(comment, false, responses);
         this.destroy();
+        self.addComment(comment, false, responses);
     });
 };
 

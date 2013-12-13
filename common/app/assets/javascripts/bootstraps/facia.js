@@ -7,6 +7,7 @@ define([
     // Modules
     'utils/detect',
     'utils/storage',
+    'utils/to-array',
     'modules/facia/popular',
     'modules/facia/collection-show-more',
     'modules/facia/container-toggle',
@@ -19,6 +20,7 @@ define([
     qwery,
     detect,
     storage,
+    toArray,
     popular,
     CollectionShowMore,
     ContainerToggle,
@@ -93,6 +95,16 @@ define([
                 // put popular after the first container if this is us-alpha front
                 if (config.page.pageId === 'us-alpha') {
                     opts.insertAfter = $('.container').first();
+                } else if (config.page.pageId === 'uk-alpha') {
+                    // place before the contributors container
+                    var containers = toArray(context.getElementsByClassName('container'));
+                    containers.some(function(container, i) {
+                        if ($(container).hasClass('container--comment')) {
+                            opts.insertAfter = containers[i -1];
+                            return true;
+                        }
+                    });
+
                 }
                 popular.render(config, opts);
             });
@@ -110,22 +122,21 @@ define([
 
             if (config.switches.userzoom && config.switches.faciaUkAlpha) {
                 path = window.location.pathname.substring(1);
-                steps = {
-                    'uk': [
-                        {
-                            pageId: 'uk-alpha',
-                            visits: 2,
-                            script: 'userzoom-uk-alpha'
-                        },
-                        {
-                            pageId: '',
-                            visits: 2,
-                            script: 'userzoom-uk'
-                        }
-                    ]
-                }[path];
 
-                if(!steps) { return; }
+                if (path !== 'uk' && path !=='uk-alpha') { return; }
+
+                steps = [
+                    {
+                        pageId: 'uk-alpha',
+                        visits: 0,
+                        script: 'userzoom-uk-alpha'
+                    },
+                    {
+                        pageId: '',
+                        visits: 2,
+                        script: 'userzoom-uk'
+                    }
+                ];
 
                 mediator.on('page:front:ready', function(config, context) {
                     steps.some(function(step) {
@@ -133,7 +144,7 @@ define([
                             visits;
 
                         if (step.pageId === config.page.pageId) {
-                            storeKey = 'gu.userzoom.' + path + '.' + step.pageId;
+                            storeKey = 'gu.userzoom.uk.' + step.pageId;
                             visits = parseInt(storage.local.get(storeKey) || 0, 10);
                             if(visits >= step.visits) {
                                 require(['js!' + step.script]);

@@ -28,6 +28,7 @@ class SingleMasterClassParsingTest extends FlatSpec with Matchers {
     result.displayPrice should be ("400.00")
     result.guardianUrl should be ("http://www.theguardian.com/guardian-masterclasses/how-to-use-twitter-effectively-david-schneider-david-levin-social-media-course")
     result.firstParagraph should be("This is the first paragraph of this event.")
+    result.readableDate should be ("20 April 2013")
 
 
     result.capacity should be (18)

@@ -95,20 +95,6 @@ class EditionalisedHtmlUnit extends TestSettings {
     goTo(editionPath, host)(block)
   }
 
-  private def testConnection(url: String): Boolean = {
-
-    // Check that the test server is accepting connections.
-    val connection = (new URL(url)).openConnection.asInstanceOf[HttpURLConnection]
-    try {
-      connection.connect
-      assert(HttpURLConnection.HTTP_OK == connection.getResponseCode, s"Invalid response: ${connection.getResponseCode}")
-      return true
-    }
-    finally {
-      connection.disconnect
-    }
-    return false
-  }
 
   protected def goTo[T](path: String, host: String)(block: TestBrowser => T): T = {
 
@@ -120,13 +106,6 @@ class EditionalisedHtmlUnit extends TestSettings {
     running(TestServer(port,
       FakeApplication(additionalPlugins = testPlugins, withoutPlugins = disabledPlugins,
                       withGlobal = globalSettingsOverride)), HTMLUNIT) { browser =>
-
-      // A test to check that the TestServer started by running() is accepting connections.
-      val start = System.currentTimeMillis()
-      while (!testConnection(host + path) && (System.currentTimeMillis - start < 10000)) {
-        println("Waiting for test server to accept connections...")
-        Thread.sleep(2000)
-      }
 
       // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
       browser.webDriver.asInstanceOf[HtmlUnitDriver].setJavascriptEnabled(false)

@@ -1,0 +1,52 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":5,
+    "startIndex":1,
+    "pageSize":50,
+    "currentPage":1,
+    "pages":1,
+    "results":[{
+      "id":"select/select-recruiters",
+      "type":"keyword",
+      "webTitle":"Select Recruiters",
+      "webUrl":"http://www.theguardian.com/select/select-recruiters",
+      "apiUrl":"http://content.guardianapis.com/select/select-recruiters",
+      "sectionId":"select",
+      "sectionName":"Select"
+    },{
+      "id":"recruiters/schools-recruitment",
+      "type":"keyword",
+      "webTitle":"Schools recruitment",
+      "webUrl":"http://www.theguardian.com/recruiters/schools-recruitment",
+      "apiUrl":"http://content.guardianapis.com/recruiters/schools-recruitment",
+      "sectionId":"recruiters",
+      "sectionName":"Recruiter Zone"
+    },{
+      "id":"recruiters/recruiters",
+      "type":"keyword",
+      "webTitle":"Recruiter Zone",
+      "webUrl":"http://www.theguardian.com/recruiters/recruiters",
+      "apiUrl":"http://content.guardianapis.com/recruiters/recruiters",
+      "sectionId":"recruiters",
+      "sectionName":"Recruiter Zone"
+    },{
+      "id":"higher-education-network/recruitment-and-hr",
+      "type":"keyword",
+      "webTitle":"Recruitment and HR",
+      "webUrl":"http://www.theguardian.com/higher-education-network/recruitment-and-hr",
+      "apiUrl":"http://content.guardianapis.com/higher-education-network/recruitment-and-hr",
+      "sectionId":"higher-education-network",
+      "sectionName":"Higher Education Network"
+    },{
+      "id":"advertising/professional-networks-recruitment",
+      "type":"keyword",
+      "webTitle":"Guardian Professional recruiters",
+      "webUrl":"http://www.theguardian.com/advertising/professional-networks-recruitment",
+      "apiUrl":"http://content.guardianapis.com/advertising/professional-networks-recruitment",
+      "sectionId":"advertising",
+      "sectionName":"Advertising"
+    }]
+  }
+}
