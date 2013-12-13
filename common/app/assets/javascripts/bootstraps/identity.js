@@ -1,20 +1,33 @@
 define([
-    "utils/mediator",
+    "$",
     "modules/identity/forms",
+    "modules/identity/formstack",
     "modules/identity/password-strength",
     "modules/identity/api",
-    "modules/adverts/userAdTargeting"
+    "modules/adverts/userAdTargeting",
+    "utils/mediator"
 ], function(
-    mediator,
+    $,
     Identity,
+    Formstack,
     PasswordStrength,
     Id,
-    UserAdTargeting
+    UserAdTargeting,
+    mediator
 ) {
 
     var modules = {
         idInit: function (config) {
             Id.init(config);
+        },
+        initFormstack: function () {
+            mediator.on('page:identity:ready', function(config, context) {
+                var attr = 'data-formstack-id';
+                $('[' + attr + ']').each(function(el) {
+                    var id = el.getAttribute(attr);
+                    new Formstack(el, id, context, config).init();
+                });
+            });
         },
         forgottenEmail: function () {
             mediator.on('page:identity:ready', function(config, context) {
@@ -50,6 +63,7 @@ define([
         if (!this.initialised) {
             this.initialised = true;
             modules.idInit(config);
+            modules.initFormstack();
             modules.forgottenEmail();
             modules.forgottenPassword();
             modules.passwordStrength();
