@@ -97,7 +97,12 @@ define([
         };
 
         Article.prototype.saveMetaEdit = function() {
-            this.save();
+            var self = this;
+
+            // defer, to let through any UI events, before they're blocked by the loadIsPending CSS:
+            setTimeout(function() {
+                self.save();
+            }, 200);
         };
 
         Article.prototype.revertHeadline = function() {
