@@ -35,8 +35,8 @@ define([
 
     HighlightPanel.prototype.prerender = function() {
         var container = this.getElem(this.classes.items);
-        this.data.slice(0, this.maxTrails).forEach(function(item) {
-            new Item(item).render(container);
+        this.data.slice(0, this.maxTrails).forEach(function(item, index) {
+            new Item(item, index).render(container);
         });
         images.upgrade(container);
         this.bindListeners();
