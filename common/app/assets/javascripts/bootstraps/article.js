@@ -12,6 +12,7 @@ define([
     "modules/sport/cricket",
     "modules/ui/notification-counter",
     "modules/experiments/left-hand-card",
+    "modules/experiments/right-most-popular",
     "modules/open/cta"
 ], function (
     common,
@@ -27,6 +28,7 @@ define([
     Cricket,
     NotificationCounter,
     LeftHandCard,
+    RightHandMostPopular,
     OpenCta
 ) {
 
@@ -153,6 +155,12 @@ define([
                     }
                 }
             });
+        },
+
+        initRightHandMostPopular: function() {
+            common.mediator.on('page:article:ready', function(config, context) {
+                var r = new RightHandMostPopular(mediator);
+            });
         }
     };
 
@@ -166,6 +174,7 @@ define([
             modules.initCricket();
             modules.externalLinksCards();
             modules.initOpen();
+            modules.initRightHandMostPopular();
         }
         common.mediator.emit("page:article:ready", config, context);
     };
