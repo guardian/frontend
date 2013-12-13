@@ -19,15 +19,13 @@
                 <span class="d-comment__avatar-wrapper">
                     <img src="@comment.profile.avatar" alt="" class="d-comment__avatar" width="44" height="44" />
                 </span>
-                <div>
+                <div class="d-comment__meta-text">
                     <span class="d-comment__author">@comment.profile.displayName</span>
                     @if(comment.profile.isStaff){
                         <span class="d-comment__author-label">Staff</span>
                     }else { @if(comment.profile.isContributor) {
                         <span class="d-comment__author-label">Contributor</span>}
                     }
-                </div>
-                <div>
                     <a href="http://discussion.theguardian.com/comment-permalink/@comment.id" class="d-comment__timestamp">
                         <time class="js-timestamp" datetime="@comment.date.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")" data-timestamp="@comment.date.getMillis" title="Permalink to this comment">
                             @Format(comment.date, "d MMM y")
