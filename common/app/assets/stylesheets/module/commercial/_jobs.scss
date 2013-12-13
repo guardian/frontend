@@ -3,6 +3,13 @@
    ========================================================================== */
 
 .jobs-component {
+    .commercial__title {
+        text-transform: lowercase;
+        word-spacing: -0.25em;
+        .em {
+            font-style: italic;
+        }
+    }
 
     .lineitem__image-logo {
         margin-left: $baseline;
