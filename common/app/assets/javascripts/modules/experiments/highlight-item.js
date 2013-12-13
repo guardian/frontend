@@ -34,10 +34,10 @@ define([
         if (this.data.itemPicture) {
             var container = this.getElem(this.classes.image);
             container.setAttribute("data-src", this.data.itemPicture);
-            container.setAttribute("data-link-name", "highlight item " + this.index);
             bonzo(container).addClass("item__image-container");
         }
         this.getElem(this.classes.link).href = this.data.url;
+        this.getElem(this.classes.link).setAttribute("data-link-name", "highlight item " + this.index);
         this.getElem(this.classes.headline).innerHTML = this.data.headline;
     };
 
