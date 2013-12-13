@@ -18,9 +18,12 @@ define([
         authedAjax,
         ko
         ){
-        function Article(options, collection) {
-            var opts = options || {},
-                self = this;
+        function Article(opts, collection) {
+            var self = this;
+
+            opts = opts || {};
+
+            this.parentArticle = opts.parentArticle;
 
             this.collection = collection;
 
@@ -37,7 +40,6 @@ define([
             this.fields.headline('...');
 
             this.meta = asObservableProps([
-                'sublinks',
                 'headline',
                 'group']);
 
@@ -80,9 +82,10 @@ define([
             populateObservables(this.state,  opts.state);
 
             this.meta.sublinks = new Group ({
-                items: _.map((opts.meta || {}).sublinks, function(sublink) {
-                    return new Article(sublink, self.collection);
+                items: _.map((opts.meta || {}).sublinks, function(item) {
+                    return new Article(_.extend(item, {parentArticle: self}), self.collection);
                 }),
+                collection: self.collection,
                 article: self
             });
         };
@@ -153,6 +156,12 @@ define([
         };
 
         Article.prototype.save = function() {
+            if (this.parentArticle) {
+                this.parentArticle.save();
+                this.stopMetaEdit();
+                return;
+            }
+
             authedAjax.updateCollection(
                 'post',
                 this.collection,

@@ -191,18 +191,21 @@
                     <a data-bind="
                         click: revertHeadline,
                         attr: {title: fields.headline},
-                        visible: meta.headline">Revert Headline</a>
+                        visible: meta.headline">Revert headline</a>
                 </div>
-                <div class="sublinks" data-bind="with: meta.sublinks">
-                    <div class="droppable" data-bind="
-                        makeDropabble: true,
-                        css: {underDrag: underDrag},
-                        template: {name: 'template_article', foreach: items}"></div>
 
-                </div>
-                <div class="sublinks-message">Drop links here</div>
-                <div class="tools">
-                    <a class="tool" data-bind="click: stopMetaEdit">Close</a>
+                <div data-bind="if: !parentArticle">
+                    <div class="sublinks" data-bind="with: meta.sublinks">
+                        <div class="droppable" data-bind="
+                            makeDropabble: true,
+                            css: {underDrag: underDrag},
+                            template: {name: 'template_article', foreach: items}"></div>
+
+                    </div>
+                    <div class="sublinks-message">Add sublinks &raquo;</div>
+                    <div class="tools">
+                        <a class="tool" data-bind="click: stopMetaEdit">Close</a>
+                    </div>
                 </div>
             <!-- /ko -->
 
