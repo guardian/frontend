@@ -38,21 +38,25 @@ define([
                 fsSubmit: '.fsSubmitButton',
                 fsFormError: '.fsError',
                 fsFieldError: '.fsValidationError',
-                fsHide: '.hidden, .fsRequiredMarker'
+                fsHide: '.hidden, .fsHidden, .fsRequiredMarker',
+                fsIdUser: '[type="number"]',
+                fsIdEmail: '[type="email"]'
             }
         }, config);
 
         var self = this,
             dom = {},
+            user = {},
             formId = formstackId.split('-')[0];
 
         self.init = function() {
             if (!$(el).hasClass(config.classes.ready)) {
 
                 // User object required to populate fields
-                var user = idApi.getUserOrSignIn();
+                user = idApi.getUserOrSignIn();
 
                 self.dom();
+                self.populate();
                 self.decorate();
 
                 $(el).addClass(config.classes.ready).removeClass(config.classes.hide);
@@ -74,10 +78,18 @@ define([
             dom.$submit = $(config.selectors.fsSubmit, dom.$form);
             dom.$hide = $(config.selectors.fsHide, dom.$form);
 
+            dom.$idUser = $(config.selectors.fsIdUser, dom.$form);
+            dom.$idEmail = $(config.selectors.fsIdEmail, dom.$form);
+
             dom.$cssLinks = $('link', dom.$formBody);
 
             // Events
             bean.on(dom.$form[0], 'submit', self.submit);
+        };
+
+        self.populate = function() {
+            dom.$idUser.val(user.id);
+            dom.$idEmail.val(user.primaryEmailAddress);
         };
 
         self.decorate = function() {
