@@ -1,14 +1,39 @@
-define(['utils/mediator', 'modules/commercial/loader', 'helpers/fixtures'], function(mediator, CommercialComponent, fixtures) {
+define([
+    'utils/mediator',
+    'utils/ajax',
+    'modules/commercial/loader',
+    'helpers/fixtures'
+], function(
+    mediator,
+    ajax,
+    CommercialComponent,
+    fixtures
+) {
 
     describe("Commercial component loader", function() {
 
-        var callback, appendTo, server;
+        var adSlot, callback, appendTo, server,
+            options = { 
+                config: {
+                    page: {
+                        keywords: 'a,b,c',
+                        section: 's',
+                        ajaxUrl: '',
+                    }
+                }
+            };
 
         beforeEach(function() {
             
+            // ...
+            ajax.init({page: {
+                ajaxUrl: "",
+                edition: "UK"
+            }});
+            
             // stub the success callback 
             callback = sinon.stub();
-            mediator.on('modules:commercial/lodaer:loaded', callback);
+            mediator.on('modules:commercial/loader:loaded', callback);
 
             // set up fake server
             server = sinon.fakeServer.create();
@@ -18,38 +43,81 @@ define(['utils/mediator', 'modules/commercial/loader', 'helpers/fixtures'], func
             // fixtures
             fixtures.render({
                 id: 'commercial-loader-fixtures',
-                fixtures: ['<div class="ad-slot">...</div>']
+                fixtures: ['<div id="ad-slot">...</div>']
             });
+
+            adSlot = document.getElementById('ad-slot');
+
+            // a new user
+            localStorage.removeItem('gu.history')
         });
 
         afterEach(function() {
             server.restore();
-            fixtures.clean('related-fixtures');
+            fixtures.clean('commercial-loader-fixtures');
         });
 
-        it("exists", function() {
-            //expect(new CommercialComponent()).toBeDefined();
+        it("Exists", function() {
+            expect(new CommercialComponent(options)).toBeDefined();
         }); 
         
-        it("keywords", function() {
-            //expect(new CommercialComponent({ config: { } })).toBeDefined();
+        it("Provides an interface to load each component", function() {
+            expect(new CommercialComponent(options).travel()).toBeDefined();
+            expect(new CommercialComponent(options).jobs()).toBeDefined();
+            expect(new CommercialComponent(options).masterclasses()).toBeDefined();
+            expect(new CommercialComponent(options).soulmates()).toBeDefined();
+        }); 
+       
+
+        it("Passes section and keyword to a travel component from the commercial server", function() {
+            server.respondWith("/commercial/travel/offers.json?seg=new&s=s&k=a&k=b&k=c&_edition=UK", [200, {}, '{ "html": "<b>advert</b>" }']);
+            runs(function() {
+                new CommercialComponent(options).travel(adSlot);
+            });
+            waitsFor(function () {
+                return callback.called === true;
+            }, 'success never called', 500);
+            runs(function(){
+                expect(callback).toHaveBeenCalledOnce();
+                expect(adSlot.innerHTML).toBe('<b>advert</b>');
+            });
         });
 
-        it("sections", function() {});
-        it("injects an oastoken", function() {});
-        it("loads a component", function() {});
-        it("context", function() {});
-        it("", function() {});
-
-        // ...
-        xit("breakpoints", function() {});
-        xit("populate", function() {
-            //server.respondWith('/related/' + pageId + '.json?_edition=UK', [200, {}, '{ "html": "<b>1</b>" }']);
-            //waits(500);
-            //expect(callback).toHaveBeenCalledOnce();
-            //expect(appendTo.innerHTML).toBe('<b>1</b>');
-        });
+        it("Passes segment information to the commercial component", function() {
+           
+            // two visits = a return visitor 
+            var history = '{"value":[{"id":"/"},{"id":"/"}]}';
+            
+            // a repeat user
+            localStorage.setItem('gu.history', history)
+            
+            server.respondWith("/commercial/masterclasses.json?seg=repeat&s=s&_edition=UK", [200, {}, '{ "html": "<b>advert</b>" }']);
+            runs(function() {
+                new CommercialComponent(options).masterclasses(adSlot);
+            });
+            waitsFor(function () {
+                return callback.called === true;
+            }, 'success never called', 500);
+            runs(function(){
+                expect(callback).toHaveBeenCalledOnce();
+            });
         
+        });
+
+        it("Injects an oastoken in to the response", function() {
+            server.respondWith("/commercial/jobs.json?seg=new&s=s&k=a&k=b&k=c&_edition=UK", [200, {}, '{ "html": "<b>%OASToken% - %OASToken%</b>" }']);
+            runs(function() {
+                options.oastoken = '123';
+                new CommercialComponent(options).jobs(adSlot);
+            });
+            waitsFor(function () {
+                return callback.called === true;
+            }, 'success never called', 500);
+            runs(function(){
+                expect(callback).toHaveBeenCalledOnce();
+                expect(adSlot.innerHTML).toBe('<b>123 - 123</b>');
+            });
+        });
 
     });
 });

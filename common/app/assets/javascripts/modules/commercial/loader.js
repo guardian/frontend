@@ -7,48 +7,44 @@ define([
     'utils/mediator',
     'utils/storage',
     'modules/lazyload',
-    'modules/component'
+    'modules/component',
+    'modules/onward/history'
 ], function (
     $,
     mediator,
     storage,
     LazyLoad,
-    Component
+    Component,
+    History
 ) {
 
     /**
      * Loads commercial components.
+     *
+     * BEWARE that this code is depended upon by the ad server. 
      * 
      * ```
      * require('modules/commercial/loader', function (CommercialComponent) {
-     *    var c = new CommercialComponent(document, {
-     *          config: guardian.config
-     *    }).load('travel', document.getElementById('header'));
+     *     var c = new CommercialComponent(guardian).travel(document.getElementById('header'));
      * })
      * ```
-     *
-     * BEWARE that this code is depended upon by the ad server, so  
-     *
-     *
      * 
      * @constructor
      * @extends Component
-     * @param {Element=} context
      * @param {Object=} options
      */
     var Loader = function(options) {
-        var opt = options || {config:{page:{}}};
-        this.keywords       = opt.keywords || '';
-        this.section        = opt.section;
-        this.oastoken       = opt.oastoken || '';
-        this.userSegments   = 'seg=' + (storage.local.get('gu.history').length <= 1 ? 'new' : 'repeat');
-        this.host           = opt.ajaxUrl + '/commercial/';
-        this.context        = opt.context || document;
+        var conf = options.config.page || {config:{page:{}}};
+        this.keywords       = conf.keywords || '';
+        this.section        = conf.section;
+        this.host           = conf.ajaxUrl + '/commercial/';
+        this.oastoken       = options.oastoken || '';
+        this.userSegments   = 'seg=' + (new History().getSize() <= 1 ? 'new' : 'repeat');
         this.components     = {
-          masterclasses: this.host + 'masterclasses.json?' + this.userSegments + '&' + this.section,
-          travel:        this.host + 'travel/offers.json?' + this.userSegments + '&' + this.section + '&' + this.getKeywords(),
-          jobs:          this.host + 'jobs.json?' + this.userSegments + '&' + this.section + '&' + this.getKeywords(),
-          soulmates:     this.host + 'soulmates/mixed.json?' + this.userSegments + '&' + this.section
+          masterclasses: this.host + 'masterclasses.json?' + this.userSegments + '&s=' + this.section,
+          travel:        this.host + 'travel/offers.json?' + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
+          jobs:          this.host + 'jobs.json?' + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
+          soulmates:     this.host + 'soulmates/mixed.json?' + this.userSegments + '&s=' + this.section
         };
         return this;
     };
@@ -65,12 +61,16 @@ define([
      * @param {Element}  target
      */
     Loader.prototype.load = function(component, target) {
-        var url = this.components[component];
+        var self = this,
+            url = this.components[component];
         new LazyLoad({
             url: url,
             container: target,
             beforeInsert: function (html) {
-                return html.replace(/%OASToken%/g, this.oastoken);
+                return html.replace(/%OASToken%/g, self.oastoken);
+            },
+            success: function () {
+                mediator.emit('modules:commercial/loader:loaded');
             },
             error: function (req) {
                 mediator.emit('module:error', 'Failed to load related: ' + req.statusText, 'modules/commercial/loader.js');
@@ -78,6 +78,22 @@ define([
         }).load();
         return this;
     };
-   
+    
+    Loader.prototype.travel = function(el) {
+        return this.load('travel', el);
+    };
+    
+    Loader.prototype.masterclasses = function(el) {
+        return this.load('masterclasses', el);
+    };
+    
+    Loader.prototype.jobs = function(el) {
+        return this.load('jobs', el);
+    };
+    
+    Loader.prototype.soulmates = function(el) {
+        return this.load('soulmates', el);
+    };
+
     return Loader;
 });
