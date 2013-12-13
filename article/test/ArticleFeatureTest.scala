@@ -482,6 +482,15 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
         $("meta[property='twitter:image:src']").getAttributes("content").head should startWith ("http://i.gucode.co.uk/n/")
       }
     }
+    
+    scenario("Signify to the user an article is sponsored"){
+      Given("I visit a sponsored article entitled 'Young people debt worries'")
+      HtmlUnit("/action-for-children/young-people-debt-worries") { browser =>
+        import browser._
+        Then("I should see a message")
+        $(".sponsored-message").should be ("This content is sponsored")
+      }
+    }
 
     scenario("Health check"){
       HtmlUnit("/world/2013/sep/15/obama-rouhani-united-nations-meeting") { browser =>
