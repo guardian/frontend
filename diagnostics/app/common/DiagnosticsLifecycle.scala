@@ -1,9 +1,7 @@
 package common
 
 import play.api.GlobalSettings
-import model.diagnostics.viewability.LoadJob
-import model.diagnostics.javascript.LoadJob
-import model.diagnostics.alpha.LoadJob
+import model.diagnostics.viewability.CountUploadJob
 
 trait DiagnosticsLifecycle extends GlobalSettings {
 
@@ -13,6 +11,8 @@ trait DiagnosticsLifecycle extends GlobalSettings {
       model.diagnostics.alpha.LoadJob.run()
       model.diagnostics.javascript.LoadJob.run()
       model.diagnostics.viewability.LoadJob.run()
+
+      CountUploadJob.run()
     }
   }
 

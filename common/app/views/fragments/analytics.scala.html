@@ -1,4 +1,5 @@
-@(page: MetaData)( implicit request:RequestHeader)
+@(page: model.MetaData)( implicit request:RequestHeader)
+@import conf.Configuration
 
 @*<!-- TODO temporary till after dotcom switch -->*@
 @defining("hits.theguardian.com"){ analyticsHost =>
@@ -47,3 +48,5 @@
     <img src="//secure-uk.imrworldwide.com/cgi-bin/m?ci=uk-305078h&amp;cg=0&amp;cc=1&amp;ts=noscript"
     width="1" height="1" alt="" />
 </noscript>
+
+<img src="@Configuration.debug.beaconUrl/pv.gif">
