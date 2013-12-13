@@ -165,15 +165,18 @@ define([
         });
 
         _.each(source, function(item) {
-            var groupInt,
+            var article = new Article(item, self),
                 group;
 
-            item.state = _.extend({}, item.state, {editingMeta: editingMetas[item.id]});
+            if(editingMetas[item.id]) {
+                article.startMetaEdit();
+            }
 
-            groupInt = parseInt((item.meta || {}).group, 10) || 0;
+            group = _.find(self.groups, function(g){
+                return (parseInt((item.meta || {}).group, 10) || 0) === g.group;
+            }) || self.groups[0];
 
-            group = _.find(self.groups, function(g){ return g.group === groupInt; }) || self.groups[0];
-            group.items.push(new Article(item, self));
+            group.items.push(article);
         });
     };
 

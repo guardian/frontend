@@ -41,7 +41,6 @@ define([
                 'headline',
                 'group']);
 
-
             this.state = asObservableProps([
                 'underDrag',
                 'editingMeta',
@@ -75,10 +74,10 @@ define([
         Article.prototype.populate = function(opts) {
             var self = this;
 
-            populateObservables(this.props, opts);
-            populateObservables(this.meta, opts.meta);
+            populateObservables(this.props,  opts);
+            populateObservables(this.meta,   opts.meta);
             populateObservables(this.fields, opts.fields);
-            populateObservables(this.state, opts.state);
+            populateObservables(this.state,  opts.state);
 
             this.meta.sublinks = new Group ({
                 items: _.map((opts.meta || {}).sublinks, function(sublink) {
@@ -89,11 +88,17 @@ define([
         };
 
         Article.prototype.startMetaEdit = function() {
-            this.state.editingMeta(true);
+            var self = this;
+            _.defer(function(){
+                self.state.editingMeta(true);
+            });
         };
 
         Article.prototype.stopMetaEdit = function() {
-            this.state.editingMeta(false);
+            var self = this;
+            _.defer(function(){
+                self.state.editingMeta(false);
+            });
         };
 
         Article.prototype.saveMetaEdit = function() {
@@ -137,11 +142,11 @@ define([
                 })
                 // drop empty arrays (e.g .sublinks):
                 .filter(function(p){ return _.isArray(p[1]) ? p[1].length : true; })
-                .object()
-                // return undefined if the object is empty (better way to achieve this?)
-                .reduce(function(obj, val, key) {
+                // return as obj, or as undefined if empty.
+                // undefined is useful for ommiting it from any subsequent JSON.stringify call 
+                .reduce(function(obj, p, key) {
                     obj = obj || {};
-                    obj[key] = val;
+                    obj[p[0]] = p[1];
                     return obj;
                 }, undefined)
                 .value();
