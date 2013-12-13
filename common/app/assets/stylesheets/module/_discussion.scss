@@ -49,7 +49,17 @@ $side-meta-breakpoint: desktop;
 }
 .d-thread--responses,
 .d-comment-box--response {
+}
 
+.d-discussion__show-more {    
+    text-align: center;
+    display: block;
+    border-top: 1px dotted $c-neutral5;
+    padding-top: $baseline*2;
+    span {
+        @include icon-button(30px, 30px);
+        background-color: $c-newsDefault;
+    }
 }
 
 /* ==========================================================================
@@ -58,7 +68,7 @@ $side-meta-breakpoint: desktop;
 
 .d-comment__inner {
     position: relative;
-    margin-top: $baseline;
+    padding-top: $baseline;
     min-height: 100px; // ??
 }
 
@@ -78,6 +88,7 @@ $c-commentPickGrey: #f3f3f1;
 
 .d-comment__meta {
     height: $avatarSize + $baseline;
+    margin-bottom: $baseline*2;
     @include mq($side-meta-breakpoint) {
         width: 160px;
         position: absolute;
@@ -138,7 +149,7 @@ $c-commentPickGrey: #f3f3f1;
 }
 
 .d-comment__timestamp {
-    color: $c-neutral5;
+    color: $c-neutral3;
     @include fs-data(2);
     margin-bottom: $baseline;
     display: inline-block;
@@ -165,7 +176,6 @@ $c-commentPickGrey: #f3f3f1;
 /* Comment body
    ======================================================= */
 
-
 .d-comment__content {
     @include mq($side-meta-breakpoint) {
         margin-left: 160px;
@@ -178,7 +188,6 @@ $c-commentPickGrey: #f3f3f1;
     }
 }
 .d-comment__pick {
-    margin: $baseline 0;
     &:after {
         content: "Guardian Pick";
         display: inline;
@@ -191,7 +200,6 @@ $c-commentPickGrey: #f3f3f1;
     }
 }
 .d-comment__main {
-    margin-top: $baseline;
     @include mq(tablet){
         margin-right: 40px;
     }
@@ -201,7 +209,7 @@ $c-commentPickGrey: #f3f3f1;
     color: $c-neutral1;
     @include fs-data(4);
     clear: both;
-    //margin-top: $baseline;
+    //margin-top: $baseline*2;
     @include mq($side-meta-breakpoint) {
         min-height: 4em;
         margin-top: 0;
@@ -216,12 +224,12 @@ $c-commentPickGrey: #f3f3f1;
     @include mq(tablet){
         min-width: 28px;
         text-align: center;
-        top: 0;
     }
 }
 
 .d-comment__recommend-button {    
-    @include icon-button(20px, 12px);
+    @include icon-button(18px, 12px);
+    cursor: pointer;
     background-color: $c-newsDefault;
     margin-right: 2px;
     margin-bottom: -5px;
@@ -233,7 +241,7 @@ $c-commentPickGrey: #f3f3f1;
         top: 1.2em;
         position: absolute;
         left: 50%;
-        margin-left: -10px;
+        margin-left: -8px;
     }
 }
 
@@ -261,6 +269,10 @@ $c-commentPickGrey: #f3f3f1;
 
 .d-comment__reply-wrapper {
     display: inline;
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline;
+    }
 }
 .d-comment__reply-button {
     // @include icon-button(20px, 12px);
@@ -295,12 +307,24 @@ $c-commentPickGrey: #f3f3f1;
 /* Reply comment
    ========================================================================== */
 
+$replyIndent: 26px;
 .d-comment--response {
+    .d-comment__main {
+        margin-top: $baseline;
+    }
     .d-comment__content {
+        position: relative;
         border-top: 1px dotted $c-neutral5;
     }
+    .d-comment__inner {
+        margin-left: $replyIndent;
+        @include mq($side-meta-breakpoint){
+            margin-left: 0;
+        }
+    }
     .d-comment__body {
-        color: $c-neutral3;
+        color: $c-neutral2;
+        margin-top: $baseline;
         @include mq(tablet) {
             margin-top: $baseline*2;
         }
@@ -314,7 +338,8 @@ $c-commentPickGrey: #f3f3f1;
 }
 
 .js-show-more-replies {
-    
+    margin-left: $replyIndent;
+
     @include mq($side-meta-breakpoint) {
         margin-left: 160px;
     }
@@ -360,6 +385,9 @@ $c-commentPickGrey: #f3f3f1;
     .d-comment {
         margin-bottom: $baseline*2;
     }
+    .d-comment__main {
+        margin-right: 40px;
+    }
     .d-comment--top-level {
         border: 0;
     }
@@ -384,7 +412,7 @@ $c-commentPickGrey: #f3f3f1;
     }
     .d-comment__content { 
         background-color: $c-commentPickGrey;
-        padding: $baseline $baseline*3;
+        padding: $baseline*2 $baseline*2;
         position: relative;
         &:before {
             position: absolute;
@@ -408,7 +436,7 @@ $c-commentPickGrey: #f3f3f1;
         }
     }
     .d-comment__recommend {
-        top: $baseline;
+        top: $baseline*2;
         right: $baseline*2;
     }
 }
