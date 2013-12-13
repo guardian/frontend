@@ -10,7 +10,7 @@ define([
     idApi
 ) {
 
-    function Formstack(el, formId, context, config) {
+    function Formstack(el, formstackId, context, config) {
 
         config = common.extend({
             classes: {
@@ -45,7 +45,8 @@ define([
         }, config);
 
         var self = this,
-            dom = {};
+            dom = {},
+            formId = formstackId.split('-')[0];
 
         self.init = function() {
             if (!$(el).hasClass(config.classes.ready)) {
@@ -101,6 +102,7 @@ define([
 
             // TODO: not this:
             dom.$formHeader.css({ 'margin-bottom': '24px' });
+            $('.fsPage').css({ 'margin-top': '16px' });
             $('html').css({ 'overflow-y': 'hidden' });
         };
 

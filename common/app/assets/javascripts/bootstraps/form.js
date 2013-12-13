@@ -15,8 +15,8 @@ define([
                         $form = $('[' + attr + ']');
 
                     $form.each(function(el, a) {
-                        var formId = el.getAttribute(attr);
-                        new Formstack(el, formId, context, config).init();
+                        var id = el.getAttribute(attr);
+                        new Formstack(el, id, context, config).init();
                     });
                 });
             }
