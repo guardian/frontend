@@ -10,8 +10,9 @@ define([
     bonzo
     ) {
 
-    function Highlight(data) {
+    function Highlight(data, index) {
         this.data = data;
+        this.index = index;
     }
 
     Component.define(Highlight);
@@ -33,6 +34,7 @@ define([
         if (this.data.itemPicture) {
             var container = this.getElem(this.classes.image);
             container.setAttribute("data-src", this.data.itemPicture);
+            container.setAttribute("data-link-name", "highlight item " + this.index);
             bonzo(container).addClass("item__image-container");
         }
         this.getElem(this.classes.link).href = this.data.url;

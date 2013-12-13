@@ -20,7 +20,7 @@ define([
         this.audienceOffset = 0.3;
         this.description = 'Test whether onward components increase page views per session';
         this.canRun = function(config) {
-            return detect.getBreakpoint() === 'wide' && detect.hasCSSSupport('position', 'fixed', true) &&
+            return detect.getBreakpoint() !== 'mobile' && detect.hasCSSSupport('position', 'fixed', true) &&
             config.page.contentType === 'Article';
         };
         this.variants = [
