@@ -24,7 +24,10 @@ case class Job(id: Int,
 
   val industries = sectorIds.flatMap(sectorId => Industries.sectorIdIndustryMap.get(sectorId))
 
-  val mainIndustry: Option[String] = industries.headOption
+  val mainIndustry: Option[String] = industries.headOption.flatMap {
+    case "General" => None
+    case industry => Some(industry)
+  }
 }
 
 object Industries extends ExecutionContexts {
