@@ -1,0 +1,5 @@
+@(content: model.Content, edition: common.Edition)(implicit request: RequestHeader)
+
+@for(mailingListDetails <- EmailSignupsMapping.mailingListDetailsFor(content, edition)) {
+	<button id="emailSignup" class="submit-input u-h" data-list-id="@mailingListDetails.id">@mailingListDetails.link</button>
+}

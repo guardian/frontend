@@ -3,12 +3,14 @@ define([
     "modules/identity/forms",
     "modules/identity/password-strength",
     "modules/identity/api",
+    "modules/identity/email-signup",
     "modules/adverts/userAdTargeting"
 ], function(
     mediator,
     Identity,
     PasswordStrength,
     Id,
+    EmailSignup,
     UserAdTargeting
 ) {
 
@@ -43,6 +45,11 @@ define([
             mediator.on('page:identity:ready', function(config, context) {
                 UserAdTargeting.requestUserSegmentsFromId();
             });
+        },
+        emailSignup : function () {
+            mediator.on('page:identity:ready', function(config, context) {
+                EmailSignup.init(context);
+            });
         }
     };
 
@@ -55,6 +62,7 @@ define([
             modules.passwordStrength();
             modules.passwordToggle();
             modules.userAdTargeting();
+            modules.emailSignup();
         }
         mediator.emit("page:identity:ready", config, context);
     };
