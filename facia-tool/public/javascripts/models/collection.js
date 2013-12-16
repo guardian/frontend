@@ -57,7 +57,7 @@ define([
             dropItem = this.drop.bind(this);
 
         return _.map(_.isArray(groupNames) ? groupNames : [undefined], function(name, index) {
-            return new Group ({
+            return new Group({
                 group: index,
                 name: name,
                 collection: self,

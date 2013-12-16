@@ -147,7 +147,6 @@ define([
                         collection: targetList.collection
                     });
 
-                    // just for UI
                     targetList.items.splice(insertAt, 0, article);
 
                     contentApi.validateItem(article)
@@ -168,8 +167,6 @@ define([
                         }
 
                         if (targetList.article) {
-                            // This is fucked up:
-                            targetList.article.meta.sublinks.items(targetList.items());
                             targetList.article.saveMetaEdit();
                             targetList.collection.state.loadIsPending(false);
                             return;

@@ -22,7 +22,6 @@ define(['modules/vars'], function(vars) {
             window.console.log(['Failed', method.toUpperCase(), ":", xhr.status, xhr.statusText, JSON.stringify(data)].join(' '));
         }).always(function() {
             collection.load();
-            //collection.state.loadIsPending(false);
         });
     }
 

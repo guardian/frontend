@@ -75,6 +75,18 @@ define([
             });
 
             this.populate(opts);
+
+            // Populate sublinks
+            this.meta.sublinks = new Group({
+                items: _.map((opts.meta || {}).sublinks, function(item) {
+                    return new Article(_.extend(item, {parentArticle: self}));
+                }),
+                collection: self.collection,
+                article: self
+            });
+
+            contentApi.decorateItems(self.meta.sublinks.items());
+            ophanApi.decorateItems(self.meta.sublinks.items());
         }
 
         Article.prototype.populate = function(opts) {
@@ -84,18 +96,6 @@ define([
             populateObservables(this.meta,   opts.meta);
             populateObservables(this.fields, opts.fields);
             populateObservables(this.state,  opts.state);
-
-            this.meta.sublinks = new Group ({
-                collection: self.collection,
-                article: self
-            });
-            
-            _.each((opts.meta || {}).sublinks, function(item) {
-                self.meta.sublinks.items.push(new Article(_.extend(item, {collection: self.collection})));
-            });
-
-            contentApi.decorateItems(self.meta.sublinks.items());
-            ophanApi.decorateItems(self.meta.sublinks.items());
         };
 
         Article.prototype.startMetaEdit = function() {
@@ -129,7 +129,7 @@ define([
         Article.prototype.getMeta = function() {
             var self = this;
 
-            return _.chain(this.meta)
+            return _.chain(self.meta)
                 .pairs()
                 // execute any knockout values:
                 .map(function(p){ return [p[0], _.isFunction(p[1]) ? p[1]() : p[1]]; })
@@ -164,6 +164,8 @@ define([
         };
 
         Article.prototype.save = function() {
+            var self = this;
+
             if (this.parentArticle) {
                 this.parentArticle.save();
                 this.stopMetaEdit();
@@ -174,9 +176,9 @@ define([
                 'post',
                 this.collection,
                 {
-                    item:     this.props.id(),
-                    position: this.props.id(),
-                    itemMeta: this.getMeta(),
+                    item:     self.props.id(),
+                    position: self.props.id(),
+                    itemMeta: self.getMeta(),
                     live:     vars.state.liveMode(),
                     draft:   !vars.state.liveMode()
                 }

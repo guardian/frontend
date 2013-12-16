@@ -47,7 +47,7 @@ define([
                     filterTypes: vars.CONST.filterTypes
                 }),
 
-                clipboard: new Group ({
+                clipboard: new Group({
                     reflow: updateLayout,
                     keepCopy:  true
                 }),
