@@ -1,9 +1,5 @@
 define(['analytics/omniture', 'common'], function(Omniture, common) {
 
-
-
-
-
     describe("Omniture", function() {
 
         var config = {};
