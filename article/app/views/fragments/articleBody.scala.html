@@ -75,6 +75,9 @@
                     <div class="social-wrapper">
                         @fragments.social(article)
                     </div>
+                    <div class="email-signup u-h">
+                        @fragments.emailSignup(article, Edition(request))
+                    </div>
                 </div>
                 <div class="article__secondary-column" aria-hidden="true">
                     <div class="article__secondary-column__inner">
@@ -89,11 +92,6 @@
                                                 @fragments.social(article, "next to content")
                                             </div>
                                         </div>
-
-                                        <div class="email-signup">
-                                            @fragments.emailSignup(article, Edition(request))
-                                        </div>
-
                                         <div class="open-cta"></div>
                                     </div>
                                 </div>

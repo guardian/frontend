@@ -7,9 +7,11 @@ define([
 	return {
 		
 		init: function (context) {
-			this.button = context.querySelector('#emailSignup');
+			this.container = context.querySelector('.email-signup');
+			this.button = this.container.querySelector('.email-signup__link');
+			this.loader = this.container.querySelector('.is-updating');
 			if (this.button && IdApi.isUserLoggedIn()) {
-				bonzo(this.button).removeClass("u-h");
+				bonzo(this.container).removeClass("u-h");
 				bean.on(this.button, 'click', this.requestEmailSignup.bind(this));
 			}
 		},
@@ -18,7 +20,7 @@ define([
 			event.preventDefault();
 			
 			var self = this;
-			self.button.innerHTML = "Loading...";
+			bonzo(this.loader).show();
 			IdApi.emailSignup(self.button.getAttribute("data-list-id")).then(function success (res) {
 				if (res.status === 'ok') {
 					self.button.innerHTML = "Signup successfull";
