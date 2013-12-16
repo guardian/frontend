@@ -6,12 +6,14 @@ define([
     'bonzo',
     'utils/request-animation-frame',
     'modules/component',
-    'modules/experiments/highlight-item'
+    'modules/experiments/highlight-item',
+    'modules/ui/images'
 ], function (
     bonzo,
     requestAnimationFrame,
     Component,
-    Item
+    Item,
+    images
 ) {
 
     function HighlightPanel(data, mediator) {
@@ -29,13 +31,14 @@ define([
     HighlightPanel.prototype.useBem = true;
 
     HighlightPanel.prototype.template = '<div class="highlight-panel"><div class="gs-container">' +
-         '<h3 class="highlight-panel__title"></h3><ul class="highlight-panel__items u-unstyled"></ul></div></div>';
+         '<h3 class="highlight-panel__title">Read next &#8230;</h3><ul class="highlight-panel__items u-unstyled"></ul></div></div>';
 
     HighlightPanel.prototype.prerender = function() {
         var container = this.getElem(this.classes.items);
-        this.data.slice(0, this.maxTrails).forEach(function(item) {
-            new Item(item).render(container);
+        this.data.slice(0, this.maxTrails).forEach(function(item, index) {
+            new Item(item, index).render(container);
         });
+        images.upgrade(container);
         this.bindListeners();
     };
 

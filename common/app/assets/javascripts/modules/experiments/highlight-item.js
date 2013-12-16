@@ -3,13 +3,16 @@
  Description: Item for hightlight panel
  */
 define([
-    'modules/component'
+    'modules/component',
+    'bonzo'
 ], function (
-    Component
+    Component,
+    bonzo
     ) {
 
-    function Highlight(data) {
+    function Highlight(data, index) {
         this.data = data;
+        this.index = index;
     }
 
     Component.define(Highlight);
@@ -23,12 +26,18 @@ define([
     Highlight.prototype.useBem = true;
 
     Highlight.prototype.template = '<li class="highlight-item"><a class="highlight-item__url media" href="">'
-        + '<img class="highlight-item__img media__img" src="" alt=""/><h3 class="highlight-item__headline media__body">'
+        + '<div class="highlight-item__img media__img"><img class="responsive-img" src="" alt=""/></div>'
+        + '<h3 class="highlight-item__headline media__body">'
         + '</h3></a></li>';
 
     Highlight.prototype.prerender = function() {
-        if(this.data.itemPicture) { this.getElem(this.classes.image).src = this.data.itemPicture; }
+        if (this.data.itemPicture) {
+            var container = this.getElem(this.classes.image);
+            container.setAttribute("data-src", this.data.itemPicture);
+            bonzo(container).addClass("item__image-container");
+        }
         this.getElem(this.classes.link).href = this.data.url;
+        this.getElem(this.classes.link).setAttribute("data-link-name", "highlight item " + this.index);
         this.getElem(this.classes.headline).innerHTML = this.data.headline;
     };
 

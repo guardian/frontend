@@ -24,7 +24,7 @@ case class Job(id: Int,
 
   val industries = sectorIds.flatMap(sectorId => Industries.sectorIdIndustryMap.get(sectorId))
 
-  val mainIndustry: Option[String] = industries.headOption
+  val mainIndustry: Option[String] = industries.headOption.filterNot(_ == "General")
 }
 
 object Industries extends ExecutionContexts {
@@ -40,6 +40,7 @@ object Industries extends ExecutionContexts {
     (141, "Environment"),
     (142, "Design"),
     (149, "Finance & Accounting"),
+    (158, "General"),
     (166, "Government & Politics"),
     (184, "Health"),
     (196, "Housing"),

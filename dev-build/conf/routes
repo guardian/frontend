@@ -8,6 +8,7 @@ GET         /assets/*path                                                       
 
 # Diagnostics
 GET         /px.gif                                                                                          controllers.DiagnosticsController.px
+GET         /count/$prefix<.+>.gif                                                                           controllers.CountController.render(prefix)
 
 # Discussion
 GET         /discussion/comment-box.json                                                                     controllers.DiscussionApp.commentBox()
