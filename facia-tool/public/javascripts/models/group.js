@@ -21,9 +21,10 @@ define([
 
         this.reflow = opts.reflow  || function() {};
 
-        this.dropItem =   opts.dropItem || function(item) {
+        this.dropItem = function(item) {
             self.items.remove(item);
             self.reflow();
+            if (_.isFunction(opts.dropItem)) { opts.dropItem(item); }
         };
     }
 

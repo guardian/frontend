@@ -53,15 +53,14 @@ define([
     }
 
     Collection.prototype.createGroups = function(groupNames) {
-        var self = this,
-            dropItem = this.drop.bind(this);
+        var self = this;
 
         return _.map(_.isArray(groupNames) ? groupNames : [undefined], function(name, index) {
             return new Group({
                 group: index,
                 name: name,
                 collection: self,
-                dropItem: dropItem
+                dropItem: self.drop.bind(self)
             });
         }).reverse(); // because groupNames is assumed to be in ascending order of importance, yet should render in descending order
     };
@@ -114,8 +113,8 @@ define([
                 draft: !vars.state.liveMode()
             })
         }).then(function() {
-                self.load();
-            });
+            self.load();
+        });
     };
 
     Collection.prototype.load = function(opts) {

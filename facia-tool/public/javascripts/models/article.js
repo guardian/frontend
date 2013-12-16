@@ -82,7 +82,8 @@ define([
                     return new Article(_.extend(item, {parentArticle: self}));
                 }),
                 collection: self.collection,
-                article: self
+                article: self,
+                dropItem: self.save.bind(self)
             });
 
             contentApi.decorateItems(self.meta.sublinks.items());
@@ -172,6 +173,10 @@ define([
                 return;
             }
 
+            if (!this.collection) {
+                return;
+            }
+
             authedAjax.updateCollection(
                 'post',
                 this.collection,
@@ -183,6 +188,7 @@ define([
                     draft:   !vars.state.liveMode()
                 }
             );
+            
             this.collection.state.loadIsPending(true);
         };
 

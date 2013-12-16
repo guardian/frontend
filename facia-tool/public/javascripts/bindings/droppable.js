@@ -168,7 +168,6 @@ define([
 
                         if (targetList.article) {
                             targetList.article.saveMetaEdit();
-                            targetList.collection.state.loadIsPending(false);
                             return;
                         }
 
