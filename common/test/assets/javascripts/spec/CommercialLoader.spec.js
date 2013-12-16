@@ -103,8 +103,9 @@ define([
             });
         
         });
-
-        it("Injects an oastoken in to the response", function() {
+        
+        // OAS can inject a url in to the advert code to track clicks on the component 
+        it("Injects an OAS tracker URL in to the response", function() {
             server.respondWith("/commercial/jobs.json?seg=new&s=s&k=a&k=b&k=c&_edition=UK", [200, {}, '{ "html": "<b>%OASToken% - %OASToken%</b>" }']);
             runs(function() {
                 options.oastoken = '123';
@@ -118,6 +119,5 @@ define([
                 expect(adSlot.innerHTML).toBe('<b>123 - 123</b>');
             });
         });
-
     });
 });
