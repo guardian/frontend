@@ -228,6 +228,10 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to test onward highlights panel",
     safeState = Off)
 
+  val ABEmailSignup = Switch("A/B Tests", "ab-email-signup",
+    "If this is switched on an AB test runs to test article page email signups",
+    safeState = Off)
+
   // Sport Switch
 
   val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
@@ -308,6 +312,7 @@ object Switches extends Collections {
     ABAlphaComm,
     ABMobileFacebookAutosignin,
     AdDwellTimeLoggerSwitch,
+    ABEmailSignup,
     UkAlphaSwitch
   )
 

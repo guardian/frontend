@@ -1,7 +1,7 @@
 define([
-    'bean',
-    'bonzo',
-    'utils/ajax',
+    "bean",
+    "bonzo",
+    "utils/ajax",
     "modules/identity/api"
 ], function(bean, bonzo, ajax, IdApi) {
 	return {
