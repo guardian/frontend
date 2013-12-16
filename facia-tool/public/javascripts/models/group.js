@@ -9,7 +9,7 @@ define([
 
         opts = opts || {};
 
-        this.items =      ko.observableArray(_.isArray(opts.items) ? opts.items : []);
+        this.items = ko.observableArray();
 
         this.underDrag =  ko.observable();
 

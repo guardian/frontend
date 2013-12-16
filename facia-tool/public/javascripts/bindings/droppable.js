@@ -168,7 +168,10 @@ define([
                         }
 
                         if (targetList.article) {
-                            targetList.article.save();
+                            // This is fucked up:
+                            targetList.article.meta.sublinks.items(targetList.items());
+                            targetList.article.saveMetaEdit();
+                            targetList.collection.state.loadIsPending(false);
                             return;
                         }
 

@@ -6,6 +6,8 @@ define([
     'utils/number-with-commas',
     'models/group',
     'modules/authed-ajax',
+    'modules/content-api',
+    'modules/ophan-api',
     'knockout',
     'js!humanized-time-span'
 ],
@@ -16,6 +18,8 @@ define([
         numberWithCommas,
         Group,
         authedAjax,
+        contentApi,
+        ophanApi,
         ko
         ){
         function Article(opts) {
@@ -82,12 +86,16 @@ define([
             populateObservables(this.state,  opts.state);
 
             this.meta.sublinks = new Group ({
-                items: _.map((opts.meta || {}).sublinks, function(item) {
-                    return new Article(_.extend(item, {parentArticle: self}));
-                }),
                 collection: self.collection,
                 article: self
             });
+            
+            _.each((opts.meta || {}).sublinks, function(item) {
+                self.meta.sublinks.items.push(new Article(_.extend(item, {collection: self.collection})));
+            });
+
+            contentApi.decorateItems(self.meta.sublinks.items());
+            ophanApi.decorateItems(self.meta.sublinks.items());
         };
 
         Article.prototype.startMetaEdit = function() {

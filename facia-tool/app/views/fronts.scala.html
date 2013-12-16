@@ -182,7 +182,7 @@
                     attr: {src: fields.thumbnail, title: props.id}" />
             </a>
 
-            <!-- ko if: state.editingMeta -->
+            <div data-bind="visible: state.editingMeta">
                 <div class="trail_tweaks u-cf">
                     <input type="text" data-bind="
                         value: headlineInput,
@@ -207,7 +207,7 @@
                         <a class="tool" data-bind="click: stopMetaEdit">Close</a>
                     </div>
                 </div>
-            <!-- /ko -->
+            </div>
 
             <!-- ko if: !state.editingMeta() -->
                 <div class="trail__remove" data-bind="click: $parent.dropItem">
