@@ -352,6 +352,12 @@ define([
             for (var event in events) {
                 bean.on(window, event, debounce(emitEvent(events[event]), 200));
             }
+        },
+
+        checkIframe: function() {
+            if (window.self !== window.top) {
+                $('html').addClass('iframed');
+            }
         }
     };
 
@@ -375,6 +381,7 @@ define([
         if (!this.initialised) {
             this.initialised = true;
             modules.windowEventListeners();
+            modules.checkIframe();
             modules.upgradeImages();
             modules.showTabs();
             modules.initialiseNavigation(config);
