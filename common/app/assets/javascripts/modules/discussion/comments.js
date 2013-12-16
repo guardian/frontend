@@ -64,6 +64,7 @@ Comments.prototype.classes = {
     reply: 'd-comment--response',
     showReplies: 'js-show-more-replies',
     header: 'd-discussion__header',
+    heading: 'discussion__heading',
     newComments: 'js-new-comments',
 
     comment: 'd-comment',
@@ -103,7 +104,7 @@ Comments.prototype.user = null;
 /** @override */
 Comments.prototype.prerender = function() {
     var self = this,
-        heading = qwery('#comments')[0],
+        heading = qwery(this.getClass('heading'), this.context)[0],
         commentCount = this.elem.getAttribute('data-comment-count'),
         initialShow = this.options.initialShow;
 
@@ -248,9 +249,9 @@ Comments.prototype.gotoComment = function(id) {
     }
 
     return this.fetchComments({
-        comment: id
+        comment: id,
+        position: 'replaceWith'
     }).then(function(resp) {
-        this.renderComments(resp, 'replaceWith');
         window.location.replace('#comment-'+ id);
     }.bind(this));
 };
@@ -300,7 +301,7 @@ Comments.prototype.loadMore = function(e) {
  * }
  */
 Comments.prototype.fetchComments = function(options) {
-    var url = options.comment ? '/discussion/comment/'+ options.comment +'.json' :
+    var url = options.comment ? '/discussion/comment-redirect/'+ options.comment +'.json' :
                 '/discussion/'+ this.options.discussionId +'.json?'+
                 (options.page ? '&page='+ options.page : '') +
                 '&maxResponses=3';

@@ -1,17 +1,17 @@
 @(discussionClosed: Boolean, discussionId: String)(implicit request: RequestHeader)
-<div class="discussion"
+<div id="comments" class="discussion"
     data-discussion-key="@discussionId"
     data-discussion-closed="@discussionClosed">
 
     <div class="discussion__comments--top-comments">
-        <h2 id="top-comments" class="js-top-comments page-sub-header comments-header">Comments <span class="u-h discussion__comment-count"></span></h2>
+        <h2 id="top-comments" class="js-top-comments page-sub-header discussion__heading">Comments <span class="u-h discussion__comment-count"></span></h2>
         <div class="discussion__comments__top">
         </div>
         <div class="d-image-fade u-h"></div>@* nasty but required to be outside here as firefox column rendering is strange (chrisfinch) *@
     </div>
 
     <div class="discussion__comments__container u-h">
-        <h2 id="comments" class="page-sub-header comments-header">All Comments</h2>
+        <h2 class="page-sub-header discussion__heading">All Comments</h2>
 
         <div class="discussion__comment-box discussion__comment-box--top"></div>
         <div class="discussion__comments"></div>

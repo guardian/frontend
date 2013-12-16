@@ -6,6 +6,14 @@ trait Element {
   def delegate: ApiElement
   def index: Int
   lazy val id: String = delegate.id
+
+  lazy val isMain = delegate.relation == "main"
+  lazy val isBody = delegate.relation == "body"
+  lazy val isGallery = delegate.relation == "gallery"
+  lazy val isThumbnail = delegate.relation == "thumbnail"
+
+  lazy val isImage = delegate.elementType == "image"
+  lazy val isVideo = delegate.elementType == "video"
 }
 
 object Element {
