@@ -178,7 +178,7 @@ define([
                         if(!supportsSticky && supportsFixed) {
                             s = new Sticky({
                                 elCls: 'ad-slot--top-banner-ad',
-                                id: 'Top2'
+                                id: 'Top'
                             });
                         }
                     } else {
@@ -186,6 +186,7 @@ define([
                         
                         bonzo(qwery('.js-mpu-ad-slot .social-wrapper')).after(bonzo.create(mpuTemp)[0]);
                         bonzo(qwery('.ad-slot--mpu-banner-ad')).attr('data-inview-name', inviewName);
+                        bonzo(qwery('.ad-slot--top-banner-ad')).attr('data-inview-name', 'Top');
                         bonzo(qwery('.js-mpu-ad-slot')).addClass('is-sticky');
                         
                         // Mwahahaha 
