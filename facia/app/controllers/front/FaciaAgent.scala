@@ -123,7 +123,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
 
   def getArticles(collectionItems: Seq[CollectionItem], edition: Edition): Future[List[Content]] = {
     if (collectionItems.isEmpty) {
-      Future(Nil)
+      Future.successful(Nil)
     }
     else {
       val results = collectionItems.foldLeft(Future[List[Content]](Nil)){(foldList, collectionItem) =>
