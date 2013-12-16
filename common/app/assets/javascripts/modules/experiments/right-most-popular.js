@@ -5,6 +5,8 @@
 define([
     'qwery',
     'utils/ajax',
+    'lodash/assign',
+
     'modules/component',
     'modules/experiments/right-most-popular-image-item',
     'modules/experiments/right-most-popular-list-item',
@@ -12,21 +14,28 @@ define([
 ], function (
     qwery,
     ajax,
+    extend,
+
     Component,
     ImageItem,
     ListItem,
     images
     ) {
 
-    function RightMostPopular(mediator, type) {
-        this.type = type;
+    function RightMostPopular(mediator, config) {
+        this.config = extend(this.config, config);
+        this.maxTrails = ('maxTrails' in config) ? config.maxTrails : 5;
         this.mediator = mediator;
         this.fetch();
     }
 
     Component.define(RightMostPopular);
 
-    RightMostPopular.prototype.maxTrails = 5;
+    RightMostPopular.prototype.config = {
+        type: 'image',
+        maxTrails : 5
+    };
+
     RightMostPopular.prototype.endpoint = '/most-read.json';
     RightMostPopular.prototype.templateName = 'right-most-popular';
     RightMostPopular.prototype.componentClass = 'right-most-popular';

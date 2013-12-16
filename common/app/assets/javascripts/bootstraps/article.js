@@ -159,7 +159,7 @@ define([
 
         initRightHandMostPopular: function() {
             common.mediator.on('page:article:ready', function(config, context) {
-                var r = new RightHandMostPopular(mediator, 'list');
+                var r = new RightHandMostPopular(mediator, { type: 'list', maxTrails: 5 });
             });
         }
     };
