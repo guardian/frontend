@@ -63,13 +63,26 @@ require([], function() {
 
         load: function(endpoint, targetSelector) {
             var self = this;
+
+            function getOasTracker()  {
+                var result = "";
+                Array.prototype.slice.call(document.querySelectorAll('[data-oas-tracker]')).forEach(function (el) {
+                    result = el.getAttribute('data-oas-tracker');
+                })
+                return result;
+            }
+
+            function prependTrackerToAllLinks(text) {
+                return text.replace(/%OASToken%/g, getOasTracker())
+            }
             //console.log('loading... ', endpoint, targetSelector)
 
             var xhr = new XMLHttpRequest();
             xhr.addEventListener("load", function () {
                 var ad = JSON.parse(xhr.response).html;
                 //console.log('***', targetSelector, ad);
-                targetSelector.innerHTML = ad;
+//                console.log(prependTrackerToAllLinks(ad));
+                targetSelector.innerHTML = prependTrackerToAllLinks(ad);
                 //self.applyBreakpointClassnames(); - TODO need to unjquery this
             }, false);
             xhr.open('GET', endpoint, true);

@@ -15,6 +15,7 @@ define([
     ){
 
     var context,
+        currentPageId,
         store = storage.session,
         prefixes = {
             contextName: 'gu.context.name',
@@ -54,7 +55,7 @@ define([
             return i.id;
         });
         return _filter(sequence, function(item) {
-            return history.indexOf(item.url) < 0;
+            return history.indexOf(item.url) < 0 && item.url !== currentPageId;
         });
     }
 
@@ -85,8 +86,10 @@ define([
         });
     }
 
-    function init() {
+    function init(id) {
         var context = getContext();
+        currentPageId = id;
+
         if(context.path !== null) {
             loadSequence(context);
         } else {

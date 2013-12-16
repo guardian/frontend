@@ -1,7 +1,7 @@
 Testing externally on your localhost 
 ====================================
 
-Prequisites: ruby & http://rubygems.org/
+Prerequisites: ruby & http://rubygems.org/
  
 Install _proxylocal_,
     
@@ -18,7 +18,7 @@ In one terminal run the _core-navigation_ server on a given port,
     > project core-navigation
     > run 9001
 
-The expose it to the world with proxylocal,
+Then expose it to the world with proxylocal,
 
     proxylocal 9001
 
