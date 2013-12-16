@@ -59,6 +59,10 @@ define([
                 self.populate();
                 self.decorate();
 
+                // Update iframe height, see "modules/identity/formstack-iframe"
+                self.postMessage('ready');
+                self.postMessage('refreshHeight');
+
                 $(el).addClass(config.classes.ready).removeClass(config.classes.hide);
             }
         };
@@ -127,7 +131,14 @@ define([
                 // Update errors
                 $(config.selectors.fsFieldError, dom.$form).addClass(config.classes.fieldError);
                 $(config.selectors.fsFormError, dom.$form).addClass(config.classes.formError);
+
+                self.postMessage('refreshHeight');
             }, 100);
+        };
+
+        self.postMessage = function(message) {
+            var domain = config.page.idUrl;
+            window.top.postMessage(message, domain);
         };
 
     }

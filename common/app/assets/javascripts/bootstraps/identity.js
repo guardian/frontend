@@ -2,6 +2,7 @@ define([
     "$",
     "modules/identity/forms",
     "modules/identity/formstack",
+    "modules/identity/formstack-iframe",
     "modules/identity/password-strength",
     "modules/identity/api",
     "modules/adverts/userAdTargeting",
@@ -10,6 +11,7 @@ define([
     $,
     Identity,
     Formstack,
+    FormstackIframe,
     PasswordStrength,
     Id,
     UserAdTargeting,
@@ -26,6 +28,9 @@ define([
                 $('[' + attr + ']').each(function(el) {
                     var id = el.getAttribute(attr);
                     new Formstack(el, id, context, config).init();
+                });
+                $('.js-formstack-iframe').each(function(el) {
+                    new FormstackIframe(el, context, config).init();
                 });
             });
         },
