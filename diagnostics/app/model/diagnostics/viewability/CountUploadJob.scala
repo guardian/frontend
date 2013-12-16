@@ -10,7 +10,7 @@ object CountUploadJob extends Logging {
     log.info("Uploading count metrics")
 
     val metrics = CountController.metrics.map{ case (prefix, metric) =>
-      s"${metric.namespace}-${metric.name}" -> metric.count.getAndSet(0)
+      s"${metric.namespace}-${metric.name}" -> metric.count.getAndSet(0).toDouble
     }
 
     // Cloudwatch will not take more than 20 metrics at a time
