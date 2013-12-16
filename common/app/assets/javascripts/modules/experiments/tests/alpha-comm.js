@@ -216,7 +216,7 @@ define([
                     document.body.className += ' test-inline-adverts--on';
                     self.variants.forEach(function(variant){
                         if(variant.id === 'Inline' || variant.id === 'Adhesive') {
-                            variant.test.call(self, {}, true);
+                            variant.test.call(self, config, true);
                         }
                     });
 
