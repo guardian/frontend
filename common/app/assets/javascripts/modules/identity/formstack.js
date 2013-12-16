@@ -111,7 +111,6 @@ define([
             // TODO: not this:
             dom.$formHeader.css({ 'margin-bottom': '24px' });
             $('.fsPage').css({ 'margin-top': '16px' });
-            $('html').css({ 'overflow-y': 'auto' });
         };
 
         self.submit = function(event) {
