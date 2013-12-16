@@ -173,7 +173,7 @@ input[type=text] {
 }
 
 .collections.live-mode {
-    background: #CCFFCC;
+    background: #DDFFDD;
 }
 
 .collections__inner {
@@ -201,8 +201,8 @@ input[type=text] {
 }
 
 .live-mode .trail {
-    border-color: #CCFFCC;
-    background: #CCFFCC;        
+    border-color: #DDFFDD;
+    background: #DDFFDD;        
 }
 
 .sublinks .trail {
