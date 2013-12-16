@@ -9,7 +9,7 @@ define([
     'utils/cookies',
     'omniture',
     'modules/analytics/mvt-cookie',
-    'utils/beacon'
+    'modules/analytics/beacon'
 ], function(
     common,
     detect,
@@ -243,10 +243,6 @@ define([
 
                     self.pageviewSent = true;
                     common.mediator.emit('module:analytics:omniture:pageview:sent');
-
-                    // independently log this page view
-                    // used for checking we have not broken analytics
-                    new Beacon("/count/pva.gif").fire(config);
                 }
             }, 250);
 
@@ -263,6 +259,12 @@ define([
         common.mediator.on('module:autoupdate:loaded', function() {
             that.populatePageProperties();
             that.logUpdate();
+        });
+
+        common.mediator.on('module:analytics:omniture:pageview:sent', function(){
+            // independently log this page view
+            // used for checking we have not broken analytics
+            new Beacon("/count/pva.gif").fire(config);
         });
 
     }
