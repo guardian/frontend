@@ -19,7 +19,7 @@ define([
                 note: 'form-field__note form-field__note--below',
                 label: 'label',
                 textInput: 'text-input',
-                textArea: 'textarea',
+                textArea: 'textarea textarea--no-resize',
                 submit: 'submit-input',
                 fieldError: 'form-field--error',
                 formError: 'form__error',
@@ -28,7 +28,6 @@ define([
             },
             selectors: {
                 fsForm: '#fsForm',
-                fsHeader: '.fsSectionHeader',
                 fsBody: '.fsBody',
                 fsField: '.fsRow',
                 fsNote: '.fsSupporting, .showMobile',
@@ -70,7 +69,6 @@ define([
         self.dom = function() {
             // TODO: Setup DOM, not like this:
             dom.$form = $(config.selectors.fsForm + formId);
-            dom.$formHeader = $(config.selectors.fsHeader);
             dom.$formBody = $(config.selectors.fsBody);
 
             dom.$fields = $(config.selectors.fsField, dom.$form);
@@ -113,7 +111,9 @@ define([
             dom.$hide.addClass(config.classes.hide);
 
             // TODO: not this:
-            dom.$formHeader.css({ 'margin-bottom': '24px' });
+            $('.fsSection .fsSectionHeading').css({ 'font-size': '20px' });
+            $('.fsSection:first-child .fsSectionHeading').css({ 'font-size': '24px' });
+            $('.fsSectionHeader .fsSectionText').css({ 'margin-bottom': '24px' });
             $('.fsPage').css({ 'margin-top': '16px' });
         };
 
