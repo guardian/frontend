@@ -1,4 +1,4 @@
-/* global _: true, humanized_time_span: true */
+/* global humanized_time_span: true */
 define([
     'modules/vars',
     'utils/as-observable-props',
@@ -9,6 +9,14 @@ define([
     'modules/content-api',
     'modules/ophan-api',
     'knockout',
+    'lodash/chaining/chain',
+    'lodash/objects/isUndefined',
+    'lodash/collection/map',
+    'lodash/objects/asssign',
+    'lodash/functions/defer',
+    'lodash/objects/isFunction',
+    'lodash/objects/isString',
+    'lodash/objects/isArray',
     'js!humanized-time-span'
 ],
     function (
@@ -20,7 +28,15 @@ define([
         authedAjax,
         contentApi,
         ophanApi,
-        ko
+        ko,
+        chain,
+        isUndefined,
+        map,
+        assign,
+        defer,
+        isFunction,
+        isString,
+        isArray
         ){
         function Article(opts) {
             var self = this;
@@ -80,8 +96,8 @@ define([
             // Populate supporting
             if (this.parentType !== 'Article') {
                 this.meta.supporting = new Group({
-                    items: _.map((opts.meta || {}).supporting, function(item) {
-                        return new Article(_.extend(item, {
+                    items: map((opts.meta || {}).supporting, function(item) {
+                        return new Article(assign(item, {
                             parent: self,
                             parentType: 'Article'
                         }));
@@ -110,14 +126,14 @@ define([
 
             if (this.uneditable) { return; }
 
-            _.defer(function(){
+            defer(function(){
                 self.state.editingMeta(true);
             });
         };
 
         Article.prototype.stopMetaEdit = function() {
             var self = this;
-            _.defer(function(){
+            defer(function(){
                 self.state.editingMeta(false);
             });
         };
@@ -146,21 +162,21 @@ define([
         Article.prototype.getMeta = function() {
             var self = this;
 
-            return _.chain(self.meta)
+            return chain(self.meta)
                 .pairs()
                 // execute any knockout values:
                 .map(function(p){ return [p[0], _.isFunction(p[1]) ? p[1]() : p[1]]; })
                 // reject undefined properties:
-                .filter(function(p){ return !_.isUndefined(p[1]); })
+                .filter(function(p){ return !isUndefined(p[1]); })
                 // reject whitespace-only strings:
                 .filter(function(p){ return _.isString(p[1]) ? p[1].replace(/\s*/g, '').length > 0 : true; })
                 // reject vals that don't differ from the props (if any) that they're overwriting:
-                .filter(function(p){ return _.isUndefined(self.props[p[0]]) || self.props[p[0]]() !== p[1]; })
+                .filter(function(p){ return isUndefined(self.props[p[0]]) || self.props[p[0]]() !== p[1]; })
                 // serialise supporting
                 .map(function(p) {
                     if (p[0] === 'supporting') {
                         // but only on first level Articles, i.e. those whose parent isn't an Article
-                        return [p[0], self.parentType === 'Article' ? [] : _.map(p[1].items(), function(item) {
+                        return [p[0], self.parentType === 'Article' ? [] : map(p[1].items(), function(item) {
                             return item.get();
                         })];
                     }
@@ -169,7 +185,7 @@ define([
                 // drop empty arrays:
                 .filter(function(p){ return _.isArray(p[1]) ? p[1].length : true; })
                 // return as obj, or as undefined if empty.
-                // undefined is useful for ommiting it from any subsequent JSON.stringify call 
+                // undefined is useful for ommiting it from any subsequent JSON.stringify call
                 .reduce(function(obj, p, key) {
                     obj = obj || {};
                     obj[p[0]] = p[1];

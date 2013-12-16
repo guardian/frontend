@@ -1,7 +1,6 @@
-/* global _: true */
-define(['utils/url-query'], function(urlQuery) {
+define(['utils/url-query', 'lodash/arrays/zipObject'], function(urlQuery, zipObject) {
     return function(url) {
-        return _.object(urlQuery(url).split('&').map(function(keyVal){
+        return zipObject(urlQuery(url).split('&').map(function(keyVal){
             return keyVal.split('=').map(function(s){
                 return decodeURIComponent(s);
             });

@@ -1,13 +1,22 @@
-/* global _: true */
 define([
     'modules/authed-ajax',
     'modules/vars',
-    'modules/cache'
+    'modules/cache',
+    'lodash/collections/forEach',
+    'lodash/collections/find',
+    'lodash/arrays/last',
+    'lodash/collections/map',
+    'lodash/collections/reduce'
 ],
 function (
     authedAjax,
     vars,
-    cache
+    cache,
+    forEach,
+    find,
+    last,
+    map,
+    reduce
 ){
     function decorateItems(items) {
         items.slice(0, 50).forEach(function(item, index){
@@ -55,10 +64,10 @@ function (
             ];
 
         if(data.seriesData && data.seriesData.length) {
-            _.each(data.seriesData, function(s){
+            forEach(data.seriesData, function(s){
 
                 // Pick the relevant graph...
-                var graph = _.find(graphs, function(g){
+                var graph = find(graphs, function(g){
                         return g.name === s.name;
                     }) || graphs[0]; // ...defaulting to the first ('Other')
 
@@ -66,20 +75,20 @@ function (
                 var minsPerSlot = Math.max(1, Math.floor(s.data.length / slots));
 
                 // ...sum the data into each graph
-                _.each(_.last(s.data, minsPerSlot*slots), function(d,index) {
+                forEach(last(s.data, minsPerSlot*slots), function(d,index) {
                     var i = Math.floor(index / minsPerSlot);
                     graph.data[i] = (graph.data[i] || 0) + (d.count / minsPerSlot);
                     graph.max = Math.max(graph.max, graph.data[i]);
                 });
             });
 
-            return _.map(graphs, function(graph){
+            return map(graphs, function(graph){
                 // recent pageviews per minute average
-                var pvm = _.reduce(_.last(graph.data, vars.CONST.pvmPeriod), function(m, n){ return m + n; }, 0) / vars.CONST.pvmPeriod;
+                var pvm = reduce(last(graph.data, vars.CONST.pvmPeriod), function(m, n){ return m + n; }, 0) / vars.CONST.pvmPeriod;
                 // classify activity on scale of 1,2,3
                 graph.activity = pvm < vars.CONST.pvmHot ? pvm < vars.CONST.pvmWarm ? 1 : 2 : 3;
                 // Round the datapoints
-                graph.data = _.map(graph.data, function(d) { return Math.round(d*10)/10; });
+                graph.data = map(graph.data, function(d) { return Math.round(d*10)/10; });
                 return graph;
             });
         }
@@ -89,7 +98,7 @@ function (
         return authedAjax.request({
             url: '/ophan/pageviews/' + id
         }).then(function (resp) {
-            _.each(resp.seriesData, function(s){
+            forEach(resp.seriesData, function(s){
                 s.data.pop(); // Drop the last data point
             });
             return resp;

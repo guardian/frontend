@@ -1,7 +1,6 @@
-/* global _: true */
-define(['knockout'], function(ko) {
+define(['knockout', 'lodash/arrays/zipObject'], function(ko, zipObject) {
     return function(props) {
-        return _.object(props.map(function(prop){
+        return zipObject(props.map(function(prop){
             return [prop, ko.observable()];
         }));
     };

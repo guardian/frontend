@@ -1,4 +1,4 @@
-/* global _: true, humanized_time_span: true */
+/* global humanized_time_span: true */
 define([
     'knockout',
     'modules/vars',
@@ -9,6 +9,11 @@ define([
     'models/article',
     'modules/content-api',
     'modules/ophan-api',
+    'lodash/collections/forEach',
+    'lodash/collections/map',
+    'lodash/objects/isArray',
+    'lodash/collections/toArray',
+    'lodash/collections/find',
     'js!humanized-time-span'
 ], function(
     ko,
@@ -19,8 +24,13 @@ define([
     Group,
     Article,
     contentApi,
-    ophanApi
-    ) {
+    ophanApi,
+    forEach,
+    map,
+    isArray,
+    toArray,
+    find
+) {
     function Collection(opts) {
         var self = this;
 
@@ -55,7 +65,7 @@ define([
     Collection.prototype.createGroups = function(groupNames) {
         var self = this;
 
-        return _.map(_.isArray(groupNames) ? groupNames : [undefined], function(name, index) {
+        return map(isArray(groupNames) ? groupNames : [undefined], function(name, index) {
             return new Group({
                 group: index,
                 name: name,
@@ -128,7 +138,7 @@ define([
         }).then(function(resp) {
                 self.response = resp;
                 self.state.loadIsPending(false);
-                self.state.hasDraft(_.isArray(self.response.draft));
+                self.state.hasDraft(isArray(self.response.draft));
 
                 var dontPopulate = opts.isRefresh && (self.state.loadIsPending() || self.response.lastUpdated === self.collectionMeta.lastUpdated());
                 if (!dontPopulate) {
@@ -157,14 +167,14 @@ define([
         var self = this,
             editingMetas = {};
 
-        _.each(this.groups, function(group) {
-            _.each(group.items(), function(item) {
+        forEach(this.groups, function(group) {
+            forEach(group.items(), function(item) {
                 editingMetas[item.props.id()] = item.state.editingMeta();
             });
             group.items.removeAll();
         });
 
-        _.each(source, function(item) {
+        forEach(source, function(item) {
             var article = new Article(_.extend(item, {
                     parent: self,
                     parentType: 'Collection'
@@ -184,7 +194,7 @@ define([
     };
 
     Collection.prototype.decorate = function() {
-        _.each(this.groups, function(group) {
+        forEach(this.groups, function(group) {
             contentApi.decorateItems(group.items());
             ophanApi.decorateItems(group.items());
         });
