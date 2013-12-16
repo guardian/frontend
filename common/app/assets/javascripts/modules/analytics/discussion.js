@@ -1,13 +1,11 @@
 define([
     '$',
     'bonzo',
-    'bean',
     'utils/mediator',
     'modules/identity/api'
 ], function(
     $,
     bonzo,
-    bean,
     mediator,
     Id
 ) {
@@ -101,12 +99,12 @@ define([
             scroll = function(e) {
                 if(!track.seen && !timer && track.areCommentsVisible()) {
                     track.scrolledToComments();
-                    bean.off(window, 'scroll', scroll);
+                    mediator.off('window:scroll', scroll);
                 }
             };
 
         if (!track.seen) {
-            bean.on(window, 'scroll', scroll);
+            mediator.on('window:scroll', scroll);
         }
     };
 
