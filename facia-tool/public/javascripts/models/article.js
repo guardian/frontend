@@ -18,14 +18,14 @@ define([
         authedAjax,
         ko
         ){
-        function Article(opts, collection) {
+        function Article(opts) {
             var self = this;
 
             opts = opts || {};
 
             this.parentArticle = opts.parentArticle;
 
-            this.collection = collection;
+            this.collection = opts.collection;
 
             this.props = asObservableProps([
                 'id',
@@ -83,7 +83,7 @@ define([
 
             this.meta.sublinks = new Group ({
                 items: _.map((opts.meta || {}).sublinks, function(item) {
-                    return new Article(_.extend(item, {parentArticle: self}), self.collection);
+                    return new Article(_.extend(item, {parentArticle: self}));
                 }),
                 collection: self.collection,
                 article: self
