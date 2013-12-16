@@ -35,6 +35,9 @@ define([
             container.setAttribute("data-src", this.data.itemPicture);
             bonzo(container).addClass("item__image-container");
         }
+//        if(this.data.discussionId) {
+//            this.elem.setAttribute("data-discussion-id", this.data.discussionId);
+//        }
         this.getElem(this.classes.link).href = this.data.url;
         this.getElem(this.classes.headline).innerHTML = this.data.headline;
     };

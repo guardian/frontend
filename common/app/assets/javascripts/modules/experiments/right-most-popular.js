@@ -5,11 +5,12 @@
 define([
     'qwery',
     'utils/ajax',
-    'lodash/assign',
+    'lodash/objects/assign',
 
     'modules/component',
     'modules/experiments/right-most-popular-image-item',
     'modules/experiments/right-most-popular-list-item',
+    "modules/discussion/comment-count",
     'modules/ui/images'
 ], function (
     qwery,
@@ -19,6 +20,7 @@ define([
     Component,
     ImageItem,
     ListItem,
+    commentCounts,
     images
     ) {
 
@@ -73,16 +75,17 @@ define([
 
     RightMostPopular.prototype.prerender = function() {
         var self = this;
-        this.setState(this.type);
+        this.setState(this.config.type);
         var container = this.getElem(this.classes.items);
-        this.data.slice(0, this.maxTrails).forEach(function(item, index) {
-            if(self.type === 'image') {
+        this.data.slice(0, this.config.maxTrails).forEach(function(item, index) {
+            if(self.config.type === 'image') {
                 new ImageItem(item).render(container);
             } else {
                new ListItem(item, index).render(container);
             }
         });
         images.upgrade(container);
+        //commentCounts.init(container);
     };
 
     return RightMostPopular;

@@ -45,6 +45,10 @@
 }
 
 .right-most-popular--image {
+    .right-most-popular-item {
+        position: relative;
+    }
+
     .right-most-popular-item__img {
         width: $gs-column-width*2;
         height: $gs-baseline*6;
@@ -53,6 +57,16 @@
 
         img {
             width: 100%;
+        }
+    }
+
+    .trail__count {
+        bottom: -4px;
+        top: auto;
+        left: $gs-column-width*2 + $gs-gutter/2;
+
+        a {
+            @include fs-data(3, true);
         }
     }
 }
