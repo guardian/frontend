@@ -165,7 +165,7 @@ define([
         });
 
         _.each(source, function(item) {
-            var article = new Article(item, self),
+            var article = new Article(_.extend(item, {collection: self})),
                 group;
 
             if(editingMetas[item.id]) {

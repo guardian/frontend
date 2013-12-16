@@ -143,8 +143,9 @@ define([
                     article = new Article({
                         id: id,
                         meta: sourceItem ? sourceItem.getMeta() : undefined,
-                        parentArticle: targetList.article
-                    }, targetList.collection);
+                        parentArticle: targetList.article,
+                        collection: targetList.collection
+                    });
 
                     // just for UI
                     targetList.items.splice(insertAt, 0, article);
