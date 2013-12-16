@@ -11,6 +11,7 @@
 
 .right-most-popular-item {
     clear: left;
+    height: $gs-column-height*2 + 3px;
     padding-top: $baseline*2;
     margin-bottom: $gs-baseline*2;
     border-top: 1px dotted $c-neutral5;
@@ -22,7 +23,9 @@
 
 .right-most-popular-item__headline {
     color: $c-neutral1;
+    margin-bottom: 0;
     @include fs-headline(1);
+    @include text-clamp(4, 20);
 }
 
 .right-most-popular-item__url {
@@ -56,25 +59,26 @@
 
 .right-most-popular--list {
     .right-most-popular-item {
-        clear: left;
-        height: $gs-column-height*2;
-        margin-bottom: 0;
         border-top: none;
     }
 
     .right-most-popular-item__headline {
         height: $gs-column-height*2;
         padding-left: $gs-gutter/2;
-        border-left: 1px solid $c-neutral4;
+    }
+
+    .right-most-popular-item__count-container {
+        width: $gs-column-width - $gs-gutter/2;
+        height: $gs-column-height*2;
+        margin-top: 3px;
+        margin-right: 0;
+        border-right: 1px solid $c-neutral4;
     }
 
     .right-most-popular-item__count {
-        width: $gs-column-width - $gs-gutter/2;
-        height: $gs-column-height*2;
-        margin-top: -3px;
-        margin-right: 0;
-        margin-bottom: $gs-baseline + $baseline;
+        display: block;
+        margin-top: -5px;
         color: $c-neutral4;
-        @include font($serifheadline, 200, 44px);
+        @include font($serifheadline, 200, 43px);
     }
 }
