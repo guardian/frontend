@@ -8,7 +8,8 @@ define([
     'modules/analytics/errors',
     'utils/cookies',
     'omniture',
-    'modules/analytics/mvt-cookie'
+    'modules/analytics/mvt-cookie',
+    'utils/beacon'
 ], function(
     common,
     detect,
@@ -18,7 +19,8 @@ define([
     Errors,
     Cookies,
     s,
-    mvtCookie
+    mvtCookie,
+    Beacon
     ) {
 
     // https://developer.omniture.com/en_US/content_page/sitecatalyst-tagging/c-tagging-overview
@@ -241,6 +243,10 @@ define([
 
                     self.pageviewSent = true;
                     common.mediator.emit('module:analytics:omniture:pageview:sent');
+
+                    // independently log this page view
+                    // used for checking we have not broken analytics
+                    new Beacon("/count/pva.gif").fire(config);
                 }
             }, 250);
 

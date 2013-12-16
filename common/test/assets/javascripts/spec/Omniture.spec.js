@@ -1,5 +1,9 @@
 define(['analytics/omniture', 'common'], function(Omniture, common) {
 
+
+
+
+
     describe("Omniture", function() {
 
         var config = {};
@@ -10,7 +14,10 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
         }
 
         beforeEach(function(){
-            config.page = { analyticsName: 'the_page_name' };
+            config.page = {
+                analyticsName: 'the_page_name',
+                beaconUrl: ''
+            };
             config.switches = {};
 
             s = { t: function(){}, tl: function(){}, apl: function(){} };
