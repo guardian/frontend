@@ -1,10 +1,12 @@
 define([
     '$',
+    'bonzo',
     'bean',
     'utils/mediator',
     'modules/identity/api'
 ], function(
     $,
+    bonzo,
     bean,
     mediator,
     Id
@@ -111,7 +113,7 @@ define([
     track.areCommentsVisible = function() {
         var comments = $('#comments').offset(),
             scrollTop = $('body').first().scrollTop(),
-            viewport = $.viewport().height;
+            viewport = bonzo.viewport().height;
 
         if ((comments.top-((viewport  / 2)) < scrollTop) &&
             ((comments.top+comments.height)-(viewport / 3) > scrollTop)) {
