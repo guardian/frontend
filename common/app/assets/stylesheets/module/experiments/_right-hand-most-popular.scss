@@ -29,13 +29,14 @@
     &:hover,
     &:active,
     &:focus {
+        color: $c-neutral1;
         text-decoration: underline;
     }
 
     &:visited,
     &:active {
         .right-most-popular-item__headline {
-            color: $c-neutral4;
+            color: $c-neutral2;
         }
     }
 }
@@ -56,17 +57,23 @@
 .right-most-popular--list {
     .right-most-popular-item {
         clear: left;
-        margin-bottom: $gs-baseline*2;
+        height: $gs-column-height*2;
+        margin-bottom: 0;
         border-top: none;
     }
 
     .right-most-popular-item__headline {
+        height: $gs-column-height*2;
         padding-left: $gs-gutter/2;
         border-left: 1px solid $c-neutral4;
     }
 
     .right-most-popular-item__count {
         width: $gs-column-width - $gs-gutter/2;
+        height: $gs-column-height*2;
+        margin-top: -3px;
+        margin-right: 0;
+        margin-bottom: $gs-baseline + $baseline;
         color: $c-neutral4;
         @include font($serifheadline, 200, 44px);
     }
