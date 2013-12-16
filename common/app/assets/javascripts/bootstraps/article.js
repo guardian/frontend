@@ -12,7 +12,8 @@ define([
     "modules/sport/cricket",
     "modules/ui/notification-counter",
     "modules/experiments/left-hand-card",
-    "modules/open/cta"
+    "modules/open/cta",
+    "modules/commercial/loader"
 ], function (
     common,
     mediator,
@@ -27,7 +28,8 @@ define([
     Cricket,
     NotificationCounter,
     LeftHandCard,
-    OpenCta
+    OpenCta,
+    CommercialLoader
 ) {
 
     var modules = {
