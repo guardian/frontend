@@ -186,6 +186,7 @@ define([
                         
                         bonzo(qwery('.js-mpu-ad-slot .social-wrapper')).after(bonzo.create(mpuTemp)[0]);
                         bonzo(qwery('.ad-slot--mpu-banner-ad')).attr('data-inview-name', inviewName);
+                        bonzo(qwery('.ad-slot--top-banner-ad')).attr('data-inview-name', 'Top');
                         bonzo(qwery('.js-mpu-ad-slot')).addClass('is-sticky');
                         
                         // Mwahahaha 
@@ -216,7 +217,7 @@ define([
                     document.body.className += ' test-inline-adverts--on';
                     self.variants.forEach(function(variant){
                         if(variant.id === 'Inline' || variant.id === 'Adhesive') {
-                            variant.test.call(self, {}, true);
+                            variant.test.call(self, config, true);
                         }
                     });
 
