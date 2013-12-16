@@ -4,5 +4,5 @@ require([
 ], function(
     bootstrap
 ) {
-    bootstrap.go(guardian.config);
+    bootstrap.go();
 });

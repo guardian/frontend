@@ -264,7 +264,7 @@ define([
         common.mediator.on('module:analytics:omniture:pageview:sent', function(){
             // independently log this page view
             // used for checking we have not broken analytics
-            new Beacon("/count/pva.gif").fire(config);
+            new Beacon("/count/pva.gif").fire();
         });
 
     }

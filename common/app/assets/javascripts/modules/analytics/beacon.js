@@ -1,7 +1,7 @@
-define([], function() {
+define(['utils/config'], function(config) {
 
     function Beacon(path) {
-        this.fire = function(config){
+        this.fire = function(){
             var img = new Image();
             img.src = config.page.beaconUrl + path;
         };
