@@ -138,7 +138,7 @@ define([
                     bonzo(hiddenItems).remove();
                     var that = this;
                     ajax({
-                        url: this._$collection.attr('data-link-context-path') + '.json',
+                        url: '/' + this._$collection.attr('data-link-context-path') + '.json',
                         type: 'json',
                         crossOrigin: true
                     }).then(function(data) {
