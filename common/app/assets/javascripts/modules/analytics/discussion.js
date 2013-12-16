@@ -1,8 +1,12 @@
 define([
-    'common',
+    '$',
+    'bean',
+    'utils/mediator',
     'modules/identity/api'
 ], function(
-    common,
+    $,
+    bean,
+    mediator,
     Id
 ) {
 
@@ -14,13 +18,14 @@ define([
      * eVar67: User ID of person being acted upon
      * eVar68: Only for event51. comment || response
      */
-    function Track() {}
+    var track = {};
+    track.seen = false;
 
     /**
      * @param {Array.<string>}
      * @return {string}
      */
-    Track.prototype.getLinkTrackVars = function(extras) {
+    track.getLinkTrackVars = function(extras) {
         extras = extras || [];
         var linkTrackVars = [
             'events',
@@ -32,7 +37,7 @@ define([
         return linkTrackVars.concat(extras).join(',');
     };
 
-    Track.prototype.comment = function(comment) {
+    track.comment = function(comment) {
         s.events = 'event51';
         s.eVar66 = Id.getUserFromCookie().id || null;
         s.eVar68 = comment.replyTo ? 'response' : 'comment';
@@ -42,7 +47,7 @@ define([
         s.tl(true, 'o', 'comment');
     };
 
-    Track.prototype.recommend = function(e) {
+    track.recommend = function(e) {
         s.events = 'event72';
         s.eVar65 = 'recommendation';
         s.eVar66 = Id.getUserFromCookie() ? Id.getUserFromCookie().id : null;
@@ -52,35 +57,78 @@ define([
         s.tl(true, 'o', 'Recommend a comment');
     };
 
-    Track.prototype.jumpedToComments = function(e) {
-        s.events = 'event72';
-        s.eVar65 = 'seen jump-to-comments';
-        s.eVar66 = Id.getUserFromCookie() ? Id.getUserFromCookie().id : null;
-        s.linkTrackVars = this.getLinkTrackVars(['eVar65']);
-        s.linkTrackEvents = 'event72';
-        s.tl(true, 'o', 'seen jump-to-comments');
+    track.jumpedToComments = function(e) {
+        if (!track.seen) {
+            s.events = 'event72';
+            s.eVar65 = 'seen jump-to-comments';
+            s.eVar66 = Id.getUserFromCookie() ? Id.getUserFromCookie().id : null;
+            s.linkTrackVars = this.getLinkTrackVars(['eVar65']);
+            s.linkTrackEvents = 'event72';
+            s.tl(true, 'o', 'seen jump-to-comments');
+            track.seen = true;
+        }
     };
 
-    Track.prototype.commentPermalink = function(e) {
-        s.events = 'event72';
-        s.eVar65 = 'seen comment-permalink';
-        s.eVar66 = Id.getUserFromCookie() ? Id.getUserFromCookie().id : null;
-        s.linkTrackVars = this.getLinkTrackVars(['eVar65']);
-        s.linkTrackEvents = 'event72';
-        s.tl(true, 'o', 'seen comment-permalink');
+    track.commentPermalink = function(e) {
+        if (!track.seen) {
+            s.events = 'event72';
+            s.eVar65 = 'seen comment-permalink';
+            s.eVar66 = Id.getUserFromCookie() ? Id.getUserFromCookie().id : null;
+            s.linkTrackVars = this.getLinkTrackVars(['eVar65']);
+            s.linkTrackEvents = 'event72';
+            s.tl(true, 'o', 'seen comment-permalink');
+            track.seen = true;
+        }
     };
 
-    Track.prototype.scrolledToComments = function() {
+    track.scrolledToComments = function() {
+        if (!track.seen) {
+            s.events = 'event72';
+            s.eVar65 = 'seen scroll-top';
+            s.eVar66 = Id.getUserFromCookie() ? Id.getUserFromCookie().id : null;
+            s.linkTrackVars = this.getLinkTrackVars(['eVar65']);
+            s.linkTrackEvents = 'event72';
+            s.tl(true, 'o', 'seen scroll-top');
+            track.seen = true;
+        }
+    };
 
+    // Convenience functions
+    track.areCommentsSeen = function() {
+        var timer,
+            scroll = function(e) {
+                if(!track.seen && !timer && track.areCommentsVisible()) {
+                    track.scrolledToComments();
+                    bean.off(window, 'scroll', scroll);
+                }
+            };
+
+        if (!track.seen) {
+            bean.on(window, 'scroll', scroll);
+        }
+    };
+
+    track.areCommentsVisible = function() {
+        var comments = $('#comments').offset(),
+            scrollTop = $('body').first().scrollTop(),
+            viewport = $.viewport().height;
+
+        if ((comments.top-((viewport  / 2)) < scrollTop) &&
+            ((comments.top+comments.height)-(viewport / 3) > scrollTop)) {
+            return true;
+        } else {
+            return false;
+        }
     };
 
     var init = function() {
-        var track = new Track();
-        common.mediator.on('discussion:commentbox:post:success', track.comment.bind(track));
-        common.mediator.on('discussion:comment:recommend:success', track.recommend.bind(track));
-        common.mediator.on('discussion:seen:comment-permalink', track.commentPermalink.bind(track));
-        common.mediator.on('discussion:seen:comments-anchor', track.jumpedToComments.bind(track));
-        common.mediator.on('discussion:seen:comments-scrolled-to', track.scrolledToComments.bind(track));
+        mediator.on('discussion:commentbox:post:success', track.comment.bind(track));
+        mediator.on('discussion:comment:recommend:success', track.recommend.bind(track));
+        mediator.on('discussion:seen:comment-permalink', track.commentPermalink.bind(track));
+        mediator.on('discussion:seen:comments-anchor', track.jumpedToComments.bind(track));
+        mediator.on('discussion:seen:comments-scrolled-to', track.scrolledToComments.bind(track));
+
+        track.areCommentsSeen();
     };
 
     return { init: init };
