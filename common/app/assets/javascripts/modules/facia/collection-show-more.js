@@ -48,15 +48,19 @@ define([
             mediator.emit('modules:collectionShowMore:renderButton', this);
         };
 
-        this._removeButton = function() {
-            // TODO - fix remove when it should be removed straight after ajax call
+        this._removeButton = function(afterAjax) {
             var that = this;
-            // listen to the clickstream, as happens later, before removing
-            mediator.on('module:clickstream:click', function(clickSpec) {
-                if (qwery(clickSpec.target)[0] === that._$button[0]) {
-                    that._$button.remove();
-                }
-            });
+            // if we've just made the ajax call, remove without waiting
+            if (afterAjax) {
+                this._$button.remove();
+            } else {
+                // listen to the clickstream, as happens later, before removing
+                mediator.on('module:clickstream:click', function(clickSpec) {
+                    if (qwery(clickSpec.target)[0] === that._$button[0]) {
+                        that._$button.remove();
+                    }
+                });
+            }
         };
 
         this._incrementButtonCounter = function() {
@@ -75,13 +79,13 @@ define([
             commentCount.init(wrappedItems);
         };
 
-        this._showItems = function() {
+        this._showItems = function(afterAjax) {
             var itemsToShow = this._items.splice(0, getShowMoreSize());
             this._$collection.append(itemsToShow);
             this._$button.attr('disabled', false);
             this._incrementButtonCounter();
             if (this._items.length === 0) {
-                this._removeButton();
+                this._removeButton(afterAjax || false);
             }
         };
 
@@ -129,6 +133,7 @@ define([
                 if (this._$collection.attr('data-can-show-more') === 'false') {
                     bonzo(hiddenItems).detach();
                     this._items = hiddenItems;
+                    this._showItems();
                 } else {
                     bonzo(hiddenItems).remove();
                     var that = this;
@@ -143,21 +148,24 @@ define([
                         });
                         var newItems = bonzo.create(
                             $('.collection', bonzo.create('<div>' + data.html + '</div>')).html()
-                        );
+                        ) || [];
                         // filter items we're showing
                         that._items = newItems.filter(function(newItem) {
                             return itemsHrefs.indexOf($('.item__link', newItem).attr('href')) === -1;
                         });
                         that._enrichItems();
-                        that._showItems();
+                        that._showItems(true);
+                    }).fail(function(req) {
+                        mediator.emit('module:error', 'Failed to load items: ' + req.statusText);
                     }).always(function() {
                         that._$button.attr('disabled', false);
                     });
                 }
                 // remove class
                 this._$collection.removeClass('js-collection--show-more');
+            } else {
+                this._showItems();
             }
-            this._showItems();
         };
 
     };
