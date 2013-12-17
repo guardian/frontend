@@ -5,6 +5,7 @@ module.exports = function (grunt) {
         env = grunt.option('env') || 'code',
         screenshotsDir = './screenshots',
         staticTargetDir = 'static/target/',
+        staticRequireDir = 'static/requirejs/',
         testConfDir = 'common/test/assets/javascripts/conf/';
 
     if (isDev) {
@@ -45,22 +46,22 @@ module.exports = function (grunt) {
         requirejs: {
             compile: {
                 options: {
-                    baseUrl: "common/app/assets/javascripts",
-                    name: "bootstraps/app",
+                    baseUrl: staticRequireDir,
+                    name: "application/app",
                     out: staticTargetDir + "javascripts/bootstraps/app.js",
                     paths: {
-                        bean:         "components/bean/bean",
-                        bonzo:        "components/bonzo/src/bonzo",
-                        domReady:     "components/domready/ready",
-                        EventEmitter: "components/eventEmitter/EventEmitter",
-                        qwery:        "components/qwery/mobile/qwery-mobile",
-                        reqwest:      "components/reqwest/src/reqwest",
-                        postscribe:   "components/postscribe/dist/postscribe",
-                        swipe:        "components/swipe/swipe",
-                        swipeview:    "components/swipeview/src/swipeview",
-                        lodash:       "components/lodash-amd/modern",
-                        imager:       'components/imager.js/src/strategies/container',
-                        omniture:     '../../public/javascripts/vendor/omniture'
+                        bean:         "common/components/bean/bean",
+                        bonzo:        "common/components/bonzo/src/bonzo",
+                        domReady:     "common/components/domready/ready",
+                        EventEmitter: "common/components/eventEmitter/EventEmitter",
+                        qwery:        "common/components/qwery/mobile/qwery-mobile",
+                        reqwest:      "common/components/reqwest/src/reqwest",
+                        postscribe:   "common/components/postscribe/dist/postscribe",
+                        swipe:        "common/components/swipe/swipe",
+                        swipeview:    "common/components/swipeview/src/swipeview",
+                        lodash:       "common/components/lodash-amd/modern",
+                        imager:       'common/components/imager.js/src/strategies/container',
+                        omniture:     'common/app/public/javascripts/vendor/omniture'
                     },
                     shim: {
                         postscribe: {
@@ -76,11 +77,18 @@ module.exports = function (grunt) {
                     },
                     wrap: {
                         startFile: "common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js",
-                        endFile: "common/app/assets/javascripts/bootstraps/go.js"
+                        endFile:   "common/app/assets/javascripts/bootstraps/go.js"
                     },
                     optimize: (isDev) ? 'none' : 'uglify2',
                     useSourceUrl: (isDev) ? true : false,
-                    preserveLicenseComments: false
+                    preserveLicenseComments: false,
+                    done: function(done, output) {
+                        var duplicates = require('rjs-build-analysis').duplicates(output);
+
+                        grunt.log.warn(duplicates);
+
+                        done();
+                    }
                 }
             }
         },
@@ -240,12 +248,26 @@ module.exports = function (grunt) {
         },
 
         copy: {
-            js: {
+            commonjs: {
                 files: [{
                     expand: true,
                     cwd: 'common/app/public/javascripts',
                     src: ['**/*.js'],
                     dest: staticTargetDir + 'javascripts'
+                },
+                {
+                    expand: true,
+                    cwd: 'common/app/assets/javascripts',
+                    src: ['**/*.js'],
+                    dest: staticRequireDir + 'common'
+                }]
+            },
+            article: {
+                files: [{
+                    expand: true,
+                    cwd: 'article/app/assets/javascripts',
+                    src: ['**/*.js'],
+                    dest: staticRequireDir + 'application'
                 }]
             },
             images: {
@@ -476,7 +498,7 @@ module.exports = function (grunt) {
         // Clean stuff up
         clean: {
             staticTarget: [staticTargetDir],
-            js: [staticTargetDir + 'javascripts'],
+            js: [staticTargetDir + 'javascripts', staticRequireDir],
             css: [staticTargetDir + 'stylesheets'],
             images: [staticTargetDir + 'images'],
             flash: [staticTargetDir + 'flash'],
@@ -537,23 +559,31 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-uglify');
 
-
     grunt.registerTask('default', ['compile', 'test', 'analyse']);
 
     // Compile tasks
     grunt.registerTask('compile:images', ['clean:images', 'copy:images', 'shell:spriteGeneration', 'imagemin']);
     grunt.registerTask('compile:css', ['clean:css', 'sass:compile']);
-    grunt.registerTask('compile:js', function() {
-        grunt.task.run(['clean:js', 'copy:js']);
+    grunt.registerTask('compile:js', function(app) {
+        if (!app) {
+            grunt.log.error('No project parameter passed');
+            return;
+        }
+        grunt.task.run(['clean:js', 'copy:commonjs', 'copy:' + app]);
         if (!isDev) {
             grunt.task.run('uglify:vendor');
         }
+
         grunt.task.run('requirejs:compile');
     });
     grunt.registerTask('compile:fonts', ['clean:fonts', 'mkdir:fontsTarget', 'webfontjson']);
     grunt.registerTask('compile:flash', ['clean:flash', 'copy:flash']);
-    grunt.registerTask('compile', function() {
-        grunt.task.run(['clean:staticTarget', 'compile:images', 'compile:css', 'compile:js', 'compile:fonts', 'compile:flash']);
+    grunt.registerTask('compile', function(app) {
+        if (!app) {
+            grunt.log.error('No project parameter passed');
+            return;
+        }
+        grunt.task.run(['clean:staticTarget', 'compile:images', 'compile:css', 'compile:js:' + app, 'compile:fonts', 'compile:flash']);
         if (!isDev) {
             grunt.task.run(['clean:assets', 'copy:headCss', 'hash']);
         }

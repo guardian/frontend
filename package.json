@@ -20,7 +20,6 @@
     "grunt-contrib-requirejs": "~0.4",
     "grunt-contrib-sass": "~0.5",
     "grunt-contrib-clean": "~0.5",
-
     "karma-script-launcher": "~0.1.0",
     "karma-phantomjs-launcher": "~0.1.0",
     "karma-chrome-launcher": "~0.1.0",
@@ -30,12 +29,12 @@
     "karma-requirejs": "~0.2",
     "karma-coffee-preprocessor": "~0.1.0",
     "karma": "~0.10.4",
-
     "phantomjs": "~1.9.1",
     "svgo": "~0.4.1",
     "casperjs": "git://github.com/smlgbl/casperjs.git#feature/makeUsableByNPM",
     "moment": "~2.4",
-    "mkdirp": "~0.3.5"
+    "mkdirp": "~0.3.5",
+    "rjs-build-analysis": "0.0.3"
   },
   "scripts": {
     "postinstall": "grunt hookmeup"
