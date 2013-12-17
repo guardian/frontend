@@ -71,7 +71,8 @@ Comments.prototype.classes = {
     commentActions: 'd-comment__actions__main',
     commentReply: 'd-comment__action--reply',
     commentPick: 'd-comment__action--pick',
-    commentRecommend: 'd-comment__recommend'
+    commentRecommend: 'd-comment__recommend',
+    commentStaff: 'd-comment--staff'
 };
 
 /** @type {Object.<string.*>} */
@@ -459,7 +460,8 @@ Comments.prototype.addComment = function(comment, focus, parent) {
             }
         },
         commentElem = bonzo.create(document.getElementById('tmpl-comment').innerHTML)[0];
-        bonzo(commentElem).addClass('fade-in'); // Comments now appear with CSS Keyframe animation
+        $commentElem = bonzo(commentElem);
+        $commentElem.addClass('fade-in'); // Comments now appear with CSS Keyframe animation
 
     for (key in map) {
         if (map.hasOwnProperty(key)) {
@@ -477,17 +479,17 @@ Comments.prototype.addComment = function(comment, focus, parent) {
     }
     commentElem.id = 'comment-'+ comment.id;
 
-    if (this.user && this.user.isStaff) {
-        // Hack to allow staff badge to appear
-        var staffBadge = bonzo.create(document.getElementById('tmpl-staff-badge').innerHTML);
-        $('.d-comment__meta div', commentElem).first().append(staffBadge);
+    if (this.user && !this.user.isStaff) {
+        $commentElem.addClass(this.getClass('commentStaff', true));
     }
 
     // Stupid hack. Will rearchitect.
     if (!parent) {
         bonzo(this.getElem('newComments')).prepend(commentElem);
     } else {
-        bonzo(parent).append(commentElem);
+        $commentElem.removeClass(this.getClass('topLevelComment', true));
+        $commentElem.addClass(this.getClass('reply', true));
+        bonzo(parent).append($commentElem);
     }
 
     if (focus) {
