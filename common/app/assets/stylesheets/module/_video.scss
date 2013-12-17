@@ -12,7 +12,7 @@ object {
         margin-left: $gs-gutter * -1;
         margin-right: $gs-gutter * -1;
     }
-    margin-bottom: $gs-column-height;
+    margin-bottom: $gs-row-height;
     background: #000000;
     text-align: center; // prevents poster from loading to left then centering
 }

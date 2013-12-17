@@ -6,7 +6,7 @@
 .article__zone {
     @include fs-header(3);
     @include box-sizing(border-box);
-    min-height: $gs-column-height;
+    min-height: $gs-row-height;
     padding: 0 $gs-gutter/2;
     border-top-width: $baseline/2;
     border-top-style: solid;
@@ -112,7 +112,7 @@
     @include mq(tablet) {
         -webkit-font-smoothing: antialiased;
         @include fs-headline(8, true);
-        margin-bottom: $gs-column-height;
+        margin-bottom: $gs-row-height;
         padding-top: 0;
         border-top: none;
     }
@@ -139,7 +139,7 @@
     @include box-sizing(border-box);
     @include fs-data(2);
     position: relative;
-    min-height: $gs-column-height;
+    min-height: $gs-row-height;
     padding-top: $baseline;
     padding-right: gs-span(1);
     margin-bottom: $baseline*3;
@@ -322,7 +322,7 @@ video {
         right: 0;
         top: 0;
         width: $gs-column-width - 1px;
-        height: $gs-column-height - 1px;
+        height: $gs-row-height - 1px;
         padding: $baseline - 1px 0 0 $gutter/4;
         border-left: 1px dotted $c-neutral5;
     }
