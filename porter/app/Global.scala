@@ -1,4 +1,4 @@
-import common.{CloudWatchApplicationMetrics, Jobs}
+import common.{AkkaAsync, CloudWatchApplicationMetrics, Jobs}
 import conf.Management
 import jobs._
 import play.api.GlobalSettings
@@ -16,24 +16,26 @@ object Global extends GlobalSettings with CloudWatchApplicationMetrics {
     Jobs.schedule("FastlyCloudwatchLoadJob", "0 0/2 * * * ?") {
       FastlyCloudwatchLoadJob.run()
     }
+    Jobs.schedule("AnalyticsSanityCheckJob", "0 */15 * * * * ?") {
+      AnalyticsSanityCheckJob.run()
+    }
   }
 
   def descheduleJobs() {
     Jobs.deschedule("AnalyticsLoadJob")
     Jobs.deschedule("ABTestResultsLoadJob")
     Jobs.deschedule("FastlyCloudwatchLoadJob")
+    Jobs.deschedule("AnalyticsSanityCheckJob")
   }
 
   override def onStart(app: play.api.Application) {
     super.onStart(app)
-
     descheduleJobs()
     scheduleJobs()
   }
 
   override def onStop(app: play.api.Application) {
     descheduleJobs()
-
     super.onStop(app)
   }
 }

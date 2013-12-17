@@ -32,6 +32,12 @@
                         analyticsImage.width = "1";
                         analyticsImage.height = "1";
                         document.body.appendChild(analyticsImage);
+
+                        @*
+                        // this is used to sanity check our analytics calls
+                        *@
+                        var img = new Image();
+                        img.src = "@{Configuration.debug.beaconUrl}/count/pva.gif";
                     }
                 </script>
         }
