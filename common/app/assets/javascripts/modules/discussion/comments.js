@@ -58,6 +58,8 @@ Comments.prototype.classes = {
     comments: 'd-thread--top-level',
     topLevelComment: 'd-comment--top-level',
     showMore: 'd-discussion__show-more',
+    showMoreNewerContainer: 'show-more__container--newer',
+    showMoreOlderContainer: 'show-more__container--older',
     showMoreNewer: 'd-discussion__show-more--newer',
     showMoreOlder: 'd-discussion__show-more--older',
     showHidden: 'd-discussion__show-hidden',
@@ -248,8 +250,7 @@ Comments.prototype.gotoComment = function(id) {
         window.location.replace('#comment-'+ id);
         return;
     }
-
-    this.showHiddenComments();
+    
     return this.fetchComments({
         comment: id,
         position: 'replaceWith'
@@ -324,8 +325,10 @@ Comments.prototype.renderComments = function(position, resp) {
     var html = bonzo.create(resp.html),
         comments = qwery(this.getClass('topLevelComment'), html);
 
-    $(this.getClass('showMoreOlder'), this.elem).replaceWith($(this.getClass('showMoreOlder'), html));
-    $(this.getClass('showMoreNewer'), this.elem).replaceWith($(this.getClass('showMoreNewer'), html));
+    $(this.getClass('showMoreNewer'), this.elem).remove();
+    $(this.getClass('showMoreOlder'), this.elem).remove();
+    $(this.getClass('showMoreNewerContainer')).append($(this.getClass('showMoreNewer'), html));
+    $(this.getClass('showMoreOlderContainer')).append($(this.getClass('showMoreOlder'), html));
 
     // Stop duplication in new comments section
     qwery(this.getClass('comment'), this.getElem('newComments')).forEach(function(comment) {
