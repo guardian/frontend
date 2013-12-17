@@ -27,6 +27,7 @@ define([
                 submit: 'submit-input',
                 fieldError: 'form-field--error',
                 formError: 'form__error',
+                required: 'formstack-required',
                 sectionHeader: 'formstack-heading',
                 sectionHeaderFirst: 'formstack-heading--first',
                 sectionText: 'formstack-section',
@@ -42,10 +43,11 @@ define([
                 submit: '.fsSubmitButton',
                 fieldError: '.fsValidationError',
                 formError: '.fsError',
+                required: '.fsRequiredMarker',
                 sectionHeader: '.fsSectionHeading',
                 sectionHeaderFirst: '.fsSection:first-child .fsSectionHeading',
                 sectionText: '.fsSectionText',
-                hide: '.hidden, .fsHidden, .fsRequiredMarker'
+                hide: '.hidden, .fsHidden'
             },
             hiddenSelectors: {
                 userId: '[type="number"]',
