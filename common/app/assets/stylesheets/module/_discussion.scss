@@ -416,6 +416,11 @@ $replyIndent: 26px;
 
 
 }
+.d-discussion__error {
+    background: #ffcc66;
+    margin-top: $baseline*2;
+    padding: $baseline*2 $gutter;
+}
 
 .js-show-more-replies {
     margin-left: $replyIndent;

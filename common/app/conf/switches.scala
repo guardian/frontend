@@ -212,7 +212,7 @@ object Switches extends Collections {
     "If this is switched on an AA test runs to prove the assignment of users in to segments is working reliably.",
     safeState = Off)
 
-  val ABAlphaComm = Switch("A/B Tests - second tranche", "ab-alpha-comm",
+  val ABAlphaComm = Switch("A/B Tests", "ab-alpha-comm",
     "If this is switched on an AB test runs to trial new advertising user experiences and commercial models",
     safeState = Off)
 
@@ -226,6 +226,10 @@ object Switches extends Collections {
 
   val ABOnwardHighlightsPanel = Switch("A/B Tests", "ab-onward-highlights-panel",
     "If this is switched on an AB test runs to test onward highlights panel",
+    safeState = Off)
+
+  val ABRightMostPopular = Switch("A/B Tests", "ab-right-most-popular",
+    "If this is switched on an AB test runs to trail a right hand side most popular component",
     safeState = Off)
 
   // Sport Switch
@@ -307,6 +311,7 @@ object Switches extends Collections {
     ABOnwardHighlightsPanel,
     ABAlphaComm,
     ABMobileFacebookAutosignin,
+    ABRightMostPopular,
     AdDwellTimeLoggerSwitch,
     UkAlphaSwitch
   )
