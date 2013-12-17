@@ -81,14 +81,7 @@ module.exports = function (grunt) {
                     },
                     optimize: (isDev) ? 'none' : 'uglify2',
                     useSourceUrl: (isDev) ? true : false,
-                    preserveLicenseComments: false,
-                    done: function(done, output) {
-                        var duplicates = require('rjs-build-analysis').duplicates(output);
-
-                        grunt.log.warn(duplicates);
-
-                        done();
-                    }
+                    preserveLicenseComments: false
                 }
             }
         },
