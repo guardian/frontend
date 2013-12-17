@@ -19,12 +19,23 @@ define([
                     return;
                 }
             });
+
+            // Listen for load of form confirmation page,
+            // which has no form, so won't instantiate the Formstack module
+            bean.on(el, 'load', function(event) {
+                self.refreshHeight();
+            });
         };
 
         self.onMessage = function(event) {
             switch (event.data) {
                 case "ready":
                     self.show();
+                    self.refreshHeight();
+                    break;
+
+                case "unload":
+                    self.refreshHeight(true);
                     break;
 
                 case "refreshHeight":
@@ -33,7 +44,13 @@ define([
             }
         };
 
-        self.refreshHeight = function() {
+        self.refreshHeight = function(reset) {
+            if (reset) {
+                // If a height is set on the iframe, the following calculation
+                // will be at least that height, optionally reset first
+                $(el).css({ 'height': 0 });
+            }
+
             var iframe = el.contentWindow.document,
                 body = iframe.body,
                 html = iframe.documentElement,

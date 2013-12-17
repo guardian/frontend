@@ -64,7 +64,6 @@ define([
 
             // Update iframe height, see "modules/identity/formstack-iframe"
             self.postMessage('ready');
-            self.postMessage('refreshHeight');
         };
 
         self.dom = function(user) {
@@ -88,6 +87,7 @@ define([
             dom.$form.append(html);
 
             // Events
+            bean.on(window, 'unload', self.unload);
             bean.on(dom.$form[0], 'submit', self.submit);
         };
 
@@ -104,6 +104,11 @@ define([
 
                 self.postMessage('refreshHeight');
             }, 100);
+        };
+
+        self.unload = function(event) {
+            // Listen for navigation to success page
+            self.postMessage('unload');
         };
 
         self.postMessage = function(message) {
