@@ -9,7 +9,7 @@
         data-@switch.name="@switch.state"
     }>
     
-    <div class="d-discussion__header">
+    <div class="d-discussion__header d-discussion__comment-count">
         @if(page.commentCount > 0){
         <div class="d-discussion__meta d-meta-item">
             @page.commentCount comment@if(page.commentCount != 1){s} in @page.topLevelCommentCount thread@if(page.topLevelCommentCount != 1){s}.
