@@ -132,10 +132,10 @@ trait ParseCollection extends ExecutionContexts with Logging {
     else {
       val results = collectionItems.foldLeft(Future[List[Content]](Nil)){(foldListFuture, collectionItem) =>
         val id = collectionItem.id
-        lazy val sublinks: List[CollectionItem] = collectionItem.metaData.map(metaMap => metaMap.get("sublinks").flatMap(_.asOpt[List[JsValue]]).getOrElse(Nil).map(json =>
-          CollectionItem((json \ "id").as[String], (json \ "meta").asOpt[Map[String, JsValue]])
-        )).getOrElse(Nil)
-        lazy val sublinksAsContent: Future[List[Content]] = if (!hasParent) getArticles(sublinks, edition, hasParent=true) else Future.successful(Nil)
+        lazy val sublinksAsContent: Future[List[Content]] = {
+          lazy val sublinks: List[CollectionItem] = retrieveSublinks(collectionItem)
+          if (!hasParent) getArticles(sublinks, edition, hasParent=true) else Future.successful(Nil)
+        }
         val response = ContentApi.item(id, edition).showFields("all").response
         response.onFailure{case t: Throwable => log.warn("%s: %s".format(id, t.toString))}
         for {
@@ -150,6 +150,11 @@ trait ParseCollection extends ExecutionContexts with Logging {
       sorted
     }
   }
+
+  private def retrieveSublinks(collectionItem: CollectionItem): List[CollectionItem] =
+    collectionItem.metaData.map(_.get("sublinks").flatMap(_.asOpt[List[JsValue]]).getOrElse(Nil)
+    .map(json => CollectionItem((json \ "id").as[String], (json \ "meta").asOpt[Map[String, JsValue]]))
+  ).getOrElse(Nil)
 
   def executeContentApiQuery(s: Option[String], edition: Edition): Future[List[Content]] = s filter(_.nonEmpty) map { queryString =>
     val queryParams: Map[String, String] = QueryParams.get(queryString).mapValues{_.mkString("")}
