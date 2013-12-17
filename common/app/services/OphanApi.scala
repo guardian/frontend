@@ -19,12 +19,11 @@ object OphanApi extends ExecutionContexts with Logging {
       WS.url(url) withRequestTimeout ophanApi.timeout get() map (_.json)
     }) getOrElse {
       log.error("Ophan host or key not configured")
-      Future(Json.parse("{}"))
+      Future.successful(JsObject(Nil))
     }
   }
 
   def getBreakdown(platform: String, hours: Int): Future[JsValue] = getBody(s"breakdown?platform=$platform&hours=$hours")
-
 
   def getBreakdown(path: String): Future[JsValue] = getBody(s"breakdown?path=/$path")
 
