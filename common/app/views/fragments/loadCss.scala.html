@@ -43,7 +43,7 @@
 
             function loadCssWithAjax() {
                 var xhr = new XMLHttpRequest();
-                xhr.open('GET', '@Static("stylesheets/global.css")?type=ajax');
+                xhr.open('GET', '@Static("stylesheets/global.css")');
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState === 4) {
                         if(xhr.status === 200) {
@@ -54,12 +54,7 @@
                         };
                     }
                 }
-                setTimeout( function () {
-                    if(xhr.readyState < 4) {
-                        xhr.abort();
-                        loadCssWithLink();
-                    }
-                }, 5000);
+                xhr.timeout = 5000;
                 xhr.send();
             }
 
