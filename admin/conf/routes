@@ -42,6 +42,7 @@ GET         /analytics/kpis                  controllers.admin.AnalyticsControll
 GET         /analytics/pageviews             controllers.admin.AnalyticsController.pageviews()
 GET         /analytics/browsers              controllers.admin.AnalyticsController.browsers()
 GET         /analytics/abtests               controllers.admin.AnalyticsController.abtests()
+GET         /analytics/confidence            controllers.admin.AnalyticsConfidenceController.renderConfidence()
 
 # Metrics
 GET         /metrics/loadbalancers           controllers.admin.DashboardController.renderDashboard()
