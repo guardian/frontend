@@ -133,7 +133,7 @@ define([
                     $(element).sparkline(graph.data, {
                         chartRangeMax: max,
                         defaultPixelsPerValue: graph.data.length < 50 ? graph.data.length < 30 ? 3 : 2 : 1,
-                        height: Math.round(Math.max(10, Math.min(40, max))),
+                        height: Math.round(Math.max(5, Math.min(30, max))),
                         lineColor: '#' + graph.color,
                         spotColor: false,
                         minSpotColor: false,

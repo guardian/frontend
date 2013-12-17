@@ -99,7 +99,7 @@ input[type=text] {
 }
 
 .finder .latest-articles {
-    padding: 0 5px 0 0;
+    padding: 0 10px 0 0;
 }
 
 .title {
@@ -191,7 +191,7 @@ input[type=text] {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     overflow: hidden;
-    padding: 0 0 3px 3px;
+    padding: 0 4px 3px 4px;;
     position: relative;
     background: #FFFFFF;
     border-top: 5px solid #FFFFFF;
@@ -206,8 +206,8 @@ input[type=text] {
 }
 
 .sublinks .trail {
-    border-color: #EEEEEE;
-    background: #EEEEEE;
+    border-color: #DDDDDD;
+    background: #DDDDDD;
 }
 
 .live-mode .sublinks .trail {
@@ -216,7 +216,7 @@ input[type=text] {
 }
 
 .trail.editingMeta {
-    background: #EEEEEE;
+    background: #DDDDDD;
 }
 
 .live-mode .trail.editingMeta {
@@ -244,10 +244,8 @@ input[type=text] {
     border-radius: 3px;
 }
 
-.trail .sublinks img {
-    height: 30px;
-    width: 50px;
-    margin: 3px 0 15px 25px;
+.sublinks .trail img {
+    opacity: 0.6;
 }
 
 .headline {
@@ -257,7 +255,7 @@ input[type=text] {
     line-height: 17px;
     color: #000000;
     cursor: move;
-    margin: 0 190px 0 80px;
+    margin: -1px 100px 0 80px;
 }
 
 .headline:hover {
@@ -265,21 +263,27 @@ input[type=text] {
 }
 
 .trail .trail__meta {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     position: absolute;
-    top: 36px;
-    right: 135px;
-    color: #999999;
-    font-size: 10px;
-    line-height: 14px;
-    margin: 0 0 0 80px;
+    top: 35px;
+    left: 4px;
+    width: 75px;
+    padding: 0 0 0 3px;
+    color: #FFFFFF;
+    font-size: 9px;
+    line-height: 13px;
+    background: rgba(0,0,0,0.2);
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
 }
 
 .trail .trail__remove {
     display: none;
     position: absolute;
-    top: 4px;
-    right: 3px;
-    background: #CCCCCC;
+    top: 3px;
+    left: 59px;
+    background: #0088cc;
     width: 14px;
     height: 20px;
     padding: 0px 3px;
@@ -288,16 +292,16 @@ input[type=text] {
     border-radius: 2px;
 }
 
-.droppable .trail:hover .trail__remove {
+.droppable .trail:hover > .trail__remove {
     display: block;
 }
 
 .droppable .trail .trail__remove:hover {
-    background: #999999;
+    background: #0077BB;
 }
 
 .trail_tweaks {
-    margin: 1px 3px 0 80px;
+    margin: 1px 0 0 80px;;
     color: #CCCCCC;
 }
 
@@ -376,20 +380,19 @@ button {
 
 .trail_stats {
     position: absolute;
-    top: 6px;
-    right: 0;
+    right: 4px;
     width: 130px;
-    height: 40px;
+    height: 30px;
     font-size: 9px;
     line-height: 12px;
 }
 
 .pageviews {
-    color: #666666;
+    color: #999999;
     font-weight: bold;
     position: absolute;
-    bottom: -2px;
-    left: 100px;
+    bottom: -12px;
+    right: 1px;
 }
 
 .pageviews-graph canvas {
@@ -397,7 +400,7 @@ button {
     float: right;
     position: absolute;
     bottom: -2px;
-    right: 33px;
+    right: 0;
 }
 
 .group-name {
@@ -586,7 +589,7 @@ button {
 }
 
 .sublinks {
-    margin: 4px 0 -4px -4px;
+    margin: 4px -4px -4px -4px;
 }
 
 .sublinks-message {
@@ -655,8 +658,7 @@ button {
     .trail .headline {
         margin: 0 0 0 80px;
     }
-    .trail .trail_stats,
-    .trail .trail__meta {
+    .trail .trail_stats {
         display: none;
     }
 }
@@ -665,7 +667,8 @@ button {
     .trail .headline {
         margin: 5px 0 0 0;
     }
-    .trail img {
+    .trail img,
+    .trail .trail__meta {
         display: none;
     }
     .trail_tweaks {

@@ -181,6 +181,12 @@
                 <img draggable="false" data-bind="
                     attr: {src: fields.thumbnail, title: props.id}" />
             </a>
+            <div class="trail__meta">
+                <span data-bind="text: humanDate"></span>
+            </div>
+            <div class="trail__remove" data-bind="click: $parent.dropItem">
+                <i class="icon-trash icon-white"></i>
+            </div>
 
             <div data-bind="if: state.editingMeta">
                 <div class="trail_tweaks u-cf">
@@ -210,16 +216,10 @@
             </div>
 
             <div data-bind="if: !state.editingMeta()">
-                <div class="trail__remove" data-bind="click: $parent.dropItem">
-                    <i class="icon-trash icon-white"></i>
-                </div>
                 <a class="trail_stats u-cf" target="ophan" data-bind="attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + props.id()}">
                     <div class="pageviews" data-bind="if: totalHitsFormatted()"><span data-bind="text: totalHitsFormatted"></span></div>
                     <div class="pageviews-graph" data-bind="if: state.pageViewsSeries(), sparkline: state.pageViewsSeries"></div>
                 </a>
-                <div class="trail__meta">
-                    <span data-bind="text: humanDate"></span>
-                </div>
                 <a class="headline" target="article" data-bind="
                     click: startMetaEdit,
                     attr: {href: props.id()},
