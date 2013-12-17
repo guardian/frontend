@@ -2,5 +2,7 @@
 
 @identityMain(metaData, conf.Switches.all) {
 } {
-    <iframe src="@idUrlBuilder.buildUrl(s"/form/$formId")" class="js-formstack-iframe formstack-iframe u-h"></iframe>
+    <div class="identity-wrapper">
+        <iframe src="@idUrlBuilder.buildUrl(s"/form/$formId")" class="js-formstack-iframe formstack-iframe u-h"></iframe>
+    </div>
 }
