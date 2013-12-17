@@ -1,7 +1,7 @@
-@(trail: model.Trail, index: Int, containerIndex: Int)(implicit request: RequestHeader)
+@(trail: model.Trail, index: Int, containerIndex: Int, element: String = "li")(implicit request: RequestHeader)
 
 @defining((VisualTone(trail), containerIndex == 0, containerIndex == 0 && index < 3)) { case (tone, isFirstContainer, inlineImages) =>
-    <li class="item item--has-@{if(trail.trailPicture(5,3).isEmpty){"no-"}}image tone-@tone @if(isFirstContainer){ item--force-image-upgrade}" data-link-name="trail | @{index + 1}"
+    <@element class="item item--has-@{if(trail.trailPicture(5,3).isEmpty){"no-"}}image tone-@tone @if(isFirstContainer){ item--force-image-upgrade}" data-link-name="trail | @{index + 1}"
         @trail.discussionId.map{ id => data-discussion-id="@id" }
         data-discussion-closed="@trail.isClosedForComments">
         <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border">
@@ -42,5 +42,5 @@
                 <span class="timestamp__text"><span class="u-h">Published: </span>@Format(trail.webPublicationDate, "d MMM y")</span>
             </time>
         </div>
-    </li>
+    </@element>
 }
