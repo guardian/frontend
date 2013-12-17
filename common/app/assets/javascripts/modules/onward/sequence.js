@@ -1,20 +1,26 @@
 define([
     'bean',
+
     'utils/ajax',
     'utils/mediator',
-    'lodash/collections/filter',
     'utils/storage',
+    'utils/config',
+
+    'lodash/collections/filter',
+
     'modules/onward/history'
 ], function(
     bean,
     ajax,
     mediator,
-    _filter,
     storage,
+    config,
+    _filter,
     History
     ){
 
     var context,
+        currentPageId,
         store = storage.session,
         prefixes = {
             contextName: 'gu.context.name',
@@ -54,8 +60,15 @@ define([
             return i.id;
         });
         return _filter(sequence, function(item) {
-            return history.indexOf(item.url) < 0;
+            return history.indexOf(item.url) < 0 && item.url !== currentPageId;
         });
+    }
+
+    function getDefaultSequence() {
+        var section = ('page' in config && config.page.section !== '') ? '/' + config.page.section : '';
+        return {
+            path: 'most-read' + section
+        };
     }
 
     function loadSequence(context) {
@@ -85,13 +98,18 @@ define([
         });
     }
 
-    function init() {
+    function init(id) {
         var context = getContext();
+        currentPageId = id;
+
         if(context.path !== null) {
             loadSequence(context);
+        } else if(getSequence() === null) {
+            loadSequence(getDefaultSequence());
         } else {
             mediator.emit('modules:sequence:loaded', getSequence());
         }
+
         bindListeners();
     }
 

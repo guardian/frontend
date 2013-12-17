@@ -53,10 +53,12 @@ define([
         var startTime = new Date().getTime(),
             $trackedAdSlots = common.$g('.ad-slot'),
             firstRun = true;
-        
+
         // a timer to submit the data to diagnostics every nth second
         if (config.switches.liveStats) {
+        
             var beaconInterval = setInterval(function() {
+
                 // if there's nothing to report, don't generate the request
                 if (Object.keys(adDwellTimes).length === 0) {
                     return false;
@@ -120,12 +122,11 @@ define([
             supportsFixed  = detect.hasCSSSupport('position', 'fixed', true);
 
         this.id = 'AlphaComm';
-        this.expiry = '2013-12-20';
+        this.expiry = '2013-12-24';
         this.audience = 0.1;
         this.audienceOffset = 0;
         this.description = 'Test new advert formats for alpha release';
         this.canRun = function(config) {
-            _config = config;
             if(config.page.contentType === 'Article') {
                 return true;
             } else {
@@ -135,7 +136,7 @@ define([
         this.variants = [
             {
                 id: 'Inline', //Article A
-                test: function(context, isBoth) {
+                test: function(context, config, isBoth) {
                     variantName = 'Inline';
                     guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha1.com';
                     var article = document.getElementsByClassName('js-article__container')[0];
@@ -152,10 +153,11 @@ define([
                     });
 
                     bonzo(qwery('.ad-slot--bottom-banner-ad')).attr('data-inview-name', 'Bottom');
+                    bonzo(qwery('.ad-slot--top-banner-ad')).attr('data-inview-name', 'Top');
 
                     // The timer for the 'Both' variant is setup only once in the variant itself
                     if (!isBoth) {
-                        initAdDwellTracking(_config, this.id);
+                        initAdDwellTracking(config, this.id);
                     }
 
                     return true;
@@ -163,7 +165,7 @@ define([
             },
             {
                 id: 'Adhesive', //Article B
-                test: function(context, isBoth) {
+                test: function(context, config, isBoth) {
                     variantName = 'Adhesive';
                     guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha2.com';
                     var viewport = detect.getBreakpoint(),
@@ -181,8 +183,15 @@ define([
                         }
                     } else {
                         inviewName = 'MPU';
+                        
                         bonzo(qwery('.js-mpu-ad-slot .social-wrapper')).after(bonzo.create(mpuTemp)[0]);
                         bonzo(qwery('.ad-slot--mpu-banner-ad')).attr('data-inview-name', inviewName);
+                        bonzo(qwery('.ad-slot--top-banner-ad')).attr('data-inview-name', 'Top');
+                        bonzo(qwery('.js-mpu-ad-slot')).addClass('is-sticky');
+                        
+                        // Mwahahaha 
+                        bonzo(qwery('.mpu-context .open-cta')).remove();
+
                         if(!supportsSticky && supportsFixed) {
                             s = new Sticky({
                                 elCls: 'js-mpu-ad-slot',
@@ -195,7 +204,7 @@ define([
 
                     // The timer for the 'Both' variant is setup only once in the variant itself
                     if (!isBoth) {
-                        initAdDwellTracking(_config, this.id);
+                        initAdDwellTracking(config, this.id);
                     }
 
                     return true;
@@ -203,12 +212,12 @@ define([
             },
             {
                 id: 'Both',  //Article C
-                test: function() {
+                test: function(context, config) {
                     guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha3.com';
                     document.body.className += ' test-inline-adverts--on';
                     self.variants.forEach(function(variant){
                         if(variant.id === 'Inline' || variant.id === 'Adhesive') {
-                            variant.test.call(self, {}, true);
+                            variant.test.call(self, context, config, true);
                         }
                     });
 
@@ -216,16 +225,19 @@ define([
                     guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha3.com';
                     variantName = 'Both';
 
-                    initAdDwellTracking(_config, this.id);
+                    initAdDwellTracking(config, this.id);
 
                     return true;
                 }
             },
             {
                 id: 'Static',
-                test: function() {
+                test: function(context, config) {
                     variantName = 'Static';
                     guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha4.com';
+                    
+                    bonzo(qwery('.ad-slot--bottom-banner-ad')).attr('data-inview-name', 'Bottom');
+                    
                     var viewport = detect.getBreakpoint(),
                         inviewName,
                         s;
@@ -236,20 +248,22 @@ define([
                         inviewName = 'MPU';
                         bonzo(qwery('.js-mpu-ad-slot .social-wrapper')).after(bonzo.create(mpuTemp)[0]);
                         bonzo(qwery('.ad-slot--mpu-banner-ad')).attr('data-inview-name', inviewName);
+                        bonzo(qwery('.ad-slot--top-banner-ad')).attr('data-inview-name', 'Top');
                     }
                     // This needs to be last as the previous calls set their own variant hosts
-                    initAdDwellTracking(_config, this.id);
+                    initAdDwellTracking(config, this.id);
                     return true;
                 }
             },
             {
                 id: 'control', //Article D
-                test: function() {
+                test: function(context, config) {
                     variantName = 'Control';
                     guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha.com';
                     bonzo(qwery('.ad-slot--bottom-banner-ad')).attr('data-inview-name', 'Bottom');
+                    bonzo(qwery('.ad-slot--top-banner-ad')).attr('data-inview-name', 'Top');
 
-                    initAdDwellTracking(_config, this.id);
+                    initAdDwellTracking(config, this.id);
 
                     return true;
                 }

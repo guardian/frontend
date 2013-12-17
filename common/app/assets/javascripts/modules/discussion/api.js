@@ -33,12 +33,11 @@ Api.init = function(config) {
  * @param {string} endpoint
  * @param {string} method
  * @param {Object.<string.*>} data
- * @param {Boolean} anon
  * @return {Reqwest} a promise
  */
-Api.send = function(endpoint, method, data, anon) {
+Api.send = function(endpoint, method, data) {
     data = data || {};
-    if (!anon && cookies.get('GU_U')) {
+    if (cookies.get('GU_U')) {
         data.GU_U = cookies.get('GU_U');
     }
 
@@ -75,7 +74,7 @@ Api.postComment = function(discussionId, comment) {
  */
 Api.recommendComment = function(id) {
     var endpoint = '/comment/'+ id +'/recommend';
-    return Api.send(endpoint, 'post', {}, true);
+    return Api.send(endpoint, 'post');
 };
 
 /**
@@ -84,7 +83,7 @@ Api.recommendComment = function(id) {
  */
 Api.pickComment = function(id) {
     var endpoint = '/comment/'+ id +'/highlight';
-    return Api.send(endpoint, 'post', {});
+    return Api.send(endpoint, 'post');
 };
 
 /**
@@ -93,7 +92,7 @@ Api.pickComment = function(id) {
  */
 Api.unPickComment = function(id) {
     var endpoint = '/comment/'+ id +'/unhighlight';
-    return Api.send(endpoint, 'post', {});
+    return Api.send(endpoint, 'post');
 };
 
 /**

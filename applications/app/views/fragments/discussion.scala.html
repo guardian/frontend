@@ -1,5 +1,5 @@
 @(discussionClosed: Boolean, discussionId: String)(implicit request: RequestHeader)
-<div class="discussion"
+<div id="comments" class="discussion"
     data-discussion-key="@discussionId"
     data-discussion-closed="@discussionClosed">
 
@@ -11,7 +11,7 @@
     </div>
 
     <div class="discussion__comments__container u-h">
-        <h2 id="comments" class="page-sub-header tone-colour">All Comments</h2>
+        <h2 class="page-sub-header tone-colour discussion__heading">All Comments</h2>
 
         <div class="discussion__comment-box discussion__comment-box--top"></div>
         <div class="discussion__comments"></div>

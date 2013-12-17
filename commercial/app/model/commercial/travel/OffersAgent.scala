@@ -5,18 +5,14 @@ import model.commercial.{Segment, AdAgent}
 
 object OffersAgent extends AdAgent[Offer] {
 
+  override def defaultAds = MostPopularOffersAgent.currentAds
+
   def refresh() {
     AllOffersAgent.refresh()
     MostPopularOffersAgent.refresh()
   }
 
-  override def adsTargetedAt(segment: Segment, adsToChooseFrom: Seq[Offer] = AllOffersAgent.currentAds): Seq[Offer] = {
-    val matchingOffers = AllOffersAgent.adsTargetedAt(segment, adsToChooseFrom)
-    if (matchingOffers.isEmpty) {
-      MostPopularOffersAgent.currentAds
-    }
-    else matchingOffers
-  }
+  override def adsTargetedAt(segment: Segment): Seq[Offer] = AllOffersAgent.adsTargetedAt(segment)
 }
 
 object AllOffersAgent extends AdAgent[Offer] with Logging with ExecutionContexts {

@@ -20,6 +20,7 @@
 
     <div class="js-new-comments"></div>
 
+    <div class="show-more__container show-more__container--newer">
     @if(page.currentPage != 1){
         <a class="d-discussion__show-more d-discussion__show-more--newer cta"
             href="@LinkTo{/@page.id?page=@(page.currentPage - 1)}"
@@ -29,6 +30,7 @@
             Show newer comments
         </a>
     }
+    </div>
 
     <ul class="d-thread d-thread--top-level">
         @page.comments.map{ comment =>
@@ -36,6 +38,7 @@
         }
     </ul>
     
+    <div class="show-more__container show-more__container--older">
     @if(page.currentPage + 1 <= page.pages){
         <a class="d-discussion__show-more d-discussion__show-more--older cta"
             href="@LinkTo{/@page.id?page=@(page.currentPage + 1)}"
@@ -45,6 +48,7 @@
             Show older comments
         </a>
     }
+    </div>
 
     <script type="text/template" id="tmpl-comment-box">@fragments.commentBox()</script>
     <script type="text/template" id="tmpl-banned-user">@fragments.cannotComment()</script>

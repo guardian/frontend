@@ -1,9 +1,9 @@
 define([
     '$',
-    'utils/ajax',
     'bonzo',
     'qwery',
     'bean',
+    'utils/ajax',
     'modules/component',
     'modules/identity/api',
     'modules/discussion/comment-box',
@@ -11,10 +11,10 @@ define([
     'modules/discussion/api'
 ], function(
     $,
-    ajax,
     bonzo,
     qwery,
     bean,
+    ajax,
     Component,
     Id,
     CommentBox,
@@ -39,7 +39,7 @@ var Comments = function(context, mediator, options) {
     this.setOptions(options);
 
     if (this.options.commentId) {
-        this.endpoint = '/discussion/comment-redirect/'+ this.options.commentId +'.json';
+        this.endpoint = '/discussion/comment-permalink/'+ this.options.commentId +'.json';
     }
 };
 Component.define(Comments);
@@ -58,12 +58,15 @@ Comments.prototype.classes = {
     comments: 'd-thread--top-level',
     topLevelComment: 'd-comment--top-level',
     showMore: 'd-discussion__show-more',
+    showMoreNewerContainer: 'show-more__container--newer',
+    showMoreOlderContainer: 'show-more__container--older',
     showMoreNewer: 'd-discussion__show-more--newer',
     showMoreOlder: 'd-discussion__show-more--older',
     showHidden: 'd-discussion__show-hidden',
     reply: 'd-comment--response',
     showReplies: 'js-show-more-replies',
     header: 'd-discussion__header',
+    heading: 'discussion__heading',
     newComments: 'js-new-comments',
 
     comment: 'd-comment',
@@ -103,7 +106,7 @@ Comments.prototype.user = null;
 /** @override */
 Comments.prototype.prerender = function() {
     var self = this,
-        heading = qwery('#comments')[0],
+        heading = qwery(this.getClass('heading'), this.context)[0],
         commentCount = this.elem.getAttribute('data-comment-count'),
         initialShow = this.options.initialShow;
 
@@ -150,6 +153,7 @@ Comments.prototype.ready = function() {
     this.on('click', this.getClass('showReplies'), this.getMoreReplies);
     this.on('click', this.getClass('showMore'), this.loadMore);
     this.on('click', this.getClass('showHidden'), this.showHiddenComments);
+    this.mediator.on('discussion:comment:recommend:fail', this.recommendFail.bind(this));
 
     this.addMoreRepliesButtons();
     
@@ -248,9 +252,9 @@ Comments.prototype.gotoComment = function(id) {
     }
 
     return this.fetchComments({
-        comment: id
+        comment: id,
+        position: 'replaceWith'
     }).then(function(resp) {
-        this.renderComments(resp, 'replaceWith');
         window.location.replace('#comment-'+ id);
     }.bind(this));
 };
@@ -300,7 +304,7 @@ Comments.prototype.loadMore = function(e) {
  * }
  */
 Comments.prototype.fetchComments = function(options) {
-    var url = options.comment ? '/discussion/comment/'+ options.comment +'.json' :
+    var url = options.comment ? '/discussion/comment-permalink/'+ options.comment +'.json' :
                 '/discussion/'+ this.options.discussionId +'.json?'+
                 (options.page ? '&page='+ options.page : '') +
                 '&maxResponses=3';
@@ -321,12 +325,10 @@ Comments.prototype.renderComments = function(position, resp) {
     var html = bonzo.create(resp.html),
         comments = qwery(this.getClass('topLevelComment'), html);
 
-    if (!resp.hasMore) {
-        this.removeShowMoreButton();
-    }
-
-    $(this.getClass('showMoreOlder'), this.elem).replaceWith($(this.getClass('showMoreOlder'), html));
-    $(this.getClass('showMoreNewer'), this.elem).replaceWith($(this.getClass('showMoreNewer'), html));
+    $(this.getClass('showMoreNewer'), this.elem).remove();
+    $(this.getClass('showMoreOlder'), this.elem).remove();
+    $(this.getClass('showMoreNewerContainer')).append($(this.getClass('showMoreNewer'), html));
+    $(this.getClass('showMoreOlderContainer')).append($(this.getClass('showMoreOlder'), html));
 
     // Stop duplication in new comments section
     qwery(this.getClass('comment'), this.getElem('newComments')).forEach(function(comment) {
@@ -427,10 +429,6 @@ Comments.prototype.getMoreReplies = function(event) {
  */
 Comments.prototype.isReadOnly = function() {
     return this.elem.getAttribute('data-read-only') === 'true';
-};
-
-Comments.prototype.removeShowMoreButton = function() {
-    bonzo(this.getElem('showMore')).remove();
 };
 
 /**
@@ -546,6 +544,24 @@ Comments.prototype.replyToComment = function(e) {
         this.destroy();
         self.addComment(comment, false, responses);
     });
+};
+
+/**
+ * @param {string} errorMessage
+ * @param {number} commentId
+ */
+Comments.prototype.error = function(commentId, errorMessage) {
+    var errorElem = bonzo.create('<div class="d-discussion__error">'+ errorMessage +'</div>');
+    $('#comment-'+ commentId).prepend(errorElem);
+};
+
+/**
+ * @param {Object.<string.*>} comment
+ */
+Comments.prototype.recommendFail = function(comment) {
+    if (comment.errorCode === "CAN'T_RECOMMEND_SAME_COMMENT_TWICE") {
+        this.error(comment.id, 'You cannot recommend the same comment twice.');
+    }
 };
 
 return Comments;

@@ -55,7 +55,7 @@ define([
                     if (!resp || !resp.trails || resp.trails.length === 0) {
                         return;
                     }
-                    var $collection = bonzo(bonzo.create('<ul class="unstyled collection" data-tone="news"></ul>'));
+                    var $collection = bonzo(bonzo.create('<ul class="unstyled collection js-collection--show-more" data-tone="news" data-can-show-more="false"></ul>'));
                     resp.trails.forEach(function(trail, index) {
                         var $item = bonzo(bonzo.create(
                             itemTmpl(trail)

@@ -80,7 +80,7 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
     getJsonForUri(key, s"$apiRoot/discussion/$key/topcomments?pageSize=$pageSize&page=$page&orderBy=$orderBy&showSwitches=true")
   }
 
-  def commentContext(id: Int): Future[(DiscussionKey, Int)] = {
+  def commentContext(id: Int): Future[(DiscussionKey, String)] = {
     def onError(r: Response) =
       s"Discussion API: Cannot load comment context, status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
 
@@ -88,7 +88,7 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
 
     getJsonOrError(apiUrl, onError) map {
       json =>
-        (DiscussionKey((json \ "discussionKey").as[String]), (json \ "page").as[Int])
+        (DiscussionKey((json \ "discussionKey").as[String]), (json \ "page").as[Int].toString)
     }
   }
 

@@ -63,6 +63,13 @@ $metaHeight: 20px;
     ));
 }
 .container--news {
+    @include mq($to: tablet) {
+        .js-collection--show-more {
+            .item:nth-child(n+6) {
+                display: none;
+            }
+        }
+    }
     @include mq(tablet) {
         .collection {
             position: relative;
@@ -250,6 +257,11 @@ $metaHeight: 20px;
                 ));
             }
         }
+        .js-collection--show-more {
+            .item:nth-child(n+8) {
+                display: none;
+            }
+        }
     }
     @include mq(desktop, wide) {
         $collection: (width: 12, height: 10, flow-offset-x: 8, flow-offset-y: 0);
@@ -366,6 +378,11 @@ $metaHeight: 20px;
                 @include rem((
                     margin-left: $gs-gutter
                 ));
+            }
+        }
+        .js-collection--show-more {
+            .item:nth-child(n+9) {
+                display: none;
             }
         }
     }

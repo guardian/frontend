@@ -1,15 +1,19 @@
+/* global _: true, humanized_time_span: true */
 define([
     'knockout',
-    'models/common',
-    'models/humanizedTimeSpan',
-    'models/authedAjax',
+    'modules/vars',
+    'utils/as-observable-props',
+    'utils/populate-observables',
+    'modules/authed-ajax',
     'models/article',
-    'models/contentApi',
-    'models/ophanApi'
+    'modules/content-api',
+    'modules/ophan-api',
+    'js!humanized-time-span'
 ], function(
     ko,
-    common,
-    humanizedTimeSpan,
+    vars,
+    asObservableProps,
+    populateObservables,
     authedAjax,
     Article,
     contentApi,
@@ -25,19 +29,19 @@ define([
         this.groups = this.createGroups(opts.groups);
 
         // properties from the config, about this collection
-        this.configMeta   = common.util.asObservableProps([
+        this.configMeta   = asObservableProps([
             'displayName',
             'roleName']);
-        common.util.populateObservables(this.configMeta, opts);
+        populateObservables(this.configMeta, opts);
 
         // properties from the collection itself
-        this.collectionMeta = common.util.asObservableProps([
+        this.collectionMeta = asObservableProps([
             'displayName',
             'lastUpdated',
             'updatedBy',
             'updatedEmail']);
 
-        this.state  = common.util.asObservableProps([
+        this.state  = asObservableProps([
             'hasDraft',
             'loadIsPending',
             'editingConfig',
@@ -86,12 +90,12 @@ define([
 
         authedAjax.request({
             type: 'post',
-            url: common.config.apiBase + '/collection/' + this.id,
+            url: vars.CONST.apiBase + '/collection/' + this.id,
             data: JSON.stringify(goLive ? {publish: true} : {discard: true})
         })
         .then(function() {
             self.load();
-        })
+        });
 
         this.state.hasDraft(false);
     };
@@ -103,11 +107,11 @@ define([
 
         authedAjax.request({
             type: 'delete',
-            url: common.config.apiBase + '/collection/' + self.id,
+            url: vars.CONST.apiBase + '/collection/' + self.id,
             data: JSON.stringify({
                 item: item.props.id(),
-                live:   common.state.liveMode(),
-                draft: !common.state.liveMode()
+                live:   vars.state.liveMode(),
+                draft: !vars.state.liveMode()
             })
         }).then(function() {
             self.load();
@@ -119,20 +123,19 @@ define([
         opts = opts || {};
 
         return authedAjax.request({
-            url: common.config.apiBase + '/collection/' + this.id
+            url: vars.CONST.apiBase + '/collection/' + this.id
         }).then(function(resp) {
             self.response = resp;
             self.state.loadIsPending(false);
             self.state.hasDraft(_.isArray(self.response.draft));
 
-            if (opts.isRefresh && (self.state.loadIsPending() || self.response.lastUpdated === self.collectionMeta.lastUpdated())) {
-                // noop
-            } else {
+            var dontUpdate = opts.isRefresh && (self.state.loadIsPending() || self.response.lastUpdated === self.collectionMeta.lastUpdated());
+            if (!dontUpdate) {
                 self.populateLists();
             }
 
             if (!self.state.editingConfig()) {
-                common.util.populateObservables(self.collectionMeta, self.response)
+                populateObservables(self.collectionMeta, self.response);
                 self.state.timeAgo(self.getTimeAgo(self.response.lastUpdated));
             }
         });
@@ -141,7 +144,7 @@ define([
     Collection.prototype.populateLists = function() {
         if (!this.response) { return; }
 
-        if (common.state.liveMode()) {
+        if (vars.state.liveMode()) {
             this.importList(this.response.live);
         } else {
             this.importList(this.response.draft || this.response.live); // No draft yet? Base it on live.
@@ -165,7 +168,7 @@ define([
             group = _.find(self.groups, function(g){ return g.group === groupInt; }) || self.groups[0];
             group.articles.push(new Article(item, self));
         });
-    }
+    };
 
     Collection.prototype.decorate = function() {
         _.each(this.groups, function(group) {
@@ -175,7 +178,7 @@ define([
     };
 
     Collection.prototype.refresh = function() {
-        if (common.state.uiBusy || this.state.loadIsPending()) { return; }
+        if (vars.state.uiBusy || this.state.loadIsPending()) { return; }
         this.load({
             isRefresh: true
         });
@@ -188,7 +191,7 @@ define([
         this.state.loadIsPending(true);
 
         authedAjax.request({
-            url: common.config.apiBase + '/collection/' + this.id,
+            url: vars.CONST.apiBase + '/collection/' + this.id,
             type: 'post',
             data: JSON.stringify({
                 config: {
@@ -201,7 +204,7 @@ define([
     };
 
     Collection.prototype.getTimeAgo = function(date) {
-        return date ? humanizedTimeSpan(date) : '';
+        return date ? humanized_time_span(date) : '';
     };
 
     return Collection;

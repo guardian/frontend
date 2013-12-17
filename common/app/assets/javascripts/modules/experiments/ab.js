@@ -7,7 +7,9 @@ define([
     'modules/experiments/tests/aa',
     'modules/experiments/tests/mobile-facebook-autosignin',
     'modules/experiments/tests/onward-intrusive',
-    'modules/experiments/tests/alpha-comm'
+    'modules/experiments/tests/onward-highlights-panel',
+    'modules/experiments/tests/alpha-comm',
+    'modules/experiments/tests/right-most-popular'
 ], function (
     common,
     store,
@@ -16,14 +18,18 @@ define([
     Aa,
     MobileFacebookAutosignin,
     OnwardIntrusive,
-    AlphaComm
+    OnwardHighlightsPanel,
+    AlphaComm,
+    RightMostPopular
     ) {
 
     var TESTS = [
             new Aa(),
             new MobileFacebookAutosignin(),
             new OnwardIntrusive(),
-            new AlphaComm()
+            new OnwardHighlightsPanel(),
+            new AlphaComm(),
+            new RightMostPopular()
         ],
         participationsKey = 'gu.ab.participations';
 
@@ -61,6 +67,14 @@ define([
         Object.keys(participations).forEach(function (k) {
             if (typeof(config.switches['ab' + k]) === 'undefined') {
                 removeParticipation({ id: k });
+            } else {
+                var testExists = TESTS.some(function (element) {
+                    return element.id === k;
+                });
+
+                if (!testExists) {
+                    removeParticipation({ id: k });
+                }
             }
         });
     }
@@ -112,7 +126,7 @@ define([
             variantId = participations[test.id].variant;
             test.variants.some(function(variant) {
                 if (variant.id === variantId) {
-                    variant.test(context);
+                    variant.test(context, config);
                     return true;
                 }
         });

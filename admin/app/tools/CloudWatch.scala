@@ -210,4 +210,25 @@ object CloudWatch {
     )
   }.toSeq
 
+  def omnitureConfidence = new LineChart("omniture-percent-conversion", Seq("Time", "%"),
+    euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
+    .withStartTime(new DateTime().minusWeeks(2).toDate)
+    .withEndTime(new DateTime().toDate)
+    .withPeriod(900)
+    .withStatistics("Average")
+    .withNamespace("Analytics")
+    .withMetricName("omniture-percent-conversion")
+    .withDimensions(stage),
+    asyncHandler))
+
+  def ophanConfidence = new LineChart("ophan-percent-conversion", Seq("Time", "%"),
+    euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
+      .withStartTime(new DateTime().minusWeeks(2).toDate)
+      .withEndTime(new DateTime().toDate)
+      .withPeriod(900)
+      .withStatistics("Average")
+      .withNamespace("Analytics")
+      .withMetricName("ophan-percent-conversion")
+      .withDimensions(stage),
+      asyncHandler))
 }

@@ -18,6 +18,7 @@ object TrailToJson {
           largestImage.url.map(ImgSrc(_, Profile("item-{width}")))
         }
       }),
+      ("discussionId", trail.discussionId.map{ id => id }),
       ("webPublicationDate", Json.obj(
         ("timestamp", trail.webPublicationDate.getMillis),
         ("datetime",trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")),

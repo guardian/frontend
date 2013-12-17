@@ -1,4 +1,3 @@
-
 # Browser support principles
 
 We believe that our journalism should be accessible to everyone.
@@ -28,14 +27,14 @@ Bandwidth
 Interaction type 
 
 - How does the user interface adapt to be used for fingers?
-- And what about when the user is using a convential mouse?
+- And what about when the user is using a conventional mouse?
 
 HTML5 support
 
 - What is the core experience for all users?
 - And what do we enhance when we detect the user has a modern web browser with extra capabilities (Eg, web fonts, geolocation etc.) 
 
-In many ways responsive design is just usability, accessbility, and progressive enhancement rephrased. 
+In many ways responsive design is just usability, accessibility, and progressive enhancement rephrased. 
 
 ## Cutting the mustard
 

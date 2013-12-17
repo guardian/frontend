@@ -5,7 +5,7 @@
 <div class="commercial masterclasses-component">
     <div class="commercial__head">
         <h3 class="commercial__title">
-            <a href="http://theguardian.com/guardian-masterclasses">
+            <a href="%OASToken%http://theguardian.com/guardian-masterclasses">
                 <span class="u-h">Guardian Masterclasses</span>
                 <i class="i i-guardian-masterclasses-logo"></i>
             </a>
@@ -15,7 +15,7 @@
         <ul class="lineitems">
             @events.take(1).map { event =>
                 <li class="lineitem">
-                    <h4 class="lineitem__title"><a href="@event.url">@event.name</a></h4>
+                    <h4 class="lineitem__title"><a href="%OASToken%@event.url">@event.name</a></h4>
                     <p class="lineitem__meta">@event.readableDate<p>
                     <p class="lineitem__description">
                         @event.firstParagraph
