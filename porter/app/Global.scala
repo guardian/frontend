@@ -16,7 +16,7 @@ object Global extends GlobalSettings with CloudWatchApplicationMetrics {
     Jobs.schedule("FastlyCloudwatchLoadJob", "0 0/2 * * * ?") {
       FastlyCloudwatchLoadJob.run()
     }
-    Jobs.schedule("AnalyticsSanityCheckJob", "0 */15 * * * * ?") {
+    Jobs.schedule("AnalyticsSanityCheckJob", "0 0/15 * * * ?") {
       AnalyticsSanityCheckJob.run()
     }
   }
