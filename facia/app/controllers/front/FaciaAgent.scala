@@ -60,7 +60,7 @@ trait ParseConfig extends ExecutionContexts with Logging {
 
 trait ParseCollection extends ExecutionContexts with Logging {
 
-  case class CollectionItem(id: String, metaData: Option[Map[String, String]])
+  case class CollectionItem(id: String, metaData: Option[Map[String, JsValue]])
 
   def requestCollection(id: String): Future[Response] = {
     val collectionUrl = s"${Configuration.frontend.store}/${S3FrontsApi.location}/collection/$id/collection.json"
@@ -100,7 +100,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
 
             // extract the articles
             val articles: Seq[CollectionItem] = (bodyJson \ "live").as[Seq[JsObject]] map { trail =>
-              CollectionItem((trail \ "id").as[String], (trail \ "meta").asOpt[Map[String, String]])
+              CollectionItem((trail \ "id").as[String], (trail \ "meta").asOpt[Map[String, JsValue]])
             }
 
             getArticles(articles, edition)
@@ -121,17 +121,25 @@ trait ParseCollection extends ExecutionContexts with Logging {
     }
   }
 
-  def getArticles(collectionItems: Seq[CollectionItem], edition: Edition): Future[List[Content]] = {
+  def getArticles(collectionItems: Seq[CollectionItem], edition: Edition): Future[List[Content]]
+    = getArticles(collectionItems, edition, hasParent=false)
+
+  //hasParent is here to break out of the recursive loop and make sure we only go one deep
+  def getArticles(collectionItems: Seq[CollectionItem], edition: Edition, hasParent: Boolean): Future[List[Content]] = {
     if (collectionItems.isEmpty) {
       Future.successful(Nil)
     }
     else {
       val results = collectionItems.foldLeft(Future[List[Content]](Nil)){(foldList, collectionItem) =>
         val id = collectionItem.id
+        lazy val sublinks: List[CollectionItem] = collectionItem.metaData.map(metaMap => metaMap.get("sublinks").flatMap(_.asOpt[List[JsValue]]).getOrElse(Nil).map(json =>
+          CollectionItem((json \ "id").as[String], (json \ "meta").asOpt[Map[String, JsValue]])
+        )).getOrElse(Nil)
+        lazy val sublinksAsContent: Future[List[Content]] = if (!hasParent) getArticles(sublinks, edition, hasParent=true) else Future.successful(Nil)
         val response = ContentApi.item(id, edition).showFields("all").response
         response.onFailure{case t: Throwable => log.warn("%s: %s".format(id, t.toString))}
-        for {l <- foldList; itemResponse <- response} yield {
-          itemResponse.content.map(Content(_, collectionItem.metaData)).map(_ +: l).getOrElse(l)
+        for {l <- foldList; itemResponse <- response; sublinks <- sublinksAsContent} yield {
+          itemResponse.content.map(Content(_, sublinks, collectionItem.metaData)).map(_ +: l).getOrElse(l)
         }
       }
       val sorted = results map { _.sortBy(t => collectionItems.indexWhere(_.id == t.id))}
