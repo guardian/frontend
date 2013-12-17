@@ -44,7 +44,7 @@ object Switches extends Collections {
 
   val RelatedContentSwitch = Switch("Performance Switches", "related-content",
     "If this switch is turned on then related content will show. Turn off to help handle exceptional load.",
-    safeState = Off)
+    safeState = On)
 
   val CssFromStorageSwitch = Switch("Performance Switches", "css-from-storage",
     "If this switch is on CSS will be cached in users localStorage and read from there on subsequent requests.",
@@ -212,7 +212,7 @@ object Switches extends Collections {
     "If this is switched on an AA test runs to prove the assignment of users in to segments is working reliably.",
     safeState = Off)
 
-  val ABAlphaComm = Switch("A/B Tests - second tranche", "ab-alpha-comm",
+  val ABAlphaComm = Switch("A/B Tests", "ab-alpha-comm",
     "If this is switched on an AB test runs to trial new advertising user experiences and commercial models",
     safeState = Off)
 

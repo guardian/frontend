@@ -17,7 +17,7 @@
 
 .commercial__title {
     color: $c-brandBlue;
-    @include fs-header(2);
+    @include fs-headline(2);
     margin: 0;
     padding: $baseline*2 $baseline;
     float: left;

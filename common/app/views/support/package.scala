@@ -185,7 +185,7 @@ object BlockNumberCleaner extends HtmlCleaner {
   }
 }
 
-case class VideoEmbedCleaner(contentVideos: List[VideoElement]) extends HtmlCleaner {
+case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
     document.getElementsByClass("element-video").foreach { element: Element =>
@@ -219,11 +219,11 @@ case class VideoEmbedCleaner(contentVideos: List[VideoElement]) extends HtmlClea
   }
 
   def findVideoFromId(id:String): Option[VideoAsset] = {
-    contentVideos.filter(_.id == id).flatMap(_.videoAssets).filter(_.mimeType == Some("video/mp4")).headOption
+    contentVideos.filter(_.id == id).flatMap(_.videoAssets).find(_.mimeType == Some("video/mp4"))
   }
 }
 
-case class PictureCleaner(contentImages: List[ImageElement]) extends HtmlCleaner with implicits.Numbers {
+case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner with implicits.Numbers {
 
   def clean(body: Document): Document = {
     body.getElementsByTag("figure").foreach { fig =>

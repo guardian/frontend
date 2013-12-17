@@ -67,6 +67,14 @@ define([
         Object.keys(participations).forEach(function (k) {
             if (typeof(config.switches['ab' + k]) === 'undefined') {
                 removeParticipation({ id: k });
+            } else {
+                var testExists = TESTS.some(function (element) {
+                    return element.id === k;
+                });
+
+                if (!testExists) {
+                    removeParticipation({ id: k });
+                }
             }
         });
     }

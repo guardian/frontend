@@ -8,7 +8,8 @@ define([
     'modules/analytics/errors',
     'utils/cookies',
     'omniture',
-    'modules/analytics/mvt-cookie'
+    'modules/analytics/mvt-cookie',
+    'modules/analytics/beacon'
 ], function(
     common,
     detect,
@@ -18,7 +19,8 @@ define([
     Errors,
     Cookies,
     s,
-    mvtCookie
+    mvtCookie,
+    Beacon
     ) {
 
     // https://developer.omniture.com/en_US/content_page/sitecatalyst-tagging/c-tagging-overview
@@ -257,6 +259,12 @@ define([
         common.mediator.on('module:autoupdate:loaded', function() {
             that.populatePageProperties();
             that.logUpdate();
+        });
+
+        common.mediator.on('module:analytics:omniture:pageview:sent', function(){
+            // independently log this page view
+            // used for checking we have not broken analytics
+            new Beacon("/count/pva.gif").fire();
         });
 
     }

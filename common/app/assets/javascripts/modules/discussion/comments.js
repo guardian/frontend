@@ -1,9 +1,9 @@
 define([
     '$',
-    'utils/ajax',
     'bonzo',
     'qwery',
     'bean',
+    'utils/ajax',
     'modules/component',
     'modules/identity/api',
     'modules/discussion/comment-box',
@@ -11,10 +11,10 @@ define([
     'modules/discussion/api'
 ], function(
     $,
-    ajax,
     bonzo,
     qwery,
     bean,
+    ajax,
     Component,
     Id,
     CommentBox,
@@ -64,6 +64,7 @@ Comments.prototype.classes = {
     reply: 'd-comment--response',
     showReplies: 'js-show-more-replies',
     header: 'd-discussion__header',
+    heading: 'discussion__heading',
     newComments: 'js-new-comments',
 
     comment: 'd-comment',
@@ -103,7 +104,7 @@ Comments.prototype.user = null;
 /** @override */
 Comments.prototype.prerender = function() {
     var self = this,
-        heading = qwery('#comments')[0],
+        heading = qwery(this.getClass('heading'), this.context)[0],
         commentCount = this.elem.getAttribute('data-comment-count'),
         initialShow = this.options.initialShow;
 
@@ -150,6 +151,7 @@ Comments.prototype.ready = function() {
     this.on('click', this.getClass('showReplies'), this.getMoreReplies);
     this.on('click', this.getClass('showMore'), this.loadMore);
     this.on('click', this.getClass('showHidden'), this.showHiddenComments);
+    this.mediator.on('discussion:comment:recommend:fail', this.recommendFail.bind(this));
 
     this.addMoreRepliesButtons();
     
@@ -248,9 +250,9 @@ Comments.prototype.gotoComment = function(id) {
     }
 
     return this.fetchComments({
-        comment: id
+        comment: id,
+        position: 'replaceWith'
     }).then(function(resp) {
-        this.renderComments(resp, 'replaceWith');
         window.location.replace('#comment-'+ id);
     }.bind(this));
 };
@@ -300,7 +302,7 @@ Comments.prototype.loadMore = function(e) {
  * }
  */
 Comments.prototype.fetchComments = function(options) {
-    var url = options.comment ? '/discussion/comment/'+ options.comment +'.json' :
+    var url = options.comment ? '/discussion/comment-redirect/'+ options.comment +'.json' :
                 '/discussion/'+ this.options.discussionId +'.json?'+
                 (options.page ? '&page='+ options.page : '') +
                 '&maxResponses=3';
@@ -546,6 +548,24 @@ Comments.prototype.replyToComment = function(e) {
         this.destroy();
         self.addComment(comment, false, responses);
     });
+};
+
+/**
+ * @param {string} errorMessage
+ * @param {number} commentId
+ */
+Comments.prototype.error = function(commentId, errorMessage) {
+    var errorElem = bonzo.create('<div class="d-discussion__error">'+ errorMessage +'</div>');
+    $('#comment-'+ commentId).prepend(errorElem);
+};
+
+/**
+ * @param {Object.<string.*>} comment
+ */
+Comments.prototype.recommendFail = function(comment) {
+    if (comment.errorCode === "CAN'T_RECOMMEND_SAME_COMMENT_TWICE") {
+        this.error(comment.id, 'You cannot recommend the same comment twice.');
+    }
 };
 
 return Comments;
