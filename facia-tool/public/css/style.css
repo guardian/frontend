@@ -15,6 +15,7 @@ body {
 }
 
 a {
+    text-decoration: none;
     cursor: pointer;
 }
 
@@ -122,7 +123,7 @@ input[type=text] {
 }
 
 .sublinks  .droppable {
-    padding: 0 0 27px 0;
+    padding: 0 0 25px 0;
 }
 
 .droppable.underDrag {
@@ -235,6 +236,15 @@ input[type=text] {
     opacity: 0.2;
 }
 
+.trail-count {
+    position: absolute;
+    top: 16px;
+    left: 7px;
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: bold;
+}
+
 .trail img {
     float: left;
     width: 75px;
@@ -244,18 +254,21 @@ input[type=text] {
     border-radius: 3px;
 }
 
-.sublinks .trail img {
-    opacity: 0.6;
+.content {
+    margin: -1px 100px 0 80px;
+    line-height: 0;
+}
+
+.content .icon-pencil {
+    cursor: pointer;
+    opacity: 0.5;
 }
 
 .headline {
-    display: block;
-    text-decoration: none;
     font-size: 15px;
     line-height: 17px;
     color: #000000;
     cursor: move;
-    margin: -1px 100px 0 80px;
 }
 
 .headline:hover {
@@ -381,7 +394,6 @@ button {
 .trail_stats {
     position: absolute;
     right: 4px;
-    width: 130px;
     height: 30px;
     font-size: 9px;
     line-height: 12px;
@@ -512,12 +524,12 @@ button {
 
 .tool {
     display: inline-block;
-    padding: 1px 10px;
+    padding: 0 10px;
     background: #CCCCCC;
     font-size: 12px;
     line-height: 20px;
     color: #FFFFFF;
-    margin-top: 4px;
+    margin-top: 5px;
     border-radius: 3px;
     border: 0;
     cursor: pointer;
@@ -594,11 +606,25 @@ button {
 
 .sublinks-message {
     position: absolute;
-    bottom: 4px;
+    bottom: 3px;
     z-index: 2;
-    left: 4px;
-    font-size: 12px;
+    left: 7px;
+    font-size: 11px;
+    color: #666666;
+}
+
+.sublinks-count {
+    width: 50px;
+    margin: 4px 0 -2px 0;
+    font-size: 10px;
+    line-height: 12px;
     color: #999999;
+    cursor: pointer;
+}
+
+.sublinks-count strong {
+    font-size: 12px;
+    font-weight: bold;
 }
 
 .trail .tools {
@@ -616,7 +642,7 @@ button {
     .finder {
         width: 40%;
     }
-    .finder .trail .headline {
+    .finder .trail .content {
         margin: 0 0 0 80px;
     }
     .finder .trail .trail_stats,
@@ -655,7 +681,7 @@ button {
 }
 
 @media (max-width: 525px) {
-    .trail .headline {
+    .trail .content {
         margin: 0 0 0 80px;
     }
     .trail .trail_stats {
@@ -664,7 +690,7 @@ button {
 }
 
 @media (max-width: 350px) {
-    .trail .headline {
+    .trail .content {
         margin: 5px 0 0 0;
     }
     .trail img,

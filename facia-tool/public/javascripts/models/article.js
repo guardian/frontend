@@ -78,20 +78,22 @@ define([
             this.populate(opts);
 
             // Populate sublinks
-            this.meta.sublinks = new Group({
-                items: _.map((opts.meta || {}).sublinks, function(item) {
-                    return new Article(_.extend(item, {
-                        parent: self,
-                        parentType: 'Article'
-                    }));
-                }),
-                parent: self,
-                parentType: 'Article',
-                omitItem: self.save.bind(self)
-            });
+            if (this.parentType !== 'Article') {
+                this.meta.sublinks = new Group({
+                    items: _.map((opts.meta || {}).sublinks, function(item) {
+                        return new Article(_.extend(item, {
+                            parent: self,
+                            parentType: 'Article'
+                        }));
+                    }),
+                    parent: self,
+                    parentType: 'Article',
+                    omitItem: self.save.bind(self)
+                });
 
-            contentApi.decorateItems(self.meta.sublinks.items());
-            ophanApi.decorateItems(self.meta.sublinks.items());
+                contentApi.decorateItems(self.meta.sublinks.items());
+                ophanApi.decorateItems(self.meta.sublinks.items());
+            }
         }
 
         Article.prototype.populate = function(opts) {
@@ -150,7 +152,7 @@ define([
                 // serialise sublinks
                 .map(function(p) {
                     if (p[0] === 'sublinks') {
-                        // but only on first level Articles, i.e. those whose parent is a Collection
+                        // but only on first level Articles, i.e. those whose parent isn't an Article
                         return [p[0], self.parentType === 'Article' ? [] : _.map(p[1].items(), function(sublink) {
                             return {
                                 id:   sublink.props.id(),

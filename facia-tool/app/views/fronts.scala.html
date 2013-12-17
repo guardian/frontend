@@ -220,10 +220,24 @@
                     <div class="pageviews" data-bind="if: totalHitsFormatted()"><span data-bind="text: totalHitsFormatted"></span></div>
                     <div class="pageviews-graph" data-bind="if: state.pageViewsSeries(), sparkline: state.pageViewsSeries"></div>
                 </a>
-                <a class="headline" target="article" data-bind="
-                    click: startMetaEdit,
-                    attr: {href: props.id()},
-                    text: meta.headline() || fields.headline()"></a>
+
+                <div class="content" data-bind="click: startMetaEdit,">
+                    <a class="headline" target="article" data-bind="
+                        attr: {href: props.id()},
+                        text: meta.headline() || fields.headline()"></a>
+
+                    <!-- ko if: meta.headline -->
+                        <i class="icon-pencil"></i>
+                    <!-- /ko -->
+
+                    <!-- ko if: meta.sublinks && meta.sublinks.items().length -->
+                        <div class="sublinks-count">
+                            <strong data-bind="text: meta.sublinks.items().length"></strong>
+                            sublink<span data-bind="if: meta.sublinks.items().length > 1">s</span>
+                        </div>
+                    <!-- /ko -->
+
+                </div>                   
             </div>
         </div>
         
