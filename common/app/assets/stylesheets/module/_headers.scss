@@ -8,7 +8,7 @@
 
     h1 {
         @include fs-header(3);
-        height: $gs-column-height;
+        height: $gs-row-height;
         margin-bottom: 0;
         line-height: 1;
         font-weight: bolder;
@@ -42,7 +42,7 @@
 
 .section-head {
     @include fs-header(4);
-    height: $gs-column-height + $baseline*2;
+    height: $gs-row-height + $baseline*2;
     line-height: 1;
     font-weight: bolder;
     margin: 0;
