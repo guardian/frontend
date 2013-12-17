@@ -13,7 +13,7 @@ GET     /discussion/comment-counts.json                     controllers.Discussi
 GET     /discussion/top/*discussionKey.json                 controllers.DiscussionApp.topCommentsPageJson(discussionKey: discussion.model.DiscussionKey)
 GET     /discussion/top/*discussionKey                      controllers.DiscussionApp.topCommentsPage(discussionKey: discussion.model.DiscussionKey)
 
-GET    	/discussion/comment/*id.json                        controllers.DiscussionApp.commentJson(id: String)
+GET     /discussion/comment/*id.json                        controllers.DiscussionApp.commentJson(id: String)
 GET     /discussion/comment/*id                             controllers.DiscussionApp.comment(id: String)
 
 GET     /discussion/comment-permalink/*commentId.json       controllers.DiscussionApp.commentPermalinkJson(commentId: Int)
