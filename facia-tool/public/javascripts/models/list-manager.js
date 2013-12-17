@@ -48,6 +48,7 @@ define([
                 }),
 
                 clipboard: new Group({
+                    parentType: 'Clipboard',
                     reflow: updateLayout,
                     keepCopy:  true
                 }),

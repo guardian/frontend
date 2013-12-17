@@ -11,17 +11,17 @@ define([
 
         this.items = ko.observableArray(opts.items);
 
-        this.underDrag =  ko.observable();
+        this.underDrag  = ko.observable();
+        this.group      = opts.group;
+        this.name       = opts.name;
 
-        this.group =      opts.group;
-        this.name =       opts.name;
-        this.collection = opts.collection;
-        this.article =    opts.article;
-        this.keepCopy =   opts.keepCopy;
+        this.parent     = opts.parent;
+        this.parentType = opts.parentType;
 
-        this.reflow = opts.reflow  || function() {};
+        this.keepCopy   = opts.keepCopy;
+        this.reflow     = opts.reflow  || function() {};
 
-        this.dropItem = function(item) {
+        this.dropItem   = function(item) {
             self.items.remove(item);
             self.reflow();
             if (_.isFunction(opts.dropItem)) { opts.dropItem(item); }

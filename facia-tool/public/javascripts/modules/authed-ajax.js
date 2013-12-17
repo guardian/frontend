@@ -14,6 +14,8 @@ define(['modules/vars'], function(vars) {
     }
 
     function updateCollection(method, collection, data) {
+        collection.state.loadIsPending(true);
+
         return request({
             url: vars.CONST.apiBase + '/collection/' + collection.id,
             type: method,

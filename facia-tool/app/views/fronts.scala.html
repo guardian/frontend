@@ -200,7 +200,7 @@
                         visible: meta.headline">Revert headline</a>
                 </div>
 
-                <div data-bind="if: !parentArticle">
+                <div data-bind="if: parentType === 'Collection' || parentType === 'Clipboard'">
                     <div class="sublinks" data-bind="with: meta.sublinks">
                         <div class="droppable" data-bind="
                             makeDropabble: true,

@@ -59,7 +59,8 @@ define([
             return new Group({
                 group: index,
                 name: name,
-                collection: self,
+                parent: self,
+                parentType: 'Collection',
                 dropItem: self.drop.bind(self)
             });
         }).reverse(); // because groupNames is assumed to be in ascending order of importance, yet should render in descending order
@@ -164,7 +165,10 @@ define([
         });
 
         _.each(source, function(item) {
-            var article = new Article(_.extend(item, {collection: self})),
+            var article = new Article(_.extend(item, {
+                    parent: self,
+                    parentType: 'Collection'
+                })),
                 group;
 
             if(editingMetas[item.id]) {

@@ -27,9 +27,8 @@ define([
 
             opts = opts || {};
 
-            this.parentArticle = opts.parentArticle;
-
-            this.collection = opts.collection;
+            this.parent = opts.parent;
+            this.parentType = opts.parentType;
 
             this.uneditable = opts.uneditable;
 
@@ -81,10 +80,13 @@ define([
             // Populate sublinks
             this.meta.sublinks = new Group({
                 items: _.map((opts.meta || {}).sublinks, function(item) {
-                    return new Article(_.extend(item, {parentArticle: self}));
+                    return new Article(_.extend(item, {
+                        parent: self,
+                        parentType: 'Article'
+                    }));
                 }),
-                collection: self.collection,
-                article: self,
+                parent: self,
+                parentType: 'Article',
                 dropItem: self.save.bind(self)
             });
 
@@ -172,29 +174,30 @@ define([
         Article.prototype.save = function() {
             var self = this;
 
-            if (this.parentArticle) {
-                this.parentArticle.save();
+            if (!this.parent) {
+                return;
+            }
+
+            if (this.parentType === 'Article') {
+                this.parent.save();
                 this.stopMetaEdit();
                 return;
             }
 
-            if (!this.collection) {
-                return;
+            if (this.parentType === 'Collection') {
+                authedAjax.updateCollection(
+                    'post',
+                    this.parent,
+                    {
+                        item:     self.props.id(),
+                        position: self.props.id(),
+                        itemMeta: self.getMeta(),
+                        live:     vars.state.liveMode(),
+                        draft:   !vars.state.liveMode()
+                    }
+                );
+                this.parent.state.loadIsPending(true);
             }
-
-            authedAjax.updateCollection(
-                'post',
-                this.collection,
-                {
-                    item:     self.props.id(),
-                    position: self.props.id(),
-                    itemMeta: self.getMeta(),
-                    live:     vars.state.liveMode(),
-                    draft:   !vars.state.liveMode()
-                }
-            );
-
-            this.collection.state.loadIsPending(true);
         };
 
         return Article;

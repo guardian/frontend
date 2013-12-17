@@ -97,8 +97,8 @@ define([
                         if (targetItem) {
                             isAfter = true;
                         // or if there arent't any other items, after those in the first preceding group that contains items.
-                        } else if (targetList.collection) {
-                            groups = targetList.collection.groups;
+                        } else if (targetList.parentType === 'Collection') {
+                            groups = targetList.parent.groups;
                             for (var i = groups.indexOf(targetList) - 1; i >= 0; i -= 1) {
                                 targetItem = _.last(groups[i].items());
                                 if (targetItem) {
@@ -124,10 +124,6 @@ define([
                         return;
                     }
 
-                    if (targetList.collection) {
-                        targetList.collection.state.loadIsPending(true);
-                    }
-
                     // sourceItem var doesn't get repopulated when the drag was from an arbitrary link elsewhere
                     // so garbage collect it - if it's a leftover from a previous drag.
                     if(sourceItem && sourceItem.props.id() !== id) {
@@ -143,8 +139,8 @@ define([
                     article = new Article({
                         id: id,
                         meta: sourceItem ? sourceItem.getMeta() : undefined,
-                        parentArticle: targetList.article,
-                        collection: targetList.collection
+                        parent: targetList.parent,
+                        parentType: targetList.parentType
                     });
 
                     targetList.items.splice(insertAt, 0, article);
@@ -152,9 +148,6 @@ define([
                     contentApi.validateItem(article)
                     .fail(function() {
                         removeMatchingItems(targetList, id);
-                        if (targetList.collection) {
-                            targetList.collection.state.loadIsPending(false);
-                        }
                         alertBadContent();
                     })
                     .done(function() {
@@ -166,21 +159,26 @@ define([
                             targetList.reflow();
                         }
 
-                        if (targetList.article) {
-                            targetList.article.saveMetaEdit();
+                        if (!targetList.parent) { // no need for persistence
                             return;
                         }
 
-                        if (!targetList.collection) { // this is a non-collection list, e.g. a clipboard, so no need for persistence
+                        if (targetList.parentType === 'Article') {
+                            targetList.parent.saveMetaEdit();
+                            return;
+                        }
+                        
+                        if (targetList.parentType !== 'Collection') {
                             return;
                         }
 
-                        itemMeta = sourceItem ? sourceItem.getMeta() : {};
+                        itemMeta = sourceItem && _.isFunction(sourceItem.getMeta) ? sourceItem.getMeta() : undefined;
+                        itemMeta = itemMeta || {};
                         itemMeta.group = targetList.group + '';
 
                         authedAjax.updateCollection(
                             'post',
-                            targetList.collection,
+                            targetList.parent,
                             {
                                 item:     id,
                                 position: position,
@@ -191,24 +189,19 @@ define([
                             }
                         );
 
-                        if (!sourceList || !sourceList.collection || sourceList.keepCopy) {
+                        if (!sourceList || sourceList.keepCopy || sourceList.parentType !== 'Collection') {
                             return;
                         }
 
-                        if (sourceList.collection.id === targetList.collection.id) {
+                        if (sourceList.parent.id === targetList.parent.id) {
                             return;
                         }
 
-                        sourceList.collection.state.loadIsPending(true);
-
-                        // just for UI
-                        sourceList.items.remove(function(article) {
-                            return article === sourceItem;
-                        });
+                        sourceList.dropItem(sourceItem);
 
                         authedAjax.updateCollection(
                             'delete',
-                            sourceList.collection,
+                            sourceList.parent,
                             {
                                 item:   id,
                                 live:   vars.state.liveMode(),

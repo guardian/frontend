@@ -109,7 +109,7 @@ input[type=text] {
 }
 
 .collections .title {
-    padding-left: 3px;
+    padding-left: 4px;
 }
 
 .droppable {
@@ -537,7 +537,7 @@ button {
 }
 
 .list-header .tools {
-    margin: 0 0 2px 3px;
+    margin: 0 0 2px 4px;
 }
 
 .tools .tool.draft-warning {
