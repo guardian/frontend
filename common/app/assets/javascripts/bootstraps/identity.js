@@ -1,20 +1,38 @@
 define([
-    "utils/mediator",
+    "$",
     "modules/identity/forms",
+    "modules/identity/formstack",
+    "modules/identity/formstack-iframe",
     "modules/identity/password-strength",
     "modules/identity/api",
-    "modules/adverts/userAdTargeting"
+    "modules/adverts/userAdTargeting",
+    "utils/mediator"
 ], function(
-    mediator,
+    $,
     Identity,
+    Formstack,
+    FormstackIframe,
     PasswordStrength,
     Id,
-    UserAdTargeting
+    UserAdTargeting,
+    mediator
 ) {
 
     var modules = {
         idInit: function (config) {
             Id.init(config);
+        },
+        initFormstack: function () {
+            mediator.on('page:identity:ready', function(config, context) {
+                var attr = 'data-formstack-id';
+                $('[' + attr + ']').each(function(el) {
+                    var id = el.getAttribute(attr);
+                    new Formstack(el, id, context, config).init();
+                });
+                $('.js-formstack-iframe').each(function(el) {
+                    new FormstackIframe(el, context, config).init();
+                });
+            });
         },
         forgottenEmail: function () {
             mediator.on('page:identity:ready', function(config, context) {
@@ -28,9 +46,8 @@ define([
         },
         passwordStrength: function () {
             mediator.on('page:identity:ready', function(config, context) {
-                var passwords = context.querySelectorAll('.js-password-strength');
-                Array.prototype.forEach.call(passwords, function (i) {
-                    new PasswordStrength(i, context, config).init();
+                $('.js-password-strength').each(function(el) {
+                    new PasswordStrength(el, context, config).init();
                 });
             });
         },
@@ -50,6 +67,7 @@ define([
         if (!this.initialised) {
             this.initialised = true;
             modules.idInit(config);
+            modules.initFormstack();
             modules.forgottenEmail();
             modules.forgottenPassword();
             modules.passwordStrength();

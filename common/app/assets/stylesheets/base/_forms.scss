@@ -121,6 +121,10 @@
     resize: vertical;
 }
 
+.textarea--no-resize {
+    resize: none;
+}
+
 .submit-input {
     background: $c-newsDefault;
     border: 0 none;

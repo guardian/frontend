@@ -5,7 +5,7 @@ define('bootstraps/app', [
     'domReady',
     'utils/ajax',
     'utils/detect',
-    
+
     'modules/analytics/errors',
     'modules/analytics/livestats',
     'modules/ui/fonts',
@@ -18,15 +18,14 @@ define('bootstraps/app', [
     'bootstraps/tag',
     'bootstraps/section',
     'bootstraps/imagecontent',
-    
+
     'bootstraps/facia',
     'bootstraps/football',
     'bootstraps/article',
     'bootstraps/video',
     'bootstraps/gallery',
     'bootstraps/interactive',
-    'bootstraps/identity',
-    'bootstraps/form'
+    'bootstraps/identity'
 ], function (
     common,
     qwery,
@@ -52,8 +51,7 @@ define('bootstraps/app', [
     Video,
     Gallery,
     Interactive,
-    Identity,
-    Form
+    Identity
 ) {
 
     var modules = {
@@ -164,10 +162,6 @@ define('bootstraps/app', [
 
                 if (config.page.contentType === 'ImageContent') {
                     ImageContent.init(config, context);
-                }
-
-                if (config.page.contentType === 'Form') {
-                    Form.init(config, context);
                 }
 
                 //Kick it all off
