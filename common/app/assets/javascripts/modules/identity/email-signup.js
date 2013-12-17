@@ -6,13 +6,15 @@ define([
 ], function(bean, bonzo, ajax, IdApi) {
 	return {
 		
-		init: function (context) {
+		init: function (context, variant) {
+
+			var container = context.querySelector('.email-signup'+'___'+variant);
 			
 			this.DOM = {
-				container: context.querySelector('.email-signup'),
-				button: context.querySelector('.email-signup__link'),
-				loader: context.querySelector('.is-updating'),
-				title: context.querySelector('.email-signup__title')
+				container: container,
+				button: container.querySelector('.email-signup__link'),
+				loader: container.querySelector('.is-updating'),
+				title: container.querySelector('.email-signup__title')
 			};
 
 			for (var key in this.DOM) {

@@ -23,9 +23,15 @@ define([
                  }
              },
              {
-                 id: 'email-signup',
+                 id: 'email-signup-inline',
                  test: function() {
-                    EmailSignup.init(document.getElementById('preload-1'));
+                    EmailSignup.init(document.getElementById('preload-1'), 'inline');
+                 }
+             },
+             {
+                 id: 'email-signup-left',
+                 test: function() {
+                    EmailSignup.init(document.getElementById('preload-1'), 'left');
                  }
              }
          ];
