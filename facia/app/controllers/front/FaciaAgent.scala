@@ -130,7 +130,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
       Future.successful(Nil)
     }
     else {
-      val results = collectionItems.foldLeft(Future[List[Content]](Nil)){(foldList, collectionItem) =>
+      val results = collectionItems.foldLeft(Future[List[Content]](Nil)){(foldListFuture, collectionItem) =>
         val id = collectionItem.id
         lazy val sublinks: List[CollectionItem] = collectionItem.metaData.map(metaMap => metaMap.get("sublinks").flatMap(_.asOpt[List[JsValue]]).getOrElse(Nil).map(json =>
           CollectionItem((json \ "id").as[String], (json \ "meta").asOpt[Map[String, JsValue]])
@@ -138,8 +138,12 @@ trait ParseCollection extends ExecutionContexts with Logging {
         lazy val sublinksAsContent: Future[List[Content]] = if (!hasParent) getArticles(sublinks, edition, hasParent=true) else Future.successful(Nil)
         val response = ContentApi.item(id, edition).showFields("all").response
         response.onFailure{case t: Throwable => log.warn("%s: %s".format(id, t.toString))}
-        for {l <- foldList; itemResponse <- response; sublinks <- sublinksAsContent} yield {
-          itemResponse.content.map(Content(_, sublinks, collectionItem.metaData)).map(_ +: l).getOrElse(l)
+        for {
+          contentList <- foldListFuture
+          itemResponse <- response
+          sublinks <- sublinksAsContent
+        } yield {
+          itemResponse.content.map(Content(_, sublinks, collectionItem.metaData)).map(_ +: contentList).getOrElse(contentList)
         }
       }
       val sorted = results map { _.sortBy(t => collectionItems.indexWhere(_.id == t.id))}
