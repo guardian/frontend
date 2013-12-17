@@ -249,6 +249,7 @@ Comments.prototype.gotoComment = function(id) {
         return;
     }
 
+    this.showHiddenComments();
     return this.fetchComments({
         comment: id,
         position: 'replaceWith'
@@ -302,7 +303,7 @@ Comments.prototype.loadMore = function(e) {
  * }
  */
 Comments.prototype.fetchComments = function(options) {
-    var url = options.comment ? '/discussion/comment-redirect/'+ options.comment +'.json' :
+    var url = options.comment ? '/discussion/comment-permalink/'+ options.comment +'.json' :
                 '/discussion/'+ this.options.discussionId +'.json?'+
                 (options.page ? '&page='+ options.page : '') +
                 '&maxResponses=3';
@@ -322,10 +323,6 @@ Comments.prototype.fetchComments = function(options) {
 Comments.prototype.renderComments = function(position, resp) {
     var html = bonzo.create(resp.html),
         comments = qwery(this.getClass('topLevelComment'), html);
-
-    if (!resp.hasMore) {
-        this.removeShowMoreButton();
-    }
 
     $(this.getClass('showMoreOlder'), this.elem).replaceWith($(this.getClass('showMoreOlder'), html));
     $(this.getClass('showMoreNewer'), this.elem).replaceWith($(this.getClass('showMoreNewer'), html));
@@ -429,10 +426,6 @@ Comments.prototype.getMoreReplies = function(event) {
  */
 Comments.prototype.isReadOnly = function() {
     return this.elem.getAttribute('data-read-only') === 'true';
-};
-
-Comments.prototype.removeShowMoreButton = function() {
-    bonzo(this.getElem('showMore')).remove();
 };
 
 /**

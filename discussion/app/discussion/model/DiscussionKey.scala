@@ -3,6 +3,7 @@ package discussion.model
 import play.api.mvc.PathBindable
 
 case class DiscussionKey(val keyAsString: String) {
+  print (keyAsString)
   require(keyAsString != null && keyAsString.matches("/?p/[\\d\\w]*"), "Invalid discussion key")
 
   override def toString(): String = keyAsString
