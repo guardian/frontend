@@ -250,7 +250,7 @@ Comments.prototype.gotoComment = function(id) {
         window.location.replace('#comment-'+ id);
         return;
     }
-    
+
     return this.fetchComments({
         comment: id,
         position: 'replaceWith'
