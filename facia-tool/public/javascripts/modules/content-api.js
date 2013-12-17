@@ -58,8 +58,8 @@ function (
         });
     }
 
-    function populate(fromObj, toKoObj) {
-        toKoObj.populate(fromObj);
+    function populate(opts, article) {
+        article.populate(opts);
     }
 
     function fetchData(ids) {

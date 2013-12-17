@@ -31,6 +31,8 @@ define([
 
             this.collection = opts.collection;
 
+            this.uneditable = opts.uneditable;
+
             this.props = asObservableProps([
                 'id',
                 'webPublicationDate']);
@@ -101,6 +103,9 @@ define([
 
         Article.prototype.startMetaEdit = function() {
             var self = this;
+
+            if (this.uneditable) { return; }
+
             _.defer(function(){
                 self.state.editingMeta(true);
             });
@@ -188,7 +193,7 @@ define([
                     draft:   !vars.state.liveMode()
                 }
             );
-            
+
             this.collection.state.loadIsPending(true);
         };
 

@@ -109,7 +109,7 @@ input[type=text] {
 }
 
 .collections .title {
-    padding-left: 4px;
+    padding-left: 3px;
 }
 
 .droppable {
@@ -191,7 +191,7 @@ input[type=text] {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     overflow: hidden;
-    padding: 0 0 3px 4px;
+    padding: 0 0 3px 3px;
     position: relative;
     background: #FFFFFF;
     border-top: 5px solid #FFFFFF;
@@ -245,7 +245,9 @@ input[type=text] {
 }
 
 .trail .sublinks img {
-    opacity: 0.25;
+    height: 30px;
+    width: 50px;
+    margin: 3px 0 15px 25px;
 }
 
 .headline {
@@ -532,19 +534,19 @@ button {
 }
 
 .list-header .tools {
-    margin: 0 0 2px 4px;
+    margin: 0 0 2px 3px;
 }
 
-.collection .tools .tool.draft-warning {
+.tools .tool.draft-warning {
     font-weight: bold;
     margin-right: 4px;
 }
 
-.collection .tools .tool:first-child {
+.tools .tool:first-child {
     background: #0088cc;
 }
 
-.collection .tools .tool:first-child:hover {
+.tools .tool:first-child:hover {
     background: #0077BB;
 }
 
