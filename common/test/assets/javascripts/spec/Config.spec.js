@@ -1,16 +1,7 @@
-define(['modules/pageconfig'], function(pageConfig) {
+define(['fixtures/config', 'utils/config'], function(testConfigData, config) {
 
     describe('Page Config', function() {
         
-        var config = pageConfig({
-            page: {
-                tones: 'foo',
-                series: 'bar',
-                references: [{baz: 'one'}, {baz: 'two'}],
-                webPublicationDate: '2013-03-20T17:07:00.000Z'
-            }
-        });
-
         it('should have "hasTone" property', function() {
             expect(config.hasTone('foo')).toBeTruthy();
             expect(config.hasTone('foo-bad')).toBeFalsy();

@@ -118,6 +118,18 @@ Loader.prototype.ready = function() {
     this.getUser();
     this.renderCommentCount();
     DiscussionAnalytics.init();
+
+    bean.on(window, 'hashchange', function(e) {
+        var commentId = self.getCommentIdFromHash();
+        if (commentId) {
+            self.comments.gotoComment(commentId);
+        }
+    });
+
+    // More for analytics than anything
+    if (window.location.hash === '#comments') {
+        this.mediator.emit('discussion:seen:comments-anchor');
+    }
 };
 
 Loader.prototype.loadComments = function(args) {
@@ -125,7 +137,8 @@ Loader.prototype.loadComments = function(args) {
         commentsContainer = this.getElem('commentsContainer'),
         commentsElem = this.getElem('comments'),
         loadingElem = bonzo.create('<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>')[0],
-        commentId = this.getCommentIdFromHash();
+        commentId = this.getCommentIdFromHash(),
+        showComments = args.showLoader || commentId || window.location.hash === '#comments';
         
 
     if (args.showLoader) {
@@ -135,6 +148,10 @@ Loader.prototype.loadComments = function(args) {
 
     bonzo(self.topLoadingElem).addClass('u-h');
     bonzo(loadingElem).insertAfter(commentsElem);
+
+    if (commentId) {
+        this.mediator.emit('discussion:seen:comment-permalink');
+    }
 
     this.comments = new Comments(this.context, this.mediator, {
         initialShow: commentId ? 10 : args.amount,
@@ -150,7 +167,7 @@ Loader.prototype.loadComments = function(args) {
             bonzo(loadingElem).remove();
             self.renderCommentBar(self.user);
 
-            if (args.showLoader || commentId) {
+            if (showComments) {
                 // Comments are being loaded in the no-top-comments-available context
                 bonzo(self.getElem('joinDiscussion')).remove();
                 bonzo([self.comments.getElem('showMore'), self.comments.getElem('header')]).removeClass('u-h');
@@ -164,13 +181,6 @@ Loader.prototype.loadComments = function(args) {
             });
             bonzo(commentsContainer).removeClass('u-h');
         }).fail(self.loadingError.bind(self));
-
-    bean.on(window, 'hashchange', function(e) {
-        commentId = self.getCommentIdFromHash();
-        if (commentId) {
-            self.comments.gotoComment(commentId);
-        }
-    });
 };
 
 /** @return {Reqwest|null} */

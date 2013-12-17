@@ -34,6 +34,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
         case popular => Cached(900) {
           JsonComponent(
             "html" -> views.html.fragments.mostPopular(popular, 5),
+            "faciaHtml" -> views.html.fragments.mostPopular(popular, 5),
             "trails" -> JsArray(popular.headOption.map(_.trails).getOrElse(Nil).map(TrailToJson(_)))
           )
         }
