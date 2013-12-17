@@ -93,7 +93,7 @@ define([
 
         self.submit = function(event) {
             // TODO: FML
-            setInterval(function() {
+            setTimeout(function() {
                 // Remove any existing errors
                 $('.' + config.idClasses.formError).removeClass(config.idClasses.formError);
                 $('.' + config.idClasses.fieldError).removeClass(config.idClasses.fieldError);
