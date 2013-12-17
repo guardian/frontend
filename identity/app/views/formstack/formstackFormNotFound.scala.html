@@ -1,0 +1,18 @@
+@(metaData: model.MetaData, projectName: Option[String] = None)(implicit request: RequestHeader)
+
+<!DOCTYPE html>
+<html class="js-off" lang="en-GB">
+    <head>
+        <meta charset="utf-8" />
+        <title>@Html(metaData.webTitle)</title>
+        @fragments.commonCssSetup(projectName)
+        @fragments.commonJavaScriptSetup(metaData, "form")
+    </head>
+    <body id="top" itemscope itemtype="http://schema.org/WebPage" itemref="schema-WebPage">
+
+        <div id="preload-1">
+            <h1>Form not found</h1>
+        </div>
+
+    </body>
+</html>
