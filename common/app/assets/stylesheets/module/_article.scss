@@ -521,4 +521,25 @@ video {
     background-color: $c-neutral7;
     padding: 10px;
     margin-bottom: 16px;
+    .is-updating {
+        margin: 12px auto 12px auto;
+    }
+}
+
+.email-signup.loading {
+    .email-signup__title, .email-signup__copy {
+        display: none;
+    }
+    .is-updating {
+        display: block;
+    }
+}
+
+.email-signup.done {
+    .email-signup__copy {
+        display: none;
+    }
+    .email-signup__title {
+        text-align: center;
+    }
 }
