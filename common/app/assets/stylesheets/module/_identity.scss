@@ -145,3 +145,16 @@
     margin: 0;
     width: 100%;
 }
+
+.formstack-heading {
+    @include fs-bodyHeading(4);
+}
+
+.formstack-heading--first {
+    @include fs-header(5);
+    margin-top: $baseline*4;
+}
+
+.formstack-heading--first + .formstack-section {
+    margin-bottom: $baseline*6;
+}
