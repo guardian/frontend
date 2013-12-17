@@ -131,13 +131,15 @@ trait ParseCollection extends ExecutionContexts with Logging {
     }
     else {
       val results = collectionItems.foldLeft(Future[List[Content]](Nil)){(foldListFuture, collectionItem) =>
-        val id = collectionItem.id
         lazy val sublinksAsContent: Future[List[Content]] = {
           lazy val sublinks: List[CollectionItem] = retrieveSublinks(collectionItem)
           if (!hasParent) getArticles(sublinks, edition, hasParent=true) else Future.successful(Nil)
         }
-        val response = ContentApi.item(id, edition).showFields("all").response
-        response.onFailure{case t: Throwable => log.warn("%s: %s".format(id, t.toString))}
+        val response = ContentApi.item(collectionItem.id, edition).showFields("all").response
+
+        response.onFailure{case t: Throwable => log.warn("%s: %s".format(collectionItem.id, t.toString))}
+        sublinksAsContent.onFailure{case t: Throwable => log.warn("Sublinks: %s: %s".format(collectionItem.id, t.toString))}
+
         for {
           contentList <- foldListFuture
           itemResponse <- response
