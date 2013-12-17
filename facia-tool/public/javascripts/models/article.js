@@ -87,7 +87,7 @@ define([
                 }),
                 parent: self,
                 parentType: 'Article',
-                dropItem: self.save.bind(self)
+                omitItem: self.save.bind(self)
             });
 
             contentApi.decorateItems(self.meta.sublinks.items());
@@ -147,10 +147,11 @@ define([
                 .filter(function(p){ return _.isString(p[1]) ? p[1].replace(/\s*/g, '').length > 0 : true; })
                 // reject vals that don't differ from the props (if any) that they're overwriting:
                 .filter(function(p){ return _.isUndefined(self.props[p[0]]) || self.props[p[0]]() !== p[1]; })
-                // serialise sublinks recursively
+                // serialise sublinks
                 .map(function(p) {
                     if (p[0] === 'sublinks') {
-                        return [p[0], _.map(p[1].items(), function(sublink) {
+                        // but only on first level Articles, i.e. those whose parent is a Collection
+                        return [p[0], self.parentType === 'Article' ? [] : _.map(p[1].items(), function(sublink) {
                             return {
                                 id:   sublink.props.id(),
                                 meta: sublink.getMeta()
@@ -159,7 +160,7 @@ define([
                     }
                     return [p[0], p[1]];
                 })
-                // drop empty arrays (e.g .sublinks):
+                // drop empty arrays:
                 .filter(function(p){ return _.isArray(p[1]) ? p[1].length : true; })
                 // return as obj, or as undefined if empty.
                 // undefined is useful for ommiting it from any subsequent JSON.stringify call 

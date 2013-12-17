@@ -61,7 +61,7 @@ define([
                 name: name,
                 parent: self,
                 parentType: 'Collection',
-                dropItem: self.drop.bind(self)
+                omitItem: self.drop.bind(self)
             });
         }).reverse(); // because groupNames is assumed to be in ascending order of importance, yet should render in descending order
     };

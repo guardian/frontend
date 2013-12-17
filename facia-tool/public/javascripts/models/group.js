@@ -21,10 +21,10 @@ define([
         this.keepCopy   = opts.keepCopy;
         this.reflow     = opts.reflow  || function() {};
 
-        this.dropItem   = function(item) {
+        this.omitItem   = function(item) {
             self.items.remove(item);
             self.reflow();
-            if (_.isFunction(opts.dropItem)) { opts.dropItem(item); }
+            if (_.isFunction(opts.omitItem)) { opts.omitItem(item); }
         };
     }
 

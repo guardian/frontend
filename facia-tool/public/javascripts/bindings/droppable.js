@@ -197,7 +197,7 @@ define([
                             return;
                         }
 
-                        sourceList.dropItem(sourceItem);
+                        sourceList.omitItem(sourceItem);
 
                         authedAjax.updateCollection(
                             'delete',
