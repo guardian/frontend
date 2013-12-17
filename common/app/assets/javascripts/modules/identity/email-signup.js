@@ -7,31 +7,45 @@ define([
 	return {
 		
 		init: function (context) {
-			this.container = context.querySelector('.email-signup');
-			this.button = this.container.querySelector('.email-signup__link');
-			this.loader = this.container.querySelector('.is-updating');
-			if (this.button && IdApi.isUserLoggedIn()) {
-				bonzo(this.container).removeClass("u-h");
-				bonzo(this.container).css('height', bonzo(this.container).css('height'));
-				bean.on(this.button, 'click', this.requestEmailSignup.bind(this));
+			
+			this.DOM = {
+				container: context.querySelector('.email-signup'),
+				button: context.querySelector('.email-signup__link'),
+				loader: context.querySelector('.is-updating'),
+				title: context.querySelector('.email-signup__title')
+			};
+
+			for (var key in this.DOM) {
+				if (this.DOM.hasOwnProperty(key)) {
+					this.DOM['$'+key] = bonzo(this.DOM[key]);
+				}
+			}
+
+			if (this.DOM.container && IdApi.isUserLoggedIn()) {
+				this.DOM.$container.removeClass("u-h");
+				this.DOM.$container.css('height', this.DOM.$container.css('height'));
+				bean.on(this.DOM.button, 'click', this.requestEmailSignup.bind(this));
 			}
 		},
 
 		requestEmailSignup: function (event) {
 			event.preventDefault();
-			
 			var self = this;
-			bonzo(this.container).addClass("loading");
-			IdApi.emailSignup(self.button.getAttribute("data-list-id")).then(function success (res) {
-				bonzo(self.container).removeClass("loading").addClass("done");
+			
+			self.DOM.$container.addClass("loading");
+			IdApi.emailSignup(self.DOM.button.getAttribute("data-list-id")).then(function success (res) {
+				self.DOM.$container.removeClass("loading").addClass("done");
 				if (res.status === 'ok') {
-					self.button.innerHTML = "Your subscription will be activated within 24 hours";
+					self.DOM.$button.remove();
+					self.DOM.title.innerHTML = "Your subscription will be activated within 24 hours";
 				} else {
-					self.button.innerHTML = "An error occured, please try again";
+					self.DOM.$button.remove();
+					self.DOM.title.innerHTML = "An error occured, please reload and try again";
 				}
 			}, function error () {
-				bonzo(this.container).removeClass("loading");
-				self.button.innerHTML = "An error occured, please try again";
+				self.DOM.$container.removeClass("loading");
+				self.DOM.$button.remove();
+				self.DOM.title.innerHTML = "An error occured, please reload and try again";
 			});
 		}
 
