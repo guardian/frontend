@@ -228,6 +228,10 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to test onward highlights panel",
     safeState = Off)
 
+  val ABRightMostPopular = Switch("A/B Tests", "ab-right-most-popular",
+    "If this is switched on an AB test runs to trail a right hand side most popular component",
+    safeState = Off)
+
   // Sport Switch
 
   val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
@@ -307,6 +311,7 @@ object Switches extends Collections {
     ABOnwardHighlightsPanel,
     ABAlphaComm,
     ABMobileFacebookAutosignin,
+    ABRightMostPopular,
     AdDwellTimeLoggerSwitch,
     UkAlphaSwitch
   )

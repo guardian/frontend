@@ -33,6 +33,7 @@ define([
         this.getElem(this.classes.count).innerHTML =  this.index;
         this.getElem(this.classes.link).href = this.data.url;
         this.getElem(this.classes.headline).innerHTML = this.data.headline;
+        this.elem.setAttribute('data-link-name', 'trail | ' + this.index);
     };
 
     return RightMostPopularItem;

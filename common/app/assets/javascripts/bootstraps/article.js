@@ -155,12 +155,6 @@ define([
                     }
                 }
             });
-        },
-
-        initRightHandMostPopular: function() {
-            common.mediator.on('page:article:ready', function(config, context) {
-                var r = new RightHandMostPopular(mediator, { type: 'image', maxTrails: 5 });
-            });
         }
     };
 
@@ -174,7 +168,6 @@ define([
             modules.initCricket();
             modules.externalLinksCards();
             modules.initOpen();
-            modules.initRightHandMostPopular();
         }
         common.mediator.emit("page:article:ready", config, context);
     };

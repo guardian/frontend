@@ -10,7 +10,8 @@ define([
     bonzo
     ) {
 
-    function RightMostPopularItem(data) {
+    function RightMostPopularItem(data, index) {
+        this.index = index + 1;
         this.data = data;
     }
 
@@ -23,6 +24,7 @@ define([
         image: 'img',
         headline: 'headline' };
     RightMostPopularItem.prototype.useBem = true;
+    RightMostPopularItem.prototype.showComments = false;
 
     RightMostPopularItem.prototype.template = '<li class="right-most-popular-item"><a class="right-most-popular-item__url media u-cf" href="">'
         + '<div class="right-most-popular-item__img media__img"><img class="responsive-img" src="" alt=""/></div>'
@@ -35,9 +37,10 @@ define([
             container.setAttribute("data-src", this.data.itemPicture);
             bonzo(container).addClass("item__image-container");
         }
-//        if(this.data.discussionId) {
-//            this.elem.setAttribute("data-discussion-id", this.data.discussionId);
-//        }
+        if(this.data.discussionId && this.showComments) {
+            this.elem.setAttribute("data-discussion-id", this.data.discussionId);
+        }
+        this.elem.setAttribute('data-link-name', 'trail | ' + this.index);
         this.getElem(this.classes.link).href = this.data.url;
         this.getElem(this.classes.headline).innerHTML = this.data.headline;
     };
