@@ -8,7 +8,8 @@ define([
     'modules/experiments/tests/mobile-facebook-autosignin',
     'modules/experiments/tests/onward-intrusive',
     'modules/experiments/tests/onward-highlights-panel',
-    'modules/experiments/tests/alpha-comm'
+    'modules/experiments/tests/alpha-comm',
+    'modules/experiments/tests/right-most-popular'
 ], function (
     common,
     store,
@@ -18,7 +19,8 @@ define([
     MobileFacebookAutosignin,
     OnwardIntrusive,
     OnwardHighlightsPanel,
-    AlphaComm
+    AlphaComm,
+    RightMostPopular
     ) {
 
     var TESTS = [
@@ -26,7 +28,8 @@ define([
             new MobileFacebookAutosignin(),
             new OnwardIntrusive(),
             new OnwardHighlightsPanel(),
-            new AlphaComm()
+            new AlphaComm(),
+            new RightMostPopular()
         ],
         participationsKey = 'gu.ab.participations';
 
