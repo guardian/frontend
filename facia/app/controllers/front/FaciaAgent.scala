@@ -60,7 +60,7 @@ trait ParseConfig extends ExecutionContexts with Logging {
 
 trait ParseCollection extends ExecutionContexts with Logging {
 
-  case class CollectionItem(id: String, metaData: Option[Map[String, String]])
+  case class CollectionItem(id: String, metaData: Option[Map[String, JsValue]])
 
   def requestCollection(id: String): Future[Response] = {
     val collectionUrl = s"${Configuration.frontend.store}/${S3FrontsApi.location}/collection/$id/collection.json"
@@ -100,7 +100,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
 
             // extract the articles
             val articles: Seq[CollectionItem] = (bodyJson \ "live").as[Seq[JsObject]] map { trail =>
-              CollectionItem((trail \ "id").as[String], (trail \ "meta").asOpt[Map[String, String]])
+              CollectionItem((trail \ "id").as[String], (trail \ "meta").asOpt[Map[String, JsValue]])
             }
 
             getArticles(articles, edition)
