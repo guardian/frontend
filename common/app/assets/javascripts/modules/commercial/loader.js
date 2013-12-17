@@ -24,8 +24,9 @@ define([
      * BEWARE that this code is depended upon by the ad server. 
      * 
      * ```
-     * require('modules/commercial/loader', function (CommercialComponent) {
-     *     var c = new CommercialComponent(guardian).travel(document.getElementById('header'));
+     * require(['modules/commercial/loader'], function (CommercialComponent) {
+     *   var slot = document.querySelector('[class="js-sticky-upper"]');
+     *    var c = new CommercialComponent({config: guardian, oastoken: '%%C%%?'}).travel(slot);
      * })
      * ```
      * 
@@ -34,7 +35,7 @@ define([
      * @param {Object=} options
      */
     var Loader = function(options) {
-        var conf = options.config.page || {config:{page:{}}};
+        var conf = options.config.page || {};
         this.keywords       = conf.keywords || '';
         this.section        = conf.section;
         this.host           = conf.ajaxUrl + '/commercial/';
@@ -60,9 +61,8 @@ define([
     /**
      * @param {Element}  target
      */
-    Loader.prototype.load = function(component, target) {
-        var self = this,
-            url = this.components[component];
+    Loader.prototype.load = function(url, target) {
+        var self = this;
         new LazyLoad({
             url: url,
             container: target,
@@ -80,19 +80,19 @@ define([
     };
     
     Loader.prototype.travel = function(el) {
-        return this.load('travel', el);
+        return this.load(this.components.travel, el);
     };
     
     Loader.prototype.masterclasses = function(el) {
-        return this.load('masterclasses', el);
+        return this.load(this.components.masterclasses, el);
     };
     
     Loader.prototype.jobs = function(el) {
-        return this.load('jobs', el);
+        return this.load(this.components.jobs, el);
     };
     
     Loader.prototype.soulmates = function(el) {
-        return this.load('soulmates', el);
+        return this.load(this.components.soulmates, el);
     };
 
     return Loader;
