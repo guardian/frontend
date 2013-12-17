@@ -42,7 +42,7 @@ define([
     RightMostPopular.prototype.classes = { items: 'items' };
     RightMostPopular.prototype.useBem = true;
 
-    RightMostPopular.prototype.template = '<div class="right-most-popular"><h3 class="right-most-popular__title">Read next &#8230;</h3>' +
+    RightMostPopular.prototype.template = '<div class="right-most-popular"><h3 class="right-most-popular__title">Read next …</h3>' +
         '<ul class="right-most-popular__items u-unstyled"></ul></div></div>';
 
     RightMostPopular.prototype.fetch = function() {
