@@ -179,6 +179,9 @@
     .svg-i-red-card { background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5IiBoZWlnaHQ9IjEyIj48cmVjdCBmaWxsPSIjRDQyMzI3IiB3aWR0aD0iOSIgaGVpZ2h0PSIxMiIvPjwvc3ZnPg==); background-position: 0 0; background-repeat: no-repeat; }
     .svg .i-red-card { @extend .svg-i-red-card !optional; }
 
+    .svg-i-reply-arrow-white { background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5LjI2NiIgaGVpZ2h0PSIxMCI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTMuOTcxIDYuMTc2bC0uNjYxLTEuODM4LS4wNDMtLjEyM2g0LjMzM3Y0LjExOWwuODMzIDEuNjY2aC44MzN2LTcuNDUxaC01Ljk5OWwuMDQ0LS4xMjIuNjYxLTEuODM4LS41OS0uNTg5LTMuMzgyIDMuMzgyIDMuMzgyIDMuMzgyLjU4OS0uNTg4eiIvPjwvc3ZnPg==); background-position: 0 0; background-repeat: no-repeat; }
+    .svg .i-reply-arrow-white { @extend .svg-i-reply-arrow-white !optional; }
+
     .svg-i-reply-button { background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOSIgaGVpZ2h0PSIxOSI+PHBhdGggZD0iTTE4LjUgOS41YzAgNC45NzEtNC4wMjkgOS05IDlzLTktNC4wMjktOS05IDQuMDI5LTkgOS05IDkgNC4wMjkgOSA5IiBmaWxsPSJub25lIi8+PGNpcmNsZSBzdHJva2U9IiM5MTkzOTYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgY3g9IjkuNSIgY3k9IjkuNSIgcj0iOSIgZmlsbD0ibm9uZSIvPjxwYXRoIGZpbGw9IiM5MTkzOTYiIGQ9Ik03LjgzOCAxMC42NzZsLS42NjEtMS44MzktLjA0My0uMTIyaDQuMzMzdjQuMTE5bC44MzMgMS42NjZoLjgzM3YtNy40NTFoLTUuOTk5bC4wNDQtLjEyMi42NjEtMS44MzgtLjU4OS0uNTg5LTMuMzgyIDMuMzgyIDMuMzgyIDMuMzgzLjU4OC0uNTg5eiIvPjwvc3ZnPg==); background-position: 0 0; background-repeat: no-repeat; }
     .svg .i-reply-button { @extend .svg-i-reply-button !optional; }
 
