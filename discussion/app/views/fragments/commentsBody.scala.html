@@ -21,9 +21,8 @@
 
     @if(page.currentPage != 1){
 
-    <div class="d-discussion__show-more-wrapper">
-        <a class="d-discussion__show-more d-discussion__show-more--newer"
-            href="@LinkTo{/@page.id?page=@(page.currentPage - 1)}"
+    <div class="d-discussion__show-more d-discussion__show-more--newer">
+        <a href="@LinkTo{/@page.id?page=@(page.currentPage - 1)}"
             data-link-name="Show more comments"
             data-age="newer"
             data-page="@(page.currentPage - 1)"
@@ -38,12 +37,12 @@
         @page.comments.map{ comment =>
             @fragments.comment(comment, page.isClosedForRecommendation)
         }
+        <li class="d-image-fade u-h"></li>
     </ul>
     
     @if(page.currentPage + 1 <= page.pages){
-    <div class="d-discussion__show-more-wrapper">
-        <a class="d-discussion__show-more d-discussion__show-more--older"
-            href="@LinkTo{/@page.id?page=@(page.currentPage + 1)}"
+    <div class="d-discussion__show-more d-discussion__show-more--older discussion__heading">
+        <a href="@LinkTo{/@page.id?page=@(page.currentPage + 1)}"
             data-link-name="Show more comments"
             data-age="older"
             data-page="@(page.currentPage + 1)"
@@ -51,8 +50,19 @@
             <span class="d-discussion__show-more-button"><i class="i i-plus-white-large"></i></span>
             <span class="d-discussion__show-more-text">Show older comments</span>
         </a>
-    <div>
+    </div>
     }
+
+    <div class="d-discussion__show-more d-discussion__show-more--featured discussion__heading u-h">
+        <a class="js-show-more-top-comments"
+            data-link-name="Show more featured comments"    
+            data-remove="true" 
+            href="@LinkTo{/@page.id?page=1}"
+            title="Show more featured comments">
+            <span class="d-discussion__show-more-button"><i class="i i-plus-white-large"></i></span>
+            <span class="d-discussion__show-more-text">Show more featured comments</span>
+        </a>    
+    </div>
 
     <script type="text/template" id="tmpl-comment-box">@fragments.commentBox()</script>
     <script type="text/template" id="tmpl-banned-user">@fragments.cannotComment()</script>

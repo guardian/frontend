@@ -61,9 +61,12 @@ $side-meta-breakpoint: desktop;
 .d-comment-box--response {
 }
 
-.d-discussion__show-more-wrapper {
-    border-top: 1px dotted $c-neutral5;
-    padding-bottom: $baseline*4;
+.d-discussion__show-more {
+    display: block;
+    padding-top: $baseline*2;
+    @include fs-data(5);
+    position: relative;
+    //padding-bottom: $baseline*4;
     @include mq($side-meta-breakpoint) {
         padding-left: 160px;
     }
@@ -73,25 +76,21 @@ $side-meta-breakpoint: desktop;
     @include mq(wide) {
         padding-left:  $a-leftColWide-width + $gs-gutter;
     }
-}
-
-.d-discussion__show-more {
-    display: block;
-    padding-top: $baseline*2;
-    @include fs-data(5);
-    position: relative;
-    &:hover span { text-decoration: underline; }
+    
+    a {
+        line-height: 30px;
+        &:hover span { text-decoration: underline; }
+    }
+    
 }
 
 .d-discussion__show-more-button {
-    left: 0;
     @include icon-button(30px, 30px);
     position: absolute;
     background-color: $c-newsDefault;
 }
 .d-discussion__show-more-text {
     padding-left: 32px + $baseline;
-    padding-top: 4px;
     display: inline-block;
 }
 
@@ -99,6 +98,7 @@ $side-meta-breakpoint: desktop;
     height: 40px;
     @include fs-data(4);
     line-height: 40px;
+    margin-top: $baseline*2;
     font-weight: bold;
     padding-left: 55px;
     display: inline-block;
@@ -109,6 +109,10 @@ $side-meta-breakpoint: desktop;
     .i-arrow-blue-down {
         margin-left: $baseline*2;
     }
+}
+
+.d-discussion__show-more--featured {
+    border-top: 1px dotted $c-neutral5;    
 }
 
 
@@ -471,6 +475,11 @@ $replyIndent: 26px;
 }
 
 .discussion__comments--top-comments {
+    
+    .d-thread { // for the max-height fade effect
+        position: relative;
+        overflow: hidden;
+    }
     .d-comment {
         margin-bottom: $baseline*2;
         overflow: hidden;
@@ -503,9 +512,8 @@ $replyIndent: 26px;
             padding-bottom: $baseline*2;
         }
     }
-    .d-comment__actions {
-        display: none;
-    }
+    .d-discussion__show-more--older, .d-discussion__show-more--newer  { display: none; }
+    .d-comment__actions { display: none; }
     .d-comment__content { 
         background-color: $c-commentPickGrey;
         padding: $baseline*2 $baseline*2;
@@ -544,6 +552,19 @@ $replyIndent: 26px;
         }
     }
     .d-discussion__comment-count { display: none; }
+    
+    .d-image-fade {
+        background-color: #fff;
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 100px;
+        z-index: 2;
+        @include d-white-fade();
+    }
 }
 
 

@@ -53,7 +53,9 @@ TopComments.prototype.classes = {
     commentActions: 'd-comment__actions__main',
     commentReply: 'd-comment__action--reply',
 
-    topCommentHolder: 'discussion__comments__top',
+    showMoreFeatured: 'd-discussion__show-more--featured',
+
+    topCommentsContainer: 'discussion__comments__top',
     titleCounter: 'discussion__comment-count',
     fadeOut: 'd-image-fade'
 };
@@ -67,7 +69,6 @@ TopComments.prototype.endpoint = '/discussion/top:discussionId.json';
 /** @type {Object.<string.*>} */
 TopComments.prototype.defaultOptions = {
     discussionId: null,
-    heightLimit: 600, // max-height in _discussion.scss .discussion__comments__top
     showRepliesCount: 3,
     user: null,
     sectionHeading: 'Featured Comments '
@@ -112,7 +113,7 @@ TopComments.prototype.fetch = function(parent) {
                 self.topCommentsAmount = resp.commentCount;
                 self.parent = parent;
                 self.elem = bonzo.create(resp.html);
-                $('.discussion__comments__top', parent).append(self.elem); // refactor
+                $(self.getClass('topCommentsContainer'), parent).append(self.elem);
                 self.elem = self.elem[0];
                 self.elems = {};
                 self.prerender();
@@ -144,34 +145,22 @@ TopComments.prototype.ready = function() {
     this.user = this.options.user;
     this.topLevelComments = qwery(this.getClass('topLevelComment'), this.elem);
     this.comments = qwery(this.getClass('comment'), this.elem);
+    this.commentsContainer = qwery(this.getClass('comments'), this.elem)[0];
 
-    var h = self.elem.offsetHeight;
-
-    if (h >= self.options.heightLimit) {
-
-        self.hasHiddenComments = true;
-
-        $('.d-image-fade', self.parent).removeClass('u-h'); // refactor
-
-        var showMoreButton = [];
-
-        showMoreButton.push('<a class="js-show-more-top-comments cta" data-link-name="Show more featured comments" data-remove="true" href="/discussion');
-        showMoreButton.push(self.options.discussionId);
-        showMoreButton.push('?page=1">');
-        showMoreButton.push('Show more featured comments');
-        showMoreButton.push('</a>');
-
-        if (!self.showMoreButton) {
-            self.showMoreButton = bonzo(showMoreButton.join(''));
-            bonzo(self.parent).after(self.showMoreButton[0]);
-            self.showMoreButton = qwery(self.getClass('showMore'))[0];
-        }
+    // calc max-height for top comments as 2/3 of viewport height bounded between 200-600
+    var maxHeight = bonzo.viewport().height * 0.66;
+    maxHeight = Math.max(maxHeight, 200);
+    maxHeight = Math.min(maxHeight, 800);
+    
+    if (this.commentsContainer.offsetHeight > maxHeight) {
+        this.truncateFeatured(parseInt(maxHeight, 10));
+        this.on('click', this.getClass('showMoreFeatured'), this.showAllFeatured);
     }
 
     var heading = document.querySelector('.js-top-comments');
 
     heading.childNodes[0].nodeValue = self.options.sectionHeading;
-
+    
     if (self.topCommentsAmount === 1) {
         heading.childNodes[0].nodeValue = heading.childNodes[0].nodeValue.replace(/s\b/, '');
     } else {
@@ -189,35 +178,20 @@ TopComments.prototype.bindCommentEvents = function() {
         this.on('click', this.getClass('commentReply'), this.replyToComment);
     }
 };
-
-/**
-* @param {Event} e
-*/
-TopComments.prototype.showMore = function(e) {
-    var self = this;
-    e.preventDefault();
-
-    if (self.showMoreButton.getAttribute('data-disabled') === 'disabled') {
-        return;
-    }
-
-    if (this.hasHiddenComments) {
-        this.showHiddenComments();
-    }
+ 
+TopComments.prototype.truncateFeatured = function(maxHeight){
+    this.hasHiddenComments = true;
+    $('.d-image-fade', this.parent).removeClass('u-h');
+    $(this.getClass('showMoreFeatured'), this.elem).removeClass('u-h');
+    $(this.commentsContainer).css("max-height", maxHeight + "px");
 };
 
-TopComments.prototype.showHiddenComments = function() {
-
-    /* ======================= REFACTOR ME ======================= */
-
-    $('.discussion__comments__top', this.parent).css("max-height", "none");
-    $('.d-discussion', this.parent).css("max-height", "none");
-
+TopComments.prototype.showAllFeatured = function(e) {
+    if (e) { e.preventDefault(); }
     this.hasHiddenComments = false;
-
-    $(this.showMoreButton).addClass('u-h'); // Not removing because of ophan error...
-
     $('.d-image-fade', this.parent).addClass('u-h');
+    $(this.getClass('showMoreFeatured'), this.elem).addClass('u-h');
+    $(this.commentsContainer).css("max-height", "none");
 };
 
 /** @param {Event} e */
