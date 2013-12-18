@@ -52,7 +52,7 @@ object Switches extends Collections {
 
   val ElasticSearchSwitch = Switch("Performance Switches", "elastic-search-content-api",
     "If this switch is on then (parts of) the application will use the Elastic Search content api",
-    safeState = Off)
+    safeState = On)
 
   val EditionRedirectLoggingSwitch = Switch("Performance Switches", "edition-redirect-logging",
     "If this switch is on, then extra logging will be done for edition redirects.",
@@ -176,7 +176,7 @@ object Switches extends Collections {
 
   val LightboxGalleriesSwitch = Switch("Feature Switches", "lightbox-galleries",
     "If this switch is on, galleries open in a lightbox.",
-    safeState = Off)
+    safeState = On)
 
   val IdentityProfileNavigationSwitch = Switch("Feature Switches", "id-profile-navigation",
     "If this switch is on you will see the link in the topbar taking you through to the users profile or sign in..",
