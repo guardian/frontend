@@ -12,13 +12,17 @@ define([
 
         this.id = 'RightMostPopular';
         this.expiry = '2013-12-31';
-        this.audience = 0.25;
+        this.audience = 0.45;
         this.audienceOffset = 0.7;
         this.description = 'Test whether a most popular component in RHS wil increase page views per session for desktop users';
         this.canRun = function(config) {
             return (detect.getBreakpoint() === 'wide' || detect.getBreakpoint() === 'desktop') && config.page.contentType === 'Article';
         };
         this.variants = [
+            {
+                id: 'Control',
+                test: function () {}
+            },
             {
                 id: 'Trail-3',
                 test: function () {
