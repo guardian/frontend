@@ -6,6 +6,7 @@ import common.ExecutionContexts
 import services.{IdentityUrlBuilder, IdRequestParser, ReturnUrlVerifier}
 import com.google.inject.{Inject, Singleton}
 import utils.SafeLogging
+import conf.Switches
 
 
 @Singleton
@@ -18,7 +19,11 @@ class EthicalAwardsController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
   val page = IdentityPage("/ethical-awards", "Ethical Awards", "ethical-awards")
 
   def ethicalAwardsForm(formId: String) = authAction.apply { implicit request =>
-    val idRequest = idRequestParser(request)
-    Ok(views.html.ethicalAwards.ethicalAwardsForm(page, formId, idRequest, idUrlBuilder))
+    if (Switches.IdentityEthicalAwardsSwitch.isSwitchedOn) {
+      val idRequest = idRequestParser(request)
+      Ok(views.html.ethicalAwards.ethicalAwardsForm(page, formId, idRequest, idUrlBuilder))
+    } else {
+      NotFound(views.html.errors._404())
+    }
   }
 }

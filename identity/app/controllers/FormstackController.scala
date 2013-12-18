@@ -8,6 +8,7 @@ import com.google.inject.{Inject, Singleton}
 import utils.SafeLogging
 import scala.concurrent.Future
 import formstack.{FormstackApi, FormstackForm}
+import conf.Switches
 
 
 @Singleton
@@ -21,23 +22,31 @@ class FormstackController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
   val page = IdentityPage("/form", "Form", "formstack")
 
   def formstackForm(formReference: String) = authAction.async { implicit request =>
-    FormstackForm.extractFromSlug(formReference).map { formstackForm =>
-      formStackApi.checkForm(formstackForm).map {
-        case Right(_) => {
-          logger.trace(s"Rendering formstack form ${formstackForm.formId}")
-          Ok(views.html.formstack.formstackForm(page, formstackForm))
+    if (Switches.IdentityEthicalAwardsSwitch.isSwitchedOn) {
+      FormstackForm.extractFromSlug(formReference).map { formstackForm =>
+        formStackApi.checkForm(formstackForm).map {
+          case Right(_) => {
+            logger.trace(s"Rendering formstack form ${formstackForm.formId}")
+            Ok(views.html.formstack.formstackForm(page, formstackForm))
+          }
+          case Left(errors) => {
+            logger.warn(s"Unable to render formstack form ${formstackForm.formReference}, $errors")
+            new Status(errors.map(_.statusCode).max)(views.html.formstack.formstackFormNotFound(page))
+          }
         }
-        case Left(errors) => {
-          logger.warn(s"Unable to render formstack form ${formstackForm.formReference}, $errors")
-          new Status(errors.map(_.statusCode).max)(views.html.formstack.formstackFormNotFound(page))
-        }
+      }.getOrElse {
+        Future.successful(NotFound(views.html.formstack.formstackFormNotFound(page)))
       }
-    }.getOrElse {
-      Future.successful(NotFound(views.html.formstack.formstackFormNotFound(page)))
+    } else {
+      Future.successful(NotFound(views.html.errors._404()))
     }
   }
 
   def complete = Action { implicit request =>
-    Ok(views.html.formstack.formstackComplete(page))
+    if (Switches.IdentityEthicalAwardsSwitch.isSwitchedOn) {
+      Ok(views.html.formstack.formstackComplete(page))
+    } else {
+      NotFound(views.html.errors._404())
+    }
   }
 }
