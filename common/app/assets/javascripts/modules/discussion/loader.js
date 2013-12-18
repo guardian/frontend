@@ -58,7 +58,7 @@ Loader.prototype.classes = {
     comments: 'discussion__comments',
     commentBox: 'discussion__comment-box',
     commentBoxBottom: 'discussion__comment-box--bottom',
-    joinDiscussion: 'd-show-cta',
+    joinDiscussion: 'd-discussion__show-all-comments',
     topComments: 'discussion__comments--top-comments'
 };
 

@@ -50,6 +50,10 @@ $side-meta-breakpoint: desktop;
 
 .d-thread--top-level {
 }
+.discussion__comments__container {
+    margin-bottom: $baseline*5;
+}
+
 .discussion__comment-count {
     color: $c-neutral3;
 }
