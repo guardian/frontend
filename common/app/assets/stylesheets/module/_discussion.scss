@@ -98,6 +98,14 @@
     padding: $baseline*2 $gutter;
 }
 
+/* New Discussion
+   ===========================================================================*/
+.discussion--closed {
+    .d-comment__action--reply {
+        display: none;
+    }
+}
+
 /* New Comment
    ===========================================================================*/
 .comment {
