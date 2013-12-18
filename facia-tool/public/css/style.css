@@ -124,8 +124,8 @@ input[type=text] {
     transition: background-color 50ms;
 }
 
-.supporting  .droppable {
-    padding: 0 0 27px 0;
+.supporting .droppable {
+    padding: 0 0 26px 0;
 }
 
 .droppable.underDrag {
@@ -145,8 +145,8 @@ input[type=text] {
 }
 
 .list-header__saving  {
+    color: #999999;
     float: right;
-    color: #d61d00;
     font-size: 12px;
 }
 
@@ -257,7 +257,8 @@ input[type=text] {
 }
 
 .headline:hover {
-    color: #438835;
+    color: #f89406;
+    text-decoration: none;
 }
 
 .trail .trail__meta {
