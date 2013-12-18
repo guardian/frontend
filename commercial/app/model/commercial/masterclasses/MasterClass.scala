@@ -6,6 +6,7 @@ import play.api.libs.json.JsValue
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Element, Document}
 import model.commercial.{Segment, Ad}
+import org.apache.commons.lang.StringUtils
 
 object MasterClass {
   private val datePattern: DateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss")
@@ -79,6 +80,8 @@ case class MasterClass(id: String,
   private val readableDateFormat = DateTimeFormat.forPattern("d MMMMM yyyy")
 
   def readableDate = readableDateFormat.print(startDate)
+
+  val truncatedFirstParagraph = StringUtils.abbreviate(firstParagraph, 300)
 }
 
 case class Ticket(price: Double)
@@ -106,4 +109,7 @@ case class Venue(name: Option[String] = None,
                  address2: Option[String] = None,
                  city: Option[String] = None,
                  country: Option[String] = None,
-                 postcode: Option[String] = None)
+                 postcode: Option[String] = None) {
+
+  val description = Seq(name, address, address2, city, country, postcode).flatten.mkString(", ")
+}

@@ -16,17 +16,18 @@
             @events.take(1).map { event =>
                 <li class="lineitem">
                     <h4 class="lineitem__title"><a href="%OASToken%@event.url">@event.name</a></h4>
-                    <p class="lineitem__meta">@event.readableDate<p>
+                    <p class="lineitem__meta">@event.readableDate<br />
+                    @event.venue.description</p>
                     <p class="lineitem__description">
-                        @event.firstParagraph
-                        <a class="lineitem__link"><i class="i i-single-arrow-right-blue"></i>Learn more and book</a></p>
+                        @event.truncatedFirstParagraph
+                        <a class="lineitem__link" href="%OASToken%@event.url"><i class="i i-single-arrow-right-blue"></i>Learn more and book</a>
                     </p>
                 </li>
             }
         </ul>
     </div>
     <div class="commercial__foot">
-        <a class="commercial__link" href="#">More courses from Guardian Masterclasses <i class="i i-double-arrow-right-blue"></i></a>
+        <a class="commercial__link" href="%OASToken%http://theguardian.com/guardian-masterclasses">More courses from Guardian Masterclasses <i class="i i-double-arrow-right-blue"></i></a>
     </div>
 </div>
 
