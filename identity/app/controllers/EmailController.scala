@@ -22,7 +22,7 @@ class EmailController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
                                 api: IdApiClient,
                                 idRequestParser : IdRequestParser,
                                 idUrlBuilder : IdentityUrlBuilder,
-                                authAction: utils.AuthAction)
+                                authAction: actions.AuthAction)
   extends Controller with ExecutionContexts with SafeLogging {
 
   val page = IdentityPage("/email-prefs", "Email preferences", "email-prefs")
