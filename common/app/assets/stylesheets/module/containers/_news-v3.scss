@@ -50,6 +50,7 @@
     }
     .item__standfirst {
         display: block;
+        @include rem((margin-top: $gs-baseline));
     }
     .item--has-image {
         .item__standfirst {
@@ -77,7 +78,7 @@
     position: relative; // Replace .item as a relative context
 
     @include rem((
-        padding-bottom: $gs-baseline*2,
+        padding-bottom: 20px,
         margin-bottom: $gs-baseline
     ));
 
@@ -141,6 +142,23 @@
     @include mq(desktop) {
         .item__title {
             @include fs-headline(5, true);
+        }
+    }
+}
+.container--news .l-row--items-2,
+.container--news .l-row--items-3 {
+    .item__standfirst {
+        display: block;
+    }
+}
+.container--news .l-row--items-4 {
+    @include mq($to: tablet) {
+        .item__title,
+        .item__byline {
+            @include fs-headline(1, true);
+        }
+        .item__media-wrapper {
+            @include rem((width: 88px));
         }
     }
 }
