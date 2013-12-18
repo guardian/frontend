@@ -4,5 +4,5 @@ curl([
 ]).then(function(
     ListManager
 ){
-    new ListManager('.top-stories').init();
+    new ListManager().init();
 });

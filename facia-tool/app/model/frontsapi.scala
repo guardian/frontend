@@ -21,14 +21,14 @@ case class Block(
 
 case class Trail(
                   id: String,
-                  meta: Option[Map[String, String]]
+                  meta: Option[Map[String, JsValue]]
                   ) extends JsonShape
 
 
 case class BlockActionJson(publish: Option[Boolean], discard: Option[Boolean]) extends JsonShape
 case class UpdateTrailblockJson(config: UpdateTrailblockConfigJson) extends JsonShape
 case class UpdateTrailblockConfigJson(contentApiQuery: Option[String], max: Option[Int], min: Option[Int], displayName: Option[String])
-case class UpdateList(item: String, position: Option[String], after: Option[Boolean], itemMeta: Option[Map[String, String]], live: Boolean, draft: Boolean) extends JsonShape
+case class UpdateList(item: String, position: Option[String], after: Option[Boolean], itemMeta: Option[Map[String, JsValue]], live: Boolean, draft: Boolean) extends JsonShape
 
 trait JsonExtract {
   implicit val updateListRead = Json.reads[UpdateList]
@@ -142,13 +142,13 @@ trait UpdateActions {
     }
   }
 
-  def updateItemMetaList(id: String, trailList: List[Trail], metaData: Map[String, String]): List[Trail] = {
-    lazy val fields: Seq[String] = Seq("headline", "group")
+  def updateItemMetaList(id: String, trailList: List[Trail], metaData: Map[String, JsValue]): List[Trail] = {
+    lazy val fields: Seq[String] = Seq("headline", "group", "supporting")
     lazy val newMetaMap = metaData.filter{case (k, v) => fields.contains(k)}
 
     for {
       trail <- trailList
-      metaMap <- trail.meta.orElse(Option(Map.empty[String, String]))
+      metaMap <- trail.meta.orElse(Option(Map.empty[String, JsValue]))
     } yield {
       if (id == trail.id) trail.copy(meta = Some(metaMap ++ newMetaMap)) else trail
     }
