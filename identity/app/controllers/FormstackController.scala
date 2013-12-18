@@ -22,7 +22,7 @@ class FormstackController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
   val page = IdentityPage("/form", "Form", "formstack")
 
   def formstackForm(formReference: String) = authAction.async { implicit request =>
-    if (Switches.IdentityEthicalAwardsSwitch.isSwitchedOn) {
+    if (Switches.IdentityFormstackSwitch.isSwitchedOn) {
       FormstackForm.extractFromSlug(formReference).map { formstackForm =>
         formStackApi.checkForm(formstackForm).map {
           case Right(_) => {
@@ -43,7 +43,7 @@ class FormstackController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
   }
 
   def complete = Action { implicit request =>
-    if (Switches.IdentityEthicalAwardsSwitch.isSwitchedOn) {
+    if (Switches.IdentityFormstackSwitch.isSwitchedOn) {
       Ok(views.html.formstack.formstackComplete(page))
     } else {
       NotFound(views.html.errors._404())

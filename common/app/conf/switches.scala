@@ -206,8 +206,8 @@ object Switches extends Collections {
     "If this switch is on then users who have previously authorized the guardian app in facebook and who have not recently signed out are automatically signed in.",
     safeState = Off)
 
-  val IdentityEthicalAwardsSwitch = Switch("Feature Switches", "id-ethical-awards",
-    "If this switch is on the Ethical Awards forms will be visible",
+  val IdentityFormstackSwitch = Switch("Feature Switches", "id-formstack",
+    "If this switch is on, formstack forms will be available",
     safeState = Off)
 
   // A/B Test Switches
@@ -341,7 +341,7 @@ object Switches extends Collections {
     ABCommercialComponents,
     EditionRedirectLoggingSwitch,
     FacebookAutoSigninSwitch,
-    IdentityEthicalAwardsSwitch,
+    IdentityFormstackSwitch,
     ABImproveOnwardTrails,
     ABOnwardIntrusive,
     ABInitialShowMore,
