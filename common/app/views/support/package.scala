@@ -82,6 +82,10 @@ case class FeaturesContainer(val showMore: Boolean = true, val headerLink: Boole
   val containerType = "features"
   val tone: String = "feature"
 }
+case class PopularContainer(val showMore: Boolean = true, val headerLink: Boolean = true) extends Container {
+  val containerType = "popular"
+  val tone: String = "news"
+}
 case class TopStoriesContainer(val showMore: Boolean = true, val headerLink: Boolean = true) extends Container {
   val containerType = "top-stories"
   val tone = "news"

@@ -117,6 +117,7 @@ define([
 
                     ([].concat(rawArticles)).forEach(function(article, index){
                         article.index = index;
+                        article.uneditable = true;
                         self.articles.push(new Article(article));
                         cache.put('contentApi', article.id, article);
                     });

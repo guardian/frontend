@@ -3,7 +3,7 @@
 @defining(config.displayName.orElse(collection.displayName)) { title =>
 
     @if(collection.items.nonEmpty) {
-        <section class="container container--@style.containerType @if(containerIndex > 0 && title.nonEmpty){js-container--toggle}"
+        <section class="container container--@style.containerType"
                  data-link-name="block | @config.id"
                  data-id="@config.id"
                  data-type="@style.containerType">
@@ -18,7 +18,7 @@
                 </h2>
             }
 
-            @fragments.collections.standard(config, collection, style, containerIndex, 9)
+            @fragments.collections.standard(config, collection, style, containerIndex, 10)
 
         </section>
     }
