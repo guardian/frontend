@@ -33,6 +33,9 @@ class SingleMasterClassParsingTest extends FlatSpec with Matchers {
 
     result.capacity should be (18)
     result.url should be ("https://www.eventurl.com")
+    result.venue should be {
+      Venue(None, Some("Kings Place"), Some("90 York Way"), Some("London"), Some("United Kingdom"), Some("N1 9GU"))
+    }
   }
 
   "MasterClass companion object" should "handle classes with 2 tickets as a range" in {

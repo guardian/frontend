@@ -35,7 +35,17 @@ object MasterClass {
     val paragraphs: Array[Element] = doc.select("p").toArray map {_.asInstanceOf[Element]}
 
     val result: Array[MasterClass] = elements map { element =>
-      new MasterClass(id.toString, title, startDate, url, description, status, tickets.toList, capacity, element.attr("href"), paragraphs.head.text)
+        new MasterClass(id.toString,
+          title,
+          startDate,
+          url,
+          description,
+          status,
+          Venue(block \ "venue"),
+          tickets.toList,
+          capacity,
+          element.attr("href"),
+          paragraphs.head.text)
     }
 
     result.headOption
@@ -48,6 +58,7 @@ case class MasterClass(id: String,
                        url: String,
                        description: String,
                        status: String,
+                       venue: Venue,
                        tickets: List[Ticket],
                        capacity: Int,
                        guardianUrl: String,
@@ -71,3 +82,28 @@ case class MasterClass(id: String,
 }
 
 case class Ticket(price: Double)
+
+
+object Venue {
+
+  def apply(json: JsValue): Venue = {
+
+    def eval(jsonField: JsValue) = jsonField.asOpt[String].filterNot(_.length == 0)
+
+    Venue(
+      name = eval(json \ "name"),
+      address = eval(json \ "address"),
+      address2 = eval(json \ "address_2"),
+      city = eval(json \ "city"),
+      country = eval(json \ "country"),
+      postcode = eval(json \ "postal_code")
+    )
+  }
+}
+
+case class Venue(name: Option[String] = None,
+                 address: Option[String] = None,
+                 address2: Option[String] = None,
+                 city: Option[String] = None,
+                 country: Option[String] = None,
+                 postcode: Option[String] = None)
