@@ -122,6 +122,7 @@ Loader.prototype.ready = function() {
         var commentId = self.getCommentIdFromHash();
         if (commentId) {
             self.comments.gotoComment(commentId);
+            bonzo(self.getElem('joinDiscussion')).addClass('u-h');
         }
     });
 
@@ -246,6 +247,7 @@ Loader.prototype.renderCommentBar = function() {
     } else {
         this.renderCommentBox();
         this.comments.on('first-load', this.renderBottomCommentBox.bind(this));
+        this.comments.on('first-load', this.cleanUpOnShowComments.bind(this));
     }
 };
 

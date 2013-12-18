@@ -1,5 +1,5 @@
 @(discussionClosed: Boolean, discussionId: String)(implicit request: RequestHeader)
-<div id="comments" class="discussion"
+<div id="comments" class="discussion@if(discussionClosed){ discussion--closed}"
     data-discussion-key="@discussionId"
     data-discussion-closed="@discussionClosed">
 

@@ -52,7 +52,7 @@ object Switches extends Collections {
 
   val ElasticSearchSwitch = Switch("Performance Switches", "elastic-search-content-api",
     "If this switch is on then (parts of) the application will use the Elastic Search content api",
-    safeState = Off)
+    safeState = On)
 
   val EditionRedirectLoggingSwitch = Switch("Performance Switches", "edition-redirect-logging",
     "If this switch is on, then extra logging will be done for edition redirects.",
@@ -176,7 +176,7 @@ object Switches extends Collections {
 
   val LightboxGalleriesSwitch = Switch("Feature Switches", "lightbox-galleries",
     "If this switch is on, galleries open in a lightbox.",
-    safeState = Off)
+    safeState = On)
 
   val IdentityProfileNavigationSwitch = Switch("Feature Switches", "id-profile-navigation",
     "If this switch is on you will see the link in the topbar taking you through to the users profile or sign in..",
@@ -232,6 +232,10 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to trail a right hand side most popular component",
     safeState = Off)
 
+  val ABRightMostPopularControl = Switch("A/B Tests", "ab-right-most-popular-control",
+    "If this is switched on an AB test runs as a control variant for right most popular",
+    safeState = Off)
+
   // Sport Switch
 
   val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
@@ -243,10 +247,6 @@ object Switches extends Collections {
   val IntegrationTestSwitch = Switch("Unwired Test Switch", "integration-test-switch",
     "Switch that is only used while running tests. You never need to change this switch.",
     safeState = Off)
-
-  val FaciaSwitch = Switch("Facia", "facia",
-    "Switch to redirect to facia if request has X-Gu-Facia=true",
-    safeState = Off  )
 
   val UkAlphaSwitch = Switch("Facia", "facia-uk-alpha",
     "If this is switched on then UK-Alpha will be served for requests with the cookie GU_UK_ALPHA",
@@ -297,7 +297,6 @@ object Switches extends Collections {
     LiveCricketSwitch,
     LiveStatsSwitch,
     UserzoomSwitch,
-    FaciaSwitch,
     AdSlotImpressionStatsSwitch,
     CssFromStorageSwitch,
     ElasticSearchSwitch,
@@ -310,6 +309,7 @@ object Switches extends Collections {
     ABOnwardIntrusive,
     ABOnwardHighlightsPanel,
     ABAlphaComm,
+    ABRightMostPopularControl,
     ABMobileFacebookAutosignin,
     ABRightMostPopular,
     AdDwellTimeLoggerSwitch,

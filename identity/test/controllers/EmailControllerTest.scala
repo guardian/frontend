@@ -1,11 +1,11 @@
 package controllers
 
 import org.scalatest.{ShouldMatchers, path}
+import services._
 import services.{ReturnUrlVerifier, IdRequestParser, IdentityUrlBuilder}
 import idapiclient.{ScGuU, IdApiClient}
 import conf.{FrontendIdentityCookieDecoder, IdentityConfiguration}
 import org.scalatest.mock.MockitoSugar
-import utils.AuthRequest
 import test.{FakeCSRFRequest, TestRequest, Fake}
 import play.api.mvc.{RequestHeader, Request, SimpleResult}
 import scala.concurrent.Future
@@ -21,6 +21,7 @@ import scala.Some
 import services.IdentityRequest
 import client.Error
 import idapiclient.TrackingData
+import actions.AuthRequest
 
 
 class EmailControllerTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
@@ -29,6 +30,7 @@ class EmailControllerTest extends path.FreeSpec with ShouldMatchers with Mockito
   val api = mock[IdApiClient]
   val idRequestParser = mock[IdRequestParser]
   val idUrlBuilder = mock[IdentityUrlBuilder]
+  val authService = mock[AuthenticationService]
   val cookieDecoder = mock[FrontendIdentityCookieDecoder]
   val idRequest = mock[IdentityRequest]
   val trackingData = mock[TrackingData]
@@ -38,7 +40,7 @@ class EmailControllerTest extends path.FreeSpec with ShouldMatchers with Mockito
   val testAuth = new ScGuU("abc")
   val error = Error("Test message", "Test description", 500)
 
-  val authAction  = new utils.AuthAction(cookieDecoder, idRequestParser, idUrlBuilder) {
+  val authAction  = new actions.AuthAction(authService) {
     override protected def invokeBlock[A](request: Request[A], block: (AuthRequest[A]) => Future[SimpleResult]): Future[SimpleResult] = {
       block(AuthRequest(request, user, testAuth))
     }

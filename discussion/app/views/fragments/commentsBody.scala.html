@@ -19,6 +19,7 @@
 
     <div class="js-new-comments"></div>
 
+    <div class="show-more__container show-more__container--newer">
     @if(page.currentPage != 1){
 
     <div class="d-discussion__show-more d-discussion__show-more--newer">
@@ -32,6 +33,7 @@
         </a>
     </div>
     }
+    </div>
 
     <ul class="d-thread d-thread--top-level">
         @page.comments.map{ comment =>
@@ -40,6 +42,7 @@
         <li class="d-image-fade u-h"></li>
     </ul>
     
+    <div class="show-more__container show-more__container--older">
     @if(page.currentPage + 1 <= page.pages){
     <div class="d-discussion__show-more d-discussion__show-more--older discussion__heading">
         <a href="@LinkTo{/@page.id?page=@(page.currentPage + 1)}"
@@ -52,6 +55,7 @@
         </a>
     </div>
     }
+    </div>
 
     <div class="d-discussion__show-more d-discussion__show-more--featured discussion__heading u-h">
         <a class="js-show-more-top-comments"

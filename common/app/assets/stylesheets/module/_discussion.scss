@@ -460,6 +460,15 @@ $replyIndent: 26px;
     }
 }
 
+/* New Discussion
+   ===========================================================================*/
+.discussion--closed {
+    .d-comment__action--reply,
+    .d-comment__action--pick {
+        display: none;
+    }
+}
+
 
 /* Top Comments
    ========================================================================== */
