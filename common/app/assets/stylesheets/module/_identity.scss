@@ -149,19 +149,12 @@
     }
 }
 
-.user-avatar {
-  float: left;
-  height: 60px;
-  width: 60px;
-  margin-right: 10px;
-  display: none;
-
-  img {
+.user-avatar,
+.user-avatar__image {
     float: left;
     height: 60px;
     width: 60px;
     margin-right: 10px;
-  }
 }
 
 form #publicFields_aboutMe {

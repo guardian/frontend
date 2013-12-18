@@ -8,10 +8,10 @@ define([
         $(".user-avatar").each(function(){
             var container = bonzo(this),
                 updating = bonzo(bonzo.create("<div class='is-updating'></div>")),
-                avatar = bonzo(bonzo.create("<img />")),
+                avatar = bonzo(bonzo.create("<img class='user-avatar__image' />")),
                 userId = container.data("userid");
             container
-                .css("display", "block");
+                .removeClass("is-hidden");
             updating
                 .css("display", "block")
                 .appendTo(container);

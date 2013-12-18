@@ -92,6 +92,20 @@
 .d-discussion--not-staff .d-staff-required {
     display: none;
 }
+.d-discussion__error {
+    background: #ffcc66;
+    margin-top: $baseline*2;
+    padding: $baseline*2 $gutter;
+}
+
+/* New Discussion
+   ===========================================================================*/
+.discussion--closed {
+    .d-comment__action--reply,
+    .d-comment__action--pick {
+        display: none;
+    }
+}
 
 /* New Comment
    ===========================================================================*/
