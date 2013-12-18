@@ -1,27 +1,27 @@
-@(config: Config, collection: Collection, style: Container, containerIndex: Int, showSize: Int = 4)(implicit request: RequestHeader)
+@(config: Config, collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader)
 
-<ul class="unstyled l-row l-row--items-2 v3-collection">
+<ul class="unstyled l-row l-row--items-2 collection">
     @collection.items.slice(0, 1).zipWithIndex.map{ case (trail, index) =>
-        <li class="l-row__item v3-collection__item v3-collection__item--volume-2">
+        <li class="l-row__item collection__item collection__item--volume-2">
             @fragments.items.standard(trail, index, containerIndex, "div")
         </li>
     }
     @collection.items.slice(1, 2).zipWithIndex.map{ case (trail, index) =>
-        <li class="l-row__item v3-collection__item">
+        <li class="l-row__item collection__item">
             @fragments.items.standard(trail, index, containerIndex, "div")
         </li>
     }
 </ul>
-<ul class="unstyled l-row l-row--items-3 v3-collection">
+<ul class="unstyled l-row l-row--items-3 collection">
     @collection.items.slice(2, 5).zipWithIndex.map{ case (trail, index) =>
-        <li class="l-row__item v3-collection__item">
+        <li class="l-row__item collection__item">
             @fragments.items.standard(trail, index, containerIndex, "div")
         </li>
     }
 </ul>
-<ul class="unstyled l-row l-row--items-4 v3-collection">
+<ul class="unstyled l-row l-row--items-4 collection">
     @collection.items.slice(5, 9).zipWithIndex.map{ case (trail, index) =>
-        <li class="l-row__item v3-collection__item">
+        <li class="l-row__item collection__item">
             @fragments.items.standard(trail, index, containerIndex, "div")
         </li>
     }
