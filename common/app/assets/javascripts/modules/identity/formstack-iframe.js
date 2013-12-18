@@ -22,9 +22,12 @@ define([
 
             bean.on(window, 'resize', self.refreshHeight);
 
-            // Listen for load of form confirmation page,
+            // Listen for load of form confirmation or error page,
             // which has no form, so won't instantiate the Formstack module
-            bean.on(el, 'load', self.refreshHeight);
+            bean.on(el, 'load', function(event) {
+                self.show();
+                self.refreshHeight();
+            });
         };
 
         self.onMessage = function(event) {
