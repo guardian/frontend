@@ -64,7 +64,7 @@ define([
         };
 
         self.show = function() {
-            $(el).removeClass('u-h');
+            $(el).removeClass('is-hidden');
         };
 
     }
