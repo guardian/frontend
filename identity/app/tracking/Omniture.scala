@@ -53,6 +53,23 @@ trait Omniture {
     )
     new IdentityPage(id, webTitle, analyticsName, Some(newMetadata)) with TrackingParams
   }
+
+  def accountEdited(idRequest: IdentityRequest) : IdentityPage with TrackingParams = {
+    val newMetadata = addMetadata(
+      "returnUrl" -> idRequest.returnUrl,
+      "content-type" -> "userid", // For the no js omniture tracking
+      "omnitureEvent" -> "event35"
+    )
+    new IdentityPage(id, webTitle, analyticsName, Some(newMetadata)) with TrackingParams
+  }
+
+  def tracking(idRequest: IdentityRequest) : IdentityPage with TrackingParams = {
+    val newMetadata = addMetadata(
+      "returnUrl" -> idRequest.returnUrl,
+      "content-type" -> "userid" // For the no js omniture tracking
+    )
+    new IdentityPage(id, webTitle, analyticsName, Some(newMetadata)) with TrackingParams
+  }
 }
 
 trait TrackingParams {

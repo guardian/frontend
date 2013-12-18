@@ -50,6 +50,7 @@
     }
     .item__standfirst {
         display: block;
+        @include rem((margin-top: $gs-baseline));
     }
     .item--has-image {
         .item__standfirst {
@@ -60,87 +61,104 @@
             display: block;
         }
     }
+}
 
-    .collection {
-        @include rem((
+.v3-collection {
+    @include rem((
         margin-left: $gutter/2 * -1,
-            margin-right: $gutter/2 * -1
-        ));
-        // Cap new collections to a width of 12 columns
-        @include mq(wide) {
-            @include rem((width: gs-span(12) + $gs-gutter));
-            margin: 0 auto;
-        }
+        margin-right: $gutter/2 * -1
+    ));
+    // Cap new collections to a width of 12 columns
+    @include mq(wide) {
+        @include rem((width: gs-span(12) + $gs-gutter));
+        margin: 0 auto;
     }
-    .collection__item {
-        position: relative; // Replace .item as a relative context
+}
+.v3-collection__item {
+    position: relative; // Replace .item as a relative context
 
-        @include rem((
-        padding-bottom: $gs-baseline*2,
-            margin-bottom: $gs-baseline
-        ));
+    @include rem((
+        padding-bottom: 20px,
+        margin-bottom: $gs-baseline
+    ));
 
-        & + .collection__item {
-            @include vertical-item-separator; // Restore inter-item separator
-        }
+    & + .v3-collection__item {
+        @include vertical-item-separator; // Restore inter-item separator
     }
+}
 
-    // Volume
-    .l-row--items-2 .collection__item--volume-2 {
-        .item__media-wrapper {
-            @include mq($to: mobileLandscape) {
-                float: none;
-                margin-right: 0;
-                width: 100%;
-            }
-            @include mq(mobileLandscape, 599px) {
-                @include rem((
+// Volume
+.l-row--items-2 .v3-collection__item--volume-2 {
+    .item__media-wrapper {
+        @include mq($to: mobileLandscape) {
+            float: none;
+            margin-right: 0;
+            width: 100%;
+        }
+        @include mq(mobileLandscape, 599px) {
+            @include rem((
                 width: gs-span(3)
-                ));
-            }
-            @include mq(600px, tablet) {
-                @include rem((
+            ));
+        }
+        @include mq(600px, tablet) {
+            @include rem((
                 width: gs-span(4)
-                ));
+            ));
+        }
+    }
+    .item__title {
+        @include fs-headline(3, true);
+    }
+
+    @include mq(tablet) {
+        @include flex-grow(2);
+
+        .item--has-image {
+            .item__title {
+                @include fs-headline(4, true);
             }
         }
-        .item__title {
-            @include fs-headline(3, true);
+        .item--has-no-image {
+            .item__title {
+                @include fs-headline(7, true);
+            }
         }
-
+    }
+    .item__media-wrapper {
         @include mq(tablet) {
-            @include flex-grow(2);
+            float: left;
 
-            .item--has-image {
-                .item__title {
-                    @include fs-headline(4, true);
-                }
-            }
-            .item--has-no-image {
-                .item__title {
-                    @include fs-headline(7, true);
-                }
-            }
-        }
-        .item__media-wrapper {
-            @include mq(tablet) {
-                float: left;
-
-                @include rem((
+            @include rem((
                 width: 219px, // same size as the image in the right column
-                    margin-right: $gs-gutter/2
-                ));
-            }
-            @include mq(desktop) {
-                @include rem((
-                width: gs-span(4)
-                ));
-            }
+                margin-right: $gs-gutter/2
+            ));
         }
         @include mq(desktop) {
-            .item__title {
-                @include fs-headline(5, true);
-            }
+            @include rem((
+                width: gs-span(4)
+            ));
+        }
+    }
+    @include mq(desktop) {
+        .item__title {
+            @include fs-headline(5, true);
+        }
+    }
+}
+.container--news .l-row--items-2,
+.container--news .l-row--items-3 {
+    .item__standfirst {
+        display: block;
+    }
+}
+.container--news .l-row--items-4 {
+    @include mq($to: tablet) {
+        .item__title,
+        .item__byline {
+            @include fs-headline(1, true);
+        }
+        .item__media-wrapper {
+            @include rem((width: 88px));
         }
     }
 }
