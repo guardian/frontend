@@ -1,6 +1,6 @@
 define([
-    'common',
-    'utils/ajax',
+    'common/common',
+    'common/utils/ajax',
     'bonzo'
 ], function (
     common,
@@ -36,7 +36,7 @@ define([
                     }
                 },
                 function (req) {
-                    common.mediator.emit('modules:error', 'Failed to load football table: ' + req.statusText, 'modules/footballtables.js');
+                    common.mediator.emit('modules:error', 'Failed to load football table: ' + req.statusText, 'common/modules/footballtables.js');
                 }
             );
         };

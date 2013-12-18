@@ -3,8 +3,8 @@
     Description: Pull in more trailblocks dynamically
 */
 define([
-    'common',
-    'utils/ajax',
+    'common/common',
+    'common/utils/ajax',
     'bonzo',
     'bean',
     'qwery'
@@ -133,7 +133,7 @@ define([
                             });
                         },
                         function(req) {
-                            common.mediator.emit('module:error', 'Failed to load more trailblocks: ' + req.statusText, 'modules/trailblock-show-more.js');
+                            common.mediator.emit('module:error', 'Failed to load more trailblocks: ' + req.statusText, 'common/modules/trailblock-show-more.js');
                         }
                     ).always(
                         function(resp) {

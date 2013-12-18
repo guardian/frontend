@@ -1,16 +1,16 @@
 define([
-    '$',
+    'common/$',
     'qwery',
     'bonzo',
-    'utils/ajax',
-    'modules/userPrefs',
-    'utils/detect',
-    'modules/adverts/document-write',
-    'modules/adverts/documentwriteslot',
-    'modules/adverts/dimensionMap',
-    'modules/adverts/audience-science',
-    'modules/adverts/quantcast',
-    'modules/adverts/userAdTargeting'
+    'common/utils/ajax',
+    'common/modules/userPrefs',
+    'common/utils/detect',
+    'common/modules/adverts/document-write',
+    'common/modules/adverts/documentwriteslot',
+    'common/modules/adverts/dimensionMap',
+    'common/modules/adverts/audience-science',
+    'common/modules/adverts/quantcast',
+    'common/modules/adverts/userAdTargeting'
 
 ],
 function (

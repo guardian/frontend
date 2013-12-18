@@ -1,8 +1,8 @@
 define([
-    'common',
+    'common/common',
     'bonzo',
     'bean',
-    'modules/userPrefs'
+    'common/modules/userPrefs'
 ], function (
     common,
     bonzo,

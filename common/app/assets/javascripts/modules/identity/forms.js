@@ -1,7 +1,7 @@
 define([
     'bean',
     'bonzo',
-    'utils/ajax'
+    'common/utils/ajax'
 ], function (
     bean,
     bonzo,

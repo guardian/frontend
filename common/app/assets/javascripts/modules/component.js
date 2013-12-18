@@ -2,7 +2,7 @@ define([
     'bean',
     'qwery',
     'bonzo',
-    'utils/ajax'
+    'common/utils/ajax'
 ], function(
     bean,
     qwery,

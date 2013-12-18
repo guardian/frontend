@@ -4,7 +4,7 @@
     Common functions to simplify access to page data
  */
 define([
-    'common'
+    'common/common'
 ], function (
     common
 ) {

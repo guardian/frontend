@@ -3,7 +3,7 @@
  Description: Item for hightlight panel
  */
 define([
-    'modules/component',
+    'common/modules/component',
     'bonzo'
 ], function (
     Component,

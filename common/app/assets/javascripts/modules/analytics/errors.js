@@ -1,7 +1,7 @@
 /*global Event:true */
 define([
-    'modules/userPrefs',
-    'common'
+    'common/modules/userPrefs',
+    'common/common'
 ], function (
     userPrefs,
     common
@@ -49,7 +49,7 @@ define([
                     }
                     return false;
                 } else {
-                    var url = makeUrl(error, (filename === 'modules/adverts/documentwriteslot.js' || message === 'Script error.'));
+                    var url = makeUrl(error, (filename === 'common/modules/adverts/documentwriteslot.js' || message === 'Script error.'));
                     createImage(url);
                     return (prefs.isOn('showErrors')) ? false : true;
                 }

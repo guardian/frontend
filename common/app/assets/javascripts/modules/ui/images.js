@@ -1,4 +1,4 @@
-define(['$', 'utils/to-array', 'bonzo', 'utils/mediator', 'imager', 'utils/detect'], function ($, toArray, bonzo, mediator, imager, detect) {
+define(['common/$', 'common/utils/to-array', 'bonzo', 'common/utils/mediator', 'imager', 'common/utils/detect'], function ($, toArray, bonzo, mediator, imager, detect) {
 
     var images = {
 

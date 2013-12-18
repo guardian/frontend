@@ -1,9 +1,9 @@
 define([
-    "utils/mediator",
-    "modules/identity/forms",
-    "modules/identity/password-strength",
-    "modules/identity/api",
-    "modules/adverts/userAdTargeting"
+    "common/utils/mediator",
+    "common/modules/identity/forms",
+    "common/modules/identity/password-strength",
+    "common/modules/identity/api",
+    "common/modules/adverts/userAdTargeting"
 ], function(
     mediator,
     Identity,

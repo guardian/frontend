@@ -1,12 +1,12 @@
 define([
-'utils/ajax',
+'common/utils/ajax',
 'bonzo',
 'qwery',
-'modules/component',
-'modules/identity/api',
-'modules/discussion/comment-box',
-'modules/discussion/recommend-comments',
-'$'
+'common/modules/component',
+'common/modules/identity/api',
+'common/modules/discussion/comment-box',
+'common/modules/discussion/recommend-comments',
+'common/$'
 ], function(
 ajax,
 bonzo,

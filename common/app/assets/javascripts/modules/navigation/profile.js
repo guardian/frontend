@@ -1,8 +1,8 @@
 define([
-    'common',
-    'utils/ajax',
+    'common/common',
+    'common/utils/ajax',
     'bonzo',
-    'modules/identity/api'
+    'common/modules/identity/api'
 ], function(
     common,
     ajax,

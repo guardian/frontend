@@ -1,6 +1,6 @@
 define([
-    'common',
-    'modules/identity/api'
+    'common/common',
+    'common/modules/identity/api'
 ], function(
     common,
     Id

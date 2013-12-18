@@ -1,13 +1,13 @@
 /*global guardian */
 define([
-    'common',
+    'common/common',
     'qwery',
     'bonzo',
     'bean',
-    'utils/detect',
-    'modules/analytics/adverts',
-    'modules/analytics/livestats-ads',
-    'modules/adverts/sticky',
+    'common/utils/detect',
+    'common/modules/analytics/adverts',
+    'common/modules/analytics/livestats-ads',
+    'common/modules/adverts/sticky',
     'lodash/objects/transform',
     'lodash/arrays/findLastIndex',
     'lodash/collections/map'

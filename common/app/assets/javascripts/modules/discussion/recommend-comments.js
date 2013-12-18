@@ -1,8 +1,8 @@
 define([
-    'common',
+    'common/common',
     'bean',
     'qwery',
-    'modules/discussion/api'
+    'common/modules/discussion/api'
 ], function(
     common,
     bean,
