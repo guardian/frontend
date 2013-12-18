@@ -1,6 +1,6 @@
 define([
     "bonzo",
-    "modules/identity/facebook-authorizer"
+    "common/modules/identity/facebook-authorizer"
 ], function(
     bonzo,
     FacebookAuthorizer

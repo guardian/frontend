@@ -1,4 +1,4 @@
-define(['modules/experiments/ab', 'fixtures/ab-test', 'modules/analytics/mvt-cookie'], function(ab, ABTest, mvtCookie) {
+define(['common/modules/experiments/ab', 'fixtures/ab-test', 'common/modules/analytics/mvt-cookie'], function(ab, ABTest, mvtCookie) {
 
     describe('AB Testing', function() {
 

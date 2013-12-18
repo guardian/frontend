@@ -1,5 +1,5 @@
 define([
-    'modules/onward/history',
+    'common/modules/onward/history',
     'fixtures/history/contains',
     'fixtures/history/max',
 ], function(History, contains, max) {

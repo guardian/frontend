@@ -1,4 +1,4 @@
-define(['utils/mediator', 'utils/ajax', 'modules/onward/sequence'], function(mediator, ajax, sequence) {
+define(['common/utils/mediator', 'common/utils/ajax', 'common/modules/onward/sequence'], function(mediator, ajax, sequence) {
 
     describe("Sequence", function() {
         var sequenceLoadedCallback,

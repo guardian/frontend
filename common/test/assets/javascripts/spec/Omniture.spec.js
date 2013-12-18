@@ -1,4 +1,4 @@
-define(['analytics/omniture', 'common'], function(Omniture, common) {
+define(['analytics/omniture', 'common/common'], function(Omniture, common) {
 
     describe("Omniture", function() {
 

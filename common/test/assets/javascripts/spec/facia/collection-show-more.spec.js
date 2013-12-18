@@ -1,4 +1,4 @@
-define(['modules/facia/collection-show-more', 'bonzo', '$', 'utils/mediator', 'bean'], function(CollectionShowMore, bonzo, $, mediator, bean) {
+define(['common/modules/facia/collection-show-more', 'bonzo', 'common/$', 'common/utils/mediator', 'bean'], function(CollectionShowMore, bonzo, $, mediator, bean) {
 
     describe('Collection Show More', function() {
 

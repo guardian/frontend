@@ -1,4 +1,4 @@
-define(['modules/pageconfig'], function(pageConfig) {
+define(['common/modules/pageconfig'], function(pageConfig) {
 
     describe('Page Config', function() {
         
