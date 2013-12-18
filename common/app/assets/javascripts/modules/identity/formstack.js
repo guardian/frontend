@@ -31,7 +31,7 @@ define([
                 sectionHeader: 'formstack-heading',
                 sectionHeaderFirst: 'formstack-heading--first',
                 sectionText: 'formstack-section',
-                hide: 'u-h'
+                hide: 'is-hidden'
             },
             fsSelectors: {
                 form: '#fsForm' + formId,
