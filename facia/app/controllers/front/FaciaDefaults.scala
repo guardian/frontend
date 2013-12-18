@@ -8,11 +8,6 @@ trait FaciaDefaults {
 
   val defaultStyle = "regular-stories"
   val emptyCollection = Collection(items=Nil, displayName=None)
-  val defaultIds: List[String] = List(
-    "uk", "uk/commentisfree", "uk/sport", "uk/culture", "uk/business", "uk/money",
-    "us", "us/commentisfree", "us/sport", "us/culture", "us/business", "us/money",
-    "au", "au/commentisfree", "au/sport", "au/culture", "au/business", "au/money"
-  )
 
   val frontsMap: Map[String, List[String]] = Map(
     ("uk",                List("uk/news/regular-stories")),
@@ -57,7 +52,7 @@ trait FaciaDefaults {
   )
 
   def getDefaultConfig: JsObject = Json.obj(
-    "fronts"      -> defaultIds.foldLeft(Json.obj()){case (m, id) => m ++
+    "fronts"      -> frontsMap.keys.foldLeft(Json.obj()){case (m, id) => m ++
       Json.obj(id ->
         Json.obj("collections" ->
           Json.arr(frontsMap.get(id))
