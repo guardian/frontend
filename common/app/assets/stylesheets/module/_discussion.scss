@@ -431,6 +431,7 @@ $replyIndent: 26px;
 }
 
 .js-show-more-replies {
+    
     margin-left: $replyIndent;
 
     @include mq($side-meta-breakpoint) {
@@ -770,7 +771,18 @@ $replyIndent: 26px;
     color: $c-neutral1;
     margin-bottom: $baseline*4;
 }
-.d-comment-box {}
+.d-comment-box { 
+    
+    @include mq($side-meta-breakpoint) {
+        margin-left: 160px;
+    }
+    @include mq(leftCol) {
+        margin-left: $a-leftCol-width + $gs-gutter;
+    }
+    @include mq(wide) {
+        margin-left:  $a-leftColWide-width + $gs-gutter;
+    }
+}
 .d-comment-box__body {
     @include box-sizing(border-box);
     border: 1px solid $c-neutral3;
