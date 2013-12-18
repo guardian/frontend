@@ -4,8 +4,9 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.Matchers
 import org.scalatest.FlatSpec
+import common.UsesElasticSearch
 
-class ResultsControllerTest extends FlatSpec with Matchers {
+class ResultsControllerTest extends FlatSpec with Matchers  with UsesElasticSearch {
   
   "Results Controller" should "200 when content type is results" in Fake {
     val result = football.controllers.ResultsController.render()(TestRequest())
