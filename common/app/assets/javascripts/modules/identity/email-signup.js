@@ -4,10 +4,12 @@ define([
     "utils/ajax",
     "modules/identity/api"
 ], function(bean, bonzo, ajax, IdApi) {
+
+	/* TODO: use local storage to hide if already sign up */
 	
 	var EmailSignup = function (context, variant) {
 
-		var container = context.querySelector(".email-signup"+(variant ? "___"+variant : ""));
+		var container = context.querySelector(".email-signup" + (variant ? "___" + variant : ""));
 		
 		this.DOM = {
 			container: container,
@@ -18,12 +20,12 @@ define([
 
 		for (var key in this.DOM) {
 			if (this.DOM.hasOwnProperty(key)) {
-				this.DOM["$"+key] = bonzo(this.DOM[key]);
+				this.DOM["$" + key] = bonzo(this.DOM[key]);
 			}
 		}
 
 		if (this.DOM.container && (this.DOM.container.children && this.DOM.container.children.length > 0) && IdApi.isUserLoggedIn()) {
-			this.DOM.$container.removeClass("u-h");
+			this.DOM.$container.removeClass("is-hidden");
 			bean.on(this.DOM.button, "click", this.requestEmailSignup.bind(this));
 		}
 	};

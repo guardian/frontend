@@ -29,9 +29,18 @@ define([
                 }
             },
             {
-                id: 'email-signup-left',
+                id: 'email-signup-left-body',
                 test: function() {
-                    this.component = new EmailSignup(document.getElementById('preload-1'), 'left');
+                    var hasCards = document.querySelectorAll('.article-body .card-wrapper').length > 0; // Left-Body variant should only show when no left-hand-cards present
+                    if (!hasCards) {
+                        this.component = new EmailSignup(document.getElementById('preload-1'), 'left-body');
+                    }
+                }
+            },
+            {
+                id: 'email-signup-left-meta',
+                test: function() {
+                    this.component = new EmailSignup(document.getElementById('preload-1'), 'left-meta');
                 }
             }
         ];

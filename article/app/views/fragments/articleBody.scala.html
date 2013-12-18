@@ -57,6 +57,11 @@
 
                         @fragments.article.dateline(article.webPublicationDate, secondary=true)
                         <div class="js-comment-count"></div>
+                        @if(ABEmailSignup.isSwitchedOn) {
+                            <div class="email-signup email-signup___left-meta is-hidden">
+                                @fragments.emailSignup(article, Edition(request))
+                            </div>
+                        }
                     </div>
 
                     <div class="js-article__container article__container u-cf">
@@ -71,17 +76,21 @@
                             </div>
                         }
 
-                        <div class="email-signup email-signup___left u-h">
-                            @fragments.emailSignup(article, Edition(request))
-                        </div>                        
+                        @if(ABEmailSignup.isSwitchedOn) {
+                            <div class="email-signup email-signup___left-body is-hidden">
+                                @fragments.emailSignup(article, Edition(request))
+                            </div>
+                        }
                     </div>
 
                     <div class="social-wrapper">
                         @fragments.social(article)
                     </div>
-                    <div class="email-signup email-signup___inline u-h">
-                        @fragments.emailSignup(article, Edition(request))
-                    </div>
+                    @if(ABEmailSignup.isSwitchedOn) {
+                        <div class="email-signup email-signup___inline is-hidden">
+                            @fragments.emailSignup(article, Edition(request))
+                        </div>
+                    }
                 </div>
                 <div class="article__secondary-column" aria-hidden="true">
                     <div class="article__secondary-column__inner">

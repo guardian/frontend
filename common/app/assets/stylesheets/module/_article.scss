@@ -539,7 +539,7 @@ video {
 
 }
 
-.email-signup___left { // Left AB variant
+.email-signup___left-body, { // Left-body AB variant
     top: 0;
     @include mq(leftCol) {
         position: absolute;
@@ -552,7 +552,6 @@ video {
         width: gs-span(3) - 20;
         left: -240px;
     }
-
 }
 
 .email-signup.loading {
