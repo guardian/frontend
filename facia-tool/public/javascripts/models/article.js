@@ -77,10 +77,10 @@ define([
 
             this.populate(opts);
 
-            // Populate sublinks
+            // Populate supporting
             if (this.parentType !== 'Article') {
-                this.meta.sublinks = new Group({
-                    items: _.map((opts.meta || {}).sublinks, function(item) {
+                this.meta.supporting = new Group({
+                    items: _.map((opts.meta || {}).supporting, function(item) {
                         return new Article(_.extend(item, {
                             parent: self,
                             parentType: 'Article'
@@ -91,8 +91,8 @@ define([
                     omitItem: self.save.bind(self)
                 });
 
-                contentApi.decorateItems(self.meta.sublinks.items());
-                ophanApi.decorateItems(self.meta.sublinks.items());
+                contentApi.decorateItems(self.meta.supporting.items());
+                ophanApi.decorateItems(self.meta.supporting.items());
             }
         }
 
@@ -149,14 +149,14 @@ define([
                 .filter(function(p){ return _.isString(p[1]) ? p[1].replace(/\s*/g, '').length > 0 : true; })
                 // reject vals that don't differ from the props (if any) that they're overwriting:
                 .filter(function(p){ return _.isUndefined(self.props[p[0]]) || self.props[p[0]]() !== p[1]; })
-                // serialise sublinks
+                // serialise supporting
                 .map(function(p) {
-                    if (p[0] === 'sublinks') {
+                    if (p[0] === 'supporting') {
                         // but only on first level Articles, i.e. those whose parent isn't an Article
-                        return [p[0], self.parentType === 'Article' ? [] : _.map(p[1].items(), function(sublink) {
+                        return [p[0], self.parentType === 'Article' ? [] : _.map(p[1].items(), function(item) {
                             return {
-                                id:   sublink.props.id(),
-                                meta: sublink.getMeta()
+                                id:   item.props.id(),
+                                meta: item.getMeta()
                             };
                         })];
                     }
