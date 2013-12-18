@@ -4,14 +4,16 @@ define([
     "modules/identity/password-strength",
     "modules/identity/api",
     //"modules/identity/email-signup",
-    "modules/adverts/userAdTargeting"
+    "modules/adverts/userAdTargeting",
+    "modules/discussion/user-avatars"
 ], function(
     mediator,
     Identity,
     PasswordStrength,
     Id,
     //EmailSignup,
-    UserAdTargeting
+    UserAdTargeting,
+    UserAvatars
 ) {
 
     var modules = {
@@ -45,6 +47,11 @@ define([
             mediator.on('page:identity:ready', function(config, context) {
                 UserAdTargeting.requestUserSegmentsFromId();
             });
+        },
+        userAvatars: function() {
+            mediator.on('page:identity:ready', function(config, context) {
+                UserAvatars.init();
+            });
         }
         // emailSignup : function () {
         //     mediator.on('page:identity:ready', function(config, context) {
@@ -63,6 +70,7 @@ define([
             modules.passwordToggle();
             modules.userAdTargeting();
             //modules.emailSignup();
+            modules.userAvatars();
         }
         mediator.emit("page:identity:ready", config, context);
     };

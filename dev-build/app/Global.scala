@@ -37,7 +37,7 @@ object DevCacheWarningFilter extends EssentialFilter with ExecutionContexts {
 object DevJsonExtensionFilter extends EssentialFilter with ExecutionContexts with Requests {
   def apply(next: EssentialAction) = new EssentialAction {
     def apply(rh: RequestHeader) = {
-      if (rh.isJson && !rh.path.endsWith(".json")) {
+      if (rh.isJson && !rh.path.endsWith(".json") && !rh.path.endsWith(".js")) {
         // makes it easy for devs to see what has happened
         println("\n\n\n---------------------------- WARNING ------------------------------------")
         println(s"URL ${rh.path} does not have a .json extension")

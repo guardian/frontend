@@ -9,6 +9,7 @@ import collection.JavaConversions._
 import views.support.{Naked, ImgSrc}
 import views.support.StripHtmlTagsAndUnescapeEntities
 import com.gu.openplatform.contentapi.model.{Content => ApiContent,Element =>ApiElement}
+import play.api.libs.json.JsValue
 
 class Content protected (val delegate: ApiContent) extends Trail with Tags with MetaData {
 
@@ -130,7 +131,7 @@ object Content {
     }
   }
 
-  def apply(delegate: ApiContent, metaData: Option[Map[String, String]]): Content = {
+  def apply(delegate: ApiContent, metaData: Option[Map[String, JsValue]]): Content = {
     metaData match {
       case Some(metaData) => new ContentWithMetaData(delegate, metaData)
       case _ => apply(delegate)
@@ -268,7 +269,7 @@ class ImageContent(content: ApiContent) extends Content(content) {
   ) ++ mainPicture.flatMap(_.largestImage.map( "twitter:image:src" -> _.path ))
 }
 
-class ContentWithMetaData(content: ApiContent, metaData: Map[String, String]) extends Content(content) {
-  override lazy val headline: String = metaData.get("headline").getOrElse(super.headline)
-  override lazy val group: Option[String] = metaData.get("group")
+class ContentWithMetaData(content: ApiContent, metaData: Map[String, JsValue]) extends Content(content) {
+  override lazy val headline: String = metaData.get("headline").flatMap(_.asOpt[String]).getOrElse(super.headline)
+  override lazy val group: Option[String] = metaData.get("group").flatMap(_.asOpt[String])
 }

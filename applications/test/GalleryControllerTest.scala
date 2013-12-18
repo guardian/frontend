@@ -3,9 +3,10 @@ package test
 import play.api.test.Helpers._
 import org.scalatest.Matchers
 import org.scalatest.FlatSpec
+import common.UsesElasticSearch
 
 
-class GalleryControllerTest extends FlatSpec with Matchers {
+class GalleryControllerTest extends FlatSpec with Matchers with UsesElasticSearch {
 
   val galleryUrl = "news/gallery/2012/may/02/picture-desk-live-kabul-burma"
   val callbackName = "aFunction"
