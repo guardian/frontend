@@ -109,7 +109,6 @@ Loader.prototype.ready = function() {
             .fetch(topCommentsElem)
             .then(function appendTopComments() {
                 bonzo(self.topLoadingElem).addClass('u-h');
-                self.on('click', $(self.topComments.showMoreButton), self.topComments.showMore.bind(self.topComments)); // Module-hopping calls - refactor needed
             });
 
         this.mediator.on('module:topcomments:loadcomments', self.loadComments.bind(self));

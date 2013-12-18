@@ -105,7 +105,7 @@ Comments.prototype.user = null;
 /** @override */
 Comments.prototype.prerender = function() {
     var self = this,
-        heading = qwery(this.getClass('heading'), this.context)[0],
+        heading = qwery(this.getClass('heading'), '.discussion__comments__container')[0],
         commentCount = this.elem.getAttribute('data-comment-count'),
         initialShow = this.options.initialShow;
 

@@ -66,16 +66,8 @@ $side-meta-breakpoint: desktop;
     padding-top: $baseline*2;
     @include fs-data(5);
     position: relative;
-    //padding-bottom: $baseline*4;
-    @include mq($side-meta-breakpoint) {
-        padding-left: 160px;
-    }
-    @include mq(leftCol) {
-        padding-left: $a-leftCol-width + $gs-gutter;
-    }
-    @include mq(wide) {
-        padding-left:  $a-leftColWide-width + $gs-gutter;
-    }
+    
+    text-align: center;
     
     a {
         line-height: 30px;
@@ -115,6 +107,9 @@ $side-meta-breakpoint: desktop;
     border-top: 1px dotted $c-neutral5;    
 }
 
+.d-discussion--not-staff .d-staff-required {
+   display: none;
+}
 
 /* ==========================================================================
    Comment
@@ -265,7 +260,7 @@ $c-commentPickGrey: #f3f3f1;
 .d-comment__body {
     //color: black;
     color: $c-neutral1;
-    @include fs-data(4);
+    @include fs-data(5);
     //margin-top: $baseline*2;
     min-height: 2.5em;
     @include mq($side-meta-breakpoint) {
@@ -772,7 +767,7 @@ $replyIndent: 26px;
     margin-bottom: $baseline*4;
 }
 .d-comment-box { 
-    
+
     @include mq($side-meta-breakpoint) {
         margin-left: 160px;
     }
