@@ -248,10 +248,6 @@ object Switches extends Collections {
     "Switch that is only used while running tests. You never need to change this switch.",
     safeState = Off)
 
-  val FaciaSwitch = Switch("Facia", "facia",
-    "Switch to redirect to facia if request has X-Gu-Facia=true",
-    safeState = Off  )
-
   val UkAlphaSwitch = Switch("Facia", "facia-uk-alpha",
     "If this is switched on then UK-Alpha will be served for requests with the cookie GU_UK_ALPHA",
     safeState = Off
@@ -301,7 +297,6 @@ object Switches extends Collections {
     LiveCricketSwitch,
     LiveStatsSwitch,
     UserzoomSwitch,
-    FaciaSwitch,
     AdSlotImpressionStatsSwitch,
     CssFromStorageSwitch,
     ElasticSearchSwitch,
