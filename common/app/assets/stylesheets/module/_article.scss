@@ -517,6 +517,9 @@ video {
     }
 }
 
+/* Email Signup AB test
+   ========================================================================== */
+
 .email-signup {
     background-color: $c-neutral7;
     padding: 10px;
@@ -524,6 +527,32 @@ video {
     .is-updating {
         margin: 0 auto;
     }
+
+    @include mq($to: wide) {
+        .email-signup__title {
+            @include fs-header(1);            
+        }
+        .email-signup__copy {
+            @include fs-bodyCopy(1);
+        }
+    }
+
+}
+
+.email-signup___left { // Left AB variant
+    top: 0;
+    @include mq(leftCol) {
+        position: absolute;
+        left: ($a-leftCol-width + $gs-gutter)*-1;
+        width: $a-leftCol-width - 20;
+    }
+
+    @include mq(wide) {
+        position: absolute;
+        width: gs-span(3) - 20;
+        left: -240px;
+    }
+
 }
 
 .email-signup.loading {

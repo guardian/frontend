@@ -57,9 +57,6 @@
 
                         @fragments.article.dateline(article.webPublicationDate, secondary=true)
                         <div class="js-comment-count"></div>
-                        <div class="email-signup email-signup___left u-h">
-                            @fragments.emailSignup(article, Edition(request))
-                        </div>
                     </div>
 
                     <div class="js-article__container article__container u-cf">
@@ -73,6 +70,10 @@
                                 @fragments.keywordList(article.keywords)
                             </div>
                         }
+
+                        <div class="email-signup email-signup___left u-h">
+                            @fragments.emailSignup(article, Edition(request))
+                        </div>                        
                     </div>
 
                     <div class="social-wrapper">
