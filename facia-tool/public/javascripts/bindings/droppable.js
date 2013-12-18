@@ -23,7 +23,8 @@ define([
     ophanApi
 ) {
     var sourceList,
-        storage = window.localStorage;
+        storage = window.localStorage,
+        storageKey ='gu.fronts-tool.drag-source';
 
     function init() {
 
@@ -42,7 +43,7 @@ define([
                     var sourceItem = ko.dataFor(event.target);
 
                     if (sourceItem.constructor === Article) {
-                        storage.setItem('gu.fronts-tool.drag-source', JSON.stringify(sourceItem.get()));
+                        storage.setItem(storageKey, JSON.stringify(sourceItem.get()));
                     }
                     sourceList = ko.dataFor(element);
                 }, false);
@@ -132,10 +133,10 @@ define([
                     }
 
                     try {
-                        sourceItem = JSON.parse(storage.getItem('gu.fronts-tool.drag-source'));
+                        sourceItem = JSON.parse(storage.getItem(storageKey));
                     } catch(e) {}
 
-                    storage.removeItem('gu.fronts-tool.drag-source');
+                    storage.removeItem(storageKey);
 
                     if (!sourceItem || sourceItem.id !== id) {
                         sourceItem = undefined;
