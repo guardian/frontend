@@ -116,7 +116,7 @@ input[type=text] {
 .droppable {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    padding: 0 0 15px 0;
+    padding: 0 0 10px 0;
     -webkit-transition: background-color 50ms;
     -moz-transition: background-color 50ms;
     transition: background-color 50ms;
@@ -416,11 +416,11 @@ button {
 }
 
 .group-name {
-    padding: 4px 0 0px 4px;
+    padding: 5px 0 0px 4px;
     font-size: 10px;
     line-height: 12px;
-    color: #999999;
-    text-transform: uppercase;
+    color: #666666;
+    text-transform: capitalize;
 }
 
 .search-form {
