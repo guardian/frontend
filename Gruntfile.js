@@ -47,7 +47,7 @@ module.exports = function (grunt) {
             compile: {
                 options: {
                     baseUrl: staticRequireDir,
-                    name: "application/app",
+                    name: "app",
                     out: staticTargetDir + "javascripts/bootstraps/app.js",
                     paths: {
                         bean:         "common/components/bean/bean",
@@ -260,7 +260,7 @@ module.exports = function (grunt) {
                     expand: true,
                     cwd: 'article/app/assets/javascripts',
                     src: ['**/*.js'],
-                    dest: staticRequireDir + 'application'
+                    dest: staticRequireDir
                 }]
             },
             images: {
