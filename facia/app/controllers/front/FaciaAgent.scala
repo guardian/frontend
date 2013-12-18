@@ -209,7 +209,7 @@ object QueryAgents {
 }
 
 trait ConfigAgent extends ExecutionContexts {
-  private val configAgent = AkkaAgent[JsValue](JsNull)
+  private val configAgent = AkkaAgent[JsValue](FaciaDefaults.getDefaultConfig)
 
   def refresh() = S3FrontsApi.getMasterConfig map {s => configAgent.send(Json.parse(s))}
 
