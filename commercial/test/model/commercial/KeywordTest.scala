@@ -5,6 +5,7 @@ import common.UsesElasticSearch
 import scala.concurrent.Await
 import scala.concurrent.duration._
 import conf.ContentApi
+import test.Fake
 
 class KeywordTest extends FlatSpec with Matchers with UsesElasticSearch {
 
@@ -14,7 +15,7 @@ class KeywordTest extends FlatSpec with Matchers with UsesElasticSearch {
     keyword.name should be("north-and-central-america")
   }
 
-  "lookup" should "find expected results using elastic search content API client" in {
+  "lookup" should "find expected results using elastic search content API client" in Fake {
     val keywords = Await.result(Keyword.lookup("Leisure"), atMost = 1.seconds)
 
     keywords.map(_.id) should contain allOf(
@@ -25,13 +26,13 @@ class KeywordTest extends FlatSpec with Matchers with UsesElasticSearch {
       )
   }
 
-  "lookup" should "ignore section filter when using elastic search content API client" in {
+  "lookup" should "ignore section filter when using elastic search content API client" in Fake {
     val keywords = Await.result(Keyword.lookup("France", section = Some("travel")), atMost = 10.seconds)
 
     keywords.size should be > 2
   }
 
-  "lookup" should "find expected results using Solr content API client" in {
+  "lookup" should "find expected results using Solr content API client" in Fake {
     implicit val contentApi = ContentApi
     val keywords = Await.result(Keyword.lookup("France", section = Some("travel")), atMost = 10.seconds)
 
