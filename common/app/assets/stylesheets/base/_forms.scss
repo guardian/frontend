@@ -139,6 +139,14 @@
     }
 }
 
+.textarea {
+    min-height: $baseline*20;
+}
+
+.textarea--long {
+    height: $baseline*40;
+}
+
 .submit-input {
     background: $c-newsDefault;
     border: 0 none;
