@@ -9,7 +9,8 @@ define([
     'modules/experiments/tests/onward-intrusive',
     'modules/experiments/tests/onward-highlights-panel',
     'modules/experiments/tests/alpha-comm',
-    'modules/experiments/tests/identity-email-signup'
+    'modules/experiments/tests/identity-email-signup',
+    'modules/experiments/tests/right-most-popular'
 ], function (
     common,
     store,
@@ -20,7 +21,8 @@ define([
     OnwardIntrusive,
     OnwardHighlightsPanel,
     AlphaComm,
-    EmailSignup
+    EmailSignup,
+    RightMostPopular
     ) {
 
     var TESTS = [
@@ -29,7 +31,8 @@ define([
             new OnwardIntrusive(),
             new OnwardHighlightsPanel(),
             new AlphaComm(),
-            new EmailSignup()
+            new EmailSignup(),
+            new RightMostPopular()
         ],
         participationsKey = 'gu.ab.participations';
 
