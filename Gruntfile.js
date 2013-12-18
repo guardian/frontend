@@ -253,6 +253,12 @@ module.exports = function (grunt) {
                     cwd: 'common/app/assets/javascripts',
                     src: ['**/*.js'],
                     dest: staticRequireDir + 'common'
+                },
+                {
+                    expand: true,
+                    cwd: 'common/test/assets/javascripts',
+                    src: ['**/*.js'],
+                    dest: staticRequireDir + 'common-test'
                 }]
             },
             article: {
@@ -504,13 +510,6 @@ module.exports = function (grunt) {
 
         // Recompile on change
         watch: {
-            js: {
-                files: ['common/app/{assets, public}/javascripts/**/*.js'],
-                tasks: ['compile:js'],
-                options: {
-                    spawn: false
-                }
-            },
             css: {
                 files: ['common/app/assets/stylesheets/**/*.scss'],
                 tasks: ['compile:css'],
@@ -588,7 +587,7 @@ module.exports = function (grunt) {
         grunt.config('casperjsLogFile', app + '.xml');
         grunt.task.run(['env:casperjs', 'casperjs:' + app]);
     });
-    grunt.registerTask('test', ['jshint:common', 'test:unit', 'test:integration']);
+    grunt.registerTask('test', ['jshint:common', 'test:unit:common', 'test:integration']);
     grunt.registerTask('test:unit', function(app) {
         grunt.config.set('karma.options.singleRun', (singleRun === false) && app ? false : true);
         grunt.task.run('karma' + (app ? ':' + app : ''));
