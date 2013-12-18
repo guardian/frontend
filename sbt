@@ -2,19 +2,12 @@
 
 set -o errexit
 
-#Node package management for Grunt build steps
-
-bundle install --system
-npm install
-
 NPM_EXIT=$?
 
 if [ $NPM_EXIT == "1" ]; then
    exit 1
 fi
 
-# do an initial grunt compile - mute output and background it.
-grunt compile > /dev/null &
 
 if [ -f "~/.sbtconfig" ]; then
   . ~/.sbtconfig
