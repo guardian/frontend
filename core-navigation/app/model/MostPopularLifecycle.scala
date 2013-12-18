@@ -2,11 +2,7 @@ package model
 
 import common.Jobs
 import feed.{MostPopularExpandableAgent, MostPopularAgent}
-import play.api.{ Application => PlayApp, Play, GlobalSettings }
-import play.api.Play.current
-import common.editions.Uk
-import scala.concurrent.duration._
-import scala.concurrent.Await
+import play.api.{ Application => PlayApp, GlobalSettings }
 
 
 trait MostPopularLifecycle extends GlobalSettings {
@@ -19,10 +15,6 @@ trait MostPopularLifecycle extends GlobalSettings {
     Jobs.schedule("MostPopularAgentRefreshJob",  "0 * * * * ?") {
       MostPopularAgent.refresh()
       MostPopularExpandableAgent.refresh()
-    }
-
-    if (Play.isTest) {
-      Await.result(MostPopularAgent.refresh(Uk), 5.seconds)
     }
   }
 

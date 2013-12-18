@@ -1,10 +1,16 @@
 define([
     "modules/onward/sequence",
-    "modules/onward/right-ear"
+    "modules/onward/right-ear",
+    'utils/mediator',
+    'utils/detect'
 ], function(
     sequence,
-    RightEar
+    RightEar,
+    mediator,
+    detect
     ) {
+
+    var rendered = false;
 
     return function() {
 
@@ -14,18 +20,23 @@ define([
         this.audienceOffset = 0.3;
         this.description = 'Test whether onward components increase page views per session';
         this.canRun = function(config) {
-            return config.page.contentType === 'Article';
+            return detect.getBreakpoint() !== 'mobile' && detect.hasCSSSupport('position', 'fixed', true) &&
+            config.page.contentType === 'Article';
         };
         this.variants = [
             {
                 id: 'RightEar',
-                test: function (context) {
-                    sequence.init();
-                    var currentSequence = sequence.getSequence();
-                    if (currentSequence && currentSequence.items.length > 0) {
-                        var rightEar = new RightEar(currentSequence.items, {});
-                        rightEar.render();
-                    }
+                test: function (context, config) {
+
+                    mediator.on('modules:sequence:loaded', function(currentSequence) {
+                        if (currentSequence && currentSequence.items.length > 0 && !rendered) {
+                            var rightEar = new RightEar(currentSequence.items, {});
+                            rightEar.render();
+                            rendered = true;
+                        }
+                    });
+
+                    sequence.init('/' + config.page.pageId);
                 }
             }
         ];

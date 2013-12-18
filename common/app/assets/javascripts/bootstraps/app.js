@@ -10,7 +10,7 @@ define('bootstraps/app', [
     'modules/analytics/livestats',
     'modules/ui/fonts',
     'modules/router',
-    'modules/pageconfig',
+    'utils/config',
     'modules/adverts/userAdTargeting',
     'modules/discussion/api',
 
@@ -37,7 +37,7 @@ define('bootstraps/app', [
     LiveStats,
     Fonts,
     Router,
-    pageConfig,
+    config,
     UserAdTargeting,
     DiscussionApi,
 
@@ -102,9 +102,7 @@ define('bootstraps/app', [
         }
     };
 
-    var routes = function(rawConfig) {
-        var config = pageConfig(rawConfig);
-
+    var routes = function() {
         domReady(function() {
             var context = document.getElementById('preload-1'),
                 contextHtml = context.cloneNode(false).innerHTML;

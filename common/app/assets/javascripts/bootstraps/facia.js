@@ -7,6 +7,7 @@ define([
     // Modules
     'utils/detect',
     'utils/storage',
+    'utils/to-array',
     'modules/facia/popular',
     'modules/facia/collection-show-more',
     'modules/facia/container-toggle',
@@ -19,6 +20,7 @@ define([
     qwery,
     detect,
     storage,
+    toArray,
     popular,
     CollectionShowMore,
     ContainerToggle,
@@ -26,17 +28,13 @@ define([
     cricket
     ) {
 
-    var hiddenCollections = {},
-        modules = {
-
+    var modules = {
 
         showCollectionShowMore: function () {
             mediator.on('page:front:ready', function(config, context) {
                 $('.container', context).each(function(container) {
                     $('.js-collection--show-more', container).each(function(collection) {
-                        var collectionShowMore = new CollectionShowMore(collection);
-                        hiddenCollections[container.getAttribute('data-id')] = collectionShowMore;
-                        collectionShowMore.addShowMore();
+                        new CollectionShowMore(collection).addShowMore();
                     });
                 });
             });
@@ -45,8 +43,7 @@ define([
         showContainerToggle: function () {
             mediator.on('page:front:ready', function(config, context) {
                 $('.js-container--toggle', context).each(function(container) {
-                    new ContainerToggle(container)
-                        .addToggle();
+                    new ContainerToggle(container).addToggle();
                 });
             });
         },
@@ -65,14 +62,6 @@ define([
                                 .after(prependTo);
                             $collection.removeClass('collection--without-sport-stats')
                                 .addClass('collection--with-sport-stats');
-                            // remove the last two items
-                            var hiddenCollection = hiddenCollections[$container.attr('data-id')];
-                            if (hiddenCollection) {
-                                var items = qwery('.item', $collection[0])
-                                                .slice(-2);
-                                hiddenCollection.prependExtraItems(items);
-                                bonzo(items).remove();
-                            }
                         }
                     });
                     new FootballFixtures({
@@ -93,6 +82,16 @@ define([
                 // put popular after the first container if this is us-alpha front
                 if (config.page.pageId === 'us-alpha') {
                     opts.insertAfter = $('.container').first();
+                } else if (config.page.pageId === 'uk-alpha') {
+                    // place before the contributors container
+                    var containers = toArray(context.getElementsByClassName('container'));
+                    containers.some(function(container, i) {
+                        if ($(container).hasClass('container--comment')) {
+                            opts.insertAfter = containers[i -1];
+                            return true;
+                        }
+                    });
+
                 }
                 popular.render(config, opts);
             });

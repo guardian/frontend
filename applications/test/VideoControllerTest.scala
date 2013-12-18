@@ -3,10 +3,11 @@ package test
 import play.api.test.Helpers._
 import org.scalatest.Matchers
 import org.scalatest.FlatSpec
+import common.UsesElasticSearch
 
-class VideoControllerTest extends FlatSpec with Matchers {
+class VideoControllerTest extends FlatSpec with Matchers with UsesElasticSearch {
 
-  val videoUrl = "/uk/video/2012/jun/26/queen-enniskillen-northern-ireland-video"
+  val videoUrl = "uk/video/2012/jun/26/queen-enniskillen-northern-ireland-video"
   val callbackName = "aFunction"
 
   "Video Controller" should "200 when content type is video" in Fake {

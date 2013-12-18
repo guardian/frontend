@@ -15,7 +15,7 @@ import conf.Switches
 class FormstackController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
                                     idRequestParser: IdRequestParser,
                                     idUrlBuilder: IdentityUrlBuilder,
-                                    authAction: utils.AuthAction,
+                                    authAction: actions.AuthAction,
                                     formStackApi: FormstackApi)
   extends Controller with ExecutionContexts with SafeLogging {
 

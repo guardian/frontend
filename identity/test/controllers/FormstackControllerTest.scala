@@ -2,22 +2,23 @@ package controllers
 
 import org.scalatest.{ShouldMatchers, path}
 import org.scalatest.mock.MockitoSugar
-import services.{IdentityUrlBuilder, IdRequestParser, ReturnUrlVerifier}
+import services._
 import formstack.{FormstackForm, FormstackApi}
-import play.api.mvc.{RequestHeader, SimpleResult, Request}
+import play.api.mvc.{RequestHeader, Request}
 import scala.concurrent.Future
 import conf.{Switches, FrontendIdentityCookieDecoder}
 import idapiclient.ScGuU
 import com.gu.identity.model.{StatusFields, User}
 import org.mockito.Mockito._
 import org.mockito.Matchers
-import utils.AuthRequest
+import test.{TestRequest, Fake}
+import play.api.test.Helpers._
+import scala.Some
+import play.api.mvc.SimpleResult
 import services.IdentityRequest
 import client.Error
 import idapiclient.TrackingData
-import scala.Some
-import test.{TestRequest, Fake}
-import play.api.test.Helpers._
+import actions.AuthRequest
 
 
 class FormstackControllerTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
@@ -29,12 +30,13 @@ class FormstackControllerTest extends path.FreeSpec with ShouldMatchers with Moc
   val cookieDecoder = mock[FrontendIdentityCookieDecoder]
   val idRequest = mock[IdentityRequest]
   val trackingData = mock[TrackingData]
+  val authService = mock[AuthenticationService]
 
   val userId = "123"
   val user = User("test@example.com", userId, statusFields = StatusFields(receive3rdPartyMarketing = Some(true), receiveGnmMarketing = Some(true)))
   val testAuth = new ScGuU("abc")
 
-  val authAction  = new utils.AuthAction(cookieDecoder, requestParser, idUrlBuilder) {
+  val authAction  = new actions.AuthAction(authService) {
     override protected def invokeBlock[A](request: Request[A], block: (AuthRequest[A]) => Future[SimpleResult]): Future[SimpleResult] = {
       block(AuthRequest(request, user, testAuth))
     }

@@ -5,6 +5,8 @@ import model.commercial.AdAgent
 
 object JobsAgent extends AdAgent[Job] with ExecutionContexts with Logging {
 
+  override def defaultAds = currentAds filter (_.industries.contains("General"))
+
   def refresh() {
     for {jobs <- JobsApi.getJobs} {
       updateCurrentAds(populateKeywords(jobs))
