@@ -1,4 +1,4 @@
-@(config: Config, collection: Collection, style: Container, containerIndex: Int, showSize: Int = 4)(implicit request: RequestHeader)
+@(config: Config, collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader)
 
 <ul class="unstyled l-row l-row--items-2 v3-collection">
     @collection.items.slice(0, 1).zipWithIndex.map{ case (trail, index) =>
