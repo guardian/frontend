@@ -16,7 +16,7 @@ POST    /email-prefs                                    @controllers.EmailContro
 GET     /profile/public                                 @controllers.PublicProfileController.displayForm
 POST    /profile/public                                 @controllers.PublicProfileController.submitForm
 
+GET     /ethical-awards/complete                        @controllers.EthicalAwardsController.complete
 GET     /ethical-awards/:formId                         @controllers.EthicalAwardsController.ethicalAwardsForm(formId: String)
 GET     /form/complete                                  @controllers.FormstackController.complete
 GET     /form/:formId                                   @controllers.FormstackController.formstackForm(formId: String)
-

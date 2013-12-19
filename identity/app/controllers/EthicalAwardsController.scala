@@ -26,4 +26,12 @@ class EthicalAwardsController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
       NotFound(views.html.errors._404())
     }
   }
+
+  def complete = Action { implicit request =>
+    if (Switches.IdentityFormstackSwitch.isSwitchedOn) {
+      Ok(views.html.ethicalAwards.complete(page))
+    } else {
+      NotFound(views.html.errors._404())
+    }
+  }
 }
