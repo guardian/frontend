@@ -13,14 +13,15 @@
     </div>
     <div class="commercial__body">
         <ul class="lineitems">
-            <li class="lineitem">
-                <h4 class="lineitem__title"><a href="%OASToken%http://theguardian.com/guardian-masterclasses/how-to-blog-like-a-professional-mark-jenkins-digital-course">How to blog like a professional</a></h4>
-                <p class="lineitem__meta">25 January • The Guardian, Kings Place, 90 York Way, London N1 9GU</p>
-                <p class="lineitem__description">
-                    Aimed at bloggers looking to expand their skills, this is a seminar-style course involving some practical exercises, covering all the key areas necessary for blogging more professionally.
-                    <a class="lineitem__link" href="%OASToken%http://theguardian.com/guardian-masterclasses/how-to-blog-like-a-professional-mark-jenkins-digital-course"><i class="i i-single-arrow-right-blue"></i>Learn more and book</a>
-                </p>
-            </li>
+            @events.take(1).map { event =>
+                <li class="lineitem">
+                    <a class="lineitem__blocklink" href="@event.url">
+                        <h4 class="lineitem__title">@event.name</h4>
+	                    <p class="lineitem__meta">@event.readableDate • @event.venue.description</p>
+                    </a>
+                    <p class="lineitem__description">@event.firstParagraph <a class="lineitem__link"><i class="i i-single-arrow-right-blue"></i>Learn more and book</a></p>
+                </li>
+            }
         </ul>
     </div>
     <div class="commercial__foot">
