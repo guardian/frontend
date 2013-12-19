@@ -309,7 +309,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
         Then("the main picture should be hidden")
         $("[itemprop='associatedMedia primaryImageOfPage']") should have size 0
 
-        findFirst("video").getAttribute("poster") should endWith("/2013/3/26/1364309869688/Jeremy-Hunt-announcing-ch-016.jpg")
+        findFirst("video").getAttribute("poster") should endWith("/2013/3/26/1364309868130/Jeremy-Hunt-announcing-ch-015.jpg")
       }
     }
 

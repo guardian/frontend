@@ -207,7 +207,7 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
       val asset = findVideoFromId(mediaId)
 
       // add the poster url
-      asset.flatMap(_.image).flatMap(ArticleMainPicture.bestFor).foreach{ url =>
+      asset.flatMap(_.image).flatMap(Item620.bestFor).foreach{ url =>
         element.attr("poster", url)
       }
 
