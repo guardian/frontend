@@ -145,7 +145,7 @@
 }
 
 .textarea--long {
-    height: $baseline*40;
+    min-height: $baseline*40;
 }
 
 .submit-input {
