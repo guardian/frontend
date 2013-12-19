@@ -33,7 +33,7 @@
     @include fs-header(4);
 
     @include mq(desktop) {
-        @include fs-header(5);
+        @include fs-header(5, $size-only: true);
     }
 }
 
