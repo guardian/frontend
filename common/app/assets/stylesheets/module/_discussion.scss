@@ -18,6 +18,7 @@ $side-meta-breakpoint: desktop;
 $avatarSize: 44px;
 $c-commentGrey: #f3f3f1;
 $c-replyText: #555;
+$replyIndent: 26px;
 
 /* ==========================================================================
    Discussion
@@ -192,7 +193,6 @@ $c-replyText: #555;
 }
 
 .d-comment__author {
-    //color: $c-newsDefault;
     color: $c-neutral1;
     @include fs-data(4);
     font-weight: bold;
@@ -217,7 +217,6 @@ $c-replyText: #555;
 }
 
 .d-comment__reply-to-author {
-    //color: $c-newsDefault;
     color: $c-neutral1;
     @include fs-data(3);
     display: none;
@@ -274,7 +273,9 @@ $c-replyText: #555;
     }
 }
  
-/* RECOMMEND */
+/* Recommend
+   ======================================================= */
+   
 .d-comment__recommend {
     position: absolute;
     right: 0;
@@ -388,7 +389,6 @@ $c-replyText: #555;
 /* Reply comment
    ========================================================================== */
 
-$replyIndent: 26px;
 .d-comment--response {
     margin-left: $replyIndent;
     border-top: 1px dotted $c-neutral3;
