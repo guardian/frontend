@@ -118,6 +118,12 @@ $c-replyText: #555;
 /* ==========================================================================
    Comment
    ========================================================================== */
+.d-comment {
+    margin: 1px 0 0 0;
+    padding: 0;
+    display: block;
+    clear: both;
+}
 
 .d-comment__inner {
     position: relative;
@@ -127,13 +133,6 @@ $c-replyText: #555;
 
 .d-comment--top-level {
     border-top: 1px solid $c-neutral4;
-}
-
-.d-comment {
-    margin: 1px 0 0 0;
-    padding: 0;
-    display: block;
-    clear: both;
 }
 
 .d-comment:target {
@@ -222,6 +221,12 @@ $c-replyText: #555;
     color: $c-neutral1;
     @include fs-data(3);
     display: none;
+}
+
+.d-comment--new {
+    .d-comment__reply-wrapper {
+        display: none;
+    }
 }
 
 
@@ -813,6 +818,7 @@ $replyIndent: 26px;
     color: $c-neutral1;
     margin-bottom: $baseline*4;
 }
+
 .d-comment-box { 
 
     @include mq($side-meta-breakpoint) {
@@ -825,6 +831,7 @@ $replyIndent: 26px;
         margin-left:  $a-leftColWide-width + $gs-gutter;
     }
 }
+
 .d-comment-box__body {
     @include box-sizing(border-box);
     border: 1px solid $c-neutral3;
@@ -835,34 +842,34 @@ $replyIndent: 26px;
     width: 100%;
     word-break: break-word;
 }
+
 .d-comment-box__body--expanded {
     height: 150px;
 }
-.d-comment-box__error {
-    background: #ffcc66;
-    padding: $baseline*2 $gutter;
-}
+
 .d-comment-box__add-comment {
     display: none;
 }
+
 .d-comment-box__submit {
     display: inline-block;
     margin-right: $gutter;
     @include fs-data(4);
     font-weight: bold;
 }
+
 .d-comment-box__reply-to,
 .d-comment-box__cancel {
     @include fs-data(2);
     color: $c-neutral1;
     display: inline-block;
 }
+
 .d-comment-box__cancel {
     color: $c-neutral2;
     float: right;
     margin-top: $baseline*3;
 }
-
 
 .open-cta {
     margin-top: $baseline*8;

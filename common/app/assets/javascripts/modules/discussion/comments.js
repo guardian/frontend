@@ -456,9 +456,10 @@ Comments.prototype.addComment = function(comment, focus, parent) {
                 src: this.user.avatar
             }
         },
-        commentElem = bonzo.create(document.getElementById('tmpl-comment').innerHTML)[0];
-        var $commentElem = bonzo(commentElem);
-        $commentElem.addClass('fade-in'); // Comments now appear with CSS Keyframe animation
+        commentElem = bonzo.create(document.getElementById('tmpl-comment').innerHTML)[0],
+        $commentElem = bonzo(commentElem);
+        
+    $commentElem.addClass('d-comment--new');
 
     for (key in map) {
         if (map.hasOwnProperty(key)) {
