@@ -1,42 +1,38 @@
 define([
     'common',
     'utils/storage',
+    'modules/analytics/mvt-cookie',
 
     //Current tests
     'modules/experiments/tests/aa',
-    'modules/experiments/tests/live-blog-show-more',
-    'modules/experiments/tests/alpha-adverts',
-    'modules/experiments/tests/commercial-components',
-    'modules/experiments/tests/story-package-question',
-    'modules/experiments/tests/initial-show-more',
-    'modules/experiments/tests/show-more-layout',
     'modules/experiments/tests/mobile-facebook-autosignin',
-    'modules/experiments/tests/onward-intrusive'
+    'modules/experiments/tests/onward-intrusive',
+    'modules/experiments/tests/onward-highlights-panel',
+    'modules/experiments/tests/alpha-comm',
+    'modules/experiments/tests/right-most-popular',
+    'modules/experiments/tests/right-most-popular-control'
 ], function (
     common,
     store,
+    mvtCookie,
 
     Aa,
-    LiveBlogShowMore,
-    AlphaAdverts,
-    CommercialComponentsTest,
-    StoryPackageQuestion,
-    InitialShowMore,
-    ShowMoreLayout,
     MobileFacebookAutosignin,
-    OnwardIntrusive
+    OnwardIntrusive,
+    OnwardHighlightsPanel,
+    AlphaComm,
+    RightMostPopular,
+    RightMostPopularControl
     ) {
 
     var TESTS = [
             new Aa(),
-            new LiveBlogShowMore(),
-            new AlphaAdverts(),
-            new CommercialComponentsTest(),
-            new StoryPackageQuestion(),
-            new InitialShowMore(),
-            new ShowMoreLayout(),
             new MobileFacebookAutosignin(),
-            new OnwardIntrusive()
+            new OnwardIntrusive(),
+            new OnwardHighlightsPanel(),
+            new AlphaComm(),
+            new RightMostPopular(),
+            new RightMostPopularControl()
         ],
         participationsKey = 'gu.ab.participations';
 
@@ -74,6 +70,14 @@ define([
         Object.keys(participations).forEach(function (k) {
             if (typeof(config.switches['ab' + k]) === 'undefined') {
                 removeParticipation({ id: k });
+            } else {
+                var testExists = TESTS.some(function (element) {
+                    return element.id === k;
+                });
+
+                if (!testExists) {
+                    removeParticipation({ id: k });
+                }
             }
         });
     }
@@ -89,7 +93,7 @@ define([
         });
     }
 
-    function testCanBeRun (test, config) {
+    function testCanBeRun(test, config) {
         var expired = (new Date() - new Date(test.expiry)) > 0;
         return (test.canRun(config) && !expired && config.switches['ab' + test.id]);
     }
@@ -125,36 +129,39 @@ define([
             variantId = participations[test.id].variant;
             test.variants.some(function(variant) {
                 if (variant.id === variantId) {
-                    variant.test(context);
+                    variant.test(context, config);
                     return true;
                 }
         });
     }
 
-    function bucket(test, config) {
+    function allocateUserToTest(test, config) {
 
-        // if user not in test, bucket them
+        // Skip allocation if the user is already participating, or the test is invalid.
         if (isParticipating(test) || !testCanBeRun(test, config)) {
-            return false;
+            return;
         }
 
-        // always at least place in a notintest control
-        var testVariantId = 'notintest';
+        // Determine whether the user is in the test or not. The test population is just a subset of mvt ids.
+        // A test population must begin from a specific value. Overlapping test ranges are permitted.
+        var smallestTestId = mvtCookie.getMvtNumValues() * test.audienceOffset;
+        var largestTestId  = smallestTestId + mvtCookie.getMvtNumValues() * test.audience;
 
-        //Only run on test required audience segment
-        if (Math.random() < test.audience) {
+        // Get this browser's mvt test id.
+        var mvtCookieId = mvtCookie.getMvtValue();
+
+        if (smallestTestId <= mvtCookieId && largestTestId > mvtCookieId) {
+            // This mvt test id is in the test range, so allocate it to a test variant.
             var variantIds = test.variants.map(function(variant) {
                 return variant.id;
             });
+            var testVariantId = mvtCookieId % variantIds.length;
 
-            //Place user in variant pool
-            testVariantId = variantIds[Math.floor(Math.random() * variantIds.length)];
+            addParticipation(test, variantIds[testVariantId]);
+
+        } else {
+            addParticipation(test, "notintest");
         }
-
-        // store
-        addParticipation(test, testVariantId);
-
-        return true;
     }
 
     var ab = {
@@ -167,15 +174,13 @@ define([
             TESTS = [];
         },
 
-        segment: function(config, options) {
-            var opts = options || {};
+        segment: function(config) {
             getActiveTests().forEach(function(test) {
-                bucket(test, config);
+                allocateUserToTest(test, config);
             });
         },
 
-        // mostly for private use
-        forceSegment: function (testId, variant) {
+        forceSegment: function(testId, variant) {
             getActiveTests().filter(function (test) {
                 return (test.id === testId);
             }).forEach(function (test) {
@@ -183,11 +188,22 @@ define([
             });
         },
 
-        run: function(config, context, options) {
-            var opts = options || {};
+        segmentUser: function(config) {
+            mvtCookie.generateMvtCookie();
+
+            var forceUserIntoTest = /^#ab/.test(window.location.hash);
+            if (forceUserIntoTest) {
+                var tokens = window.location.hash.replace('#ab-','').split('=');
+                var test = tokens[0], variant = tokens[1];
+                ab.forceSegment(test, variant);
+            } else {
+                ab.segment(config);
+            }
 
             cleanParticipations(config);
+        },
 
+        run: function(config, context) {
             getActiveTests().forEach(function(test) {
                 run(test, config, context);
             });

@@ -1,0 +1,37 @@
+@(events: List[model.commercial.masterclasses.MasterClass])(implicit request: RequestHeader)
+
+@main(Page(
+  "Masterclasses",
+  "Masterclasses",
+  "Masterclasses",
+  "Masterclasses")){
+  }{
+
+<link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
+
+<div class="commercial masterclasses-component commercial--w600">
+    <div class="commercial__head">
+        <h3 class="commercial__title">
+            <a href="http://theguardian.com/guardian-masterclasses">
+                <span class="u-h">Guardian Masterclasses</span>
+                <i class="i i-guardian-masterclasses-logo"></i>
+            </a>
+        </h3>
+        <a class="commercial__link" href="#">More all courses <i class="i i-double-arrow-right-white"></i></a>
+    </div>
+    <div class="commercial__body">
+        <ul class="lineitems">
+            @events.take(4).map { event =>
+                <li class="lineitem">
+                    <a class="lineitem__blocklink" href="@event.url">
+                        <h4 class="lineitem__title">@event.name</h4>
+                        <p class="lineitem__meta">@event.readableDate<p>
+                    </a>
+                    <p class="lineitem__description">@event.firstParagraph <a class="lineitem__link"><i class="i i-single-arrow-right-blue"></i>Learn more and book</a></p>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+
+}

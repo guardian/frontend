@@ -20,7 +20,7 @@ define(['your/dependencies'], function (dependency) {
          *
          * @param el        : The Element of the interactive that is being progressively enhanced. 
          * @param context   : The DOM context this module must work within.
-         * @param config    : The configration object for this page. 
+         * @param config    : The configuration object for this page. 
          *
         **/
 
@@ -40,7 +40,7 @@ Embedding the interactive in a page is the same as today. A page is created in r
 
 When the page is delivered to the user the frontend code scans the DOM for interactives and loads each one.
 
-Currently any URL with the `ng-interactive` with be routed to the interactive server.
+Currently any URL with the `ng-interactive` will be routed to the interactive server.
 
 The interactive code and boot.js must be housed in a corresponding location. This is a temporary limitation that will be
 resolve when the Composer team deliver a means to embed interactives in articles.

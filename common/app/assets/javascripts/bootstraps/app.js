@@ -10,8 +10,7 @@ define('bootstraps/app', [
     'modules/analytics/livestats',
     'modules/ui/fonts',
     'modules/router',
-    'modules/experiments/ab',
-    'modules/pageconfig',
+    'utils/config',
     'modules/adverts/userAdTargeting',
     'modules/discussion/api',
 
@@ -38,8 +37,7 @@ define('bootstraps/app', [
     LiveStats,
     Fonts,
     Router,
-    ab,
-    pageConfig,
+    config,
     UserAdTargeting,
     DiscussionApi,
 
@@ -85,17 +83,6 @@ define('bootstraps/app', [
             }
             new LiveStats({ beaconUrl: config.page.beaconUrl }).log();
         },
-        
-        initialiseAbTest: function (config) {
-            var forceUserIntoTest = /^#ab/.test(window.location.hash);
-            if (forceUserIntoTest) {
-                var tokens = window.location.hash.replace('#ab-','').split('=');
-                var test = tokens[0], variant = tokens[1];
-                ab.forceSegment(test, variant);
-            } else {
-                ab.segment(config);
-            }
-        },
 
         loadFonts: function(config, ua) {
             if (config.switches.webFonts && !guardian.shouldLoadFontsAsynchronously) {
@@ -115,16 +102,13 @@ define('bootstraps/app', [
         }
     };
 
-    var routes = function(rawConfig) {
-        var config = pageConfig(rawConfig);
-
+    var routes = function() {
         domReady(function() {
             var context = document.getElementById('preload-1'),
                 contextHtml = context.cloneNode(false).innerHTML;
 
             modules.initialiseAjax(config);
             modules.initialiseDiscussionApi(config);
-            modules.initialiseAbTest(config);
             modules.attachGlobalErrorHandler(config);
             modules.loadFonts(config, navigator.userAgent);
             modules.initId(config, context);

@@ -17,7 +17,13 @@ define(function () {
             expires.setDate(1);
         }
 
-        document.cookie = name + "=" + value + "; path=/; expires=" + expires.toUTCString() + ";";
+        var domain = document.domain;
+
+        if (domain.substr(0,4) === "www.") {
+            domain = domain.substr(3);
+        }
+
+        document.cookie = name + "=" + value + "; path=/; expires=" + expires.toUTCString() + "; domain=" + domain + ";";
     }
 
     function get(name) {
@@ -25,9 +31,14 @@ define(function () {
             nameEq = name + '=',
             cookies = document.cookie.split(';');
 
-        cookies.forEach(function(cookie, i) {
-            while (cookie.charAt(0) === ' ') { cookie = cookie.substring(1, cookie.length); }
-            if (cookie.indexOf(nameEq) === 0) { cookieVal = cookie.substring(nameEq.length, cookie.length); return cookieVal; }
+        cookies.forEach(function(cookie) {
+            while (cookie.charAt(0) === ' ') {
+                cookie = cookie.substring(1, cookie.length);
+            }
+            if (cookie.indexOf(nameEq) === 0) {
+                cookieVal = cookie.substring(nameEq.length, cookie.length);
+                return cookieVal;
+            }
         });
 
         return cookieVal;

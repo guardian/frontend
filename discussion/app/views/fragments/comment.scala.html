@@ -7,15 +7,17 @@
            id="comment-@comment.id"
            data-comment-id="@comment.id"
            data-comment-author="@comment.profile.displayName"
+           data-comment-replies="@comment.responseCount"
+           data-comment-timestamp="@comment.date"           
            data-comment-author-id="@comment.profile.userId"
            data-comment-highlighted="@comment.isHighlighted">
     <div class="d-comment__inner">
         
         <div class="d-comment__pick i i-guardian-picks @if(!comment.isHighlighted || comment.isBlocked){u-h}" title="Guardian pick"></div>
         
-        @if(!(isClosedForRecommendation && comment.numRecommends == 0) && !comment.isBlocked){
+        @if(!comment.isBlocked){ @* Change here should be double check for functionality relating to wether recs should show when recs are closed *@
             <div
-                class="d-comment__recommend@if(!isClosedForRecommendation){ js-recommend-comment}@if(comment.isHighlighted){ d-comment__recommend--left}" 
+                class="d-comment__recommend js-recommend-comment@if(comment.isHighlighted){ d-comment__recommend--left}" 
                 data-comment-id="@comment.id"
                 data-user-id="@comment.profile.userId"
                 data-recommend-count="@comment.numRecommends"
@@ -36,7 +38,7 @@
 
                 <div>
                     <a href="http://discussion.theguardian.com/comment-permalink/@comment.id" class="d-meta-item d-comment__meta-item">
-                        <time class="js-timestamp" datetime="@comment.date.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")" data-timestamp="@comment.date.getMillis" title="Permalink to this comment">
+                        <time class="js-timestamp" datetime="@comment.date.toISODateTimeNoMillisString" data-timestamp="@comment.date.getMillis" title="Permalink to this comment">
                             @Format(comment.date, "d MMM y")
                         </time>
                     </a>
@@ -58,6 +60,13 @@
                 <div class="d-comment__actions">
                     <div class="d-comment__actions__main u-cf">
                         <div class="u-fauxlink d-comment__action d-comment__action--reply sign-in-required" role="button" data-link-name="reply to comment" data-comment-id="@comment.id">Reply</div>
+                        <span class="d-staff-required">
+                            <span class="d-comment__seperator d-comment__action">|</span>
+                            <span class="u-fauxlink d-comment__action d-comment__action--pick" role="button"
+                                data-comment-id="@comment.id"
+                                data-comment-highlighted="@comment.isHighlighted">@if(comment.isHighlighted){Unpick}else{Pick}</span>
+                        </span>
+
                         <a href="http://discussion.theguardian.com/components/report-abuse/@comment.id" class="d-comment__action d-comment__action--report" target="_blank">Report</a>
                     </div>
                 </div>

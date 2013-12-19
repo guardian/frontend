@@ -1,13 +1,15 @@
 define([
-    'common',
     'bean',
     'qwery',
+    'utils/mediator',
     'modules/discussion/api',
+    'modules/identity/api'
 ], function(
-    common,
     bean,
     qwery,
-    DiscussionApi
+    mediator,
+    DiscussionApi,
+    IdApi
 ) {
 
 /**
@@ -21,7 +23,8 @@ RecommendComments.CONFIG = {
         button: 'js-recommend-comment',
         count: 'js-recommend-count',
         active: 'd-comment__recommend--active',
-        userRecommended: 'd-comment__recommend--user-recommended'
+        userRecommended: 'd-comment__recommend--user-recommended',
+        open: 'd-discussion--recommendations-open'
     },
     events: {
         prefix: 'discussion:comment:recommend:',
@@ -36,7 +39,13 @@ RecommendComments.CONFIG = {
  * @param {Object=} options
  */
 RecommendComments.init = function(context, options) {
-    var buttons = qwery('.'+ RecommendComments.CONFIG.classes.button, context);
+    var buttons;
+
+    this.open = this.open || qwery('.'+ RecommendComments.CONFIG.classes.open, context).length > 0;
+
+    if (this.open) {
+        buttons = qwery('.'+ RecommendComments.CONFIG.classes.button, context);
+    }
 
     for (var prop in options) {
         RecommendComments.options[prop] = options[prop];
@@ -44,11 +53,17 @@ RecommendComments.init = function(context, options) {
 
     if (buttons) {
         Array.prototype.forEach.call(buttons, function(button) {
-            button.className = button.className + ' ' + RecommendComments.CONFIG.classes.active;
-            button.title = button.title += ' - recommend this comment';
+            var user = IdApi.getUserFromCookie(),
+                userId = user ? user.id : null,
+                isSameUser = button.getAttribute('data-user-id') === userId;
+
+            if (!userId || !isSameUser) {
+                button.className = button.className + ' ' + RecommendComments.CONFIG.classes.active;
+                button.title = button.title += ' - recommend this comment';
+            }
         });
         RecommendComments.bindEvents(context);
-        common.mediator.emit(RecommendComments.getEvent('init'));
+        mediator.emit(RecommendComments.getEvent('init'));
     }
 };
 
@@ -56,7 +71,7 @@ RecommendComments.init = function(context, options) {
  * @param {Element} context
  */
 RecommendComments.bindEvents = function(context) {
-    bean.on(context, 'click', '.'+ RecommendComments.CONFIG.classes.button, RecommendComments.handleClick);
+    bean.on(context, 'click', '.'+ RecommendComments.CONFIG.classes.active, RecommendComments.handleClick);
 };
 
 /**
@@ -91,7 +106,7 @@ RecommendComments.recommendComment = function(id) {
  * @param {Object} resp
  */
 RecommendComments.success = function(resp) {
-    common.mediator.emit(
+    mediator.emit(
         RecommendComments.getEvent('success'),
         {
             id: parseInt(this.getAttribute('data-comment-id'), 10),
@@ -105,14 +120,20 @@ RecommendComments.success = function(resp) {
  * @param {XMLHttpRequest} xhr
  */
 RecommendComments.fail = function(xhr) {
+    var resp = xhr.responseText !== 'NOT FOUND' ? JSON.parse(xhr.responseText) : {};
+    
     RecommendComments.renderRecommendation(this, true);
+    if (resp.errorCode === "CAN'T_RECOMMEND_SAME_COMMENT_TWICE") {
+        this.className = this.className.replace(RecommendComments.CONFIG.classes.active, '');
+    }
     this.className = this.className +' '+ RecommendComments.CONFIG.classes.button;
 
-    common.mediator.emit(
+    mediator.emit(
         RecommendComments.getEvent('fail'),
         {
             id: parseInt(this.getAttribute('data-comment-id'), 10),
-            count: parseInt(this.getAttribute('data-recommend-count'), 10)
+            count: parseInt(this.getAttribute('data-recommend-count'), 10),
+            errorCode: resp.errorCode
         }
     );
 };

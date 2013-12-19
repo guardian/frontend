@@ -2,7 +2,7 @@
 
 It is useful to be able to log data back on to the server to help diagnose problems. The client-side diagnostics box serves this purpose.
 
-The quickest way to use is it for your code to depend on the Errors module from your own AMD module,
+The quickest way to use it is for your code to depend on the Errors module from your own AMD module,
 
 ```
 define([
@@ -24,6 +24,6 @@ if ((Math.random() < 0.001)) {
 }
 ```
 
-On your localhost the logger will output to your `window.console`, on PROD it will send a beacon back to out to our diagnstics server.
+On your localhost the logger will output to your `window.console`, on PROD it will send a beacon back to out to our diagnostics server.
 
 In production you can ssh on to the diagnostics box and tail the Nginx logs or download the diagnostics logs from s3.

@@ -1,4 +1,3 @@
-
 Getting http access logs for your localhost 
 ===========================================
 
@@ -39,7 +38,7 @@ Run the nginx server (your nginx binary might be somewhere else),
 
     /usr/local/Cellar/nginx/1.2.1/sbin/nginx -s reload
 
-Then fire up the an _article_ server on the port specified,
+Then fire up an _article_ server on the port specified,
 
     ./sbt001
     > project article

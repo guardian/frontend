@@ -23,7 +23,7 @@
 .updated-time {
     margin: $baseline 0 $baseline*4;
     @include fs-data(1);
-    color: #777;
+    color: $c-neutral2;
 }
 
 .live-blog > .block:first-child .published-time:first-child,
@@ -91,7 +91,7 @@
 
     .tweet-date {
         display: block;
-        color: $c-neutral3;
+        color: $c-neutral2;
         padding-left: 40px;
         margin-bottom: $baseline*4;
     }
@@ -123,11 +123,4 @@
     height: auto;
     background-color: transparent;
     @include transition(opacity 2s ease-out, background-color 4s ease-out);
-}
-
-.live-blog__blocks--hidden {
-    opacity: 0;
-    height: 0;
-    overflow: hidden;
-    background-color: $c-neutral7;
 }

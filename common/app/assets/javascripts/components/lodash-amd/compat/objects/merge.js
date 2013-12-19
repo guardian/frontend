@@ -1,23 +1,12 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize exports="amd" -o ./compat/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
  * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  * Available under MIT license <http://lodash.com/license>
  */
-define(['../internals/baseCreateCallback', '../internals/baseMerge', '../internals/getArray', './isObject', '../internals/releaseArray'], function(baseCreateCallback, baseMerge, getArray, isObject, releaseArray) {
-
-  /**
-   * Used for `Array` method references.
-   *
-   * Normally `Array.prototype` would suffice, however, using an array literal
-   * avoids issues in Narwhal.
-   */
-  var arrayRef = [];
-
-  /* Native method shortcuts for methods with the same name as other `lodash` methods */
-  var nativeSlice = arrayRef.slice;
+define(['../internals/baseCreateCallback', '../internals/baseMerge', '../internals/getArray', './isObject', '../internals/releaseArray', '../internals/slice'], function(baseCreateCallback, baseMerge, getArray, isObject, releaseArray, slice) {
 
   /**
    * Recursively merges own enumerable properties of the source object(s), that
@@ -39,21 +28,21 @@ define(['../internals/baseCreateCallback', '../internals/baseMerge', '../interna
    * @example
    *
    * var names = {
-   *   'stooges': [
-   *     { 'name': 'moe' },
-   *     { 'name': 'larry' }
+   *   'characters': [
+   *     { 'name': 'barney' },
+   *     { 'name': 'fred' }
    *   ]
    * };
    *
    * var ages = {
-   *   'stooges': [
-   *     { 'age': 40 },
-   *     { 'age': 50 }
+   *   'characters': [
+   *     { 'age': 36 },
+   *     { 'age': 40 }
    *   ]
    * };
    *
    * _.merge(names, ages);
-   * // => { 'stooges': [{ 'name': 'moe', 'age': 40 }, { 'name': 'larry', 'age': 50 }] }
+   * // => { 'characters': [{ 'name': 'barney', 'age': 36 }, { 'name': 'fred', 'age': 40 }] }
    *
    * var food = {
    *   'fruits': ['apple'],
@@ -87,7 +76,7 @@ define(['../internals/baseCreateCallback', '../internals/baseMerge', '../interna
     } else if (length > 2 && typeof args[length - 1] == 'function') {
       callback = args[--length];
     }
-    var sources = nativeSlice.call(arguments, 1, length),
+    var sources = slice(arguments, 1, length),
         index = -1,
         stackA = getArray(),
         stackB = getArray();

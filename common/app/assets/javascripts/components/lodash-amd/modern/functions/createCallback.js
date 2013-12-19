@@ -1,12 +1,12 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="amd" -o ./modern/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
  * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  * Available under MIT license <http://lodash.com/license>
  */
-define(['../internals/baseCreateCallback', '../internals/baseIsEqual', '../objects/isObject', '../objects/keys'], function(baseCreateCallback, baseIsEqual, isObject, keys) {
+define(['../internals/baseCreateCallback', '../internals/baseIsEqual', '../objects/isObject', '../objects/keys', '../utilities/property'], function(baseCreateCallback, baseIsEqual, isObject, keys, property) {
 
   /**
    * Produces a callback bound to an optional `thisArg`. If `func` is a property
@@ -16,16 +16,16 @@ define(['../internals/baseCreateCallback', '../internals/baseIsEqual', '../objec
    *
    * @static
    * @memberOf _
-   * @category Functions
+   * @category Utilities
    * @param {*} [func=identity] The value to convert to a callback.
    * @param {*} [thisArg] The `this` binding of the created callback.
    * @param {number} [argCount] The number of arguments the callback accepts.
    * @returns {Function} Returns a callback function.
    * @example
    *
-   * var stooges = [
-   *   { 'name': 'moe', 'age': 40 },
-   *   { 'name': 'larry', 'age': 50 }
+   * var characters = [
+   *   { 'name': 'barney', 'age': 36 },
+   *   { 'name': 'fred',   'age': 40 }
    * ];
    *
    * // wrap to create custom callback shorthands
@@ -36,8 +36,8 @@ define(['../internals/baseCreateCallback', '../internals/baseIsEqual', '../objec
    *   };
    * });
    *
-   * _.filter(stooges, 'age__gt45');
-   * // => [{ 'name': 'larry', 'age': 50 }]
+   * _.filter(characters, 'age__gt38');
+   * // => [{ 'name': 'fred', 'age': 40 }]
    */
   function createCallback(func, thisArg, argCount) {
     var type = typeof func;
@@ -46,9 +46,7 @@ define(['../internals/baseCreateCallback', '../internals/baseIsEqual', '../objec
     }
     // handle "_.pluck" style callback shorthands
     if (type != 'object') {
-      return function(object) {
-        return object[func];
-      };
+      return property(func);
     }
     var props = keys(func),
         key = props[0],

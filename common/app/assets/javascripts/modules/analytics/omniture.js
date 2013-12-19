@@ -7,7 +7,9 @@ define([
     'modules/identity/api',
     'modules/analytics/errors',
     'utils/cookies',
-    'omniture'
+    'omniture',
+    'modules/analytics/mvt-cookie',
+    'modules/analytics/beacon'
 ], function(
     common,
     detect,
@@ -16,7 +18,9 @@ define([
     id,
     Errors,
     Cookies,
-    s
+    s,
+    mvtCookie,
+    Beacon
     ) {
 
     // https://developer.omniture.com/en_US/content_page/sitecatalyst-tagging/c-tagging-overview
@@ -147,7 +151,22 @@ define([
                     s.eVar51  = alphaTag + s.eVar51;
                 }
 
+                // is user is viewing uk-alpha front
+                if (config.page.pageId === 'uk-alpha') {
+                    var ukAlphaTag = 'uk-alpha,';
+                    s.prop51  = ukAlphaTag + s.prop51;
+                    s.eVar51  = ukAlphaTag + s.eVar51;
+                }
+
                 s.events = s.apl(s.events,'event58',',');
+            }
+
+            // Tag the identity of this user, which is composed of
+            // the omniture visitor id, the ophan browser id, and the frontend-only mvt id.
+            var mvtId = mvtCookie.getMvtFullId();
+
+            if (mvtId) {
+                s.eVar60 = mvtId;
             }
 
             if (config.page.commentable) {
@@ -240,6 +259,12 @@ define([
         common.mediator.on('module:autoupdate:loaded', function() {
             that.populatePageProperties();
             that.logUpdate();
+        });
+
+        common.mediator.on('module:analytics:omniture:pageview:sent', function(){
+            // independently log this page view
+            // used for checking we have not broken analytics
+            new Beacon("/count/pva.gif").fire();
         });
 
     }

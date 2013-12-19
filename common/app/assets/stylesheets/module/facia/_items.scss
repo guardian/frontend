@@ -38,13 +38,13 @@ $c-live: #e81818;
         border-top-width: $item-top-border-height;
         background-color: transparent !important;
         line-height: 1em;
-        .tone-news & {
+        &.tone-news {
             color: $c-newsDefault;
         }
-        .tone-comment & {
+        &.tone-comment {
             color: $c-commentDefault;
         }
-        .tone-feature & {
+        &.tone-feature {
             color: $c-featureDefault;
         }
     }
@@ -156,6 +156,9 @@ $c-live: #e81818;
     margin-top: 2px;
     padding-bottom: 60%;
 
+    &.inlined-image {
+        display: block;
+    }
     .responsive-img {
         width: 100%;
         height: 100%;

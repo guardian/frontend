@@ -1,5 +1,5 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="amd" -o ./modern/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -37,17 +37,17 @@ define(['../functions/createCallback', '../objects/forOwn', '../objects/isArray'
    * _.some([null, 0, 'yes', false], Boolean);
    * // => true
    *
-   * var food = [
-   *   { 'name': 'apple',  'organic': false, 'type': 'fruit' },
-   *   { 'name': 'carrot', 'organic': true,  'type': 'vegetable' }
+   * var characters = [
+   *   { 'name': 'barney', 'age': 36, 'blocked': false },
+   *   { 'name': 'fred',   'age': 40, 'blocked': true }
    * ];
    *
    * // using "_.pluck" callback shorthand
-   * _.some(food, 'organic');
+   * _.some(characters, 'blocked');
    * // => true
    *
    * // using "_.where" callback shorthand
-   * _.some(food, { 'type': 'meat' });
+   * _.some(characters, { 'age': 1 });
    * // => false
    */
   function some(collection, callback, thisArg) {

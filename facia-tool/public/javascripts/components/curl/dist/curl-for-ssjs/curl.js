@@ -13,10 +13,11 @@
 (function (global) {
 //"use strict"; don't restore this until the config routine is refactored
 	var
-		version = '0.7.4',
+		version = '0.8.4',
 		curlName = 'curl',
 		defineName = 'define',
-		runModuleAttr = 'data-curl-run',
+		bootScriptAttr = 'data-curl-run',
+		bootScript,
 		userCfg,
 		prevCurl,
 		prevDefine,
@@ -52,7 +53,7 @@
 		findDotsRx = /(\.)(\.?)(?:$|\/([^\.\/]+.*)?)/g,
 		removeCommentsRx = /\/\*[\s\S]*?\*\/|\/\/.*?[\n\r]/g,
 		findRValueRequiresRx = /require\s*\(\s*(["'])(.*?[^\\])\1\s*\)|[^\\]?(["'])/g,
-		splitMainDirectives = /\s*,\s*/,
+		splitCommaSepRx = /\s*,\s*/,
 		cjsGetters,
 		core;
 
@@ -62,15 +63,16 @@
 		return toString.call(obj).indexOf('[object ' + type) == 0;
 	}
 
-	function normalizePkgDescriptor (descriptor) {
+	function normalizePkgDescriptor (descriptor, isPkg) {
 		var main;
 
 		descriptor.path = removeEndSlash(descriptor['path'] || descriptor['location'] || '');
-		main = descriptor['main'] || './main';
-		if (!isRelUrl(main)) main = './' + main;
-		// trailing slashes trick reduceLeadingDots to see them as base ids
-		descriptor.main = reduceLeadingDots(main, descriptor.name + '/');
-		//if (isRelUrl(descriptor.main)) throw new Error('invalid main (' + main + ') in ' + descriptor.name);
+		if (isPkg) {
+			main = descriptor['main'] || './main';
+			if (!isRelUrl(main)) main = './' + main;
+			// trailing slashes trick reduceLeadingDots to see them as base ids
+			descriptor.main = reduceLeadingDots(main, descriptor.name + '/');
+		}
 		descriptor.config = descriptor['config'];
 
 		return descriptor;
@@ -303,15 +305,32 @@
 
 			// functions that dependencies will use:
 
-			function toAbsId (childId) {
-				return core.toAbsId(childId, def.id, cfg);
+			function toAbsId (childId, checkPlugins) {
+				var absId, parts, plugin;
+
+				absId = core.toAbsId(childId, def.id, cfg);
+				if (!checkPlugins) return absId;
+
+				parts = pluginParts(absId);
+				if (!parts.pluginId) return absId;
+
+				plugin = cache[parts.pluginId];
+				// check if plugin supports the normalize method
+				if ('normalize' in plugin) {
+					// note: dojo/has may return falsey values (0, actually)
+					parts.resourceId = plugin['normalize'](parts.resourceId, toAbsId, def.config) || '';
+				}
+				else {
+					parts.resourceId = toAbsId(parts.resourceId);
+				}
+				return parts.pluginId + '!' + parts.resourceId;
 			}
 
 			function toUrl (n) {
 				// the AMD spec states that we should not append an extension
 				// in this function since it could already be appended.
 				// we need to use toAbsId in case this is a module id.
-				return core.resolvePathInfo(toAbsId(n), cfg).url;
+				return core.resolvePathInfo(toAbsId(n, true), cfg).url;
 			}
 
 			function localRequire (ids, callback, errback) {
@@ -327,7 +346,7 @@
 						throw new Error('require(id, callback) not allowed');
 					}
 					// return resource
-					rvid = toAbsId(ids);
+					rvid = toAbsId(ids, true);
 					childDef = cache[rvid];
 					if (!(rvid in cache)) {
 						// this should only happen when devs attempt their own
@@ -570,13 +589,8 @@
 						// remove plugin-specific path from coll
 						delete coll[name];
 					}
-					if (isPkg) {
-						info = normalizePkgDescriptor(data);
-						if (info.config) info.config = beget(newCfg, info.config);
-					}
-					else {
-						info = { path: removeEndSlash(data.path) };
-					}
+					info = normalizePkgDescriptor(data, isPkg);
+					if (info.config) info.config = beget(newCfg, info.config);
 					info.specificity = id.split('/').length;
 					if (id) {
 						currCfg.pathMap[id] = info;
@@ -676,6 +690,7 @@
 
 		loadScript: function (def, success, failure) {
 			// script processing rules learned from RequireJS
+			// TODO: pass a validate function into loadScript to check if a success really is a success
 
 			// insert script
 			var el = doc.createElement('script');
@@ -961,12 +976,12 @@
 		},
 
 		fetchDep: function (depName, parentDef) {
-			var toAbsId, isPreload, cfg, parts, absId, mainId, loaderId, pluginId,
+			var toAbsId, isPreload, parentCfg, parts, absId, mainId, loaderId, pluginId,
 				resId, pathInfo, def, tempDef, resCfg;
 
 			toAbsId = parentDef.toAbsId;
 			isPreload = parentDef.isPreload;
-			cfg = parentDef.config || userCfg; // is this fallback necessary?
+			parentCfg = parentDef.config || userCfg; // is this fallback necessary?
 
 			absId = toAbsId(depName);
 
@@ -980,24 +995,26 @@
 				resId = parts.resourceId;
 				// get id of first resource to load (which could be a plugin)
 				mainId = parts.pluginId || resId;
-				pathInfo = core.resolvePathInfo(mainId, cfg);
+				pathInfo = core.resolvePathInfo(mainId, parentCfg);
 			}
 
-			// get custom module loader from package config if not a plugin
-			if (parts) {
+			if (!(absId in cache)) {
+				resCfg = core.resolvePathInfo(resId, parentCfg).config;
 				if (parts.pluginId) {
 					loaderId = mainId;
 				}
 				else {
-					// TODO: move config.moduleLoader to config.transform
-					loaderId = pathInfo.config['moduleLoader'] || pathInfo.config.moduleLoader;
+					// get custom module loader from package config if not a plugin
+					// TODO: move config.moduleLoader to config.loader
+					loaderId = resCfg['moduleLoader'] || resCfg.moduleLoader
+						|| resCfg['loader'] || resCfg.loader;
 					if (loaderId) {
 						// TODO: allow transforms to have relative module ids?
 						// (we could do this by returning package location from
 						// resolvePathInfo. why not return all package info?)
 						resId = mainId;
 						mainId = loaderId;
-						pathInfo = core.resolvePathInfo(loaderId, cfg);
+						pathInfo = core.resolvePathInfo(loaderId, parentCfg);
 					}
 				}
 			}
@@ -1009,7 +1026,7 @@
 				def = cache[mainId] = urlCache[pathInfo.url];
 			}
 			else {
-				def = core.createResourceDef(pathInfo.config, mainId, isPreload);
+				def = core.createResourceDef(resCfg, mainId, isPreload);
 				// TODO: can this go inside createResourceDef?
 				// TODO: can we pass pathInfo.url to createResourceDef instead?
 				def.url = core.checkToAddJsExt(pathInfo.url, pathInfo.config);
@@ -1020,6 +1037,10 @@
 			// plugin or transformer
 			if (mainId == loaderId) {
 
+				// use plugin's config if specified
+				if (parts.pluginId && parentCfg.plugins[parts.pluginId]) {
+					resCfg = parentCfg.plugins[parts.pluginId];
+				}
 				// we need to use an anonymous promise until plugin tells
 				// us normalized id. then, we need to consolidate the promises
 				// below. Note: exports objects will be different between
@@ -1028,10 +1049,6 @@
 				// resId doesn't change, the check if this is a new
 				// normalizedDef (below) will think it's already being loaded.
 				tempDef = new Promise();
-
-				// note: this means moduleLoaders can store config info in the
-				// plugins config, too.
-				resCfg = cfg.plugins[loaderId] || cfg;
 
 				// wait for plugin resource def
 				when(def, function(plugin) {
@@ -1112,27 +1129,53 @@
 		},
 
 		findScript: function (predicate) {
-			var i = 0, script;
-			while (doc && (script = doc.scripts[i++])) {
+			var i = 0, scripts, script;
+			scripts = doc && (doc.scripts || doc.getElementsByTagName('script'));
+			while (scripts && (script = scripts[i++])) {
 				if (predicate(script)) return script;
 			}
 		},
 
-		extractDataAttrConfig: function (cfg) {
-			var script;
+		extractDataAttrConfig: function () {
+			var script, attr = '';
 			script = core.findScript(function (script) {
-				var main;
-				// find main module(s) in data-curl-run attr on script element
-				// TODO: extract baseUrl, too?
-				main = script.getAttribute(runModuleAttr);
-				if (main) cfg.main = main;
-				return main;
+				var run;
+				// find data-curl-run attr on script element
+				run = script.getAttribute(bootScriptAttr);
+				if (run) attr = run;
+				return run;
 			});
 			// removeAttribute is wonky (in IE6?) but this works
 			if (script) {
-				script.setAttribute(runModuleAttr, '');
+				script.setAttribute(bootScriptAttr, '');
 			}
-			return cfg;
+			return attr;
+		},
+
+		bootScript: function () {
+			var urls = bootScript.split(splitCommaSepRx);
+			if (urls.length) {
+				load();
+			}
+			function load () {
+				// Note: IE calls success handler if it gets a 400+.
+				core.loadScript({ url: urls.shift() }, check, check);
+			}
+			function check () {
+				// check if run.js called curl() or curl.config()
+				if (bootScript) {
+					if (urls.length) {
+						// show an error message
+						core.nextTurn(fail);
+						// try next
+						load();
+					}
+					else fail('run.js script did not run.');
+				}
+			}
+			function fail (msg) {
+				throw new Error(msg || 'Primary run.js failed. Trying fallback.');
+			}
 		},
 
 		nextTurn: function (task) {
@@ -1147,6 +1190,9 @@
 	function _curl (/* various */) {
 		var args, promise, cfg;
 
+		// indicate we're no longer waiting for a boot script
+		bootScript = '';
+
 		args = [].slice.call(arguments);
 
 		// extract config, if it's specified
@@ -1159,7 +1205,10 @@
 	}
 
 	function _config (cfg, callback, errback) {
-		var pPromise, mPromise, main, devmain, fallback;
+		var pPromise, main, fallback;
+
+		// indicate we're no longer waiting for a boot script
+		bootScript = '';
 
 		if (cfg) {
 			core.setApi(cfg);
@@ -1175,16 +1224,8 @@
 			}
 			// check for main module(s). all modules wait for preloads implicitly.
 			main = cfg['main'];
-			main = main && String(main).split(splitMainDirectives);
 			if (main) {
-				mPromise = new Promise();
-				mPromise.then(callback, errback);
-				// figure out if we are using a dev-time fallback
-				fallback = main[1]
-					? function () { new CurlApi(main[1], mPromise.resolve, mPromise.reject); }
-					: mPromise.reject;
-				new CurlApi(main[0], mPromise.resolve, fallback);
-				return mPromise;
+				return new CurlApi(main, callback, errback);
 			}
 		}
 	}
@@ -1237,7 +1278,7 @@
 
 		if (id == undef) {
 			if (argsNet !== undef) {
-				argsNet = { ex: 'Multiple anonymous defines in url' };
+				argsNet = { ex: 'Multiple anonymous defines encountered' };
 			}
 			else if (!(id = core.getCurrentDefName())/* intentional assignment */) {
 				// anonymous define(), defer processing until after script loads
@@ -1283,24 +1324,26 @@
 		pathRx: /$^/
 	};
 
-	// look for "data-curl-run" directive, and override config
-	userCfg = core.extractDataAttrConfig(userCfg);
-
 	// handle pre-existing global
 	prevCurl = global[curlName];
 	prevDefine = global[defineName];
 
 	// only run config if there is something to config (perf saver?)
-	if (prevCurl && isType(prevCurl, 'Object') || userCfg.main) {
+	if (prevCurl && isType(prevCurl, 'Object')) {
 		// remove global curl object
 		global[curlName] = undef; // can't use delete in IE 6-8
 		// configure curl
-		_config(prevCurl || userCfg);
+		_config(prevCurl);
 	}
 	else {
 		// set default api
 		core.setApi();
 	}
+
+	// look for "data-curl-run" directive
+	bootScript = core.extractDataAttrConfig();
+	// wait a bit in case curl.js is bundled into the boot script
+	if (bootScript) core.nextTurn(core.bootScript);
 
 	// allow curl to be a dependency
 	cache[curlName] = _curl;
@@ -1320,89 +1363,107 @@
 	};
 
 }(this.window || (typeof global != 'undefined' && global) || this));
-/** MIT License (c) copyright 2010-2013 B Cavalier & J Hann */
+define('curl/plugin/_fetchText', [], function () {
 
-/**
- * curl CommonJS Modules/1.1 loader
- *
- * Licensed under the MIT License at:
- * 		http://www.opensource.org/licenses/mit-license.php
- */
+	var xhr, progIds;
 
-/**
- * @experimental
- */
-(function (global, document, globalEval) {
+	progIds = ['Msxml2.XMLHTTP', 'Microsoft.XMLHTTP', 'Msxml2.XMLHTTP.4.0'];
 
-define('curl/loader/cjsm11', function () {
-
-	var head, insertBeforeEl /*, findRequiresRx, myId*/;
-
-	head = document && (document['head'] || document.getElementsByTagName('head')[0]);
-	// to keep IE from crying, we need to put scripts before any
-	// <base> elements, but after any <meta>. this should do it:
-	insertBeforeEl = head && head.getElementsByTagName('base')[0] || null;
-
-	function wrapSource (source, resourceId, fullUrl) {
-		var sourceUrl = fullUrl ? '/*\n////@ sourceURL=' + fullUrl.replace(/\s/g, '%20') + '.js\n*/' : '';
-		return "define('" + resourceId + "'," +
-			"['require','exports','module'],function(require,exports,module){" +
-			source + "\n});\n" + sourceUrl + "\n";
-	}
-
-	var injectSource = function (el, source) {
-		// got this from Stoyan Stefanov (http://www.phpied.com/dynamic-script-and-style-elements-in-ie/)
-		injectSource = ('text' in el) ?
-			function (el, source) { el.text = source; } :
-			function (el, source) { el.appendChild(document.createTextNode(source)); };
-		injectSource(el, source);
+	xhr = function () {
+		if (typeof XMLHttpRequest !== "undefined") {
+			// rewrite the getXhr method to always return the native implementation
+			xhr = function () {
+				return new XMLHttpRequest();
+			};
+		}
+		else {
+			// keep trying progIds until we find the correct one, then rewrite the getXhr method
+			// to always return that one.
+			var noXhr = xhr = function () {
+				throw new Error("getXhr(): XMLHttpRequest not available");
+			};
+			while (progIds.length > 0 && xhr === noXhr) (function (id) {
+				try {
+					new ActiveXObject(id);
+					xhr = function () {
+						return new ActiveXObject(id);
+					};
+				}
+				catch (ex) {
+				}
+			}(progIds.shift()));
+		}
+		return xhr();
 	};
 
-	function injectScript (source) {
-		var el = document.createElement('script');
-		injectSource(el, source);
-		el.charset = 'utf-8';
-		head.insertBefore(el, insertBeforeEl);
-	}
-
-	wrapSource['load'] = function (resourceId, require, callback, config) {
-		// TODO: extract xhr from text! plugin and use that instead (after we upgrade to cram.js)
-		require(['text!' + resourceId + '.js', 'curl/_privileged'], function (source, priv) {
-			var moduleMap;
-
-			// find (and replace?) dependencies
-			moduleMap = priv['core'].extractCjsDeps(source);
-			//source = parseDepModuleIds(source, moduleMap, config.replaceRequires);
-
-			// get deps
-			require(moduleMap, function () {
-
-				// wrap source in a define
-				source = wrapSource(source, resourceId, config['injectSourceUrl'] !== false && require.toUrl(resourceId));
-
-				if (config['injectScript']) {
-					injectScript(source);
+	function fetchText (url, callback, errback) {
+		var x = xhr();
+		x.open('GET', url, true);
+		x.onreadystatechange = function (e) {
+			if (x.readyState === 4) {
+				if (x.status < 400) {
+					callback(x.responseText);
 				}
 				else {
-					//eval(source);
-					globalEval(source);
+					errback(new Error('fetchText() failed. status: ' + x.statusText));
 				}
+			}
+		};
+		x.send(null);
+	}
 
-				// call callback now that the module is defined
-				callback(require(resourceId));
-
-			}, callback['error'] || function (ex) { throw ex; });
-
-		});
-	};
-
-	wrapSource['cramPlugin'] = '../cram/cjsm11';
-
-	return wrapSource;
+	return fetchText;
 
 });
+(function (freeRequire) {
+define('curl/shim/_fetchText', function () {
 
-}(this, this.document, function () { /* FB needs direct eval here */ eval(arguments[0]); }));
+	var fs, http, url;
+
+	fs = freeRequire('fs');
+	http = freeRequire('http');
+	url = freeRequire('url');
+
+	var hasHttpProtocolRx;
+
+	hasHttpProtocolRx = /^https?:/;
+
+	function fetchText (url, callback, errback) {
+		if (hasHttpProtocolRx.test(url)) {
+			loadFileViaNodeHttp(url, callback, errback);
+		}
+		else {
+			loadLocalFile(url, callback, errback);
+		}
+	}
+
+	return fetchText;
+
+	function loadLocalFile (uri, callback, errback) {
+		fs.readFile(uri, function (ex, contents) {
+			if (ex) {
+				errback(ex);
+			}
+			else {
+				callback(contents.toString());
+			}
+		});
+	}
+
+	function loadFileViaNodeHttp (uri, callback, errback) {
+		var options, data;
+		options = url.parse(uri, false, true);
+		data = '';
+		http.get(options, function (response) {
+			response
+				.on('data', function (chunk) { data += chunk; })
+				.on('end', function () { callback(data); })
+				.on('error', errback);
+		}).on('error', errback);
+	}
+
+});
+}(require));
 /** MIT License (c) copyright 2010-2013 B Cavalier & J Hann */
 
 /**
@@ -1414,16 +1475,15 @@ define('curl/loader/cjsm11', function () {
  * 		http://www.opensource.org/licenses/mit-license.php
  *
  * TODO: support environments that implement XMLHttpRequest such as Wakanda
- *
- * @experimental
  */
 define['amd'].ssjs = true;
 var require, load;
 (function (freeRequire, globalLoad) {
-define('curl/shim/ssjs', function (require, exports) {
+define('curl/shim/ssjs', ['curl/_privileged', './_fetchText'], function (priv, _fetchText) {
 "use strict";
 
-	var priv, config, hasProtocolRx, extractProtocolRx, protocol,
+	var cache, config,
+		hasProtocolRx, extractProtocolRx, protocol,
 		http, localLoadFunc, remoteLoadFunc,
 		undef;
 
@@ -1432,10 +1492,16 @@ define('curl/shim/ssjs', function (require, exports) {
 		return;
 	}
 
-	priv = require('curl/_privileged');
+	cache = priv.cache;
 	config = priv.config();
-    hasProtocolRx = /^\w+:/;
+
+    hasProtocolRx = /^\w+:\/\//;
 	extractProtocolRx = /(^\w+:)?.*$/;
+
+	// force-overwrite the xhr-based _fetchText
+	if (typeof XMLHttpRequest == 'undefined') {
+		cache['curl/plugin/_fetchText'] = _fetchText;
+	}
 
     protocol = fixProtocol(config.defaultProtocol)
 		|| extractProtocol(config.baseUrl)
@@ -1551,3 +1617,111 @@ define('curl/shim/ssjs', function (require, exports) {
 
 });
 }(require, load));
+/** MIT License (c) copyright 2010-2013 B Cavalier & J Hann */
+
+/**
+ * curl CommonJS Modules/1.1 loader
+ *
+ * This loader loads modules that conform to the CommonJS Modules/1.1 spec.
+ * The loader also accommodates node.js, which  adds features beyond the
+ * spec, such as `module.exports` and `this === exports`.
+ *
+ * CommonJS modules can't run in browser environments without help. This
+ * loader wraps the modules in AMD and injects the CommonJS "free vars":
+ *
+ * define(function (require, exports, module) {
+ *     // CommonJS code goes here.
+ * });
+ *
+ * Config options:
+ *
+ * `injectSourceUrl` {boolean} If truthy (default), a //@sourceURL is injected
+ * into the script so that debuggers may display a meaningful name in the
+ * list of scripts. Setting this to false may save a few bytes.
+ *
+ * `injectScript` {boolean} If truthy, a <script> element will be inserted,
+ * rather than using a global `eval()` to execute the module.  You typically
+ * won't need to use this option.
+ *
+ * `dontAddFileExt` {RegExp|string} An expression that determines when *not*
+ * to add a '.js' extension onto a url when fetching a module from a server.
+ */
+
+(function (global, document, globalEval) {
+
+define('curl/loader/cjsm11', ['../plugin/_fetchText', 'curl/_privileged'], function (fetchText, priv) {
+
+	var head, insertBeforeEl, extractCjsDeps, checkToAddJsExt;
+
+	head = document && (document['head'] || document.getElementsByTagName('head')[0]);
+	// to keep IE from crying, we need to put scripts before any
+	// <base> elements, but after any <meta>. this should do it:
+	insertBeforeEl = head && head.getElementsByTagName('base')[0] || null;
+
+	extractCjsDeps = priv['core'].extractCjsDeps;
+	checkToAddJsExt = priv['core'].checkToAddJsExt;
+
+	function wrapSource (source, resourceId, fullUrl) {
+		var sourceUrl = fullUrl ? '/*\n////@ sourceURL=' + fullUrl.replace(/\s/g, '%20') + '.js\n*/' : '';
+		return "define('" + resourceId + "'," +
+			"['require','exports','module'],function(require,exports,module){" +
+			source + "\n});\n" + sourceUrl + "\n";
+	}
+
+	var injectSource = function (el, source) {
+		// got this from Stoyan Stefanov (http://www.phpied.com/dynamic-script-and-style-elements-in-ie/)
+		injectSource = ('text' in el) ?
+			function (el, source) { el.text = source; } :
+			function (el, source) { el.appendChild(document.createTextNode(source)); };
+		injectSource(el, source);
+	};
+
+	function injectScript (source) {
+		var el = document.createElement('script');
+		injectSource(el, source);
+		el.charset = 'utf-8';
+		head.insertBefore(el, insertBeforeEl);
+	}
+
+	wrapSource['load'] = function (resourceId, require, callback, config) {
+		var errback, url, sourceUrl;
+
+		errback = callback['error'] || function (ex) { throw ex; };
+		url = checkToAddJsExt(require.toUrl(resourceId), config);
+		sourceUrl = config['injectSourceUrl'] !== false && url;
+
+		fetchText(url, function (source) {
+			var moduleMap;
+
+			// find (and replace?) dependencies
+			moduleMap = extractCjsDeps(source);
+
+			// get deps
+			require(moduleMap, function () {
+
+
+				// wrap source in a define
+				source = wrapSource(source, resourceId, sourceUrl);
+
+				if (config['injectScript']) {
+					injectScript(source);
+				}
+				else {
+					//eval(source);
+					globalEval(source);
+				}
+
+				// call callback now that the module is defined
+				callback(require(resourceId));
+
+			}, errback);
+		}, errback);
+	};
+
+	wrapSource['cramPlugin'] = '../cram/cjsm11';
+
+	return wrapSource;
+
+});
+
+}(this, this.document, function () { /* FB needs direct eval here */ eval(arguments[0]); }));

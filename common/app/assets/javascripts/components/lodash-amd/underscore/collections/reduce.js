@@ -1,12 +1,12 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize underscore exports="amd" -o ./underscore/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
  * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  * Available under MIT license <http://lodash.com/license>
  */
-define(['../internals/baseCreateCallback', '../objects/forOwn'], function(baseCreateCallback, forOwn) {
+define(['../functions/createCallback', '../objects/forOwn'], function(createCallback, forOwn) {
 
   /**
    * Reduces a collection to a value which is the accumulated result of running
@@ -41,7 +41,7 @@ define(['../internals/baseCreateCallback', '../objects/forOwn'], function(baseCr
   function reduce(collection, callback, accumulator, thisArg) {
     if (!collection) return accumulator;
     var noaccum = arguments.length < 3;
-    callback = baseCreateCallback(callback, thisArg, 4);
+    callback = createCallback(callback, thisArg, 4);
 
     var index = -1,
         length = collection.length;

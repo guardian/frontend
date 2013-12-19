@@ -167,67 +167,66 @@ define([
             });
         },
 
+        initAbTests: function (config) {
+            ab.segmentUser(config);
+        },
+
         runAbTests: function (config, context) {
             ab.run(config, context);
         },
 
-        loadAnalytics: function () {
+        loadAnalytics: function (config, context) {
             var omniture = new Omniture();
 
-            mediator.on('page:common:deferred:loaded', function(config, context) {
+            omniture.go(config, function(){
+                // callback:
 
-                omniture.go(config, function(){
-                    // callback:
-
-                    Array.prototype.forEach.call(context.getElementsByTagName("video"), function(video){
-                        if (!bonzo(video).hasClass('tracking-applied')) {
-                            bonzo(video).addClass('tracking-applied');
-                            var v = new OmnitureMedia({
-                                el: video,
-                                config: config
-                            }).init();
-                        }
-                    });
-
-                    if (config.switches.adslotImpressionStats) {
-                        var advertsAnalytics = new AdvertsAnalytics(config, context);
+                Array.prototype.forEach.call(context.getElementsByTagName("video"), function(video){
+                    if (!bonzo(video).hasClass('tracking-applied')) {
+                        bonzo(video).addClass('tracking-applied');
+                        var v = new OmnitureMedia({
+                            el: video,
+                            config: config
+                        }).init();
                     }
                 });
 
-                require(config.page.ophanUrl, function (Ophan) {
-
-                    if (!Ophan.isInitialised) {
-                        Ophan.isInitialised = true;
-                        Ophan.initLog();
-                    }
-
-                    Ophan.additionalViewData(function() {
-
-                        var viewData = {};
-
-                        var audsci = storage.local.get('gu.ads.audsci');
-                        if (audsci) {
-                            viewData.audsci_json = JSON.stringify(audsci);
-                        }
-
-                        var participations = ab.getParticipations(),
-                            participationsKeys = Object.keys(participations);
-
-                        if (participationsKeys.length > 0) {
-                            var testData = participationsKeys.map(function(k) {
-                                return { id: k, variant: participations[k].variant };
-                            });
-                            viewData.experiments_json = JSON.stringify(testData);
-                        }
-
-                        return viewData;
-                    });
-
-                    Ophan.sendLog(config.swipe ? config.swipe.referrer : undefined, true);
-                });
-
+                if (config.switches.adslotImpressionStats) {
+                    var advertsAnalytics = new AdvertsAnalytics(config, context);
+                }
             });
 
+            require(config.page.ophanUrl, function (Ophan) {
+
+                if (!Ophan.isInitialised) {
+                    Ophan.isInitialised = true;
+                    Ophan.initLog();
+                }
+
+                Ophan.additionalViewData(function() {
+
+                    var viewData = {};
+
+                    var audsci = storage.local.get('gu.ads.audsci');
+                    if (audsci) {
+                        viewData.audsci_json = JSON.stringify(audsci);
+                    }
+
+                    var participations = ab.getParticipations(),
+                        participationsKeys = Object.keys(participations);
+
+                    if (participationsKeys.length > 0) {
+                        var testData = participationsKeys.map(function(k) {
+                            return { id: k, variant: participations[k].variant };
+                        });
+                        viewData.experiments_json = JSON.stringify(testData);
+                    }
+
+                    return viewData;
+                });
+
+                Ophan.sendLog(config.swipe ? config.swipe.referrer : undefined, true);
+            });
         },
 
         loadAdverts: function () {
@@ -318,7 +317,7 @@ define([
 
         logReadingHistory : function() {
             mediator.on('page:common:ready', function(config) {
-                 if(/Article|Video|Gallery|Interactive/.test(config.page.contentType)) {
+                if(/Article|Video|Gallery|Interactive/.test(config.page.contentType)) {
                     new History().log({
                         id: '/' + config.page.pageId,
                         meta: {
@@ -327,7 +326,7 @@ define([
                         }
                     });
                 }
-                sequence.init();
+                sequence.init('/' + config.page.pageId);
             });
         },
 
@@ -342,7 +341,8 @@ define([
         windowEventListeners: function() {
             var events = {
                     resize: 'window:resize',
-                    orientationchange: 'window:orientationchange'
+                    orientationchange: 'window:orientationchange',
+                    scroll: 'window:scroll'
                 },
                 emitEvent = function(eventName) {
                     return function(e) {
@@ -360,11 +360,12 @@ define([
         deferToLoadEvent(function() {
             if (!self.initialisedDeferred) {
                 self.initialisedDeferred = true;
+                modules.initAbTests(config);
                 modules.loadAdverts();
-                modules.loadAnalytics();
-
-                // TODO: make these run in event 'page:common:deferred:loaded'
+                modules.loadAnalytics(config, context);
                 modules.cleanupCookies(context);
+                modules.runAbTests(config, context);
+                modules.transcludeRelated(config, context);
             }
             mediator.emit("page:common:deferred:loaded", config, context);
         });
@@ -373,18 +374,6 @@ define([
     var ready = function (config, context, contextHtml) {
         if (!this.initialised) {
             this.initialised = true;
-
-            mediator.on("page:common:ready", function(config, context){
-                try {
-                    modules.runAbTests(config, context);
-                    modules.transcludeRelated(config, context);
-                } catch(error) {
-                    // This catch ensures errors in AbTests and Related do not
-                    // affect the likelihood of reaching the analytics load.
-                    mediator.emit('module:error', 'Failed to run ab tests or transclude related: ' + error, 'bootstraps/common');
-                }
-            });
-
             modules.windowEventListeners();
             modules.upgradeImages();
             modules.showTabs();

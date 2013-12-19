@@ -51,12 +51,6 @@
 //     highlights comment with ID 123
 .d-comment:target > .d-comment__inner {
     background: $c-neutral7;
-
-    $highlightBleedingOffset: $gutter/4;
-    padding-left: $highlightBleedingOffset;
-    padding-right: $highlightBleedingOffset;
-    margin-left: $highlightBleedingOffset * -1;
-    margin-right: $highlightBleedingOffset * -1;
 }
 .d-comment__pick {
     position: absolute;
@@ -92,9 +86,25 @@
 .d-comment__body {
     @include d-comment__body;
 }
-
 .d-discussion[data-read-only="true"] .sign-in-required {
     display: none; /* Not the most performant, but it happens so rarely */
+}
+.d-discussion--not-staff .d-staff-required {
+    display: none;
+}
+.d-discussion__error {
+    background: #ffcc66;
+    margin-top: $baseline*2;
+    padding: $baseline*2 $gutter;
+}
+
+/* New Discussion
+   ===========================================================================*/
+.discussion--closed {
+    .d-comment__action--reply,
+    .d-comment__action--pick {
+        display: none;
+    }
 }
 
 /* New Comment
@@ -162,6 +172,10 @@
         position: relative;
         top: 2px;
     }
+}
+
+.comment__meta {
+    margin-top: $gs-baseline;
 }
 
 /* Person
@@ -400,6 +414,7 @@
     padding: $baseline*2 $gutter/2;
     resize: vertical;
     width: 100%;
+    word-break: break-word;
 }
 .d-comment-box__body--expanded {
     height: 150px;
@@ -594,4 +609,13 @@ $topCommentsHeight: 600px;
 
 .open-cta {
     margin-top: $baseline*8;
+
+    .clamp__fade {
+        @include simple-gradient(transparent, $c-neutral7);
+    }
+
+    .clamp__fade-content {
+        border-top: 1px solid $c-neutral3;
+        background: $c-neutral7;
+    }
 }

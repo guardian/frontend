@@ -12,10 +12,11 @@ GET        /$path<(culture|sport|australia|commentisfree|business|money)>   cont
 
 
 # Editionalised pages
-GET        /$path<(us|uk|au|uk-alpha)?>                                     controllers.FaciaController.renderEditionFront(path)
-GET        /$path<(us|uk|au|uk-alpha)?>.json                                controllers.FaciaController.renderEditionFrontJson(path)
+GET        /$path<(us|uk|au|us-alpha|uk-alpha|au-alpha)?>                   controllers.FaciaController.renderEditionFront(path)
+GET        /$path<(us|uk|au|us-alpha|uk-alpha|au-alpha)?>.json              controllers.FaciaController.renderEditionFrontJson(path)
 GET        /$path<(\w+/)?([\d\w-]*)>                                        controllers.FaciaController.renderEditionSectionFront(path)
 GET        /$path<(\w+/)?([\d\w-]*)>.json                                   controllers.FaciaController.renderEditionSectionFrontJson(path)
 
-GET        /collection/$id<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>                controllers.FaciaController.renderEditionCollection(id)
-GET        /collection/$id<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>.json           controllers.FaciaController.renderEditionCollectionJson(id)
+GET        /collection/$id<[\w\d-/]*>/rss                                   controllers.FaciaController.renderCollectionRss(id)
+GET        /collection/$id<[\w\d-/]*>                                       controllers.FaciaController.renderEditionCollection(id)
+GET        /collection/$id<[\w\d-/]*>.json                                  controllers.FaciaController.renderEditionCollectionJson(id)

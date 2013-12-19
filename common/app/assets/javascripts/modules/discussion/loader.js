@@ -1,27 +1,29 @@
 define([
+    '$',
     'utils/ajax',
     'bonzo',
     'qwery',
+    'bean',
     'modules/component',
     'modules/analytics/discussion',
     'modules/identity/api',
     'modules/discussion/api',
     'modules/discussion/comments',
     'modules/discussion/top-comments',
-    'modules/discussion/comment-box',
-    '$'
+    'modules/discussion/comment-box'
 ], function(
+    $,
     ajax,
     bonzo,
     qwery,
+    bean,
     Component,
     DiscussionAnalytics,
     Id,
     DiscussionApi,
     Comments,
     TopComments,
-    CommentBox,
-    $
+    CommentBox
 ) {
 
 /**
@@ -91,43 +93,54 @@ Loader.prototype.canComment = false;
  * 3. render comment bar
  */
 Loader.prototype.ready = function() {
-    var topCommentsElem = this.getElem('topComments'),
-        self = this;
+    var self = this,
+        topCommentsElem = this.getElem('topComments');
 
-    self.topLoadingElem = bonzo.create('<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>')[0];
-
-    bonzo(self.topLoadingElem).insertAfter(topCommentsElem);
+    this.topLoadingElem = bonzo.create('<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>')[0];
+    bonzo(this.topLoadingElem).insertAfter(topCommentsElem);
 
     this.on('user:loaded', function(user) {
-        self.topComments = new TopComments(self.context, self.mediator, {
-            discussionId: self.getDiscussionId(),
+        this.topComments = new TopComments(self.context, self.mediator, {
+            discussionId: this.getDiscussionId(),
             user: self.user
-        }, self.topCommentsSwitch);
+        }, this.topCommentsSwitch);
 
-        self.topComments
+        this.topComments
             .fetch(topCommentsElem)
             .then(function appendTopComments() {
                 bonzo(self.topLoadingElem).addClass('u-h');
                 self.on('click', $(self.topComments.showMoreButton), self.topComments.showMore.bind(self.topComments)); // Module-hopping calls - refactor needed
             });
 
-        self.mediator.on('module:topcomments:loadcomments', self.loadComments.bind(self));
+        this.mediator.on('module:topcomments:loadcomments', self.loadComments.bind(self));
     });
 
     this.getUser();
     this.renderCommentCount();
     DiscussionAnalytics.init();
+
+    bean.on(window, 'hashchange', function(e) {
+        var commentId = self.getCommentIdFromHash();
+        if (commentId) {
+            self.comments.gotoComment(commentId);
+            bonzo(self.getElem('joinDiscussion')).addClass('u-h');
+        }
+    });
+
+    // More for analytics than anything
+    if (window.location.hash === '#comments') {
+        this.mediator.emit('discussion:seen:comments-anchor');
+    }
 };
 
-Loader.prototype.loadComments = function (args) {
-
-    var self = this;
-
-    var commentsContainer = this.getElem('commentsContainer'),
+Loader.prototype.loadComments = function(args) {
+    var self = this,
+        commentsContainer = this.getElem('commentsContainer'),
         commentsElem = this.getElem('comments'),
         loadingElem = bonzo.create('<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>')[0],
-        hash = window.location.hash,
-        isAnchor = /#comment-\d/.test(hash);
+        commentId = this.getCommentIdFromHash(),
+        showComments = args.showLoader || commentId || window.location.hash === '#comments';
+        
 
     if (args.showLoader) {
         // Comments are being loaded in the no-top-comments-available context
@@ -137,11 +150,15 @@ Loader.prototype.loadComments = function (args) {
     bonzo(self.topLoadingElem).addClass('u-h');
     bonzo(loadingElem).insertAfter(commentsElem);
 
+    if (commentId) {
+        this.mediator.emit('discussion:seen:comment-permalink');
+    }
+
     this.comments = new Comments(this.context, this.mediator, {
-        initialShow: isAnchor ? 10 : args.amount,
+        initialShow: commentId ? 10 : args.amount,
         discussionId: this.getDiscussionId(),
         user: this.user,
-        commentId: isAnchor ? parseInt(hash.replace('#comment-', ''), 10) : null
+        commentId: commentId ? commentId : null
     });
 
     // Doing this makes sure there is only one redraw
@@ -150,16 +167,17 @@ Loader.prototype.loadComments = function (args) {
         .then(function killLoadingMessage() {
             bonzo(loadingElem).remove();
             self.renderCommentBar(self.user);
-            bonzo(self.comments.getElem('showMore')).addClass('u-h');
 
-            if (args.showLoader) {
+            if (showComments) {
                 // Comments are being loaded in the no-top-comments-available context
                 bonzo(self.getElem('joinDiscussion')).remove();
                 bonzo([self.comments.getElem('showMore'), self.comments.getElem('header')]).removeClass('u-h');
+            } else {
+                bonzo(self.comments.getElem('showMore')).addClass('u-h');
             }
 
-            self.on("click", self.getElem('joinDiscussion'), function (event) {
-                self.comments.showMore(event);
+            self.on('click', self.getElem('joinDiscussion'), function (e) {
+                self.comments.showHiddenComments(e);
                 self.cleanUpOnShowComments();
             });
             bonzo(commentsContainer).removeClass('u-h');
@@ -230,6 +248,7 @@ Loader.prototype.renderCommentBar = function() {
     } else {
         this.renderCommentBox();
         this.comments.on('first-load', this.renderBottomCommentBox.bind(this));
+        this.comments.on('first-load', this.cleanUpOnShowComments.bind(this));
     }
 };
 
@@ -262,7 +281,7 @@ Loader.prototype.commentPosted = function () {
     // Should more comments be shown?
     if (!this.firstComment) {
         this.firstComment = true;
-        this.comments.showMore();
+        this.comments.showHiddenComments();
         this.cleanUpOnShowComments();
     }
 
@@ -335,6 +354,14 @@ Loader.prototype.renderCommentCount = function() {
             }
         }
     });
+};
+
+/**
+ * @return {number}
+ */
+Loader.prototype.getCommentIdFromHash = function() {
+    var reg = (/#comment-(\d+)/);
+    return reg.exec(window.location.hash) ? parseInt(reg.exec(window.location.hash)[1], 10) : null;
 };
 
 return Loader;

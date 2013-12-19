@@ -1,0 +1,20 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "startIndex":1,
+    "pageSize":50,
+    "currentPage":1,
+    "pages":1,
+    "results":[{
+      "id":"travel/cuba",
+      "type":"keyword",
+      "webTitle":"Cuba",
+      "webUrl":"http://www.theguardian.com/travel/cuba",
+      "apiUrl":"http://content.guardianapis.com/travel/cuba",
+      "sectionId":"travel",
+      "sectionName":"Travel"
+    }]
+  }
+}

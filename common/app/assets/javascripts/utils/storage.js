@@ -7,7 +7,7 @@ define([
 ], function (
     mediator
 ) {
-    
+
     var w = window;
     
     var Storage = function(type) {

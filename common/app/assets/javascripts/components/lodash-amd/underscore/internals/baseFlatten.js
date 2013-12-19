@@ -1,5 +1,5 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize underscore exports="amd" -o ./underscore/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -15,11 +15,11 @@ define(['../objects/isArguments', '../objects/isArray'], function(isArguments, i
    * @private
    * @param {Array} array The array to flatten.
    * @param {boolean} [isShallow=false] A flag to restrict flattening to a single level.
-   * @param {boolean} [isArgArrays=false] A flag to restrict flattening to arrays and `arguments` objects.
+   * @param {boolean} [isStrict=false] A flag to restrict flattening to arrays and `arguments` objects.
    * @param {number} [fromIndex=0] The index to start from.
    * @returns {Array} Returns a new flattened array.
    */
-  function baseFlatten(array, isShallow, isArgArrays, fromIndex) {
+  function baseFlatten(array, isShallow, isStrict, fromIndex) {
     var index = (fromIndex || 0) - 1,
         length = array ? array.length : 0,
         result = [];
@@ -31,7 +31,7 @@ define(['../objects/isArguments', '../objects/isArray'], function(isArguments, i
           && (isArray(value) || isArguments(value))) {
         // recursively flatten arrays (susceptible to call stack limits)
         if (!isShallow) {
-          value = baseFlatten(value, isShallow, isArgArrays);
+          value = baseFlatten(value, isShallow, isStrict);
         }
         var valIndex = -1,
             valLength = value.length,
@@ -41,7 +41,7 @@ define(['../objects/isArguments', '../objects/isArray'], function(isArguments, i
         while (++valIndex < valLength) {
           result[resIndex++] = value[valIndex];
         }
-      } else if (!isArgArrays) {
+      } else if (!isStrict) {
         result.push(value);
       }
     }

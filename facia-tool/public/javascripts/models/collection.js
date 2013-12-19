@@ -1,43 +1,49 @@
+/* global _: true, humanized_time_span: true */
 define([
     'knockout',
-    'models/common',
-    'models/humanizedTimeSpan',
-    'models/authedAjax',
+    'modules/vars',
+    'utils/as-observable-props',
+    'utils/populate-observables',
+    'modules/authed-ajax',
+    'models/group',
     'models/article',
-    'models/contentApi',
-    'models/ophanApi'
+    'modules/content-api',
+    'modules/ophan-api',
+    'js!humanized-time-span'
 ], function(
     ko,
-    common,
-    humanizedTimeSpan,
+    vars,
+    asObservableProps,
+    populateObservables,
     authedAjax,
+    Group,
     Article,
     contentApi,
     ophanApi
-) {
+    ) {
     function Collection(opts) {
         var self = this;
-            
+
         if (!opts || !opts.id) { return; }
-        
+
         this.id = opts.id;
         this.response = null;
         this.groups = this.createGroups(opts.groups);
-        
+
         // properties from the config, about this collection
-        this.configMeta   = common.util.asObservableProps([
+        this.configMeta   = asObservableProps([
             'displayName',
             'roleName']);
-        common.util.populateObservables(this.configMeta, opts);
+        populateObservables(this.configMeta, opts);
 
         // properties from the collection itself
-        this.collectionMeta = common.util.asObservableProps([
+        this.collectionMeta = asObservableProps([
             'displayName',
             'lastUpdated',
             'updatedBy',
             'updatedEmail']);
 
-        this.state  = common.util.asObservableProps([
+        this.state  = asObservableProps([
             'hasDraft',
             'loadIsPending',
             'editingConfig',
@@ -47,18 +53,16 @@ define([
     }
 
     Collection.prototype.createGroups = function(groupNames) {
-        var self = this,
-            dropItem = this.drop.bind(this);
+        var self = this;
 
         return _.map(_.isArray(groupNames) ? groupNames : [undefined], function(name, index) {
-            return {
+            return new Group({
                 group: index,
                 name: name,
-                collection: self,
-                articles:  ko.observableArray(),
-                underDrag: ko.observable(),
-                dropItem: dropItem
-            };
+                parent: self,
+                parentType: 'Collection',
+                omitItem: self.drop.bind(self)
+            });
         }).reverse(); // because groupNames is assumed to be in ascending order of importance, yet should render in descending order
     };
 
@@ -86,12 +90,12 @@ define([
 
         authedAjax.request({
             type: 'post',
-            url: common.config.apiBase + '/collection/' + this.id,
+            url: vars.CONST.apiBase + '/collection/' + this.id,
             data: JSON.stringify(goLive ? {publish: true} : {discard: true})
         })
-        .then(function() {
-            self.load();
-        })
+            .then(function() {
+                self.load();
+            });
 
         this.state.hasDraft(false);
     };
@@ -103,12 +107,12 @@ define([
 
         authedAjax.request({
             type: 'delete',
-            url: common.config.apiBase + '/collection/' + self.id,
+            url: vars.CONST.apiBase + '/collection/' + self.id,
             data: JSON.stringify({
                 item: item.props.id(),
-                live:   common.state.liveMode(),
-                draft: !common.state.liveMode()
-            }),
+                live:   vars.state.liveMode(),
+                draft: !vars.state.liveMode()
+            })
         }).then(function() {
             self.load();
         });
@@ -116,32 +120,32 @@ define([
 
     Collection.prototype.load = function(opts) {
         var self = this;
+
         opts = opts || {};
 
         return authedAjax.request({
-            url: common.config.apiBase + '/collection/' + this.id
+            url: vars.CONST.apiBase + '/collection/' + this.id
         }).then(function(resp) {
-            self.response = resp;
-            self.state.loadIsPending(false);
-            self.state.hasDraft(_.isArray(self.response.draft));
+                self.response = resp;
+                self.state.loadIsPending(false);
+                self.state.hasDraft(_.isArray(self.response.draft));
 
-            if (opts.isRefresh && (self.state.loadIsPending() || self.response.lastUpdated === self.collectionMeta.lastUpdated())) {
-                // noop
-            } else {
-                self.populateLists();
-            }
+                var dontPopulate = opts.isRefresh && (self.state.loadIsPending() || self.response.lastUpdated === self.collectionMeta.lastUpdated());
+                if (!dontPopulate) {
+                    self.populateLists();
+                }
 
-            if (!self.state.editingConfig()) {
-                common.util.populateObservables(self.collectionMeta, self.response)
-                self.state.timeAgo(self.getTimeAgo(self.response.lastUpdated));
-            }
-        });
+                if (!self.state.editingConfig()) {
+                    populateObservables(self.collectionMeta, self.response);
+                    self.state.timeAgo(self.getTimeAgo(self.response.lastUpdated));
+                }
+            });
     };
 
     Collection.prototype.populateLists = function() {
         if (!this.response) { return; }
 
-        if (common.state.liveMode()) {
+        if (vars.state.liveMode()) {
             this.importList(this.response.live);
         } else {
             this.importList(this.response.draft || this.response.live); // No draft yet? Base it on live.
@@ -150,32 +154,44 @@ define([
     };
 
     Collection.prototype.importList = function(source) {
-        var self = this;
+        var self = this,
+            editingMetas = {};
 
         _.each(this.groups, function(group) {
-            group.articles.removeAll();
+            _.each(group.items(), function(item) {
+                editingMetas[item.props.id()] = item.state.editingMeta();
+            });
+            group.items.removeAll();
         });
 
-        _.toArray(source).forEach(function(item, index) {
-            var groupInt,
+        _.each(source, function(item) {
+            var article = new Article(_.extend(item, {
+                    parent: self,
+                    parentType: 'Collection'
+                })),
                 group;
 
-            groupInt = parseInt((item.meta || {}).group, 10) || 0;
+            if(editingMetas[item.id]) {
+                article.startMetaEdit();
+            }
 
-            group = _.find(self.groups, function(g){ return g.group === groupInt; }) || self.groups[0];
-            group.articles.push(new Article(item, self));
+            group = _.find(self.groups, function(g){
+                return (parseInt((item.meta || {}).group, 10) || 0) === g.group;
+            }) || self.groups[0];
+
+            group.items.push(article);
         });
-    }
+    };
 
     Collection.prototype.decorate = function() {
         _.each(this.groups, function(group) {
-            contentApi.decorateItems(group.articles());
-            ophanApi.decorateItems(group.articles());
+            contentApi.decorateItems(group.items());
+            ophanApi.decorateItems(group.items());
         });
     };
 
     Collection.prototype.refresh = function() {
-        if (common.state.uiBusy || this.state.loadIsPending()) { return; }
+        if (vars.state.uiBusy || this.state.loadIsPending()) { return; }
         this.load({
             isRefresh: true
         });
@@ -188,7 +204,7 @@ define([
         this.state.loadIsPending(true);
 
         authedAjax.request({
-            url: common.config.apiBase + '/collection/' + this.id,
+            url: vars.CONST.apiBase + '/collection/' + this.id,
             type: 'post',
             data: JSON.stringify({
                 config: {
@@ -196,12 +212,12 @@ define([
                 }
             })
         }).then(function(){
-            self.load();
-        });
+                self.load();
+            });
     };
 
     Collection.prototype.getTimeAgo = function(date) {
-        return date ? humanizedTimeSpan(date) : '';
+        return date ? humanized_time_span(date) : '';
     };
 
     return Collection;

@@ -13,6 +13,7 @@ case class TestTrail(url: String) extends Trail {
   def webPublicationDate: DateTime = DateTime.now
   def shortUrl: String = ""
   def linkText: String = ""
+  def webUrl: String = ""
   def headline: String = ""
   def trailText: Option[String] = None
   def section: String = ""

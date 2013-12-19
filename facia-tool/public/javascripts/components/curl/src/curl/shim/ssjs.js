@@ -9,16 +9,15 @@
  * 		http://www.opensource.org/licenses/mit-license.php
  *
  * TODO: support environments that implement XMLHttpRequest such as Wakanda
- *
- * @experimental
  */
 define['amd'].ssjs = true;
 var require, load;
 (function (freeRequire, globalLoad) {
-define(/*=='curl/shim/ssjs',==*/ function (require, exports) {
+define(/*=='curl/shim/ssjs',==*/ ['curl/_privileged', './_fetchText'], function (priv, _fetchText) {
 "use strict";
 
-	var priv, config, hasProtocolRx, extractProtocolRx, protocol,
+	var cache, config,
+		hasProtocolRx, extractProtocolRx, protocol,
 		http, localLoadFunc, remoteLoadFunc,
 		undef;
 
@@ -27,10 +26,16 @@ define(/*=='curl/shim/ssjs',==*/ function (require, exports) {
 		return;
 	}
 
-	priv = require('curl/_privileged');
+	cache = priv.cache;
 	config = priv.config();
-    hasProtocolRx = /^\w+:/;
+
+    hasProtocolRx = /^\w+:\/\//;
 	extractProtocolRx = /(^\w+:)?.*$/;
+
+	// force-overwrite the xhr-based _fetchText
+	if (typeof XMLHttpRequest == 'undefined') {
+		cache['curl/plugin/_fetchText'] = _fetchText;
+	}
 
     protocol = fixProtocol(config.defaultProtocol)
 		|| extractProtocol(config.baseUrl)

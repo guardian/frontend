@@ -1,4 +1,4 @@
-/* global module: false */
+/* global module: false, process: false */
 module.exports = function (grunt) {
     var isDev = grunt.option('dev') || process.env.GRUNT_ISDEV === '1',
         singleRun = grunt.option('single-run') !== false,
@@ -359,6 +359,13 @@ module.exports = function (grunt) {
                     expand: true,
                     cwd: 'common/app/assets/javascripts/',
                     src: ['**/*.js', '!components/**', '!utils/atob.js']
+                }]
+            },
+            faciaTool: {
+                files: [{
+                    expand: true,
+                    cwd: 'facia-tool/public/javascripts/',
+                    src: ['**/*.js', '!components/**', '!omniture.js']
                 }]
             }
         },
