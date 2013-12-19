@@ -61,19 +61,25 @@ $side-meta-breakpoint: desktop;
 .d-comment-box--response {
 }
 
-.d-discussion__show-more {
+.show-more__container {
+    margin-bottom: $baseline*4;
+    padding-top: $baseline*2;
     display: block;
+    text-align: center;
+
+    &.show-more__container--older {
+        color: $c-neutral1;
+        border-top: 1px dotted $c-neutral3;
+    }
+}
+
+.d-discussion__show-more {
     padding-top: $baseline*2;
     @include fs-data(5);
-    position: relative;
-    
-    text-align: center;
-    
-    a {
-        line-height: 30px;
-        &:hover span { text-decoration: underline; }
-    }
-    
+    position: relative;    
+    line-height: 30px;
+
+    &:hover span { text-decoration: underline; }    
 }
 
 .d-discussion__show-more-button {

@@ -19,21 +19,19 @@
 
     <div class="js-new-comments"></div>
 
-    <div class="show-more__container show-more__container--newer">
     @if(page.currentPage != 1){
-
-    <div class="d-discussion__show-more d-discussion__show-more--newer">
-        <a href="@LinkTo{/@page.id?page=@(page.currentPage - 1)}"
-            data-link-name="Show more comments"
-            data-age="newer"
-            data-page="@(page.currentPage - 1)"
-            title="Show newer comments">
-            <span class="d-discussion__show-more-button"><i class="i i-plus-white-large"></i></span>
-            <span class="d-discussion__show-more-text">Show newer comments</span>
-        </a>
-    </div>
+        <div class="show-more__container show-more__container--newer">
+            <a class="d-discussion__show-more d-discussion__show-more--newer"
+                href="@LinkTo{/@page.id?page=@(page.currentPage - 1)}"
+                data-link-name="Show more comments"
+                data-age="newer"
+                data-page="@(page.currentPage - 1)"
+                title="Show newer comments">
+                <span class="d-discussion__show-more-button"><i class="i i-plus-white-large"></i></span>
+                <span class="d-discussion__show-more-text">Show newer comments</span>
+            </a>
+        </div>
     }
-    </div>
 
     <ul class="d-thread d-thread--top-level">
         @page.comments.map{ comment =>
@@ -44,8 +42,8 @@
     
     <div class="show-more__container show-more__container--older">
     @if(page.currentPage + 1 <= page.pages){
-    <div class="d-discussion__show-more d-discussion__show-more--older discussion__heading">
-        <a href="@LinkTo{/@page.id?page=@(page.currentPage + 1)}"
+        <a class="d-discussion__show-more d-discussion__show-more--older"
+            href="@LinkTo{/@page.id?page=@(page.currentPage + 1)}"
             data-link-name="Show more comments"
             data-age="older"
             data-page="@(page.currentPage + 1)"
@@ -53,7 +51,6 @@
             <span class="d-discussion__show-more-button"><i class="i i-plus-white-large"></i></span>
             <span class="d-discussion__show-more-text">Show older comments</span>
         </a>
-    </div>
     }
     </div>
 
