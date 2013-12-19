@@ -1,4 +1,4 @@
-@(page: CommentPage, blankComment: Comment = null)(implicit request: RequestHeader)
+@(page: CommentPage, blankComment: Comment = null, isTopComments: Boolean = false)(implicit request: RequestHeader)
 
 <div
     class="d-discussion d-discussion--not-staff@if(!page.isClosedForRecommendation){ d-discussion--recommendations-open}"
@@ -35,7 +35,7 @@
 
     <ul class="d-thread d-thread--top-level">
         @page.comments.map{ comment =>
-            @fragments.comment(comment, page.isClosedForRecommendation)
+            @fragments.comment(comment, page.isClosedForRecommendation, false, isTopComments)
         }
         <li class="d-image-fade u-h"></li>
     </ul>

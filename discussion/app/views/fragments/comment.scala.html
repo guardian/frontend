@@ -1,11 +1,11 @@
-@(comment: Comment, isClosedForRecommendation: Boolean = true, isResponse: Boolean = false)(implicit request: RequestHeader)
-
+@(comment: Comment, isClosedForRecommendation: Boolean = true, isResponse: Boolean = false, isTopComment: Boolean = false)(implicit request: RequestHeader)
+@* Please don't use the isTopComment switch - we've kept it pretty clean without it, but just need a solution for IDs *@
 <li class="d-comment
            @if(isResponse){d-comment--response}else{d-comment--top-level}
            @if(comment.isBlocked){d-comment--blocked}
            @if(comment.responses.nonEmpty){d-comment--has-replies}
            @if(comment.profile.isStaff){d-comment-staff}"
-           id="comment-@comment.id"
+           id="@if(isTopComment){top-}comment-@comment.id"
            data-comment-id="@comment.id"
            data-comment-author="@comment.profile.displayName"
            data-comment-replies="@comment.responseCount"

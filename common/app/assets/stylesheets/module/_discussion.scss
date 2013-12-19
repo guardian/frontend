@@ -138,6 +138,10 @@ $side-meta-breakpoint: desktop;
     clear: both;
 }
 
+.d-comment:target {
+    background-color: $c-neutral5;
+}
+
 /* META */
 $c-commentGrey: #a3a3a3;
 $avatarSize: 44px;
