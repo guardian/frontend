@@ -41,7 +41,6 @@ $c-replyText: #555;
 
 .d-discussion__comment-count {
     @include fs-data(4);
-    font-weight: bold;
     color: $c-neutral2;
     border-top: 1px solid $c-neutral4;
     padding-bottom: $baseline*3;
