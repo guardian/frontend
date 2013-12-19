@@ -120,7 +120,7 @@ RecommendComments.success = function(resp) {
  * @param {XMLHttpRequest} xhr
  */
 RecommendComments.fail = function(xhr) {
-    var resp = xhr.responseText !== 'NOT FOUND' ? JSON.parse(xhr.responseText) : {};
+    var resp = xhr.responseText !== 'NOT FOUND' && xhr.responseText !== '' ? JSON.parse(xhr.responseText) : {};
     
     RecommendComments.renderRecommendation(this, true);
     if (resp.errorCode === "CAN'T_RECOMMEND_SAME_COMMENT_TWICE") {
