@@ -11,7 +11,7 @@ define([
     var MAX_INT = 1000000;
 
     function generateMvtCookie() {
-        if (!getMvtValue() || getMvtValue() >  MAX_INT) {
+        if (!getMvtValue() || getMvtValue() > MAX_INT) {
             var mvtId = generateRandomInteger(MAX_INT, 1);
             cookies.add(MULTIVARIATE_ID_COOKIE, mvtId, 365);
         }
