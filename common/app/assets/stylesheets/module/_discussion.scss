@@ -430,7 +430,7 @@ $replyIndent: 26px;
         float: none;
         width: 100%;
         .d-comment__timestamp { display: none; }
-        .d-comment__author { display: inline; @include fs-data(2); }
+        .d-comment__author { display: inline; @include fs-data(4); }
         .i-in-reply-arrow { display: inline-block; }
         .d-comment__reply-to-author { display: inline; }
         .d-comment__avatar-wrapper { display: none; }
