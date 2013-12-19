@@ -79,7 +79,7 @@ object Switches extends Collections {
   val AudienceScienceSwitch = Switch("Analytics", "audience-science",
     "If this switch is on the Audience Science will be enabled.",
     safeState = Off)
-  
+
   val AdDwellTimeLoggerSwitch = Switch("Analytics", "ad-dwell-times-logging",
     "If this is on the in-view advert tracker will log some data to the Play logs",
     safeState = On)
@@ -166,10 +166,6 @@ object Switches extends Collections {
     "If this switch is on the australia front will be available. Otherwise it will 404.",
     safeState = Off)
 
-  val NewsContainerSwitch = Switch("Feature Switches", "news-container",
-    "If this switch is on the news container will be on the network front. Otherwise fronts will display a normal facia container.",
-    safeState = Off)
-
   val LocalNavSwitch = Switch("Feature Switches", "local-nav",
     "If this switch is on, a secondary local nav is shown.",
     safeState = Off)
@@ -252,10 +248,6 @@ object Switches extends Collections {
     "Switch that is only used while running tests. You never need to change this switch.",
     safeState = Off)
 
-  val FaciaSwitch = Switch("Facia", "facia",
-    "Switch to redirect to facia if request has X-Gu-Facia=true",
-    safeState = Off  )
-
   val UkAlphaSwitch = Switch("Facia", "facia-uk-alpha",
     "If this is switched on then UK-Alpha will be served for requests with the cookie GU_UK_ALPHA",
     safeState = Off
@@ -293,7 +285,6 @@ object Switches extends Collections {
     ImageServerSwitch,
     ReleaseMessageSwitch,
     AustraliaFrontSwitch,
-    NewsContainerSwitch,
     IntegrationTestSwitch,
     iPhoneAppSwitch,
     ClientSideErrorSwitch,
@@ -305,7 +296,6 @@ object Switches extends Collections {
     LiveCricketSwitch,
     LiveStatsSwitch,
     UserzoomSwitch,
-    FaciaSwitch,
     AdSlotImpressionStatsSwitch,
     CssFromStorageSwitch,
     ElasticSearchSwitch,

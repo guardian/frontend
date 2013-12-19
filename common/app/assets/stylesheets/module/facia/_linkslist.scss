@@ -1,0 +1,20 @@
+.linkslist {
+    @extend .unstyled;
+}
+.linkslist__item {
+    border-top: 1px dotted $c-neutral3;
+    @include rem((
+        padding-top: $baseline,
+        padding-bottom: $baseline*3 // Simulates margins and don't create extra space
+                                     // at the beginning of a new column break
+    ));
+}
+.linkslist__action {
+    color: $c-neutral1;
+    display: block;
+    @include fs-headline(1);
+
+    &:visited {
+        color: $c-neutral2;
+    }
+}
