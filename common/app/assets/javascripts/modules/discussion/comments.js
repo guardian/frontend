@@ -55,6 +55,7 @@ Comments.prototype.componentClass = 'd-discussion';
  * @override
  */
 Comments.prototype.classes = {
+    container: 'discussion__comments__container',
     comments: 'd-thread--top-level',
     topLevelComment: 'd-comment--top-level',
     showMore: 'd-discussion__show-more',
@@ -107,7 +108,7 @@ Comments.prototype.user = null;
 /** @override */
 Comments.prototype.prerender = function() {
     var self = this,
-        heading = qwery(this.getClass('heading'), '.discussion__comments__container')[0],
+        heading = qwery(this.getClass('heading'), this.getClass('container'))[0],
         commentCount = this.elem.getAttribute('data-comment-count'),
         initialShow = this.options.initialShow;
 
