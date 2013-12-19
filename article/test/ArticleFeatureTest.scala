@@ -94,7 +94,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
     scenario("Poster image on embedded video", ArticleComponents) {
       HtmlUnit("/world/2013/sep/25/kenya-mall-attack-bodies") { browser =>
         import browser._
-        findFirst("video").getAttribute("poster") should endWith ("Westgate-shopping-centre--016.jpg")
+        findFirst("video").getAttribute("poster") should endWith ("Westgate-shopping-centre--015.jpg")
       }
     }
 
