@@ -347,7 +347,6 @@ Loader.prototype.renderCommentCount = function() {
                                '  <span class="commentcount__label">'+commentCountLabel+'</span>' +
                                '</a>';
 
-                    //qwery('.js-commentcount__number', this.context).innerHTML = commentCount;
                     bonzo(qwery('.js-comment-count', this.context)).html(html);
                 }
             }
