@@ -162,7 +162,9 @@
 
 .formstack-iframe {
     border: none;
-    margin: 0;
+    display: block;
+    margin: 0 auto;
+    max-width: gs-span(6);
     width: 100%;
 }
 
