@@ -437,9 +437,25 @@ $replyIndent: 26px;
 
 }
 .d-discussion__error {
-    background: #ffcc66;
     margin-top: $baseline*2;
-    padding: $baseline*2 $gutter;
+    .d-discussion__error-text {
+        margin-left: 24px;
+        line-height: 24px;
+    }
+    .i-alert { position: absolute; }
+}
+
+.d-thread--responses .d-discussion__error {
+    @include mq($side-meta-breakpoint) {
+        margin-left: 160px + $replyIndent;
+    }
+    @include mq(leftCol) {
+        margin-left: $a-leftCol-width + $gs-gutter + $replyIndent;
+    }
+    @include mq(wide) {
+        margin-left:  $a-leftColWide-width + $gs-gutter + $replyIndent;
+    }
+
 }
 
 .js-show-more-replies {

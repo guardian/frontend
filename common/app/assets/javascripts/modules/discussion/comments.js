@@ -547,21 +547,9 @@ Comments.prototype.replyToComment = function(e) {
 };
 
 /**
- * @param {string} errorMessage
- * @param {number} commentId
- */
-Comments.prototype.error = function(commentId, errorMessage) {
-    var errorElem = bonzo.create('<div class="d-discussion__error">'+ errorMessage +'</div>');
-    $('#comment-'+ commentId).prepend(errorElem);
-};
-
-/**
  * @param {Object.<string.*>} comment
  */
 Comments.prototype.recommendFail = function(comment) {
-    if (comment.errorCode === "CAN'T_RECOMMEND_SAME_COMMENT_TWICE") {
-        this.error(comment.id, 'You cannot recommend the same comment twice.');
-    }
 };
 
 return Comments;
