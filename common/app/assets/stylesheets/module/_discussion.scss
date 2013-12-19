@@ -192,16 +192,15 @@ $c-replyText: #555;
 }
 
 .d-comment__author {
-    //color: $c-newsDefault;
-    color: $c-neutral1;
     @include fs-data(4);
+    color: $c-neutral1;
     font-weight: bold;
     display: block;
 }
 
 .d-comment__author-label {
-    text-transform: uppercase;
     @include fs-data(1);
+    text-transform: uppercase;
     display: block;
     color: $c-neutral1;
 }
@@ -217,7 +216,6 @@ $c-replyText: #555;
 }
 
 .d-comment__reply-to-author {
-    //color: $c-newsDefault;
     color: $c-neutral1;
     @include fs-data(3);
     display: none;
