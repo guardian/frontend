@@ -73,20 +73,23 @@
         background-color: $c-neutral1;
         margin: 0;
         border: 0 none;
-        padding: 0;
     }
 
+	.commercial__link {
+		color: #fff;
+	}
+
     .commercial__search {
-        padding: $baseline;
+		margin-bottom: $baseline;
         overflow: hidden;
         position: relative;
 
         .i.i-search-grey {
-            background-position: 10px 10px;
+            background-position: 6px 6px;
             position: absolute;
             top: 0;
             left: 0;
-            padding: 12px;
+            padding: 8px;
         }
 
         .text-input {
