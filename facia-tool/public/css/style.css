@@ -214,11 +214,11 @@ input[type=text] {
 }
 
 .trail.underDrag {
-    border-top-color: #f89406 !important; 
+    border-top-color: #f89406; 
 }
 
 .editingMeta .trail.underDrag {
-    border-top-color: #999999 !important; 
+    border-top-color: #999999; 
 }
 
 .trail:last-child {
