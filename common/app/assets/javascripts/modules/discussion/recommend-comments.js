@@ -85,7 +85,7 @@ RecommendComments.handleClick = function(e) {
 
     // Remove button class to remove event handler
     // as it is delegated
-    elem.className = elem.className.replace(RecommendComments.CONFIG.classes.button, '');
+    elem.className = elem.className.replace(RecommendComments.CONFIG.classes.active, '');
 
     RecommendComments.renderRecommendation(elem);
     return result.then(
