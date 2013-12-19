@@ -293,7 +293,7 @@ Loader.prototype.cleanUpOnShowComments = function () {
 };
 
 Loader.prototype.renderUserBanned = function() {
-    this.getElem('commentBox').innerHTML = '<div class="d-bar d-bar--banned">Commenting has been disabled for this account (<a href="/community-faqs#321a">why?</a>).</div>';
+    this.getElem('commentBox').innerHTML = '<div class="d-bar d-discussion__error d-bar--banned">Commenting has been disabled for this account (<a href="/community-faqs#321a">why?</a>).</div>';
 };
 
 /**

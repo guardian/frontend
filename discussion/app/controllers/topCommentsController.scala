@@ -38,7 +38,7 @@ trait TopCommentsController extends DiscussionController {
           Cached(60) {
             if (request.isJson)
               JsonComponent(
-                "html" -> views.html.fragments.commentsBody(commentPage, blankComment).toString,
+                "html" -> views.html.fragments.commentsBody(commentPage, blankComment, isTopComments = true).toString,
                 "hasMore" -> commentPage.hasMore,
                 "currentPage" -> commentPage.currentPage,
                 "commentCount" -> commentPage.comments.length

@@ -139,6 +139,10 @@ $c-replyText: #555;
     clear: both;
 }
 
+.d-comment:target {
+    background-color: $c-commentGrey;
+}
+
 .d-comment__meta {
     height: $avatarSize + $baseline;
     margin-bottom: $baseline*2;
