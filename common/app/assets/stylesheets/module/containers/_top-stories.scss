@@ -1,4 +1,13 @@
 .container--top-stories {
+    // Cap new collections to a width of 12 columns
+    @include mq(gs-span(7) + $gs-gutter, tablet) {
+        @include rem((width: gs-span(7)));
+        margin: 0 auto;
+    }
+    @include mq(wide) {
+        @include rem((width: gs-span(12) + $gs-gutter));
+        margin: 0 auto;
+    }
     .item {
         display: block;
         margin-top: 0;
@@ -19,12 +28,7 @@
             border-top-style: solid;
         }
     }
-    .item__link {
-        @include clearfix; // Expands the clickable zone when image is floated
-    }
     .item__media-wrapper {
-//        padding-top: 2px; // Align image with top of headline text
-
         @include mq($to: tablet) {
             float: left;
 
@@ -66,11 +70,6 @@
             margin-left: $gs-gutter/2 * -1,
             margin-right: $gs-gutter/2 * -1
         ));
-        // Cap new collections to a width of 12 columns
-        @include mq(wide) {
-            @include rem((width: gs-span(12) + $gs-gutter));
-            margin: 0 auto;
-        }
     }
     .collection__item {
         position: relative; // Replace .item as a relative context
@@ -110,10 +109,13 @@
 
         @include mq(tablet) {
             @include flex-grow(2);
-
+            .item__standfirst {
+                @include fs-headline(2, true);
+                clear: both;
+            }
             .item--has-image {
                 .item__title {
-                    @include fs-headline(4, true);
+                    @include fs-headline(5, true);
                 }
             }
             .item--has-no-image {
@@ -125,6 +127,7 @@
         .item__media-wrapper {
             @include mq(tablet) {
                 float: left;
+                margin-bottom: $gs-baseline;
 
                 @include rem((
                     width: 219px, // same size as the image in the right column
