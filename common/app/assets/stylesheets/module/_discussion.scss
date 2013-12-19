@@ -217,7 +217,7 @@ $c-replyText: #555;
 .d-comment__timestamp {
     @include fs-data(2);
     margin-bottom: $baseline;
-    a { color: $c-neutral3; }
+    a { color: $c-neutral2; }
 }
 
 .d-comment__reply-to-author {
