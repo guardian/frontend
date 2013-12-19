@@ -66,7 +66,7 @@ $c-replyText: #555;
 }
 
 .show-more__container {
-    margin-bottom: $baseline*4;
+    margin-bottom: $baseline*2;
     padding-top: $baseline*2;
     display: block;
     text-align: center;
@@ -100,7 +100,6 @@ $c-replyText: #555;
     height: 40px;
     @include fs-data(4);
     line-height: 40px;
-    margin-top: $baseline*2;
     font-weight: bold;
     padding-left: 55px;
     display: inline-block;
@@ -125,6 +124,7 @@ $c-replyText: #555;
 .d-comment__inner {
     position: relative;
     padding-top: $baseline;
+    overflow: hidden;
 }
 
 .d-comment--top-level {
@@ -392,16 +392,16 @@ $c-replyText: #555;
 $replyIndent: 26px;
 .d-comment--response {
     margin-left: $replyIndent;
-    border-top: 1px dotted $c-neutral5;
+    border-top: 1px dotted $c-neutral3;
 
     @include mq($side-meta-breakpoint) {
-        margin-left: 160px;
+        margin-left: 160px + $replyIndent;
     }
     @include mq(leftCol) {
-        margin-left: $a-leftCol-width + $gs-gutter;
+        margin-left: $a-leftCol-width + $gs-gutter + $replyIndent;
     }
     @include mq(wide) {
-        margin-left:  $a-leftColWide-width + $gs-gutter;
+        margin-left:  $a-leftColWide-width + $gs-gutter + $replyIndent;
     }
 
 
@@ -453,13 +453,13 @@ $replyIndent: 26px;
     margin-left: $replyIndent;
 
     @include mq($side-meta-breakpoint) {
-        margin-left: 160px;
+        margin-left: 160px + $replyIndent;
     }
     @include mq(leftCol) {
-        margin-left: $a-leftCol-width + $gs-gutter;
+        margin-left: $a-leftCol-width + $gs-gutter + $replyIndent;
     }
     @include mq(wide) {
-        margin-left:  $a-leftColWide-width + $gs-gutter;
+        margin-left:  $a-leftColWide-width + $gs-gutter + $replyIndent;
     }
 
     color: $c-newsDefault;
@@ -491,10 +491,7 @@ $replyIndent: 26px;
         display: none;
     }
     .d-comment__main {
-        padding-bottom: 25px;
-    }
-    .d-comment--response .d-comment__main {
-        padding-bottom: 6px;
+        padding-bottom: 20px;
     }
 }
 
@@ -552,7 +549,7 @@ $replyIndent: 26px;
     .d-comment__actions { display: none; }
     .d-comment__content { 
         background-color: $c-commentGrey;
-        padding: $baseline*2 $baseline*2;
+        padding: $baseline*2 $baseline*3;
         margin-bottom: $baseline*3;
         position: relative;
 
