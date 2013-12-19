@@ -43,7 +43,6 @@ Component.define(TopComments);
 TopComments.prototype.classes = {
     comments: 'd-thread--top-level',
     topLevelComment: 'd-comment--top-level',
-    showMore: 'js-show-more-top-comments',
     reply: 'd-comment--response',
     showReplies: 'js-show-more-replies',
 
@@ -53,7 +52,8 @@ TopComments.prototype.classes = {
     commentActions: 'd-comment__actions__main',
     commentReply: 'd-comment__action--reply',
 
-    showMoreFeatured: 'd-discussion__show-more--featured',
+    showMoreFeatured: 'show-more__container--featured',
+    showMoreFeaturedButton: 'js-show-more-top-comments',
 
     topCommentsContainer: 'discussion__comments__top',
     titleCounter: 'discussion__comment-count',
@@ -154,7 +154,7 @@ TopComments.prototype.ready = function() {
     
     if (this.commentsContainer.offsetHeight > maxHeight) {
         this.truncateFeatured(parseInt(maxHeight, 10));
-        this.on('click', this.getClass('showMoreFeatured'), this.showAllFeatured);
+        this.on('click', this.getClass('showMoreFeaturedButton'), this.showAllFeatured);
     }
 
     var heading = document.querySelector('.js-top-comments');
