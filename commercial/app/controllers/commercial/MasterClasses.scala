@@ -14,7 +14,7 @@ object MasterClasses extends Controller {
       MasterClassAgent.getUpcoming match {
         case Nil => NotFound
         case upcoming => {
-          Cached(60)(Ok(views.html.masterclasses(upcoming take 4)))
+          Cached(60)(Ok(views.html.masterclassesCombined(upcoming take 4)))
         }
       }
   }

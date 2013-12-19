@@ -1,0 +1,14 @@
+@(members: Seq[model.commercial.soulmates.Member])(implicit request: RequestHeader)
+
+@main(Page(
+    "Soulmates",
+    "Soulmates",
+    "Soulmates",
+    "Soulmates")) {
+} {
+
+    @soulmates(members)
+
+    @soulmates_large(members)
+
+}
