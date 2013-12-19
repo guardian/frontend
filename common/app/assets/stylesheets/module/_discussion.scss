@@ -193,15 +193,15 @@ $replyIndent: 26px;
 }
 
 .d-comment__author {
-    color: $c-neutral1;
     @include fs-data(4);
+    color: $c-neutral1;
     font-weight: bold;
     display: block;
 }
 
 .d-comment__author-label {
-    text-transform: uppercase;
     @include fs-data(1);
+    text-transform: uppercase;
     display: block;
     color: $c-neutral1;
 }
