@@ -17,6 +17,6 @@ GET     /profile/public                                 @controllers.PublicProfi
 POST    /profile/public                                 @controllers.PublicProfileController.submitForm
 
 GET     /ethical-awards/complete                        @controllers.EthicalAwardsController.complete
-GET     /ethical-awards/:formId                         @controllers.EthicalAwardsController.ethicalAwardsForm(formId: String)
+GET     /ethical-awards/:formReference                  @controllers.EthicalAwardsController.ethicalAwardsForm(formReference: String)
 GET     /form/complete                                  @controllers.FormstackController.complete
-GET     /form/:formId                                   @controllers.FormstackController.formstackForm(formId: String)
+GET     /form/:formReference                            @controllers.FormstackController.formstackForm(formReference: String)

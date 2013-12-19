@@ -38,6 +38,7 @@ class FormstackController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
         Future.successful(NotFound(views.html.formstack.formstackFormNotFound(page)))
       }
     } else {
+      logger.info(s"formstack switched off, attempt to access $formReference failed")
       Future.successful(NotFound(views.html.errors._404()))
     }
   }
