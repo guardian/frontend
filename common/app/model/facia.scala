@@ -4,10 +4,8 @@ case class Config(
                    id: String,
                    contentApiQuery: Option[String],
                    displayName: Option[String],
-                   collectionTone: Option[String]) {
-  // 'middle' part of the id is the section
-  val section: String = id.split("/").tail.dropRight(1).mkString("/")
-}
+                   collectionTone: Option[String],
+                   href: Option[String])
 
 case class Collection(items: Seq[Trail],
                       displayName: Option[String])
