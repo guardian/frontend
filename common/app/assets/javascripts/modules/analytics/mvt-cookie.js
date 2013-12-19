@@ -7,11 +7,11 @@ define([
         VISITOR_ID_COOKIE ="s_vi",
         BROWSER_ID_COOKIE = "bwid";
 
-    // Max integer in IEEE-754 is 2^53 (52-bit mantissa plus implicit integer bit 1).
-    var MAX_INT = 9007199254740992;
+    // Nice manageable range :)
+    var MAX_INT = 1000000;
 
     function generateMvtCookie() {
-        if (!getMvtValue()) {
+        if (!getMvtValue() || getMvtValue() >  MAX_INT) {
             var mvtId = generateRandomInteger(MAX_INT, 1);
             cookies.add(MULTIVARIATE_ID_COOKIE, mvtId, 365);
         }
