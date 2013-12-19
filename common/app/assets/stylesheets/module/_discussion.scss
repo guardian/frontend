@@ -118,6 +118,12 @@ $c-replyText: #555;
 /* ==========================================================================
    Comment
    ========================================================================== */
+.d-comment {
+    margin: 1px 0 0 0;
+    padding: 0;
+    display: block;
+    clear: both;
+}
 
 .d-comment__inner {
     position: relative;
@@ -127,13 +133,6 @@ $c-replyText: #555;
 
 .d-comment--top-level {
     border-top: 1px solid $c-neutral4;
-}
-
-.d-comment {
-    margin: 1px 0 0 0;
-    padding: 0;
-    display: block;
-    clear: both;
 }
 
 .d-comment:target {
@@ -222,6 +221,12 @@ $c-replyText: #555;
     color: $c-neutral1;
     @include fs-data(3);
     display: none;
+}
+
+.d-comment--new {
+    .d-comment__reply-wrapper {
+        display: none;
+    }
 }
 
 
