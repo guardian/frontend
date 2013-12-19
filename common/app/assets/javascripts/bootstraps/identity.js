@@ -3,13 +3,15 @@ define([
     "modules/identity/forms",
     "modules/identity/password-strength",
     "modules/identity/api",
-    "modules/adverts/userAdTargeting"
+    "modules/adverts/userAdTargeting",
+    "modules/discussion/user-avatars"
 ], function(
     mediator,
     Identity,
     PasswordStrength,
     Id,
-    UserAdTargeting
+    UserAdTargeting,
+    UserAvatars
 ) {
 
     var modules = {
@@ -43,6 +45,11 @@ define([
             mediator.on('page:identity:ready', function(config, context) {
                 UserAdTargeting.requestUserSegmentsFromId();
             });
+        },
+        userAvatars: function() {
+            mediator.on('page:identity:ready', function(config, context) {
+                UserAvatars.init();
+            });
         }
     };
 
@@ -55,6 +62,7 @@ define([
             modules.passwordStrength();
             modules.passwordToggle();
             modules.userAdTargeting();
+            modules.userAvatars();
         }
         mediator.emit("page:identity:ready", config, context);
     };

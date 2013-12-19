@@ -1,0 +1,10 @@
+@(idInput: form.Input)(implicit handler: views.html.helper.FieldConstructor)
+
+@import views.html.helper.input
+@import play.api.templates.PlayMagic.toHtmlArgs
+
+@input(idInput.field, idInput.args:_*) { (id, name, value, htmlArgs) =>
+    <textarea class="@idInput.cls" type="@idInput.inputType" id="@id" name="@name"
+    autocapitalize="@idInput.autocapitalize" autocorrect="@idInput.autocorrect" @if(idInput.autofocus){autofocus}
+    spellcheck="@idInput.spellcheck" @if(idInput.required){aria-required="true"} @toHtmlArgs(htmlArgs)>@value</textarea>
+}
