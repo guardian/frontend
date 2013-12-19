@@ -16,6 +16,9 @@
 
     <div class="d-comment__inner">
 
+        @if(isResponse) {
+            <div class="d-comment__pick i i-gupickasterisk @if(!comment.isHighlighted || comment.isBlocked){u-h}" title="Guardian pick"></div>
+        }
         <div class="d-comment__meta">
             <span class="d-comment__avatar-wrapper">
                 <img src="@comment.profile.avatar" alt="" class="d-comment__avatar"/>
@@ -57,7 +60,9 @@
                 </div>
             }
             <div class="d-comment__main">
-                <div class="d-comment__pick i i-gupickasterisk @if(!comment.isHighlighted || comment.isBlocked){u-h}" title="Guardian pick"></div>
+                @if(!isResponse) {
+                    <div class="d-comment__pick i i-gupickasterisk @if(!comment.isHighlighted || comment.isBlocked){u-h}" title="Guardian pick"></div>
+                }
 
                 <div class="d-comment__body" itemprop="text">
                     @if(comment.isBlocked){

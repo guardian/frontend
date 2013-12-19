@@ -17,6 +17,7 @@
 $side-meta-breakpoint: desktop;
 $avatarSize: 44px;
 $c-commentGrey: #f3f3f1;
+$c-replyText: #555;
 
 /* ==========================================================================
    Discussion
@@ -409,7 +410,7 @@ $replyIndent: 26px;
     .d-comment__inner {
     }
     .d-comment__body {
-        color: $c-neutral2;
+        color: $c-replyText;
         margin-top: $baseline;
         @include mq(tablet) {
             margin-top: $baseline*2;
@@ -484,6 +485,12 @@ $replyIndent: 26px;
     .d-comment__reply-wrapper,
     .d-comment__action--pick {
         display: none;
+    }
+    .d-comment__main {
+        padding-bottom: 25px;
+    }
+    .d-comment--response .d-comment__main {
+        padding-bottom: 6px;
     }
 }
 
