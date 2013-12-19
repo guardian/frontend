@@ -36,7 +36,6 @@ $c-replyText: #555;
     @include rem((font-size: 14px));
 }
 .d-discussion__header {
-    //margin-bottom: $baseline*3;
 }
 
 .d-discussion__comment-count {
@@ -131,7 +130,6 @@ $c-replyText: #555;
 }
 
 .d-comment {
-    //padding-top: $baseline;
     margin: 1px 0 0 0;
     padding: 0;
     display: block;
@@ -263,13 +261,10 @@ $c-replyText: #555;
 }
 
 .d-comment__body {
-    //color: black;
     color: $c-neutral1;
     @include fs-data(5);
-    //margin-top: $baseline*2;
     min-height: 2.5em;
     @include mq($side-meta-breakpoint) {
-        //min-height: 5em;
         margin-top: 0;
     }
 }
