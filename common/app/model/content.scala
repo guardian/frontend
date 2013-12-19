@@ -131,9 +131,9 @@ object Content {
     }
   }
 
-  def apply(delegate: ApiContent, sublinks: List[Content], metaData: Option[Map[String, JsValue]]): Content = {
+  def apply(delegate: ApiContent, supporting: List[Content], metaData: Option[Map[String, JsValue]]): Content = {
     metaData match {
-      case Some(metaData) => new ContentWithMetaData(delegate, sublinks, metaData)
+      case Some(meta) => new ContentWithMetaData(delegate, supporting, meta)
       case _ => apply(delegate)
     }
   }
@@ -273,8 +273,11 @@ class ImageContent(content: ApiContent) extends Content(content) {
   ) ++ mainPicture.flatMap(_.largestImage.map( "twitter:image:src" -> _.path ))
 }
 
-class ContentWithMetaData(content: ApiContent, s: List[Content], metaData: Map[String, JsValue]) extends Content(content) {
+class ContentWithMetaData(
+                           content: ApiContent,
+                           override val supporting: List[Content],
+                           metaData: Map[String, JsValue]) extends Content(content
+                          ) {
   override lazy val headline: String = metaData.get("headline").flatMap(_.asOpt[String]).getOrElse(super.headline)
   override lazy val group: Option[String] = metaData.get("group").flatMap(_.asOpt[String])
-  override lazy val sublinks: List[Trail] = s
 }

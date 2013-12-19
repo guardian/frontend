@@ -131,21 +131,21 @@ trait ParseCollection extends ExecutionContexts with Logging {
     }
     else {
       val results = collectionItems.foldLeft(Future[List[Content]](Nil)){(foldListFuture, collectionItem) =>
-        lazy val sublinksAsContent: Future[List[Content]] = {
-          lazy val sublinks: List[CollectionItem] = retrieveSublinks(collectionItem)
-          if (!hasParent) getArticles(sublinks, edition, hasParent=true) else Future.successful(Nil)
+        lazy val supportingAsContent: Future[List[Content]] = {
+          lazy val supportingLinks: List[CollectionItem] = retrieveSupportingLinks(collectionItem)
+          if (!hasParent) getArticles(supportingLinks, edition, hasParent=true) else Future.successful(Nil)
         }
         val response = ContentApi.item(collectionItem.id, edition).showFields("all").response
 
         response.onFailure{case t: Throwable => log.warn("%s: %s".format(collectionItem.id, t.toString))}
-        sublinksAsContent.onFailure{case t: Throwable => log.warn("Sublinks: %s: %s".format(collectionItem.id, t.toString))}
+        supportingAsContent.onFailure{case t: Throwable => log.warn("Supporting links: %s: %s".format(collectionItem.id, t.toString))}
 
         for {
           contentList <- foldListFuture
           itemResponse <- response
-          sublinks <- sublinksAsContent
+          supporting <- supportingAsContent
         } yield {
-          itemResponse.content.map(Content(_, sublinks, collectionItem.metaData)).map(_ +: contentList).getOrElse(contentList)
+          itemResponse.content.map(Content(_, supporting, collectionItem.metaData)).map(_ +: contentList).getOrElse(contentList)
         }
       }
       val sorted = results map { _.sortBy(t => collectionItems.indexWhere(_.id == t.id))}
@@ -153,8 +153,8 @@ trait ParseCollection extends ExecutionContexts with Logging {
     }
   }
 
-  private def retrieveSublinks(collectionItem: CollectionItem): List[CollectionItem] =
-    collectionItem.metaData.map(_.get("sublinks").flatMap(_.asOpt[List[JsValue]]).getOrElse(Nil)
+  private def retrieveSupportingLinks(collectionItem: CollectionItem): List[CollectionItem] =
+    collectionItem.metaData.map(_.get("supporting").flatMap(_.asOpt[List[JsValue]]).getOrElse(Nil)
     .map(json => CollectionItem((json \ "id").as[String], (json \ "meta").asOpt[Map[String, JsValue]]))
   ).getOrElse(Nil)
 
