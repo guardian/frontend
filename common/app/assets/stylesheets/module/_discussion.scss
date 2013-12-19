@@ -1,111 +1,621 @@
+@mixin icon-button($buttonSize, $iconSize) {
+    width: $buttonSize;
+    height: $buttonSize;
+    @include rounded-corners($buttonSize);
+    position: relative;
+    display: inline-block;
+    .i {
+        position: absolute;
+        text-indent: -9999px;
+        top: 50%;
+        left: 50%;
+        margin-top: -$iconSize/2;
+        margin-left: -$iconSize/2;
+    }
+}
+
+$side-meta-breakpoint: desktop;
+$avatarSize: 44px;
+$c-commentGrey: #f3f3f1;
+$c-replyText: #555;
+$replyIndent: 26px;
+
 /* ==========================================================================
    Discussion
    ========================================================================== */
+
+.discussion {
+    @include mq(leftCol) {
+        margin-left: - ($a-leftCol-width + $gs-gutter);
+    }
+    @include mq(wide) {
+        margin-left: - ($a-leftColWide-width + $gs-gutter);
+    }
+}
 
 .d-discussion {
     @include rem((font-size: 14px));
 }
 .d-discussion__header {
-    margin-bottom: $baseline*3;
 }
+
+.d-discussion__comment-count {
+    @include fs-data(4);
+    color: $c-neutral2;
+    border-top: 1px solid $c-neutral4;
+    padding-bottom: $baseline*3;
+}
+
 .d-thread {
     list-style: none;
-    margin: 0 0 1em;
+    margin: 0;
 }
+
+.d-thread--top-level {
+}
+.discussion__comments__container {
+    margin-bottom: $baseline*5;
+}
+
 .discussion__comment-count {
     color: $c-neutral3;
 }
 .d-thread--responses,
 .d-comment-box--response {
-    padding-left: 28px; /* aligns with top level comment's body */
-    border-left: $gutter/2 solid $c-neutral5;
+}
 
-    @include mq(768px) {
-        padding-left: 44px;
-        border-left-width: $gutter;
+.show-more__container {
+    margin-bottom: $baseline*2;
+    padding-top: $baseline*2;
+    display: block;
+    text-align: center;
+
+    &.show-more__container--older, &.show-more__container--featured {
+        color: $c-neutral1;
+        border-top: 1px dotted $c-neutral3;
     }
 }
-.d-comment {
-    border-top: 1px solid $c-neutral6;
-    color: $c-neutral1;
-    font-family: $sans-serif;
 
-    &.fade-in {
-        opacity: 0;
-        background-color: $c-neutral6;
-        @include commentFadeInAnimation();
-    }
+.d-discussion__show-more {
+    padding-top: $baseline*2;
+    @include fs-data(5);
+    position: relative;    
+    line-height: 30px;
+
+    &:hover span { text-decoration: underline; }    
 }
-.d-comment--has-replies + .d-comment {
-    border-top: 2px solid $c-neutral5;
-}
-.d-comment--blocked > .d-comment__inner {
-    opacity: .5;
-}
-.d-comment__inner {
-    padding-top: $baseline*3;
-    position: relative;
-}
-// Highlight targetted comment
-// ie: http://path/to/url#comment-123
-//     highlights comment with ID 123
-.d-comment:target > .d-comment__inner {
-    background: $c-neutral7;
-}
-.d-comment__pick {
+
+.d-discussion__show-more-button {
+    @include icon-button(30px, 30px);
     position: absolute;
-    top: 0;
-    right: 0;
+    background-color: $c-newsDefault;
 }
-.d-comment__header {
-    margin-top: -2px;
+.d-discussion__show-more-text {
+    padding-left: 32px + $baseline;
+    display: inline-block;
 }
+
+.d-discussion__show-all-comments {
+    height: 40px;
+    @include fs-data(4);
+    line-height: 40px;
+    font-weight: bold;
+    padding-left: 55px;
+    display: inline-block;
+    .i-show-all-comments {
+        position: absolute;
+        left: 0;
+    }
+    .i-arrow-blue-down {
+        margin-left: $baseline*2;
+    }
+}
+
+
+.d-discussion--not-staff .d-staff-required {
+   display: none;
+}
+
+/* ==========================================================================
+   Comment
+   ========================================================================== */
+.d-comment {
+    margin: 1px 0 0 0;
+    padding: 0;
+    display: block;
+    clear: both;
+}
+
+.d-comment__inner {
+    position: relative;
+    padding-top: $baseline;
+    overflow: hidden;
+}
+
+.d-comment--top-level {
+    border-top: 1px solid $c-neutral4;
+}
+
+.d-comment:target {
+    background-color: $c-commentGrey;
+}
+
+.d-comment__meta {
+    height: $avatarSize + $baseline;
+    margin-bottom: $baseline*2;
+    @include mq($side-meta-breakpoint) {
+        width: 160px;
+        float: left;
+        height: auto;
+    }
+    @include mq(leftCol) {
+        width: $a-leftCol-width + $gs-gutter;
+    }
+    @include mq(wide) {
+        width:  $a-leftColWide-width + $gs-gutter;
+    }
+}
+
 .d-comment__avatar-wrapper {
+    margin-right: $baseline*2;
+    margin-top: $baseline;
+    position: absolute;
+    @include mq(desktop) {
+        position: static;
+    }
+    @include mq(wide) {
+        position: absolute;
+    }
+}
+
+.d-comment__avatar {
+    width: $avatarSize;
+    height: $avatarSize;
+    @include rounded-corners(36px);
+    overflow:hidden;
+}
+
+.d-comment__meta-text {
+    position: absolute;
+    margin-left: $avatarSize + $baseline*2;
+    @include mq(desktop) {
+        position: static;
+        margin-left: 0;
+    }
+    @include mq(wide) {
+        position: absolute;
+        margin-left: $avatarSize + $baseline*2;        
+    }
+    .i-in-reply-arrow {
+        margin-bottom: -1px;
+        display: none; // shown in d-comment--response
+    }
+}
+
+.d-comment__author {
+    @include fs-data(4);
+    color: $c-neutral1;
+    font-weight: bold;
     display: block;
 }
-.d-comment__avatar {
-    padding-top: 2px; /* align avatar with body text */
+
+.d-comment__author-label {
+    @include fs-data(1);
+    text-transform: uppercase;
+    display: block;
+    color: $c-neutral1;
 }
-.d-comment__meta {
-    line-height: 1.3;
-    word-wrap: break-word;
+
+
+.d-comment__author-label--staff { display: none; }
+.d-comment--staff .d-comment__author-label--staff { display: block; }
+
+.d-comment__timestamp {
+    @include fs-data(2);
+    margin-bottom: $baseline;
+    a { color: $c-neutral2; }
 }
-@include mq(768px) {
-    .d-comment__author + .d-badge {
-        top: -.15em;
-    }
-}
-.d-meta-separator {
-    color: #aaa;
-    font-size: .85714285714em;
-}
-.d-comment__main {
-    padding-top: $baseline * 3;
-    padding-bottom: $baseline * 3;
-}
-.d-comment__body {
-    @include d-comment__body;
-}
-.d-discussion[data-read-only="true"] .sign-in-required {
-    display: none; /* Not the most performant, but it happens so rarely */
-}
-.d-discussion--not-staff .d-staff-required {
+
+.d-comment__reply-to-author {
+    color: $c-neutral1;
+    @include fs-data(3);
     display: none;
 }
+
+.d-comment--new {
+    .d-comment__reply-wrapper {
+        display: none;
+    }
+}
+
+
+/* Comment body
+   ======================================================= */
+
+.d-comment__content {
+    @include mq($side-meta-breakpoint) {
+        margin-left: 160px;
+    }
+    @include mq(leftCol) {
+        margin-left: $a-leftCol-width + $gs-gutter;
+    }
+    @include mq(wide) {
+        margin-left:  $a-leftColWide-width + $gs-gutter;
+    }
+}
+.d-comment__pick {
+    &:after {
+        content: "Guardian Pick";
+        display: inline;
+        margin-left: 24px;
+        white-space: nowrap;
+        @include fs-data(2);
+        color: black;
+        font-weight: bold;
+
+    }
+}
+.d-comment__main {
+    padding-bottom: 40px;
+    position: relative;
+
+    @include mq(tablet){
+        padding-right: 40px;
+    }
+}
+
+.d-comment__body {
+    color: $c-neutral1;
+    @include fs-data(5);
+    @include rem((line-height: 23px)); 
+    min-height: 2.5em;
+    @include mq($side-meta-breakpoint) {
+        margin-top: 0;
+    }
+}
+ 
+/* Recommend
+   ======================================================= */
+   
+.d-comment__recommend {
+    position: absolute;
+    right: 0;
+    top: $baseline;
+    z-index: 1;
+    @include mq(tablet){
+        min-width: 28px;
+        text-align: center;
+    }
+}
+
+.d-comment__recommend-button {    
+    @include icon-button(18px, 12px);
+    background-color: $c-neutral4;
+    margin-right: 2px;
+    margin-bottom: -5px;
+    @include mq(tablet) {
+        margin: 0;
+        position: absolute;
+        top: 1.4em;
+        left: 50%;
+        margin-left: -9px;
+    }
+}
+
+.d-comment__recommend-count {
+    @include fs-data(3);
+    color: $c-neutral2;
+    font-weight: bold;
+    text-align: right;
+    min-width: 12px;
+    display: inline-block;
+    @include mq(tablet) {
+        min-width: 0;
+        display: block;
+        text-align: center;
+    }
+}
+
+.d-comment__recommend--active {
+    cursor: pointer;
+
+    .d-comment__recommend-button {
+        background-color: $c-newsDefault;
+    }
+    .d-comment__recommend-count {
+        color: $c-newsDefault;
+    }
+}
+
+.d-comment__recommend--user-recommended {
+    .d-comment__recommend-button {
+        background-color: $c-commentDefault;
+    }
+    .d-comment__recommend-count {
+        color: $c-commentDefault;
+    }
+}
+
+/* Comment actions
+   ======================================================= */
+
+.d-comment__actions {
+    @include fs-data(2);
+    height: 1.4rem;
+    padding-top: $baseline*2;
+    padding-bottom: $baseline*3;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+}
+
+.d-comment__reply-wrapper {
+    display: inline;
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+.d-comment__reply-button {
+    @include icon-button(19px, 12px);
+    background-color: $c-newsDefault;
+    position: absolute;
+    margin-top: -3px;
+}
+
+.d-comment__action {
+    color: $c-newsDefault;
+    font-weight: bold;
+}
+
+.d-comment__action--reply {
+    padding-left: 25px;
+}
+
+.d-comment__action--report {
+    font-weight: normal;
+    position: absolute;
+    right: $baseline;
+}
+
+.d-comment__action-separator {
+    @include fs-data(1);
+    color: $c-neutral2;
+    display: inline-block;
+    margin: 0 $baseline*2;
+    position: relative;
+    bottom: 1px;
+}
+
+/* Reply comment
+   ========================================================================== */
+
+.d-comment--response {
+    margin-left: $replyIndent;
+    border-top: 1px dotted $c-neutral3;
+
+    @include mq($side-meta-breakpoint) {
+        margin-left: 160px + $replyIndent;
+    }
+    @include mq(leftCol) {
+        margin-left: $a-leftCol-width + $gs-gutter + $replyIndent;
+    }
+    @include mq(wide) {
+        margin-left:  $a-leftColWide-width + $gs-gutter + $replyIndent;
+    }
+
+
+    .d-comment__main {
+        margin-top: $baseline;
+    }
+    .d-comment__content {
+        margin-left: 0;
+    }
+    .d-comment__inner {
+    }
+    .d-comment__body {
+        color: $c-replyText;
+        margin-top: $baseline;
+        @include mq(tablet) {
+            margin-top: $baseline*2;
+        }
+    }   
+    .d-comment__recommend {
+        top: $baseline;
+    }
+
+    .d-comment__meta {
+        height: auto;
+        display: block;
+        float: none;
+        width: 100%;
+        .d-comment__timestamp { display: none; }
+        .d-comment__author { display: inline; @include fs-data(4); }
+        .i-in-reply-arrow { display: inline-block; }
+        .d-comment__reply-to-author { display: inline; }
+        .d-comment__avatar-wrapper { display: none; }
+    }
+    .d-comment__meta-text { margin-left: 0; position: static; }
+    .d-comment__timestamp { margin-top: -4px; }
+
+    
+
+
+}
 .d-discussion__error {
-    background: #ffcc66;
     margin-top: $baseline*2;
-    padding: $baseline*2 $gutter;
+    .d-discussion__error-text {
+        margin-left: 24px;
+        line-height: 24px;
+    }
+    .i-alert { position: absolute; }
+}
+
+.d-thread--responses .d-discussion__error {
+    @include mq($side-meta-breakpoint) {
+        margin-left: 160px + $replyIndent;
+    }
+    @include mq(leftCol) {
+        margin-left: $a-leftCol-width + $gs-gutter + $replyIndent;
+    }
+    @include mq(wide) {
+        margin-left:  $a-leftColWide-width + $gs-gutter + $replyIndent;
+    }
+
+}
+
+.js-show-more-replies {
+    
+    margin-left: $replyIndent;
+
+    @include mq($side-meta-breakpoint) {
+        margin-left: 160px + $replyIndent;
+    }
+    @include mq(leftCol) {
+        margin-left: $a-leftCol-width + $gs-gutter + $replyIndent;
+    }
+    @include mq(wide) {
+        margin-left:  $a-leftColWide-width + $gs-gutter + $replyIndent;
+    }
+
+    color: $c-newsDefault;
+    background-color: transparent;
+    @include fs-data(1);
+    font-weight: bold;
+
+    border-top: 1px dotted $c-neutral5;
+    line-height: 40px;
+
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline;
+    }
+
+    span {
+        @include icon-button(18px, 18px);
+        background-color: $c-newsDefault;
+        margin-bottom: -4px;
+        margin-right: $baseline*2;
+    }
 }
 
 /* New Discussion
    ===========================================================================*/
 .discussion--closed {
-    .d-comment__action--reply,
-    .d-comment__action--pick {
+    .d-comment__reply-wrapper,
+    .d-comment__action-separator {
         display: none;
     }
+    .d-comment__main {
+        padding-bottom: 20px;
+    }
 }
+
+
+/* Top Comments
+   ========================================================================== */
+
+.discussion__heading {
+    color: $c-neutral1;
+    border-top: 1px dotted $c-neutral3;
+    margin-bottom: 0;
+}
+
+.discussion__comments--top-comments {
+    
+    .d-thread { // for the max-height fade effect
+        position: relative;
+        overflow: hidden;
+    }
+    .d-comment {
+        margin-bottom: $baseline*2;
+        overflow: hidden;
+    }
+    .d-comment__main {
+        padding-right: 40px;
+        padding-bottom: 0;
+    }
+    .d-comment__body {
+        min-height: 0;
+    }
+    .d-comment--top-level {
+        border: 0;
+    }
+    .d-comment__meta {
+        position: absolute;
+        bottom: $baseline*2;
+        width: 100%;
+        @include mq($side-meta-breakpoint) {
+            position: static;
+            margin-top: $baseline*4;
+            width: 160px;
+            top: 0;
+        }
+    }
+    .d-comment__inner {
+        min-height: 0;
+        padding-bottom: $avatarSize + 20px + $baseline*4;
+        @include mq($side-meta-breakpoint) {
+            padding-bottom: $baseline*2;
+        }
+    }
+
+    .show-more__container--newer, .show-more__container--older { display: none; }
+
+    .d-comment__actions { display: none; }
+    .d-comment__content { 
+        background-color: $c-commentGrey;
+        padding: $baseline*2 $baseline*3;
+        margin-bottom: $baseline*3;
+        position: relative;
+
+        &:before {
+            position: absolute;
+            display: block;
+            content: "";
+            bottom: -20px;
+            left: 20px;
+            width: 0; 
+            height: 0; 
+            border-right: 20px solid transparent;
+            border-top: 20px solid $c-commentGrey;
+            border-right-style: inset;
+        }
+        @include mq($side-meta-breakpoint) {
+            margin-bottom: 0;
+            &:before {
+                left: -20px;
+                top: 20px;
+                border: 0;
+                border-left: 20px solid transparent;
+                border-bottom: 20px solid $c-commentGrey;
+                border-left-style: inset;
+            }
+        }
+    }
+    .d-comment__recommend {
+        top: $baseline*2;
+        right: $baseline*2;
+        @include mq(tablet) {
+            right: $baseline;
+        }
+    }
+    .d-discussion__comment-count { display: none; }
+    
+    .d-image-fade {
+        background-color: #fff;
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 100px;
+        z-index: 2;
+        @include d-white-fade();
+    }
+}
+
 
 /* New Comment
    ===========================================================================*/
@@ -190,101 +700,6 @@
     margin-right: 15px;
     overflow: hidden;
     width: 36px;
-}
-
-/* Header
-   ========================================================================== */
-
-/**
- * Simulate Media object on Comments header
- * To have an image or a media on the left,
- * and a content block on its right.
- * See benefits of this technique:
- * - www.stubbornella.org/content/2010/06/25/the-media-object-saves-hundreds-of-lines-of-code/
- * - http://jsfiddle.net/necolas/rZvEF/
- */
-
-.d-comment-header {
-    zoom: 1;
-
-    &:before,
-    &:after {
-        content: '.';
-        display: block;
-        overflow: hidden;
-        visibility: hidden;
-        font-size: 0;
-        line-height: 0;
-        width: 0;
-        height: 0;
-    }
-    &:after {
-        clear: both;
-    }
-}
-.d-comment__media {
-    float: left;
-    margin-right: 15px;
-
-    img {
-        display: block;
-        max-width: 100%; /* 1 */
-    }
-}
-
-/**
- * 1. Create new block formatting context in modern browsers
- * 2. Avoid shrink-wrap behaviour of table-cell
- * 3. Override for IE6/7
- * 4. Create new block formatting context in IE6/7
-*/
-.d-comment__meta {
-    display: table-cell; /* 1 */
-    max-width: 100%;
-    width: 10000px; /* 2 */
-    *width: auto; /* 3 */
-    *zoom:1; /* 4 */
-}
-.d-meta-item {
-    color: $c-neutral2;
-    font-size: .85714285714em;
-    font-family: $sans-serif; // Force font when used outside of comment context
-}
-.d-comment__actions {
-    margin-top: $baseline * 3; /* Compensate missing space in case the comment does not end with a paragraph */
-    margin-bottom: $baseline;
-}
-.d-comment__action {
-    color: $c-neutral2;
-    display: inline-block;
-    font-size: .85714285714em;
-}
-.d-comment__action--report {
-    float: right;
-}
-.d-comment__recommend {
-    position: absolute;
-    right: 0;
-    top: $baseline * 4;
-    padding: $baseline $gutter/2;
-    background-color: #929497;
-    color: #ffffff;
-    @include rem((font-size: 14px));
-}
-.d-comment__recommend--left {
-    right: $gutter * 1.5;
-}
-.d-comment__recommend--active {
-    background-color: #4490ce;
-    color: #fff;
-    cursor: pointer;
-}
-.d-comment__recommend--user-recommended {
-    background-color: #931c55;
-}
-.d-comment__seperator {
-    margin: 0 9px 0 6px;
-    cursor: normal;
 }
 
 /* Badges
@@ -400,12 +815,24 @@
 /* Comment Box
    ========================================================================== */
 
-.d-bar {
-    background-color: $c-neutral5;
-    padding: $baseline*3 $gutter $baseline*3 $gutter;
-    margin-bottom: $baseline*3;
+.d-bar {    
+    color: $c-neutral1;
+    margin-bottom: $baseline*4;
 }
-.d-comment-box {}
+
+.d-comment-box { 
+
+    @include mq($side-meta-breakpoint) {
+        margin-left: 160px;
+    }
+    @include mq(leftCol) {
+        margin-left: $a-leftCol-width + $gs-gutter;
+    }
+    @include mq(wide) {
+        margin-left:  $a-leftColWide-width + $gs-gutter;
+    }
+}
+
 .d-comment-box__body {
     @include box-sizing(border-box);
     border: 1px solid $c-neutral3;
@@ -416,195 +843,33 @@
     width: 100%;
     word-break: break-word;
 }
+
 .d-comment-box__body--expanded {
     height: 150px;
 }
-.d-comment-box__error {
-    background: #ffcc66;
-    padding: $baseline*2 $gutter;
-}
+
 .d-comment-box__add-comment {
     display: none;
 }
+
 .d-comment-box__submit {
     display: inline-block;
     margin-right: $gutter;
+    @include fs-data(4);
+    font-weight: bold;
 }
+
 .d-comment-box__reply-to,
 .d-comment-box__cancel {
     @include fs-data(2);
     color: $c-neutral1;
     display: inline-block;
 }
+
 .d-comment-box__cancel {
     color: $c-neutral2;
     float: right;
     margin-top: $baseline*3;
-}
-
-
-/* Top Comments
-   ========================================================================== */
-
-$topCommentsHeight: 600px;
-
-.discussion__comments--top-comments { // Section
-    position: relative;
-
-    .d-image-fade {
-        background-color: #fff;
-        display: block;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        width: 100%;
-        height: 40px;
-        @include d-white-fade();
-    }
-    .discussion__comments__top { // Container
-
-        max-height: $topCommentsHeight;
-        position: relative;
-        overflow: hidden;
-
-        > div {
-            max-height: $topCommentsHeight;
-        }
-        ul {
-            margin: 0;
-            // Mobile First
-            @include mq($from: desktop) {
-
-                // Switch to 2-col layout for desktop
-
-                -webkit-column-width: 290px;
-                -webkit-column-gap: $gs-gutter; 
-                -webkit-column-count: 2;
-
-                -moz-column-width: 290px;
-                -moz-column-gap: $gs-gutter;
-                -moz-column-count: 2;
-
-                column-width: 290px;
-                column-gap: $gs-gutter; 
-                column-count: 2;
-
-                .d-comment {
-                    width: auto;
-                    overflow: hidden;
-                    /* Prevents breaking of elements in CSS3 column layout */
-                    -webkit-column-break-inside:avoid;
-                       -moz-column-break-inside:avoid;
-                        -ms-column-break-inside:avoid;
-                         -o-column-break-inside:avoid;
-                            column-break-inside:avoid;
-                }
-
-            }
-        }
-        .d-comment { // Comment
-            border: none;
-            position: relative;
-            display: block;
-            padding: 0 0 $baseline*10 0;
-        }
-        .d-comment__inner {
-            background-color: $c-neutral7;
-            display: inline-block;
-            padding: $baseline*2 $gutter/2 $baseline*6 $gutter/2;
-
-            &:before { // Pointer (equilateral triangle)
-                top: 100%;
-                border: solid transparent;
-                content: " ";
-                height: 0;
-                width: 0;
-                position: absolute;
-                pointer-events: none;
-                border-color: rgba(255, 255, 255, 0);
-                border-top-color: $c-neutral7;
-                border-width: 30px;
-                left: 23px ;
-                margin-left: -30px;
-            }
-
-            &:after { // Mask (right-skewed parellelogram)
-                @include transform(skew(-10deg));
-                top: 100%;
-                content: " ";
-                height: 24px;
-                width: 24px;
-                position: absolute;
-                pointer-events: none;
-                background-color: #ffffff;
-                left: -5px;
-            }
-            .d-comment__main {
-                padding-top: 36px;
-            }
-            .d-comment__pick {
-                bottom: 24px;
-                right: 8px;
-                top: auto;
-            }
-            .d-comment__recommend {
-                background-color: transparent;
-                padding: 0;
-                margin: 0;
-                display: block;
-                height: 20px;
-                top: 12px;
-                right: 6px;
-
-                .d-comment__recommend-caption {
-                    color: #4490ce;
-                    display: inline-block;
-                    padding: 0 8px 0 0;
-                    position: relative;
-                    top: -5px;
-                    font-size: 0.9em;
-                }
-                .i-reccomend-container {
-                    display: inline-block;
-                    width: 12px;
-                    height: 14px;
-                    padding: 2px 4px 4px 4px;
-                    @include rounded-corners(50px);
-                    background-color: #4490ce;
-                    position: relative;
-                    top: -4px;
-
-                    .i-recommend {
-                        background-color: #4490ce;
-                    }
-                }
-                .d-comment__recommend-count {
-                    color: #4490ce;
-                    display: inline-block;
-                    padding: 0 0 0 8px;
-                    position: relative;
-                    top: -5px;
-                    font-size: 0.9em;
-                }
-
-                &:hover {
-                    .d-comment__recommend-count,
-                    .d-comment__recommend-caption {
-                        text-decoration: underline;
-                    }
-                }
-            }
-        }
-        .d-comment__avatar-wrapper {
-            @include rounded-corners(50px);
-            overflow: hidden;
-
-            .d-comment__avatar {
-                padding: 0;
-            }
-        }
-    }
 }
 
 .open-cta {
