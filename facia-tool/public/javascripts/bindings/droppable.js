@@ -4,6 +4,7 @@ define([
     'modules/vars',
     'utils/parse-query-params',
     'utils/url-abs-path',
+    'utils/clean-clone',
     'modules/authed-ajax',
     'models/group',
     'models/article',
@@ -14,6 +15,7 @@ define([
     vars,
     parseQueryParams,
     urlAbsPath,
+    cleanClone,
     authedAjax,
     Group,
     Article,
@@ -21,7 +23,8 @@ define([
     ophanApi
 ) {
     var sourceList,
-        sourceItem;
+        storage = window.localStorage,
+        storageKey ='gu.fronts-tool.drag-source';
 
     function init() {
 
@@ -37,8 +40,12 @@ define([
             init: function(element) {
 
                 element.addEventListener('dragstart', function(event) {
+                    var sourceItem = ko.dataFor(event.target);
+
+                    if (sourceItem.constructor === Article) {
+                        storage.setItem(storageKey, JSON.stringify(sourceItem.get()));
+                    }
                     sourceList = ko.dataFor(element);
-                    sourceItem = ko.dataFor(event.target);
                 }, false);
 
                 element.addEventListener('dragover', function(event) {
@@ -75,6 +82,7 @@ define([
                     var targetList = ko.dataFor(element),
                         targetItem = ko.dataFor(event.target),
                         id = event.testData ? event.testData : event.dataTransfer.getData('Text'),
+                        sourceItem,
                         position,
                         article,
                         groups,
@@ -84,7 +92,7 @@ define([
                     event.preventDefault();
                     event.stopPropagation();
 
-                    if (!targetList.items || !targetList.underDrag) { return; }
+                    if (!targetList) { return; }
 
                     targetList.underDrag(false);
                     _.each(targetList.items(), function(item) {
@@ -124,9 +132,13 @@ define([
                         return;
                     }
 
-                    // sourceItem var doesn't get repopulated when the drag was from an arbitrary link elsewhere
-                    // so garbage collect it - if it's a leftover from a previous drag.
-                    if(sourceItem && sourceItem.props.id() !== id) {
+                    try {
+                        sourceItem = JSON.parse(storage.getItem(storageKey));
+                    } catch(e) {}
+
+                    storage.removeItem(storageKey);
+
+                    if (!sourceItem || sourceItem.id !== id) {
                         sourceItem = undefined;
                         sourceList = undefined;
                     }
@@ -138,7 +150,7 @@ define([
  
                     article = new Article({
                         id: id,
-                        meta: sourceItem ? sourceItem.getMeta() : undefined,
+                        meta: sourceItem ? cleanClone(sourceItem.meta) : undefined,
                         parent: targetList.parent,
                         parentType: targetList.parentType
                     });
@@ -172,8 +184,7 @@ define([
                             return;
                         }
 
-                        itemMeta = sourceItem && _.isFunction(sourceItem.getMeta) ? sourceItem.getMeta() : undefined;
-                        itemMeta = itemMeta || {};
+                        itemMeta = sourceItem && sourceItem.meta ? sourceItem.meta : {};
                         itemMeta.group = targetList.group + '';
 
                         authedAjax.updateCollection(
@@ -197,7 +208,7 @@ define([
                             return;
                         }
 
-                        sourceList.omitItem(sourceItem);
+                        removeMatchingItems(sourceList, id);
 
                         authedAjax.updateCollection(
                             'delete',
