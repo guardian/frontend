@@ -283,25 +283,21 @@ $c-commentPickGrey: #f3f3f1;
 
 .d-comment__recommend-button {    
     @include icon-button(18px, 12px);
-    cursor: pointer;
-    background-color: $c-newsDefault;
+    background-color: $c-neutral4;
     margin-right: 2px;
     margin-bottom: -5px;
-    //float: left;
     @include mq(tablet) {
         margin: 0;
         position: absolute;
-        //right: 5px;
         top: 1.4em;
-        position: absolute;
         left: 50%;
         margin-left: -9px;
     }
 }
 
 .d-comment__recommend-count {
-    color: $c-newsDefault;
     @include fs-data(3);
+    color: $c-neutral2;
     font-weight: bold;
     text-align: right;
     min-width: 12px;
@@ -310,6 +306,26 @@ $c-commentPickGrey: #f3f3f1;
         min-width: 0;
         display: block;
         text-align: center;
+    }
+}
+
+.d-comment__recommend--active {
+    cursor: pointer;
+
+    .d-comment__recommend-button {
+        background-color: $c-newsDefault;
+    }
+    .d-comment__recommend-count {
+        color: $c-newsDefault;
+    }
+}
+
+.d-comment__recommend--user-recommended {
+    .d-comment__recommend-button {
+        background-color: $c-commentDefault;
+    }
+    .d-comment__recommend-count {
+        color: $c-commentDefault;
     }
 }
 
