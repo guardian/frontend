@@ -1,0 +1,19 @@
+@(metaData: model.MetaData, projectName: Option[String] = Some(conf.Configuration.environment.projectName))(implicit request: RequestHeader)
+
+<!DOCTYPE html>
+<html class="js-off" lang="en-GB">
+<head>
+    <meta charset="utf-8" />
+    <title>@Html(metaData.webTitle)</title>
+    @fragments.commonCssSetup(projectName)
+    @fragments.commonJavaScriptSetup(metaData, "form")
+</head>
+<body id="top" itemscope itemtype="http://schema.org/WebPage" itemref="schema-WebPage">
+
+    <div id="preload-1">
+        <h2 class="formstack-heading formstack-heading--first">Thank you for nominating</h2>
+        <p>Remember to keep an eye out for the reader voted shortlist March. Winners will be announced at our awards ceremony in June.</p>
+    </div>
+
+</body>
+</html>
