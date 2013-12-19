@@ -125,11 +125,15 @@ input[type=text] {
 }
 
 .supporting .droppable {
-    padding: 0 0 26px 0;
+    padding: 0 0 25px 0;
 }
 
 .droppable.underDrag {
     background-color: #f89406;
+}
+
+.editingMeta .droppable.underDrag {
+    background-color: #999999;
 }
 
 .pending {
@@ -201,16 +205,20 @@ input[type=text] {
 }
 
 .supporting .trail {
-    border-color: #DDDDDD;
-    background: #DDDDDD;
+    border-color: #CCCCCC;
+    background: #CCCCCC;
 }
 
 .trail.editingMeta {
-    background: #DDDDDD;
+    background: #CCCCCC;
 }
 
 .trail.underDrag {
     border-top-color: #f89406 !important; 
+}
+
+.editingMeta .trail.underDrag {
+    border-top-color: #999999 !important; 
 }
 
 .trail:last-child {
@@ -576,11 +584,11 @@ button {
 
 .supporting-message {
     position: absolute;
-    bottom: 3px;
+    bottom: 2px;
     z-index: 2;
     left: 4px;
     font-size: 11px;
-    color: #666666;
+    color: #FFFFFF;
 }
 
 .supporting-count {
