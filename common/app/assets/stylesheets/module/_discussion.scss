@@ -267,6 +267,7 @@ $replyIndent: 26px;
 .d-comment__body {
     color: $c-neutral1;
     @include fs-data(5);
+    @include rem((line-height: 23px)); 
     min-height: 2.5em;
     @include mq($side-meta-breakpoint) {
         margin-top: 0;
