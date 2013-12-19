@@ -141,7 +141,12 @@
 }
 
 .textarea {
+    resize: vertical;
+}
+
+.textarea--no-resize {
     min-height: $baseline*20;
+    resize: none;
 }
 
 .textarea--long {

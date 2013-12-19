@@ -228,6 +228,11 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val url = configuration.getMandatoryStringProperty("riffraff.url")
     lazy val apiKey = configuration.getMandatoryStringProperty("riffraff.apikey")
   }
+
+  object formstack {
+    lazy val url = configuration.getMandatoryStringProperty("formstack.url")
+    lazy val oAuthToken = configuration.getMandatoryStringProperty("formstack.oauthToken")
+  }
 }
 
 object ManifestData {

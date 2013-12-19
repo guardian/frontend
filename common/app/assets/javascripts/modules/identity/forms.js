@@ -1,11 +1,9 @@
 define([
     'bean',
-    'bonzo',
-    'utils/ajax'
+    'bonzo'
 ], function (
     bean,
-    bonzo,
-    ajax
+    bonzo
 ) {
 
     function forgottenEmail(config, context) {

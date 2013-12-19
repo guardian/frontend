@@ -91,18 +91,19 @@ define([
              var topStories = new TopStories(),
                 sections = new Sections(config),
                 search = new Search(config),
-                header = document.getElementById('header'),
-                profile;
+                header = document.getElementById('header');
 
-            if (config.switches.idProfileNavigation) {
-                profile = new Profile(header, {
-                    url: config.page.idUrl
-                });
-                profile.init();
+            if (header) {
+                if (config.switches.idProfileNavigation) {
+                    var profile = new Profile(header, {
+                        url: config.page.idUrl
+                    });
+                    profile.init();
+                }
+                topStories.load(config, header);
             }
 
             sections.init(document);
-            topStories.load(config, header);
             search.init(header);
         },
 
@@ -352,6 +353,12 @@ define([
             for (var event in events) {
                 bean.on(window, event, debounce(emitEvent(events[event]), 200));
             }
+        },
+
+        checkIframe: function() {
+            if (window.self !== window.top) {
+                $('html').addClass('iframed');
+            }
         }
     };
 
@@ -375,6 +382,7 @@ define([
         if (!this.initialised) {
             this.initialised = true;
             modules.windowEventListeners();
+            modules.checkIframe();
             modules.upgradeImages();
             modules.showTabs();
             modules.initialiseNavigation(config);

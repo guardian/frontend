@@ -202,6 +202,10 @@ object Switches extends Collections {
     "If this switch is on then users who have previously authorized the guardian app in facebook and who have not recently signed out are automatically signed in.",
     safeState = Off)
 
+  val IdentityFormstackSwitch = Switch("Feature Switches", "id-formstack",
+    "If this switch is on, formstack forms will be available",
+    safeState = Off)
+
   // A/B Test Switches
 
   val ABAa = Switch("A/B Tests", "ab-abcd",
@@ -300,6 +304,7 @@ object Switches extends Collections {
     ArticleKeywordsSwitch,
     EditionRedirectLoggingSwitch,
     FacebookAutoSigninSwitch,
+    IdentityFormstackSwitch,
     ABAa,
     ABOnwardIntrusive,
     ABOnwardHighlightsPanel,
