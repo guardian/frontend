@@ -15,6 +15,8 @@
 }
 
 $side-meta-breakpoint: desktop;
+$avatarSize: 44px;
+$c-commentGrey: #f3f3f1;
 
 /* ==========================================================================
    Discussion
@@ -41,6 +43,7 @@ $side-meta-breakpoint: desktop;
     font-weight: bold;
     color: $c-neutral2;
     border-top: 1px solid $c-neutral4;
+    padding-bottom: $baseline*3;
 }
 
 .d-thread {
@@ -67,7 +70,7 @@ $side-meta-breakpoint: desktop;
     display: block;
     text-align: center;
 
-    &.show-more__container--older {
+    &.show-more__container--older, &.show-more__container--featured {
         color: $c-neutral1;
         border-top: 1px dotted $c-neutral3;
     }
@@ -109,9 +112,6 @@ $side-meta-breakpoint: desktop;
     }
 }
 
-.d-discussion__show-more--featured {
-    border-top: 1px dotted $c-neutral5;    
-}
 
 .d-discussion--not-staff .d-staff-required {
    display: none;
@@ -137,11 +137,6 @@ $side-meta-breakpoint: desktop;
     display: block;
     clear: both;
 }
-
-/* META */
-$c-commentGrey: #a3a3a3;
-$avatarSize: 44px;
-$c-commentPickGrey: #f3f3f1;
 
 .d-comment__meta {
     height: $avatarSize + $baseline;
@@ -359,7 +354,7 @@ $c-commentPickGrey: #f3f3f1;
     @include icon-button(19px, 12px);
     background-color: $c-newsDefault;
     position: absolute;
-    margin-top: -1px;
+    margin-top: -3px;
 }
 
 .d-comment__action {
@@ -540,10 +535,12 @@ $replyIndent: 26px;
             padding-bottom: $baseline*2;
         }
     }
-    .d-discussion__show-more--older, .d-discussion__show-more--newer  { display: none; }
+
+    .show-more__container--newer, .show-more__container--older { display: none; }
+
     .d-comment__actions { display: none; }
     .d-comment__content { 
-        background-color: $c-commentPickGrey;
+        background-color: $c-commentGrey;
         padding: $baseline*2 $baseline*2;
         margin-bottom: $baseline*3;
         position: relative;
@@ -557,7 +554,7 @@ $replyIndent: 26px;
             width: 0; 
             height: 0; 
             border-right: 20px solid transparent;
-            border-top: 20px solid $c-commentPickGrey;
+            border-top: 20px solid $c-commentGrey;
             border-right-style: inset;
         }
         @include mq($side-meta-breakpoint) {
@@ -567,7 +564,7 @@ $replyIndent: 26px;
                 top: 20px;
                 border: 0;
                 border-left: 20px solid transparent;
-                border-bottom: 20px solid $c-commentPickGrey;
+                border-bottom: 20px solid $c-commentGrey;
                 border-left-style: inset;
             }
         }
