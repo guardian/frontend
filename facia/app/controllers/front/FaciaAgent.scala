@@ -72,7 +72,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
   }
 
   private def parseCollectionItem(json: JsValue): Seq[CollectionItem] = (json \ "live").as[Seq[JsObject]] map { trail =>
-    CollectionItem((trail \ "id").as[String], (trail \ "meta").asOpt[Map[String, String]])
+    CollectionItem((trail \ "id").as[String], (trail \ "meta").asOpt[Map[String, JsValue]])
   }
 
   def getCollectionItems(id: String): Future[Seq[CollectionItem]] =

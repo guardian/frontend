@@ -83,13 +83,13 @@ trait ContentApiWrite extends ExecutionContexts {
 
   private def generateGroups(config: Config, block: Block): Seq[Group] = {
     config.groups.zipWithIndex.map {case (group, index) =>
-    val trails = block.live.filter(_.meta.exists(_.get("group").exists(_.toInt == index)))
+    val trails = block.live.filter(_.meta.exists(_.get("group").exists(_.asOpt[Int].exists(_ == index))))
       Group(
         title = group,
         content = trails.map { trail =>
           Item(
             id=trail.id,
-            headline=trail.meta.flatMap(_.get("headline"))
+            headline=trail.meta.flatMap(_.get("headline").flatMap(_.asOpt[String]))
           )
         }
       )
