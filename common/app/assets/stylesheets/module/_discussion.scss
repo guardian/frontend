@@ -497,7 +497,7 @@ $replyIndent: 26px;
    ===========================================================================*/
 .discussion--closed {
     .d-comment__reply-wrapper,
-    .d-comment__action--pick {
+    .d-comment__action-separator {
         display: none;
     }
     .d-comment__main {
