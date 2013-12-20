@@ -10,6 +10,7 @@ import views.support.{Naked, ImgSrc}
 import views.support.StripHtmlTagsAndUnescapeEntities
 import com.gu.openplatform.contentapi.model.{Content => ApiContent,Element =>ApiElement}
 import play.api.libs.json.JsValue
+import views.support.countLinks
 
 class Content protected (val delegate: ApiContent) extends Trail with Tags with MetaData {
 
@@ -156,7 +157,8 @@ class Article(content: ApiContent) extends Content(content) {
 
   override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
     ("content-type", contentType),
-    ("isLiveBlog", isLiveBlog)
+    ("isLiveBlog", isLiveBlog),
+    ("inBodyLinkCount", countLinks(body))
   )
 
   override def openGraph: List[(String, Any)] = super.openGraph ++ List(

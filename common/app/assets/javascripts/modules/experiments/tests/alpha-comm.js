@@ -31,7 +31,7 @@ define([
 
   /*! adapted from Idle.Js, copyright 2013-04-27, Shawn Mclean
   *
-  * Essentially we set up a dead man switch on the isAway flag.
+  * Essentially we set up a dead man's switch on the isAway flag.
   *
   * If any activity on the page is detected we restart the countdown
   * with a debounce. If no activity is detected the switch is set to on. 
@@ -39,7 +39,7 @@ define([
   * */
   var Idle = function () {
       
-      this.isAway = false; // false = the user is active on the page, true = the user is inactive
+      this.isAway = true; // false = the user is active on the page, true = the user is inactive
       this.awayTimeout = 5000;
 
       var startInactivityTimeout,
@@ -48,7 +48,7 @@ define([
      
       startInactivityTimeout = debounce(function() {
         self.setInactive();
-      }, 5000);
+      }, this.awayTimeout);
       
       logActivity = function () {
         self.isAway = false;
@@ -56,10 +56,9 @@ define([
 
       // sensors
       bean.on(window, 'click keydown', startInactivityTimeout);
-      bean.on(window, 'scroll mousemove', debounce(startInactivityTimeout, 200));
-      
+      bean.on(window, 'scroll mousemove', debounce(startInactivityTimeout, 100));
       bean.on(window, 'click keydown', logActivity);
-      bean.on(window, 'scroll mousemove', debounce(logActivity, 200));
+      bean.on(window, 'scroll mousemove', debounce(logActivity, 100));
 
     };
 
@@ -74,7 +73,7 @@ define([
         adDwellTimes = {},
         flushInterval = 3000, // every 2 seconds
         trackInterval = 1000,
-        maxTrackTime  = 80000, // stop tracking after this time
+        maxTrackTime  = 90000, // stop tracking after this time
         instanceId = Math.random(), // each page view generates a temporary user 'id'
         idle = new Idle();
         
@@ -176,8 +175,7 @@ define([
         this.audienceOffset = 0;
         this.description = 'Test new advert formats for alpha release';
         this.canRun = function(config) {
-            var isInternetExplorer = /Internet Explorer/.test(navigator.userAgent);
-            if(config.page.contentType === 'Article' && !isInternetExplorer) {
+            if(config.page.contentType === 'Article') {
                 return true;
             } else {
                 return false;
