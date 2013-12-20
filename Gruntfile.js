@@ -241,7 +241,7 @@ module.exports = function (grunt) {
         },
 
         copy: {
-            commonjs: {
+            'javascript-common': {
                 files: [{
                     expand: true,
                     cwd: 'common/app/public/javascripts',
@@ -261,7 +261,7 @@ module.exports = function (grunt) {
                     dest: staticRequireDir + 'common-test'
                 }]
             },
-            admin: {
+            'javascript-admin': {
                 files: [{
                     expand: true,
                     cwd: 'admin/app/assets/javascripts',
@@ -275,7 +275,7 @@ module.exports = function (grunt) {
                     dest: staticRequireDir + 'admin-public'
                 }]
             },
-            applications: {
+            'javascript-applications': {
                 files: [{
                     expand: true,
                     cwd: 'applications/app/assets/javascripts',
@@ -283,7 +283,7 @@ module.exports = function (grunt) {
                     dest: staticRequireDir
                 }]
             },
-            article: {
+            'javascript-article': {
                 files: [{
                     expand: true,
                     cwd: 'article/app/assets/javascripts',
@@ -291,7 +291,7 @@ module.exports = function (grunt) {
                     dest: staticRequireDir
                 }]
             },
-            commercial: {
+            'javascript-commercial': {
                 files: [{
                     expand: true,
                     cwd: 'commercial/app/assets/javascripts',
@@ -299,7 +299,7 @@ module.exports = function (grunt) {
                     dest: staticRequireDir
                 }]
             },
-            'core-navigation': {
+            'javascript-core-navigation': {
                 files: [{
                     expand: true,
                     cwd: 'core-navigation/app/assets/javascripts',
@@ -307,15 +307,7 @@ module.exports = function (grunt) {
                     dest: staticRequireDir
                 }]
             },
-            'dev-build': {
-                files: [{
-                    expand: true,
-                    cwd: 'dev-build/app/assets/javascripts',
-                    src: ['**/*.js'],
-                    dest: staticRequireDir
-                }]
-            },
-            discussion: {
+            'javascript-discussion': {
                 files: [{
                     expand: true,
                     cwd: 'discussion/app/assets/javascripts',
@@ -323,7 +315,7 @@ module.exports = function (grunt) {
                     dest: staticRequireDir
                 }]
             },
-            facia: {
+            'javascript-facia': {
                 files: [{
                     expand: true,
                     cwd: 'facia/app/assets/javascripts',
@@ -331,7 +323,7 @@ module.exports = function (grunt) {
                     dest: staticRequireDir
                 }]
             },
-            'facia-tool': {
+            'javascript-facia-tool': {
                 files: [{
                     expand: true,
                     cwd: 'facia-tool/app/assets/javascripts',
@@ -339,7 +331,7 @@ module.exports = function (grunt) {
                     dest: staticRequireDir
                 }]
             },
-            identity: {
+            'javascript-identity': {
                 files: [{
                     expand: true,
                     cwd: 'identity/app/assets/javascripts',
@@ -347,7 +339,7 @@ module.exports = function (grunt) {
                     dest: staticRequireDir
                 }]
             },
-            image: {
+            'javascript-image': {
                 files: [{
                     expand: true,
                     cwd: 'image/app/assets/javascripts',
@@ -355,7 +347,7 @@ module.exports = function (grunt) {
                     dest: staticRequireDir
                 }]
             },
-            onward: {
+            'javascript-onward': {
                 files: [{
                     expand: true,
                     cwd: 'onward/app/assets/javascripts',
@@ -363,7 +355,7 @@ module.exports = function (grunt) {
                     dest: staticRequireDir
                 }]
             },
-            porter: {
+            'javascript-porter': {
                 files: [{
                     expand: true,
                     cwd: 'porter/app/assets/javascripts',
@@ -371,7 +363,7 @@ module.exports = function (grunt) {
                     dest: staticRequireDir
                 }]
             },
-            sport: {
+            'javascript-sport': {
                 files: [{
                     expand: true,
                     cwd: 'sport/app/assets/javascripts',
@@ -379,7 +371,7 @@ module.exports = function (grunt) {
                     dest: staticRequireDir
                 }]
             },
-            router: {
+            'javascript-router': {
                 files: [{
                     expand: true,
                     cwd: 'router/app/assets/javascripts',
@@ -387,7 +379,7 @@ module.exports = function (grunt) {
                     dest: staticRequireDir
                 }]
             },
-            diagnostics: {
+            'javascript-diagnostics': {
                 files: [{
                     expand: true,
                     cwd: 'diagnostics/app/assets/javascripts',
@@ -658,6 +650,13 @@ module.exports = function (grunt) {
 
         // Recompile on change
         watch: {
+            js: {
+                files: ['common/app/{assets, public}/javascripts/**/*.js'],
+                tasks: ['compile:js'],
+                options: {
+                    spawn: false
+                }
+            },
             css: {
                 files: ['common/app/assets/stylesheets/**/*.scss'],
                 tasks: ['compile:css'],
@@ -705,25 +704,21 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:images', ['clean:images', 'copy:images', 'shell:spriteGeneration', 'imagemin']);
     grunt.registerTask('compile:css', ['clean:css', 'sass:compile']);
     grunt.registerTask('compile:js', function(app) {
-        if (!app) {
-            grunt.log.error('No project parameter passed');
-            return;
+        grunt.task.run(['clean:js', 'copy:javascript-common']);
+        if (app) {
+            grunt.task.run('copy:javascript-' + app);
         }
-        grunt.task.run(['clean:js', 'copy:commonjs', 'copy:' + app]);
         if (!isDev) {
             grunt.task.run('uglify:vendor');
         }
-
+        // When an app defines it's own javascript application, the requirejs task will need to compile both
+        // common and app.
         grunt.task.run('requirejs:compile');
     });
     grunt.registerTask('compile:fonts', ['clean:fonts', 'mkdir:fontsTarget', 'webfontjson']);
     grunt.registerTask('compile:flash', ['clean:flash', 'copy:flash']);
     grunt.registerTask('compile', function(app) {
-        if (!app) {
-            grunt.log.error('No project parameter passed');
-            return;
-        }
-        grunt.task.run(['clean:staticTarget', 'compile:images', 'compile:css', 'compile:js:' + app, 'compile:fonts', 'compile:flash']);
+        grunt.task.run(['clean:staticTarget', 'compile:images', 'compile:css', 'compile:js' + (app ? ':' + app : ''), 'compile:fonts', 'compile:flash']);
         if (!isDev) {
             grunt.task.run(['clean:assets', 'copy:headCss', 'hash']);
         }
