@@ -108,7 +108,7 @@ define([
 
                     // If the item isn't dropped onto an article, asssume it's to be appended *after* the other items in this group,
                     if (targetItem.constructor === Group) {
-                        targetItem = _.last(targetList.items());
+                        targetItem = last(targetList.items());
                         if (targetItem) {
                             isAfter = true;
                         // or if there arent't any other items, after those in the first preceding group that contains items.

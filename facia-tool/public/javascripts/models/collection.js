@@ -14,6 +14,7 @@ define([
     'lodash/objects/isArray',
     'lodash/collections/toArray',
     'lodash/collections/find',
+    'lodash/objects/assign',
     'js!humanized-time-span'
 ], function(
     ko,
@@ -29,7 +30,8 @@ define([
     map,
     isArray,
     toArray,
-    find
+    find,
+    assign
 ) {
     function Collection(opts) {
         var self = this;
@@ -175,7 +177,7 @@ define([
         });
 
         forEach(source, function(item) {
-            var article = new Article(_.extend(item, {
+            var article = new Article(assign(item, {
                     parent: self,
                     parentType: 'Collection'
                 })),
@@ -185,7 +187,7 @@ define([
                 article.startMetaEdit();
             }
 
-            group = _.find(self.groups, function(g){
+            group = find(self.groups, function(g){
                 return (parseInt((item.meta || {}).group, 10) || 0) === g.group;
             }) || self.groups[0];
 

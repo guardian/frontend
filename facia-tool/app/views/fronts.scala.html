@@ -7,16 +7,16 @@
     <img class="ophan-legend" src="@routes.Assets.at("images/ophan-legend.png")" title="Pageview graph colours" />
 
     <div class="toolbar" data-bind="visible: true" style="display: none">
-        
+
         <span class="tool-label">
             Editing front
         </span>
         <select class="tool-select" data-bind="options: fronts, value: front, optionsCaption: 'choose...'"></select>
-       
+
         <span class="tool-label">
             Edit Mode
         </span>
-        
+
         <a class="tool pref-draft" data-bind="
             click: setModeDraft,
             css: {active: !liveMode()}">Draft</a
@@ -135,7 +135,7 @@
                     <div data-bind="visible: !$root.liveMode()">
                         <a class="tool draft-publish" data-bind="
                             click: publishDraft">Publish this container's edits</a>
-                            
+
                         <a class="tool draft-discard" data-bind="
                             click: discardDraft">Discard edits</a>
                     </div>
@@ -149,7 +149,7 @@
     </script>
 
     <script type="text/html" id="template_groups">
-        <!-- ko if: !_.isUndefined(name) -->
+        <!-- ko if: $data.name -->
         <div class="group-name" data-bind="text: name"></div>
         <!-- /ko -->
         <div class="droppable" data-bind="
@@ -235,10 +235,10 @@
                         </div>
                     <!-- /ko -->
 
-                </div>                   
+                </div>
             </div>
         </div>
-        
+
     </script>
 
 </div>

@@ -11,8 +11,8 @@ define([
     'knockout',
     'lodash/chaining/chain',
     'lodash/objects/isUndefined',
-    'lodash/collection/map',
-    'lodash/objects/asssign',
+    'lodash/collections/map',
+    'lodash/objects/assign',
     'lodash/functions/defer',
     'lodash/objects/isFunction',
     'lodash/objects/isString',
@@ -165,11 +165,11 @@ define([
             return chain(self.meta)
                 .pairs()
                 // execute any knockout values:
-                .map(function(p){ return [p[0], _.isFunction(p[1]) ? p[1]() : p[1]]; })
+                .map(function(p){ return [p[0], isFunction(p[1]) ? p[1]() : p[1]]; })
                 // reject undefined properties:
                 .filter(function(p){ return !isUndefined(p[1]); })
                 // reject whitespace-only strings:
-                .filter(function(p){ return _.isString(p[1]) ? p[1].replace(/\s*/g, '').length > 0 : true; })
+                .filter(function(p){ return isString(p[1]) ? p[1].replace(/\s*/g, '').length > 0 : true; })
                 // reject vals that don't differ from the props (if any) that they're overwriting:
                 .filter(function(p){ return isUndefined(self.props[p[0]]) || self.props[p[0]]() !== p[1]; })
                 // serialise supporting
@@ -183,7 +183,7 @@ define([
                     return [p[0], p[1]];
                 })
                 // drop empty arrays:
-                .filter(function(p){ return _.isArray(p[1]) ? p[1].length : true; })
+                .filter(function(p){ return isArray(p[1]) ? p[1].length : true; })
                 // return as obj, or as undefined if empty.
                 // undefined is useful for ommiting it from any subsequent JSON.stringify call
                 .reduce(function(obj, p, key) {
