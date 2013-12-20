@@ -40,6 +40,7 @@ define([
         this.section        = conf.section;
         this.host           = conf.ajaxUrl + '/commercial/';
         this.oastoken       = options.oastoken || '';
+        this.omnitureTracker = options.omniture || '';
         this.userSegments   = 'seg=' + (new History().getSize() <= 1 ? 'new' : 'repeat');
         this.components     = {
           masterclasses: this.host + 'masterclasses.json?' + this.userSegments + '&s=' + this.section,
@@ -67,7 +68,7 @@ define([
             url: url,
             container: target,
             beforeInsert: function (html) {
-                return html.replace(/%OASToken%/g, self.oastoken);
+                return html.replace(/%OASToken%/g, self.oastoken).replace(/%OmnitureTracker%/g, self.omnitureTracker);
             },
             success: function () {
                 mediator.emit('modules:commercial/loader:loaded');
