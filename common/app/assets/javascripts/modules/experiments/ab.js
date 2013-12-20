@@ -22,7 +22,7 @@ define([
     OnwardIntrusive,
     OnwardHighlightsPanel,
     AlphaComm,
-    CommercialInArticle
+    CommercialInArticle,
     RightMostPopular,
     RightMostPopularControl
     ) {
