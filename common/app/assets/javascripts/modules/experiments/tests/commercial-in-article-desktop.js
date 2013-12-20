@@ -4,16 +4,13 @@ define([
     'qwery',
     'bonzo',
     'bean',
-    'utils/detect',
-    'modules/analytics/adverts',
-    'modules/adverts/sticky'
+    'utils/detect'
 ], function (
     common,
     qwery,
     bonzo,
     bean,
-    detect,
-    Sticky
+    detect
 ) {
 
     var inlineAdvertSlot = '<div class="ad-slot ad-slot--inline" data-base="%slot%" data-median="%slot%"><div class="ad-container"></div></div>',
@@ -32,11 +29,11 @@ define([
         bonzo(qwery('.js-mpu-ad-slot .social-wrapper')).after(bonzo.create(mpuSlot.replace(/%slot%/g, id))[0]);
     };
 
-    var CommercialInArticles = function () {
+    var CommercialInArticlesDesktop = function () {
 
         var self = this;
         
-        this.id = 'CommercialInArticles';
+        this.id = 'CommercialInArticlesDesktop';
         this.expiry = '2014-01-07';
         this.audience = 0.1;
         this.audienceOffset = 0.5;
@@ -48,7 +45,7 @@ define([
         };
         this.variants = [
             {
-                id: 'commercialInline',
+                id: 'CommercialInline',
                 test: function(context, config) {
                     guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha1.com';
                     createInlineAdSlots('Middle1');
@@ -56,7 +53,7 @@ define([
                 }
             },
             {
-                id: 'commercialAdhesive',
+                id: 'CommercialMpu',
                 test: function(context, config) {
                     guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha1.com';
                     createInlineAdSlots('Middle');
@@ -72,6 +69,6 @@ define([
         ];
     };
 
-    return CommercialInArticles;
+    return CommercialInArticlesDesktop;
 
 });
