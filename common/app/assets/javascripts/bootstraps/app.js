@@ -1,5 +1,5 @@
 /*global guardian:true */
-define('bootstraps/app', [
+define([
     'common/common',
     'qwery',
     'domReady',
