@@ -21,8 +21,8 @@ define([
     OnwardIntrusive,
     OnwardHighlightsPanel,
     AlphaComm,
-    RightMostPopular,
-    RightMostPopularControl
+    RightPopular,
+    RightPopularControl
     ) {
 
     var TESTS = [
@@ -31,8 +31,8 @@ define([
             new OnwardIntrusive(),
             new OnwardHighlightsPanel(),
             new AlphaComm(),
-            new RightMostPopular(),
-            new RightMostPopularControl()
+            new RightPopular(),
+            new RightPopularControl()
         ],
         participationsKey = 'gu.ab.participations';
 
