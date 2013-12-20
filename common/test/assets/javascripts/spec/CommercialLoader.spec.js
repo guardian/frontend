@@ -18,7 +18,7 @@ define([
                     page: {
                         keywords: 'a,b,c',
                         section: 's',
-                        ajaxUrl: '',
+                        ajaxUrl: ''
                     }
                 }
             };
