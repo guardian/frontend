@@ -196,6 +196,11 @@ define([
                 s.prop30 = 'non-content';
             }
 
+            // the number of Guardian links inside the body
+            if (config.page.inBodyLinkCount) {
+                s.prop58 = config.page.inBodyLinkCount;
+            }
+
             /* Retrieve navigation interaction data, incl. swipe */
             var ni = storage.session.get('gu.analytics.referrerVars');
             if (ni) {
