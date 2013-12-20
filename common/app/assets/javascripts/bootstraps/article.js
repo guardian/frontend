@@ -12,7 +12,8 @@ define([
     "modules/sport/cricket",
     "modules/ui/notification-counter",
     "modules/experiments/left-hand-card",
-    "modules/open/cta"
+    "modules/open/cta",
+    "modules/commercial/loader"
 ], function (
     common,
     mediator,
@@ -27,7 +28,8 @@ define([
     Cricket,
     NotificationCounter,
     LeftHandCard,
-    OpenCta
+    OpenCta,
+    CommercialLoader
 ) {
 
     var modules = {
@@ -87,7 +89,7 @@ define([
         initDiscussion: function() {
 
             common.mediator.on('page:article:ready', function(config, context) {
-                if (config.page.commentable) {
+                if (config.page.commentable && config.switches.discussion) {
                     var discussionLoader = new DiscussionLoader(context, common.mediator, {}, config.switches.discussionTopComments);
                     discussionLoader.attachToDefault();
                 }

@@ -250,7 +250,7 @@ trait ConfigAgent extends ExecutionContexts {
       Config(
         id,
         (collectionJson \ "apiQuery").asOpt[String],
-        (collectionJson \ "displayName").asOpt[String],
+        (collectionJson \ "displayName").asOpt[String].filter(_.nonEmpty),
         (collectionJson \ "tone").asOpt[String]
       )
     }

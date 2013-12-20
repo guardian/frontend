@@ -169,9 +169,13 @@ CommentBox.prototype.postComment = function(e) {
  * @param {string} message Overrides the default message
  */
 CommentBox.prototype.error = function(type, message) {
-    var error = document.createElement('div');
-    error.className = this.getClass('error', true);
-    error.innerHTML = message || this.errorMessages[type];
+    message = message || this.errorMessages[type];
+    var error = bonzo.create(
+        '<div class="d-discussion__error '+ this.getClass('error', true) +'">'+
+            '<i class="i i-alert"></i>'+
+            '<span class="d-discussion__error-text">'+ message +'</span>'+
+        '</div>'
+    )[0];
     this.getElem('messages').appendChild(error);
     this.errors.push(type);
 };
