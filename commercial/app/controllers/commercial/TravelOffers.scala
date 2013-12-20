@@ -11,7 +11,7 @@ object TravelOffers extends Controller {
     implicit request =>
       OffersAgent.adsTargetedAt(segment) match {
         case Nil => NotFound
-        case offers => Cached(60)(Ok(views.html.travelOffers(offers take 4)))
+        case offers => Cached(60)(Ok(views.html.travelOffersCombined(offers take 4)))
       }
   }
 

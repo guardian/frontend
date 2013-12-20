@@ -1,0 +1,14 @@
+@(jobInstances: Seq[model.commercial.jobs.Job])(implicit request: RequestHeader)
+
+@main(Page(
+    "Jobs",
+    "Jobs",
+    "Jobs",
+    "Jobs")) {
+} {
+
+    @jobs(jobInstances)
+
+    @jobs_large(jobInstances)
+
+}

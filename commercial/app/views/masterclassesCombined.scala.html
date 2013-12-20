@@ -1,0 +1,14 @@
+@(events: List[model.commercial.masterclasses.MasterClass])(implicit request: RequestHeader)
+
+@main(Page(
+    "Masterclasses",
+    "Masterclasses",
+    "Masterclasses",
+    "Masterclasses")) {
+} {
+
+    @masterclasses(events)
+
+    @masterclasses_large(events)
+
+}

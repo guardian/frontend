@@ -12,7 +12,7 @@ object SoulmateAds extends Controller {
       SoulmatesAggregatingAgent.sampleMembers(segment) match {
         case Nil => NotFound
         case members => {
-          Cached(60)(Ok(views.html.soulmates(members)))
+          Cached(60)(Ok(views.html.soulmatesCombined(members)))
         }
       }
   }
