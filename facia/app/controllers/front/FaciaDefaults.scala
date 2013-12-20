@@ -55,7 +55,7 @@ trait FaciaDefaults {
     "fronts"      -> frontsMap.keys.foldLeft(Json.obj()){case (m, id) => m ++
       Json.obj(id ->
         Json.obj("collections" ->
-          Json.arr(frontsMap.get(id))
+          frontsMap.get(id)
         )
       )
     },
