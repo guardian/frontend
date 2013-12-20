@@ -228,11 +228,11 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to test onward highlights panel",
     safeState = Off)
 
-  val ABRightMostPopular = Switch("A/B Tests", "ab-right-most-popular",
+  val ABRightPopular = Switch("A/B Tests", "ab-right-popular",
     "If this is switched on an AB test runs to trail a right hand side most popular component",
     safeState = Off)
 
-  val ABRightMostPopularControl = Switch("A/B Tests", "ab-right-most-popular-control",
+  val ABRightPopularControl = Switch("A/B Tests", "ab-right-popular-control",
     "If this is switched on an AB test runs as a control variant for right most popular",
     safeState = Off)
 
@@ -309,9 +309,9 @@ object Switches extends Collections {
     ABOnwardIntrusive,
     ABOnwardHighlightsPanel,
     ABAlphaComm,
-    ABRightMostPopularControl,
+    ABRightPopularControl,
     ABMobileFacebookAutosignin,
-    ABRightMostPopular,
+    ABRightPopular,
     AdDwellTimeLoggerSwitch,
     UkAlphaSwitch
   )
