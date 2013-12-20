@@ -1,4 +1,4 @@
-define([    
+define([
 	"common/$",
     "common/modules/identity/forms",
     "common/modules/identity/formstack",

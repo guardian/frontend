@@ -10,7 +10,7 @@ define([
     'common/modules/analytics/livestats',
     'common/modules/ui/fonts',
     'common/modules/router',
-    'common/utils/pageconfig',
+    'common/utils/config',
     'common/modules/adverts/userAdTargeting',
     'common/modules/discussion/api',
 

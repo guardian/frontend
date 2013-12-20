@@ -1,5 +1,5 @@
 define([
-    'utils/detect'
+    'common/utils/detect'
 ], function(
     detect
     ) {

@@ -8,7 +8,7 @@ define([
     'common/modules/experiments/tests/mobile-facebook-autosignin',
     'common/modules/experiments/tests/onward-intrusive',
     'common/modules/experiments/tests/onward-highlights-panel',
-    'common/modules/experiments/tests/alpha-comm'
+    'common/modules/experiments/tests/alpha-comm',
     'common/modules/experiments/tests/right-most-popular',
     'common/modules/experiments/tests/right-most-popular-control'
 ], function (

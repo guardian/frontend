@@ -3,12 +3,12 @@
     Description: Loads our commercial components
 */
 define([
-    '$',
-    'utils/mediator',
-    'utils/storage',
-    'modules/lazyload',
-    'modules/component',
-    'modules/onward/history'
+    'common/$',
+    'common/utils/mediator',
+    'common/utils/storage',
+    'common/modules/lazyload',
+    'common/modules/component',
+    'common/modules/onward/history'
 ], function (
     $,
     mediator,
