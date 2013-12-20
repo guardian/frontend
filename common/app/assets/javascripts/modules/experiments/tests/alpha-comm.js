@@ -48,7 +48,7 @@ define([
      
       startInactivityTimeout = debounce(function() {
         self.setInactive();
-      }, 5000);
+      }, this.awayTimeout);
       
       logActivity = function () {
         self.isAway = false;
