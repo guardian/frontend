@@ -43,8 +43,7 @@ define([
         showContainerToggle: function () {
             mediator.on('page:front:ready', function(config, context) {
                 $('.js-container--toggle', context).each(function(container) {
-                    new ContainerToggle(container)
-                        .addToggle();
+                    new ContainerToggle(container).addToggle();
                 });
             });
         },

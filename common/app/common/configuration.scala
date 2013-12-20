@@ -157,6 +157,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object discussion {
     lazy val apiRoot = configuration.getMandatoryStringProperty("discussion.apiRoot")
+    lazy val secureApiRoot = configuration.getMandatoryStringProperty("discussion.secureApiRoot")
     lazy val apiTimeout = configuration.getMandatoryStringProperty("discussion.apiTimeout")
     lazy val apiClientHeader = configuration.getMandatoryStringProperty("discussion.apiClientHeader")
   }
@@ -175,6 +176,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       "idWebAppUrl" -> id.webappUrl,
       "idApiUrl" -> id.apiRoot,
       "discussionApiRoot" -> discussion.apiRoot,
+      ("secureDiscussionApiRoot", discussion.secureApiRoot),
       "discussionApiClientHeader" -> discussion.apiClientHeader
     )
 
@@ -225,6 +227,11 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   object riffraff {
     lazy val url = configuration.getMandatoryStringProperty("riffraff.url")
     lazy val apiKey = configuration.getMandatoryStringProperty("riffraff.apikey")
+  }
+
+  object formstack {
+    lazy val url = configuration.getMandatoryStringProperty("formstack.url")
+    lazy val oAuthToken = configuration.getMandatoryStringProperty("formstack.oauthToken")
   }
 }
 

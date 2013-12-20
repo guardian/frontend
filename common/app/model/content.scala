@@ -9,6 +9,7 @@ import collection.JavaConversions._
 import views.support.{Naked, ImgSrc}
 import views.support.StripHtmlTagsAndUnescapeEntities
 import com.gu.openplatform.contentapi.model.{Content => ApiContent,Element =>ApiElement}
+import play.api.libs.json.JsValue
 
 class Content protected (val delegate: ApiContent) extends Trail with Tags with MetaData {
 
@@ -130,9 +131,9 @@ object Content {
     }
   }
 
-  def apply(delegate: ApiContent, metaData: Option[Map[String, String]]): Content = {
+  def apply(delegate: ApiContent, supporting: List[Content], metaData: Option[Map[String, JsValue]]): Content = {
     metaData match {
-      case Some(metaData) => new ContentWithMetaData(delegate, metaData)
+      case Some(meta) => new ContentWithMetaData(delegate, supporting, meta)
       case _ => apply(delegate)
     }
   }
@@ -150,12 +151,8 @@ class Article(content: ApiContent) extends Content(content) {
   override def schemaType = if (isReview) Some("http://schema.org/Review") else Some("http://schema.org/Article")
 
   // if you change these rules make sure you update IMAGES.md (in this project)
-  override def trailPicture: Option[ImageContainer] = {
-    val mainPic = if (hasVideoAtTop) videos.headOption else mainPicture
-    thumbnail.find(_.imageCrops.exists(_.width >= 620))
-      .orElse(mainPic)
-      .orElse(thumbnail)
-  }
+  override def trailPicture: Option[ImageContainer] = thumbnail.find(_.imageCrops.exists(_.width >= 620))
+      .orElse(mainPicture).orElse(videos.headOption)
 
   override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
     ("content-type", contentType),
@@ -272,7 +269,10 @@ class ImageContent(content: ApiContent) extends Content(content) {
   ) ++ mainPicture.flatMap(_.largestImage.map( "twitter:image:src" -> _.path ))
 }
 
-class ContentWithMetaData(content: ApiContent, metaData: Map[String, String]) extends Content(content) {
-  override lazy val headline: String = metaData.get("headline").getOrElse(super.headline)
-  override lazy val group: Option[String] = metaData.get("group")
+class ContentWithMetaData(
+                           content: ApiContent,
+                           override val supporting: List[Content],
+                           metaData: Map[String, JsValue]) extends Content(content) {
+  override lazy val headline: String = metaData.get("headline").flatMap(_.asOpt[String]).getOrElse(super.headline)
+  override lazy val group: Option[String] = metaData.get("group").flatMap(_.asOpt[String])
 }

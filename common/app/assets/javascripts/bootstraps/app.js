@@ -5,7 +5,7 @@ define('bootstraps/app', [
     'domReady',
     'utils/ajax',
     'utils/detect',
-    
+
     'modules/analytics/errors',
     'modules/analytics/livestats',
     'modules/ui/fonts',
@@ -18,7 +18,7 @@ define('bootstraps/app', [
     'bootstraps/tag',
     'bootstraps/section',
     'bootstraps/imagecontent',
-    
+
     'bootstraps/facia',
     'bootstraps/football',
     'bootstraps/article',
