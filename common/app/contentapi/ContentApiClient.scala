@@ -40,7 +40,7 @@ trait QueryDefaults extends implicits.Collections with ExecutionContexts {
   }
 
   object FaciaDefaults {
-    val tag = "tag=type/gallery|type/article|type/video|type/sudoku"
+    val tag = "tag=type/gallery|type/article|type/video|type/sudoku|type/interactive"
     val editorsPicks = "show-editors-picks=true"
     val showInlineFields = s"show-fields=$trailFields"
     val showElements = "show-elements=all"
