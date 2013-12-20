@@ -14,6 +14,10 @@ body {
     user-select: none;
 }
 
+p {
+    margin: 0;
+}
+
 a {
     text-decoration: none;
     cursor: pointer;
@@ -252,7 +256,7 @@ a {
 
 .headline {
     font-size: 15px;
-    line-height: 18px;
+    line-height: 17px;
     color: #000000;
     cursor: move;
 }
@@ -260,6 +264,23 @@ a {
 .headline:hover {
     color: #f89406;
     text-decoration: none;
+}
+
+.trailText {
+    padding-right: 50px;
+    box-sizing: border-box;
+    width: 100%;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    word-wrap: break-word;
+    height: 13px;
+    line-height: 16px;
+    font-size: 12px;
+    color: #999999;
+    margin: 2px 0 0 0;
 }
 
 .trail .trail__meta {
@@ -301,7 +322,9 @@ a {
 }
 
 .trail_tweaks {
-    margin: 1px 0 0 80px;;
+    position: relative;
+    margin: 1px 0 0 80px;
+    padding: 0 55px 0 0;
     color: #CCCCCC;
 }
 
@@ -313,7 +336,6 @@ a {
 }
 
 .trail_tweaks a {
-    display: inline-block;
     font-size: 12px;
     line-height: 13px;
 }
@@ -323,14 +345,56 @@ a {
     border-left: none;
 }
 
+.image_tweaks {
+    position: absolute;
+    top: 49px;
+    font-size: 10px;
+    line-height: 14px;
+}
+
+.image_tweaks a {
+    color: #999999;
+}
+
+.image_tweaks a:hover,
+.image_tweaks a.selected {
+    color: #333333;
+}
+
+.revert {
+    position: absolute;
+    right: 10px;
+}
+
+.revert--headline {
+    top: 7px;
+}
+
+.revert--trailtext {
+    top: 30px;
+}
+
 select,
 input[type="text"] {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    height: 26px;
+    height: 23px;
     padding: 1px 5px;
     margin: 1px 0 0 0;
     color: #000000;
+}
+
+textarea {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    font-size: 12px;
+    line-height: 14px;
+    padding: 3px 5px 0px 5px;
+    min-height: 35px;
+    margin: 0;
+    color: #999999;
+    background: #eeeeee;
 }
 
 button {
@@ -583,17 +647,16 @@ button {
 }
 
 .supporting-count {
-    width: 125px;
-    margin: 3px 0 -2px 0;
-    font-size: 10px;
-    line-height: 12px;
-    color: #999999;
+    font-size: 15px;
+    line-height: 16px;
+    color: #CCCCCC;
     cursor: pointer;
 }
 
-.supporting-count strong {
-    font-size: 12px;
-    font-weight: bold;
+.supporting-count span {
+    display: inline-block;
+    margin: 0 2px;
+    color: #666666;
 }
 
 .trail .tools {

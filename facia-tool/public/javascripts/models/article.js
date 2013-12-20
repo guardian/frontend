@@ -38,14 +38,15 @@ define([
 
             this.fields = asObservableProps([
                 'headline',
-                'thumbnail',
                 'trailText',
+                'thumbnail',
                 'shortId']);
 
             this.fields.headline('...');
 
             this.meta = asObservableProps([
                 'headline',
+                'trailText',
                 'group']);
 
             this.state = asObservableProps([
@@ -65,15 +66,11 @@ define([
                 return numberWithCommas(this.state.totalHits());
             }, this);
 
-            this.headlineInput = ko.computed({
-                read: function() {
-                    return this.meta.headline() || this.fields.headline();
-                },
-                write: function(value) {
-                    this.meta.headline(value);
-                },
-                owner: this
-            });
+            this.headlineInput  = this.overrider('headline');
+            this.headlineRevert = this.reverter('headline');
+
+            this.trailTextInput  = this.overrider('trailText');
+            this.trailTextRevert = this.reverter('trailText');
 
             this.populate(opts);
 
@@ -95,6 +92,25 @@ define([
                 ophanApi.decorateItems(self.meta.supporting.items());
             }
         }
+
+        Article.prototype.overrider = function(key) {
+            return ko.computed({
+                read: function() {
+                    return this.meta[key]() || this.fields[key]();
+                },
+                write: function(value) {
+                    this.meta[key](value);
+                },
+                owner: this
+            });
+        };
+
+        Article.prototype.reverter = function(key) {
+            return function() {
+                this.meta[key](undefined);
+                this.saveMetaEdit();
+            };
+        };
 
         Article.prototype.populate = function(opts) {
             var self = this;
@@ -131,10 +147,12 @@ define([
             }, 200);
         };
 
+        /*
         Article.prototype.revertHeadline = function() {
             this.meta.headline(undefined);
             this.saveMetaEdit();
         };
+        */
 
         Article.prototype.get = function() {
             return {

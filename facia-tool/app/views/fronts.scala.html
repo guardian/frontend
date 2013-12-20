@@ -187,15 +187,25 @@
             </div>
 
             <div data-bind="if: state.editingMeta">
+                <div class="image_tweaks"><a class="selected">show</a> <a class="">hide</a> <a class="">boost</a></div>
                 <div class="trail_tweaks u-cf">
                     <input type="text" data-bind="
                         value: headlineInput,
                         event: {blur: saveMetaEdit},
                         attr: {placeholder: fields.headline}"/>
-                    <a data-bind="
-                        click: revertHeadline,
+                    <a class="revert revert--headline" data-bind="
+                        click: headlineRevert,
                         attr: {title: fields.headline},
-                        visible: meta.headline">Revert headline</a>
+                        visible: meta.headline">Revert</a>
+
+                    <textarea type="text" data-bind="
+                        value: trailTextInput,
+                        event: {blur: saveMetaEdit},
+                        attr: {placeholder: fields.trailText}"/></textarea>
+                    <a class="revert revert--trailtext" data-bind="
+                        click: trailTextRevert,
+                        attr: {title: 'Revert to: ' + fields.trailText},
+                        visible: meta.trailText">Revert</a>
                 </div>
 
                 <div data-bind="if: parentType === 'Collection' || parentType === 'Clipboard'">
@@ -221,19 +231,23 @@
 
                 <div class="content" data-bind="click: startMetaEdit,">
                     <a class="headline" target="article" data-bind="
-                        attr: {href: props.id()},
-                        text: meta.headline() || fields.headline()"></a>
+                        text: meta.headline() || fields.headline(),
+                        attr: {
+                            href: props.id(),
+                            title: meta.trailText() || fields.trailText()
+                        }"></a>
+
+                    <!-- ko if: meta.supporting && meta.supporting.items().length -->
+                        <span class="supporting-count">(<span data-bind="text: meta.supporting.items().length"></span>)</span>
+                    <!-- /ko -->
 
                     <!-- ko if: meta.headline -->
                         <i class="icon-pencil"></i>
                     <!-- /ko -->
 
-                    <!-- ko if: meta.supporting && meta.supporting.items().length -->
-                        <div class="supporting-count">
-                            <strong data-bind="text: meta.supporting.items().length"></strong>
-                            supporting link<span data-bind="if: meta.supporting.items().length > 1">s</span>
-                        </div>
-                    <!-- /ko -->
+                    <div class="trailText" data-bind="
+                        attr: {href: props.id()},
+                        html: meta.trailText() || fields.trailText()"></div>
 
                 </div>                   
             </div>
