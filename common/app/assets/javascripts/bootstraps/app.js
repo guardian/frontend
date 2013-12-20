@@ -10,7 +10,7 @@ define([
     'common/modules/analytics/livestats',
     'common/modules/ui/fonts',
     'common/modules/router',
-    'common/modules/pageconfig',
+    'common/utils/pageconfig',
     'common/modules/adverts/userAdTargeting',
     'common/modules/discussion/api',
 
@@ -37,7 +37,7 @@ define([
     LiveStats,
     Fonts,
     Router,
-    pageConfig,
+    config,
     UserAdTargeting,
     DiscussionApi,
 
@@ -102,9 +102,7 @@ define([
         }
     };
 
-    var routes = function(rawConfig) {
-        var config = pageConfig(rawConfig);
-
+    var routes = function() {
         domReady(function() {
             var context = document.getElementById('preload-1'),
                 contextHtml = context.cloneNode(false).innerHTML;

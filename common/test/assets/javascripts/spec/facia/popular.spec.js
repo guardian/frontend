@@ -4,16 +4,12 @@ define(['common/modules/facia/popular', 'bonzo', 'common/$', 'bean', 'helpers/fi
 
         var server,
             response = JSON.stringify({
-                trails: [1, 2, 3, 4].map(function(itemNum) {
-                    return {
-                        headline: 'A Headline',
-                        trailText: 'Some trailtext',
-                        webPublicationDate: {
-                            timestamp: '1'
-                        },
-                        itemPicture: 'item-{width}.jpg'
-                    }
-                })
+                faciaHtml: '<section class="container--popular"><ul>' + [1, 2, 3, 4].reduce(function(previousValue, itemNum) {
+                    return previousValue + '<li>' +
+                            '<div class="item__image-container" data-src="item-{width}.jpg"></div>' +
+                            '<div class="js-item__timestamp"><div class="timestamp__text">1</div></div>' +
+                        '</li>';
+                }, '') + '</section></ul>'
             });
 
         ajax.init({
@@ -49,28 +45,6 @@ define(['common/modules/facia/popular', 'bonzo', 'common/$', 'bean', 'helpers/fi
             }, 'popular container to be rendered', 100);
         });
 
-        it('should have data-link-name attribute equal to "block | popular"', function() {
-            popular.render({});
-
-            waitsFor(function() {
-                return $('.container--popular').length;
-            }, 'popular container to be rendered', 100);
-            runs(function() {
-                expect($('.container--popular').attr('data-link-name')).toEqual('block | popular');
-            });
-        });
-
-        it('should have a "data-type" attribute of value "popular"', function() {
-            popular.render({});
-
-            waitsFor(function() {
-                return $('.container--popular').length;
-            }, 'popular container to be rendered', 100);
-            runs(function() {
-                expect($('.container--popular').attr('data-type')).toEqual('popular');
-            });
-        });
-
         it('should call correct most-read endpoint', function() {
             var section = 'sport';
             server.respondWith('/most-read/' + section + '.json?_edition=UK', [200, {}, response]);
@@ -103,6 +77,7 @@ define(['common/modules/facia/popular', 'bonzo', 'common/$', 'bean', 'helpers/fi
                 return $('.container--popular').length;
             }, 'popular container to be rendered', 100);
             runs(function() {
+                expect($('.timestamp__text').length).toEqual(4);
                 $('.timestamp__text').each(function(item) {
                     expect(bonzo(item).text()).toEqual('1 Jan 1970');
                 });

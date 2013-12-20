@@ -21,7 +21,11 @@ var Api = {
  * @param {Object.<string.*>}
  */
 Api.init = function(config) {
-    Api.root = config.page.discussionApiRoot;
+    if ("https:" === document.location.protocol) {
+        Api.root = config.page.secureDiscussionApiRoot;
+    } else {
+        Api.root = config.page.discussionApiRoot;
+    }
     Api.clientHeader = config.page.discussionApiClientHeader;
 };
 
@@ -29,18 +33,17 @@ Api.init = function(config) {
  * @param {string} endpoint
  * @param {string} method
  * @param {Object.<string.*>} data
- * @param {Boolean} anon
  * @return {Reqwest} a promise
  */
-Api.send = function(endpoint, method, data, anon) {
+Api.send = function(endpoint, method, data) {
     data = data || {};
-    if (!anon && cookies.get('GU_U')) {
+    if (cookies.get('GU_U')) {
         data.GU_U = cookies.get('GU_U');
     }
 
     var request = ajax({
         url: Api.root + endpoint,
-        type: 'json',
+        type: ("get" === method) ? 'jsonp' : 'json',
         method: method,
         crossOrigin: true,
         data: data,
@@ -71,7 +74,7 @@ Api.postComment = function(discussionId, comment) {
  */
 Api.recommendComment = function(id) {
     var endpoint = '/comment/'+ id +'/recommend';
-    return Api.send(endpoint, 'post', {}, true);
+    return Api.send(endpoint, 'post');
 };
 
 /**
@@ -80,7 +83,7 @@ Api.recommendComment = function(id) {
  */
 Api.pickComment = function(id) {
     var endpoint = '/comment/'+ id +'/highlight';
-    return Api.send(endpoint, 'post', {});
+    return Api.send(endpoint, 'post');
 };
 
 /**
@@ -89,7 +92,7 @@ Api.pickComment = function(id) {
  */
 Api.unPickComment = function(id) {
     var endpoint = '/comment/'+ id +'/unhighlight';
-    return Api.send(endpoint, 'post', {});
+    return Api.send(endpoint, 'post');
 };
 
 /**

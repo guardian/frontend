@@ -28,17 +28,13 @@ define([
     cricket
     ) {
 
-    var hiddenCollections = {},
-        modules = {
-
+    var modules = {
 
         showCollectionShowMore: function () {
             mediator.on('page:front:ready', function(config, context) {
                 $('.container', context).each(function(container) {
                     $('.js-collection--show-more', container).each(function(collection) {
-                        var collectionShowMore = new CollectionShowMore(collection);
-                        hiddenCollections[container.getAttribute('data-id')] = collectionShowMore;
-                        collectionShowMore.addShowMore();
+                        new CollectionShowMore(collection).addShowMore();
                     });
                 });
             });
@@ -47,8 +43,7 @@ define([
         showContainerToggle: function () {
             mediator.on('page:front:ready', function(config, context) {
                 $('.js-container--toggle', context).each(function(container) {
-                    new ContainerToggle(container)
-                        .addToggle();
+                    new ContainerToggle(container).addToggle();
                 });
             });
         },
@@ -67,14 +62,6 @@ define([
                                 .after(prependTo);
                             $collection.removeClass('collection--without-sport-stats')
                                 .addClass('collection--with-sport-stats');
-                            // remove the last two items
-                            var hiddenCollection = hiddenCollections[$container.attr('data-id')];
-                            if (hiddenCollection) {
-                                var items = qwery('.item', $collection[0])
-                                                .slice(-2);
-                                hiddenCollection.prependExtraItems(items);
-                                bonzo(items).remove();
-                            }
                         }
                     });
                     new FootballFixtures({

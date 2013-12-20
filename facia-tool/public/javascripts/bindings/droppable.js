@@ -4,7 +4,9 @@ define([
     'modules/vars',
     'utils/parse-query-params',
     'utils/url-abs-path',
+    'utils/clean-clone',
     'modules/authed-ajax',
+    'models/group',
     'models/article',
     'modules/content-api',
     'modules/ophan-api'
@@ -13,13 +15,16 @@ define([
     vars,
     parseQueryParams,
     urlAbsPath,
+    cleanClone,
     authedAjax,
+    Group,
     Article,
     contentApi,
     ophanApi
 ) {
     var sourceList,
-        sourceArticle;
+        storage = window.localStorage,
+        storageKey ='gu.fronts-tool.drag-source';
 
     function init() {
 
@@ -35,19 +40,24 @@ define([
             init: function(element) {
 
                 element.addEventListener('dragstart', function(event) {
+                    var sourceItem = ko.dataFor(event.target);
+
+                    if (sourceItem.constructor === Article) {
+                        storage.setItem(storageKey, JSON.stringify(sourceItem.get()));
+                    }
                     sourceList = ko.dataFor(element);
-                    sourceArticle = ko.dataFor(event.target);
                 }, false);
 
                 element.addEventListener('dragover', function(event) {
                     var targetList = ko.dataFor(element),
-                        targetArticle = ko.dataFor(event.target);
+                        targetItem = ko.dataFor(event.target);
 
                     event.preventDefault();
+                    event.stopPropagation();
 
-                    targetList.underDrag(targetArticle.constructor !== Article);
-                    _.each(targetList.articles(), function(item) {
-                        var underDrag = (item === targetArticle);
+                    targetList.underDrag(targetItem.constructor === Group);
+                    _.each(targetList.items(), function(item) {
+                        var underDrag = (item === targetItem);
                         if (underDrag !== item.state.underDrag()) {
                             item.state.underDrag(underDrag);
                         }
@@ -58,9 +68,10 @@ define([
                     var targetList = ko.dataFor(element);
 
                     event.preventDefault();
+                    event.stopPropagation();
 
                     targetList.underDrag(false);
-                    _.each(targetList.articles(), function(item) {
+                    _.each(targetList.items(), function(item) {
                         if (item.state.underDrag()) {
                             item.state.underDrag(false);
                         }
@@ -69,33 +80,36 @@ define([
 
                 element.addEventListener('drop', function(event) {
                     var targetList = ko.dataFor(element),
-                        targetArticle = ko.dataFor(event.target),
-                        item = event.testData ? event.testData : event.dataTransfer.getData('Text'),
+                        targetItem = ko.dataFor(event.target),
+                        id = event.testData ? event.testData : event.dataTransfer.getData('Text'),
+                        sourceItem,
                         position,
                         article,
+                        groups,
                         insertAt,
                         isAfter = false;
 
                     event.preventDefault();
+                    event.stopPropagation();
 
-                    if (!targetList.articles || !targetList.underDrag) { return; }
+                    if (!targetList) { return; }
 
                     targetList.underDrag(false);
-                    _.each(targetList.articles(), function(item) {
+                    _.each(targetList.items(), function(item) {
                         item.state.underDrag(false);
                     });
 
-                    // If the item isn't dropped onto an article, asssume it's to be appended *after* the other articles in this group,
-                    if (targetArticle.constructor !== Article) {
-                        targetArticle = _.last(targetList.articles());
-                        if (targetArticle) {
+                    // If the item isn't dropped onto an article, asssume it's to be appended *after* the other items in this group,
+                    if (targetItem.constructor === Group) {
+                        targetItem = _.last(targetList.items());
+                        if (targetItem) {
                             isAfter = true;
-                        // or if there arent't any other articles, after those in the first preceding group that contains articles.
-                        } else if (targetList.collection) {
-                            var groups = targetList.collection.groups;
+                        // or if there arent't any other items, after those in the first preceding group that contains items.
+                        } else if (targetList.parentType === 'Collection') {
+                            groups = targetList.parent.groups;
                             for (var i = groups.indexOf(targetList) - 1; i >= 0; i -= 1) {
-                                targetArticle = _.last(groups[i].articles());
-                                if (targetArticle) {
+                                targetItem = _.last(groups[i].items());
+                                if (targetItem) {
                                     isAfter = true;
                                     break;
                                 }
@@ -103,48 +117,49 @@ define([
                         }
                     }
 
-                    position = targetArticle && targetArticle.props ? targetArticle.props.id() : undefined;
+                    position = targetItem && targetItem.props ? targetItem.props.id() : undefined;
 
-                    _.each(parseQueryParams(item), function(url){
+                    _.each(parseQueryParams(id), function(url){
                         if (url && url.match(/^http:\/\/www.theguardian.com/)) {
-                            item = url;
+                            id = url;
                         }
                     });
 
-                    item = urlAbsPath(item);
+                    id = urlAbsPath(id);
 
-                    if (!item) {
+                    if (!id) {
                         alertBadContent();
                         return;
                     }
 
-                    if (targetList.collection) {
-                        targetList.collection.state.loadIsPending(true);
+                    try {
+                        sourceItem = JSON.parse(storage.getItem(storageKey));
+                    } catch(e) {}
+
+                    storage.removeItem(storageKey);
+
+                    if (!sourceItem || sourceItem.id !== id) {
+                        sourceItem = undefined;
+                        sourceList = undefined;
                     }
 
-                    // sourceArticle doesn't exist when the drag was from an arbitrary link elsewhere.
-                    // garbage collect it, if it's a leftover from a previous drag.
-                    if(sourceArticle && sourceArticle.props.id() !== item) {
-                        sourceArticle = undefined;
-                    }
+                    removeMatchingItems(targetList, id);
 
-                    insertAt = targetList.articles().indexOf(targetArticle) + isAfter;
-                    insertAt = insertAt === -1 ? targetList.articles().length : insertAt;
-
+                    insertAt = targetList.items().indexOf(targetItem) + isAfter;
+                    insertAt = insertAt === -1 ? targetList.items().length : insertAt;
+ 
                     article = new Article({
-                        id: item,
-                        meta: sourceArticle ? sourceArticle.getMeta() : undefined
+                        id: id,
+                        meta: sourceItem ? cleanClone(sourceItem.meta) : undefined,
+                        parent: targetList.parent,
+                        parentType: targetList.parentType
                     });
 
-                    // just for UI
-                    targetList.articles.splice(insertAt, 0, article);
+                    targetList.items.splice(insertAt, 0, article);
 
                     contentApi.validateItem(article)
                     .fail(function() {
-                        if (targetList.collection) {
-                            targetList.collection.state.loadIsPending(false);
-                        }
-                        targetList.articles.remove(article);
+                        removeMatchingItems(targetList, id);
                         alertBadContent();
                     })
                     .done(function() {
@@ -152,22 +167,31 @@ define([
 
                         ophanApi.decorateItems([article]);
 
-                        if (_.isFunction(targetList.callback)) {
-                            targetList.callback();
+                        if (_.isFunction(targetList.reflow)) {
+                            targetList.reflow();
                         }
 
-                        if (!targetList.collection) { // this is a non-collection list, e.g. a clipboard, so no need for persistence
+                        if (!targetList.parent) { // no need for persistence
                             return;
                         }
 
-                        itemMeta = sourceArticle ? sourceArticle.getMeta() : {};
+                        if (targetList.parentType === 'Article') {
+                            targetList.parent.saveMetaEdit();
+                            return;
+                        }
+                        
+                        if (targetList.parentType !== 'Collection') {
+                            return;
+                        }
+
+                        itemMeta = sourceItem && sourceItem.meta ? sourceItem.meta : {};
                         itemMeta.group = targetList.group + '';
 
                         authedAjax.updateCollection(
                             'post',
-                            targetList.collection,
+                            targetList.parent,
                             {
-                                item:     item,
+                                item:     id,
                                 position: position,
                                 after:    isAfter,
                                 live:     vars.state.liveMode(),
@@ -176,26 +200,21 @@ define([
                             }
                         );
 
-                        if (!sourceList || !sourceList.collection || sourceList.keepCopy) {
+                        if (!sourceList || sourceList.keepCopy || sourceList.parentType !== 'Collection') {
                             return;
                         }
 
-                        if (sourceList.collection.id === targetList.collection.id) {
+                        if (sourceList.parent.id === targetList.parent.id) {
                             return;
                         }
 
-                        sourceList.collection.state.loadIsPending(true);
-
-                        // just for UI
-                        sourceList.articles.remove(function(article) {
-                            return article === sourceArticle;
-                        });
+                        removeMatchingItems(sourceList, id);
 
                         authedAjax.updateCollection(
                             'delete',
-                            sourceList.collection,
+                            sourceList.parent,
                             {
-                                item:   item,
+                                item:   id,
                                 live:   vars.state.liveMode(),
                                 draft: !vars.state.liveMode()
                             }
@@ -204,6 +223,12 @@ define([
                 }, false);
             }
         };
+    }
+
+    function removeMatchingItems(list, id) {
+        list.items.remove(function(item) {
+            return item.props.id() === id;
+        });
     }
 
     function alertBadContent() {

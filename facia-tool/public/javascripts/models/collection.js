@@ -5,6 +5,7 @@ define([
     'utils/as-observable-props',
     'utils/populate-observables',
     'modules/authed-ajax',
+    'models/group',
     'models/article',
     'modules/content-api',
     'modules/ophan-api',
@@ -15,10 +16,11 @@ define([
     asObservableProps,
     populateObservables,
     authedAjax,
+    Group,
     Article,
     contentApi,
     ophanApi
-) {
+    ) {
     function Collection(opts) {
         var self = this;
 
@@ -51,18 +53,16 @@ define([
     }
 
     Collection.prototype.createGroups = function(groupNames) {
-        var self = this,
-            dropItem = this.drop.bind(this);
+        var self = this;
 
         return _.map(_.isArray(groupNames) ? groupNames : [undefined], function(name, index) {
-            return {
+            return new Group({
                 group: index,
                 name: name,
-                collection: self,
-                articles:  ko.observableArray(),
-                underDrag: ko.observable(),
-                dropItem: dropItem
-            };
+                parent: self,
+                parentType: 'Collection',
+                omitItem: self.drop.bind(self)
+            });
         }).reverse(); // because groupNames is assumed to be in ascending order of importance, yet should render in descending order
     };
 
@@ -93,9 +93,9 @@ define([
             url: vars.CONST.apiBase + '/collection/' + this.id,
             data: JSON.stringify(goLive ? {publish: true} : {discard: true})
         })
-        .then(function() {
-            self.load();
-        });
+            .then(function() {
+                self.load();
+            });
 
         this.state.hasDraft(false);
     };
@@ -120,25 +120,26 @@ define([
 
     Collection.prototype.load = function(opts) {
         var self = this;
+
         opts = opts || {};
 
         return authedAjax.request({
             url: vars.CONST.apiBase + '/collection/' + this.id
         }).then(function(resp) {
-            self.response = resp;
-            self.state.loadIsPending(false);
-            self.state.hasDraft(_.isArray(self.response.draft));
+                self.response = resp;
+                self.state.loadIsPending(false);
+                self.state.hasDraft(_.isArray(self.response.draft));
 
-            var dontUpdate = opts.isRefresh && (self.state.loadIsPending() || self.response.lastUpdated === self.collectionMeta.lastUpdated());
-            if (!dontUpdate) {
-                self.populateLists();
-            }
+                var dontPopulate = opts.isRefresh && (self.state.loadIsPending() || self.response.lastUpdated === self.collectionMeta.lastUpdated());
+                if (!dontPopulate) {
+                    self.populateLists();
+                }
 
-            if (!self.state.editingConfig()) {
-                populateObservables(self.collectionMeta, self.response);
-                self.state.timeAgo(self.getTimeAgo(self.response.lastUpdated));
-            }
-        });
+                if (!self.state.editingConfig()) {
+                    populateObservables(self.collectionMeta, self.response);
+                    self.state.timeAgo(self.getTimeAgo(self.response.lastUpdated));
+                }
+            });
     };
 
     Collection.prototype.populateLists = function() {
@@ -153,27 +154,39 @@ define([
     };
 
     Collection.prototype.importList = function(source) {
-        var self = this;
+        var self = this,
+            editingMetas = {};
 
         _.each(this.groups, function(group) {
-            group.articles.removeAll();
+            _.each(group.items(), function(item) {
+                editingMetas[item.props.id()] = item.state.editingMeta();
+            });
+            group.items.removeAll();
         });
 
-        _.toArray(source).forEach(function(item, index) {
-            var groupInt,
+        _.each(source, function(item) {
+            var article = new Article(_.extend(item, {
+                    parent: self,
+                    parentType: 'Collection'
+                })),
                 group;
 
-            groupInt = parseInt((item.meta || {}).group, 10) || 0;
+            if(editingMetas[item.id]) {
+                article.startMetaEdit();
+            }
 
-            group = _.find(self.groups, function(g){ return g.group === groupInt; }) || self.groups[0];
-            group.articles.push(new Article(item, self));
+            group = _.find(self.groups, function(g){
+                return (parseInt((item.meta || {}).group, 10) || 0) === g.group;
+            }) || self.groups[0];
+
+            group.items.push(article);
         });
     };
 
     Collection.prototype.decorate = function() {
         _.each(this.groups, function(group) {
-            contentApi.decorateItems(group.articles());
-            ophanApi.decorateItems(group.articles());
+            contentApi.decorateItems(group.items());
+            ophanApi.decorateItems(group.items());
         });
     };
 
@@ -199,8 +212,8 @@ define([
                 }
             })
         }).then(function(){
-            self.load();
-        });
+                self.load();
+            });
     };
 
     Collection.prototype.getTimeAgo = function(date) {

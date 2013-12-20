@@ -1,6 +1,6 @@
 @(config: Config, collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader)
 
-@defining(config.displayName.orElse(collection.displayName).getOrElse("")) { title =>
+@defining(config.displayName.orElse(collection.displayName)) { title =>
 
     @if(collection.items.nonEmpty) {
         <section class="container container--@style.containerType @if(containerIndex > 0 && title.nonEmpty){js-container--toggle}"
@@ -8,7 +8,7 @@
                  data-id="@config.id"
                  data-type="@style.containerType">
 
-            @if(title.nonEmpty) {
+            @title.map { title =>
                 <h2 class="container__title tone-@style.tone tone-background tone-accent-border">
                     @if(style.headerLink) {
                         <a data-link-name="section heading" href="@LinkTo{/@config.section}">@Html(title)</a>
@@ -18,7 +18,7 @@
                 </h2>
             }
 
-            @fragments.collections.standard(config, collection, style, containerIndex)
+            @fragments.collections.standard(config, collection, style, containerIndex, 5)
 
         </section>
     }

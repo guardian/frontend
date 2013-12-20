@@ -1,77 +1,111 @@
-@(comment: Comment, isClosedForRecommendation: Boolean = true, isResponse: Boolean = false)(implicit request: RequestHeader)
-
+@(comment: Comment, isClosedForRecommendation: Boolean = true, isResponse: Boolean = false, isTopComment: Boolean = false)(implicit request: RequestHeader)
+@* Please don't use the isTopComment switch - we've kept it pretty clean without it, but just need a solution for IDs *@
 <li class="d-comment
            @if(isResponse){d-comment--response}else{d-comment--top-level}
            @if(comment.isBlocked){d-comment--blocked}
-           @if(comment.responses.nonEmpty){d-comment--has-replies}"
-           id="comment-@comment.id"
+           @if(comment.responses.nonEmpty){d-comment--has-replies}
+           @if(comment.profile.isStaff){d-comment-staff}"
+           id="@if(isTopComment){top-}comment-@comment.id"
            data-comment-id="@comment.id"
            data-comment-author="@comment.profile.displayName"
            data-comment-replies="@comment.responseCount"
            data-comment-timestamp="@comment.date"           
            data-comment-author-id="@comment.profile.userId"
-           data-comment-highlighted="@comment.isHighlighted">
-    <div class="d-comment__inner">
-        
-        <div class="d-comment__pick i i-guardian-picks @if(!comment.isHighlighted || comment.isBlocked){u-h}" title="Guardian pick"></div>
-        
-        @if(!comment.isBlocked){ @* Change here should be double check for functionality relating to wether recs should show when recs are closed *@
-            <div
-                class="d-comment__recommend js-recommend-comment@if(comment.isHighlighted){ d-comment__recommend--left}" 
-                data-comment-id="@comment.id"
-                data-user-id="@comment.profile.userId"
-                data-recommend-count="@comment.numRecommends"
-                title="@comment.numRecommends recommendations">
-                <i class="i i-recommend"></i><span class="d-comment__recommend-count js-recommend-count">@comment.numRecommends</span>
-            </div>
-        }
-        <div class="d-comment-header">
-            <div class="d-comment__media">
-                <span class="d-comment__avatar-wrapper"><img src="@comment.profile.avatar" alt="" class="d-comment__avatar" width="36" height="36" /></span>
-            </div>
-            <div class="d-comment__meta">
-                <div>
-                    <span class="d-comment__author">@comment.profile.displayName</span>
-                    @if(comment.profile.isContributor){<i class="d-badge d-badge--contributor d-comment__author-status" title="Contributor"><span class="d-badge__label">Contributor</span></i>}
-                    @if(comment.profile.isStaff){<i class="d-badge d-badge--guardian-staff d-comment__author-status" title="Guardian staff"><span class="d-badge__label">Guardian Staff</span></i>}
-                </div>
+           data-comment-highlighted="@comment.isHighlighted"
+           itemscope itemtype="http://schema.org/Comment">
 
-                <div>
-                    <a href="http://discussion.theguardian.com/comment-permalink/@comment.id" class="d-meta-item d-comment__meta-item">
-                        <time class="js-timestamp" datetime="@comment.date.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")" data-timestamp="@comment.date.getMillis" title="Permalink to this comment">
-                            @Format(comment.date, "d MMM y")
+    <div class="d-comment__inner">
+
+        @if(isResponse) {
+            <div class="d-comment__pick i i-gupickasterisk @if(!comment.isHighlighted || comment.isBlocked){u-h}" title="Guardian pick"></div>
+        }
+        <div class="d-comment__meta">
+            <span class="d-comment__avatar-wrapper">
+                <img src="@comment.profile.avatar" alt="" class="d-comment__avatar"/>
+            </span>
+            <div class="d-comment__meta-text">
+                <span class="d-comment__author" itemprop="author">@comment.profile.displayName</span>
+                @if(!comment.responseTo.isEmpty){  
+                    <span class="i i-in-reply-arrow"></span>
+                    <span class="d-comment__reply-to-author">@comment.responseTo.map(_.displayName)</span>
+                }
+                @if(comment.profile.isStaff){
+                    <span class="d-comment__author-label">Staff</span>
+                }else { @if(comment.profile.isContributor) {
+                    <span class="d-comment__author-label">Contributor</span>}
+                }
+                <div class="d-comment__timestamp">
+                    <a href="http://discussion.theguardian.com/comment-permalink/@comment.id" class="d-comment__timestamp">
+                        <time class="js-timestamp" itemprop="dateCreated" datetime="@comment.date.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")" data-timestamp="@comment.date.getMillis" title="Permalink to this comment">
+                            @Format(comment.date, "d MMM y HH:mm")
                         </time>
                     </a>
                 </div>
             </div>
         </div>
-        <div class="d-comment__main">
-            <div class="d-comment__body">
-                @if(comment.isBlocked){
-                    This comment was removed by a moderator because it didn't abide by our <a href="http://www.theguardian.com/community-standards" data-link-name="community standards">community standards</a>.
-                    Replies may also be deleted. For more detail see <a href="http://www.theguardian.com/community-faqs" data-link-name="FAQs">our FAQs</a>.
-                }else{
-                    @withJsoup(BulletCleaner(comment.body))(
-                        InBodyLinkCleaner("in body link")(Edition(request))
-                    )
-                }
-            </div>
-            @if(!comment.isBlocked){
-                <div class="d-comment__actions">
-                    <div class="d-comment__actions__main u-cf">
-                        <div class="u-fauxlink d-comment__action d-comment__action--reply sign-in-required" role="button" data-link-name="reply to comment" data-comment-id="@comment.id">Reply</div>
-                        <span class="d-staff-required">
-                            <span class="d-comment__seperator d-comment__action">|</span>
-                            <span class="u-fauxlink d-comment__action d-comment__action--pick" role="button"
-                                data-comment-id="@comment.id"
-                                data-comment-highlighted="@comment.isHighlighted">@if(comment.isHighlighted){Unpick}else{Pick}</span>
-                        </span>
 
-                        <a href="http://discussion.theguardian.com/components/report-abuse/@comment.id" class="d-comment__action d-comment__action--report" target="_blank">Report</a>
-                    </div>
+        <div class="d-comment__content">
+
+            @if(!comment.isBlocked){ @* Change here should be double check for functionality relating to wether recs should show when recs are closed *@
+                <div
+                    class="d-comment__recommend js-recommend-comment@if(comment.isHighlighted){ d-comment__recommend--left}" 
+                    data-comment-id="@comment.id"
+                    data-user-id="@comment.profile.userId"
+                    data-recommend-count="@comment.numRecommends"
+                    title="@comment.numRecommends recommendations">
+                    <span class="d-comment__recommend-button">
+                        <i class="i i-recommend"></i>
+                    </span>
+                    <span class="d-comment__recommend-count js-recommend-count">@comment.numRecommends</span>
                 </div>
             }
-        </div>
+            <div class="d-comment__main">
+                @if(!isResponse) {
+                    <div class="d-comment__pick i i-gupickasterisk @if(!comment.isHighlighted || comment.isBlocked){u-h}" title="Guardian pick"></div>
+                }
+
+                <div class="d-comment__body" itemprop="text">
+                    @if(comment.isBlocked){
+                        This comment was removed by a moderator because it didn't abide by our <a href="http://www.theguardian.com/community-standards" data-link-name="community standards">community standards</a>.
+                        Replies may also be deleted. For more detail see <a href="http://www.theguardian.com/community-faqs" data-link-name="FAQs">our FAQs</a>.
+                    }else{
+                        @withJsoup(BulletCleaner(comment.body))(
+                            InBodyLinkCleaner("in body link")(Edition(request))
+                        )
+                    }
+                    @if(isResponse){
+                        <div class="d-comment__timestamp">
+                            <a href="http://discussion.theguardian.com/comment-permalink/@comment.id" itemprop="url">
+                                <time class="js-timestamp" datetime="@comment.date.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")" data-timestamp="@comment.date.getMillis" title="Permalink to this comment">
+                                    @Format(comment.date, "d MMM y HH:mm")
+                                </time>
+                            </a>
+                        </div>
+                    }
+                </div>
+                @if(!comment.isBlocked){
+                    <div class="d-comment__actions">
+                        <div class="d-comment__actions__main">
+                            <div class="d-comment__reply-wrapper sign-in-required">
+                                <span class="d-comment__reply-button">
+                                    <i class="i i-reply-arrow-white"></i>
+                                </span>
+                                <span class="u-fauxlink d-comment__action d-comment__action--reply" role="button" data-link-name="reply to comment" data-comment-id="@comment.id">Reply</span>
+                            </div>
+
+                            <span class="d-staff-required">
+                                <span class="d-comment__action-separator">|</span> 
+                                <span class="u-fauxlink d-comment__action d-comment__action--pick" role="button"
+                                    data-comment-id="@comment.id"
+                                    data-comment-highlighted="@comment.isHighlighted">@if(comment.isHighlighted){Unpick}else{Pick}</span>
+                            </span>
+                            <a href="http://discussion.theguardian.com/components/report-abuse/@comment.id" class="d-comment__action d-comment__action--report" target="_blank">Report</a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>  
+
     </div>
 
     @if(comment.responses.nonEmpty){

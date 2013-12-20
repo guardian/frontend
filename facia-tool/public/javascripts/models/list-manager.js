@@ -8,6 +8,7 @@ define([
     'bindings/droppable',
     'modules/authed-ajax',
     'models/collection',
+    'models/group',
     'models/article',
     'models/latest-articles'
 ], function(
@@ -19,12 +20,13 @@ define([
     droppable,
     authedAjax,
     Collection,
+    Group,
     Article,
     LatestArticles
 ) {
     var prefKeyDefaultMode = 'gu.frontsTool.defaultToLiveMode';
 
-    return function(selector) {
+    return function() {
 
         function updateLayout() {
             var height = $(window).height();
@@ -45,16 +47,11 @@ define([
                     filterTypes: vars.CONST.filterTypes
                 }),
 
-                clipboard: {
-                    articles: ko.observableArray(),
-                    underDrag: ko.observable(),
-                    callback: updateLayout,
-                    dropItem: function(item) {
-                        model.clipboard.articles.remove(item);
-                        updateLayout();
-                    },
+                clipboard: new Group({
+                    parentType: 'Clipboard',
+                    reflow: updateLayout,
                     keepCopy:  true
-                },
+                }),
 
                 liveMode: vars.state.liveMode
             };
@@ -137,7 +134,7 @@ define([
                     $(element).sparkline(graph.data, {
                         chartRangeMax: max,
                         defaultPixelsPerValue: graph.data.length < 50 ? graph.data.length < 30 ? 3 : 2 : 1,
-                        height: Math.round(Math.max(10, Math.min(40, max))),
+                        height: Math.round(Math.max(5, Math.min(30, max))),
                         lineColor: '#' + graph.color,
                         spotColor: false,
                         minSpotColor: false,

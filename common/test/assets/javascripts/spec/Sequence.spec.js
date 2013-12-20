@@ -41,10 +41,31 @@ define(['common/utils/mediator', 'common/utils/ajax', 'common/modules/onward/seq
             server.restore();
             window.sessionStorage.removeItem('gu.context.path');
             window.sessionStorage.removeItem('gu.context.name');
-            window.localStorage.removeItem('gu.sequence');
+            window.sessionStorage.removeItem('gu.sequence');
         });
 
         it("should load a sequence from the server if none available", function(){
+
+            runs(function() {
+                sequence.init();
+            });
+
+            waitsFor(function () {
+                return sequenceLoadedCallback.calledOnce === true;
+            }, 'sequence callback never called', 500);
+
+        });
+
+        it("should load a default sequence from the server if no context is available", function(){
+
+            guardian.config.page.section = 'sport';
+
+            window.sessionStorage.removeItem('gu.context.path');
+
+            server = sinon.fakeServer.create();
+            server.autoRespond = true;
+            server.autoRespondAfter = 20;
+            server.respondWith('/most-read/sport.json?_edition=UK', [200, {}, response]);
 
             runs(function() {
                 sequence.init();

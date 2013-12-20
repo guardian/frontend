@@ -82,6 +82,14 @@ case class FeaturesContainer(val showMore: Boolean = true, val headerLink: Boole
   val containerType = "features"
   val tone: String = "feature"
 }
+case class PopularContainer(val showMore: Boolean = true, val headerLink: Boolean = true) extends Container {
+  val containerType = "popular"
+  val tone: String = "news"
+}
+case class TopStoriesContainer(val showMore: Boolean = true, val headerLink: Boolean = true) extends Container {
+  val containerType = "top-stories"
+  val tone = "news"
+}
 case class SectionContainer(val showMore: Boolean = true, val tone: String = "news", val headerLink: Boolean = true) extends Container {
   val containerType = "section"
 }
@@ -185,7 +193,7 @@ object BlockNumberCleaner extends HtmlCleaner {
   }
 }
 
-case class VideoEmbedCleaner(contentVideos: List[VideoElement]) extends HtmlCleaner {
+case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
     document.getElementsByClass("element-video").foreach { element: Element =>
@@ -219,11 +227,11 @@ case class VideoEmbedCleaner(contentVideos: List[VideoElement]) extends HtmlClea
   }
 
   def findVideoFromId(id:String): Option[VideoAsset] = {
-    contentVideos.filter(_.id == id).flatMap(_.videoAssets).filter(_.mimeType == Some("video/mp4")).headOption
+    contentVideos.filter(_.id == id).flatMap(_.videoAssets).find(_.mimeType == Some("video/mp4"))
   }
 }
 
-case class PictureCleaner(contentImages: List[ImageElement]) extends HtmlCleaner with implicits.Numbers {
+case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner with implicits.Numbers {
 
   def clean(body: Document): Document = {
     body.getElementsByTag("figure").foreach { fig =>
