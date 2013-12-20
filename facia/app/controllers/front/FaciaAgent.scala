@@ -1,7 +1,7 @@
 package controllers.front
 
 import common._
-import conf.{ ContentApi, Configuration }
+import conf.{ SwitchingContentApi=>ContentApi, Configuration }
 import model._
 import play.api.libs.json.Json._
 import play.api.libs.json._
@@ -148,7 +148,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
           lazy val supportingLinks: List[CollectionItem] = retrieveSupportingLinks(collectionItem)
           if (!hasParent) getArticles(supportingLinks, edition, hasParent=true) else Future.successful(Nil)
         }
-        val response = ContentApi.item(collectionItem.id, edition).showFields("all").response
+        val response = ContentApi().item(collectionItem.id, edition).showFields("all").response
 
         response.onFailure{case t: Throwable => log.warn("%s: %s".format(collectionItem.id, t.toString))}
         supportingAsContent.onFailure{case t: Throwable => log.warn("Supporting links: %s: %s".format(collectionItem.id, t.toString))}
@@ -177,7 +177,8 @@ trait ParseCollection extends ExecutionContexts with Logging {
 
     val newSearch = queryString match {
       case Path(Seg("search" ::  Nil)) => {
-        val search = ContentApi.search(edition)
+        val search = ContentApi().search(edition)
+                       .tag("type/gallery|type/article|type/video|type/sudoku")
                        .showElements("all")
                        .pageSize(20)
         val newSearch = queryParamsWithEdition.foldLeft(search){
@@ -188,7 +189,8 @@ trait ParseCollection extends ExecutionContexts with Logging {
         }
       }
       case Path(id)  => {
-        val search = ContentApi.item(id, edition)
+        val search = ContentApi().item(id, edition)
+                       .tag("type/gallery|type/article|type/video|type/sudoku")
                        .showElements("all")
                        .showEditorsPicks(true)
                        .pageSize(20)
