@@ -1,7 +1,7 @@
 define([
-    'utils/mediator',
-    'utils/ajax',
-    'modules/commercial/loader',
+    'common/utils/mediator',
+    'common/utils/ajax',
+    'common/modules/commercial/loader',
     'helpers/fixtures'
 ], function(
     mediator,
