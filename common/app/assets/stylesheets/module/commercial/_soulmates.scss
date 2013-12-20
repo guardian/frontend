@@ -12,24 +12,13 @@
         clear: both;
     }
 
-    .commercial__title {
-        padding: $baseline;
-    }
-
     .commercial__subtitle {
-        color: #2478D8;
-        @include f-headline;
-        @include font-size(12,12);
-		margin: 0;
-        position: absolute;
-		bottom: 0;
-		padding: $baseline;
+        color: $c-neutral2;
     }
 
     .commercial__body {
         padding: $baseline*2;
     }
-
 
     /* Entries */
     .lineitem {
@@ -101,19 +90,34 @@
         }
     }
 
-    &.commercial--w600 {
-        .commercial__item {
-            float: left;
-            width: 80%;
-        }
-        
-        .commercial__search {
-            float: left;
-            width: 20%;
-        }
-        
-        .lineitem {
-            width: 25%;
-        }
-    }
+	@include mq($to: tablet) {
+		.commercial__head {
+			background-color: #fff;
+		}
+	}
+	@include mq($from: tablet) {
+		.commercial__title {
+			padding-top: $baseline;
+		}
+		.commercial__subtitle {
+			display: block; // this is not a very good idea
+			bottom: 0;
+		}
+	}
+
+//    &.commercial--w600 {
+//        .commercial__item {
+//            float: left;
+//            width: 80%;
+//        }
+//        
+//        .commercial__search {
+//            float: left;
+//            width: 20%;
+//        }
+//        
+//        .lineitem {
+//            width: 25%;
+//        }
+//    }
 }

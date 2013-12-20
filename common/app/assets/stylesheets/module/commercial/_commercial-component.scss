@@ -17,10 +17,25 @@
 
 .commercial__title {
     color: $c-brandBlue;
+    text-transform: lowercase;
+    word-spacing: -0.25em;
     @include fs-headline(2);
     margin: 0;
     padding: $baseline*2 $baseline;
     float: left;
+    .em {
+        font-style: italic;
+    }
+}
+
+.commercial__subtitle {
+	color: #fff;
+    @include f-headline;
+    @include font-size(12,12);
+	margin: 0;
+    position: absolute;
+	bottom: $baseline;
+	padding: $baseline;
 }
 
 .commercial__body {
@@ -127,4 +142,36 @@
 .lineitem__image {
     max-width: 100%;
     outline: 1px solid $c-neutral7;
+}
+
+
+/* ==========================================================================
+   300x50 varient
+   ========================================================================== */
+@include mq($to: tablet) {
+	.commercial__head {
+		padding-left: $baseline*1.5;
+		padding-right: $baseline*1.5;
+		height: rem(50px);
+		overflow: hidden;
+	}
+	.commercial__title {
+		padding-top: $baseline;
+		.i {
+			margin-top: $baseline;
+		}
+	}
+	.commercial__title a {
+		color: #fff;
+	}
+	.commercial__body,
+	.commercial__foot {
+		display: none; // this is not a very good idea
+	}
+}
+
+@include mq($from: tablet) {
+	.commercial__subtitle {
+		display: none; // this is not a very good idea
+	}
 }
