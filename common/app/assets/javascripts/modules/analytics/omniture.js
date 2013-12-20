@@ -113,7 +113,6 @@ define([
 
             s.prop3     = config.page.publication || '';
 
-
             s.channel = config.page.contentType === "Network Front" ? "Network Front" : config.page.section || '';
             s.prop9     = config.page.contentType || '';  //contentType
 
@@ -262,9 +261,12 @@ define([
         });
 
         common.mediator.on('module:analytics:omniture:pageview:sent', function(){
-            // independently log this page view
-            // used for checking we have not broken analytics
-            new Beacon("/count/pva.gif").fire();
+            // there is currently no SSL version of the beacon
+            if(!config.page.isSSL){
+                // independently log this page view
+                // used for checking we have not broken analytics
+                new Beacon("/count/pva.gif").fire();
+            }
         });
 
     }
