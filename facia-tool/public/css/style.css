@@ -19,13 +19,6 @@ a {
     cursor: pointer;
 }
 
-fieldset,
-input[type=text] {
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    height: inherit;
-}
-
 #environment {
     line-height: 40px;
     position: absolute;
@@ -190,7 +183,7 @@ input[type=text] {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     overflow: hidden;
-    padding: 0 4px 3px 4px;;
+    padding: 0 2px 3px 4px;
     position: relative;
     background: #FFFFFF;
     border-top: 5px solid #FFFFFF;
@@ -330,15 +323,14 @@ input[type=text] {
     border-left: none;
 }
 
+select,
 input[type="text"] {
-    margin: 2px 0 0 0;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    height: 26px;
     padding: 1px 5px;
-    background: #ffffff;
+    margin: 1px 0 0 0;
     color: #000000;
-}
-
-select {
-    margin: 0;
 }
 
 button {
@@ -579,7 +571,7 @@ button {
 }
 
 .supporting {
-    margin: 4px -4px -4px -4px;
+    margin: 4px -2px -4px -4px;
 }
 
 .supporting-message {
