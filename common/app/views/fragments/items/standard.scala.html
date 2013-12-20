@@ -1,7 +1,9 @@
 @(trail: model.Trail, index: Int, containerIndex: Int, element: String = "li")(implicit request: RequestHeader)
 
 @defining((VisualTone(trail), containerIndex == 0, containerIndex == 0 && index < 3)) { case (tone, isFirstContainer, inlineImages) =>
-    <@element class="item item--has-@{if(trail.trailPicture(5,3).isEmpty){"no-"}}image tone-@tone @if(isFirstContainer){ item--force-image-upgrade}" data-link-name="trail | @{index + 1}"
+    <@element
+        class="item item--has-@{if(trail.trailPicture(5,3).isEmpty){"no-"}}image tone-@tone @if(isFirstContainer){ item--force-image-upgrade}"
+        data-link-name="trail | @{index + 1}"
         @trail.discussionId.map{ id => data-discussion-id="@id" }
         data-discussion-closed="@trail.isClosedForComments">
         <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border">
@@ -33,6 +35,17 @@
         }
         @trail.trailText.map { text =>
             <div class="item__standfirst">@Html(text)</div>
+        }
+        @if(trail.supporting.nonEmpty){
+            <ul class="item__support">
+                @trail.supporting.map{ supporting =>
+                    <li class="item__supporting item__supporting--@VisualTone(supporting) @if(supporting.isLive){item__supporting--live}">
+                        <a href="@LinkTo{@supporting.url}" class="item__supporting__link">
+                            <h3 class="item__supporting__title">@supporting.headline</h3>
+                        </a>
+                    </li>
+                }
+            </ul>
         }
         <div class="item__meta">
             <time class="item__timestamp js-item__timestamp"
