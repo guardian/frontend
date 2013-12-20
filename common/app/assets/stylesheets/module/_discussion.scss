@@ -1,4 +1,4 @@
-@mixin icon-button($buttonSize, $iconSize) {
+@mixin icon-button($buttonSize, $iconOffsetX, $iconOffsetY: "") {
     width: $buttonSize;
     height: $buttonSize;
     @include rounded-corners($buttonSize);
@@ -9,8 +9,12 @@
         text-indent: -9999px;
         top: 50%;
         left: 50%;
-        margin-top: -$iconSize/2;
-        margin-left: -$iconSize/2;
+        margin-top: $iconOffsetX;
+        @if $iconOffsetY == "" { 
+            margin-left: $iconOffsetX; 
+        } @else { 
+            margin-left: $iconOffsetY; 
+        }
     }
 }
 
@@ -86,7 +90,7 @@ $replyIndent: 26px;
 }
 
 .d-discussion__show-more-button {
-    @include icon-button(30px, 30px);
+    @include icon-button(30px, -15px);
     position: absolute;
     background-color: $c-newsDefault;
 }
@@ -300,7 +304,7 @@ $replyIndent: 26px;
 }
 
 .d-comment__recommend-button {    
-    @include icon-button(18px, 12px);
+    @include icon-button(18px, -6px);
     background-color: $c-neutral4;
     margin-right: 2px;
     margin-bottom: -5px;
@@ -368,7 +372,7 @@ $replyIndent: 26px;
     }
 }
 .d-comment__reply-button {
-    @include icon-button(19px, 12px);
+    @include icon-button(20px, -5px, -6px);
     background-color: $c-newsDefault;
     position: absolute;
     margin-top: -3px;
@@ -503,7 +507,7 @@ $replyIndent: 26px;
     }
 
     span {
-        @include icon-button(18px, 18px);
+        @include icon-button(18px, -9px);
         background-color: $c-newsDefault;
         margin-bottom: -4px;
         margin-right: $baseline*2;
