@@ -1,7 +1,7 @@
 package tools
 
 import com.amazonaws.services.cloudwatch.AmazonCloudWatchAsyncClient
-import conf.Configuration
+import conf.{AdminHealthCheckPage, Configuration}
 import com.amazonaws.services.cloudwatch.model._
 import org.joda.time.DateTime
 import com.amazonaws.handlers.AsyncHandler
@@ -77,7 +77,13 @@ object CloudWatch {
   {
     def onError(exception: Exception)
     {
-      log.info(s"CloudWatch GetMetricStatisticsRequest error: ${exception.getMessage}}")
+      log.info(s"CloudWatch GetMetricStatisticsRequest error: ${exception.getMessage}")
+      exception match {
+        // temporary till JVM bug fix comes out
+        // see https://blogs.oracle.com/joew/entry/jdk_7u45_aws_issue_123
+        case e: Exception if e.getMessage.contains("JAXP00010001") => AdminHealthCheckPage.setUnhealthy()
+        case _ =>
+      }
     }
     def onSuccess(request: GetMetricStatisticsRequest, result: GetMetricStatisticsResult )
     {
