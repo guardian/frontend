@@ -372,8 +372,7 @@ button {
     color: #999999;
     font-weight: bold;
     position: absolute;
-    bottom: -12px;
-    right: 1px;
+    bottom: -14px;
 }
 
 .pageviews-graph canvas {
