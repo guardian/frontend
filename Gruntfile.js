@@ -261,10 +261,136 @@ module.exports = function (grunt) {
                     dest: staticRequireDir + 'common-test'
                 }]
             },
+            admin: {
+                files: [{
+                    expand: true,
+                    cwd: 'admin/app/assets/javascripts',
+                    src: ['**/*.js'],
+                    dest: staticRequireDir
+                },
+                {
+                    expand: true,
+                    cwd: 'admin/public/javascripts',
+                    src: ['**/*.js'],
+                    dest: staticRequireDir + 'admin-public'
+                }]
+            },
+            applications: {
+                files: [{
+                    expand: true,
+                    cwd: 'applications/app/assets/javascripts',
+                    src: ['**/*.js'],
+                    dest: staticRequireDir
+                }]
+            },
             article: {
                 files: [{
                     expand: true,
                     cwd: 'article/app/assets/javascripts',
+                    src: ['**/*.js'],
+                    dest: staticRequireDir
+                }]
+            },
+            commercial: {
+                files: [{
+                    expand: true,
+                    cwd: 'commercial/app/assets/javascripts',
+                    src: ['**/*.js'],
+                    dest: staticRequireDir
+                }]
+            },
+            'core-navigation': {
+                files: [{
+                    expand: true,
+                    cwd: 'core-navigation/app/assets/javascripts',
+                    src: ['**/*.js'],
+                    dest: staticRequireDir
+                }]
+            },
+            devBuild: {
+                files: [{
+                    expand: true,
+                    cwd: 'dev-build/app/assets/javascripts',
+                    src: ['**/*.js'],
+                    dest: staticRequireDir
+                }]
+            },
+            discussion: {
+                files: [{
+                    expand: true,
+                    cwd: 'discussion/app/assets/javascripts',
+                    src: ['**/*.js'],
+                    dest: staticRequireDir
+                }]
+            },
+            facia: {
+                files: [{
+                    expand: true,
+                    cwd: 'facia/app/assets/javascripts',
+                    src: ['**/*.js'],
+                    dest: staticRequireDir
+                }]
+            },
+            'facia-tool': {
+                files: [{
+                    expand: true,
+                    cwd: 'facia-tool/app/assets/javascripts',
+                    src: ['**/*.js'],
+                    dest: staticRequireDir
+                }]
+            },
+            identity: {
+                files: [{
+                    expand: true,
+                    cwd: 'identity/app/assets/javascripts',
+                    src: ['**/*.js'],
+                    dest: staticRequireDir
+                }]
+            },
+            image: {
+                files: [{
+                    expand: true,
+                    cwd: 'image/app/assets/javascripts',
+                    src: ['**/*.js'],
+                    dest: staticRequireDir
+                }]
+            },
+            onward: {
+                files: [{
+                    expand: true,
+                    cwd: 'onward/app/assets/javascripts',
+                    src: ['**/*.js'],
+                    dest: staticRequireDir
+                }]
+            },
+            porter: {
+                files: [{
+                    expand: true,
+                    cwd: 'porter/app/assets/javascripts',
+                    src: ['**/*.js'],
+                    dest: staticRequireDir
+                }]
+            },
+            sport: {
+                files: [{
+                    expand: true,
+                    cwd: 'sport/app/assets/javascripts',
+                    src: ['**/*.js'],
+                    dest: staticRequireDir
+                }]
+            },
+            router: {
+                files: [{
+                    expand: true,
+                    cwd: 'router/app/assets/javascripts',
+                    src: ['**/*.js'],
+                    dest: staticRequireDir
+                }]
+            },
+            diagnostics: {
+                files: [{
+                    expand: true,
+                    cwd: 'diagnostics/app/assets/javascripts',
                     src: ['**/*.js'],
                     dest: staticRequireDir
                 }]
@@ -366,6 +492,28 @@ module.exports = function (grunt) {
             },
             admin: {
                 configFile: testConfDir + 'admin.js'
+            },
+            applications: {
+            },
+            article: {
+            },
+            commercial: {
+            },
+            'core-navigation': {
+            },
+            diagnostics: {
+            },
+            'facia-tool': {
+            },
+            image: {
+            },
+            onward: {
+            },
+            porter: {
+            },
+            router: {
+            },
+            sport: {
             }
         },
 
@@ -590,7 +738,12 @@ module.exports = function (grunt) {
     grunt.registerTask('test', ['jshint:common', 'test:unit:common', 'test:integration']);
     grunt.registerTask('test:unit', function(app) {
         grunt.config.set('karma.options.singleRun', (singleRun === false) && app ? false : true);
-        grunt.task.run('karma' + (app ? ':' + app : ''));
+        if (app) {
+            grunt.task.run('karma:' + app);
+            grunt.task.run('karma:common');
+        } else {
+            grunt.task.run('karma:common');
+        }
     });
 
     // Analyse tasks
