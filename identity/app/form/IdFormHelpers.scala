@@ -15,7 +15,7 @@ object IdFormHelpers {
   }
 
   def Email(field: Field, args: (Symbol, Any)*): Input = {
-    val updatedArgs = updateArgs(args, 'autocomplete -> "on", 'autocapitalize -> "off", 'autocorrect -> "off",  'tabindex -> 1)
+    val updatedArgs = updateArgs(args, 'autocomplete -> "on", 'autocapitalize -> "off", 'autocorrect -> "off")
     new Input("email", field, updatedArgs:_*)
   }
 
@@ -56,7 +56,6 @@ class Input(val inputType: String, val field: Field, initialArgs: (Symbol, Any)*
   val autocorrect = getArgOrElse('autocorrect, "on", initialArgs)
   val spellcheck = getArgOrElse('spellcheck, "false", initialArgs)
   val autofocus = getArgOrElse('autofocus, false, initialArgs)
-  val tabindex = getArgOrElse('tabindex, 0, initialArgs)
   val required = field.constraints.exists(constraint => constraint._1 == "constraint.required")
 
   val args = initialArgs.filter(_._1 != 'type) ++ Seq('_showConstraints -> false)
