@@ -113,7 +113,6 @@ define([
 
             s.prop3     = config.page.publication || '';
 
-
             s.channel = config.page.contentType === "Network Front" ? "Network Front" : config.page.section || '';
             s.prop9     = config.page.contentType || '';  //contentType
 
@@ -196,6 +195,11 @@ define([
                 s.prop30 = 'non-content';
             }
 
+            // the number of links inside the body
+            if (config.page.inBodyLinkCount) {
+                s.prop58 = config.page.inBodyLinkCount;
+            }
+
             /* Retrieve navigation interaction data, incl. swipe */
             var ni = storage.session.get('gu.analytics.referrerVars');
             if (ni) {
@@ -262,9 +266,12 @@ define([
         });
 
         common.mediator.on('module:analytics:omniture:pageview:sent', function(){
-            // independently log this page view
-            // used for checking we have not broken analytics
-            new Beacon("/count/pva.gif").fire();
+            // there is currently no SSL version of the beacon
+            if(!config.page.isSSL){
+                // independently log this page view
+                // used for checking we have not broken analytics
+                new Beacon("/count/pva.gif").fire();
+            }
         });
 
     }

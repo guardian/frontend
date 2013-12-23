@@ -33,11 +33,14 @@
                         analyticsImage.height = "1";
                         document.body.appendChild(analyticsImage);
 
-                        @*
-                        // this is used to sanity check our analytics calls
-                        *@
-                        var img = new Image();
-                        img.src = "@{Configuration.debug.beaconUrl}/count/pva.gif";
+                        @* there is currently no SSL version of the beacon *@
+                        @if(!Configuration.environment.secure){
+                            @*
+                            // this is used to sanity check our analytics calls
+                            *@
+                            var img = new Image();
+                            img.src = "@{Configuration.debug.beaconUrl}/count/pva.gif";
+                        }
                     }
                 </script>
         }
@@ -55,4 +58,7 @@
     width="1" height="1" alt="" />
 </noscript>
 
-<img src="@Configuration.debug.beaconUrl/count/pv.gif" alt="" style="display: none;"/>
+@* there is currently no SSL version of the beacon *@
+@if(!Configuration.environment.secure){
+    <img src="@Configuration.debug.beaconUrl/count/pv.gif" alt="" style="display: none;"/>
+}
