@@ -10,7 +10,6 @@ define([
     'common/modules/experiments/tests/onward-intrusive',
     'common/modules/experiments/tests/onward-highlights-panel',
     'common/modules/experiments/tests/alpha-comm',
-    'common/modules/experiments/tests/commercial-in-article-mobile',
     'common/modules/experiments/tests/commercial-in-article-desktop',
     'common/modules/experiments/tests/right-most-popular',
     'common/modules/experiments/tests/right-most-popular-control'
@@ -24,7 +23,6 @@ define([
     OnwardIntrusive,
     OnwardHighlightsPanel,
     AlphaComm,
-    CommercialInArticlesMobile,
     CommercialInArticlesDesktop,
     RightMostPopular,
     RightMostPopularControl
@@ -36,7 +34,6 @@ define([
             new OnwardIntrusive(),
             new OnwardHighlightsPanel(),
             new AlphaComm(),
-            new CommercialInArticlesMobile(),
             new CommercialInArticlesDesktop(),
             new RightMostPopular(),
             new RightMostPopularControl()
