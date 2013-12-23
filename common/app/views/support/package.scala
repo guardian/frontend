@@ -428,6 +428,8 @@ object `package` extends Formats {
 
   private object inflector extends Inflector
 
+  def countLinks(s: String): Int = Jsoup.parseBodyFragment(s).getElementsByTag("a").length
+
   def withJsoup(html: Html)(cleaners: HtmlCleaner*): Html = withJsoup(html.body) { cleaners: _* }
 
   def withJsoup(html: String)(cleaners: HtmlCleaner*): Html = {

@@ -10,7 +10,8 @@ define([
     'modules/adverts/sticky',
     'lodash/objects/transform',
     'lodash/arrays/findLastIndex',
-    'lodash/collections/map'
+    'lodash/collections/map',
+    'lodash/functions/debounce'
 ], function (
     common,
     qwery,
@@ -22,30 +23,71 @@ define([
     Sticky,
     transform,
     findLastIndex,
-    map) {
+    map,
+    debounce
+) {
 
+
+
+  /*! adapted from Idle.Js, copyright 2013-04-27, Shawn Mclean
+  *
+  * Essentially we set up a dead man's switch on the isAway flag.
+  *
+  * If any activity on the page is detected we restart the countdown
+  * with a debounce. If no activity is detected the switch is set to on. 
+  *
+  * */
+  var Idle = function () {
+      
+      this.isAway = true; // false = the user is active on the page, true = the user is inactive
+      this.awayTimeout = 5000;
+
+      var startInactivityTimeout,
+          logActivity,
+          self = this;
+     
+      startInactivityTimeout = debounce(function() {
+        self.setInactive();
+      }, this.awayTimeout);
+      
+      logActivity = function () {
+        self.isAway = false;
+      };
+
+      // sensors
+      bean.on(window, 'click keydown', startInactivityTimeout);
+      bean.on(window, 'scroll mousemove', debounce(startInactivityTimeout, 100));
+      bean.on(window, 'click keydown', logActivity);
+      bean.on(window, 'scroll mousemove', debounce(logActivity, 100));
+
+    };
+
+    Idle.prototype.setInactive = function () {
+      this.isAway = true;
+    };
+
+
+    // 
     var _config,
         variantName,
         adDwellTimes = {},
         flushInterval = 3000, // every 2 seconds
         trackInterval = 1000,
-        maxTrackTime  = 80000, // stop tracking after this time
-        instanceId = Math.random(); // each page view generates a temporary user 'id'
-
+        maxTrackTime  = 90000, // stop tracking after this time
+        instanceId = Math.random(), // each page view generates a temporary user 'id'
+        idle = new Idle();
+        
     /*
         This idea here is that we have two timers. One to monitor whether an advert is in the viewport
         every 1 second, and a second to flush the data to the server every 5 seconds.
 
         As the user scrolls down the page and views adverts they increment the collective counter on
-        the server by one each time they view an advert.
+        the server by the number of seconds the user has spent viewing an advert slot.
 
-        For example, a user that sticks at the top of the page for 20 seconds will increment the 'Top' slot
-        counter by '20' and the server count by '4'.
-
-        We say can the Top slot has been viewed for 20 seconds by 4 instances, or an average of 5 seconds per
-        instance.
-        
         The highest counter indicates the more viewed the advert.
+
+        The idle object allows us to stop flushing data to the server for the period of time where the user
+        is inactive. 
     */
 
     function initAdDwellTracking(config, variant) {
@@ -90,6 +132,12 @@ define([
 
         // a timer to monitor the pages for ad-slots inside the viewport
         var adTrackInterval = setInterval(function() {
+           
+            // don't do anything if the user is idle 
+            if (idle.isAway) {
+                return;
+            }
+
             var viewport = detect.getBreakpoint();
             // NOTE:  getLayoutMode used to return 'extended' for 'wide'; this makes it backwards compatible
             viewport = (viewport === 'wide') ? 'extended' : viewport;
@@ -274,3 +322,4 @@ define([
     return AlphaComm;
 
 });
+

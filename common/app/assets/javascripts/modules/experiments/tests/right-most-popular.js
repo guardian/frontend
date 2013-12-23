@@ -10,7 +10,7 @@ define([
 
     return function() {
 
-        this.id = 'RightMostPopular';
+        this.id = 'RightPopular';
         this.expiry = '2013-12-31';
         this.audience = 0.3;
         this.audienceOffset = 0.7;
