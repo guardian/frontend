@@ -5,7 +5,8 @@ import org.joda.time.DateTime
 
 object MasterClassAgent extends Logging with ExecutionContexts {
   private val masterClass1 = MasterClass("1", "MasterClass A", new DateTime(),
-    "http://www.theguardian.com", "Description of MasterClass A", "Live", Ticket(1.0) :: Nil, 1, "http://www.theguardian.com")
+    "http://www.theguardian.com", "Description of MasterClass A", "Live", Venue(), Ticket(1.0) :: Nil, 1,
+    "http://www.theguardian.com")
 
   private val masterClass2 = masterClass1.copy(name = "MasterClass B", description = "MasterClass with multiple tickets", tickets = List(Ticket(1.0), Ticket(5.0)))
   private val masterClass3 = masterClass1.copy(name = "Guardian MasterClass C", description = "Description of MasterClass C")
