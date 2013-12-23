@@ -1,7 +1,7 @@
 define([
-    '$',
-    'utils/detect',
-    'utils/request-animation-frame',
+    'common/$',
+    'common/utils/detect',
+    'common/utils/request-animation-frame',
     'lodash/objects/assign',
     'bean',
     'bonzo'

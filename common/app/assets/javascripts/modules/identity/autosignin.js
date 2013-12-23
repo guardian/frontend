@@ -1,14 +1,14 @@
 define([
-    "utils/ajax",
+    "common/utils/ajax",
     "bonzo",
-    "common",
-    "modules/identity/api",
-    "modules/identity/facebook-authorizer",
-    "modules/navigation/profile",
-    "utils/storage",
-    "modules/userPrefs",
-    "utils/time",
-    "modules/ui/message"
+    "common/common",
+    "common/modules/identity/api",
+    "common/modules/identity/facebook-authorizer",
+    "common/modules/navigation/profile",
+    "common/utils/storage",
+    "common/modules/userPrefs",
+    "common/utils/time",
+    "common/modules/ui/message"
 ],
 function(
     ajax,

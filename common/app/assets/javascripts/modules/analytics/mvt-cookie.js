@@ -1,5 +1,5 @@
 define([
-    'utils/cookies'
+    'common/utils/cookies'
 ], function (
     cookies
 ) {

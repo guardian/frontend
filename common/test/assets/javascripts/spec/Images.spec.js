@@ -1,4 +1,4 @@
-define(['modules/ui/images', 'helpers/fixtures', '$', 'bonzo', 'utils/mediator'], function(images, fixtures, $, bonzo, mediator) {
+define(['common/modules/ui/images', 'helpers/fixtures', 'common/$', 'bonzo', 'common/utils/mediator'], function(images, fixtures, $, bonzo, mediator) {
 
     describe('Images', function() {
 

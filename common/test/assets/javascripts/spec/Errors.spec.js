@@ -1,4 +1,4 @@
-define(['common', 'bean', 'modules/analytics/errors'], function(common, bean, Errors) {
+define(['common/common', 'bean', 'common/modules/analytics/errors'], function(common, bean, Errors) {
 
     describe("Errors", function() {
        
@@ -56,9 +56,9 @@ define(['common', 'bean', 'modules/analytics/errors'], function(common, bean, Er
         describe('Advert errors', function() {
             
             it("it should log 'documentwriteslot.js' errors as advert errors", function(){
-                e.log(fakeError.message, 'modules/adverts/documentwriteslot.js', fakeError.lineno);
+                e.log(fakeError.message, 'common/modules/adverts/documentwriteslot.js', fakeError.lineno);
                 expect(document.getElementById('js-err').getAttribute('src')).toContain(
-                    'beacon.gu.com/js.gif?message=foo&filename=modules%2Fadverts%2Fdocumentwriteslot.js&lineno=1&type=ads'
+                    'beacon.gu.com/js.gif?message=foo&filename=common%2Fmodules%2Fadverts%2Fdocumentwriteslot.js&lineno=1&type=ads'
                 );
             });
             

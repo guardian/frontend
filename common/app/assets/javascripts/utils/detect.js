@@ -7,8 +7,8 @@
 /*global DocumentTouch: true */
 
 define([
-    'modules/userPrefs',
-    'common'
+    'common/modules/userPrefs',
+    'common/common'
 ], function (
     userPrefs,
     common

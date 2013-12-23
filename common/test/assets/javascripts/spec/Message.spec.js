@@ -1,7 +1,7 @@
 define([
-    'modules/ui/message', 
+    'common/modules/ui/message',
     'helpers/fixtures',
-    '$'
+    'common/$'
 ], function(
     Message,
     fixtures,

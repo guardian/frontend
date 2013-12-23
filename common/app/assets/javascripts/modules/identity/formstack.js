@@ -1,8 +1,8 @@
 define([
-    '$',
-    'common',
+    'common/$',
+    'common/common',
     'bean',
-    'modules/identity/api'
+    'common/modules/identity/api'
 ], function (
     $,
     common,

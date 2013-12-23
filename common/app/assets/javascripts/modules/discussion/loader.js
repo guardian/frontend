@@ -1,16 +1,16 @@
 define([
-    '$',
-    'utils/ajax',
+    'common/$',
+    'common/utils/ajax',
     'bonzo',
     'qwery',
     'bean',
-    'modules/component',
-    'modules/analytics/discussion',
-    'modules/identity/api',
-    'modules/discussion/api',
-    'modules/discussion/comments',
-    'modules/discussion/top-comments',
-    'modules/discussion/comment-box'
+    'common/modules/component',
+    'common/modules/analytics/discussion',
+    'common/modules/identity/api',
+    'common/modules/discussion/api',
+    'common/modules/discussion/comments',
+    'common/modules/discussion/top-comments',
+    'common/modules/discussion/comment-box'
 ], function(
     $,
     ajax,

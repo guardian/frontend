@@ -1,7 +1,7 @@
 define([
-    'common',
-    'utils/ajax',
-    'utils/cookies'
+    'common/common',
+    'common/utils/ajax',
+    'common/utils/cookies'
 ], function(
     common,
     ajax,

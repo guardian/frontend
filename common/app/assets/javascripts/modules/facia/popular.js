@@ -1,11 +1,11 @@
 define([
-    '$',
-    'utils/mediator',
-    'utils/ajax',
+    'common/$',
+    'common/utils/mediator',
+    'common/utils/ajax',
     'bonzo',
-    'modules/ui/relativedates',
-    'modules/facia/collection-show-more',
-    'modules/ui/images'
+    'common/modules/ui/relativedates',
+    'common/modules/facia/collection-show-more',
+    'common/modules/ui/images'
 ], function ($, mediator, ajax, bonzo, relativeDates, CollectionShowMore, images) {
 
     return  {

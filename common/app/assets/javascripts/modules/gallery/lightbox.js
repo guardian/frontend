@@ -1,14 +1,14 @@
 define([
-    '$',
+    'common/$',
     "bean",
-    "utils/mediator",
+    "common/utils/mediator",
     'lodash/functions/debounce',
-    "utils/ajax",
+    "common/utils/ajax",
     "bonzo",
     "qwery",
-    "utils/detect",
-    "utils/url",
-    "modules/ui/overlay"
+    "common/utils/detect",
+    "common/utils/url",
+    "common/modules/ui/overlay"
 ], function (
     $,
     bean,
