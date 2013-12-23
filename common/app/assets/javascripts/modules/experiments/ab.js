@@ -5,10 +5,6 @@ define([
 
     //Current tests
     'modules/experiments/tests/aa',
-    'modules/experiments/tests/mobile-facebook-autosignin',
-    'modules/experiments/tests/onward-intrusive',
-    'modules/experiments/tests/onward-highlights-panel',
-    'modules/experiments/tests/alpha-comm',
     'modules/experiments/tests/right-most-popular',
     'modules/experiments/tests/right-most-popular-control'
 ], function (
@@ -17,20 +13,12 @@ define([
     mvtCookie,
 
     Aa,
-    MobileFacebookAutosignin,
-    OnwardIntrusive,
-    OnwardHighlightsPanel,
-    AlphaComm,
     RightPopular,
     RightPopularControl
     ) {
 
     var TESTS = [
             new Aa(),
-            new MobileFacebookAutosignin(),
-            new OnwardIntrusive(),
-            new OnwardHighlightsPanel(),
-            new AlphaComm(),
             new RightPopular(),
             new RightPopularControl()
         ],
