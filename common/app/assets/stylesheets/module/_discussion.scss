@@ -352,7 +352,7 @@ $replyIndent: 26px;
     @include fs-data(2);
     height: 1.4rem;
     padding-top: $baseline*2;
-    padding-bottom: $baseline*3;
+    padding-bottom: $baseline*5;
     width: 100%;
     position: absolute;
     bottom: 0;
@@ -590,11 +590,11 @@ $replyIndent: 26px;
         @include mq($side-meta-breakpoint) {
             margin-bottom: 0;
             &:before {
-                left: -20px;
-                top: 20px;
+                left: -18px;
+                top: 11px;
                 border: 0;
-                border-left: 20px solid transparent;
-                border-bottom: 20px solid $c-commentGrey;
+                border-left: 18px solid transparent;
+                border-bottom: 18px solid $c-commentGrey;
                 border-left-style: inset;
             }
         }
