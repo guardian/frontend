@@ -33,7 +33,7 @@
             <div class="fieldset__fields">
                 <ul class="unstyled">
 
-                    @inputField(Email(registrationForm("user.primaryEmailAddress"), '_label -> "Email address"))
+                    @inputField(Email(registrationForm("user.primaryEmailAddress"), '_label -> "Email address", '_tabindex -> 1))
 
                     @inputField(Username(registrationForm("user.publicFields.username"), '_label -> "Username", '_help -> "Between 6 and 20 characters, letters and numbers only"))
 
