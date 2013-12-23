@@ -1,8 +1,8 @@
 define([
-    "modules/onward/sequence",
-    "modules/onward/right-ear",
-    'utils/mediator',
-    'utils/detect'
+    "common/modules/onward/sequence",
+    "common/modules/onward/right-ear",
+    'common/utils/mediator',
+    'common/utils/detect'
 ], function(
     sequence,
     RightEar,

@@ -1,9 +1,9 @@
 define([
-    'common',
+    'common/common',
     'bonzo',
-    'utils/mediator',
-    'utils/detect',
-    'modules/userPrefs'
+    'common/utils/mediator',
+    'common/utils/detect',
+    'common/modules/userPrefs'
 ], function (
     common,
     bonzo,

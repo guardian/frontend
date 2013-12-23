@@ -1,7 +1,7 @@
 define([
-    "modules/experiments/right-most-popular",
-    'utils/mediator',
-    'utils/detect'
+    "common/modules/experiments/right-most-popular",
+    'common/utils/mediator',
+    'common/utils/detect'
 ], function(
     RightHandMostPopular,
     mediator,

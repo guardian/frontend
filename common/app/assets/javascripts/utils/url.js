@@ -1,6 +1,6 @@
 define([
-    'utils/detect',
-    'common'
+    'common/utils/detect',
+    'common/common'
 ], function(
     detect,
     common

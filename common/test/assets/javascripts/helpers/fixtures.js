@@ -5,7 +5,7 @@
  *
  */
 
-define(['common'], function(common) {
+define(['common/common'], function(common) {
     
     function clean(id) {
         common.$g('#' + id).remove();

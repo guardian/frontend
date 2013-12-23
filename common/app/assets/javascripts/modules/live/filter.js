@@ -3,7 +3,7 @@
     Description: Filter displayed events depending on their type
 */
 define([
-    'common',
+    'common/common',
     'bonzo',
     'bean'
 ], function (

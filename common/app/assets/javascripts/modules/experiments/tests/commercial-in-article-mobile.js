@@ -1,10 +1,10 @@
 /*global guardian */
 define([
-    'common',
+    'common/common',
     'qwery',
     'bonzo',
     'bean',
-    'utils/detect'
+    'common/utils/detect'
 ], function (
     common,
     qwery,

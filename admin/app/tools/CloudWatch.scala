@@ -73,10 +73,8 @@ object CloudWatch {
   def shortStackLatency = latency(primaryLoadBalancers)
   def fullStackLatency = shortStackLatency ++ latency(secondaryLoadBalancers)
 
-  object asyncHandler extends AsyncHandler[GetMetricStatisticsRequest, GetMetricStatisticsResult] with Logging
-  {
-    def onError(exception: Exception)
-    {
+  object asyncHandler extends AsyncHandler[GetMetricStatisticsRequest, GetMetricStatisticsResult] with Logging {
+    def onError(exception: Exception) {
       log.info(s"CloudWatch GetMetricStatisticsRequest error: ${exception.getMessage}")
       exception match {
         // temporary till JVM bug fix comes out
@@ -85,9 +83,7 @@ object CloudWatch {
         case _ =>
       }
     }
-    def onSuccess(request: GetMetricStatisticsRequest, result: GetMetricStatisticsResult )
-    {
-    }
+    def onSuccess(request: GetMetricStatisticsRequest, result: GetMetricStatisticsResult ) { }
   }
 
   // TODO - this file is getting a bit long/ complicated. It needs to be split up a bit

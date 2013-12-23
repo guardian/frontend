@@ -3,10 +3,10 @@
     Description: Used to load a list of football fixtures of a given competition and append to DOM
 */
 define([
-    'common',
-    'utils/ajax',
+    'common/common',
+    'common/utils/ajax',
     'bonzo',
-    'modules/ui/expandable'
+    'common/modules/ui/expandable'
 ], function (
     common,
     ajax,
@@ -65,7 +65,7 @@ define([
                     }
                 },
                 function (req) {
-                    common.mediator.emit("modules:error", 'Failed to load football fixtures: ' + req.statusText, 'modules/footballfixtures.js');
+                    common.mediator.emit("modules:error", 'Failed to load football fixtures: ' + req.statusText, 'common/modules/footballfixtures.js');
                 }
             );
         };

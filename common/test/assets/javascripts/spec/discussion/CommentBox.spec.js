@@ -1,12 +1,12 @@
 define([
-    'common',
-    'utils/ajax',
+    'common/common',
+    'common/utils/ajax',
     'bean',
     'helpers/fixtures',
     'fixtures/discussion/discussion',
     'fixtures/discussion/comment-valid',
     'fixtures/discussion/api-post-comment-valid',
-    'modules/discussion/comment-box'
+    'common/modules/discussion/comment-box'
 ], function(
     common,
     ajax,

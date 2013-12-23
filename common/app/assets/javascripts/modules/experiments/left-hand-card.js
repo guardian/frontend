@@ -1,7 +1,7 @@
 define([
-    'common',
-    'utils/detect',
-    'modules/experiments/inline-link-card'
+    'common/common',
+    'common/utils/detect',
+    'common/modules/experiments/inline-link-card'
 ],
     function (
         common,
