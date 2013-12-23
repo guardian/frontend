@@ -3,14 +3,14 @@
     Description: Used to load update fragments of the DOM from specfied endpoint
 */
 define([
-    'common',
-    'utils/ajax',
+    'common/common',
+    'common/utils/ajax',
     'bonzo',
     'bean',
     'qwery',
-    'modules/userPrefs',
-    'utils/detect',
-    'modules/ui/circular-progress'
+    'common/modules/userPrefs',
+    'common/utils/detect',
+    'common/modules/ui/circular-progress'
 ], function (
     common,
     ajax,
@@ -168,7 +168,7 @@ define([
                     }
                 },
                 function(req) {
-                    common.mediator.emit('module:error', 'Failed to load auto-update: ' + req.statusText, 'modules/autoupdate.js');
+                    common.mediator.emit('module:error', 'Failed to load auto-update: ' + req.statusText, 'common/modules/autoupdate.js');
                 }
             );
         };

@@ -1,8 +1,8 @@
 define([
-    'common',
-    'utils/detect',
+    'common/common',
+    'common/utils/detect',
     'bean',
-    'modules/experiments/ab'
+    'common/modules/experiments/ab'
 ], function (
     common,
     detect,

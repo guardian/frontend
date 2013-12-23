@@ -1,15 +1,15 @@
 /*global s_i_guardian:true */
 define([
-    'common',
-    'utils/detect',
-    'modules/experiments/ab',
-    'utils/storage',
-    'modules/identity/api',
-    'modules/analytics/errors',
-    'utils/cookies',
+    'common/common',
+    'common/utils/detect',
+    'common/modules/experiments/ab',
+    'common/utils/storage',
+    'common/modules/identity/api',
+    'common/modules/analytics/errors',
+    'common/utils/cookies',
     'omniture',
-    'modules/analytics/mvt-cookie',
-    'modules/analytics/beacon'
+    'common/modules/analytics/mvt-cookie',
+    'common/modules/analytics/beacon'
 ], function(
     common,
     detect,

@@ -1,7 +1,7 @@
 define([
-    'modules/identity/api',
-    "modules/identity/autosignin",
-    "modules/identity/facebook-authorizer"
+    'common/modules/identity/api',
+    "common/modules/identity/autosignin",
+    "common/modules/identity/facebook-authorizer"
 ], function(
     Id,
     AutoSignin,

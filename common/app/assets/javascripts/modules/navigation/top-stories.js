@@ -1,8 +1,8 @@
 define([
-    'common',
-    'utils/ajax',
+    'common/common',
+    'common/utils/ajax',
     'bonzo',
-    'modules/lazyload'
+    'common/modules/lazyload'
 ], function (
     common,
     ajax,
@@ -37,7 +37,7 @@ define([
                         common.mediator.emit('modules:topstories:loaded');
                     },
                     error: function(req) {
-                        common.mediator.emit('module:error', 'Failed to load top stories: ' + req.statusText, 'modules/top-stories.js');
+                        common.mediator.emit('module:error', 'Failed to load top stories: ' + req.statusText, 'common/modules/top-stories.js');
                     }
                 }).load();
 

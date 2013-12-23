@@ -1,7 +1,7 @@
 define([
-    'utils/mediator',
+    'common/utils/mediator',
     'bean',
-    'modules/inview'
+    'common/modules/inview'
 ], function (
     mediator,
     bean,

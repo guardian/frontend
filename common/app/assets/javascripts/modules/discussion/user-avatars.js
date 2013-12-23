@@ -1,7 +1,7 @@
 define([
-    '$',
+    'common/$',
     'bonzo',
-    'modules/discussion/api'
+    'common/modules/discussion/api'
 ], function($, bonzo, discussionApi){
 
     function init() {

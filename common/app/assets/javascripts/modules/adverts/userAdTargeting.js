@@ -1,7 +1,7 @@
 define([
-    'utils/storage',
-    'modules/identity/api',
-    'utils/time'
+    'common/utils/storage',
+    'common/modules/identity/api',
+    'common/utils/time'
 ], function(
     storage,
     id,

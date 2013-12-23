@@ -1,9 +1,9 @@
 define([
-    'common',
+    'common/common',
     'bonzo',
-    'utils/ajax',
+    'common/utils/ajax',
     'helpers/fixtures',
-    'modules/experiments/inline-link-card'
+    'common/modules/experiments/inline-link-card'
 ], function(
     common,
     bonzo,

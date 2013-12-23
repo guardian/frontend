@@ -1,8 +1,8 @@
 define([
-    'common',
-    'modules/lazyload',
-    'modules/ui/expandable',
-    'modules/ui/images'
+    'common/common',
+    'common/modules/lazyload',
+    'common/modules/ui/expandable',
+    'common/modules/ui/images'
 ], function (
     common,
     LazyLoad,
@@ -37,7 +37,7 @@ define([
                         common.mediator.emit('modules:related:loaded', config, context);
                     },
                     error: function(req) {
-                        common.mediator.emit('module:error', 'Failed to load related: ' + req.statusText, 'modules/related.js');
+                        common.mediator.emit('module:error', 'Failed to load related: ' + req.statusText, 'common/modules/related.js');
                     }
                 }).load();
             }
