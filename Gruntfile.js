@@ -710,7 +710,6 @@ module.exports = function (grunt) {
     });
     grunt.registerTask('test', ['jshint:common', 'test:unit', 'test:integration']);
     grunt.registerTask('test:unit', function(app) {
-        grunt.task.run('compile:js' + (app ? ':' + app : ''));
         grunt.config.set('karma.options.singleRun', (singleRun === false) && app ? false : true);
         // Target common when no app is specified, because karma can only test what has been js-compiled.
         grunt.task.run('karma' + (app ? ':' + app : ':common'));
