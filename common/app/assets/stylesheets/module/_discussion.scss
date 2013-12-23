@@ -839,6 +839,10 @@ $replyIndent: 26px;
     }
 }
 
+.d-comment .d-comment-box {
+    padding-left: $replyIndent;
+}
+
 .d-comment-box__body {
     @include box-sizing(border-box);
     border: 1px solid $c-neutral3;
