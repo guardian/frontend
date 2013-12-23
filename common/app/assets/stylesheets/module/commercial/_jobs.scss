@@ -3,6 +3,13 @@
    ========================================================================== */
 
 .jobs-component {
+    .commercial__title {
+        text-transform: lowercase;
+        word-spacing: -0.25em;
+        .em {
+            font-style: italic;
+        }
+    }
 
     .lineitem__image-logo {
         margin-left: $baseline;
@@ -22,31 +29,19 @@
         margin: $baseline*4 0;
     }
 
-	@include mq($to: tablet) {
-		.commercial__head {
-			background-color: #08417b;
-			.commercial__title {
-				.em {
-					color: #fff;
-					color: rgba(255,255,255,0.8);
-				}
-			}
-		}
-	}
-
-//    &.commercial--w600 {
-//        .commercial__item {
-//            @include box-sizing(border-box);
-//            padding-right: $gs-gutter/2;
-//            width: 40%;
-//            float: left;
-//            &.commercial__item:nth-child(3) {
-//                width: 20%;
-//                .lineitem__title {
-//                    @include f-headline;
-//                    @include font-size(14,16);
-//                }
-//            }
-//        }
-//    }
+    &.commercial--w600 {
+        .commercial__item {
+            @include box-sizing(border-box);
+            padding-right: $gs-gutter/2;
+            width: 40%;
+            float: left;
+            &.commercial__item:nth-child(3) {
+                width: 20%;
+                .lineitem__title {
+                    @include f-headline;
+                    @include font-size(14,16);
+                }
+            }
+        }
+    }
 }
