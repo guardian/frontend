@@ -484,28 +484,6 @@ module.exports = function (grunt) {
             },
             admin: {
                 configFile: testConfDir + 'admin.js'
-            },
-            applications: {
-            },
-            article: {
-            },
-            commercial: {
-            },
-            'core-navigation': {
-            },
-            diagnostics: {
-            },
-            'facia-tool': {
-            },
-            image: {
-            },
-            onward: {
-            },
-            porter: {
-            },
-            router: {
-            },
-            sport: {
             }
         },
 
@@ -730,15 +708,12 @@ module.exports = function (grunt) {
         grunt.config('casperjsLogFile', app + '.xml');
         grunt.task.run(['env:casperjs', 'casperjs:' + app]);
     });
-    grunt.registerTask('test', ['jshint:common', 'test:unit:common', 'test:integration']);
+    grunt.registerTask('test', ['jshint:common', 'test:unit', 'test:integration']);
     grunt.registerTask('test:unit', function(app) {
+        grunt.task.run('compile:js' + (app ? ':' + app : ''));
         grunt.config.set('karma.options.singleRun', (singleRun === false) && app ? false : true);
-        if (app) {
-            grunt.task.run('karma:' + app);
-            grunt.task.run('karma:common');
-        } else {
-            grunt.task.run('karma:common');
-        }
+        // Target common when no app is specified, because karma can only test what has been js-compiled.
+        grunt.task.run('karma' + (app ? ':' + app : ':common'));
     });
 
     // Analyse tasks
