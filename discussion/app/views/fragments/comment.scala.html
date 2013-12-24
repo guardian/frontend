@@ -59,7 +59,10 @@
                         <span class="d-comment__recommend-pulse"></span>
                         <i class="i i-recommend"></i>
                     </span>
-                    <span class="d-comment__recommend-count js-recommend-count">@comment.numRecommends</span>
+                    <span class="d-comment__recommend-count js-recommend-count">
+                        <span class="d-comment__recommend-count--old">@comment.numRecommends</span>
+                        <span class="d-comment__recommend-count--new">@(comment.numRecommends+1)</span>
+                    </span>
                 </div>
             }
             <div class="d-comment__main">
