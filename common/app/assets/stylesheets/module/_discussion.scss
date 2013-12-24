@@ -1,28 +1,30 @@
-@mixin icon-button($buttonSize, $iconOffsetX, $iconOffsetY: "") {
-    width: $buttonSize;
-    height: $buttonSize;
-    @include rounded-corners($buttonSize);
-    position: relative;
-    display: inline-block;
-    .i {
-        position: absolute;
-        text-indent: -9999px;
-        top: 50%;
-        left: 50%;
-        margin-top: $iconOffsetX;
-        @if $iconOffsetY == "" { 
-            margin-left: $iconOffsetX; 
-        } @else { 
-            margin-left: $iconOffsetY; 
-        }
-    }
-}
-
 $side-meta-breakpoint: desktop;
 $avatarSize: 44px;
 $c-commentGrey: #f3f3f1;
 $c-replyText: #555;
 $replyIndent: 26px;
+
+@include keyframes(pulse) {
+    0% {
+        opacity: 1;
+        @include transform(scale(1.0));
+    }
+    100% {
+        opacity: 0;
+        @include transform(scale(2.0));
+    }
+}
+
+.d-comment__recommend--user-recommended .d-comment__recommend-pulse {
+    @include animation(pulse 0.5s ease-in-out 1);
+    @include transition(background-color 0.25s ease-in-out);
+    background-color: #E6711B;
+}
+
+.d-comment__recommend--user-recommended .d-comment__recommend-button {
+    background-color: #E6711B;
+    @include transition(background-color 0.25s ease-in-out);
+}
 
 /* ==========================================================================
    Discussion
@@ -96,7 +98,7 @@ $replyIndent: 26px;
     padding-left: 32px + $baseline;
     display: inline-block;
 }
-
+ 
 .d-discussion__show-all-comments {
     height: 40px;
     @include fs-data(4);
@@ -310,6 +312,14 @@ $replyIndent: 26px;
         margin-left: -9px;
     }
 }
+.d-comment__recommend-pulse {
+    width: 18px;
+    height: 18px;
+    @include rounded-corners(18px);
+    position: absolute;
+    top: 0; left: 0;
+    background-color: $c-neutral4;
+}
 
 .d-comment__recommend-count {
     @include fs-data(3);
@@ -328,7 +338,7 @@ $replyIndent: 26px;
 .d-comment__recommend--active {
     cursor: pointer;
 
-    .d-comment__recommend-button {
+    .d-comment__recommend-button, .d-comment__recommend-pulse {
         background-color: $c-newsDefault;
     }
     .d-comment__recommend-count {
@@ -337,7 +347,7 @@ $replyIndent: 26px;
 }
 
 .d-comment__recommend--user-recommended {
-    .d-comment__recommend-button {
+    .d-comment__recommend-button, .d-comment__recommend-pulse {
         background-color: $c-commentDefault;
     }
     .d-comment__recommend-count {
