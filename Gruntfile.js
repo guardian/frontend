@@ -6,7 +6,9 @@ module.exports = function (grunt) {
         screenshotsDir = './screenshots',
         staticTargetDir = 'static/target/',
         staticRequireDir = 'static/requirejs/',
-        testConfDir = 'common/test/assets/javascripts/conf/';
+        testConfDir = 'common/test/assets/javascripts/conf/',
+        propertiesFile = (isDev) ? process.env.HOME + '/.gu/frontend.properties' : '/etc/gu/frontend.properties';
+
 
     if (isDev) {
         grunt.log.subhead('Running Grunt in DEV mode');
@@ -579,6 +581,19 @@ module.exports = function (grunt) {
                 }
             }
         },
+        assetmonitor: {
+            common: {
+                src: [
+                    staticTargetDir + 'javascripts/bootstraps/app.js',
+                    staticTargetDir + 'stylesheets/head.default.css',
+                    staticTargetDir + 'stylesheets/head.facia.css',
+                    staticTargetDir + 'stylesheets/global.css'
+                ],
+                options: {
+                    credentials: propertiesFile
+                }
+            }
+        },
 
         /*
          * Miscellaneous
@@ -675,6 +690,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-asset-monitor');
 
     grunt.registerTask('default', ['compile', 'test', 'analyse']);
 
@@ -717,6 +733,7 @@ module.exports = function (grunt) {
 
     // Analyse tasks
     grunt.registerTask('analyse:css', ['compile:css', 'cssmetrics:common']);
+    grunt.registerTask('analyse:monitor', ['monitor:common']);
     grunt.registerTask('analyse', ['analyse:css']);
 
     // Miscellaneous task
