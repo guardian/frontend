@@ -10,7 +10,7 @@ import views.support.{Naked, ImgSrc}
 import views.support.StripHtmlTagsAndUnescapeEntities
 import com.gu.openplatform.contentapi.model.{Content => ApiContent,Element =>ApiElement}
 import play.api.libs.json.JsValue
-import views.support.countLinks
+import views.support.countGuardianLinks
 
 class Content protected (val delegate: ApiContent) extends Trail with Tags with MetaData {
 
@@ -23,8 +23,8 @@ class Content protected (val delegate: ApiContent) extends Trail with Tags with 
   lazy val standfirst: Option[String] = fields.get("standfirst")
   lazy val starRating: Option[String] = fields.get("starRating")
   lazy val shortUrlPath: String = shortUrl.replace("http://gu.com", "")
-  lazy val allowUserGeneratedContent: Boolean = fields.get("allowUgc").map(_.toBoolean).getOrElse(false)
-  lazy val isCommentable: Boolean = fields.get("commentable").map(_ == "true").getOrElse(false)
+  lazy val allowUserGeneratedContent: Boolean = fields.get("allowUgc").exists(_.toBoolean)
+  lazy val isCommentable: Boolean = fields.get("commentable").exists(_ == "true")
   lazy val isExpired = delegate.isExpired.getOrElse(false)
   lazy val blockAds: Boolean = videoAssets.exists(_.blockAds)
   lazy val isLiveBlog: Boolean = delegate.isLiveBlog
@@ -71,7 +71,7 @@ class Content protected (val delegate: ApiContent) extends Trail with Tags with 
   }
 
   // Inherited from Tags
-  override lazy val tags: Seq[Tag] = delegate.tags map { Tag(_) }
+  override lazy val tags: Seq[Tag] = delegate.tags map { Tag }
 
   // Inherited from MetaData
   override lazy val id: String = delegate.id
@@ -90,7 +90,7 @@ class Content protected (val delegate: ApiContent) extends Trail with Tags with 
     ("series", series.map { _.name }.mkString(",")),
     ("blogs", blogs.map { _.name }.mkString(",")),
     ("commentable", isCommentable),
-    ("has-story-package", fields.get("hasStoryPackage").map(_.toBoolean).getOrElse(false)),
+    ("has-story-package", fields.get("hasStoryPackage").exists(_.toBoolean)),
     ("page-code", fields("internalPageCode")),
     ("isLive", isLive),
     ("wordCount", wordCount),
@@ -158,7 +158,7 @@ class Article(content: ApiContent) extends Content(content) {
   override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
     ("content-type", contentType),
     ("isLiveBlog", isLiveBlog),
-    ("inBodyLinkCount", countLinks(body))
+    ("inBodyLinkCount", countGuardianLinks(body))
   )
 
   override def openGraph: List[(String, Any)] = super.openGraph ++ List(
