@@ -48,6 +48,7 @@ define([
                 id: 'CommercialInline',
                 test: function(context, config) {
                     guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha1.com';
+                    guardian.config.page.ab_commercialInArticleDesktop = 'inline';
                     createInlineAdSlots('Middle1');
                     createMpuAdSlot('Middle');
                 }
@@ -56,6 +57,7 @@ define([
                 id: 'CommercialMpu',
                 test: function(context, config) {
                     guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha1.com';
+                    guardian.config.page.ab_commercialInArticleDesktop = 'mpu';
                     createInlineAdSlots('Middle');
                     createMpuAdSlot('Middle1');
                 }

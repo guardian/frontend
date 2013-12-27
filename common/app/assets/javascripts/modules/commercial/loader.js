@@ -39,7 +39,10 @@ define([
         this.keywords       = conf.keywords || '';
         this.section        = conf.section;
         this.host           = conf.ajaxUrl + '/commercial/';
+        this.userVariant    = conf.ab_commercialInArticleDesktop || '';
         this.oastoken       = options.oastoken || '';
+        this.inlineMicCode  = options.inlineMicCode || '';
+        this.mpuMicCode     = options.mpuMicCode || '';
         this.userSegments   = 'seg=' + (new History().getSize() <= 1 ? 'new' : 'repeat');
         this.components     = {
           masterclasses: this.host + 'masterclasses.json?' + this.userSegments + '&s=' + this.section,
@@ -67,7 +70,13 @@ define([
             url: url,
             container: target,
             beforeInsert: function (html) {
-                return html.replace(/%OASToken%/g, self.oastoken);
+                var result = html;
+                if (this.userVariant === "inline") {
+                    result = result.replace(/%OmnitureToken%/g, "?INTCMP=" + self.inlineMicCode);
+                } else if (this.userVariant === "mpu") {
+                    result = result.replace(/%OmnitureToken%/g, "?INTCMP=" + self.mpuMicCode);
+                }
+                return result.replace(/%OASToken%/g, self.oastoken);
             },
             success: function () {
                 mediator.emit('modules:commercial/loader:loaded');

@@ -5,7 +5,7 @@
 <div class="commercial masterclasses-component">
     <div class="commercial__head">
         <h3 class="commercial__title">
-            <a href="%OASToken%http://theguardian.com/guardian-masterclasses">
+            <a href="%OASToken%http://theguardian.com/guardian-masterclasses%OmnitureToken%">
                 <span>Guardian <span class="em">Masterclasses</span></span>
             </a>
         </h3>
@@ -15,7 +15,7 @@
         <ul class="lineitems">
             @events.take(1).map { event =>
                 <li class="lineitem">
-                    <a class="lineitem__blocklink" href="@event.url">
+                    <a class="lineitem__blocklink" href="%OASToken%@event.url%OmnitureToken%">
                         <h4 class="lineitem__title">@event.name</h4>
 	                    <p class="lineitem__meta">@event.readableDate • @event.venue.description</p>
                     </a>
@@ -25,6 +25,6 @@
         </ul>
     </div>
     <div class="commercial__foot">
-        <a class="commercial__link" href="%OASToken%http://theguardian.com/guardian-masterclasses/masterclasses-calendar">More courses from Guardian Masterclasses <i class="i i-double-arrow-right-blue"></i></a>
+        <a class="commercial__link" href="%OASToken%http://theguardian.com/guardian-masterclasses/masterclasses-calendar%OmnitureToken%">More courses from Guardian Masterclasses <i class="i i-double-arrow-right-blue"></i></a>
     </div>
 </div>
