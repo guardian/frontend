@@ -19,10 +19,6 @@ GET         /assets/*file                    controllers.Assets.at(path="/public
 GET         /                                controllers.admin.IndexController.index()
 GET         /admin                           controllers.admin.IndexController.admin()
 
-# Admin endpoints
-GET         /admin/feature-trailblock        controllers.admin.FeatureTrailblockController.edit()
-POST        /admin/feature-trailblock        controllers.admin.FeatureTrailblockController.save()
-
 # API endpoint proxying for https
 GET         /api/proxy/*path                 controllers.admin.Api.proxy(path, callback)
 GET         /api/tag                         controllers.admin.Api.tag(q, callback)
