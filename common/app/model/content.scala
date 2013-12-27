@@ -158,7 +158,7 @@ class Article(content: ApiContent) extends Content(content) {
   override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
     ("content-type", contentType),
     ("isLiveBlog", isLiveBlog),
-    ("inBodyLinkCount", countGuardianLinks(body))
+    ("inBodyLinkCount", countGuardianLinks(body) + standfirst.map(countGuardianLinks).getOrElse(0))
   )
 
   override def openGraph: List[(String, Any)] = super.openGraph ++ List(
