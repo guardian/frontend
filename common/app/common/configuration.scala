@@ -2,12 +2,13 @@ package common
 
 import com.gu.conf.ConfigurationFactory
 import com.gu.management.{ Manifest => ManifestFile }
-import com.amazonaws.auth.{ BasicAWSCredentials, AWSCredentials }
+import com.amazonaws.auth.{DefaultAWSCredentialsProviderChain, AWSCredentialsProvider, BasicAWSCredentials}
 import play.api.Play
 import play.api.Play.current
 import java.io.{FileInputStream, File}
 import org.apache.commons.io.IOUtils
 import conf.Configuration
+import com.amazonaws.internal.StaticCredentialsProvider
 
 class BadConfigurationException(property: String) extends RuntimeException(s"Property $property not configured")
 
@@ -208,14 +209,18 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object aws {
-    lazy val accessKey = configuration.getMandatoryStringProperty("aws.access.key")
-    lazy val secretKey = configuration.getMandatoryStringProperty("aws.access.secret.key")
-    lazy val region = configuration.getMandatoryStringProperty("aws.region")
+    private lazy val accessKey = configuration.getStringProperty("aws.access.key")
+    private lazy val secretKey = configuration.getStringProperty("aws.access.secret.key")
 
+    lazy val region = configuration.getMandatoryStringProperty("aws.region")
     lazy val bucket = configuration.getMandatoryStringProperty("aws.bucket")
     lazy val sns: String = configuration.getMandatoryStringProperty("sns.notification.topic.arn")
 
-    lazy val credentials: AWSCredentials = new BasicAWSCredentials(accessKey, secretKey)
+    lazy val credentials: AWSCredentialsProvider = (accessKey, secretKey) match {
+      case (Some(a), Some(s)) => new StaticCredentialsProvider(new BasicAWSCredentials(a, s))
+      case (None, None) => new DefaultAWSCredentialsProviderChain()
+      case _ => throw new BadConfigurationException("aws.access.key or aws.access.secret.key")
+    }
   }
 
   object pingdom {
