@@ -2,7 +2,7 @@ package common
 
 import com.gu.conf.ConfigurationFactory
 import com.gu.management.{ Manifest => ManifestFile }
-import com.amazonaws.auth.{DefaultAWSCredentialsProviderChain, AWSCredentialsProvider, BasicAWSCredentials}
+import com.amazonaws.auth._
 import play.api.Play
 import play.api.Play.current
 import java.io.{FileInputStream, File}
@@ -216,11 +216,15 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val bucket = configuration.getMandatoryStringProperty("aws.bucket")
     lazy val sns: String = configuration.getMandatoryStringProperty("sns.notification.topic.arn")
 
-    lazy val credentials: AWSCredentialsProvider = (accessKey, secretKey) match {
-      case (Some(a), Some(s)) => new StaticCredentialsProvider(new BasicAWSCredentials(a, s))
-      case (None, None) => new DefaultAWSCredentialsProviderChain()
-      case _ => throw new BadConfigurationException("aws.access.key or aws.access.secret.key")
-    }
+    lazy val credentials: AWSCredentialsProvider = new AWSCredentialsProviderChain(
+      // the first 3 are a copy n paste job from the constructor of DefaultAWSCredentialsProviderChain
+      // once we are done migrating we will fall back to that.
+      LoggingAWSCredentialsProvider(new EnvironmentVariableCredentialsProvider()),
+      LoggingAWSCredentialsProvider(new SystemPropertiesCredentialsProvider()),
+      LoggingAWSCredentialsProvider(new InstanceProfileCredentialsProvider()),
+
+      LoggingAWSCredentialsProvider(new StaticCredentialsProvider(new NullableAWSCredentials(accessKey, secretKey)))
+    )
   }
 
   object pingdom {
@@ -244,3 +248,33 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 object ManifestData {
   lazy val build = ManifestFile.asKeyValuePairs.getOrElse("Build", "DEV").dequote.trim
 }
+
+// AWSCredentialsProviderChain relies on these being null if not configured.
+private class NullableAWSCredentials(accessKeyId: Option[String], secretKey: Option[String]) extends AWSCredentials{
+  def getAWSAccessKeyId: String = accessKeyId.getOrElse(null)
+  def getAWSSecretKey: String = secretKey.getOrElse(null)
+}
+
+// I want to see which provider we are using
+private class LoggingAWSCredentialsProvider(delegate: AWSCredentialsProvider) extends AWSCredentialsProvider with Logging {
+  val className = delegate.getClass.getSimpleName
+
+  def refresh() {
+    log.info(s"$className.refresh")
+    delegate.refresh()
+  }
+
+  def getCredentials: AWSCredentials = {
+    val credentials = delegate.getCredentials
+    // this is how the AWSCredentialsProviderChain works
+    if (credentials.getAWSAccessKeyId != null && credentials.getAWSSecretKey != null) {
+      log.info(s"using AWS Credentials from $className")
+    }
+    credentials
+  }
+}
+
+private object LoggingAWSCredentialsProvider{
+  def apply(delegate: AWSCredentialsProvider) = new LoggingAWSCredentialsProvider(delegate)
+}
+
