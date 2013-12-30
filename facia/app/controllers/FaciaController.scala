@@ -252,7 +252,7 @@ object FrontPage {
 }
 
 
-class FaciaController extends Controller with Logging with JsonTrails with ExecutionContexts {
+class FaciaController extends Controller with Logging with ExecutionContexts {
 
   val front: Front = Front
   val EditionalisedKey = """^\w\w(/.*)?$""".r
