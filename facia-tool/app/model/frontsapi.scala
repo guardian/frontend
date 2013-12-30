@@ -25,19 +25,16 @@ case class Trail(
                   ) extends JsonShape
 
 
-case class BlockActionJson(publish: Option[Boolean], discard: Option[Boolean]) extends JsonShape
 case class UpdateList(item: String, position: Option[String], after: Option[Boolean], itemMeta: Option[Map[String, JsValue]], live: Boolean, draft: Boolean) extends JsonShape
 
 trait JsonExtract {
   implicit val updateListRead = Json.reads[UpdateList]
   implicit val trailActionRead = Json.reads[Trail]
   implicit val blockActionRead = Json.reads[Block]
-  implicit val blockActionJsonRead = Json.reads[BlockActionJson]
 
   private def extractJson(v: JsValue): Either[String, JsonShape] =
     v.asOpt[Block]
       .orElse{v.asOpt[UpdateList]}
-      .orElse{v.asOpt[BlockActionJson]}
       .toRight("Invalid Json")
 
   def build(v: JsValue) = extractJson(v).right.toOption

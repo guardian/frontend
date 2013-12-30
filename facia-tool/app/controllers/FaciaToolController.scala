@@ -58,23 +58,6 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
         notifyContentApi(id)
         Ok
       }
-      case blockAction: BlockActionJson => {
-        val identity = Identity(request).get
-        blockAction.publish.filter {_ == true}
-          .map { _ =>
-            FaciaToolMetrics.DraftPublishCount.increment()
-            FaciaApi.publishBlock(id, identity)
-            notifyContentApi(id)
-            Ok
-          }
-          .orElse {
-          blockAction.discard.filter {_ == true}.map { _ =>
-            FaciaApi.discardBlock(id, identity)
-            notifyContentApi(id)
-            Ok
-          }
-        } getOrElse NotFound("Invalid JSON")
-      }
       case _ => NotFound
     } getOrElse NotFound
   }
