@@ -75,12 +75,6 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
           }
         } getOrElse NotFound("Invalid JSON")
       }
-      case updateTrailblock: UpdateTrailblockJson => {
-        val identity = Identity(request).get
-        UpdateActions.updateTrailblockJson(id, updateTrailblock, identity)
-        notifyContentApi(id)
-        Ok
-      }
       case _ => NotFound
     } getOrElse NotFound
   }

@@ -26,8 +26,6 @@ case class Trail(
 
 
 case class BlockActionJson(publish: Option[Boolean], discard: Option[Boolean]) extends JsonShape
-case class UpdateTrailblockJson(config: UpdateTrailblockConfigJson) extends JsonShape
-case class UpdateTrailblockConfigJson(contentApiQuery: Option[String], max: Option[Int], min: Option[Int], displayName: Option[String])
 case class UpdateList(item: String, position: Option[String], after: Option[Boolean], itemMeta: Option[Map[String, JsValue]], live: Boolean, draft: Boolean) extends JsonShape
 
 trait JsonExtract {
@@ -35,13 +33,10 @@ trait JsonExtract {
   implicit val trailActionRead = Json.reads[Trail]
   implicit val blockActionRead = Json.reads[Block]
   implicit val blockActionJsonRead = Json.reads[BlockActionJson]
-  implicit val updateMetaRead = Json.reads[UpdateTrailblockConfigJson]
-  implicit val updateTrailblockRead = Json.reads[UpdateTrailblockJson]
 
   private def extractJson(v: JsValue): Either[String, JsonShape] =
     v.asOpt[Block]
       .orElse{v.asOpt[UpdateList]}
-      .orElse{v.asOpt[UpdateTrailblockJson]}
       .orElse{v.asOpt[BlockActionJson]}
       .toRight("Invalid Json")
 
@@ -126,20 +121,6 @@ trait UpdateActions {
       FaciaApi.putBlock(id, Block(id, None, List(Trail(update.item, update.itemMeta)), None, DateTime.now.toString, identity.fullName, identity.email, None), identity)
     else
       FaciaApi.putBlock(id, Block(id, None, Nil, Some(List(Trail(update.item, update.itemMeta))), DateTime.now.toString, identity.fullName, identity.email, None), identity)
-  }
-
-  def updateTrailblockJson(id: String, updateTrailblock: UpdateTrailblockJson, identity: Identity) = {
-    FaciaApi.getBlock(id).map { block =>
-      val newBlock = block.copy(
-        displayName = updateTrailblock.config.displayName map HtmlFormat.escape map (_.body)
-      )
-      if (newBlock != block) {
-        FaciaApi.putBlock(id, newBlock, identity)
-      }
-    } getOrElse {
-      val newBlock = Block(id, None, Nil, None, DateTime.now.toString, identity.fullName, identity.email, updateTrailblock.config.displayName)
-      FaciaApi.putBlock(id, newBlock, identity)
-    }
   }
 
   def updateItemMetaList(id: String, trailList: List[Trail], metaData: Map[String, JsValue]): List[Trail] = {
