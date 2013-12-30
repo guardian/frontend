@@ -2,6 +2,7 @@ package implicits
 
 import play.api.mvc.RequestHeader
 import play.api.http.MediaRange
+import conf.Configuration.ajax._
 
 trait Requests {
   implicit class Request2rich(r: RequestHeader) {
@@ -25,5 +26,9 @@ trait Requests {
     }
 
     lazy val hasParameters = !r.queryString.isEmpty
+
+    lazy val accessControlAllowOrigin = r.headers.get("Origin").map{ requestOrigin =>
+      "Access-Control-Allow-Origin" -> corsOrigins.find(_ == requestOrigin).getOrElse("*")
+    }
   }
 }
