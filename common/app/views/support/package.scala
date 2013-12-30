@@ -428,10 +428,6 @@ object `package` extends Formats {
 
   private object inflector extends Inflector
 
-  // we can assume www.theguardian.com here as this happens before any cleaning
-  def countGuardianLinks(s: String): Int = Jsoup.parseBodyFragment(s).getElementsByTag("a").flatMap(a => Option(a.attr("href")))
-    .filter(_ contains "www.theguardian.com").length
-
   def withJsoup(html: Html)(cleaners: HtmlCleaner*): Html = withJsoup(html.body) { cleaners: _* }
 
   def withJsoup(html: String)(cleaners: HtmlCleaner*): Html = {

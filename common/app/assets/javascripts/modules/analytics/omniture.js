@@ -195,9 +195,14 @@ define([
                 s.prop30 = 'non-content';
             }
 
-            // the number of links inside the body
-            if (config.page.inBodyLinkCount) {
-                s.prop58 = config.page.inBodyLinkCount;
+            // the number of Guardian links inside the body
+            if (config.page.inBodyInternalLinkCount) {
+                s.prop58 = config.page.inBodyInternalLinkCount;
+            }
+
+            // the number of External links inside the body
+            if (config.page.inBodyExternalLinkCount) {
+                s.prop69 = config.page.inBodyExternalLinkCount;
             }
 
             /* Retrieve navigation interaction data, incl. swipe */

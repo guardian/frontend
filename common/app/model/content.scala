@@ -3,14 +3,13 @@ package model
 import com.gu.openplatform.contentapi.model.{Content => ApiContent}
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
-import common.Reference
+import common.{LinkCounts, LinkTo, Reference}
 import org.jsoup.Jsoup
 import collection.JavaConversions._
 import views.support.{Naked, ImgSrc}
 import views.support.StripHtmlTagsAndUnescapeEntities
 import com.gu.openplatform.contentapi.model.{Content => ApiContent,Element =>ApiElement}
 import play.api.libs.json.JsValue
-import views.support.countGuardianLinks
 
 class Content protected (val delegate: ApiContent) extends Trail with Tags with MetaData {
 
@@ -155,10 +154,13 @@ class Article(content: ApiContent) extends Content(content) {
   override def trailPicture: Option[ImageContainer] = thumbnail.find(_.imageCrops.exists(_.width >= 620))
       .orElse(mainPicture).orElse(videos.headOption)
 
+
+  private lazy val linkCounts = LinkTo.countLinks(body) + standfirst.map(LinkTo.countLinks).getOrElse(LinkCounts.None)
   override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
     ("content-type", contentType),
     ("isLiveBlog", isLiveBlog),
-    ("inBodyLinkCount", countGuardianLinks(body) + standfirst.map(countGuardianLinks).getOrElse(0))
+    ("inBodyInternalLinkCount", linkCounts.internal),
+    ("inBodyExternalLinkCount", linkCounts.external)
   )
 
   override def openGraph: List[(String, Any)] = super.openGraph ++ List(

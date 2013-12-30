@@ -25,7 +25,9 @@ class ArticleControllerTest extends FlatSpec with Matchers  with UsesElasticSear
 
   it should "count in body links" in Fake {
     val result = controllers.ArticleController.renderArticle(liveBlogUrl)(TestRequest(liveBlogUrl))
-    contentAsString(result) should include(""""inBodyLinkCount": "38"""")
+    val body = contentAsString(result)
+    body should include(""""inBodyInternalLinkCount": "38"""")
+    body should include(""""inBodyExternalLinkCount": "42"""")
   }
 
   it should "200 when content type is sudoku" in Fake {
