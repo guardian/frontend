@@ -1,70 +1,128 @@
 package controllers.front
 
-import model.Collection
-import common.Edition
-import play.api.libs.json.{JsObject, Json}
+import play.api.libs.json.{JsValue, Json}
 
 trait FaciaDefaults {
 
-  val defaultStyle = "regular-stories"
-  val emptyCollection = Collection(items=Nil, displayName=None)
+  def getDefaultConfig: JsValue = Json.parse(defaultJson)
 
-  val frontsMap: Map[String, List[String]] = Map(
-    ("uk",                List("uk/news/regular-stories")),
-    ("us",                List("us/news/regular-stories")),
-    ("au",                List("au/news/regular-stories")),
-    ("uk/commentisfree",  List("uk/commentisfree/regular-stories")),
-    ("us/commentisfree",  List("us/commentisfree/regular-stories")),
-    ("au/commentisfree",  List("au/commentisfree/regular-stories")),
-    ("uk/sport",          List("uk/sport/regular-stories")),
-    ("us/sport",          List("us/sport/regular-stories")),
-    ("au/sport",          List("au/sport/regular-stories")),
-    ("uk/culture",        List("uk/culture/regular-stories")),
-    ("us/culture",        List("us/culture/regular-stories")),
-    ("au/culture",        List("au/culture/regular-stories")),
-    ("uk/business",       List("uk/business/regular-stories")),
-    ("us/business",       List("us/business/regular-stories")),
-    ("au/business",       List("au/business/regular-stories")),
-    ("uk/money",          List("uk/money/regular-stories")),
-    ("us/money",          List("us/money/regular-stories")),
-    ("au/money",          List("au/money/regular-stories"))
-  )
-
-  val collectionsMap: Map[String, Map[String, String]] = Map(
-    ("uk/news/regular-stories",           Map(("apiQuery", "?edition=UK"))),
-    ("us/news/regular-stories",           Map(("apiQuery", "?edition=US"))),
-    ("au/news/regular-stories",           Map(("apiQuery", "?edition=AU"))),
-    ("uk/commentisfree/regular-stories",  Map(("apiQuery", "commentisfree?edition=UK"))),
-    ("us/commentisfree/regular-stories",  Map(("apiQuery", "commentisfree?edition=US"))),
-    ("au/commentisfree/regular-stories",  Map(("apiQuery", "commentisfree?edition=AU"))),
-    ("uk/sport/regular-stories",          Map(("apiQuery", "sport?edition=UK"))),
-    ("us/sport/regular-stories",          Map(("apiQuery", "sport?edition=US"))),
-    ("au/sport/regular-stories",          Map(("apiQuery", "sport?edition=AU"))),
-    ("uk/culture/regular-stories",        Map(("apiQuery", "culture?edition=UK"))),
-    ("us/culture/regular-stories",        Map(("apiQuery", "culture?edition=US"))),
-    ("au/culture/regular-stories",        Map(("apiQuery", "culture?edition=AU"))),
-    ("uk/business/regular-stories",       Map(("apiQuery", "business?edition=UK"))),
-    ("us/business/regular-stories",       Map(("apiQuery", "business?edition=US"))),
-    ("au/business/regular-stories",       Map(("apiQuery", "business?edition=AU"))),
-    ("uk/money/regular-stories",          Map(("apiQuery", "money?edition=UK"))),
-    ("us/money/regular-stories",          Map(("apiQuery", "money?edition=US"))),
-    ("au/money/regular-stories",          Map(("apiQuery", "money?edition=AU")))
-  )
-
-  def getDefaultConfig: JsObject = Json.obj(
-    "fronts"      -> frontsMap.keys.foldLeft(Json.obj()){case (m, id) => m ++
-      Json.obj(id ->
-        Json.obj("collections" ->
-          frontsMap.get(id)
-        )
-      )
-    },
-    "collections" -> frontsMap.values.flatten.foldLeft(Json.obj()){case (m, id) => m ++
-      Json.obj(id -> collectionsMap.get(id))
-    }
-  )
-
-  def getEdition(id: String): Edition = Edition.all.find(edition => id.toLowerCase.startsWith(edition.id.toLowerCase)).getOrElse(Edition.defaultEdition)
+  def defaultJson: String =
+    """
+      {
+        "fronts" : {
+          "uk/business" : {
+            "collections" : [ "uk/business/regular-stories" ]
+          },
+          "uk" : {
+            "collections" : [ "uk/news/regular-stories" ]
+          },
+          "au/money" : {
+            "collections" : [ "au/money/regular-stories" ]
+          },
+          "uk/commentisfree" : {
+            "collections" : [ "uk/commentisfree/regular-stories" ]
+          },
+          "au/commentisfree" : {
+            "collections" : [ "au/commentisfree/regular-stories" ]
+          },
+          "au/sport" : {
+            "collections" : [ "au/sport/regular-stories" ]
+          },
+          "uk/culture" : {
+            "collections" : [ "uk/culture/regular-stories" ]
+          },
+          "us/culture" : {
+            "collections" : [ "us/culture/regular-stories" ]
+          },
+          "us" : {
+            "collections" : [ "us/news/regular-stories" ]
+          },
+          "us/commentisfree" : {
+            "collections" : [ "us/commentisfree/regular-stories" ]
+          },
+          "uk/sport" : {
+            "collections" : [ "uk/sport/regular-stories" ]
+          },
+          "us/business" : {
+            "collections" : [ "us/business/regular-stories" ]
+          },
+          "us/money" : {
+            "collections" : [ "us/money/regular-stories" ]
+          },
+          "us/sport" : {
+            "collections" : [ "us/sport/regular-stories" ]
+          },
+          "au" : {
+            "collections" : [ "au/news/regular-stories" ]
+          },
+          "au/business" : {
+            "collections" : [ "au/business/regular-stories" ]
+          },
+          "uk/money" : {
+            "collections" : [ "uk/money/regular-stories" ]
+          },
+          "au/culture" : {
+            "collections" : [ "au/culture/regular-stories" ]
+          }
+        },
+        "collections" : {
+          "uk/business/regular-stories" : {
+            "apiQuery" : "business?edition=UK"
+          },
+          "uk/news/regular-stories" : {
+            "apiQuery" : "?edition=UK"
+          },
+          "au/money/regular-stories" : {
+            "apiQuery" : "money?edition=AU"
+          },
+          "uk/commentisfree/regular-stories" : {
+            "apiQuery" : "commentisfree?edition=UK"
+          },
+          "au/commentisfree/regular-stories" : {
+            "apiQuery" : "commentisfree?edition=AU"
+          },
+          "au/sport/regular-stories" : {
+            "apiQuery" : "sport?edition=AU"
+          },
+          "uk/culture/regular-stories" : {
+            "apiQuery" : "culture?edition=UK"
+          },
+          "us/culture/regular-stories" : {
+            "apiQuery" : "culture?edition=US"
+          },
+          "us/news/regular-stories" : {
+            "apiQuery" : "?edition=US"
+          },
+          "us/commentisfree/regular-stories" : {
+            "apiQuery" : "commentisfree?edition=US"
+          },
+          "uk/sport/regular-stories" : {
+            "apiQuery" : "sport?edition=UK"
+          },
+          "us/business/regular-stories" : {
+            "apiQuery" : "business?edition=US"
+          },
+          "us/money/regular-stories" : {
+            "apiQuery" : "money?edition=US"
+          },
+          "us/sport/regular-stories" : {
+            "apiQuery" : "sport?edition=US"
+          },
+          "au/news/regular-stories" : {
+            "apiQuery" : "?edition=AU"
+          },
+          "au/business/regular-stories" : {
+            "apiQuery" : "business?edition=AU"
+          },
+          "uk/money/regular-stories" : {
+            "apiQuery" : "money?edition=UK"
+          },
+          "au/culture/regular-stories" : {
+            "apiQuery" : "culture?edition=AU"
+          }
+        }
+      }
+    """
 }
 
 object FaciaDefaults extends FaciaDefaults
