@@ -90,8 +90,8 @@ define([
 
         authedAjax.request({
             type: 'post',
-            url: vars.CONST.apiBase + '/collection/' + this.id,
-            data: JSON.stringify(goLive ? {publish: true} : {discard: true})
+            url: vars.CONST.apiBase + '/collection/'+ (goLive ? 'publish' : 'discard') + '/' + this.id,
+            data: '{}'
         })
             .then(function() {
                 self.load();
