@@ -1,8 +1,9 @@
 package model.commercial
 
 import scala.concurrent.Future
-import conf.ContentApi
+import conf.SwitchingContentApi
 import common.{Logging, ExecutionContexts}
+import contentapi.ContentApiClient
 
 case class Keyword(id: String, webTitle: String) {
 
@@ -16,12 +17,9 @@ case class Keyword(id: String, webTitle: String) {
 
 object Keyword extends ExecutionContexts with Logging {
 
-  def lookup(term: String, section: Option[String] = None): Future[Seq[Keyword]] = {
-    /*
-     * Known bug in elastic search implementation means that section will be ignored,
-     * so using Solr implementation until there's a fix.
-     */
-    val baseQuery = ContentApi.tags.q(term).tagType("keyword").pageSize(50)
+  def lookup(term: String, section: Option[String] = None)
+            (implicit contentApi: ContentApiClient = SwitchingContentApi()): Future[Seq[Keyword]] = {
+    val baseQuery = contentApi.tags.q(term).tagType("keyword").pageSize(50)
     val query = section.foldLeft(baseQuery)((acc, sectionName) => acc section sectionName)
 
     val result = query.response.map {

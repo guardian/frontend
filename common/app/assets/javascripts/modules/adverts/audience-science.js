@@ -1,6 +1,6 @@
 define([
-    'utils/cookies',
-    'utils/storage'
+    'common/utils/cookies',
+    'common/utils/storage'
 ], function(
     Cookies,
     storage

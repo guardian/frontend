@@ -1,7 +1,7 @@
 define([
-    "modules/experiments/right-most-popular",
-    'utils/mediator',
-    'utils/detect'
+    "common/modules/experiments/right-most-popular",
+    'common/utils/mediator',
+    'common/utils/detect'
 ], function(
     RightHandMostPopular,
     mediator,
@@ -10,9 +10,9 @@ define([
 
     return function() {
 
-        this.id = 'RightMostPopular';
+        this.id = 'RightPopular';
         this.expiry = '2013-12-31';
-        this.audience = 0.25;
+        this.audience = 0.3;
         this.audienceOffset = 0.7;
         this.description = 'Test whether a most popular component in RHS wil increase page views per session for desktop users';
         this.canRun = function(config) {
@@ -32,12 +32,6 @@ define([
                 }
             },
             {
-                id: 'Trail-6',
-                test: function () {
-                    var r = new RightHandMostPopular(mediator, { type: 'image', maxTrails: 6 });
-                }
-            },
-            {
                 id: 'Trail-10',
                 test: function () {
                     var r = new RightHandMostPopular(mediator, { type: 'image', maxTrails: 10 });
@@ -53,12 +47,6 @@ define([
                 id: 'List-5',
                 test: function () {
                     var r = new RightHandMostPopular(mediator, { type: 'list', maxTrails: 5 });
-                }
-            },
-            {
-                id: 'List-6',
-                test: function () {
-                    var r = new RightHandMostPopular(mediator, { type: 'list', maxTrails: 6 });
                 }
             },
             {

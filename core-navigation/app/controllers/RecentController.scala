@@ -8,7 +8,7 @@ import scala.collection.Seq
 import scala.concurrent._
 import scala.util.Random
 
-object RecentController extends Controller with Logging with JsonTrails with ExecutionContexts {
+object RecentController extends Controller with Logging with ExecutionContexts {
 
   def renderRecent() = Action.async { implicit request =>
     lookup(Edition(request)) map { trails =>

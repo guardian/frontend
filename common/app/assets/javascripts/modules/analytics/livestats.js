@@ -1,6 +1,6 @@
 /*global Event:true */
 define([
-    'utils/cookies'
+    'common/utils/cookies'
 ], function (
     Cookies
 ) {

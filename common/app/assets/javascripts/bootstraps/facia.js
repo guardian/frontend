@@ -1,18 +1,18 @@
 define([
     // Common libraries
-    '$',
-    'utils/mediator',
+    'common/$',
+    'common/utils/mediator',
     'bonzo',
     'qwery',
     // Modules
-    'utils/detect',
-    'utils/storage',
-    'utils/to-array',
-    'modules/facia/popular',
-    'modules/facia/collection-show-more',
-    'modules/facia/container-toggle',
-    'modules/sport/football/fixtures',
-    'modules/sport/cricket'
+    'common/utils/detect',
+    'common/utils/storage',
+    'common/utils/to-array',
+    'common/modules/facia/popular',
+    'common/modules/facia/collection-show-more',
+    'common/modules/facia/container-toggle',
+    'common/modules/sport/football/fixtures',
+    'common/modules/sport/cricket'
 ], function (
     $,
     mediator,
@@ -43,8 +43,7 @@ define([
         showContainerToggle: function () {
             mediator.on('page:front:ready', function(config, context) {
                 $('.js-container--toggle', context).each(function(container) {
-                    new ContainerToggle(container)
-                        .addToggle();
+                    new ContainerToggle(container).addToggle();
                 });
             });
         },

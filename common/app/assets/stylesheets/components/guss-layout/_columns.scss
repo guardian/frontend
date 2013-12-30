@@ -1,0 +1,109 @@
+/* ==========================================================================
+   Guss: columns
+   ========================================================================== */
+
+/**
+ * A "columns pattern" will fit as many "$guss-column-min-width"-wide columns
+ * in any type of context: full-width container, sidebar…
+ * Examples: http://sassmeister.com/gist/7987988
+ *
+ * Usage 1: Sass mixin
+ * @include guss-columns('.classname');
+ *
+ * Usage 2: utility class set as `$guss-columns-utility-class`
+ * @include guss-columns-utility;
+ *
+ * <div class="l-columns">
+ *     <div class="l-columns__item"></div>
+ *     <div class="l-columns__item"></div>
+ *     <div class="l-columns__item"></div>
+ *     <div class="l-columns__item"></div>
+ *     <div class="l-columns__item"></div>
+ *     <div class="l-columns__item"></div>
+ *     <div class="l-columns__item"></div>
+ * </div>
+ *
+ */
+
+$guss-column-min-width: 300px !default;
+$guss-column-rule: 1px solid #e3e3db !default;
+$guss-column-gap: 20px !default;
+
+$guss-columns-utility-class: '.l-columns';
+
+// When set to false, output a simpler version with a static width
+// http://caniuse.com/#feat=multicolumn
+$browser-supports-columns: true !default;
+
+// Static, non-responsive width for older browsers
+$guss-columns-fallback-width: 940px !default;
+
+// Number of columns in the non-responsive version
+$guss-columns-fallback-columns: 3 !default;
+
+@mixin guss-columns($base-class) {
+    @if $browser-supports-columns {
+        #{$base-class} {
+            -webkit-column-width: $guss-column-min-width;
+            -webkit-column-rule: $guss-column-rule;
+            -webkit-column-gap: $guss-column-gap;
+
+            -moz-column-width: $guss-column-min-width;
+            -moz-column-rule: $guss-column-rule;
+            -moz-column-gap: $guss-column-gap;
+
+            column-width: $guss-column-min-width;
+            column-rule: $guss-column-rule;
+            column-gap: $guss-column-gap;
+        }
+        #{$base-class}__item {
+            -webkit-column-break-inside: avoid;
+               -moz-column-break-inside: avoid;
+                    column-break-inside: avoid;
+        }
+    } @else {
+        #{$base-class} {
+            width: $guss-columns-fallback-width + $guss-column-gap;
+            margin-left: $guss-column-gap / 2 * -1;
+            margin-right: $guss-column-gap / 2 * -1;
+
+            // Micro clearfix (http://nicolasgallagher.com/micro-clearfix-hack/)
+            zoom: 1;
+
+            &:after,
+            &:before {
+                content: "";
+                display: table;
+            }
+            &:after {
+                clear: both;
+            }
+        }
+        #{$base-class}__item {
+            position: relative;
+            float: left;
+            width: $guss-columns-fallback-width / $guss-columns-fallback-columns - $guss-column-gap;
+            margin-left: $guss-column-gap / 2;
+            margin-right: $guss-column-gap / 2;
+            box-sizing: border-box;
+
+            &:nth-child(n+1):before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: $guss-column-gap / 2 * -1;
+                bottom: 0;
+                height: 100%;
+                width: 1px;
+                background: nth($guss-column-rule, 3);
+            }
+            &:nth-child(#{$guss-columns-fallback-columns}n+1):before {
+                display: none;
+            }
+        }
+    }
+}
+
+@mixin guss-columns-utility {
+    @include guss-columns($guss-columns-utility-class);
+}

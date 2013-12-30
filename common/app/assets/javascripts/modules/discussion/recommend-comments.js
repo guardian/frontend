@@ -1,9 +1,9 @@
 define([
     'bean',
     'qwery',
-    'utils/mediator',
-    'modules/discussion/api',
-    'modules/identity/api'
+    'common/utils/mediator',
+    'common/modules/discussion/api',
+    'common/modules/identity/api'
 ], function(
     bean,
     qwery,
@@ -85,7 +85,7 @@ RecommendComments.handleClick = function(e) {
 
     // Remove button class to remove event handler
     // as it is delegated
-    elem.className = elem.className.replace(RecommendComments.CONFIG.classes.button, '');
+    elem.className = elem.className.replace(RecommendComments.CONFIG.classes.active, '');
 
     RecommendComments.renderRecommendation(elem);
     return result.then(
@@ -120,11 +120,12 @@ RecommendComments.success = function(resp) {
  * @param {XMLHttpRequest} xhr
  */
 RecommendComments.fail = function(xhr) {
-    var resp = xhr.responseText !== 'NOT FOUND' ? JSON.parse(xhr.responseText) : {};
+    var resp = xhr.responseText !== 'NOT FOUND' && xhr.responseText !== '' ? JSON.parse(xhr.responseText) : {};
     
     RecommendComments.renderRecommendation(this, true);
     if (resp.errorCode === "CAN'T_RECOMMEND_SAME_COMMENT_TWICE") {
         this.className = this.className.replace(RecommendComments.CONFIG.classes.active, '');
+        this.title = 'You cannot recommend the same comment twice';
     }
     this.className = this.className +' '+ RecommendComments.CONFIG.classes.button;
 

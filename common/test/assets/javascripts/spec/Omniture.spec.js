@@ -1,4 +1,4 @@
-define(['fixtures/config', 'analytics/omniture', 'common'], function(testConfigData, Omniture, common) {
+define(['fixtures/config', 'analytics/omniture', 'common/common'], function(testConfigData, Omniture, common) {
 
     describe("Omniture", function() {
 
@@ -59,7 +59,8 @@ define(['fixtures/config', 'analytics/omniture', 'common'], function(testConfigD
                     buildNumber: "build-73",
                     edition: "US",
                     webPublicationDate: "2012-02-22T16:58:00.000Z",
-                    analyticsName: "GFE:theworld:a-really-long-title-a-really-long-title-a-really-long-title-a-really-long"
+                    analyticsName: "GFE:theworld:a-really-long-title-a-really-long-title-a-really-long-title-a-really-long",
+                    inBodyLinkCount: "7"
             };
 
             var o = new Omniture(s, w);
@@ -77,6 +78,7 @@ define(['fixtures/config', 'analytics/omniture', 'common'], function(testConfigD
             expect(s.prop25).toBe("Middle East Live");
             expect(s.prop14).toBe("build-73");
             expect(s.prop47).toBe("US");
+            expect(s.prop58).toBe("7");
             expect(s.prop68).toBe("low");
             expect(s.prop56).toBe("Javascript");
             expect(s.prop30).toBe("content");

@@ -3,8 +3,8 @@
     Description: Display latest summary to the user
 */
 define([
-    'utils/mediator',
-    'utils/to-array',
+    'common/utils/mediator',
+    'common/utils/to-array',
     'bonzo'
 ], function (
     mediator,

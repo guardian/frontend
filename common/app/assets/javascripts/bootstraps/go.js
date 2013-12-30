@@ -1,6 +1,6 @@
 /*global guardian:true */
 require([
-    'bootstraps/app'
+    'common/bootstraps/app'
 ], function(
     bootstrap
 ) {

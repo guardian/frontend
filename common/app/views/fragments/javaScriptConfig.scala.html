@@ -19,7 +19,8 @@
         "oasSiteIdHost": "www.theguardian.com",
         "idUrl": "@Configuration.id.url",
         "beaconUrl": "@Configuration.debug.beaconUrl",
-        "renderTime": "@{(new DateTime).toISODateTimeNoMillisString}"
+        "renderTime": "@{(new DateTime).toISODateTimeNoMillisString}",
+        "isSSL": @Configuration.environment.secure
     },
     "switches" : { @{Html(conf.Switches.all.map{ switch =>
             s""""${JavaScriptVariableName(switch.name)}":${switch.isSwitchedOn}"""

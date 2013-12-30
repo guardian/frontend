@@ -1,6 +1,6 @@
 define([
-    'common',
-    'utils/ajax',
+    'common/common',
+    'common/utils/ajax',
     'bonzo'
 ], function (
     common,
@@ -30,13 +30,10 @@ define([
                 crossOrigin: true
             }).then(
                 function (response) {
-                    //This is because the endpoint can also return a 204 no-content
-                    if(response) {
-                       that.view.render(response.html);
-                    }
+                   that.view.render(response.html);
                 },
                 function (req) {
-                    common.mediator.emit('modules:error', 'Failed to load football table: ' + req.statusText, 'modules/footballtables.js');
+                    common.mediator.emit('modules:error', 'Failed to load football table: ' + req.statusText, 'common/modules/footballtables.js');
                 }
             );
         };

@@ -82,6 +82,14 @@ case class FeaturesContainer(val showMore: Boolean = true, val headerLink: Boole
   val containerType = "features"
   val tone: String = "feature"
 }
+case class PopularContainer(val showMore: Boolean = true, val headerLink: Boolean = true) extends Container {
+  val containerType = "popular"
+  val tone: String = "news"
+}
+case class TopStoriesContainer(val showMore: Boolean = true, val headerLink: Boolean = true) extends Container {
+  val containerType = "top-stories"
+  val tone = "news"
+}
 case class SectionContainer(val showMore: Boolean = true, val tone: String = "news", val headerLink: Boolean = true) extends Container {
   val containerType = "section"
 }
@@ -419,6 +427,8 @@ object OmnitureAnalyticsData {
 object `package` extends Formats {
 
   private object inflector extends Inflector
+
+  def countLinks(s: String): Int = Jsoup.parseBodyFragment(s).getElementsByTag("a").length
 
   def withJsoup(html: Html)(cleaners: HtmlCleaner*): Html = withJsoup(html.body) { cleaners: _* }
 

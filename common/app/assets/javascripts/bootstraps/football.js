@@ -1,19 +1,19 @@
 /*global guardian:false */
 define([
     //Common libraries
-    "$",
-    "utils/mediator",
-    "utils/lazy-load-css",
+    "common/$",
+    "common/utils/mediator",
+    "common/utils/lazy-load-css",
     "bonzo",
     //Modules
-    "modules/router",
-    "modules/ui/togglepanel",
-    "modules/ui/expandable",
-    "modules/sport/football/fixtures",
-    "modules/sport/football/tables",
-    "modules/sport/football/more-matches",
-    "modules/ui/autoupdate",
-    "modules/sport/football/matchnav"
+    "common/modules/router",
+    "common/modules/ui/togglepanel",
+    "common/modules/ui/expandable",
+    "common/modules/sport/football/fixtures",
+    "common/modules/sport/football/tables",
+    "common/modules/sport/football/more-matches",
+    "common/modules/ui/autoupdate",
+    "common/modules/sport/football/matchnav"
 ], function (
     $,
     mediator,
