@@ -71,11 +71,17 @@ define([
             container: target,
             beforeInsert: function (html) {
                 var result = html;
-                if (this.userVariant === "inline") {
+                if (self.userVariant === "inline") {
                     result = result.replace(/%OmnitureToken%/g, "?INTCMP=" + self.inlineMicCode);
-                } else if (this.userVariant === "mpu") {
+                    result = result.replace(/%JustOmnitureToken%/g, self.inlineMicCode);
+                } else if (self.userVariant === "mpu") {
                     result = result.replace(/%OmnitureToken%/g, "?INTCMP=" + self.mpuMicCode);
+                    result = result.replace(/%JustOmnitureToken%/g, self.mpuMicCode);
+                } else {
+                    result = result.replace(/%OmnitureToken%/g, "");
+                    result = result.replace(/%JustOmnitureToken%/g, "");
                 }
+
                 return result.replace(/%OASToken%/g, self.oastoken);
             },
             success: function () {
