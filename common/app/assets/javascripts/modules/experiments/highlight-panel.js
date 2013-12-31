@@ -4,10 +4,10 @@
 */
 define([
     'bonzo',
-    'utils/request-animation-frame',
-    'modules/component',
-    'modules/experiments/highlight-item',
-    'modules/ui/images'
+    'common/utils/request-animation-frame',
+    'common/modules/component',
+    'common/modules/experiments/highlight-item',
+    'common/modules/ui/images'
 ], function (
     bonzo,
     requestAnimationFrame,

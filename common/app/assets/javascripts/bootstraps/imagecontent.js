@@ -1,6 +1,6 @@
 define([
-    "utils/mediator",
-    "modules/discussion/loader"
+    "common/utils/mediator",
+    "common/modules/discussion/loader"
 ], function(
     mediator,
     DiscussionLoader

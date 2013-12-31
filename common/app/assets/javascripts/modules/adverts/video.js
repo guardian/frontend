@@ -1,9 +1,9 @@
 define([
-    "$",
-    "utils/mediator",
-    "utils/to-array",
+    "common/$",
+    "common/utils/mediator",
+    "common/utils/to-array",
     "bean",
-    "utils/ajax"
+    "common/utils/ajax"
 ], function(
     $,
     mediator,

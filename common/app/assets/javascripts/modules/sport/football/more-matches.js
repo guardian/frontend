@@ -1,6 +1,6 @@
 define([
-    'common',
-    'utils/ajax',
+    'common/common',
+    'common/utils/ajax',
     'bonzo',
     'bean'
 ], function (
@@ -52,7 +52,7 @@ define([
                         }
                     },
                     function(req) {
-                        common.mediator.emit('modules:error', 'Failed to load more matches: ' + req.statusText, 'modules/more-matches.js');
+                        common.mediator.emit('modules:error', 'Failed to load more matches: ' + req.statusText, 'common/modules/more-matches.js');
                     }
                 );
             }

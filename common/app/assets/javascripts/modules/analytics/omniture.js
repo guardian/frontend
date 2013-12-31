@@ -1,15 +1,15 @@
 /*global s_i_guardian:true */
 define([
-    'common',
-    'utils/detect',
-    'modules/experiments/ab',
-    'utils/storage',
-    'modules/identity/api',
-    'modules/analytics/errors',
-    'utils/cookies',
+    'common/common',
+    'common/utils/detect',
+    'common/modules/experiments/ab',
+    'common/utils/storage',
+    'common/modules/identity/api',
+    'common/modules/analytics/errors',
+    'common/utils/cookies',
     'omniture',
-    'modules/analytics/mvt-cookie',
-    'modules/analytics/beacon'
+    'common/modules/analytics/mvt-cookie',
+    'common/modules/analytics/beacon'
 ], function(
     common,
     detect,
@@ -195,9 +195,14 @@ define([
                 s.prop30 = 'non-content';
             }
 
-            // the number of links inside the body
-            if (config.page.inBodyLinkCount) {
-                s.prop58 = config.page.inBodyLinkCount;
+            // the number of Guardian links inside the body
+            if (config.page.inBodyInternalLinkCount) {
+                s.prop58 = config.page.inBodyInternalLinkCount;
+            }
+
+            // the number of External links inside the body
+            if (config.page.inBodyExternalLinkCount) {
+                s.prop69 = config.page.inBodyExternalLinkCount;
             }
 
             /* Retrieve navigation interaction data, incl. swipe */

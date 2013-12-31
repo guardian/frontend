@@ -1,5 +1,5 @@
 define([
-    '$',
+    'common/$',
     'bean'
 ], function (
     $,

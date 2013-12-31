@@ -8,7 +8,7 @@ import play.api.libs.json._
 import services.{Index, IndexPage}
 
 
-trait IndexController extends Controller with Index with Logging with Paging with JsonTrails with ExecutionContexts {
+trait IndexController extends Controller with Index with Logging with Paging with ExecutionContexts {
 
   def renderCombiner(leftSide: String, rightSide: String) = Action.async{ implicit request =>
     index(Edition(request), leftSide, rightSide).map {

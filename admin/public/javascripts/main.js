@@ -1,5 +1,5 @@
 var tests = [],
-    specUrl = '/base/admin/public/javascripts/spec',
+    specUrl = '/base/admin-public/spec',
     specRegExp = new RegExp(specUrl.replace(/\//g, '\\/') + '\/.*\\Spec\\.js'),
     spec;
 
@@ -15,7 +15,7 @@ for (var file in window.__karma__.files) {
 
 requirejs.config({
     // Karma serves files from '/base'
-    baseUrl: '/base/admin/public/javascripts/',
+    baseUrl: '/base/admin-public',
     paths: {
         Common:       'common',
         TagSearch:    'modules/TagSearch',
