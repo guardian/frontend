@@ -6,8 +6,6 @@ import controllers.Identity
 import org.joda.time.DateTime
 import play.api.templates.HtmlFormat
 
-trait JsonShape
-
 case class Block(
                   id: String,
                   name: Option[String],
@@ -17,24 +15,21 @@ case class Block(
                   updatedBy: String,
                   updatedEmail: String,
                   displayName: Option[String]
-                  ) extends JsonShape
+                  )
 
 case class Trail(
                   id: String,
                   meta: Option[Map[String, JsValue]]
-                  ) extends JsonShape
+                  )
 
 
-case class UpdateList(item: String, position: Option[String], after: Option[Boolean], itemMeta: Option[Map[String, JsValue]], live: Boolean, draft: Boolean) extends JsonShape
+case class UpdateList(item: String, position: Option[String], after: Option[Boolean], itemMeta: Option[Map[String, JsValue]], live: Boolean, draft: Boolean)
 
 trait JsonExtract {
   implicit val updateListRead = Json.reads[UpdateList]
-  implicit val trailActionRead = Json.reads[Trail]
-  implicit val blockActionRead = Json.reads[Block]
 
-  private def extractJson(v: JsValue): Either[String, JsonShape] =
-    v.asOpt[Block]
-      .orElse{v.asOpt[UpdateList]}
+  private def extractJson(v: JsValue): Either[String, UpdateList] =
+    v.asOpt[UpdateList]
       .toRight("Invalid Json")
 
   def build(v: JsValue) = extractJson(v).right.toOption
