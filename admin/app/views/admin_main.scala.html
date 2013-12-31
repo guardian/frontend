@@ -20,23 +20,6 @@
         <meta name="msapplication-TileImage" content="@routes.Assets.at("images/windows_tile_144_b.png")" />
 
         <link href="@routes.Assets.at("javascripts/components/bootstrap.css/css/bootstrap.css")" rel="stylesheet">
-        <script>
-            var curl = {
-                baseUrl: '/assets/javascripts',
-                paths: {
-                    omniture: 'components/omniture.js'
-                }
-            }
-        </script>
-
-        <script>
-            define('Config', function() {
-                return {
-                    apiKey: '@conf.Configuration.contentApi.key',
-                    identity: @{Html(identity)}
-                }
-            });
-        </script>
 
         @if(hasCharts){
             <script type="text/javascript" src="https://www.google.com/jsapi"></script>
@@ -65,16 +48,13 @@
             }
         </div>
     </div>
-    
-    @content
+
+    <div class="container">
+        @content
+    </div>
 
     <link href='//fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>
     <link href='//fonts.googleapis.com/css?family=Open+Sans:800' rel='stylesheet' type='text/css'>
-    <script>
-        curl(['js!omniture']).then(function () {
-            s.tl();        
-        })
-    </script>
 
     </body>
 </html>

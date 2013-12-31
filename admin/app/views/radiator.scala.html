@@ -7,7 +7,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>theguardian.com radiator</title>
-        <link rel="stylesheet" type="text/css" href="/assets/css/radiator.css">
+        <link rel="stylesheet" type="text/css" href="@routes.Assets.at("assets/css/radiator.css")">
         <script src="@routes.Assets.at("javascripts/components/jquery/jquery.js")"></script>
         <script src="@routes.Assets.at("javascripts/components/underscore/underscore.js")"></script>
         <script src="https://www.google.com/jsapi"></script>
@@ -16,7 +16,6 @@
         </script>
     </head>
   <body>
-
         <header>
             <span id="logo">the<span class="white">guardian</span>.com dashboard</span>
             <div class="cost"><strong>$@cost.max.toLong</strong> this month</div>
@@ -49,6 +48,6 @@
         @hitMissCharts.map{ chart => @fragments.lineChart(chart) }
         @fragments.lineChart(jsErrors)
 
-        <script src="/assets/javascripts/radiator/bootstrap.js" defer></script>
+        <script src="@routes.Assets.at("javascripts/radiator/bootstrap.js")" defer></script>
   </body>
 </html>

@@ -83,6 +83,45 @@ module.exports = function (grunt) {
                     useSourceUrl: (isDev) ? true : false,
                     preserveLicenseComments: false
                 }
+            },
+            admin: {
+                options: {
+                    baseUrl: staticRequireDir,
+                    name: "bootstraps/admin",
+                    out: staticTargetDir + "javascripts/bootstraps/admin.js",
+                    paths: {
+                        bean:         "common/components/bean/bean",
+                        bonzo:        "common/components/bonzo/src/bonzo",
+                        domReady:     "common/components/domready/ready",
+                        EventEmitter: "common/components/eventEmitter/EventEmitter",
+                        qwery:        "common/components/qwery/mobile/qwery-mobile",
+                        reqwest:      "common/components/reqwest/src/reqwest",
+                        postscribe:   "common/components/postscribe/dist/postscribe",
+                        swipe:        "common/components/swipe/swipe",
+                        swipeview:    "common/components/swipeview/src/swipeview",
+                        lodash:       "common/components/lodash-amd/modern",
+                        imager:       'common/components/imager.js/src/strategies/container',
+                        omniture:     '../../common/app/public/javascripts/vendor/omniture'
+                    },
+                    shim: {
+                        postscribe: {
+                            exports: "postscribe"
+                        },
+                        imager: {
+                            deps: ['common/components/imager.js/src/imager'],
+                            exports: 'Imager'
+                        },
+                        omniture: {
+                            exports: 's'
+                        }
+                    },
+                    wrap: {
+                        startFile: "common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js"
+                    },
+                    optimize: (isDev) ? 'none' : 'uglify2',
+                    useSourceUrl: (isDev) ? true : false,
+                    preserveLicenseComments: false
+                }
             }
         },
 
@@ -692,6 +731,11 @@ module.exports = function (grunt) {
         // When an app defines it's own javascript application, the requirejs task will need to compile both
         // common and app.
         grunt.task.run('requirejs:compile');
+
+        // Admin has its own application.
+        if (app && app === "admin") {
+            grunt.task.run('requirejs:admin');
+        }
     });
     grunt.registerTask('compile:fonts', ['clean:fonts', 'mkdir:fontsTarget', 'webfontjson']);
     grunt.registerTask('compile:flash', ['clean:flash', 'copy:flash']);
