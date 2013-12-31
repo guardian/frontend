@@ -9,8 +9,19 @@ define([
 	
 	var EmailSignup = function (context, variant) {
 
-		var container = context.querySelector(".email-signup" + (variant ? "___" + variant : ""));
-		
+		var container;
+
+		if (variant) {
+			if (variant.indexOf('-alt') > 1) {
+				container = context.querySelector(".email-signup" + "___" + variant.substr(0, variant.indexOf('-alt')));
+				bonzo(container).addClass('alt');
+			} else {
+				container = context.querySelector(".email-signup" + "___" + variant);
+			}
+		} else {
+			container = context.querySelector(".email-signup");
+		}
+
 		this.DOM = {
 			container: container,
 			button: container.querySelector(".email-signup__link"),

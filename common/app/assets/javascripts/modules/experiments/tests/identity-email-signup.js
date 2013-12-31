@@ -29,6 +29,12 @@ define([
                 }
             },
             {
+                id: 'email-signup-inline-alt',
+                test: function() {
+                    this.component = new EmailSignup(document.getElementById('preload-1'), 'inline-alt');
+                }
+            },
+            {
                 id: 'email-signup-left-body',
                 test: function() {
                     var hasCards = document.querySelectorAll('.article-body .card-wrapper').length > 0; // Left-Body variant should only show when no left-hand-cards present

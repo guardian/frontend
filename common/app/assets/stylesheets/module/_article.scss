@@ -528,6 +528,10 @@ video {
         margin: 0 auto;
     }
 
+    .i-share-email {
+        display: none;
+    }
+
     @include mq($to: wide) {
         .email-signup__title {
             @include fs-header(1);            
@@ -537,6 +541,25 @@ video {
         }
     }
 
+}
+
+.email-signup.alt {
+    background-color: #fff;
+    border-top: 1px solid $c-neutral3;
+    padding: 4px 0 10px 0;
+    .i-share-email {
+        display: block;
+        float: left;
+        margin: 0 8px 0 0;
+    }
+
+    .email-signup__title {
+        padding: 8px 0 0 0;
+    }
+
+    .email-signup__copy {
+        padding: 6px 0 0 0;
+    }
 }
 
 .email-signup___left-body, { // Left-body AB variant
