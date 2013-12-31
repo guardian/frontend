@@ -66,19 +66,11 @@ trait UpdateActions {
       } orElse {if (update.draft) Some(updateList(update, block.live)) else None}
       lazy val updatedLive: List[Trail] = updateList(update, block.live)
 
-      lazy val liveCollectionWithUpdatedMeta = updateListMeta(update, updatedLive)
-      lazy val draftCollectionWithUpdatedMeta = updatedDraft.map(updateListMeta(update, _))
-
-      updateCollection(id, block, update, identity, draftCollectionWithUpdatedMeta, liveCollectionWithUpdatedMeta)
+      updateCollection(id, block, update, identity, updatedDraft, updatedLive)
     } getOrElse {
       UpdateActions.createBlock(id, identity, update)
     }
   }
-
-  def updateListMeta(update: UpdateList, trailList: List[Trail]): List[Trail] = {for {
-      metaMap <- update.itemMeta
-      } yield updateItemMetaList(update.item, trailList, metaMap)
-    } getOrElse trailList
 
   def updateCollection(id: String, block: Block, update: UpdateList, identity: Identity, updatedDraft: => Option[List[Trail]], updatedLive: => List[Trail]): Unit = {
       val live = shouldUpdate(update.live, block.live, updatedLive)
@@ -110,7 +102,12 @@ trait UpdateActions {
       }
     }
 
-    splitList._1 ++ List(Trail(update.item, None)) ++ splitList._2
+    splitList._1 ++ List(Trail(update.item, update.itemMeta.map(metaWhiteList))) ++ splitList._2
+  }
+
+  def metaWhiteList(itemMeta: Map[String, JsValue]): Map[String, JsValue] = {
+    val fields: Seq[String] = Seq("headline", "group", "supporting")
+    itemMeta.filter{case (k, v) => fields.contains(k)}
   }
 
   def createBlock(id: String, identity: Identity, update: UpdateList) {
@@ -118,18 +115,6 @@ trait UpdateActions {
       FaciaApi.putBlock(id, Block(id, None, List(Trail(update.item, update.itemMeta)), None, DateTime.now.toString, identity.fullName, identity.email, None), identity)
     else
       FaciaApi.putBlock(id, Block(id, None, Nil, Some(List(Trail(update.item, update.itemMeta))), DateTime.now.toString, identity.fullName, identity.email, None), identity)
-  }
-
-  def updateItemMetaList(id: String, trailList: List[Trail], metaData: Map[String, JsValue]): List[Trail] = {
-    lazy val fields: Seq[String] = Seq("headline", "group", "supporting")
-    lazy val newMetaMap = metaData.filter{case (k, v) => fields.contains(k)}
-
-    for {
-      trail <- trailList
-      metaMap <- trail.meta.orElse(Option(Map.empty[String, JsValue]))
-    } yield {
-      if (id == trail.id) trail.copy(meta = Some(metaMap ++ newMetaMap)) else trail
-    }
   }
 
 }
