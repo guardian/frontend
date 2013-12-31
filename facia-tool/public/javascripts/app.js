@@ -4,5 +4,9 @@ curl([
 ]).then(function(
     ListManager
 ){
-    new ListManager().init();
+    if ('localStorage' in window) {
+        new ListManager().init();
+    } else {
+        window.alert('Sorry, this browser is not supported');
+    }
 });

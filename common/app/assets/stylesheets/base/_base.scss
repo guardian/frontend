@@ -1,5 +1,9 @@
 html {
     overflow-y: scroll;
+
+    &.iframed {
+        overflow-y: auto;
+    }
 }
 
 body {

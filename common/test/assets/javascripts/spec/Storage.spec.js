@@ -1,4 +1,4 @@
-define(['utils/mediator', 'utils/storage'], function(mediator, storage) {
+define(['common/utils/mediator', 'common/utils/storage'], function(mediator, storage) {
 
     describe('Storage', function() {
 
@@ -44,7 +44,7 @@ define(['utils/mediator', 'utils/storage'], function(mediator, storage) {
                 setItem: sinon.stub().throws()
             });
             expect(storage.local.isAvailable()).toBeFalsy();
-            expect(mediator.emit).toHaveBeenCalledWith('module:error', 'Unable to save to local storage: Error', 'utils/storage.js');
+            expect(mediator.emit).toHaveBeenCalledWith('module:error', 'Unable to save to local storage: Error', 'common/utils/storage.js');
         });
 
         it('should save and retrieve data', function() {

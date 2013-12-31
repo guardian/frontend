@@ -524,6 +524,7 @@ video {
     background-color: $c-neutral7;
     padding: 10px;
     margin-bottom: 16px;
+    position: relative;
     .is-updating {
         margin: 0 auto;
     }
@@ -541,25 +542,6 @@ video {
         }
     }
 
-}
-
-.email-signup.alt {
-    background-color: #fff;
-    border-top: 1px solid $c-neutral3;
-    padding: 4px 0 10px 0;
-    .i-share-email {
-        display: block;
-        float: left;
-        margin: 0 8px 0 0;
-    }
-
-    .email-signup__title {
-        padding: 8px 0 0 0;
-    }
-
-    .email-signup__copy {
-        padding: 6px 0 0 0;
-    }
 }
 
 .email-signup___left-body, { // Left-body AB variant
@@ -609,4 +591,44 @@ video {
         display: table-cell;
         vertical-align: middle;
     }
+}
+
+// Alt styling variants
+.email-signup.alt {
+    background-color: #fff;
+    border-top: 1px solid $c-neutral3;
+    padding: 4px 0 10px 0;
+    .i-share-email {
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 4px;
+    }
+
+    .email-signup__title {
+        padding: 8px 0 0 44px;
+    }
+
+    .email-signup__title:hover i {
+        @extend .i-share-email-hover;        
+    }
+
+    .email-signup__copy {
+        padding: 6px 0 0 0;
+    }
+
+    // Left body and meta ALT variants
+
+    &.email-signup___left-meta,
+    &.email-signup___left-body {
+        .email-signup__title {
+            //padding-top: 0px;
+            @include mq(leftCol) {
+                @include font($sans-serif, normal, 13, 16);
+                padding-top: 4px;
+                min-height: 32px;
+            }
+        }
+    }
+
 }

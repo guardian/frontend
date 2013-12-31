@@ -1,24 +1,42 @@
 define([
-    "utils/mediator",
-    "modules/identity/forms",
-    "modules/identity/password-strength",
-    "modules/identity/api",
+	"common/$",
+    "common/modules/identity/forms",
+    "common/modules/identity/formstack",
+    "common/modules/identity/formstack-iframe",
+    "common/modules/identity/password-strength",
+    "common/modules/identity/api",
     //"modules/identity/email-signup",
-    "modules/adverts/userAdTargeting",
-    "modules/discussion/user-avatars"
+    "common/modules/adverts/userAdTargeting",
+    "common/modules/discussion/user-avatars",
+    "common/utils/mediator"
 ], function(
-    mediator,
+    $,
     Identity,
+    Formstack,
+    FormstackIframe,
     PasswordStrength,
     Id,
     //EmailSignup,
     UserAdTargeting,
-    UserAvatars
+    UserAvatars,
+    mediator
 ) {
 
     var modules = {
         idInit: function (config) {
             Id.init(config);
+        },
+        initFormstack: function () {
+            mediator.on('page:identity:ready', function(config, context) {
+                var attr = 'data-formstack-id';
+                $('[' + attr + ']').each(function(el) {
+                    var id = el.getAttribute(attr);
+                    new Formstack(el, id, context, config).init();
+                });
+                $('.js-formstack-iframe').each(function(el) {
+                    new FormstackIframe(el, context, config).init();
+                });
+            });
         },
         forgottenEmail: function () {
             mediator.on('page:identity:ready', function(config, context) {
@@ -32,9 +50,8 @@ define([
         },
         passwordStrength: function () {
             mediator.on('page:identity:ready', function(config, context) {
-                var passwords = context.querySelectorAll('.js-password-strength');
-                Array.prototype.forEach.call(passwords, function (i) {
-                    new PasswordStrength(i, context, config).init();
+                $('.js-password-strength').each(function(el) {
+                    new PasswordStrength(el, context, config).init();
                 });
             });
         },
@@ -64,6 +81,7 @@ define([
         if (!this.initialised) {
             this.initialised = true;
             modules.idInit(config);
+            modules.initFormstack();
             modules.forgottenEmail();
             modules.forgottenPassword();
             modules.passwordStrength();

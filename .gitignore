@@ -48,3 +48,5 @@ integration-tests/target/*
 developer.properties
 
 *-spec-runner.html
+
+static/requirejs

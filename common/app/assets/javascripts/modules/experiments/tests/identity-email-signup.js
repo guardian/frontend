@@ -1,7 +1,7 @@
 define([
-    "utils/mediator",
-    "modules/identity/email-signup",
-    "modules/identity/api"
+    "common/utils/mediator",
+    "common/modules/identity/email-signup",
+    "common/modules/identity/api"
 ], function (mediator, EmailSignup, IdApi) {
      
     var EmailSignupTest = function () {
@@ -44,11 +44,26 @@ define([
                 }
             },
             {
+                id: 'email-signup-left-body-alt',
+                test: function() {
+                    var hasCards = document.querySelectorAll('.article-body .card-wrapper').length > 0; // Left-Body variant should only show when no left-hand-cards present
+                    if (!hasCards) {
+                        this.component = new EmailSignup(document.getElementById('preload-1'), 'left-body-alt');
+                    }
+                }
+            },
+            {
                 id: 'email-signup-left-meta',
                 test: function() {
                     this.component = new EmailSignup(document.getElementById('preload-1'), 'left-meta');
                 }
-            }
+            },
+            {
+                id: 'email-signup-left-meta-alt',
+                test: function() {
+                    this.component = new EmailSignup(document.getElementById('preload-1'), 'left-meta-alt');
+                }
+            }            
         ];
     };
 

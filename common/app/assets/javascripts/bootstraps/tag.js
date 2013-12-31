@@ -1,7 +1,7 @@
 define([
-    'utils/mediator',
-    'modules/facia/popular',
-    'modules/sport/cricket'
+    'common/utils/mediator',
+    'common/modules/facia/popular',
+    'common/modules/sport/cricket'
 ], function (
     mediator,
     popular,

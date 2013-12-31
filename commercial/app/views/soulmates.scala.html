@@ -16,7 +16,7 @@
         <ul class="lineitems">
             @members.take(2).map { member =>
                 <li class="lineitem">
-                    <a class="lineitem__blocklink" href="#">
+                    <a class="lineitem__blocklink" href="%OASToken%http://soulmates.theguardian.com/">
                         <img class="lineitem__image" src="@member.profilePhoto" alt=""/>
                         <h4 class="lineitem__title">@member.username</h4>
                         <p class="lineitem__meta">@member.age, @member.location</p>
@@ -26,6 +26,6 @@
         </ul>
     </div>
     <div class="commercial__foot">
-        <a class="commercial__link" href="#">Join Guardian Soulmates <i class="i i-double-arrow-right-blue"></i></a>
+        <a class="commercial__link" href="%OASToken%http://soulmates.theguardian.com/">Join Guardian Soulmates <i class="i i-double-arrow-right-blue"></i></a>
     </div>
 </div>

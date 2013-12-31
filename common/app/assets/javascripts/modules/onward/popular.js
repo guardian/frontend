@@ -1,6 +1,6 @@
 define([
-    'common',
-    'modules/lazyload'
+    'common/common',
+    'common/modules/lazyload'
 ], function (
     common,
     LazyLoad
@@ -24,7 +24,7 @@ define([
                     common.mediator.emit('fragment:ready:images', container);
                 },
                 error: function(req) {
-                    common.mediator.emit('module:error', 'Failed to load most read: ' + req.statusText, 'modules/popular.js');
+                    common.mediator.emit('module:error', 'Failed to load most read: ' + req.statusText, 'common/modules/popular.js');
                 }
             }).load();
         }

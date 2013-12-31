@@ -1,6 +1,6 @@
 define([
-    'common',
-    'utils/ajax',
+    'common/common',
+    'common/utils/ajax',
     'bonzo'
 ], function (
     common,

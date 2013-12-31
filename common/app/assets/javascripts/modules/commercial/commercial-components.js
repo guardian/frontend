@@ -1,13 +1,13 @@
 define([
-    '$',
-    'utils/mediator',
+    'common/$',
+    'common/utils/mediator',
     'lodash/objects/assign',
     'lodash/functions/debounce',
     'qwery',
     'bonzo',
     'bean',
-    'modules/adverts/document-write',
-    'utils/storage'
+    'common/modules/adverts/document-write',
+    'common/utils/storage'
 ], function (
     $,
     mediator,

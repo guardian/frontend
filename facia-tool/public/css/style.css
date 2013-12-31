@@ -124,12 +124,16 @@ input[type=text] {
     transition: background-color 50ms;
 }
 
-.supporting  .droppable {
-    padding: 0 0 27px 0;
+.supporting .droppable {
+    padding: 0 0 25px 0;
 }
 
 .droppable.underDrag {
     background-color: #f89406;
+}
+
+.editingMeta .droppable.underDrag {
+    background-color: #999999;
 }
 
 .pending {
@@ -145,8 +149,8 @@ input[type=text] {
 }
 
 .list-header__saving  {
+    color: #999999;
     float: right;
-    color: #d61d00;
     font-size: 12px;
 }
 
@@ -201,16 +205,20 @@ input[type=text] {
 }
 
 .supporting .trail {
-    border-color: #DDDDDD;
-    background: #DDDDDD;
+    border-color: #CCCCCC;
+    background: #CCCCCC;
 }
 
 .trail.editingMeta {
-    background: #DDDDDD;
+    background: #CCCCCC;
 }
 
 .trail.underDrag {
-    border-top-color: #f89406 !important; 
+    border-top-color: #f89406; 
+}
+
+.editingMeta .trail.underDrag {
+    border-top-color: #999999; 
 }
 
 .trail:last-child {
@@ -257,7 +265,8 @@ input[type=text] {
 }
 
 .headline:hover {
-    color: #438835;
+    color: #f89406;
+    text-decoration: none;
 }
 
 .trail .trail__meta {
@@ -575,11 +584,11 @@ button {
 
 .supporting-message {
     position: absolute;
-    bottom: 3px;
+    bottom: 2px;
     z-index: 2;
     left: 4px;
     font-size: 11px;
-    color: #666666;
+    color: #FFFFFF;
 }
 
 .supporting-count {

@@ -1,8 +1,8 @@
 /*jshint loopfunc: true */
 define([
-    'utils/ajax',
-    'common',
-    'utils/storage'
+    'common/utils/ajax',
+    'common/common',
+    'common/utils/storage'
 ], function (
     ajax,
     common,

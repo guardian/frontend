@@ -3,7 +3,7 @@ package model
 import com.gu.openplatform.contentapi.model.{Content => ApiContent}
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
-import common.Reference
+import common.{LinkCounts, LinkTo, Reference}
 import org.jsoup.Jsoup
 import collection.JavaConversions._
 import views.support.{Naked, ImgSrc}
@@ -22,8 +22,8 @@ class Content protected (val delegate: ApiContent) extends Trail with Tags with 
   lazy val standfirst: Option[String] = fields.get("standfirst")
   lazy val starRating: Option[String] = fields.get("starRating")
   lazy val shortUrlPath: String = shortUrl.replace("http://gu.com", "")
-  lazy val allowUserGeneratedContent: Boolean = fields.get("allowUgc").map(_.toBoolean).getOrElse(false)
-  lazy val isCommentable: Boolean = fields.get("commentable").map(_ == "true").getOrElse(false)
+  lazy val allowUserGeneratedContent: Boolean = fields.get("allowUgc").exists(_.toBoolean)
+  lazy val isCommentable: Boolean = fields.get("commentable").exists(_ == "true")
   lazy val isExpired = delegate.isExpired.getOrElse(false)
   lazy val blockAds: Boolean = videoAssets.exists(_.blockAds)
   lazy val isLiveBlog: Boolean = delegate.isLiveBlog
@@ -70,7 +70,7 @@ class Content protected (val delegate: ApiContent) extends Trail with Tags with 
   }
 
   // Inherited from Tags
-  override lazy val tags: Seq[Tag] = delegate.tags map { Tag(_) }
+  override lazy val tags: Seq[Tag] = delegate.tags map { Tag }
 
   // Inherited from MetaData
   override lazy val id: String = delegate.id
@@ -89,7 +89,7 @@ class Content protected (val delegate: ApiContent) extends Trail with Tags with 
     ("series", series.map { _.name }.mkString(",")),
     ("blogs", blogs.map { _.name }.mkString(",")),
     ("commentable", isCommentable),
-    ("has-story-package", fields.get("hasStoryPackage").map(_.toBoolean).getOrElse(false)),
+    ("has-story-package", fields.get("hasStoryPackage").exists(_.toBoolean)),
     ("page-code", fields("internalPageCode")),
     ("isLive", isLive),
     ("wordCount", wordCount),
@@ -131,9 +131,9 @@ object Content {
     }
   }
 
-  def apply(delegate: ApiContent, metaData: Option[Map[String, JsValue]]): Content = {
+  def apply(delegate: ApiContent, supporting: List[Content], metaData: Option[Map[String, JsValue]]): Content = {
     metaData match {
-      case Some(metaData) => new ContentWithMetaData(delegate, metaData)
+      case Some(meta) => new ContentWithMetaData(delegate, supporting, meta)
       case _ => apply(delegate)
     }
   }
@@ -154,9 +154,13 @@ class Article(content: ApiContent) extends Content(content) {
   override def trailPicture: Option[ImageContainer] = thumbnail.find(_.imageCrops.exists(_.width >= 620))
       .orElse(mainPicture).orElse(videos.headOption)
 
+
+  private lazy val linkCounts = LinkTo.countLinks(body) + standfirst.map(LinkTo.countLinks).getOrElse(LinkCounts.None)
   override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
     ("content-type", contentType),
-    ("isLiveBlog", isLiveBlog)
+    ("isLiveBlog", isLiveBlog),
+    ("inBodyInternalLinkCount", linkCounts.internal),
+    ("inBodyExternalLinkCount", linkCounts.external)
   )
 
   override def openGraph: List[(String, Any)] = super.openGraph ++ List(
@@ -269,7 +273,10 @@ class ImageContent(content: ApiContent) extends Content(content) {
   ) ++ mainPicture.flatMap(_.largestImage.map( "twitter:image:src" -> _.path ))
 }
 
-class ContentWithMetaData(content: ApiContent, metaData: Map[String, JsValue]) extends Content(content) {
+class ContentWithMetaData(
+                           content: ApiContent,
+                           override val supporting: List[Content],
+                           metaData: Map[String, JsValue]) extends Content(content) {
   override lazy val headline: String = metaData.get("headline").flatMap(_.asOpt[String]).getOrElse(super.headline)
   override lazy val group: Option[String] = metaData.get("group").flatMap(_.asOpt[String])
 }

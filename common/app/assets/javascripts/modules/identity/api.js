@@ -1,11 +1,11 @@
 /*global escape:true */
 define([
-    '$',
-    'utils/atob',
-    'utils/cookies',
-    'utils/storage',
-    'utils/ajax',
-    'modules/asyncCallMerger'
+    'common/$',
+    'common/utils/atob',
+    'common/utils/cookies',
+    'common/utils/storage',
+    'common/utils/ajax',
+    'common/modules/asyncCallMerger'
 ], function(
     $,
     utilAtob,

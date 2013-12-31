@@ -136,6 +136,13 @@ define([
             this.saveMetaEdit();
         };
 
+        Article.prototype.get = function() {
+            return {
+                id:   this.props.id(),
+                meta: this.getMeta()
+            };
+        };
+
         Article.prototype.getMeta = function() {
             var self = this;
 
@@ -154,10 +161,7 @@ define([
                     if (p[0] === 'supporting') {
                         // but only on first level Articles, i.e. those whose parent isn't an Article
                         return [p[0], self.parentType === 'Article' ? [] : _.map(p[1].items(), function(item) {
-                            return {
-                                id:   item.props.id(),
-                                meta: item.getMeta()
-                            };
+                            return item.get();
                         })];
                     }
                     return [p[0], p[1]];

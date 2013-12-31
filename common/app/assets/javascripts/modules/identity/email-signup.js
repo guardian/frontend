@@ -1,8 +1,8 @@
 define([
     "bean",
     "bonzo",
-    "utils/ajax",
-    "modules/identity/api"
+    "common/utils/ajax",
+    "common/modules/identity/api"
 ], function(bean, bonzo, ajax, IdApi) {
 
 	/* TODO: use local storage to hide if already sign up */
