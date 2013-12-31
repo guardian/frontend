@@ -47,8 +47,6 @@ trait UpdateActions {
   lazy val defaultMinimumTrailblocks = 0
   lazy val defaultMaximumTrailblocks = 20
 
-  def shouldUpdate[T](cond: Boolean, original: T, updated: => T) = if (cond) updated else original
-
   def updateCollectionFilter(id: String, update: UpdateList, identity: Identity) = {
     FaciaApi.getBlock(id) map { block: Block =>
       lazy val updatedLive = block.live.filterNot(_.id == update.item)
@@ -73,8 +71,8 @@ trait UpdateActions {
   }
 
   def updateCollection(id: String, block: Block, update: UpdateList, identity: Identity, updatedDraft: => Option[List[Trail]], updatedLive: => List[Trail]): Unit = {
-      val live = shouldUpdate(update.live, block.live, updatedLive)
-      val draft = shouldUpdate(update.draft, block.draft, updatedDraft) filter {_ != live}
+      val live = if (update.live) updatedLive else block.live
+      val draft = {if (update.draft) updatedDraft else block.draft} filter {_ != live}
 
       val newBlock =
         block.copy(draft = draft)
