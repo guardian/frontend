@@ -102,10 +102,10 @@ trait UpdateActions {
       }
     }
 
-    splitList._1 ++ List(Trail(update.item, update.itemMeta.map(metaWhiteList))) ++ splitList._2
+    splitList._1 ++ List(Trail(update.item, update.itemMeta.map(itemMetaWhiteList))) ++ splitList._2
   }
 
-  def metaWhiteList(itemMeta: Map[String, JsValue]): Map[String, JsValue] = {
+  def itemMetaWhiteList(itemMeta: Map[String, JsValue]): Map[String, JsValue] = {
     val fields: Seq[String] = Seq("headline", "group", "supporting")
     itemMeta.filter{case (k, v) => fields.contains(k)}
   }
