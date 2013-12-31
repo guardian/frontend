@@ -98,14 +98,14 @@ trait UpdateActions {
     val splitList: (List[Trail], List[Trail]) = {
       //Different index logic if item is being place at itself in list
       //(Eg for metadata update, or group change, index must come from list without item removed)
-      if (update.item == update.position.getOrElse("")) {
+      if (update.position.exists(_ == update.item)) {
         val index = blocks.indexWhere(_.id == update.item)
         listWithoutItem.splitAt(index)
       }
       else {
         val index = update.after.filter {_ == true}
-          .map {_ => listWithoutItem.indexWhere(_.id == update.position.getOrElse("")) + 1}
-          .getOrElse { listWithoutItem.indexWhere(_.id == update.position.getOrElse("")) }
+          .map {_ => listWithoutItem.indexWhere(t => update.position.exists(_ == t.id)) + 1}
+          .getOrElse { listWithoutItem.indexWhere(t => update.position.exists(_ == t.id)) }
         listWithoutItem.splitAt(index)
       }
     }
