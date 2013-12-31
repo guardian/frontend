@@ -63,7 +63,7 @@ define([
                 test: function() {
                     this.component = new EmailSignup(document.getElementById('preload-1'), 'left-meta-alt');
                 }
-            }            
+            }
         ];
     };
 
