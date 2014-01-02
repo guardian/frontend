@@ -1,13 +1,18 @@
 require([
     'domReady',
-    'bootstraps/abtests'
+    'bootstraps/abtests',
+    'bootstraps/browserstats'
 ], function(
     domReady,
-    abTests
+    abTests,
+    browserstats
 ) {
     domReady(function() {
         if (document.title === "A/B Tests") {
             abTests.init();
+        }
+        if (document.title === "Browsers") {
+            browserstats.init();
         }
     });
 });

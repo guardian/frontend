@@ -31,32 +31,45 @@
     </head>
     <body>
         
-    <div class="navbar">
-        <div class="navbar-inner">
-            <div id="environment"><span class="label label-warning">Environment: @env.toLowerCase</span></div>
-            <ul class="nav">
-                <li><a id="home" href="/admin">Home</a></li>
-            </ul>
-            @if(isAuthed){
-                <ul class="nav pull-right">
-                    <li><a href="/logout" id="logout-button">Logout</a></li>
+        <div class="navbar">
+            <div class="navbar-inner">
+                <div id="environment"><span class="label label-warning">Environment: @env.toLowerCase</span></div>
+                <ul class="nav">
+                    <li><a id="home" href="/admin">Home</a></li>
                 </ul>
-            } else {
-                <form action="@controllers.admin.routes.Login.loginPost()" method="post" class="pull-right" style="margin:0px;">
-                    <input value="Log In" class="btn btn-primary" type="submit" id="login-button">
-                </form>
-            }
+                @if(isAuthed){
+                    <ul class="nav pull-right">
+                        <li><a href="/logout" id="logout-button">Logout</a></li>
+                    </ul>
+                } else {
+                    <form action="@controllers.admin.routes.Login.loginPost()" method="post" class="pull-right" style="margin:0px;">
+                        <input value="Log In" class="btn btn-primary" type="submit" id="login-button">
+                    </form>
+                }
+            </div>
         </div>
-    </div>
 
-    <div class="container">
-        @content
-    </div>
+        <div class="container">
+            @content
+        </div>
 
-    <link href='//fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>
-    <link href='//fonts.googleapis.com/css?family=Open+Sans:800' rel='stylesheet' type='text/css'>
+        <link href='//fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>
+        <link href='//fonts.googleapis.com/css?family=Open+Sans:800' rel='stylesheet' type='text/css'>
 
     </body>
+
+    <script type="text/javascript">
+        var curl = {
+            baseUrl: 'assets/javascripts',
+            apiName: 'require'
+        }
+
+        var script = document.createElement('script');
+        script.async = 'async';
+        script.src = '@Static("javascripts/bootstraps/admin.js")';
+
+        document.getElementsByTagName("head")[0].appendChild(script);
+    </script>
 </html>
 
 
