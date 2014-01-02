@@ -17,7 +17,6 @@ GET           /assets/*file              controllers.Assets.at(path="/public", f
 
 # Fronts
 GET           /                          controllers.FaciaToolController.index()
-GET           /config/*id                controllers.FaciaToolController.getConfig(id)
 
 GET           /collection/*id            controllers.FaciaToolController.readBlock(id)
 POST          /collection/*id            controllers.FaciaToolController.updateBlock(id)

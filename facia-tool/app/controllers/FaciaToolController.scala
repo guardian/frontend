@@ -40,14 +40,6 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     } getOrElse NotFound
   }
 
-  def getConfig(id: String) = AjaxExpiringAuthentication { request =>
-    FaciaToolMetrics.ApiUsageCount.increment()
-    S3FrontsApi.getConfig(id) map {json =>
-      Ok(json).as("application/json")
-    } getOrElse NotFound
-  }
-
-
   def updateBlock(id: String): Action[AnyContent] = AjaxExpiringAuthentication { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
     request.body.asJson flatMap JsonExtract.build map {
