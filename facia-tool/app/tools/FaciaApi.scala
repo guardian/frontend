@@ -16,8 +16,8 @@ trait FaciaApiRead {
 
 trait FaciaApiWrite {
   def putBlock(id: String, block: Block, identity: Identity): Option[Block]
-  def publishBlock(id: String, identity: Identity): Unit
-  def discardBlock(id: String, identity: Identity): Unit
+  def publishBlock(id: String, identity: Identity): Option[Block]
+  def discardBlock(id: String, identity: Identity): Option[Block]
   def archive(id: String, block: Block): Unit
 }
 
@@ -40,9 +40,9 @@ object FaciaApi extends FaciaApiRead with FaciaApiWrite {
     val newBlock = updateIdentity(block, identity)
     Try(S3FrontsApi.putBlock(id, Json.prettyPrint(Json.toJson(newBlock)))).map(_ => newBlock).toOption
   }
-  def publishBlock(id: String, identity: Identity) = getBlock(id) map (updateIdentity(_, identity)) foreach { block => putBlock(id, block.copy(live = block.draft.getOrElse(Nil), draft = None), identity)}
-  def discardBlock(id: String, identity: Identity) = getBlock(id) map (updateIdentity(_, identity)) foreach { block => putBlock(id, block.copy(draft = None), identity)}
-  def archive(id: String, block: Block) = S3FrontsApi.archive(id, Json.prettyPrint(Json.toJson(block)))
+  def publishBlock(id: String, identity: Identity): Option[Block] = getBlock(id) map (updateIdentity(_, identity)) flatMap { block => putBlock(id, block.copy(live = block.draft.getOrElse(Nil), draft = None), identity)}
+  def discardBlock(id: String, identity: Identity): Option[Block] = getBlock(id) map (updateIdentity(_, identity)) flatMap { block => putBlock(id, block.copy(draft = None), identity)}
+  def archive(id: String, block: Block): Unit = S3FrontsApi.archive(id, Json.prettyPrint(Json.toJson(block)))
 
   def updateIdentity(block: Block, identity: Identity): Block = block.copy(lastUpdated = DateTime.now.toString, updatedBy = identity.fullName, updatedEmail = identity.email)
 }
