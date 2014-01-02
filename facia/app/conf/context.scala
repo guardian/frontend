@@ -20,17 +20,17 @@ object Management extends GuManagement {
     StatusPage(applicationName, metrics),
     new PropertiesPage(Configuration.toString),
     new LogbackLevelPage(applicationName),
-    ConfigAgentStatus,
-    CollectionAgentStatus
+    new ConfigAgentStatus,
+    new CollectionAgentStatus
   )
 }
 
-object ConfigAgentStatus extends ManagementPage {
+class ConfigAgentStatus extends ManagementPage {
   val path: String = "/management/configagentstatus"
   def get(request: HttpRequest) = PlainTextResponse(ConfigAgent.contentsAsJsonString)
 }
 
-object CollectionAgentStatus extends ManagementPage {
+class CollectionAgentStatus extends ManagementPage {
   val path: String = "/management/collectionagentstatus"
   def get(request: HttpRequest) = PlainTextResponse(CollectionAgent.contentsAsJsonString)
 }
