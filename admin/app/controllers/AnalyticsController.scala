@@ -4,7 +4,6 @@ import play.api.mvc.Controller
 import common.Logging
 import controllers.AuthLogging
 import tools._
-import tools.charts._
 import model.NoCache
 
 object AnalyticsController extends Controller with Logging with AuthLogging {
@@ -40,10 +39,6 @@ object AnalyticsController extends Controller with Logging with AuthLogging {
   }
 
   def abtests() = Authenticated { request =>
-    NoCache(Ok(views.html.abtests("PROD",
-      SwipeAvgPageViewsPerSessionGraph,
-      SwipeAvgSessionDurationGraph,
-      FacebookMostReadPageViewsPerSessionGraph
-    )))
+    NoCache(Ok(views.html.abtests("PROD")))
   }
 }
