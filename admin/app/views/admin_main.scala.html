@@ -1,4 +1,4 @@
-@(title: String, env: String, isAuthed: Boolean = false, hasCharts: Boolean = false)(content: Html)
+@(title: String, env: String, isAuthed: Boolean = false, hasCharts: Boolean = false, autoRefresh: Boolean = false)(content: Html)
 
 <!DOCTYPE html>
 
@@ -6,8 +6,10 @@
     <head>
         <title>@title</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <meta http-equiv="refresh" content="60">
         <meta charset="utf-8"/>
+        @if(autoRefresh){
+            <meta http-equiv="refresh" content="60">
+        }
         
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/32x32.ico")" />
 

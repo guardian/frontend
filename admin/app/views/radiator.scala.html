@@ -1,6 +1,6 @@
 @(charts: Seq[tools.LineChart], hitMissCharts: Seq[tools.LineChart], jsErrors: tools.LineChart, cost: tools.MaximumMetric, env: String)
 
-@admin_main("theguardian.com radiator", env, isAuthed = true, hasCharts = true) {
+@admin_main("theguardian.com radiator", env, isAuthed = true, hasCharts = true, autoRefresh = true) {
 
     <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/radiator.css")">
 
