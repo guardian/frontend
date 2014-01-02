@@ -5,6 +5,7 @@ import org.joda.time.DateTime
 import play.api.libs.json.Json
 import services.S3FrontsApi
 import controllers.Identity
+import scala.util.Try
 
 trait FaciaApiRead {
   def getSchema: Option[String]
@@ -14,7 +15,7 @@ trait FaciaApiRead {
 }
 
 trait FaciaApiWrite {
-  def putBlock(id: String, block: Block, identity: Identity): Unit
+  def putBlock(id: String, block: Block, identity: Identity): Option[Block]
   def publishBlock(id: String, identity: Identity): Unit
   def discardBlock(id: String, identity: Identity): Unit
   def archive(id: String, block: Block): Unit
@@ -35,9 +36,9 @@ object FaciaApi extends FaciaApiRead with FaciaApiWrite {
 
   def getBlocksSince(since: DateTime) = ???
 
-  def putBlock(id: String, block: Block, identity: Identity) = {
+  def putBlock(id: String, block: Block, identity: Identity): Option[Block] = {
     val newBlock = updateIdentity(block, identity)
-    S3FrontsApi.putBlock(id, Json.prettyPrint(Json.toJson(newBlock)))
+    Try(S3FrontsApi.putBlock(id, Json.prettyPrint(Json.toJson(newBlock)))).map(_ => newBlock).toOption
   }
   def publishBlock(id: String, identity: Identity) = getBlock(id) map (updateIdentity(_, identity)) foreach { block => putBlock(id, block.copy(live = block.draft.getOrElse(Nil), draft = None), identity)}
   def discardBlock(id: String, identity: Identity) = getBlock(id) map (updateIdentity(_, identity)) foreach { block => putBlock(id, block.copy(draft = None), identity)}
