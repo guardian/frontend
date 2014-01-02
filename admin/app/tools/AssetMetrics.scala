@@ -17,7 +17,6 @@ object AssetMetrics {
         .withNamespace("Assets")
         .withMetricName(file)
         .withDimensions(
-          new Dimension().withName("Stage").withValue("PROD"),
           new Dimension().withName("Compression").withValue("GZip")
         ),
         asyncHandler),
@@ -30,7 +29,6 @@ object AssetMetrics {
         .withNamespace("Assets")
         .withMetricName(file)
         .withDimensions(
-          new Dimension().withName("Stage").withValue("PROD"),
           new Dimension().withName("Compression").withValue("None")
         ),
         asyncHandler)
