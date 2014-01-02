@@ -83,6 +83,7 @@ trait UpdateActions {
       .map(insertIntoDraft(update, _))
       .map(insertIntoLive(update, _))
       .flatMap(putBlock(id, _, identity))
+      .orElse(createBlock(id, identity, update))
 
   def updateCollectionFilter(id: String, update: UpdateList, identity: Identity): Option[Block] =
     getBlock(id)
@@ -116,7 +117,7 @@ trait UpdateActions {
     itemMeta.filter{case (k, v) => fields.contains(k)}
   }
 
-  def createBlock(id: String, identity: Identity, update: UpdateList) {
+  def createBlock(id: String, identity: Identity, update: UpdateList): Option[Block] = {
     if (update.live)
       FaciaApi.putBlock(id, Block(id, None, List(Trail(update.item, update.itemMeta)), None, DateTime.now.toString, identity.fullName, identity.email, None), identity)
     else
