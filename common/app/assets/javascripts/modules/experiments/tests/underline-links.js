@@ -28,6 +28,6 @@ define(['common/$'], function ($) {
         ];
     };
 
-    return ExperimentTagLinking;
+    return ExperimentUnderlineLinks; 
 
 });
