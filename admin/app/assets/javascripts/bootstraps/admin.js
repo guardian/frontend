@@ -21,13 +21,15 @@ require([
     ajax.init(config);
 
     domReady(function() {
-        if (document.title === "A/B Tests") {
+        var location = window.location.pathname;
+
+        if (location === "/analytics/abtests") {
             abTests.init();
         }
-        if (document.title === "Browsers") {
+        if (location === "/analytics/browsers") {
             browserstats.init();
         }
-        if (document.title === "theguardian.com radiator") {
+        if (location === "/radiator") {
             radiator.init();
         }
     });
