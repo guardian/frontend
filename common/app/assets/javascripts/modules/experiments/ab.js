@@ -10,7 +10,8 @@ define([
     'common/modules/experiments/tests/onward-highlights-panel',
     'common/modules/experiments/tests/alpha-comm',
     'common/modules/experiments/tests/right-most-popular',
-    'common/modules/experiments/tests/right-most-popular-control'
+    'common/modules/experiments/tests/right-most-popular-control',
+    'common/modules/experiments/tests/tag-links'
 ], function (
     common,
     store,
@@ -22,7 +23,8 @@ define([
     OnwardHighlightsPanel,
     AlphaComm,
     RightPopular,
-    RightPopularControl
+    RightPopularControl,
+    TagLinks
     ) {
 
     var TESTS = [
@@ -32,7 +34,8 @@ define([
             new OnwardHighlightsPanel(),
             new AlphaComm(),
             new RightPopular(),
-            new RightPopularControl()
+            new RightPopularControl(),
+            new TagLinks()
         ],
         participationsKey = 'gu.ab.participations';
 

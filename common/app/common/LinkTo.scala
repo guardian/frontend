@@ -4,6 +4,8 @@ import play.api.templates.Html
 import play.api.mvc.{SimpleResult, AnyContent, Request, RequestHeader}
 import conf.Configuration
 import model.MetaData
+import org.jsoup.Jsoup
+import scala.collection.JavaConversions._
 
 /*
  * Builds absolute links to the core site (www.theguardian.com)
@@ -38,7 +40,28 @@ trait LinkTo extends Logging {
   }
 }
 
-object LinkTo extends LinkTo
+case class LinkCounts(internal: Int, external: Int) {
+  def + (that: LinkCounts): LinkCounts = LinkCounts(this.internal + that.internal, this.external + that.external)
+  lazy val noLinks = internal == 0 && external == 0
+}
+
+object LinkCounts {
+  val None = LinkCounts(0, 0)
+}
+
+object LinkTo extends LinkTo {
+
+  // we can assume www.theguardian.com here as this happens before any cleaning
+  def countLinks(html: String): LinkCounts = {
+    val links = Jsoup.parseBodyFragment(html).getElementsByTag("a").flatMap(a => Option(a.attr("href")))
+    val guardianLinksCount = links.count(_ contains "www.theguardian.com")
+    LinkCounts(
+      internal = guardianLinksCount,
+      external = links.length - guardianLinksCount
+    )
+  }
+
+}
 
 object DesktopLink {
 
