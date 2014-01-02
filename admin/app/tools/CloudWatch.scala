@@ -19,7 +19,7 @@ object CloudWatch {
     executor.shutdownNow()
   }
 
-  val stage = new Dimension().withName("Stage").withValue(environment.stage)
+  val stage = new Dimension().withName("Stage").withValue("PROD")
 
   // we create a new client on each request, otherwise we run into this problem
   // http://blog.bdoughan.com/2011/03/preventing-entity-expansion-attacks-in.html
@@ -68,6 +68,13 @@ object CloudWatch {
     ("JavaScript errors from iOS", "js.android"),
     ("JavaScript errors from iOS", "js.unknown"),
     ("JavaScript errors from iOS", "js.windows")
+  )
+
+  val assetsFiles = Seq(
+    "app.js",
+    "global.css",
+    "head.default.css",
+    "head.facia.css"
   )
 
   def shortStackLatency = latency(primaryLoadBalancers)
