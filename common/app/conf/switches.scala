@@ -240,6 +240,9 @@ object Switches extends Collections {
     "If this is switched on an AB test runs whereby articles that have no in body links auto link to their tags",
     safeState = Off)
 
+  val ABUnderlineLinks = Switch("A/B Tests", "ab-underline-links",
+    "If this is switched on an AB test runs whereby links in articles are underline (with CSS)",
+    safeState = On)
 
   // Sport Switch
 
@@ -319,7 +322,8 @@ object Switches extends Collections {
     ABRightPopular,
     AdDwellTimeLoggerSwitch,
     UkAlphaSwitch,
-    ABTagLinking
+    ABTagLinking,
+    ABUnderlineLinks
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

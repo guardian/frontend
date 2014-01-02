@@ -11,7 +11,8 @@ define([
     'common/modules/experiments/tests/alpha-comm',
     'common/modules/experiments/tests/right-most-popular',
     'common/modules/experiments/tests/right-most-popular-control',
-    'common/modules/experiments/tests/tag-links'
+    'common/modules/experiments/tests/tag-links',
+    'common/modules/experiments/tests/underline-links'
 ], function (
     common,
     store,
@@ -24,7 +25,8 @@ define([
     AlphaComm,
     RightPopular,
     RightPopularControl,
-    TagLinks
+    TagLinks,
+    UnderlineLinks
     ) {
 
     var TESTS = [
@@ -35,7 +37,8 @@ define([
             new AlphaComm(),
             new RightPopular(),
             new RightPopularControl(),
-            new TagLinks()
+            new TagLinks(),
+            new UnderlineLinks()
         ],
         participationsKey = 'gu.ab.participations';
 
