@@ -10,7 +10,7 @@ object AssetMetrics {
     new LineChart(s"${file} size in Kb", Seq("Size", "GZip (kb)", "None (kb)"),
 
       euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
-        .withStartTime(new DateTime().minusDays(7).toDate)
+        .withStartTime(new DateTime().minusDays(14).toDate)
         .withEndTime(new DateTime().toDate)
         .withPeriod(3600) //One hour
         .withStatistics("Average")
@@ -22,7 +22,7 @@ object AssetMetrics {
         asyncHandler),
 
       euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
-        .withStartTime(new DateTime().minusDays(7).toDate)
+        .withStartTime(new DateTime().minusDays(14).toDate)
         .withEndTime(new DateTime().toDate)
         .withPeriod(3600) //One hour
         .withStatistics("Average")
