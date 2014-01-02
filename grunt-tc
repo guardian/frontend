@@ -7,6 +7,7 @@ set -o errexit
 export PATH=dev/gems/bin:$PATH
 
 bundle install --binstubs dev/gems/bin --path dev/gems
+./nave.sh use 0.10.24
 npm install
 
 grunt "$@"
