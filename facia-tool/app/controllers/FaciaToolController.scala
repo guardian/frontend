@@ -12,6 +12,7 @@ import play.api.libs.ws.WS
 
 
 object FaciaToolController extends Controller with Logging with ExecutionContexts {
+  implicit val updateListRead = Json.reads[UpdateList]
 
   def index() = ExpiringAuthentication { request =>
     Ok(views.html.fronts(Configuration.environment.stage))
@@ -64,7 +65,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
 
   def updateBlock(id: String): Action[AnyContent] = AjaxExpiringAuthentication { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
-    request.body.asJson flatMap JsonExtract.build map {
+    request.body.asJson flatMap (_.asOpt[UpdateList]) map {
       case update: UpdateList => {
         val identity = Identity(request).get
         UpdateActions.updateCollectionList(id, update, identity)
@@ -84,7 +85,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
 
   def deleteTrail(id: String) = AjaxExpiringAuthentication { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
-    request.body.asJson flatMap JsonExtract.build map {
+    request.body.asJson flatMap (_.asOpt[UpdateList]) map {
       case update: UpdateList => {
         val identity = Identity(request).get
         UpdateActions.updateCollectionFilter(id, update, identity)

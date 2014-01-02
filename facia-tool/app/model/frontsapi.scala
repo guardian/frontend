@@ -25,18 +25,6 @@ case class Trail(
 
 case class UpdateList(item: String, position: Option[String], after: Option[Boolean], itemMeta: Option[Map[String, JsValue]], live: Boolean, draft: Boolean)
 
-trait JsonExtract {
-  implicit val updateListRead = Json.reads[UpdateList]
-
-  private def extractJson(v: JsValue): Either[String, UpdateList] =
-    v.asOpt[UpdateList]
-      .toRight("Invalid Json")
-
-  def build(v: JsValue) = extractJson(v).right.toOption
-}
-
-object JsonExtract extends JsonExtract
-
 trait UpdateActions {
 
   lazy val defaultMinimumTrailblocks = 0
