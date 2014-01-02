@@ -77,12 +77,6 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     } getOrElse NotFound
   }
 
-  def updateTrail(id: String, trailId: String) = AjaxExpiringAuthentication { request =>
-    request.body.asJson.map{ json =>
-    }
-    Ok
-  }
-
   def deleteTrail(id: String) = AjaxExpiringAuthentication { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
     request.body.asJson flatMap (_.asOpt[UpdateList]) map {
