@@ -16,7 +16,10 @@ object AssetMetrics {
         .withStatistics("Average")
         .withNamespace("Assets")
         .withMetricName(file)
-        .withDimensions(new Dimension().withName("Stage").withValue("PROD"), new Dimension().withName("Compression").withValue("GZip")),
+        .withDimensions(
+          new Dimension().withName("Stage").withValue("PROD"),
+          new Dimension().withName("Compression").withValue("GZip")
+        ),
         asyncHandler),
 
       euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
@@ -26,7 +29,10 @@ object AssetMetrics {
         .withStatistics("Average")
         .withNamespace("Assets")
         .withMetricName(file)
-        .withDimensions(new Dimension().withName("Stage").withValue("PROD"), new Dimension().withName("Compression").withValue("None")),
+        .withDimensions(
+          new Dimension().withName("Stage").withValue("PROD"),
+          new Dimension().withName("Compression").withValue("None")
+        ),
         asyncHandler)
     )
   }
