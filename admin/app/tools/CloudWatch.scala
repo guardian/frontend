@@ -19,7 +19,7 @@ object CloudWatch {
     executor.shutdownNow()
   }
 
-  val stage = new Dimension().withName("Stage").withValue("PROD")
+  val stage = new Dimension().withName("Stage").withValue(environment.stage)
 
   // we create a new client on each request, otherwise we run into this problem
   // http://blog.bdoughan.com/2011/03/preventing-entity-expansion-attacks-in.html

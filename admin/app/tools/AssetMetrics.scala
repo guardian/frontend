@@ -1,8 +1,8 @@
 package tools
 
 import CloudWatch._
-import com.amazonaws.services.cloudwatch.model.{Dimension, StandardUnit, GetMetricStatisticsRequest}
-import org.joda.time.{DateTime, Duration}
+import com.amazonaws.services.cloudwatch.model.{Dimension, GetMetricStatisticsRequest}
+import org.joda.time.DateTime
 
 object AssetMetrics {
 
@@ -12,21 +12,21 @@ object AssetMetrics {
       euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
         .withStartTime(new DateTime().minusDays(7).toDate)
         .withEndTime(new DateTime().toDate)
-        .withPeriod(3600)
+        .withPeriod(3600) //One hour
         .withStatistics("Average")
         .withNamespace("Assets")
         .withMetricName(file)
-        .withDimensions(stage, new Dimension().withName("Compression").withValue("GZip")),
+        .withDimensions(new Dimension().withName("Stage").withValue("PROD"), new Dimension().withName("Compression").withValue("GZip")),
         asyncHandler),
 
       euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
         .withStartTime(new DateTime().minusDays(7).toDate)
         .withEndTime(new DateTime().toDate)
-        .withPeriod(3600)
+        .withPeriod(3600) //One hour
         .withStatistics("Average")
         .withNamespace("Assets")
         .withMetricName(file)
-        .withDimensions(stage, new Dimension().withName("Compression").withValue("None")),
+        .withDimensions(new Dimension().withName("Stage").withValue("PROD"), new Dimension().withName("Compression").withValue("None")),
         asyncHandler)
     )
   }
