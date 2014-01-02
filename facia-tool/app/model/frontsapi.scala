@@ -29,6 +29,7 @@ trait UpdateActions {
 
   lazy val defaultMinimumTrailblocks = 0
   lazy val defaultMaximumTrailblocks = 20
+  val itemMetaWhitelistFields: Seq[String] = Seq("headline", "group", "supporting")
 
   def getBlock(id: String): Option[Block] = FaciaApi.getBlock(id)
 
@@ -100,10 +101,7 @@ trait UpdateActions {
     splitList._1 ++ List(Trail(update.item, update.itemMeta.map(itemMetaWhiteList))) ++ splitList._2
   }
 
-  def itemMetaWhiteList(itemMeta: Map[String, JsValue]): Map[String, JsValue] = {
-    val fields: Seq[String] = Seq("headline", "group", "supporting")
-    itemMeta.filter{case (k, v) => fields.contains(k)}
-  }
+  def itemMetaWhiteList(itemMeta: Map[String, JsValue]): Map[String, JsValue] = itemMeta.filter{case (k, v) => itemMetaWhitelistFields.contains(k)}
 
   def createBlock(id: String, identity: Identity, update: UpdateList): Option[Block] = {
     if (update.live)
