@@ -1,19 +1,11 @@
 define([
     'common/utils/ajax',
     'common/$',
-    'lodash/chaining',
-    'lodash/collections',
-    'lodash/arrays',
-    'lodash/objects',
-    'lodash/main' // this is needed to enable chaining, despite being unreferenced.
+    'lodash/main'
 ], function(
     ajax,
     $,
-    chaining,
-    collections,
-    arrays,
-    objects,
-    lodash
+    _
 ) {
     function initialise() {
         // bootstrap for http://localhost:9003/radiator
@@ -105,27 +97,27 @@ define([
         }).then(
             function(data) {
 
-                var todayData = chaining.chain(data.seriesData)
+                var todayData = _.chain(data.seriesData)
                                  .pluck('data')
                                  .flatten()
                                  .groupBy(function(entry) { return entry.dateTime })
                                  .value();
 
                 // Remove first & last Ophan entries, as they always seem slightly off
-                var keys = objects.keys(todayData);
-                delete todayData[arrays.first(keys)];
-                delete todayData[arrays.last(keys)];
+                var keys =  _.keys(todayData);
+                delete todayData[_.first(keys)];
+                delete todayData[_.last(keys)];
 
                 // Build Graph
                 var graphData = [['time', 'pageviews']];
 
-                collections.each(todayData, function(viewsBreakdown, timestamp) {
+                _.each(todayData, function(viewsBreakdown, timestamp) {
                     var epoch = parseInt(timestamp, 10),
                         time  = new Date(epoch),
                         hours = ("0" + time.getHours()).slice(-2),
                         mins  = ("0" + time.getMinutes()).slice(-2),
                         formattedTime = hours + ':' + mins,
-                        totalViews = collections.reduce(viewsBreakdown, function(memo, entry) { return entry.count + memo }, 0);
+                        totalViews = _.reduce(viewsBreakdown, function(memo, entry) { return entry.count + memo }, 0);
 
                     graphData.push([formattedTime, totalViews]);
                 });
@@ -144,14 +136,13 @@ define([
                     });
 
                 // Average pageviews now
-                var lastOphanEntry = chaining.chain(todayData)
+                var lastOphanEntry = _.chain(todayData)
                     .values()
                     .last()
                     .reduce(function(memo, entry) { return entry.count + memo }, 0)
                     .value();
                 var viewsPerSecond = Math.round(lastOphanEntry/60);
                 $('.pageviews-per-second').html('(' + viewsPerSecond + ' views/sec)');
-
             }
         )
     }
