@@ -21,6 +21,7 @@ import scala.Some
 import play.api.mvc.SimpleResult
 import model.Tag
 import model.VideoAsset
+import conf.Switches.ABTagLinking
 
 sealed trait Style {
   val className: String
@@ -320,6 +321,36 @@ object TweetCleaner extends HtmlCleaner {
       }
     }
     document
+  }
+}
+
+class TagLinker(article: Article)(implicit val edition: Edition) extends HtmlCleaner{
+  def clean(d: Document): Document = {
+    if (ABTagLinking.isSwitchedOn && article.linkCounts.noLinks) {
+      val paragraphs = d.getElementsByTag("p")
+
+      // order by length of name so we do not make simple match errors
+      // e.g 'Northern Ireland' & 'Ireland'
+      article.keywords.sortBy(_.name.length).reverse.foreach{ keyword =>
+        // don't link again in paragraphs we have already upgraded
+        val unlinkedParas = paragraphs.filterNot(_.html.contains("<a"))
+        unlinkedParas.find(_.text().contains(keyword.name)).foreach{ p =>
+
+          val tagLink = d.createElement("a")
+          tagLink.attr("href", LinkTo(keyword.url, edition))
+          tagLink.text(keyword.name)
+          tagLink.attr("data-link-name", "auto-linked-tag")
+          tagLink.addClass("linked-tag-name is-hidden")
+          
+          val nameSpan = d.createElement("span")
+          nameSpan.html(keyword.name)
+          nameSpan.addClass("unlinked-tag-name")
+        
+          p.html(p.html().replaceFirst(keyword.name, tagLink.toString + nameSpan.toString))
+        }
+      }
+    }
+    d
   }
 }
 
