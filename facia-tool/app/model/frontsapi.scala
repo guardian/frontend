@@ -42,40 +42,53 @@ trait UpdateActions {
   lazy val defaultMinimumTrailblocks = 0
   lazy val defaultMaximumTrailblocks = 20
 
-  def updateCollectionFilter(id: String, update: UpdateList, identity: Identity) = {
-    FaciaApi.getBlock(id) map { block: Block =>
-      lazy val updatedLive = block.live.filterNot(_.id == update.item)
-      lazy val updatedDraft = block.draft map { l =>
-        l.filterNot(_.id == update.item)
-      } orElse Some(updatedLive)
-      updateCollection(id, block, update, identity, updatedDraft, updatedLive)
-    }
+  def getBlock(id: String): Option[Block] = FaciaApi.getBlock(id)
+
+  def insertIntoLive(update: UpdateList, block: Block): Block =
+    if (update.live)
+      block.copy(live=updateList(update, block.live))
+    else
+      block
+
+  def insertIntoDraft(update: UpdateList, block: Block): Block =
+    if (update.draft)
+        block.copy(
+          draft=block.draft.map {
+            l => updateList(update, l)}.orElse {
+              Option(updateList(update, block.live))
+          }
+        )
+    else
+      block
+
+  def deleteFromLive(update: UpdateList, block: Block): Block =
+    if (update.live)
+      block.copy(live=block.live.filterNot(_.id == update.item))
+    else
+      block
+
+  def deleteFromDraft(update: UpdateList, block: Block): Block =
+    if (update.draft)
+      block.copy(draft=block.draft map { l => l.filterNot(_.id == update.item) } filter(_ != block.live) )
+    else
+      block
+
+  def putBlock(id: String, block: Block, identity: Identity): Option[Block] = {
+    FaciaApi.archive(id, block)
+    FaciaApi.putBlock(id, block, identity)
   }
 
-  def updateCollectionList(id: String, update: UpdateList, identity: Identity) = {
-    FaciaApi.getBlock(id) map { block: Block =>
-      lazy val updatedDraft: Option[List[Trail]] = block.draft map { l =>
-        updateList(update, l)
-      } orElse {if (update.draft) Some(updateList(update, block.live)) else None}
-      lazy val updatedLive: List[Trail] = updateList(update, block.live)
+  def updateCollectionList(id: String, update: UpdateList, identity: Identity): Option[Block] =
+    getBlock(id)
+      .map(insertIntoDraft(update, _))
+      .map(insertIntoLive(update, _))
+      .flatMap(putBlock(id, _, identity))
 
-      updateCollection(id, block, update, identity, updatedDraft, updatedLive)
-    } getOrElse {
-      UpdateActions.createBlock(id, identity, update)
-    }
-  }
-
-  def updateCollection(id: String, block: Block, update: UpdateList, identity: Identity, updatedDraft: => Option[List[Trail]], updatedLive: => List[Trail]): Unit = {
-      val live = if (update.live) updatedLive else block.live
-      val draft = {if (update.draft) updatedDraft else block.draft} filter {_ != live}
-
-      val newBlock =
-        block.copy(draft = draft)
-             .copy(live = live)
-
-      FaciaApi.putBlock(id, newBlock, identity)
-      FaciaApi.archive(id, block)
-  }
+  def updateCollectionFilter(id: String, update: UpdateList, identity: Identity): Option[Block] =
+    getBlock(id)
+      .map(deleteFromLive(update, _))
+      .map(deleteFromDraft(update, _))
+      .flatMap(putBlock(id, _, identity))
 
   private def updateList(update: UpdateList, blocks: List[Trail]): List[Trail] = {
     val listWithoutItem = blocks.filterNot(_.id == update.item)
