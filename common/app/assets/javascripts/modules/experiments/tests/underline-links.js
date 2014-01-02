@@ -24,6 +24,18 @@ define(['common/$'], function ($) {
                 test: function (context) {
                     $('.article__main-column p a').addClass('u-underline');
                 }
+            },
+            {
+                id: 'highlight',
+                test: function (context) {
+                    $('.article__main-column p a').addClass('u-underline-hiviz');
+                }
+            },
+            {
+                id: 'novisual',
+                test: function (context) {
+                    $('.article__main-column p a').addClass('u-underline-masklink');
+                }
             }
         ];
     };
