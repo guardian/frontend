@@ -70,6 +70,13 @@ object CloudWatch {
     ("JavaScript errors from iOS", "js.windows")
   )
 
+  val assetsFiles = Seq(
+    "app.js",
+    "global.css",
+    "head.default.css",
+    "head.facia.css"
+  )
+
   def shortStackLatency = latency(primaryLoadBalancers)
   def fullStackLatency = shortStackLatency ++ latency(secondaryLoadBalancers)
 
