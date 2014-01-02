@@ -22,19 +22,19 @@ define(['common/$'], function ($) {
             {
                 id: 'underlined',
                 test: function (context) {
-                    $('.article__main-column p a').addClass('u-underline');
+                    $('.article-body p a').addClass('u-underline');
                 }
             },
             {
                 id: 'highlight',
                 test: function (context) {
-                    $('.article__main-column p a').addClass('u-underline-hiviz');
+                    $('.article-body p a').addClass('u-underline-hiviz');
                 }
             },
             {
                 id: 'novisual',
                 test: function (context) {
-                    $('.article__main-column p a').addClass('u-underline-masklink');
+                    $('.article-body p a').addClass('u-underline-masklink');
                 }
             }
         ];
