@@ -33,6 +33,11 @@ STAGE=DEV
 The second file is called `[YOUR_HOME_DIR]/.gu/frontend.properties` and you can get its contents from a shared
 document. Ask your team mates to share it with you. If it has already been shared with you just search for "frontend.properties" in your documents.
 
+Nginx
+-----
+
+Nginx must be installed and configured to correctly serve the application, please refer to `/nginx/README.md` in this project.
+
 Vagrant
 -------
 You can run the project with the supplied Vagrantfile - make sure you understand what vagrant is http://www.vagrantup.com/
