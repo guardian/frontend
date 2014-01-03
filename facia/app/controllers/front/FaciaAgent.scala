@@ -9,6 +9,7 @@ import play.api.libs.ws.{ WS, Response }
 import play.api.libs.json.JsObject
 import services.{SecureS3Request, S3FrontsApi}
 import scala.concurrent.Future
+import common.FaciaMetrics.S3AuthorizationError
 
 object Path {
   def unapply[T](uri: String) = Some(uri.split('?')(0))
@@ -112,6 +113,10 @@ trait ParseCollection extends ExecutionContexts with Logging {
               throw e
             }
           }
+        case 403 => {
+          S3AuthorizationError.increment()
+          Future.failed(throw new Exception(s"Request failed to authenticate with S3: $id"))
+        }
         case (httpResponseCode: Int) if httpResponseCode >= 500 =>
           Future.failed(throw new Exception("S3 returned a 5xx"))
         case _ =>
