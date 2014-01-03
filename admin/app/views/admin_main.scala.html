@@ -35,7 +35,7 @@
 
     </head>
     <body>
-        <div class="container-fluid">
+        <div class="container-fluid container--global">
             <div class="global-nav navbar">
                 <div class="navbar-inner">
                     <div class="global-nav__environment" id="environment"><span class="label label-warning">Environment: @env.toLowerCase</span></div>
@@ -54,9 +54,7 @@
                 </div>
             </div>
 
-            <div class="full-width-content">
-                @content
-            </div>
+            @content
 
         </div>
 
