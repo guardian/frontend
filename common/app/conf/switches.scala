@@ -218,11 +218,11 @@ object Switches extends Collections {
   
   val ABCommercialInArticleDesktop = Switch("A/B Tests", "ab-commercial-in-articles-desktop",
     "If this is on an AB test inserts commercial components in the inline and MPU advert slots (scope to desktop)",
-    safeState = On)
+    safeState = Off)
   
   val ABCommercialInArticleMobile = Switch("A/B Tests", "ab-commercial-in-articles-mobile",
     "If this is on an AB test inserts commercial components in the inline and MPU advert slots (scope to mobile browsers)",
-    safeState = On)
+    safeState = Off)
 
   val ABMobileFacebookAutosignin = Switch("A/B Tests", "ab-mobile-facebook-autosignin",
     "If this is switched on an AB test runs to test facebook autosignin for mobile users",
