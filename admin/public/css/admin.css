@@ -1,3 +1,13 @@
+.global-nav {
+    margin-top: 20px;
+}
+
+    .global-nav__environment {
+        float:left;
+        margin-top: 10px;
+    }
+
+
 .full-width-content  {
     padding: 0 30px;
 }
