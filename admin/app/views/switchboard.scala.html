@@ -3,14 +3,14 @@
 @admin_main("Switchboard", env, isAuthed = true) {
 <link href="@routes.Assets.at("css/switchboard.css")" rel="stylesheet">
 @if(flash.get("error").isDefined) { <h1 style="color:#bd362f">@flash.get("error").get</h1> }
-<div class="row">
+<div class="row-fluid">
     <form id="switchboard" action="/dev/switchboard" method="POST">
         <input type="hidden" name="lastModified" value="@lastModified" />
         @Switches.grouped.map { case (group, switches) =>
             <h4>@group</h4>
             <div class="well">
                 @switches.map { switch =>
-                    <div class="row">
+                    <div class="row-fluid">
                         <fieldset>
                             <legend>
                                 <input class="status" id="switch-@switch.name" name="@switch.name" type="checkbox" @if(switch.isSwitchedOn) { checked="checked" }/>
@@ -23,7 +23,7 @@
             </div>
         }
 
-        <input type="submit" value="Save">
+        <input class="btn btn-large btn-success" type="submit" value="Save">
     </form>
 </div>
 }

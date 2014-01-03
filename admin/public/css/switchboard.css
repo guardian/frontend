@@ -49,11 +49,6 @@ fieldset#controls {
     right: 0;
 }
 
-#environment {
-    line-height: 40px;
-    float: left;
-}
-
 input[type=checkbox].status {
     width: 33px;
     height: 33px;
