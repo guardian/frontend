@@ -1,7 +1,7 @@
 @(chart: tools.LineChart)
 
 @* placeholder for chart *@
-<div id="@chart.id" class="@chart.format.cssClass"></div>
+<div id="@chart.id" class="chart @chart.format.cssClass"></div>
 
 <script type="text/javascript">
     new google.visualization.LineChart(document.getElementById('@chart.id'))
@@ -14,6 +14,10 @@
             } else {
                 legend: { position: "in" },
             }
-            fontName: 'Georgia'
+            chartArea: {
+                width: "94%"
+            },
+            axisTitlesPosition: 'in',
+            fontName : 'Georgia'
     });
 </script>

@@ -541,8 +541,8 @@
             }
         },
         "grunt-asset-monitor": {
-            "version": "0.1.2",
-            "from": "grunt-asset-monitor@~0.1.2",
+            "version": "0.1.4",
+            "from": "grunt-asset-monitor@~0.1.4",
             "dependencies": {
                 "prettysize": {
                     "version": "0.0.3",
@@ -571,6 +571,11 @@
                 "q": {
                     "version": "0.9.7",
                     "from": "q@~0.9.7"
+                },
+                "css-parse": {
+                    "version": "1.7.0",
+                    "from": "css-parse@",
+                    "resolved": "https://registry.npmjs.org/css-parse/-/css-parse-1.7.0.tgz"
                 }
             }
         },

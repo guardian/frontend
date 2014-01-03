@@ -1,15 +1,15 @@
 /*
  Module: participation.js
- Description: Displays a single participation
+ Description: Displays opt-in and opt-out links for a test
  */
 define([
-    'qwery',
     'lodash/objects/assign',
-    'common/modules/component'
+    'common/modules/component',
+    'modules/abtests/participation-item'
 ], function (
-    qwery,
     extend,
-    Component
+    Component,
+    ParticipationItem
     ) {
 
     function Participation(config) {
@@ -19,18 +19,24 @@ define([
     Component.define(Participation);
 
     Participation.prototype.config = {
-        test: '',
-        variant: ''
+        test: ''
     };
 
     Participation.prototype.templateName = 'participation-template';
     Participation.prototype.componentClass = 'participation';
-    Participation.prototype.classes = { test: 'test', variant: 'variant'};
+    Participation.prototype.classes = { test: 'test', links: 'links', optOut: 'opt-out'};
     Participation.prototype.useBem = true;
 
     Participation.prototype.prerender = function() {
-        this.getElem(this.classes.test).innerHTML = this.config.test;
-        this.getElem(this.classes.variant).innerHTML = this.config.variant;
+        var test = this.config.test;
+        this.getElem(this.classes.test).textContent = test.id;
+        this.getElem(this.classes.optOut).href = "http://www.theguardian.com/uk#ab-" + test.id + "=notintest";
+
+        var linksContainer = this.getElem(this.classes.links);
+
+        test.variants.forEach(function(variant) {
+            new ParticipationItem({test: test.id, variant: variant.id}).render(linksContainer);
+        });
     };
 
     return Participation;

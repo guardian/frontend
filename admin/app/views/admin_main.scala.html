@@ -22,7 +22,8 @@
         <meta name="msapplication-TileColor" content="#004983" />
         <meta name="msapplication-TileImage" content="@routes.Assets.at("images/windows_tile_144_b.png")" />
 
-        <link href="@routes.Assets.at("javascripts/components/bootstrap.css/css/bootstrap.css")" rel="stylesheet">
+        <link href="@routes.Assets.at("javascripts/components/bootstrap.css/css/bootstrap.css")" rel="stylesheet" />
+        <link href="@routes.Assets.at("javascripts/components/bootstrap.css/css/bootstrap-responsive.css")" rel="stylesheet" />
         <link href="@routes.Assets.at("css/admin.css")" rel="stylesheet">
 
         @if(hasCharts){
@@ -34,27 +35,34 @@
 
     </head>
     <body>
-        
-        <div class="navbar">
-            <div class="navbar-inner">
-                <div id="environment"><span class="label label-warning">Environment: @env.toLowerCase</span></div>
-                <ul class="nav">
-                    <li><a id="home" href="/admin">Home</a></li>
-                </ul>
-                @if(isAuthed){
-                    <ul class="nav pull-right">
-                        <li><a href="/logout" id="logout-button">Logout</a></li>
+        <div class="container-fluid container--global">
+            <div class="global-nav navbar">
+                <div class="navbar-inner">
+                    <div class="global-nav__environment" id="environment"><span class="label label-warning">Environment: @env.toLowerCase</span></div>
+                    <ul class="nav">
+                        <li><a id="home" href="/admin">Home</a></li>
                     </ul>
-                } else {
-                    <form action="@controllers.admin.routes.Login.loginPost()" method="post" class="pull-right" style="margin:0px;">
-                        <input value="Log In" class="btn btn-primary" type="submit" id="login-button">
-                    </form>
-                }
+                    @if(isAuthed){
+                        <ul class="nav pull-right">
+                            <li><a href="/logout" id="logout-button">Logout</a></li>
+                        </ul>
+                    } else {
+                        <form action="@controllers.admin.routes.Login.loginPost()" method="post" class="pull-right" style="margin:0px;">
+                            <input value="Log In" class="btn btn-primary" type="submit" id="login-button">
+                        </form>
+                    }
+                </div>
             </div>
-        </div>
 
-        <div class="full-width-content">
             @content
+
+
+            @if(isAuthed){
+                <hr/>
+                <footer><p>&copy; The Grauniad</p></footer>
+
+            }
+
         </div>
 
         <link href='//fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>
