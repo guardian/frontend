@@ -12,12 +12,10 @@
         margin-top: 10px;
     }
 
-
 .well--front {
     min-height: 200px;
 }
 
-.full-width-content  {
-    padding: 0 30px;
+.chart {
+    margin-bottom: 20px;
 }
-
