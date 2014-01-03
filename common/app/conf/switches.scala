@@ -215,6 +215,14 @@ object Switches extends Collections {
   val ABAlphaComm = Switch("A/B Tests", "ab-alpha-comm",
     "If this is switched on an AB test runs to trial new advertising user experiences and commercial models",
     safeState = Off)
+  
+  val ABCommercialInArticleDesktop = Switch("A/B Tests", "ab-commercial-in-articles-desktop",
+    "If this is on an AB test inserts commercial components in the inline and MPU advert slots (scope to desktop)",
+    safeState = On)
+  
+  val ABCommercialInArticleMobile = Switch("A/B Tests", "ab-commercial-in-articles-mobile",
+    "If this is on an AB test inserts commercial components in the inline and MPU advert slots (scope to mobile browsers)",
+    safeState = On)
 
   val ABMobileFacebookAutosignin = Switch("A/B Tests", "ab-mobile-facebook-autosignin",
     "If this is switched on an AB test runs to test facebook autosignin for mobile users",
@@ -317,6 +325,8 @@ object Switches extends Collections {
     ABOnwardIntrusive,
     ABOnwardHighlightsPanel,
     ABAlphaComm,
+    ABCommercialInArticleDesktop,
+    ABCommercialInArticleMobile,
     ABRightPopularControl,
     ABMobileFacebookAutosignin,
     ABRightPopular,
