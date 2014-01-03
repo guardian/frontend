@@ -1,0 +1,41 @@
+@(env: String, assets: Seq[tools.AssetData])
+
+@admin_main("Dashboard", env, isAuthed = true, hasCharts = true) {
+
+    <h1 class="page-header">Static assets</h1>
+
+    @assets.filter(_.combined.hasData).map{ asset =>
+        <h3>@asset.name</h3>
+
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th colspan="3">Size in Kb (last 14 days)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="3">@fragments.lineChart(asset.raw)</td>
+                </tr>
+            </tbody>
+            <thead>
+                <tr>
+                    <th>Current size (Raw)</th>
+                    <th>Current size (GZip)</th>
+                    <th>Week-on-week Change</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@asset.raw.latest.floor Kb</td>
+                    <td>@asset.zipped.latest.floor Kb</td>
+                    <td>
+                        <span class="label @if(asset.rawChange.isNegInfinity || asset.rawChange == 0.0) { label-success } else { label-important }">
+                            @{"%.2f".format(asset.rawChange) } Kb
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    }
+}
