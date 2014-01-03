@@ -5,7 +5,7 @@ define(['common/$'], function ($) {
         this.id = 'InBodyLinking';
         this.expiry = "2014-01-20";
         this.audience = 0.2;
-        this.audienceOffset = 0.5;
+        this.audienceOffset = 0.3;
         this.description = 'Removes In body links to see change to bounce rate';
         this.canRun = function(config) {
             return (
