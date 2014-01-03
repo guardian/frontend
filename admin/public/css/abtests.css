@@ -1,34 +1,3 @@
 .participation__test, .participation__variant {
     display: inline;
 }
-
-.breakdown__table-title-name,
-.breakdown-item__name {
-    width: 10%;
-}
-
-.breakdown__table-title-description,
-.breakdown-item__description {
-    width: 30%;
-}
-
-.breakdown__table-title-expiry,
-.breakdown-item__expiry {
-    width: 10%;
-}
-
-
-.breakdown__table-title-audience,
-.breakdown-item__audience {
-    width: 10%;
-}
-
-.breakdown__table-title-audience-offset,
-.breakdown-item__audience-offset {
-    width: 10%;
-}
-
-.breakdown__table-title-variants,
-.breakdown-item__variants {
-    width: 30%;
-}
