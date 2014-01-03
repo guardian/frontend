@@ -23,12 +23,12 @@ define([
 
     ParticipationItem.prototype.templateName = 'participation-item-template';
     ParticipationItem.prototype.componentClass = 'participation-item';
-    ParticipationItem.prototype.classes = { optIn: 'opt-in', variant: 'variant'};
+    ParticipationItem.prototype.classes = {};
     ParticipationItem.prototype.useBem = true;
 
     ParticipationItem.prototype.prerender = function() {
-        this.getElem(this.classes.variant).textContent = this.config.variant + ": ";
-        this.getElem(this.classes.optIn).href = "http://www.theguardian.com/uk#ab-" + this.config.test + "=" + this.config.variant;
+        this.elem.textContent = this.config.variant;
+        this.elem.href = "http://www.theguardian.com/uk#ab-" + this.config.test + "=" + this.config.variant;
     };
 
     return ParticipationItem;
