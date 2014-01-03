@@ -68,17 +68,23 @@ define([
         if (user) {
             $container.addClass('is-signed-in');
             $popup.html(
-                '<a href="' + this.config.url + '/profile/public" class="pull-right box-indent ' + Profile.CONFIG.classes.publicProfile + '">Edit profile</a>'
-                +
-                '<a href="' + this.config.url + '/email-prefs" class="pull-right box-indent ' + Profile.CONFIG.classes.emailPrefs + '">Email preferences</a>'
-                +
-                '<a href="' + this.config.url + '/signout" class="pull-right box-indent ' + Profile.CONFIG.classes.signout + '">Sign out</a>'
+                '<ul class="nav nav--columns nav--top-border-off" data-link-name="Sub Sections">'+
+                    this.menuListItem("Edit profile", this.config.url+'/profile/public', "publicProfile")+
+                    this.menuListItem("Email preferences", this.config.url+'/email-prefs', "emailPrefs")+
+                    this.menuListItem("Sign out", this.config.url+'/signout', "signout")+
+                '</ul>'
             );
         } else {
             $popup.remove();
         }
 
         this.emitLoadedEvent(user);
+    };
+
+    Profile.prototype.menuListItem = function(text, url, className) {
+        return  '<li class="nav__item">'+
+                    '<a href="' + url + '/email-prefs" class="nav-link ' + Profile.CONFIG.classes[className] + '">' + text + '</a>'+
+                '</li>';
     };
 
     /**
