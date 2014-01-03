@@ -2,20 +2,13 @@
 
 @admin_main("Front editor", env, isAuthed = true) {
     <div class="row">
-        <h3>Site building tools</h3>
-        <p class="muted">Tools for editorially configuring the site</p>
-        <ul>
-            <li><a href="/admin/feature-trailblock">Feature trailblock editor</a></li>
-        </ul>
-    </div>
-    <div class="row">
         <h3>Analytics</h3>
         <p class="muted">See Ophan for neartime data.</p>
         <ul>
             <li><a href="@controllers.admin.routes.AnalyticsController.kpis()">KPIs</a></li>
             <li><a href="@controllers.admin.routes.AnalyticsController.pageviews()">Pageviews</a></li>
             <li><a href="@controllers.admin.routes.AnalyticsController.browsers()">Browser support tables</a></li>
-            <li><a href="@controllers.admin.routes.AnalyticsController.abtests()">A/B Test Results</a></li>
+            <li><a href="@controllers.admin.routes.AnalyticsController.abtests()">A/B Tests</a></li>
             <li><a href="@controllers.admin.routes.AnalyticsConfidenceController.renderConfidence()">Confidence</a></li>
         </ul>
     </div>
@@ -40,6 +33,7 @@
                 </ul>
             </li>
             <li><a href="@controllers.admin.routes.DashboardController.renderMemory()">JVM Memory</a></li>
+            <li><a href="@controllers.admin.routes.DashboardController.renderAssets()">Static assets</a></li>
         </ul>
     </div>
     <div class="row">

@@ -155,7 +155,7 @@ class Article(content: ApiContent) extends Content(content) {
       .orElse(mainPicture).orElse(videos.headOption)
 
 
-  private lazy val linkCounts = LinkTo.countLinks(body) + standfirst.map(LinkTo.countLinks).getOrElse(LinkCounts.None)
+  lazy val linkCounts = LinkTo.countLinks(body) + standfirst.map(LinkTo.countLinks).getOrElse(LinkCounts.None)
   override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
     ("content-type", contentType),
     ("isLiveBlog", isLiveBlog),

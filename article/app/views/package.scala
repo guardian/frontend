@@ -17,6 +17,7 @@ object BodyCleaner {
     BlockNumberCleaner,
     TweetCleaner,
     WitnessCleaner,
-    VideoEmbedCleaner(article.bodyVideos)
+    VideoEmbedCleaner(article.bodyVideos),
+    new TagLinker(article)
   )
 }

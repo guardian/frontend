@@ -42,6 +42,7 @@ trait LinkTo extends Logging {
 
 case class LinkCounts(internal: Int, external: Int) {
   def + (that: LinkCounts): LinkCounts = LinkCounts(this.internal + that.internal, this.external + that.external)
+  lazy val noLinks = internal == 0 && external == 0
 }
 
 object LinkCounts {
