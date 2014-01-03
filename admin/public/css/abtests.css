@@ -1,7 +1,3 @@
-.participation__test  {
-    display: inline;
-}
-
-.participation__variant {
+.participation__test, .participation__variant {
     display: inline;
 }
