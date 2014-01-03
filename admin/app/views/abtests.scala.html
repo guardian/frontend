@@ -6,14 +6,14 @@
 
     <h1 class="page-header">A/B Tests</h1>
 
-    <section class="breakdown-section">
+    <section class="breakdown-section" id="breakdown">
         <h3>Breakdown</h3>
     </section>
 
     <hr>
 
-    <section class="participation-section">
-        <h3>Your Participations</h3>
+    <section class="participation-section" id="participation">
+        <h3>Test Participations</h3>
     </section>
 
     <hr>
@@ -21,4 +21,5 @@
     <script type="text/template" id="tmpl-participation-template">@fragments.participation()</script>
     <script type="text/template" id="tmpl-breakdown-template">@fragments.breakdown()</script>
     <script type="text/template" id="tmpl-breakdown-item-template">@fragments.breakdownItem()</script>
+    <script type="text/template" id="tmpl-participation-item-template">@fragments.participationItem()</script>
 }
