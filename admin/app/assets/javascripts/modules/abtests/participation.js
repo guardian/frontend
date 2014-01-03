@@ -3,11 +3,9 @@
  Description: Displays a single participation
  */
 define([
-    'qwery',
     'lodash/objects/assign',
     'common/modules/component'
 ], function (
-    qwery,
     extend,
     Component
     ) {
