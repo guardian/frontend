@@ -98,11 +98,7 @@ define([
 
     function getExpiredTests() {
         return TESTS.filter(function(test) {
-            var expired = (new Date() - new Date(test.expiry)) > 0;
-            if (expired) {
-                return true;
-            }
-            return false;
+            return (new Date() - new Date(test.expiry)) > 0;
         });
     }
 
