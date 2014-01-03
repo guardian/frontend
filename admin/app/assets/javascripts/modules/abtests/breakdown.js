@@ -30,17 +30,25 @@ define([
 
     Breakdown.prototype.prerender = function() {
 
-        var expiredContainer = this.getElem(this.classes.expired);
+        if (this.config.expired.length) {
+            var expiredContainer = this.getElem(this.classes.expired);
 
-        this.config.expired.forEach(function(test) {
-            new Item({test: test}).render(expiredContainer);
-        });
+            this.config.expired.forEach(function(test) {
+                new Item({test: test}).render(expiredContainer);
+            });
+        } else {
+            this.getElem(this.classes.expired).innerHTML = "There are no expired tests.";
+        }
 
-        var activeContainer = this.getElem(this.classes.active);
+        if (this.config.active.length) {
+            var activeContainer = this.getElem(this.classes.active);
 
-        this.config.active.forEach(function(test) {
-            new Item({test: test}).render(activeContainer);
-        });
+            this.config.active.forEach(function(test) {
+                new Item({test: test}).render(activeContainer);
+            });
+        } else {
+            this.getElem(this.classes.active).innerHTML = "There are no active tests.";
+        }
     };
 
     return Breakdown;
