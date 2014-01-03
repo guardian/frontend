@@ -96,6 +96,16 @@ define([
         });
     }
 
+    function getExpiredTests() {
+        return TESTS.filter(function(test) {
+            var expired = (new Date() - new Date(test.expiry)) > 0;
+            if (expired) {
+                return true;
+            }
+            return false;
+        });
+    }
+
     function testCanBeRun(test, config) {
         var expired = (new Date() - new Date(test.expiry)) > 0;
         return (test.canRun(config) && !expired && config.switches['ab' + test.id]);
@@ -244,8 +254,9 @@ define([
         },
 
         getParticipations: getParticipations,
-        makeOmnitureTag: makeOmnitureTag
-
+        makeOmnitureTag: makeOmnitureTag,
+        getExpiredTests: getExpiredTests,
+        getActiveTests: getActiveTests
     };
 
     return ab;
