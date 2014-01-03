@@ -7,7 +7,7 @@ import play.api.libs.json.Json._
 import play.api.libs.json._
 import play.api.libs.ws.{ WS, Response }
 import play.api.libs.json.JsObject
-import services.S3FrontsApi
+import services.{SecureS3Request, S3FrontsApi}
 import scala.concurrent.Future
 
 object Path {
@@ -63,9 +63,10 @@ trait ParseCollection extends ExecutionContexts with Logging {
   case class CollectionItem(id: String, metaData: Option[Map[String, JsValue]])
 
   def requestCollection(id: String): Future[Response] = {
-    val collectionUrl = s"${Configuration.frontend.store}/${S3FrontsApi.location}/collection/$id/collection.json"
-    log.info(s"loading running order configuration from: $collectionUrl")
-    WS.url(collectionUrl).withRequestTimeout(2000).get()
+    val s3BucketLocation: String = s"${S3FrontsApi.location}/collection/$id/collection.json"
+    log.info(s"loading running order configuration from: ${Configuration.frontend.store}/$s3BucketLocation")
+    val request = SecureS3Request.url(s3BucketLocation)
+    request.withRequestTimeout(2000).get()
   }
 
   def getCollection(id: String, config: Config, edition: Edition, isWarmedUp: Boolean): Future[Collection] = {
