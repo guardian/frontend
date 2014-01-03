@@ -12,7 +12,9 @@ define([
     'common/modules/experiments/tests/alpha-comm',
     'common/modules/experiments/tests/commercial-in-article-desktop',
     'common/modules/experiments/tests/right-most-popular',
-    'common/modules/experiments/tests/right-most-popular-control'
+    'common/modules/experiments/tests/right-most-popular-control',
+    'common/modules/experiments/tests/tag-links',
+    'common/modules/experiments/tests/in-body-links'
 ], function (
     common,
     store,
@@ -25,7 +27,9 @@ define([
     AlphaComm,
     CommercialInArticlesDesktop,
     RightMostPopular,
-    RightMostPopularControl
+    RightMostPopularControl,
+    TagLinks,
+    InBodyLinks
     ) {
 
     var TESTS = [
@@ -36,7 +40,9 @@ define([
             new AlphaComm(),
             new CommercialInArticlesDesktop(),
             new RightMostPopular(),
-            new RightMostPopularControl()
+            new RightMostPopularControl(),
+            new TagLinks(),
+            new InBodyLinks()
         ],
         participationsKey = 'gu.ab.participations';
 
@@ -94,6 +100,12 @@ define([
                 return false;
             }
             return true;
+        });
+    }
+
+    function getExpiredTests() {
+        return TESTS.filter(function(test) {
+            return (new Date() - new Date(test.expiry)) > 0;
         });
     }
 
@@ -245,8 +257,9 @@ define([
         },
 
         getParticipations: getParticipations,
-        makeOmnitureTag: makeOmnitureTag
-
+        makeOmnitureTag: makeOmnitureTag,
+        getExpiredTests: getExpiredTests,
+        getActiveTests: getActiveTests
     };
 
     return ab;

@@ -1,28 +1,24 @@
-@(env: String, charts: tools.Chart*)
+@(env: String)
 
 @admin_main("A/B Tests", env, isAuthed = true) {
 
-    <h1>A/B Tests</h1>
+    <link href="@routes.Assets.at("css/abtests.css")" rel="stylesheet">
 
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript">
-        google.load("visualization", "1", {packages:["corechart"]});
-        google.setOnLoadCallback(drawCharts);
+    <h1 class="page-header">A/B Tests</h1>
 
-        function drawCharts() {
-            @charts.map{ chart =>
-                var data = google.visualization.arrayToDataTable(@Html(chart.asDataset));
-                @for(i <- 1 to chart.labels.length - 1) {
-                    new google.visualization.NumberFormat({pattern: '#,###.###'}).format(data, @i);
-                }
+    <section class="breakdown-section">
+        <h3>Breakdown</h3>
+    </section>
 
-                new google.visualization.@{chart.form}(document.getElementById('@chart.id')).draw(data, {
-                    title: '@chart.name' @chart.yAxis.map{ title =>, vAxis: {title: "@title"} }
-                });
-            }
-        }
-    </script>
+    <hr>
 
+    <section class="participation-section">
+        <h3>Your Participations</h3>
+    </section>
 
-    @charts.map{ chart => <div id="@chart.id" style="max-width: 1200px"></div> }
+    <hr>
+
+    <script type="text/template" id="tmpl-participation-template">@fragments.participation()</script>
+    <script type="text/template" id="tmpl-breakdown-template">@fragments.breakdown()</script>
+    <script type="text/template" id="tmpl-breakdown-item-template">@fragments.breakdownItem()</script>
 }

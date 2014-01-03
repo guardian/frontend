@@ -73,7 +73,7 @@ define(['common/common', 'common/utils/ajax', 'qwery', 'common/modules/sport/foo
         });
 
         it("should fail silently if no response is returned from fixtures request", function() {
-            server.respondWith([200, {}, 'null']);
+            server.respondWith([404, {}, 'null']);
             runs(function() {
                 new FootballFixtures({
                     prependTo: prependTo,

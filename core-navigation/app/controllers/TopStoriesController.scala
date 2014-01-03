@@ -1,7 +1,6 @@
 package controllers
 
 import common._
-import com.gu.openplatform.contentapi.ApiError
 import conf._
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
@@ -9,7 +8,7 @@ import scala.concurrent.Future
 import com.gu.openplatform.contentapi.ApiError
 import play.api.libs.json.JsArray
 
-object TopStoriesController extends Controller with Logging with Paging with JsonTrails with ExecutionContexts {
+object TopStoriesController extends Controller with Logging with Paging with ExecutionContexts {
 
   val validFormats: Seq[String] = Seq("html", "json")
 
