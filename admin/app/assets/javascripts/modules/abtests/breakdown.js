@@ -25,13 +25,13 @@ define([
 
     Breakdown.prototype.templateName = 'breakdown-template';
     Breakdown.prototype.componentClass = 'breakdown';
-    Breakdown.prototype.classes = {expired: 'expired', active: 'active'};
+    Breakdown.prototype.classes = {expired: 'expired', active: 'active', expiredTable: 'expired-tbody', activeTable: 'active-tbody' };
     Breakdown.prototype.useBem = true;
 
     Breakdown.prototype.prerender = function() {
 
         if (this.config.expired.length) {
-            var expiredContainer = this.getElem(this.classes.expired);
+            var expiredContainer = this.getElem(this.classes.expiredTable);
 
             this.config.expired.forEach(function(test) {
                 new Item({test: test}).render(expiredContainer);
@@ -41,7 +41,7 @@ define([
         }
 
         if (this.config.active.length) {
-            var activeContainer = this.getElem(this.classes.active);
+            var activeContainer = this.getElem(this.classes.activeTable);
 
             this.config.active.forEach(function(test) {
                 new Item({test: test}).render(activeContainer);

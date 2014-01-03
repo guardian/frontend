@@ -4,15 +4,19 @@
 
     <link href="@routes.Assets.at("css/abtests.css")" rel="stylesheet">
 
-    <h1>A/B Tests</h1>
+    <h1 class="page-header">A/B Tests</h1>
 
     <section class="breakdown-section">
         <h3>Breakdown</h3>
     </section>
 
+    <hr>
+
     <section class="participation-section">
         <h3>Your Participations</h3>
     </section>
+
+    <hr>
 
     <script type="text/template" id="tmpl-participation-template">@fragments.participation()</script>
     <script type="text/template" id="tmpl-breakdown-template">@fragments.breakdown()</script>
