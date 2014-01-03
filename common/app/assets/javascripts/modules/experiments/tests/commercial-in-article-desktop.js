@@ -56,7 +56,7 @@ define([
             {
                 id: 'CommercialMpu',
                 test: function(context, config) {
-                    guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha1.com';
+                    guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha2.com';
                     guardian.config.page.ab_commercialInArticleDesktop = 'mpu';
                     createInlineAdSlots('Middle');
                     createMpuAdSlot('Middle1');
