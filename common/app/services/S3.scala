@@ -123,14 +123,15 @@ trait SecureS3Request extends Logging {
 
   def url(id: String): WS.WSRequestHolder = {
     val date: String = DateTime.now.toString(formatterRfc822)
+    val signedString: String = signAndBase64Encode(generateStringToSign(id, date))
     WS.url(s"$frontendStore/$id")
       .withHeaders("Date" -> date)
-      .withHeaders("Authorization" -> s"AWS $accessKey:${generateStringToSign(id, date)}")
+      .withHeaders("Authorization" -> s"AWS $accessKey:$signedString}")
   }
 
   private def generateStringToSign(id: String, date: String) =
   //http://docs.aws.amazon.com/AmazonS3/latest/dev/RESTAuthentication.html
-    signAndBase64Encode(s"GET\n\n\n$date\n/$frontendBucket/$id")
+    s"GET\n\n\n$date\n/$frontendBucket/$id"
 
   private def signAndBase64Encode(stringToSign: String) = {
     try {
@@ -141,6 +142,7 @@ trait SecureS3Request extends Logging {
       encoded
     } catch {
       case e: Throwable => log.error("Unable to calculate a request signature: " + e.getMessage, e)
+      "Invalid"
     }
   }
 }
