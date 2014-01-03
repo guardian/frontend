@@ -128,7 +128,7 @@ trait SecureS3Request extends Logging {
     val signedString: String = signAndBase64Encode(generateStringToSign(httpVerb, id, date))
     WS.url(s"$frontendStore/$id")
       .withHeaders("Date" -> date)
-      .withHeaders("Authorization" -> s"AWS $accessKey:$signedString}")
+      .withHeaders("Authorization" -> s"AWS $accessKey:$signedString")
   }
 
   //Other HTTP verbs may need other information such as Content-MD5 and Content-Type
