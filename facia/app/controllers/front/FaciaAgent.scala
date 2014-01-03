@@ -65,7 +65,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
   def requestCollection(id: String): Future[Response] = {
     val s3BucketLocation: String = s"${S3FrontsApi.location}/collection/$id/collection.json"
     log.info(s"loading running order configuration from: ${Configuration.frontend.store}/$s3BucketLocation")
-    val request = SecureS3Request.url(s3BucketLocation)
+    val request = SecureS3Request.urlGet(s3BucketLocation)
     request.withRequestTimeout(2000).get()
   }
 

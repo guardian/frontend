@@ -121,19 +121,23 @@ trait SecureS3Request extends Logging {
   val frontendBucket: String = Configuration.aws.bucket
   val frontendStore: String = Configuration.frontend.store
 
-  def url(id: String): WS.WSRequestHolder = {
+  def urlGet(id: String): WS.WSRequestHolder = url("GET", id)
+
+  private def url(httpVerb: String, id: String): WS.WSRequestHolder = {
     val date: String = DateTime.now.toString(formatterRfc822)
-    val signedString: String = signAndBase64Encode(generateStringToSign(id, date))
+    val signedString: String = signAndBase64Encode(generateStringToSign(httpVerb, id, date))
     WS.url(s"$frontendStore/$id")
       .withHeaders("Date" -> date)
       .withHeaders("Authorization" -> s"AWS $accessKey:$signedString}")
   }
 
-  private def generateStringToSign(id: String, date: String) =
+  //Other HTTP verbs may need other information such as Content-MD5 and Content-Type
+  //If we move to AWS Security Token Service, we will need x-amz-security-token
+  private def generateStringToSign(httpVerb: String, id: String, date: String): String =
   //http://docs.aws.amazon.com/AmazonS3/latest/dev/RESTAuthentication.html
-    s"GET\n\n\n$date\n/$frontendBucket/$id"
+    s"$httpVerb\n\n\n$date\n/$frontendBucket/$id"
 
-  private def signAndBase64Encode(stringToSign: String) = {
+  private def signAndBase64Encode(stringToSign: String): String = {
     try {
       val mac: Mac = Mac.getInstance(algorithm)
       mac.init(new SecretKeySpec(secretKey.getBytes("UTF-8"), algorithm))
