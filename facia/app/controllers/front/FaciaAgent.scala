@@ -115,7 +115,9 @@ trait ParseCollection extends ExecutionContexts with Logging {
           }
         case 403 => {
           S3AuthorizationError.increment()
-          Future.failed(throw new Exception(s"Request failed to authenticate with S3: $id"))
+          val errorString: String = s"Request failed to authenticate with S3: $id"
+          log.warn(errorString)
+          Future.failed(throw new Exception(errorString))
         }
         case (httpResponseCode: Int) if httpResponseCode >= 500 =>
           Future.failed(throw new Exception("S3 returned a 5xx"))
