@@ -85,7 +85,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
         authors.last.getAttribute("content") should be("Mark Jones")
 
         And("it should handle escaping")
-        authors(4).getAttribute("content") should be("Phelim O'Neill") should be
+        authors(4).getAttribute("content") should be("Phelim O'Neill")
       }
     }
 
