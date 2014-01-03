@@ -200,16 +200,82 @@
         margin-bottom: $baseline*4;
     }
 
-    > ul {
-        list-style: none;
+    > ul,
+    > ol {
         margin: 0;
         padding: 0;
+        list-style: none;
 
+        > li {
+            position: relative;
+            @include rem((
+                text-indent: 16px
+            ));
+
+            + li {
+                margin-top: .6em;
+            }
+
+            @include mq(tablet) {
+                @include rem((
+                    text-indent: 20px
+                ));
+            }
+        }
+
+        + * {
+            margin-top: .6em;
+        }
+    }
+
+    > ol {
+        counter-reset: li;
+
+        > li:before {
+            position: absolute;
+            @include rem((
+                left: -16px
+            ));
+            content: counter(li)".";
+            counter-increment: li;
+            @include fs-header(1);
+            color: $c-neutral3;
+
+            @include mq(tablet) {
+                @include fs-header(3, true);
+                @include rem((
+                    left: -20px,
+                    top: -2px
+                ));
+            }
+        }
+    }
+
+    > ul {
         > li {
             @include faux-bullet-point;
 
-            + li {
-                margin-top: .5em;
+            @include mq(mobile, tablet) {
+                @include rem((
+                    text-indent: 16px
+                ));
+            }
+
+            &:before {
+                color: $c-neutral4;
+                @include rem((
+                    font-size: 50px,
+                    top: -2px,
+                    left: -20px
+                ));
+
+                @include mq(tablet) {
+                    @include rem((
+                        font-size: 61px,
+                        top: -2px,
+                        left: -24px
+                    ));
+                }
             }
         }
     }
