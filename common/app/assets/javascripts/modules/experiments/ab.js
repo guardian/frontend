@@ -11,8 +11,8 @@ define([
     'common/modules/experiments/tests/onward-highlights-panel',
     'common/modules/experiments/tests/alpha-comm',
     'common/modules/experiments/tests/commercial-in-article-desktop',
-    'common/modules/experiments/tests/right-popular',
-    'common/modules/experiments/tests/right-popular-control',
+    'common/modules/experiments/tests/right-most-popular',
+    'common/modules/experiments/tests/right-most-popular-control',
     'common/modules/experiments/tests/tag-links',
     'common/modules/experiments/tests/in-body-links'
 ], function (
