@@ -36,7 +36,7 @@ document. Ask your team mates to share it with you. If it has already been share
 Nginx
 -----
 
-Nginx must be installed and configured to correctly serve the application, please refer to `/nginx/README.md` in this project.
+Nginx must be installed and configured to correctly serve the application, please refer to [`/nginx/README.md`](./nginx/README.md) in this project.
 
 Vagrant
 -------
