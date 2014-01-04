@@ -1,3 +1,15 @@
 .participation__test, .participation__variant {
     display: inline;
 }
+
+.well--table .table {
+    background-color: blanchedalmond;
+}
+
+.ab-panel {
+    margin: 20px;
+}
+
+.ab-panel__label {
+    margin-right: 20px;
+}

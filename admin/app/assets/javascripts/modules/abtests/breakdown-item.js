@@ -33,12 +33,12 @@ define([
     BreakdownItem.prototype.useBem = true;
 
     BreakdownItem.prototype.prerender = function() {
-        this.getElem(this.classes.name).innerHTML = this.config.test.id;
-        this.getElem(this.classes.description).innerHTML = this.config.test.description;
-        this.getElem(this.classes.expiry).innerHTML = this.config.test.expiry;
-        this.getElem(this.classes.audience).innerHTML = this.config.test.audience;
-        this.getElem(this.classes.audienceOffset).innerHTML = this.config.test.audienceOffset;
-        this.getElem(this.classes.variants).innerHTML = _.pluck(this.config.test.variants, 'id').join(', ');
+        this.getElem(this.classes.name).textContent = this.config.test.id;
+        this.getElem(this.classes.description).textContent = this.config.test.description;
+        this.getElem(this.classes.expiry).textContent = this.config.test.expiry;
+        this.getElem(this.classes.audience).textContent = this.config.test.audience;
+        this.getElem(this.classes.audienceOffset).textContent = this.config.test.audienceOffset;
+        this.getElem(this.classes.variants).textContent = _.pluck(this.config.test.variants, 'id').join(', ');
     };
 
     return BreakdownItem;
