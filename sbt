@@ -67,9 +67,11 @@ echo "**************************************************************************
 echo ''
 
 
-# NOTE APP_SECRET below is not a REAL secret, it is just for DEV environments
+# NOTE this is not a REAL APP_SECRET it is just for DEV environments
+fake_secret="myKV8HQkjcaxygbDuyneHBeyFgsyyM8yCFFOxyDoT0QGuyrY7IyammSyP1VivCxS"
+
 java $FRONTEND_JVM_ARGS  \
   -Dsbt.boot.directory=$SBT_BOOT_DIR \
   $DEBUG_PARAMS \
-  -DAPP_SECRET="myKV8HQkjcaxygbDuyneHBeyFgsyyM8yCFFOxyDoT0QGuyrY7IyammSyP1VivCxS" \
+  -DAPP_SECRET=$fake_secret \
   -jar `dirname $0`/dev/sbt-launch-0.13.0.jar "$@"
