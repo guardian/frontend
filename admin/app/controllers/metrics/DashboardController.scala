@@ -34,4 +34,9 @@ object DashboardController extends Controller with Logging with AuthLogging {
     val metrics = MemoryMetrics.memory.map(_.withFormat(ChartFormat.DoubleLineBlueRed))
     NoCache(Ok(views.html.lineCharts(stage, metrics)))
   }
+
+  def renderAssets() = Authenticated{ request =>
+    val metrics = AssetMetrics.asset.map(_.withFormat(ChartFormat.DoubleLineBlueRed))
+    NoCache(Ok(views.html.lineCharts(stage, metrics, Some("Size of static assets"))))
+  }
 }
