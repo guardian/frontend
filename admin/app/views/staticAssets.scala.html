@@ -1,41 +1,124 @@
 @(env: String, assets: Seq[tools.AssetData])
 
+@chart(chart: tools.AssetChart) = {
+    <div id="@chart.id" class="chart @chart.format.cssClass"></div>
+
+    <script type="text/javascript">
+    new google.visualization.LineChart(document.getElementById('@chart.id'))
+    .draw(google.visualization.arrayToDataTable(@Html(chart.asDataset)), {
+        curveType: 'function',
+        colors: [@Html(chart.format.colours.map(c => s"'$c'").mkString(","))],
+        chartArea: {
+            width: "98%"
+        },
+        vAxis: {
+            title: 'Kb',
+            textPosition: 'in',
+        },
+        fontName : 'Helvetica'
+    });
+    </script>
+}
+
+@data(asset: tools.AssetData, index: Int) = {
+    <h4><i class="icon icon-file"></i> @asset.name</h4>
+    <hr />
+    <div class="row-fluid" id="asset-@index">
+        <div class="span8">
+            <table class="table table-bordered table--asset">
+                <thead>
+                    <tr>
+                        <th class="table__head" colspan="4">Size in Kb (last 14 days)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="4">@chart(asset.raw)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="span4">
+            <table class="table table-bordered table--asset">
+                <tbody>
+                    <tr>
+                        <th class="table__head" colspan="3">Size</th>
+                    </tr>
+                    <tr>
+                        <th>Current size (Raw)</th>
+                        <th>Current size (GZip)</th>
+                        <th>Week-on-week Change</th>
+                    </tr>
+                    <tr>
+                        <td>@asset.raw.latest.floor Kb</td>
+                        <td>@asset.zipped.latest.floor Kb</td>
+                        <td>
+                        @change(asset)
+                        </td>
+                    </tr>
+                    @if(asset.isCSS) {
+                        <tr>
+                            <th class="table__head" colspan="3">Metrics</th>
+                        </tr>
+                        <tr>
+                            <th>Rules</th>
+                            <th>Total Selectors</th>
+                            <th>Average Selectors</th>
+                        </tr>
+                        <tr>
+                            <td>@asset.rules.latest</td>
+                            <td>@asset.selectors.latest</td>
+                            <td></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+@change(asset: tools.AssetData) = {
+    @defining(asset.isPositiveChange) { change =>
+        <span class="label @if(change) { label-success } else { label-important }">
+            <i class="icon-arrow-@if(change) {down} else {up} icon-white"></i>
+            @{"%.2f".format(asset.rawChange) } Kb
+        </span>
+    }
+}
+
 @admin_main("Dashboard", env, isAuthed = true, hasCharts = true) {
 
     <h1 class="page-header">Static assets</h1>
 
-    @assets.filter(_.combined.hasData).map{ asset =>
-        <h3>@asset.name</h3>
+    <h3>Summary</h3>
 
-        <table class="table table-bordered table-striped">
-            <thead>
+    <table class="table table-bordered table-striped table--asset">
+        <thead>
+            <tr>
+                <th class="table__head">Asset filename</th>
+                <th class="table__head">Current size (Raw)</th>
+                <th class="table__head">Current size (GZip)</th>
+                <th class="table__head">Week-on-week Change</th>
+            </tr>
+        </thead>
+        <tbody>
+            @assets.filter(_.combined.hasData).zipWithIndex.map{ case (asset, index) =>
                 <tr>
-                    <th colspan="3">Size in Kb (last 14 days)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td colspan="3">@fragments.lineChart(asset.raw)</td>
-                </tr>
-            </tbody>
-            <thead>
-                <tr>
-                    <th>Current size (Raw)</th>
-                    <th>Current size (GZip)</th>
-                    <th>Week-on-week Change</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
+                    <td>
+                        <a href="#asset-@index">
+                            <strong>@asset.name</strong></td>
+                        </a>
                     <td>@asset.raw.latest.floor Kb</td>
                     <td>@asset.zipped.latest.floor Kb</td>
                     <td>
-                        <span class="label @if(asset.rawChange.isNegInfinity || asset.rawChange == 0.0) { label-success } else { label-important }">
-                            @{"%.2f".format(asset.rawChange) } Kb
-                        </span>
+                        @change(asset)
                     </td>
                 </tr>
-            </tbody>
-        </table>
+            }
+        </tbody>
+    </table>
+
+    @assets.filter(_.combined.hasData).zipWithIndex.map{ case (asset, index) =>
+        @data(asset, index)
     }
 }
