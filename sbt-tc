@@ -35,8 +35,16 @@ echo $IVY_PARAMS
 
 DOMAIN=`hostname -d`
 
+echo ''
+echo "******************************* JAVA VERION *********************************************"
+java -version
+echo "*****************************************************************************************"
+echo ''
+
+
 #MaxPermSize specifies the the maximum size for the permanent generation heap,
 # a heap that holds objects such as classes and methods. Xmx is the heap size.
+# TODO ensure we are building against OpenJDK 7 in TC
 cat /dev/null | java -Xmx4096M -XX:MaxPermSize=2048m \
   -XX:ReservedCodeCacheSize=128m \
   -Dsbt.boot.directory=$SBT_BOOT_DIR \

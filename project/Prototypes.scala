@@ -16,8 +16,6 @@ trait Prototypes {
     maxErrors := 20,
     javacOptions := Seq(
       "-g",
-      "-source", "1.6",
-      "-target", "1.6",
       "-encoding", "utf8"
     ),
     scalacOptions := Seq("-unchecked", "-optimise", "-deprecation",

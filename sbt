@@ -28,27 +28,10 @@ if [ ! -d "${SBT_BOOT_DIR}" ]; then
   mkdir -p ${SBT_BOOT_DIR}
 fi
 
-
-# Build configuration
-BUILD_PARAMS=""
-if [ -n "$BUILD_NUMBER" ]; then
-  BUILD_PARAMS="${BUILD_PARAMS} -Dbuild.number=\"$BUILD_NUMBER\""
-fi
-if [ -n "$BUILD_VCS_NUMBER" ]; then
-  BUILD_PARAMS="${BUILD_PARAMS} -Dbuild.vcs.number=\"$BUILD_VCS_NUMBER\""
-fi
-
-
-# Ivy configuration params and debug option
-IVY_PARAMS=""
+# Debug option
 DEBUG_PARAMS=""
 for arg in "$@"
 do
-    if [ "$arg" == "--directory-ivy-cache" ]; then
-      echo "setting ivy cache dir"
-      IVY_PARAMS="-Dsbt.ivy.home=.ivy -Divy.home=.ivy"
-      shift
-    fi
 
     if [ "$arg" == "--debug" ]; then
       echo "setting java process as debuggable"
@@ -58,18 +41,35 @@ do
 
 done
 
-#MaxPermSize specifies the the maximum size for the permanent generation heap,
-# a heap that holds objects such as classes and methods. Xmx is the heap size.
+# gives physical memory in KB
+physical_mem=$(grep MemTotal /proc/meminfo | awk '{print $2}')
 
-java -Xmx6144M -XX:MaxPermSize=3072m \
-  -XX:ReservedCodeCacheSize=128m \
-  -XX:+UseConcMarkSweepGC \
-  -XX:+CMSIncrementalMode \
+#http://stackoverflow.com/questions/5374455/what-does-java-option-xmx-stand-for
+jvm_mem="-Xmx$((physical_mem / 2 / 1024))m"
+
+#http://stackoverflow.com/questions/12114174/what-does-xxmaxpermsize-do
+perm_size="-XX:MaxPermSize=$((physical_mem / 3 / 1024))m"
+
+if [ -z $FRONTEND_JVM_ARGS ]; then
+    FRONTEND_JVM_ARGS="$jvm_mem $perm_size -XX:ReservedCodeCacheSize=128m -XX:+UseConcMarkSweepGC -XX:+CMSIncrementalMode -Djava.awt.headless=true"
+fi
+
+echo ''
+echo "******************************* USING JVM ARGS *********************************************"
+echo $FRONTEND_JVM_ARGS
+echo "********* to override/ customise use export FRONTEND_JVM_ARGS='XXX' in e.g. .bashrc ********"
+echo ''
+
+echo ''
+echo "******************************* JAVA VERION *********************************************"
+java -version
+echo "*****************************************************************************************"
+echo ''
+
+
+# NOTE APP_SECRET below is not a REAL secret, it is just for DEV environments
+java $FRONTEND_JVM_ARGS  \
   -Dsbt.boot.directory=$SBT_BOOT_DIR \
-  -Djava.awt.headless=true \
   $DEBUG_PARAMS \
   -DAPP_SECRET="myKV8HQkjcaxygbDuyneHBeyFgsyyM8yCFFOxyDoT0QGuyrY7IyammSyP1VivCxS" \
-  $BUILD_PARAMS \
-  $IVY_PARAMS \
-  $SBT_EXTRA_PARAMS \
   -jar `dirname $0`/dev/sbt-launch-0.13.0.jar "$@"
