@@ -1,0 +1,21 @@
+.container--global {
+    margin: 0 auto;
+    max-width: 1400px;
+}
+
+.global-nav {
+    margin-top: 10px;
+}
+
+    .global-nav__environment {
+        float:left;
+        margin-top: 10px;
+    }
+
+.well--front {
+    min-height: 200px;
+}
+
+.chart {
+    margin-bottom: 20px;
+}
