@@ -119,7 +119,7 @@ trait Prototypes {
 
   def root() = Project("root", base = file("."))
     .settings(
-      scalaVersion := "2.10.2"
+      scalaVersion := "2.10.3"
     )
 
   def application(name: String) = play.Project(name, version, path = file(name))
