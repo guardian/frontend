@@ -24,7 +24,7 @@
                     <div class="player media-content">
 
                         <div class="media-proportional-container">
-                            <video controls="controls" @video.mainPicture.map{ img =>  poster="@ArticleMainPicture.bestFor(img)" }>
+                            <video controls="controls" @video.mainPicture.map{ img =>  poster="@Item620.bestFor(img)" }>
                                 @video.encodings.map{ encoding =>
                                     <source src="@encoding.url" />
                                 }
@@ -34,7 +34,7 @@
                                         <param name="allowFullScreen" value="true" />
                                         <param name="movie" value="@Static("flash/flashmediaelement.swf")" />
                                         <param name="flashvars" value="controls=true&amp;file=@encoding.url" />
-                                        <img @video.mainPicture.map{ img =>  src="@ArticleMainPicture.bestFor(img)" } alt="" width="620" height="350" />
+                                        <img @video.mainPicture.map{ img =>  src="@Item620.bestFor(img)" } alt="" width="620" height="350" />
                                         Sorry, your browser is unable to play this video.
                                     </object>
                                 }

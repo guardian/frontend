@@ -20,7 +20,7 @@ trait FrontLifecycle extends GlobalSettings {
       }
     }
 
-    Front.refresh()
+    Front.refreshCollections()
   }
 
   override def onStop(app: play.api.Application) {

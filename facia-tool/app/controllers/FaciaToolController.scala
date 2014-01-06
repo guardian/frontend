@@ -23,7 +23,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     Ok(Json.toJson(S3FrontsApi.listCollectionIds))
   }
 
-  def listConfigs = AjaxExpiringAuthentication { request =>
+  def getConfig = AjaxExpiringAuthentication { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
     S3FrontsApi.getMasterConfig map { json =>
       Ok(json).as("application/json")

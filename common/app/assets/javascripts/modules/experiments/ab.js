@@ -4,14 +4,17 @@ define([
     'common/modules/analytics/mvt-cookie',
 
     //Current tests
+
     'common/modules/experiments/tests/aa',
     'common/modules/experiments/tests/mobile-facebook-autosignin',
     'common/modules/experiments/tests/onward-intrusive',
     'common/modules/experiments/tests/onward-highlights-panel',
     'common/modules/experiments/tests/alpha-comm',
+    'common/modules/experiments/tests/commercial-in-article-desktop',
     'common/modules/experiments/tests/right-most-popular',
     'common/modules/experiments/tests/right-most-popular-control',
     'common/modules/experiments/tests/tag-links',
+    'common/modules/experiments/tests/underline-links',
     'common/modules/experiments/tests/in-body-links'
 ], function (
     common,
@@ -23,9 +26,11 @@ define([
     OnwardIntrusive,
     OnwardHighlightsPanel,
     AlphaComm,
+    CommercialInArticlesDesktop,
     RightPopular,
     RightPopularControl,
     TagLinks,
+    UnderlineLinks,
     InBodyLinks
     ) {
 
@@ -35,9 +40,11 @@ define([
             new OnwardIntrusive(),
             new OnwardHighlightsPanel(),
             new AlphaComm(),
+            new CommercialInArticlesDesktop(),
             new RightPopular(),
             new RightPopularControl(),
             new TagLinks(),
+            new UnderlineLinks(),
             new InBodyLinks()
         ],
         participationsKey = 'gu.ab.participations';

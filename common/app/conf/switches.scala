@@ -215,6 +215,14 @@ object Switches extends Collections {
   val ABAlphaComm = Switch("A/B Tests", "ab-alpha-comm",
     "If this is switched on an AB test runs to trial new advertising user experiences and commercial models",
     safeState = Off)
+  
+  val ABCommercialInArticleDesktop = Switch("A/B Tests", "ab-commercial-in-articles-desktop",
+    "If this is on an AB test inserts commercial components in the inline and MPU advert slots (scope to desktop)",
+    safeState = Off)
+  
+  val ABCommercialInArticleMobile = Switch("A/B Tests", "ab-commercial-in-articles-mobile",
+    "If this is on an AB test inserts commercial components in the inline and MPU advert slots (scope to mobile browsers)",
+    safeState = Off)
 
   val ABMobileFacebookAutosignin = Switch("A/B Tests", "ab-mobile-facebook-autosignin",
     "If this is switched on an AB test runs to test facebook autosignin for mobile users",
@@ -240,6 +248,10 @@ object Switches extends Collections {
     "If this is switched on an AB test runs whereby articles that have no in body links auto link to their tags",
     safeState = Off)
 
+  val ABUnderlineLinks = Switch("A/B Tests", "ab-underline-links",
+    "If this is switched on an AB test runs whereby links in articles are underline (with CSS)",
+    safeState = Off)
+  
   val ABInBodyLinking = Switch("A/B Tests", "ab-in-body-linking",
     "If this is switched on an AB test runs whereby articles have in body links hidden",
     safeState = Off)
@@ -317,12 +329,15 @@ object Switches extends Collections {
     ABOnwardIntrusive,
     ABOnwardHighlightsPanel,
     ABAlphaComm,
+    ABCommercialInArticleDesktop,
+    ABCommercialInArticleMobile,
     ABRightPopularControl,
     ABMobileFacebookAutosignin,
     ABRightPopular,
     AdDwellTimeLoggerSwitch,
     UkAlphaSwitch,
     ABTagLinking,
+    ABUnderlineLinks,
     ABInBodyLinking
   )
 

@@ -133,10 +133,6 @@ object RemoveOuterParaHtml {
   }
 }
 
-object SafeName {
-  def apply(desc: TrailblockDescription) = if (desc.id == "") "top-stories" else desc.id.replace("/", "-")
-}
-
 object JavaScriptValue {
   def apply(value: Any) = value match {
     case b: Boolean => b
@@ -208,7 +204,7 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
       val asset = findVideoFromId(mediaId)
 
       // add the poster url
-      asset.flatMap(_.image).flatMap(ArticleMainPicture.bestFor).foreach{ url =>
+      asset.flatMap(_.image).flatMap(Item620.bestFor).foreach{ url =>
         element.attr("poster", url)
       }
 
