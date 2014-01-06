@@ -171,25 +171,30 @@
         <div class="trail u-cf" data-bind="
             css: {
                 editingMeta: state.editingMeta,
-                underDrag: state.underDrag,
-                redundant: $parent.collectionMeta && $parent.collectionMeta.max ? (0 + $index()) >= (0 + $parent.collectionMeta.max()) : false
+                underDrag: state.underDrag
             }">
 
             <a target="article" data-bind="attr: {href: 'http://www.theguardian.com/' + props.id()}">
                 <img draggable="false" data-bind="
                     attr: {src: fields.thumbnail, title: props.id}" />
             </a>
-            <div class="trail__meta">
-                <span data-bind="text: humanDate"></span>
-            </div>
+            <div class="trail__meta" data-bind="text: humanDate"></div>
             <div class="trail__remove" data-bind="click: $parent.omitItem">
                 <i class="icon-trash icon-white"></i>
             </div>
 
             <div data-bind="if: state.editingMeta">
-                <div class="image_tweaks"><a class="selected">show</a> <a class="">hide</a> <a class="">boost</a></div>
+                <div class="image_tweaks">
+                    <a data-bind="
+                        click: toggleImageToneHide,
+                        css: {selected: meta.imageTone() === 'hide'}">Hide</a>
+                    |
+                    <a data-bind="
+                        click: toggleImageToneHighlight,
+                        css: {selected: meta.imageTone() === 'highlight'}">Highlight</a>
+                </div>
                 <div class="trail_tweaks u-cf">
-                    <input type="text" data-bind="
+                    <input class="headline-input" type="text" data-bind="
                         value: headlineInput,
                         event: {blur: saveMetaEdit},
                         attr: {placeholder: fields.headline}"/>
@@ -198,7 +203,7 @@
                         attr: {title: fields.headline},
                         visible: meta.headline">Revert</a>
 
-                    <textarea type="text" data-bind="
+                    <textarea class="trailtext" type="text" data-bind="
                         value: trailTextInput,
                         event: {blur: saveMetaEdit},
                         attr: {placeholder: fields.trailText}"/></textarea>
@@ -232,10 +237,7 @@
                 <div class="content" data-bind="click: startMetaEdit,">
                     <a class="headline" target="article" data-bind="
                         text: meta.headline() || fields.headline(),
-                        attr: {
-                            href: props.id(),
-                            title: meta.trailText() || fields.trailText()
-                        }"></a>
+                        attr: {href: props.id()}"></a>
 
                     <!-- ko if: meta.supporting && meta.supporting.items().length -->
                         <span class="supporting-count">(<span data-bind="text: meta.supporting.items().length"></span>)</span>
@@ -245,7 +247,7 @@
                         <i class="icon-pencil"></i>
                     <!-- /ko -->
 
-                    <div class="trailText" data-bind="
+                    <div class="trailtext" data-bind="
                         attr: {href: props.id()},
                         html: meta.trailText() || fields.trailText()"></div>
 

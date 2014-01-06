@@ -47,6 +47,7 @@ define([
             this.meta = asObservableProps([
                 'headline',
                 'trailText',
+                'imageTone',
                 'group']);
 
             this.state = asObservableProps([
@@ -108,17 +109,25 @@ define([
         Article.prototype.reverter = function(key) {
             return function() {
                 this.meta[key](undefined);
-                this.saveMetaEdit();
+                this.save();
             };
         };
 
         Article.prototype.populate = function(opts) {
-            var self = this;
-
             populateObservables(this.props,  opts);
             populateObservables(this.meta,   opts.meta);
             populateObservables(this.fields, opts.fields);
             populateObservables(this.state,  opts.state);
+        };
+
+        Article.prototype.toggleImageToneHide = function() {
+            this.meta.imageTone(this.meta.imageTone() === 'hide' ? undefined : 'hide');
+            this.save();
+        };
+
+        Article.prototype.toggleImageToneHighlight = function() {
+            this.meta.imageTone(this.meta.imageTone() === 'highlight' ? undefined : 'highlight');
+            this.save();
         };
 
         Article.prototype.startMetaEdit = function() {
@@ -146,13 +155,6 @@ define([
                 self.save();
             }, 200);
         };
-
-        /*
-        Article.prototype.revertHeadline = function() {
-            this.meta.headline(undefined);
-            this.saveMetaEdit();
-        };
-        */
 
         Article.prototype.get = function() {
             return {

@@ -18,7 +18,7 @@ p {
     margin: 0;
 }
 
-a {
+a, a:hover {
     text-decoration: none;
     cursor: pointer;
 }
@@ -134,7 +134,7 @@ a {
 }
 
 .pending {
-    opacity: 0.5;
+    opacity: 0.7;
     pointer-events: none;
 }
 
@@ -245,7 +245,7 @@ a {
 }
 
 .content {
-    margin: -1px 100px 0 80px;
+    margin: 1px 100px 0 80px;
     line-height: 0;
 }
 
@@ -256,9 +256,10 @@ a {
 
 .headline {
     font-size: 15px;
-    line-height: 17px;
+    line-height: 16px;
     color: #000000;
     cursor: move;
+    margin: 1px 0 0 0;
 }
 
 .headline:hover {
@@ -266,7 +267,7 @@ a {
     text-decoration: none;
 }
 
-.trailText {
+.trailtext {
     padding-right: 50px;
     box-sizing: border-box;
     width: 100%;
@@ -276,11 +277,14 @@ a {
     text-overflow: ellipsis;
     word-break: break-all;
     word-wrap: break-word;
-    height: 13px;
+    height: 15px;
     line-height: 16px;
     font-size: 12px;
     color: #999999;
-    margin: 2px 0 0 0;
+}
+
+.supporting .trailtext {
+    display: none;
 }
 
 .trail .trail__meta {
@@ -290,9 +294,9 @@ a {
     top: 35px;
     left: 4px;
     width: 75px;
-    padding: 0 0 0 3px;
+    padding: 0 0 0 2px;
     color: #FFFFFF;
-    font-size: 9px;
+    font-size: 10px;
     line-height: 13px;
     background: rgba(0,0,0,0.2);
     border-bottom-left-radius: 3px;
@@ -350,15 +354,24 @@ a {
     top: 49px;
     font-size: 10px;
     line-height: 14px;
+    color: #AAAAAA;
+    font-size: 11px;
+}
+
+.supporting .image_tweaks {
+    display: none;
 }
 
 .image_tweaks a {
-    color: #999999;
+    color: #666666;
 }
 
-.image_tweaks a:hover,
+.image_tweaks a:hover {
+    color: #0088cc;
+}
+
 .image_tweaks a.selected {
-    color: #333333;
+    color: #000000;
 }
 
 .revert {
@@ -384,7 +397,7 @@ input[type="text"] {
     color: #000000;
 }
 
-textarea {
+textarea.trailtext {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     width: 100%;
@@ -520,7 +533,6 @@ button {
 
 .linky:hover {
     color: #005580;
-    text-decoration: underline;
 }
 
 .toolbar {
@@ -647,14 +659,13 @@ button {
 }
 
 .supporting-count {
-    font-size: 15px;
-    line-height: 16px;
+    font-size: 12px;
+    line-height: 12px;
     color: #CCCCCC;
     cursor: pointer;
 }
 
 .supporting-count span {
-    display: inline-block;
     margin: 0 2px;
     color: #666666;
 }
