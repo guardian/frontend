@@ -1,43 +1,43 @@
 define([
     //Commmon libraries
-    '$',
-    'utils/mediator',
-    'utils/deferToLoad',
-    'utils/ajax',
-    'modules/userPrefs',
+    'common/$',
+    'common/utils/mediator',
+    'common/utils/deferToLoad',
+    'common/utils/ajax',
+    'common/modules/userPrefs',
     //Vendor libraries
     'domReady',
     'bonzo',
     'bean',
     'lodash/functions/debounce',
     //Modules
-    'utils/storage',
-    'utils/detect',
-    'modules/onward/popular',
-    'modules/onward/related',
-    'modules/router',
-    'modules/ui/images',
-    'modules/navigation/top-stories',
-    'modules/navigation/profile',
-    'modules/navigation/sections',
-    'modules/navigation/search',
-    'modules/ui/tabs',
-    'modules/ui/toggles',
-    'modules/ui/relativedates',
-    'modules/analytics/clickstream',
-    'modules/analytics/omniture',
-    'modules/adverts/adverts',
-    'utils/cookies',
-    'modules/analytics/omnitureMedia',
-    'modules/analytics/adverts',
-    'modules/experiments/ab',
-    "modules/adverts/video",
-    "modules/discussion/comment-count",
-    "modules/gallery/lightbox",
-    "modules/onward/history",
-    "modules/onward/sequence",
-    "modules/ui/message",
-    "modules/identity/autosignin"
+    'common/utils/storage',
+    'common/utils/detect',
+    'common/modules/onward/popular',
+    'common/modules/onward/related',
+    'common/modules/router',
+    'common/modules/ui/images',
+    'common/modules/navigation/top-stories',
+    'common/modules/navigation/profile',
+    'common/modules/navigation/sections',
+    'common/modules/navigation/search',
+    'common/modules/ui/tabs',
+    'common/modules/ui/toggles',
+    'common/modules/ui/relativedates',
+    'common/modules/analytics/clickstream',
+    'common/modules/analytics/omniture',
+    'common/modules/adverts/adverts',
+    'common/utils/cookies',
+    'common/modules/analytics/omnitureMedia',
+    'common/modules/analytics/adverts',
+    'common/modules/experiments/ab',
+    "common/modules/adverts/video",
+    "common/modules/discussion/comment-count",
+    "common/modules/gallery/lightbox",
+    "common/modules/onward/history",
+    "common/modules/onward/sequence",
+    "common/modules/ui/message",
+    "common/modules/identity/autosignin"
 ], function (
     $,
     mediator,
@@ -91,18 +91,19 @@ define([
              var topStories = new TopStories(),
                 sections = new Sections(config),
                 search = new Search(config),
-                header = document.getElementById('header'),
-                profile;
+                header = document.getElementById('header');
 
-            if (config.switches.idProfileNavigation) {
-                profile = new Profile(header, {
-                    url: config.page.idUrl
-                });
-                profile.init();
+            if (header) {
+                if (config.switches.idProfileNavigation) {
+                    var profile = new Profile(header, {
+                        url: config.page.idUrl
+                    });
+                    profile.init();
+                }
+                topStories.load(config, header);
             }
 
             sections.init(document);
-            topStories.load(config, header);
             search.init(header);
         },
 
@@ -317,7 +318,7 @@ define([
 
         logReadingHistory : function() {
             mediator.on('page:common:ready', function(config) {
-                 if(/Article|Video|Gallery|Interactive/.test(config.page.contentType)) {
+                if(/Article|Video|Gallery|Interactive/.test(config.page.contentType)) {
                     new History().log({
                         id: '/' + config.page.pageId,
                         meta: {
@@ -326,7 +327,7 @@ define([
                         }
                     });
                 }
-                sequence.init();
+                sequence.init('/' + config.page.pageId);
             });
         },
 
@@ -341,7 +342,8 @@ define([
         windowEventListeners: function() {
             var events = {
                     resize: 'window:resize',
-                    orientationchange: 'window:orientationchange'
+                    orientationchange: 'window:orientationchange',
+                    scroll: 'window:scroll'
                 },
                 emitEvent = function(eventName) {
                     return function(e) {
@@ -350,6 +352,12 @@ define([
                 };
             for (var event in events) {
                 bean.on(window, event, debounce(emitEvent(events[event]), 200));
+            }
+        },
+
+        checkIframe: function() {
+            if (window.self !== window.top) {
+                $('html').addClass('iframed');
             }
         }
     };
@@ -374,6 +382,7 @@ define([
         if (!this.initialised) {
             this.initialised = true;
             modules.windowEventListeners();
+            modules.checkIframe();
             modules.upgradeImages();
             modules.showTabs();
             modules.initialiseNavigation(config);

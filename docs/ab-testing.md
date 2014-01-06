@@ -1,10 +1,9 @@
-
 This explains how to run an A/B test in frontend.
 
 We have a homebrewed AB testing framework running in the application. The data it collects is logged with both Ophan and Omniture.
 
 For the moment we write tests in JavaScript, which limits their usefulness. With Varnish, and the ability to serve variants from
-our CDN, then we can start to release server-generated varations at segments of our audience.
+our CDN, then we can start to release server-generated variations at segments of our audience.
 
 # Guide
 
@@ -86,7 +85,7 @@ define(['bonzo'], function (bonzo) {
 The AMD module must return an object with the following properties,
 
 - id: The unique name of the test.
-- expiry: The date on which this test is due to stop running. Expressed as a string parsable by the JavaScript Date obejct.
+- expiry: The date on which this test is due to stop running. Expressed as a string parsable by the JavaScript Date object.
 - audience: The ratio of people who you want in the test (Eg, 0.2 = 20%), who will then be split 50/50 between the control and variant.
 - description: A plain English summary of the test.
 - events: Values of data-link-name attributes whose elements should listen for events to record for the test.
@@ -172,7 +171,7 @@ For example,
 > - Time on page increase by 5%
 > - Page views per visit increase twofold
 
-You should also predict which varients are, in your eyes, going to provide the most positive improvements.
+You should also predict which variants are, in your eyes, going to provide the most positive improvements.
 
 > - Magical recommendations algorithm
 > - Control
@@ -186,7 +185,7 @@ Some things we do not like about Optimizely,
 
 Optimizely relies on JQuery, which the frontend code does not use as a base JS library and do not want to add.
 
-The Optimisely set-up allows _anyone_ to insert bits of code/design in to the site outside of a release cycle. While this sort of democratisation of AB testing is important we strongly feel, like all code/design/ux, the tests should follow this route through the review systems we have in place. Git pull etc.
+The Optimizely set-up allows _anyone_ to insert bits of code/design in to the site outside of a release cycle. While this sort of democratisation of AB testing is important we strongly feel, like all code/design/ux, the tests should follow this route through the review systems we have in place. Git pull etc.
 
 Given we already have 2 repositories of user behaviour data (Omniture, Ophan/RedShift) creating a third just adds another silo. Typically the data is much easier to analyse in our existing tools.
 

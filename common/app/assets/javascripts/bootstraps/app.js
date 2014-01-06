@@ -1,31 +1,31 @@
 /*global guardian:true */
-define('bootstraps/app', [
-    'common',
+define([
+    'common/common',
     'qwery',
     'domReady',
-    'utils/ajax',
-    'utils/detect',
+    'common/utils/ajax',
+    'common/utils/detect',
     
-    'modules/analytics/errors',
-    'modules/analytics/livestats',
-    'modules/ui/fonts',
-    'modules/router',
-    'modules/pageconfig',
-    'modules/adverts/userAdTargeting',
-    'modules/discussion/api',
+    'common/modules/analytics/errors',
+    'common/modules/analytics/livestats',
+    'common/modules/ui/fonts',
+    'common/modules/router',
+    'common/utils/config',
+    'common/modules/adverts/userAdTargeting',
+    'common/modules/discussion/api',
 
-    'bootstraps/common',
-    'bootstraps/tag',
-    'bootstraps/section',
-    'bootstraps/imagecontent',
+    'common/bootstraps/common',
+    'common/bootstraps/tag',
+    'common/bootstraps/section',
+    'common/bootstraps/imagecontent',
     
-    'bootstraps/facia',
-    'bootstraps/football',
-    'bootstraps/article',
-    'bootstraps/video',
-    'bootstraps/gallery',
-    'bootstraps/interactive',
-    'bootstraps/identity'
+    'common/bootstraps/facia',
+    'common/bootstraps/football',
+    'common/bootstraps/article',
+    'common/bootstraps/video',
+    'common/bootstraps/gallery',
+    'common/bootstraps/interactive',
+    'common/bootstraps/identity'
 ], function (
     common,
     qwery,
@@ -37,7 +37,7 @@ define('bootstraps/app', [
     LiveStats,
     Fonts,
     Router,
-    pageConfig,
+    config,
     UserAdTargeting,
     DiscussionApi,
 
@@ -102,9 +102,7 @@ define('bootstraps/app', [
         }
     };
 
-    var routes = function(rawConfig) {
-        var config = pageConfig(rawConfig);
-
+    var routes = function() {
         domReady(function() {
             var context = document.getElementById('preload-1'),
                 contextHtml = context.cloneNode(false).innerHTML;

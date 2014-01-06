@@ -1,5 +1,5 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="amd" -o ./modern/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -12,6 +12,13 @@ define(['../functions/createCallback', './forOwnRight'], function(createCallback
    * This method is like `_.findKey` except that it iterates over elements
    * of a `collection` in the opposite order.
    *
+   * If a property name is provided for `callback` the created "_.pluck" style
+   * callback will return the property value of the given element.
+   *
+   * If an object is provided for `callback` the created "_.where" style callback
+   * will return `true` for elements that have the properties of the given object,
+   * else `false`.
+   *
    * @static
    * @memberOf _
    * @category Objects
@@ -23,10 +30,24 @@ define(['../functions/createCallback', './forOwnRight'], function(createCallback
    * @returns {string|undefined} Returns the key of the found element, else `undefined`.
    * @example
    *
-   * _.findLastKey({ 'a': 1, 'b': 2, 'c': 3, 'd': 4 }, function(num) {
-   *   return num % 2 == 1;
+   * var characters = {
+   *   'barney': {  'age': 36, 'blocked': true },
+   *   'fred': {    'age': 40, 'blocked': false },
+   *   'pebbles': { 'age': 1,  'blocked': true }
+   * };
+   *
+   * _.findLastKey(characters, function(chr) {
+   *   return chr.age < 40;
    * });
-   * // => returns `c`, assuming `_.findKey` returns `a`
+   * // => returns `pebbles`, assuming `_.findKey` returns `barney`
+   *
+   * // using "_.where" callback shorthand
+   * _.findLastKey(characters, { 'age': 40 });
+   * // => 'fred'
+   *
+   * // using "_.pluck" callback shorthand
+   * _.findLastKey(characters, 'blocked');
+   * // => 'pebbles'
    */
   function findLastKey(object, callback, thisArg) {
     var result;

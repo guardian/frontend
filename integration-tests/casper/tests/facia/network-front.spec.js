@@ -133,7 +133,12 @@ casper.test.begin('Popular container appears at the bottom of the page', functio
     var popContainerSelector = '.container--popular';
     casper.waitForSelector(popContainerSelector, function(){
         test.assertExists(popContainerSelector, 'popular container displayed');
-        test.assertElementCount(popContainerSelector+ ' .item', 5, 'first five items visible');
+        // only 5 should be seen
+        var i = 6;
+        while (i <= 10) {
+            test.assertNotVisible(popContainerSelector + ' .item:nth-child(' + i + ')', 'item is not visible');
+            i++;
+        }
     });
 
     casper.run(function() {

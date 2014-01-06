@@ -82,15 +82,6 @@ class ContentTest extends FlatSpec with Matchers {
     testContent.mainPicture.flatMap(_.largestImage.flatMap(_.caption)) should be(Some("main picture 1"))
   }
 
-  it should "understand that trail image can be an image of type 'video'" in {
-
-    val testContent = content("article", List(image("test-image-0","body", "body picture 1", 50, 0),
-                                              image("test-image-1","body", "body picture 2", 50, 0),
-                                              video("test-image-3","main", "video poster", 50, 0)))
-
-    testContent.trailPicture.flatMap(_.largestImage.flatMap(_.caption)) should be(Some("video poster"))
-  }
-
   it should "detect if content is commentable" in{
     val noFields = article.copy(fields = None)
     Content(noFields).isCommentable should be(false)
@@ -138,14 +129,6 @@ class ContentTest extends FlatSpec with Matchers {
                       width: Int,
                       index: Int): ApiElement = {
     ApiElement(id, relation, "image", Some(index), List(asset(caption, width)))
-  }
-
-  private def video(  id: String,
-                      relation: String,
-                      caption: String,
-                      width: Int,
-                      index: Int): ApiElement = {
-    ApiElement(id, relation, "video", Some(index), List(asset(caption, width)))
   }
 
   private def asset(caption: String, width: Int): Asset = {

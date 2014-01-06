@@ -1,8 +1,0 @@
-{
-  "name": "reqwest",
-  "version": "0.8.2-alpha",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:ironsidevsquincy/reqwest.git"
-  }
-}

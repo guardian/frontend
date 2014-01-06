@@ -7,6 +7,11 @@
         .item:nth-child(n+3) {
             @extend %item-show-more;
         }
+        .js-collection--show-more {
+            .item:nth-child(n+3) {
+                display: none;
+            }
+        }
     }
     @include mq(tablet) {
         .item {
@@ -18,11 +23,21 @@
         .item:nth-child(-n+3) {
             @include card-image;
         }
+        .js-collection--show-more {
+            .item:nth-child(n+4) {
+                display: none;
+            }
+        }
     }
     @include mq(desktop) {
         @include first-row(4);
         .item:nth-child(-n+4) {
             @include card-image;
+        }
+        .js-collection--show-more {
+            .item:nth-child(n+5) {
+                display: none;
+            }
         }
     }
 }

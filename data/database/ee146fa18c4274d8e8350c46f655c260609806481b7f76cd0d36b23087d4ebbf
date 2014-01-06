@@ -1,0 +1,124 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":14,
+    "startIndex":1,
+    "pageSize":50,
+    "currentPage":1,
+    "pages":1,
+    "results":[{
+      "id":"artanddesign/design",
+      "type":"keyword",
+      "webTitle":"Design",
+      "webUrl":"http://www.theguardian.com/artanddesign/design",
+      "apiUrl":"http://content.guardianapis.com/artanddesign/design",
+      "sectionId":"artanddesign",
+      "sectionName":"Art and design"
+    },{
+      "id":"volvo-design/volvo-design",
+      "type":"keyword",
+      "webTitle":"Volvo Design",
+      "webUrl":"http://www.theguardian.com/volvo-design/volvo-design",
+      "apiUrl":"http://content.guardianapis.com/volvo-design/volvo-design",
+      "sectionId":"volvo-design",
+      "sectionName":"Volvo Design"
+    },{
+      "id":"sustainable-business/sustainable-design",
+      "type":"keyword",
+      "webTitle":"Sustainable design",
+      "webUrl":"http://www.theguardian.com/sustainable-business/sustainable-design",
+      "apiUrl":"http://content.guardianapis.com/sustainable-business/sustainable-design",
+      "sectionId":"sustainable-business",
+      "sectionName":"Guardian Sustainable Business"
+    },{
+      "id":"digital-agency/site-design",
+      "type":"keyword",
+      "webTitle":"Site design",
+      "webUrl":"http://www.theguardian.com/digital-agency/site-design",
+      "apiUrl":"http://content.guardianapis.com/digital-agency/site-design",
+      "sectionId":"digital-agency",
+      "sectionName":"Digital Agency"
+    },{
+      "id":"bsf/design-shine",
+      "type":"keyword",
+      "webTitle":"Design and shine",
+      "webUrl":"http://www.theguardian.com/bsf/design-shine",
+      "apiUrl":"http://content.guardianapis.com/bsf/design-shine",
+      "sectionId":"bsf",
+      "sectionName":"Building schools for the future"
+    },{
+      "id":"books/art",
+      "type":"keyword",
+      "webTitle":"Art and design",
+      "webUrl":"http://www.theguardian.com/books/art",
+      "apiUrl":"http://content.guardianapis.com/books/art",
+      "sectionId":"books",
+      "sectionName":"Books"
+    },{
+      "id":"extra/design-museum",
+      "type":"keyword",
+      "webTitle":"Design Museum",
+      "webUrl":"http://www.theguardian.com/extra/design-museum",
+      "apiUrl":"http://content.guardianapis.com/extra/design-museum",
+      "sectionId":"extra",
+      "sectionName":"Extra"
+    },{
+      "id":"service-design/service-design",
+      "type":"keyword",
+      "webTitle":"Service design",
+      "webUrl":"http://www.theguardian.com/service-design/service-design",
+      "apiUrl":"http://content.guardianapis.com/service-design/service-design",
+      "sectionId":"service-design",
+      "sectionName":"Service design"
+    },{
+      "id":"education/artanddesign",
+      "type":"keyword",
+      "webTitle":"Art and design",
+      "webUrl":"http://www.theguardian.com/education/artanddesign",
+      "apiUrl":"http://content.guardianapis.com/education/artanddesign",
+      "sectionId":"education",
+      "sectionName":"Education"
+    },{
+      "id":"artanddesign/artanddesign",
+      "type":"keyword",
+      "webTitle":"Art and design",
+      "webUrl":"http://www.theguardian.com/artanddesign/artanddesign",
+      "apiUrl":"http://content.guardianapis.com/artanddesign/artanddesign",
+      "sectionId":"artanddesign",
+      "sectionName":"Art and design"
+    },{
+      "id":"guardian-masterclasses/web-design-and-blogging-courses",
+      "type":"keyword",
+      "webTitle":"Web design and blogging courses",
+      "webUrl":"http://www.theguardian.com/guardian-masterclasses/web-design-and-blogging-courses",
+      "apiUrl":"http://content.guardianapis.com/guardian-masterclasses/web-design-and-blogging-courses",
+      "sectionId":"guardian-masterclasses",
+      "sectionName":"Guardian Masterclasses"
+    },{
+      "id":"volvo-design/the-future-designed-around-you",
+      "type":"keyword",
+      "webTitle":"The Future Designed Around You",
+      "webUrl":"http://www.theguardian.com/volvo-design/the-future-designed-around-you",
+      "apiUrl":"http://content.guardianapis.com/volvo-design/the-future-designed-around-you",
+      "sectionId":"volvo-design",
+      "sectionName":"Volvo Design"
+    },{
+      "id":"books/penguindesignaward",
+      "type":"keyword",
+      "webTitle":"Penguin design award",
+      "webUrl":"http://www.theguardian.com/books/penguindesignaward",
+      "apiUrl":"http://content.guardianapis.com/books/penguindesignaward",
+      "sectionId":"books",
+      "sectionName":"Books"
+    },{
+      "id":"guardian-masterclasses/art-and-design-courses",
+      "type":"keyword",
+      "webTitle":"Art and design courses",
+      "webUrl":"http://www.theguardian.com/guardian-masterclasses/art-and-design-courses",
+      "apiUrl":"http://content.guardianapis.com/guardian-masterclasses/art-and-design-courses",
+      "sectionId":"guardian-masterclasses",
+      "sectionName":"Guardian Masterclasses"
+    }]
+  }
+}

@@ -33,6 +33,7 @@ trait Trail extends Elements with Tags with FaciaFields {
 //Facia tool values
 trait FaciaFields {
   def group: Option[String] = None
+  def supporting: List[Trail] = Nil
 }
 
 case class Trailblock(description: TrailblockDescription, trails: Seq[Trail])

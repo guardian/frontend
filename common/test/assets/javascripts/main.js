@@ -1,50 +1,44 @@
 var tests = [],
-    specUrl = '/base/common/test/assets/javascripts/spec',
+    specUrl = '/base/common-test/spec',
     specRegExp = new RegExp(specUrl.replace(/\//g, '\\/') + '\/.*\\.spec\\.js'),
     spec;
 
 for (var file in window.__karma__.files) {
-    // We are only testing against discussion for now
     if (file.match(specRegExp)) {
-        spec = file
-                .replace(specUrl, 'spec')
-                .replace('.js', '');
-        tests.push(spec);
+        tests.push(file);
     }
 }
 
 requirejs.config({
     // Karma serves files from '/base'
-    baseUrl: '/base/common/app/assets/javascripts',
+    baseUrl: '/base',
     paths: {
         spec:         specUrl,
-        fixtures:     '/base/common/test/assets/javascripts/fixtures',
-        helpers:      '/base/common/test/assets/javascripts/helpers',
-        analytics:    'modules/analytics',
-
-        bean:         'components/bean/bean',
-        bonzo:        'components/bonzo/src/bonzo',
-        domReady:     'components/domready/ready',
-        EventEmitter: 'components/eventEmitter/EventEmitter',
-        qwery:        'components/qwery/mobile/qwery-mobile',
-        reqwest:      'components/reqwest/src/reqwest',
-        postscribe:   'components/postscribe/dist/postscribe',
-        swipe:        'components/swipe/swipe',
-        swipeview:    'components/swipeview/src/swipeview',
-        lodash:       'components/lodash-amd/modern',
-        imager:       'components/imager.js/src/strategies/container',
-        component:    'components/component/component'
+        fixtures:     'common-test/fixtures',
+        helpers:      'common-test/helpers',
+        analytics:    'common/modules/analytics',
+        bean:         'common/components/bean/bean',
+        bonzo:        'common/components/bonzo/src/bonzo',
+        domReady:     'common/components/domready/ready',
+        EventEmitter: 'common/components/eventEmitter/EventEmitter',
+        qwery:        'common/components/qwery/mobile/qwery-mobile',
+        reqwest:      'common/components/reqwest/src/reqwest',
+        postscribe:   'common/components/postscribe/dist/postscribe',
+        swipe:        'common/components/swipe/swipe',
+        swipeview:    'common/components/swipeview/src/swipeview',
+        lodash:       'common/components/lodash-amd/modern',
+        imager:       'common/components/imager.js/src/strategies/container'
     },
     map: {
         '*': {
             // mock out omniture script
             // TODO - better way of mocking dependencies?
-            omniture: '/base/common/test/assets/javascripts/spies/omniture.js'
+            omniture: 'common-test/spies/omniture'
         }
     },
     shim: {
         imager: {
-            deps: ['components/imager.js/src/imager'],
+            deps: ['common/components/imager.js/src/imager'],
             exports: 'Imager'
         }
     }

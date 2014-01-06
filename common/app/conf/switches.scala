@@ -44,7 +44,7 @@ object Switches extends Collections {
 
   val RelatedContentSwitch = Switch("Performance Switches", "related-content",
     "If this switch is turned on then related content will show. Turn off to help handle exceptional load.",
-    safeState = Off)
+    safeState = On)
 
   val CssFromStorageSwitch = Switch("Performance Switches", "css-from-storage",
     "If this switch is on CSS will be cached in users localStorage and read from there on subsequent requests.",
@@ -52,7 +52,7 @@ object Switches extends Collections {
 
   val ElasticSearchSwitch = Switch("Performance Switches", "elastic-search-content-api",
     "If this switch is on then (parts of) the application will use the Elastic Search content api",
-    safeState = Off)
+    safeState = On)
 
   val EditionRedirectLoggingSwitch = Switch("Performance Switches", "edition-redirect-logging",
     "If this switch is on, then extra logging will be done for edition redirects.",
@@ -79,7 +79,7 @@ object Switches extends Collections {
   val AudienceScienceSwitch = Switch("Analytics", "audience-science",
     "If this switch is on the Audience Science will be enabled.",
     safeState = Off)
-  
+
   val AdDwellTimeLoggerSwitch = Switch("Analytics", "ad-dwell-times-logging",
     "If this is on the in-view advert tracker will log some data to the Play logs",
     safeState = On)
@@ -104,10 +104,6 @@ object Switches extends Collections {
 
   val DiscussionSwitch = Switch("Discussion", "discussion",
     "If this switch is on, comments are displayed on articles.",
-    safeState = Off)
-
-  val ShortDiscussionSwitch = Switch("Discussion", "short-discussion",
-    "If this switch is on, only 10 top level comments are requested from discussion api.",
     safeState = Off)
 
   val DiscussionCommentRecommend = Switch("Discussion", "discussion-comment-recommend",
@@ -170,17 +166,13 @@ object Switches extends Collections {
     "If this switch is on the australia front will be available. Otherwise it will 404.",
     safeState = Off)
 
-  val NewsContainerSwitch = Switch("Feature Switches", "news-container",
-    "If this switch is on the news container will be on the network front. Otherwise fronts will display a normal facia container.",
-    safeState = Off)
-
   val LocalNavSwitch = Switch("Feature Switches", "local-nav",
     "If this switch is on, a secondary local nav is shown.",
     safeState = Off)
 
   val LightboxGalleriesSwitch = Switch("Feature Switches", "lightbox-galleries",
     "If this switch is on, galleries open in a lightbox.",
-    safeState = Off)
+    safeState = On)
 
   val IdentityProfileNavigationSwitch = Switch("Feature Switches", "id-profile-navigation",
     "If this switch is on you will see the link in the topbar taking you through to the users profile or sign in..",
@@ -200,7 +192,7 @@ object Switches extends Collections {
 
   val ArticleKeywordsSwitch = Switch("Feature Switches", "article-keywords",
     "If this is switched on then keywords will be shown at the end of articles.",
-    safeState = Off)
+    safeState = On)
 
   val ClientSideErrorSwitch = Switch("Feature Switches", "client-side-errors",
     "If this is switch on the the browser will log JavaScript errors to the server (via a beacon)",
@@ -210,54 +202,46 @@ object Switches extends Collections {
     "If this switch is on then users who have previously authorized the guardian app in facebook and who have not recently signed out are automatically signed in.",
     safeState = Off)
 
+  val IdentityFormstackSwitch = Switch("Feature Switches", "id-formstack",
+    "If this switch is on, formstack forms will be available",
+    safeState = Off)
+
   // A/B Test Switches
-
-  val FontDelaySwitch = Switch("A/B Tests", "web-fonts-delay",
-    "If this is switched on an AB test runs to measure the impact of not showing fallback fonts while fonts download.",
-    safeState = Off)
-
-  val ABParagraphSpacingSwitch = Switch("A/B Tests", "ab-paragraph-spacing",
-    "If this is switched on an AB test runs to measure the impact of macro typography tweaks on readability.",
-    safeState = Off)
-
-  val ABInlineLinkCardSwitch = Switch("A/B Tests", "ab-inline-link-card",
-    "If this is switched on an AB test runs to measure the impact of cardifying inline links on number of linked stories read.",
-    safeState = Off)
 
   val ABAa = Switch("A/B Tests", "ab-abcd",
     "If this is switched on an AA test runs to prove the assignment of users in to segments is working reliably.",
     safeState = Off)
 
-  val ABLiveBlogShowMore = Switch("A/B Tests", "ab-live-blog-show-more",
-    "If this is switched on an AB test runs to trial the impact of only displaying 10 live blog blocks with a show more cta",
-    safeState = Off)
-
-  val ABAlphaAdverts = Switch("A/B Tests", "ab-alpha-adverts",
+  val ABAlphaComm = Switch("A/B Tests", "ab-alpha-comm",
     "If this is switched on an AB test runs to trial new advertising user experiences and commercial models",
-    safeState = Off)
-
-  val ABCommercialComponents = Switch("A/B Tests", "ab-commercial-components",
-    "If this is switched on an AB test runs to test the new commercial components",
     safeState = Off)
 
   val ABMobileFacebookAutosignin = Switch("A/B Tests", "ab-mobile-facebook-autosignin",
     "If this is switched on an AB test runs to test facebook autosignin for mobile users",
    safeState = Off)
 
-  val ABImproveOnwardTrails = Switch("A/B Tests", "ab-improve-onward-trails",
-    "If this is switched on an AB test runs to test re-ordering story packages",
-    safeState = Off)
-
-  val ABInitialShowMore = Switch("A/B Tests", "ab-initial-show-more",
-    "If this is switched on an AB test runs to test how many items to initially show in news container",
-    safeState = Off)
-
-  val ABShowMoreLayout = Switch("A/B Tests", "ab-show-more-layout",
-    "If this is switched on an AB test runs that presents the 'show more' layout of a collection",
-    safeState = Off)
-
   val ABOnwardIntrusive = Switch("A/B Tests", "ab-onward-intrusive",
     "If this is switched on an AB test runs to test intrusive onward components",
+    safeState = Off)
+
+  val ABOnwardHighlightsPanel = Switch("A/B Tests", "ab-onward-highlights-panel",
+    "If this is switched on an AB test runs to test onward highlights panel",
+    safeState = Off)
+
+  val ABRightPopular = Switch("A/B Tests", "ab-right-popular",
+    "If this is switched on an AB test runs to trail a right hand side most popular component",
+    safeState = Off)
+
+  val ABRightPopularControl = Switch("A/B Tests", "ab-right-popular-control",
+    "If this is switched on an AB test runs as a control variant for right most popular",
+    safeState = Off)
+
+  val ABTagLinking = Switch("A/B Tests", "ab-tag-linking",
+    "If this is switched on an AB test runs whereby articles that have no in body links auto link to their tags",
+    safeState = Off)
+
+  val ABInBodyLinking = Switch("A/B Tests", "ab-in-body-linking",
+    "If this is switched on an AB test runs whereby articles have in body links hidden",
     safeState = Off)
 
   // Sport Switch
@@ -271,10 +255,6 @@ object Switches extends Collections {
   val IntegrationTestSwitch = Switch("Unwired Test Switch", "integration-test-switch",
     "Switch that is only used while running tests. You never need to change this switch.",
     safeState = Off)
-
-  val FaciaSwitch = Switch("Facia", "facia",
-    "Switch to redirect to facia if request has X-Gu-Facia=true",
-    safeState = Off  )
 
   val UkAlphaSwitch = Switch("Facia", "facia-uk-alpha",
     "If this is switched on then UK-Alpha will be served for requests with the cookie GU_UK_ALPHA",
@@ -303,7 +283,6 @@ object Switches extends Collections {
     DiscussionPostCommentSwitch,
     DiscussionTopCommentsSwitch,
     OpenCtaSwitch,
-    ShortDiscussionSwitch,
     SwipeNav,
     SwipeNavOnClick,
     FontSwitch,
@@ -314,15 +293,10 @@ object Switches extends Collections {
     ImageServerSwitch,
     ReleaseMessageSwitch,
     AustraliaFrontSwitch,
-    NewsContainerSwitch,
-    FontDelaySwitch,
-    ABParagraphSpacingSwitch,
-    ABInlineLinkCardSwitch,
     IntegrationTestSwitch,
     iPhoneAppSwitch,
     ClientSideErrorSwitch,
     LocalNavSwitch,
-    ABAa,
     LightboxGalleriesSwitch,
     IdentityProfileNavigationSwitch,
     ExternalLinksCardsSwitch,
@@ -330,25 +304,26 @@ object Switches extends Collections {
     LiveCricketSwitch,
     LiveStatsSwitch,
     UserzoomSwitch,
-    FaciaSwitch,
     AdSlotImpressionStatsSwitch,
-    ABLiveBlogShowMore,
     CssFromStorageSwitch,
     ElasticSearchSwitch,
     ShowUnsupportedEmbedsSwitch,
     ServeWebPImagesSwitch,
     ArticleKeywordsSwitch,
-    ABAlphaAdverts,
-    ABCommercialComponents,
     EditionRedirectLoggingSwitch,
     FacebookAutoSigninSwitch,
-    ABImproveOnwardTrails,
+    IdentityFormstackSwitch,
+    ABAa,
     ABOnwardIntrusive,
-    ABInitialShowMore,
-    AdDwellTimeLoggerSwitch,
-    ABShowMoreLayout,
+    ABOnwardHighlightsPanel,
+    ABAlphaComm,
+    ABRightPopularControl,
     ABMobileFacebookAutosignin,
-    UkAlphaSwitch
+    ABRightPopular,
+    AdDwellTimeLoggerSwitch,
+    UkAlphaSwitch,
+    ABTagLinking,
+    ABInBodyLinking
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

@@ -3,11 +3,11 @@
     Description: Wrapper around localStorage functionality
 */
 define([
-    'utils/mediator'
+    'common/utils/mediator'
 ], function (
     mediator
 ) {
-    
+
     var w = window;
     
     var Storage = function(type) {
@@ -28,7 +28,7 @@ define([
             w[this.type].removeItem(testKey);
             return true;
         } catch (e) {
-            mediator.emit('module:error', 'Unable to save to local storage: ' + e.message, 'utils/storage.js');
+            mediator.emit('module:error', 'Unable to save to local storage: ' + e.message, 'common/utils/storage.js');
             return false;
         }
     };

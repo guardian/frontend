@@ -2,17 +2,17 @@
     "name": "frontend-common-js",
     "version": "0.1.0 ",
     "dependencies": {
-        "bean": "1.0",
-        "bonzo": "1.3",
-        "curl": "0.8",
+        "bean": "~1.0.4",
+        "bonzo": "~1.3.6",
+        "curl": "~0.8.4",
         "domready": "*",
         "postscribe": "krux/postscribe",
-        "eventEmitter": "4.2",
-        "qwery": "3.4",
-        "reqwest": "ironsidevsquincy/reqwest",
+        "eventEmitter": "~4.2.6",
+        "qwery": "~3.4.1",
+        "reqwest": "guardian/reqwest#v0.8.2-alpha",
         "swipe": "guardian/Swipe",
         "swipeview": "guardian/SwipeView",
         "imager.js": "oncletom/Imager.js#feature-separation",
-        "lodash-amd": "2.2.1"
+        "lodash-amd": "~2.4.1"
     }
 }

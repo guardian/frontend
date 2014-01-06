@@ -5,15 +5,17 @@ html {
 body {
     overflow-y: hidden;
     margin: 0;
-    padding: 10px  10px 0 10px;
+    padding: 0;
+    min-width: 320px;
     color: #000000;
     -webkit-touch-callout: none;
-      -webkit-user-select: none;
-         -moz-user-select: none;
-              user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
 }
 
 a {
+    text-decoration: none;
     cursor: pointer;
 }
 
@@ -38,65 +40,75 @@ input[type=text] {
 .u-cf:after{clear:both}
 .u-cf{zoom:1}
 
+.logo {
+    position: fixed;
+    top: 8px;
+    left: 15px;
+    z-index: 2;
+}
+
+.tool-title {
+    float: left;
+    margin: 8px 10px 0 46px;
+    font-size: 26px;
+    line-height: 30px;
+    color: #000;
+    text-transform: lowercase;
+    font-weight: normal;
+}
+
+.tool-title .message {
+    color: #CCCCCC;
+    font-size: 26px;
+    font-style: italic;
+    font-weight: normal;
+}
+
+.tool-title .message--important {
+    color: #d61d00;
+}
+
+.tool-title .message--loading {
+    display: none;
+}
+
+.is-authed .tool-title .message--loading {
+    display: inline;
+}
+
+.login-form {
+    float: left;
+    margin: 10px 10px 0 0;
+}
+
 .finder {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    float: left;
-    clear: left;
+    position: absolute;
+    top: 49px;
     width: 50%;
-    padding: 0 15px 0 0;
-    margin-top: 10px;
+    padding: 10px 15px 0 12px;
     color: #666666;
     border-right: 1px solid #cccccc;
+    border-top: 1px solid #cccccc;
 }
 
 .finder__controls {
     font-size: 10px;
     color: #666666;
     text-transform: uppercase;
+    padding: 0 0 0 4px;
 }
 
-.login-form {
-    display: inline-table;
-    margin: 0 0 0 10px;
-}
-
-h1 {
-    float: left;
-    font-size: 26px;
-    height: 30px;
-    color: #999999;
-    font-weight: bold;
-    letter-spacing: -1px;
-    margin: 0;
-    line-height: 30px;
-}
-
-h1 span {
-    color: #CCCCCC;
-    font-weight: normal;
-}
-
-.message {
-    float: left;
-    font-size: 26px;
-    font-style: italic;
-    height: 30px;
-    color: #CCCCCC;
-    letter-spacing: -1px;
-    line-height: 30px;
-    margin: 0 0 0 10px;
-}
-
-.message--important {
-    color: #d61d00;
+.finder .latest-articles {
+    padding: 0 10px 0 0;
 }
 
 .title {
     font-size: 18px;
     font-weight: bold;
     color: #000000;
-    padding: 6px 0 0 0;
+    padding: 0 0 0 4px;
 }
 
 .collections .title {
@@ -104,10 +116,24 @@ h1 span {
 }
 
 .droppable {
-    padding: 0 0 20px 0;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0 0 10px 0;
     -webkit-transition: background-color 50ms;
-       -moz-transition: background-color 50ms;
-            transition: background-color 50ms;
+    -moz-transition: background-color 50ms;
+    transition: background-color 50ms;
+}
+
+.supporting .droppable {
+    padding: 0 0 25px 0;
+}
+
+.droppable.underDrag {
+    background-color: #f89406;
+}
+
+.editingMeta .droppable.underDrag {
+    background-color: #999999;
 }
 
 .pending {
@@ -118,11 +144,13 @@ h1 span {
 .list-header {
     color: #999999;
     overflow: hidden;
+    padding: 5px 0 1px 0;
+    min-width: 300px;
 }
 
 .list-header__saving  {
+    color: #999999;
     float: right;
-    color: #d61d00;
     font-size: 12px;
 }
 
@@ -136,25 +164,25 @@ h1 span {
 .collections {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    padding-left: 15px;
+    position: absolute;
+    left: 50%;
+    top: 50px;
     width: 50%;
-    float: right;
-    margin-top: 10px;
+    padding: 10px 15px 0 15px;
+}
+
+.collections.live-mode {
+    background: #EEFFEE;
 }
 
 .collections__inner {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     padding: 0 10px 0 0;
-    border-top: 1px solid #CCCCCC;
 }
 
 .collection {
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    width: 100%;
-    float: left;
-    position: relative;
+    padding: 0 0 3px 0;
     border-bottom: 1px solid #CCCCCC;
 }
 
@@ -162,12 +190,35 @@ h1 span {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     overflow: hidden;
-    padding: 1px 3px 4px 4px;
+    padding: 0 4px 3px 4px;;
     position: relative;
-    background-color: #FFFFFF;
-    -webkit-transition: background-color 100ms;
-       -moz-transition: background-color 100ms;
-            transition: background-color 100ms;
+    background: #FFFFFF;
+    border-top: 5px solid #FFFFFF;
+    -webkit-transition: border-color 150ms;
+       -moz-transition: border-color 150ms;
+            transition: border-color 150ms;
+}
+
+.live-mode .trail {
+    border-color: #EEFFEE;
+    background: #EEFFEE;        
+}
+
+.supporting .trail {
+    border-color: #CCCCCC;
+    background: #CCCCCC;
+}
+
+.trail.editingMeta {
+    background: #CCCCCC;
+}
+
+.trail.underDrag {
+    border-top-color: #f89406; 
+}
+
+.editingMeta .trail.underDrag {
+    border-top-color: #999999; 
 }
 
 .trail:last-child {
@@ -176,6 +227,15 @@ h1 span {
 
 .trail.redundant {
     opacity: 0.2;
+}
+
+.trail-count {
+    position: absolute;
+    top: 16px;
+    left: 7px;
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 .trail img {
@@ -187,69 +247,50 @@ h1 span {
     border-radius: 3px;
 }
 
-.web-title {
-    margin: 0 190px 0 80px;
-    display: block;    
+.content {
+    margin: -1px 100px 0 80px;
+    line-height: 0;
 }
 
-.web-title a {
-    text-decoration: none;
+.content .icon-pencil {
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+.headline {
     font-size: 15px;
-    line-height: 16px;
+    line-height: 18px;
     color: #000000;
     cursor: move;
 }
 
-.web-title:hover a {
-    color: #438835;
-}
-
-.web-title--editor {
-    display: none;
-}
-
-.latest-articles .web-title--editor {
-    display: none !important;
-}
-
-.web-title:hover .web-title--editor {
-    opacity: 0.5;
-    display: inline-block;
-}
-
-.web-title--editor:hover {
-    opacity: 1;
-}
-
-.web-title--edited {
-    opacity: 0.75;
-    display: inline-block;
-    background-color: #CCCCCC;
-    border: 2px solid #CCCCCC;
-    border-radius: 4px;
-    margin: 0;
-}
-
-.web-title--edited:hover {
-    opacity: 1;
+.headline:hover {
+    color: #f89406;
+    text-decoration: none;
 }
 
 .trail .trail__meta {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     position: absolute;
-    top: 36px;
-    right: 135px;
-    color: #999999;
-    font-size: 10px;
-    line-height: 14px;
-    margin: 0 0 0 80px;
+    top: 35px;
+    left: 4px;
+    width: 75px;
+    padding: 0 0 0 3px;
+    color: #FFFFFF;
+    font-size: 9px;
+    line-height: 13px;
+    background: rgba(0,0,0,0.2);
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
 }
 
 .trail .trail__remove {
     display: none;
     position: absolute;
-    top: 4px;
-    right: 3px;
-    background: #CCCCCC;
+    top: 3px;
+    left: 59px;
+    background: #0088cc;
     width: 14px;
     height: 20px;
     padding: 0px 3px;
@@ -258,16 +299,16 @@ h1 span {
     border-radius: 2px;
 }
 
-.droppable .trail:hover .trail__remove {
+.droppable .trail:hover > .trail__remove {
     display: block;
 }
 
 .droppable .trail .trail__remove:hover {
-    background: #999999;
+    background: #0077BB;
 }
 
 .trail_tweaks {
-    margin: 0 0 0 80px;
+    margin: 1px 0 0 80px;;
     color: #CCCCCC;
 }
 
@@ -282,8 +323,6 @@ h1 span {
     display: inline-block;
     font-size: 12px;
     line-height: 13px;
-    padding: 0 1px 0 6px;
-    border-left: 1px solid #CCCCCC;
 }
 
 .trail_tweaks a:first-child {
@@ -311,32 +350,11 @@ button {
     font-weight: bold;
 }
 
-.clipboard,
-.clipboard__overlay {
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    min-height: 53px;
-}
-
-.clipboard__title {
-    border-top: 1px solid #CCCCCC;
-}
-
 .clipboard__wrapper {
     position: relative;
-    margin: 5px 0 27px 0;
-}
-
-.clipboard__overlay {
-    position: absolute;
-    z-index: -1;
-    border: 1px dashed #cccccc;
-    border-radius: 3px;
-    width: 100%;
-    padding: 4px 5px;
-    color: #999999;
-    font-size: 12px;
-    text-align: center;
+    margin: 0px 0 5px 0;
+    padding: 5px 0 5px 0;
+    border-bottom: 1px solid #CCCCCC;
 }
 
 .collection-config {
@@ -352,20 +370,18 @@ button {
 
 .trail_stats {
     position: absolute;
-    top: 6px;
-    right: 0;
-    width: 130px;
-    height: 40px;
+    right: 4px;
+    height: 30px;
     font-size: 9px;
     line-height: 12px;
 }
 
 .pageviews {
-    color: #666666;
+    color: #999999;
     font-weight: bold;
     position: absolute;
-    bottom: -2px;
-    left: 100px;
+    bottom: -12px;
+    right: 1px;
 }
 
 .pageviews-graph canvas {
@@ -373,24 +389,21 @@ button {
     float: right;
     position: absolute;
     bottom: -2px;
-    right: 33px;
+    right: 0;
 }
 
 .group-name {
-    padding: 4px 0 0px 4px;
+    padding: 5px 0 0px 4px;
     font-size: 10px;
     line-height: 12px;
-    color: #999999;
-    text-transform: uppercase;
-}
-
-.underDrag {
-    background: #a7d9a0 !important;
+    color: #666666;
+    text-transform: capitalize;
 }
 
 .search-form {
     position: relative;
     height: 35px;
+    padding: 5px 0 0 4px;
 }
 
 .search-term {
@@ -408,7 +421,7 @@ button {
 
 .autocompleter {
     position: absolute;
-    left: 40%;
+    left: 37%;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     display: inline-block;
@@ -459,11 +472,23 @@ button {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     float: right;
+    position: absolute;
+    left: 50%;
     width: 50%;
-    padding: 0 0 0 18px;
-    height: 30px;
+    min-width: 350px;
+    padding: 10px 15px 10px 18px;
+    height: 50px;
     white-space: nowrap;
     overflow: hidden;
+    border-bottom: 1px solid #cccccc;
+    border-left: 1px solid #cccccc;
+    margin-left: -1px;
+    z-index: 1;
+    background: #ffffff;
+}
+
+.toolbar > * {
+    margin-bottom: 20px;
 }
 
 .tool-select {
@@ -476,12 +501,13 @@ button {
 }
 
 .tool {
-    float: left;
     display: inline-block;
-    padding: 4px 10px;
+    padding: 0 10px;
     background: #CCCCCC;
+    font-size: 12px;
+    line-height: 20px;
     color: #FFFFFF;
-    margin: 1px 0;
+    margin-top: 5px;
     border-radius: 3px;
     border: 0;
     cursor: pointer;
@@ -500,33 +526,21 @@ button {
     color: #999999;
 }
 
-.draft-toolbar {
-    color: #46c430;
-    margin: 0 0 10px 4px;
-    height: 22px;
+.list-header .tools {
+    margin: 0 0 2px 4px;
 }
 
-.draft-toolbar .tool {
-    padding: 0 8px;
-    font-size: 12px;
-    line-height: 20px;
-}
-
-.draft-toolbar .tool.draft-warning {
+.tools .tool.draft-warning {
     font-weight: bold;
     margin-right: 4px;
 }
 
-.draft-toolbar .tool.draft-publish {
+.tools .tool:first-child {
     background: #0088cc;
 }
 
-.draft-toolbar .tool.draft-publish:hover {
+.tools .tool:first-child:hover {
     background: #0077BB;
-}
-
-.draft-toolbar .tool.draft-discard {
-    margin-left: 2px;
 }
 
 .logout,
@@ -561,4 +575,107 @@ button {
 .ophan-legend {
     position: absolute;
     right: 51%;
+    top: 10px;
+}
+
+.supporting {
+    margin: 4px -4px -4px -4px;
+}
+
+.supporting-message {
+    position: absolute;
+    bottom: 2px;
+    z-index: 2;
+    left: 4px;
+    font-size: 11px;
+    color: #FFFFFF;
+}
+
+.supporting-count {
+    width: 125px;
+    margin: 3px 0 -2px 0;
+    font-size: 10px;
+    line-height: 12px;
+    color: #999999;
+    cursor: pointer;
+}
+
+.supporting-count strong {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.trail .tools {
+    position: absolute;
+    bottom: 2px;
+    right: 3px;
+}
+
+@media (max-width: 1100px) {
+    .toolbar,
+    .collections {
+        left: 40%;
+        width: 60%;
+    }
+    .finder {
+        width: 40%;
+    }
+    .finder .trail .content {
+        margin: 0 0 0 80px;
+    }
+    .finder .trail .trail_stats,
+    .finder .trail .trail__meta {
+        display: none;
+    }
+}
+
+@media (max-width: 875px) {
+    .is-authed .tool-title,
+    .finder,
+    .ophan-legend {
+        display: none;
+    }
+    .toolbar {
+        position: fixed;
+        left: 0;
+        width: 100%;
+        height: 50px;
+        padding: 10px 15px 10px 45px;
+    }
+    .collections {
+        left: 0;
+        width: 100%;
+        padding-left: 10px;
+    }
+    .scrollable {
+        overflow-y: inherit
+    }
+}
+
+@media (max-width: 675px) {
+    .toolbar .tool-label {
+        display: none;
+    }
+}
+
+@media (max-width: 525px) {
+    .trail .content {
+        margin: 0 0 0 80px;
+    }
+    .trail .trail_stats {
+        display: none;
+    }
+}
+
+@media (max-width: 350px) {
+    .trail .content {
+        margin: 5px 0 0 0;
+    }
+    .trail img,
+    .trail .trail__meta {
+        display: none;
+    }
+    .trail_tweaks {
+        margin: 0;
+    }
 }

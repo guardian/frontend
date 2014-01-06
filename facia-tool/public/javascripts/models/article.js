@@ -1,129 +1,211 @@
+/* global _: true, humanized_time_span: true */
 define([
-    'models/common',
-    'models/humanizedTimeSpan',
-    'models/authedAjax',
-    'knockout'
+    'modules/vars',
+    'utils/as-observable-props',
+    'utils/populate-observables',
+    'utils/number-with-commas',
+    'models/group',
+    'modules/authed-ajax',
+    'modules/content-api',
+    'modules/ophan-api',
+    'knockout',
+    'js!humanized-time-span'
 ],
-function (
-    common,
-    humanizedTimeSpan,
-    authedAjax,
-    ko
-){
-    var absUrlHost = 'http://m.guardian.co.uk/';
+    function (
+        vars,
+        asObservableProps,
+        populateObservables,
+        numberWithCommas,
+        Group,
+        authedAjax,
+        contentApi,
+        ophanApi,
+        ko
+        ){
+        function Article(opts) {
+            var self = this;
 
-    function Article(opts, collection) {
-        var opts = opts || {};
+            opts = opts || {};
 
-        this.collection = collection;
+            this.parent = opts.parent;
+            this.parentType = opts.parentType;
 
-        this.props = common.util.asObservableProps([
-            'id',
-            'webPublicationDate']);
+            this.uneditable = opts.uneditable;
 
-        this.fields = common.util.asObservableProps([
-            'headline',
-            'thumbnail',
-            'trailText',
-            'shortId']);
+            this.props = asObservableProps([
+                'id',
+                'webPublicationDate']);
 
-        this.fields.headline('...'); 
+            this.fields = asObservableProps([
+                'headline',
+                'thumbnail',
+                'trailText',
+                'shortId']);
 
-        this.meta = common.util.asObservableProps([
-            'headline',
-            'group']);
+            this.fields.headline('...');
 
-        this.state = common.util.asObservableProps([
-            'underDrag',
-            'editingTitle',
-            'shares',
-            'comments',
-            'totalHits',
-            'pageViewsSeries']);
+            this.meta = asObservableProps([
+                'headline',
+                'group']);
 
-        // Computeds
-        this.humanDate = ko.computed(function(){
-            return this.props.webPublicationDate() ? humanizedTimeSpan(this.props.webPublicationDate()) : '';
-        }, this);
-        
-        this.totalHitsFormatted = ko.computed(function(){
-            return common.util.numberWithCommas(this.state.totalHits());
-        }, this);
+            this.state = asObservableProps([
+                'underDrag',
+                'editingMeta',
+                'shares',
+                'comments',
+                'totalHits',
+                'pageViewsSeries']);
 
-        this.headlineInput = ko.computed({
-            read: function() {
-                return this.meta.headline() || this.fields.headline();
-            },
-            write: function(value) {
-                this.meta.headline(value);
-            },
-            owner: this
-        });
+            // Computeds
+            this.humanDate = ko.computed(function(){
+                return this.props.webPublicationDate() ? humanized_time_span(this.props.webPublicationDate()) : '';
+            }, this);
 
-        this.provisionalHeadline = null;
+            this.totalHitsFormatted = ko.computed(function(){
+                return numberWithCommas(this.state.totalHits());
+            }, this);
 
-        this.populate(opts);
-    };
+            this.headlineInput = ko.computed({
+                read: function() {
+                    return this.meta.headline() || this.fields.headline();
+                },
+                write: function(value) {
+                    this.meta.headline(value);
+                },
+                owner: this
+            });
 
-    Article.prototype.populate = function(opts) {
-        common.util.populateObservables(this.props, opts);
-        common.util.populateObservables(this.meta, opts.meta);
-        common.util.populateObservables(this.fields, opts.fields);
-    };
+            this.populate(opts);
 
-    Article.prototype.startTitleEdit = function() {
-        this.provisionalHeadline = this.meta.headline();
-        this.state.editingTitle(true);
-    };
+            // Populate supporting
+            if (this.parentType !== 'Article') {
+                this.meta.supporting = new Group({
+                    items: _.map((opts.meta || {}).supporting, function(item) {
+                        return new Article(_.extend(item, {
+                            parent: self,
+                            parentType: 'Article'
+                        }));
+                    }),
+                    parent: self,
+                    parentType: 'Article',
+                    omitItem: self.save.bind(self)
+                });
 
-    Article.prototype.saveTitleEdit = function() {
-        if(this.meta.headline()) {
-            this.save();
-        };
-        this.state.editingTitle(false);
-    };
-
-    Article.prototype.cancelTitleEdit = function() {
-        this.meta.headline(this.provisionalHeadline);
-        this.state.editingTitle(false);
-    };
-
-    Article.prototype.revertTitleEdit = function() {
-        this.meta.headline(undefined);
-        this.state.editingTitle(false);
-        this.save();
-    };
-
-    Article.prototype.getMeta = function() {
-        var self = this;
-
-        return _.chain(this.meta)
-            .pairs()
-            // is the meta property a not a whitespace-only string ?
-            .filter(function(p){ return !_.isUndefined(p[1]()) && ("" + p[1]()).replace(/\s*/g, '').length > 0; })
-            // does it actually differ from the props value (if any) that it's overwriting ?
-            .filter(function(p){ return  _.isUndefined(self.props[p[0]]) || self.props[p[0]]() !== p[1](); })
-            .map(function(p){ return [p[0], p[1]()]; })
-            .object()
-            .value();
-    };
-
-    Article.prototype.save = function() {
-        if (!this.collection) { return; }
-
-        authedAjax.updateCollection(
-            'post',
-            this.collection,
-            {
-                item:     this.props.id(),
-                position: this.props.id(),
-                itemMeta: this.getMeta(),
-                live:     common.state.liveMode(),
-                draft:   !common.state.liveMode(),
+                contentApi.decorateItems(self.meta.supporting.items());
+                ophanApi.decorateItems(self.meta.supporting.items());
             }
-        );
-        this.collection.state.loadIsPending(true)
-    };
+        }
 
-    return Article;
-});
+        Article.prototype.populate = function(opts) {
+            var self = this;
+
+            populateObservables(this.props,  opts);
+            populateObservables(this.meta,   opts.meta);
+            populateObservables(this.fields, opts.fields);
+            populateObservables(this.state,  opts.state);
+        };
+
+        Article.prototype.startMetaEdit = function() {
+            var self = this;
+
+            if (this.uneditable) { return; }
+
+            _.defer(function(){
+                self.state.editingMeta(true);
+            });
+        };
+
+        Article.prototype.stopMetaEdit = function() {
+            var self = this;
+            _.defer(function(){
+                self.state.editingMeta(false);
+            });
+        };
+
+        Article.prototype.saveMetaEdit = function() {
+            var self = this;
+
+            // defer, to let through any UI events, before they're blocked by the loadIsPending CSS:
+            setTimeout(function() {
+                self.save();
+            }, 200);
+        };
+
+        Article.prototype.revertHeadline = function() {
+            this.meta.headline(undefined);
+            this.saveMetaEdit();
+        };
+
+        Article.prototype.get = function() {
+            return {
+                id:   this.props.id(),
+                meta: this.getMeta()
+            };
+        };
+
+        Article.prototype.getMeta = function() {
+            var self = this;
+
+            return _.chain(self.meta)
+                .pairs()
+                // execute any knockout values:
+                .map(function(p){ return [p[0], _.isFunction(p[1]) ? p[1]() : p[1]]; })
+                // reject undefined properties:
+                .filter(function(p){ return !_.isUndefined(p[1]); })
+                // reject whitespace-only strings:
+                .filter(function(p){ return _.isString(p[1]) ? p[1].replace(/\s*/g, '').length > 0 : true; })
+                // reject vals that don't differ from the props (if any) that they're overwriting:
+                .filter(function(p){ return _.isUndefined(self.props[p[0]]) || self.props[p[0]]() !== p[1]; })
+                // serialise supporting
+                .map(function(p) {
+                    if (p[0] === 'supporting') {
+                        // but only on first level Articles, i.e. those whose parent isn't an Article
+                        return [p[0], self.parentType === 'Article' ? [] : _.map(p[1].items(), function(item) {
+                            return item.get();
+                        })];
+                    }
+                    return [p[0], p[1]];
+                })
+                // drop empty arrays:
+                .filter(function(p){ return _.isArray(p[1]) ? p[1].length : true; })
+                // return as obj, or as undefined if empty.
+                // undefined is useful for ommiting it from any subsequent JSON.stringify call 
+                .reduce(function(obj, p, key) {
+                    obj = obj || {};
+                    obj[p[0]] = p[1];
+                    return obj;
+                }, undefined)
+                .value();
+        };
+
+        Article.prototype.save = function() {
+            var self = this;
+
+            if (!this.parent) {
+                return;
+            }
+
+            if (this.parentType === 'Article') {
+                this.parent.save();
+                this.stopMetaEdit();
+                return;
+            }
+
+            if (this.parentType === 'Collection') {
+                authedAjax.updateCollection(
+                    'post',
+                    this.parent,
+                    {
+                        item:     self.props.id(),
+                        position: self.props.id(),
+                        itemMeta: self.getMeta(),
+                        live:     vars.state.liveMode(),
+                        draft:   !vars.state.liveMode()
+                    }
+                );
+                this.parent.state.loadIsPending(true);
+            }
+        };
+
+        return Article;
+    });

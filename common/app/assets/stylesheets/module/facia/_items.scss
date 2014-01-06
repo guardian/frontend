@@ -123,17 +123,7 @@ $c-live: #e81818;
         vertical-align: top;
     }
 
-    &:before {
-        content: '';
-        display: block;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        width: 1px;
-        height: 100%;
-        border-left: 1px solid $c-neutral5;
-    }
+    @include vertical-item-separator;
 }
 .item__link {
     display: block;
@@ -156,6 +146,9 @@ $c-live: #e81818;
     margin-top: 2px;
     padding-bottom: 60%;
 
+    &.inlined-image {
+        display: block;
+    }
     .responsive-img {
         width: 100%;
         height: 100%;
@@ -244,6 +237,9 @@ $c-live: #e81818;
             left: $gs-gutter/2 - 1;
         }
     }
+}
+.item__support {
+    display: none;
 }
 
 .collection__show-more {

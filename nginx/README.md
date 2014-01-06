@@ -42,3 +42,7 @@ You will have to make sure the ```sites-enabled``` folder in included in your ``
         # THIS IS WHAT YOU MUST ADD
         include sites-enabled/*; 
     #...
+
+## Note
+
+Both [frontend-test.crt](frontend-test.crt) and [frontend-test.key](frontend-test.key) are test values that are not used in production or anywhere else across the Guardian so can be public.

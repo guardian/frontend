@@ -1,5 +1,5 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize underscore exports="amd" -o ./underscore/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
@@ -36,26 +36,31 @@ define(['../functions/createCallback', './forEach', '../objects/forOwn'], functi
    * _.max([4, 2, 8, 6]);
    * // => 8
    *
-   * var stooges = [
-   *   { 'name': 'moe', 'age': 40 },
-   *   { 'name': 'larry', 'age': 50 }
+   * var characters = [
+   *   { 'name': 'barney', 'age': 36 },
+   *   { 'name': 'fred',   'age': 40 }
    * ];
    *
-   * _.max(stooges, function(stooge) { return stooge.age; });
-   * // => { 'name': 'larry', 'age': 50 };
+   * _.max(characters, function(chr) { return chr.age; });
+   * // => { 'name': 'fred', 'age': 40 };
    *
    * // using "_.pluck" callback shorthand
-   * _.max(stooges, 'age');
-   * // => { 'name': 'larry', 'age': 50 };
+   * _.max(characters, 'age');
+   * // => { 'name': 'fred', 'age': 40 };
    */
   function max(collection, callback, thisArg) {
     var computed = -Infinity,
         result = computed;
 
+    // allows working with functions like `_.map` without using
+    // their `index` argument as a callback
+    if (typeof callback != 'function' && thisArg && thisArg[callback] === collection) {
+      callback = null;
+    }
     var index = -1,
         length = collection ? collection.length : 0;
 
-    if (!callback && typeof length == 'number') {
+    if (callback == null && typeof length == 'number') {
       while (++index < length) {
         var value = collection[index];
         if (value > result) {

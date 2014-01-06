@@ -1,20 +1,23 @@
 define([
-    "common",
-    "$",
-    "modules/ui/autoupdate",
-    "modules/live/filter",
-    "modules/live/summary",
-    "modules/sport/football/matchnav",
-    "modules/analytics/reading",
-    "modules/discussion/loader",
-    "modules/sport/cricket",
-    "modules/experiments/live-blog-show-more",
-    "modules/ui/notification-counter",
-    "utils/detect",
-    "modules/experiments/left-hand-card",
-    "modules/open/cta"
+    "common/common",
+    "common/utils/mediator",
+    "common/utils/detect",
+    "common/$",
+    "common/modules/ui/autoupdate",
+    "common/modules/live/filter",
+    "common/modules/live/summary",
+    "common/modules/sport/football/matchnav",
+    "common/modules/analytics/reading",
+    "common/modules/discussion/loader",
+    "common/modules/sport/cricket",
+    "common/modules/ui/notification-counter",
+    "common/modules/experiments/left-hand-card",
+    "common/modules/open/cta",
+    "common/modules/commercial/loader"
 ], function (
     common,
+    mediator,
+    detect,
     $,
     AutoUpdate,
     LiveFilter,
@@ -23,11 +26,10 @@ define([
     Reading,
     DiscussionLoader,
     Cricket,
-    LiveShowMore,
     NotificationCounter,
-    detect,
     LeftHandCard,
-    OpenCta
+    OpenCta,
+    CommercialLoader
 ) {
 
     var modules = {
@@ -87,7 +89,7 @@ define([
         initDiscussion: function() {
 
             common.mediator.on('page:article:ready', function(config, context) {
-                if (config.page.commentable) {
+                if (config.page.commentable && config.switches.discussion) {
                     var discussionLoader = new DiscussionLoader(context, common.mediator, {}, config.switches.discussionTopComments);
                     discussionLoader.attachToDefault();
                 }

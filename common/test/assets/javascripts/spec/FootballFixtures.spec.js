@@ -1,4 +1,4 @@
-define(['common', 'utils/ajax', 'qwery', 'modules/sport/football/fixtures', 'helpers/fixtures'], function(common, ajax, qwery, FootballFixtures, fixtures) {
+define(['common/common', 'common/utils/ajax', 'qwery', 'common/modules/sport/football/fixtures', 'helpers/fixtures'], function(common, ajax, qwery, FootballFixtures, fixtures) {
 
     var fixuresConf = {
         id: 'football-fixtures-fixtures',
@@ -73,7 +73,7 @@ define(['common', 'utils/ajax', 'qwery', 'modules/sport/football/fixtures', 'hel
         });
 
         it("should fail silently if no response is returned from fixtures request", function() {
-            server.respondWith([200, {}, 'null']);
+            server.respondWith([404, {}, 'null']);
             runs(function() {
                 new FootballFixtures({
                     prependTo: prependTo,

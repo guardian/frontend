@@ -1,25 +1,16 @@
 /**
- * Lo-Dash 2.2.1 (Custom Build) <http://lodash.com/>
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize underscore exports="amd" -o ./underscore/`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
  * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  * Available under MIT license <http://lodash.com/license>
  */
-define(['../functions/createCallback'], function(createCallback) {
-
-  /**
-   * Used for `Array` method references.
-   *
-   * Normally `Array.prototype` would suffice, however, using an array literal
-   * avoids issues in Narwhal.
-   */
-  var arrayRef = [];
+define(['../functions/createCallback', '../internals/slice'], function(createCallback, slice) {
 
   /* Native method shortcuts for methods with the same name as other `lodash` methods */
   var nativeMax = Math.max,
-      nativeMin = Math.min,
-      nativeSlice = arrayRef.slice;
+      nativeMin = Math.min;
 
   /**
    * Gets all but the last element or last `n` elements of an array. If a
@@ -57,24 +48,19 @@ define(['../functions/createCallback'], function(createCallback) {
    * });
    * // => [1]
    *
-   * var food = [
-   *   { 'name': 'beet',   'organic': false },
-   *   { 'name': 'carrot', 'organic': true }
+   * var characters = [
+   *   { 'name': 'barney',  'blocked': false, 'employer': 'slate' },
+   *   { 'name': 'fred',    'blocked': true,  'employer': 'slate' },
+   *   { 'name': 'pebbles', 'blocked': true,  'employer': 'na' }
    * ];
    *
    * // using "_.pluck" callback shorthand
-   * _.initial(food, 'organic');
-   * // => [{ 'name': 'beet',   'organic': false }]
-   *
-   * var food = [
-   *   { 'name': 'banana', 'type': 'fruit' },
-   *   { 'name': 'beet',   'type': 'vegetable' },
-   *   { 'name': 'carrot', 'type': 'vegetable' }
-   * ];
+   * _.initial(characters, 'blocked');
+   * // => [{ 'name': 'barney',  'blocked': false, 'employer': 'slate' }]
    *
    * // using "_.where" callback shorthand
-   * _.initial(food, { 'type': 'vegetable' });
-   * // => [{ 'name': 'banana', 'type': 'fruit' }]
+   * _.pluck(_.initial(characters, { 'employer': 'na' }), 'name');
+   * // => ['barney', 'fred']
    */
   function initial(array, callback, thisArg) {
     var n = 0,
@@ -89,7 +75,7 @@ define(['../functions/createCallback'], function(createCallback) {
     } else {
       n = (callback == null || thisArg) ? 1 : callback || n;
     }
-    return nativeSlice.call(array, 0, nativeMin(nativeMax(0, length - n), length));
+    return slice(array, 0, nativeMin(nativeMax(0, length - n), length));
   }
 
   return initial;

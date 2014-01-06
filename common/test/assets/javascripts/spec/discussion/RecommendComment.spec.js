@@ -1,9 +1,9 @@
 define([
-    'common',
-    'utils/ajax',
+    'common/common',
+    'common/utils/ajax',
     'bean',
     'helpers/fixtures',
-    'modules/discussion/recommend-comments'
+    'common/modules/discussion/recommend-comments'
 ], function(
     common,
     ajax,
@@ -21,7 +21,7 @@ define([
             recommendCommentFixture = {
                 id: fixturesId,
                 fixtures: [
-                    '<div class="d-comment__recommend js-recommend-comment" data-comment-id="200" data-recommend-count="3" title="3 recommendations"><i class="i i-recommend"></i><span class="d-comment__recommend-count js-recommend-count">3</span></div>'
+                    '<div class="d-comment__recommend js-recommend-comment d-discussion--recommendations-open" data-comment-id="200" data-recommend-count="3" title="3 recommendations"><i class="i i-recommend"></i><span class="d-comment__recommend-count js-recommend-count">3</span></div>'
                 ]
             };
 

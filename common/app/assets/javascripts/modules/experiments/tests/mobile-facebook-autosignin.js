@@ -1,6 +1,6 @@
 define([
-    "utils/detect",
-    "modules/identity/autosignin"],
+    "common/utils/detect",
+    "common/modules/identity/autosignin"],
  function(
    Detect,
    AutoSignin

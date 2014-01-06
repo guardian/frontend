@@ -13,10 +13,12 @@ object BodyCleaner {
     InBodyElementCleaner,
     UnindentBulletParents,
     PictureCleaner(article.bodyImages),
+    new InBodyLinksABTestCleaner(article),
     InBodyLinkCleaner("in body link")(Edition(request)),
     BlockNumberCleaner,
     TweetCleaner,
     WitnessCleaner,
-    VideoEmbedCleaner(article.bodyVideos)
+    VideoEmbedCleaner(article.bodyVideos),
+    new TagLinker(article)
   )
 }

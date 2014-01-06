@@ -1,3 +1,0 @@
-window.externalFunction = function () {
-
-}
