@@ -58,7 +58,7 @@ trait UpdateActions {
 
   def deleteFromDraft(update: UpdateList, block: Block): Block =
     if (update.draft)
-      block.copy(draft=block.draft map { l => l.filterNot(_.id == update.item) } filter(_ != block.live) )
+      block.copy(draft=block.draft orElse Option(block.live) map { l => l.filterNot(_.id == update.item) } filter(_ != block.live) )
     else
       block
 
