@@ -150,7 +150,7 @@ define([
         Article.prototype.saveMetaEdit = function() {
             var self = this;
 
-            // defer, to let through any UI events, before they're blocked by the loadIsPending CSS:
+            // defer, to let through any UI events, before they're blocked by the "isPending" CSS:
             setTimeout(function() {
                 self.save();
             }, 200);
@@ -223,7 +223,7 @@ define([
                         draft:   !vars.state.liveMode()
                     }
                 );
-                this.parent.state.loadIsPending(true);
+                this.parent.setPending(true);
             }
         };
 

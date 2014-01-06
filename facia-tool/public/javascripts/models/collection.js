@@ -45,14 +45,22 @@ define([
 
         this.state  = asObservableProps([
             'hasDraft',
-            'loadIsPending',
+            'pending',
             'editingConfig',
             'count',
             'timeAgo']);
 
-        this.state.loadIsPending(true);
+        this.setPending(true);
         this.load();
     }
+
+    Collection.prototype.setPending = function(bool) {
+        this.state.pending(!!bool);
+    };
+
+    Collection.prototype.isPending = function() {
+        return !!this.state.pending();
+    };
 
     Collection.prototype.createGroups = function(groupNames) {
         var self = this;
@@ -88,7 +96,7 @@ define([
     Collection.prototype.processDraft = function(goLive) {
         var self = this;
 
-        this.state.loadIsPending(true);
+        this.setPending(true);
 
         authedAjax.request({
             type: 'post',
@@ -105,7 +113,7 @@ define([
     Collection.prototype.drop = function(item) {
         var self = this;
 
-        self.state.loadIsPending(true);
+        self.setPending(true);
 
         authedAjax.request({
             type: 'delete',
@@ -132,7 +140,7 @@ define([
             self.response = resp;
             self.state.hasDraft(_.isArray(self.response.draft));
 
-            var dontPopulate = opts.isRefresh && (self.state.loadIsPending() || self.response.lastUpdated === self.collectionMeta.lastUpdated());
+            var dontPopulate = opts.isRefresh && (self.isPending() || self.response.lastUpdated === self.collectionMeta.lastUpdated());
             if (!dontPopulate) {
                 self.populateLists();
             }
@@ -143,7 +151,7 @@ define([
             }
         })
         .always(function() {
-            self.state.loadIsPending(false);
+            self.setPending(false);
         });
     };
 
@@ -198,7 +206,7 @@ define([
     };
 
     Collection.prototype.refresh = function() {
-        if (vars.state.uiBusy || this.state.loadIsPending()) { return; }
+        if (vars.state.uiBusy || this.setPending()) { return; }
         this.load({
             isRefresh: true
         });
@@ -208,7 +216,7 @@ define([
         var self = this;
 
         this.state.editingConfig(false);
-        this.state.loadIsPending(true);
+        this.setPending(true);
 
         authedAjax.request({
             url: vars.CONST.apiBase + '/collection/' + this.id,
