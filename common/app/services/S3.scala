@@ -113,18 +113,17 @@ object S3FrontsApi extends S3 {
   }
 }
 
-trait SecureS3Request extends Logging {
+trait SecureS3Request extends implicits.Dates with Logging {
   val algorithm: String = "HmacSHA1"
   val accessKey: String = Configuration.aws.accessKey
   val secretKey: String = Configuration.aws.secretKey
-  val formatterRfc822: DateTimeFormatter = DateTimeFormat.forPattern("E, d MMM y HH:mm:ss Z")
   val frontendBucket: String = Configuration.aws.bucket
   val frontendStore: String = Configuration.frontend.store
 
   def urlGet(id: String): WS.WSRequestHolder = url("GET", id)
 
   private def url(httpVerb: String, id: String): WS.WSRequestHolder = {
-    val date: String = DateTime.now.toString(formatterRfc822)
+    val date: String = DateTime.now.toHttpDateTimeString
     val signedString: String = signAndBase64Encode(generateStringToSign(httpVerb, id, date))
     WS.url(s"$frontendStore/$id")
       .withHeaders("Date" -> date)
