@@ -9,6 +9,7 @@ import play.api.libs.ws.{ WS, Response }
 import play.api.libs.json.JsObject
 import services.S3FrontsApi
 import scala.concurrent.Future
+import scala.collection.immutable.SortedMap
 
 object Path {
   def unapply[T](uri: String) = Some(uri.split('?')(0))
@@ -165,7 +166,6 @@ trait ParseCollection extends ExecutionContexts with Logging {
     val newSearch = queryString match {
       case Path(Seg("search" ::  Nil)) => {
         val search = ContentApi.search(edition)
-                       .tag("type/gallery|type/article|type/video|type/sudoku")
                        .showElements("all")
                        .pageSize(20)
         val newSearch = queryParamsWithEdition.foldLeft(search){
@@ -177,7 +177,6 @@ trait ParseCollection extends ExecutionContexts with Logging {
       }
       case Path(id)  => {
         val search = ContentApi.item(id, edition)
-                       .tag("type/gallery|type/article|type/video|type/sudoku")
                        .showElements("all")
                        .showEditorsPicks(true)
                        .pageSize(20)
@@ -217,6 +216,11 @@ object CollectionAgent extends ParseCollection {
   }
 
   def close(): Unit = collectionAgent.close()
+
+  def contentsAsJsonString: String = {
+    val contents: SortedMap[String, Seq[String]] = SortedMap(collectionAgent.get().mapValues{v => v.items.map(_.url)}.toSeq:_*)
+    Json.prettyPrint(Json.toJson(contents))
+  }
 }
 
 object QueryAgents {
@@ -266,6 +270,8 @@ trait ConfigAgent extends ExecutionContexts {
   }
 
   def close() = configAgent.close()
+
+  def contentsAsJsonString: String = Json.prettyPrint(configAgent.get)
 }
 
 object ConfigAgent extends ConfigAgent

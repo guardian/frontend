@@ -2,7 +2,7 @@ package common
 
 import play.api.mvc.RequestHeader
 import org.joda.time.DateTimeZone
-import model.{MetaData, TrailblockDescription}
+import model.MetaData
 
 // describes the ways in which editions differ from each other
 abstract class Edition(
