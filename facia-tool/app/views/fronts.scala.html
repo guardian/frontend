@@ -94,8 +94,6 @@
         <div class="collection">
             <div class="list-header">
                 <div class="title" data-bind="visible: !state.editingConfig()">
-                    <span class="list-header__saving" data-bind="visible: state.loadIsPending">SAVING</span>
-
                     <a class="list-header__display" data-bind="
                         visible: typeof configMeta.displayName() === 'undefined',
                         text: collectionMeta.displayName() || 'Set title for ' + (configMeta.roleName() || id),
@@ -103,19 +101,23 @@
 
                     <span class="list-header__display" data-bind="
                         visible: typeof configMeta.displayName() !== 'undefined',
-                        text: configMeta.displayName"></span>
+                        text: configMeta.displayName() || configMeta.roleName()"></span>
 
-                    <span class="list-header__display" data-bind="
-                        visible: configMeta.displayName() === '',
-                        text: configMeta.roleName"></span>
+                    <span class="count" data-bind="if: !state.loadIsPending()">
+                        (<span data-bind="
+                            text: state.count() ? state.count() : 'empty',
+                            css: {'non-zero':  state.count}
+                            "></span>)
+                    </span>
+
+                    <span class="count" data-bind="if: state.loadIsPending">
+                        (<span class="non-zero">updating...</span>)
+                    </span>
 
                     <span class="list-header__timings">
                         <!-- ko if: state.timeAgo -->
                             <span class="list-header__timings__last-updated" data-bind="text: state.timeAgo"></span>
                             by <span class="list-header__timings__user" data-bind="text: collectionMeta.updatedBy"></span>
-                        <!-- /ko -->
-                        <!-- ko ifnot: state.timeAgo -->
-                            empty
                         <!-- /ko -->
                     </span>
                 </div>
@@ -240,7 +242,7 @@
                         attr: {href: props.id()}"></a>
 
                     <!-- ko if: meta.supporting && meta.supporting.items().length -->
-                        <span class="supporting-count">(<span data-bind="text: meta.supporting.items().length"></span>)</span>
+                        <span class="count">(<span class="non-zero" data-bind="text: meta.supporting.items().length"></span>)</span>
                     <!-- /ko -->
 
                     <!-- ko if: meta.headline -->

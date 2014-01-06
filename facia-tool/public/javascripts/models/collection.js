@@ -47,8 +47,10 @@ define([
             'hasDraft',
             'loadIsPending',
             'editingConfig',
+            'count',
             'timeAgo']);
 
+        this.state.loadIsPending(true);
         this.load();
     }
 
@@ -125,21 +127,24 @@ define([
 
         return authedAjax.request({
             url: vars.CONST.apiBase + '/collection/' + this.id
-        }).then(function(resp) {
-                self.response = resp;
-                self.state.loadIsPending(false);
-                self.state.hasDraft(_.isArray(self.response.draft));
+        })
+        .then(function(resp) {
+            self.response = resp;
+            self.state.hasDraft(_.isArray(self.response.draft));
 
-                var dontPopulate = opts.isRefresh && (self.state.loadIsPending() || self.response.lastUpdated === self.collectionMeta.lastUpdated());
-                if (!dontPopulate) {
-                    self.populateLists();
-                }
+            var dontPopulate = opts.isRefresh && (self.state.loadIsPending() || self.response.lastUpdated === self.collectionMeta.lastUpdated());
+            if (!dontPopulate) {
+                self.populateLists();
+            }
 
-                if (!self.state.editingConfig()) {
-                    populateObservables(self.collectionMeta, self.response);
-                    self.state.timeAgo(self.getTimeAgo(self.response.lastUpdated));
-                }
-            });
+            if (!self.state.editingConfig()) {
+                populateObservables(self.collectionMeta, self.response);
+                self.state.timeAgo(self.getTimeAgo(self.response.lastUpdated));
+            }
+        })
+        .always(function() {
+            self.state.loadIsPending(false);
+        });
     };
 
     Collection.prototype.populateLists = function() {
@@ -181,6 +186,8 @@ define([
 
             group.items.push(article);
         });
+
+        this.state.count(source.length);
     };
 
     Collection.prototype.decorate = function() {
