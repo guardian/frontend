@@ -12,7 +12,7 @@ class Front extends Logging {
     if (editions.contains(sectionId)) "" else sectionId
   }
 
-  def refresh() = refreshJobs().foreach(_())
+  def refreshCollections(): Unit = ConfigAgent.getAllCollectionIds.foreach { collectionId => CollectionAgent.updateCollectionById(collectionId, isWarmedUp=false) }
 
   def refreshJobs() = Seq(() => {
       ConfigAgent.refresh()}
