@@ -270,7 +270,7 @@ a, a:hover {
     text-decoration: none;
 }
 
-.trailtext {
+div.trailtext {
     padding-right: 50px;
     box-sizing: border-box;
     width: 100%;
@@ -453,6 +453,7 @@ button {
     font-weight: bold;
     position: absolute;
     bottom: -14px;
+    right: 1px;
 }
 
 .pageviews-graph canvas {
