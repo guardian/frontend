@@ -137,10 +137,11 @@ define([
             url: vars.CONST.apiBase + '/collection/' + this.id
         })
         .then(function(resp) {
+            var dontPopulate = opts.isRefresh && (self.isPending() || self.response.lastUpdated === self.collectionMeta.lastUpdated());
+
             self.response = resp;
             self.state.hasDraft(_.isArray(self.response.draft));
 
-            var dontPopulate = opts.isRefresh && (self.isPending() || self.response.lastUpdated === self.collectionMeta.lastUpdated());
             if (!dontPopulate) {
                 self.populateLists();
             }

@@ -248,7 +248,6 @@ a, a:hover {
 }
 
 .content {
-    font-size: 14px;
     margin: 0 100px 0 85px;
     line-height: 0;
 }
@@ -259,7 +258,7 @@ a, a:hover {
 }
 
 .headline {
-    font-size: 15px;
+    font-size: 14px;
     line-height: 16px;
     color: #000000;
     cursor: move;
@@ -597,7 +596,7 @@ button {
     color: #999999;
 }
 
-.list-header .tools {
+.collection .tools {
     margin: 0 0 2px 4px;
 }
 
