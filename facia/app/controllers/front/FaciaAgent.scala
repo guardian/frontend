@@ -9,6 +9,7 @@ import play.api.libs.ws.{ WS, Response }
 import play.api.libs.json.JsObject
 import services.S3FrontsApi
 import scala.concurrent.Future
+import scala.collection.immutable.SortedMap
 
 object Path {
   def unapply[T](uri: String) = Some(uri.split('?')(0))
@@ -217,6 +218,11 @@ object CollectionAgent extends ParseCollection {
   }
 
   def close(): Unit = collectionAgent.close()
+
+  def contentsAsJsonString: String = {
+    val contents: SortedMap[String, Seq[String]] = SortedMap(collectionAgent.get().mapValues{v => v.items.map(_.url)}.toSeq:_*)
+    Json.prettyPrint(Json.toJson(contents))
+  }
 }
 
 object QueryAgents {
@@ -266,6 +272,8 @@ trait ConfigAgent extends ExecutionContexts {
   }
 
   def close() = configAgent.close()
+
+  def contentsAsJsonString: String = Json.prettyPrint(configAgent.get)
 }
 
 object ConfigAgent extends ConfigAgent
