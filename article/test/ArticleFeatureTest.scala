@@ -73,6 +73,22 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
       }
     }
 
+    scenario("Author metadata", ArticleComponents) {
+
+      Given("I am on an article entitled 'TV highlights 09/08/2012'")
+      HtmlUnit("/tv-and-radio/2012/aug/08/americas-animal-hoarder-the-churchills") { browser =>
+        import browser._
+
+        Then("the authors should be exposed as meta data")
+        val authors = $("meta[name=author]")
+        authors.first.getAttribute("content") should be("Ben Arnold")
+        authors.last.getAttribute("content") should be("Mark Jones")
+
+        And("it should handle escaping")
+        authors(4).getAttribute("content") should be("Phelim O'Neill")
+      }
+    }
+
     scenario("Display the article image", ArticleComponents) {
 
       Given("I am on an article entitled 'Putting a price on the rivers and rain diminishes us all'")
