@@ -1,15 +1,15 @@
 /*global s_i_guardian:true */
 define([
-    'common',
-    'utils/detect',
-    'modules/experiments/ab',
-    'utils/storage',
-    'modules/identity/api',
-    'modules/analytics/errors',
-    'utils/cookies',
+    'common/common',
+    'common/utils/detect',
+    'common/modules/experiments/ab',
+    'common/utils/storage',
+    'common/modules/identity/api',
+    'common/modules/analytics/errors',
+    'common/utils/cookies',
     'omniture',
-    'modules/analytics/mvt-cookie',
-    'modules/analytics/beacon'
+    'common/modules/analytics/mvt-cookie',
+    'common/modules/analytics/beacon'
 ], function(
     common,
     detect,
@@ -113,7 +113,6 @@ define([
 
             s.prop3     = config.page.publication || '';
 
-
             s.channel = config.page.contentType === "Network Front" ? "Network Front" : config.page.section || '';
             s.prop9     = config.page.contentType || '';  //contentType
 
@@ -196,6 +195,16 @@ define([
                 s.prop30 = 'non-content';
             }
 
+            // the number of Guardian links inside the body
+            if (config.page.inBodyInternalLinkCount) {
+                s.prop58 = config.page.inBodyInternalLinkCount;
+            }
+
+            // the number of External links inside the body
+            if (config.page.inBodyExternalLinkCount) {
+                s.prop69 = config.page.inBodyExternalLinkCount;
+            }
+
             /* Retrieve navigation interaction data, incl. swipe */
             var ni = storage.session.get('gu.analytics.referrerVars');
             if (ni) {
@@ -262,9 +271,12 @@ define([
         });
 
         common.mediator.on('module:analytics:omniture:pageview:sent', function(){
-            // independently log this page view
-            // used for checking we have not broken analytics
-            new Beacon("/count/pva.gif").fire();
+            // there is currently no SSL version of the beacon
+            if(!config.page.isSSL){
+                // independently log this page view
+                // used for checking we have not broken analytics
+                new Beacon("/count/pva.gif").fire();
+            }
         });
 
     }

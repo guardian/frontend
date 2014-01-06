@@ -216,7 +216,7 @@ object ChartFormat {
   val MultiLine = ChartFormat(colours = Seq("#FF6600", "#99CC33", "#CC0066", "#660099", "#0099FF"), cssClass =  "charts charts-full")
 }
 
-class LineChart(val name: String, val labels: Seq[String], charts: Future[GetMetricStatisticsResult]*) extends Chart {
+class LineChart(val name: String, val labels: Seq[String], val charts: Future[GetMetricStatisticsResult]*) extends Chart {
 
   override lazy val dataset = {
     val allPoints: List[List[(String, Double)]] = charts.toList.map(_.get())
@@ -243,6 +243,13 @@ class LineChart(val name: String, val labels: Seq[String], charts: Future[GetMet
   lazy val format = ChartFormat.SingleLineBlue
 
   def withFormat(f: ChartFormat) = new LineChart(name, labels, charts:_*) {
+    override lazy val format = f
+  }
+}
+
+class AssetChart(name: String, labels: Seq[String], charts: Future[GetMetricStatisticsResult]*) extends LineChart(name, labels, charts:_*) {
+  override def toLabel(dataPoint: Datapoint): String = new DateTime(dataPoint.getTimestamp.getTime).toString("dd/MM")
+  override def withFormat(f: ChartFormat) = new AssetChart(name, labels, charts:_*) {
     override lazy val format = f
   }
 }

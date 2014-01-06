@@ -1,8 +1,8 @@
 define([
-    'common',
-    'utils/ajax',
+    'common/common',
+    'common/utils/ajax',
     'bonzo',
-    'modules/identity/api'
+    'common/modules/identity/api'
 ], function(
     common,
     ajax,
@@ -68,10 +68,10 @@ define([
         if (user) {
             $container.addClass('is-signed-in');
             $popup.html(
-                '<a href="' + this.config.url + '/email-prefs" class="pull-right box-indent ' + Profile.CONFIG.classes.emailPrefs + '">Email preferences</a>'
-                    +
                 '<a href="' + this.config.url + '/profile/public" class="pull-right box-indent ' + Profile.CONFIG.classes.publicProfile + '">Edit profile</a>'
-                    +
+                +
+                '<a href="' + this.config.url + '/email-prefs" class="pull-right box-indent ' + Profile.CONFIG.classes.emailPrefs + '">Email preferences</a>'
+                +
                 '<a href="' + this.config.url + '/signout" class="pull-right box-indent ' + Profile.CONFIG.classes.signout + '">Sign out</a>'
             );
         } else {

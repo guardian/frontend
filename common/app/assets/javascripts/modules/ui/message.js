@@ -1,8 +1,8 @@
 define([
-    "$",
+    "common/$",
     "bean",
-    "utils/storage",
-    "modules/userPrefs"
+    "common/utils/storage",
+    "common/modules/userPrefs"
 ], function (
     $,
     bean,

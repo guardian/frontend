@@ -121,23 +121,42 @@ trait ParseCollection extends ExecutionContexts with Logging {
     }
   }
 
-  def getArticles(collectionItems: Seq[CollectionItem], edition: Edition): Future[List[Content]] = {
+  def getArticles(collectionItems: Seq[CollectionItem], edition: Edition): Future[List[Content]]
+    = getArticles(collectionItems, edition, hasParent=false)
+
+  //hasParent is here to break out of the recursive loop and make sure we only go one deep
+  def getArticles(collectionItems: Seq[CollectionItem], edition: Edition, hasParent: Boolean): Future[List[Content]] = {
     if (collectionItems.isEmpty) {
-      Future(Nil)
+      Future.successful(Nil)
     }
     else {
-      val results = collectionItems.foldLeft(Future[List[Content]](Nil)){(foldList, collectionItem) =>
-        val id = collectionItem.id
-        val response = ContentApi.item(id, edition).showFields("all").response
-        response.onFailure{case t: Throwable => log.warn("%s: %s".format(id, t.toString))}
-        for {l <- foldList; itemResponse <- response} yield {
-          itemResponse.content.map(Content(_, collectionItem.metaData)).map(_ +: l).getOrElse(l)
+      val results = collectionItems.foldLeft(Future[List[Content]](Nil)){(foldListFuture, collectionItem) =>
+        lazy val supportingAsContent: Future[List[Content]] = {
+          lazy val supportingLinks: List[CollectionItem] = retrieveSupportingLinks(collectionItem)
+          if (!hasParent) getArticles(supportingLinks, edition, hasParent=true) else Future.successful(Nil)
+        }
+        val response = ContentApi.item(collectionItem.id, edition).showFields("all").response
+
+        response.onFailure{case t: Throwable => log.warn("%s: %s".format(collectionItem.id, t.toString))}
+        supportingAsContent.onFailure{case t: Throwable => log.warn("Supporting links: %s: %s".format(collectionItem.id, t.toString))}
+
+        for {
+          contentList <- foldListFuture
+          itemResponse <- response
+          supporting <- supportingAsContent
+        } yield {
+          itemResponse.content.map(Content(_, supporting, collectionItem.metaData)).map(_ +: contentList).getOrElse(contentList)
         }
       }
       val sorted = results map { _.sortBy(t => collectionItems.indexWhere(_.id == t.id))}
       sorted
     }
   }
+
+  private def retrieveSupportingLinks(collectionItem: CollectionItem): List[CollectionItem] =
+    collectionItem.metaData.map(_.get("supporting").flatMap(_.asOpt[List[JsValue]]).getOrElse(Nil)
+    .map(json => CollectionItem((json \ "id").as[String], (json \ "meta").asOpt[Map[String, JsValue]]))
+  ).getOrElse(Nil)
 
   def executeContentApiQuery(s: Option[String], edition: Edition): Future[List[Content]] = s filter(_.nonEmpty) map { queryString =>
     val queryParams: Map[String, String] = QueryParams.get(queryString).mapValues{_.mkString("")}

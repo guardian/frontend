@@ -1,4 +1,4 @@
-define([ 'common', 'utils/ajax', 'modules/navigation/top-stories', 'helpers/fixtures'], function (common, ajax, TopStories, fixtures) {
+define([ 'common/common', 'common/utils/ajax', 'common/modules/navigation/top-stories', 'helpers/fixtures'], function (common, ajax, TopStories, fixtures) {
 
     describe("TopStories", function () {
 

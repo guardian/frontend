@@ -1,8 +1,8 @@
 define([
-    "modules/onward/sequence",
-    "modules/experiments/highlight-panel",
-    'utils/mediator',
-    'utils/detect'
+    "common/modules/onward/sequence",
+    "common/modules/experiments/highlight-panel",
+    'common/utils/mediator',
+    'common/utils/detect'
 ], function(
     sequence,
     HighlightPanel,

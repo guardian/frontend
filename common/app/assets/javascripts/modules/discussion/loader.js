@@ -1,16 +1,16 @@
 define([
-    '$',
-    'utils/ajax',
+    'common/$',
+    'common/utils/ajax',
     'bonzo',
     'qwery',
     'bean',
-    'modules/component',
-    'modules/analytics/discussion',
-    'modules/identity/api',
-    'modules/discussion/api',
-    'modules/discussion/comments',
-    'modules/discussion/top-comments',
-    'modules/discussion/comment-box'
+    'common/modules/component',
+    'common/modules/analytics/discussion',
+    'common/modules/identity/api',
+    'common/modules/discussion/api',
+    'common/modules/discussion/comments',
+    'common/modules/discussion/top-comments',
+    'common/modules/discussion/comment-box'
 ], function(
     $,
     ajax,
@@ -58,7 +58,7 @@ Loader.prototype.classes = {
     comments: 'discussion__comments',
     commentBox: 'discussion__comment-box',
     commentBoxBottom: 'discussion__comment-box--bottom',
-    joinDiscussion: 'd-show-cta',
+    joinDiscussion: 'd-discussion__show-all-comments',
     topComments: 'discussion__comments--top-comments'
 };
 
@@ -109,7 +109,6 @@ Loader.prototype.ready = function() {
             .fetch(topCommentsElem)
             .then(function appendTopComments() {
                 bonzo(self.topLoadingElem).addClass('u-h');
-                self.on('click', $(self.topComments.showMoreButton), self.topComments.showMore.bind(self.topComments)); // Module-hopping calls - refactor needed
             });
 
         this.mediator.on('module:topcomments:loadcomments', self.loadComments.bind(self));
@@ -294,7 +293,7 @@ Loader.prototype.cleanUpOnShowComments = function () {
 };
 
 Loader.prototype.renderUserBanned = function() {
-    this.getElem('commentBox').innerHTML = '<div class="d-bar d-bar--banned">Commenting has been disabled for this account (<a href="/community-faqs#321a">why?</a>).</div>';
+    this.getElem('commentBox').innerHTML = '<div class="d-bar d-discussion__error d-bar--banned">Commenting has been disabled for this account (<a href="/community-faqs#321a">why?</a>).</div>';
 };
 
 /**
@@ -348,7 +347,6 @@ Loader.prototype.renderCommentCount = function() {
                                '  <span class="commentcount__label">'+commentCountLabel+'</span>' +
                                '</a>';
 
-                    qwery('.js-commentcount__number', this.context).innerHTML = commentCount;
                     bonzo(qwery('.js-comment-count', this.context)).html(html);
                 }
             }

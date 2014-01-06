@@ -1,9 +1,9 @@
 /*global guardian */
 define([
-    'utils/mediator',
-    'utils/ajax',
-    'utils/detect',
-    'modules/adverts/audience-science'
+    'common/utils/mediator',
+    'common/utils/ajax',
+    'common/utils/detect',
+    'common/modules/adverts/audience-science'
 ], function (
     mediator,
     ajax,

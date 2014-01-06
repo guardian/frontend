@@ -79,7 +79,7 @@ object Switches extends Collections {
   val AudienceScienceSwitch = Switch("Analytics", "audience-science",
     "If this switch is on the Audience Science will be enabled.",
     safeState = Off)
-  
+
   val AdDwellTimeLoggerSwitch = Switch("Analytics", "ad-dwell-times-logging",
     "If this is on the in-view advert tracker will log some data to the Play logs",
     safeState = On)
@@ -166,10 +166,6 @@ object Switches extends Collections {
     "If this switch is on the australia front will be available. Otherwise it will 404.",
     safeState = Off)
 
-  val NewsContainerSwitch = Switch("Feature Switches", "news-container",
-    "If this switch is on the news container will be on the network front. Otherwise fronts will display a normal facia container.",
-    safeState = Off)
-
   val LocalNavSwitch = Switch("Feature Switches", "local-nav",
     "If this switch is on, a secondary local nav is shown.",
     safeState = Off)
@@ -196,7 +192,7 @@ object Switches extends Collections {
 
   val ArticleKeywordsSwitch = Switch("Feature Switches", "article-keywords",
     "If this is switched on then keywords will be shown at the end of articles.",
-    safeState = Off)
+    safeState = On)
 
   val ClientSideErrorSwitch = Switch("Feature Switches", "client-side-errors",
     "If this is switch on the the browser will log JavaScript errors to the server (via a beacon)",
@@ -204,6 +200,10 @@ object Switches extends Collections {
 
   val FacebookAutoSigninSwitch = Switch("Feature Switches", "facebook-autosignin",
     "If this switch is on then users who have previously authorized the guardian app in facebook and who have not recently signed out are automatically signed in.",
+    safeState = Off)
+
+  val IdentityFormstackSwitch = Switch("Feature Switches", "id-formstack",
+    "If this switch is on, formstack forms will be available",
     safeState = Off)
 
   // A/B Test Switches
@@ -228,12 +228,20 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to test onward highlights panel",
     safeState = Off)
 
-  val ABRightMostPopular = Switch("A/B Tests", "ab-right-most-popular",
+  val ABRightPopular = Switch("A/B Tests", "ab-right-popular",
     "If this is switched on an AB test runs to trail a right hand side most popular component",
     safeState = Off)
 
-  val ABRightMostPopularControl = Switch("A/B Tests", "ab-right-most-popular-control",
+  val ABRightPopularControl = Switch("A/B Tests", "ab-right-popular-control",
     "If this is switched on an AB test runs as a control variant for right most popular",
+    safeState = Off)
+
+  val ABTagLinking = Switch("A/B Tests", "ab-tag-linking",
+    "If this is switched on an AB test runs whereby articles that have no in body links auto link to their tags",
+    safeState = Off)
+
+  val ABInBodyLinking = Switch("A/B Tests", "ab-in-body-linking",
+    "If this is switched on an AB test runs whereby articles have in body links hidden",
     safeState = Off)
 
   // Sport Switch
@@ -285,7 +293,6 @@ object Switches extends Collections {
     ImageServerSwitch,
     ReleaseMessageSwitch,
     AustraliaFrontSwitch,
-    NewsContainerSwitch,
     IntegrationTestSwitch,
     iPhoneAppSwitch,
     ClientSideErrorSwitch,
@@ -305,15 +312,18 @@ object Switches extends Collections {
     ArticleKeywordsSwitch,
     EditionRedirectLoggingSwitch,
     FacebookAutoSigninSwitch,
+    IdentityFormstackSwitch,
     ABAa,
     ABOnwardIntrusive,
     ABOnwardHighlightsPanel,
     ABAlphaComm,
-    ABRightMostPopularControl,
+    ABRightPopularControl,
     ABMobileFacebookAutosignin,
-    ABRightMostPopular,
+    ABRightPopular,
     AdDwellTimeLoggerSwitch,
-    UkAlphaSwitch
+    UkAlphaSwitch,
+    ABTagLinking,
+    ABInBodyLinking
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

@@ -1,6 +1,6 @@
-define([ 'common',
+define([ 'common/common',
          'bean',
-         'modules/navigation/sections',
+         'common/modules/navigation/sections',
          'helpers/fixtures'], function(common, bean, Sections, fixtures) {
 
 

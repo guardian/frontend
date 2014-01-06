@@ -7,6 +7,11 @@
    Facia
    ========================================================================== */
 
+@import "components/guss-layout/_columns";
+@import "components/guss-layout/_row";
+@include guss-columns-utility;
+@include guss-row-utility;
+
 .facia-container {
     @include mq(tablet) {
         @include rem((width: gs-span(9)));
@@ -25,19 +30,11 @@
 @import "module/facia/_mixins";
 @import "module/facia/_items";
 
-@import "module/containers/_news-v1";
-.news-container--v1,
-.news-container--v2 {
-    @include container--news-mobile;
-}
-.news-container--v1 {
-    @include container--news-tablet-and-up;
-}
-.news-container--v2 {
-    @import "module/containers/_news-v2";
-}
-
+@import "module/containers/_news";
+@import "module/containers/_top-stories";
 @import "module/containers/_sport";
 @import "module/containers/_features";
 @import "module/containers/_comment";
 @import "module/containers/_section";
+
+@import "module/facia/_linkslist";

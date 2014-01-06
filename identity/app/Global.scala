@@ -8,6 +8,7 @@ import play.api.mvc._
 import play.api.mvc.Results._
 import scala.concurrent.Future
 import utils.SafeLogging
+import conf.Configuration
 
 object Global extends WithFilters(HeaderLoggingFilter :: RequestMeasurementMetrics.asFilters: _*) with SafeLogging
                                                                                     with CloudWatchApplicationMetrics {
@@ -17,8 +18,11 @@ object Global extends WithFilters(HeaderLoggingFilter :: RequestMeasurementMetri
   private lazy val injector = {
     val module =
       Play.mode match {
+        case Mode.Prod => {
+          if (Configuration.environment.isNonProd) new PreProdModule
+          else new ProdModule
+        }
         case Mode.Dev => new DevModule
-        case Mode.Prod => new ProdModule
         case Mode.Test => new TestModule
       }
 

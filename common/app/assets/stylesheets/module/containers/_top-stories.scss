@@ -1,0 +1,172 @@
+.container--top-stories {
+    // Cap new collections to a width of 12 columns
+    @include mq(gs-span(7) + $gs-gutter, tablet) {
+        @include rem((width: gs-span(7)));
+        margin: 0 auto;
+    }
+    @include mq(wide) {
+        @include rem((width: gs-span(12) + $gs-gutter));
+        margin: 0 auto;
+    }
+    .item {
+        display: block;
+        margin-top: 0;
+        position: static; // Children should be relative to the row__item
+        padding-bottom: 0;
+
+        @include rem((
+            margin-bottom: $gs-baseline/2
+        ));
+
+        &:before {
+            // Remove inter-item separator
+            // (restored on collection__item)
+            display: none;
+        }
+        // Restore top tone border on first item of each row
+        &:first-child .item__link {
+            border-top-style: solid;
+        }
+    }
+    .item__media-wrapper {
+        @include mq($to: tablet) {
+            float: left;
+
+            // Adapt the width of images to sit on text's baseline
+            @include rem((
+                width: 108px,
+                margin-right: $gs-gutter/2
+            ));
+            @include mq(mobileLandscape) {
+                @include rem((
+                    width: 124px
+                ));
+            }
+            @include mq(600px) {
+                @include rem((
+                    width: 156px
+                ));
+            }
+        }
+    }
+    .item__media-wrapper {
+        display: none;
+    }
+    .item__standfirst {
+        display: block;
+        @include rem((margin-top: $gs-baseline));
+    }
+    .item--has-image {
+        .item__standfirst {
+            display: none;
+        }
+        .item__media-wrapper,
+        .item__image-container {
+            display: block;
+        }
+    }
+    .collection {
+        @include rem((
+            margin-left: $gs-gutter/2 * -1,
+            margin-right: $gs-gutter/2 * -1
+        ));
+    }
+    .collection__item {
+        position: relative; // Replace .item as a relative context
+
+        @include rem((
+            padding-bottom: 20px,
+            margin-bottom: $gs-baseline
+        ));
+
+        & + .collection__item {
+            @include vertical-item-separator; // Restore inter-item separator
+        }
+    }
+
+    // Volume
+    .l-row--items-2 .collection__item--volume-2 {
+        .item__media-wrapper {
+            @include mq($to: mobileLandscape) {
+                float: none;
+                margin-right: 0;
+                width: 100%;
+            }
+            @include mq(mobileLandscape, 599px) {
+                @include rem((
+                    width: gs-span(3)
+                ));
+            }
+            @include mq(600px, tablet) {
+                @include rem((
+                    width: gs-span(4)
+                ));
+            }
+        }
+        .item__title {
+            @include fs-headline(3, true);
+        }
+
+        @include mq(tablet) {
+            @include flex-grow(2);
+            .item__standfirst {
+                @include fs-headline(2, true);
+                clear: both;
+            }
+            .item--has-image {
+                .item__title {
+                    @include fs-headline(5, true);
+                }
+            }
+            .item--has-no-image {
+                .item__title {
+                    @include fs-headline(7, true);
+                }
+            }
+        }
+        .item__media-wrapper {
+            @include mq(tablet) {
+                float: left;
+                margin-bottom: $gs-baseline;
+
+                @include rem((
+                    width: 219px, // same size as the image in the right column
+                    margin-right: $gs-gutter/2
+                ));
+            }
+            @include mq(desktop) {
+                @include rem((
+                    width: gs-span(4)
+                ));
+            }
+        }
+        @include mq(desktop) {
+            .item__title {
+                @include fs-headline(5, true);
+            }
+        }
+    }
+    .l-row--items-2,
+    .l-row--items-3 {
+        .item__standfirst {
+            display: block;
+        }
+    }
+    .l-row--items-4 {
+        @include mq($to: tablet) {
+            .item__title,
+            .item__byline {
+                @include fs-headline(1, true);
+            }
+            .item__media-wrapper {
+                @include rem((width: 90px));
+            }
+        }
+        @include mq(tablet) {
+            .item__title,
+            .item__byline {
+                @include fs-headline(1, true);
+            }
+        }
+    }
+}
