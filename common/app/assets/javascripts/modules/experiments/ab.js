@@ -12,6 +12,7 @@ define([
     'common/modules/experiments/tests/right-most-popular',
     'common/modules/experiments/tests/right-most-popular-control',
     'common/modules/experiments/tests/tag-links',
+    'common/modules/experiments/tests/underline-links',
     'common/modules/experiments/tests/in-body-links'
 ], function (
     common,
@@ -26,6 +27,7 @@ define([
     RightPopular,
     RightPopularControl,
     TagLinks,
+    UnderlineLinks,
     InBodyLinks
     ) {
 
@@ -38,6 +40,7 @@ define([
             new RightPopular(),
             new RightPopularControl(),
             new TagLinks(),
+            new UnderlineLinks(),
             new InBodyLinks()
         ],
         participationsKey = 'gu.ab.participations';
