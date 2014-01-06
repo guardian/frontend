@@ -1,7 +1,8 @@
 package implicits
 
 import org.joda.time.{DateTime, DateMidnight, Days}
-import conf.Configuration
+import org.scala_tools.time.Imports._
+import org.joda.time.format.ISODateTimeFormat
 
 trait Dates {
   object Epoch {
@@ -19,5 +20,14 @@ trait Dates {
 
   implicit class DateTimeWithExpiry(d: DateTime) {
     def age: Long = DateTime.now.getMillis - d.getMillis
+  }
+
+  //http://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.3.1
+  private val HTTPDateFormat = DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss 'GMT'").withZone(DateTimeZone.UTC)
+
+  implicit class DateTime2ToCommonDateFormats(date: DateTime) {
+    lazy val toISODateTimeString: String = date.toString(ISODateTimeFormat.dateTime)
+    lazy val toISODateTimeNoMillisString: String = date.toString(ISODateTimeFormat.dateTimeNoMillis)
+    lazy val toHttpDateTimeString: String = date.toString(HTTPDateFormat)
   }
 }
