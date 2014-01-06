@@ -24,7 +24,7 @@ define([
      * BEWARE that this code is depended upon by the ad server. 
      * 
      * ```
-     * require(['modules/commercial/loader'], function (CommercialComponent) {
+     * require(['common/modules/commercial/loader'], function (CommercialComponent) {
      *   var slot = document.querySelector('[class="js-sticky-upper"]');
      *    var c = new CommercialComponent({config: guardian, oastoken: '%%C%%?'}).travel(slot);
      * })
@@ -88,7 +88,7 @@ define([
                 mediator.emit('modules:commercial/loader:loaded');
             },
             error: function (req) {
-                mediator.emit('module:error', 'Failed to load related: ' + req.statusText, 'modules/commercial/loader.js');
+                mediator.emit('module:error', 'Failed to load related: ' + req.statusText, 'common/modules/commercial/loader.js');
             }
         }).load();
         return this;

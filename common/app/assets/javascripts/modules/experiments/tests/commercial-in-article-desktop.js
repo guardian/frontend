@@ -34,7 +34,7 @@ define([
         var self = this;
         
         this.id = 'CommercialInArticlesDesktop';
-        this.expiry = '2014-01-07';
+        this.expiry = '2014-01-20';
         this.audience = 0.1;
         this.audienceOffset = 0.5;
         this.description = 'Inserts commercial components in to the articles to monitor CTR';
