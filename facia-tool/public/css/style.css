@@ -662,15 +662,6 @@ button {
     color: #FFFFFF;
 }
 
-.supporting-count {
-    color: #CCCCCC;
-}
-
-.supporting-count span {
-    margin: 0 2px;
-    color: #666666;
-}
-
 .trail .tools {
     position: absolute;
     bottom: 2px;

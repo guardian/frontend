@@ -175,16 +175,15 @@ define([
                 // reject whitespace-only strings:
                 .filter(function(p){ return _.isString(p[1]) ? p[1].replace(/\s*/g, '').length > 0 : true; })
                 // for sublinks reject anything that isn't a headline
-                .filter(function(p){ return self.parentType === 'Collection' || p[0] === 'headline'; })
+                .filter(function(p){ return p[0] === 'headline' || self.parentType !== 'Article'; })
                 // reject vals that don't differ from the props (if any) that they're overwriting:
                 .filter(function(p){ return _.isUndefined(self.props[p[0]]) || self.props[p[0]]() !== p[1]; })
-                // serialise supporting
+                // serialise the supporting links
                 .map(function(p) {
                     if (p[0] === 'supporting') {
-                        // but only on first level Articles, i.e. those whose parent is a Collection
-                        return [p[0], self.parentType === 'Collection' ? _.map(p[1].items(), function(item) {
+                        return [p[0], _.map(p[1].items(), function(item) {
                             return item.get();
-                        }) : []];
+                        })];
                     }
                     return [p[0], p[1]];
                 })
