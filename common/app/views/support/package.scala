@@ -21,7 +21,7 @@ import scala.Some
 import play.api.mvc.SimpleResult
 import model.Tag
 import model.VideoAsset
-import conf.Switches.ABTagLinking
+import conf.Switches.{ABTagLinking, ABInBodyLinking}
 
 sealed trait Style {
   val className: String
@@ -351,6 +351,34 @@ class TagLinker(article: Article)(implicit val edition: Edition) extends HtmlCle
       }
     }
     d
+  }
+}
+
+class InBodyLinksABTestCleaner(content: Content)(implicit val edition: Edition) extends HtmlCleaner {
+  def clean(d: Document): Document = {
+    // bit hacky, but this only lives as long as the AB test
+    content match {
+      case article: Article => clean(article, d)
+      case _ => {}
+    }
+    d
+  }
+
+  private def clean(article: Article, d: Document) {
+    if (ABInBodyLinking.isSwitchedOn && article.linkCounts.internal > 0) {
+
+      val guardianlinks = d.getElementsByTag("a").filter(_.attr("href").contains("www.theguardian.com"))
+
+      guardianlinks.foreach { link =>
+        link.addClass("ab-in-body-link")
+
+        val nameSpan = d.createElement("span")
+        nameSpan.html(link.html())
+        nameSpan.addClass("ab-in-body-text is-hidden")
+
+        link.after(nameSpan)
+      }
+    }
   }
 }
 
