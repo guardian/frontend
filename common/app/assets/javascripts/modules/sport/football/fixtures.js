@@ -59,10 +59,7 @@ define([
                 crossOrigin: true
             }).then(
                 function (response) {
-                    //This is because the endpoint can also return a 204 no-content
-                    if(response && response.html) {
-                        that.view.render(response.html);
-                    }
+                    that.view.render(response.html);
                 },
                 function (req) {
                     common.mediator.emit("modules:error", 'Failed to load football fixtures: ' + req.statusText, 'common/modules/footballfixtures.js');

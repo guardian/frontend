@@ -10,7 +10,6 @@ abstract class Edition(
     val displayName: String,
     val timezone: DateTimeZone
   ) {
-  def configuredFronts: Map[String, Seq[TrailblockDescription]]
   def zones: Seq[Zone]
   def navigation(metadata: MetaData): Seq[NavItem]
 }
