@@ -212,7 +212,7 @@ object CollectionAgent extends ParseCollection {
   def updateCollectionById(id: String): Unit = updateCollectionById(id, isWarmedUp=true)
 
   def updateCollectionById(id: String, isWarmedUp: Boolean): Unit = {
-    val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(id, None, None, None, None))
+    val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(id))
     val edition = Edition.byId(id.take(2)).getOrElse(Edition.defaultEdition)
     //TODO: Refactor isWarmedUp into method by ID
     updateCollection(id, config, edition, isWarmedUp=isWarmedUp)

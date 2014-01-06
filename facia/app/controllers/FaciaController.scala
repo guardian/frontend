@@ -334,7 +334,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
 
   def renderCollection(id: String) = Action { implicit request =>
     CollectionAgent.getCollection(id) map { collection =>
-      val html = views.html.fragments.collections.standard(Config(id, None, None, None, None), collection, NewsContainer(false), 1)
+      val html = views.html.fragments.collections.standard(Config(id), collection, NewsContainer(false), 1)
       Cached(60) {
         if (request.isJson) {
             JsonComponent(
@@ -351,7 +351,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
   def renderCollectionRss(id: String) = Action { implicit request =>
     CollectionAgent.getCollection(id) map { collection =>
       Cached(60) {
-        val config: Config = ConfigAgent.getConfig(id).getOrElse(Config("", None, None, None, None))
+        val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(""))
         Ok(TrailsToRss(config.displayName, collection.items))
       }.as("text/xml; charset=utf-8")
     } getOrElse(NotFound)
