@@ -2,8 +2,7 @@ package common.editions
 
 import common._
 import org.joda.time.DateTimeZone
-import model.{RunningOrderTrailblockDescription, ItemTrailblockDescription, MetaData}
-import views.support._
+import model.MetaData
 
 
 object Uk extends Edition(

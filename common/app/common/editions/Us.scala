@@ -2,8 +2,7 @@ package common.editions
 
 import common._
 import org.joda.time.DateTimeZone
-import model.{RunningOrderTrailblockDescription, MetaData, ItemTrailblockDescription}
-import views.support._
+import model.MetaData
 import contentapi.QueryDefaults
 import common.NavItem
 

@@ -151,18 +151,6 @@ class TemplatesTest extends FlatSpec with Matchers {
     last.rowClass should be("last odd")
   }
 
-  "SafeName" should "understand the Javascript name of top stories" in {
-    SafeName(ItemTrailblockDescription("", "News", 3)(Uk)) should be("top-stories")
-  }
-
-  it should "understand a section" in {
-    SafeName(ItemTrailblockDescription("sport", "Sport", 3)(Uk)) should be("sport")
-  }
-
-  it should "understand a tag" in {
-    SafeName(ItemTrailblockDescription("sport/triathlon", "Sport", 3)(Uk)) should be("sport-triathlon")
-  }
-
   "StripHtmlTags" should "strip html from string" in {
     StripHtmlTags("<a href=\"www.guardian.co.uk\">Foo <b>Bar</b></a>") should be("Foo Bar")
   }
