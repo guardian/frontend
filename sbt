@@ -51,10 +51,6 @@ else
     physical_mem=$(grep MemTotal /proc/meminfo | awk '{print $2}')
 fi
 
-echo $physical_mem
-
-exit # DELETEME
-
 #http://stackoverflow.com/questions/5374455/what-does-java-option-xmx-stand-for
 jvm_mem="-Xmx$((physical_mem / 2 / 1024))m"
 
