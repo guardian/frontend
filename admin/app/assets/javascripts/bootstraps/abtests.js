@@ -1,34 +1,29 @@
 define([
     'common/modules/experiments/ab',
-    'common/$',
+    'qwery',
     'modules/abtests/participation',
     'modules/abtests/breakdown'
 ], function(
     abTests,
-    $,
+    qwery,
     Participation,
     Breakdown
 ) {
-    var participations = abTests.getParticipations();
-
     function renderParticipations() {
-        var elem = $('.participation-section');
+        var elem = qwery('.participation-section');
 
         if (elem) {
-            var keys = Object.keys(participations);
-            keys.forEach(function(test, index) {
-                var participation = new Participation({ test: test, variant: participations[test].variant });
+            var active = abTests.getActiveTests();
+
+            active.forEach(function(test) {
+                var participation = new Participation({ test: test});
                 participation.render(elem);
             });
-
-            if (!keys.length) {
-                elem.append("You have no participations in this browser.");
-            }
         }
     }
 
     function renderBreakdown() {
-        var elem = $('.breakdown-section');
+        var elem = qwery('.breakdown-section');
 
         if (elem) {
             var expired = abTests.getExpiredTests();

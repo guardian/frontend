@@ -19,3 +19,15 @@
 .chart {
     margin-bottom: 20px;
 }
+
+.table--asset .table__head {
+    background-color: #F5F5F5;
+    font-size: 14px;
+    color: black;
+}
+
+.table--asset th {
+    font-size: 12px;
+    font-weight: bold;
+    color: #9da0a4;
+}
