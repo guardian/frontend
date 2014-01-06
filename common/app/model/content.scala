@@ -11,7 +11,7 @@ import views.support.StripHtmlTagsAndUnescapeEntities
 import com.gu.openplatform.contentapi.model.{Content => ApiContent,Element =>ApiElement}
 import play.api.libs.json.JsValue
 
-class Content protected (val delegate: ApiContent) extends Trail with Tags with MetaData {
+class Content protected (val delegate: ApiContent) extends Trail with MetaData {
 
   lazy val publication: String = fields.get("publication").getOrElse("")
   lazy val lastModified: DateTime = fields("lastModified").parseISODateTime
