@@ -352,3 +352,18 @@
          }
     }
 }
+
+/* Identity Menu
+   ========================================================================== */
+
+.nav-popup.nav-popup-profile {
+    width: 337px;
+    right: 0;
+    > ul {
+        padding-left: 4px;
+        padding-right: 4px;
+        > .nav__item a {
+            padding: 10px 0;
+        }
+    }
+}

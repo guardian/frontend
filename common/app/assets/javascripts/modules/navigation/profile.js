@@ -68,7 +68,7 @@ define([
         if (user) {
             $container.addClass('is-signed-in');
             $popup.html(
-                '<ul class="nav nav--columns nav--top-border-off" data-link-name="Sub Sections">'+
+                '<ul class="nav nav--columns nav--top-border-off nav--additional-sections" data-link-name="Sub Sections">'+
                     this.menuListItem("Edit profile", this.config.url+'/profile/public', "publicProfile")+
                     this.menuListItem("Email preferences", this.config.url+'/email-prefs', "emailPrefs")+
                     this.menuListItem("Sign out", this.config.url+'/signout', "signout")+
@@ -83,7 +83,7 @@ define([
 
     Profile.prototype.menuListItem = function(text, url, className) {
         return  '<li class="nav__item">'+
-                    '<a href="' + url + '/email-prefs" class="nav-link ' + Profile.CONFIG.classes[className] + '">' + text + '</a>'+
+                    '<a href="' + url + '/email-prefs" class="nav__link ' + Profile.CONFIG.classes[className] + '">' + text + '</a>'+
                 '</li>';
     };
 
