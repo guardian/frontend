@@ -1,4 +1,4 @@
-define(['utils/config'], function(config) {
+define(['common/utils/config'], function(config) {
 
     function Beacon(path) {
         this.fire = function(){

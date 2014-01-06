@@ -1,14 +1,14 @@
 define([
-    '$',
+    'common/$',
     'bonzo',
     'qwery',
     'bean',
-    'utils/ajax',
-    'modules/component',
-    'modules/identity/api',
-    'modules/discussion/comment-box',
-    'modules/discussion/recommend-comments',
-    'modules/discussion/api'
+    'common/utils/ajax',
+    'common/modules/component',
+    'common/modules/identity/api',
+    'common/modules/discussion/comment-box',
+    'common/modules/discussion/recommend-comments',
+    'common/modules/discussion/api'
 ], function(
     $,
     bonzo,

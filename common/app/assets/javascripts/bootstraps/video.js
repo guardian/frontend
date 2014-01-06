@@ -1,8 +1,8 @@
 define([
-    "utils/mediator",
-    "utils/detect",
-    "utils/lazy-load-css",
-    "modules/analytics/video"
+    "common/utils/mediator",
+    "common/utils/detect",
+    "common/utils/lazy-load-css",
+    "common/modules/analytics/video"
 ], function(
     mediator,
     detect,

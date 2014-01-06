@@ -1,9 +1,9 @@
 define([
-    'modules/facia/container-toggle',
-    'common',
+    'common/modules/facia/container-toggle',
+    'common/common',
     'bonzo',
     'bean',
-    'modules/userPrefs'
+    'common/modules/userPrefs'
 ], function(ContainerDisplayToggle, common, bonzo, bean, userPrefs) {
 
     describe('Container Toggle', function() {

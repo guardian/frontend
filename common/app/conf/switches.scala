@@ -192,7 +192,7 @@ object Switches extends Collections {
 
   val ArticleKeywordsSwitch = Switch("Feature Switches", "article-keywords",
     "If this is switched on then keywords will be shown at the end of articles.",
-    safeState = Off)
+    safeState = On)
 
   val ClientSideErrorSwitch = Switch("Feature Switches", "client-side-errors",
     "If this is switch on the the browser will log JavaScript errors to the server (via a beacon)",
@@ -215,6 +215,14 @@ object Switches extends Collections {
   val ABAlphaComm = Switch("A/B Tests", "ab-alpha-comm",
     "If this is switched on an AB test runs to trial new advertising user experiences and commercial models",
     safeState = Off)
+  
+  val ABCommercialInArticleDesktop = Switch("A/B Tests", "ab-commercial-in-articles-desktop",
+    "If this is on an AB test inserts commercial components in the inline and MPU advert slots (scope to desktop)",
+    safeState = Off)
+  
+  val ABCommercialInArticleMobile = Switch("A/B Tests", "ab-commercial-in-articles-mobile",
+    "If this is on an AB test inserts commercial components in the inline and MPU advert slots (scope to mobile browsers)",
+    safeState = Off)
 
   val ABMobileFacebookAutosignin = Switch("A/B Tests", "ab-mobile-facebook-autosignin",
     "If this is switched on an AB test runs to test facebook autosignin for mobile users",
@@ -228,12 +236,24 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to test onward highlights panel",
     safeState = Off)
 
-  val ABRightMostPopular = Switch("A/B Tests", "ab-right-most-popular",
+  val ABRightPopular = Switch("A/B Tests", "ab-right-popular",
     "If this is switched on an AB test runs to trail a right hand side most popular component",
     safeState = Off)
 
-  val ABRightMostPopularControl = Switch("A/B Tests", "ab-right-most-popular-control",
+  val ABRightPopularControl = Switch("A/B Tests", "ab-right-popular-control",
     "If this is switched on an AB test runs as a control variant for right most popular",
+    safeState = Off)
+
+  val ABTagLinking = Switch("A/B Tests", "ab-tag-linking",
+    "If this is switched on an AB test runs whereby articles that have no in body links auto link to their tags",
+    safeState = Off)
+
+  val ABUnderlineLinks = Switch("A/B Tests", "ab-underline-links",
+    "If this is switched on an AB test runs whereby links in articles are underline (with CSS)",
+    safeState = Off)
+  
+  val ABInBodyLinking = Switch("A/B Tests", "ab-in-body-linking",
+    "If this is switched on an AB test runs whereby articles have in body links hidden",
     safeState = Off)
 
   // Sport Switch
@@ -309,11 +329,16 @@ object Switches extends Collections {
     ABOnwardIntrusive,
     ABOnwardHighlightsPanel,
     ABAlphaComm,
-    ABRightMostPopularControl,
+    ABCommercialInArticleDesktop,
+    ABCommercialInArticleMobile,
+    ABRightPopularControl,
     ABMobileFacebookAutosignin,
-    ABRightMostPopular,
+    ABRightPopular,
     AdDwellTimeLoggerSwitch,
-    UkAlphaSwitch
+    UkAlphaSwitch,
+    ABTagLinking,
+    ABUnderlineLinks,
+    ABInBodyLinking
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

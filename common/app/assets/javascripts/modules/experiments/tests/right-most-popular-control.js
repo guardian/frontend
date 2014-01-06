@@ -1,12 +1,12 @@
 define([
-    'utils/detect'
+    'common/utils/detect'
 ], function(
     detect
     ) {
 
     return function() {
 
-        this.id = 'RightMostPopularControl';
+        this.id = 'RightPopularControl';
         this.expiry = '2013-12-31';
         this.audience = 0.05;
         this.audienceOffset = 0.55;

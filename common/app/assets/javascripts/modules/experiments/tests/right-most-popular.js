@@ -1,7 +1,7 @@
 define([
-    "modules/experiments/right-most-popular",
-    'utils/mediator',
-    'utils/detect'
+    "common/modules/experiments/right-most-popular",
+    'common/utils/mediator',
+    'common/utils/detect'
 ], function(
     RightHandMostPopular,
     mediator,
@@ -10,7 +10,7 @@ define([
 
     return function() {
 
-        this.id = 'RightMostPopular';
+        this.id = 'RightPopular';
         this.expiry = '2013-12-31';
         this.audience = 0.3;
         this.audienceOffset = 0.7;

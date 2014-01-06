@@ -1,9 +1,9 @@
 define([
     'bean',
     'qwery',
-    'utils/mediator',
-    'modules/discussion/api',
-    'modules/identity/api'
+    'common/utils/mediator',
+    'common/modules/discussion/api',
+    'common/modules/identity/api'
 ], function(
     bean,
     qwery,

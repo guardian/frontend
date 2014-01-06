@@ -1,14 +1,14 @@
 define([
     'bean',
 
-    'utils/ajax',
-    'utils/mediator',
-    'utils/storage',
-    'utils/config',
+    'common/utils/ajax',
+    'common/utils/mediator',
+    'common/utils/storage',
+    'common/utils/config',
 
     'lodash/collections/filter',
 
-    'modules/onward/history'
+    'common/modules/onward/history'
 ], function(
     bean,
     ajax,
@@ -85,7 +85,7 @@ define([
                 mediator.emit('modules:sequence:loaded', getSequence());
             }
         }).fail(function(req) {
-            mediator.emit('modules:error', 'Failed to load sequence: ' + req.statusText, 'modules/onwards/sequence.js');
+            mediator.emit('modules:error', 'Failed to load sequence: ' + req.statusText, 'common/modules/onwards/sequence.js');
         });
     }
 

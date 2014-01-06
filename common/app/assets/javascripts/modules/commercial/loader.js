@@ -3,12 +3,12 @@
     Description: Loads our commercial components
 */
 define([
-    '$',
-    'utils/mediator',
-    'utils/storage',
-    'modules/lazyload',
-    'modules/component',
-    'modules/onward/history'
+    'common/$',
+    'common/utils/mediator',
+    'common/utils/storage',
+    'common/modules/lazyload',
+    'common/modules/component',
+    'common/modules/onward/history'
 ], function (
     $,
     mediator,
@@ -24,7 +24,7 @@ define([
      * BEWARE that this code is depended upon by the ad server. 
      * 
      * ```
-     * require(['modules/commercial/loader'], function (CommercialComponent) {
+     * require(['common/modules/commercial/loader'], function (CommercialComponent) {
      *   var slot = document.querySelector('[class="js-sticky-upper"]');
      *    var c = new CommercialComponent({config: guardian, oastoken: '%%C%%?'}).travel(slot);
      * })
@@ -39,7 +39,10 @@ define([
         this.keywords       = conf.keywords || '';
         this.section        = conf.section;
         this.host           = conf.ajaxUrl + '/commercial/';
+        this.userVariant    = conf.ab_commercialInArticleDesktop || '';
         this.oastoken       = options.oastoken || '';
+        this.inlineMicCode  = options.inlineMicCode || '';
+        this.mpuMicCode     = options.mpuMicCode || '';
         this.userSegments   = 'seg=' + (new History().getSize() <= 1 ? 'new' : 'repeat');
         this.components     = {
           masterclasses: this.host + 'masterclasses.json?' + this.userSegments + '&s=' + this.section,
@@ -67,13 +70,25 @@ define([
             url: url,
             container: target,
             beforeInsert: function (html) {
-                return html.replace(/%OASToken%/g, self.oastoken);
+                var result = html;
+                if (self.userVariant === "inline") {
+                    result = result.replace(/%OmnitureToken%/g, "?INTCMP=" + self.inlineMicCode);
+                    result = result.replace(/%JustOmnitureToken%/g, self.inlineMicCode);
+                } else if (self.userVariant === "mpu") {
+                    result = result.replace(/%OmnitureToken%/g, "?INTCMP=" + self.mpuMicCode);
+                    result = result.replace(/%JustOmnitureToken%/g, self.mpuMicCode);
+                } else {
+                    result = result.replace(/%OmnitureToken%/g, "");
+                    result = result.replace(/%JustOmnitureToken%/g, "");
+                }
+
+                return result.replace(/%OASToken%/g, self.oastoken);
             },
             success: function () {
                 mediator.emit('modules:commercial/loader:loaded');
             },
             error: function (req) {
-                mediator.emit('module:error', 'Failed to load related: ' + req.statusText, 'modules/commercial/loader.js');
+                mediator.emit('module:error', 'Failed to load related: ' + req.statusText, 'common/modules/commercial/loader.js');
             }
         }).load();
         return this;

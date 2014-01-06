@@ -2,7 +2,7 @@
 //Heavily inspired by https://github.com/PaulKinlan/leviroutes/blob/master/routes.js
 /*jshint boss:true, curly:false */
 define([
-    'common'
+    'common/common'
 ], function (
     common
 ) {

@@ -1,6 +1,6 @@
 define([
-    'common',
-    'utils/ajax'
+    'common/common',
+    'common/utils/ajax'
 ], function (
     common,
     ajax
@@ -36,7 +36,7 @@ define([
                     common.mediator.emit('modules:matchnav:loaded', json);
                 },
                 function(req) {
-                    common.mediator.emit('modules:error', 'Failed to load match nav: ' + req.statusText, 'modules/matchnav.js');
+                    common.mediator.emit('modules:error', 'Failed to load match nav: ' + req.statusText, 'common/modules/matchnav.js');
                 }
             );
         };

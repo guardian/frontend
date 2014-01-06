@@ -3,10 +3,10 @@
     Description: Load in data from the linked page and display in sidebar
 */
 define([
-    '$',
-    'utils/mediator',
-    'utils/detect',
-    'utils/ajax'
+    'common/$',
+    'common/utils/mediator',
+    'common/utils/detect',
+    'common/utils/ajax'
 ], function (
     $,
     mediator,
@@ -115,7 +115,7 @@ define([
                 self.prependCard(href, resp, self.title);
             },
             function(req) {
-                mediator.emit('module:error', 'Failed to cardify in body link: ' + req.statusText, 'modules/inline-link-card.js');
+                mediator.emit('module:error', 'Failed to cardify in body link: ' + req.statusText, 'common/modules/inline-link-card.js');
             }
         );
     };
