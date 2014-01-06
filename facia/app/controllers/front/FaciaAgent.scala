@@ -207,11 +207,13 @@ object CollectionAgent extends ParseCollection {
 
   def updateCollection(id: String, collection: Collection): Unit = collectionAgent.send { _.updated(id, collection) }
 
-  def updateCollectionById(id: String): Unit = {
+  def updateCollectionById(id: String): Unit = updateCollectionById(id, isWarmedUp=true)
+
+  def updateCollectionById(id: String, isWarmedUp: Boolean): Unit = {
     val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(id, None, None, None))
     val edition = Edition.byId(id.take(2)).getOrElse(Edition.defaultEdition)
     //TODO: Refactor isWarmedUp into method by ID
-    updateCollection(id, config, edition, isWarmedUp=true)
+    updateCollection(id, config, edition, isWarmedUp=isWarmedUp)
   }
 
   def close(): Unit = collectionAgent.close()
@@ -228,7 +230,7 @@ object QueryAgents {
 }
 
 trait ConfigAgent extends ExecutionContexts {
-  private val configAgent = AkkaAgent[JsValue](JsNull)
+  private val configAgent = AkkaAgent[JsValue](FaciaDefaults.getDefaultConfig)
 
   def refresh() = S3FrontsApi.getMasterConfig map {s => configAgent.send(Json.parse(s))}
 
