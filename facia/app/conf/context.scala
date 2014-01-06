@@ -27,10 +27,12 @@ object Management extends GuManagement {
 
 class ConfigAgentStatus extends ManagementPage {
   val path: String = "/management/configagentstatus"
+  override lazy val linktext = "/management/configagentstatus - ONLY use for debugging"
   def get(request: HttpRequest) = PlainTextResponse(ConfigAgent.contentsAsJsonString)
 }
 
 class CollectionAgentStatus extends ManagementPage {
   val path: String = "/management/collectionagentstatus"
+  override lazy val linktext = "/management/collectionagentstatus - ONLY use for debugging"
   def get(request: HttpRequest) = PlainTextResponse(CollectionAgent.contentsAsJsonString)
 }
