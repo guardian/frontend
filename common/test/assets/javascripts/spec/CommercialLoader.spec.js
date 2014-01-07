@@ -1,4 +1,4 @@
-define([
+    define([
     'common/utils/mediator',
     'common/utils/ajax',
     'common/modules/commercial/loader',
@@ -18,7 +18,9 @@ define([
                     page: {
                         keywords: 'a,b,c',
                         section: 's',
-                        ajaxUrl: ''
+                        ajaxUrl: '',
+                        ab_commercialInArticleDesktop: 'inline'
+
                     }
                 }
             };

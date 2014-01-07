@@ -1,6 +1,10 @@
-@(env: String, charts: Seq[tools.LineChart])
+@(env: String, charts: Seq[tools.LineChart], title: Option[String] = None)
 
 @admin_main("Dashboard", env, isAuthed = true, hasCharts = true) {
+
+    @title.map{ title =>
+        <h3>@title</h3>
+    }
 
     @* some servers have no data *@
     @defining(charts.filterNot(_.hasData).map(_.name).mkString(", ")){ noData =>
