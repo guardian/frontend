@@ -609,8 +609,8 @@ video {
         padding: 8px 0 0 44px;
     }
 
-    .email-signup__title:hover i {
-        @extend .i-share-email-hover;        
+    .email-signup__title:hover a {
+        text-decoration: underline;
     }
 
     .email-signup__copy {
