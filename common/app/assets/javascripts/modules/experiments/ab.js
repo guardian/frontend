@@ -267,7 +267,7 @@ define([
             var abLogObject = {};
             getActiveTests().forEach(function (test) {
                 if (isParticipating(test) && isTestSwitchedOn(test, config) && getTestVariant(test.id) !== 'notintest') {
-                    abLogObject['ab-' + test.id] = getTestVariant(test.id);
+                    abLogObject['ab' + test.id] = getTestVariant(test.id);
                 }
             });
 
