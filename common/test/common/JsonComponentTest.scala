@@ -75,7 +75,6 @@ class JsonComponentTest extends FlatSpec with Matchers with ExecutionContexts {
     }
 
     status(result) should be(200)
-    println(headers(result))
     header("Vary", result) should be (Some("Accept, Origin"))
   }
 
