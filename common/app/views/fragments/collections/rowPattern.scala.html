@@ -17,10 +17,11 @@
 <ul class="unstyled l-row l-row--items-4 collection">
     @collection.items.slice(5, 9).zipWithIndex.map{ case (trail, index) =>
         <li class="l-row__item collection__item collection__item--volume-@trail.group.getOrElse("0")">
-            @fragments.items.standard(trail, index, containerIndex, "div")
+            @fragments.items.thumbnail(trail, index, containerIndex, "div")
         </li>
     }
 </ul>
+<div class="tone-border tone-news"></div>
 <ul class="l-columns linkslist">
     @collection.items.slice(9, 22).zipWithIndex.map{ case (trail, index) =>
         <li class="l-columns__item linkslist__item">
