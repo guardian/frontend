@@ -2,11 +2,15 @@ define([
     'common/common',
     'common/utils/ajax',
     'bonzo',
+    'bean',
+    'common/utils/detect',
     'common/modules/identity/api'
 ], function(
     common,
     ajax,
     bonzo,
+    bean,
+    detect,
     Id
 ) {
 
@@ -18,7 +22,6 @@ define([
     function Profile(context, config) {
         this.context = context;
         this.config = common.extend(this.config, config);
-        
         this.dom.container = context.querySelector('.' + Profile.CONFIG.classes.container);
         this.dom.content = this.dom.container.querySelector('.' + Profile.CONFIG.classes.content);
         this.dom.popup = context.querySelector('.' + Profile.CONFIG.classes.popup);
@@ -31,10 +34,7 @@ define([
         classes: {
             container: 'js-profile-nav',
             content: 'js-profile-info',
-            popup: 'js-profile-nav-popup',
-            signout: 'js-nav-signout',
-            emailPrefs: 'js-nav-emailPrefs',
-            publicProfile: 'js-nav-publicProfile'
+            popup: 'js-profile-nav-popup'
         }
     };
 
@@ -68,17 +68,34 @@ define([
         if (user) {
             $container.addClass('is-signed-in');
             $popup.html(
-                '<a href="' + this.config.url + '/profile/public" class="pull-right box-indent ' + Profile.CONFIG.classes.publicProfile + '">Edit profile</a>'
-                +
-                '<a href="' + this.config.url + '/email-prefs" class="pull-right box-indent ' + Profile.CONFIG.classes.emailPrefs + '">Email preferences</a>'
-                +
-                '<a href="' + this.config.url + '/signout" class="pull-right box-indent ' + Profile.CONFIG.classes.signout + '">Sign out</a>'
+                '<ul class="nav nav--columns nav--top-border-off nav--additional-sections" data-link-name="Sub Sections">'+
+                    this.menuListItem("Edit profile", this.config.url+'/profile/public')+
+                    this.menuListItem("Email preferences", this.config.url+'/email-prefs')+
+                    this.menuListItem("Sign out", this.config.url+'/signout')+
+                '</ul>'
             );
+
+            var three_col = 220, // Magic number for 3 grid columns
+                width = $container.parent()[0].offsetWidth,
+                offsetLeft = $content.parent()[0].offsetLeft;
+
+            if (detect.getBreakpoint() !== 'mobile' && detect.getBreakpoint() !== 'tablet') {
+                $popup.css({
+                    left: Math.min(offsetLeft, width - three_col)
+                });
+            }
+
         } else {
             $popup.remove();
         }
 
         this.emitLoadedEvent(user);
+    };
+
+    Profile.prototype.menuListItem = function(text, url) {
+        return  '<li class="nav__item">'+
+                    '<a href="' + url + '" class="nav__link" data-link-name="' + text + '">' + text + '</a>'+
+                '</li>';
     };
 
     /**

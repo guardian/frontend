@@ -60,6 +60,18 @@
     padding: 0;
 }
 
+
+.form-field__submit {
+    .form-field__note {
+        margin: 0 0 $gs-baseline*2 0;
+        @include mq(desktop) {
+            float: right;
+            width: 60%;
+            margin: 0;
+        }
+    }
+}
+
 .form-field--no-margin {
     margin: 0;
 }
