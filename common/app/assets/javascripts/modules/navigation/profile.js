@@ -93,7 +93,7 @@ define([
 
     Profile.prototype.menuListItem = function(text, url, className) {
         return  '<li class="nav__item">'+
-                    '<a href="' + url + '/email-prefs" class="nav__link ' + Profile.CONFIG.classes[className] + '">' + text + '</a>'+
+                    '<a href="' + url + '" class="nav__link ' + Profile.CONFIG.classes[className] + '">' + text + '</a>'+
                 '</li>';
     };
 
