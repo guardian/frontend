@@ -362,9 +362,9 @@
 
 .nav-popup.nav-popup-profile {
     right: 0;
-    width: auto;
-    @include mq($to: desktop) {
-        width: 100%;
+    width: 100%;
+    @include mq(desktop) {
+        width: auto;
     }
     > .nav {
         padding-left: 4px;
