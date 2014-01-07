@@ -64,34 +64,33 @@ sealed trait Container {
   val containerType: String
   val showMore: Boolean
   val tone: String
-  val headerLink: Boolean
 }
 
-case class NewsContainer(showMore: Boolean = true, headerLink: Boolean = true) extends Container {
+case class NewsContainer(showMore: Boolean = true) extends Container {
   val containerType = "news"
   val tone = "news"
 }
-case class SportContainer(showMore: Boolean = true, headerLink: Boolean = true) extends Container {
+case class SportContainer(showMore: Boolean = true) extends Container {
   val containerType = "sport"
   val tone = "news"
 }
-case class CommentContainer(showMore: Boolean = true, headerLink: Boolean = true) extends Container {
+case class CommentContainer(showMore: Boolean = true) extends Container {
   val containerType = "comment"
   val tone = "comment"
 }
-case class FeaturesContainer(showMore: Boolean = true, headerLink: Boolean = true) extends Container {
+case class FeaturesContainer(showMore: Boolean = true) extends Container {
   val containerType = "features"
   val tone: String = "feature"
 }
-case class PopularContainer(showMore: Boolean = true, headerLink: Boolean = true) extends Container {
+case class PopularContainer(showMore: Boolean = true) extends Container {
   val containerType = "popular"
   val tone: String = "news"
 }
-case class TopStoriesContainer(showMore: Boolean = true, headerLink: Boolean = true) extends Container {
+case class TopStoriesContainer(showMore: Boolean = true) extends Container {
   val containerType = "top-stories"
   val tone = "news"
 }
-case class SectionContainer(showMore: Boolean = true, tone: String = "news", headerLink: Boolean = true) extends Container {
+case class SectionContainer(showMore: Boolean = true, tone: String = "news") extends Container {
   val containerType = "section"
 }
 
@@ -131,10 +130,6 @@ object RemoveOuterParaHtml {
       Html(fragment.html.drop(3).dropRight(4))
     }
   }
-}
-
-object SafeName {
-  def apply(desc: TrailblockDescription) = if (desc.id == "") "top-stories" else desc.id.replace("/", "-")
 }
 
 object JavaScriptValue {
@@ -208,7 +203,7 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
       val asset = findVideoFromId(mediaId)
 
       // add the poster url
-      asset.flatMap(_.image).flatMap(ArticleMainPicture.bestFor).foreach{ url =>
+      asset.flatMap(_.image).flatMap(Item620.bestFor).foreach{ url =>
         element.attr("poster", url)
       }
 
@@ -341,11 +336,11 @@ class TagLinker(article: Article)(implicit val edition: Edition) extends HtmlCle
           tagLink.text(keyword.name)
           tagLink.attr("data-link-name", "auto-linked-tag")
           tagLink.addClass("linked-tag-name is-hidden")
-          
+
           val nameSpan = d.createElement("span")
           nameSpan.html(keyword.name)
           nameSpan.addClass("unlinked-tag-name")
-        
+
           p.html(p.html().replaceFirst(keyword.name, tagLink.toString + nameSpan.toString))
         }
       }

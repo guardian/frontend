@@ -101,6 +101,9 @@ SBT for the Play Framework backend. Neither of these tools are much use for
 building the other half of the project and coupling them together with an
 integration is one of those bad ideas that is even worse than it sounds.
 
+You ***must*** start SBT with the supplied script called `sbt` if you start
+SBT any other way the project will not run.
+
 Start the Grunt build and watch for development changes:
 
 ```
