@@ -1,8 +1,8 @@
 @(trails: Seq[Trail], heading: String, visibleTrails: Int = 5)(implicit request: RequestHeader)
 
 @defining(trails.length){ numTrails =>
-    <h2 id="related-content-head" class="related-content-head page-sub-header">@Html(heading)</h2>
-    <div class="related-container"
+    <h2 id="related-content-head" class="related__header page-sub-header">@Html(heading)</h2>
+    <div class="related__container"
         data-count="@{trails.length - visibleTrails -1}"
         data-link-name="Related @heading"
         role="complementary"
