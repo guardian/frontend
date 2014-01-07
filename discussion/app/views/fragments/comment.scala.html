@@ -91,8 +91,8 @@
                 </div>
                 @if(!comment.isBlocked){
                     <div class="d-comment__actions">
-                        <div class="d-comment__actions__main">
-                            <div class="d-comment__reply-wrapper sign-in-required">
+			<div class="d-comment__actions__main sign-in-required">
+			    <div class="d-comment__reply-wrapper">
                                 <span class="d-comment__reply-button">
                                     <i class="i i-reply-arrow-white"></i>
                                 </span>
@@ -105,8 +105,8 @@
                                     data-comment-id="@comment.id"
                                     data-comment-highlighted="@comment.isHighlighted">@if(comment.isHighlighted){Unpick}else{Pick}</span>
                             </span>
-                            <a href="@Configuration.discussion.url/components/report-abuse/@comment.id" class="d-comment__action d-comment__action--report" target="_blank">Report</a>
                         </div>
+			<a href="@Configuration.discussion.url/components/report-abuse/@comment.id" class="d-comment__action d-comment__action--report" target="_blank">Report</a>
                     </div>
                 }
             </div>
