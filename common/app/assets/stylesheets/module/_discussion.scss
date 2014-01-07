@@ -1,6 +1,5 @@
-$side-meta-breakpoint: desktop;
+$comment-meta-breakpoint: desktop;
 $avatarSize: 44px;
-$c-commentGrey: #f3f3f1;
 $c-replyText: #555;
 $replyIndent: 26px;
 
@@ -119,14 +118,14 @@ $replyIndent: 26px;
 }
 
 .d-comment:target {
-    background-color: $c-commentGrey;
+    background-color: $c-neutral7;
 }
 
 .d-comment__meta {
     height: $avatarSize + $baseline;
     margin-bottom: $baseline*2;
     white-space: nowrap;
-    @include mq($side-meta-breakpoint) {
+    @include mq($comment-meta-breakpoint) {
         width: 160px;
         float: left;
         height: auto;
@@ -211,7 +210,7 @@ $replyIndent: 26px;
    ======================================================= */
 
 .d-comment__content {
-    @include mq($side-meta-breakpoint) {
+    @include mq($comment-meta-breakpoint) {
         margin-left: 160px;
     }
     @include mq(leftCol) {
@@ -244,11 +243,11 @@ $replyIndent: 26px;
 }
 
 .id--signed-in .discussion__comments .d-comment__main {
-    padding-bottom: 40px;
+    padding-bottom: $gs-baseline*4;
 }
 
 .id--signed-in .discussion--closed .discussion__comments .d-discussion--not-staff .d-comment__main {
-    padding-bottom: 20px;
+    padding-bottom: $gs-baseline*2;
 }
 
 .d-comment__body {
@@ -258,8 +257,9 @@ $replyIndent: 26px;
     min-height: 2.5em;
     position: relative;
     z-index: 2;
-    @include mq($side-meta-breakpoint) {
+    @include mq($comment-meta-breakpoint) {
         margin-top: 0;
+        min-height: 3.5em;
     }
 }
  
@@ -295,7 +295,8 @@ $replyIndent: 26px;
     height: 18px;
     @include rounded-corners(18px);
     position: absolute;
-    top: 0; left: 0;
+    top: 0; 
+    left: 0;
     background-color: $c-neutral4;
 }
 
@@ -385,7 +386,7 @@ $replyIndent: 26px;
     }
 }
 .d-comment__reply-button {
-    @include icon-button(20px, -5px, -6px);
+    @include icon-button(18px, -5px, -6px);
     background-color: $c-newsDefault;
     position: absolute;
     margin-top: -3px;
@@ -422,7 +423,7 @@ $replyIndent: 26px;
     margin-left: $replyIndent;
     border-top: 1px dotted $c-neutral3;
 
-    @include mq($side-meta-breakpoint) {
+    @include mq($comment-meta-breakpoint) {
         margin-left: 160px + $replyIndent;
     }
     @include mq(leftCol) {
@@ -480,7 +481,7 @@ $replyIndent: 26px;
 }
 
 .d-thread--responses .d-discussion__error {
-    @include mq($side-meta-breakpoint) {
+    @include mq($comment-meta-breakpoint) {
         margin-left: 160px + $replyIndent;
     }
     @include mq(leftCol) {
@@ -496,7 +497,7 @@ $replyIndent: 26px;
     
     margin-left: $replyIndent;
 
-    @include mq($side-meta-breakpoint) {
+    @include mq($comment-meta-breakpoint) {
         margin-left: 160px + $replyIndent;
     }
     @include mq(leftCol) {
@@ -570,7 +571,7 @@ $replyIndent: 26px;
         position: absolute;
         bottom: $baseline*2;
         width: 100%;
-        @include mq($side-meta-breakpoint) {
+        @include mq($comment-meta-breakpoint) {
             position: static;
             margin-top: $baseline*4;
             width: 160px;
@@ -580,7 +581,7 @@ $replyIndent: 26px;
     .d-comment__inner {
         min-height: 0;
         padding-bottom: $avatarSize + 20px + $baseline*4;
-        @include mq($side-meta-breakpoint) {
+        @include mq($comment-meta-breakpoint) {
             padding-bottom: $baseline*2;
         }
     }
@@ -589,7 +590,7 @@ $replyIndent: 26px;
 
     .d-comment__actions { display: none; }
     .d-comment__content { 
-        background-color: $c-commentGrey;
+        background-color: $c-neutral7;
         padding: $baseline*2 $baseline*3;
         margin-bottom: $baseline*3;
         position: relative;
@@ -603,17 +604,17 @@ $replyIndent: 26px;
             width: 0; 
             height: 0; 
             border-right: 20px solid transparent;
-            border-top: 20px solid $c-commentGrey;
+            border-top: 20px solid $c-neutral7;
             border-right-style: inset;
         }
-        @include mq($side-meta-breakpoint) {
+        @include mq($comment-meta-breakpoint) {
             margin-bottom: 0;
             &:before {
                 left: -18px;
                 top: 11px;
                 border: 0;
                 border-left: 18px solid transparent;
-                border-bottom: 18px solid $c-commentGrey;
+                border-bottom: 18px solid $c-neutral7;
                 border-left-style: inset;
             }
         }
@@ -847,7 +848,7 @@ $replyIndent: 26px;
 
 .d-comment-box { 
 
-    @include mq($side-meta-breakpoint) {
+    @include mq($comment-meta-breakpoint) {
         margin-left: 160px;
     }
     @include mq(leftCol) {
