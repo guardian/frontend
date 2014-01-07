@@ -1,13 +1,14 @@
-/* global _: true */
 define([
     'modules/authed-ajax',
     'modules/vars',
-    'modules/cache'
+    'modules/cache',
+    'lodash/collections/filter'
 ],
 function (
     authedAjax,
     vars,
-    cache
+    cache,
+    filter
 ){
     function validateItem (item) {
         var data = cache.get('contentApi', item.props.id()),
@@ -49,7 +50,7 @@ function (
         .done(function(results){
             results.forEach(function(article){
                 cache.put('contentApi', article.id, article);
-                _.filter(items,function(item){
+                filter(items,function(item){
                     return item.props.id() === article.id;
                 }).forEach(function(item){
                     populate(article, item);

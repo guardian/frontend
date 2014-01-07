@@ -1,4 +1,3 @@
-/* global _: true */
 define([
     'config',
     'knockout',
@@ -10,7 +9,16 @@ define([
     'models/collection',
     'models/group',
     'models/article',
-    'models/latest-articles'
+    'models/latest-articles',
+    'lodash/objects/isObject',
+    'lodash/objects/keys',
+    'lodash/objects/assign',
+    'lodash/functions/once',
+    'lodash/objects/isArray',
+    'lodash/collections/max',
+    'lodash/collections/pluck',
+    'lodash/collections/forEach',
+    'lodash/collections/toArray'
 ], function(
     config,
     ko,
@@ -22,7 +30,16 @@ define([
     Collection,
     Group,
     Article,
-    LatestArticles
+    LatestArticles,
+    isObject,
+    keys,
+    assign,
+    once,
+    isArray,
+    max,
+    pluck,
+    forEach,
+    toArray
 ) {
     var prefKeyDefaultMode = 'gu.frontsTool.defaultToLiveMode';
 
@@ -78,13 +95,13 @@ define([
             })
             .done(function(resp) {
 
-                if (!(_.isObject(resp.fronts) && _.isObject(resp.collections))) {
+                if (!(isObject(resp.fronts) && isObject(resp.collections))) {
                     window.alert("Oops, the fronts configuration is invalid! Please contact support.");
                     return;
                 }
 
                 model.config = resp;
-                model.fronts(_.keys(resp.fronts).sort());
+                model.fronts(keys(resp.fronts).sort());
             });
         }
 
@@ -103,13 +120,13 @@ define([
                 .filter(function(id){ return !!model.config.collections[id]; })
                 .map(function(id){
                     return new Collection(
-                        _.extend(model.config.collections[id], {id: id})
+                        assign(model.config.collections[id], {id: id})
                     );
                 })
             );
         }
 
-        var startPoller = _.once(function() {
+        var startPoller = once(function() {
             var period = vars.CONST.collectionsPollMs || 60000;
 
             setInterval(function(){
@@ -124,17 +141,17 @@ define([
         ko.bindingHandlers.sparkline = {
             update: function (element, valueAccessor, allBindingsAccessor, model) {
                 var graphs = ko.utils.unwrapObservable(valueAccessor()),
-                    max;
+                    maxValue;
 
-                if (!_.isArray(graphs)) { return; }
-                max = _.max(_.pluck(graphs, 'max'));
-                if (!max) { return; }
+                if (!isArray(graphs)) { return; }
+                maxValue = max(pluck(graphs, 'max'));
+                if (!maxValue) { return; }
 
-                _.each(_.toArray(graphs).reverse(), function(graph, i){
+                forEach(toArray(graphs).reverse(), function(graph, i){
                     $(element).sparkline(graph.data, {
-                        chartRangeMax: max,
+                        chartRangeMax: maxValue,
                         defaultPixelsPerValue: graph.data.length < 50 ? graph.data.length < 30 ? 3 : 2 : 1,
-                        height: Math.round(Math.max(5, Math.min(30, max))),
+                        height: Math.round(Math.max(5, Math.min(30, maxValue))),
                         lineColor: '#' + graph.color,
                         spotColor: false,
                         minSpotColor: false,
@@ -152,7 +169,7 @@ define([
         });
 
         model.liveMode.subscribe(function() {
-            _.each(model.collections(), function(collection) {
+            forEach(model.collections(), function(collection) {
                 collection.populateLists();
             });
         });

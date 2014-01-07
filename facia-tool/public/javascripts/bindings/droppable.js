@@ -1,4 +1,3 @@
-/* global _: true */
 define([
     'knockout',
     'modules/vars',
@@ -9,7 +8,11 @@ define([
     'models/group',
     'models/article',
     'modules/content-api',
-    'modules/ophan-api'
+    'modules/ophan-api',
+    'lodash/collections/forEach',
+    'lodash/arrays/last',
+    'lodash/functions/once',
+    'lodash/objects/isFunction'
 ], function(
     ko,
     vars,
@@ -20,7 +23,11 @@ define([
     Group,
     Article,
     contentApi,
-    ophanApi
+    ophanApi,
+    forEach,
+    last,
+    once,
+    isFunction
 ) {
     var sourceList,
         storage = window.localStorage,
@@ -56,7 +63,7 @@ define([
                     event.stopPropagation();
 
                     targetList.underDrag(targetItem.constructor === Group);
-                    _.each(targetList.items(), function(item) {
+                    forEach(targetList.items(), function(item) {
                         var underDrag = (item === targetItem);
                         if (underDrag !== item.state.underDrag()) {
                             item.state.underDrag(underDrag);
@@ -71,7 +78,7 @@ define([
                     event.stopPropagation();
 
                     targetList.underDrag(false);
-                    _.each(targetList.items(), function(item) {
+                    forEach(targetList.items(), function(item) {
                         if (item.state.underDrag()) {
                             item.state.underDrag(false);
                         }
@@ -95,20 +102,20 @@ define([
                     if (!targetList) { return; }
 
                     targetList.underDrag(false);
-                    _.each(targetList.items(), function(item) {
+                    forEach(targetList.items(), function(item) {
                         item.state.underDrag(false);
                     });
 
                     // If the item isn't dropped onto an article, asssume it's to be appended *after* the other items in this group,
                     if (targetItem.constructor === Group) {
-                        targetItem = _.last(targetList.items());
+                        targetItem = last(targetList.items());
                         if (targetItem) {
                             isAfter = true;
                         // or if there arent't any other items, after those in the first preceding group that contains items.
                         } else if (targetList.parentType === 'Collection') {
                             groups = targetList.parent.groups;
                             for (var i = groups.indexOf(targetList) - 1; i >= 0; i -= 1) {
-                                targetItem = _.last(groups[i].items());
+                                targetItem = last(groups[i].items());
                                 if (targetItem) {
                                     isAfter = true;
                                     break;
@@ -119,7 +126,7 @@ define([
 
                     position = targetItem && targetItem.props ? targetItem.props.id() : undefined;
 
-                    _.each(parseQueryParams(id), function(url){
+                    forEach(parseQueryParams(id), function(url){
                         if (url && url.match(/^http:\/\/www.theguardian.com/)) {
                             id = url;
                         }
@@ -147,7 +154,7 @@ define([
 
                     insertAt = targetList.items().indexOf(targetItem) + isAfter;
                     insertAt = insertAt === -1 ? targetList.items().length : insertAt;
- 
+
                     article = new Article({
                         id: id,
                         meta: sourceItem ? cleanClone(sourceItem.meta) : undefined,
@@ -167,7 +174,7 @@ define([
 
                         ophanApi.decorateItems([article]);
 
-                        if (_.isFunction(targetList.reflow)) {
+                        if (isFunction(targetList.reflow)) {
                             targetList.reflow();
                         }
 
@@ -179,7 +186,7 @@ define([
                             targetList.parent.saveMetaEdit();
                             return;
                         }
-                        
+
                         if (targetList.parentType !== 'Collection') {
                             return;
                         }
@@ -236,6 +243,6 @@ define([
     }
 
     return {
-        init: _.once(init)
+        init: once(init)
     };
 });

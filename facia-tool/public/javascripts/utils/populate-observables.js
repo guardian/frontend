@@ -1,8 +1,7 @@
-/* global _: true */
-define(function() {
+define(['lodash/objects/isObject', 'lodash/objects/keys'], function(isObject, keys) {
     return function(target, opts) {
-        if (!_.isObject(target) || !_.isObject(opts)) { return; }
-        _.keys(target).forEach(function(key){
+        if (!isObject(target) || !isObject(opts)) { return; }
+        keys(target).forEach(function(key){
             target[key](opts[key]);
         });
     };

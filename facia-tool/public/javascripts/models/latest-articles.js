@@ -1,4 +1,3 @@
-/* global _: true */
 define([
     'modules/vars',
     'utils/query-params',
@@ -8,7 +7,9 @@ define([
     'modules/ophan-api',
     'modules/cache',
     'modules/authed-ajax',
-    'knockout'
+    'knockout',
+    'lodash/objects/values',
+    'lodash/collections/max'
 ], function (
     vars,
     queryParams,
@@ -18,7 +19,9 @@ define([
     ophanApi,
     cache,
     authedAjax,
-    ko
+    ko,
+    values,
+    max
 ) {
     return function(options) {
 
@@ -35,7 +38,7 @@ define([
 
         this.filter     = ko.observable();
         this.filterType = ko.observable();
-        this.filterTypes= ko.observableArray(_.values(opts.filterTypes) || []);
+        this.filterTypes= ko.observableArray(values(opts.filterTypes) || []);
 
         this.page       = ko.observable(1);
 
@@ -146,7 +149,7 @@ define([
         };
 
         this.pagePrev = function() {
-            self.page(_.max([1, self.page() - 1]));
+            self.page(max([1, self.page() - 1]));
             self.search();
         };
 
