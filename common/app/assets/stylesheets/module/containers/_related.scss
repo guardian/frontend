@@ -1,0 +1,106 @@
+.related-container {
+    margin-bottom: $gs-baseline*2;
+
+    .item__image-container {
+        display: block;
+    }
+
+    .item__link {
+        border-top: none;
+    }
+
+    .i-quote-light-grey,
+    .item__byline {
+        display:none;
+    }
+
+    .timestamp__text {
+        padding-top: 1px;
+        display: inline-block;
+    }
+
+    .gallerythumbs { margin: 0; }
+
+    @include mq($to: tablet) {
+        .item {
+            min-height: 244px;
+            padding-bottom: 0;
+            margin-top: $gs-baseline;
+            margin-bottom: $gs-baseline;
+
+            &:before {
+                width: 0;
+                border-left: none;
+                border-right: 1px solid $c-neutral5;
+            }
+
+            &:nth-child(1n+2) {
+                @include card-half-width($with-image: true);
+            }
+
+            &:first-child {
+                margin-top: 0;
+                padding-right: 0;
+
+                .item__image-container { margin: 0; }
+
+                .item__title {
+                    height: auto;
+                    padding-bottom: $gs-baseline*3;
+                    margin-top: 10px;
+                    @include fs-headline(3, true);
+                }
+            }
+
+            &:first-child,
+            &:nth-child(even) {
+                clear: left;
+                padding-left: 0;
+
+                &:before {
+                    border-right: none;
+                }
+            }
+
+            &:nth-child(odd) {
+                padding-right: 0;
+            }
+        }
+
+        .item__title {
+            margin-top: 0;
+            padding-top: 10px;
+            height: $gs-row-height*3 - $gs-baseline;
+        }
+
+        .item__meta {
+            position: relative;
+            width: 100%;
+            height: $gs-baseline;
+            margin-bottom: - $gs-baseline;
+            padding-top: $gs-baseline;
+            padding-bottom: $gs-baseline*2;
+            border-bottom: 1px solid $c-neutral5;
+            @include box-sizing(border-box);
+        }
+    }
+
+    @include mq(tablet) {
+        .item {
+            @include card;
+        }
+    }
+
+    @include mq(tablet, desktop) {
+        @include first-row(3);
+        .item:nth-child(-n+3) {
+            @include card-image;
+        }
+    }
+    @include mq(desktop) {
+        @include first-row(4);
+        .item:nth-child(-n+4) {
+            @include card-image;
+        }
+    }
+}
