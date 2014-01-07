@@ -21,7 +21,7 @@
     word-spacing: -0.25em;
     @include fs-headline(2);
     margin: 0;
-    padding: $baseline*2 $baseline;
+    padding: $baseline*2;
     float: left;
     .em {
         font-style: italic;
@@ -35,11 +35,11 @@
 	margin: 0;
     position: absolute;
 	bottom: $baseline;
-	padding: $baseline;
+	padding: $baseline $baseline*2;
 }
 
 .commercial__body {
-    padding: $baseline*2 $baseline;
+    padding: $baseline*2;
     overflow: hidden;
 }
 
@@ -156,10 +156,13 @@
 		overflow: hidden;
 	}
 	.commercial__title {
-		padding-top: $baseline;
+		padding: $baseline;
 		.i {
 			margin-top: $baseline;
 		}
+	}
+	.commercial__subtitle {
+		padding: $baseline;
 	}
 	.commercial__title a {
 		color: #fff;
