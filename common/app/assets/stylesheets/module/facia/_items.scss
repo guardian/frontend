@@ -240,7 +240,12 @@ $c-live: #e81818;
 }
 .item__support {
     display: none;
+    @include rem((
+        margin-top: $gs-baseline*2
+    ))
 }
+.item__support__item {}
+.item__support__action {}
 
 .collection__show-more {
     border-style: none;
