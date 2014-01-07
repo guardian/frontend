@@ -51,7 +51,7 @@ define([
                 // Apply tracking to links
                 $(self.selector + ' a', context).attr('data-is-ajax', '1');
 
-                bean.on(context, 'click', self.selector + ' a', function(e) {
+                bean.on(context, 'click', self.selector, function(e) {
                     e.preventDefault();
                     var galleryUrl = e.currentTarget.getAttribute('href');
 

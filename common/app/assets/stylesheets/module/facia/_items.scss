@@ -242,6 +242,45 @@ $c-live: #e81818;
     display: none;
 }
 
+.item__cta {
+    position: absolute;
+    width: $baseline*11;  //44px
+    height: $baseline*11;
+    top: $baseline*2;
+    left: $gs-gutter/2.5;
+    background-color: rgba($c-neutral2, 0.7);
+    z-index: 2;
+    @include rounded-corners(44px);
+
+    i {
+        position: absolute;
+        top: 30%;
+        left: 30%;
+    }
+
+    p {
+        width: 0;
+        height: 0;
+        text-indent: -999em;
+    }
+}
+
+.item--gallery {
+    .item__meta,
+    .item__title {
+        padding-left: $gs-gutter/2.5;
+        padding-right: $gs-gutter/2.5;
+        background-color: $c-neutral1;
+    }
+
+    .item__title { color: #ffffff; }
+
+    .item__title-type {
+        color: $c-commentAccent;
+        display: block;
+    }
+}
+
 .collection__show-more {
     border-style: none;
     width: 30px;
