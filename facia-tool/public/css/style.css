@@ -159,15 +159,15 @@ a, a:hover {
     height: 20px;
 }
 
+.list-header.collapsed {
+    opacity: 0.5;
+}
+
 .list-header__timings {
     float: right;
     font-weight: normal;
     font-size: 10px;
     color: #999999;
-}
-
-.list-header .count {
-    font-size: 16px;
 }
 
 .collections {
@@ -430,14 +430,7 @@ button {
 }
 
 .collection-config {
-    padding: 5px 7px 7px 7px;
-    font-size: 10px;
-    background: #CCCCCC;
-    color: #000000;
-}
-
-.collection-config.editable {
-    background-color: #eee;
+    margin: -6px 0 0 3px;
 }
 
 .trail_stats {
@@ -601,16 +594,16 @@ button {
     margin: 0 0 2px 4px;
 }
 
-.tools .tool.draft-warning {
+.tool.draft-warning {
     font-weight: bold;
     margin-right: 4px;
 }
 
-.tools .tool:first-child {
+.tool:first-child {
     background: #0088cc;
 }
 
-.tools .tool:first-child:hover {
+.tool:first-child:hover {
     background: #0077BB;
 }
 

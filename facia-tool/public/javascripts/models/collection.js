@@ -44,6 +44,7 @@ define([
             'updatedEmail']);
 
         this.state  = asObservableProps([
+            'collapsed',
             'hasDraft',
             'pending',
             'editingConfig',
@@ -76,7 +77,11 @@ define([
         }).reverse(); // because groupNames is assumed to be in ascending order of importance, yet should render in descending order
     };
 
-    Collection.prototype.toggleEditingConfig = function() {
+    Collection.prototype.toggleCollapsed = function() {
+        this.state.collapsed(!this.state.collapsed());
+    };
+
+    Collection.prototype.toggleEditingConfig = function(e) {
         this.state.editingConfig(!this.state.editingConfig());
     };
 

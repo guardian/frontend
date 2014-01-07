@@ -92,16 +92,17 @@
 
     <script type="text/html" id="template_collection">
         <div class="collection">
-            <div class="list-header">
-                <div class="title" data-bind="visible: !state.editingConfig()">
-                    <a class="list-header__display" data-bind="
-                        visible: typeof configMeta.displayName() === 'undefined',
-                        text: collectionMeta.displayName() || 'Set title for ' + (configMeta.roleName() || id),
-                        click: toggleEditingConfig"></a>
+            <div class="list-header" data-bind="
+                css: {collapsed: state.collapsed}">
 
-                    <span class="list-header__display" data-bind="
-                        visible: typeof configMeta.displayName() !== 'undefined',
-                        text: configMeta.displayName() || configMeta.roleName()"></span>
+                <div data-bind="visible: !state.editingConfig()">
+                    <span class="title" data-bind="
+                        click: toggleCollapsed,
+                        text: configMeta.displayName() || collectionMeta.displayName() || configMeta.roleName() || id"></span>
+
+                    <a class="list-header__edit" data-bind="
+                        click: toggleEditingConfig,
+                        visible: typeof configMeta.displayName() === 'undefined' && !state.collapsed()">&laquo; edit title</a>
 
                     <span class="count" data-bind="if: !isPending()">
                         (<span data-bind="
@@ -113,7 +114,7 @@
                         (<span class="non-zero">updating...</span>)
                     </span>
 
-                    <span class="list-header__timings">
+                    <span class="list-header__timings" data-bind="click: toggleCollapsed">
                         <!-- ko if: state.timeAgo -->
                             <span class="list-header__timings__last-updated" data-bind="text: state.timeAgo"></span>
                             by <span class="list-header__timings__user" data-bind="text: collectionMeta.updatedBy"></span>
@@ -122,31 +123,36 @@
                 </div>
 
                 <div class="collection-config" data-bind="visible: state.editingConfig">
-                    <input type="text" data-bind="value: collectionMeta.displayName" placeholder="Title"/>
-                    <input type="submit" class="btn" value="Save" data-bind="click: saveConfig"/>
-                    <button class="btn" value="Cancel" data-bind="click: cancelEditingConfig">Cancel</button>
+                    <input type="text" data-bind="
+                        value: collectionMeta.displayName, hasFocus: true" placeholder="Title"/>
+                    <span>
+                        <a class="tool" data-bind="click: saveConfig">Save</a>
+                        <a class="tool" data-bind="click: cancelEditingConfig">Cancel</a>
+                    </span>
                 </div>
 
             </div>
 
-            <div class="tools" data-bind="visible: state.hasDraft">
-                <a class="draft-warning" data-bind="
-                    click: $root.setModeDraft,
-                    visible: $root.liveMode">
-                    <span class="tool draft-publish draft-warning">!</span>Unpublished edits exist</a>
+            <div data-bind="if: !state.collapsed()">
+                <div class="tools" data-bind="visible: state.hasDraft">
+                    <a class="draft-warning" data-bind="
+                        click: $root.setModeDraft,
+                        visible: $root.liveMode">
+                        <span class="tool draft-publish draft-warning">!</span>Unpublished edits exist</a>
 
-                <div data-bind="visible: !$root.liveMode()">
-                    <a class="tool draft-publish" data-bind="
-                        click: publishDraft">Publish this container's edits</a>
-                        
-                    <a class="tool draft-discard" data-bind="
-                        click: discardDraft">Discard edits</a>
+                    <div data-bind="visible: !$root.liveMode()">
+                        <a class="tool draft-publish" data-bind="
+                            click: publishDraft">Publish this container's edits</a>
+                            
+                        <a class="tool draft-discard" data-bind="
+                            click: discardDraft">Discard edits</a>
+                    </div>
                 </div>
-            </div>
 
-            <div data-bind="
-                css: {'pending': isPending()},
-                template: {name: 'template_groups', foreach: groups}"></div>
+                <div data-bind="
+                    css: {'pending': isPending()},
+                    template: {name: 'template_groups', foreach: groups}"></div>
+            </div>
         </div>
     </script>
 
