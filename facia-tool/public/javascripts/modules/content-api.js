@@ -58,8 +58,8 @@ function (
         });
     }
 
-    function populate(fromObj, toKoObj) {
-        toKoObj.populate(fromObj);
+    function populate(opts, article) {
+        article.populate(opts);
     }
 
     function fetchData(ids) {
@@ -67,7 +67,7 @@ function (
             defer = $.Deferred();
 
         if (ids.length) {
-            apiUrl = vars.CONST.apiSearchBase + "/search?page-size=50&format=json&show-fields=all&show-tags=all";
+            apiUrl = vars.CONST.apiSearchBase + "/search?page-size=50&format=json&show-fields=all";
             apiUrl += "&ids=" + ids.map(function(id){
                 return encodeURIComponent(id);
             }).join(',');

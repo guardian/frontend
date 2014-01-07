@@ -2,7 +2,7 @@ define([
     'bean',
     'qwery',
     'bonzo',
-    'utils/ajax'
+    'common/utils/ajax'
 ], function(
     bean,
     qwery,
@@ -78,13 +78,13 @@ define([
     };
 
     /**
-     * Uses the CONFIG.componentName
+     * Uses the this.componentClass
      */
     Component.prototype.attachToDefault = function() {
         this.checkAttached();
         var elem = qwery('.'+ this.componentClass, this.context);
         if (elem.length === 0) {
-            throw new ComponentError('No element of type "'+ '.'+ this.componentName +'" to attach to.');
+            throw new ComponentError('No element of type "'+ '.'+ this.componentClass +'" to attach to.');
         }
         this.elem = elem[0];
         this._prerender();

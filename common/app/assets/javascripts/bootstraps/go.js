@@ -1,8 +1,8 @@
 /*global guardian:true */
 require([
-    'bootstraps/app'
+    'common/bootstraps/app'
 ], function(
     bootstrap
 ) {
-    bootstrap.go(guardian.config);
+    bootstrap.go();
 });

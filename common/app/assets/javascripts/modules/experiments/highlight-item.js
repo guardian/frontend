@@ -3,15 +3,16 @@
  Description: Item for hightlight panel
  */
 define([
-    'modules/component',
+    'common/modules/component',
     'bonzo'
 ], function (
     Component,
     bonzo
     ) {
 
-    function Highlight(data) {
+    function Highlight(data, index) {
         this.data = data;
+        this.index = index;
     }
 
     Component.define(Highlight);
@@ -36,6 +37,7 @@ define([
             bonzo(container).addClass("item__image-container");
         }
         this.getElem(this.classes.link).href = this.data.url;
+        this.getElem(this.classes.link).setAttribute("data-link-name", "highlight item " + this.index);
         this.getElem(this.classes.headline).innerHTML = this.data.headline;
     };
 

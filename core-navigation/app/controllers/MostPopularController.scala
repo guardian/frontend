@@ -2,14 +2,13 @@ package controllers
 
 import common._
 import conf._
-import feed.{ MostPopularExpandableAgent, MostPopularAgent }
+import feed.MostPopularAgent
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
 import play.api.libs.json._
-import play.api.libs.json.Json
 import scala.concurrent.Future
 import scala.util.Random
-import views.support.{Profile, ImgSrc, cleanTrailText}
+import views.support.PopularContainer
 
 
 object MostPopularController extends Controller with Logging with ExecutionContexts {
@@ -34,6 +33,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
         case popular => Cached(900) {
           JsonComponent(
             "html" -> views.html.fragments.mostPopular(popular, 5),
+            "faciaHtml" -> views.html.fragments.containers.popular(Config("uk/popular/regular-stories", displayName = Option("Most popular")), Collection(popular.headOption.map(_.trails).getOrElse(Nil).take(10), None), PopularContainer(showMore = true), containerIndex = 1),
             "trails" -> JsArray(popular.headOption.map(_.trails).getOrElse(Nil).map(TrailToJson(_)))
           )
         }

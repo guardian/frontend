@@ -252,7 +252,7 @@ object FrontPage {
 }
 
 
-class FaciaController extends Controller with Logging with JsonTrails with ExecutionContexts {
+class FaciaController extends Controller with Logging with ExecutionContexts {
 
   val front: Front = Front
   val EditionalisedKey = """^\w\w(/.*)?$""".r
@@ -293,7 +293,7 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
     }
     else
       path
-  
+
   // Needed as aliases for reverse routing
   def renderEditionFrontJson(path: String) = renderFront(path)
   def renderEditionFront(path: String) = renderFront(path)
@@ -334,7 +334,7 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
 
   def renderCollection(id: String) = Action { implicit request =>
     CollectionAgent.getCollection(id) map { collection =>
-      val html = views.html.fragments.collections.standard(Config(id, None, None, None), collection, NewsContainer(true, true), 1)
+      val html = views.html.fragments.collections.standard(Config(id), collection, NewsContainer(false), 1)
       Cached(60) {
         if (request.isJson) {
             JsonComponent(
@@ -351,7 +351,7 @@ class FaciaController extends Controller with Logging with JsonTrails with Execu
   def renderCollectionRss(id: String) = Action { implicit request =>
     CollectionAgent.getCollection(id) map { collection =>
       Cached(60) {
-        val config: Config = ConfigAgent.getConfig(id).getOrElse(Config("", None, None, None))
+        val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(""))
         Ok(TrailsToRss(config.displayName, collection.items))
       }.as("text/xml; charset=utf-8")
     } getOrElse(NotFound)

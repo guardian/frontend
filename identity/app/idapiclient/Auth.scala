@@ -1,6 +1,7 @@
 package idapiclient
 
 import client.{Auth, Parameters}
+import java.net.URLEncoder
 
 
 case class EmailPassword(email: String, password: String) extends Auth {
@@ -12,7 +13,8 @@ case class UserToken(userAccessToken: String) extends Auth {
 }
 
 case class UserCookie(cookieValue: String) extends Auth {
-  override def parameters: Parameters = List(("SC_GU_U", cookieValue))
+  override def parameters: Parameters = Iterable.empty
+  override def headers: Parameters = List(("X-GU-ID-FOWARDED-SC-GU-U", cookieValue))
 }
 
 case class UserTokenExchange(userAccessToken: String, clientId: String) extends Auth {

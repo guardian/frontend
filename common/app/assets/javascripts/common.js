@@ -1,14 +1,14 @@
 define([
-    '$',
-    'utils/mediator',
-    'utils/deferToLoad',
+    'common/$',
+    'common/utils/mediator',
+    'common/utils/deferToLoad',
     'lodash/objects/assign',
     'lodash/functions/debounce',
     'lodash/functions/throttle',
-    'utils/to-array',
-    'utils/lazy-load-css',
-    'utils/atob',
-    'utils/request-animation-frame'
+    'common/utils/to-array',
+    'common/utils/lazy-load-css',
+    'common/utils/atob',
+    'common/utils/request-animation-frame'
 ], function (
     $,
     mediator,

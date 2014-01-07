@@ -1,4 +1,4 @@
-define(['analytics/omniture', 'common'], function(Omniture, common) {
+define(['fixtures/config', 'analytics/omniture', 'common/common'], function(testConfigData, Omniture, common) {
 
     describe("Omniture", function() {
 
@@ -10,7 +10,10 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
         }
 
         beforeEach(function(){
-            config.page = { analyticsName: 'the_page_name' };
+            config.page = {
+                analyticsName: 'the_page_name',
+                beaconUrl: ''
+            };
             config.switches = {};
 
             s = { t: function(){}, tl: function(){}, apl: function(){} };
@@ -56,7 +59,9 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
                     buildNumber: "build-73",
                     edition: "US",
                     webPublicationDate: "2012-02-22T16:58:00.000Z",
-                    analyticsName: "GFE:theworld:a-really-long-title-a-really-long-title-a-really-long-title-a-really-long"
+                    analyticsName: "GFE:theworld:a-really-long-title-a-really-long-title-a-really-long-title-a-really-long",
+                    inBodyInternalLinkCount: "7",
+                    inBodyExternalLinkCount: "0"
             };
 
             var o = new Omniture(s, w);
@@ -74,6 +79,8 @@ define(['analytics/omniture', 'common'], function(Omniture, common) {
             expect(s.prop25).toBe("Middle East Live");
             expect(s.prop14).toBe("build-73");
             expect(s.prop47).toBe("US");
+            expect(s.prop58).toBe("7");
+            expect(s.prop69).toBe("0");
             expect(s.prop68).toBe("low");
             expect(s.prop56).toBe("Javascript");
             expect(s.prop30).toBe("content");

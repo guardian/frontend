@@ -3,7 +3,7 @@ package model
 import common.ManifestData
 import conf.Configuration
 
-trait MetaData {
+trait MetaData extends Tags {
   def id: String
   def section: String
   def webTitle: String
@@ -67,8 +67,9 @@ trait Elements {
   }
 
   // trail picture is used on index pages (i.e. Fronts and tag pages)
-  def trailPicture: Option[ImageContainer] = mainPicture.orElse(thumbnail)
-
+  def trailPicture: Option[ImageContainer] = thumbnail.find(_.imageCrops.exists(_.width >= 620))
+    .orElse(mainPicture)
+    .orElse(thumbnail)
 
   /*
   Now I know you might THINK that you want to change how we get the main picture.
@@ -82,34 +83,28 @@ trait Elements {
   You probably want the TRAIL PICTURE
 */
   // main picture is used on the content page (i.e. the article page or the video page)
-  def mainPicture: Option[ImageContainer] = imageElements.headOption
+
+  // if you change these rules make sure you update IMAGES.md (in this project)
+  def mainPicture: Option[ImageContainer] = images.find(_.isMain)
+
   lazy val hasMainPicture = mainPicture.flatMap(_.imageCrops.headOption).isDefined
 
-  def mainVideo: Option[VideoElement] = videoMap("main").headOption
+  def mainVideo: Option[VideoElement] = videos.find(_.isMain).headOption
   lazy val hasMainVideo: Boolean = mainVideo.flatMap(_.videoAssets.headOption).isDefined
 
-  lazy val bodyImages: List[ImageElement] = imageMap("body")
-  lazy val bodyVideos: List[VideoElement] = videoMap("body")
-  lazy val videoAssets: List[VideoAsset] = videos.flatMap(_.videoAssets)
-  lazy val thumbnail: Option[ImageElement] = imageMap("thumbnail").headOption
+  lazy val bodyImages: Seq[ImageElement] = images.filter(_.isBody)
+  lazy val bodyVideos: Seq[VideoElement] = videos.filter(_.isBody)
+  lazy val videoAssets: Seq[VideoAsset] = videos.flatMap(_.videoAssets)
+  lazy val thumbnail: Option[ImageElement] = images.find(_.isThumbnail)
 
-  private lazy val images: List[ImageElement] = imageMap("main")
-  private lazy val videos: List[VideoElement] = videoMap("main") ++ videoMap("body")
-  private lazy val imageElements: List[ImageContainer] = (images ++ videos).sortBy(_.index)
+  def elements: Seq[Element] = Nil
 
-  def elementsMap(elementType: String): Map[String,List[Element]] = Map.empty.withDefaultValue(Nil)
+  protected lazy val images: Seq[ImageElement] = elements.filter(_.isImage)
+    .map(e => new ImageElement(e.delegate, e.index))
 
-  protected lazy val imageMap: Map[String,List[ImageElement]] = {
-    elementsMap("image").collect {
-      case (relation, elements) => ( relation -> elements.collect{case x:ImageElement => x})
-    }.toMap.withDefaultValue(Nil)
-  }
+  protected lazy val videos: Seq[VideoElement] = elements.filter(_.isVideo)
+    .map(e => new VideoElement(e.delegate, e.index))
 
-  protected lazy val videoMap: Map[String,List[VideoElement]] = {
-    elementsMap("video").collect {
-      case (relation, elements) => ( relation -> elements.collect{case x:VideoElement => x})
-    }.toMap.withDefaultValue(Nil)
-  }
 }
 
 trait Tags {

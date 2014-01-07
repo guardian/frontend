@@ -41,58 +41,34 @@
         padding: 0;
     }
 
-    &.commercial--w600 {
-        .lineitems {
-            margin-right: -1px;
-        }
-
-        .lineitem {
-            @include box-sizing(border-box);
-            width: 50%;
-            float: left;
-        }
-
-        .lineitem-reduced {
-            border: solid lighten($c-neutral7, 2%);;
-            border-width: 0 0 1px 1px;
-            width: 25%;
-            
-            .lineitem__title {
-                color: #fff;
-                @include fs-data(2);
-                font-weight: normal;
-                margin: 0;
-            }
-            .lineitem__offer {
-                padding: $baseline;
-            }
-        }
-    }
-
     .commercial__foot {
         background-color: $c-neutral1;
         margin: 0;
         border: 0 none;
-        padding: 0;
     }
 
+	.commercial__link {
+		color: #fff;
+	}
+
     .commercial__search {
-        padding: $baseline;
+		margin-bottom: $baseline;
         overflow: hidden;
         position: relative;
 
         .i.i-search-grey {
-            background-position: 10px 10px;
+            background-position: 6px 6px;
             position: absolute;
             top: 0;
             left: 0;
-            padding: 12px;
+            padding: 8px;
         }
 
         .text-input {
             padding: $baseline;
             padding-left: 2em;
             width: 70%;
+            height: 32px;
             float: left;
             overflow: hidden;
         }
@@ -106,4 +82,41 @@
             float: left;
         }
     }
+
+	@include mq($to: tablet) {
+		.commercial__head {
+			background-color: #BBDFF6;
+		}
+		.commercial__subtitle {
+			color: $c-brandBlue;
+		}
+	}
+
+//    &.commercial--w600 {
+//        .lineitems {
+//            margin-right: -1px;
+//        }
+//
+//        .lineitem {
+//            @include box-sizing(border-box);
+//            width: 50%;
+//            float: left;
+//        }
+//
+//        .lineitem-reduced {
+//            border: solid lighten($c-neutral7, 2%);;
+//            border-width: 0 0 1px 1px;
+//            width: 25%;
+//            
+//            .lineitem__title {
+//                color: #fff;
+//                @include fs-data(2);
+//                font-weight: normal;
+//                margin: 0;
+//            }
+//            .lineitem__offer {
+//                padding: $baseline;
+//            }
+//        }
+//    }
 }

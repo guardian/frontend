@@ -1,14 +1,22 @@
 define([
-    'common',
-    'utils/storage',
-    'modules/analytics/mvt-cookie',
+    'common/common',
+    'common/utils/storage',
+    'common/modules/analytics/mvt-cookie',
 
     //Current tests
-    'modules/experiments/tests/aa',
-    'modules/experiments/tests/mobile-facebook-autosignin',
-    'modules/experiments/tests/onward-intrusive',
-    'modules/experiments/tests/onward-highlights-panel',
-    'modules/experiments/tests/alpha-comm'
+
+    'common/modules/experiments/tests/aa',
+    'common/modules/experiments/tests/mobile-facebook-autosignin',
+    'common/modules/experiments/tests/onward-intrusive',
+    'common/modules/experiments/tests/onward-highlights-panel',
+    'common/modules/experiments/tests/alpha-comm',
+    'common/modules/experiments/tests/commercial-in-article-desktop',
+    'common/modules/experiments/tests/commercial-in-article-mobile',
+    'common/modules/experiments/tests/right-most-popular',
+    'common/modules/experiments/tests/right-most-popular-control',
+    'common/modules/experiments/tests/tag-links',
+    'common/modules/experiments/tests/underline-links',
+    'common/modules/experiments/tests/in-body-links'
 ], function (
     common,
     store,
@@ -18,7 +26,14 @@ define([
     MobileFacebookAutosignin,
     OnwardIntrusive,
     OnwardHighlightsPanel,
-    AlphaComm
+    AlphaComm,
+    CommercialInArticlesDesktop,
+    CommercialInArticlesMobile,
+    RightPopular,
+    RightPopularControl,
+    TagLinks,
+    UnderlineLinks,
+    InBodyLinks
     ) {
 
     var TESTS = [
@@ -26,7 +41,14 @@ define([
             new MobileFacebookAutosignin(),
             new OnwardIntrusive(),
             new OnwardHighlightsPanel(),
-            new AlphaComm()
+            new AlphaComm(),
+            new CommercialInArticlesDesktop(),
+            new CommercialInArticlesMobile(),
+            new RightPopular(),
+            new RightPopularControl(),
+            new TagLinks(),
+            new UnderlineLinks(),
+            new InBodyLinks()
         ],
         participationsKey = 'gu.ab.participations';
 
@@ -64,6 +86,14 @@ define([
         Object.keys(participations).forEach(function (k) {
             if (typeof(config.switches['ab' + k]) === 'undefined') {
                 removeParticipation({ id: k });
+            } else {
+                var testExists = TESTS.some(function (element) {
+                    return element.id === k;
+                });
+
+                if (!testExists) {
+                    removeParticipation({ id: k });
+                }
             }
         });
     }
@@ -76,6 +106,12 @@ define([
                 return false;
             }
             return true;
+        });
+    }
+
+    function getExpiredTests() {
+        return TESTS.filter(function(test) {
+            return (new Date() - new Date(test.expiry)) > 0;
         });
     }
 
@@ -227,8 +263,9 @@ define([
         },
 
         getParticipations: getParticipations,
-        makeOmnitureTag: makeOmnitureTag
-
+        makeOmnitureTag: makeOmnitureTag,
+        getExpiredTests: getExpiredTests,
+        getActiveTests: getActiveTests
     };
 
     return ab;

@@ -185,7 +185,7 @@ figcaption,
 }
 
 .main-caption {
-    padding: $baseline*2 $gs-gutter/2 $gs-column-height;
+    padding: $baseline*2 $gs-gutter/2 $gs-row-height;
 
     @include mq(mobileLandscape) {
         padding-left: $gs-gutter;
@@ -226,7 +226,7 @@ figure {
             padding: $baseline 6px $baseline*6 6px;
 
             @include mq(wide) {
-                padding: $baseline*1.5 8px $gs-column-height 8px;
+                padding: $baseline*1.5 8px $gs-row-height 8px;
             }
         }
     }

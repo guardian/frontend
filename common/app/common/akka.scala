@@ -1,7 +1,7 @@
 package common
 
 import akka.agent.Agent
-import play.api.libs.concurrent.{ Akka => PlayAkka }
+import play.api.libs.concurrent.{Akka => PlayAkka}
 import scala.concurrent.duration._
 import play.api.Play
 

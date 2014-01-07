@@ -1,16 +1,21 @@
 define([
     'bean',
-    'utils/ajax',
-    'utils/mediator',
+
+    'common/utils/ajax',
+    'common/utils/mediator',
+    'common/utils/storage',
+    'common/utils/config',
+
     'lodash/collections/filter',
-    'utils/storage',
-    'modules/onward/history'
+
+    'common/modules/onward/history'
 ], function(
     bean,
     ajax,
     mediator,
-    _filter,
     storage,
+    config,
+    _filter,
     History
     ){
 
@@ -59,6 +64,13 @@ define([
         });
     }
 
+    function getDefaultSequence() {
+        var section = ('page' in config && config.page.section !== '') ? '/' + config.page.section : '';
+        return {
+            path: 'most-read' + section
+        };
+    }
+
     function loadSequence(context) {
         ajax({
             url: '/' + context.path + '.json',
@@ -73,7 +85,7 @@ define([
                 mediator.emit('modules:sequence:loaded', getSequence());
             }
         }).fail(function(req) {
-            mediator.emit('modules:error', 'Failed to load sequence: ' + req.statusText, 'modules/onwards/sequence.js');
+            mediator.emit('modules:error', 'Failed to load sequence: ' + req.statusText, 'common/modules/onwards/sequence.js');
         });
     }
 
@@ -92,9 +104,12 @@ define([
 
         if(context.path !== null) {
             loadSequence(context);
+        } else if(getSequence() === null) {
+            loadSequence(getDefaultSequence());
         } else {
             mediator.emit('modules:sequence:loaded', getSequence());
         }
+
         bindListeners();
     }
 

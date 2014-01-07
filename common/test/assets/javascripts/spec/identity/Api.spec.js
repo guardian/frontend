@@ -1,8 +1,8 @@
 define([
-    'utils/cookies',
-    'modules/identity/api',
-    'utils/ajax',
-    'utils/storage'
+    'common/utils/cookies',
+    'common/modules/identity/api',
+    'common/utils/ajax',
+    'common/utils/storage'
 ], function(
     Cookies,
     Id,

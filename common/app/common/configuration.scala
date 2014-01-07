@@ -2,12 +2,13 @@ package common
 
 import com.gu.conf.ConfigurationFactory
 import com.gu.management.{ Manifest => ManifestFile }
-import com.amazonaws.auth.{ BasicAWSCredentials, AWSCredentials }
+import com.amazonaws.auth._
 import play.api.Play
 import play.api.Play.current
 import java.io.{FileInputStream, File}
 import org.apache.commons.io.IOUtils
 import conf.Configuration
+import com.amazonaws.internal.StaticCredentialsProvider
 
 class BadConfigurationException(property: String) extends RuntimeException(s"Property $property not configured")
 
@@ -113,7 +114,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val url =
       if (environment.secure) configuration.getStringProperty("ajax.secureUrl").getOrElse("")
       else configuration.getStringProperty("ajax.url").getOrElse("")
-    lazy val corsOrigin = configuration.getStringProperty("ajax.cors.origin")
+    lazy val corsOrigins: Seq[String] = configuration.getStringProperty("ajax.cors.origin").map(_.split(",")
+      .map(_.trim).toSeq).getOrElse(Nil)
   }
 
   object id {
@@ -157,8 +159,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object discussion {
     lazy val apiRoot = configuration.getMandatoryStringProperty("discussion.apiRoot")
+    lazy val secureApiRoot = configuration.getMandatoryStringProperty("discussion.secureApiRoot")
     lazy val apiTimeout = configuration.getMandatoryStringProperty("discussion.apiTimeout")
     lazy val apiClientHeader = configuration.getMandatoryStringProperty("discussion.apiClientHeader")
+    lazy val url = configuration.getMandatoryStringProperty("discussion.url")
   }
 
   object open {
@@ -175,6 +179,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       "idWebAppUrl" -> id.webappUrl,
       "idApiUrl" -> id.apiRoot,
       "discussionApiRoot" -> discussion.apiRoot,
+      ("secureDiscussionApiRoot", discussion.secureApiRoot),
       "discussionApiClientHeader" -> discussion.apiClientHeader
     )
 
@@ -205,14 +210,24 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object aws {
-    lazy val accessKey = configuration.getMandatoryStringProperty("aws.access.key")
-    lazy val secretKey = configuration.getMandatoryStringProperty("aws.access.secret.key")
-    lazy val region = configuration.getMandatoryStringProperty("aws.region")
+    private lazy val accessKey = configuration.getStringProperty("aws.access.key")
+    private lazy val secretKey = configuration.getStringProperty("aws.access.secret.key")
 
+    lazy val region = configuration.getMandatoryStringProperty("aws.region")
     lazy val bucket = configuration.getMandatoryStringProperty("aws.bucket")
     lazy val sns: String = configuration.getMandatoryStringProperty("sns.notification.topic.arn")
 
-    lazy val credentials: AWSCredentials = new BasicAWSCredentials(accessKey, secretKey)
+    lazy val credentials: AWSCredentialsProvider = new AWSCredentialsProviderChain(
+      // the first 3 are a copy n paste job from the constructor of DefaultAWSCredentialsProviderChain
+      // once we are done migrating we will fall back to that.
+      LoggingAWSCredentialsProvider(new EnvironmentVariableCredentialsProvider()),
+      LoggingAWSCredentialsProvider(new SystemPropertiesCredentialsProvider()),
+
+      // TODO - we uncomment this AFTER we have proven that all the correct roles are on the boxes
+      //LoggingAWSCredentialsProvider(new InstanceProfileCredentialsProvider()),
+
+      LoggingAWSCredentialsProvider(new StaticCredentialsProvider(new NullableAWSCredentials(accessKey, secretKey)))
+    )
   }
 
   object pingdom {
@@ -226,8 +241,43 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val url = configuration.getMandatoryStringProperty("riffraff.url")
     lazy val apiKey = configuration.getMandatoryStringProperty("riffraff.apikey")
   }
+
+  object formstack {
+    lazy val url = configuration.getMandatoryStringProperty("formstack.url")
+    lazy val oAuthToken = configuration.getMandatoryStringProperty("formstack.oauthToken")
+  }
 }
 
 object ManifestData {
   lazy val build = ManifestFile.asKeyValuePairs.getOrElse("Build", "DEV").dequote.trim
 }
+
+// AWSCredentialsProviderChain relies on these being null if not configured.
+private class NullableAWSCredentials(accessKeyId: Option[String], secretKey: Option[String]) extends AWSCredentials{
+  def getAWSAccessKeyId: String = accessKeyId.getOrElse(null)
+  def getAWSSecretKey: String = secretKey.getOrElse(null)
+}
+
+// I want to see which provider we are using
+private class LoggingAWSCredentialsProvider(delegate: AWSCredentialsProvider) extends AWSCredentialsProvider with Logging {
+  val className = delegate.getClass.getSimpleName
+
+  def refresh() {
+    log.info(s"$className.refresh")
+    delegate.refresh()
+  }
+
+  def getCredentials: AWSCredentials = {
+    val credentials = delegate.getCredentials
+    // this is how the AWSCredentialsProviderChain works
+    if (credentials.getAWSAccessKeyId != null && credentials.getAWSSecretKey != null) {
+      log.info(s"using AWS Credentials from $className")
+    }
+    credentials
+  }
+}
+
+private object LoggingAWSCredentialsProvider{
+  def apply(delegate: AWSCredentialsProvider) = new LoggingAWSCredentialsProvider(delegate)
+}
+

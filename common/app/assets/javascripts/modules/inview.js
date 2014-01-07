@@ -1,7 +1,7 @@
 define([
-    "utils/mediator",
-    'utils/to-array',
-    'utils/request-animation-frame',
+    "common/utils/mediator",
+    'common/utils/to-array',
+    'common/utils/request-animation-frame',
     "bean"
 ], function (
     mediator,

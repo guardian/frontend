@@ -1,16 +1,16 @@
 define([
-    '$',
-    'utils/ajax',
+    'common/$',
+    'common/utils/ajax',
     'bonzo',
     'qwery',
     'bean',
-    'modules/component',
-    'modules/analytics/discussion',
-    'modules/identity/api',
-    'modules/discussion/api',
-    'modules/discussion/comments',
-    'modules/discussion/top-comments',
-    'modules/discussion/comment-box'
+    'common/modules/component',
+    'common/modules/analytics/discussion',
+    'common/modules/identity/api',
+    'common/modules/discussion/api',
+    'common/modules/discussion/comments',
+    'common/modules/discussion/top-comments',
+    'common/modules/discussion/comment-box'
 ], function(
     $,
     ajax,
@@ -58,7 +58,7 @@ Loader.prototype.classes = {
     comments: 'discussion__comments',
     commentBox: 'discussion__comment-box',
     commentBoxBottom: 'discussion__comment-box--bottom',
-    joinDiscussion: 'd-show-cta',
+    joinDiscussion: 'd-discussion__show-all-comments',
     topComments: 'discussion__comments--top-comments'
 };
 
@@ -109,7 +109,6 @@ Loader.prototype.ready = function() {
             .fetch(topCommentsElem)
             .then(function appendTopComments() {
                 bonzo(self.topLoadingElem).addClass('u-h');
-                self.on('click', $(self.topComments.showMoreButton), self.topComments.showMore.bind(self.topComments)); // Module-hopping calls - refactor needed
             });
 
         this.mediator.on('module:topcomments:loadcomments', self.loadComments.bind(self));
@@ -118,6 +117,19 @@ Loader.prototype.ready = function() {
     this.getUser();
     this.renderCommentCount();
     DiscussionAnalytics.init();
+
+    bean.on(window, 'hashchange', function(e) {
+        var commentId = self.getCommentIdFromHash();
+        if (commentId) {
+            self.comments.gotoComment(commentId);
+            bonzo(self.getElem('joinDiscussion')).addClass('u-h');
+        }
+    });
+
+    // More for analytics than anything
+    if (window.location.hash === '#comments') {
+        this.mediator.emit('discussion:seen:comments-anchor');
+    }
 };
 
 Loader.prototype.loadComments = function(args) {
@@ -125,7 +137,8 @@ Loader.prototype.loadComments = function(args) {
         commentsContainer = this.getElem('commentsContainer'),
         commentsElem = this.getElem('comments'),
         loadingElem = bonzo.create('<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>')[0],
-        commentId = this.getCommentIdFromHash();
+        commentId = this.getCommentIdFromHash(),
+        showComments = args.showLoader || commentId || window.location.hash === '#comments';
         
 
     if (args.showLoader) {
@@ -135,6 +148,10 @@ Loader.prototype.loadComments = function(args) {
 
     bonzo(self.topLoadingElem).addClass('u-h');
     bonzo(loadingElem).insertAfter(commentsElem);
+
+    if (commentId) {
+        this.mediator.emit('discussion:seen:comment-permalink');
+    }
 
     this.comments = new Comments(this.context, this.mediator, {
         initialShow: commentId ? 10 : args.amount,
@@ -150,7 +167,7 @@ Loader.prototype.loadComments = function(args) {
             bonzo(loadingElem).remove();
             self.renderCommentBar(self.user);
 
-            if (args.showLoader || commentId) {
+            if (showComments) {
                 // Comments are being loaded in the no-top-comments-available context
                 bonzo(self.getElem('joinDiscussion')).remove();
                 bonzo([self.comments.getElem('showMore'), self.comments.getElem('header')]).removeClass('u-h');
@@ -164,13 +181,6 @@ Loader.prototype.loadComments = function(args) {
             });
             bonzo(commentsContainer).removeClass('u-h');
         }).fail(self.loadingError.bind(self));
-
-    bean.on(window, 'hashchange', function(e) {
-        commentId = self.getCommentIdFromHash();
-        if (commentId) {
-            self.comments.gotoComment(commentId);
-        }
-    });
 };
 
 /** @return {Reqwest|null} */
@@ -237,6 +247,7 @@ Loader.prototype.renderCommentBar = function() {
     } else {
         this.renderCommentBox();
         this.comments.on('first-load', this.renderBottomCommentBox.bind(this));
+        this.comments.on('first-load', this.cleanUpOnShowComments.bind(this));
     }
 };
 
@@ -282,7 +293,7 @@ Loader.prototype.cleanUpOnShowComments = function () {
 };
 
 Loader.prototype.renderUserBanned = function() {
-    this.getElem('commentBox').innerHTML = '<div class="d-bar d-bar--banned">Commenting has been disabled for this account (<a href="/community-faqs#321a">why?</a>).</div>';
+    this.getElem('commentBox').innerHTML = '<div class="d-bar d-discussion__error d-bar--banned">Commenting has been disabled for this account (<a href="/community-faqs#321a">why?</a>).</div>';
 };
 
 /**
@@ -336,7 +347,6 @@ Loader.prototype.renderCommentCount = function() {
                                '  <span class="commentcount__label">'+commentCountLabel+'</span>' +
                                '</a>';
 
-                    qwery('.js-commentcount__number', this.context).innerHTML = commentCount;
                     bonzo(qwery('.js-comment-count', this.context)).html(html);
                 }
             }

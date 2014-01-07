@@ -2,12 +2,10 @@ package model
 
 case class Config(
                    id: String,
-                   contentApiQuery: Option[String],
-                   displayName: Option[String],
-                   collectionTone: Option[String]) {
-  // 'middle' part of the id is the section
-  val section: String = id.split("/").tail.dropRight(1).mkString("/")
-}
+                   contentApiQuery: Option[String] = None,
+                   displayName: Option[String] = None,
+                   collectionTone: Option[String] = None,
+                   href: Option[String] = None)
 
 case class Collection(items: Seq[Trail],
                       displayName: Option[String])

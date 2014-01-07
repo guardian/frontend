@@ -1,7 +1,7 @@
 define([
-    'common',
+    'common/common',
     'bonzo',
-    'utils/ajax'
+    'common/utils/ajax'
 ], function (
     common,
     bonzo,
@@ -48,7 +48,7 @@ define([
                 }
             },
             function(req) {
-                common.mediator.emit('module:error', 'Failed to load cricket: ' + req.statusText, 'modules/cricketsummary.js');
+                common.mediator.emit('module:error', 'Failed to load cricket: ' + req.statusText, 'common/modules/cricketsummary.js');
             }
         );
         common.mediator.emit('modules:cricket:loaded', config, context);
@@ -77,7 +77,7 @@ define([
                 firstCricketBlock.append(bonzo.create(resp.summary));
             },
             function(req) {
-                common.mediator.emit('module:error', 'Failed to load cricket: ' + req.statusText, 'modules/cricketsummary.js');
+                common.mediator.emit('module:error', 'Failed to load cricket: ' + req.statusText, 'common/modules/cricketsummary.js');
             }
         );
         common.mediator.emit('modules:cricket:loaded', config, context);

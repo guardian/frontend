@@ -16,8 +16,6 @@ trait Prototypes {
     maxErrors := 20,
     javacOptions := Seq(
       "-g",
-      "-source", "1.6",
-      "-target", "1.6",
       "-encoding", "utf8"
     ),
     scalacOptions := Seq("-unchecked", "-optimise", "-deprecation",
@@ -121,7 +119,7 @@ trait Prototypes {
 
   def root() = Project("root", base = file("."))
     .settings(
-      scalaVersion := "2.10.2"
+      scalaVersion := "2.10.3"
     )
 
   def application(name: String) = play.Project(name, version, path = file(name))
