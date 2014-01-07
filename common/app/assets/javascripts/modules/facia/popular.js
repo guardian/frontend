@@ -5,8 +5,9 @@ define([
     'bonzo',
     'common/modules/ui/relativedates',
     'common/modules/facia/collection-show-more',
-    'common/modules/ui/images'
-], function ($, mediator, ajax, bonzo, relativeDates, CollectionShowMore, images) {
+    'common/modules/ui/images',
+    'common/modules/discussion/comment-count'
+], function ($, mediator, ajax, bonzo, relativeDates, CollectionShowMore, images, commentCount) {
 
     return  {
         render:  function (config, options) {
@@ -25,6 +26,7 @@ define([
                     // add show more button
                     new CollectionShowMore($('.collection', container)[0])
                         .addShowMore();
+                    commentCount.init(container);
                     // relativise timestamps
                     relativeDates.init(container);
                     // upgrade image

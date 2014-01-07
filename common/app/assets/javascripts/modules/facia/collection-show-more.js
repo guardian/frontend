@@ -72,16 +72,14 @@ define([
         };
 
         this._enrichItems = function() {
-            // NOTE: wrapping in div so can be passed to commentCount, relativeDates, etc.
-            var wrappedItems = bonzo(bonzo.create('<div></div>'))
-                .append(this._items)[0];
-            relativeDates.init(wrappedItems);
-            commentCount.init(wrappedItems);
+            relativeDates.init(this._collection);
+            commentCount.init(this._collection);
         };
 
         this._showItems = function(afterAjax) {
             var itemsToShow = this._items.splice(0, getShowMoreSize());
             this._$collection.append(itemsToShow);
+            this._enrichItems();
             this._$button.attr('disabled', false);
             this._incrementButtonCounter();
             if (this._items.length === 0) {
@@ -153,7 +151,6 @@ define([
                         that._items = newItems.filter(function(newItem) {
                             return itemsHrefs.indexOf($('.item__link', newItem).attr('href')) === -1;
                         });
-                        that._enrichItems();
                         that._showItems(true);
                     }).fail(function(req) {
                         mediator.emit('module:error', 'Failed to load items: ' + req.statusText);
