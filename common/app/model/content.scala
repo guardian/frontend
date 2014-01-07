@@ -29,7 +29,7 @@ class Content protected (val delegate: ApiContent) extends Trail with MetaData {
   lazy val blockAds: Boolean = videoAssets.exists(_.blockAds)
   lazy val isLiveBlog: Boolean = delegate.isLiveBlog
   lazy val openGraphImage: String = mainPicture.flatMap(_.largestImage.flatMap(_.url)).getOrElse(conf.Configuration.facebook.imageFallback)
-  lazy val isSponsored: Boolean = tags.exists(_.id == "sponsored/sponsored")
+  lazy val isSponsored: Boolean = tags.exists(_.id == "tone/sponsoredfeatures")
   lazy val sponsor: Option[Sponsor] = {
     if (isSponsored) {
       Sponsors.find(tags.filter(_.tagType == "keyword").head.id) 
