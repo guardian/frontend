@@ -57,7 +57,7 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
     }
   }
 
-  private def getCommentJsonForId(id: String, apiUrl: String): Future[Comment] = {
+  private def getCommentJsonForId(id: Int, apiUrl: String): Future[Comment] = {
     def onError(r: Response) =
       s"Error loading comment id: $id status: ${r.status} message: ${r.statusText}"
 
@@ -68,7 +68,7 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
     }
   }
 
-  def commentFor(id: String): Future[Comment] = {
+  def commentFor(id: Int): Future[Comment] = {
     getCommentJsonForId(id, s"$apiRoot/comment/$id?displayResponses=true&displayThreaded=true")
   }
 
