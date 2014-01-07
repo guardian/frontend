@@ -27,8 +27,8 @@ define([
         if (!opts || !opts.id) { return; }
 
         this.id = opts.id;
-        this.response = null;
         this.groups = this.createGroups(opts.groups);
+        this.raw = undefined;
 
         // properties from the config, about this collection
         this.configMeta   = asObservableProps([
@@ -139,52 +139,55 @@ define([
 
         opts = opts || {};
 
+        if (opts.isRefresh && self.isPending()) { return; }
+
         return authedAjax.request({
             url: vars.CONST.apiBase + '/collection/' + this.id
         })
-        .then(function(resp) {
-            var dontPopulate = opts.isRefresh && (self.isPending() || self.response.lastUpdated === self.collectionMeta.lastUpdated());
+        .done(function(raw) {
+            if (opts.isRefresh && self.isPending()) { return; }
+            
+            self.setPending(false);
 
-            self.response = resp;
-            self.state.hasDraft(_.isArray(self.response.draft));
+            if (!raw || raw.lastUpdated === self.collectionMeta.lastUpdated()) { return; }
 
-            if (!dontPopulate) {
-                self.populateLists();
-            }
-
-            if (!self.state.editingConfig()) {
-                populateObservables(self.collectionMeta, self.response);
-                self.state.timeAgo(self.getTimeAgo(self.response.lastUpdated));
-            }
+            self.populateLists(raw);
+            self.state.hasDraft(_.isArray(raw.draft));
         })
-        .always(function() {
+        .fail(function() {
             self.setPending(false);
         });
     };
 
-    Collection.prototype.populateLists = function() {
-        if (!this.response) { return; }
-
-        if (vars.state.liveMode()) {
-            this.importList(this.response.live);
-        } else {
-            this.importList(this.response.draft || this.response.live); // No draft yet? Base it on live.
-        }
-        this.decorate();
-    };
-
-    Collection.prototype.importList = function(source) {
+    Collection.prototype.populateLists = function(raw) {
         var self = this,
-            editingMetas = {};
+            editingMetas = {},
+            list;
+
+        if (raw) {
+            this.raw = raw;
+        } else {
+            raw = this.raw;
+        }
+
+        if (!raw) { return; }
 
         _.each(this.groups, function(group) {
             _.each(group.items(), function(item) {
                 editingMetas[item.props.id()] = item.state.editingMeta();
             });
+        });
+
+        // Don't import list if any items are in edit mode        
+        if (_.some(editingMetas, function(is) { return is; })) { return; }
+
+        _.each(this.groups, function(group) {
             group.items.removeAll();
         });
 
-        _.each(source, function(item) {
+        list = vars.state.liveMode() ? raw.live : raw.draft || raw.live || [];
+
+        _.each(list, function(item) {
             var article = new Article(_.extend(item, {
                     parent: self,
                     parentType: 'Collection'
@@ -202,7 +205,13 @@ define([
             group.items.push(article);
         });
 
-        this.state.count(source.length);
+        this.decorate();
+        this.state.count(list.length);
+        this.state.timeAgo(self.getTimeAgo(raw.lastUpdated));
+
+        if (!this.state.editingConfig()) {
+            populateObservables(this.collectionMeta, raw);
+        }
     };
 
     Collection.prototype.decorate = function() {
@@ -213,7 +222,8 @@ define([
     };
 
     Collection.prototype.refresh = function() {
-        if (vars.state.uiBusy || this.setPending()) { return; }
+        if (this.isPending()) { return; }
+
         this.load({
             isRefresh: true
         });
