@@ -8,8 +8,7 @@ case class Sponsor(
 object Sponsors {
 
   lazy val campaigns: Map[String, Sponsor] = Map(
-    "sponsored/discover-america" -> Sponsor("Discover America", "discover-america"),
-    "sponsored/rent-a-car" -> Sponsor("Enterprise: rent-a-car", "rent-a-car")
+    "carphone-warehouse-mobile-living/carphone-warehouse-mobile-living" -> Sponsor("Carphone Warehouse", "carphone-warehouse") 
   )
 
   def find(tag:String) = {
