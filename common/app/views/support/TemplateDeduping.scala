@@ -14,7 +14,7 @@ class TemplateDeduping extends implicits.Collections {
   }
 
   def take(numberWanted: Int, collection: Collection): Collection =
-    collection.copy(items = take(numberWanted, collection.items))
+    collection.copy(curated = take(numberWanted, collection.curated))
 
   def apply(numberWanted: Int, collection: Collection): Collection = take(numberWanted, collection)
   def apply(collection: Collection): Collection = take(collection.items.length, collection)
