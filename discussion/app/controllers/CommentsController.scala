@@ -32,17 +32,18 @@ trait CommentsController extends DiscussionController {
     }
   }
 
-  def topComments(key: DiscussionKey) = comments(key, true)
-  def topCommentsJson(key: DiscussionKey) = comments(key, true)
+  def topComments(key: DiscussionKey) = comments(key, isTopComments = true)
+  def topCommentsJson(key: DiscussionKey) = comments(key, isTopComments = true)
+  def oldestComments(key: DiscussionKey) = comments(key, orderBy = "oldest")
+  def oldestCommentsJson(key: DiscussionKey) = comments(key, orderBy = "oldest")
   def commentsJson(key: DiscussionKey) = comments(key)
-  def comments(key: DiscussionKey, isTopComments: Boolean = false) = Action.async { implicit request =>
-    getComments(key, request.getQueryString("page").getOrElse("1"), isTopComments)
+  def comments(key: DiscussionKey, orderBy: String = "newest", isTopComments: Boolean = false) = Action.async { implicit request =>
+    getComments(key, request.getQueryString("page").getOrElse("1"), orderBy, isTopComments)
   }
 
-  def getComments(key: DiscussionKey, page: String = "1", isTopComments: Boolean = false)(implicit request: RequestHeader):Future[SimpleResult] = {
+  def getComments(key: DiscussionKey, page: String = "1", orderBy: String = "newest", isTopComments: Boolean = false)(implicit request: RequestHeader):Future[SimpleResult] = {
     val allResponses = request.getQueryString("allResponses").exists(_ == "true")
-    val order = request.getQueryString("order").getOrElse("newest")
-    val commentPage = if (isTopComments) discussionApi.topCommentsFor(key) else discussionApi.commentsFor(key, page, order, allResponses)
+    val commentPage = if (isTopComments) discussionApi.topCommentsFor(key) else discussionApi.commentsFor(key, page, orderBy, allResponses)
     val blankComment = Comment(Json.parse("""{
       "id": 5,
       "body": "",

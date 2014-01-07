@@ -41,7 +41,7 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
         }
 
         CommentPage(
-          id = s"discussion/$key",
+          id = s"/$key",
           title = (json \ "discussion" \ "title").as[String],
           contentUrl = (json \ "discussion" \ "webUrl").as[String],
           comments = comments,
@@ -50,6 +50,7 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
           commenterCount =  (json \ "discussion" \ "commenterCount").as[Option[Int]].getOrElse(0),
           currentPage = (json \ "currentPage").as[Int],
           pages = (json \ "pages").as[Int],
+          orderBy = (json \ "orderBy").as[String],
           isClosedForRecommendation = (json \ "discussion" \ "isClosedForRecommendation").as[Boolean],
           switches = (json \ "switches").as[Seq[JsObject]] map { json => Switch(json) }
         )

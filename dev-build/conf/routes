@@ -20,6 +20,8 @@ GET         /discussion/comment-permalink/*commentId.json                       
 GET         /discussion/comment-permalink/*commentId                                                                 controllers.DiscussionApp.commentPermalink(commentId: Int)
 GET         /discussion/top/*discussionKey.json                                                                      controllers.DiscussionApp.topCommentsJson(discussionKey: discussion.model.DiscussionKey)
 GET         /discussion/top/*discussionKey                                                                           controllers.DiscussionApp.topComments(discussionKey: discussion.model.DiscussionKey)
+GET         /discussion/oldest/*discussionKey.json                                                                   controllers.DiscussionApp.oldestCommentsJson(discussionKey: discussion.model.DiscussionKey)
+GET         /discussion/oldest/*discussionKey                                                                        controllers.DiscussionApp.oldestComments(discussionKey: discussion.model.DiscussionKey)
 GET         /discussion/*discussionKey.json                                                                          controllers.DiscussionApp.commentsJson(discussionKey: discussion.model.DiscussionKey)
 GET         /discussion/*discussionKey                                                                               controllers.DiscussionApp.comments(discussionKey: discussion.model.DiscussionKey)
 GET         /open/cta/article/*discussionKey.json                                                                    controllers.CtaController.cta(discussionKey: discussion.model.DiscussionKey)
