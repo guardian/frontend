@@ -1,6 +1,6 @@
 .container--top-stories {
     // Cap new collections to a width of 12 columns
-    @include mq(gs-span(7) + $gs-gutter, tablet) {
+    @include mq(gs-span(7) + $gs-gutter*3, tablet) {
         @include rem((width: gs-span(7)));
         margin: 0 auto;
     }
@@ -29,37 +29,19 @@
         }
     }
     .item__media-wrapper {
-        @include mq($to: tablet) {
-            float: left;
-
-            // Adapt the width of images to sit on text's baseline
-            @include rem((
-                width: 108px,
-                margin-right: $gs-gutter/2
-            ));
-            @include mq(mobileLandscape) {
-                @include rem((
-                    width: 124px
-                ));
-            }
-            @include mq(600px) {
-                @include rem((
-                    width: 156px
-                ));
-            }
-        }
-    }
-    .item__media-wrapper {
         display: none;
+    }
+    .item__title {
+        @include mq(tablet) {
+            @include rem((
+                min-height: nth(nth($fs-headlines, 2), 2) * 2
+            ));
+        }
     }
     .item__standfirst {
         display: block;
-        @include rem((margin-top: $gs-baseline));
     }
     .item--has-image {
-        .item__standfirst {
-            display: none;
-        }
         .item__media-wrapper,
         .item__image-container {
             display: block;
@@ -87,14 +69,11 @@
     // Volume
     .l-row--items-2 .collection__item--volume-2 {
         .item__media-wrapper {
-            @include mq($to: mobileLandscape) {
-                float: none;
-                margin-right: 0;
-                width: 100%;
-            }
-            @include mq(mobileLandscape, 599px) {
+            @include mq(mobileLandscape) {
+                float: left;
                 @include rem((
-                    width: gs-span(3)
+                    width: gs-span(3),
+                    margin-right: $gs-gutter/2
                 ));
             }
             @include mq(600px, tablet) {
@@ -153,20 +132,22 @@
         }
     }
     .l-row--items-4 {
-        @include mq($to: tablet) {
-            .item__title,
-            .item__byline {
-                @include fs-headline(1, true);
-            }
-            .item__media-wrapper {
-                @include rem((width: 90px));
-            }
-        }
-        @include mq(tablet) {
-            .item__title,
-            .item__byline {
-                @include fs-headline(1, true);
-            }
-        }
+        
+    }
+}
+
+.item--thumbnail {
+    .item__media-wrapper {
+        float: left;
+        clear: both;
+        @include rem((
+            width: 88px,
+            margin-right: $gs-gutter/2
+        ));
+    }
+    .item__standfirst {
+        @include rem((
+            margin-top: 2px
+        ));
     }
 }
