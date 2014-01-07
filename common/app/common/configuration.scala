@@ -221,7 +221,9 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       // once we are done migrating we will fall back to that.
       LoggingAWSCredentialsProvider(new EnvironmentVariableCredentialsProvider()),
       LoggingAWSCredentialsProvider(new SystemPropertiesCredentialsProvider()),
-      LoggingAWSCredentialsProvider(new InstanceProfileCredentialsProvider()),
+
+      // TODO - we uncomment this AFTER we have proven that all the correct roles are on the boxes
+      //LoggingAWSCredentialsProvider(new InstanceProfileCredentialsProvider()),
 
       LoggingAWSCredentialsProvider(new StaticCredentialsProvider(new NullableAWSCredentials(accessKey, secretKey)))
     )
