@@ -4,9 +4,11 @@
 .linkslist__item {
     border-top: 1px dotted $c-neutral3;
     @include rem((
-        padding-top: $baseline,
-        padding-bottom: $baseline*3 // Simulates margins and don't create extra space
+        min-height: 44px - $gs-baseline - $gs-baseline/3,
+        padding-top: $gs-baseline/3,
+        padding-bottom: $gs-baseline // Simulates margins and don't create extra space
                                      // at the beginning of a new column break
+                                     // (as margins do)
     ));
 }
 .linkslist__action {
