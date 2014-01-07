@@ -5,7 +5,7 @@ import org.scalatest.Matchers
 import test.HtmlUnit
 import collection.JavaConversions._
 
-class CombinerFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
+class CombinerFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with UsesElasticSearch {
 
   feature("Combiner pages") {
 

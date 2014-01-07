@@ -1,11 +1,11 @@
 package test
 
-import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.Matchers
 import org.scalatest.FlatSpec
+import common.UsesElasticSearch
 
-class InteractiveControllerTest extends FlatSpec with Matchers {
+class InteractiveControllerTest extends FlatSpec with Matchers with UsesElasticSearch {
  
   val url = "music/interactive/2013/aug/20/matthew-herbert-quiz-hearing"
 
