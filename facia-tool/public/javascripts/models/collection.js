@@ -103,9 +103,9 @@ define([
             url: vars.CONST.apiBase + '/collection/' + this.id,
             data: JSON.stringify(goLive ? {publish: true} : {discard: true})
         })
-            .then(function() {
-                self.load();
-            });
+        .then(function() {
+            self.load();
+        });
 
         this.state.hasDraft(false);
     };
@@ -123,7 +123,8 @@ define([
                 live:   vars.state.liveMode(),
                 draft: !vars.state.liveMode()
             })
-        }).then(function() {
+        })
+        .then(function() {
             self.load();
         });
     };
@@ -227,9 +228,10 @@ define([
                     displayName: this.collectionMeta.displayName()
                 }
             })
-        }).then(function(){
-                self.load();
-            });
+        })
+        .then(function(){
+            self.load();
+        });
     };
 
     Collection.prototype.getTimeAgo = function(date) {
