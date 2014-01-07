@@ -356,14 +356,26 @@
 /* Identity Menu
    ========================================================================== */
 
+.is-signed-in {
+    position: relative;
+}
+
 .nav-popup.nav-popup-profile {
-    width: 337px;
     right: 0;
-    > ul {
+    width: auto;
+    @include mq($to: desktop) {
+        width: 100%;
+    }
+    > .nav {
         padding-left: 4px;
         padding-right: 4px;
-        > .nav__item a {
-            padding: 10px 0;
+        > .nav__item {
+            width: 100%;
+            padding: 0 10px;
+            .nav__link {
+                padding: 10px 0;
+                border: none;
+            }
         }
     }
 }

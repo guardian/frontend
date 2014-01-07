@@ -2,11 +2,15 @@ define([
     'common/common',
     'common/utils/ajax',
     'bonzo',
+    'bean',
+    'common/utils/detect',
     'common/modules/identity/api'
 ], function(
     common,
     ajax,
     bonzo,
+    bean,
+    detect,
     Id
 ) {
 
@@ -18,7 +22,6 @@ define([
     function Profile(context, config) {
         this.context = context;
         this.config = common.extend(this.config, config);
-        
         this.dom.container = context.querySelector('.' + Profile.CONFIG.classes.container);
         this.dom.content = this.dom.container.querySelector('.' + Profile.CONFIG.classes.content);
         this.dom.popup = context.querySelector('.' + Profile.CONFIG.classes.popup);
@@ -74,6 +77,13 @@ define([
                     this.menuListItem("Sign out", this.config.url+'/signout', "signout")+
                 '</ul>'
             );
+
+            if (detect.getBreakpoint() !== 'mobile' && detect.getBreakpoint() !== 'tablet') {
+                $popup.css({
+                    left: $content.parent()[0].offsetLeft
+                });
+            }
+
         } else {
             $popup.remove();
         }
