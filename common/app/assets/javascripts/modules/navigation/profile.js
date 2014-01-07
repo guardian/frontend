@@ -78,9 +78,13 @@ define([
                 '</ul>'
             );
 
+            var three_col = 220, // Magic number for 3 grid columns
+                width = $container.parent()[0].offsetWidth,
+                offsetLeft = $content.parent()[0].offsetLeft;
+
             if (detect.getBreakpoint() !== 'mobile' && detect.getBreakpoint() !== 'tablet') {
                 $popup.css({
-                    left: $content.parent()[0].offsetLeft
+                    left: Math.min(offsetLeft, width - three_col)
                 });
             }
 
