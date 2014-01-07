@@ -34,10 +34,7 @@ define([
         classes: {
             container: 'js-profile-nav',
             content: 'js-profile-info',
-            popup: 'js-profile-nav-popup',
-            signout: 'js-nav-signout',
-            emailPrefs: 'js-nav-emailPrefs',
-            publicProfile: 'js-nav-publicProfile'
+            popup: 'js-profile-nav-popup'
         }
     };
 
@@ -72,9 +69,9 @@ define([
             $container.addClass('is-signed-in');
             $popup.html(
                 '<ul class="nav nav--columns nav--top-border-off nav--additional-sections" data-link-name="Sub Sections">'+
-                    this.menuListItem("Edit profile", this.config.url+'/profile/public', "publicProfile")+
-                    this.menuListItem("Email preferences", this.config.url+'/email-prefs', "emailPrefs")+
-                    this.menuListItem("Sign out", this.config.url+'/signout', "signout")+
+                    this.menuListItem("Edit profile", this.config.url+'/profile/public')+
+                    this.menuListItem("Email preferences", this.config.url+'/email-prefs')+
+                    this.menuListItem("Sign out", this.config.url+'/signout')+
                 '</ul>'
             );
 
@@ -95,9 +92,9 @@ define([
         this.emitLoadedEvent(user);
     };
 
-    Profile.prototype.menuListItem = function(text, url, className) {
+    Profile.prototype.menuListItem = function(text, url) {
         return  '<li class="nav__item">'+
-                    '<a href="' + url + '" class="nav__link ' + Profile.CONFIG.classes[className] + '" data-link-name="' + text + '">' + text + '</a>'+
+                    '<a href="' + url + '" class="nav__link" data-link-name="' + text + '">' + text + '</a>'+
                 '</li>';
     };
 
