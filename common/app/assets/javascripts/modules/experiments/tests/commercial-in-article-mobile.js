@@ -51,14 +51,14 @@ define([
                 test: function(context, config) {
                     guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha3.com';
                     createInlineAdSlots('Middle1');
-                    createTopAdSlot('Top');
+                    createTopAdSlot('Top2');
                 }
             },
             {
                 id: 'CommercialTop',
                 test: function(context, config) {
                     guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha4.com';
-                    createInlineAdSlots('Top');
+                    createInlineAdSlots('Top2');
                     createTopAdSlot('Middle1');
                 }
             },
