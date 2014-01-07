@@ -41,7 +41,8 @@ trait CommentsController extends DiscussionController {
 
   def getComments(key: DiscussionKey, page: String = "1", isTopComments: Boolean = false)(implicit request: RequestHeader):Future[SimpleResult] = {
     val allResponses = request.getQueryString("allResponses").exists(_ == "true")
-    val commentPage = discussionApi.commentsFor(key, page, allResponses)
+    val order = request.getQueryString("order").getOrElse("newest")
+    val commentPage = if (isTopComments) discussionApi.topCommentsFor(key) else discussionApi.commentsFor(key, page, order, allResponses)
     val blankComment = Comment(Json.parse("""{
       "id": 5,
       "body": "",
