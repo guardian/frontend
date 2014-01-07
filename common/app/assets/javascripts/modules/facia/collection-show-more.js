@@ -142,15 +142,24 @@ define([
                     }).then(function(data) {
                         // get hrefs of items we're showing
                         var itemsHrefs = $('.item__link', that._collection).map(function(item) {
-                            return $(item).attr('href');
-                        });
-                        var newItems = bonzo.create(
-                            $('.collection', bonzo.create('<div>' + data.html + '</div>')).html()
-                        ) || [];
-                        // filter items we're showing
-                        that._items = newItems.filter(function(newItem) {
-                            return itemsHrefs.indexOf($('.item__link', newItem).attr('href')) === -1;
-                        });
+                                return $(item).attr('href');
+                            }),
+                            newItems = bonzo.create(
+                                $('.collection', bonzo.create('<div>' + data.html + '</div>')).html()
+                            ) || [],
+                            currentItemsCount = $('.item', that._collection).length;
+                        that._items = newItems
+                            // filter items we're showing
+                            .filter(function(newItem) {
+                                return itemsHrefs.indexOf($('.item__link', newItem).attr('href')) === -1;
+                            })
+                            // update data-link-name index
+                            .map(function(item, itemIndex) {
+                                var $item = $(item),
+                                    updatedDataLinkName = $item.attr('data-link-name').replace(/trail \| \d+/, 'trail | ' + (currentItemsCount + itemIndex + 1));
+                                $item.attr('data-link-name', updatedDataLinkName);
+                                return $item[0];
+                            });
                         that._showItems(true);
                     }).fail(function(req) {
                         mediator.emit('module:error', 'Failed to load items: ' + req.statusText);
