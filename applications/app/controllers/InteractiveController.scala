@@ -32,7 +32,7 @@ object InteractiveController extends Controller with Logging with ExecutionConte
   private def lookup(path: String, index: Int, isTrail: Boolean)(implicit request: RequestHeader): Future[Either[InteractivePage, SimpleResult]] = {
     val edition = Edition(request)
     log.info(s"Fetching interactive: $path for edition $edition")
-    val response: Future[ItemResponse] = ContentApi.item(path, edition)
+    val response: Future[ItemResponse] = SwitchingContentApi().item(path, edition)
       .showExpired(true)
       .showFields("all")
       .response

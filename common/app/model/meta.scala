@@ -3,7 +3,7 @@ package model
 import common.ManifestData
 import conf.Configuration
 
-trait MetaData {
+trait MetaData extends Tags {
   def id: String
   def section: String
   def webTitle: String

@@ -4,8 +4,9 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.Matchers
 import org.scalatest.FlatSpec
+import common.UsesElasticSearch
 
-class FixturesControllerTest extends FlatSpec with Matchers {
+class FixturesControllerTest extends FlatSpec with Matchers with UsesElasticSearch {
   
   val fixturesUrl = "/football/fixtures"
   val fixtureUrl = "/football/fixtures/2012/oct/20"
