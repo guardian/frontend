@@ -1,4 +1,4 @@
-define(['common', 'modules/analytics/livestats-ads', 'utils/cookies'], function(common, LiveStatsAds) {
+define(['common/common', 'common/modules/analytics/livestats-ads', 'common/utils/cookies'], function(common, LiveStatsAds) {
 
     describe("LiveStatsAds", function() {
        

@@ -6,6 +6,7 @@ import play.api.mvc.Controller
 import tools._
 import model.NoCache
 import conf.Configuration
+import tools.CloudWatch._
 
 object DashboardController extends Controller with Logging with AuthLogging {
   // We only do PROD metrics
@@ -33,5 +34,11 @@ object DashboardController extends Controller with Logging with AuthLogging {
   def renderMemory() = Authenticated{ request =>
     val metrics = MemoryMetrics.memory.map(_.withFormat(ChartFormat.DoubleLineBlueRed))
     NoCache(Ok(views.html.lineCharts(stage, metrics)))
+  }
+
+  def renderAssets() = Authenticated{ request =>
+
+    val metrics = AssetMetrics.assets
+    NoCache(Ok(views.html.staticAssets(stage, metrics)))
   }
 }

@@ -1,4 +1,4 @@
-define(['modules/asyncCallMerger'], function(asyncCallMerger) {
+define(['common/modules/asyncCallMerger'], function(asyncCallMerger) {
     describe("AsyncCallMerger", function() {
         var targetCallCount;
         var targetFn;

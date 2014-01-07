@@ -1,9 +1,9 @@
 define([
-    'common',
-    'utils/ajax',
+    'common/common',
+    'common/utils/ajax',
     'bean',
     'helpers/fixtures',
-    'modules/discussion/recommend-comments'
+    'common/modules/discussion/recommend-comments'
 ], function(
     common,
     ajax,

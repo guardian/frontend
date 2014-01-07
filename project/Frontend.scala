@@ -14,18 +14,16 @@ object Frontend extends Build with Prototypes {
       "com.typesafe.akka" %% "akka-agent" % "2.1.0",
 
       "org.jsoup" % "jsoup" % "1.6.3",
-      "com.googlecode.htmlcompressor" % "htmlcompressor" % "1.4",
-      "com.yahoo.platform.yui" % "yuicompressor" % "2.4.6",
 
       "org.codehaus.jackson" % "jackson-core-asl" % "1.9.6",
       "org.codehaus.jackson" % "jackson-mapper-asl" % "1.9.6",
 
-      "com.amazonaws" % "aws-java-sdk" % "1.6.6",
+      "com.amazonaws" % "aws-java-sdk" % "1.6.10",
 
       "org.quartz-scheduler" % "quartz" % "2.2.0",
 
       "org.jboss.dna" % "dna-common" % "0.6",
-      "org.scalaj" % "scalaj-time_2.10.0-M7" % "0.6",
+      "org.scalaj" % "scalaj-time_2.10.2" % "0.7",
 
       "org.apache.commons" % "commons-math3" % "3.2",
     

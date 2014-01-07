@@ -1,7 +1,7 @@
-define([
-    'utils/mediator',
-    'utils/ajax',
-    'modules/commercial/loader',
+    define([
+    'common/utils/mediator',
+    'common/utils/ajax',
+    'common/modules/commercial/loader',
     'helpers/fixtures'
 ], function(
     mediator,
@@ -19,6 +19,8 @@ define([
                         keywords: 'a,b,c',
                         section: 's',
                         ajaxUrl: '',
+                        ab_commercialInArticleDesktop: 'inline'
+
                     }
                 }
             };

@@ -1,6 +1,6 @@
 define([
-    'utils/mediator',
-    'modules/facia/popular'
+    'common/utils/mediator',
+    'common/modules/facia/popular'
 ], function (
     mediator,
     popular

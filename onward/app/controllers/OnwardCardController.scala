@@ -7,7 +7,7 @@ import scala.concurrent.Future
 import conf.ContentApi
 
 
-object OnwardCardController extends Controller with Logging with JsonTrails with ExecutionContexts {
+object OnwardCardController extends Controller with Logging with ExecutionContexts {
 
   private def lookup(path: String)(implicit request: RequestHeader): Future[Option[Content]] = {
     log.info(s"Fetching trail for ${path}")

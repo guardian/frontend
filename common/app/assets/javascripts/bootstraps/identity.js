@@ -1,13 +1,13 @@
 define([
-    "$",
-    "modules/identity/forms",
-    "modules/identity/formstack",
-    "modules/identity/formstack-iframe",
-    "modules/identity/password-strength",
-    "modules/identity/api",
-    "modules/adverts/userAdTargeting",
-    "modules/discussion/user-avatars",
-    "utils/mediator"
+	"common/$",
+    "common/modules/identity/forms",
+    "common/modules/identity/formstack",
+    "common/modules/identity/formstack-iframe",
+    "common/modules/identity/password-strength",
+    "common/modules/identity/api",
+    "common/modules/adverts/userAdTargeting",
+    "common/modules/discussion/user-avatars",
+    "common/utils/mediator"
 ], function(
     $,
     Identity,

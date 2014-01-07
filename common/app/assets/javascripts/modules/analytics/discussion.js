@@ -1,8 +1,8 @@
 define([
-    '$',
+    'common/$',
     'bonzo',
-    'utils/mediator',
-    'modules/identity/api'
+    'common/utils/mediator',
+    'common/modules/identity/api'
 ], function(
     $,
     bonzo,

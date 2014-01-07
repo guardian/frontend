@@ -13,8 +13,7 @@
     <div class="commercial__head">
         <h3 class="commercial__title">
             <a href="http://theguardian.com/guardian-masterclasses">
-                <span class="u-h">Guardian Masterclasses</span>
-                <i class="i i-guardian-masterclasses-logo"></i>
+                <span>Guardian <span class="em">Masterclasses</span></span>
             </a>
         </h3>
         <a class="commercial__link" href="#">More all courses <i class="i i-double-arrow-right-white"></i></a>
@@ -25,7 +24,7 @@
                 <li class="lineitem">
                     <a class="lineitem__blocklink" href="@event.url">
                         <h4 class="lineitem__title">@event.name</h4>
-                        <p class="lineitem__meta">@event.readableDate<p>
+	                    <p class="lineitem__meta">@event.readableDate • @event.venue.description</p>
                     </a>
                     <p class="lineitem__description">@event.firstParagraph <a class="lineitem__link"><i class="i i-single-arrow-right-blue"></i>Learn more and book</a></p>
                 </li>
