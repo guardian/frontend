@@ -4,6 +4,7 @@ define([
     'utils/as-observable-props',
     'utils/populate-observables',
     'utils/number-with-commas',
+    'utils/full-trim',
     'models/group',
     'modules/authed-ajax',
     'modules/content-api',
@@ -16,6 +17,7 @@ define([
         asObservableProps,
         populateObservables,
         numberWithCommas,
+        fullTrim,
         Group,
         authedAjax,
         contentApi,
@@ -172,25 +174,23 @@ define([
                 .map(function(p){ return [p[0], _.isFunction(p[1]) ? p[1]() : p[1]]; })
                 // reject undefined properties:
                 .filter(function(p){ return !_.isUndefined(p[1]); })
+                // trim strings:
+                .map(function(p){ return [p[0], _.isString(p[1]) ? fullTrim(p[1]) : p[1]]; })
                 // reject whitespace-only strings:
-                .filter(function(p){ return _.isString(p[1]) ? p[1].replace(/\s*/g, '').length > 0 : true; })
+                .filter(function(p){ return _.isString(p[1]) ? p[1] : true; })
                 // for sublinks reject anything that isn't a headline
                 .filter(function(p){ return p[0] === 'headline' || self.parentType !== 'Article'; })
-                // reject vals that don't differ from the props (if any) that they're overwriting:
-                .filter(function(p){ return _.isUndefined(self.props[p[0]]) || self.props[p[0]]() !== p[1]; })
-                // serialise the supporting links
+                // reject vals that are equivalent to the fields (if any) that they're overwriting:
+                .filter(function(p){ return _.isUndefined(self.fields[p[0]]) || p[1] !== fullTrim(self.fields[p[0]]()); })
+                // recurse into supporting links
                 .map(function(p) {
-                    if (p[0] === 'supporting') {
-                        return [p[0], _.map(p[1].items(), function(item) {
-                            return item.get();
-                        })];
-                    }
-                    return [p[0], p[1]];
+                    return [p[0], p[0] === 'supporting' ? _.map(p[1].items(), function(item) {
+                        return item.get();
+                    }) : p[1]];
                 })
                 // drop empty arrays:
                 .filter(function(p){ return _.isArray(p[1]) ? p[1].length : true; })
-                // return as obj, or as undefined if empty.
-                // undefined is useful for ommiting it from any subsequent JSON.stringify call 
+                // return as obj, or as undefined if empty (this ommits it from any subsequent JSON.stringify result) 
                 .reduce(function(obj, p, key) {
                     obj = obj || {};
                     obj[p[0]] = p[1];
