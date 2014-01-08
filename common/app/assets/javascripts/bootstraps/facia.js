@@ -12,7 +12,8 @@ define([
     'common/modules/facia/collection-show-more',
     'common/modules/facia/container-toggle',
     'common/modules/sport/football/fixtures',
-    'common/modules/sport/cricket'
+    'common/modules/sport/cricket',
+    'common/modules/ui/message'
 ], function (
     $,
     mediator,
@@ -25,7 +26,8 @@ define([
     CollectionShowMore,
     ContainerToggle,
     FootballFixtures,
-    cricket
+    cricket,
+    Message
     ) {
 
     var modules = {
@@ -143,6 +145,16 @@ define([
                     });
                 });
             }
+        },
+
+        displayAlphaMessage: function(config) {
+            if (config.page.contentType === 'Network Front') {
+                var page = window.location.pathname,
+                    msg = '<p class="site-message__message">' +
+                              'Test the <a href="/preference' + page + 'alpha/optin?page=' + page + '">alpha fronts</a>' +
+                          '</p>';
+                new Message('facia-alpha').show(msg);
+            }
         }
     };
 
@@ -154,6 +166,7 @@ define([
             modules.showFootballFixtures();
             modules.showPopular();
             modules.showUserzoom(config);
+            modules.displayAlphaMessage(config);
         }
         mediator.emit("page:front:ready", config, context);
     };
