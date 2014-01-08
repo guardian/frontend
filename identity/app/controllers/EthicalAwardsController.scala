@@ -19,7 +19,7 @@ class EthicalAwardsController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
   val page = IdentityPage("/ethical-awards", "Ethical Awards", "ethical-awards")
 
   def ethicalAwardsForm(formReference: String) = authAction.apply { implicit request =>
-    if (Switches.IdentityFormstackSwitch.isSwitchedOn) {
+    if (Switches.IdentityEthicalAwardsSwitch.isSwitchedOn) {
       val idRequest = idRequestParser(request)
       Ok(views.html.ethicalAwards.form(page, formReference, idRequest, idUrlBuilder))
     } else {
@@ -29,7 +29,7 @@ class EthicalAwardsController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
   }
 
   def complete = Action { implicit request =>
-    if (Switches.IdentityFormstackSwitch.isSwitchedOn) {
+    if (Switches.IdentityEthicalAwardsSwitch.isSwitchedOn) {
       Ok(views.html.ethicalAwards.complete(page))
     } else {
       NotFound(views.html.errors._404())

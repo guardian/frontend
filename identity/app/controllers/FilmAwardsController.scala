@@ -19,7 +19,7 @@ class FilmAwardsController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
   val page = IdentityPage("/film-awards", "Film Awards", "film-awards")
 
   def filmAwardsForm(formReference: String) = authAction.apply { implicit request =>
-    if (Switches.IdentityFormstackSwitch.isSwitchedOn) {
+    if (Switches.IdentityFilmAwardsSwitch.isSwitchedOn) {
       val idRequest = idRequestParser(request)
       Ok(views.html.filmAwards.form(page, formReference, idRequest, idUrlBuilder))
     } else {
@@ -29,7 +29,7 @@ class FilmAwardsController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
   }
 
   def complete = Action { implicit request =>
-    if (Switches.IdentityFormstackSwitch.isSwitchedOn) {
+    if (Switches.IdentityFilmAwardsSwitch.isSwitchedOn) {
       Ok(views.html.filmAwards.complete(page))
     } else {
       NotFound(views.html.errors._404())
