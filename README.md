@@ -122,7 +122,7 @@ Now test you are up and running by hitting the following URLs:
 
 Play Framework will recompile code changes on refresh.
 
-To create project files for use in IntelliJ, run the `idea` task from the root
+To create project files for use in IntelliJ, run the `gen-idea` task from the root
 SBT project. see https://github.com/mpeltonen/sbt-idea
 
 Further information on using the Play console is available [here][play2-console].

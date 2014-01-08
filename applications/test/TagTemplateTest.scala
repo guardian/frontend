@@ -9,6 +9,6 @@ class TagTemplateTest extends FlatSpec with Matchers with UsesElasticSearch {
   it should "render tag headline" in HtmlUnit("/world/turkey") { browser =>
     import browser._
 
-    $("h2 a").first.getText should be ("Turkey")
+    $(".container__title").first.getText should be ("Turkey")
   }
 }

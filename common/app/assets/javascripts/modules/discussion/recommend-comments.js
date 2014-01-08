@@ -159,7 +159,6 @@ RecommendComments.renderRecommendation = function(elem, unrecommend) {
     }
 
     elem.setAttribute('data-recommend-count', newCount);
-    recommendCountElem.innerHTML = newCount;
 };
 
 /**

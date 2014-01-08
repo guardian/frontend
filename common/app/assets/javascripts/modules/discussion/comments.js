@@ -383,7 +383,7 @@ Comments.prototype.addMoreRepliesButtons = function (comments) {
             var numHiddenReplies = replies - rendered_replies.length;
 
             var showButton = "";
-            showButton += '<li class="' + self.getClass('showReplies', true) + ' ';
+            showButton += '<li class="' + self.getClass('showReplies', true) + '" ';
             showButton += 'data-link-name="Show more replies" ';
             showButton += 'data-is-ajax data-comment-id="' + elem.getAttribute("data-comment-id") + '">';
             showButton += '<span><i class="i i-plus-white-small"></i></span>';
