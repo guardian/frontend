@@ -26,7 +26,6 @@ trait ContentApiWrite extends ExecutionContexts {
   case class ContentApiPut(
                             `type`: String,
                             title: Option[String],
-                            description: Option[String],
                             groups: Seq[Group],
                             backfill: Map[String, String],
                             lastModified: String,
@@ -72,7 +71,6 @@ trait ContentApiWrite extends ExecutionContexts {
       ContentApiPut(
         config.roleName.getOrElse("Default"),
         config.displayName.orElse(Option("Default Title")),
-        Option("Default Description"),
         groups,
         Map("id" -> "uk/news", "edition" -> "UK"),
         block.lastUpdated,
