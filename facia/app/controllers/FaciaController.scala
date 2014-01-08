@@ -7,7 +7,7 @@ import conf._
 import play.api.mvc._
 import play.api.libs.json.{JsArray, Json}
 import Switches.EditionRedirectLoggingSwitch
-import views.support.NewsContainer
+import views.support.{TemplateDeduping, NewsContainer}
 import common.editions.Uk
 
 abstract class FrontPage(val isNetworkFront: Boolean) extends MetaData
@@ -257,11 +257,12 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
   val front: Front = Front
   val EditionalisedKey = """^\w\w(/.*)?$""".r
 
+  implicit def getTemplateDedupingInstance: TemplateDeduping = TemplateDeduping()
+
   private def editionPath(path: String, edition: Edition) = path match {
     case EditionalisedKey(_) => path
     case _ => Editionalise(path, edition)
   }
-
 
   def editionRedirect(path: String) = Action{ implicit request =>
 
@@ -306,6 +307,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
   def renderEditionCollectionJson(id: String) = renderCollection(id)
 
   def renderFront(path: String) = Action { implicit request =>
+
       //For UK alpha only
       val newPath = getPathForUkAlpha(path, request)
 
@@ -334,7 +336,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
 
   def renderCollection(id: String) = Action { implicit request =>
     CollectionAgent.getCollection(id) map { collection =>
-      val html = views.html.fragments.collections.standard(Config(id), collection, NewsContainer(false), 1)
+      val html = views.html.fragments.collections.standard(Config(id), collection.items, NewsContainer(false), 1)
       Cached(60) {
         if (request.isJson) {
             JsonComponent(

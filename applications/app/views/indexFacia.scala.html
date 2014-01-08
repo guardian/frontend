@@ -1,4 +1,4 @@
-@(index: services.IndexPage)(implicit request: RequestHeader)
+@(index: services.IndexPage)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
 @import conf.Switches._
 @main(index.page, projectName = Option("facia")){ }{
     <div class="facia-container monocolumn-wrapper monocolumn-wrapper--no-limit" data-link-name="Front" role="main">
