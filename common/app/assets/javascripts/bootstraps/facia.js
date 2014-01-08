@@ -13,7 +13,8 @@ define([
     'common/modules/facia/container-toggle',
     'common/modules/sport/football/fixtures',
     'common/modules/sport/cricket',
-    'common/modules/ui/message'
+    'common/modules/ui/message',
+    'common/modules/analytics/mvt-cookie'
 ], function (
     $,
     mediator,
@@ -27,7 +28,8 @@ define([
     ContainerToggle,
     FootballFixtures,
     cricket,
-    Message
+    Message,
+    mvtCookie
     ) {
 
     var modules = {
@@ -148,7 +150,9 @@ define([
         },
 
         displayAlphaMessage: function(config) {
-            if (config.page.contentType === 'Network Front' && config.switches.networkFrontAlphas === true) {
+            // only run on 5% of the users
+            var isAChosenOne = parseInt(mvtCookie.getMvtValue(), 10) < (mvtCookie.MAX_INT * 0.05);
+            if (config.page.contentType === 'Network Front' && config.switches.networkFrontAlphas === true && isAChosenOne) {
                 var page = window.location.pathname.replace('-alpha', ''),
                     preferenceUrl = '/preference' + page + 'alpha/[OPT]?page=' + page,
                     msg,
