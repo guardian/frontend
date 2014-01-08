@@ -54,7 +54,7 @@ define([
 
             this.state = asObservableProps([
                 'underDrag',
-                'editingMeta',
+                'open',
                 'shares',
                 'comments',
                 'totalHits',
@@ -111,7 +111,7 @@ define([
         Article.prototype.reverter = function(key) {
             return function() {
                 this.meta[key](undefined);
-                this.save();
+                this._save();
             };
         };
 
@@ -124,38 +124,29 @@ define([
 
         Article.prototype.toggleImageToneHide = function() {
             this.meta.imageTone(this.meta.imageTone() === 'hide' ? undefined : 'hide');
-            this.save();
+            this._save();
         };
 
         Article.prototype.toggleImageToneHighlight = function() {
             this.meta.imageTone(this.meta.imageTone() === 'highlight' ? undefined : 'highlight');
-            this.save();
+            this._save();
         };
 
-        Article.prototype.startMetaEdit = function() {
+        Article.prototype.open = function() {
             var self = this;
 
             if (this.uneditable) { return; }
 
             _.defer(function(){
-                self.state.editingMeta(true);
+                self.state.open(true);
             });
         };
 
-        Article.prototype.stopMetaEdit = function() {
+        Article.prototype.close = function() {
             var self = this;
             _.defer(function(){
-                self.state.editingMeta(false);
+                self.state.open(false);
             });
-        };
-
-        Article.prototype.saveMetaEdit = function() {
-            var self = this;
-
-            // defer, to let through any UI events, before they're blocked by the "isPending" CSS:
-            setTimeout(function() {
-                self.save();
-            }, 200);
         };
 
         Article.prototype.get = function() {
@@ -199,7 +190,7 @@ define([
                 .value();
         };
 
-        Article.prototype.save = function() {
+        Article.prototype._save = function() {
             var self = this;
 
             if (!this.parent) {
@@ -207,8 +198,8 @@ define([
             }
 
             if (this.parentType === 'Article') {
-                this.parent.save();
-                this.stopMetaEdit();
+                this.parent._save();
+                this.close();
                 return;
             }
 
@@ -226,6 +217,15 @@ define([
                 );
                 this.parent.setPending(true);
             }
+        };
+
+        Article.prototype.save = function() {
+            var self = this;
+
+            // defer, to let through UI events before they're blocked by the "isPending" CSS:
+            setTimeout(function() {
+                self._save();
+            }, 200);
         };
 
         return Article;

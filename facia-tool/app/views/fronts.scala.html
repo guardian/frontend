@@ -179,7 +179,7 @@
     <script type="text/html" id="template_article">
         <div class="article u-cf" data-bind="
             css: {
-                editingMeta: state.editingMeta,
+                open: state.open,
                 underDrag: state.underDrag
             }">
 
@@ -192,7 +192,7 @@
                 <i class="icon-trash icon-white"></i>
             </div>
 
-            <div data-bind="if: state.editingMeta">
+            <div data-bind="if: state.open">
                 <div class="image__overrides">
                     <a data-bind="
                         click: toggleImageToneHide,
@@ -205,7 +205,7 @@
                 <div class="article__overrides u-cf">
                     <input class="headline-input" type="text" data-bind="
                         value: headlineInput,
-                        event: {blur: saveMetaEdit},
+                        event: {blur: save},
                         attr: {placeholder: fields.headline}"/>
                     <a class="revert revert--headline" data-bind="
                         click: headlineRevert,
@@ -214,7 +214,7 @@
 
                     <textarea class="trailtext" type="text" data-bind="
                         value: trailTextInput,
-                        event: {blur: saveMetaEdit},
+                        event: {blur: save},
                         attr: {placeholder: fields.trailText}"/></textarea>
                     <a class="revert revert--trailtext" data-bind="
                         click: trailTextRevert,
@@ -232,18 +232,18 @@
                     </div>
                     <div class="supporting-message">Supporting links &raquo;</div>
                     <div class="tools">
-                        <a class="tool" data-bind="click: stopMetaEdit">Close</a>
+                        <a class="tool" data-bind="click: close">Close</a>
                     </div>
                 </div>
             </div>
 
-            <div data-bind="if: !state.editingMeta()">
+            <div data-bind="if: !state.open()">
                 <a class="article_stats u-cf" target="ophan" data-bind="attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + props.id()}">
                     <div class="pageviews" data-bind="if: totalHitsFormatted()"><span data-bind="text: totalHitsFormatted"></span></div>
                     <div class="pageviews-graph" data-bind="if: state.pageViewsSeries(), sparkline: state.pageViewsSeries"></div>
                 </a>
 
-                <div class="article_content" data-bind="click: startMetaEdit,">
+                <div class="article_content" data-bind="click: open,">
                     <a class="headline" target="article" data-bind="
                         text: meta.headline() || fields.headline(),
                         attr: {href: props.id()}"></a>

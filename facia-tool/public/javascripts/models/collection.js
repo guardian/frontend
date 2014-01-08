@@ -28,7 +28,10 @@ define([
 
         this.id = opts.id;
         this.groups = this.createGroups(opts.groups);
+        
+        // Placeholders
         this.raw = undefined;
+        this.lastUpdated = undefined;
 
         // properties from the config, about this collection
         this.configMeta   = asObservableProps([
@@ -101,7 +104,9 @@ define([
     Collection.prototype.processDraft = function(goLive) {
         var self = this;
 
+        this.state.hasDraft(false);
         this.setPending(true);
+        this.closeAllArticles();
 
         authedAjax.request({
             type: 'post',
@@ -111,8 +116,6 @@ define([
         .then(function() {
             self.load();
         });
-
-        this.state.hasDraft(false);
     };
 
     Collection.prototype.drop = function(item) {
@@ -149,7 +152,7 @@ define([
             
             self.setPending(false);
 
-            if (!raw || raw.lastUpdated === self.collectionMeta.lastUpdated()) { return; }
+            if (!raw || raw.lastUpdated === self.lastUpdated) { return; }
 
             self.populateLists(raw);
             self.state.hasDraft(_.isArray(raw.draft));
@@ -161,7 +164,7 @@ define([
 
     Collection.prototype.populateLists = function(raw) {
         var self = this,
-            editingMetas = {},
+            openArticles = {},
             list;
 
         if (raw) {
@@ -174,44 +177,44 @@ define([
 
         _.each(this.groups, function(group) {
             _.each(group.items(), function(item) {
-                editingMetas[item.props.id()] = item.state.editingMeta();
+                if (item.state.open()) {
+                    openArticles[item.props.id()] = item;
+                }
             });
-        });
-
-        // Don't import list if any items are in edit mode        
-        if (_.some(editingMetas, function(is) { return is; })) { return; }
-
-        _.each(this.groups, function(group) {
             group.items.removeAll();
         });
 
         list = vars.state.liveMode() ? raw.live : raw.draft || raw.live || [];
 
         _.each(list, function(item) {
-            var article = new Article(_.extend(item, {
+            var article = openArticles[item.id] || new Article(_.extend(item, {
                     parent: self,
                     parentType: 'Collection'
                 })),
-                group;
-
-            if(editingMetas[item.id]) {
-                article.startMetaEdit();
-            }
-
-            group = _.find(self.groups, function(g){
-                return (parseInt((item.meta || {}).group, 10) || 0) === g.group;
-            }) || self.groups[0];
+                group = _.find(self.groups, function(g){
+                    return (parseInt((item.meta || {}).group, 10) || 0) === g.group;
+                }) || self.groups[0];
 
             group.items.push(article);
         });
 
-        this.decorate();
         this.state.count(list.length);
         this.state.timeAgo(self.getTimeAgo(raw.lastUpdated));
+        self.lastUpdated = _.isEmpty(openArticles) ? raw.lastUpdated : self.lastUpdated;
 
         if (!this.state.editingConfig()) {
             populateObservables(this.collectionMeta, raw);
         }
+
+        this.decorate();
+    };
+
+    Collection.prototype.closeAllArticles = function() {
+        _.each(this.groups, function(group) {
+            _.each(group.items(), function(item) {
+                item.close();
+            });
+        });
     };
 
     Collection.prototype.decorate = function() {
