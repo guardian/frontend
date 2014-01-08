@@ -75,7 +75,7 @@ $replyIndent: 26px;
     padding-left: 32px + $baseline;
     display: inline-block;
 }
- 
+
 .d-discussion__show-all-comments {
     height: 40px;
     @include fs-data(4);
@@ -153,7 +153,7 @@ $replyIndent: 26px;
 
 .d-comment__meta-text {
     padding-right: 50px;
-    box-sizing: border-box;
+    @include box-sizing(border-box);
     @include mq(desktop) {
         padding-right: 0;
     }
