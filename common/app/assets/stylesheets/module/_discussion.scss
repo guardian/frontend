@@ -92,9 +92,12 @@ $replyIndent: 26px;
     }
 }
 
-
 .d-discussion--not-staff .d-staff-required {
-   display: none;
+    display: none;
+}
+
+.d-discussion__order-control {
+    margin: 0;
 }
 
 /* ==========================================================================
