@@ -6,9 +6,10 @@
         data-link-name="trail | @{index + 1}"
         @trail.discussionId.map{ id => data-discussion-id="@id" }
         data-discussion-closed="@trail.isClosedForComments">
-        <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border gallerythumbs">
-            @trail.trailPicture(5,3).map{ imageContainer =>
-                @ImgSrc.imager(imageContainer).map { imgSrc =>
+
+        @trail.trailPicture(5,3).map{ imageContainer =>
+            @ImgSrc.imager(imageContainer).map { imgSrc =>
+                <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border gallerythumbs">
                     <div class="item__media-wrapper">
                         <div class="item__cta item--video">
                             <p>Play</p>
@@ -20,9 +21,10 @@
                             }
                         </div>
                     </div>
-                }
+                </a>
             }
-        </a>
+        }
+
         <a href="@LinkTo{@trail.url}" class="item__link">
             <h@if(isFirstContainer && index == 0){1}else{2} class="item__title">
                 <span class="item__title-type">Video </span>

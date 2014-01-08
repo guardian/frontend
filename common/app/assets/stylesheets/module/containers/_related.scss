@@ -129,20 +129,29 @@
     }
 
     .item--has-no-image {
+
+        .item__link {
+            width: 100%;
+            height: $gs-baseline;
+            position: relative;
+            padding-bottom: 100%;
+        }
+
         .item__title {
+            position: absolute;
+            top: 0;
+            left: 0;
             padding-top: 0;
-            padding-bottom: 65%;
-            min-height: $gs-row-height*3 - $gs-baseline*2;
             @include fs-headline(2, true);
 
             @include mq(tablet) {
-                min-height: gs-height(3);
                 @include fs-headline(3, true);
             }
+        }
 
-            @include mq($a-rightCol-trigger) {
-                padding-bottom: 60%;
-                min-height: $gs-row-height*3 - $gs-baseline;
+        &.item--dark {
+            .item__link {
+                background-color: $c-neutral1;
             }
         }
     }
