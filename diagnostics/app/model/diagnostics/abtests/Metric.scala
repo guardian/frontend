@@ -33,6 +33,14 @@ object Metric extends Logging {
     }
   }
 
+  def viewsPerSession : Map[String, Double] = {
+    // Calculate the ratio of page views to sessions for test variants
+    // that have data in both Maps.
+    val variants = pageViews.keys.toList intersect sessions.keys.toList
+
+    variants.map( variant => { (variant, pageViews(variant).doubleValue / sessions(variant).doubleValue) } ).toMap
+  }
+
   def reset() {
     pageViews.clear()
     sessions.clear()

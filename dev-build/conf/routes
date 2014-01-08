@@ -8,6 +8,7 @@ GET         /assets/*path                                                       
 
 # Diagnostics
 GET         /px.gif                                                                                          controllers.DiagnosticsController.px
+GET         /ab.gif                                                                                          controllers.DiagnosticsController.ab
 GET         /count/$prefix<.+>.gif                                                                           controllers.CountController.render(prefix)
 
 # Discussion
