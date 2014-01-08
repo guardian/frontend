@@ -5,9 +5,8 @@
 
         @trail match {
             case g: Gallery => { @fragments.items.gallery(trail, info.rowNum, 0) }
-            case other => {
-                @fragments.items.standard(trail, info.rowNum, 0)
-            }
+            case v: Video => { @fragments.items.video(trail, info.rowNum, 0) }
+            case other => { @fragments.items.standard(trail, info.rowNum, 0) }
         }
     }
 </ul>

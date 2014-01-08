@@ -75,7 +75,7 @@
                 margin-bottom: 20px;
 
                 .item__title {
-                    padding-bottom: $gs-row-height*2;
+                    padding-bottom: $gs-row-height;
                 }
             }
         }
@@ -103,7 +103,7 @@
 
     .item__title {
         margin-top: 0;
-        padding-top: 8px;
+        padding-top: 6px;
         height: $gs-row-height*3 - $gs-baseline; //96px
         @include fs-headline(1, true);
 
@@ -113,7 +113,7 @@
 
         @include mq(tablet) {
             height: $gs-row-height*4 - $baseline*2; //136px
-            @include fs-headline(3, true);
+            @include fs-headline(2, true);
         }
 
         @include mq($a-rightCol-trigger) {
@@ -144,11 +144,6 @@
     .i-quote-light-grey,
     .item__byline {
         display:none;
-    }
-
-    .timestamp__text {
-        padding-top: 1px;
-        display: inline-block;
     }
 
     .gallerythumbs { margin: 0; }
