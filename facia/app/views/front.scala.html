@@ -1,4 +1,4 @@
-@(front: FrontPage, page: FaciaPage)(implicit request: RequestHeader)
+@(front: FrontPage, page: FaciaPage)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
 
 @main(front, projectName = Option("facia")){ }{
     @fragments.frontBody(front, page)
