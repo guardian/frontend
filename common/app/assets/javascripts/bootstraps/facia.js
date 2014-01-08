@@ -148,11 +148,20 @@ define([
         },
 
         displayAlphaMessage: function(config) {
-            if (config.page.contentType === 'Network Front') {
-                var page = window.location.pathname,
+            if (config.page.contentType === 'Network Front' && config.switches.networkFrontAlphas === true) {
+                var page = window.location.pathname.replace('-alpha', ''),
+                    preferenceUrl = '/preference' + page + 'alpha/[OPT]?page=' + page,
+                    msg;
+                // opt in
+                if (config.page.pageId === "") {
                     msg = '<p class="site-message__message">' +
-                              'Test the <a href="/preference' + page + 'alpha/optin?page=' + page + '">alpha fronts</a>' +
+                              'Test the <a href="' + preferenceUrl.replace('[OPT]', 'optin') + '">alpha fronts</a>' +
                           '</p>';
+                } else { // opt out
+                    msg = '<p class="site-message__message">' +
+                              '<a href="' + preferenceUrl.replace('[OPT]', 'optout') + '">Opt out of the alpha</a>' +
+                          '</p>';
+                }
                 new Message('facia-alpha').show(msg);
             }
         }

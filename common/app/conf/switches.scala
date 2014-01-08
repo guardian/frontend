@@ -148,7 +148,7 @@ object Switches extends Collections {
   val FontSwitch = Switch("Feature Switches", "web-fonts",
     "If this is switched on then the custom Guardian web font will load.",
     safeState = Off)
-  
+
   val SponsoredContentSwitch = Switch("Feature Switches", "sponsored-content",
     "If this is switched on the articles will display a simple 'Advertisement feature' notice.",
     safeState = Off)
@@ -222,11 +222,11 @@ object Switches extends Collections {
   val ABAlphaComm = Switch("A/B Tests", "ab-alpha-comm",
     "If this is switched on an AB test runs to trial new advertising user experiences and commercial models",
     safeState = Off)
-  
+
   val ABCommercialInArticleDesktop = Switch("A/B Tests", "ab-commercial-in-articles-desktop",
     "If this is on an AB test inserts commercial components in the inline and MPU advert slots (scope to desktop)",
     safeState = Off)
-  
+
   val ABCommercialInArticleMobile = Switch("A/B Tests", "ab-commercial-in-articles-mobile",
     "If this is on an AB test inserts commercial components in the inline and MPU advert slots (scope to mobile browsers)",
     safeState = Off)
@@ -262,7 +262,6 @@ object Switches extends Collections {
   val ABUnderlineLinks = Switch("A/B Tests", "ab-underline-links",
     "If this is switched on an AB test runs whereby links in articles are underline (with CSS)",
     safeState = Off)
-  
   // Sport Switch
 
   val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
@@ -275,8 +274,8 @@ object Switches extends Collections {
     "Switch that is only used while running tests. You never need to change this switch.",
     safeState = Off)
 
-  val UkAlphaSwitch = Switch("Facia", "facia-uk-alpha",
-    "If this is switched on then UK-Alpha will be served for requests with the cookie GU_UK_ALPHA",
+  val NetworkFrontAlphas = Switch("Facia", "network-front-alphas",
+    "If this is switched on then the alpha network fronts will be served if a coockie has been dropped, e.g. GU_UK_ALPHA",
     safeState = Off
   )
 
@@ -343,7 +342,7 @@ object Switches extends Collections {
     ABRightPopular,
     AdDwellTimeLoggerSwitch,
     ABEmailSignup,
-    UkAlphaSwitch,
+    NetworkFrontAlphas,
     TagLinking,
     ABUnderlineLinks,
     SponsoredContentSwitch,

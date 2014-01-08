@@ -8,7 +8,6 @@ import play.api.mvc._
 import play.api.libs.json.{JsArray, Json}
 import Switches.EditionRedirectLoggingSwitch
 import views.support.{TemplateDeduping, NewsContainer}
-import common.editions.Uk
 
 abstract class FrontPage(val isNetworkFront: Boolean) extends MetaData
 
@@ -284,16 +283,19 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
     Cached(60)(Redirect(redirectPath))
   }
 
-  def getPathForUkAlpha(path: String, request: RequestHeader): String =
-    if (path == "uk" &&
-      Switches.UkAlphaSwitch.isSwitchedOn &&
-      Edition(request) == Uk &&
-      request.headers.get("X-Gu-Uk-Alpha").exists(_.toLowerCase == "true")
-    ) {
-      "uk-alpha"
-    }
-    else
+  def getPathForUkAlpha(path: String, request: RequestHeader): String = {
+    if (Switches.NetworkFrontAlphas.isSwitchedOn) {
+      Seq("uk", "us", "au").find { page =>
+        path == page &&
+          Option(Edition(request)) == Edition.byId(page) &&
+          request.headers.get(s"X-Gu-${page.capitalize}-Alpha").exists(_.toLowerCase == "true")
+      }.map{ page =>
+        s"$page-alpha"
+      }.getOrElse(path)
+    } else {
       path
+    }
+  }
 
   // Needed as aliases for reverse routing
   def renderEditionFrontJson(path: String) = renderFront(path)
