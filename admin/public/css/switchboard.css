@@ -1,0 +1,69 @@
+html {
+    overflow-y: scroll;
+}
+
+body {
+    padding: 10px;
+}
+
+.dropdown-menu {
+    position: absolute;
+    display: block;
+    top: auto;
+    margin-top: -10px;
+}
+
+.row, .dropdown-menu {
+    margin-left: 20px;
+}
+
+.row {
+    margin: 20px;
+}
+
+input[type="text"] {
+    background-color: #DFF0D8;
+}
+
+input.invalid {
+    background-color: #F2DEDE;
+}
+
+fieldset,
+input[type=text] {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+input[type=text] {
+    height: inherit;
+}
+
+fieldset#controls {
+    margin-top: 30px;
+    position: relative;
+}
+
+#clear-frontend {
+    position: absolute;
+    right: 0;
+}
+
+input[type=checkbox].status {
+    width: 33px;
+    height: 33px;
+    float: left;
+    margin-right: 10px;
+}
+
+#switchboard label {
+    display: inline;
+    font-size: 20px;
+}
+
+#switchboard label:hover {
+    color: #699;
+    cursor: pointer;
+}
+
+

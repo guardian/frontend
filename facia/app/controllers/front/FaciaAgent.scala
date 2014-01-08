@@ -9,6 +9,7 @@ import play.api.libs.ws.{ WS, Response }
 import play.api.libs.json.JsObject
 import services.S3FrontsApi
 import scala.concurrent.Future
+import scala.collection.immutable.SortedMap
 
 object Path {
   def unapply[T](uri: String) = Some(uri.split('?')(0))
@@ -53,7 +54,8 @@ trait ParseConfig extends ExecutionContexts with Logging {
       (json \ "id").as[String],
       (json \ "contentApiQuery").asOpt[String].filter(_.nonEmpty),
       (json \ "displayName").asOpt[String],
-      (json \ "tone").asOpt[String]
+      (json \ "tone").asOpt[String],
+      (json \ "href").asOpt[String]
     )
 
 }
@@ -165,7 +167,6 @@ trait ParseCollection extends ExecutionContexts with Logging {
     val newSearch = queryString match {
       case Path(Seg("search" ::  Nil)) => {
         val search = ContentApi.search(edition)
-                       .tag("type/gallery|type/article|type/video|type/sudoku")
                        .showElements("all")
                        .pageSize(20)
         val newSearch = queryParamsWithEdition.foldLeft(search){
@@ -177,7 +178,6 @@ trait ParseCollection extends ExecutionContexts with Logging {
       }
       case Path(id)  => {
         val search = ContentApi.item(id, edition)
-                       .tag("type/gallery|type/article|type/video|type/sudoku")
                        .showElements("all")
                        .showEditorsPicks(true)
                        .pageSize(20)
@@ -207,14 +207,21 @@ object CollectionAgent extends ParseCollection {
 
   def updateCollection(id: String, collection: Collection): Unit = collectionAgent.send { _.updated(id, collection) }
 
-  def updateCollectionById(id: String): Unit = {
-    val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(id, None, None, None))
+  def updateCollectionById(id: String): Unit = updateCollectionById(id, isWarmedUp=true)
+
+  def updateCollectionById(id: String, isWarmedUp: Boolean): Unit = {
+    val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(id))
     val edition = Edition.byId(id.take(2)).getOrElse(Edition.defaultEdition)
     //TODO: Refactor isWarmedUp into method by ID
-    updateCollection(id, config, edition, isWarmedUp=true)
+    updateCollection(id, config, edition, isWarmedUp=isWarmedUp)
   }
 
   def close(): Unit = collectionAgent.close()
+
+  def contentsAsJsonString: String = {
+    val contents: SortedMap[String, Seq[String]] = SortedMap(collectionAgent.get().mapValues{v => v.items.map(_.url)}.toSeq:_*)
+    Json.prettyPrint(Json.toJson(contents))
+  }
 }
 
 object QueryAgents {
@@ -228,7 +235,7 @@ object QueryAgents {
 }
 
 trait ConfigAgent extends ExecutionContexts {
-  private val configAgent = AkkaAgent[JsValue](JsNull)
+  private val configAgent = AkkaAgent[JsValue](FaciaDefaults.getDefaultConfig)
 
   def refresh() = S3FrontsApi.getMasterConfig map {s => configAgent.send(Json.parse(s))}
 
@@ -251,7 +258,8 @@ trait ConfigAgent extends ExecutionContexts {
         id,
         (collectionJson \ "apiQuery").asOpt[String],
         (collectionJson \ "displayName").asOpt[String].filter(_.nonEmpty),
-        (collectionJson \ "tone").asOpt[String]
+        (collectionJson \ "tone").asOpt[String],
+        (collectionJson \ "href").asOpt[String]
       )
     }
   }
@@ -264,6 +272,8 @@ trait ConfigAgent extends ExecutionContexts {
   }
 
   def close() = configAgent.close()
+
+  def contentsAsJsonString: String = Json.prettyPrint(configAgent.get)
 }
 
 object ConfigAgent extends ConfigAgent

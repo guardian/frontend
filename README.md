@@ -33,6 +33,11 @@ STAGE=DEV
 The second file is called `[YOUR_HOME_DIR]/.gu/frontend.properties` and you can get its contents from a shared
 document. Ask your team mates to share it with you. If it has already been shared with you just search for "frontend.properties" in your documents.
 
+Nginx
+-----
+
+Nginx must be installed and configured to correctly serve the application, please refer to [`/nginx/README.md`](./nginx/README.md) in this project.
+
 Vagrant
 -------
 You can run the project with the supplied Vagrantfile - make sure you understand what vagrant is http://www.vagrantup.com/
@@ -96,6 +101,9 @@ SBT for the Play Framework backend. Neither of these tools are much use for
 building the other half of the project and coupling them together with an
 integration is one of those bad ideas that is even worse than it sounds.
 
+You ***must*** start SBT with the supplied script called `sbt` if you start
+SBT any other way the project will not run.
+
 Start the Grunt build and watch for development changes:
 
 ```
@@ -114,7 +122,7 @@ Now test you are up and running by hitting the following URLs:
 
 Play Framework will recompile code changes on refresh.
 
-To create project files for use in IntelliJ, run the `idea` task from the root
+To create project files for use in IntelliJ, run the `gen-idea` task from the root
 SBT project. see https://github.com/mpeltonen/sbt-idea
 
 Further information on using the Play console is available [here][play2-console].

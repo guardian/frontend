@@ -7,9 +7,10 @@ import org.scalatest.Matchers
 import org.scalatest.concurrent.Eventually
 import org.scalatest.time.{Millis, Span}
 import org.joda.time.DateMidnight
+import common.UsesElasticSearch
 
 
-class CompetitionAgentTest extends FlatSpec with Matchers with implicits.Football with Eventually {
+class CompetitionAgentTest extends FlatSpec with Matchers with implicits.Football with Eventually with UsesElasticSearch {
 
   override implicit lazy val patienceConfig = PatienceConfig(timeout = scaled(Span(3000, Millis)), interval = scaled(Span(100, Millis)))
 

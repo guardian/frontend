@@ -21,6 +21,7 @@ import scala.Some
 import play.api.mvc.SimpleResult
 import model.Tag
 import model.VideoAsset
+import conf.Switches.{ABTagLinking, ABInBodyLinking}
 
 sealed trait Style {
   val className: String
@@ -63,34 +64,33 @@ sealed trait Container {
   val containerType: String
   val showMore: Boolean
   val tone: String
-  val headerLink: Boolean
 }
 
-case class NewsContainer(showMore: Boolean = true, headerLink: Boolean = true) extends Container {
+case class NewsContainer(showMore: Boolean = true) extends Container {
   val containerType = "news"
   val tone = "news"
 }
-case class SportContainer(showMore: Boolean = true, headerLink: Boolean = true) extends Container {
+case class SportContainer(showMore: Boolean = true) extends Container {
   val containerType = "sport"
   val tone = "news"
 }
-case class CommentContainer(showMore: Boolean = true, headerLink: Boolean = true) extends Container {
+case class CommentContainer(showMore: Boolean = true) extends Container {
   val containerType = "comment"
   val tone = "comment"
 }
-case class FeaturesContainer(showMore: Boolean = true, headerLink: Boolean = true) extends Container {
+case class FeaturesContainer(showMore: Boolean = true) extends Container {
   val containerType = "features"
   val tone: String = "feature"
 }
-case class PopularContainer(showMore: Boolean = true, headerLink: Boolean = true) extends Container {
+case class PopularContainer(showMore: Boolean = true) extends Container {
   val containerType = "popular"
   val tone: String = "news"
 }
-case class TopStoriesContainer(showMore: Boolean = true, headerLink: Boolean = true) extends Container {
+case class TopStoriesContainer(showMore: Boolean = true) extends Container {
   val containerType = "top-stories"
   val tone = "news"
 }
-case class SectionContainer(showMore: Boolean = true, tone: String = "news", headerLink: Boolean = true) extends Container {
+case class SectionContainer(showMore: Boolean = true, tone: String = "news") extends Container {
   val containerType = "section"
 }
 
@@ -130,10 +130,6 @@ object RemoveOuterParaHtml {
       Html(fragment.html.drop(3).dropRight(4))
     }
   }
-}
-
-object SafeName {
-  def apply(desc: TrailblockDescription) = if (desc.id == "") "top-stories" else desc.id.replace("/", "-")
 }
 
 object JavaScriptValue {
@@ -207,7 +203,7 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
       val asset = findVideoFromId(mediaId)
 
       // add the poster url
-      asset.flatMap(_.image).flatMap(ArticleMainPicture.bestFor).foreach{ url =>
+      asset.flatMap(_.image).flatMap(Item620.bestFor).foreach{ url =>
         element.attr("poster", url)
       }
 
@@ -320,6 +316,64 @@ object TweetCleaner extends HtmlCleaner {
       }
     }
     document
+  }
+}
+
+class TagLinker(article: Article)(implicit val edition: Edition) extends HtmlCleaner{
+  def clean(d: Document): Document = {
+    if (ABTagLinking.isSwitchedOn && article.linkCounts.noLinks) {
+      val paragraphs = d.getElementsByTag("p")
+
+      // order by length of name so we do not make simple match errors
+      // e.g 'Northern Ireland' & 'Ireland'
+      article.keywords.sortBy(_.name.length).reverse.foreach{ keyword =>
+        // don't link again in paragraphs we have already upgraded
+        val unlinkedParas = paragraphs.filterNot(_.html.contains("<a"))
+        unlinkedParas.find(_.text().contains(keyword.name)).foreach{ p =>
+
+          val tagLink = d.createElement("a")
+          tagLink.attr("href", LinkTo(keyword.url, edition))
+          tagLink.text(keyword.name)
+          tagLink.attr("data-link-name", "auto-linked-tag")
+          tagLink.addClass("linked-tag-name is-hidden")
+
+          val nameSpan = d.createElement("span")
+          nameSpan.html(keyword.name)
+          nameSpan.addClass("unlinked-tag-name")
+
+          p.html(p.html().replaceFirst(keyword.name, tagLink.toString + nameSpan.toString))
+        }
+      }
+    }
+    d
+  }
+}
+
+class InBodyLinksABTestCleaner(content: Content)(implicit val edition: Edition) extends HtmlCleaner {
+  def clean(d: Document): Document = {
+    // bit hacky, but this only lives as long as the AB test
+    content match {
+      case article: Article => clean(article, d)
+      case _ => {}
+    }
+    d
+  }
+
+  private def clean(article: Article, d: Document) {
+    if (ABInBodyLinking.isSwitchedOn && article.linkCounts.internal > 0) {
+
+      val guardianlinks = d.getElementsByTag("a").filter(_.attr("href").contains("www.theguardian.com"))
+
+      guardianlinks.foreach { link =>
+        link.addClass("ab-in-body-link")
+
+        val nameSpan = d.createElement("span")
+        nameSpan.html(link.html())
+        nameSpan.addClass("ab-in-body-text is-hidden")
+
+        link.after(nameSpan)
+      }
+    }
   }
 }
 

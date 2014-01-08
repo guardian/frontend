@@ -4,6 +4,7 @@
 <div class="article__standfirst" itemprop="description" data-link-name="standfirst">
     @content.standfirst.map { s =>
         @withJsoup(BulletCleaner(s))(
+            new InBodyLinksABTestCleaner(content)(Edition(request)),
             InBodyLinkCleaner("in standfirst link")(Edition(request))
         )
         @content.starRating.map { s =>

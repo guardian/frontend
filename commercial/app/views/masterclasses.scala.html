@@ -5,28 +5,26 @@
 <div class="commercial masterclasses-component">
     <div class="commercial__head">
         <h3 class="commercial__title">
-            <a href="%OASToken%http://theguardian.com/guardian-masterclasses">
-                <span class="u-h">Guardian Masterclasses</span>
-                <i class="i i-guardian-masterclasses-logo"></i>
+            <a href="%OASToken%http://theguardian.com/guardian-masterclasses%OmnitureToken%">
+                <span>Guardian <span class="em">Masterclasses</span></span>
             </a>
         </h3>
+		<p class="commercial__subtitle">Courses from the Guardian</p>
     </div>
     <div class="commercial__body">
         <ul class="lineitems">
             @events.take(1).map { event =>
                 <li class="lineitem">
-                    <h4 class="lineitem__title"><a href="%OASToken%@event.url">@event.name</a></h4>
-                    <p class="lineitem__meta">@event.readableDate<p>
-                    <p class="lineitem__description">
-                        @event.firstParagraph
-                        <a class="lineitem__link"><i class="i i-single-arrow-right-blue"></i>Learn more and book</a></p>
-                    </p>
+                    <a class="lineitem__blocklink" href="%OASToken%@event.url%OmnitureToken%">
+                        <h4 class="lineitem__title">@event.name</h4>
+	                    <p class="lineitem__meta">@event.readableDate • @event.venue.description</p>
+                    </a>
+                    <p class="lineitem__description">@event.truncatedFirstParagraph <a class="lineitem__link"><i class="i i-single-arrow-right-blue"></i>Learn more and book</a></p>
                 </li>
             }
         </ul>
     </div>
     <div class="commercial__foot">
-        <a class="commercial__link" href="#">More courses from Guardian Masterclasses <i class="i i-double-arrow-right-blue"></i></a>
+        <a class="commercial__link" href="%OASToken%http://theguardian.com/guardian-masterclasses/masterclasses-calendar%OmnitureToken%">More courses from Guardian Masterclasses <i class="i i-double-arrow-right-blue"></i></a>
     </div>
 </div>
-
