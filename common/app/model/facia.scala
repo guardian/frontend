@@ -12,7 +12,7 @@ case class Collection(curated: Seq[Trail],
                       results: Seq[Trail],
                       displayName: Option[String]) {
 
-  def items: Seq[Trail] =
+  lazy val items: Seq[Trail] =
     curated ++
     editorsPicks.filterNot(ep => curated.exists(_.url == ep.url)) ++
     results.filterNot (r => curated.exists(_.url == r.url) || editorsPicks.exists(_.url == r.url))
