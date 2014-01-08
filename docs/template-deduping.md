@@ -10,6 +10,8 @@ For example, if you had two lists of 10 items each, and you asked each list to b
 
 Do not forget that each request has it's own scope of `TemplateDeduping`. At the time of writing, `show more` were separate requests to `Facia` and would return what was already on the page; it is the javascript which dedupes at this stage.
 
+Collections are also deduped individually for repetitions.
+
 #### Example
 
 ```
