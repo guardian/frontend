@@ -280,7 +280,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
       log.info(s"Edition redirect: geolocation: $country | edition: ${edition.id} | edition cookie set: $editionCookie"  )
     }
 
-    NoCache(Redirect(redirectPath))
+    Cached(60)(Redirect(redirectPath))
   }
 
   def getPathForUkAlpha(path: String, request: RequestHeader): String =
