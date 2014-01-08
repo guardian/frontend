@@ -6,7 +6,7 @@ import play.api.mvc.{ Action, Controller }
 import model._
 
 
-object CompetitionTablesController extends Controller with Logging with CompetitionTableFilters with ExecutionContexts {
+object CompetitionTablesController extends Controller with Logging with CompetitionTableFilters with ExecutionContexts with implicits.Requests {
 
   private def loadTable(competitionId: String): Option[Table] = Competitions().competitions
     .find(_.id == competitionId)
@@ -21,22 +21,19 @@ object CompetitionTablesController extends Controller with Logging with Competit
     .headOption
 
   def renderCompetitionJson() = renderCompetition()
-  def renderCompetition() = Action { implicit request =>
-    val competitionId = request.queryString("competitionId").headOption
-
-    competitionId.map { id =>
-      loadTable(id).map { table =>
-        val html = () => football.views.html.fragments.frontTableBlock(table)
-        renderFormat(html, html, 60)
-      }.getOrElse(Cached(600)(NoContent))
-    } getOrElse BadRequest("need a competition id")
+  def renderCompetition() = Action{ implicit request =>
+    request.getQueryString("competitionId").flatMap(loadTable).map{ table =>
+      val html = () => football.views.html.fragments.frontTableBlock(table)
+      renderFormat(html, html, 60)
+    }.getOrElse(Cached(600)(JsonNotFound()))
   }
+
 
   def renderTeamJson(teamId: String) = renderTeam(teamId)
   def renderTeam(teamId: String) = Action { implicit request =>
     loadTableWithTeam(teamId).map { table =>
       val html = () => football.views.html.fragments.frontTableBlock(table, Some(teamId))
       renderFormat(html, html, 60)
-    }.getOrElse(Cached(600)(NoContent))
+    }.getOrElse(Cached(600)(JsonNotFound()))
   }
 }

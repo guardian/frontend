@@ -352,3 +352,30 @@
          }
     }
 }
+
+/* Identity Menu
+   ========================================================================== */
+
+.is-signed-in {
+    position: relative;
+}
+
+.nav-popup.nav-popup-profile {
+    right: 0;
+    width: 100%;
+    @include mq(desktop) {
+        width: auto;
+    }
+    > .nav {
+        padding-left: 4px;
+        padding-right: 4px;
+        > .nav__item {
+            width: 100%;
+            padding: 0 $gs-gutter/2;
+            .nav__link {
+                padding: $gs-gutter/2 0;
+                border: none;
+            }
+        }
+    }
+}

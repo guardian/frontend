@@ -51,7 +51,7 @@
  * curl.config({
  *     paths: {
  *         backbone: {
- *             location: 'modules/backbone-1.3.1/backbone.js',
+ *             location: 'common/modules/backbone-1.3.1/backbone.js',
  *             config: {
  *                 loader: 'curl/loader/legacy',
  *                 exports: 'Backbone.noConflict()',
@@ -70,7 +70,7 @@
  * curl.config({
  *     packages: {
  *         jqueryui: {
- *             location: 'modules/jquery-1.6.3/jqueryui.js#',
+ *             location: 'common/modules/jquery-1.6.3/jqueryui.js#',
  *             config: {
  *                 loader: 'curl/loader/legacy',
  *                 factory: function (fullId) {

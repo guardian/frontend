@@ -1,19 +1,19 @@
 module.exports = function(config) {
     return {
-        basePath: './../../../../..',
+        basePath: './../../../../../static/requirejs',
         frameworks: ['jasmine', 'requirejs'],
 
         files: [
-            { pattern: 'common/test/assets/javascripts/components/sinonjs/sinon.js', included: true },
-            { pattern: 'common/test/assets/javascripts/components/jasmine-sinon/lib/jasmine-sinon.js', included: true },
-            { pattern: 'common/test/assets/javascripts/components/seedrandom/index.js', included: true },
-            { pattern: 'common/test/assets/javascripts/setup.js', included: true },
-            { pattern: 'common/test/assets/javascripts/main.js', included: true },
-            { pattern: 'common/app/assets/javascripts/**/*.js', included: false },
-            { pattern: 'common/test/assets/javascripts/components/**/*', included: false },
-            { pattern: 'common/test/assets/javascripts/fixtures/**/*', included: false },
-            { pattern: 'common/test/assets/javascripts/helpers/**/*.js', included: false },
-            { pattern: 'common/test/assets/javascripts/spies/**/*.js', included: false }
+            { pattern: 'common-test/components/sinonjs/sinon.js', included: true },
+            { pattern: 'common-test/components/jasmine-sinon/lib/jasmine-sinon.js', included: true },
+            { pattern: 'common-test/components/seedrandom/index.js', included: true },
+            { pattern: 'common-test/setup.js', included: true },
+            { pattern: 'common-test/main.js', included: true },
+            { pattern: 'common-test/components/**/*', included: false },
+            { pattern: 'common-test/fixtures/**/*', included: false },
+            { pattern: 'common-test/helpers/**/*.js', included: false },
+            { pattern: 'common-test/spies/**/*.js', included: false },
+            { pattern: 'common/**/*.js', included: false }
         ],
 
         exclude: [],

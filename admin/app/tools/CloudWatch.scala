@@ -1,7 +1,7 @@
 package tools
 
 import com.amazonaws.services.cloudwatch.AmazonCloudWatchAsyncClient
-import conf.Configuration
+import conf.{AdminHealthCheckPage, Configuration}
 import com.amazonaws.services.cloudwatch.model._
 import org.joda.time.DateTime
 import com.amazonaws.handlers.AsyncHandler
@@ -13,24 +13,21 @@ case class LoadBalancer(id: String, name: String, project: String)
 
 object CloudWatch {
 
-  private lazy val executor = Executors.newCachedThreadPool
-
   def shutdown() {
-    executor.shutdownNow()
+    euWestClient.shutdown()
+    defaultClient.shutdown()
   }
 
   val stage = new Dimension().withName("Stage").withValue(environment.stage)
 
-  // we create a new client on each request, otherwise we run into this problem
-  // http://blog.bdoughan.com/2011/03/preventing-entity-expansion-attacks-in.html
-  def euWestClient = {
-    val client = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials, executor)
+  lazy val euWestClient = {
+    val client = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials)
     client.setEndpoint("monitoring.eu-west-1.amazonaws.com")
     client
   }
 
   // some metrics are only available in the 'default' region
-  def defaultClient = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials, executor)
+  lazy val defaultClient = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials)
 
   val primaryLoadBalancers = Seq(
     LoadBalancer("frontend-RouterLo-1HHMP4C9L33QJ", "Router", "frontend-router"),
@@ -70,18 +67,27 @@ object CloudWatch {
     ("JavaScript errors from iOS", "js.windows")
   )
 
+  val assetsFiles = Seq(
+    "app.js",
+    "global.css",
+    "head.default.css",
+    "head.facia.css"
+  )
+
   def shortStackLatency = latency(primaryLoadBalancers)
   def fullStackLatency = shortStackLatency ++ latency(secondaryLoadBalancers)
 
-  object asyncHandler extends AsyncHandler[GetMetricStatisticsRequest, GetMetricStatisticsResult] with Logging
-  {
-    def onError(exception: Exception)
-    {
-      log.info(s"CloudWatch GetMetricStatisticsRequest error: ${exception.getMessage}}")
+  object asyncHandler extends AsyncHandler[GetMetricStatisticsRequest, GetMetricStatisticsResult] with Logging {
+    def onError(exception: Exception) {
+      log.info(s"CloudWatch GetMetricStatisticsRequest error: ${exception.getMessage}")
+      exception match {
+        // temporary till JVM bug fix comes out
+        // see https://blogs.oracle.com/joew/entry/jdk_7u45_aws_issue_123
+        case e: Exception if e.getMessage.contains("JAXP00010001") => AdminHealthCheckPage.setUnhealthy()
+        case _ =>
+      }
     }
-    def onSuccess(request: GetMetricStatisticsRequest, result: GetMetricStatisticsResult )
-    {
-    }
+    def onSuccess(request: GetMetricStatisticsRequest, result: GetMetricStatisticsResult ) { }
   }
 
   // TODO - this file is getting a bit long/ complicated. It needs to be split up a bit

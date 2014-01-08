@@ -4,13 +4,13 @@
  */
 define([
     'qwery',
-    'utils/ajax',
+    'common/utils/ajax',
     'lodash/objects/assign',
 
-    'modules/component',
-    'modules/experiments/right-most-popular-image-item',
-    'modules/experiments/right-most-popular-list-item',
-    'modules/ui/images'
+    'common/modules/component',
+    'common/modules/experiments/right-most-popular-image-item',
+    'common/modules/experiments/right-most-popular-list-item',
+    'common/modules/ui/images'
 ], function (
     qwery,
     ajax,

@@ -1,13 +1,13 @@
 define([
-    '$',
-    'bonzo',
+    'common/$',
+	'bonzo',
     'bean',
     'qwery',
-    'utils/mediator',
-    'utils/detect',
-    'utils/ajax',
-    'modules/ui/relativedates',
-    'modules/discussion/comment-count'
+    'common/utils/mediator',
+    'common/utils/detect',
+    'common/utils/ajax',
+    'common/modules/ui/relativedates',
+    'common/modules/discussion/comment-count'
 ], function ($, bonzo, bean, qwery, mediator, detect, ajax, relativeDates, commentCount) {
 
     var buttonText = 'Show more',

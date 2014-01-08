@@ -5,8 +5,6 @@ import model.commercial.{Segment, AdAgent}
 
 object OffersAgent extends AdAgent[Offer] {
 
-  override def defaultAds = MostPopularOffersAgent.currentAds
-
   def refresh() {
     AllOffersAgent.refresh()
     MostPopularOffersAgent.refresh()
@@ -16,6 +14,8 @@ object OffersAgent extends AdAgent[Offer] {
 }
 
 object AllOffersAgent extends AdAgent[Offer] with Logging with ExecutionContexts {
+
+  override def defaultAds = MostPopularOffersAgent.currentAds
 
   def refresh() = {
     for {offers <- OffersApi.getAllOffers}

@@ -1,16 +1,22 @@
 define([
-    'common',
-    'utils/storage',
-    'modules/analytics/mvt-cookie',
+    'common/common',
+    'common/utils/storage',
+    'common/modules/analytics/mvt-cookie',
 
     //Current tests
-    'modules/experiments/tests/aa',
-    'modules/experiments/tests/mobile-facebook-autosignin',
-    'modules/experiments/tests/onward-intrusive',
-    'modules/experiments/tests/onward-highlights-panel',
-    'modules/experiments/tests/alpha-comm',
-    'modules/experiments/tests/right-most-popular',
-    'modules/experiments/tests/right-most-popular-control'
+
+    'common/modules/experiments/tests/aa',
+    'common/modules/experiments/tests/mobile-facebook-autosignin',
+    'common/modules/experiments/tests/onward-intrusive',
+    'common/modules/experiments/tests/onward-highlights-panel',
+    'common/modules/experiments/tests/alpha-comm',
+    'common/modules/experiments/tests/commercial-in-article-desktop',
+    'common/modules/experiments/tests/commercial-in-article-mobile',
+    'common/modules/experiments/tests/right-most-popular',
+    'common/modules/experiments/tests/right-most-popular-control',
+    'common/modules/experiments/tests/tag-links',
+    'common/modules/experiments/tests/underline-links',
+    'common/modules/experiments/tests/in-body-links'
 ], function (
     common,
     store,
@@ -21,8 +27,13 @@ define([
     OnwardIntrusive,
     OnwardHighlightsPanel,
     AlphaComm,
-    RightMostPopular,
-    RightMostPopularControl
+    CommercialInArticlesDesktop,
+    CommercialInArticlesMobile,
+    RightPopular,
+    RightPopularControl,
+    TagLinks,
+    UnderlineLinks,
+    InBodyLinks
     ) {
 
     var TESTS = [
@@ -31,8 +42,13 @@ define([
             new OnwardIntrusive(),
             new OnwardHighlightsPanel(),
             new AlphaComm(),
-            new RightMostPopular(),
-            new RightMostPopularControl()
+            new CommercialInArticlesDesktop(),
+            new CommercialInArticlesMobile(),
+            new RightPopular(),
+            new RightPopularControl(),
+            new TagLinks(),
+            new UnderlineLinks(),
+            new InBodyLinks()
         ],
         participationsKey = 'gu.ab.participations';
 
@@ -90,6 +106,12 @@ define([
                 return false;
             }
             return true;
+        });
+    }
+
+    function getExpiredTests() {
+        return TESTS.filter(function(test) {
+            return (new Date() - new Date(test.expiry)) > 0;
         });
     }
 
@@ -241,8 +263,9 @@ define([
         },
 
         getParticipations: getParticipations,
-        makeOmnitureTag: makeOmnitureTag
-
+        makeOmnitureTag: makeOmnitureTag,
+        getExpiredTests: getExpiredTests,
+        getActiveTests: getActiveTests
     };
 
     return ab;

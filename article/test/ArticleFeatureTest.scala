@@ -73,6 +73,22 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
       }
     }
 
+    scenario("Author metadata", ArticleComponents) {
+
+      Given("I am on an article entitled 'TV highlights 09/08/2012'")
+      HtmlUnit("/tv-and-radio/2012/aug/08/americas-animal-hoarder-the-churchills") { browser =>
+        import browser._
+
+        Then("the authors should be exposed as meta data")
+        val authors = $("meta[name=author]")
+        authors.first.getAttribute("content") should be("Ben Arnold")
+        authors.last.getAttribute("content") should be("Mark Jones")
+
+        And("it should handle escaping")
+        authors(4).getAttribute("content") should be("Phelim O'Neill")
+      }
+    }
+
     scenario("Display the article image", ArticleComponents) {
 
       Given("I am on an article entitled 'Putting a price on the rivers and rain diminishes us all'")
@@ -94,7 +110,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
     scenario("Poster image on embedded video", ArticleComponents) {
       HtmlUnit("/world/2013/sep/25/kenya-mall-attack-bodies") { browser =>
         import browser._
-        findFirst("video").getAttribute("poster") should endWith ("Westgate-shopping-centre--016.jpg")
+        findFirst("video").getAttribute("poster") should endWith ("Westgate-shopping-centre--015.jpg")
       }
     }
 
@@ -309,7 +325,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
         Then("the main picture should be hidden")
         $("[itemprop='associatedMedia primaryImageOfPage']") should have size 0
 
-        findFirst("video").getAttribute("poster") should endWith("/2013/3/26/1364309869688/Jeremy-Hunt-announcing-ch-016.jpg")
+        findFirst("video").getAttribute("poster") should endWith("/2013/3/26/1364309868130/Jeremy-Hunt-announcing-ch-015.jpg")
       }
     }
 
@@ -480,6 +496,16 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
         $("meta[property='twitter:card']").getAttributes("content").head  should be ("summary_large_image")
         $("meta[property='twitter:app:url:googleplay']").getAttributes("content").head should startWith ("guardian://www.theguardian.com/world")
         $("meta[property='twitter:image:src']").getAttributes("content").head should startWith ("http://i.gucode.co.uk/n/")
+      }
+    }
+    
+    scenario("Signify to the user an article is sponsored"){
+      Given("I visit a sponsored article entitled 'Young people debt worries'")
+      SponsoredContentSwitch.switchOn()
+      HtmlUnit("/carphone-warehouse-mobile-living/melody-makers") { browser =>
+        import browser._
+        Then("I should see a message")
+        $(".article__sponsor").getText should be ("Advertisement feature")
       }
     }
 

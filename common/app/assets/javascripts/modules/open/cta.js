@@ -1,7 +1,7 @@
 define([
-    '$',
-    'utils/clamp',
-    'modules/component'
+    'common/$',
+    'common/utils/clamp',
+    'common/modules/component'
 ], function(
     $,
     clamp,

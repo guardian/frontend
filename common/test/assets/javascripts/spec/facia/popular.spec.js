@@ -1,4 +1,4 @@
-define(['modules/facia/popular', 'bonzo', '$', 'bean', 'helpers/fixtures', 'utils/ajax'], function(popular, bonzo, $, bean, fixtures, ajax) {
+define(['common/modules/facia/popular', 'bonzo', 'common/$', 'bean', 'helpers/fixtures', 'common/utils/ajax'], function(popular, bonzo, $, bean, fixtures, ajax) {
 
     describe('Popular', function() {
 

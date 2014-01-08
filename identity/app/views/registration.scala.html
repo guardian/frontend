@@ -7,48 +7,60 @@
 
 @identityMain(page, conf.Switches.all){
 }{
-<div class="identity-wrapper">
-    <h1>Create your Guardian account</h1>
+<div class="identity-wrapper monocolumn-wrapper">
+    <h1 class="identity-title">Create your Guardian account</h1>
     <p>Already have an account? <a href="@idUrlBuilder.buildUrl("/signin", idRequest)">Sign in</a>.</p>
 
-    @socialSignin("Register", page, idRequest, idUrlBuilder)
+    <form class="form js-register-form" novalidate action="@idUrlBuilder.buildUrl("/register", idRequest)" role="main" method="post">
+        @if(registrationForm.globalError.isDefined) {
+            <div class="form__error">@registrationForm.globalErrors.map(_.message).mkString(", ")</div>
+        }
 
-    <div class="identity-section">
-        <h2 class="type-2">Register with an email address</h2>
-        <p>All fields required.</p>
+        <fieldset class="fieldset">
+            <div class="fieldset__heading">
+                <h2 class="form__heading">Use your social account</h2>
+            </div>
+            <div class="fieldset__fields">
+                @socialSignin("Register", page, idRequest, idUrlBuilder)
+            </div>
+        </fieldset>
 
-        <form class="form js-register-form" novalidate action="@idUrlBuilder.buildUrl("/register", idRequest)" role="main" method="post">
-            @if(registrationForm.globalError.isDefined) {
-                <div class="form__error">@registrationForm.globalErrors.map(_.message).mkString(", ")</div>
-            }
+        <fieldset class="fieldset">
+            <div class="fieldset__heading">
+                <h2 class="form__heading">Register with an email address</h2>
+                <div class="form__note">All fields required.</div>
+            </div>
+            <div class="fieldset__fields">
+                <ul class="unstyled">
 
-            <ul class="form-fields">
+                    @inputField(Email(registrationForm("user.primaryEmailAddress"), '_label -> "Email address", 'tabindex -> 1))
 
-                @inputField(Email(registrationForm("user.primaryEmailAddress"), '_label -> "Email address"))
-                @inputField(Username(registrationForm("user.publicFields.username"), '_label -> "Username", '_help -> "Between 6 and 20 characters, letters and numbers only"))
-                @inputField(Password(registrationForm("user.password"), '_label -> "Password", '_help -> "Between 6 and 20 characters", 'class -> "js-register-password js-password-strength"))
+                    @inputField(Username(registrationForm("user.publicFields.username"), '_label -> "Username", '_help -> "Between 6 and 20 characters, letters and numbers only", ('tabindex, 2)))
 
-                <li>
-                    <label class="check-label" for="@registrationForm("receive_gnm_marketing").id">
-                        @checkbox(registrationForm("receive_gnm_marketing"))
-                        Keep me up to date with offers and developments from the Guardian
-                    </label>
-                    <label class="check-label" for="@registrationForm("receive_third_party_marketing").id">
-                        @checkbox(registrationForm("receive_third_party_marketing"))
-                        Send me messages from 3rd party organisations screened by the Guardian
-                    </label>
-                </li>
-                <li>
-                    <div class="form__note">
-                        By proceeding, you agree to the Guardian's <a href="http://www.theguardian.com/help/terms-of-service" data-link-name="Terms of service">Terms of Service</a> and <a href="http://www.theguardian.com/help/privacy-policy" data-link-name="Privacy policy">Privacy Policy</a>.
-                    </div>
-                </li>
-                <li>
-                    <button type="submit" class="submit-input" data-link-name="Create account">Create account</button>
-                </li>
-            </ul>
-        </form>
-    </div>
+                    @inputField(Password(registrationForm("user.password"), '_label -> "Password", '_help -> "Between 6 and 20 characters", 'class -> "js-register-password js-password-strength", ('tabindex, 3)))
+
+                    <li class="form-field form-field--no-margin">
+                        <label class="check-label" for="@registrationForm("receive_gnm_marketing").id">
+                            @checkbox(registrationForm("receive_gnm_marketing"), ('tabindex, 4))
+                            Keep me up to date with offers and developments from the Guardian
+                        </label>
+                    </li>
+                    <li class="form-field">
+                        <label class="check-label" for="@registrationForm("receive_third_party_marketing").id">
+                            @checkbox(registrationForm("receive_third_party_marketing"), ('tabindex, 5))
+                            Send me messages from 3rd party organisations screened by the Guardian
+                        </label>
+                    </li>
+                    <li class="form-field form-field__submit">
+                        <div class="form-field__note">
+                            By proceeding, you agree to the Guardian's <a href="http://www.theguardian.com/help/terms-of-service" data-link-name="Terms of service">Terms of Service</a> and <a href="http://www.theguardian.com/help/privacy-policy" data-link-name="Privacy policy">Privacy Policy</a>.
+                        </div>
+                        <button type="submit" class="submit-input" data-link-name="Create account" tabindex="6">Create account</button>
+                    </li>
+                </ul>
+            </div>
+        </fieldset>
+    </form>
 
     @registrationFooter(page, idRequest, idUrlBuilder)
 </div>

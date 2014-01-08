@@ -4,8 +4,8 @@ import common.{AkkaAgent, ExecutionContexts}
 import play.api.libs.json.{Json, JsNull, JsValue}
 import model.Config
 
-trait ConfigAgentTrait {
-  val configAgent = AkkaAgent[JsValue](JsNull)
+trait ConfigAgentTrait extends ExecutionContexts {
+  private val configAgent = AkkaAgent[JsValue](JsNull)
 
   def refresh() = S3FrontsApi.getMasterConfig map {s => configAgent.send(Json.parse(s))}
 
@@ -27,10 +27,11 @@ trait ConfigAgentTrait {
       Config(
         id,
         (collectionJson \ "apiQuery").asOpt[String],
-        (collectionJson \ "displayName").asOpt[String],
+        (collectionJson \ "displayName").asOpt[String].filter(_.nonEmpty),
         (collectionJson \ "tone").asOpt[String],
-        (collectionJson \ "groups").asOpt[Seq[String]] getOrElse Nil,
-        (collectionJson \ "roleName").asOpt[String]
+        (json \ "href").asOpt[String],
+        (json \ "groups").asOpt[Seq[String]] getOrElse Nil,
+        (json \ "roleName").asOpt[String]
       )
     }
   }
@@ -43,4 +44,6 @@ trait ConfigAgentTrait {
   }
 
   def close() = configAgent.close()
+
+  def contentsAsJsonString: String = Json.prettyPrint(configAgent.get)
 }

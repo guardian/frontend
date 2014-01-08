@@ -1,6 +1,7 @@
 @(env: String, os: Map[String, Long], browser: Map[String, Long], combined: Map[String, Long])
 
 @admin_main("Browsers", env, isAuthed = true) {
+  <link href="@routes.Assets.at("css/browsers.css")" rel="stylesheet">
 
   <section id="usage">
 
@@ -128,13 +129,6 @@
             </tr>
         </tfoot>
     </table>
-    </table>
-
-    <script>
-        window.addEventListener('load', function () { 
-            curl(['modules/BrowserStats']);
-        });
-    </script>
     
   </section>    
 }

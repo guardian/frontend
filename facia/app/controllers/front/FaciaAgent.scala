@@ -10,6 +10,7 @@ import play.api.libs.json.JsObject
 import services.{ConfigAgentTrait, S3FrontsApi}
 import scala.concurrent.Future
 import play.api.http.Status
+import scala.collection.immutable.SortedMap
 
 object Path {
   def unapply[T](uri: String) = Some(uri.split('?')(0))
@@ -55,6 +56,7 @@ trait ParseConfig extends ExecutionContexts with Logging {
       (json \ "contentApiQuery").asOpt[String].filter(_.nonEmpty),
       (json \ "displayName").asOpt[String],
       (json \ "tone").asOpt[String],
+      (json \ "href").asOpt[String],
       (json \ "groups").asOpt[Seq[String]] getOrElse Nil,
       (json \ "roleName").asOpt[String]
     )
@@ -131,23 +133,42 @@ trait ParseCollection extends ExecutionContexts with Logging {
     }
   }
 
-  def getArticles(collectionItems: Seq[CollectionItem], edition: Edition): Future[List[Content]] = {
+  def getArticles(collectionItems: Seq[CollectionItem], edition: Edition): Future[List[Content]]
+    = getArticles(collectionItems, edition, hasParent=false)
+
+  //hasParent is here to break out of the recursive loop and make sure we only go one deep
+  def getArticles(collectionItems: Seq[CollectionItem], edition: Edition, hasParent: Boolean): Future[List[Content]] = {
     if (collectionItems.isEmpty) {
-      Future(Nil)
+      Future.successful(Nil)
     }
     else {
-      val results = collectionItems.foldLeft(Future[List[Content]](Nil)){(foldList, collectionItem) =>
-        val id = collectionItem.id
-        val response = ContentApi.item(id, edition).showFields("all").response
-        response.onFailure{case t: Throwable => log.warn("%s: %s".format(id, t.toString))}
-        for {l <- foldList; itemResponse <- response} yield {
-          itemResponse.content.map(Content(_, collectionItem.metaData)).map(_ +: l).getOrElse(l)
+      val results = collectionItems.foldLeft(Future[List[Content]](Nil)){(foldListFuture, collectionItem) =>
+        lazy val supportingAsContent: Future[List[Content]] = {
+          lazy val supportingLinks: List[CollectionItem] = retrieveSupportingLinks(collectionItem)
+          if (!hasParent) getArticles(supportingLinks, edition, hasParent=true) else Future.successful(Nil)
+        }
+        val response = ContentApi.item(collectionItem.id, edition).showFields("all").response
+
+        response.onFailure{case t: Throwable => log.warn("%s: %s".format(collectionItem.id, t.toString))}
+        supportingAsContent.onFailure{case t: Throwable => log.warn("Supporting links: %s: %s".format(collectionItem.id, t.toString))}
+
+        for {
+          contentList <- foldListFuture
+          itemResponse <- response
+          supporting <- supportingAsContent
+        } yield {
+          itemResponse.content.map(Content(_, supporting, collectionItem.metaData)).map(_ +: contentList).getOrElse(contentList)
         }
       }
       val sorted = results map { _.sortBy(t => collectionItems.indexWhere(_.id == t.id))}
       sorted
     }
   }
+
+  private def retrieveSupportingLinks(collectionItem: CollectionItem): List[CollectionItem] =
+    collectionItem.metaData.map(_.get("supporting").flatMap(_.asOpt[List[JsValue]]).getOrElse(Nil)
+    .map(json => CollectionItem((json \ "id").as[String], (json \ "meta").asOpt[Map[String, JsValue]]))
+  ).getOrElse(Nil)
 
   def executeContentApiQuery(s: Option[String], edition: Edition): Future[List[Content]] = s filter(_.nonEmpty) map { queryString =>
     val queryParams: Map[String, String] = QueryParams.get(queryString).mapValues{_.mkString("")}
@@ -156,7 +177,6 @@ trait ParseCollection extends ExecutionContexts with Logging {
     val newSearch = queryString match {
       case Path(Seg("search" ::  Nil)) => {
         val search = ContentApi.search(edition)
-                       .tag("type/gallery|type/article|type/video|type/sudoku")
                        .showElements("all")
                        .pageSize(20)
         val newSearch = queryParamsWithEdition.foldLeft(search){
@@ -168,7 +188,6 @@ trait ParseCollection extends ExecutionContexts with Logging {
       }
       case Path(id)  => {
         val search = ContentApi.item(id, edition)
-                       .tag("type/gallery|type/article|type/video|type/sudoku")
                        .showElements("all")
                        .showEditorsPicks(true)
                        .pageSize(20)
@@ -198,14 +217,21 @@ object CollectionAgent extends ParseCollection {
 
   def updateCollection(id: String, collection: Collection): Unit = collectionAgent.send { _.updated(id, collection) }
 
-  def updateCollectionById(id: String): Unit = {
+  def updateCollectionById(id: String): Unit = updateCollectionById(id, isWarmedUp=true)
+
+  def updateCollectionById(id: String, isWarmedUp: Boolean): Unit = {
     val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(id))
     val edition = Edition.byId(id.take(2)).getOrElse(Edition.defaultEdition)
     //TODO: Refactor isWarmedUp into method by ID
-    updateCollection(id, config, edition, isWarmedUp=true)
+    updateCollection(id, config, edition, isWarmedUp=isWarmedUp)
   }
 
   def close(): Unit = collectionAgent.close()
+
+  def contentsAsJsonString: String = {
+    val contents: SortedMap[String, Seq[String]] = SortedMap(collectionAgent.get().mapValues{v => v.items.map(_.url)}.toSeq:_*)
+    Json.prettyPrint(Json.toJson(contents))
+  }
 }
 
 object QueryAgents {

@@ -1,14 +1,14 @@
 define([
-    '$',
+    'common/$',
     'bonzo',
     'qwery',
     'bean',
-    'utils/ajax',
-    'modules/component',
-    'modules/identity/api',
-    'modules/discussion/comment-box',
-    'modules/discussion/recommend-comments',
-    'modules/discussion/api'
+    'common/utils/ajax',
+    'common/modules/component',
+    'common/modules/identity/api',
+    'common/modules/discussion/comment-box',
+    'common/modules/discussion/recommend-comments',
+    'common/modules/discussion/api'
 ], function(
     $,
     bonzo,
@@ -55,6 +55,7 @@ Comments.prototype.componentClass = 'd-discussion';
  * @override
  */
 Comments.prototype.classes = {
+    container: 'discussion__comments__container',
     comments: 'd-thread--top-level',
     topLevelComment: 'd-comment--top-level',
     showMore: 'd-discussion__show-more',
@@ -73,7 +74,8 @@ Comments.prototype.classes = {
     commentActions: 'd-comment__actions__main',
     commentReply: 'd-comment__action--reply',
     commentPick: 'd-comment__action--pick',
-    commentRecommend: 'd-comment__recommend'
+    commentRecommend: 'd-comment__recommend',
+    commentStaff: 'd-comment--staff'
 };
 
 /** @type {Object.<string.*>} */
@@ -106,7 +108,7 @@ Comments.prototype.user = null;
 /** @override */
 Comments.prototype.prerender = function() {
     var self = this,
-        heading = qwery(this.getClass('heading'), this.context)[0],
+        heading = qwery(this.getClass('heading'), this.getClass('container'))[0],
         commentCount = this.elem.getAttribute('data-comment-count'),
         initialShow = this.options.initialShow;
 
@@ -380,17 +382,15 @@ Comments.prototype.addMoreRepliesButtons = function (comments) {
 
             var numHiddenReplies = replies - rendered_replies.length;
 
-            var showButton = [];
-            showButton.push('<li class="');
-            showButton.push(self.getClass('showReplies', true));
-            showButton.push(' cta" data-link-name="Show more replies" data-is-ajax data-comment-id="');
-            showButton.push(elem.getAttribute("data-comment-id"));
-            showButton.push('">Show ');
-            showButton.push(numHiddenReplies);
-            showButton.push(' more ');
-            showButton.push((numHiddenReplies === 1 ? 'reply' : 'replies'));
-            showButton.push('</li>');
-            showButton = bonzo.create(showButton.join(""));
+            var showButton = "";
+            showButton += '<li class="' + self.getClass('showReplies', true) + '" ';
+            showButton += 'data-link-name="Show more replies" ';
+            showButton += 'data-is-ajax data-comment-id="' + elem.getAttribute("data-comment-id") + '">';
+            showButton += '<span><i class="i i-plus-white-small"></i></span>';
+            showButton += 'Show ' + numHiddenReplies + ' more ' + (numHiddenReplies === 1 ? 'reply' : 'replies');
+            showButton += '</li>';
+
+            showButton = bonzo.create(showButton);
             bonzo(showButton).data("source-comment", elem);
 
             bonzo(qwery('.d-thread--responses', elem)).append(showButton);
@@ -457,8 +457,10 @@ Comments.prototype.addComment = function(comment, focus, parent) {
                 src: this.user.avatar
             }
         },
-        commentElem = bonzo.create(document.getElementById('tmpl-comment').innerHTML)[0];
-        bonzo(commentElem).addClass('fade-in'); // Comments now appear with CSS Keyframe animation
+        commentElem = bonzo.create(document.getElementById('tmpl-comment').innerHTML)[0],
+        $commentElem = bonzo(commentElem);
+        
+    $commentElem.addClass('d-comment--new');
 
     for (key in map) {
         if (map.hasOwnProperty(key)) {
@@ -476,17 +478,17 @@ Comments.prototype.addComment = function(comment, focus, parent) {
     }
     commentElem.id = 'comment-'+ comment.id;
 
-    if (this.user && this.user.isStaff) {
-        // Hack to allow staff badge to appear
-        var staffBadge = bonzo.create(document.getElementById('tmpl-staff-badge').innerHTML);
-        $('.d-comment__meta div', commentElem).first().append(staffBadge);
+    if (this.user && !this.user.isStaff) {
+        $commentElem.addClass(this.getClass('commentStaff', true));
     }
 
     // Stupid hack. Will rearchitect.
     if (!parent) {
         bonzo(this.getElem('newComments')).prepend(commentElem);
     } else {
-        bonzo(parent).append(commentElem);
+        $commentElem.removeClass(this.getClass('topLevelComment', true));
+        $commentElem.addClass(this.getClass('reply', true));
+        bonzo(parent).append($commentElem);
     }
 
     if (focus) {
@@ -547,21 +549,9 @@ Comments.prototype.replyToComment = function(e) {
 };
 
 /**
- * @param {string} errorMessage
- * @param {number} commentId
- */
-Comments.prototype.error = function(commentId, errorMessage) {
-    var errorElem = bonzo.create('<div class="d-discussion__error">'+ errorMessage +'</div>');
-    $('#comment-'+ commentId).prepend(errorElem);
-};
-
-/**
  * @param {Object.<string.*>} comment
  */
 Comments.prototype.recommendFail = function(comment) {
-    if (comment.errorCode === "CAN'T_RECOMMEND_SAME_COMMENT_TWICE") {
-        this.error(comment.id, 'You cannot recommend the same comment twice.');
-    }
 };
 
 return Comments;
