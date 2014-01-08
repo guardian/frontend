@@ -174,7 +174,7 @@ $replyIndent: 26px;
     display: block;
     overflow: hidden;
     text-overflow: ellipsis;
-    padding-right: $gs-baseline;
+    padding-right: $gs-gutter / 2;
 }
 
 .d-comment__author-label {
