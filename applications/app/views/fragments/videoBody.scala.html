@@ -70,15 +70,15 @@
                 </div>
             </div>
         </article>
-        <div class="article__inner">
-            @if(page.storyPackage.nonEmpty) {
-                <aside class="related" role="complementary">
-                    @fragments.relatedTrails(page.storyPackage, heading = "More on this story", visibleTrails = 5)
-                </aside>
-            } else {
-                <aside class="related js-related" role="complementary"></aside>
-            }
-        </div>
+
+        @if(page.storyPackage.nonEmpty) {
+            <aside class="related" role="complementary">
+                @fragments.relatedTrails(page.storyPackage, heading = "More on this story", visibleTrails = 5)
+            </aside>
+        } else {
+            <aside class="related js-related" role="complementary"></aside>
+        }
+
         @fragments.mostPopularPlaceholder(video.section)
     </div>
 
