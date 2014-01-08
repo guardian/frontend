@@ -47,7 +47,8 @@ object CloudWatch {
     LoadBalancer("frontend-SportLoa-GLJK02HUD48W", "Sport", "frontend-sport"),
     LoadBalancer("frontend-Commerci-12ZQ79RIOLIYE", "Commercial", "frontend-commercial"),
     LoadBalancer("frontend-OnwardLo-14YIUHL6HIW63", "Onward", "frontend-onward"),
-    LoadBalancer("frontend-R2Footba-9BHU0R3R3DHV", "R2 Football", "frontend-r2football")
+    LoadBalancer("frontend-R2Footba-9BHU0R3R3DHV", "R2 Football", "frontend-r2football"),
+    LoadBalancer("frontend-Diagnost-1SCNCG3BR1RFE", "Diagnostics", "frontend-diagnostics" )
   )
 
   val loadBalancers = primaryLoadBalancers ++ secondaryLoadBalancers
