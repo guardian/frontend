@@ -584,3 +584,42 @@ video {
         margin-top: 10px;
     }
 }
+
+/*
+    This shares too much similarity with the `article__zone` block, so will merge once
+    we get some proper direction over where/what the messaging we need for sponsored
+    articles.
+ */
+.article__sponsor {
+    min-height: $gs-row-height;
+    padding: 0 $gs-gutter/2;
+    
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
+
+    @include mq(tablet) {
+        min-height: 0;
+        padding: $baseline*3 0;
+
+        max-width: gs-span(8);
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    @include mq(rightCol) {
+        margin-left: $gs-gutter;
+        margin-right: $gs-gutter;
+        max-width: none;
+    }
+
+    @include mq(leftCol) {
+        padding-left: $a-leftCol-width + $gs-gutter;
+    }
+
+    @include mq(wide) {
+        padding-left:  gs-span(3) + $gs-gutter;
+        padding-right: $a-rightCol-width + gs-span(1) + $gs-gutter*2;
+    }
+}

@@ -13,11 +13,8 @@ class TemplateDeduping extends implicits.Collections {
     returnList.distinctBy(_.url)
   }
 
-  def take(numberWanted: Int, collection: Collection): Collection =
-    collection.copy(items = take(numberWanted, collection.items))
-
-  def apply(numberWanted: Int, collection: Collection): Collection = take(numberWanted, collection)
-  def apply(collection: Collection): Collection = take(collection.items.length, collection)
+  def apply(numberWanted: Int, collection: Collection): Seq[Trail] = take(numberWanted, collection.items)
+  def apply(collection: Collection): Seq[Trail] = take(collection.items.length, collection.items)
 
   def apply(numberWanted: Int, items: Seq[Trail]): Seq[Trail] = take(numberWanted, items)
   def apply(items: Seq[Trail]): Seq[Trail] = take(items.length, items)

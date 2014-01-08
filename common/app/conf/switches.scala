@@ -141,9 +141,12 @@ object Switches extends Collections {
     "If this is switched on users will be messaged that they are inside the alpha/beta/whatever release",
     safeState = Off)
 
-
   val FontSwitch = Switch("Feature Switches", "web-fonts",
     "If this is switched on then the custom Guardian web font will load.",
+    safeState = Off)
+  
+  val SponsoredContentSwitch = Switch("Feature Switches", "sponsored-content",
+    "If this is switched on the articles will display a simple 'Advertisement feature' notice.",
     safeState = Off)
 
   val NetworkFrontAppealSwitch = Switch("Feature Switches", "network-front-appeal",
@@ -338,7 +341,8 @@ object Switches extends Collections {
     UkAlphaSwitch,
     ABTagLinking,
     ABUnderlineLinks,
-    ABInBodyLinking
+    ABInBodyLinking,
+    SponsoredContentSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
