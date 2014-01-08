@@ -289,7 +289,16 @@ $c-live: #e81818;
         background-color: $c-neutral1;
     }
 
-    .item__title { color: #ffffff; }
+    .item__link:visited {
+        .item__title {
+            color: #9c9c9c; //Darkest we can go to pass accessiblity
+        }
+    }
+
+    .item__link,
+    .item__title {
+        color: #ffffff;
+    }
 
     .item__title-type {
         color: $c-commentAccent;
