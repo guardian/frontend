@@ -51,7 +51,7 @@ define([
                 sectionHeader: '.fsSectionHeading',
                 sectionHeaderFirst: '.fsSection:first-child .fsSectionHeading',
                 sectionText: '.fsSectionText',
-                hide: '.hidden, .fsHidden'
+                hide: '.hidden, .fsHidden, .ui-datepicker-trigger'
             },
             hiddenSelectors: {
                 userId: '[type="number"]',
