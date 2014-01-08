@@ -1,4 +1,31 @@
-.related { position: relative; }
+.related {
+    position: relative;
+
+    @include mq($a-rightCol-trigger) {
+
+        .item {
+            &:first-child {
+                &:before {
+                    border-left: none;
+                }
+            }
+
+            &:last-child {
+                display: none;
+            }
+        }
+
+        &.more-on-this-story {
+            .item:first-child {
+                display: none;
+            }
+
+            .item:last-child {
+                display: block;
+            }
+        }
+    }
+}
 
 .related__header {
     @include mq($a-leftCol-trigger) {
@@ -84,10 +111,6 @@
             width: 25%;
             clear: none;
 
-            &:first-child {
-                display: none;
-            }
-
             &:nth-child(2) {
                 &:before {
                     border-left: none;
@@ -102,6 +125,16 @@
     }
 
     .item--dark {
+
+        @include mq(tablet, $a-rightCol-trigger) {
+            &:first-child {
+                .item__title {
+                    padding-left: $gs-gutter*0.4;
+                    padding-right: $gs-gutter*0.4;
+                }
+            }
+        }
+
         .item__meta {
             border-bottom: none;
         }
