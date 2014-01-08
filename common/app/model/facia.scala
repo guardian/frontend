@@ -19,6 +19,7 @@ case class Collection(curated: Seq[Trail],
 }
 
 object Collection {
+  def apply(curated: Seq[Trail]): Collection = Collection(curated, Nil, Nil, None)
   def apply(curated: Seq[Trail], displayName: Option[String]): Collection = Collection(curated, Nil, Nil, displayName)
 }
 
