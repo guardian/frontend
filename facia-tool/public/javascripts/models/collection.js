@@ -82,6 +82,7 @@ define([
 
     Collection.prototype.toggleCollapsed = function() {
         this.state.collapsed(!this.state.collapsed());
+        this.closeAllArticles();
     };
 
     Collection.prototype.toggleEditingConfig = function(e) {

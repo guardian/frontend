@@ -97,7 +97,6 @@
 
                 <div data-bind="visible: !state.editingConfig()">
                     <span class="title" data-bind="
-                        click: toggleCollapsed,
                         text: configMeta.displayName() || collectionMeta.displayName() || configMeta.roleName() || id"></span>
 
                     <a class="list-header__edit" data-bind="
@@ -114,7 +113,13 @@
                         (<span class="non-zero">updating...</span>)
                     </span>
 
-                    <span class="list-header__timings" data-bind="click: toggleCollapsed">
+                    <i class="list-header__collapser" data-bind="
+                        click: toggleCollapsed,
+                        css: {
+                            'icon-chevron-down': !state.collapsed(),
+                            'icon-chevron-up'  :  state.collapsed }"></i>
+
+                    <span class="list-header__timings">
                         <!-- ko if: state.timeAgo -->
                             <span class="list-header__timings__last-updated" data-bind="text: state.timeAgo"></span>
                             by <span class="list-header__timings__user" data-bind="text: collectionMeta.updatedBy"></span>

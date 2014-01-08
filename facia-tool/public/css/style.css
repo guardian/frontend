@@ -103,10 +103,6 @@ a, a:hover {
     padding: 0 0 0 4px;
 }
 
-.collections .title {
-    padding-left: 4px;
-}
-
 .count {
     color: #CCCCCC;
     font-weight: normal;
@@ -158,11 +154,17 @@ a, a:hover {
     opacity: 0.5;
 }
 
+.list-header__collapser {
+    float: right;
+    margin: 2px 0 0 6px;
+    opacity: 0.75;
+}
+
 .list-header__timings {
     float: right;
     font-weight: normal;
     font-size: 10px;
-    color: #999999;
+    color: #666666;
 }
 
 .collections {
