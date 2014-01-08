@@ -352,9 +352,9 @@ $replyIndent: 26px;
     }
 
     .d-comment__recommend-count--old, .d-comment__recommend-count--new {
-    	top: -1.6rem;
-    	@include transition(top 0.15s ease-in-out);
-    	@include transition-delay(0.15s);
+        top: -1.6rem;
+        @include transition(top 0.15s ease-in-out);
+        @include transition-delay(0.15s);
     }
 }
 
@@ -411,7 +411,7 @@ $replyIndent: 26px;
 
 .discussion--open {
     .d-comment__reply-wrapper, .d-comment__action-separator {
-	   display: inline;
+        display: inline;
     }
 }
 
@@ -424,10 +424,10 @@ $replyIndent: 26px;
 .id--signed-in .discussion--open .discussion__comments {
     // only show reply/pick actions when user is signed in and discussion is open
     .d-comment__actions__main {
-	display: block;
+        display: block;
     }
     .d-comment__main {
-	padding-bottom: $gs-baseline*4;
+        padding-bottom: $gs-baseline*4;
     }
 }
 
