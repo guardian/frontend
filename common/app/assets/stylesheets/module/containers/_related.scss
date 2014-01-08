@@ -62,7 +62,7 @@
                 .item__image-container { margin: 0; }
 
                 .item__title {
-                    height: auto;
+                    min-height: 0;
                     padding-bottom: $gs-baseline*3;
                     @include fs-headline(3, true);
                 }
@@ -74,6 +74,7 @@
                 margin-bottom: 20px;
 
                 .item__title {
+                    min-height: 0;
                     padding-bottom: $gs-row-height;
                 }
             }
@@ -100,6 +101,12 @@
 
     }
 
+    .item--dark {
+        .item__meta {
+            border-bottom: none;
+        }
+    }
+
     .item__title {
         margin-top: 0;
         padding-top: 6px; //Magic
@@ -124,10 +131,19 @@
     .item--has-no-image {
         .item__title {
             padding-top: 0;
-            min-height: gs-height(4) + $gs-baseline;
+            padding-bottom: 65%;
+            min-height: $gs-row-height*3 - $gs-baseline*2;
+            @include fs-headline(2, true);
 
-            @include mq(tablet) { min-height: gs-height(5); }
-            @include mq($a-rightCol-trigger) { min-height: gs-height(5) + $gs-baseline; }
+            @include mq(tablet) {
+                min-height: gs-height(3);
+                @include fs-headline(3, true);
+            }
+
+            @include mq($a-rightCol-trigger) {
+                padding-bottom: 60%;
+                min-height: $gs-row-height*3 - $gs-baseline;
+            }
         }
     }
 
@@ -153,6 +169,10 @@
     .i-quote-light-grey,
     .item__byline {
         display:none;
+    }
+
+    .item__timestamp {
+        padding-right: 0;
     }
 
     .gallerythumbs { margin: 0; }
