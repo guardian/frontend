@@ -14,8 +14,10 @@ define([
                 id: 'message',
                 fixtures: [
                     '<div id="header"></div>' +
-                    '<div class="site-message u-h"></div>' +
-                    '<div class="js-site-message-copy">...</div>'
+                    '<div class="site-message u-h">' +
+                        '<div class="js-site-message-copy">...</div>' +
+                        '<button class="site-message__close"></button>' +
+                    '</div>'
                 ]
         }
 
@@ -65,6 +67,11 @@ define([
             m2.show('message two');
             m3.show('message three');
             expect($('.js-site-message-copy').text()).toContain('message two');
+        })
+
+        it("has option to stay permanently open", function(){
+            new Message('a', { permanent: true }).show('message one');
+            expect($('.site-message__close').hasClass('u-h')).toBeTruthy();
         })
 
     })

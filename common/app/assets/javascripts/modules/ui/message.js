@@ -23,6 +23,7 @@ define([
         var opts = options || {};
         this.id = id;
         this.important = opts.important || false;
+        this.permanent = opts.permanent || false;
         this.prefs = 'messages';
     };
 
@@ -34,7 +35,11 @@ define([
         $('.js-site-message-copy').html(message);
         $('#header').addClass('js-site-message');
         $('.site-message').removeClass('u-h');
-        bean.on(document, 'click', '.js-site-message-close', this.acknowledge.bind(this));
+        if (this.permanent) {
+            $('.site-message__close').addClass('u-h');
+        } else {
+            bean.on(document, 'click', '.js-site-message-close', this.acknowledge.bind(this));
+        }
     };
 
     Message.prototype.hide = function() {

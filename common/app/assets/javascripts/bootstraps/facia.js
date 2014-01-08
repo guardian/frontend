@@ -151,7 +151,8 @@ define([
             if (config.page.contentType === 'Network Front' && config.switches.networkFrontAlphas === true) {
                 var page = window.location.pathname.replace('-alpha', ''),
                     preferenceUrl = '/preference' + page + 'alpha/[OPT]?page=' + page,
-                    msg;
+                    msg,
+                    opts = {};
                 // opt in
                 if (config.page.pageId === "") {
                     msg = '<p class="site-message__message">' +
@@ -161,8 +162,11 @@ define([
                     msg = '<p class="site-message__message">' +
                               '<a href="' + preferenceUrl.replace('[OPT]', 'optout') + '">Opt out of the alpha</a>' +
                           '</p>';
+                    opts = {
+                        permanent: true
+                    };
                 }
-                new Message('facia-alpha').show(msg);
+                new Message('facia-alpha', opts).show(msg);
             }
         }
     };
