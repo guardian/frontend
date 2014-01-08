@@ -63,7 +63,8 @@ module.exports = function (grunt) {
                         swipeview:    "common/components/swipeview/src/swipeview",
                         lodash:       "common/components/lodash-amd/modern",
                         imager:       'common/components/imager.js/src/strategies/container',
-                        omniture:     '../../common/app/public/javascripts/vendor/omniture'
+                        omniture:     '../../common/app/public/javascripts/vendor/omniture',
+                        'ophan/ng':   'empty:'
                     },
                     shim: {
                         postscribe: {
