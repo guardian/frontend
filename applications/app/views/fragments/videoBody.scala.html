@@ -72,11 +72,11 @@
         </article>
         <div class="article__inner">
             @if(page.storyPackage.nonEmpty) {
-                <aside role="complementary">
+                <aside class="related" role="complementary">
                     @fragments.relatedTrails(page.storyPackage, heading = "More on this story", visibleTrails = 5)
                 </aside>
             } else {
-                <aside class="js-related" role="complementary"></aside>
+                <aside class="related js-related" role="complementary"></aside>
             }
         </div>
         @fragments.mostPopularPlaceholder(video.section)

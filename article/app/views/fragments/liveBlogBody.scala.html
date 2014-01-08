@@ -126,11 +126,11 @@
         }
 
         @if(storyPackage.nonEmpty) {
-            <aside role="complementary">
+            <aside class="related" role="complementary">
             @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
             </aside>
         } else {
-            <aside class="js-related" role="complementary"></aside>
+            <aside class="related js-related" role="complementary"></aside>
         }
 
         @fragments.mostPopularPlaceholder(article.section)
