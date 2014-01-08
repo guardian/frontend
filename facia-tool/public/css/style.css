@@ -23,11 +23,6 @@ a, a:hover {
     cursor: pointer;
 }
 
-#environment {
-    line-height: 40px;
-    position: absolute;
-}
-
 .scrollable {
     overflow-y: scroll;
 }
@@ -195,7 +190,7 @@ a, a:hover {
     border-bottom: 1px solid #CCCCCC;
 }
 
-.trail {
+.article {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     overflow: hidden;
@@ -208,51 +203,47 @@ a, a:hover {
             transition: border-color 150ms;
 }
 
-.live-mode .trail {
+.live-mode .article {
     border-color: #EEFFEE;
     background: #EEFFEE;        
 }
 
-.supporting .trail {
+.supporting .article {
     border-color: #CCCCCC;
     background: #CCCCCC;
 }
 
-.trail.editingMeta {
+.article.editingMeta {
     background: #CCCCCC;
 }
 
-.trail.underDrag {
+.article.underDrag {
     border-top-color: #f89406; 
 }
 
-.editingMeta .trail.underDrag {
+.editingMeta .article.underDrag {
     border-top-color: #999999; 
 }
 
-.trail:last-child {
+.article:last-child {
     border-bottom: 0;
 }
 
-.trail.redundant {
-    opacity: 0.2;
-}
-
-.trail img {
+.article img {
     float: left;
     width: 75px;
     height: 45px;
     margin: 3px 0 0 0;
     background-color: #EEEEEE;
-    border-radius: 3px;
+    border-radius: 2px;
 }
 
-.content {
+.article_content {
     margin: 0 100px 0 85px;
     line-height: 0;
 }
 
-.content .icon-pencil {
+.article_content .icon-pencil {
     cursor: pointer;
     opacity: 0.5;
 }
@@ -290,23 +281,25 @@ div.trailtext {
     display: none;
 }
 
-.trail .trail__meta {
+.article__date {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     position: absolute;
-    top: 35px;
+    top: 3px;
     left: 4px;
     width: 75px;
+    height: 13px;
+    overflow: hidden;
     padding: 0 0 0 2px;
     color: #FFFFFF;
     font-size: 10px;
-    line-height: 13px;
+    line-height: 14px;
     background: rgba(0,0,0,0.2);
-    border-bottom-left-radius: 3px;
-    border-bottom-right-radius: 3px;
+    border-bottom-top-radius: 2px;
+    border-bottom-top-radius: 2px;
 }
 
-.trail .trail__remove {
+.article__remove {
     display: none;
     position: absolute;
     top: 3px;
@@ -320,39 +313,34 @@ div.trailtext {
     border-radius: 2px;
 }
 
-.droppable .trail:hover > .trail__remove {
+.droppable .article:hover > .article__remove {
     display: block;
 }
 
-.droppable .trail .trail__remove:hover {
+.droppable .article__remove:hover {
     background: #0077BB;
 }
 
-.trail_tweaks {
+.article__overrides {
     position: relative;
     margin: 1px 0 0 80px;
     padding: 0 55px 0 0;
     color: #CCCCCC;
 }
 
-.trail_tweaks input {
+.article__overrides input {
     z-index: 99;
     background: #eeeeee;
     width: 100%;
 
 }
 
-.trail_tweaks a {
+.article__overrides a {
     font-size: 12px;
     line-height: 13px;
 }
 
-.trail_tweaks a:first-child {
-    font-weight: bold;
-    border-left: none;
-}
-
-.image_tweaks {
+.image__overrides {
     position: absolute;
     top: 49px;
     font-size: 10px;
@@ -361,19 +349,19 @@ div.trailtext {
     font-size: 11px;
 }
 
-.supporting .image_tweaks {
+.supporting .image__overrides {
     display: none;
 }
 
-.image_tweaks a {
+.image__overrides a {
     color: #666666;
 }
 
-.image_tweaks a:hover {
+.image__overrides a:hover {
     color: #0088cc;
 }
 
-.image_tweaks a.selected {
+.image__overrides a.selected {
     color: #000000;
 }
 
@@ -409,7 +397,7 @@ textarea.trailtext {
     padding: 3px 5px 0px 5px;
     min-height: 35px;
     margin: 0;
-    color: #999999;
+    color: #333333;
     background: #eeeeee;
 }
 
@@ -429,11 +417,11 @@ button {
     border-bottom: 1px solid #CCCCCC;
 }
 
-.collection-config {
+.collection-overrides {
     margin: -6px 0 0 3px;
 }
 
-.trail_stats {
+.article_stats {
     position: absolute;
     right: 4px;
     height: 30px;
@@ -572,7 +560,7 @@ button {
     line-height: 20px;
     color: #FFFFFF;
     margin-top: 5px;
-    border-radius: 3px;
+    border-radius: 2px;
     border: 0;
     cursor: pointer;
 }
@@ -655,10 +643,10 @@ button {
     color: #FFFFFF;
 }
 
-.trail .tools {
+.article .tools {
     position: absolute;
-    bottom: 2px;
-    right: 3px;
+    bottom: 0;
+    right: 2px;
 }
 
 @media (max-width: 1100px) {
@@ -670,11 +658,11 @@ button {
     .finder {
         width: 40%;
     }
-    .finder .trail .content {
+    .finder .article .article_content {
         margin-right: 0;
     }
-    .finder .trail .trail_stats,
-    .finder .trail .trail__meta {
+    .finder .article .article_stats,
+    .finder .article__meta {
         display: none;
     }
 }
@@ -709,24 +697,24 @@ button {
 }
 
 @media (max-width: 525px) {
-    .trail .content {
+    .article .article_content {
         margin-right: 0;
     }
-    .trail .trail_stats {
+    .article .article_stats {
         display: none;
     }
 }
 
 @media (max-width: 350px) {
-    .trail .content {
+    .article .article_content {
         margin-left: 0;
         margin-right: 5px;
     }
-    .trail img,
-    .trail .trail__meta {
+    .article img,
+    .article__meta {
         display: none;
     }
-    .trail_tweaks {
+    .article__overrides {
         margin: 0;
     }
 }
