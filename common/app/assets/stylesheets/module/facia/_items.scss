@@ -242,7 +242,10 @@ $c-live: #e81818;
     display: none;
     @include rem((
         margin-top: $gs-baseline*2
-    ))
+    ));
+    .item--support-show & {
+        display: block;
+    }
 }
 .item__support__item {}
 .item__support__action {}
@@ -267,5 +270,18 @@ $c-live: #e81818;
         left: 50%;
         margin-top: -5px;
         margin-left: -12px;
+    }
+}
+
+// Image tone
+// values: [hide|highlight] in the fronts tool
+.item--imagetone-hide {
+    .item__image {
+        
+    }
+}
+.item--imagetone-highlight {
+    .item__image {
+        
     }
 }

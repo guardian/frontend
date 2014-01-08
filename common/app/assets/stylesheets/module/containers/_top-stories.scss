@@ -31,16 +31,6 @@
     .item__media-wrapper {
         display: none;
     }
-    .item__title {
-        @include mq(tablet) {
-            @include rem((
-                min-height: nth(nth($fs-headlines, 2), 2) * 2
-            ));
-        }
-    }
-    .item__standfirst {
-        display: block;
-    }
     .item--has-image {
         .item__media-wrapper,
         .item__image-container {
@@ -146,6 +136,8 @@
         ));
     }
     .item__standfirst {
+        display: block;
+
         @include rem((
             margin-top: 2px
         ));
