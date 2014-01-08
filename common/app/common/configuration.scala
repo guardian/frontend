@@ -162,6 +162,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val secureApiRoot = configuration.getMandatoryStringProperty("discussion.secureApiRoot")
     lazy val apiTimeout = configuration.getMandatoryStringProperty("discussion.apiTimeout")
     lazy val apiClientHeader = configuration.getMandatoryStringProperty("discussion.apiClientHeader")
+    lazy val url = configuration.getMandatoryStringProperty("discussion.url")
   }
 
   object open {

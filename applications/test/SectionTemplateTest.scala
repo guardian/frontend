@@ -8,6 +8,6 @@ class SectionTemplateTest extends FlatSpec with Matchers with UsesElasticSearch 
 
   it should "render front title" in HtmlUnit("/uk-news") { browser =>
     import browser._
-    $("h2 a").first.getText should be ("UK news")
+    $(".container__title").first.getText should be ("UK news")
   }
 }
