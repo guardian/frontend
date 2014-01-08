@@ -150,7 +150,6 @@
 @mixin transition-delay($args...) {
     -webkit-transition-delay: $args;
     -moz-transition-delay: $args;
-    -o-transition-delay: $args;
     transition-delay: $args;
 }
 

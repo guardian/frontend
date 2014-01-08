@@ -352,9 +352,9 @@ $replyIndent: 26px;
     }
 
     .d-comment__recommend-count--old, .d-comment__recommend-count--new {
-	top: -1.6rem;
-	@include transition(top 0.15s ease-in-out);
-	@include transition-delay(0.15s);
+    	top: -1.6rem;
+    	@include transition(top 0.15s ease-in-out);
+    	@include transition-delay(0.15s);
     }
 }
 
@@ -410,9 +410,8 @@ $replyIndent: 26px;
 }
 
 .discussion--open {
-    .d-comment__reply-wrapper,
-    .d-comment__action-separator {
-	display: inline;
+    .d-comment__reply-wrapper, .d-comment__action-separator {
+	   display: inline;
     }
 }
 
