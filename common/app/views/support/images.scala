@@ -72,11 +72,10 @@ object ImgSrc {
     } else s"${url}"
   }
 
-  def imager(imageContainer: ImageContainer): Option[String] = {
-    imageContainer.largestImage.flatMap { largestImage =>
-      largestImage.url.map { url =>
-        ImgSrc(url, Profile("item-{width}"))
-      }
+  // always, and I mean ALWAYS think carefully about the size image you use
+  def imager(imageContainer: ImageContainer, profile: Profile): Option[String] = {
+    profile.elementFor(imageContainer).flatMap(_.url).map{ largestImage =>
+      ImgSrc(largestImage, Profile("item-{width}"))
     }
   }
 
