@@ -389,8 +389,7 @@ Comments.prototype.showHiddenComments = function(e) {
  * @param {NodeList} comments
  */
 Comments.prototype.addMoreRepliesButtons = function (comments) {
-    var repliesToHide,
-        self = this;
+    var self = this;
 
     comments = comments || this.topLevelComments;
     comments.forEach(function(elem, i) {
