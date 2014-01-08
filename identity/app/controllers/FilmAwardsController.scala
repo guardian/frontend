@@ -21,7 +21,7 @@ class FilmAwardsController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
   def filmAwardsForm(formReference: String) = authAction.apply { implicit request =>
     if (Switches.IdentityFormstackSwitch.isSwitchedOn) {
       val idRequest = idRequestParser(request)
-      Ok(views.html.filmAwards.filmAwardsForm(page, formReference, idRequest, idUrlBuilder))
+      Ok(views.html.filmAwards.form(page, formReference, idRequest, idUrlBuilder))
     } else {
       logger.info(s"formstack switched off, attempt to access $formReference failed")
       NotFound(views.html.errors._404())
