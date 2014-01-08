@@ -151,7 +151,7 @@ define([
 
         displayAlphaMessage: function(config) {
             // only run on 5% of the users
-            var isAChosenOne = parseInt(mvtCookie.getMvtValue(), 10) < (mvtCookie.MAX_INT * 0.05);
+            var isAChosenOne = parseInt(mvtCookie.getMvtValue(), 10) < (mvtCookie.MAX_INT * 0.05) || true;
             if (config.page.contentType === 'Network Front' && config.switches.networkFrontAlphas === true && isAChosenOne) {
                 var page = window.location.pathname.replace('-alpha', ''),
                     preferenceUrl = '/preference' + page + 'alpha/[OPT]?page=' + page,
@@ -160,11 +160,11 @@ define([
                 // opt in
                 if (config.page.pageId === "") {
                     msg = '<p class="site-message__message">' +
-                              'Test the <a href="' + preferenceUrl.replace('[OPT]', 'optin') + '">alpha fronts</a>' +
+                              'We are currently testing a news version of our hompeage. If you would like to view it, please <a href="' + preferenceUrl.replace('[OPT]', 'optin') + '">click here</a>' +
                           '</p>';
                 } else { // opt out
                     msg = '<p class="site-message__message">' +
-                              '<a href="' + preferenceUrl.replace('[OPT]', 'optout') + '">Opt out of the alpha</a>' +
+                              'If you would like to leave the test and go back to the current homepage, please <a href="' + preferenceUrl.replace('[OPT]', 'optout') + '">click here</a>' +
                           '</p>';
                     opts = {
                         permanent: true
