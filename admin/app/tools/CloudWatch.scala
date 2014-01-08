@@ -11,7 +11,7 @@ import java.util.concurrent.Executors
 
 case class LoadBalancer(id: String, name: String, project: String)
 
-object CloudWatch {
+object CloudWatch extends implicits.Futures{
 
   private lazy val executor = Executors.newCachedThreadPool
 
@@ -20,6 +20,7 @@ object CloudWatch {
   }
 
   val stage = new Dimension().withName("Stage").withValue(environment.stage)
+  val stageFilter = new DimensionFilter().withName("Stage").withValue(environment.stage)
 
   // we create a new client on each request, otherwise we run into this problem
   // http://blog.bdoughan.com/2011/03/preventing-entity-expansion-attacks-in.html
@@ -92,6 +93,13 @@ object CloudWatch {
       }
     }
     def onSuccess(request: GetMetricStatisticsRequest, result: GetMetricStatisticsResult ) { }
+  }
+
+  object listMetricsHandler extends AsyncHandler[ListMetricsRequest, ListMetricsResult] with Logging {
+    def onError(exception: Exception) {
+      log.info(s"CloudWatch ListMetricsRequest error: ${exception.getMessage}")
+    }
+    def onSuccess(request: ListMetricsRequest, result: ListMetricsResult ) { }
   }
 
   // TODO - this file is getting a bit long/ complicated. It needs to be split up a bit
@@ -241,4 +249,11 @@ object CloudWatch {
       .withMetricName("ophan-percent-conversion")
       .withDimensions(stage),
       asyncHandler))
+
+  def AbMetricNames() = {
+    euWestClient.listMetricsAsync( new ListMetricsRequest()
+      .withNamespace("AbTests")
+      .withDimensions(stageFilter),
+      listMetricsHandler).toScalaFuture
+  }
 }
