@@ -5,7 +5,6 @@ define([
     "common/modules/identity/formstack-iframe",
     "common/modules/identity/password-strength",
     "common/modules/identity/api",
-    //"modules/identity/email-signup",
     "common/modules/adverts/userAdTargeting",
     "common/modules/discussion/user-avatars",
     "common/utils/mediator"
@@ -16,7 +15,6 @@ define([
     FormstackIframe,
     PasswordStrength,
     Id,
-    //EmailSignup,
     UserAdTargeting,
     UserAvatars,
     mediator
@@ -70,11 +68,6 @@ define([
                 UserAvatars.init();
             });
         }
-        // emailSignup : function () {
-        //     mediator.on('page:identity:ready', function(config, context) {
-        //         EmailSignup.init(context);
-        //     });
-        // }
     };
 
     var ready = function (config, context) {
@@ -87,7 +80,6 @@ define([
             modules.passwordStrength();
             modules.passwordToggle();
             modules.userAdTargeting();
-            //modules.emailSignup();
             modules.userAvatars();
         }
         mediator.emit("page:identity:ready", config, context);

@@ -688,7 +688,6 @@ video {
     &.email-signup___left-meta,
     &.email-signup___left-body {
         .email-signup__title {
-            //padding-top: 0px;
             @include mq(leftCol) {
                 @include font($sans-serif, normal, 13, 16);
                 padding-top: 4px;
