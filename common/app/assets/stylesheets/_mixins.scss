@@ -148,9 +148,10 @@
 }
 
 @mixin transition-delay($args...) {
-    -webkit-transition: $args;
-    -moz-transition: $args;
-    transition: $args;
+    -webkit-transition-delay: $args;
+    -moz-transition-delay: $args;
+    -o-transition-delay: $args;
+    transition-delay: $args;
 }
 
 @mixin transform($args) {
