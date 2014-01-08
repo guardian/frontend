@@ -1,0 +1,9 @@
+@()(implicit request: RequestHeader)
+
+@import Switches._
+
+@if(Switches.SponsoredContentSwitch.isSwitchedOn){
+    <div class="article__sponsor">
+      <a href="@{LinkTo("/sponsored-content")}">Advertisement feature</a>
+    </div>
+}
