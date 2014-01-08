@@ -167,6 +167,10 @@
         @include box-sizing(border-box);
     }
 
+    .item__media-wrapper {
+        position: relative;    
+    }
+    
     .item__image-container {
         display: block;
     }
