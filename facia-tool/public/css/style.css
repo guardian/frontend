@@ -146,7 +146,6 @@ a, a:hover {
     color: #999999;
     overflow: hidden;
     padding: 5px 0 1px 0;
-    min-width: 300px;
     height: 20px;
 }
 
@@ -663,8 +662,7 @@ button {
     .finder .article .article_content {
         margin-right: 0;
     }
-    .finder .article .article_stats,
-    .finder .article__meta {
+    .finder .article .article_stats {
         display: none;
     }
 }
@@ -685,7 +683,7 @@ button {
     .collections {
         left: 0;
         width: 100%;
-        padding-left: 10px;
+        padding: 10px 0 0 10px;
     }
     .scrollable {
         overflow-y: inherit
@@ -713,7 +711,7 @@ button {
         margin-right: 5px;
     }
     .article img,
-    .article__meta {
+    .article__date {
         display: none;
     }
     .article__overrides {
