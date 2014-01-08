@@ -1,16 +1,16 @@
-@(config: Config, collection: Collection, style: Container, containerIndex: Int, showSize: Int = 4)(implicit request: RequestHeader)
+@(config: Config, items: Seq[Trail], style: Container, containerIndex: Int, showSize: Int = 4)(implicit request: RequestHeader)
 
 <ul class="unstyled collection collection--without-sport-stats @if(style.showMore){js-collection--show-more}"
      data-link-context-path="collection/@config.id"
      data-link-context-name="@config.displayName"
      data-tone="@style.tone"
-     data-can-show-more="@{collection.items.size > showSize}">
+     data-can-show-more="@{items.size > showSize}">
     @if(style.showMore) {
-        @collection.items.take(showSize).zipWithIndex.map{ case (trail, index) =>
+        @items.take(showSize).zipWithIndex.map{ case (trail, index) =>
             @fragments.items.standard(trail, index, containerIndex)
         }
     } else {
-        @collection.items.zipWithIndex.map{ case (trail, index) =>
+        @items.zipWithIndex.map{ case (trail, index) =>
             @fragments.items.standard(trail, index, containerIndex)
         }
     }
