@@ -331,7 +331,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
               Ok(views.html.front(frontPage, faciaPage))
           }
         }
-      }.getOrElse(NotFound) //TODO is 404 the right thing here
+      }.getOrElse(Cached(5)(NotFound)) //TODO is 404 the right thing here
   }
 
   def renderCollection(id: String) = Action { implicit request =>
@@ -347,7 +347,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
           Ok(html)
         }
       }
-    } getOrElse(NotFound)
+    } getOrElse(Cached(5)(NotFound))
   }
 
   def renderCollectionRss(id: String) = Action { implicit request =>
@@ -356,7 +356,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
         val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(""))
         Ok(TrailsToRss(config.displayName, collection.items))
       }.as("text/xml; charset=utf-8")
-    } getOrElse(NotFound)
+    } getOrElse(Cached(5)(NotFound))
   }
 
 }
