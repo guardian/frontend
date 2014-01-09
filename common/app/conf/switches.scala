@@ -274,8 +274,18 @@ object Switches extends Collections {
     "Switch that is only used while running tests. You never need to change this switch.",
     safeState = Off)
 
-  val NetworkFrontAlphas = Switch("Facia", "network-front-alphas",
-    "If this is switched on then the alpha network fronts will be served if a coockie has been dropped, e.g. GU_UK_ALPHA",
+  val NetworkFrontUkAlpha = Switch("Facia", "network-front-uk-alpha",
+    "If this is switched on then the uk alpha network fronts will be served if a GU_UK_ALPHA cookie has been dropped",
+    safeState = Off
+  )
+
+  val NetworkFrontUsAlpha = Switch("Facia", "network-front-us-alpha",
+    "If this is switched on then the us alpha network fronts will be served if a GU_US_ALPHA cookie has been dropped",
+    safeState = Off
+  )
+
+  val NetworkFrontAuAlpha = Switch("Facia", "network-front-au-alpha",
+    "If this is switched on then the au alpha network fronts will be served if a GU_AU_ALPHA cookie has been dropped",
     safeState = Off
   )
 
@@ -342,7 +352,9 @@ object Switches extends Collections {
     ABRightPopular,
     AdDwellTimeLoggerSwitch,
     ABEmailSignup,
-    NetworkFrontAlphas,
+    NetworkFrontUkAlpha,
+    NetworkFrontUsAlpha,
+    NetworkFrontAuAlpha,
     TagLinking,
     ABUnderlineLinks,
     SponsoredContentSwitch,
@@ -350,6 +362,8 @@ object Switches extends Collections {
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
+
+  def byName(name: String): Option[Switch] = all.find(_.name.equals(name))
 }
 
 

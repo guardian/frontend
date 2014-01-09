@@ -151,26 +151,28 @@ define([
 
         displayAlphaMessage: function(config) {
             // only run on 5% of the users
-            var isAChosenOne = parseInt(mvtCookie.getMvtValue(), 10) < (mvtCookie.MAX_INT * 0.05) || true;
-            if (config.page.contentType === 'Network Front' && config.switches.networkFrontAlphas === true && isAChosenOne) {
-                var page = window.location.pathname.replace('-alpha', ''),
-                    preferenceUrl = '/preference' + page + 'alpha/[OPT]?page=' + page,
-                    msg,
-                    opts = {};
-                // opt in
-                if (config.page.pageId === "") {
-                    msg = '<p class="site-message__message">' +
-                              'We are currently testing a new version of our hompeage. If you would like to view it, please <a href="' + preferenceUrl.replace('[OPT]', 'optin') + '">click here</a>' +
-                          '</p>';
-                } else { // opt out
-                    msg = '<p class="site-message__message">' +
-                              'If you would like to leave the test and go back to the current homepage, please <a href="' + preferenceUrl.replace('[OPT]', 'optout') + '">click here</a>' +
-                          '</p>';
-                    opts = {
-                        permanent: true
-                    };
+            var isAChosenOne = parseInt(mvtCookie.getMvtValue(), 10) < (mvtCookie.MAX_INT * 0.05);
+            if (config.page.contentType === 'Network Front' && isAChosenOne) {
+                var page = window.location.pathname.replace('-alpha', '');
+                if (config.switches['networkFront' + (page.charAt(0).toUpperCase() + page.slice(1)) + 'Alpha'] === true) {
+                    var preferenceUrl = '/preference' + page + 'alpha/[OPT]?page=' + page,
+                        msg,
+                        opts = {};
+                    // opt in
+                    if (config.page.pageId === "") {
+                        msg = '<p class="site-message__message">' +
+                                  'We are currently testing a new version of our hompeage. If you would like to view it, please <a href="' + preferenceUrl.replace('[OPT]', 'optin') + '">click here</a>' +
+                              '</p>';
+                    } else { // opt out
+                        msg = '<p class="site-message__message">' +
+                                  'If you would like to leave the test and go back to the current homepage, please <a href="' + preferenceUrl.replace('[OPT]', 'optout') + '">click here</a>' +
+                              '</p>';
+                        opts = {
+                            permanent: true
+                        };
+                    }
+                    new Message('facia-alpha', opts).show(msg);
                 }
-                new Message('facia-alpha', opts).show(msg);
             }
         }
     };

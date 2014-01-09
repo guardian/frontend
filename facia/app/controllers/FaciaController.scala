@@ -283,19 +283,15 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
     Cached(60)(Redirect(redirectPath))
   }
 
-  def getPathForUkAlpha(path: String, request: RequestHeader): String = {
-    if (Switches.NetworkFrontAlphas.isSwitchedOn) {
-      Seq("uk", "us", "au").find { page =>
-        path == page &&
-          Option(Edition(request)) == Edition.byId(page) &&
-          request.headers.get(s"X-Gu-${page.capitalize}-Alpha").exists(_.toLowerCase == "true")
-      }.map{ page =>
-        s"$page-alpha"
-      }.getOrElse(path)
-    } else {
-      path
-    }
-  }
+  def getPathForUkAlpha(path: String, request: RequestHeader): String =
+    Seq("uk", "us", "au").find { page =>
+      path == page &&
+        Option(Edition(request)) == Edition.byId(page) &&
+        Switches.byName(s"network-front-${page}-alpha").map(_.isSwitchedOn).getOrElse(false) &&
+        request.headers.get(s"X-Gu-${page.capitalize}-Alpha").exists(_.toLowerCase == "true")
+    }.map{ page =>
+      s"$page-alpha"
+    }.getOrElse(path)
 
   // Needed as aliases for reverse routing
   def renderEditionFrontJson(path: String) = renderFront(path)
