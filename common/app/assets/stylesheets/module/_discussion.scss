@@ -51,7 +51,7 @@ $replyIndent: 26px;
     display: block;
     text-align: center;
 
-    &.show-more__container--older, &.show-more__container--featured {
+    &.show-more__container--older, &.show-more__container--hidden, &.show-more__container--featured {
         color: $c-neutral1;
         border-top: 1px dotted $c-neutral3;
     }

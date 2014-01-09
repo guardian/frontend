@@ -61,6 +61,7 @@ Comments.prototype.classes = {
     showMore: 'd-discussion__show-more',
     showMoreNewerContainer: 'show-more__container--newer',
     showMoreOlderContainer: 'show-more__container--older',
+    showMoreHiddenContainer: 'show-more__container--hidden',
     showMoreNewer: 'd-discussion__show-more--newer',
     showMoreOlder: 'd-discussion__show-more--older',
     showHidden: 'd-discussion__show-hidden',
@@ -75,7 +76,8 @@ Comments.prototype.classes = {
     commentReply: 'd-comment__action--reply',
     commentPick: 'd-comment__action--pick',
     commentRecommend: 'd-comment__recommend',
-    commentStaff: 'd-comment--staff'
+    commentStaff: 'd-comment--staff',
+    commentBlocked: 'd-comment--blocked'
 };
 
 /** @type {Object.<string.*>} */
@@ -131,22 +133,21 @@ Comments.prototype.prerender = function() {
         }
     }
 
-    if (this.topLevelComments.length > 0) {
-        qwery(this.getClass('topLevelComment'), this.elem).forEach(function(elem, i) {
-            if (i >= initialShow) {
-                bonzo(elem).addClass('u-h');
-            }
+    if (this.topLevelComments.length > initialShow) {
+        var nonblocked_comments = qwery(this.getClass('topLevelComment'), this.elem).filter(function(el) {
+            return !bonzo(el).hasClass(self.getClass('commentBlocked', true));
         });
 
-        if (this.topLevelComments.length > initialShow) {
-            if (!this.getElem('showMore')) {
-                bonzo(this.getElem('comments')).append(
-                    '<a class="'+ this.getClass('showHidden') +' cta" data-age="older" data-link-name="Show more comments" data-remove="true" href="/discussion'+
-                        this.options.discussionId +'?page=1">'+
-                        'Show older comments'+
-                    '</a>');
-            }
+        if (nonblocked_comments.length >= initialShow) {
+            bonzo(this.topLevelComments).addClass('u-h');
+            bonzo(nonblocked_comments.slice(0, initialShow)).removeClass('u-h');
+        } else {
+            bonzo(this.topLevelComments.slice(initialShow)).addClass('u-h');
         }
+
+        bonzo(this.getElem('showMoreOlderContainer')).addClass('u-h');
+        bonzo(this.getElem('showMoreHiddenContainer')).removeClass('u-h');
+
     }
 };
 
@@ -360,9 +361,9 @@ Comments.prototype.showHiddenComments = function(e) {
         bonzo(elem).removeClass('u-h');
     });
 
-    if (this.getElem('showMore').getAttribute('data-remove') === 'true') {
-        bonzo(this.getElem('showMore')).remove();
-    }
+    bonzo(this.getElem('showMoreOlderContainer')).removeClass('u-h');
+    bonzo(this.getElem('showMoreHiddenContainer')).addClass('u-h');
+
     this.emit('first-load');
 };
 
