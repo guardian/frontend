@@ -160,7 +160,7 @@ define([
                 // opt in
                 if (config.page.pageId === "") {
                     msg = '<p class="site-message__message">' +
-                              'We are currently testing a news version of our hompeage. If you would like to view it, please <a href="' + preferenceUrl.replace('[OPT]', 'optin') + '">click here</a>' +
+                              'We are currently testing a new version of our hompeage. If you would like to view it, please <a href="' + preferenceUrl.replace('[OPT]', 'optin') + '">click here</a>' +
                           '</p>';
                 } else { // opt out
                     msg = '<p class="site-message__message">' +
