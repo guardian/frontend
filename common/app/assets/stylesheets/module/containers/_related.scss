@@ -60,21 +60,29 @@
     
     .item__container {
         position: relative;
+        min-height: gs-height(5);
+
+        @include mq(mobileLandscape) {
+            min-height: gs-height(6);
+        }
+
+        @include mq(tablet, rightCol) {
+            min-height: gs-height(7) - $gs-baseline;
+        }
+
+        @include mq(rightCol) {
+            min-height: gs-height(5);
+        }
+
     }
 
     .item {
         float: left;
         position: relative;
         width: 50%;
-        min-height: gs-height(5);
         padding-bottom: 0;
         margin-top: $gs-baseline*2;
         margin-bottom: $gs-baseline;
-
-
-        @include mq(mobileLandscape) {
-            min-height: gs-height(6);
-        }
 
         @include mq($to: rightCol) {
 
@@ -112,8 +120,6 @@
         }
 
         @include mq(tablet, rightCol) {
-            min-height: gs-height(7) - $gs-baseline;
-
             &:first-child {
                 margin-bottom: 20px;
 
@@ -127,7 +133,6 @@
         @include mq(rightCol) {
             width: 25%;
             clear: none;
-            min-height: gs-height(5);
 
             &:nth-child(2) {
                 &:before {
