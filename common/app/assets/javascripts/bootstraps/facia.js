@@ -166,11 +166,11 @@ define([
                     // opt in
                     if (config.page.pageId === "") {
                         msg = '<p class="site-message__message">' +
-                                  'We are currently testing a new version of our hompeage. If you would like to view it, please <a href="' + preferenceUrl.replace('[OPT]', 'optin') + '">click here</a>' +
+                                  'We\'re trying out some new things on our website and would love your feedback. <a href="' + preferenceUrl.replace('[OPT]', 'optin') + '">Click here</a> to explore a test version of the site.' +
                               '</p>';
                     } else { // opt out
                         msg = '<p class="site-message__message">' +
-                                  'If you would like to leave the test and go back to the current homepage, please <a href="' + preferenceUrl.replace('[OPT]', 'optout') + '">click here</a>' +
+                                  'You\'re viewing a test version of the Guardian website. We\'d love your feedback. If you\'d like to opt out and go back to the regular mobile site, <a href="' + preferenceUrl.replace('[OPT]', 'optout') + '">click here</a>.' +
                               '</p>';
                         opts = {
                             permanent: true
