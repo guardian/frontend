@@ -100,6 +100,10 @@ object Switches extends Collections {
     "Turns on userzoom survey popups",
     safeState = Off)
 
+  val OphanMultiEventSwitch = Switch("Analytics", "ophan-multi-event",
+    "Enables the new Ophan tracking javascript which support multiple events per page",
+    safeState = Off)
+
   // Discussion Switches
 
   val DiscussionSwitch = Switch("Discussion", "discussion",
@@ -239,6 +243,10 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to test onward highlights panel",
     safeState = Off)
 
+  val ABEmailSignup = Switch("A/B Tests", "ab-email-signup",
+    "If this is switched on an AB test runs to test article page email signups",
+    safeState = Off)
+
   val ABRightPopular = Switch("A/B Tests", "ab-right-popular",
     "If this is switched on an AB test runs to trail a right hand side most popular component",
     safeState = Off)
@@ -247,18 +255,14 @@ object Switches extends Collections {
     "If this is switched on an AB test runs as a control variant for right most popular",
     safeState = Off)
 
-  val ABTagLinking = Switch("A/B Tests", "ab-tag-linking",
-    "If this is switched on an AB test runs whereby articles that have no in body links auto link to their tags",
+  val TagLinking = Switch("Feature Switches", "tag-linking",
+    "If this is switched on articles that have no in body links will auto link to their tags where possible",
     safeState = Off)
 
   val ABUnderlineLinks = Switch("A/B Tests", "ab-underline-links",
     "If this is switched on an AB test runs whereby links in articles are underline (with CSS)",
     safeState = Off)
   
-  val ABInBodyLinking = Switch("A/B Tests", "ab-in-body-linking",
-    "If this is switched on an AB test runs whereby articles have in body links hidden",
-    safeState = Off)
-
   // Sport Switch
 
   val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
@@ -338,11 +342,12 @@ object Switches extends Collections {
     ABMobileFacebookAutosignin,
     ABRightPopular,
     AdDwellTimeLoggerSwitch,
+    ABEmailSignup,
     UkAlphaSwitch,
-    ABTagLinking,
+    TagLinking,
     ABUnderlineLinks,
-    ABInBodyLinking,
-    SponsoredContentSwitch
+    SponsoredContentSwitch,
+    OphanMultiEventSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

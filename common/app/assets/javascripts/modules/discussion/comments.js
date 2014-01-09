@@ -5,6 +5,7 @@ define([
     'bean',
     'common/utils/ajax',
     'common/modules/component',
+    'common/modules/userPrefs',
     'common/modules/identity/api',
     'common/modules/discussion/comment-box',
     'common/modules/discussion/recommend-comments',
@@ -16,6 +17,7 @@ define([
     bean,
     ajax,
     Component,
+    userPrefs,
     Id,
     CommentBox,
     RecommendComments,
@@ -40,6 +42,14 @@ var Comments = function(context, mediator, options) {
 
     if (this.options.commentId) {
         this.endpoint = '/discussion/comment-permalink/'+ this.options.commentId +'.json';
+    }
+
+    if (userPrefs.get('discussion.order')) {
+        this.options.order = userPrefs.get('discussion.order');
+    }
+
+    if (this.options.order === 'oldest') {
+        this.endpoint = '/discussion/oldest'+ this.options.discussionId + '.json';
     }
 };
 Component.define(Comments);
@@ -70,6 +80,8 @@ Comments.prototype.classes = {
     header: 'd-discussion__header',
     heading: 'discussion__heading',
     newComments: 'js-new-comments',
+    orderControl: 'd-discussion__order-control',
+    loader: 'd-discussion__loader',
 
     comment: 'd-comment',
     commentActions: 'd-comment__actions__main',
@@ -86,7 +98,8 @@ Comments.prototype.defaultOptions = {
     initialShow: 10,
     showRepliesCount: 3,
     user: null,
-    commentId: null
+    commentId: null,
+    order: 'newest'
 };
 
 /**
@@ -156,6 +169,7 @@ Comments.prototype.ready = function() {
     this.on('click', this.getClass('showReplies'), this.getMoreReplies);
     this.on('click', this.getClass('showMore'), this.loadMore);
     this.on('click', this.getClass('showHidden'), this.showHiddenComments);
+    this.on('change', this.getClass('orderControl'), this.setOrder);
     this.mediator.on('discussion:comment:recommend:fail', this.recommendFail.bind(this));
 
     this.addMoreRepliesButtons();
@@ -256,7 +270,7 @@ Comments.prototype.gotoComment = function(id) {
 
     return this.fetchComments({
         comment: id,
-        position: 'replaceWith'
+        position: 'replace'
     }).then(function(resp) {
         window.location.replace('#comment-'+ id);
     }.bind(this));
@@ -268,7 +282,7 @@ Comments.prototype.gotoComment = function(id) {
 Comments.prototype.gotoPage = function(page) {
     return this.fetchComments({
         page: page,
-        position: 'replaceWith'
+        position: 'replace'
     });
 };
 
@@ -303,12 +317,12 @@ Comments.prototype.loadMore = function(e) {
  * options {
  *   page: {number},
  *   comment: {number},
- *   position: {string} append|prepend|replaceWith
+ *   position: {string} append|prepend|replace
  * }
  */
 Comments.prototype.fetchComments = function(options) {
     var url = options.comment ? '/discussion/comment-permalink/'+ options.comment +'.json' :
-                '/discussion/'+ this.options.discussionId +'.json?'+
+                '/discussion/'+ (this.options.order === 'oldest' ? 'oldest' : '') + this.options.discussionId +'.json?'+
                 (options.page ? '&page='+ options.page : '') +
                 '&maxResponses=3';
     
@@ -322,7 +336,7 @@ Comments.prototype.fetchComments = function(options) {
 
 /**
  * @param {Object} resp
- * @param {String} position append|prepend|replaceWith
+ * @param {String} position append|prepend|replace
  */
 Comments.prototype.renderComments = function(position, resp) {
     var html = bonzo.create(resp.html),
@@ -341,8 +355,19 @@ Comments.prototype.renderComments = function(position, resp) {
         }
     });
 
-    bonzo(this.getElem('comments'))[position](comments);
+    if (position === 'replace') {
+        bonzo(this.getElem('comments')).empty().append(comments);
+    } else {
+        bonzo(this.getElem('comments'))[position](comments);
+    }
     this.addMoreRepliesButtons(comments);
+
+    // Dealing with where new comments are posted
+    if (this.options.order === 'oldest') {
+        $(this.getElem('newComments')).insertAfter($(this.getElem('showMoreOlderContainer')));
+    } else {
+        $(this.getElem('newComments')).insertBefore($(this.getElem('showMoreNewerContainer')));
+    }
 
     if (!this.isReadOnly()) {
         RecommendComments.init(this.context);
@@ -371,8 +396,7 @@ Comments.prototype.showHiddenComments = function(e) {
  * @param {NodeList} comments
  */
 Comments.prototype.addMoreRepliesButtons = function (comments) {
-    var repliesToHide,
-        self = this;
+    var self = this;
 
     comments = comments || this.topLevelComments;
     comments.forEach(function(elem, i) {
@@ -492,9 +516,7 @@ Comments.prototype.addComment = function(comment, focus, parent) {
         bonzo(parent).append($commentElem);
     }
 
-    if (focus) {
-        window.location.replace('#comment-'+ comment.id);
-    }
+    window.location.replace('#comment-'+ comment.id);
 };
 
 /** @param {Event} e */
@@ -552,7 +574,52 @@ Comments.prototype.replyToComment = function(e) {
 /**
  * @param {Object.<string.*>} comment
  */
-Comments.prototype.recommendFail = function(comment) {
+Comments.prototype.recommendFail = function(comment) {};
+
+Comments.prototype.showDiscussion = function() {
+    var showDiscussionElem = $('.d-discussion__show-all-comments');
+    if (!showDiscussionElem.hasClass('u-h')) {
+        bean.fire(showDiscussionElem, 'click');
+        showDiscussionElem.addClass('u-h');
+    }
+};
+
+Comments.prototype.loading = function() {
+    $(this.getElem('loader')).removeClass('u-h');
+    $(this.getElem('comments')).addClass('u-h');
+    $(this.getElem('showMoreOlderContainer')).addClass('u-h');
+    $(this.getElem('showMoreNewerContainer')).addClass('u-h');
+};
+
+Comments.prototype.loaded = function() {
+    $(this.getElem('loader')).addClass('u-h');
+    $(this.getElem('comments')).removeClass('u-h');
+    $(this.getElem('showMoreOlderContainer')).removeClass('u-h');
+    $(this.getElem('showMoreNewerContainer')).removeClass('u-h');
+};
+
+/**
+ * @param {Event} e
+ */
+Comments.prototype.setOrder = function(e) {
+    var elem = e.currentTarget,
+        newWorldOrder = elem.options[elem.selectedIndex].value,
+        $newComments = $(this.getElem('newComments'));
+
+    this.options.order = newWorldOrder;
+    this.options.initialShow = this.defaultOptions.initialShow;
+    this.showDiscussion();
+    this.loading();
+
+    $newComments.empty();
+    userPrefs.set('discussion.order', newWorldOrder);
+
+    return this.fetchComments({
+        page: 1,
+        position: 'replace'
+    }).then(function() {
+        this.loaded();
+    }.bind(this));
 };
 
 return Comments;
