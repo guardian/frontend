@@ -517,5 +517,18 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
       }
     }
 
+    scenario("Ensure that 'comment' always takes precedence before 'feature' when selecting article tone"){
+      Given("I am on an article entitled 'Who would you like to see honoured by a blue plaque?'")
+
+      ArticleKeywordsSwitch.switchOn()
+
+      HtmlUnit("/commentisfree/2013/jan/07/blue-plaque-english-heritage"){ browser =>
+        import browser._
+
+        Then("I should see the comment tonal treatmemt")
+        $(".article-wrapper").getAttribute("class") should include ("tone-comment")
+      }
+    }
+
   }
 }
