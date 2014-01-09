@@ -2,11 +2,13 @@ define([
     'bean',
     'bonzo',
     'common/modules/discussion/api',
+    'common/modules/identity/api',
     'common/modules/component'
 ], function(
     bean,
     bonzo,
     DiscussionApi,
+    IdentityApi,
     Component
 ) {
 
@@ -59,7 +61,10 @@ CommentBox.prototype.errorMessages = {
     COMMENT_TOO_LONG: 'Your comment must be fewer than 5000 characters long.',
     ENHANCE_YOUR_CALM: 'You can only post one comment every minute. Please try again in a moment.',
     USER_BANNED: 'Commenting has been disabled for this account (<a href="/community-faqs#321a">why?</a>).',
-    API_ERROR: 'Sorry, there was a problem posting your comment.'
+    API_ERROR: 'Sorry, there was a problem posting your comment.',
+    EMAIL_NOT_VERIFIED: 'Please confirm your email address to post your first comment.<br />'+
+        '<a href="/send/email"><strong>Send verification email</strong></a><span class="d-comment-box__error-meta"> to '+
+        IdentityApi.getUserFromCookie().primaryEmailAddress + '</span>'
 };
 
 /**
@@ -142,13 +147,15 @@ CommentBox.prototype.postComment = function(e) {
     e.preventDefault();
     this.getElem('messages').innerHTML = '';
     this.errors = [];
+    this.removeState('invalid');
 
     if (comment.body === '') {
         this.error('EMPTY_COMMENT_BODY');
     }
 
     else if (comment.body.length > this.options.maxLength) {
-        this.error('COMMENT_TOO_LONG', '<b>Comments must be shorter than '+ this.options.maxLength +' characters.</b> Yours is currently '+ (comment.body.length-this.options.maxLength) +' characters too long.');
+        this.error('COMMENT_TOO_LONG', '<b>Comments must be shorter than '+ this.options.maxLength +' characters.</b>'+
+            'Yours is currently '+ (comment.body.length-this.options.maxLength) +' characters too long.');
     }
 
     if (this.options.replyTo) {
@@ -170,6 +177,8 @@ CommentBox.prototype.postComment = function(e) {
  */
 CommentBox.prototype.error = function(type, message) {
     message = message || this.errorMessages[type];
+
+    this.setState('invalid');
     var error = bonzo.create(
         '<div class="d-discussion__error '+ this.getClass('error', true) +'">'+
             '<i class="i i-alert"></i>'+
@@ -214,7 +223,6 @@ CommentBox.prototype.fail = function(xhr) {
     }
 };
 
-
 /**
  * TODO: remove the replace, get the Scala to be better
  * @return {string}
@@ -246,7 +254,6 @@ CommentBox.prototype.setFormState = function(disabled) {
 CommentBox.prototype.setExpanded = function(e) {
     this.setState('expanded', 'body');
 };
-
 
 return CommentBox;
 

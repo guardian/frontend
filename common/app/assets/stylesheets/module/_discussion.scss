@@ -481,18 +481,22 @@ $replyIndent: 26px;
     }
     .d-comment__meta-text { margin-left: 0; position: static; }
     .d-comment__timestamp { margin-top: -4px; }
-
-    
-
-
 }
+
 .d-discussion__error {
+    @include fs-data(4);
+    color: $c-error;
     margin-top: $baseline*2;
     .d-discussion__error-text {
+        display: inline-block;
         margin-left: 24px;
         line-height: 24px;
     }
     .i-alert { position: absolute; }
+}
+
+.d-comment-box__error-meta {
+    color: $c-neutral2;
 }
 
 .d-thread--responses .d-discussion__error {
@@ -867,6 +871,12 @@ $replyIndent: 26px;
 
 .d-comment .d-comment-box {
     padding-left: $replyIndent;
+}
+
+.d-comment-box--invalid {
+    .d-comment-box__body {
+        border-color: $c-error;
+    }
 }
 
 .d-comment-box__body {
