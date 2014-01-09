@@ -7,8 +7,9 @@ import play.api.libs.json.Json._
 import play.api.libs.json._
 import play.api.libs.ws.{ WS, Response }
 import play.api.libs.json.JsObject
-import services.S3FrontsApi
+import services.{SecureS3Request, S3FrontsApi}
 import scala.concurrent.Future
+import common.FaciaMetrics.S3AuthorizationError
 import scala.collection.immutable.SortedMap
 
 object Path {
@@ -68,9 +69,10 @@ trait ParseCollection extends ExecutionContexts with Logging {
   case class Result(curated: List[Content], contentApiResults: List[Content], editorsPicks: List[Content])
 
   def requestCollection(id: String): Future[Response] = {
-    val collectionUrl = s"${Configuration.frontend.store}/${S3FrontsApi.location}/collection/$id/collection.json"
-    log.info(s"loading running order configuration from: $collectionUrl")
-    WS.url(collectionUrl).withRequestTimeout(2000).get()
+    val s3BucketLocation: String = s"${S3FrontsApi.location}/collection/$id/collection.json"
+    log.info(s"loading running order configuration from: ${Configuration.frontend.store}/$s3BucketLocation")
+    val request = SecureS3Request.urlGet(s3BucketLocation)
+    request.withRequestTimeout(2000).get()
   }
 
   def getCollection(id: String, config: Config, edition: Edition, isWarmedUp: Boolean): Future[Collection] = {
@@ -116,10 +118,16 @@ trait ParseCollection extends ExecutionContexts with Logging {
               throw e
             }
           }
+        case 403 => {
+          S3AuthorizationError.increment()
+          val errorString: String = s"Request failed to authenticate with S3: $id"
+          log.warn(errorString)
+          Future.failed(throw new Exception(errorString))
+        }
         case (httpResponseCode: Int) if httpResponseCode >= 500 =>
           Future.failed(throw new Exception("S3 returned a 5xx"))
         case _ =>
-          log.warn(s"Could not load running order: ${r.status} ${r.statusText}")
+          log.warn(s"Could not load running order: ${r.status} ${r.statusText} $id")
           // NOTE: better way of handling fallback
           Future(Nil)
       }

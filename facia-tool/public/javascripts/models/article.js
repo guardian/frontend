@@ -4,6 +4,7 @@ define([
     'utils/as-observable-props',
     'utils/populate-observables',
     'utils/number-with-commas',
+    'utils/full-trim',
     'models/group',
     'modules/authed-ajax',
     'modules/content-api',
@@ -16,6 +17,7 @@ define([
         asObservableProps,
         populateObservables,
         numberWithCommas,
+        fullTrim,
         Group,
         authedAjax,
         contentApi,
@@ -38,19 +40,21 @@ define([
 
             this.fields = asObservableProps([
                 'headline',
-                'thumbnail',
                 'trailText',
+                'thumbnail',
                 'shortId']);
 
             this.fields.headline('...');
 
             this.meta = asObservableProps([
                 'headline',
+                'trailText',
+                'imageTone',
                 'group']);
 
             this.state = asObservableProps([
                 'underDrag',
-                'editingMeta',
+                'open',
                 'shares',
                 'comments',
                 'totalHits',
@@ -65,15 +69,11 @@ define([
                 return numberWithCommas(this.state.totalHits());
             }, this);
 
-            this.headlineInput = ko.computed({
-                read: function() {
-                    return this.meta.headline() || this.fields.headline();
-                },
-                write: function(value) {
-                    this.meta.headline(value);
-                },
-                owner: this
-            });
+            this.headlineInput  = this.overrider('headline');
+            this.headlineRevert = this.reverter('headline');
+
+            this.trailTextInput  = this.overrider('trailText');
+            this.trailTextRevert = this.reverter('trailText');
 
             this.populate(opts);
 
@@ -96,44 +96,57 @@ define([
             }
         }
 
-        Article.prototype.populate = function(opts) {
-            var self = this;
+        Article.prototype.overrider = function(key) {
+            return ko.computed({
+                read: function() {
+                    return this.meta[key]() || this.fields[key]();
+                },
+                write: function(value) {
+                    this.meta[key](value);
+                },
+                owner: this
+            });
+        };
 
+        Article.prototype.reverter = function(key) {
+            return function() {
+                this.meta[key](undefined);
+                this._save();
+            };
+        };
+
+        Article.prototype.populate = function(opts) {
             populateObservables(this.props,  opts);
             populateObservables(this.meta,   opts.meta);
             populateObservables(this.fields, opts.fields);
             populateObservables(this.state,  opts.state);
         };
 
-        Article.prototype.startMetaEdit = function() {
+        Article.prototype.toggleImageToneHide = function() {
+            this.meta.imageTone(this.meta.imageTone() === 'hide' ? undefined : 'hide');
+            this._save();
+        };
+
+        Article.prototype.toggleImageToneHighlight = function() {
+            this.meta.imageTone(this.meta.imageTone() === 'highlight' ? undefined : 'highlight');
+            this._save();
+        };
+
+        Article.prototype.open = function() {
             var self = this;
 
             if (this.uneditable) { return; }
 
             _.defer(function(){
-                self.state.editingMeta(true);
+                self.state.open(true);
             });
         };
 
-        Article.prototype.stopMetaEdit = function() {
+        Article.prototype.close = function() {
             var self = this;
             _.defer(function(){
-                self.state.editingMeta(false);
+                self.state.open(false);
             });
-        };
-
-        Article.prototype.saveMetaEdit = function() {
-            var self = this;
-
-            // defer, to let through any UI events, before they're blocked by the loadIsPending CSS:
-            setTimeout(function() {
-                self.save();
-            }, 200);
-        };
-
-        Article.prototype.revertHeadline = function() {
-            this.meta.headline(undefined);
-            this.saveMetaEdit();
         };
 
         Article.prototype.get = function() {
@@ -152,24 +165,23 @@ define([
                 .map(function(p){ return [p[0], _.isFunction(p[1]) ? p[1]() : p[1]]; })
                 // reject undefined properties:
                 .filter(function(p){ return !_.isUndefined(p[1]); })
+                // trim strings:
+                .map(function(p){ return [p[0], _.isString(p[1]) ? fullTrim(p[1]) : p[1]]; })
                 // reject whitespace-only strings:
-                .filter(function(p){ return _.isString(p[1]) ? p[1].replace(/\s*/g, '').length > 0 : true; })
-                // reject vals that don't differ from the props (if any) that they're overwriting:
-                .filter(function(p){ return _.isUndefined(self.props[p[0]]) || self.props[p[0]]() !== p[1]; })
-                // serialise supporting
+                .filter(function(p){ return _.isString(p[1]) ? p[1] : true; })
+                // for sublinks reject anything that isn't a headline
+                .filter(function(p){ return p[0] === 'headline' || self.parentType !== 'Article'; })
+                // reject vals that are equivalent to the fields (if any) that they're overwriting:
+                .filter(function(p){ return _.isUndefined(self.fields[p[0]]) || p[1] !== fullTrim(self.fields[p[0]]()); })
+                // recurse into supporting links
                 .map(function(p) {
-                    if (p[0] === 'supporting') {
-                        // but only on first level Articles, i.e. those whose parent isn't an Article
-                        return [p[0], self.parentType === 'Article' ? [] : _.map(p[1].items(), function(item) {
-                            return item.get();
-                        })];
-                    }
-                    return [p[0], p[1]];
+                    return [p[0], p[0] === 'supporting' ? _.map(p[1].items(), function(item) {
+                        return item.get();
+                    }) : p[1]];
                 })
                 // drop empty arrays:
                 .filter(function(p){ return _.isArray(p[1]) ? p[1].length : true; })
-                // return as obj, or as undefined if empty.
-                // undefined is useful for ommiting it from any subsequent JSON.stringify call 
+                // return as obj, or as undefined if empty (this ommits it from any subsequent JSON.stringify result) 
                 .reduce(function(obj, p, key) {
                     obj = obj || {};
                     obj[p[0]] = p[1];
@@ -178,7 +190,7 @@ define([
                 .value();
         };
 
-        Article.prototype.save = function() {
+        Article.prototype._save = function() {
             var self = this;
 
             if (!this.parent) {
@@ -186,8 +198,8 @@ define([
             }
 
             if (this.parentType === 'Article') {
-                this.parent.save();
-                this.stopMetaEdit();
+                this.parent._save();
+                this.close();
                 return;
             }
 
@@ -203,8 +215,17 @@ define([
                         draft:   !vars.state.liveMode()
                     }
                 );
-                this.parent.state.loadIsPending(true);
+                this.parent.setPending(true);
             }
+        };
+
+        Article.prototype.save = function() {
+            var self = this;
+
+            // defer, to let through UI events before they're blocked by the "isPending" CSS:
+            setTimeout(function() {
+                self._save();
+            }, 200);
         };
 
         return Article;
