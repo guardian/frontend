@@ -19,17 +19,6 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     Ok(views.html.fronts(Configuration.environment.stage))
   }
 
-  def printstuff(path: String) = Action { request =>
-    Ok(ConfigAgent.getConfig(path) map {config =>
-      ContentApiWrite.prettyPrint(config)
-    } getOrElse "")
-  }
-
-  def refreshagent = Action { request =>
-    ConfigAgent.refresh()
-    Ok("Refresh")
-  }
-
   def admin() = ExpiringAuthentication { request =>
     Redirect("/")
   }
