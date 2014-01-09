@@ -157,7 +157,8 @@ Loader.prototype.loadComments = function(args) {
         initialShow: commentId ? 10 : args.amount,
         discussionId: this.getDiscussionId(),
         user: this.user,
-        commentId: commentId ? commentId : null
+        commentId: commentId ? commentId : null,
+        order: this.getDiscussionClosed() ? 'oldest' : 'newest'
     });
 
     // Doing this makes sure there is only one redraw
@@ -301,6 +302,7 @@ Loader.prototype.renderUserBanned = function() {
  * When you load more comments
  */
 Loader.prototype.renderBottomCommentBox = function() {
+    if (this.bottomCommentBox) { return; }
     this.bottomCommentBox = new CommentBox(this.context, this.mediator, {
         discussionId: this.getDiscussionId(),
         premod: this.user.privateFields.isPremoderated

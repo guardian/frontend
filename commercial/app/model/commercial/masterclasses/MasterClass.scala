@@ -81,7 +81,7 @@ case class MasterClass(id: String,
 
   def readableDate = readableDateFormat.print(startDate)
 
-  val truncatedFirstParagraph = StringUtils.abbreviate(firstParagraph, 300)
+  val truncatedFirstParagraph = StringUtils.abbreviate(firstParagraph, 250)
 }
 
 case class Ticket(price: Double)

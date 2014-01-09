@@ -12,7 +12,9 @@ define([
     'common/modules/facia/collection-show-more',
     'common/modules/facia/container-toggle',
     'common/modules/sport/football/fixtures',
-    'common/modules/sport/cricket'
+    'common/modules/sport/cricket',
+    'common/modules/ui/message',
+    'common/modules/analytics/mvt-cookie'
 ], function (
     $,
     mediator,
@@ -25,7 +27,9 @@ define([
     CollectionShowMore,
     ContainerToggle,
     FootballFixtures,
-    cricket
+    cricket,
+    Message,
+    mvtCookie
     ) {
 
     var modules = {
@@ -143,6 +147,38 @@ define([
                     });
                 });
             }
+        },
+
+        displayAlphaMessage: function(config) {
+            // only run on 5% of the users
+            var isAChosenOne = parseInt(mvtCookie.getMvtValue(), 10) < (mvtCookie.MAX_INT * 0.05);
+            if (config.page.contentType === 'Network Front' && isAChosenOne) {
+                var page = window.location.pathname.replace('-alpha', ''),
+                    alphaSwitch = {
+                        uk: 'networkFrontUkAlpha',
+                        us: 'networkFrontUsAlpha',
+                        au: 'networkFrontAuAlpha'
+                    } [page];
+                if (alphaSwitch === true) {
+                    var preferenceUrl = '/preference' + page + 'alpha/[OPT]?page=' + page,
+                        msg,
+                        opts = {};
+                    // opt in
+                    if (config.page.pageId === "") {
+                        msg = '<p class="site-message__message">' +
+                                  'We\'re trying out some new things on our website and would love your feedback. <a href="' + preferenceUrl.replace('[OPT]', 'optin') + '">Click here</a> to explore a test version of the site.' +
+                              '</p>';
+                    } else { // opt out
+                        msg = '<p class="site-message__message">' +
+                                  'You\'re viewing a test version of the Guardian website. We\'d love your feedback. If you\'d like to opt out and go back to the regular mobile site, <a href="' + preferenceUrl.replace('[OPT]', 'optout') + '">click here</a>.' +
+                              '</p>';
+                        opts = {
+                            permanent: true
+                        };
+                    }
+                    new Message('facia-alpha', opts).show(msg);
+                }
+            }
         }
     };
 
@@ -154,6 +190,7 @@ define([
             modules.showFootballFixtures();
             modules.showPopular();
             modules.showUserzoom(config);
+            modules.displayAlphaMessage(config);
         }
         mediator.emit("page:front:ready", config, context);
     };

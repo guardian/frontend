@@ -8,10 +8,8 @@ import conf.Configuration
 
 trait DiscussionDispatcher
   extends CommentCountController
-  with CommentPageController
+  with CommentsController
   with CommentBoxController
-  with TopCommentsController
-  with CommentController
 
 object DiscussionApp extends DiscussionDispatcher {
   protected val discussionApi = current.plugin(classOf[DiscussionApi]) getOrElse {

@@ -6,7 +6,7 @@ import org.scalatest.Matchers
 import org.joda.time.DateTime
 import com.gu.openplatform.contentapi.model.{ Asset, Element =>ApiElement, Content => ApiContent, Tag => ApiTag }
 
-class ContentTest extends FlatSpec with Matchers {
+class ContentTest extends FlatSpec with Matchers with implicits.Dates {
 
 
   "Trail" should "be populated properly" in {

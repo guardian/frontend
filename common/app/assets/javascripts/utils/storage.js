@@ -9,15 +9,15 @@ define([
 ) {
 
     var w = window;
-    
+
     var Storage = function(type) {
         this.type = type;
     };
-    
+
     Storage.prototype.setWindow = function(window) {
         w = window;
     };
-            
+
     Storage.prototype.isAvailable = function(data) {
         var testKey = 'local-storage-module-test',
             d = data || 'test';
@@ -32,7 +32,7 @@ define([
             return false;
         }
     };
-    
+
     /**
      * @param {String}  key
      * @param {Any}     data
@@ -50,13 +50,13 @@ define([
         }
         return w[this.type].setItem(key, value);
     };
-        
+
     Storage.prototype.get = function(key) {
         var data = w[this.type].getItem(key);
         if (data === null) {
             return null;
         }
-        
+
         // try and parse the data
         var dataParsed;
         try{
@@ -66,7 +66,7 @@ define([
             this.remove(key);
             return null;
         }
-        
+
         // has it expired?
         if (dataParsed.expires && new Date() > new Date(dataParsed.expires)) {
             this.remove(key);
@@ -75,19 +75,19 @@ define([
 
         return dataParsed.value;
     };
-        
+
     Storage.prototype.remove = function(key) {
         return w[this.type].removeItem(key);
     };
-        
+
     Storage.prototype.removeAll = function() {
         return w[this.type].clear();
     };
-    
+
     Storage.prototype.length = function() {
         return w[this.type].length;
     };
-    
+
     Storage.prototype.getKey = function(i) {
         return w[this.type].key(i);
     };
@@ -101,7 +101,7 @@ define([
             }
         }
     };
-    
+
     return {
         local: new Storage('localStorage'),
         session: new Storage('sessionStorage')
