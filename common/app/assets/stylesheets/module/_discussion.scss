@@ -262,7 +262,7 @@ $replyIndent: 26px;
 .d-comment__recommend {
     position: absolute;
     right: 0;
-    top: $baseline;
+    top: $gs-baseline/2;
     z-index: 1;
     @include mq(tablet){
         min-width: 28px;
@@ -302,7 +302,9 @@ $replyIndent: 26px;
     text-align: right;
     min-width: 12px;
     display: inline-block;
+    margin-bottom: -4px;
     @include mq(tablet) {
+        margin-bottom: 0;
         min-width: 0;
         display: block;
         text-align: center;
