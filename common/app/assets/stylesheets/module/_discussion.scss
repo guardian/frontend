@@ -51,7 +51,9 @@ $replyIndent: 26px;
     display: block;
     text-align: center;
 
-    &.show-more__container--older, &.show-more__container--featured {
+    &.show-more__container--older,
+    &.show-more__container--hidden,
+    &.show-more__container--featured {
         color: $c-neutral1;
         border-top: 1px dotted $c-neutral3;
     }
@@ -92,9 +94,14 @@ $replyIndent: 26px;
     }
 }
 
-
 .d-discussion--not-staff .d-staff-required {
-   display: none;
+    display: none;
+}
+
+.d-discussion__order-control {
+    font-size: 16px;
+    font-size: 1.6rem;
+    margin: 2px $gs-gutter/4 0;
 }
 
 /* ==========================================================================
@@ -262,7 +269,7 @@ $replyIndent: 26px;
 .d-comment__recommend {
     position: absolute;
     right: 0;
-    top: $baseline;
+    top: $gs-baseline/2;
     z-index: 1;
     @include mq(tablet){
         min-width: 28px;
@@ -302,7 +309,9 @@ $replyIndent: 26px;
     text-align: right;
     min-width: 12px;
     display: inline-block;
+    margin-bottom: -4px;
     @include mq(tablet) {
+        margin-bottom: 0;
         min-width: 0;
         display: block;
         text-align: center;

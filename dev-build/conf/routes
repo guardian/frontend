@@ -43,6 +43,7 @@ GET         /recent/card.json                                                   
 
 GET         /preference/platform/:platform                                                                           controllers.ChangeViewController.render(platform, page)
 GET         /preference/edition/:edition                                                                             controllers.ChangeEditionController.render(edition)
+GET         /preference/$networkFront<uk|au|us>alpha/:optaction                                                      controllers.ChangeAlphaController.render(networkFront, optaction, page)
 
 GET         /cards/opengraph/*path.json                                                                              controllers.CardController.opengraph(path)
 
