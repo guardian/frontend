@@ -21,7 +21,7 @@ import scala.Some
 import play.api.mvc.SimpleResult
 import model.Tag
 import model.VideoAsset
-import conf.Switches.{ABTagLinking, ABInBodyLinking}
+import conf.Switches.{TagLinking}
 
 sealed trait Style {
   val className: String
@@ -321,7 +321,7 @@ object TweetCleaner extends HtmlCleaner {
 
 class TagLinker(article: Article)(implicit val edition: Edition) extends HtmlCleaner{
   def clean(d: Document): Document = {
-    if (ABTagLinking.isSwitchedOn && article.linkCounts.noLinks) {
+    if (TagLinking.isSwitchedOn && article.linkCounts.noLinks) {
       val paragraphs = d.getElementsByTag("p")
 
       // order by length of name so we do not make simple match errors
@@ -335,45 +335,12 @@ class TagLinker(article: Article)(implicit val edition: Edition) extends HtmlCle
           tagLink.attr("href", LinkTo(keyword.url, edition))
           tagLink.text(keyword.name)
           tagLink.attr("data-link-name", "auto-linked-tag")
-          tagLink.addClass("linked-tag-name is-hidden")
 
-          val nameSpan = d.createElement("span")
-          nameSpan.html(keyword.name)
-          nameSpan.addClass("unlinked-tag-name")
-
-          p.html(p.html().replaceFirst(keyword.name, tagLink.toString + nameSpan.toString))
+          p.html(p.html().replaceFirst(keyword.name, tagLink.toString))
         }
       }
     }
     d
-  }
-}
-
-class InBodyLinksABTestCleaner(content: Content)(implicit val edition: Edition) extends HtmlCleaner {
-  def clean(d: Document): Document = {
-    // bit hacky, but this only lives as long as the AB test
-    content match {
-      case article: Article => clean(article, d)
-      case _ => {}
-    }
-    d
-  }
-
-  private def clean(article: Article, d: Document) {
-    if (ABInBodyLinking.isSwitchedOn && article.linkCounts.internal > 0) {
-
-      val guardianlinks = d.getElementsByTag("a").filter(_.attr("href").contains("www.theguardian.com"))
-
-      guardianlinks.foreach { link =>
-        link.addClass("ab-in-body-link")
-
-        val nameSpan = d.createElement("span")
-        nameSpan.html(link.html())
-        nameSpan.addClass("ab-in-body-text is-hidden")
-
-        link.after(nameSpan)
-      }
-    }
   }
 }
 

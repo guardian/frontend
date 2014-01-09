@@ -1,6 +1,6 @@
 package test
 
-import conf.{HealthcheckPage, Configuration}
+import conf.{Switches, HealthcheckPage, Configuration}
 import conf.Switches._
 import org.scalatest.Matchers
 import org.scalatest.{ GivenWhenThen, FeatureSpec }
@@ -235,6 +235,45 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
         findFirst("[itemprop=headline]").getText should be ("Birds of Britain | video")
       }
     }
+
+    scenario("Articles should auto link to keywords") {
+
+      Given("An article that has no in body links")
+      Switches.TagLinking.switchOn()
+      HtmlUnit("/business/2014/jan/09/morrisons-issues-profit-warning-sales-down") { browser =>
+        import browser._
+
+        Then("It should automatucally link to tags")
+        val taglinks = $("a[data-link-name=auto-linked-tag]")
+
+        taglinks.length should be (2)
+
+        taglinks(0).getText should be ("Morrisons")
+        taglinks(0).getAttribute("href") should endWith ("/business/morrisons")
+
+        taglinks(1).getText should be ("Tesco")
+      }
+    }
+
+    scenario("Articles should link longest keywords first") {
+      // so you don't overlap similar tags
+
+      Given("An article that has no in body links")
+      Switches.TagLinking.switchOn()
+      HtmlUnit("/uk-news/2013/dec/27/high-winds-heavy-rain-uk-ireland") { browser =>
+        import browser._
+
+        Then("It should automatucally link to tags")
+        val taglinks = $("a[data-link-name=auto-linked-tag]")
+
+        taglinks.length should be (1)
+
+        taglinks(0).getText should be ("Northern Ireland")
+        taglinks(0).getAttribute("href") should endWith ("/uk/northernireland")
+      }
+    }
+
+
 
     scenario("Review body", ArticleComponents) {
 

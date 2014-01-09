@@ -14,9 +14,7 @@ define([
     'common/modules/experiments/tests/commercial-in-article-mobile',
     'common/modules/experiments/tests/right-most-popular',
     'common/modules/experiments/tests/right-most-popular-control',
-    'common/modules/experiments/tests/tag-links',
-    'common/modules/experiments/tests/underline-links',
-    'common/modules/experiments/tests/in-body-links'
+    'common/modules/experiments/tests/underline-links'
 ], function (
     common,
     store,
@@ -31,9 +29,7 @@ define([
     CommercialInArticlesMobile,
     RightPopular,
     RightPopularControl,
-    TagLinks,
-    UnderlineLinks,
-    InBodyLinks
+    UnderlineLinks
     ) {
 
     var TESTS = [
@@ -46,9 +42,7 @@ define([
             new CommercialInArticlesMobile(),
             new RightPopular(),
             new RightPopularControl(),
-            new TagLinks(),
-            new UnderlineLinks(),
-            new InBodyLinks()
+            new UnderlineLinks()
         ],
         participationsKey = 'gu.ab.participations';
 
