@@ -73,6 +73,20 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
       }
     }
 
+    scenario("Keyword metadata", ArticleComponents) {
+
+      Given("I am on an article entitled 'TV highlights 09/08/2012'")
+      HtmlUnit("/tv-and-radio/2012/aug/08/americas-animal-hoarder-the-churchills") { browser =>
+        import browser._
+
+        Then("Keywords should be exposed")
+        findFirst("meta[name=keywords]").getAttribute("content") should be("Television,Television & radio,Culture,Proms 2012,Classical music,Proms,Music")
+
+        And("News Keywords should be exposed")
+        findFirst("meta[name=news_keywords]").getAttribute("content") should be("Television,Television & radio,Culture,Proms 2012,Classical music,Proms,Music")
+      }
+    }
+
     scenario("Author metadata", ArticleComponents) {
 
       Given("I am on an article entitled 'TV highlights 09/08/2012'")
