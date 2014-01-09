@@ -1,7 +1,9 @@
 package conf
 
 import org.scalatest.FlatSpec
+import org.scalatest.{ GivenWhenThen, FeatureSpec }
 import org.scalatest.Matchers
+import org.joda.time.DateTime
 
 class SwitchesTest extends FlatSpec with Matchers {
 
@@ -16,7 +18,23 @@ class SwitchesTest extends FlatSpec with Matchers {
 
   they should "have a description" in {
     Switches.all foreach {
-      case Switch(_, _, description, _) => description.trim should not be("")
+      case Switch(_, _, description, _, _) => description.trim should not be("")
     }
   }
+ 
+  // fails the tests is something has expired
+  they should "be deleted once expired" in {
+    Switches.all foreach {
+      case Switch(_, id, _, _, sellByDate) => assert(sellByDate.isAfter(new DateTime()))
+    }
+  }
+
+  it should "Check a switch is on" in {
+    assert(Switches.AlwaysOnSwitch.isSwitchedOn)
+  }
+  
+  it should "Check a switch expires once it's sell by date has past" in {
+    assert(Switches.AlwaysExpiredSwitch.isSwitchedOff)
+  }
+  
 }

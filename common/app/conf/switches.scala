@@ -5,15 +5,16 @@ import common._
 import implicits.Collections
 import play.api.Plugin
 import play.api.libs.ws.WS
+import org.joda.time.DateTime
 
 sealed trait SwitchState
 case object On extends SwitchState
 case object Off extends SwitchState
 
-case class Switch(group: String, name: String, description: String, safeState: SwitchState) extends Switchable {
+case class Switch(group: String, name: String, description: String, safeState: SwitchState, sellByDate: DateTime = new DateTime().plusDays(1)) extends Switchable {
   val delegate = DefaultSwitch(name, description, initiallyOn = safeState == On)
 
-  def isSwitchedOn: Boolean = delegate.isSwitchedOn
+  def isSwitchedOn: Boolean = delegate.isSwitchedOn && new DateTime().isBefore(sellByDate)
 
   def switchOn() {
     if (isSwitchedOff) {
@@ -271,6 +272,16 @@ object Switches extends Collections {
     "Switch that is only used while running tests. You never need to change this switch.",
     safeState = Off)
 
+  val AlwaysOnSwitch = Switch("Unwired Test Switch", "always-on-switch",
+    "Switch that is only used while running tests. You never need to change this switch.",
+    safeState = On, new DateTime().plusYears(100))
+  
+  val AlwaysExpiredSwitch = Switch("Unwired Test Switch", "always-expired",
+    "Switch that is only used while running tests. You never need to change this switch.",
+    safeState = On, new DateTime().minusDays(1))
+
+  // Facia 
+  
   val UkAlphaSwitch = Switch("Facia", "facia-uk-alpha",
     "If this is switched on then UK-Alpha will be served for requests with the cookie GU_UK_ALPHA",
     safeState = Off
