@@ -282,11 +282,15 @@ $c-live: #e81818;
 }
 
 .item--dark {
-    .item__meta,
+
+    .item__container,
+    .item__timestamp {
+        background-color: $c-neutral1;
+    }
+
     .item__title {
         padding-left: 7px;
         padding-right: 7px;
-        background-color: $c-neutral1;
     }
 
     .item__link:visited {

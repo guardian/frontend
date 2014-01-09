@@ -1,7 +1,7 @@
 .related {
     position: relative;
 
-    @include mq($a-rightCol-trigger) {
+    @include mq(rightCol) {
 
         .item {
             &:first-child {
@@ -28,7 +28,7 @@
 }
 
 .related__header {
-    @include mq($a-leftCol-trigger) {
+    @include mq(leftCol) {
         position: absolute;
         top: 0;
         left: 0;
@@ -44,11 +44,11 @@
 .related__container {
     margin-bottom: $gs-baseline*2;
 
-    @include mq($a-rightCol-trigger) {
+    @include mq(rightCol) {
         margin-left: - $gs-gutter/2;
     }
 
-    @include mq($a-leftCol-trigger) {
+    @include mq(leftCol) {
         margin-left: $a-leftCol-width + $gs-gutter/2;
         margin-right: - $gs-gutter/2;
     }
@@ -59,13 +59,20 @@
     }
 
     .item {
-        width: 50%;
         float: left;
+        position: relative;
+        width: 50%;
+        min-height: gs-height(5);
         padding-bottom: 0;
-        margin-top: $gs-baseline;
+        margin-top: $gs-baseline*2;
         margin-bottom: $gs-baseline;
 
-        @include mq($to: $a-rightCol-trigger) {
+
+        @include mq(mobileLandscape) {
+            min-height: gs-height(6);
+        }
+
+        @include mq($to: rightCol) {
 
             &:nth-child(odd) {
                 padding-right: 0;
@@ -93,10 +100,16 @@
                     padding-bottom: $gs-baseline*3;
                     @include fs-headline(3, true);
                 }
+
+                .item__meta {
+                    padding-right: 0;
+                }
             }
         }
 
-        @include mq(tablet, $a-rightCol-trigger) {
+        @include mq(tablet, rightCol) {
+            min-height: gs-height(7) - $gs-baseline;
+
             &:first-child {
                 margin-bottom: 20px;
 
@@ -107,9 +120,10 @@
             }
         }
 
-        @include mq($a-rightCol-trigger) {
+        @include mq(rightCol) {
             width: 25%;
             clear: none;
+            min-height: gs-height(5);
 
             &:nth-child(2) {
                 &:before {
@@ -118,7 +132,7 @@
             }
         }
 
-        @include mq($a-leftCol-trigger) {
+        @include mq(leftCol) {
             margin-top: 0;
         }
 
@@ -126,7 +140,7 @@
 
     .item--dark {
 
-        @include mq(tablet, $a-rightCol-trigger) {
+        @include mq(tablet, rightCol) {
             &:first-child {
                 .item__title {
                     padding-left: $gs-gutter*0.4;
@@ -143,8 +157,10 @@
     .item__title {
         margin-top: 0;
         padding-top: 6px; //Magic
+        padding-bottom: $gs-baseline;
         min-height: $gs-row-height*3 - $gs-baseline; //96px
         @include fs-headline(1, true);
+        @include box-sizing(border-box);
 
         @include mq(mobileLandscape) {
             @include fs-headline(2, true);
@@ -155,7 +171,7 @@
             @include fs-headline(2, true);
         }
 
-        @include mq($a-rightCol-trigger) {
+        @include mq(rightCol) {
             min-height: $gs-row-height*3 - $gs-baseline; //96px
             @include fs-headline(1, true);
         }
@@ -163,17 +179,7 @@
 
     .item--has-no-image {
 
-        .item__link {
-            width: 100%;
-            height: $gs-baseline;
-            position: relative;
-            padding-bottom: 100%;
-        }
-
         .item__title {
-            position: absolute;
-            top: 0;
-            left: 0;
             padding-top: 0;
             @include fs-headline(2, true);
 
@@ -190,14 +196,25 @@
     }
 
     .item__meta {
-        position: relative;
         width: 100%;
-        height: $gs-baseline;
-        margin-bottom: - $gs-baseline;
-        padding-top: $gs-baseline;
-        padding-bottom: $gs-baseline*2;
+        padding-left: 0;
+        padding-right: $gs-gutter/2;;
+        margin-bottom: - $gs-baseline*2;
+        @include box-sizing(border-box);
+
+        @include mq(rightCol) {
+            padding-right: $gs-gutter;
+        }
+    }
+
+    .item__timestamp {
+        width: 100%;
+        padding-bottom: $gs-baseline;
+        padding-left: 21px;
         border-bottom: 1px solid $c-neutral5;
         @include box-sizing(border-box);
+
+        i { left: 7px }
     }
 
     .item__media-wrapper {
@@ -205,6 +222,7 @@
     }
     
     .item__image-container {
+        margin-top: 0;
         display: block;
     }
 
