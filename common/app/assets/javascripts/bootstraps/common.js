@@ -197,6 +197,10 @@ define([
                 }
             });
 
+            if (config.switches.ophanMultiEvent) {
+                require('ophan/ng', function () {});
+            }
+
             require(config.page.ophanUrl, function (Ophan) {
 
                 if (!Ophan.isInitialised) {

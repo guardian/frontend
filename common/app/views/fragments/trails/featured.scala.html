@@ -17,7 +17,7 @@
     @trail.trailText.map { text => <div class="trail__text">@cleanTrailText(text)(Edition(request))</div> }
 
     @trail.trailPicture.map{ imageContainer =>
-        @ImgSrc.imager(imageContainer).map { imgSrc =>
+        @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
             <a href="@LinkTo{@trail.url}"
                class="trail__img item__image-container"
                aria-hidden="true"

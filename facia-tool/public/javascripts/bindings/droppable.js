@@ -176,7 +176,7 @@ define([
                         }
 
                         if (targetList.parentType === 'Article') {
-                            targetList.parent.saveMetaEdit();
+                            targetList.parent.save();
                             return;
                         }
                         

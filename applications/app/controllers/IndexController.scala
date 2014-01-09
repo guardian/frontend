@@ -6,9 +6,12 @@ import model._
 import play.api.mvc._
 import play.api.libs.json._
 import services.{Index, IndexPage}
+import views.support.TemplateDeduping
 
 
 trait IndexController extends Controller with Index with Logging with Paging with ExecutionContexts {
+
+  implicit def getTemplateDedupingInstance: TemplateDeduping = TemplateDeduping()
 
   def renderCombiner(leftSide: String, rightSide: String) = Action.async{ implicit request =>
     index(Edition(request), leftSide, rightSide).map {

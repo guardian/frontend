@@ -100,6 +100,10 @@ object Switches extends Collections {
     "Turns on userzoom survey popups",
     safeState = Off)
 
+  val OphanMultiEventSwitch = Switch("Analytics", "ophan-multi-event",
+    "Enables the new Ophan tracking javascript which support multiple events per page",
+    safeState = Off)
+
   // Discussion Switches
 
   val DiscussionSwitch = Switch("Discussion", "discussion",
@@ -141,9 +145,12 @@ object Switches extends Collections {
     "If this is switched on users will be messaged that they are inside the alpha/beta/whatever release",
     safeState = Off)
 
-
   val FontSwitch = Switch("Feature Switches", "web-fonts",
     "If this is switched on then the custom Guardian web font will load.",
+    safeState = Off)
+  
+  val SponsoredContentSwitch = Switch("Feature Switches", "sponsored-content",
+    "If this is switched on the articles will display a simple 'Advertisement feature' notice.",
     safeState = Off)
 
   val NetworkFrontAppealSwitch = Switch("Feature Switches", "network-front-appeal",
@@ -244,18 +251,14 @@ object Switches extends Collections {
     "If this is switched on an AB test runs as a control variant for right most popular",
     safeState = Off)
 
-  val ABTagLinking = Switch("A/B Tests", "ab-tag-linking",
-    "If this is switched on an AB test runs whereby articles that have no in body links auto link to their tags",
+  val TagLinking = Switch("Feature Switches", "tag-linking",
+    "If this is switched on articles that have no in body links will auto link to their tags where possible",
     safeState = Off)
 
   val ABUnderlineLinks = Switch("A/B Tests", "ab-underline-links",
     "If this is switched on an AB test runs whereby links in articles are underline (with CSS)",
     safeState = Off)
   
-  val ABInBodyLinking = Switch("A/B Tests", "ab-in-body-linking",
-    "If this is switched on an AB test runs whereby articles have in body links hidden",
-    safeState = Off)
-
   // Sport Switch
 
   val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
@@ -336,9 +339,10 @@ object Switches extends Collections {
     ABRightPopular,
     AdDwellTimeLoggerSwitch,
     UkAlphaSwitch,
-    ABTagLinking,
+    TagLinking,
     ABUnderlineLinks,
-    ABInBodyLinking
+    SponsoredContentSwitch,
+    OphanMultiEventSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

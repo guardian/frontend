@@ -50,7 +50,8 @@ define([
                 id: 'CommercialInline',
                 test: function(context, config) {
                     guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha3.com';
-                    createInlineAdSlots('Middle1');
+                    guardian.config.page.ab_commercialInArticleMobile = 'inline';
+                    createInlineAdSlots('x49');
                     createTopAdSlot('Top2');
                 }
             },
@@ -58,8 +59,9 @@ define([
                 id: 'CommercialTop',
                 test: function(context, config) {
                     guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha4.com';
+                    guardian.config.page.ab_commercialInArticleMobile = 'top';
                     createInlineAdSlots('Top2');
-                    createTopAdSlot('Middle1');
+                    createTopAdSlot('x49');
                 }
             },
             {

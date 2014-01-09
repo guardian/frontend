@@ -2,6 +2,11 @@
 @import conf.Switches._
 
 @defining((model.article, model.storyPackage)) { case (article, storyPackage) =>
+    
+    @if(article.isSponsored) {
+        @fragments.sponsored()
+    }
+
     <h2 class="article-zone left-col-deport tone-@VisualTone(article) tone-accent-border">
         <span class="left-col-deport__body">
             <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
