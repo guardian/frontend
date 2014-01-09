@@ -100,6 +100,10 @@ object Switches extends Collections {
     "Turns on userzoom survey popups",
     safeState = Off)
 
+  val OphanMultiEventSwitch = Switch("Analytics", "ophan-multi-event",
+    "Enables the new Ophan tracking javascript which support multiple events per page",
+    safeState = Off)
+
   // Discussion Switches
 
   val DiscussionSwitch = Switch("Discussion", "discussion",
@@ -337,7 +341,8 @@ object Switches extends Collections {
     UkAlphaSwitch,
     TagLinking,
     ABUnderlineLinks,
-    SponsoredContentSwitch
+    SponsoredContentSwitch,
+    OphanMultiEventSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
