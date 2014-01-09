@@ -9,6 +9,11 @@ import com.amazonaws.util.StringInputStream
 import scala.io.Source
 import org.joda.time.DateTime
 import play.Play
+import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
+import play.api.libs.ws.WS
+import javax.crypto.Mac
+import javax.crypto.spec.SecretKeySpec
+import sun.misc.BASE64Encoder
 
 trait S3 extends Logging {
 
@@ -107,3 +112,42 @@ object S3FrontsApi extends S3 {
     putPrivate(s"${location}/history/collection/${id}/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/${now}.json", json, "application/json")
   }
 }
+
+trait SecureS3Request extends implicits.Dates with Logging {
+  val algorithm: String = "HmacSHA1"
+  val accessKey: String = Configuration.aws.accessKey
+  val secretKey: String = Configuration.aws.secretKey
+  val frontendBucket: String = Configuration.aws.bucket
+  val frontendStore: String = Configuration.frontend.store
+
+  def urlGet(id: String): WS.WSRequestHolder = url("GET", id)
+
+  private def url(httpVerb: String, id: String): WS.WSRequestHolder = {
+    val date: String = DateTime.now.toHttpDateTimeString
+    val signedString: String = signAndBase64Encode(generateStringToSign(httpVerb, id, date))
+    WS.url(s"$frontendStore/$id")
+      .withHeaders("Date" -> date)
+      .withHeaders("Authorization" -> s"AWS $accessKey:$signedString")
+  }
+
+  //Other HTTP verbs may need other information such as Content-MD5 and Content-Type
+  //If we move to AWS Security Token Service, we will need x-amz-security-token
+  private def generateStringToSign(httpVerb: String, id: String, date: String): String =
+  //http://docs.aws.amazon.com/AmazonS3/latest/dev/RESTAuthentication.html
+    s"$httpVerb\n\n\n$date\n/$frontendBucket/$id"
+
+  private def signAndBase64Encode(stringToSign: String): String = {
+    try {
+      val mac: Mac = Mac.getInstance(algorithm)
+      mac.init(new SecretKeySpec(secretKey.getBytes("UTF-8"), algorithm))
+      val signature: Array[Byte] = mac.doFinal(stringToSign.getBytes("UTF-8"))
+      val encoded: String = new BASE64Encoder().encode(signature)
+      encoded
+    } catch {
+      case e: Throwable => log.error("Unable to calculate a request signature: " + e.getMessage, e)
+      "Invalid"
+    }
+  }
+}
+
+object SecureS3Request extends SecureS3Request
