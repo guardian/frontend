@@ -262,6 +262,7 @@ object Switches extends Collections {
   val ABUnderlineLinks = Switch("A/B Tests", "ab-underline-links",
     "If this is switched on an AB test runs whereby links in articles are underline (with CSS)",
     safeState = Off)
+
   // Sport Switch
 
   val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
