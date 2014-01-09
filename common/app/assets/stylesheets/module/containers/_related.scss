@@ -45,7 +45,7 @@
     margin-bottom: $gs-baseline*2;
 
     @include mq(rightCol) {
-        margin-left: - $gs-gutter/2;
+        margin-left: -1*($gs-gutter/2);
     }
 
     @include mq(leftCol) {
