@@ -62,6 +62,7 @@ define([
         getMvtFullId: getMvtFullId,
         getMvtValue: getMvtValue,
         getMvtNumValues: getMvtNumValues,
-        overwriteMvtCookie: overwriteMvtCookie
+        overwriteMvtCookie: overwriteMvtCookie,
+        MAX_INT: MAX_INT
     };
 });
