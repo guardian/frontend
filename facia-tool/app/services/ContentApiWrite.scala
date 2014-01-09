@@ -27,7 +27,7 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
                             `type`: String,
                             title: Option[String],
                             groups: Seq[Group],
-                            backfill: String,
+                            backfill: Option[String],
                             lastModified: String,
                             modifiedBy: String
                             )
@@ -68,7 +68,7 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
         config.roleName.getOrElse("Default"),
         config.displayName.orElse(Option("Default Title")),
         groups,
-        "uk/news",
+        config.contentApiQuery.flatMap(_.split('?').headOption.filter(_.nonEmpty)),
         block.lastUpdated,
         block.updatedEmail
       )
