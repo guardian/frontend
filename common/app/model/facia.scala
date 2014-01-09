@@ -11,8 +11,10 @@ case class Config(
 
 object Config {
   def apply(id: String): Config = Config(id, None, None, None, None, Nil, None)
-  def apply (id: String, contentApiQuery: Option[String], displayName: Option[String], collectionTone: Option[String]): Config
+  def apply(id: String, contentApiQuery: Option[String], displayName: Option[String], collectionTone: Option[String]): Config
     = Config(id, contentApiQuery, displayName, collectionTone, None, Nil, None)
+  def apply (id: String, displayName: Option[String]): Config
+  = Config(id, None, displayName, None, None, Nil, None)
 }
 
 case class Collection(items: Seq[Trail],
