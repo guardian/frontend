@@ -302,6 +302,7 @@ Loader.prototype.renderUserBanned = function() {
  * When you load more comments
  */
 Loader.prototype.renderBottomCommentBox = function() {
+    if (this.bottomCommentBox) { return; }
     this.bottomCommentBox = new CommentBox(this.context, this.mediator, {
         discussionId: this.getDiscussionId(),
         premod: this.user.privateFields.isPremoderated
