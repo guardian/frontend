@@ -13,6 +13,7 @@ import services.{SecureS3Request, S3FrontsApi}
 import scala.concurrent.Future
 import common.FaciaMetrics.S3AuthorizationError
 import scala.collection.immutable.SortedMap
+import akka.agent.Agent
 
 object Path {
   def unapply[T](uri: String) = Some(uri.split('?')(0))
@@ -256,4 +257,6 @@ object QueryAgents {
   def apply(id: String): Option[FaciaPage] = items(id).map(FaciaPage(id, _))
 }
 
-object ConfigAgent extends ConfigAgentTrait with ExecutionContexts
+object ConfigAgent extends ConfigAgentTrait with ExecutionContexts {
+  val configAgent: Agent[JsValue] = AkkaAgent[JsValue](FaciaDefaults.getDefaultConfig)
+}

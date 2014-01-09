@@ -1,11 +1,12 @@
 package services
 
-import common.{AkkaAgent, ExecutionContexts}
-import play.api.libs.json.{Json, JsNull, JsValue}
+import common.ExecutionContexts
+import play.api.libs.json.{Json, JsValue}
 import model.Config
+import akka.agent.Agent
 
 trait ConfigAgentTrait extends ExecutionContexts {
-  private val configAgent = AkkaAgent[JsValue](JsNull)
+  val configAgent: Agent[JsValue]
 
   def refresh() = S3FrontsApi.getMasterConfig map {s => configAgent.send(Json.parse(s))}
 
