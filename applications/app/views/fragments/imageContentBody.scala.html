@@ -56,13 +56,8 @@
         @if(DiscussionSwitch.isSwitchedOn && image.isCommentable) {
             @fragments.discussion(image.isClosedForComments, image.shortUrlId)
         }
-        @if(storyPackage.nonEmpty) {
-            <aside class="related" role="complementary">
-                @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
-            </aside>
-        } else {
-            <aside class="related js-related" role="complementary"></aside>
-        }
+
+        @fragments.storyPackagePlaceholder(storyPackage)
 
         @fragments.mostPopularPlaceholder(image.section)
     </div>

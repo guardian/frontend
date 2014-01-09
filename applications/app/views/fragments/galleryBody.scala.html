@@ -84,13 +84,7 @@
         </div>
     </article>
 
-    @if(storyPackage.nonEmpty) {
-        <aside class="related" role="complementary">
-            @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
-        </aside>
-    } else {
-        <aside class="related js-related" role="complementary"></aside>
-    }
+    @fragments.storyPackagePlaceholder(storyPackage)
 
     @fragments.mostPopularPlaceholder(gallery.section)
 </div>
