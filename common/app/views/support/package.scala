@@ -544,29 +544,33 @@ object VisualTone {
   private val News = "news"
   private val Feature = "feature"
 
-  private val toneMappings = Map(
-    ("tone/comment", Comment),
-    ("tone/letters", Comment),
-    ("tone/obituaries", Comment),
-    ("tone/profiles", Comment),
-    ("tone/editorials", Comment),
-    ("tone/analysis", Comment),
+  private val commentMappings = Seq(
+    "tone/comment",
+    "tone/letters",
+    "tone/obituaries",
+    "tone/profiles",
+    "tone/editorials",
+    "tone/analysis"
+  )
 
-    ("tone/features", Feature),
-    ("tone/recipes", Feature),
-    ("tone/interview", Feature),
-    ("tone/performances", Feature),
-    ("tone/extract", Feature),
-    ("tone/reviews", Feature),
-    ("tone/albumreview", Feature),
-    ("tone/livereview", Feature),
-    ("tone/childrens-user-reviews", Feature)
+  private val featureMappings = Seq(
+    "tone/features",
+    "tone/recipes",
+    "tone/interview",
+    "tone/performances",
+    "tone/extract",
+    "tone/reviews",
+    "tone/albumreview",
+    "tone/livereview",
+    "tone/childrens-user-reviews"
   )
 
 
   // tones are all considered to be 'News' it is the default so we do not list news tones explicitly
-  def apply(tags: Tags) = tags.tones.headOption.flatMap(tone => toneMappings.get(tone.id)).getOrElse(News)
+  def apply(tags: Tags) = if(isComment(tags.tones)) Comment else if(isFeature(tags.tones)) Feature else News
 
+  private def isComment(tones: Seq[Tag]) = tones.exists(t => commentMappings.contains(t.id))
+  private def isFeature(tones: Seq[Tag]) = tones.exists(t => featureMappings.contains(t.id))
 }
 
 object RenderOtherStatus {
