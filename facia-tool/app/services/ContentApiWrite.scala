@@ -27,7 +27,7 @@ trait ContentApiWrite extends ExecutionContexts {
                             `type`: String,
                             title: Option[String],
                             groups: Seq[Group],
-                            backfill: Map[String, String],
+                            backfill: String,
                             lastModified: String,
                             modifiedBy: String
                             )
@@ -72,7 +72,7 @@ trait ContentApiWrite extends ExecutionContexts {
         config.roleName.getOrElse("Default"),
         config.displayName.orElse(Option("Default Title")),
         groups,
-        Map("id" -> "uk/news", "edition" -> "UK"),
+        "uk/news",
         block.lastUpdated,
         block.updatedEmail
       )
@@ -81,7 +81,7 @@ trait ContentApiWrite extends ExecutionContexts {
 
   private def generateGroups(config: Config, block: Block): Seq[Group] = {
     config.groups.zipWithIndex.map {case (group, index) =>
-    val trails = block.live.filter(_.meta.exists(_.get("group").exists(_.asOpt[Int].exists(_ == index))))
+    val trails = block.live.filter(_.meta.exists(_.get("group").exists(_.asOpt[String].map(_.toInt).exists(_ == index))))
       Group(
         title = group,
         content = trails.map { trail =>
