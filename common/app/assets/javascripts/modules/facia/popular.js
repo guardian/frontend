@@ -7,7 +7,16 @@ define([
     'common/modules/facia/collection-show-more',
     'common/modules/ui/images',
     'common/modules/discussion/comment-count'
-], function ($, mediator, ajax, bonzo, relativeDates, CollectionShowMore, images, commentCount) {
+], function (
+    $,
+    mediator,
+    ajax,
+    bonzo,
+    relativeDates,
+    CollectionShowMore,
+    images,
+    commentCount
+) {
 
     return  {
         render:  function (config, options) {
