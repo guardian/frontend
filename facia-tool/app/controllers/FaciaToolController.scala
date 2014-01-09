@@ -25,10 +25,6 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     } getOrElse "")
   }
 
-  def printagent = Action { request =>
-    Ok(ConfigAgent.configAgent.get().toString)
-  }
-
   def refreshagent = Action { request =>
     ConfigAgent.refresh()
     Ok("Refresh")
