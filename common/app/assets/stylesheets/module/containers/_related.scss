@@ -171,18 +171,16 @@
         @include fs-headline(1, true);
         @include box-sizing(border-box);
 
-        @include mq(mobileLandscape) {
+        @include mq(mobileLandscape, rightCol) {
             @include fs-headline(2, true);
         }
 
         @include mq(tablet) {
             min-height: $gs-row-height*4 - $baseline*2; //136px
-            @include fs-headline(2, true);
         }
 
         @include mq(rightCol) {
             min-height: $gs-row-height*3 - $gs-baseline; //96px
-            @include fs-headline(1, true);
         }
     }
 
@@ -235,7 +233,7 @@
 
     .i-quote-light-grey,
     .item__byline {
-        display:none;
+        display: none;
     }
 
     .item__timestamp {

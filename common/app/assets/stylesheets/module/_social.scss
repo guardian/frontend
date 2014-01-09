@@ -1,6 +1,6 @@
 @mixin socialOnPageLoad {
     .social-wrapper {
-        padding-top: $baseline*3;
+        padding-top: $gs-baseline;
         max-width: gs-span(4);
         overflow: hidden;
     }
