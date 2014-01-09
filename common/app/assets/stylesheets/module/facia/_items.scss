@@ -247,6 +247,14 @@ $c-live: #e81818;
         display: block;
     }
 }
+.item__support__title {
+    color: $c-neutral2;
+    @include fs-data(3);
+
+    @include mq(tablet) {
+        @include fs-data(4, true);
+    }
+}
 .item__support__item {}
 .item__support__action {}
 
@@ -273,6 +281,7 @@ $c-live: #e81818;
     }
 }
 
+
 // Image tone
 // values: [hide|highlight] in the fronts tool
 .item--imagetone-hide {
@@ -283,5 +292,19 @@ $c-live: #e81818;
 .item--imagetone-highlight {
     .item__image {
         
+    }
+}
+
+
+// Thumbnail element order:
+// 1. Title
+// 2. Image + standfirst
+// 3. Meta
+
+.item--thumbnail {
+    .item__standfirst {
+        @include rem((
+            margin-top: $gs-baseline
+        ));
     }
 }

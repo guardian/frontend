@@ -66,6 +66,10 @@ $guss-columns-fallback-columns: 3 !default;
             -webkit-column-break-inside: avoid;
                -moz-column-break-inside: avoid;
                     column-break-inside: avoid;
+            // column-break-inside: avoid; does not work in all browsers
+            // so we use inline-block instead
+            display: inline-block;
+            width: 100%;
         }
     } @else {
         #{$base-class} {
