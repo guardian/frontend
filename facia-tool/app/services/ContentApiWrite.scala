@@ -36,8 +36,6 @@ trait ContentApiWrite extends ExecutionContexts {
   implicit val contentApiPutWriteGroup = Json.writes[Group]
   implicit val contentApiPutWriteContentApiPut = Json.writes[ContentApiPut]
 
-  lazy val username = Configuration.contentApi.write.username
-  lazy val password = Configuration.contentApi.write.password
   lazy val endpoint = Configuration.contentApi.write.endpoint
 
   def getCollectionUrlForWrite(id: String): Option[String] = endpoint
@@ -46,6 +44,8 @@ trait ContentApiWrite extends ExecutionContexts {
 
   def writeToContentapi(config: Config): Future[Response] = {
     (for {
+      username      <- Configuration.contentApi.write.username
+      password      <- Configuration.contentApi.write.password
       url           <- getCollectionUrlForWrite(config.id)
       contentApiPut <- generateContentApiPut(config)
     } yield
