@@ -14,7 +14,6 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
 
   protected val apiRoot: String
   protected val clientHeaderValue: String
-  protected val orderBy: String = "newest"
   protected val pageSize: String = "10"
 
   def commentCounts(ids: String): Future[Seq[CommentCount]] = {
@@ -42,7 +41,7 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
         }
 
         CommentPage(
-          id = s"discussion/$key",
+          id = s"/$key",
           title = (json \ "discussion" \ "title").as[String],
           contentUrl = (json \ "discussion" \ "webUrl").as[String],
           comments = comments,
@@ -51,13 +50,14 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
           commenterCount =  (json \ "discussion" \ "commenterCount").as[Option[Int]].getOrElse(0),
           currentPage = (json \ "currentPage").as[Int],
           pages = (json \ "pages").as[Int],
+          orderBy = (json \ "orderBy").as[String],
           isClosedForRecommendation = (json \ "discussion" \ "isClosedForRecommendation").as[Boolean],
           switches = (json \ "switches").as[Seq[JsObject]] map { json => Switch(json) }
         )
     }
   }
 
-  private def getCommentJsonForId(id: String, apiUrl: String): Future[Comment] = {
+  private def getCommentJsonForId(id: Int, apiUrl: String): Future[Comment] = {
     def onError(r: Response) =
       s"Error loading comment id: $id status: ${r.status} message: ${r.statusText}"
 
@@ -68,19 +68,19 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
     }
   }
 
-  def commentFor(id: String): Future[Comment] = {
+  def commentFor(id: Int): Future[Comment] = {
     getCommentJsonForId(id, s"$apiRoot/comment/$id?displayResponses=true&displayThreaded=true")
   }
 
-  def commentsFor(key: DiscussionKey, page: String, allResponses: Boolean = false): Future[CommentPage] = {
+  def commentsFor(key: DiscussionKey, page: String, orderBy: String = "newest", allResponses: Boolean = false): Future[CommentPage] = {
     getJsonForUri(key, s"$apiRoot/discussion/$key?pageSize=$pageSize&page=$page&orderBy=$orderBy&showSwitches=true" + (if(allResponses) "" else "&maxResponses=3"))
   }
 
-  def topCommentsFor(key: DiscussionKey, page: String): Future[CommentPage] = {
-    getJsonForUri(key, s"$apiRoot/discussion/$key/topcomments?pageSize=$pageSize&page=$page&orderBy=$orderBy&showSwitches=true")
+  def topCommentsFor(key: DiscussionKey): Future[CommentPage] = {
+    getJsonForUri(key, s"$apiRoot/discussion/$key/topcomments?pageSize=$pageSize&page=1&orderBy=newest&showSwitches=true")
   }
 
-  def commentContext(id: Int): Future[(DiscussionKey, String)] = {
+  def commentContext(id: Int, orderBy: String = "newest"): Future[(DiscussionKey, String)] = {
     def onError(r: Response) =
       s"Discussion API: Cannot load comment context, status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
 

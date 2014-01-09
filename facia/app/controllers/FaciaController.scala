@@ -7,7 +7,7 @@ import conf._
 import play.api.mvc._
 import play.api.libs.json.{JsArray, Json}
 import Switches.EditionRedirectLoggingSwitch
-import views.support.NewsContainer
+import views.support.{TemplateDeduping, NewsContainer}
 import common.editions.Uk
 
 abstract class FrontPage(val isNetworkFront: Boolean) extends MetaData
@@ -257,11 +257,12 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
   val front: Front = Front
   val EditionalisedKey = """^\w\w(/.*)?$""".r
 
+  implicit def getTemplateDedupingInstance: TemplateDeduping = TemplateDeduping()
+
   private def editionPath(path: String, edition: Edition) = path match {
     case EditionalisedKey(_) => path
     case _ => Editionalise(path, edition)
   }
-
 
   def editionRedirect(path: String) = Action{ implicit request =>
 
@@ -280,7 +281,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
       log.info(s"Edition redirect: geolocation: $country | edition: ${edition.id} | edition cookie set: $editionCookie"  )
     }
 
-    NoCache(Redirect(redirectPath))
+    Cached(60)(Redirect(redirectPath))
   }
 
   def getPathForUkAlpha(path: String, request: RequestHeader): String =
@@ -306,6 +307,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
   def renderEditionCollectionJson(id: String) = renderCollection(id)
 
   def renderFront(path: String) = Action { implicit request =>
+
       //For UK alpha only
       val newPath = getPathForUkAlpha(path, request)
 
@@ -329,12 +331,12 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
               Ok(views.html.front(frontPage, faciaPage))
           }
         }
-      }.getOrElse(NotFound) //TODO is 404 the right thing here
+      }.getOrElse(Cached(5)(NotFound)) //TODO is 404 the right thing here
   }
 
   def renderCollection(id: String) = Action { implicit request =>
     CollectionAgent.getCollection(id) map { collection =>
-      val html = views.html.fragments.collections.standard(Config(id), collection, NewsContainer(false), 1)
+      val html = views.html.fragments.collections.standard(Config(id), collection.items, NewsContainer(false), 1)
       Cached(60) {
         if (request.isJson) {
             JsonComponent(
@@ -345,7 +347,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
           Ok(html)
         }
       }
-    } getOrElse(NotFound)
+    } getOrElse(Cached(5)(NotFound))
   }
 
   def renderCollectionRss(id: String) = Action { implicit request =>
@@ -354,7 +356,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
         val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(""))
         Ok(TrailsToRss(config.displayName, collection.items))
       }.as("text/xml; charset=utf-8")
-    } getOrElse(NotFound)
+    } getOrElse(Cached(5)(NotFound))
   }
 
 }

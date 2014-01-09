@@ -1,28 +1,28 @@
-@(config: Config, collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader)
+@(config: Config, items: Seq[Trail], style: Container, containerIndex: Int)(implicit request: RequestHeader)
 
 <ul class="unstyled l-row l-row--items-2 collection">
-    @collection.items.slice(0, 2).zipWithIndex.map{ case (trail, index) =>
+    @items.slice(0, 2).zipWithIndex.map{ case (trail, index) =>
         <li class="l-row__item collection__item collection__item--volume-@trail.group.getOrElse("0")">
             @fragments.items.standard(trail, index, containerIndex, "div")
         </li>
     }
 </ul>
 <ul class="unstyled l-row l-row--items-3 collection">
-    @collection.items.slice(2, 5).zipWithIndex.map{ case (trail, index) =>
+    @items.slice(2, 5).zipWithIndex.map{ case (trail, index) =>
         <li class="l-row__item collection__item collection__item--volume-@trail.group.getOrElse("0")">
             @fragments.items.standard(trail, index, containerIndex, "div")
         </li>
     }
 </ul>
 <ul class="unstyled l-row l-row--items-4 collection">
-    @collection.items.slice(5, 9).zipWithIndex.map{ case (trail, index) =>
+    @items.slice(5, 9).zipWithIndex.map{ case (trail, index) =>
         <li class="l-row__item collection__item collection__item--volume-@trail.group.getOrElse("0")">
             @fragments.items.standard(trail, index, containerIndex, "div")
         </li>
     }
 </ul>
 <ul class="l-columns linkslist">
-    @collection.items.slice(9, 22).zipWithIndex.map{ case (trail, index) =>
+    @items.slice(9, 22).zipWithIndex.map{ case (trail, index) =>
         <li class="l-columns__item linkslist__item">
             <a href="@LinkTo{@trail.url}" class="linkslist__action">
                 @RemoveOuterParaHtml(trail.headline)

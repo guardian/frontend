@@ -1,6 +1,6 @@
 package views.support
 
-import org.scalatest.{BeforeAndAfter, FlatSpec, Matchers}
+import org.scalatest.{Ignore, BeforeAndAfter, FlatSpec, Matchers}
 import model.{Collection, Trail}
 import org.joda.time.DateTime
 import com.gu.openplatform.contentapi.model.{Content => ApiContent}
@@ -48,21 +48,21 @@ class TemplateDedupingTest extends FlatSpec with Matchers with BeforeAndAfter {
   }
 
   it should "dedupe all of the trails passed by default" in {
-    val newTrailsOne = dedupe.apply(Collection(trails))
-    newTrailsOne.items.length should be (4)
+    val newTrailsOne = dedupe.apply(trails)
+    newTrailsOne.length should be (4)
 
-    val newTrailsTwo = dedupe.apply(Collection(trails))
-    newTrailsTwo.items.length should be (0)
+    val newTrailsTwo = dedupe.apply(trails)
+    newTrailsTwo.length should be (0)
   }
 
   it should "respect deduping boundaries" in {
-    val newTrailsOne = dedupe.take(1, Collection(trails))
-    newTrailsOne.items.length should be (4)
-    newTrailsOne.items should be (Seq(trailOne, trailTwo, trailThree, trailFour))
+    val newTrailsOne = dedupe.take(1, trails)
+    newTrailsOne.length should be (4)
+    newTrailsOne should be (Seq(trailOne, trailTwo, trailThree, trailFour))
 
-    val newTrailsTwo = dedupe.take(1, Collection(trails))
-    newTrailsTwo.items.length should be (3)
-    newTrailsTwo.items should be (Seq(trailTwo, trailThree, trailFour))
+    val newTrailsTwo = dedupe.take(1, trails)
+    newTrailsTwo.length should be (3)
+    newTrailsTwo should be (Seq(trailTwo, trailThree, trailFour))
 
     //trailTwo and trailOne have been deduped above, but are not in the deduping zone here
     //so they should not be deduped and we should get 4 back
@@ -77,24 +77,24 @@ class TemplateDedupingTest extends FlatSpec with Matchers with BeforeAndAfter {
   }
 
   it should "not return anything in the end" in {
-    val newTrailsOne = dedupe.take(1, Collection(trails))
-    newTrailsOne.items.length should be (4)
-    newTrailsOne.items should be (Seq(trailOne, trailTwo, trailThree, trailFour))
+    val newTrailsOne = dedupe.take(1, trails)
+    newTrailsOne.length should be (4)
+    newTrailsOne should be (Seq(trailOne, trailTwo, trailThree, trailFour))
 
-    val newTrailsTwo = dedupe.take(1, Collection(trails))
-    newTrailsTwo.items.length should be (3)
-    newTrailsTwo.items should be (Seq(trailTwo, trailThree, trailFour))
+    val newTrailsTwo = dedupe.take(1, trails)
+    newTrailsTwo.length should be (3)
+    newTrailsTwo should be (Seq(trailTwo, trailThree, trailFour))
 
-    val newTrailsThree = dedupe.take(1, Collection(trails))
-    newTrailsThree.items.length should be (2)
-    newTrailsThree.items should be (Seq(trailThree, trailFour))
+    val newTrailsThree = dedupe.take(1, trails)
+    newTrailsThree.length should be (2)
+    newTrailsThree should be (Seq(trailThree, trailFour))
 
-    val newTrailsFour = dedupe.take(1, Collection(trails))
-    newTrailsFour.items.length should be (1)
-    newTrailsFour.items should be (Seq(trailFour))
+    val newTrailsFour = dedupe.take(1, trails)
+    newTrailsFour.length should be (1)
+    newTrailsFour should be (Seq(trailFour))
 
-    val newTrailsFive = dedupe.take(1, Collection(trails))
-    newTrailsFive.items.length should be (0)
+    val newTrailsFive = dedupe.take(1, trails)
+    newTrailsFive.length should be (0)
   }
 
   it should "preserve order" in {

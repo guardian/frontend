@@ -7,9 +7,11 @@ import play.api.libs.json.Json._
 import play.api.libs.json._
 import play.api.libs.ws.{ WS, Response }
 import play.api.libs.json.JsObject
-import services.{ConfigAgentTrait, S3FrontsApi}
-import scala.concurrent.Future
+import services.ConfigAgentTrait
 import play.api.http.Status
+import services.{SecureS3Request, S3FrontsApi}
+import scala.concurrent.Future
+import common.FaciaMetrics.S3AuthorizationError
 import scala.collection.immutable.SortedMap
 
 object Path {
@@ -67,10 +69,14 @@ trait ParseCollection extends ExecutionContexts with Logging {
 
   case class CollectionItem(id: String, metaData: Option[Map[String, JsValue]])
 
+  //Curated and editorsPicks are the same, we will get rid of either
+  case class Result(curated: List[Content], editorsPicks: List[Content], contentApiResults: List[Content])
+
   def requestCollection(id: String): Future[Response] = {
-    val collectionUrl = s"${Configuration.frontend.store}/${S3FrontsApi.location}/collection/$id/collection.json"
-    log.info(s"loading running order configuration from: $collectionUrl")
-    WS.url(collectionUrl).withRequestTimeout(2000).get()
+    val s3BucketLocation: String = s"${S3FrontsApi.location}/collection/$id/collection.json"
+    log.info(s"loading running order configuration from: ${Configuration.frontend.store}/$s3BucketLocation")
+    val request = SecureS3Request.urlGet(s3BucketLocation)
+    request.withRequestTimeout(2000).get()
   }
 
   private def parseCollectionItem(json: JsValue): Seq[CollectionItem] = (json \ "live").as[Seq[JsObject]] map { trail =>
@@ -87,7 +93,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
       collectionList <- getCuratedList(response, edition, id, isWarmedUp)
       displayName    <- parseDisplayName(response).fallbackTo(Future.successful(None))
       contentApiList <- executeContentApiQuery(config.contentApiQuery, edition)
-    } yield Collection(collectionList ++ contentApiList, displayName)
+    } yield Collection(collectionList, contentApiList.editorsPicks, contentApiList.contentApiResults, displayName)
   }
 
   def getCuratedList(response: Future[Response], edition: Edition, id: String, isWarmedUp: Boolean): Future[List[Content]] = {
@@ -123,10 +129,16 @@ trait ParseCollection extends ExecutionContexts with Logging {
               throw e
             }
           }
+        case 403 => {
+          S3AuthorizationError.increment()
+          val errorString: String = s"Request failed to authenticate with S3: $id"
+          log.warn(errorString)
+          Future.failed(throw new Exception(errorString))
+        }
         case (httpResponseCode: Int) if httpResponseCode >= 500 =>
           Future.failed(throw new Exception("S3 returned a 5xx"))
         case _ =>
-          log.warn(s"Could not load running order: ${r.status} ${r.statusText}")
+          log.warn(s"Could not load running order: ${r.status} ${r.statusText} $id")
           // NOTE: better way of handling fallback
           Future(Nil)
       }
@@ -170,7 +182,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
     .map(json => CollectionItem((json \ "id").as[String], (json \ "meta").asOpt[Map[String, JsValue]]))
   ).getOrElse(Nil)
 
-  def executeContentApiQuery(s: Option[String], edition: Edition): Future[List[Content]] = s filter(_.nonEmpty) map { queryString =>
+  def executeContentApiQuery(s: Option[String], edition: Edition): Future[Result] = s filter(_.nonEmpty) map { queryString =>
     val queryParams: Map[String, String] = QueryParams.get(queryString).mapValues{_.mkString("")}
     val queryParamsWithEdition = queryParams + ("edition" -> queryParams.getOrElse("edition", Edition.defaultEdition.id))
 
@@ -183,7 +195,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
           case (query, (key, value)) => query.stringParam(key, value)
         }.showFields("all")
         newSearch.response map { r =>
-          r.results.map(Content(_))
+          Result(Nil, Nil, r.results.map(Content(_)))
         }
       }
       case Path(id)  => {
@@ -195,14 +207,14 @@ trait ParseCollection extends ExecutionContexts with Logging {
           case (query, (key, value)) => query.stringParam(key, value)
         }.showFields("all")
         newSearch.response map { r =>
-          r.editorsPicks.map(Content(_)) ++ r.results.map(Content(_))
+          Result(Nil, r.editorsPicks.map(Content(_)), r.results.map(Content(_)))
         }
       }
     }
 
     newSearch onFailure {case t: Throwable => log.warn("Content API Query failed: %s: %s".format(queryString, t.toString))}
     newSearch
-  } getOrElse Future(Nil)
+  } getOrElse Future(Result(Nil, Nil, Nil))
 
 }
 

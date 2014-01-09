@@ -116,7 +116,7 @@ define([
                 model.collections().forEach(function(list, index){
                     setTimeout(function(){
                         list.refresh();
-                    }, index * period / (model.collections().length + 1)); // stagger requests
+                    }, index * period / (model.collections().length || 1)); // stagger requests
                 });
             }, period);
         });
@@ -153,6 +153,7 @@ define([
 
         model.liveMode.subscribe(function() {
             _.each(model.collections(), function(collection) {
+                collection.closeAllArticles();
                 collection.populateLists();
             });
         });
