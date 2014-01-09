@@ -153,8 +153,13 @@ define([
             // only run on 5% of the users
             var isAChosenOne = parseInt(mvtCookie.getMvtValue(), 10) < (mvtCookie.MAX_INT * 0.05);
             if (config.page.contentType === 'Network Front' && isAChosenOne) {
-                var page = window.location.pathname.replace('-alpha', '');
-                if (config.switches['networkFront' + (page.charAt(0).toUpperCase() + page.slice(1)) + 'Alpha'] === true) {
+                var page = window.location.pathname.replace('-alpha', ''),
+                    alphaSwitch = {
+                        uk: 'networkFrontUkAlpha',
+                        us: 'networkFrontUsAlpha',
+                        au: 'networkFrontAuAlpha'
+                    } [page];
+                if (alphaSwitch === true) {
                     var preferenceUrl = '/preference' + page + 'alpha/[OPT]?page=' + page,
                         msg,
                         opts = {};
