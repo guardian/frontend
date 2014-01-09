@@ -247,18 +247,14 @@ object Switches extends Collections {
     "If this is switched on an AB test runs as a control variant for right most popular",
     safeState = Off)
 
-  val ABTagLinking = Switch("A/B Tests", "ab-tag-linking",
-    "If this is switched on an AB test runs whereby articles that have no in body links auto link to their tags",
+  val TagLinking = Switch("Feature Switches", "tag-linking",
+    "If this is switched on articles that have no in body links will auto link to their tags where possible",
     safeState = Off)
 
   val ABUnderlineLinks = Switch("A/B Tests", "ab-underline-links",
     "If this is switched on an AB test runs whereby links in articles are underline (with CSS)",
     safeState = Off)
   
-  val ABInBodyLinking = Switch("A/B Tests", "ab-in-body-linking",
-    "If this is switched on an AB test runs whereby articles have in body links hidden",
-    safeState = Off)
-
   // Sport Switch
 
   val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
@@ -339,9 +335,8 @@ object Switches extends Collections {
     ABRightPopular,
     AdDwellTimeLoggerSwitch,
     UkAlphaSwitch,
-    ABTagLinking,
+    TagLinking,
     ABUnderlineLinks,
-    ABInBodyLinking,
     SponsoredContentSwitch
   )
 
