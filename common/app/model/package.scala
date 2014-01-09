@@ -2,14 +2,13 @@ package model
 
 import com.gu.openplatform.contentapi.model.{ Content => ApiContent, MediaAsset }
 import org.joda.time.DateTime
-import org.joda.time.format.ISODateTimeFormat
+import org.joda.time.format.{DateTimeFormat, ISODateTimeFormat}
 import scala.math.abs
 import org.scala_tools.time.Imports._
+import org.scala_tools.time.TypeImports.DateTimeFormat
+import org.scala_tools.time.StaticForwarderImports.DateTimeFormat
 
 object `package` {
-
-  //http://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.3.1
-  private val HTTPDateFormat = DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss 'GMT'").withZone(DateTimeZone.UTC)
 
   implicit class ApiContent2Is(content: ApiContent) {
     lazy val isLiveBlog: Boolean = content.tags exists { _.id == "tone/minutebyminute" }
@@ -42,12 +41,6 @@ object `package` {
   implicit class Int2RichInt(i: Int) {
     def distanceFrom(j: Int) = abs(j - i)
     def in(range: Range): Boolean = range contains i
-  }
-
-  implicit class DateTime2ToCommonDateFormats(date: DateTime) {
-    lazy val toISODateTimeString: String = date.toString(ISODateTimeFormat.dateTime)
-    lazy val toISODateTimeNoMillisString: String = date.toString(ISODateTimeFormat.dateTimeNoMillis)
-    lazy val toHttpDateTimeString: String = date.toString(HTTPDateFormat)
   }
 
   lazy val DateTimeWithMillis = """.*\d\d:\d\d\.(\d+)[Z|\+].*""".r
