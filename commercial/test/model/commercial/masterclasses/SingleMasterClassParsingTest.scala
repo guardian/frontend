@@ -27,7 +27,6 @@ class SingleMasterClassParsingTest extends FlatSpec with Matchers {
     result.isOpen should be (true)
     result.displayPrice should be ("400.00")
     result.guardianUrl should be ("http://www.theguardian.com/guardian-masterclasses/how-to-use-twitter-effectively-david-schneider-david-levin-social-media-course")
-    result.firstParagraph should be("This is the first paragraph of this event.")
     result.readableDate should be ("20 April 2013")
 
 
@@ -53,6 +52,18 @@ class SingleMasterClassParsingTest extends FlatSpec with Matchers {
     result.displayPrice should be ("400.00 to 2,600.00")
   }
 
+  "Generated masterclass object" should "have a desription text that is truncated to 250 chars" in {
+    val event: JsValue = Json.parse(json)
+
+    val resultMaybe = MasterClass(event)
+
+    resultMaybe.isDefined should be (true)
+    val result = resultMaybe.get
+
+    result.name should be("Travel writing weekend")
+    result.truncatedFirstParagraph should be ("Everybody loves a good, juicy murder. So it's little wonder crime fiction is one of the UK's bestselling literary genres. Whether your tastes tend toward the gritty Jack Reacher procedural or the witty Father Brown whimsical, over the course of a ...")
+  }
+
 
   val json = """{ "background_color" : "FFFFFF",
                |  "box_background_color" : "FFFFFF",
@@ -63,7 +74,7 @@ class SingleMasterClassParsingTest extends FlatSpec with Matchers {
                |  "capacity" : 18,
                |  "category" : "seminars,conferences",
                |  "created" : "2013-02-15 09:50:35",
-               |  "description" : "<p>This is the first paragraph of this event.</p><P>A bunch of HTML goes here. <a href='http://www.theguardian.com/guardian-masterclasses/how-to-use-twitter-effectively-david-schneider-david-levin-social-media-course'>Full course and returns information on the Masterclasses website</a></P>",
+               |  "description" : "<p>Everybody loves a good, juicy murder. So it's little wonder crime fiction is one of the UK's bestselling literary genres. Whether your tastes tend toward the gritty Jack Reacher procedural or the witty Father Brown whimsical, over the course of a weekend, acclaimed novelists William Ryan and M R Hall, joined by Literary Agent David Headley, will give an intensive and entertaining overview of the building blocks of crime fiction. And whether you're an absolute beginner or a much more experienced writer, this course will be of real value. From understanding the types of fiction agents, publishers and readers are looking for to giving practical and incisive help with your plotting and characterisation, through a series of lectures and workshops, you'll learn how to drive your novel forward without giving everything away - and while keeping your readers gripped. You'll leave the course with a step-by-step guide to developing your crime novel, and invaluable feedback from three professionals at the top of their game on how to continue.</p><P>A bunch of HTML goes here. <a href='http://www.theguardian.com/guardian-masterclasses/how-to-use-twitter-effectively-david-schneider-david-levin-social-media-course'>Full course and returns information on the Masterclasses website</a></P>",
                |  "end_date" : "2013-04-21 17:00:00",
                |  "id" : 112342566,
                |  "link_color" : "EE6600",

@@ -3,23 +3,26 @@
 # ~~~~
 
 # For assets on dev machines
-GET     /assets/*path                                       dev.DevAssetsController.at(path)
+GET        /assets/*path                                        dev.DevAssetsController.at(path)
 
-GET     /discussion/comment-box.json                        controllers.DiscussionApp.commentBox()
+GET        /discussion/comment-box.json                         controllers.DiscussionApp.commentBox()
 
-GET     /discussion/comment-counts                          controllers.DiscussionApp.commentCount(shortUrls: String)
-GET     /discussion/comment-counts.json                     controllers.DiscussionApp.commentCountJson(shortUrls: String)
+GET        /discussion/comment-counts                           controllers.DiscussionApp.commentCount(shortUrls: String)
+GET        /discussion/comment-counts.json                      controllers.DiscussionApp.commentCountJson(shortUrls: String)
 
-GET     /discussion/top/*discussionKey.json                 controllers.DiscussionApp.topCommentsPageJson(discussionKey: discussion.model.DiscussionKey)
-GET     /discussion/top/*discussionKey                      controllers.DiscussionApp.topCommentsPage(discussionKey: discussion.model.DiscussionKey)
+GET        /discussion/comment/*id.json                         controllers.DiscussionApp.commentJson(id: Int)
+GET        /discussion/comment/*id                              controllers.DiscussionApp.comment(id: Int)
 
-GET     /discussion/comment/*id.json                        controllers.DiscussionApp.commentJson(id: String)
-GET     /discussion/comment/*id                             controllers.DiscussionApp.comment(id: String)
+GET        /discussion/comment-permalink/*commentId.json        controllers.DiscussionApp.commentPermalinkJson(commentId: Int)
+GET        /discussion/comment-permalink/*commentId             controllers.DiscussionApp.commentPermalink(commentId: Int)
 
-GET     /discussion/comment-permalink/*commentId.json       controllers.DiscussionApp.commentPermalinkJson(commentId: Int)
-GET     /discussion/comment-permalink/*commentId            controllers.DiscussionApp.commentPermalink(commentId: Int)
+GET        /discussion/top/*discussionKey.json                  controllers.DiscussionApp.topCommentsJson(discussionKey: discussion.model.DiscussionKey)
+GET        /discussion/top/*discussionKey                       controllers.DiscussionApp.topComments(discussionKey: discussion.model.DiscussionKey)
 
-GET     /discussion/*discussionKey.json                     controllers.DiscussionApp.commentPageJson(discussionKey: discussion.model.DiscussionKey)
-GET     /discussion/*discussionKey                          controllers.DiscussionApp.commentPage(discussionKey: discussion.model.DiscussionKey)
+GET        /discussion/oldest/*discussionKey.json               controllers.DiscussionApp.oldestCommentsJson(discussionKey: discussion.model.DiscussionKey)
+GET        /discussion/oldest/*discussionKey                    controllers.DiscussionApp.oldestComments(discussionKey: discussion.model.DiscussionKey)
 
-GET     /open/cta/article/*discussionKey.json               controllers.CtaController.cta(discussionKey: discussion.model.DiscussionKey)
+GET        /discussion/*discussionKey.json                      controllers.DiscussionApp.commentsJson(discussionKey: discussion.model.DiscussionKey)
+GET        /discussion/*discussionKey                           controllers.DiscussionApp.comments(discussionKey: discussion.model.DiscussionKey)
+
+GET        /open/cta/article/*discussionKey.json                controllers.CtaController.cta(discussionKey: discussion.model.DiscussionKey)

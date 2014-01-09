@@ -9,7 +9,7 @@ import com.gu.openplatform.contentapi.model.{ Content => ApiContent }
 import play.api.mvc.Results
 import org.scala_tools.time.Imports._
 
-class CachedTest extends FlatSpec with Matchers with Results {
+class CachedTest extends FlatSpec with Matchers with Results with implicits.Dates {
 
   "Cached" should "cache live content for 30 seconds" in {
     Switches.DoubleCacheTimesSwitch.switchOff()
