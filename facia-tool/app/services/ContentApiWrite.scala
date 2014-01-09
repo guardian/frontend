@@ -6,12 +6,12 @@ import scala.concurrent.Future
 import tools.FaciaApi
 import play.api.libs.json.Json
 import play.api.libs.ws.{Response, WS}
-import common.ExecutionContexts
+import common.{Logging, ExecutionContexts}
 import com.ning.http.client.Realm
 import conf.Configuration
 import play.Play
 
-trait ContentApiWrite extends ExecutionContexts {
+trait ContentApiWrite extends ExecutionContexts with Logging {
 
   case class Item(
                    id: String,
@@ -54,15 +54,11 @@ trait ContentApiWrite extends ExecutionContexts {
         .url(url).withAuth(username, password, Realm.AuthScheme.NONE)
         .put(Json.toJson(contentApiPut))
 
-      //Initial logging out, remove
-      response.onSuccess{case r => println(s"Successful Put to content api with status ${r.status}: ${r.body}")}
-      response.onFailure{case e => println(s"Failure to put to content api with exception ${e.toString}")}
+      response.onSuccess{case r => log.info(s"Successful Put to content api with status ${r.status}: ${r.body}")}
+      response.onFailure{case e => log.warn(s"Failure to put to content api with exception ${e.toString}")}
       response
     }) getOrElse Future.failed(new Throwable(s"${config.id} does not exist"))
   }
-
-  //Just to check to see what is going out, remove
-  def prettyPrint(config: Config): String = Json.prettyPrint(Json.toJson(generateContentApiPut(config)))
 
   private def generateContentApiPut(config: Config): Option[ContentApiPut] = {
     FaciaApi.getBlock(config.id) map { block =>
