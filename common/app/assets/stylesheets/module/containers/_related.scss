@@ -57,6 +57,10 @@
         margin-left: $a-leftColWide-width + $gs-gutter/2;
         width:  gs-span(12) + $gs-gutter*1;
     }
+    
+    .item__container {
+        position: relative;
+    }
 
     .item {
         float: left;
@@ -197,9 +201,9 @@
 
     .item__meta {
         width: 100%;
-        padding-left: 0;
-        padding-right: $gs-gutter/2;;
+        padding-bottom: $gs-baseline;
         margin-bottom: - $gs-baseline*2;
+        border-bottom: 1px solid $c-neutral5;
         @include box-sizing(border-box);
 
         @include mq(rightCol) {
@@ -208,13 +212,7 @@
     }
 
     .item__timestamp {
-        width: 100%;
-        padding-bottom: $gs-baseline;
-        padding-left: 21px;
-        border-bottom: 1px solid $c-neutral5;
         @include box-sizing(border-box);
-
-        i { left: 7px }
     }
 
     .item__media-wrapper {
