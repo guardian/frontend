@@ -115,10 +115,12 @@ object S3FrontsApi extends S3 {
 
 trait SecureS3Request extends implicits.Dates with Logging {
   val algorithm: String = "HmacSHA1"
-  val accessKey: String = Configuration.aws.accessKey
-  val secretKey: String = Configuration.aws.secretKey
   val frontendBucket: String = Configuration.aws.bucket
   val frontendStore: String = Configuration.frontend.store
+
+  //Defs because credentials expire
+  def accessKey: String = Configuration.aws.credentials.getCredentials.getAWSAccessKeyId
+  def secretKey: String = Configuration.aws.credentials.getCredentials.getAWSSecretKey
 
   def urlGet(id: String): WS.WSRequestHolder = url("GET", id)
 
