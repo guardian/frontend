@@ -5,6 +5,7 @@ define([
     'bean',
     'common/utils/ajax',
     'common/modules/component',
+    'common/modules/userPrefs',
     'common/modules/identity/api',
     'common/modules/discussion/comment-box',
     'common/modules/discussion/recommend-comments',
@@ -16,6 +17,7 @@ define([
     bean,
     ajax,
     Component,
+    userPrefs,
     Id,
     CommentBox,
     RecommendComments,
@@ -40,6 +42,10 @@ var Comments = function(context, mediator, options) {
 
     if (this.options.commentId) {
         this.endpoint = '/discussion/comment-permalink/'+ this.options.commentId +'.json';
+    }
+
+    if (userPrefs.get('discussion.order')) {
+        this.options.order = userPrefs.get('discussion.order');
     }
 
     if (this.options.order === 'oldest') {
@@ -602,10 +608,11 @@ Comments.prototype.setOrder = function(e) {
     this.options.order = newWorldOrder;
     this.options.initialShow = this.defaultOptions.initialShow;
     this.showDiscussion();
+    this.loading();
 
     $newComments.empty();
+    userPrefs.set('discussion.order', newWorldOrder);
 
-    this.loading();
     return this.fetchComments({
         page: 1,
         position: 'replace'

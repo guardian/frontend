@@ -157,7 +157,8 @@ Loader.prototype.loadComments = function(args) {
         initialShow: commentId ? 10 : args.amount,
         discussionId: this.getDiscussionId(),
         user: this.user,
-        commentId: commentId ? commentId : null
+        commentId: commentId ? commentId : null,
+        order: this.getDiscussionClosed() ? 'oldest' : 'newest'
     });
 
     // Doing this makes sure there is only one redraw
