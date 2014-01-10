@@ -62,15 +62,15 @@ if [ -z $FRONTEND_JVM_ARGS ]; then
 fi
 
 echo ''
-echo "******************************* USING JVM ARGS *********************************************"
+echo "******************************** USING JVM ARGS ********************************"
 echo $FRONTEND_JVM_ARGS
-echo "********* to override/ customise use export FRONTEND_JVM_ARGS='XXX' in e.g. .bashrc ********"
+echo "*** to override/customise use export FRONTEND_JVM_ARGS='XXX' in e.g. .bashrc ***"
 echo ''
 
 echo ''
-echo "******************************* JAVA VERION *********************************************"
+echo "********************************* JAVA VERSION *********************************"
 java -version
-echo "*****************************************************************************************"
+echo "********************************************************************************"
 echo ''
 
 

@@ -33,31 +33,29 @@
             <div class="fieldset__fields">
                 <ul class="unstyled">
 
-                    @inputField(Email(registrationForm("user.primaryEmailAddress"), '_label -> "Email address"))
+                    @inputField(Email(registrationForm("user.primaryEmailAddress"), '_label -> "Email address", 'tabindex -> 1))
 
-                    @inputField(Username(registrationForm("user.publicFields.username"), '_label -> "Username", '_help -> "Between 6 and 20 characters, letters and numbers only"))
+                    @inputField(Username(registrationForm("user.publicFields.username"), '_label -> "Username", '_help -> "Between 6 and 20 characters, letters and numbers only", ('tabindex, 2)))
 
-                    @inputField(Password(registrationForm("user.password"), '_label -> "Password", '_help -> "Between 6 and 20 characters", 'class -> "js-register-password js-password-strength"))
+                    @inputField(Password(registrationForm("user.password"), '_label -> "Password", '_help -> "Between 6 and 20 characters", 'class -> "js-register-password js-password-strength", ('tabindex, 3)))
 
                     <li class="form-field form-field--no-margin">
                         <label class="check-label" for="@registrationForm("receive_gnm_marketing").id">
-                            @checkbox(registrationForm("receive_gnm_marketing"))
+                            @checkbox(registrationForm("receive_gnm_marketing"), ('tabindex, 4))
                             Keep me up to date with offers and developments from the Guardian
                         </label>
                     </li>
                     <li class="form-field">
                         <label class="check-label" for="@registrationForm("receive_third_party_marketing").id">
-                            @checkbox(registrationForm("receive_third_party_marketing"))
+                            @checkbox(registrationForm("receive_third_party_marketing"), ('tabindex, 5))
                             Send me messages from 3rd party organisations screened by the Guardian
                         </label>
                     </li>
-                    <li class="form-field">
+                    <li class="form-field form-field__submit">
                         <div class="form-field__note">
                             By proceeding, you agree to the Guardian's <a href="http://www.theguardian.com/help/terms-of-service" data-link-name="Terms of service">Terms of Service</a> and <a href="http://www.theguardian.com/help/privacy-policy" data-link-name="Privacy policy">Privacy Policy</a>.
                         </div>
-                    </li>
-                    <li class="form-field">
-                        <button type="submit" class="submit-input" data-link-name="Create account">Create account</button>
+                        <button type="submit" class="submit-input" data-link-name="Create account" tabindex="6">Create account</button>
                     </li>
                 </ul>
             </div>

@@ -21,7 +21,7 @@ import scala.Some
 import play.api.mvc.SimpleResult
 import model.Tag
 import model.VideoAsset
-import conf.Switches.{ABTagLinking, ABInBodyLinking}
+import conf.Switches.{TagLinking}
 
 sealed trait Style {
   val className: String
@@ -64,34 +64,33 @@ sealed trait Container {
   val containerType: String
   val showMore: Boolean
   val tone: String
-  val headerLink: Boolean
 }
 
-case class NewsContainer(showMore: Boolean = true, headerLink: Boolean = true) extends Container {
+case class NewsContainer(showMore: Boolean = true) extends Container {
   val containerType = "news"
   val tone = "news"
 }
-case class SportContainer(showMore: Boolean = true, headerLink: Boolean = true) extends Container {
+case class SportContainer(showMore: Boolean = true) extends Container {
   val containerType = "sport"
   val tone = "news"
 }
-case class CommentContainer(showMore: Boolean = true, headerLink: Boolean = true) extends Container {
+case class CommentContainer(showMore: Boolean = true) extends Container {
   val containerType = "comment"
   val tone = "comment"
 }
-case class FeaturesContainer(showMore: Boolean = true, headerLink: Boolean = true) extends Container {
+case class FeaturesContainer(showMore: Boolean = true) extends Container {
   val containerType = "features"
   val tone: String = "feature"
 }
-case class PopularContainer(showMore: Boolean = true, headerLink: Boolean = true) extends Container {
+case class PopularContainer(showMore: Boolean = true) extends Container {
   val containerType = "popular"
   val tone: String = "news"
 }
-case class TopStoriesContainer(showMore: Boolean = true, headerLink: Boolean = true) extends Container {
+case class TopStoriesContainer(showMore: Boolean = true) extends Container {
   val containerType = "top-stories"
   val tone = "news"
 }
-case class SectionContainer(showMore: Boolean = true, tone: String = "news", headerLink: Boolean = true) extends Container {
+case class SectionContainer(showMore: Boolean = true, tone: String = "news") extends Container {
   val containerType = "section"
 }
 
@@ -322,7 +321,7 @@ object TweetCleaner extends HtmlCleaner {
 
 class TagLinker(article: Article)(implicit val edition: Edition) extends HtmlCleaner{
   def clean(d: Document): Document = {
-    if (ABTagLinking.isSwitchedOn && article.linkCounts.noLinks) {
+    if (TagLinking.isSwitchedOn && article.linkCounts.noLinks) {
       val paragraphs = d.getElementsByTag("p")
 
       // order by length of name so we do not make simple match errors
@@ -336,45 +335,12 @@ class TagLinker(article: Article)(implicit val edition: Edition) extends HtmlCle
           tagLink.attr("href", LinkTo(keyword.url, edition))
           tagLink.text(keyword.name)
           tagLink.attr("data-link-name", "auto-linked-tag")
-          tagLink.addClass("linked-tag-name is-hidden")
-          
-          val nameSpan = d.createElement("span")
-          nameSpan.html(keyword.name)
-          nameSpan.addClass("unlinked-tag-name")
-        
-          p.html(p.html().replaceFirst(keyword.name, tagLink.toString + nameSpan.toString))
+
+          p.html(p.html().replaceFirst(keyword.name, tagLink.toString))
         }
       }
     }
     d
-  }
-}
-
-class InBodyLinksABTestCleaner(content: Content)(implicit val edition: Edition) extends HtmlCleaner {
-  def clean(d: Document): Document = {
-    // bit hacky, but this only lives as long as the AB test
-    content match {
-      case article: Article => clean(article, d)
-      case _ => {}
-    }
-    d
-  }
-
-  private def clean(article: Article, d: Document) {
-    if (ABInBodyLinking.isSwitchedOn && article.linkCounts.internal > 0) {
-
-      val guardianlinks = d.getElementsByTag("a").filter(_.attr("href").contains("www.theguardian.com"))
-
-      guardianlinks.foreach { link =>
-        link.addClass("ab-in-body-link")
-
-        val nameSpan = d.createElement("span")
-        nameSpan.html(link.html())
-        nameSpan.addClass("ab-in-body-text is-hidden")
-
-        link.after(nameSpan)
-      }
-    }
   }
 }
 
@@ -545,29 +511,33 @@ object VisualTone {
   private val News = "news"
   private val Feature = "feature"
 
-  private val toneMappings = Map(
-    ("tone/comment", Comment),
-    ("tone/letters", Comment),
-    ("tone/obituaries", Comment),
-    ("tone/profiles", Comment),
-    ("tone/editorials", Comment),
-    ("tone/analysis", Comment),
+  private val commentMappings = Seq(
+    "tone/comment",
+    "tone/letters",
+    "tone/obituaries",
+    "tone/profiles",
+    "tone/editorials",
+    "tone/analysis"
+  )
 
-    ("tone/features", Feature),
-    ("tone/recipes", Feature),
-    ("tone/interview", Feature),
-    ("tone/performances", Feature),
-    ("tone/extract", Feature),
-    ("tone/reviews", Feature),
-    ("tone/albumreview", Feature),
-    ("tone/livereview", Feature),
-    ("tone/childrens-user-reviews", Feature)
+  private val featureMappings = Seq(
+    "tone/features",
+    "tone/recipes",
+    "tone/interview",
+    "tone/performances",
+    "tone/extract",
+    "tone/reviews",
+    "tone/albumreview",
+    "tone/livereview",
+    "tone/childrens-user-reviews"
   )
 
 
   // tones are all considered to be 'News' it is the default so we do not list news tones explicitly
-  def apply(tags: Tags) = tags.tones.headOption.flatMap(tone => toneMappings.get(tone.id)).getOrElse(News)
+  def apply(tags: Tags) = if(isComment(tags.tones)) Comment else if(isFeature(tags.tones)) Feature else News
 
+  private def isComment(tones: Seq[Tag]) = tones.exists(t => commentMappings.contains(t.id))
+  private def isFeature(tones: Seq[Tag]) = tones.exists(t => featureMappings.contains(t.id))
 }
 
 object RenderOtherStatus {

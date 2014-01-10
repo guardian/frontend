@@ -5,7 +5,7 @@ import play.api.libs.json._
 import play.api.libs.json.Json.toJson
 import views.support.JavaScriptVariableName
 
-trait Formats {
+trait Formats extends implicits.Dates {
   implicit val imageFormat: Writes[ImageAsset] = new Writes[ImageAsset] {
     def writes(image: ImageAsset): JsValue = toJson(
       Map(

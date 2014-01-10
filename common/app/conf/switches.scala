@@ -100,6 +100,10 @@ object Switches extends Collections {
     "Turns on userzoom survey popups",
     safeState = Off)
 
+  val OphanMultiEventSwitch = Switch("Analytics", "ophan-multi-event",
+    "Enables the new Ophan tracking javascript which support multiple events per page",
+    safeState = Off)
+
   // Discussion Switches
 
   val DiscussionSwitch = Switch("Discussion", "discussion",
@@ -141,9 +145,12 @@ object Switches extends Collections {
     "If this is switched on users will be messaged that they are inside the alpha/beta/whatever release",
     safeState = Off)
 
-
   val FontSwitch = Switch("Feature Switches", "web-fonts",
     "If this is switched on then the custom Guardian web font will load.",
+    safeState = Off)
+
+  val SponsoredContentSwitch = Switch("Feature Switches", "sponsored-content",
+    "If this is switched on the articles will display a simple 'Advertisement feature' notice.",
     safeState = Off)
 
   val NetworkFrontAppealSwitch = Switch("Feature Switches", "network-front-appeal",
@@ -215,11 +222,11 @@ object Switches extends Collections {
   val ABAlphaComm = Switch("A/B Tests", "ab-alpha-comm",
     "If this is switched on an AB test runs to trial new advertising user experiences and commercial models",
     safeState = Off)
-  
+
   val ABCommercialInArticleDesktop = Switch("A/B Tests", "ab-commercial-in-articles-desktop",
     "If this is on an AB test inserts commercial components in the inline and MPU advert slots (scope to desktop)",
     safeState = Off)
-  
+
   val ABCommercialInArticleMobile = Switch("A/B Tests", "ab-commercial-in-articles-mobile",
     "If this is on an AB test inserts commercial components in the inline and MPU advert slots (scope to mobile browsers)",
     safeState = Off)
@@ -236,6 +243,10 @@ object Switches extends Collections {
     "If this is switched on an AB test runs to test onward highlights panel",
     safeState = Off)
 
+  val ABEmailSignup = Switch("A/B Tests", "ab-email-signup",
+    "If this is switched on an AB test runs to test article page email signups",
+    safeState = Off)
+
   val ABRightPopular = Switch("A/B Tests", "ab-right-popular",
     "If this is switched on an AB test runs to trail a right hand side most popular component",
     safeState = Off)
@@ -244,16 +255,12 @@ object Switches extends Collections {
     "If this is switched on an AB test runs as a control variant for right most popular",
     safeState = Off)
 
-  val ABTagLinking = Switch("A/B Tests", "ab-tag-linking",
-    "If this is switched on an AB test runs whereby articles that have no in body links auto link to their tags",
+  val TagLinking = Switch("Feature Switches", "tag-linking",
+    "If this is switched on articles that have no in body links will auto link to their tags where possible",
     safeState = Off)
 
   val ABUnderlineLinks = Switch("A/B Tests", "ab-underline-links",
     "If this is switched on an AB test runs whereby links in articles are underline (with CSS)",
-    safeState = Off)
-  
-  val ABInBodyLinking = Switch("A/B Tests", "ab-in-body-linking",
-    "If this is switched on an AB test runs whereby articles have in body links hidden",
     safeState = Off)
 
   // Sport Switch
@@ -268,8 +275,18 @@ object Switches extends Collections {
     "Switch that is only used while running tests. You never need to change this switch.",
     safeState = Off)
 
-  val UkAlphaSwitch = Switch("Facia", "facia-uk-alpha",
-    "If this is switched on then UK-Alpha will be served for requests with the cookie GU_UK_ALPHA",
+  val NetworkFrontUkAlpha = Switch("Facia", "network-front-uk-alpha",
+    "If this is switched on then the uk alpha network fronts will be served if a GU_UK_ALPHA cookie has been dropped",
+    safeState = Off
+  )
+
+  val NetworkFrontUsAlpha = Switch("Facia", "network-front-us-alpha",
+    "If this is switched on then the us alpha network fronts will be served if a GU_US_ALPHA cookie has been dropped",
+    safeState = Off
+  )
+
+  val NetworkFrontAuAlpha = Switch("Facia", "network-front-au-alpha",
+    "If this is switched on then the au alpha network fronts will be served if a GU_AU_ALPHA cookie has been dropped",
     safeState = Off
   )
 
@@ -335,13 +352,19 @@ object Switches extends Collections {
     ABMobileFacebookAutosignin,
     ABRightPopular,
     AdDwellTimeLoggerSwitch,
-    UkAlphaSwitch,
-    ABTagLinking,
+    ABEmailSignup,
+    NetworkFrontUkAlpha,
+    NetworkFrontUsAlpha,
+    NetworkFrontAuAlpha,
+    TagLinking,
     ABUnderlineLinks,
-    ABInBodyLinking
+    SponsoredContentSwitch,
+    OphanMultiEventSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
+
+  def byName(name: String): Option[Switch] = all.find(_.name.equals(name))
 }
 
 

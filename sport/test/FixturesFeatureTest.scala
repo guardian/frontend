@@ -3,9 +3,9 @@ package test
 import org.scalatest.{ FeatureSpec, GivenWhenThen }
 import org.scalatest.Matchers
 import collection.JavaConversions._
-import org.joda.time.DateTime
+import common.UsesElasticSearch
 
-class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
+class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with UsesElasticSearch {
 
   feature("Football Fixtures") {
 

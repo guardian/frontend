@@ -2,6 +2,11 @@
 @import conf.Switches._
 
 @defining((model.article, model.storyPackage)) { case (article, storyPackage) =>
+    
+    @if(article.isSponsored) {
+        @fragments.sponsored()
+    }
+
     <h2 class="article-zone left-col-deport tone-@VisualTone(article) tone-accent-border">
         <span class="left-col-deport__body">
             <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
@@ -57,6 +62,11 @@
 
                         @fragments.article.dateline(article.webPublicationDate, secondary=true)
                         <div class="js-comment-count"></div>
+                        @if(ABEmailSignup.isSwitchedOn) {
+                            <div class="email-signup email-signup___left-meta is-hidden">
+                                @fragments.emailSignup(article, Edition(request))
+                            </div>
+                        }
                     </div>
 
                     <div class="js-article__container article__container u-cf">
@@ -70,11 +80,22 @@
                                 @fragments.keywordList(article.keywords)
                             </div>
                         }
+
+                        @if(ABEmailSignup.isSwitchedOn) {
+                            <div class="email-signup email-signup___left-body is-hidden">
+                                @fragments.emailSignup(article, Edition(request))
+                            </div>
+                        }
                     </div>
 
                     <div class="social-wrapper">
                         @fragments.social(article)
                     </div>
+                    @if(ABEmailSignup.isSwitchedOn) {
+                        <div class="email-signup email-signup___inline is-hidden">
+                            @fragments.emailSignup(article, Edition(request))
+                        </div>
+                    }
                 </div>
                 <div class="article__secondary-column" aria-hidden="true">
                     <div class="article__secondary-column__inner">

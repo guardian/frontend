@@ -2,19 +2,25 @@ package model
 
 case class Config(
                    id: String,
-                   contentApiQuery: Option[String],
-                   displayName: Option[String],
-                   collectionTone: Option[String]) {
-  // 'middle' part of the id is the section
-  val section: String = id.split("/").tail.dropRight(1).mkString("/")
+                   contentApiQuery: Option[String] = None,
+                   displayName: Option[String] = None,
+                   collectionTone: Option[String] = None,
+                   href: Option[String] = None)
+
+case class Collection(curated: Seq[Trail],
+                      editorsPicks: Seq[Trail],
+                      results: Seq[Trail],
+                      displayName: Option[String]) {
+
+  lazy val items: Seq[Trail] =
+    curated ++
+    editorsPicks.filterNot(ep => curated.exists(_.url == ep.url)) ++
+    results.filterNot (r => curated.exists(_.url == r.url) || editorsPicks.exists(_.url == r.url))
 }
 
-case class Collection(items: Seq[Trail],
-                      displayName: Option[String])
-
 object Collection {
-  def apply(items: Seq[Trail]): Collection = Collection(items, None)
-  def apply(items: Seq[Trail], name: String): Collection = Collection(items, Some(name))
+  def apply(curated: Seq[Trail]): Collection = Collection(curated, Nil, Nil, None)
+  def apply(curated: Seq[Trail], displayName: Option[String]): Collection = Collection(curated, Nil, Nil, displayName)
 }
 
 case class FaciaPage(
