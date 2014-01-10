@@ -169,7 +169,7 @@ CommentBox.prototype.error = function(type, message) {
         '<div class="d-discussion__error '+ this.getClass('error', true) +'">'+
             '<i class="i i-alert"></i>'+
             '<span class="d-discussion__error-text">'+ message +'</span>'+
-            '</div>'
+        '</div>'
     )[0];
     this.getElem('messages').appendChild(error);
     this.errors.push(type);
@@ -196,7 +196,7 @@ CommentBox.prototype.fail = function(xhr) {
     // if our API is down, it returns HTML
     // this is not so good for JSON.parse
     try { response = JSON.parse(xhr.responseText); }
-    catch (e) { response = {}; }
+        catch (e) { response = {}; }
 
     this.setFormState();
 
