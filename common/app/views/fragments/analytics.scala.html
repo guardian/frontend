@@ -47,17 +47,6 @@
     }
 }
 
-<script>
-  (function() {
-    var d = new Image(1, 1);
-    d.src = ["//secure-uk.imrworldwide.com/cgi-bin/m?ci=uk-305078h&cg=0&cc=1&si=", escape(window.location.href), "&rp=", escape(document.referrer), "&ts=compact&rnd=", (new Date()).getTime()].join('');
-  })();
-</script>
-<noscript>
-    <img src="//secure-uk.imrworldwide.com/cgi-bin/m?ci=uk-305078h&amp;cg=0&amp;cc=1&amp;ts=noscript"
-    width="1" height="1" alt="" />
-</noscript>
-
 @* there is currently no SSL version of the beacon *@
 @if(!Configuration.environment.secure){
     <img src="@Configuration.debug.beaconUrl/count/pv.gif" alt="" style="display: none;"/>

@@ -74,20 +74,33 @@ object Switches extends Collections {
     "If this switch is on then the iPhone app upsell will be enabled.",
     safeState = Off)
 
-
-  // Analytics Switches
-
-  val AudienceScienceSwitch = Switch("Analytics", "audience-science",
+  // Commercial Tags
+  
+  val AudienceScienceSwitch = Switch("Commercial Tags", "audience-science",
     "If this switch is on the Audience Science will be enabled.",
     safeState = Off)
+  
+  val QuantcastSwitch = Switch("Commercial Tags", "quantcast",
+    "Enable the Quantcast audience segment tracking.",
+    safeState = Off)
+
+  val ImrWorldwideSwitch = Switch("Commercial Tags", "imr-worldwide",
+    "Enable the Quantcast audience segment tracking.",
+    safeState = Off)
+  
+  val AmaaSwitch = Switch("Commercial Tags", "amaa",
+    "Enable the Quantcast audience segment tracking.",
+    safeState = Off)
+  
+  val EffectiveMeasureSwitch = Switch("Commercial Tags", "effective-measure",
+    "Enable the Quantcast audience segment tracking.",
+    safeState = Off)
+  
+  // Analytics Switches
 
   val AdDwellTimeLoggerSwitch = Switch("Analytics", "ad-dwell-times-logging",
     "If this is on the in-view advert tracker will log some data to the Play logs",
     safeState = On)
-
-  val QuantcastSwitch = Switch("Analytics", "quantcast",
-    "Enable the Quantcast audience segment tracking.",
-    safeState = Off)
 
   val AdSlotImpressionStatsSwitch = Switch("Analytics", "adslot-impression-stats",
     "Track when adslots (and possible ad slots) are scrolled into view.",
@@ -369,7 +382,10 @@ object Switches extends Collections {
     TagLinking,
     ABUnderlineLinks,
     SponsoredContentSwitch,
-    OphanMultiEventSwitch
+    OphanMultiEventSwitch,
+    EffectiveMeasureSwitch,
+    AmaaSwitch,
+    ImrWorldwideSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
