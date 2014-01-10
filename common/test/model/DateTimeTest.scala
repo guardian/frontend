@@ -6,7 +6,7 @@ import org.joda.time.DateTime
 import com.gu.openplatform.contentapi.model.{ Content => ApiContent }
 import org.scala_tools.time.Imports._
 
-class DateTimeTest extends FlatSpec with Matchers {
+class DateTimeTest extends FlatSpec with Matchers with implicits.Dates {
 
   //http://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.3.1
 

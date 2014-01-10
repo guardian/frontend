@@ -250,7 +250,23 @@ $c-live: #e81818;
 }
 .item__support {
     display: none;
+    @include rem((
+        margin-top: $gs-baseline*2
+    ));
+    .item--support-show & {
+        display: block;
+    }
 }
+.item__support__title {
+    color: $c-neutral2;
+    @include fs-data(3);
+
+    @include mq(tablet) {
+        @include fs-data(4, true);
+    }
+}
+.item__support__item {}
+.item__support__action {}
 
 .item__cta {
     position: absolute;
@@ -335,5 +351,33 @@ $c-live: #e81818;
         left: 50%;
         margin-top: -5px;
         margin-left: -12px;
+    }
+}
+
+
+// Image tone
+// values: [hide|highlight] in the fronts tool
+.item--imagetone-hide {
+    .item__image {
+        
+    }
+}
+.item--imagetone-highlight {
+    .item__image {
+        
+    }
+}
+
+
+// Thumbnail element order:
+// 1. Title
+// 2. Image + standfirst
+// 3. Meta
+
+.item--thumbnail {
+    .item__standfirst {
+        @include rem((
+            margin-top: $gs-baseline
+        ));
     }
 }

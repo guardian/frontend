@@ -59,6 +59,7 @@ $guss-row-fallback-width: 940px !default;
             -webkit-align-items: stretch;
             -ms-flex-align: stretch;
             align-items: stretch;
+            width: 100%; // Prevent consecutive rows from flexing together in FF
 
             @include mq(tablet) {
                 -webkit-box-orient: horizontal;
@@ -73,6 +74,7 @@ $guss-row-fallback-width: 940px !default;
 
             @include mq(tablet) {
                 @include flex(1, 1, 0);
+                width: 0; // Prevent items to grow out of their parent in FF
             }
         }
         #{$base-class}__item--boost-1 { @include flex-grow(1.5); }

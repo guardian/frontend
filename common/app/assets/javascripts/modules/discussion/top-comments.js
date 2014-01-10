@@ -106,11 +106,11 @@ TopComments.prototype.fetch = function(parent) {
     }).then(
         function render(resp) {
             // Success: Render Top or Regular comments
-            if (resp.commentCount > 0 && self.topCommentsSwitch) {
+            if (resp.currentCommentCount > 0 && self.topCommentsSwitch) {
 
                 // Render Top Comments
 
-                self.topCommentsAmount = resp.commentCount;
+                self.topCommentsAmount = resp.currentCommentCount;
                 self.parent = parent;
                 self.elem = bonzo.create(resp.html);
                 $(self.getClass('topCommentsContainer'), parent).append(self.elem);

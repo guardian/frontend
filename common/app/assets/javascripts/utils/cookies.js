@@ -17,11 +17,8 @@ define(function () {
             expires.setDate(1);
         }
 
-        var domain = document.domain;
-
-        if (domain.substr(0,4) === "www.") {
-            domain = domain.substr(3);
-        }
+        // remove www (and dev bit, for localhost set up with dev.theguardian.com domain)
+        var domain = document.domain.replace(/^(www|dev)\./, '.');
 
         document.cookie = name + "=" + value + "; path=/; expires=" + expires.toUTCString() + "; domain=" + domain + ";";
     }

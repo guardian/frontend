@@ -3,11 +3,10 @@
 @defining((VisualTone(trail), containerIndex == 0, containerIndex == 0 && index < 3)) { case (tone, isFirstContainer, inlineImages) =>
     <@element
         class="item
-                item--has-@{if(trail.trailPicture(5,3).isEmpty){"no-"}}image
+               item--has-@{if(trail.trailPicture(5,3).isEmpty){"no-"}}image
                 @if(trail.isLive){ item--live}
-                tone-@tone
-                @if(isFirstContainer){ item--force-image-upgrade}
-        "
+               tone-@tone
+               @if(isFirstContainer){item--force-image-upgrade}"
         data-link-name="trail | @{index + 1}"
         @trail.discussionId.map{ id => data-discussion-id="@id" }
         data-discussion-closed="@trail.isClosedForComments">
@@ -40,6 +39,7 @@
                     <p class="item__byline tone-colour">@Html(byLine)</p>
                 }
             }
+<<<<<<< HEAD
             @trail.trailText.map { text =>
                 <div class="item__standfirst">@Html(text)</div>
             }
@@ -49,10 +49,32 @@
                         <li class="item__supporting item__supporting--@VisualTone(supporting) @if(supporting.isLive){item__supporting--live}">
                             <a href="@LinkTo{@supporting.url}" class="item__supporting__link">
                                 <h3 class="item__supporting__title">@supporting.headline</h3>
+=======
+        }
+        @trail.trailText.map { text =>
+            <div class="item__standfirst">@Html(text)</div>
+        }
+        @if(trail.supporting.nonEmpty){
+            <div class="item__support">
+                <h3 class="item__support__title">More on this story:</h3>
+
+                <ul class="l-columns linkslist">
+                    @trail.supporting.map{ supporting =>
+                        <li class="l-columns__item
+                                   linkslist__item
+                                   item__support__item
+                                   item__support__item--@VisualTone(supporting)
+                                   @if(supporting.isLive){item__support__item--live}">
+                            <a href="@LinkTo{@supporting.url}"
+                               class="item__support__action
+                                      linkslist__action">
+                                @supporting.headline
+>>>>>>> master
                             </a>
                         </li>
                     }
                 </ul>
+<<<<<<< HEAD
             }
             <div class="item__meta">
                 <time class="item__timestamp js-item__timestamp"
@@ -64,6 +86,19 @@
                     <span class="timestamp__text"><span class="u-h">Published: </span>@Format(trail.webPublicationDate, "d MMM y")</span>
                 </time>
             </div>
+=======
+            </div>
+        }
+        <div class="item__meta">
+            <time class="item__timestamp js-item__timestamp"
+                  itemprop="datePublished"
+                  datetime="@trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
+                  data-timestamp="@trail.webPublicationDate.getMillis"
+                  data-relativeformat="short">
+                <i class="i i-clock-light-grey"></i>
+                <span class="timestamp__text"><span class="u-h">Published: </span>@Format(trail.webPublicationDate, "d MMM y")</span>
+            </time>
+>>>>>>> master
         </div>
     </@element>
 }
