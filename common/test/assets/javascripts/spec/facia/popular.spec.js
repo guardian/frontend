@@ -6,7 +6,7 @@ define(['common/modules/facia/popular', 'bonzo', 'common/$', 'bean', 'helpers/fi
             response = JSON.stringify({
                 faciaHtml: '<section class="container--popular"><ul>' + [1, 2, 3, 4].reduce(function(previousValue, itemNum) {
                     return previousValue + '<li>' +
-                            '<div class="item__image-container" data-src="item-{width}.jpg"></div>' +
+                            '<div class="js-image-upgrade" data-src="item-{width}.jpg"></div>' +
                             '<div class="js-item__timestamp"><div class="timestamp__text">1</div></div>' +
                         '</li>';
                 }, '') + '</section></ul>'
@@ -70,17 +70,13 @@ define(['common/modules/facia/popular', 'bonzo', 'common/$', 'bean', 'helpers/fi
             });
         });
 
-        it('dates should be relativised', function() {
+        it('should not display container if response is empty', function() {
+            server.respondWith([200, {}, JSON.stringify({ faciaHtml: "\n\n\n\n   \n\n\n" })]);
             popular.render({});
 
-            waitsFor(function() {
-                return $('.container--popular').length;
-            }, 'popular container to be rendered', 100);
+            waits(100);
             runs(function() {
-                expect($('.timestamp__text').length).toEqual(4);
-                $('.timestamp__text').each(function(item) {
-                    expect(bonzo(item).text()).toEqual('1 Jan 1970');
-                });
+                expect($('.container--popular').length).toEqual(0);
             });
         });
 
