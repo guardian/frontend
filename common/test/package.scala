@@ -28,9 +28,7 @@ trait TestSettings {
   }
 
   private def verify(property: String, hash: String, message: String) {
-
-    val expectedHash = DigestUtils.sha256Hex(property)
-    if (expectedHash != hash && !otherKey.exists(_ == expectedHash)) {
+    if (DigestUtils.sha256Hex(property) != hash) {
 
       // the println makes it easier to spot what is wrong in tests
       println()
@@ -39,7 +37,6 @@ trait TestSettings {
 
       throw new RuntimeException(message)
     }
-
   }
 
   private def toRecorderHttp(http: Http[Future]) = new Http[Future] {
