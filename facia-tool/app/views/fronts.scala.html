@@ -198,15 +198,6 @@
             </div>
 
             <div data-bind="if: state.open">
-                <div class="image__overrides">
-                    <a data-bind="
-                        click: toggleImageToneHide,
-                        css: {selected: meta.imageTone() === 'hide'}">Hide</a>
-                    |
-                    <a data-bind="
-                        click: toggleImageToneHighlight,
-                        css: {selected: meta.imageTone() === 'highlight'}">Highlight</a>
-                </div>
                 <div class="article__overrides u-cf">
                     <input class="headline-input" type="text" data-bind="
                         value: headlineInput,
@@ -225,6 +216,16 @@
                         click: trailTextRevert,
                         attr: {title: 'Revert to: ' + fields.trailText},
                         visible: meta.trailText">Revert</a>
+
+                    <div class="image__overrides">
+                        <a data-bind="
+                        click: toggleImageAdjustHide,
+                        css: {selected: meta.imageAdjust() === 'hide'}">Hide image</a>
+                        |
+                        <a data-bind="
+                        click: toggleImageAdjustHighlight,
+                        css: {selected: meta.imageAdjust() === 'highlight'}">Highlight image</a>
+                    </div>
                 </div>
 
                 <div data-bind="if: parentType === 'Collection' || parentType === 'Clipboard'">
@@ -235,7 +236,7 @@
                             template: {name: 'template_article', foreach: items}"></div>
 
                     </div>
-                    <div class="supporting-message">Supporting links &raquo;</div>
+                    <div class="supporting-message">Add supporting content below</div>
                     <div class="tools">
                         <a class="tool" data-bind="click: close">Close</a>
                     </div>
