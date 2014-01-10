@@ -228,14 +228,14 @@ object FaciaToolMetrics {
 
   object ContentApiPutSuccess extends CountMetric(
     "facia-api",
-    "facia-tool-contentapi-success",
+    "faciatool-contentapi-put-success",
     "Facia tool contentapi put success count",
     "Number of PUT requests that have been successful to the content api"
   )
 
   object ContentApiPutFailure extends CountMetric(
     "facia-api",
-    "facia-tool-contentapi-failure",
+    "faciatool-contentapi-put-failure",
     "Facia tool contentapi put failure count",
     "Number of PUT requests that have failed to the content api"
   )
