@@ -255,6 +255,20 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
       }
     }
 
+    scenario("Articles should link section tags") {
+
+      Given("An article that has no in body links")
+      Switches.TagLinking.switchOn()
+      HtmlUnit("/environment/2014/jan/09/penguins-ice-walls-climate-change-antarctica") { browser =>
+        import browser._
+
+        Then("It should automatically link to tags")
+        val taglinks = $("a[data-link-name=auto-linked-tag]")
+
+        taglinks.map(_.getText) should not contain "Science"
+      }
+    }
+
     scenario("Articles should link longest keywords first") {
       // so you don't overlap similar tags
 
@@ -263,7 +277,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
       HtmlUnit("/uk-news/2013/dec/27/high-winds-heavy-rain-uk-ireland") { browser =>
         import browser._
 
-        Then("It should automatucally link to tags")
+        Then("It should automatically link to tags")
         val taglinks = $("a[data-link-name=auto-linked-tag]")
 
         taglinks.length should be (1)
