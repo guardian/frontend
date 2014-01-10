@@ -59,7 +59,7 @@ object GetContainer {
       ("uk/contributors/feature-stories", CommentContainer())
     )),
     ("uk-alpha", Map(
-      ("uk-alpha/news/regular-stories", TopStoriesContainer()),
+      ("uk-alpha/news/regular-stories", NewsContainer()),
       ("uk-alpha/features/feature-stories", FeaturesContainer()),
       ("uk-alpha/special/special-story", SportContainer()),
       ("uk-alpha/contributors/feature-stories", CommentContainer()),

@@ -2,7 +2,7 @@
 
 <ul class="unstyled l-row l-row--items-2 collection">
     @items.slice(0, 1).zipWithIndex.map{ case (trail, index) =>
-        <li class="l-row__item collection__item collection__item--volume-@trail.group.getOrElse("0") item--support-show">
+        <li class="l-row__item collection__item collection__item--volume-@trail.group.getOrElse("2") item--support-show">
             @fragments.items.standard(trail, index, containerIndex, "div")
         </li>
     }
