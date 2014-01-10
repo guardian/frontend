@@ -155,7 +155,7 @@ object CloudWatch extends implicits.Futures{
     new LineChart("JavaScript Errors", Seq("Time") ++ jsErrorMetrics.map{ case(title, name) => name}.toSeq, metrics:_*)
   }
   
-  def adsInView(statistic: String) = new LineChart(statistic, Nil,
+  def adsInView(statistic: String) = new LineChart(statistic, Seq("Time", statistic),
     euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
       .withStartTime(new DateTime().minusHours(1).toDate)
       .withEndTime(new DateTime().toDate)
@@ -181,7 +181,7 @@ object CloudWatch extends implicits.Futures{
     )
   }.toSeq
   
-  def liveStats(statistic: String) = new LineChart(statistic, Nil,
+  def liveStats(statistic: String) = new LineChart(statistic, Seq("Time", statistic),
     euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
       .withStartTime(new DateTime().minusHours(6).toDate)
       .withEndTime(new DateTime().toDate)
