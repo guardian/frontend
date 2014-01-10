@@ -143,7 +143,7 @@ trait UpdateActions {
   }
 
   def updateItemMetaList(id: String, trailList: List[Trail], metaData: Map[String, JsValue]): List[Trail] = {
-    lazy val fields: Seq[String] = Seq("headline", "trailText", "group", "supporting", "imageTone")
+    lazy val fields: Seq[String] = Seq("headline", "trailText", "group", "supporting", "imageAdjust")
     lazy val newMetaMap = metaData.filter{case (k, v) => fields.contains(k)}
 
     for {
