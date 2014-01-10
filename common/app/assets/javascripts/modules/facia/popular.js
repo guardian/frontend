@@ -30,6 +30,9 @@ define([
             }).then(
                 function(resp) {
                     var container = bonzo.create(resp.faciaHtml)[0];
+                    if (!container) {
+                        return false;
+                    }
                     bonzo(container)
                         .insertAfter(insertAfter);
                     // add show more button
