@@ -3,7 +3,7 @@
 
 @image.map{ picture =>
     <figure itemprop="associatedMedia primaryImageOfPage" itemscope itemtype="http://schema.org/ImageObject" class="media-primary media-content">
-        <div class="item__image-container" data-src="@ImgSrc.imager(picture, Item620)" data-force-upgrade>
+        <div data-src="@ImgSrc.imager(picture, Item620)" data-force-upgrade>
             <img src="@Item220.bestFor(picture)"
                  class="maxed main-image responsive-img"
                  itemprop="contentURL"
