@@ -71,7 +71,7 @@ define(['common/modules/facia/popular', 'bonzo', 'common/$', 'bean', 'helpers/fi
         });
 
         it('should not display container if response is empty', function() {
-            server.respondWith([200, {}, JSON.stringify({ faciaHtml: '' })]);
+            server.respondWith([200, {}, JSON.stringify({ faciaHtml: "\n\n\n\n   \n\n\n" })]);
             popular.render({});
 
             waits(100);
