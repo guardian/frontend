@@ -11,7 +11,11 @@ sealed trait SwitchState
 case object On extends SwitchState
 case object Off extends SwitchState
 
-case class Switch(group: String, name: String, description: String, safeState: SwitchState, sellByDate: DateTime = new DateTime().plusDays(1)) extends Switchable {
+case class Switch( group: String, 
+                   name: String,
+                   description: String,
+                   safeState: SwitchState,
+                   sellByDate: DateTime = new DateTime().plusDays(10)) extends Switchable {
   val delegate = DefaultSwitch(name, description, initiallyOn = safeState == On)
 
   def isSwitchedOn: Boolean = delegate.isSwitchedOn && new DateTime().isBefore(sellByDate)
@@ -37,11 +41,11 @@ object Switches extends Collections {
 
   val AutoRefreshSwitch = Switch("Performance Switches", "auto-refresh",
     "Enables auto refresh in pages such as live blogs and live scores. Turn off to help handle exceptional load.",
-    safeState = Off)
+    safeState = Off, new DateTime().plusDays(1))
 
   val DoubleCacheTimesSwitch = Switch("Performance Switches", "double-cache-times",
     "Doubles the cache time of every endpoint. Turn on to help handle exceptional load.",
-    safeState = On)
+    safeState = On, new DateTime().plusDays(1))
 
   val RelatedContentSwitch = Switch("Performance Switches", "related-content",
     "If this switch is turned on then related content will show. Turn off to help handle exceptional load.",
