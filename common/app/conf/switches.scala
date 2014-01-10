@@ -5,16 +5,15 @@ import common._
 import implicits.Collections
 import play.api.Plugin
 import play.api.libs.ws.WS
-import org.joda.time.DateTime
 
 sealed trait SwitchState
 case object On extends SwitchState
 case object Off extends SwitchState
 
-case class Switch(group: String, name: String, description: String, safeState: SwitchState, sellByDate: DateTime = new DateTime().plusDays(1)) extends Switchable {
+case class Switch(group: String, name: String, description: String, safeState: SwitchState) extends Switchable {
   val delegate = DefaultSwitch(name, description, initiallyOn = safeState == On)
 
-  def isSwitchedOn: Boolean = delegate.isSwitchedOn && new DateTime().isBefore(sellByDate)
+  def isSwitchedOn: Boolean = delegate.isSwitchedOn
 
   def switchOn() {
     if (isSwitchedOff) {
