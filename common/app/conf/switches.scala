@@ -350,6 +350,8 @@ object Switches extends Collections {
     EditionRedirectLoggingSwitch,
     FacebookAutoSigninSwitch,
     IdentityFormstackSwitch,
+    IdentityEthicalAwardsSwitch,
+    IdentityFilmAwardsSwitch,
     ABAa,
     ABOnwardIntrusive,
     ABOnwardHighlightsPanel,
