@@ -51,7 +51,9 @@ $replyIndent: 26px;
     display: block;
     text-align: center;
 
-    &.show-more__container--older, &.show-more__container--featured {
+    &.show-more__container--older,
+    &.show-more__container--hidden,
+    &.show-more__container--featured {
         color: $c-neutral1;
         border-top: 1px dotted $c-neutral3;
     }
@@ -97,7 +99,9 @@ $replyIndent: 26px;
 }
 
 .d-discussion__order-control {
-    margin: $gs-baseline/2 $gs-gutter/4 0;
+    font-size: 16px;
+    font-size: 1.6rem;
+    margin: 2px $gs-gutter/4 0;
 }
 
 /* ==========================================================================

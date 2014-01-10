@@ -43,7 +43,7 @@ This is applicable to [GMG employees](http://www.gmgplc.co.uk/).
 - A member of the team will review the changes. Once they are satisfied they will add +1 to the pull request.
 - If there are no broken or ongoing builds in Teamcity, merge your branch and then ensure the master branch is built successfully: both [builds](http://teamcity.gudev.gnl:8111/project.html?projectId=project35&tab=projectOverview) and [integration tests](http://teamcity.gudev.gnl:8111/project.html?projectId=project41&tab=projectOverview).
 - Deploy the code yourself, first to CODE then to PROD.
-- Pay close attention to our [monitoring](http://graphite.guprod.gnl/dashboard/dashboards-dev/gdn-frontend.php?time=1d&env=PROD).
+- Pay close attention to our [monitoring](https://frontend.gutools.co.uk).
 
 ### External contributions
 
