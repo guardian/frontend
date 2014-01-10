@@ -300,6 +300,13 @@ object Switches extends Collections {
     "If this switch is on images will be served off i.guim.co.uk (dynamic image host).",
     safeState = On)
 
+  // Facia Tool Switches
+
+  val ContentApiPutSwitch = Switch("Facia Tool", "facia-tool-contentapi-put",
+    "If this switch is on facia tool will PUT all collection changes to content api",
+    safeState = Off
+  )
+
   val all: List[Switch] = List(
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
@@ -359,7 +366,8 @@ object Switches extends Collections {
     TagLinking,
     ABUnderlineLinks,
     SponsoredContentSwitch,
-    OphanMultiEventSwitch
+    OphanMultiEventSwitch,
+    ContentApiPutSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
