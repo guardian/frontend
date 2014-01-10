@@ -76,7 +76,7 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
 
       ContentApiPut(
         config.roleName.getOrElse("Default"),
-        config.displayName.orElse(Option("Default Title")),
+        config.displayName,
         groups,
         config.contentApiQuery.flatMap(_.split('?').headOption.filter(_.nonEmpty)),
         block.lastUpdated,
