@@ -2,12 +2,16 @@ define([
     'bean',
     'bonzo',
     'common/modules/discussion/api',
-    'common/modules/component'
+    'common/modules/identity/api',
+    'common/modules/component',
+    "common/modules/discussion/user-avatars"
 ], function(
     bean,
     bonzo,
     DiscussionApi,
-    Component
+    IdentityApi,
+    Component,
+    UserAvatars
 ) {
 
 /**
@@ -47,7 +51,6 @@ CommentBox.prototype.componentClass = 'd-comment-box';
  * @override
  */
 CommentBox.prototype.classes = {
-    bodyExpanded: 'd-comment-box__body--expanded'
 };
 
 /**
@@ -72,8 +75,7 @@ CommentBox.prototype.defaultOptions = {
     premod: false,
     focus: false,
     state: 'top-level',
-    replyTo: null,
-    cancelable: false
+    replyTo: null
 };
 
 /**
@@ -89,6 +91,12 @@ CommentBox.prototype.prerender = function() {
 
     if (this.options.state === 'response') {
         this.getElem('submit').innerHTML = 'Post reply';
+    } else {
+        var userData = IdentityApi.getUserFromCookie();
+        var avatar = this.getElem('avatar-wrapper');
+        avatar.setAttribute('userid', userData.id);
+        UserAvatars.avatarify(avatar);
+        this.getElem('author').innerHTML = userData.displayName;
     }
 
     if (this.options.replyTo) {
@@ -100,10 +108,6 @@ CommentBox.prototype.prerender = function() {
         bonzo(elem).insertAfter(this.getElem('submit'));
     }
 
-    if (this.options.cancelable) {
-        var beforeElem = this.getElem('reply-to') ? this.getElem('reply-to') : this.getElem('submit');
-        bonzo(bonzo.create('<div class="u-fauxlink '+ this.getClass('cancel', true) +'" role="button">Cancel</div>')).insertAfter(beforeElem);
-    }
 };
 
 /** @override */
@@ -121,7 +125,7 @@ CommentBox.prototype.ready = function() {
     bean.on(this.context, 'submit', [this.elem], this.postComment.bind(this));
     bean.on(this.context, 'change keyup', [commentBody], this.setFormState.bind(this));
     bean.on(commentBody, 'focus', this.setExpanded.bind(this)); // this isn't delegated as bean doesn't support it
-    this.on('click', this.getClass('cancel'), this.destroy);
+    this.on('click', this.getClass('cancel'), this.cancelComment);
 
     this.setState(this.options.state);
 
@@ -244,7 +248,20 @@ CommentBox.prototype.setFormState = function(disabled) {
  * @param {Event=} e (optional)
  */
 CommentBox.prototype.setExpanded = function(e) {
-    this.setState('expanded', 'body');
+    this.setState('expanded');
+};
+
+/**
+ * @param {Event=} e (optional)
+ */
+CommentBox.prototype.cancelComment = function(e) {
+    if (this.options.state === 'response') {
+        this.destroy();
+    } else {
+        this.getElem('body').value = "";
+        this.setFormState();
+        this.removeState('expanded');
+    }
 };
 
 

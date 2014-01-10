@@ -126,7 +126,7 @@ $replyIndent: 26px;
     background-color: $c-neutral7;
 }
 
-.d-comment__meta {
+.d-comment__meta, .d-comment-box__meta {
     height: $avatarSize + $baseline;
     margin-bottom: $baseline*2;
     white-space: nowrap;
@@ -143,20 +143,28 @@ $replyIndent: 26px;
     }
 }
 
-.d-comment__avatar-wrapper {
+.d-comment-box__meta {
+    margin-top: $gs-baseline/2;
+    display: none;
+    @include mq($comment-meta-breakpoint) {
+        display: block;
+    }
+}
+
+.d-comment__avatar-wrapper, .d-comment-box__avatar-wrapper {
     margin-right: $baseline*2;
     margin-top: $baseline;
     float: left;
 }
 
-.d-comment__avatar {
+.d-comment__avatar, .user-avatar__image {
     width: $avatarSize;
     height: $avatarSize;
     @include rounded-corners(36px);
     overflow:hidden;
 }
 
-.d-comment__meta-text {
+.d-comment__meta-text, .d-comment-box__meta-text {
     padding-right: 50px;
     @include box-sizing(border-box);
     @include mq(desktop) {
@@ -172,7 +180,7 @@ $replyIndent: 26px;
     padding-right: 0;
 }
 
-.d-comment__author {
+.d-comment__author, .d-comment-box__author {
     @include fs-data(4);
     color: $c-neutral1;
     font-weight: bold;
@@ -860,16 +868,6 @@ $replyIndent: 26px;
 }
 
 .d-comment-box { 
-
-    @include mq($comment-meta-breakpoint) {
-        margin-left: 160px;
-    }
-    @include mq(leftCol) {
-        margin-left: $a-leftCol-width + $gs-gutter;
-    }
-    @include mq(wide) {
-        margin-left:  $a-leftColWide-width + $gs-gutter;
-    }
 }
 
 .d-comment .d-comment-box {
@@ -885,9 +883,25 @@ $replyIndent: 26px;
     resize: vertical;
     width: 100%;
     word-break: break-word;
+
 }
 
-.d-comment-box__body--expanded {
+.d-comment-box__content {
+
+    position: relative;
+
+    @include mq($comment-meta-breakpoint) {
+        margin-left: 160px;
+    }
+    @include mq(leftCol) {
+        margin-left: $a-leftCol-width + $gs-gutter;
+    }
+    @include mq(wide) {
+        margin-left:  $a-leftColWide-width + $gs-gutter;
+    }
+
+}
+.d-comment-box--expanded .d-comment-box__body {
     height: 150px;
 }
 
@@ -906,13 +920,26 @@ $replyIndent: 26px;
 .d-comment-box__cancel {
     @include fs-data(2);
     color: $c-neutral1;
+}
+
+.d-comment-box__reply-to {
     display: inline-block;
 }
 
 .d-comment-box__cancel {
     color: $c-neutral2;
-    float: right;
-    margin-top: $baseline*3;
+    position: absolute;
+    right: 0;
+    bottom: $gs-baseline;
+    display: none;
+}
+.d-comment-box--expanded .d-comment-box__cancel,
+.d-comment-box--response .d-comment-box__cancel {
+    display: inline-block;
+}
+
+.d-comment-box--response .d-comment__meta {
+    display: none;
 }
 
 .open-cta {

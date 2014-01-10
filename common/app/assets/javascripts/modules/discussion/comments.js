@@ -545,8 +545,7 @@ Comments.prototype.replyToComment = function(e) {
                 author: replyToAuthor,
                 authorId: replyToAuthorId
             },
-            focus: true,
-            cancelable: true
+            focus: true
         });
 
     // this is a bit toffee, but we don't have .parents() in bonzo
