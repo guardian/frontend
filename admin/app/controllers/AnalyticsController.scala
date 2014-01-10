@@ -40,7 +40,7 @@ object AnalyticsController extends Controller with Logging with AuthLogging {
 
   def abtests() = Authenticated { request =>
     NoCache(Ok(views.html.abtests("PROD",
-      model.abtests.AbTests.getAbCharts()
+      model.abtests.AbTests.getAbCharts().filter(_.hasData)
     )))
   }
 }
