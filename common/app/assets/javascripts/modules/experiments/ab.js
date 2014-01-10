@@ -15,7 +15,8 @@ define([
     'common/modules/experiments/tests/commercial-in-article-mobile',
     'common/modules/experiments/tests/right-most-popular',
     'common/modules/experiments/tests/right-most-popular-control',
-    'common/modules/experiments/tests/underline-links'
+    'common/modules/experiments/tests/underline-links',
+    'common/modules/experiments/tests/chartbeat-desktop'
 ], function (
     common,
     store,
@@ -31,7 +32,8 @@ define([
     CommercialInArticlesMobile,
     RightPopular,
     RightPopularControl,
-    UnderlineLinks
+    UnderlineLinks,
+    ChartbeatDesktop
     ) {
 
     var TESTS = [
@@ -45,7 +47,8 @@ define([
             new CommercialInArticlesMobile(),
             new RightPopular(),
             new RightPopularControl(),
-            new UnderlineLinks()
+            new UnderlineLinks(),
+            new ChartbeatDesktop()
         ],
         participationsKey = 'gu.ab.participations';
 
@@ -114,7 +117,7 @@ define([
 
     function testCanBeRun(test, config) {
         var expired = (new Date() - new Date(test.expiry)) > 0;
-        return (test.canRun(config) && !expired && config.switches['ab' + test.id]);
+        return (test.canRun(config) && !expired && isTestSwitchedOn(test, config));
     }
 
     function getTest(id) {
@@ -181,6 +184,14 @@ define([
         } else {
             addParticipation(test, "notintest");
         }
+    }
+
+    function isTestSwitchedOn(test, config) {
+        return config.switches['ab' + test.id];
+    }
+
+    function getTestVariant(testId) {
+        return getParticipations()[testId].variant;
     }
 
     var ab = {
@@ -255,14 +266,22 @@ define([
             });
         },
 
-        getTestVariant: function(testId) {
-            return getParticipations()[testId].variant;
+        getAbLoggableObject: function(config) {
+            var abLogObject = {};
+            getActiveTests().forEach(function (test) {
+                if (isParticipating(test) && isTestSwitchedOn(test, config) && getTestVariant(test.id) !== 'notintest') {
+                    abLogObject['ab' + test.id] = getTestVariant(test.id);
+                }
+            });
+
+            return abLogObject;
         },
 
         getParticipations: getParticipations,
         makeOmnitureTag: makeOmnitureTag,
         getExpiredTests: getExpiredTests,
-        getActiveTests: getActiveTests
+        getActiveTests: getActiveTests,
+        getTestVariant: getTestVariant
     };
 
     return ab;

@@ -4,6 +4,10 @@ html {
     &.iframed {
         overflow-y: auto;
     }
+
+    &.iframed--overflow-hidden {
+        overflow: hidden;
+    }
 }
 
 body {

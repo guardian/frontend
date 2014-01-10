@@ -1,6 +1,15 @@
 .container--top-stories {
+    // Start hack for Firefox < 22
+    -moz-box-orient: vertical;
+    display: -moz-box;
+    width: 100%;
+    overflow: visible;
+
+    .collection { width: auto; }
+    // End hack
+
     // Cap new collections to a width of 12 columns
-    @include mq(gs-span(7) + $gs-gutter, tablet) {
+    @include mq(gs-span(7) + $gs-gutter*3, tablet) {
         @include rem((width: gs-span(7)));
         margin: 0 auto;
     }
@@ -29,43 +38,16 @@
         }
     }
     .item__media-wrapper {
-        @include mq($to: tablet) {
-            float: left;
-
-            // Adapt the width of images to sit on text's baseline
-            @include rem((
-                width: 108px,
-                margin-right: $gs-gutter/2
-            ));
-            @include mq(mobileLandscape) {
-                @include rem((
-                    width: 124px
-                ));
-            }
-            @include mq(600px) {
-                @include rem((
-                    width: 156px
-                ));
-            }
-        }
-    }
-    .item__media-wrapper {
         display: none;
     }
-    .item__standfirst {
-        display: block;
-        @include rem((margin-top: $gs-baseline));
-    }
     .item--has-image {
-        .item__standfirst {
-            display: none;
-        }
         .item__media-wrapper,
         .item__image-container {
             display: block;
         }
     }
     .collection {
+        overflow: visible;
         @include rem((
             margin-left: $gs-gutter/2 * -1,
             margin-right: $gs-gutter/2 * -1
@@ -87,14 +69,11 @@
     // Volume
     .l-row--items-2 .collection__item--volume-2 {
         .item__media-wrapper {
-            @include mq($to: mobileLandscape) {
-                float: none;
-                margin-right: 0;
-                width: 100%;
-            }
-            @include mq(mobileLandscape, 599px) {
+            @include mq(mobileLandscape) {
+                float: left;
                 @include rem((
-                    width: gs-span(3)
+                    width: gs-span(3),
+                    margin-right: $gs-gutter/2
                 ));
             }
             @include mq(600px, tablet) {
@@ -108,7 +87,7 @@
         }
 
         @include mq(tablet) {
-            @include flex-grow(2);
+            @include flex-grow(3);
             .item__standfirst {
                 @include fs-headline(2, true);
                 clear: both;
@@ -122,6 +101,12 @@
                 .item__title {
                     @include fs-headline(7, true);
                 }
+            }
+            .item__standfirst,
+            .item__support {
+                @include rem((
+                    max-width: gs-span(8)
+                ));
             }
         }
         .item__media-wrapper {
@@ -153,20 +138,53 @@
         }
     }
     .l-row--items-4 {
-        @include mq($to: tablet) {
-            .item__title,
-            .item__byline {
-                @include fs-headline(1, true);
-            }
-            .item__media-wrapper {
-                @include rem((width: 90px));
+        
+    }
+}
+
+.item--thumbnail {
+    .l-row--items-3 & ,
+    .l-row--items-4 & {
+        .item__standfirst {
+            display: block;
+
+            @include rem((
+                margin-top: 2px
+            ));
+        }
+        .item__media-wrapper {
+            float: left;
+            clear: both;
+
+            @include rem((
+                margin-right: $gs-gutter/2
+            ));
+        }
+    }
+    .l-row--items-3 & {
+        .item__media-wrapper {
+            @include rem((
+                width: 88px
+            ));
+
+            @include mq(desktop) {
+                @include rem((
+                    width: 122px
+                ));
             }
         }
-        @include mq(tablet) {
-            .item__title,
-            .item__byline {
-                @include fs-headline(1, true);
+    }
+    .l-row--items-4 & {
+        .item__media-wrapper {
+            @include rem((
+                width: 56px
+            ));
+            @include mq(desktop) {
+                @include rem((
+                    width: 88px
+                ));
             }
         }
+
     }
 }
