@@ -4,15 +4,13 @@ define([
     'qwery',
     'bonzo',
     'bean',
-    'common/utils/detect',
-    'common/components/chartbeat/chartbeat_pub'
+    'common/utils/detect'
 ], function (
     common,
     qwery,
     bonzo,
     bean,
-    detect,
-    chartbeat
+    detect
 ) {
 
     var inlineAdvertSlot = '<div class="ad-slot ad-slot--inline" data-base="%slot%" data-median="%slot%"><div class="ad-container"></div></div>',

@@ -15,7 +15,8 @@ define([
     'common/modules/experiments/tests/commercial-in-article-mobile',
     'common/modules/experiments/tests/right-most-popular',
     'common/modules/experiments/tests/right-most-popular-control',
-    'common/modules/experiments/tests/underline-links'
+    'common/modules/experiments/tests/underline-links',
+    'common/modules/experiments/tests/chartbeat-desktop'
 ], function (
     common,
     store,
@@ -31,7 +32,8 @@ define([
     CommercialInArticlesMobile,
     RightPopular,
     RightPopularControl,
-    UnderlineLinks
+    UnderlineLinks,
+    ChartbeatDesktop
     ) {
 
     var TESTS = [
@@ -45,7 +47,8 @@ define([
             new CommercialInArticlesMobile(),
             new RightPopular(),
             new RightPopularControl(),
-            new UnderlineLinks()
+            new UnderlineLinks(),
+            new ChartbeatDesktop()
         ],
         participationsKey = 'gu.ab.participations';
 
