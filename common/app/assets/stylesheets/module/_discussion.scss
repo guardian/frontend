@@ -861,8 +861,7 @@ $replyIndent: 26px;
     margin-bottom: $baseline*4;
 }
 
-.d-comment-box { 
-
+.d-comment-box {
     @include mq($comment-meta-breakpoint) {
         margin-left: 160px;
     }
@@ -871,6 +870,16 @@ $replyIndent: 26px;
     }
     @include mq(wide) {
         margin-left:  $a-leftColWide-width + $gs-gutter;
+    }
+}
+
+.d-comment-box--expanded {
+    .d-comment-box__body {
+        height: 150px;
+    }
+
+    .d-comment-box__cancel {
+        display: inline-block;
     }
 }
 
@@ -887,10 +896,6 @@ $replyIndent: 26px;
     resize: vertical;
     width: 100%;
     word-break: break-word;
-}
-
-.d-comment-box__body--expanded {
-    height: 150px;
 }
 
 .d-comment-box__add-comment {
@@ -913,6 +918,7 @@ $replyIndent: 26px;
 
 .d-comment-box__cancel {
     color: $c-neutral2;
+    display: none;
     float: right;
     margin-top: $baseline*3;
 }
