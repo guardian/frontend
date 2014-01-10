@@ -4,7 +4,7 @@ define(['modules/vars'], function(vars) {
         return $.ajax(
             _.extend({}, {
                 dataType: !opts.type || opts.type === 'get' ? 'json' : undefined,
-                contentType: 'application/json'
+                contentType: opts.data ? 'application/json' : undefined
             }, opts)
         ).fail(function(xhr) {
             if (xhr.status === 403) {
