@@ -1,6 +1,6 @@
 package test
 
-import conf.{HealthcheckPage, Configuration}
+import conf.{Switches, HealthcheckPage, Configuration}
 import conf.Switches._
 import org.scalatest.Matchers
 import org.scalatest.{ GivenWhenThen, FeatureSpec }
@@ -70,6 +70,20 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
         And("I should see a link to the author's page")
         $("[itemprop=author] a[itemprop='url name']")(0).getAttribute("href") should be(WithHost("/profile/ben-arnold"))
         $("[itemprop=author] a[itemprop='url name']").last.getAttribute("href") should be(WithHost("/profile/phelimoneill"))
+      }
+    }
+
+    scenario("Keyword metadata", ArticleComponents) {
+
+      Given("I am on an article entitled 'TV highlights 09/08/2012'")
+      HtmlUnit("/tv-and-radio/2012/aug/08/americas-animal-hoarder-the-churchills") { browser =>
+        import browser._
+
+        Then("Keywords should be exposed")
+        findFirst("meta[name=keywords]").getAttribute("content") should be("Television,Television & radio,Culture,Proms 2012,Classical music,Proms,Music")
+
+        And("News Keywords should be exposed")
+        findFirst("meta[name=news_keywords]").getAttribute("content") should be("Television,Television & radio,Culture,Proms 2012,Classical music,Proms,Music")
       }
     }
 
@@ -222,6 +236,59 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
       }
     }
 
+    scenario("Articles should auto link to keywords") {
+
+      Given("An article that has no in body links")
+      Switches.TagLinking.switchOn()
+      HtmlUnit("/business/2014/jan/09/morrisons-issues-profit-warning-sales-down") { browser =>
+        import browser._
+
+        Then("It should automatucally link to tags")
+        val taglinks = $("a[data-link-name=auto-linked-tag]")
+
+        taglinks.length should be (2)
+
+        taglinks(0).getText should be ("Morrisons")
+        taglinks(0).getAttribute("href") should endWith ("/business/morrisons")
+
+        taglinks(1).getText should be ("Tesco")
+      }
+    }
+
+    scenario("Articles should link section tags") {
+
+      Given("An article that has no in body links")
+      Switches.TagLinking.switchOn()
+      HtmlUnit("/environment/2014/jan/09/penguins-ice-walls-climate-change-antarctica") { browser =>
+        import browser._
+
+        Then("It should automatically link to tags")
+        val taglinks = $("a[data-link-name=auto-linked-tag]")
+
+        taglinks.map(_.getText) should not contain "Science"
+      }
+    }
+
+    scenario("Articles should link longest keywords first") {
+      // so you don't overlap similar tags
+
+      Given("An article that has no in body links")
+      Switches.TagLinking.switchOn()
+      HtmlUnit("/uk-news/2013/dec/27/high-winds-heavy-rain-uk-ireland") { browser =>
+        import browser._
+
+        Then("It should automatically link to tags")
+        val taglinks = $("a[data-link-name=auto-linked-tag]")
+
+        taglinks.length should be (1)
+
+        taglinks(0).getText should be ("Northern Ireland")
+        taglinks(0).getAttribute("href") should endWith ("/uk/northernireland")
+      }
+    }
+
+
+
     scenario("Review body", ArticleComponents) {
 
       // Nb, The schema.org markup for a review body is different to an article body
@@ -280,19 +347,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
         findFirst(".js-main-site-link").getAttribute("href") should
           be(DesktopVersionLink("/environment/2012/feb/22/capitalise-low-carbon-future"))
       }
-    }
-
-    scenario("Story package navigation") {
-
-      Given("I'm on an article entitled 'Iraq war logs reveal 15,000 previously unlisted civilian deaths'")
-
-      HtmlUnit("/world/2010/oct/22/true-civilian-body-count-iraq") { browser =>
-        import browser._
-
-        Then("I should see navigation to related content")
-        $("[itemprop=relatedLink]").size() should be > 0
-      }
-
     }
 
     scenario("Direct link to paragraph") {
@@ -419,15 +473,15 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
         import browser._
 
         Then("I should see the main ARIA roles described")
-        findFirst(".related-trails").getAttribute("role") should be("complementary")
+        findFirst(".related__container").getAttribute("role") should be("complementary")
         findFirst("aside").getAttribute("role") should be("complementary")
         findFirst("header").getAttribute("role") should be("banner")
         findFirst(".footer__secondary").getAttribute("role") should be("contentinfo")
         findFirst("nav").getAttribute("role") should be("navigation")
         findFirst("nav").getAttribute("aria-label") should be("Guardian sections")
         findFirst("#article").getAttribute("role") should be("main")
-        findFirst(".trailblock").getAttribute("role") should be("complementary")
-        findFirst(".trailblock").getAttribute("aria-labelledby") should be("related-content-head")
+        findFirst(".related__container").getAttribute("role") should be("complementary")
+        findFirst(".related__container").getAttribute("aria-labelledby") should be("related-content-head")
 
       }
     }
@@ -439,13 +493,10 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
         import browser._
 
         Then("I should see a fancy gallery trail")
-        $(".trail--gallery") should have size 1
+        $(".item--gallery") should have size 2
 
-        And("it should have 3 thumbnails")
-        $(".gallerythumbs__item") should have size 3
-
-        And("should show a total image count of 12")
-        $(".trail__count--imagecount").getText should be("12 images")
+        //And("should show a total image count of 12")
+        //$(".trail__count--imagecount").getText should be("12 images")
       }
 
 
@@ -498,12 +549,35 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
         $("meta[property='twitter:image:src']").getAttributes("content").head should startWith ("http://i.gucode.co.uk/n/")
       }
     }
+    
+    scenario("Signify to the user an article is sponsored"){
+      Given("I visit a sponsored article entitled 'Young people debt worries'")
+      SponsoredContentSwitch.switchOn()
+      HtmlUnit("/carphone-warehouse-mobile-living/melody-makers") { browser =>
+        import browser._
+        Then("I should see a message")
+        $(".article__sponsor").getText should be ("Advertisement feature")
+      }
+    }
 
     scenario("Health check"){
       HtmlUnit("/world/2013/sep/15/obama-rouhani-united-nations-meeting") { browser =>
         Await.result(WS.url("http://localhost:9000/_cdn_healthcheck").get(), 10.seconds).status should be (503)
         HealthcheckPage.get(com.gu.management.HttpRequest(com.gu.management.GET, "/management/healthcheck", "http://localhost:10808", Map.empty))
         Await.result(WS.url("http://localhost:9000/_cdn_healthcheck").get(), 10.seconds).status should be (200)
+      }
+    }
+
+    scenario("Ensure that 'comment' always takes precedence before 'feature' when selecting article tone"){
+      Given("I am on an article entitled 'Who would you like to see honoured by a blue plaque?'")
+
+      ArticleKeywordsSwitch.switchOn()
+
+      HtmlUnit("/commentisfree/2013/jan/07/blue-plaque-english-heritage"){ browser =>
+        import browser._
+
+        Then("I should see the comment tonal treatmemt")
+        $(".article-wrapper").getAttribute("class") should include ("tone-comment")
       }
     }
 

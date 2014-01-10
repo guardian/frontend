@@ -183,8 +183,16 @@ object FaciaMetrics {
     "Number of errors whilst parsing JSON out of S3"
   )
 
+  object S3AuthorizationError extends CountMetric(
+    "facia-front",
+    "facia-s3-authorization",
+    "Facia S3 403 (Unauthorized) error count",
+    "Number of requests to S3 by facia that have resulted in a 403"
+  )
+
   val all: Seq[Metric] = Seq(
-    JsonParsingErrorCount
+    JsonParsingErrorCount,
+    S3AuthorizationError
   )
 }
 

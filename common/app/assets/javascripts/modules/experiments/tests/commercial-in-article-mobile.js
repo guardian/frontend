@@ -13,20 +13,21 @@ define([
     detect
 ) {
 
-    var inlineAdvertSlot = '<div class="ad-slot ad-slot--inline" data-base="%slot%" data-median="%slot%"><div class="ad-container"></div></div>',
-        topSlot = 'TODO';
+    var adSlot = '<div class="ad-slot ad-slot--inline" data-base="%slot%" data-median="%slot%"><div class="ad-container"></div></div>';
 
     // inserts a few inline advert slots in to the page 
     var createInlineAdSlots = function (id) {
         var article = document.getElementsByClassName('js-article__container')[0];
-        bonzo(qwery('p:nth-of-type(10n)'), article).each(function(el, i) {
+        bonzo(qwery('p:nth-of-type(7n)'), article).each(function(el, i) {
             var cls = (i % 2 === 0) ? 'is-odd' : 'is-even';
-            bonzo(bonzo.create(inlineAdvertSlot.replace(/%slot%/g, id))).addClass(cls).insertAfter(this);
+            bonzo(bonzo.create(adSlot.replace(/%slot%/g, id))).addClass(cls).insertAfter(this);
         });
     };
     
     var createTopAdSlot = function (id) {
-        // TODO 
+        bonzo(qwery('.ad-slot--top-banner-ad')).attr('data-base', id);
+        bonzo(qwery('.ad-slot--top-banner-ad')).attr('data-median', id);
+        bonzo(qwery('.ad-slot--top-banner-ad')).attr('data-extended', id);
     };
 
     var CommercialInArticlesMobile = function () {
@@ -34,30 +35,33 @@ define([
         var self = this;
         
         this.id = 'CommercialInArticlesMobile';
-        this.expiry = '2014-01-07';
+        this.expiry = '2014-01-21';
         this.audience = 0.1;
-        this.audienceOffset = 0.6;
-        this.description = 'Inserts commercial components in to the articles to monitor CTR';
+        this.audienceOffset = 0.4;
+        this.description = 'Inserts commercial components in to the mobile articles to monitor CTR';
         this.canRun = function(config) {
             return (config.page.contentType === 'Article'
                 && (/mobile/).test(detect.getBreakpoint())
             );
         };
+
         this.variants = [
             {
                 id: 'CommercialInline',
                 test: function(context, config) {
-                    guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha1.com';
-                    createInlineAdSlots('Top');
-                    createTopAdSlot('x49');
+                    guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha3.com';
+                    guardian.config.page.ab_commercialInArticleMobile = 'inline';
+                    createInlineAdSlots('x49');
+                    createTopAdSlot('Top2');
                 }
             },
             {
                 id: 'CommercialTop',
                 test: function(context, config) {
-                    guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha1.com';
-                    createInlineAdSlots('x49');
-                    createTopAdSlot('Top');
+                    guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha4.com';
+                    guardian.config.page.ab_commercialInArticleMobile = 'top';
+                    createInlineAdSlots('Top2');
+                    createTopAdSlot('x49');
                 }
             },
             {

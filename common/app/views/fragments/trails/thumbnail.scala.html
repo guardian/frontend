@@ -14,7 +14,7 @@
     </h@headingLevel>
 
     @trail.trailPicture.map { imageContainer =>
-        @ImgSrc.imager(imageContainer).map{ imgSrc =>
+        @ImgSrc.imager(imageContainer, Item620).map{ imgSrc =>
             <a href="@LinkTo{@trail.url}"
                class="trail__img item__image-container"
                data-link-name="@rowNum | image"

@@ -51,9 +51,11 @@ define([
                 // Apply tracking to links
                 $(self.selector + ' a', context).attr('data-is-ajax', '1');
 
-                bean.on(context, 'click', self.selector + ' a', function(e) {
+                bean.on(context, 'click', self.selector, function(e) {
                     e.preventDefault();
-                    var galleryUrl = e.currentTarget.getAttribute('href');
+
+                    var el = (e.currentTarget.nodeName === "A") ? e.currentTarget : e.currentTarget.querySelector('a');
+                    var galleryUrl = el.getAttribute('href');
 
                     // Go to a specific image if it's in the query string. eg: index=3
                     if (galleryUrl.indexOf('index=') !== -1) {

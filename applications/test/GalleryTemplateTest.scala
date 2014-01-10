@@ -18,8 +18,8 @@ class GalleryTemplateTest extends FlatSpec with Matchers with UsesElasticSearch 
     val linkNames = $("a").getTexts
     val linkUrls = $("a").getAttributes("href")
 
-    linkNames should contain("Dudamel's Beethoven challenge")
-    linkUrls should contain(WithHost("/music/tomserviceblog/2012/jun/21/simon-bolivar-orchestra-dudamel-beethoven"))
+    linkNames should contain("Gustavo Dudamel: 'I'm not the messiah'")
+    linkUrls should contain(WithHost("/music/2010/sep/16/gustavo-dudamel-simon-bolivar-orchestra"))
   }
 
   it should "render caption and navigation on first image page" in HtmlUnit("/news/gallery/2012/may/02/picture-desk-live-kabul-burma") { browser =>

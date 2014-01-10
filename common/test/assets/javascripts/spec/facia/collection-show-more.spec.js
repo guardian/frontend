@@ -1,11 +1,11 @@
 define([
-    'common/modules/facia/collection-show-more',
     'bonzo',
+    'bean',
     'common/$',
     'common/utils/mediator',
-    'bean',
-    'common/utils/ajax'
-], function(CollectionShowMore, bonzo, $, mediator, bean, ajax) {
+    'common/utils/ajax',
+    'common/modules/facia/collection-show-more'
+], function(bonzo, bean, $, mediator, ajax, CollectionShowMore) {
 
     describe('Collection Show More', function() {
 
@@ -20,7 +20,7 @@ define([
             server,
             response = JSON.stringify({
                 html: '<ul class="collection">' + [1, 2, 3, 4, 5, 6].reduce(function(previousValue, currentValue) {
-                    return previousValue + '<li class="item">' + currentValue + '</li>'
+                    return previousValue + '<li class="item" data-link-name="trail | ' + currentValue + '">Item ' + currentValue + '</li>'
                 }, '') + '</ul>'
             });
 
@@ -35,7 +35,7 @@ define([
             container = bonzo.create(
                 '<section>' +
                     '<ul class="js-collection--show-more" data-link-context-path="collection/uk/sport/regular-sories">' +
-                        '<li>Item 1</li>' +
+                        '<li class="item" data-link-name="trail | 1">Item 1</li>' +
                     '</ul>' +
                 '</section>'
             )[0];
@@ -116,13 +116,12 @@ define([
                 expect($button.attr('disabled')).toBeTruthy();
 
                 waitsFor(function() {
-                    return $('.item', collection).length;
+                    return $('.item', collection).length > 1;
                 }, 'server hasn\'t responded', 100);
                 runs(function() {
                     expect($button.attr('disabled')).toBeFalsy();
                 });
             });
-
         });
 
         it('should remove "js-collection--show-more" class from container when clicked', function() {
@@ -136,10 +135,10 @@ define([
             click();
 
             waitsFor(function() {
-                return $('.item', collection).length;
+                return $('.item', collection).length > 1;
             }, 'server hasn\'t responded', 100);
             runs(function() {
-                expect($('.item', collection).length).toEqual(5);
+                expect($('.item', collection).length).toEqual(6);
             });
         });
 
@@ -148,7 +147,7 @@ define([
             click();
 
             waitsFor(function() {
-                return $('.item', collection).length;
+                return $('.item', collection).length > 1;
             }, 'server hasn\'t responded', 100);
             runs(function() {
                 expect($('button', container).attr('data-link-name')).toEqual('Show more | 1');
@@ -160,7 +159,7 @@ define([
             click();
 
             waitsFor(function() {
-                return $('.item', collection).length;
+                return $('.item', collection).length > 1;
             }, 'server hasn\'t responded', 100);
             runs(function() {
                 click();
@@ -172,9 +171,9 @@ define([
         it('should remove any hidden items', function() {
             bonzo(collection).append('<li class="item" style="display: none"></li>');
             collectionShowMore.addShowMore();
-            expect($('.item', collection).length).toEqual(1);
+            expect($('.item', collection).length).toEqual(2);
             click();
-            expect($('.item', collection).length).toEqual(0);
+            expect($('.item', collection).length).toEqual(1);
         });
 
         it('should use items on page if can\'t show more', function() {
@@ -186,10 +185,24 @@ define([
                 );
             collectionShowMore.addShowMore();
             click();
-            expect($('.item', collection).length).toEqual(5);
-            click();
             expect($('.item', collection).length).toEqual(6);
+            click();
+            expect($('.item', collection).length).toEqual(7);
             expect($('button', collection).length).toEqual(0);
+        });
+
+        it('should update data-link-name index', function() {
+            collectionShowMore.addShowMore();
+            click();
+
+            waitsFor(function() {
+                return $('.item', collection).length > 1;
+            }, 'server hasn\'t responded', 100);
+            runs(function() {
+                $('.item', collection).each(function(item, index) {
+                    expect($(item).attr('data-link-name')).toEqual('trail | ' + (index + 1));
+                });
+            });
         });
 
     });

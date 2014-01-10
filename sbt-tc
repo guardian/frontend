@@ -36,17 +36,20 @@ echo $IVY_PARAMS
 DOMAIN=`hostname -d`
 
 echo ''
-echo "******************************* JAVA VERION *********************************************"
-java -version
-echo "*****************************************************************************************"
+echo "********************************* JAVA VERSION *********************************"
+/usr/lib/jvm/java-1.7.0/bin/java -version
+echo "********************************************************************************"
 echo ''
+
+export JAVA_HOME=/usr/lib/jvm/java-1.7.0/bin/java
+export JDK_HOME=/usr/lib/jvm/java-1.7.0/bin/java
 
 # NOTE this is not a REAL APP_SECRET it is just for DEV environments
 fake_secret="myKV8HQkjcaxygbDuyneHBeyFgsyyM8yCFFOxyDoT0QGuyrY7IyammSyP1VivCxS"
 
 #MaxPermSize specifies the the maximum size for the permanent generation heap,
 # a heap that holds objects such as classes and methods. Xmx is the heap size.
-cat /dev/null | java -Xmx4096M -XX:MaxPermSize=2048m \
+cat /dev/null | /usr/lib/jvm/java-1.7.0/bin/java -Xmx4096M -XX:MaxPermSize=2048m \
   -XX:ReservedCodeCacheSize=128m \
   -Dsbt.boot.directory=$SBT_BOOT_DIR \
   -Dsbt.log.noformat=true \

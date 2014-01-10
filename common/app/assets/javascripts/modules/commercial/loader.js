@@ -39,10 +39,12 @@ define([
         this.keywords       = conf.keywords || '';
         this.section        = conf.section;
         this.host           = conf.ajaxUrl + '/commercial/';
-        this.userVariant    = conf.ab_commercialInArticleDesktop || '';
+        this.desktopUserVariant    = conf.ab_commercialInArticleDesktop || '';
+        this.mobileUserVariant  = conf.ab_commercialInArticleMobile || '';
         this.oastoken       = options.oastoken || '';
         this.inlineMicCode  = options.inlineMicCode || '';
         this.mpuMicCode     = options.mpuMicCode || '';
+        this.adType         = options.adType || 'desktop';
         this.userSegments   = 'seg=' + (new History().getSize() <= 1 ? 'new' : 'repeat');
         this.components     = {
           masterclasses: this.host + 'masterclasses.json?' + this.userSegments + '&s=' + this.section,
@@ -71,15 +73,28 @@ define([
             container: target,
             beforeInsert: function (html) {
                 var result = html;
-                if (self.userVariant === "inline") {
-                    result = result.replace(/%OmnitureToken%/g, "?INTCMP=" + self.inlineMicCode);
-                    result = result.replace(/%JustOmnitureToken%/g, self.inlineMicCode);
-                } else if (self.userVariant === "mpu") {
-                    result = result.replace(/%OmnitureToken%/g, "?INTCMP=" + self.mpuMicCode);
-                    result = result.replace(/%JustOmnitureToken%/g, self.mpuMicCode);
+                if (self.adType === "mobile") {
+                    if (self.mobileUserVariant === "inline") {
+                        result = result.replace(/%OmnitureToken%/g, "?INTCMP=" + self.inlineMicCode);
+                        result = result.replace(/%JustOmnitureToken%/g, self.inlineMicCode);
+                    } else if (self.mobileUserVariant === "top") {
+                        result = result.replace(/%OmnitureToken%/g, "?INTCMP=" + self.mpuMicCode);
+                        result = result.replace(/%JustOmnitureToken%/g, self.mpuMicCode);
+                    } else {
+                        result = result.replace(/%OmnitureToken%/g, "");
+                        result = result.replace(/%JustOmnitureToken%/g, "");
+                    }
                 } else {
-                    result = result.replace(/%OmnitureToken%/g, "");
-                    result = result.replace(/%JustOmnitureToken%/g, "");
+                    if (self.desktopUserVariant === "inline") {
+                        result = result.replace(/%OmnitureToken%/g, "?INTCMP=" + self.inlineMicCode);
+                        result = result.replace(/%JustOmnitureToken%/g, self.inlineMicCode);
+                    } else if (self.desktopUserVariant === "mpu") {
+                        result = result.replace(/%OmnitureToken%/g, "?INTCMP=" + self.mpuMicCode);
+                        result = result.replace(/%JustOmnitureToken%/g, self.mpuMicCode);
+                    } else {
+                        result = result.replace(/%OmnitureToken%/g, "");
+                        result = result.replace(/%JustOmnitureToken%/g, "");
+                    }
                 }
 
                 return result.replace(/%OASToken%/g, self.oastoken);

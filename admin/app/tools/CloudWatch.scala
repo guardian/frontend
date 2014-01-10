@@ -13,25 +13,22 @@ case class LoadBalancer(id: String, name: String, project: String)
 
 object CloudWatch extends implicits.Futures{
 
-  private lazy val executor = Executors.newCachedThreadPool
-
   def shutdown() {
-    executor.shutdownNow()
+    euWestClient.shutdown()
+    defaultClient.shutdown()
   }
 
   val stage = new Dimension().withName("Stage").withValue(environment.stage)
   val stageFilter = new DimensionFilter().withName("Stage").withValue(environment.stage)
 
-  // we create a new client on each request, otherwise we run into this problem
-  // http://blog.bdoughan.com/2011/03/preventing-entity-expansion-attacks-in.html
-  def euWestClient = {
-    val client = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials, executor)
+  lazy val euWestClient = {
+    val client = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials)
     client.setEndpoint("monitoring.eu-west-1.amazonaws.com")
     client
   }
 
   // some metrics are only available in the 'default' region
-  def defaultClient = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials, executor)
+  lazy val defaultClient = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials)
 
   val primaryLoadBalancers = Seq(
     LoadBalancer("frontend-RouterLo-1HHMP4C9L33QJ", "Router", "frontend-router"),

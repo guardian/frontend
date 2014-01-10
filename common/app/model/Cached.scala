@@ -5,14 +5,16 @@ import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import play.api.mvc.{ SimpleResult, Results }
 
-object Cached extends Results {
+object Cached extends Results with implicits.Dates {
+
+  private val cacheableStatusCodes = Seq(200, 404)
 
   def apply(seconds: Int)(result: SimpleResult): SimpleResult = {
-    if (result.header.status == 200) cacheHeaders(seconds, result) else result
+    if (cacheableStatusCodes.exists(_ == result.header.status)) cacheHeaders(seconds, result) else result
   }
 
   def apply(metaData: MetaData)(result: SimpleResult): SimpleResult = {
-    if (result.header.status == 200) cacheHeaders(metaData.cacheSeconds, result) else result
+    if (cacheableStatusCodes.exists(_ == result.header.status)) cacheHeaders(metaData.cacheSeconds, result) else result
   }
 
   private def cacheHeaders(seconds: Int, result: SimpleResult) = {
