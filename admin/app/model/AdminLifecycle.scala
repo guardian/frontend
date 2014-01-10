@@ -6,13 +6,13 @@ import common.Jobs
 
 trait AdminLifecycle extends GlobalSettings {
 
-  def scheduleJobs() {
+  private def scheduleJobs() {
     Jobs.schedule("AdminLoadJob", "0/30 * * * * ?") {
       model.abtests.AbTestJob.run()
     }
   }
 
-  def descheduleJobs() {
+  private def descheduleJobs() {
     Jobs.deschedule("AdminLoadJob")
   }
 
