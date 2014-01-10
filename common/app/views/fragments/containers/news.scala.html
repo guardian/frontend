@@ -12,7 +12,7 @@
                 @title.map { title =>
                     <h2 class="container__title tone-@style.tone tone-background tone-accent-border">
                     @config.href.map { href =>
-                    <a data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
+                        <a data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
                     }.getOrElse{
                         @Html(title)
                     }
