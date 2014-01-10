@@ -8,9 +8,9 @@ import common.{FaciaToolMetrics, ExecutionContexts, Logging}
 import conf.Configuration
 import tools.FaciaApi
 import services.{ConfigAgent, ContentApiWrite, S3FrontsApi}
-import play.api.libs.ws.{Response, WS}
+import play.api.libs.ws.Response
 import scala.concurrent.Future
-import model.Config
+import conf.Switches.ContentApiPutSwitch
 
 
 object FaciaToolController extends Controller with Logging with ExecutionContexts {
@@ -97,7 +97,10 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     } getOrElse NotFound
   }
 
-  def notifyContentApi(id: String): Option[Future[Response]] = ConfigAgent.getConfig(id)
-    .map {config => ContentApiWrite.writeToContentapi(config)}
+  def notifyContentApi(id: String): Option[Future[Response]] =
+    if (ContentApiPutSwitch.isSwitchedOn)
+      ConfigAgent.getConfig(id)
+        .map {config => ContentApiWrite.writeToContentapi(config)}
+    else None
 
 }
