@@ -368,7 +368,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
         import browser._
 
         Then("the primary image's 'data-force-upgrade' attribute should be 'true'")
-        findFirst("#article figure .item__image-container").getAttribute("data-force-upgrade") should be("")
+        findFirst("#article figure .js-image-upgrade").getAttribute("data-force-upgrade") should be("")
       }
     }
 
