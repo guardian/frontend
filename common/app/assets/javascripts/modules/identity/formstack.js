@@ -65,6 +65,7 @@ define([
 
             self.dom(user);
             $(el).removeClass(config.idClasses.hide);
+            $('html').addClass('iframed--overflow-hidden');
 
             // Update iframe height, see "modules/identity/formstack-iframe"
             self.postMessage('ready');
