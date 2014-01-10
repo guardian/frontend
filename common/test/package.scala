@@ -26,9 +26,10 @@ trait TestSettings {
   val recorder = new ContentApiHttpRecorder {
     override lazy val baseDir = new File(System.getProperty("user.dir"), "data/database")
   }
-
-  private def verify(property: String, hash: String, message: String) {
-    if (DigestUtils.sha256Hex(property) != hash) {
+                                                                      // TODO otherKey is just temporary so we can
+                                                                      // roll this out without TC downtime
+  private def verify(property: String, hash: String, message: String, otherKey: Option[String] = None) {
+    if (DigestUtils.sha256Hex(property) != hash && !otherKey.exists(_ == hash)) {
 
       // the println makes it easier to spot what is wrong in tests
       println()
@@ -53,7 +54,8 @@ trait TestSettings {
     verify(
       Configuration.contentApi.elasticSearchHost,
       "973dff7baa408e6f2334e3cf4ca36a960f1743b6d09911ff68723db9cbe62163",
-      "YOU ARE NOT USING THE CORRECT ELASTIC SEARCH CONTENT API HOST"
+      "YOU ARE NOT USING THE CORRECT ELASTIC SEARCH CONTENT API HOST",
+      Some("973dff7baa408e6f2334e3cf4ca36a960f1743b6d09911ff68723db9cbe62163")
     )
 
     verify(
