@@ -329,11 +329,11 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
               Ok(views.html.front(frontPage, faciaPage))
           }
         }
-      }.getOrElse(Cached(5)(NotFound)) //TODO is 404 the right thing here
+      }.getOrElse(Cached(60)(NotFound))
   }
 
   def renderCollection(id: String) = Action { implicit request =>
-    if (ConfigAgent.getAllCollectionIds.exists(_.equals(id))) {
+    if (ConfigAgent.getAllCollectionIds.exists(_ == id)) {
       CollectionAgent.getCollection(id) map { collection =>
         val html = views.html.fragments.collections.standard(Config(id), collection.items, NewsContainer(false), 1)
         Cached(60) {
@@ -349,16 +349,20 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
       } getOrElse(ServiceUnavailable)
     }
     else
-      NotFound
+      Cached(60)(NotFound)
   }
 
   def renderCollectionRss(id: String) = Action { implicit request =>
-    CollectionAgent.getCollection(id) map { collection =>
-      Cached(60) {
-        val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(""))
-        Ok(TrailsToRss(config.displayName, collection.items))
-      }.as("text/xml; charset=utf-8")
-    } getOrElse(Cached(5)(NotFound))
+    if (ConfigAgent.getAllCollectionIds.exists(_ == id)) {
+      CollectionAgent.getCollection(id) map { collection =>
+        Cached(60) {
+          val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(""))
+          Ok(TrailsToRss(config.displayName, collection.items))
+        }.as("text/xml; charset=utf-8")
+      } getOrElse(ServiceUnavailable)
+    }
+    else
+      Cached(60)(NotFound)
   }
 
 }
