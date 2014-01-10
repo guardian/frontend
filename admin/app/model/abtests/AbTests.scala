@@ -1,6 +1,6 @@
 package model.abtests
 
-import tools.{CloudWatch, LineChart}
+import tools.{ChartFormat, CloudWatch, LineChart}
 import com.amazonaws.services.cloudwatch.model.GetMetricStatisticsRequest
 import org.joda.time.DateTime
 
@@ -37,7 +37,7 @@ object AbTests {
         }
 
         // Make a list of line charts
-        new LineChart(abTest, Seq("Time") ++ variants, cloudwatchResults:_*)
+        new LineChart(abTest, Seq("Time") ++ variants, cloudwatchResults:_*).withFormat(ChartFormat.MultiLine)
     }.toSeq
   }
 } 
