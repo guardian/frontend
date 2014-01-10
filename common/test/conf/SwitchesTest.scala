@@ -29,8 +29,8 @@ class SwitchesTest extends FlatSpec with Matchers {
     }
   }
 
-  it should "Check a switch is on" in {
-    assert(Switches.AlwaysOnSwitch.isSwitchedOn)
+  it should "Check a switch is on if set to expire in the future" in {
+    assert(Switches.NeverExpiredSwitch.isSwitchedOn)
   }
   
   it should "Check a switch expires once it's sell by date has past" in {

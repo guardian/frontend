@@ -285,7 +285,7 @@ object Switches extends Collections {
     "Switch that is only used while running tests. You never need to change this switch.",
     safeState = Off)
 
-  val AlwaysOnSwitch = Switch("Unwired Test Switch", "always-on-switch",
+  val NeverExpiredSwitch = Switch("Unwired Test Switch", "never-expired-switch",
     "Switch that is only used while running tests. You never need to change this switch.",
     safeState = On, new DateTime().plusYears(100))
   
