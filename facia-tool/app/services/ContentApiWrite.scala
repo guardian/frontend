@@ -10,6 +10,7 @@ import common.{Logging, ExecutionContexts}
 import com.ning.http.client.Realm
 import conf.Configuration
 import play.Play
+import common.FaciaToolMetrics.{ContentApiPutFailure, ContentApiPutSuccess}
 
 trait ContentApiWrite extends ExecutionContexts with Logging {
 
@@ -54,8 +55,17 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
         .url(url).withAuth(username, password, Realm.AuthScheme.NONE)
         .put(Json.toJson(contentApiPut))
 
-      response.onSuccess{case r => log.info(s"Successful Put to content api with status ${r.status}: ${r.body}")}
-      response.onFailure{case e => log.warn(s"Failure to put to content api with exception ${e.toString}")}
+      response.onSuccess{case r =>
+        r.status match {
+          case 202 => ContentApiPutSuccess.increment()
+          case _   => ContentApiPutFailure.increment()
+        }
+        log.info(s"Successful Put to content api with status ${r.status}: ${r.body}")
+      }
+      response.onFailure{case e =>
+      ContentApiPutFailure.increment()
+        log.warn(s"Failure to put to content api with exception ${e.toString}")
+      }
       response
     }) getOrElse Future.failed(new Throwable(s"${config.id} does not exist"))
   }
