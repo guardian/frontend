@@ -29,7 +29,7 @@ class KeywordTest extends FlatSpec with Matchers with UsesElasticSearch {
   "lookup" should "ignore section filter when using elastic search content API client" in Fake {
     val keywords = Await.result(Keyword.lookup("France", section = Some("travel")), atMost = 10.seconds)
 
-    keywords.size should be > 2
+    keywords.size should be >= 2
   }
 
   "lookup" should "find expected results using Solr content API client" in Fake {
