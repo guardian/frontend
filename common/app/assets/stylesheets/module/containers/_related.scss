@@ -17,12 +17,20 @@
         }
 
         &.more-on-this-story {
-            .item:first-child {
-                display: none;
-            }
+            .item{
+                &:first-child {
+                    display: none;
+                }
 
-            .item:last-child {
-                display: block;
+                &:last-child {
+                    display: block;
+                }
+
+                &:nth-child(2) {
+                    &:before {
+                        border-left: none;
+                    }
+                }
             }
         }
     }
@@ -134,12 +142,6 @@
         @include mq(rightCol) {
             width: 25%;
             clear: none;
-
-            &:nth-child(2) {
-                &:before {
-                    border-left: none;
-                }
-            }
         }
 
         @include mq(leftCol) {
