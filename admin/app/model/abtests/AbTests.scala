@@ -28,7 +28,7 @@ object AbTests {
           CloudWatch.euWestClient.getMetricStatisticsAsync( new GetMetricStatisticsRequest()
             .withStartTime(new DateTime().minusHours(24).toDate)
             .withEndTime(new DateTime().toDate)
-            .withPeriod(3600)
+            .withPeriod(300)
             .withStatistics("Average")
             .withNamespace("AbTests")
             .withMetricName(s"$abTest-$variant")
