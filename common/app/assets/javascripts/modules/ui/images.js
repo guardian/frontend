@@ -11,7 +11,7 @@ define(['common/$', 'common/utils/to-array', 'bonzo', 'common/utils/mediator', '
                     replacementDelay: 0
                 };
 
-            toArray(context.getElementsByClassName('item__image-container')).forEach(function(container) {
+            toArray(context.getElementsByClassName('js-image-upgrade')).forEach(function(container) {
                 var $container = bonzo(container),
                     forceUpgradeAttr = $container.attr('data-force-upgrade'),
                     forceUpdgradeBreakpoints = forceUpgradeAttr !== null ? forceUpgradeAttr.split(' ') : [],
