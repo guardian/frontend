@@ -34,7 +34,7 @@
                     @RemoveOuterParaHtml(trail.headline)
                 </h@if(isFirstContainer && index == 0){1}else{2}>
             </a>
-            @if(tone == "comment") {                                                            test
+            @if(tone == "comment") {                                             
                 @trail.byline.map { byLine =>
                     <p class="item__byline tone-colour">@Html(byLine)</p>
                 }
