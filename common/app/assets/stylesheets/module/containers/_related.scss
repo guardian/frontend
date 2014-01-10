@@ -81,7 +81,7 @@
         }
 
         @include mq(rightCol) {
-            min-height: gs-height(5);
+            min-height: gs-height(5) + $gs-baseline;
         }
 
     }
@@ -136,6 +136,10 @@
                     min-height: 0;
                     padding-bottom: $gs-row-height;
                 }
+
+                .item__container {
+                    min-height: gs-height(10) + $gs-baseline;
+                }
             }
         }
 
@@ -164,6 +168,10 @@
 
         .item__meta {
             border-bottom: none;
+        }
+
+        .trail__count i {
+            top: 0;
         }
     }
 
