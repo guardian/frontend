@@ -89,23 +89,30 @@ CommentBox.prototype.prerender = function() {
         this.getElem('premod').parentNode.removeChild(this.getElem('premod'));
     }
 
+    var userData = IdentityApi.getUserFromCookie();
+    this.getElem('author').innerHTML = userData.displayName;
+
     if (this.options.state === 'response') {
         this.getElem('submit').innerHTML = 'Post reply';
     } else {
-        var userData = IdentityApi.getUserFromCookie();
         var avatar = this.getElem('avatar-wrapper');
         avatar.setAttribute('userid', userData.id);
         UserAvatars.avatarify(avatar);
-        this.getElem('author').innerHTML = userData.displayName;
     }
 
     if (this.options.replyTo) {
-        var elem = document.createElement('label');
-        elem.setAttribute('for', 'reply-to-'+ this.options.replyTo.commentId);
-        elem.className = 'label '+ this.getClass('reply-to', true);
-        elem.innerHTML = 'to '+ this.options.replyTo.author;
-        this.getElem('body').id = 'reply-to-'+ this.options.replyTo.commentId;
-        bonzo(elem).insertAfter(this.getElem('submit'));
+        var replyToAuthor = this.getElem('reply-to-author');
+        replyToAuthor.innerHTML = this.options.replyTo.author;
+        this.getElem('parent-comment-author').innerHTML = this.options.replyTo.author + " @ " + this.options.replyTo.timestamp + " said:";
+
+        this.getElem('parent-comment-body').innerHTML = this.options.replyTo.body;
+
+        var setSpoutMargin = function() {
+            var spoutOffset = replyToAuthor.offsetLeft + (replyToAuthor.getBoundingClientRect().width/2);
+            this.getElem('parent-comment-spout').style.marginLeft = spoutOffset + 'px';
+        };
+        window.setTimeout(setSpoutMargin.bind(this), 0);
+
     }
 
 };
@@ -126,6 +133,8 @@ CommentBox.prototype.ready = function() {
     bean.on(this.context, 'change keyup', [commentBody], this.setFormState.bind(this));
     bean.on(commentBody, 'focus', this.setExpanded.bind(this)); // this isn't delegated as bean doesn't support it
     this.on('click', this.getClass('cancel'), this.cancelComment);
+    this.on('click', this.getClass('show-parent'), this.setState.bind(this, 'parent-visible', false));
+    this.on('click', this.getClass('hide-parent'), this.removeState.bind(this, 'parent-visible', false));
 
     this.setState(this.options.state);
 

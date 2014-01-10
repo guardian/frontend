@@ -41,9 +41,6 @@ $replyIndent: 26px;
 .discussion__comment-count {
     color: $c-neutral3;
 }
-.d-thread--responses,
-.d-comment-box--response {
-}
 
 .show-more__container {
     margin-bottom: $baseline*2;
@@ -147,6 +144,7 @@ $replyIndent: 26px;
 
 .d-comment-box__meta {
     margin-top: $gs-baseline/2;
+    position: relative;
     display: none;
     @include mq($comment-meta-breakpoint) {
         display: block;
@@ -209,10 +207,14 @@ $replyIndent: 26px;
     a { color: $c-neutral2; }
 }
 
-.d-comment__reply-to-author {
+.d-comment__reply-to-author, .d-comment-box__reply-to-author {
     color: $c-neutral1;
     @include fs-data(3);
     display: none;
+}
+
+.d-comment-box__reply-to-author {
+    display: inline;
 }
 
 .d-comment--new {
@@ -451,8 +453,7 @@ $replyIndent: 26px;
 /* Reply comment
    ========================================================================== */
 
-.d-comment--response {
-    margin-left: $replyIndent;
+.d-comment--response, .d-comment-box--response {
     border-top: 1px dotted $c-neutral3;
 
     @include mq($comment-meta-breakpoint) {
@@ -484,25 +485,50 @@ $replyIndent: 26px;
     .d-comment__recommend {
         top: $baseline;
     }
+    .d-comment__timestamp { margin-top: -4px; }
+}
+.d-comment-box--response {
+    .d-comment-box {
+        padding-left: none;
+    }
+    .d-comment-box__content {
+        margin-left: 0
+    }
+    .d-comment-box__avatar-wrapper {
+        display: none;
+    }
+}
+.d-comment--response, .d-comment-box--response {
 
-    .d-comment__meta {
+    .d-comment__meta, .d-comment-box__meta {
         height: auto;
         display: block;
         float: none;
         width: 100%;
         .d-comment__timestamp { display: none; }
-        .d-comment__author { display: inline; @include fs-data(4); }
-        .i-in-reply-arrow { display: inline-block; }
-        .d-comment__reply-to-author { display: inline; }
         .d-comment__avatar-wrapper { display: none; }
     }
-    .d-comment__meta-text { margin-left: 0; position: static; }
-    .d-comment__timestamp { margin-top: -4px; }
 
-    
-
-
+    .i-in-reply-arrow {
+        display: inline-block;
+    }
+    .d-comment__author,
+    .d-comment-box__author {
+        display: inline;
+        @include fs-data(4);
+        padding-right: 0;
+    }
+    .d-comment__meta-text,
+    .d-comment-box__meta-text {
+        margin-left: 0;
+        position: static;
+    }
+    .d-comment__reply-to-author,
+    .d-comment-box__reply-to-author {
+        display: inline;
+    }
 }
+
 .d-discussion__error {
     margin-top: $baseline*2;
     .d-discussion__error-text {
@@ -869,13 +895,6 @@ $replyIndent: 26px;
     margin-bottom: $baseline*4;
 }
 
-.d-comment-box { 
-}
-
-.d-comment .d-comment-box {
-    padding-left: $replyIndent;
-}
-
 .d-comment-box__body {
     @include box-sizing(border-box);
     border: 1px solid $c-neutral3;
@@ -923,6 +942,28 @@ $replyIndent: 26px;
     @include fs-data(2);
     color: $c-neutral1;
 }
+.d-comment-box__hide-parent,
+.d-comment-box__show-parent {
+    @include fs-data(3);
+    margin-left: $gs-gutter;
+    display: none;
+}
+
+.d-comment-box--response {
+    .d-comment-box__show-parent {
+        display: inline;
+    }
+
+    &.d-comment-box--parent-visible {
+        .d-comment-box__hide-parent {
+            display: inline;
+        }
+        .d-comment-box__show-parent {
+            display: none;
+        }
+    }
+}
+
 
 .d-comment-box__reply-to {
     display: inline-block;
@@ -954,5 +995,43 @@ $replyIndent: 26px;
     .clamp__fade-content {
         border-top: 1px solid $c-neutral3;
         background: $c-neutral7;
+    }
+}
+
+.d-comment-box__parent-comment-spout {
+    display: block;
+    left: 20px;
+    width: 0;
+    height: 0;
+    border-right: 16px solid transparent;
+    border-bottom: 16px solid $c-neutral7;
+    border-right-style: inset;
+    margin-left: $gs-gutter*2;
+}
+
+.d-comment-box__parent-comment {
+    background-color: $c-neutral7;
+    padding: $gs-baseline $gs-gutter;
+    .d-comment-box__hide-parent {
+        margin-left: 0;
+    }
+}
+
+.d-comment-box__parent-comment-author {
+    font-weight: bold;
+    margin-bottom: $gs-baseline/2;
+    color: $c-neutral1;
+    display: inline-block;
+}
+.d-comment-box__parent-comment-body {
+    position: relative;
+}
+.d-comment-box__parent-comment-wrapper {
+    margin-top: $gs-baseline/2;
+    display: none;
+}
+.d-comment-box--parent-visible {
+    .d-comment-box__parent-comment-wrapper {
+        display: block;
     }
 }

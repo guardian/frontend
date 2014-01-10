@@ -89,7 +89,9 @@ Comments.prototype.classes = {
     commentPick: 'd-comment__action--pick',
     commentRecommend: 'd-comment__recommend',
     commentStaff: 'd-comment--staff',
-    commentBlocked: 'd-comment--blocked'
+    commentBlocked: 'd-comment--blocked',
+    commentBody: 'd-comment__body',
+    commentTimestampJs: 'js-timestamp'
 };
 
 /** @type {Object.<string.*>} */
@@ -536,6 +538,8 @@ Comments.prototype.replyToComment = function(e) {
         replyToAuthor = replyToComment.getAttribute('data-comment-author'),
         replyToAuthorId = replyToComment.getAttribute('data-comment-author-id'),
         $replyToComment = bonzo(replyToComment),
+        replyToBody = qwery(this.getClass('commentBody'), replyToComment)[0].innerHTML,
+        replyToTimestamp = qwery(this.getClass('commentTimestampJs'), replyToComment)[0].innerHTML,
         commentBox = new CommentBox(this.context, this.mediator, {
             discussionId: this.options.discussionId,
             premod: this.user.privateFields.isPremoderated,
@@ -543,7 +547,9 @@ Comments.prototype.replyToComment = function(e) {
             replyTo: {
                 commentId: replyToId,
                 author: replyToAuthor,
-                authorId: replyToAuthorId
+                authorId: replyToAuthorId,
+                body: replyToBody,
+                timestamp: replyToTimestamp
             },
             focus: true
         });
