@@ -198,6 +198,16 @@
 
     .item--has-no-image {
 
+        &:first-child {
+            @include mq($to: rightCol) {
+                @include fs-headline(3, true);
+
+                .item__container {
+                    min-height: gs-height(2);
+                }
+            }
+        }
+
         .item__title {
             padding-top: 0;
             @include fs-headline(2, true);
