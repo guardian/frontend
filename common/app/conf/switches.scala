@@ -92,10 +92,6 @@ object Switches extends Collections {
     "Enable the Quantcast audience segment tracking.",
     safeState = Off)
   
-  val EffectiveMeasureSwitch = Switch("Commercial Tags", "effective-measure",
-    "Enable the Quantcast audience segment tracking.",
-    safeState = Off)
-  
   // Analytics Switches
 
   val AdDwellTimeLoggerSwitch = Switch("Analytics", "ad-dwell-times-logging",
@@ -383,7 +379,6 @@ object Switches extends Collections {
     ABUnderlineLinks,
     SponsoredContentSwitch,
     OphanMultiEventSwitch,
-    EffectiveMeasureSwitch,
     AmaaSwitch,
     ImrWorldwideSwitch
   )
