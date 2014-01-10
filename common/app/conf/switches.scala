@@ -84,11 +84,11 @@ object Switches extends Collections {
     safeState = Off)
 
   val ImrWorldwideSwitch = Switch("Commercial Tags", "imr-worldwide",
-    "Enable the Quantcast audience segment tracking.",
+    "Enable the IMR Worldwide audience segment tracking.",
     safeState = Off)
   
   val AmaaSwitch = Switch("Commercial Tags", "amaa",
-    "Enable the Quantcast audience segment tracking.",
+    "Enable the AMAA audience segment tracking.",
     safeState = Off)
   
   // Analytics Switches
