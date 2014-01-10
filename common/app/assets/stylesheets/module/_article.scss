@@ -1,5 +1,6 @@
 .article {
     position: relative;
+    margin-bottom: $gs-baseline*3.5;
 }
 
 .article-zone,
@@ -573,6 +574,8 @@ video {
 
 
 .article__popular {
+    clear: left;
+
     .article-zone {
         border-color: $c-newsAccent; // Acts as a default
     }

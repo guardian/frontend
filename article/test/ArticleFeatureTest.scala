@@ -349,19 +349,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
       }
     }
 
-    scenario("Story package navigation") {
-
-      Given("I'm on an article entitled 'Iraq war logs reveal 15,000 previously unlisted civilian deaths'")
-
-      HtmlUnit("/world/2010/oct/22/true-civilian-body-count-iraq") { browser =>
-        import browser._
-
-        Then("I should see navigation to related content")
-        $("[itemprop=relatedLink]").size() should be > 0
-      }
-
-    }
-
     scenario("Direct link to paragraph") {
 
       Given("I have clicked a direct link to paragrah 16 on the article 'Eurozone crisis live: Fitch downgrades Greece on euro exit fears'")
@@ -486,15 +473,15 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
         import browser._
 
         Then("I should see the main ARIA roles described")
-        findFirst(".related-trails").getAttribute("role") should be("complementary")
+        findFirst(".related__container").getAttribute("role") should be("complementary")
         findFirst("aside").getAttribute("role") should be("complementary")
         findFirst("header").getAttribute("role") should be("banner")
         findFirst(".footer__secondary").getAttribute("role") should be("contentinfo")
         findFirst("nav").getAttribute("role") should be("navigation")
         findFirst("nav").getAttribute("aria-label") should be("Guardian sections")
         findFirst("#article").getAttribute("role") should be("main")
-        findFirst(".trailblock").getAttribute("role") should be("complementary")
-        findFirst(".trailblock").getAttribute("aria-labelledby") should be("related-content-head")
+        findFirst(".related__container").getAttribute("role") should be("complementary")
+        findFirst(".related__container").getAttribute("aria-labelledby") should be("related-content-head")
 
       }
     }
@@ -506,13 +493,10 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
         import browser._
 
         Then("I should see a fancy gallery trail")
-        $(".trail--gallery") should have size 1
+        $(".item--gallery") should have size 2
 
-        And("it should have 3 thumbnails")
-        $(".gallerythumbs__item") should have size 3
-
-        And("should show a total image count of 12")
-        $(".trail__count--imagecount").getText should be("12 images")
+        //And("should show a total image count of 12")
+        //$(".trail__count--imagecount").getText should be("12 images")
       }
 
 
