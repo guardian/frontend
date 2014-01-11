@@ -59,6 +59,11 @@ object Switches extends Collections {
     safeState = Off
   )
 
+  val BeconRequestLogging = Switch("Performance Switches", "enable-beacon-request-logging",
+    "If this switch is on, then extra logging will be done for beacon redirects.",
+    safeState = Off
+  )
+
   // Advertising Switches
 
   val AdvertSwitch = Switch("Advertising", "adverts",
@@ -365,7 +370,8 @@ object Switches extends Collections {
     TagLinking,
     ABUnderlineLinks,
     SponsoredContentSwitch,
-    OphanMultiEventSwitch
+    OphanMultiEventSwitch,
+    BeconRequestLogging
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

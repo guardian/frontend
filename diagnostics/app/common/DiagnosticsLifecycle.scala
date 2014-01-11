@@ -1,11 +1,12 @@
 package common
 
 import play.api.GlobalSettings
+import play.api.mvc.{Handler, RequestHeader}
+import conf.Switches
 
-trait DiagnosticsLifecycle extends GlobalSettings {
+trait DiagnosticsLifecycle extends GlobalSettings with Logging {
 
-  def scheduleJobs() {
-    
+  private def scheduleJobs() {
     Jobs.schedule("DiagnosticsLoadJob", "0 * * * * ?") {
       model.diagnostics.alpha.LoadJob.run()
       model.diagnostics.javascript.LoadJob.run()
@@ -15,7 +16,7 @@ trait DiagnosticsLifecycle extends GlobalSettings {
     }
   }
 
-  def descheduleJobs() {
+  private def descheduleJobs() {
     Jobs.deschedule("DiagnosticsLoadJob")
   }
 
@@ -28,5 +29,12 @@ trait DiagnosticsLifecycle extends GlobalSettings {
   override def onStop(app: play.api.Application) {
     descheduleJobs()
     super.onStop(app)
+  }
+
+  override def onRouteRequest(request: RequestHeader): Option[Handler] = {
+    if(Switches.BeconRequestLogging.isSwitchedOn) {
+      log.info(RequestLog(request))
+    }
+    super.onRouteRequest(request)
   }
 }
