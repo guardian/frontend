@@ -40,7 +40,7 @@ object Switches extends Collections {
   
   private lazy val never = new DateMidnight(2100, 1, 1)
   private lazy val endOfQ4 = new DateMidnight(2014, 4, 1)
-  
+
   // Load Switches
 
   val AutoRefreshSwitch = Switch("Performance Switches", "auto-refresh",
@@ -125,6 +125,11 @@ object Switches extends Collections {
   val OphanMultiEventSwitch = Switch("Analytics", "ophan-multi-event",
     "Enables the new Ophan tracking javascript which support multiple events per page",
     safeState = Off, endOfQ4
+  )
+
+  val OmnitureVerificationSwitch = Switch("Analytics", "omniture-verification",
+    "Enables the new Ophan tracking javascript which support multiple events per page",
+    safeState = Off, new DateMidnight(2014, 2, 28)
   )
 
   // Discussion Switches
@@ -440,7 +445,8 @@ object Switches extends Collections {
     TagLinking,
     ABUnderlineLinks,
     SponsoredContentSwitch,
-    OphanMultiEventSwitch
+    OphanMultiEventSwitch,
+    OmnitureVerificationSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
