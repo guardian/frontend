@@ -3,24 +3,24 @@
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
 <div class="commercial jobs-component">
-	@jobs.take(1).map { job =>
-	    <div class="commercial__head">
-	        <h3 class="commercial__title">
-	            <a href="%OASToken%http://jobs.theguardian.com/%OmnitureToken%">
-	                <span>Guardian <span class="em">Jobs</span></span>
-	            </a>
-	        </h3>
-			<p class="commercial__subtitle">Find your next @job.mainIndustry job on Guardian Jobs</p>
-	    </div>
-	    <div class="commercial__body">
-	        <ul class="lineitems">
+    @jobs.take(1).map { job =>
+        <div class="commercial__head">
+            <h3 class="commercial__title">
+                <a href="%OASToken%http://jobs.theguardian.com/%OmnitureToken%">
+                    <span>Guardian <span class="em">Jobs</span></span>
+                </a>
+            </h3>
+            <p class="commercial__subtitle">Find your next @job.mainIndustry job on Guardian Jobs</p>
+        </div>
+        <div class="commercial__body">
+            <ul class="lineitems">
                 <li class="lineitem">
                     <h4 class="lineitem__title"><a href="%OASToken%@job.listingUrl%OmnitureToken%">@job.title</a></h4>
-                    <p class="lineitem__description">@job.recruiterLogoUrl.map{ url => <img class="lineitem__image lineitem__image-logo" src="@url" />} @job.shortDescription</p>
+                    <p class="lineitem__description">@job.recruiterLogoUrl.map{ url => <img class="lineitem__image lineitem__image-logo" src="@url" alt="" />} @job.shortDescription</p>
                 </li>
-	        </ul>
-	    </div>
-	}
+            </ul>
+        </div>
+    }
     <div class="commercial__foot">
         @jobs.take(1).map { job =>
             <a class="commercial__link" href="%OASToken%http://jobs.theguardian.com/%OmnitureToken%">Find your next @job.mainIndustry job on Guardian Jobs <i class="i i-double-arrow-right-blue"></i></a>

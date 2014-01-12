@@ -10,7 +10,7 @@
                 <i class="i i-guardian-holidayoffers-logo"></i>
             </a>
         </h3>
-		<p class="commercial__subtitle">Find your perfect holiday</p>
+        <p class="commercial__subtitle">Find your perfect holiday</p>
     </div>
 
     <div class="commercial__body">
@@ -18,7 +18,7 @@
             @offers.take(1).map { offer =>
                 <li class="lineitem">
                     <a class="lineitem__link" href="%OASToken%@offer.offerUrl%OmnitureToken%">
-                        <img class="lineitem__image" src="@offer.imageUrl" alt="@offer.title" />
+                        <img class="lineitem__image" src="@offer.imageUrl" alt="" />
                         <div class="lineitem__offer">
                             <h4 class="lineitem__title">@offer.title</h4>
                             <p class="lineitem__meta">@offer.durationInWords from <span class="lineitem__price">£@offer.fromPrice</span></p>
@@ -37,6 +37,6 @@
             <input value="Search" name="go" class="submit-input" type="submit" />
             <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />
         </form>
-		<a class="commercial__link" href="%OASToken%http://www.guardianholidayoffers.co.uk/%OmnitureToken%">More from Guardian Holiday Offers <i class="i i-double-arrow-right-white"></i></a>
+        <a class="commercial__link" href="%OASToken%http://www.guardianholidayoffers.co.uk/%OmnitureToken%">More from Guardian Holiday Offers <i class="i i-double-arrow-right-white"></i></a>
     </div>
 </div>
