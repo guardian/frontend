@@ -27,7 +27,7 @@ define([
     RightMostPopularItem.prototype.showComments = false;
 
     RightMostPopularItem.prototype.template = '<li class="right-most-popular-item"><a class="right-most-popular-item__url media u-cf" href="">'
-        + '<div class="right-most-popular-item__img media__img"><img class="responsive-img" src="" alt=""/></div>'
+        + '<div class="right-most-popular-item__img media__img js-image-upgrade"><img class="responsive-img" src="" alt=""/></div>'
         + '<h3 class="right-most-popular-item__headline media__body">'
         + '</h3></a></li>';
 
@@ -35,7 +35,6 @@ define([
         if (this.data.itemPicture) {
             var container = this.getElem(this.classes.image);
             container.setAttribute("data-src", this.data.itemPicture);
-            bonzo(container).addClass("item__image-container");
         }
         if(this.data.discussionId && this.showComments) {
             this.elem.setAttribute("data-discussion-id", this.data.discussionId);
