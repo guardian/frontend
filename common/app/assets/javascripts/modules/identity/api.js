@@ -180,10 +180,11 @@ define([
     Id.resendValidationEmail = function () {
         if(Id.isUserLoggedIn()) {
             return ajax({
-                url: Id.idApiRoot + "/resend-verify-email",
+                url: Id.idApiRoot + "/user/send-validation-email",
                 type: 'jsonp',
                 crossOrigin: true,
-                method: 'POST'
+                withCredentials: true,
+                data: {method: 'post'}
             });
         }
     };
