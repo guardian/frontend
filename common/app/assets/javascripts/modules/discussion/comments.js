@@ -611,6 +611,8 @@ Comments.prototype.setOrder = function(e) {
     this.showDiscussion();
     this.loading();
 
+    bonzo(this.getElem('showMoreHiddenContainer')).addClass('u-h');
+
     $newComments.empty();
     userPrefs.set('discussion.order', newWorldOrder);
 
