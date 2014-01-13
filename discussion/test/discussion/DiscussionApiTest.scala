@@ -22,7 +22,7 @@ class DiscussionApiTest extends FreeSpec {
       protected val apiRoot: String = ""
     }
 
-    Await.ready(discussionApi.topCommentsFor(DiscussionKey("p/3tycg"), "1"), 2 seconds)
+    Await.ready(discussionApi.topCommentsFor(DiscussionKey("p/3tycg")), 2 seconds)
   }
 
   "Should do GET request on correct URL for comments " in {

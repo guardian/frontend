@@ -30,6 +30,7 @@ define([
     'common/utils/cookies',
     'common/modules/analytics/omnitureMedia',
     'common/modules/analytics/adverts',
+    'common/modules/analytics/livestats',
     'common/modules/experiments/ab',
     "common/modules/adverts/video",
     "common/modules/discussion/comment-count",
@@ -70,6 +71,7 @@ define([
     Cookies,
     OmnitureMedia,
     AdvertsAnalytics,
+    liveStats,
     ab,
     VideoAdvert,
     CommentCount,
@@ -176,6 +178,12 @@ define([
             ab.run(config, context);
         },
 
+        logLiveStats: function (config) {
+            if (config.switches.liveStats) {
+                liveStats.log({ beaconUrl: config.page.beaconUrl }, config);
+            }
+        },
+
         loadAnalytics: function (config, context) {
             var omniture = new Omniture();
 
@@ -196,6 +204,10 @@ define([
                     var advertsAnalytics = new AdvertsAnalytics(config, context);
                 }
             });
+
+            if (config.switches.ophanMultiEvent) {
+                require('ophan/ng', function () {});
+            }
 
             require(config.page.ophanUrl, function (Ophan) {
 
@@ -368,6 +380,7 @@ define([
             if (!self.initialisedDeferred) {
                 self.initialisedDeferred = true;
                 modules.initAbTests(config);
+                modules.logLiveStats(config);
                 modules.loadAdverts();
                 modules.loadAnalytics(config, context);
                 modules.cleanupCookies(context);

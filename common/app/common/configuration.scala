@@ -172,6 +172,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   object javascript {
     // This is config that is avaliable to both Javascript and Scala
     // But does not change across environments
+    // See https://issues.scala-lang.org/browse/SI-6723 for why we don't always use ->
     lazy val config: Map[String, String] = Map(
       "ophanUrl" -> "http://s.ophan.co.uk/js/ophan.min",
       "googleSearchUrl" -> "http://www.google.co.uk/cse/cse.js",
@@ -180,7 +181,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       "idApiUrl" -> id.apiRoot,
       "discussionApiRoot" -> discussion.apiRoot,
       ("secureDiscussionApiRoot", discussion.secureApiRoot),
-      "discussionApiClientHeader" -> discussion.apiClientHeader
+      "discussionApiClientHeader" -> discussion.apiClientHeader,
+      ("ophanJsUrl", "http://j.ophan.co.uk/ophan.ng")
     )
 
     lazy val pageData: Map[String, String] = {

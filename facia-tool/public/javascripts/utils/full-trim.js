@@ -1,5 +1,5 @@
 define(function() {
     return function(str){
-        return str ? str.replace(/(?:(?:^|\n)\s+|\s+(?:$|\n))/g,'').replace(/\s+/g,' ') : undefined;
+        return ('' + str).split(/\s+/).filter(function(s) { return s; }).join(' ');
     };
 });

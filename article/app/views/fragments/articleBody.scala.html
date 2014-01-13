@@ -62,6 +62,11 @@
 
                         @fragments.article.dateline(article.webPublicationDate, secondary=true)
                         <div class="js-comment-count"></div>
+                        @if(ABEmailSignup.isSwitchedOn) {
+                            <div class="email-signup email-signup___left-meta is-hidden">
+                                @fragments.emailSignup(article, Edition(request))
+                            </div>
+                        }
                     </div>
 
                     <div class="js-article__container article__container u-cf">
@@ -75,11 +80,22 @@
                                 @fragments.keywordList(article.keywords)
                             </div>
                         }
+
+                        @if(ABEmailSignup.isSwitchedOn) {
+                            <div class="email-signup email-signup___left-body is-hidden">
+                                @fragments.emailSignup(article, Edition(request))
+                            </div>
+                        }
                     </div>
 
                     <div class="social-wrapper">
                         @fragments.social(article)
                     </div>
+                    @if(ABEmailSignup.isSwitchedOn) {
+                        <div class="email-signup email-signup___inline is-hidden">
+                            @fragments.emailSignup(article, Edition(request))
+                        </div>
+                    }
                 </div>
                 <div class="article__secondary-column" aria-hidden="true">
                     <div class="article__secondary-column__inner">
@@ -103,7 +119,7 @@
                                 <div class="u-table__cell u-table__cell--collapse u-table__cell--bottom">
                                     <div class="js-sticky-lower" data-id="mpu-ad-slot"></div>
                                     @if(storyPackage.nonEmpty) {
-                                        @fragments.cards.card(storyPackage.head, "right", "More on this story", "Story package card", "visible")
+                                        @fragments.cards.card(storyPackage.head, "right", "Read next", "Story package card", "visible")
                                     }
                                 </div>
                             </div>
@@ -114,18 +130,14 @@
             </div>
         </article>
 
-        <div class="article__inner">
-            @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
+        @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
+            <div class="article__inner">
                 @fragments.discussion(article.isClosedForComments, article.shortUrlId)
-            }
-            @if(storyPackage.nonEmpty) {
-                <aside role="complementary" class="more-on-this-story@if(storyPackage.size == 1){ more-on-this-story--one-item}">
-                    @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
-                </aside>
-            } else {
-                <aside class="js-related" role="complementary"></aside>
-            }
-        </div>
+            </div>
+        }
+
+        @fragments.storyPackagePlaceholder(storyPackage)
+
         @fragments.mostPopularPlaceholder(article.section)
     </div>
 

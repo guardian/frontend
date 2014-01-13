@@ -2,12 +2,12 @@
 define([
     'common/common',
     'qwery',
+    'bean',
     'domReady',
     'common/utils/ajax',
     'common/utils/detect',
     
     'common/modules/analytics/errors',
-    'common/modules/analytics/livestats',
     'common/modules/ui/fonts',
     'common/modules/router',
     'common/utils/config',
@@ -29,12 +29,12 @@ define([
 ], function (
     common,
     qwery,
+    bean,
     domReady,
     ajax,
     detect,
 
     Errors,
-    LiveStats,
     Fonts,
     Router,
     config,
@@ -76,13 +76,6 @@ define([
             e.init();
             common.mediator.on('module:error', e.log);
         },
-        
-        liveStats: function (config) {
-            if (!config.switches.liveStats) {
-                return false;
-            }
-            new LiveStats({ beaconUrl: config.page.beaconUrl }).log();
-        },
 
         loadFonts: function(config, ua) {
             if (config.switches.webFonts && !guardian.shouldLoadFontsAsynchronously) {
@@ -113,7 +106,6 @@ define([
             modules.loadFonts(config, navigator.userAgent);
             modules.initId(config, context);
             modules.initUserAdTargeting();
-            modules.liveStats(config);
 
             var pageRoute = function(config, context, contextHtml) {
 

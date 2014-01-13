@@ -12,7 +12,9 @@ define([
     'common/modules/facia/collection-show-more',
     'common/modules/facia/container-toggle',
     'common/modules/sport/football/fixtures',
-    'common/modules/sport/cricket'
+    'common/modules/sport/cricket',
+    'common/modules/ui/message',
+    'common/modules/analytics/mvt-cookie'
 ], function (
     $,
     mediator,
@@ -25,7 +27,9 @@ define([
     CollectionShowMore,
     ContainerToggle,
     FootballFixtures,
-    cricket
+    cricket,
+    Message,
+    mvtCookie
     ) {
 
     var modules = {
@@ -143,6 +147,50 @@ define([
                     });
                 });
             }
+        },
+
+        displayAlphaMessage: function(config) {
+            // only run on 5% of (mobile) users
+            var isAChosenOne = parseInt(mvtCookie.getMvtValue(), 10) < (mvtCookie.MAX_INT * 0.05) && detect.getMobileOS();
+            if (config.page.contentType === 'Network Front' && isAChosenOne) {
+                var page = window.location.pathname.replace('-alpha', ''),
+                    alphaSwitch = {
+                        '/uk': 'networkFrontUkAlpha',
+                        '/us': 'networkFrontUsAlpha',
+                        '/au': 'networkFrontAuAlpha'
+                    }[page];
+                if (config.switches[alphaSwitch] === true) {
+                    var preferenceUrl = '/preference' + page + 'alpha/[OPT]?page=' + page,
+                        msg,
+                        opts = {};
+                    // opt in
+                    if (config.page.pageId === "") {
+                        msg = '<p class="site-message__message">' +
+                                  'We\'re trying out some new things on our website and would love your feedback. <a href="' + preferenceUrl.replace('[OPT]', 'optin') + '">Click here</a> to explore a test version of the site.' +
+                              '</p>';
+                    } else { // opt out
+                        msg = '<p class="site-message__message">' +
+                                  'You\'re viewing a test version of the Guardian website.' +
+                              '</p>' +
+                              '<ul class="site-message__actions unstyled">' +
+                                  // TODO - need to get the omniture survey url
+                                  //'<li class="site-message__actions__item">' +
+                                  //    '<i class="i i-comment-grey"></i>' +
+                                  //    '<a href="http://survey.omniture.com/d1/hosted/815f9cfba1" data-link-name="feedback" target="_blank">We’d love to hear your feedback</a>' +
+                                  //'</li>' +
+                                  '<li class="site-message__actions__item">' +
+                                      '<i class="i i-back"></i>' +
+                                      '<a class="js-main-site-link" rel="nofollow" href="' + preferenceUrl.replace('[OPT]', 'optout') + '"' +
+                                          'data-link-name="opt-out">Opt-out and return to standard desktop site </a>' +
+                                  '</li>' +
+                              '</ul>';
+                        opts = {
+                            permanent: true
+                        };
+                    }
+                    new Message('facia-alpha', opts).show(msg);
+                }
+            }
         }
     };
 
@@ -154,6 +202,7 @@ define([
             modules.showFootballFixtures();
             modules.showPopular();
             modules.showUserzoom(config);
+            modules.displayAlphaMessage(config);
         }
         mediator.emit("page:front:ready", config, context);
     };

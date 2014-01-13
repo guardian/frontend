@@ -4,7 +4,7 @@ define(['modules/vars'], function(vars) {
         return $.ajax(
             _.extend({}, {
                 dataType: !opts.type || opts.type === 'get' ? 'json' : undefined,
-                contentType: 'application/json'
+                contentType: opts.data ? 'application/json' : undefined
             }, opts)
         ).fail(function(xhr) {
             if (xhr.status === 403) {
@@ -14,7 +14,7 @@ define(['modules/vars'], function(vars) {
     }
 
     function updateCollection(method, collection, data) {
-        collection.state.loadIsPending(true);
+        collection.setPending(true);
 
         return request({
             url: vars.CONST.apiBase + '/collection/' + collection.id,

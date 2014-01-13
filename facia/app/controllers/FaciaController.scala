@@ -8,7 +8,6 @@ import play.api.mvc._
 import play.api.libs.json.{JsArray, Json}
 import Switches.EditionRedirectLoggingSwitch
 import views.support.{TemplateDeduping, NewsContainer}
-import common.editions.Uk
 
 abstract class FrontPage(val isNetworkFront: Boolean) extends MetaData
 
@@ -285,15 +284,14 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
   }
 
   def getPathForUkAlpha(path: String, request: RequestHeader): String =
-    if (path == "uk" &&
-      Switches.UkAlphaSwitch.isSwitchedOn &&
-      Edition(request) == Uk &&
-      request.headers.get("X-Gu-Uk-Alpha").exists(_.toLowerCase == "true")
-    ) {
-      "uk-alpha"
-    }
-    else
-      path
+    Seq("uk", "us", "au").find { page =>
+      path == page &&
+        Option(Edition(request)) == Edition.byId(page) &&
+        Switches.byName(s"network-front-${page}-alpha").map(_.isSwitchedOn).getOrElse(false) &&
+        request.headers.get(s"X-Gu-${page.capitalize}-Alpha").exists(_.toLowerCase == "true")
+    }.map{ page =>
+      s"$page-alpha"
+    }.getOrElse(path)
 
   // Needed as aliases for reverse routing
   def renderEditionFrontJson(path: String) = renderFront(path)
@@ -331,32 +329,40 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
               Ok(views.html.front(frontPage, faciaPage))
           }
         }
-      }.getOrElse(NotFound) //TODO is 404 the right thing here
+      }.getOrElse(Cached(60)(NotFound))
   }
 
   def renderCollection(id: String) = Action { implicit request =>
-    CollectionAgent.getCollection(id) map { collection =>
-      val html = views.html.fragments.collections.standard(Config(id), collection.items, NewsContainer(false), 1)
-      Cached(60) {
-        if (request.isJson) {
+    if (ConfigAgent.getAllCollectionIds.contains(id)) {
+      CollectionAgent.getCollection(id) map { collection =>
+        val html = views.html.fragments.collections.standard(Config(id), collection.items, NewsContainer(false), 1)
+        Cached(60) {
+          if (request.isJson) {
             JsonComponent(
               "html" -> html,
               "trails" -> JsArray(collection.items.map(TrailToJson(_)))
             )
-        } else {
-          Ok(html)
+          }
+          else
+            Ok(html)
         }
-      }
-    } getOrElse(NotFound)
+      } getOrElse(ServiceUnavailable)
+    }
+    else
+      Cached(60)(NotFound)
   }
 
   def renderCollectionRss(id: String) = Action { implicit request =>
-    CollectionAgent.getCollection(id) map { collection =>
-      Cached(60) {
-        val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(""))
-        Ok(TrailsToRss(config.displayName, collection.items))
-      }.as("text/xml; charset=utf-8")
-    } getOrElse(NotFound)
+    if (ConfigAgent.getAllCollectionIds.contains(id)) {
+      CollectionAgent.getCollection(id) map { collection =>
+        Cached(60) {
+          val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(""))
+          Ok(TrailsToRss(config.displayName, collection.items))
+        }.as("text/xml; charset=utf-8")
+      } getOrElse(ServiceUnavailable)
+    }
+    else
+      Cached(60)(NotFound)
   }
 
 }

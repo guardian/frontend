@@ -165,6 +165,8 @@ define([
                 modules.showMoreMatches(context);
                 break;
             default:
+                if(config.page.contentType === 'Article') { return false; } //Prevent loading of fixtures in story packages
+
                 var comp = config.referenceOfType('paFootballCompetition'),
                     team = config.referenceOfType('paFootballTeam');
 
