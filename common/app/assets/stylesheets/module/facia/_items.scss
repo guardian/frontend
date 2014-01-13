@@ -357,12 +357,12 @@ $c-live: #e81818;
 
 // Image adjust
 // values: [hide|highlight] in the fronts tool
+item--imagetone-hide {
+    .item__media-wrapper {
+    }
+}
 .item--imageadjust-highlight {
     .item__media-wrapper {
-        width: 100% !important;
-    }
-    .item__standfirst {
-        display: none !important;
     }
 }
 
