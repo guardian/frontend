@@ -3,6 +3,7 @@ define(['common/common', 'common/modules/analytics/livestats', 'common/utils/coo
     describe("LiveStats", function() {
        
         var beacon;
+        var config;
        
         beforeEach(function() {
             window.sessionStorage.clear();
@@ -10,10 +11,15 @@ define(['common/common', 'common/modules/analytics/livestats', 'common/utils/coo
             common.$g('#js-livestats-px').remove();
             common.$g('#js-livestats-ab').remove();
             beacon = { beaconUrl: 'beacon.gu.com' };
+            config = { switches: {
+                            liveStats : true,
+                            liveAbTestStats : false
+                        }
+                     }
         });
         
         it("should log a new session as type 'session'", function(){
-            liveStats.log(beacon);
+            liveStats.log(beacon, config);
             expect(document.getElementById('js-livestats-px').getAttribute('src')).toContain(
                 'beacon.gu.com/px.gif?platform=responsive&type=session'
             );
@@ -21,7 +27,7 @@ define(['common/common', 'common/modules/analytics/livestats', 'common/utils/coo
         
         it("should log a second page view as type 'view'", function(){
             window.sessionStorage.setItem("gu.session", true);
-            liveStats.log(beacon);
+            liveStats.log(beacon, config);
             expect(document.getElementById('js-livestats-px').getAttribute('src')).toContain(
                 'beacon.gu.com/px.gif?platform=responsive&type=view'
             );

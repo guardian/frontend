@@ -115,7 +115,12 @@ object Switches extends Collections {
 
   val LiveStatsSwitch = Switch("Analytics", "live-stats",
     "Turns on our real-time KPIs",
-    safeState = On, sellByDate = endOfQ4
+    safeState = Off, sellByDate = endOfQ4
+  )
+
+  val LiveAbTestStatsSwitch = Switch("Analytics", "live-ab-test-stats",
+    "Turns on our real-time ab test logging",
+    safeState = Off, sellByDate = endOfQ4
   )
 
   val UserzoomSwitch = Switch("Analytics", "userzoom",
@@ -423,6 +428,7 @@ object Switches extends Collections {
     LiveSummarySwitch,
     LiveCricketSwitch,
     LiveStatsSwitch,
+    LiveAbTestStatsSwitch,
     UserzoomSwitch,
     AdSlotImpressionStatsSwitch,
     CssFromStorageSwitch,
