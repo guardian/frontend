@@ -15,7 +15,7 @@
         <ul class="lineitems">
             @events.take(1).map { event =>
                 <li class="lineitem">
-                    <a class="lineitem__blocklink" href="%OASToken%@event.url%OmnitureToken%">
+                    <a class="lineitem__blocklink" href="%OASToken%@event.guardianUrl%OmnitureToken%">
                         <h4 class="lineitem__title">@event.name</h4>
                         <p class="lineitem__meta">@event.readableDate • @event.venue.description</p>
                     </a>
