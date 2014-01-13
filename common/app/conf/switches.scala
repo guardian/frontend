@@ -73,6 +73,7 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
+
   // Advertising Switches
 
   val AdvertSwitch = Switch("Advertising", "adverts",
@@ -129,6 +130,11 @@ object Switches extends Collections {
 
   val OmnitureVerificationSwitch = Switch("Analytics", "omniture-verification",
     "Enables the new Ophan tracking javascript which support multiple events per page",
+    safeState = Off, new DateMidnight(2014, 2, 28)
+  )
+
+  val BeaconRequestLogging = Switch("Performance Switches", "enable-beacon-request-logging",
+    "If this switch is on, then extra logging will be done for beacon redirects.",
     safeState = Off, new DateMidnight(2014, 2, 28)
   )
 
@@ -446,6 +452,7 @@ object Switches extends Collections {
     ABUnderlineLinks,
     SponsoredContentSwitch,
     OphanMultiEventSwitch,
+    BeaconRequestLogging,
     OmnitureVerificationSwitch
   )
 
