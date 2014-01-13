@@ -38,9 +38,12 @@
         }
     }
     .collection {
-        overflow: visible; // Prevents height issue in Firefox < 22
         margin-left: auto;
         margin-right: auto;
+
+        @include mq(tablet) {
+            overflow: visible; // Prevents height issue in Firefox < 22
+        }
     }
     .collection-wrapper {
         @include rem((
