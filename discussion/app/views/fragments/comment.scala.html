@@ -92,11 +92,11 @@
                 @if(!comment.isBlocked){
                     <div class="d-comment__actions">
                         <div class="d-comment__actions__main sign-in-required">
-                            <div class="d-comment__reply-wrapper">
+                            <div class="d-comment__action d-comment__action--reply" data-link-name="reply to comment" data-comment-id="@comment.id" role="button">
                                 <span class="d-comment__reply-button">
                                     <i class="i i-reply-arrow-white"></i>
                                 </span>
-                                <span class="u-fauxlink d-comment__action d-comment__action--reply" role="button" data-link-name="reply to comment" data-comment-id="@comment.id">Reply</span>
+                                <span class="u-fauxlink d-comment__action--reply-text">Reply</span>
                             </div>
 
                             <span class="d-staff-required">
