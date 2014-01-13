@@ -181,7 +181,7 @@ define([
                 })
                 // drop empty arrays:
                 .filter(function(p){ return _.isArray(p[1]) ? p[1].length : true; })
-                // return as obj, or as undefined if empty (this ommits it from any subsequent JSON.stringify result) 
+                // return as obj, or as undefined if empty (this ommits it from any subsequent JSON.stringify result)
                 .reduce(function(obj, p, key) {
                     obj = obj || {};
                     obj[p[0]] = p[1];
