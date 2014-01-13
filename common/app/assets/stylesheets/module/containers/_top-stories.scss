@@ -1,13 +1,4 @@
 .container--top-stories {
-    // Start hack for Firefox < 22
-    -moz-box-orient: vertical;
-    display: -moz-box;
-    width: 100%;
-    overflow: visible;
-
-    .collection { width: auto; }
-    // End hack
-
     // Cap new collections to a width of 12 columns
     @include mq(gs-span(7) + $gs-gutter*3, tablet) {
         @include rem((width: gs-span(7)));
@@ -47,7 +38,11 @@
         }
     }
     .collection {
-        overflow: visible;
+        overflow: visible; // Prevents height issue in Firefox < 22
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .collection-wrapper {
         @include rem((
             margin-left: $gs-gutter/2 * -1,
             margin-right: $gs-gutter/2 * -1
