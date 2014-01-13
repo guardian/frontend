@@ -323,16 +323,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 1, 24)
   )
 
-  val ABRightPopular = Switch("A/B Tests", "ab-right-popular",
-    "If this is switched on an AB test runs to trail a right hand side most popular component",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 20)
-  )
-
-  val ABRightPopularControl = Switch("A/B Tests", "ab-right-popular-control",
-    "If this is switched on an AB test runs as a control variant for right most popular",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 20)
-  )
-
   val TagLinking = Switch("Feature Switches", "tag-linking",
     "If this is switched on articles that have no in body links will auto link to their tags where possible",
     safeState = Off, sellByDate = new DateMidnight(2014, 1, 20)
@@ -446,9 +436,7 @@ object Switches extends Collections {
     ABCommercialInArticleDesktop,
     ABCommercialInArticleMobile,
     ABChartbeatDesktop,
-    ABRightPopularControl,
     ABMobileFacebookAutosignin,
-    ABRightPopular,
     AdDwellTimeLoggerSwitch,
     ABEmailSignup,
     NetworkFrontUkAlpha,
