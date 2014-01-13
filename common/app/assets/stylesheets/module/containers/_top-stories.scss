@@ -145,16 +145,11 @@
         }
         @include mq(tablet) {
             .item--has-image .item__media-wrapper,
-            .item--has-no-image .item__standfirst,
-            .item--imageadjust-hide .item__standfirst {
+            .item--has-no-image .item__standfirst {
                 display: block;
             }
         }
-        .item--imageadjust-hide .item__media-wrapper {
-            display: none;
-        }
     }
-    
 }
 
 .item--thumbnail {

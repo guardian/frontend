@@ -4,9 +4,15 @@
     <@element
         class="item
                item--thumbnail
-               item--has-@if(trail.trailPicture(5,3).isEmpty){no-}image
-               tone-@tone
-               @trail.imageAdjust.map{ adjustValue => item--imageadjust-@adjustValue }"
+               @if(trail.trailPicture(5,3).isEmpty || trail.imageAdjust == Some("hide")){
+                   item--has-no-image
+               }else{
+                   item--has-image
+                   @trail.imageAdjust.map{adjustValue =>
+                       item--imageadjust-@adjustValue
+                   }
+               }
+               tone-@tone"
         data-link-name="trail | @{index + 1}"
         @trail.discussionId.map{ id => data-discussion-id="@id" }
         data-discussion-closed="@trail.isClosedForComments">
