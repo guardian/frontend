@@ -273,11 +273,11 @@ object Switches extends Collections {
 
   val IdentityEthicalAwardsSwitch = Switch("Feature Switches", "id-ethical-awards",
     "If this switch is on, Ethical awards forms will be available",
-    safeState = Off)
+    safeState = Off, sellByDate = endOfQ4)
 
   val IdentityFilmAwardsSwitch = Switch("Feature Switches", "id-film-awards",
     "If this switch is on, Film awards forms will be available",
-    safeState = Off)
+    safeState = Off, sellByDate = endOfQ4)
 
   // A/B Test Switches
 
