@@ -150,8 +150,8 @@ define([
         },
 
         displayAlphaMessage: function(config) {
-            // only run on 5% of the users
-            var isAChosenOne = parseInt(mvtCookie.getMvtValue(), 10) < (mvtCookie.MAX_INT * 0.05);
+            // only run on 5% of (mobile) users
+            var isAChosenOne = parseInt(mvtCookie.getMvtValue(), 10) < (mvtCookie.MAX_INT * 0.05) && detect.getMobileOS();
             if (config.page.contentType === 'Network Front' && isAChosenOne) {
                 var page = window.location.pathname.replace('-alpha', ''),
                     alphaSwitch = {

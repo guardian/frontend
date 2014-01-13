@@ -49,7 +49,7 @@ define([
             this.meta = asObservableProps([
                 'headline',
                 'trailText',
-                'imageTone',
+                'imageAdjust',
                 'group']);
 
             this.state = asObservableProps([
@@ -122,13 +122,13 @@ define([
             populateObservables(this.state,  opts.state);
         };
 
-        Article.prototype.toggleImageToneHide = function() {
-            this.meta.imageTone(this.meta.imageTone() === 'hide' ? undefined : 'hide');
+        Article.prototype.toggleImageAdjustHide = function() {
+            this.meta.imageAdjust(this.meta.imageAdjust() === 'hide' ? undefined : 'hide');
             this._save();
         };
 
-        Article.prototype.toggleImageToneHighlight = function() {
-            this.meta.imageTone(this.meta.imageTone() === 'highlight' ? undefined : 'highlight');
+        Article.prototype.toggleImageAdjustHighlight = function() {
+            this.meta.imageAdjust(this.meta.imageAdjust() === 'highlight' ? undefined : 'highlight');
             this._save();
         };
 
@@ -181,7 +181,7 @@ define([
                 })
                 // drop empty arrays:
                 .filter(function(p){ return _.isArray(p[1]) ? p[1].length : true; })
-                // return as obj, or as undefined if empty (this ommits it from any subsequent JSON.stringify result) 
+                // return as obj, or as undefined if empty (this ommits it from any subsequent JSON.stringify result)
                 .reduce(function(obj, p, key) {
                     obj = obj || {};
                     obj[p[0]] = p[1];

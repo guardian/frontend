@@ -99,11 +99,6 @@ CommentBox.prototype.prerender = function() {
         this.getElem('body').id = 'reply-to-'+ this.options.replyTo.commentId;
         bonzo(elem).insertAfter(this.getElem('submit'));
     }
-
-    if (this.options.cancelable) {
-        var beforeElem = this.getElem('reply-to') ? this.getElem('reply-to') : this.getElem('submit');
-        bonzo(bonzo.create('<div class="u-fauxlink '+ this.getClass('cancel', true) +'" role="button">Cancel</div>')).insertAfter(beforeElem);
-    }
 };
 
 /** @override */
@@ -121,7 +116,7 @@ CommentBox.prototype.ready = function() {
     bean.on(this.context, 'submit', [this.elem], this.postComment.bind(this));
     bean.on(this.context, 'change keyup', [commentBody], this.setFormState.bind(this));
     bean.on(commentBody, 'focus', this.setExpanded.bind(this)); // this isn't delegated as bean doesn't support it
-    this.on('click', this.getClass('cancel'), this.destroy);
+    this.on('click', this.getClass('cancel'), this.cancel);
 
     this.setState(this.options.state);
 
@@ -181,7 +176,7 @@ CommentBox.prototype.error = function(type, message) {
 };
 
 /**
-* @param {Object} comment
+ * @param {Object} comment
  * @param {Object} resp
  */
 CommentBox.prototype.success = function(comment, resp) {
@@ -214,6 +209,18 @@ CommentBox.prototype.fail = function(xhr) {
     }
 };
 
+/**
+ * @param {Event}
+ * Destroy the box if reply, removes text if top level
+ */
+CommentBox.prototype.cancel = function(e) {
+    if (this.hasState('top-level')) {
+        this.getElem('body').value = '';
+        this.setFormState();
+    } else {
+        this.destroy();
+    }
+};
 
 /**
  * TODO: remove the replace, get the Scala to be better
@@ -244,7 +251,7 @@ CommentBox.prototype.setFormState = function(disabled) {
  * @param {Event=} e (optional)
  */
 CommentBox.prototype.setExpanded = function(e) {
-    this.setState('expanded', 'body');
+    this.setState('expanded');
 };
 
 

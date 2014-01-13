@@ -116,19 +116,14 @@
             </div>
         </article>
 
-        <div class="article__inner">
-            @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
+        @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
+            <div class="article__inner">
                 @fragments.discussion(article.isClosedForComments, article.shortUrlId)
-            }
-            @if(storyPackage.nonEmpty) {
-                <aside role="complementary">
-                    @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
-                </aside>
-            } else {
-                <aside class="js-related" role="complementary"></aside>
-            }
+            </div>
+        }
 
-        </div>
+        @fragments.storyPackagePlaceholder(storyPackage)
+
         @fragments.mostPopularPlaceholder(article.section)
     </div>
 

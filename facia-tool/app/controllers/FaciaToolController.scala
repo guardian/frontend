@@ -12,13 +12,10 @@ import play.api.libs.ws.WS
 
 
 object FaciaToolController extends Controller with Logging with ExecutionContexts {
+  implicit val updateListRead = Json.reads[UpdateList]
 
   def index() = ExpiringAuthentication { request =>
     Ok(views.html.fronts(Configuration.environment.stage))
-  }
-
-  def admin() = ExpiringAuthentication { request =>
-    Redirect("/")
   }
 
   def listCollections = AjaxExpiringAuthentication { request =>
@@ -40,9 +37,31 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     } getOrElse NotFound
   }
 
+  def getConfig(id: String) = AjaxExpiringAuthentication { request =>
+    FaciaToolMetrics.ApiUsageCount.increment()
+    S3FrontsApi.getConfig(id) map {json =>
+      Ok(json).as("application/json")
+    } getOrElse NotFound
+  }
+
+  def publishCollection(id: String) = AjaxExpiringAuthentication { request =>
+    val identity = Identity(request).get
+    FaciaToolMetrics.DraftPublishCount.increment()
+    FaciaApi.publishBlock(id, identity)
+    notifyContentApi(id)
+    Ok
+  }
+
+  def discardCollection(id: String) = AjaxExpiringAuthentication { request =>
+    val identity = Identity(request).get
+    FaciaApi.discardBlock(id, identity)
+    notifyContentApi(id)
+    Ok
+  }
+
   def updateBlock(id: String): Action[AnyContent] = AjaxExpiringAuthentication { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
-    request.body.asJson flatMap JsonExtract.build map {
+    request.body.asJson flatMap (_.asOpt[UpdateList]) map {
       case update: UpdateList => {
         val identity = Identity(request).get
         UpdateActions.updateCollectionList(id, update, identity)
@@ -50,42 +69,13 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
         notifyContentApi(id)
         Ok
       }
-      case blockAction: BlockActionJson => {
-        val identity = Identity(request).get
-        blockAction.publish.filter {_ == true}
-          .map { _ =>
-            FaciaToolMetrics.DraftPublishCount.increment()
-            FaciaApi.publishBlock(id, identity)
-            notifyContentApi(id)
-            Ok
-          }
-          .orElse {
-          blockAction.discard.filter {_ == true}.map { _ =>
-            FaciaApi.discardBlock(id, identity)
-            notifyContentApi(id)
-            Ok
-          }
-        } getOrElse NotFound("Invalid JSON")
-      }
-      case updateTrailblock: UpdateTrailblockJson => {
-        val identity = Identity(request).get
-        UpdateActions.updateTrailblockJson(id, updateTrailblock, identity)
-        notifyContentApi(id)
-        Ok
-      }
       case _ => NotFound
     } getOrElse NotFound
   }
 
-  def updateTrail(id: String, trailId: String) = AjaxExpiringAuthentication { request =>
-    request.body.asJson.map{ json =>
-    }
-    Ok
-  }
-
   def deleteTrail(id: String) = AjaxExpiringAuthentication { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
-    request.body.asJson flatMap JsonExtract.build map {
+    request.body.asJson flatMap (_.asOpt[UpdateList]) map {
       case update: UpdateList => {
         val identity = Identity(request).get
         UpdateActions.updateCollectionFilter(id, update, identity)

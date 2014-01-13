@@ -2,11 +2,13 @@
     @extend .unstyled;
 }
 .linkslist__item {
-    border-top: 1px dotted $c-neutral3;
+    border-top: 1px solid $c-neutral5;
     @include rem((
-        padding-top: $baseline,
-        padding-bottom: $baseline*3 // Simulates margins and don't create extra space
-                                     // at the beginning of a new column break
+        min-height: nth(nth($fs-headlines, 1), 2) + 1, // Line height of the action
+        padding-top: $gs-baseline/3,
+        padding-bottom: $gs-baseline*1.5 // Simulates margins and don't create
+                                         // extra space at the beginning of a
+                                         // new column break as margins do
     ));
 }
 .linkslist__action {
