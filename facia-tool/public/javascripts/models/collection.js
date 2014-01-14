@@ -164,6 +164,7 @@ define([
 
             if (!self.state.editingConfig()) {
                 populateObservables(self.collectionMeta, raw);
+                self.collectionMeta.updatedBy(raw.updatedEmail === config.email ? 'you' : raw.updatedBy);
                 self.state.timeAgo(self.getTimeAgo(raw.lastUpdated));
             }
 
