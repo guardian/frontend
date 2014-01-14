@@ -1,0 +1,38 @@
+@include mq(wide) {
+    @include guss-columns('.headline-column', $column-min-width: gs-span(3), $column-rule: none);
+
+    .article__popular {
+
+        .page-sub-header {
+            display: none;
+        }
+
+        .tabs__container {
+            float: left;
+            width: $a-leftColWide-width;
+            margin-right: $gs-gutter;
+        }
+
+        .tabs__tab:last-child {
+            display: none;
+        }
+
+        .tabs__content {
+            float:left;
+            clear: none;
+            width: gs-span(12);
+        }
+
+        .headline-list--large {
+
+            .headline-list__item {
+                padding-left: $gs-column-width;
+            }
+
+            .headline-list__count {
+                left: 0;
+            }
+        }
+    }
+
+}

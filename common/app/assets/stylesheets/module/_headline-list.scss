@@ -224,7 +224,3 @@
         }
     }
 }
-
-@include mq(wide) {
-    @include guss-columns('.headline-column', $column-min-width: gs-span(3), $column-rule: none);
-}
