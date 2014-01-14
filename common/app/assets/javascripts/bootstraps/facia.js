@@ -169,15 +169,21 @@ define([
                                   'We\'re trying out some new things on our website and would love your feedback. <a href="' + preferenceUrl.replace('[OPT]', 'optin') + '">Click here</a> to explore a test version of the site.' +
                               '</p>';
                     } else { // opt out
+                        var userZoomSurvey = {
+                            '/us': 'MSBDMTBTMTE1',
+                            '/au': 'MSBDMTBTMTE2'
+                        }[page];
                         msg = '<p class="site-message__message">' +
                                   'You\'re viewing a test version of the Guardian website.' +
                               '</p>' +
                               '<ul class="site-message__actions unstyled">' +
-                                  // TODO - need to get the omniture survey url
-                                  //'<li class="site-message__actions__item">' +
-                                  //    '<i class="i i-comment-grey"></i>' +
-                                  //    '<a href="http://survey.omniture.com/d1/hosted/815f9cfba1" data-link-name="feedback" target="_blank">We’d love to hear your feedback</a>' +
-                                  //'</li>' +
+                                  (
+                                     userZoomSurvey ||
+                                     '<li class="site-message__actions__item">' +
+                                         '<i class="i i-comment-grey"></i>' +
+                                         '<a href="https://s.userzoom.com/m/' + userZoomSurvey + '" data-link-name="feedback" target="_blank">We’d love to hear your feedback</a>' +
+                                     '</li>'
+                                  ) +
                                   '<li class="site-message__actions__item">' +
                                       '<i class="i i-back"></i>' +
                                       '<a class="js-main-site-link" rel="nofollow" href="' + preferenceUrl.replace('[OPT]', 'optout') + '"' +
