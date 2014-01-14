@@ -14,7 +14,7 @@ define([
     "common/modules/experiments/left-hand-card",
     "common/modules/open/cta",
     "common/modules/commercial/loader",
-    "common/modules/experiments/right-most-popular"
+    "common/modules/onward/right-most-popular"
 ], function (
     common,
     mediator,

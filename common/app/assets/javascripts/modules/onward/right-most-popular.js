@@ -8,8 +8,7 @@ define([
     'lodash/objects/assign',
 
     'common/modules/component',
-    'common/modules/experiments/right-most-popular-image-item',
-    'common/modules/experiments/right-most-popular-list-item',
+    'common/modules/onward/right-most-popular-image-item',
     'common/modules/ui/images'
 ], function (
     qwery,
@@ -18,7 +17,6 @@ define([
 
     Component,
     ImageItem,
-    ListItem,
     images
     ) {
 
@@ -32,7 +30,6 @@ define([
     Component.define(RightMostPopular);
 
     RightMostPopular.prototype.config = {
-        type: 'image',
         maxTrails : 5
     };
 
@@ -72,16 +69,11 @@ define([
     };
 
     RightMostPopular.prototype.prerender = function() {
-        var self = this;
         this.setState(this.config.type);
         this.elem.setAttribute('data-link-name', 'Right hand most popular');
         var container = this.getElem(this.classes.items);
         this.data.slice(0, this.config.maxTrails).forEach(function(item, index) {
-            if(self.config.type === 'image') {
-                new ImageItem(item, index).render(container);
-            } else {
-               new ListItem(item, index).render(container);
-            }
+            new ImageItem(item, index).render(container);
         });
         images.upgrade(container);
     };
