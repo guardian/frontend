@@ -111,8 +111,6 @@ object FootballClient extends PaClient with Http with Logging with ExecutionCont
   }
 }
 
-class SwitchBoardPlugin(app: PlayApp) extends SwitchBoardAgent(Configuration)
-
 object Management extends GuManagement {
   val applicationName = "frontend-sport"
   val metrics = Metrics.contentApi ++ Metrics.common ++ Metrics.pa

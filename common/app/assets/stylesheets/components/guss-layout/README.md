@@ -1,5 +1,7 @@
 # Guss Layout
 
+Part of the [Guss](https://github.com/guardian/guss) collection.
+
 ## Installation
 
 ```

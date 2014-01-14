@@ -1,12 +1,12 @@
 @mixin socialOnPageLoad {
     .social-wrapper {
-        padding: $baseline*3 0 $baseline*4;
-        margin-bottom: $baseline*4;
+        padding-top: $gs-baseline;
         max-width: gs-span(4);
         overflow: hidden;
     }
     .social-wrapper--aside {
         padding-top: 0;
+        margin-bottom: $baseline*4;
     }
     .social__item {
         float: left;

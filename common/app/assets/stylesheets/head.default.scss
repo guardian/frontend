@@ -8,6 +8,10 @@
    ========================================================================== */
 
 @import "module/_article";
+@import "module/facia/_extends";
+@import "module/facia/_mixins";
+@import "module/facia/_items";
+@import "module/containers/_related";
 @import "module/_social";
     @include socialOnPageLoad;
 
