@@ -11,7 +11,7 @@ define([
     function avatarify(el){
         var container = bonzo(el),
             updating = bonzo(bonzo.create("<div class='is-updating'></div>")),
-            avatar = bonzo(bonzo.create("<img class='user-avatar__image' />")),
+            avatar = bonzo(bonzo.create("<img class='user-avatar__image' alt=''/>")),
             userId = container.data("userid");
         container
             .removeClass("is-hidden");
