@@ -104,16 +104,16 @@ object Switches extends Collections {
     "Enable the AMAA audience segment tracking.",
     safeState = Off, sellByDate = endOfQ4)
   
+  val QuantcastSwitch = Switch("Commercial Tags", "quantcast",
+    "Enable the Quantcast audience segment tracking.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 1, 20)
+  )
+
   // Analytics Switches
 
   val AdDwellTimeLoggerSwitch = Switch("Analytics", "ad-dwell-times-logging",
     "If this is on the in-view advert tracker will log some data to the Play logs",
     safeState = On, sellByDate = new DateMidnight(2014, 1, 20)
-  )
-
-  val QuantcastSwitch = Switch("Analytics", "quantcast",
-    "Enable the Quantcast audience segment tracking.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 20)
   )
 
   val AdSlotImpressionStatsSwitch = Switch("Analytics", "adslot-impression-stats",
