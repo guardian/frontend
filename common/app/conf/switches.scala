@@ -322,16 +322,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 1, 20)
   )
 
-  val ABOnwardIntrusive = Switch("A/B Tests", "ab-onward-intrusive",
-    "If this is switched on an AB test runs to test intrusive onward components",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 20)
-  )
-
-  val ABOnwardHighlightsPanel = Switch("A/B Tests", "ab-onward-highlights-panel",
-    "If this is switched on an AB test runs to test onward highlights panel",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 20)
-  )
-
   val ABEmailSignup = Switch("A/B Tests", "ab-email-signup",
     "If this is switched on an AB test runs to test article page email signups",
     safeState = Off, sellByDate = new DateMidnight(2014, 1, 24)
@@ -442,8 +432,6 @@ object Switches extends Collections {
     IdentityEthicalAwardsSwitch,
     IdentityFilmAwardsSwitch,
     ABAa,
-    ABOnwardIntrusive,
-    ABOnwardHighlightsPanel,
     ABAlphaComm,
     ABCommercialInArticleDesktop,
     ABCommercialInArticleMobile,
