@@ -110,6 +110,9 @@ object S3FrontsApi extends S3 {
 
   def getConfigIds(prefix: String): List[String] = getListing(prefix, "/config.json")
   def getCollectionIds(prefix: String): List[String] = getListing(prefix, "/collection.json")
+
+  def putPressedJson(id: String, json: String) =
+    putPrivate(s"$location/collection/pressed/$id/pressed.json", json, "application/json")
 }
 
 trait SecureS3Request extends implicits.Dates with Logging {
