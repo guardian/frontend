@@ -3,7 +3,7 @@ package conf
 import com.gu.management.{ DefaultSwitch, Switchable }
 import common._
 import implicits.Collections
-import play.api.Plugin
+import play.api.{Application, Plugin}
 import play.api.libs.ws.WS
 import org.joda.time.DateMidnight
 
@@ -138,8 +138,8 @@ object Switches extends Collections {
     safeState = Off, new DateMidnight(2014, 2, 28)
   )
 
-  val BeaconRequestLogging = Switch("Performance Switches", "enable-beacon-request-logging",
-    "If this switch is on, then extra logging will be done for beacon redirects.",
+  val DiagnosticsRequestLogging = Switch("Diagnostics", "enable-diagnostics-request-logging",
+    "If this switch is on, then requests to the Diagnostics servers will be logged.",
     safeState = Off, new DateMidnight(2014, 2, 28)
   )
 
@@ -463,7 +463,7 @@ object Switches extends Collections {
     ABUnderlineLinks,
     SponsoredContentSwitch,
     OphanMultiEventSwitch,
-    BeaconRequestLogging,
+    DiagnosticsRequestLogging,
     OmnitureVerificationSwitch
   )
 
@@ -472,7 +472,7 @@ object Switches extends Collections {
   def byName(name: String): Option[Switch] = all.find(_.name.equals(name))
 }
 
-
+class SwitchBoardPlugin(app: Application) extends SwitchBoardAgent(Configuration)
 class SwitchBoardAgent(config: GuardianConfiguration) extends Plugin with ExecutionContexts with Logging {
 
   def refresh() {

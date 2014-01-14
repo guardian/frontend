@@ -32,7 +32,7 @@ trait DiagnosticsLifecycle extends GlobalSettings with Logging {
   }
 
   override def onRouteRequest(request: RequestHeader): Option[Handler] = {
-    if(Switches.BeaconRequestLogging.isSwitchedOn) {
+    if(Switches.DiagnosticsRequestLogging.isSwitchedOn) {
       log.info(RequestLog(request))
     }
     super.onRouteRequest(request)
