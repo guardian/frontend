@@ -70,7 +70,7 @@ CommentBox.prototype.errorMessages = {
     EMAIL_VERIFIED_FAIL: 'We are having technical difficulties. Please try again later or '+
         '<a href="/send/email" class="js-id-send-validation-email"><strong>resend the verification</strong></a>.',
     EMAIL_NOT_VERIFIED: 'Please confirm your email address to post your first comment.<br />'+
-        '<a href="/send/email" class="js-id-send-validation-email"><strong>Send verification email</strong></a><span class="d-comment-box__error-meta"> to '+
+        '<a href="_#" class="js-id-send-validation-email"><strong>Send verification email</strong></a><span class="d-comment-box__error-meta"> to '+
         (IdentityApi.getUserFromCookie() ? IdentityApi.getUserFromCookie().primaryEmailAddress : ' your email address') + '.</span>'
 };
 
