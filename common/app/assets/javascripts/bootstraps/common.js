@@ -38,7 +38,8 @@ define([
     "common/modules/onward/history",
     "common/modules/onward/sequence",
     "common/modules/ui/message",
-    "common/modules/identity/autosignin"
+    "common/modules/identity/autosignin",
+    'common/modules/adverts/article-body-adverts'
 ], function (
     $,
     mediator,
@@ -79,7 +80,8 @@ define([
     History,
     sequence,
     Message,
-    AutoSignin
+    AutoSignin,
+    ArticleBodyAdverts
 ) {
 
     var modules = {
@@ -244,6 +246,8 @@ define([
 
         loadAdverts: function () {
             if (!userPrefs.isOff('adverts')){
+                ArticleBodyAdverts.init();
+
                 mediator.on('page:common:deferred:loaded', function(config, context) {
                     if (config.switches && config.switches.adverts && !config.page.blockAds) {
                         Adverts.init(config, context);
