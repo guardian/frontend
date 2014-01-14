@@ -10,6 +10,7 @@ Twitter: @commuterjoy
 Discussion Developer/Desperado: James Gorrie
 Twitter: @jamesgorrie
 From: KwaZulu-Natal, South Africa
+Location: Londond, UK
 
 Product Manager: Chris Mulholland
 LinkedIn: chrismulholland
@@ -48,3 +49,7 @@ From: Brighton, UK
 Developer: Stephan Fowler
 Twitter: @stephanfowler
 From: London, UK
+
+User Experience Architect: Alastair Jardine
+Twitter: @aj_ux
+From: London, UK 
