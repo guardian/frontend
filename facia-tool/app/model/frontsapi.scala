@@ -24,7 +24,7 @@ case class Trail(
 
 
 case class UpdateList(item: String, position: Option[String], after: Option[Boolean], itemMeta: Option[Map[String, JsValue]], live: Boolean, draft: Boolean)
-case class CollectionUpdate(displayName: Option[String])
+case class CollectionMetaUpdate(displayName: Option[String])
 
 trait UpdateActions {
 
@@ -63,7 +63,7 @@ trait UpdateActions {
     else
       block
 
-  def updateCollection(block: Block, update: CollectionUpdate, identity: Identity): Block =
+  def updateCollectionMeta(block: Block, update: CollectionMetaUpdate, identity: Identity): Block =
     block.copy(displayName=update.displayName)
 
   def putBlock(id: String, block: Block, identity: Identity): Option[Block] = {
@@ -84,9 +84,9 @@ trait UpdateActions {
       .map(deleteFromDraft(update, _))
       .flatMap(putBlock(id, _, identity))
 
-  def updateCollection(id: String, update: CollectionUpdate, identity: Identity): Option[Block] =
+  def updateCollectionMeta(id: String, update: CollectionMetaUpdate, identity: Identity): Option[Block] =
     getBlock(id)
-      .map(updateCollection(_, update, identity))
+      .map(updateCollectionMeta(_, update, identity))
       .flatMap(putBlock(id, _, identity))
 
   private def updateList(update: UpdateList, blocks: List[Trail]): List[Trail] = {
