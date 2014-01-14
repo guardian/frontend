@@ -3,7 +3,7 @@ package conf
 import com.gu.management.{ DefaultSwitch, Switchable }
 import common._
 import implicits.Collections
-import play.api.Plugin
+import play.api.{Application, Plugin}
 import play.api.libs.ws.WS
 import org.joda.time.DateMidnight
 
@@ -138,8 +138,8 @@ object Switches extends Collections {
     safeState = Off, new DateMidnight(2014, 2, 28)
   )
 
-  val BeaconRequestLogging = Switch("Performance Switches", "enable-beacon-request-logging",
-    "If this switch is on, then extra logging will be done for beacon redirects.",
+  val DiagnosticsRequestLogging = Switch("Diagnostics", "enable-diagnostics-request-logging",
+    "If this switch is on, then requests to the Diagnostics servers will be logged.",
     safeState = Off, new DateMidnight(2014, 2, 28)
   )
 
@@ -332,11 +332,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 1, 20)
   )
 
-  val ABUnderlineLinks = Switch("A/B Tests", "ab-underline-links",
-    "If this is switched on an AB test runs whereby links in articles are underline (with CSS)",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 20)
-  )
-
   // Sport Switch
 
   val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
@@ -448,10 +443,9 @@ object Switches extends Collections {
     NetworkFrontUsAlpha,
     NetworkFrontAuAlpha,
     TagLinking,
-    ABUnderlineLinks,
     SponsoredContentSwitch,
     OphanMultiEventSwitch,
-    BeaconRequestLogging,
+    DiagnosticsRequestLogging,
     OmnitureVerificationSwitch
   )
 
@@ -460,7 +454,7 @@ object Switches extends Collections {
   def byName(name: String): Option[Switch] = all.find(_.name.equals(name))
 }
 
-
+class SwitchBoardPlugin(app: Application) extends SwitchBoardAgent(Configuration)
 class SwitchBoardAgent(config: GuardianConfiguration) extends Plugin with ExecutionContexts with Logging {
 
   def refresh() {

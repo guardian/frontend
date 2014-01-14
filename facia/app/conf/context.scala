@@ -4,11 +4,8 @@ import common.Metrics
 import com.gu.management.{ PropertiesPage, StatusPage, ManifestPage, ManagementPage, PlainTextResponse }
 import com.gu.management.play.{ Management => GuManagement }
 import com.gu.management.logback.LogbackLevelPage
-import _root_.play.api.{ Application => PlayApp }
 import com.gu.management.HttpRequest
 import controllers.front.{CollectionAgent, ConfigAgent}
-
-class SwitchBoardPlugin(app: PlayApp) extends SwitchBoardAgent(Configuration)
 
 object Management extends GuManagement {
   val applicationName = "frontend-facia"
