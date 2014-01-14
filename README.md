@@ -107,7 +107,7 @@ SBT any other way the project will not run.
 Start the Grunt build and watch for development changes:
 
 ```
-./grunt watch
+grunt watch
 ```
 
 In another console, start Simple Build Tool (sbt) by running `./sbt`. It may
