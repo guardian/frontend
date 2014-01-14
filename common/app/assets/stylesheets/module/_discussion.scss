@@ -116,12 +116,12 @@ $replyIndent: 26px;
 
 .d-comment__inner {
     position: relative;
-    padding-top: $baseline;
+    padding-top: $gs-baseline;
     overflow: hidden;
 }
 
 .d-comment--top-level {
-    border-top: 1px solid $c-neutral4;
+    border-top: 1px solid $c-neutral3;
 }
 
 .d-comment:target {
@@ -149,6 +149,12 @@ $replyIndent: 26px;
     margin-right: $baseline*2;
     margin-top: $baseline;
     float: left;
+    @include mq($comment-meta-breakpoint) {
+        float: none;
+    }
+    @include mq(wide) {
+        float: left;
+    }
 }
 
 .d-comment__avatar {
@@ -270,7 +276,7 @@ $replyIndent: 26px;
 .d-comment__recommend {
     position: absolute;
     right: 0;
-    top: $gs-baseline/2;
+    top: $gs-baseline;
     z-index: 1;
     @include mq(tablet){
         min-width: 28px;
@@ -467,6 +473,7 @@ $replyIndent: 26px;
         margin-left: 0;
     }
     .d-comment__inner {
+        padding-top: $gs-baseline/2;
     }
     .d-comment__body {
         color: $c-replyText;
@@ -476,7 +483,7 @@ $replyIndent: 26px;
         }
     }
     .d-comment__recommend {
-        top: $baseline;
+        top: $gs-baseline/2;
     }
 
     .d-comment__meta {
@@ -898,6 +905,12 @@ $replyIndent: 26px;
     resize: vertical;
     width: 100%;
     word-break: break-word;
+    blockquote {
+        margin: $gs-baseline $gs-gutter;
+        padding-left: $gs-gutter/2;
+        border-left: 3px solid $c-neutral4;
+
+    }
 }
 
 .d-comment-box__add-comment {
