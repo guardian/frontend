@@ -2,6 +2,7 @@ import common.{AkkaAsync, CloudWatchApplicationMetrics, Jobs}
 import conf.Management
 import jobs._
 import play.api.GlobalSettings
+import services.PorterConfigAgent
 
 object Global extends GlobalSettings with CloudWatchApplicationMetrics {
   override lazy val applicationName = Management.applicationName
@@ -19,6 +20,12 @@ object Global extends GlobalSettings with CloudWatchApplicationMetrics {
     Jobs.schedule("AnalyticsSanityCheckJob", "0 0/15 * * * ?") {
       AnalyticsSanityCheckJob.run()
     }
+    Jobs.schedule("FrontPressJob", "0/5 * * * * ?") {
+      FrontPressJob.run()
+    }
+    Jobs.schedule("ConfigAgentJob", "0 * * * * ?") {
+      PorterConfigAgent.refresh()
+    }
   }
 
   def descheduleJobs() {
@@ -26,12 +33,15 @@ object Global extends GlobalSettings with CloudWatchApplicationMetrics {
     Jobs.deschedule("ABTestResultsLoadJob")
     Jobs.deschedule("FastlyCloudwatchLoadJob")
     Jobs.deschedule("AnalyticsSanityCheckJob")
+    Jobs.deschedule("FrontPressJob")
+    Jobs.deschedule("ConfigAgentJob")
   }
 
   override def onStart(app: play.api.Application) {
     super.onStart(app)
     descheduleJobs()
     scheduleJobs()
+    PorterConfigAgent.refresh()
   }
 
   override def onStop(app: play.api.Application) {
