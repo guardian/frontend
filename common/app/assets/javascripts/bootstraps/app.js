@@ -5,11 +5,14 @@ define([
     'domReady',
     'common/utils/ajax',
     'common/utils/detect',
+    'common/utils/config',
+    'common/utils/contextualiser',
+    'common/utils/context',
+    'common/utils/t',
     
     'common/modules/analytics/errors',
     'common/modules/ui/fonts',
     'common/modules/router',
-    'common/utils/config',
     'common/modules/adverts/userAdTargeting',
     'common/modules/discussion/api',
 
@@ -31,11 +34,14 @@ define([
     domReady,
     ajax,
     detect,
+    config,
+    contextualiser,
+    c,
+    T,
 
     Errors,
     Fonts,
     Router,
-    config,
     UserAdTargeting,
     DiscussionApi,
 
@@ -97,6 +103,11 @@ define([
         domReady(function() {
             var context = document.getElementById('preload-1'),
                 contextHtml = context.cloneNode(false).innerHTML;
+
+            var t = new T();
+            contextualiser.set(context);
+            t = new T();
+
 
             modules.initialiseAjax(config);
             modules.initialiseDiscussionApi(config);
