@@ -17,7 +17,7 @@ class SwitchesTest extends FlatSpec with Matchers {
 
   they should "have a description" in {
     Switches.all foreach {
-      case Switch(_, _, description, _) => description.trim should not be("")
+      case Switch(_, _, description, _, _) => description.trim should not be("")
     }
   }
   
