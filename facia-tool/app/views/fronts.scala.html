@@ -126,8 +126,9 @@
                             by <span class="list-header__timings__user" data-bind="text: collectionMeta.updatedBy"></span>
                         <!-- /ko -->
                         <a data-bind="
+                            click: reset,
                             visible: state.hasConcurrentEdits,
-                            ">Show</a>
+                            ">Show edits</a>
                     </span>
                 </div>
 
