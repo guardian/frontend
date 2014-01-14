@@ -44,7 +44,7 @@ trait UpdateActions {
     if (update.draft)
         block.copy(
           draft=block.draft.map {
-            l => updateList(update, l)}.orElse {
+            l => updateList(update, l)}.filterNot(_ == block.live).orElse {
               Option(updateList(update, block.live))
           }
         )
@@ -73,8 +73,8 @@ trait UpdateActions {
 
   def updateCollectionList(id: String, update: UpdateList, identity: Identity): Option[Block] =
     getBlock(id)
-      .map(insertIntoDraft(update, _))
       .map(insertIntoLive(update, _))
+      .map(insertIntoDraft(update, _))
       .flatMap(putBlock(id, _, identity))
       .orElse(createBlock(id, identity, update))
 
