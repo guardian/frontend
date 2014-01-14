@@ -1,15 +1,15 @@
 /* TEAM */
 
-Head of User Experience:Nick Haley
+Head of User Experience: Nick Haley
 Twitter: @twobobswerver
-From:London, England
+From: London, England
 
-Developer Manager:Matt Chadburn
+Developer Manager: Matt Chadburn
 Twitter: @commuterjoy
 
-Discussion Developer/Desperado:James Gorrie
+Discussion Developer/Desperado: James Gorrie
 Twitter: @jamesgorrie
-From:KwaZulu-Natal, South Afric
+From: KwaZulu-Natal, South Africa
 
 Product Manager: Chris Mulholland
 LinkedIn: chrismulholland
@@ -33,10 +33,14 @@ Developer: Kaelig Deloumeau-Prigent
 Twitter: @kaelig
 From: Rennes, Brittany, France
 
-Engineer:Richard Nguyen
+Engineer: Richard Nguyen
 Twitter: @Sherbet_Noin
-From:London, UK
+From: London, UK
 
-Developer:Ken Lim
-Twitter:@kenlim
-Location:London,United Kingdom
+Developer: Ken Lim
+Twitter: @kenlim
+Location: London,United Kingdom
+
+Designer and front-end developer: Paul Lloyd
+Twitter: @paulrobertlloyd
+From: Brighton, UK
