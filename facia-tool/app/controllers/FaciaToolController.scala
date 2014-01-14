@@ -13,6 +13,7 @@ import play.api.libs.ws.WS
 
 object FaciaToolController extends Controller with Logging with ExecutionContexts {
   implicit val updateListRead = Json.reads[UpdateList]
+  implicit val collectionMetaRead = Json.reads[CollectionMetaUpdate]
 
   def index() = ExpiringAuthentication { request =>
     Ok(views.html.fronts(Configuration.environment.stage))
@@ -64,7 +65,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     request.body.asJson flatMap(_.asOpt[CollectionMetaUpdate]) map {
       case update: CollectionMetaUpdate => {
         val identity = Identity(request).get
-        UpdateActions.updateCollection(id, update, identity)
+        UpdateActions.updateCollectionMeta(id, update, identity)
         notifyContentApi(id)
         Ok
       }
