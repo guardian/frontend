@@ -255,10 +255,6 @@ object Switches extends Collections {
     "If this is switched on articles that have no in body links will auto link to their tags where possible",
     safeState = Off)
 
-  val ABUnderlineLinks = Switch("A/B Tests", "ab-underline-links",
-    "If this is switched on an AB test runs whereby links in articles are underline (with CSS)",
-    safeState = Off)
-  
   // Sport Switch
 
   val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
@@ -340,7 +336,6 @@ object Switches extends Collections {
     AdDwellTimeLoggerSwitch,
     UkAlphaSwitch,
     TagLinking,
-    ABUnderlineLinks,
     SponsoredContentSwitch,
     OphanMultiEventSwitch
   )

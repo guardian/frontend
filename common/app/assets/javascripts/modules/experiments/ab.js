@@ -13,8 +13,7 @@ define([
     'common/modules/experiments/tests/commercial-in-article-desktop',
     'common/modules/experiments/tests/commercial-in-article-mobile',
     'common/modules/experiments/tests/right-most-popular',
-    'common/modules/experiments/tests/right-most-popular-control',
-    'common/modules/experiments/tests/underline-links'
+    'common/modules/experiments/tests/right-most-popular-control'
 ], function (
     common,
     store,
@@ -28,8 +27,7 @@ define([
     CommercialInArticlesDesktop,
     CommercialInArticlesMobile,
     RightPopular,
-    RightPopularControl,
-    UnderlineLinks
+    RightPopularControl
     ) {
 
     var TESTS = [
@@ -41,8 +39,7 @@ define([
             new CommercialInArticlesDesktop(),
             new CommercialInArticlesMobile(),
             new RightPopular(),
-            new RightPopularControl(),
-            new UnderlineLinks()
+            new RightPopularControl()
         ],
         participationsKey = 'gu.ab.participations';
 
