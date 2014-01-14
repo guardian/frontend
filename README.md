@@ -53,6 +53,7 @@ You can run the project with the supplied Vagrantfile - make sure you understand
 Local Install Requirements
 --------------------------
 * A Mac or Linux pc
+* Installed Open JDK `sudo apt-get install openjdk-7-jdk`
 * Installed Node.js (https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager)
 * Installed npm (Node package manager - you quite possibly already have this)
 * Installed GraphicsMagick
