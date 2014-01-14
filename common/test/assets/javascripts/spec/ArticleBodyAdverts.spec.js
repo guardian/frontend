@@ -29,13 +29,13 @@ define([ 'common/common',
                     .html('body:after{ content: "wide"}')
                     .appendTo('head');
 
-                ArticleBodyAdverts.init();
+                new ArticleBodyAdverts().init();
 
                 expect(document.querySelectorAll('.ad-slot--mpu-banner-ad').length).toBe(1);
             });
 
             it("Should insert an 2 inline ad containers to the content", function() {
-                ArticleBodyAdverts.init();
+                new ArticleBodyAdverts().init();
 
                 expect(document.querySelectorAll('.ad-slot--inline').length).toBe(2);
             });

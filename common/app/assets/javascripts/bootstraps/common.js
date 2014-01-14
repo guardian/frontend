@@ -246,7 +246,7 @@ define([
 
         loadAdverts: function () {
             if (!userPrefs.isOff('adverts')){
-                ArticleBodyAdverts.init();
+                var articleBodyAdverts = new ArticleBodyAdverts().init();
 
                 mediator.on('page:common:deferred:loaded', function(config, context) {
                     if (config.switches && config.switches.adverts && !config.page.blockAds) {
