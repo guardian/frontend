@@ -11,13 +11,9 @@ case class Collection(curated: Seq[Trail],
                       editorsPicks: Seq[Trail],
                       mostViewed: Seq[Trail],
                       results: Seq[Trail],
-                      displayName: Option[String]) {
+                      displayName: Option[String]) extends implicits.Collections {
 
-  lazy val items: Seq[Trail] =
-    curated ++
-    editorsPicks.filterNot(ep => curated.exists(_.url == ep.url)) ++
-    mostViewed.filterNot (r => curated.exists(_.url == r.url) || editorsPicks.exists(_.url == r.url)) ++
-    results.filterNot (r => curated.exists(_.url == r.url) || editorsPicks.exists(_.url == r.url) || mostViewed.exists(_.url == r.url))
+  lazy val items: Seq[Trail] = (curated ++ editorsPicks ++ mostViewed ++ results).distinctBy(_.url)
 }
 
 object Collection {
