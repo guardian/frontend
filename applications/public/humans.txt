@@ -18,7 +18,7 @@ From: Glasgow, Scotland
 
 Design and art direction: Katrina Stubbings
 Twitter: @vilderness
-Location: London
+Location: London, UK
 
 Engineer (Tech Lead): Grant Klopper
 Twitter: @grantklopper
@@ -39,7 +39,7 @@ From: London, UK
 
 Developer: Ken Lim
 Twitter: @kenlim
-Location: London,United Kingdom
+Location: London, UK
 
 Designer and front-end developer: Paul Lloyd
 Twitter: @paulrobertlloyd
