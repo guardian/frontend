@@ -59,6 +59,19 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     Ok
   }
 
+  def updateCollection(id: String): Action[AnyContent] = AjaxExpiringAuthentication { request =>
+    FaciaToolMetrics.ApiUsageCount.increment()
+    request.body.asJson flatMap(_.asOpt[CollectionUpdate]) map {
+      case update: CollectionUpdate => {
+        val identity = Identity(request).get
+        UpdateActions.updateCollection(id, update, identity)
+        notifyContentApi(id)
+        Ok
+      }
+      case _ => NotFound
+    } getOrElse NotFound
+  }
+
   def updateBlock(id: String): Action[AnyContent] = AjaxExpiringAuthentication { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
     request.body.asJson flatMap (_.asOpt[UpdateList]) map {

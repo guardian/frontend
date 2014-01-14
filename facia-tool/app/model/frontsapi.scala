@@ -24,6 +24,7 @@ case class Trail(
 
 
 case class UpdateList(item: String, position: Option[String], after: Option[Boolean], itemMeta: Option[Map[String, JsValue]], live: Boolean, draft: Boolean)
+case class CollectionUpdate(displayName: Option[String])
 
 trait UpdateActions {
 
@@ -62,6 +63,9 @@ trait UpdateActions {
     else
       block
 
+  def updateCollection(block: Block, update: CollectionUpdate, identity: Identity): Block =
+    block.copy(displayName=update.displayName)
+
   def putBlock(id: String, block: Block, identity: Identity): Option[Block] = {
     FaciaApi.archive(id, block)
     FaciaApi.putBlock(id, block, identity)
@@ -78,6 +82,11 @@ trait UpdateActions {
     getBlock(id)
       .map(deleteFromLive(update, _))
       .map(deleteFromDraft(update, _))
+      .flatMap(putBlock(id, _, identity))
+
+  def updateCollection(id: String, update: CollectionUpdate, identity: Identity): Option[Block] =
+    getBlock(id)
+      .map(updateCollection(_, update, identity))
       .flatMap(putBlock(id, _, identity))
 
   private def updateList(update: UpdateList, blocks: List[Trail]): List[Trail] = {
