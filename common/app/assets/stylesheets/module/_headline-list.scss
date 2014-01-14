@@ -172,10 +172,7 @@
         }
 
         @include mq(wide) {
-            width: 25%;
-            float: left;
             padding-bottom: 0;
-            padding-left: gs-span(1) + $gs-gutter;
             min-height: gs-height(3);
 
             &:first-child {
@@ -226,4 +223,8 @@
             padding-top: $baseline*6;
         }
     }
+}
+
+@include mq(wide) {
+    @include guss-columns('.headline-column', $column-min-width: gs-span(3), $column-rule: none);
 }
