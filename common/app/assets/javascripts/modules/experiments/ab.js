@@ -13,8 +13,6 @@ define([
     'common/modules/experiments/tests/identity-email-signup',
     'common/modules/experiments/tests/commercial-in-article-desktop',
     'common/modules/experiments/tests/commercial-in-article-mobile',
-    'common/modules/experiments/tests/right-most-popular',
-    'common/modules/experiments/tests/right-most-popular-control',
     'common/modules/experiments/tests/underline-links',
     'common/modules/experiments/tests/chartbeat-desktop'
 ], function (
@@ -30,8 +28,6 @@ define([
     EmailSignup,
     CommercialInArticlesDesktop,
     CommercialInArticlesMobile,
-    RightPopular,
-    RightPopularControl,
     UnderlineLinks,
     ChartbeatDesktop
     ) {
@@ -45,8 +41,6 @@ define([
             new EmailSignup(),
             new CommercialInArticlesDesktop(),
             new CommercialInArticlesMobile(),
-            new RightPopular(),
-            new RightPopularControl(),
             new UnderlineLinks(),
             new ChartbeatDesktop()
         ],

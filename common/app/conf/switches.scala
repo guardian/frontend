@@ -276,6 +276,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val RightHandMostPopularSwitch = Switch("Feature Switches", "right-hand-most-popular",
+    "If this switch is on, a component with most popular content from around the Guardian is displayed in the article right hand column at desktop breakpoints.",
+    safeState = Off, sellByDate = endOfQ4
+  )
+
   val IdentityEthicalAwardsSwitch = Switch("Feature Switches", "id-ethical-awards",
     "If this switch is on, Ethical awards forms will be available",
     safeState = Off, sellByDate = endOfQ4)
@@ -283,6 +288,7 @@ object Switches extends Collections {
   val IdentityFilmAwardsSwitch = Switch("Feature Switches", "id-film-awards",
     "If this switch is on, Film awards forms will be available",
     safeState = Off, sellByDate = endOfQ4)
+
 
   // A/B Test Switches
 
@@ -329,16 +335,6 @@ object Switches extends Collections {
   val ABEmailSignup = Switch("A/B Tests", "ab-email-signup",
     "If this is switched on an AB test runs to test article page email signups",
     safeState = Off, sellByDate = new DateMidnight(2014, 1, 24)
-  )
-
-  val ABRightPopular = Switch("A/B Tests", "ab-right-popular",
-    "If this is switched on an AB test runs to trail a right hand side most popular component",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 20)
-  )
-
-  val ABRightPopularControl = Switch("A/B Tests", "ab-right-popular-control",
-    "If this is switched on an AB test runs as a control variant for right most popular",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 20)
   )
 
   val TagLinking = Switch("Feature Switches", "tag-linking",
@@ -447,6 +443,7 @@ object Switches extends Collections {
     EditionRedirectLoggingSwitch,
     FacebookAutoSigninSwitch,
     IdentityFormstackSwitch,
+    RightHandMostPopularSwitch,
     IdentityEthicalAwardsSwitch,
     IdentityFilmAwardsSwitch,
     ABAa,
@@ -456,9 +453,7 @@ object Switches extends Collections {
     ABCommercialInArticleDesktop,
     ABCommercialInArticleMobile,
     ABChartbeatDesktop,
-    ABRightPopularControl,
     ABMobileFacebookAutosignin,
-    ABRightPopular,
     AdDwellTimeLoggerSwitch,
     ABEmailSignup,
     NetworkFrontUkAlpha,
