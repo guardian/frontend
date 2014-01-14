@@ -125,7 +125,8 @@ $replyIndent: 26px;
     background-color: $c-neutral7;
 }
 
-.d-comment__meta, .d-comment-box__meta {
+.d-comment__meta,
+.d-comment-box__meta {
     height: $avatarSize + $baseline;
     margin-bottom: $baseline*2;
     white-space: nowrap;
@@ -151,20 +152,23 @@ $replyIndent: 26px;
     }
 }
 
-.d-comment__avatar-wrapper, .d-comment-box__avatar-wrapper {
+.d-comment__avatar-wrapper,
+.d-comment-box__avatar-wrapper {
     margin-right: $baseline*2;
     margin-top: $baseline;
     float: left;
 }
 
-.d-comment__avatar, .user-avatar__image {
+.d-comment__avatar,
+.user-avatar__image {
     width: $avatarSize;
     height: $avatarSize;
     @include rounded-corners(36px);
     overflow:hidden;
 }
 
-.d-comment__meta-text, .d-comment-box__meta-text {
+.d-comment__meta-text,
+.d-comment-box__meta-text {
     padding-right: 50px;
     @include box-sizing(border-box);
     @include mq(desktop) {
@@ -180,7 +184,8 @@ $replyIndent: 26px;
     padding-right: 0;
 }
 
-.d-comment__author, .d-comment-box__author {
+.d-comment__author,
+.d-comment-box__author {
     @include fs-data(4);
     color: $c-neutral1;
     font-weight: bold;
@@ -207,7 +212,8 @@ $replyIndent: 26px;
     a { color: $c-neutral2; }
 }
 
-.d-comment__reply-to-author, .d-comment-box__reply-to-author {
+.d-comment__reply-to-author,
+.d-comment-box__reply-to-author {
     color: $c-neutral1;
     @include fs-data(3);
     display: none;
@@ -333,7 +339,8 @@ $replyIndent: 26px;
     }
 }
 
-.d-comment__recommend-count--new, .d-comment__recommend-count--old {
+.d-comment__recommend-count--new,
+.d-comment__recommend-count--old {
     display: block;
     position: relative;
 }
@@ -341,7 +348,8 @@ $replyIndent: 26px;
 .d-comment__recommend--active {
     cursor: pointer;
 
-    .d-comment__recommend-button, .d-comment__recommend-pulse {
+    .d-comment__recommend-button,
+    .d-comment__recommend-pulse {
         background-color: $c-newsDefault;
     }
     .d-comment__recommend-count {
@@ -362,7 +370,8 @@ $replyIndent: 26px;
 
 .d-comment__recommend--user-recommended {
 
-    .d-comment__recommend-button, .d-comment__recommend-pulse {        
+    .d-comment__recommend-button,
+    .d-comment__recommend-pulse {
         @include transition(background-color 0.25s ease-in-out);
         background-color: $c-commentDefault;
     }
@@ -375,7 +384,8 @@ $replyIndent: 26px;
         color: $c-commentDefault;
     }
 
-    .d-comment__recommend-count--old, .d-comment__recommend-count--new {
+    .d-comment__recommend-count--old,
+    .d-comment__recommend-count--new {
         top: -1.6rem;
         @include transition(top 0.15s ease-in-out);
         @include transition-delay(0.15s);
@@ -434,7 +444,8 @@ $replyIndent: 26px;
 }
 
 .discussion--open {
-    .d-comment__reply-wrapper, .d-comment__action-separator {
+    .d-comment__reply-wrapper,
+    .d-comment__action-separator {
         display: inline;
     }
 }
@@ -458,7 +469,8 @@ $replyIndent: 26px;
 /* Reply comment
    ========================================================================== */
 
-.d-comment--response, .d-comment-box--response {
+.d-comment--response,
+.d-comment-box--response {
     border-top: 1px dotted $c-neutral3;
 
     @include mq($comment-meta-breakpoint) {
@@ -503,9 +515,11 @@ $replyIndent: 26px;
         display: none;
     }
 }
-.d-comment--response, .d-comment-box--response {
+.d-comment--response,
+.d-comment-box--response {
 
-    .d-comment__meta, .d-comment-box__meta {
+    .d-comment__meta,
+    .d-comment-box__meta {
         height: auto;
         display: block;
         float: none;
@@ -640,7 +654,10 @@ $replyIndent: 26px;
         }
     }
 
-    .show-more__container--newer, .show-more__container--older { display: none; }
+    .show-more__container--newer,
+    .show-more__container--older {
+        display: none;
+    }
 
     .d-comment__actions { display: none; }
     .d-comment__content { 
