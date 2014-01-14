@@ -109,7 +109,7 @@ define([
 
         displayAlphaMessage: function(config) {
             // only run on 5% of (mobile) users
-            var isAChosenOne = parseInt(mvtCookie.getMvtValue(), 10) < (mvtCookie.MAX_INT * 0.05) && detect.getMobileOS();
+            var isAChosenOne = parseInt(mvtCookie.getMvtValue(), 10) < (mvtCookie.MAX_INT * 0.05) && detect.getMobileOS() || true;
             if (config.page.contentType === 'Network Front' && isAChosenOne) {
                 var page = window.location.pathname.replace('-alpha', ''),
                     alphaSwitch = {
@@ -136,11 +136,11 @@ define([
                               '</p>' +
                               '<ul class="site-message__actions unstyled">' +
                                   (
-                                     userZoomSurvey ||
-                                     '<li class="site-message__actions__item">' +
-                                         '<i class="i i-comment-grey"></i>' +
-                                         '<a href="https://s.userzoom.com/m/' + userZoomSurvey + '" data-link-name="feedback" target="_blank">We’d love to hear your feedback</a>' +
-                                     '</li>'
+                                      (userZoomSurvey) ?
+                                      '<li class="site-message__actions__item">' +
+                                          '<i class="i i-comment-grey"></i>' +
+                                          '<a href="https://s.userzoom.com/m/' + userZoomSurvey + '" data-link-name="feedback" target="_blank">We’d love to hear your feedback</a>' +
+                                      '</li>' : ''
                                   ) +
                                   '<li class="site-message__actions__item">' +
                                       '<i class="i i-back"></i>' +
