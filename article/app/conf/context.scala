@@ -5,14 +5,11 @@ import common.Metrics
 import com.gu.management._
 import com.gu.management.play.{ Management => GuManagement }
 import com.gu.management.logback.LogbackLevelPage
-import _root_.play.api.{Application => PlayApp}
 import scala.concurrent.{ExecutionContext, Await, Future}
 import com.gu.management.HttpRequest
 import com.gu.management.PlainTextResponse
 import scala.concurrent.duration._
 import java.util.concurrent.atomic.AtomicBoolean
-
-class SwitchBoardPlugin(app: PlayApp) extends SwitchBoardAgent(Configuration)
 
 class HealthcheckPage(val urls: String*) extends ManagementPage {
 

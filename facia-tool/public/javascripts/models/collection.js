@@ -31,11 +31,12 @@ define([
         this.id = opts.id;
         this.raw = undefined;
         this.groups = this.createGroups(opts.groups);
-        
+
         // properties from the config, about this collection
         this.configMeta   = asObservableProps([
             'displayName',
-            'roleName']);
+            'roleName',
+            'uneditable']);
         populateObservables(this.configMeta, opts);
 
         // properties from the collection itself
@@ -151,7 +152,7 @@ define([
         })
         .done(function(raw) {
             if (opts.isRefresh && self.isPending()) { return; }
-            
+
             self.setPending(false);
 
             if (!raw) { return; }

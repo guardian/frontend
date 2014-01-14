@@ -10,18 +10,18 @@ import conf.Switches
 
 
 @Singleton
-class EthicalAwardsController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
+class FilmAwardsController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
                                         idRequestParser: IdRequestParser,
                                         idUrlBuilder: IdentityUrlBuilder,
                                         authAction: actions.AuthAction)
   extends Controller with ExecutionContexts with SafeLogging {
 
-  val page = IdentityPage("/ethical-awards", "Ethical Awards", "ethical-awards")
+  val page = IdentityPage("/film-awards", "Film Awards", "film-awards")
 
-  def ethicalAwardsForm(formReference: String) = authAction.apply { implicit request =>
-    if (Switches.IdentityEthicalAwardsSwitch.isSwitchedOn) {
+  def filmAwardsForm(formReference: String) = authAction.apply { implicit request =>
+    if (Switches.IdentityFilmAwardsSwitch.isSwitchedOn) {
       val idRequest = idRequestParser(request)
-      Ok(views.html.ethicalAwards.form(page, formReference, idRequest, idUrlBuilder))
+      Ok(views.html.filmAwards.form(page, formReference, idRequest, idUrlBuilder))
     } else {
       logger.info(s"formstack switched off, attempt to access $formReference failed")
       NotFound(views.html.errors._404())
@@ -29,8 +29,8 @@ class EthicalAwardsController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
   }
 
   def complete = Action { implicit request =>
-    if (Switches.IdentityEthicalAwardsSwitch.isSwitchedOn) {
-      Ok(views.html.ethicalAwards.complete(page))
+    if (Switches.IdentityFilmAwardsSwitch.isSwitchedOn) {
+      Ok(views.html.filmAwards.complete(page))
     } else {
       NotFound(views.html.errors._404())
     }

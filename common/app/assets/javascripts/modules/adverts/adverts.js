@@ -8,10 +8,7 @@ define([
     'common/modules/adverts/document-write',
     'common/modules/adverts/documentwriteslot',
     'common/modules/adverts/dimensionMap',
-    'common/modules/adverts/audience-science',
-    'common/modules/adverts/quantcast',
     'common/modules/adverts/userAdTargeting'
-
 ],
 function (
     $,
@@ -24,8 +21,6 @@ function (
     documentWrite,
     DocumentWriteSlot,
     dimensionMap,
-    audienceScience,
-    quantcast,
     userAdTargeting
 ) {
 
@@ -66,14 +61,6 @@ function (
                     }
                 }
             }
-        }
-
-        if (currConfig.switches.audienceScience) {
-            audienceScience.load(currConfig.page);
-        }
-
-        if (currConfig.switches.quantcast) {
-            quantcast.load();
         }
 
         //Make the request to ad server

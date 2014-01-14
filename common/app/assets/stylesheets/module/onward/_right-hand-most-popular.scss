@@ -3,10 +3,12 @@
 }
 
 .right-most-popular__title {
+    height: gs-height(1);
     padding-top: $baseline;
-    margin-bottom: $gs-baseline*2;
+    margin-bottom: $gs-baseline/1.5;
     border-top: 1px dotted $c-neutral5;
     @include fs-header(2);
+    @include box-sizing(border-box);
 }
 
 .right-most-popular-item {
@@ -17,6 +19,7 @@
     border-top: 1px dotted $c-neutral5;
 
     &:first-child {
+        padding-top: 0;
         border-top: none;
     }
 }

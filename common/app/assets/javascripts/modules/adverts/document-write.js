@@ -3,7 +3,7 @@ define([
     'common/utils/mediator',
     'common/utils/ajax',
     'common/utils/detect',
-    'common/modules/adverts/audience-science'
+    'common/modules/analytics/commercial/tags/common/audience-science'
 ], function (
     mediator,
     ajax,
