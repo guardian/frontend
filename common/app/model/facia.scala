@@ -9,18 +9,20 @@ case class Config(
 
 case class Collection(curated: Seq[Trail],
                       editorsPicks: Seq[Trail],
+                      mostViewed: Seq[Trail],
                       results: Seq[Trail],
                       displayName: Option[String]) {
 
   lazy val items: Seq[Trail] =
     curated ++
     editorsPicks.filterNot(ep => curated.exists(_.url == ep.url)) ++
-    results.filterNot (r => curated.exists(_.url == r.url) || editorsPicks.exists(_.url == r.url))
+    mostViewed.filterNot (r => curated.exists(_.url == r.url) || editorsPicks.exists(_.url == r.url)) ++
+    results.filterNot (r => curated.exists(_.url == r.url) || editorsPicks.exists(_.url == r.url) || mostViewed.exists(_.url == r.url))
 }
 
 object Collection {
-  def apply(curated: Seq[Trail]): Collection = Collection(curated, Nil, Nil, None)
-  def apply(curated: Seq[Trail], displayName: Option[String]): Collection = Collection(curated, Nil, Nil, displayName)
+  def apply(curated: Seq[Trail]): Collection = Collection(curated, Nil, Nil, Nil, None)
+  def apply(curated: Seq[Trail], displayName: Option[String]): Collection = Collection(curated, Nil, Nil, Nil, displayName)
 }
 
 case class FaciaPage(
