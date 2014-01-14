@@ -15,7 +15,7 @@
     @include fs-headline(2);
     color: $c-neutral2;
     margin-bottom: 0;
-    margin-right: $baseline*6;
+    margin-right: $gs-gutter*(6/5);
     .site-message--permanent & {
         margin-right: 0;
     }
@@ -27,7 +27,7 @@
     width: 100%;
     border-top: 1px dotted $c-neutral2;
     margin-top: $baseline*6;
-    overflow:hidden;
+    overflow: hidden;
 }
 
 .site-message__actions__item {
