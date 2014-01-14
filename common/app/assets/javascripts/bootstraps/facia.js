@@ -107,48 +107,6 @@ define([
             });
         },
 
-        showUserzoom: function(config) {
-            var path,
-                steps;
-
-            if (config.switches.userzoom && config.switches.faciaUkAlpha) {
-                path = window.location.pathname.substring(1);
-
-                if (path !== 'uk' && path !=='uk-alpha') { return; }
-
-                steps = [
-                    {
-                        pageId: 'uk-alpha',
-                        visits: 0,
-                        script: 'userzoom-uk-alpha'
-                    },
-                    {
-                        pageId: '',
-                        visits: 2,
-                        script: 'userzoom-uk'
-                    }
-                ];
-
-                mediator.on('page:front:ready', function(config, context) {
-                    steps.some(function(step) {
-                        var storeKey,
-                            visits;
-
-                        if (step.pageId === config.page.pageId) {
-                            storeKey = 'gu.userzoom.uk.' + step.pageId;
-                            visits = parseInt(storage.local.get(storeKey) || 0, 10);
-                            if(visits >= step.visits) {
-                                require(['js!' + step.script]);
-                            } else {
-                                storage.local.set(storeKey, visits + 1);
-                            }
-                            return true;
-                        }
-                    });
-                });
-            }
-        },
-
         displayAlphaMessage: function(config) {
             // only run on 5% of (mobile) users
             var isAChosenOne = parseInt(mvtCookie.getMvtValue(), 10) < (mvtCookie.MAX_INT * 0.05) && detect.getMobileOS();
@@ -207,7 +165,6 @@ define([
             modules.showContainerToggle();
             modules.showFootballFixtures();
             modules.showPopular();
-            modules.showUserzoom(config);
             modules.displayAlphaMessage(config);
         }
         mediator.emit("page:front:ready", config, context);
