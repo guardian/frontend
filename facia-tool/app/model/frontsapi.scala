@@ -44,9 +44,9 @@ trait UpdateActions {
     if (update.draft)
         block.copy(
           draft=block.draft.map {
-            l => updateList(update, l)}.filterNot(_ == block.live).orElse {
+            l => updateList(update, l)}.orElse {
               Option(updateList(update, block.live))
-          }
+          }.filter(_ != block.live)
         )
     else
       block
