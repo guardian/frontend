@@ -88,15 +88,23 @@ object Switches extends Collections {
 
   val iPhoneAppSwitch = Switch("Advertising", "iphone-app",
     "If this switch is on then the iPhone app upsell will be enabled.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 30)
-  )
+    safeState = Off, sellByDate = new DateMidnight(2014, 1, 30))
 
-  // Analytics Switches
-
-  val AudienceScienceSwitch = Switch("Analytics", "audience-science",
+  // Commercial Tags
+  
+  val AudienceScienceSwitch = Switch("Commercial Tags", "audience-science",
     "If this switch is on the Audience Science will be enabled.",
-    safeState = Off, sellByDate = endOfQ4
-  )
+    safeState = Off, sellByDate = endOfQ4)
+
+  val ImrWorldwideSwitch = Switch("Commercial Tags", "imr-worldwide",
+    "Enable the IMR Worldwide audience segment tracking.",
+    safeState = Off, sellByDate = endOfQ4)
+  
+  val AmaaSwitch = Switch("Commercial Tags", "amaa",
+    "Enable the AMAA audience segment tracking.",
+    safeState = Off, sellByDate = endOfQ4)
+  
+  // Analytics Switches
 
   val AdDwellTimeLoggerSwitch = Switch("Analytics", "ad-dwell-times-logging",
     "If this is on the in-view advert tracker will log some data to the Play logs",
@@ -445,6 +453,8 @@ object Switches extends Collections {
     TagLinking,
     SponsoredContentSwitch,
     OphanMultiEventSwitch,
+    AmaaSwitch,
+    ImrWorldwideSwitch,
     DiagnosticsRequestLogging,
     OmnitureVerificationSwitch
   )

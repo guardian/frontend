@@ -1,7 +1,6 @@
 package conf
 
 import org.scalatest.FlatSpec
-import org.scalatest.{ GivenWhenThen, FeatureSpec }
 import org.scalatest.Matchers
 import org.joda.time.DateMidnight
 
@@ -18,10 +17,10 @@ class SwitchesTest extends FlatSpec with Matchers {
 
   they should "have a description" in {
     Switches.all foreach {
-      case Switch(_, _, description, _, _) => description.trim should not be("")
+      case Switch(_, _, description, _) => description.trim should not be("")
     }
   }
- 
+  
   // If you are wondering why this test has failed then read, https://github.com/guardian/frontend/pull/2711
   they should "be deleted once expired" in {
     Switches.all foreach {
