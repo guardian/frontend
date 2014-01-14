@@ -132,7 +132,7 @@ define([
                 returnUrl = 'http://www.theguardian.com/foo',
                 user = Id.getUserOrSignIn(returnUrl);
 
-            expect(redirectSpy.getCall(0).args[0]).toContain(returnUrl);
+            expect(redirectSpy.getCall(0).args[0]).toContain(encodeURIComponent(returnUrl));
             Id.redirectTo.restore();
         });
 

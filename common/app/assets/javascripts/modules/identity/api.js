@@ -116,8 +116,8 @@ define([
         if (Id.isUserLoggedIn()) {
             return Id.getUserFromCookie();
         } else {
-            var url = Id.getUrl() + '/signin?returnUrl=' + returnUrl;
             returnUrl = encodeURIComponent(returnUrl || document.location.href);
+            var url = Id.getUrl() + '/signin?returnUrl=' + returnUrl;
             Id.redirectTo(url);
         }
     };
@@ -180,7 +180,7 @@ define([
     };
 
     Id.sendValidationEmail = function() {
-        var endpoint = '/user/me',
+        var endpoint = '/user/send-validation-email',
             request = ajax({
                 url: Id.idApiRoot + endpoint,
                 type: 'jsonp',
@@ -191,26 +191,6 @@ define([
             });
 
         return request;
-    };
-
-    Id.emailSignup = function (listId) {
-
-        var endpoint = '/useremails/'+Id.getUserFromCookie().id+'/subscriptions';
-
-        var data = { 'listId': listId };
-
-        var request = ajax({
-            url: Id.idApiRoot + endpoint,
-            type: 'jsonp',
-            crossOrigin: true,
-            data: {
-                body: JSON.stringify(data),
-                method: 'post'
-            }
-        });
-
-        return request;
-
     };
 
     return Id;
