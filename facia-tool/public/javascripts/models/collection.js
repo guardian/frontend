@@ -1,5 +1,6 @@
 /* global _: true, humanized_time_span: true */
 define([
+    'config',
     'knockout',
     'modules/vars',
     'utils/as-observable-props',
@@ -11,6 +12,7 @@ define([
     'modules/ophan-api',
     'js!humanized-time-span'
 ], function(
+    config,
     ko,
     vars,
     asObservableProps,
@@ -27,12 +29,9 @@ define([
         if (!opts || !opts.id) { return; }
 
         this.id = opts.id;
+        this.raw = undefined;
         this.groups = this.createGroups(opts.groups);
         
-        // Placeholders
-        this.raw = undefined;
-        this.lastUpdated = undefined;
-
         // properties from the config, about this collection
         this.configMeta   = asObservableProps([
             'displayName',
@@ -47,6 +46,8 @@ define([
             'updatedEmail']);
 
         this.state  = asObservableProps([
+            'lastUpdated',
+            'hasConcurrentEdits',
             'collapsed',
             'hasDraft',
             'pending',
@@ -89,7 +90,8 @@ define([
         this.state.editingConfig(!this.state.editingConfig());
     };
 
-    Collection.prototype.cancelEditingConfig = function() {
+    Collection.prototype.reset = function() {
+        this.closeAllArticles();
         this.state.editingConfig(false);
         this.load();
     };
@@ -142,7 +144,7 @@ define([
 
         opts = opts || {};
 
-        if (opts.isRefresh && self.isPending()) { return; }
+        if (opts.isRefresh && this.isPending()) { return; }
 
         return authedAjax.request({
             url: vars.CONST.apiBase + '/collection/' + this.id
@@ -152,9 +154,19 @@ define([
             
             self.setPending(false);
 
-            if (!raw || raw.lastUpdated === self.lastUpdated) { return; }
+            if (!raw) { return; }
 
-            self.populateLists(raw);
+            self.state.hasConcurrentEdits(false);
+
+            if (raw.lastUpdated !== self.state.lastUpdated()) {
+                self.populateLists(raw);
+            }
+
+            if (!self.state.editingConfig()) {
+                populateObservables(self.collectionMeta, raw);
+                self.state.timeAgo(self.getTimeAgo(raw.lastUpdated));
+            }
+
             self.state.hasDraft(_.isArray(raw.draft));
         })
         .fail(function() {
@@ -162,49 +174,48 @@ define([
         });
     };
 
+    Collection.prototype.hasOpenArticles = function() {
+        return _.reduce(this.groups, function(hasOpen, group) {
+            return hasOpen || _.some(group.items(), function(article) { return article.state.open(); });
+        }, false);
+    };
+
     Collection.prototype.populateLists = function(raw) {
         var self = this,
-            openArticles = {},
             list;
 
-        if (raw) {
-            this.raw = raw;
-        } else {
-            raw = this.raw;
+        raw = raw ? raw : this.raw;
+        this.raw = raw;
+
+        if (!raw) {
+            return;
         }
 
-        if (!raw) { return; }
-
-        _.each(this.groups, function(group) {
-            _.each(group.items(), function(item) {
-                if (item.state.open()) {
-                    openArticles[item.props.id()] = item;
-                }
-            });
-            group.items.removeAll();
-        });
+        if (this.hasOpenArticles()) {
+            this.state.hasConcurrentEdits(raw.updatedEmail !== config.email && self.state.lastUpdated());
+            return;
+        }
 
         list = vars.state.liveMode() ? raw.live : raw.draft || raw.live || [];
 
-        _.each(list, function(item) {
-            var article = openArticles[item.id] || new Article(_.extend(item, {
-                    parent: self,
-                    parentType: 'Collection'
-                })),
-                group = _.find(self.groups, function(g){
-                    return (parseInt((item.meta || {}).group, 10) || 0) === g.group;
-                }) || self.groups[0];
-
-            group.items.push(article);
+        _.each(this.groups, function(group) {
+            group.items.removeAll();
         });
 
-        this.state.count(list.length);
-        this.state.timeAgo(self.getTimeAgo(raw.lastUpdated));
-        self.lastUpdated = _.isEmpty(openArticles) ? raw.lastUpdated : self.lastUpdated;
+        _.each(list, function(item) {
+            (_.find(self.groups, function(g){
+                return (parseInt((item.meta || {}).group, 10) || 0) === g.group;
+            }) || self.groups[0])
+            .items.push(
+                new Article(_.extend(item, {
+                    parent: self,
+                    parentType: 'Collection'
+                }))
+            );
+        });
 
-        if (!this.state.editingConfig()) {
-            populateObservables(this.collectionMeta, raw);
-        }
+        this.state.lastUpdated(raw.lastUpdated);
+        this.state.count(list.length);
 
         this.decorate();
     };

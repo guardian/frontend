@@ -1,6 +1,6 @@
-@(env: String)
+@(env: String, identity: Option[Identity])
 
-@admin_main("Fronts editor", env, isAuthed = true) {
+@admin_main("Fronts editor", env, isAuthed = true, identity) {
 
 <div style="display: none;" data-bind="visible: true">
 
@@ -119,11 +119,15 @@
                             'icon-chevron-down': !state.collapsed(),
                             'icon-chevron-up'  :  state.collapsed }"></i>
 
-                    <span class="list-header__timings">
+                    <span class="list-header__timings" data-bind="
+                        css: {'has-concurrent-user': state.hasConcurrentEdits}">
                         <!-- ko if: state.timeAgo -->
-                            <span class="list-header__timings__last-updated" data-bind="text: state.timeAgo"></span>
+                            Edited <span class="list-header__timings__last-updated" data-bind="text: state.timeAgo"></span>
                             by <span class="list-header__timings__user" data-bind="text: collectionMeta.updatedBy"></span>
                         <!-- /ko -->
+                        <a data-bind="
+                            visible: state.hasConcurrentEdits,
+                            ">Show</a>
                     </span>
                 </div>
 
@@ -133,7 +137,7 @@
                         hasFocus: true" placeholder="Title"/>
                     <span>
                         <a class="tool" data-bind="click: saveConfig">Save</a>
-                        <a class="tool" data-bind="click: cancelEditingConfig">Cancel</a>
+                        <a class="tool" data-bind="click: reset">Cancel</a>
                     </span>
                 </div>
 
@@ -149,7 +153,7 @@
                     <div data-bind="visible: !$root.liveMode()">
                         <a class="tool draft-publish" data-bind="
                             click: publishDraft">Publish container</a>
-                            
+
                         <a class="tool draft-discard" data-bind="
                             click: discardDraft">Discard changes</a>
                     </div>
