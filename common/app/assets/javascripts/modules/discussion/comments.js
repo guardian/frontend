@@ -74,6 +74,7 @@ Comments.prototype.classes = {
     showMoreHiddenContainer: 'show-more__container--hidden',
     showMoreNewer: 'd-discussion__show-more--newer',
     showMoreOlder: 'd-discussion__show-more--older',
+    showMoreLoading: 'd-discussion__show-more-loading',
     showHidden: 'd-discussion__show-hidden',
     reply: 'd-comment--response',
     showReplies: 'js-show-more-replies',
@@ -188,6 +189,13 @@ Comments.prototype.ready = function() {
         window.location.replace('#comment-'+ this.options.commentId);
     }
 
+    if (!this.getElem('showMoreNewer')) {
+        $(this.getClass('showMoreNewerContainer')).addClass('u-h');
+    }
+    if (!this.getElem('showMoreOlder')) {
+        $(this.getClass('showMoreOlderContainer')).addClass('u-h');
+    }
+
     this.emit('ready');
 };
 
@@ -293,23 +301,22 @@ Comments.prototype.loadMore = function(e) {
     e.preventDefault();
     var button = e.currentTarget,
         age = button.getAttribute('data-age'),
-        buttonHTML = button.innerHTML,
         page = parseInt(button.getAttribute('data-page'), 10);
 
     if (button.getAttribute('data-disabled')) {
         return false;
     }
 
-    button.innerHTML = 'Loading…';
-    button.setAttribute('data-disabled', 'disabled');
+    var $button = bonzo(button),
+        $container = $button.parent();
+    $button.remove();
+    var $loadingElem = bonzo.create('<span class="' + this.getClass('showMoreLoading',true) + '">Loading...</span>');
+    $container.empty().append($loadingElem);
 
     return this.fetchComments({
         page: page,
         position: age === 'newer' ? 'prepend' : 'append'
-    }).then(function(resp) {
-        button.removeAttribute('data-disabled');
-        button.innerHTML = buttonHTML;
-    }.bind(this));
+    });
 };
 
 /**
@@ -342,10 +349,21 @@ Comments.prototype.renderComments = function(position, resp) {
     var html = bonzo.create(resp.html),
         comments = qwery(this.getClass('topLevelComment'), html);
 
-    $(this.getClass('showMoreNewer'), this.elem).remove();
-    $(this.getClass('showMoreOlder'), this.elem).remove();
-    $(this.getClass('showMoreNewerContainer')).append($(this.getClass('showMoreNewer'), html));
-    $(this.getClass('showMoreOlderContainer')).append($(this.getClass('showMoreOlder'), html));
+    var replaceButton = function(name) {
+        var newButton = qwery(this.getClass(name), html),
+            currentButton = this.getElem(name),
+            container = this.getElem(name + 'Container');
+        $(this.getClass('showMoreLoading'), container).remove(); // remove loading text span
+
+        if (newButton.length === 0) {
+            bonzo(container).addClass('u-h');
+        } else if (currentButton) {
+            bonzo(container).append(newButton);
+        }
+    }.bind(this);
+
+    replaceButton('showMoreOlder');
+    replaceButton('showMoreNewer');
 
     // Stop duplication in new comments section
     qwery(this.getClass('comment'), this.getElem('newComments')).forEach(function(comment) {
@@ -612,6 +630,9 @@ Comments.prototype.setOrder = function(e) {
     this.loading();
 
     bonzo(this.getElem('showMoreHiddenContainer')).addClass('u-h');
+
+    $(this.getElem('showMoreOlderContainer')).empty();
+    $(this.getElem('showMoreNewerContainer')).empty();
 
     $newComments.empty();
     userPrefs.set('discussion.order', newWorldOrder);
