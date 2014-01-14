@@ -159,8 +159,10 @@ define([
             });
         },
 
-        initRightMostPopular : function() {
-            var r = new RightMostPopular(mediator, { type: 'image', maxTrails: 5 });
+        initRightMostPopular : function(config) {
+            if(config.switches.rightHandMostPopular) {
+                var r = new RightMostPopular(mediator, { type: 'image', maxTrails: 5 });
+            }
         }
     };
 
@@ -170,11 +172,11 @@ define([
             modules.matchNav();
             modules.initLiveBlogging();
             modules.logReading();
-            modules.initRightMostPopular();
+            modules.initRightMostPopular(config);
             modules.initDiscussion();
             modules.initCricket();
             modules.externalLinksCards();
-            modules.initOpen();
+            modules.initOpen(config);
         }
         common.mediator.emit("page:article:ready", config, context);
     };
