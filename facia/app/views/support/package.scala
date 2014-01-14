@@ -19,7 +19,6 @@ object GetContainer {
   val specificContainers: Map[String, Map[String, Container]] = Map(
     ("au", Map(
       ("au/news/regular-stories", NewsContainer()),
-      ("au/news/special-story", SectionContainer()),
       ("au/sport/regular-stories", SportContainer()),
       ("au/tone/features/feature-stories", FeaturesContainer()),
       ("au/commentisfree/regular-stories", CommentContainer()),
@@ -51,7 +50,6 @@ object GetContainer {
     )),
     ("uk", Map(
       ("uk/news/regular-stories", NewsContainer()),
-      ("uk/news/special-story", SectionContainer()),
       ("uk/sport/regular-stories", SportContainer()),
       ("uk/tone/features/feature-stories", FeaturesContainer()),
       ("uk/commentisfree/regular-stories", CommentContainer()),
@@ -83,7 +81,6 @@ object GetContainer {
     )),
     ("us", Map(
       ("us/news/regular-stories", NewsContainer()),
-      ("us/news/special-story", SectionContainer()),
       ("us/sport/regular-stories", SportContainer()),
       ("us/tone/features/feature-stories", FeaturesContainer()),
       ("us/commentisfree/regular-stories", CommentContainer()),

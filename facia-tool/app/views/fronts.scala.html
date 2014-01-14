@@ -7,16 +7,16 @@
     <img class="ophan-legend" src="@routes.Assets.at("images/ophan-legend.png")" title="Pageview graph colours" />
 
     <div class="toolbar" data-bind="visible: true" style="display: none">
-        
+
         <span class="tool-label">
             Editing front
         </span>
         <select class="tool-select" data-bind="options: fronts, value: front, optionsCaption: 'choose...'"></select>
-       
+
         <span class="tool-label">
             Edit Mode
         </span>
-        
+
         <a class="tool pref-draft" data-bind="
             click: setModeDraft,
             css: {active: !liveMode()}">Draft</a
@@ -93,7 +93,7 @@
     <script type="text/html" id="template_collection">
         <div class="collection">
             <div class="list-header" data-bind="
-                css: {collapsed: state.collapsed}">
+                css: {collapsed: state.collapsed() || configMeta.uneditable()}">
 
                 <div data-bind="visible: !state.editingConfig()">
                     <span class="title" data-bind="
@@ -103,18 +103,19 @@
                         click: toggleEditingConfig,
                         visible: typeof configMeta.displayName() === 'undefined' && !state.collapsed()">&laquo; edit title</a>
 
-                    <span class="count" data-bind="if: !isPending()">
+                    <span class="count" data-bind="if: !isPending() && !configMeta.uneditable()">
                         (<span data-bind="
                             text: state.count() ? state.count() : 'empty',
                             css: {'non-zero':  state.count}"></span>)
                     </span>
 
-                    <span class="count" data-bind="if: isPending()">
+                    <span class="count" data-bind="if: isPending() && !configMeta.uneditable()">
                         (<span class="non-zero">updating...</span>)
                     </span>
 
                     <i class="list-header__collapser" data-bind="
                         click: toggleCollapsed,
+                        visible: !configMeta.uneditable(),
                         css: {
                             'icon-chevron-down': !state.collapsed(),
                             'icon-chevron-up'  :  state.collapsed }"></i>
@@ -149,7 +150,7 @@
                     <div data-bind="visible: !$root.liveMode()">
                         <a class="tool draft-publish" data-bind="
                             click: publishDraft">Publish container</a>
-                            
+
                         <a class="tool draft-discard" data-bind="
                             click: discardDraft">Discard changes</a>
                     </div>
@@ -198,15 +199,6 @@
             </div>
 
             <div data-bind="if: state.open">
-                <div class="image__overrides">
-                    <a data-bind="
-                        click: toggleImageToneHide,
-                        css: {selected: meta.imageTone() === 'hide'}">Hide</a>
-                    |
-                    <a data-bind="
-                        click: toggleImageToneHighlight,
-                        css: {selected: meta.imageTone() === 'highlight'}">Highlight</a>
-                </div>
                 <div class="article__overrides u-cf">
                     <input class="headline-input" type="text" data-bind="
                         value: headlineInput,
@@ -225,6 +217,16 @@
                         click: trailTextRevert,
                         attr: {title: 'Revert to: ' + fields.trailText},
                         visible: meta.trailText">Revert</a>
+
+                    <div class="image__overrides">
+                        <a data-bind="
+                        click: toggleImageAdjustHide,
+                        css: {selected: meta.imageAdjust() === 'hide'}">Hide image</a>
+                        |
+                        <a data-bind="
+                        click: toggleImageAdjustHighlight,
+                        css: {selected: meta.imageAdjust() === 'highlight'}">Highlight image</a>
+                    </div>
                 </div>
 
                 <div data-bind="if: parentType === 'Collection' || parentType === 'Clipboard'">
@@ -235,7 +237,7 @@
                             template: {name: 'template_article', foreach: items}"></div>
 
                     </div>
-                    <div class="supporting-message">Supporting links &raquo;</div>
+                    <div class="supporting-message">Add supporting content below</div>
                     <div class="tools">
                         <a class="tool" data-bind="click: close">Close</a>
                     </div>
@@ -265,10 +267,10 @@
                         attr: {href: props.id()},
                         html: meta.trailText() || fields.trailText()"></div>
 
-                </div>                   
+                </div>
             </div>
         </div>
-        
+
     </script>
 
 </div>

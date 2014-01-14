@@ -71,6 +71,7 @@ define([
         ];
     };
 
+
     return CommercialInArticlesDesktop;
 
 });

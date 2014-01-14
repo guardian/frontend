@@ -30,6 +30,7 @@ define([
     'common/utils/cookies',
     'common/modules/analytics/omnitureMedia',
     'common/modules/analytics/adverts',
+    'common/modules/analytics/livestats',
     'common/modules/experiments/ab',
     "common/modules/adverts/video",
     "common/modules/discussion/comment-count",
@@ -37,7 +38,8 @@ define([
     "common/modules/onward/history",
     "common/modules/onward/sequence",
     "common/modules/ui/message",
-    "common/modules/identity/autosignin"
+    "common/modules/identity/autosignin",
+    "common/modules/analytics/commercial/tags/container"
 ], function (
     $,
     mediator,
@@ -70,6 +72,7 @@ define([
     Cookies,
     OmnitureMedia,
     AdvertsAnalytics,
+    liveStats,
     ab,
     VideoAdvert,
     CommentCount,
@@ -77,7 +80,8 @@ define([
     History,
     sequence,
     Message,
-    AutoSignin
+    AutoSignin,
+    TagContainer
 ) {
 
     var modules = {
@@ -174,6 +178,10 @@ define([
 
         runAbTests: function (config, context) {
             ab.run(config, context);
+        },
+
+        logLiveStats: function (config) {
+            liveStats.log({ beaconUrl: config.page.beaconUrl }, config);
         },
 
         loadAnalytics: function (config, context) {
@@ -342,6 +350,12 @@ define([
                 }
             });
         },
+        
+        loadTags : function() {
+            mediator.on('page:common:ready', function(config) {
+                TagContainer.init(config);
+            });
+        },
 
         windowEventListeners: function() {
             var events = {
@@ -372,6 +386,7 @@ define([
             if (!self.initialisedDeferred) {
                 self.initialisedDeferred = true;
                 modules.initAbTests(config);
+                modules.logLiveStats(config);
                 modules.loadAdverts();
                 modules.loadAnalytics(config, context);
                 modules.cleanupCookies(context);
@@ -402,6 +417,7 @@ define([
             modules.logReadingHistory();
             modules.unshackleParagraphs(config, context);
             modules.initAutoSignin(config);
+            modules.loadTags(config);
         }
         mediator.emit("page:common:ready", config, context);
     };

@@ -83,13 +83,18 @@ CommentBox.prototype.defaultOptions = {
  */
 CommentBox.prototype.errors = [];
 
-/** @oevrride */
+CommentBox.prototype.getUserData = function() {
+    return IdentityApi.getUserFromCookie();
+};
+
+/** @override */
 CommentBox.prototype.prerender = function() {
     if (!this.options.premod) {
         this.getElem('premod').parentNode.removeChild(this.getElem('premod'));
     }
 
-    var userData = IdentityApi.getUserFromCookie();
+    var userData = this.getUserData();
+
     this.getElem('author').innerHTML = userData.displayName;
 
     if (this.options.state === 'response') {
@@ -194,7 +199,7 @@ CommentBox.prototype.error = function(type, message) {
 };
 
 /**
-* @param {Object} comment
+ * @param {Object} comment
  * @param {Object} resp
  */
 CommentBox.prototype.success = function(comment, resp) {
@@ -226,7 +231,6 @@ CommentBox.prototype.fail = function(xhr) {
         this.error('API_ERROR');
     }
 };
-
 
 /**
  * TODO: remove the replace, get the Scala to be better

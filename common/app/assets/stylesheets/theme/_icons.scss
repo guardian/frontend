@@ -104,3 +104,15 @@ figcaption:before {
         @include transform(scale(0.8));
     }
 }
+
+
+
+.item--dark .i-comment-light-grey {
+    @extend .i-comment-grey;
+
+    @if ($svg-support) {
+        .svg & {
+            @extend .svg-i-comment-grey;
+        }
+    }
+}

@@ -28,7 +28,7 @@ define([
 
         this.id = opts.id;
         this.groups = this.createGroups(opts.groups);
-        
+
         // Placeholders
         this.raw = undefined;
         this.lastUpdated = undefined;
@@ -36,7 +36,8 @@ define([
         // properties from the config, about this collection
         this.configMeta   = asObservableProps([
             'displayName',
-            'roleName']);
+            'roleName',
+            'uneditable']);
         populateObservables(this.configMeta, opts);
 
         // properties from the collection itself
@@ -111,8 +112,7 @@ define([
 
         authedAjax.request({
             type: 'post',
-            url: vars.CONST.apiBase + '/collection/' + this.id,
-            data: JSON.stringify(goLive ? {publish: true} : {discard: true})
+            url: vars.CONST.apiBase + '/collection/'+ (goLive ? 'publish' : 'discard') + '/' + this.id
         })
         .then(function() {
             self.load();
@@ -150,7 +150,7 @@ define([
         })
         .done(function(raw) {
             if (opts.isRefresh && self.isPending()) { return; }
-            
+
             self.setPending(false);
 
             if (!raw || raw.lastUpdated === self.lastUpdated) { return; }

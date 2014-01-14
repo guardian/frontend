@@ -30,7 +30,7 @@ object AjaxExpiringAuthentication extends ExpiringAuthAction("/login") {
 object Login extends LoginController with Controller with ExecutionContexts {
 
   val loginUrl: String = routes.Login.login.url
-  val baseUrl: String = "/admin"
+  val baseUrl: String = "/"
   val maxAuthAge: Long = if (Play.isDev) 10.minutes.toSeconds else 0
   override val extraOpenIDParameters: Seq[String] = Seq(
     "openid.ns.pape=http://specs.openid.net/extensions/pape/1.0",

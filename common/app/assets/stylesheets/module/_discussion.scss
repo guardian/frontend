@@ -35,7 +35,7 @@ $replyIndent: 26px;
 }
 
 .discussion__comments__container {
-    margin-bottom: $baseline*5;
+    margin-bottom: $gs-baseline*3.5;
 }
 
 .discussion__comment-count {
@@ -59,10 +59,10 @@ $replyIndent: 26px;
 .d-discussion__show-more {
     padding-top: $baseline*2;
     @include fs-data(5);
-    position: relative;    
+    position: relative;
     line-height: 30px;
 
-    &:hover span { text-decoration: underline; }    
+    &:hover span { text-decoration: underline; }
 }
 
 .d-discussion__show-more-button {
@@ -267,9 +267,10 @@ $replyIndent: 26px;
 }
 
 .d-comment__body {
-    color: $c-neutral1;
     @include fs-data(5);
-    @include rem((line-height: 23px)); 
+    @include rem((line-height: 23px));
+
+    color: $c-neutral1;
     min-height: 2.5em;
     position: relative;
     z-index: 2;
@@ -283,10 +284,10 @@ $replyIndent: 26px;
         padding-left: $gs-gutter/2;
     }
 }
- 
+
 /* Recommend
    ======================================================= */
-   
+
 .d-comment__recommend {
     position: absolute;
     right: 0;
@@ -298,7 +299,7 @@ $replyIndent: 26px;
     }
 }
 
-.d-comment__recommend-button {    
+.d-comment__recommend-button {
     @include icon-button(18px, -6px);
     background-color: $c-neutral4;
     margin-right: 2px;
@@ -316,7 +317,7 @@ $replyIndent: 26px;
     height: 18px;
     @include rounded-corners(18px);
     position: absolute;
-    top: 0; 
+    top: 0;
     left: 0;
     background-color: $c-neutral4;
 }
@@ -498,7 +499,7 @@ $replyIndent: 26px;
         @include mq(tablet) {
             margin-top: $baseline*2;
         }
-    }   
+    }
     .d-comment__recommend {
         top: $baseline;
     }
@@ -571,7 +572,7 @@ $replyIndent: 26px;
 }
 
 .js-show-more-replies {
-    
+
     margin-left: $replyIndent;
 
     @include mq($comment-meta-breakpoint) {
@@ -616,7 +617,7 @@ $replyIndent: 26px;
 }
 
 .discussion__comments--top-comments {
-    
+
     .d-thread { // for the max-height fade effect
         position: relative;
         overflow: hidden;
@@ -660,7 +661,7 @@ $replyIndent: 26px;
     }
 
     .d-comment__actions { display: none; }
-    .d-comment__content { 
+    .d-comment__content {
         background-color: $c-neutral7;
         padding: $baseline*2 $baseline*3;
         margin-bottom: $baseline*3;
@@ -672,8 +673,8 @@ $replyIndent: 26px;
             content: "";
             bottom: -20px;
             left: 20px;
-            width: 0; 
-            height: 0; 
+            width: 0;
+            height: 0;
             border-right: 20px solid transparent;
             border-top: 20px solid $c-neutral7;
             border-right-style: inset;
@@ -698,7 +699,7 @@ $replyIndent: 26px;
         }
     }
     .d-discussion__comment-count { display: none; }
-    
+
     .d-image-fade {
         background-color: #fff;
         display: block;
@@ -912,7 +913,7 @@ $replyIndent: 26px;
 /* Comment Box
    ========================================================================== */
 
-.d-bar {    
+.d-bar {
     color: $c-neutral1;
     margin-bottom: $baseline*4;
 }
@@ -942,10 +943,25 @@ $replyIndent: 26px;
     @include mq(wide) {
         margin-left:  $a-leftColWide-width + $gs-gutter;
     }
-
 }
-.d-comment-box--expanded .d-comment-box__body {
-    height: 150px;
+
+.d-comment .d-comment-box {
+    padding-left: $replyIndent;
+}
+
+.d-comment-box__body {
+    @include box-sizing(border-box);
+    border: 1px solid $c-neutral3;
+    height: 50px;
+    margin: $baseline*2 0;
+    padding: $baseline*2 $gutter/2;
+    resize: vertical;
+    width: 100%;
+    word-break: break-word;
+}
+
+.d-comment-box__body--expanded {
+    height: gs-height(3);
 }
 
 .d-comment-box__add-comment {

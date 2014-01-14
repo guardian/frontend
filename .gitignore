@@ -32,8 +32,6 @@ RUNNING_PID
 
 *.sublime-*
 
-tags
-
 local.sbt
 
 node_modules

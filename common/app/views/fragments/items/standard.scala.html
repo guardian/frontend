@@ -3,72 +3,89 @@
 @defining((VisualTone(trail), containerIndex == 0, containerIndex == 0 && index < 3)) { case (tone, isFirstContainer, inlineImages) =>
     <@element
         class="item
-               item--has-@{if(trail.trailPicture(5,3).isEmpty){"no-"}}image
+               @if(trail.trailPicture(5,3).isEmpty || trail.imageAdjust == Some("hide")){
+                   item--has-no-image
+               }else{
+                   item--has-image
+                   @trail.imageAdjust.map{adjustValue =>
+                       item--imageadjust-@adjustValue
+                   }
+               }
+               @if(trail.isLive){item--live}
                tone-@tone
-               @if(isFirstContainer){item--force-image-upgrade}"
-        data-link-name="trail | @{index + 1}"
+               @if(isFirstContainer){item--force-image-upgrade}
+               "
+        data-link-name="trail"
         @trail.discussionId.map{ id => data-discussion-id="@id" }
         data-discussion-closed="@trail.isClosedForComments">
-        <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border">
-            @trail.trailPicture(5,3).map{ imageContainer =>
-                @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
-                    <div class="item__media-wrapper">
-                        <div class="item__image-container @if(inlineImages){ inlined-image}" data-src="@imgSrc" @if(isFirstContainer){ data-force-upgrade="desktop wide"}>
-                            @if(inlineImages){
-                                @Item300.bestFor(imageContainer).map{ url => <img src="@url" class="responsive-img" alt="" /> }
-                            }
-                        </div>
-                    </div>
-                }
-            }
-            <h@if(isFirstContainer && index == 0){1}else{2} class="item__title">
-                @if(trail.isLive){
-                    <span class="item__live-indicator">Live</span>
-                }
-                @if(tone == "comment") {
-                    <span class="i i-quote-light-grey"></span>
-                }
-                @RemoveOuterParaHtml(trail.headline)
-            </h@if(isFirstContainer && index == 0){1}else{2}>
-        </a>
-        @if(tone == "comment") {
-            @trail.byline.map { byLine =>
-                <p class="item__byline tone-colour">@Html(byLine)</p>
-            }
-        }
-        @trail.trailText.map { text =>
-            <div class="item__standfirst">@Html(text)</div>
-        }
-        @if(trail.supporting.nonEmpty){
-            <div class="item__support">
-                <h3 class="item__support__title">More on this story:</h3>
 
-                <ul class="l-columns linkslist">
-                    @trail.supporting.map{ supporting =>
-                        <li class="l-columns__item
-                                   linkslist__item
-                                   item__support__item
-                                   item__support__item--@VisualTone(supporting)
-                                   @if(supporting.isLive){item__support__item--live}">
-                            <a href="@LinkTo{@supporting.url}"
-                               class="item__support__action
-                                      linkslist__action">
-                                @supporting.headline
-                            </a>
-                        </li>
+        <div class="item__container">
+            <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border" data-link-name="@{index + 1}">
+                @if(trail.imageAdjust != Some("hide")) {
+                    @trail.trailPicture(5,3).map{ imageContainer =>
+                        @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
+                            <div class="item__media-wrapper">
+                                <div class="item__image-container js-image-upgrade @if(inlineImages){ inlined-image}" data-src="@imgSrc" @if(isFirstContainer){ data-force-upgrade="desktop wide"}>
+                                    @if(inlineImages){
+                                        @Item300.bestFor(imageContainer).map{ url => <img src="@url" class="responsive-img" alt="" /> }
+                                    }
+                                </div>
+                            </div>
+                        }
                     }
-                </ul>
+                }
+                <h@if(isFirstContainer && index == 0){1}else{2} class="item__title">
+                    @if(trail.isLive){
+                        <span class="item__live-indicator">Live</span>
+                    }
+                    @if(tone == "comment") {
+                        <span class="i i-quote-light-grey"></span>
+                    }
+                    @RemoveOuterParaHtml(trail.headline)
+                </h@if(isFirstContainer && index == 0){1}else{2}>
+            </a>
+            @if(tone == "comment") {
+                @trail.byline.map { byLine =>
+                    <p class="item__byline tone-colour">@Html(byLine)</p>
+                }
+            }
+
+            @trail.trailText.map { text =>
+                <div class="item__standfirst">@Html(text)</div>
+            }
+
+            @if(trail.supporting.nonEmpty){
+                <div class="item__support">
+                    <h3 class="item__support__title">More on this story:</h3>
+
+                    <ul class="l-columns linkslist">
+                        @trail.supporting.map{ supporting =>
+                            <li class="l-columns__item
+                                       linkslist__item
+                                       item__support__item
+                                       item__support__item--@VisualTone(supporting)
+                                       @if(supporting.isLive){item__support__item--live}">
+                                <a href="@LinkTo{@supporting.url}"
+                                   class="item__support__action
+                                          linkslist__action">
+                                    @supporting.headline
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            }
+
+            <div class="item__meta">
+                <time class="item__timestamp js-item__timestamp"
+                      itemprop="datePublished"
+                      datetime="@trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
+                      data-timestamp="@trail.webPublicationDate.getMillis"
+                      data-relativeformat="short">
+                    <i class="i i-clock-light-grey"></i>
+                    <span class="timestamp__text"><span class="u-h">Published: </span>@Format(trail.webPublicationDate, "d MMM y")</span>
+                </time>
             </div>
-        }
-        <div class="item__meta">
-            <time class="item__timestamp js-item__timestamp"
-                  itemprop="datePublished"
-                  datetime="@trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
-                  data-timestamp="@trail.webPublicationDate.getMillis"
-                  data-relativeformat="short">
-                <i class="i i-clock-light-grey"></i>
-                <span class="timestamp__text"><span class="u-h">Published: </span>@Format(trail.webPublicationDate, "d MMM y")</span>
-            </time>
         </div>
     </@element>
 }

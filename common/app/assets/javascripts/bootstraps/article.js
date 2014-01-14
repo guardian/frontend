@@ -13,7 +13,8 @@ define([
     "common/modules/ui/notification-counter",
     "common/modules/experiments/left-hand-card",
     "common/modules/open/cta",
-    "common/modules/commercial/loader"
+    "common/modules/commercial/loader",
+    "common/modules/onward/right-most-popular"
 ], function (
     common,
     mediator,
@@ -29,7 +30,8 @@ define([
     NotificationCounter,
     LeftHandCard,
     OpenCta,
-    CommercialLoader
+    CommercialLoader,
+    RightMostPopular
 ) {
 
     var modules = {
@@ -155,6 +157,12 @@ define([
                     }
                 }
             });
+        },
+
+        initRightMostPopular : function(config) {
+            if(config.switches.rightHandMostPopular) {
+                var r = new RightMostPopular(mediator, { type: 'image', maxTrails: 5 });
+            }
         }
     };
 
@@ -164,10 +172,11 @@ define([
             modules.matchNav();
             modules.initLiveBlogging();
             modules.logReading();
+            modules.initRightMostPopular(config);
             modules.initDiscussion();
             modules.initCricket();
             modules.externalLinksCards();
-            modules.initOpen();
+            modules.initOpen(config);
         }
         common.mediator.emit("page:article:ready", config, context);
     };
