@@ -296,7 +296,7 @@ $replyIndent: 26px;
     height: 18px;
     @include rounded-corners(18px);
     position: absolute;
-    top: 0;
+    top: 0; 
     left: 0;
     background-color: $c-neutral4;
 }
@@ -906,6 +906,10 @@ $replyIndent: 26px;
     resize: vertical;
     width: 100%;
     word-break: break-word;
+}
+
+.d-comment-box__body--expanded {
+    height: 150px;
 }
 
 .d-comment-box__add-comment {

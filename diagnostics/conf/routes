@@ -11,3 +11,5 @@ GET        /ab.gif                     controllers.DiagnosticsController.ab
 GET        /ad.gif                     controllers.DiagnosticsController.ads(Top: Option[Int] ?= None, Bottom: Option[Int] ?= None, Inline: Option[Int] ?= None, MPU: Option[Int] ?= None, first: Option[Int] ?= None, layout: Option[String] ?= None, variant: Option[String], id: Option[String])
 
 GET        /count/$path<.+>.gif        controllers.CountController.render(path)
+
+GET        /robots.txt                 controllers.Assets.at(path="/public", file="robots.txt")

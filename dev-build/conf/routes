@@ -129,6 +129,7 @@ GET         /metrics/errors                                                     
 GET         /metrics/errors/4xx                                                                                      controllers.admin.DashboardController.render4XX()
 GET         /metrics/errors/5xx                                                                                      controllers.admin.DashboardController.render5XX()
 GET         /metrics/memory                                                                                          controllers.admin.DashboardController.renderMemory()
+GET         /metrics/assets                                                                                          controllers.admin.DashboardController.renderAssets()
 GET         /radiator                                                                                                controllers.admin.RadiatorController.renderRadiator()
 GET         /radiator/pingdom                                                                                        controllers.admin.RadiatorController.pingdom()
 GET         /radiator/commit/*hash                                                                                   controllers.admin.RadiatorController.commitDetail(hash)

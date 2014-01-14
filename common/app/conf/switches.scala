@@ -40,7 +40,7 @@ object Switches extends Collections {
   
   private lazy val never = new DateMidnight(2100, 1, 1)
   private lazy val endOfQ4 = new DateMidnight(2014, 4, 1)
-  
+
   // Load Switches
 
   val AutoRefreshSwitch = Switch("Performance Switches", "auto-refresh",
@@ -72,6 +72,7 @@ object Switches extends Collections {
     "If this switch is on, then extra logging will be done for edition redirects.",
     safeState = Off, sellByDate = endOfQ4
   )
+
 
   // Advertising Switches
 
@@ -114,7 +115,12 @@ object Switches extends Collections {
 
   val LiveStatsSwitch = Switch("Analytics", "live-stats",
     "Turns on our real-time KPIs",
-    safeState = On, sellByDate = endOfQ4
+    safeState = Off, sellByDate = endOfQ4
+  )
+
+  val LiveAbTestStatsSwitch = Switch("Analytics", "live-ab-test-stats",
+    "Turns on our real-time ab test logging",
+    safeState = Off, sellByDate = endOfQ4
   )
 
   val UserzoomSwitch = Switch("Analytics", "userzoom",
@@ -125,6 +131,16 @@ object Switches extends Collections {
   val OphanMultiEventSwitch = Switch("Analytics", "ophan-multi-event",
     "Enables the new Ophan tracking javascript which support multiple events per page",
     safeState = Off, endOfQ4
+  )
+
+  val OmnitureVerificationSwitch = Switch("Analytics", "omniture-verification",
+    "Enables the new Ophan tracking javascript which support multiple events per page",
+    safeState = Off, new DateMidnight(2014, 2, 28)
+  )
+
+  val BeaconRequestLogging = Switch("Performance Switches", "enable-beacon-request-logging",
+    "If this switch is on, then extra logging will be done for beacon redirects.",
+    safeState = Off, new DateMidnight(2014, 2, 28)
   )
 
   // Discussion Switches
@@ -259,6 +275,14 @@ object Switches extends Collections {
     "If this switch is on, formstack forms will be available",
     safeState = Off, sellByDate = never
   )
+
+  val IdentityEthicalAwardsSwitch = Switch("Feature Switches", "id-ethical-awards",
+    "If this switch is on, Ethical awards forms will be available",
+    safeState = Off, sellByDate = endOfQ4)
+
+  val IdentityFilmAwardsSwitch = Switch("Feature Switches", "id-film-awards",
+    "If this switch is on, Film awards forms will be available",
+    safeState = Off, sellByDate = endOfQ4)
 
   // A/B Test Switches
 
@@ -412,6 +436,7 @@ object Switches extends Collections {
     LiveSummarySwitch,
     LiveCricketSwitch,
     LiveStatsSwitch,
+    LiveAbTestStatsSwitch,
     UserzoomSwitch,
     AdSlotImpressionStatsSwitch,
     CssFromStorageSwitch,
@@ -422,6 +447,8 @@ object Switches extends Collections {
     EditionRedirectLoggingSwitch,
     FacebookAutoSigninSwitch,
     IdentityFormstackSwitch,
+    IdentityEthicalAwardsSwitch,
+    IdentityFilmAwardsSwitch,
     ABAa,
     ABOnwardIntrusive,
     ABOnwardHighlightsPanel,
@@ -440,7 +467,9 @@ object Switches extends Collections {
     TagLinking,
     ABUnderlineLinks,
     SponsoredContentSwitch,
-    OphanMultiEventSwitch
+    OphanMultiEventSwitch,
+    BeaconRequestLogging,
+    OmnitureVerificationSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

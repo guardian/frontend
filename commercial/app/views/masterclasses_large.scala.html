@@ -12,11 +12,11 @@
 <div class="commercial masterclasses-component commercial--w600">
     <div class="commercial__head">
         <h3 class="commercial__title">
-            <a href="http://theguardian.com/guardian-masterclasses">
+            <a href="http://www.theguardian.com/guardian-masterclasses">
                 <span>Guardian <span class="em">Masterclasses</span></span>
             </a>
         </h3>
-        <a class="commercial__link" href="#">More all courses <i class="i i-double-arrow-right-white"></i></a>
+        <a class="commercial__link" href="http://www.theguardian.com/guardian-masterclasses">All courses <i class="i i-double-arrow-right-white"></i></a>
     </div>
     <div class="commercial__body">
         <ul class="lineitems">
@@ -26,7 +26,7 @@
                         <h4 class="lineitem__title">@event.name</h4>
 	                    <p class="lineitem__meta">@event.readableDate • @event.venue.description</p>
                     </a>
-                    <p class="lineitem__description">@event.firstParagraph <a class="lineitem__link"><i class="i i-single-arrow-right-blue"></i>Learn more and book</a></p>
+                    <p class="lineitem__description">@event.firstParagraph <a class="lineitem__link" href="@event.url"><i class="i i-single-arrow-right-blue"></i>Learn more and book</a></p>
                 </li>
             }
         </ul>

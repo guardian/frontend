@@ -193,5 +193,25 @@ define([
         return request;
     };
 
+    Id.emailSignup = function (listId) {
+
+        var endpoint = '/useremails/'+Id.getUserFromCookie().id+'/subscriptions';
+
+        var data = { 'listId': listId };
+
+        var request = ajax({
+            url: Id.idApiRoot + endpoint,
+            type: 'jsonp',
+            crossOrigin: true,
+            data: {
+                body: JSON.stringify(data),
+                method: 'post'
+            }
+        });
+
+        return request;
+
+    };
+
     return Id;
 });
