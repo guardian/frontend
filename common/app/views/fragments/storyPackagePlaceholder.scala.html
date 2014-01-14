@@ -1,0 +1,9 @@
+@(storyPackage: List[Trail])(implicit request: RequestHeader)
+
+@if(storyPackage.nonEmpty) {
+    <aside role="complementary" class="related more-on-this-story@if(storyPackage.size == 1){ more-on-this-story--one-item}">
+    @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
+    </aside>
+} else {
+    <aside class="related js-related" role="complementary"></aside>
+}

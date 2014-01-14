@@ -35,48 +35,46 @@ $guss-row-fallback-width: 940px !default;
 
 @mixin guss-row($base-class) {
     @if ($browser-supports-flexbox) {
-        #{$base-class} {
-            display: -webkit-box;
-            display: -moz-box;
-            display: -ms-flexbox;
-            display: -webkit-flex;
-            display: flex;
-            -webkit-box-direction: normal;
-            -moz-box-direction: normal;
-            -webkit-box-orient: vertical;
-            -moz-box-orient: vertical;
-            -webkit-flex-direction: column;
-            -ms-flex-direction: column;
-            flex-direction: column;
-            -webkit-flex-wrap: nowrap;
-            -ms-flex-wrap: nowrap;
-            flex-wrap: nowrap;
-            -webkit-align-content: stretch;
-            -ms-flex-line-pack: stretch;
-            align-content: stretch;
-            -webkit-box-align: stretch;
-            -moz-box-align: stretch;
-            -webkit-align-items: stretch;
-            -ms-flex-align: stretch;
-            align-items: stretch;
-
-            @include mq(tablet) {
+        @include mq(tablet) {
+            #{$base-class} {
+                display: -webkit-box;
+                display: -moz-box;
+                display: -ms-flexbox;
+                display: -webkit-flex;
+                display: flex;
+                -webkit-box-direction: normal;
+                -moz-box-direction: normal;
                 -webkit-box-orient: horizontal;
                 -moz-box-orient: horizontal;
                 -webkit-flex-direction: row;
                 -ms-flex-direction: row;
                 flex-direction: row;
+                -webkit-flex-wrap: nowrap;
+                -ms-flex-wrap: nowrap;
+                flex-wrap: nowrap;
+                -webkit-align-content: stretch;
+                -ms-flex-line-pack: stretch;
+                align-content: stretch;
+                -webkit-box-align: stretch;
+                -moz-box-align: stretch;
+                -webkit-align-items: stretch;
+                -ms-flex-align: stretch;
+                align-items: stretch;
+                width: 100%; // Prevent consecutive rows from flexing together in FF
             }
-        }
-        #{$base-class}__item {
-            @include flex;
-
-            @include mq(tablet) {
-                @include flex(1, 1, 0);
+            #{$base-class}__item {
+                -webkit-box-flex: 1;
+                -moz-box-flex: 1;
+                -webkit-flex: 1;
+                -ms-flex: 1;
+                flex: 1;
+                @include flex-grow(1);
+                @include flex-basis(0);
+                width: 0; // Prevent items to grow out of their parent in FF
             }
+            #{$base-class}__item--boost-1 { @include flex-grow(1.5); }
+            #{$base-class}__item--boost-2 { @include flex-grow(2); }
         }
-        #{$base-class}__item--boost-1 { @include flex-grow(1.5); }
-        #{$base-class}__item--boost-2 { @include flex-grow(2); }
     } @else {
         #{$base-class} {
             width: $guss-row-fallback-width;

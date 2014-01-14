@@ -81,7 +81,8 @@
     padding-bottom: $baseline*2;
     border-bottom: 1px solid $c-neutral4;
     overflow: auto;
-    @include fs-data(3, true);
+    @include fs-data(3);
+    color: $c-neutral2;
 
     .dateline {
         float: left;
@@ -98,12 +99,14 @@
     .trail__count {
         position: relative;
         top: 0;
-        margin-left: 4px;
 
         a {
             margin-left: $gs-gutter/2 - 1;
+            color: inherit;
         }
         i {
+            margin-right: 3px;
+            margin-bottom: -3px;
             @extend .i-comment-light-grey;
         }
     }
@@ -113,6 +116,8 @@
     margin-bottom: 0;
 }
 .card__headline {
+    font-family: $serifheadline !important;
+    font-weight: normal !important;
     font-size: 20px !important;
     font-size: 2.0rem !important;
     line-height: 24px !important;

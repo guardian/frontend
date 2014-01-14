@@ -22,11 +22,13 @@ define([
                 field: 'form-field',
                 note: 'form-field__note form-field__note--below',
                 label: 'label',
+                checkboxLabel: 'check-label',
                 textInput: 'text-input',
                 textArea: 'textarea textarea--no-resize',
                 submit: 'submit-input',
                 fieldError: 'form-field--error',
                 formError: 'form__error',
+                fieldset: 'formstack-fieldset',
                 required: 'formstack-required',
                 sectionHeader: 'formstack-heading',
                 sectionHeaderFirst: 'formstack-heading--first',
@@ -38,16 +40,18 @@ define([
                 field: '.fsRow',
                 note: '.fsSupporting, .showMobile',
                 label: '.fsLabel',
+                checkboxLabel: '.fsOptionLabel',
                 textInput: '.fsField[type="text"], .fsField[type="email"], .fsField[type="number"], .fsField[type="tel"]',
                 textArea: 'textarea.fsField',
                 submit: '.fsSubmitButton',
                 fieldError: '.fsValidationError',
                 formError: '.fsError',
+                fieldset: 'fieldset',
                 required: '.fsRequiredMarker',
                 sectionHeader: '.fsSectionHeading',
                 sectionHeaderFirst: '.fsSection:first-child .fsSectionHeading',
                 sectionText: '.fsSectionText',
-                hide: '.hidden, .fsHidden'
+                hide: '.hidden, .fsHidden, .ui-datepicker-trigger'
             },
             hiddenSelectors: {
                 userId: '[type="number"]',
@@ -61,6 +65,7 @@ define([
 
             self.dom(user);
             $(el).removeClass(config.idClasses.hide);
+            $('html').addClass('iframed--overflow-hidden');
 
             // Update iframe height, see "modules/identity/formstack-iframe"
             self.postMessage('ready');

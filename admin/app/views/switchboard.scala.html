@@ -1,5 +1,7 @@
 @(env: String, lastModified: Long)(implicit flash: Flash)
 
+@import org.joda.time.{Days, DateTime}
+
 @admin_main("Switchboard", env, isAuthed = true) {
 <link href="@routes.Assets.at("css/switchboard.css")" rel="stylesheet">
 @if(flash.get("error").isDefined) { <h1 style="color:#bd362f">@flash.get("error").get</h1> }
@@ -16,6 +18,7 @@
                                 <input class="status" id="switch-@switch.name" name="@switch.name" type="checkbox" @if(switch.isSwitchedOn) { checked="checked" }/>
                                 <label for="switch-@switch.name">@switch.name</label>
                                 <small>- @switch.description</small>
+                                <small>Expires in <strong>@{Days.daysBetween(new DateTime(), switch.sellByDate).getDays()}</strong> days.</small>
                             </legend>
                         </fieldset>
                     </div>

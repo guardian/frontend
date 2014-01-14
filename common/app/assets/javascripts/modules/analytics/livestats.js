@@ -1,67 +1,71 @@
-/*global Event:true */
 define([
-    'common/utils/cookies'
+    'common/utils/cookies',
+    'common/modules/experiments/ab'
 ], function (
-    Cookies
+    Cookies,
+    ab
 ) {
+    function isNewSession() {
+        var key = 'gu.session';
+        if (window.sessionStorage && !!window.sessionStorage.getItem(key)) {
+            return false;
+        } else {
+            window.sessionStorage.setItem(key, "true");
+            return true;
+        }
+    }
 
-    var Session = function () {
-        
-        var key = 'gu.session',
-            isNewSession = function () {
-                if (window.sessionStorage && !!window.sessionStorage.getItem(key)) {
-                    return false;
-                } else {
-                    window.sessionStorage.setItem(key, "true");
-                    return true;
+    function createImage(url, id) {
+        var image = new Image();
+        image.id = id;
+        image.className = 'u-h';
+        image.src = url;
+        document.body.appendChild(image);
+    }
+
+    function makeUrl(properties, path) {
+        var query = [];
+        for (var name in properties) {
+            query.push(name + '=' + encodeURIComponent(properties[name]));
+        }
+        return path + '?' + query.join('&');
+    }
+
+    var liveStats = {
+
+        log : function (beacon, config) {
+
+            if (config.switches.liveStats) {
+                var inAlphaTest = !!Cookies.get('GU_ALPHA');
+
+                if (inAlphaTest) {
+                    var liveStatsView = {platform: 'responsive'};
+
+                    if (isNewSession()) {
+                        liveStatsView.type = 'session';
+                    } else {
+                        liveStatsView.type = 'view';
+                    }
+                    var url = beacon.beaconUrl + makeUrl(liveStatsView, '/px.gif');
+                    createImage(url, 'js-livestats-px');
                 }
-            };
+            }
 
-        return {
-            isNewSession: isNewSession
-        };
+            if (config.switches.liveAbTestStats) {
+                // Also log views and sessions for each participating ab test.
+                var abValues = ab.getAbLoggableObject(config);
+
+                if (isNewSession()) {
+                    abValues.type = 'session';
+                } else {
+                    abValues.type = 'view';
+                }
+
+                var abUrl = beacon.beaconUrl + makeUrl(abValues, '/ab.gif');
+                createImage(abUrl, 'js-livestats-ab');
+            }
+        }
     };
 
-    var LiveStats = function (config) {
-
-        var c = config || {},
-            url = config.beaconUrl,
-            path = config.beaconName || '/px.gif',
-            inAlphaTest = !!Cookies.get('GU_ALPHA'),
-            body = document.body,
-            platform = 'responsive',
-            sessionLength = 30,
-            createImage = function(url) {
-                var image = new Image();
-                image.id = 'js-livestats';
-                image.className = 'u-h';
-                image.src = url;
-                body.appendChild(image);
-            },
-            makeUrl = function(properties) {
-                var query = [];
-                for (var name in properties) {
-                    query.push(name + '=' + encodeURIComponent(properties[name]));
-                }
-                return path + '?' + query.join('&');
-            },
-            log = function() {
-                if (!inAlphaTest) {
-                    return false;
-                }
-                if (new Session().isNewSession()) {
-                    url += makeUrl({ type: 'session', platform: platform });
-                } else {
-                    url += makeUrl({ type: 'view', platform: platform });
-                }
-                createImage(url);
-            };
-
-        return {
-            log: log
-        };
-
-    };
-
-    return LiveStats;
+    return liveStats;
 });

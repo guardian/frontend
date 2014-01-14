@@ -66,7 +66,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
   case class CollectionItem(id: String, metaData: Option[Map[String, JsValue]])
 
   //Curated and editorsPicks are the same, we will get rid of either
-  case class Result(curated: List[Content], contentApiResults: List[Content], editorsPicks: List[Content])
+  case class Result(curated: List[Content], editorsPicks: List[Content], contentApiResults: List[Content])
 
   def requestCollection(id: String): Future[Response] = {
     val s3BucketLocation: String = s"${S3FrontsApi.location}/collection/$id/collection.json"
@@ -184,7 +184,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
           case (query, (key, value)) => query.stringParam(key, value)
         }.showFields("all")
         newSearch.response map { r =>
-          Result(Nil, r.results.map(Content(_)), Nil)
+          Result(Nil, Nil, r.results.map(Content(_)))
         }
       }
       case Path(id)  => {

@@ -30,6 +30,7 @@ define([
     'common/utils/cookies',
     'common/modules/analytics/omnitureMedia',
     'common/modules/analytics/adverts',
+    'common/modules/analytics/livestats',
     'common/modules/experiments/ab',
     "common/modules/adverts/video",
     "common/modules/discussion/comment-count",
@@ -70,6 +71,7 @@ define([
     Cookies,
     OmnitureMedia,
     AdvertsAnalytics,
+    liveStats,
     ab,
     VideoAdvert,
     CommentCount,
@@ -174,6 +176,10 @@ define([
 
         runAbTests: function (config, context) {
             ab.run(config, context);
+        },
+
+        logLiveStats: function (config) {
+            liveStats.log({ beaconUrl: config.page.beaconUrl }, config);
         },
 
         loadAnalytics: function (config, context) {
@@ -372,6 +378,7 @@ define([
             if (!self.initialisedDeferred) {
                 self.initialisedDeferred = true;
                 modules.initAbTests(config);
+                modules.logLiveStats(config);
                 modules.loadAdverts();
                 modules.loadAnalytics(config, context);
                 modules.cleanupCookies(context);
