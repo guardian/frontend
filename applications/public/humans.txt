@@ -1,0 +1,38 @@
+/* TEAM */
+
+Head of User Experience:Nick Haley
+Twitter: @twobobswerver
+From:London, England
+
+Developer Manager:Matt Chadburn
+Twitter: @commuterjoy
+
+Discussion Developer/Desperado:James Gorrie
+Twitter: @jamesgorrie
+From:KwaZulu-Natal, South Afric
+
+Product Manager: Chris Mulholland
+LinkedIn: chrismulholland
+Twitter: @kungpochicken
+From: Glasgow, Scotland
+
+Design and art direction: Katrina Stubbings
+Twitter: @vilderness
+Location: London
+
+Engineer (Tech Lead): Grant Klopper
+Twitter: @grantklopper
+From: Durban, South Africa
+Location: London, UK
+
+Developer: Kaelig Deloumeau-Prigent
+Twitter: @kaelig
+From: Rennes, Brittany, France
+
+Engineer:Richard Nguyen
+Twitter: @Sherbet_Noin
+From:London, UK
+
+Developer:Ken Lim
+Twitter:@kenlim
+Location:London,United Kingdom
