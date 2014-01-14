@@ -342,11 +342,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 1, 20)
   )
 
-  val ABUnderlineLinks = Switch("A/B Tests", "ab-underline-links",
-    "If this is switched on an AB test runs whereby links in articles are underline (with CSS)",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 20)
-  )
-
   // Sport Switch
 
   val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
@@ -460,7 +455,6 @@ object Switches extends Collections {
     NetworkFrontUsAlpha,
     NetworkFrontAuAlpha,
     TagLinking,
-    ABUnderlineLinks,
     SponsoredContentSwitch,
     OphanMultiEventSwitch,
     DiagnosticsRequestLogging,

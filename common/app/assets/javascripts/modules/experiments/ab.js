@@ -13,7 +13,6 @@ define([
     'common/modules/experiments/tests/identity-email-signup',
     'common/modules/experiments/tests/commercial-in-article-desktop',
     'common/modules/experiments/tests/commercial-in-article-mobile',
-    'common/modules/experiments/tests/underline-links',
     'common/modules/experiments/tests/chartbeat-desktop'
 ], function (
     common,
@@ -28,7 +27,6 @@ define([
     EmailSignup,
     CommercialInArticlesDesktop,
     CommercialInArticlesMobile,
-    UnderlineLinks,
     ChartbeatDesktop
     ) {
 
@@ -41,7 +39,6 @@ define([
             new EmailSignup(),
             new CommercialInArticlesDesktop(),
             new CommercialInArticlesMobile(),
-            new UnderlineLinks(),
             new ChartbeatDesktop()
         ],
         participationsKey = 'gu.ab.participations';
