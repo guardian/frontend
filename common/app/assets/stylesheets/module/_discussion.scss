@@ -285,6 +285,7 @@ $replyIndent: 26px;
     blockquote {
         margin: $gs-baseline $gs-gutter;
         padding-left: $gs-gutter/2;
+        border-left: 3px solid rgba(200, 200, 200, 0.75);
     }
 }
 
@@ -516,7 +517,9 @@ $replyIndent: 26px;
         padding-left: none;
     }
     .d-comment-box__content {
-        margin-left: 0
+        margin-left: 0;
+        margin-right: $gs-gutter;
+        padding-bottom: $gs-baseline;
     }
     .d-comment-box__avatar-wrapper {
         display: none;
@@ -973,12 +976,6 @@ $replyIndent: 26px;
     resize: vertical;
     width: 100%;
     word-break: break-word;
-    blockquote {
-        margin: $gs-baseline $gs-gutter;
-        padding-left: $gs-gutter/2;
-        border-left: 3px solid $c-neutral4;
-
-    }
 }
 
 .d-comment-box--expanded .d-comment-box__body {
@@ -1072,9 +1069,18 @@ $replyIndent: 26px;
 .d-comment-box__parent-comment {
     background-color: $c-neutral7;
     padding: $gs-baseline $gs-gutter;
+    margin-right: $gs-gutter;
     .d-comment-box__hide-parent {
         margin-left: 0;
     }
+}
+
+.d-comment:target .d-comment-box__parent-comment-spout {
+    border-bottom-color: $c-neutral5;
+}
+
+.d-comment:target .d-comment-box__parent-comment {
+    background-color: $c-neutral5;
 }
 
 .d-comment-box__parent-comment-author {
