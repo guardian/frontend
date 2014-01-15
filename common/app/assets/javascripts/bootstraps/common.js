@@ -39,7 +39,8 @@ define([
     "common/modules/onward/sequence",
     "common/modules/ui/message",
     "common/modules/identity/autosignin",
-    'common/modules/adverts/article-body-adverts'
+    'common/modules/adverts/article-body-adverts',
+    "common/modules/analytics/commercial/tags/container"
 ], function (
     $,
     mediator,
@@ -81,7 +82,8 @@ define([
     sequence,
     Message,
     AutoSignin,
-    ArticleBodyAdverts
+    ArticleBodyAdverts,
+    TagContainer
 ) {
 
     var modules = {
@@ -181,9 +183,7 @@ define([
         },
 
         logLiveStats: function (config) {
-            if (config.switches.liveStats) {
-                liveStats.log({ beaconUrl: config.page.beaconUrl }, config);
-            }
+            liveStats.log({ beaconUrl: config.page.beaconUrl }, config);
         },
 
         loadAnalytics: function (config, context) {
@@ -355,6 +355,12 @@ define([
             });
         },
 
+        loadTags : function() {
+            mediator.on('page:common:ready', function(config) {
+                TagContainer.init(config);
+            });
+        },
+
         windowEventListeners: function() {
             var events = {
                     resize: 'window:resize',
@@ -415,6 +421,7 @@ define([
             modules.logReadingHistory();
             modules.unshackleParagraphs(config, context);
             modules.initAutoSignin(config);
+            modules.loadTags(config);
         }
         mediator.emit("page:common:ready", config, context);
     };

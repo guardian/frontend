@@ -4,7 +4,14 @@
     <@element
         class="item
                item--thumbnail
-               item--has-@{if(trail.trailPicture(5,3).isEmpty){"no-"}}image
+               @if(trail.trailPicture(5,3).isEmpty || trail.imageAdjust == Some("hide")){
+                   item--has-no-image
+               }else{
+                   item--has-image
+                   @trail.imageAdjust.map{adjustValue =>
+                       item--imageadjust-@adjustValue
+                   }
+               }
                tone-@tone"
         data-link-name="trail | @{index + 1}"
         @trail.discussionId.map{ id => data-discussion-id="@id" }
@@ -19,15 +26,17 @@
                 }
                 @RemoveOuterParaHtml(trail.headline)
             </h@if(isFirstContainer && index == 0){1}else{2}>
-            @trail.trailPicture(5,3).map{ imageContainer =>
-                @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
-                    <div class="item__media-wrapper">
-                        <div class="item__image-container @if(inlineImages){ inlined-image}" data-src="@imgSrc" @if(isFirstContainer){ data-force-upgrade="desktop wide"}>
-                            @if(inlineImages){
-                                @Item300.bestFor(imageContainer).map{ url => <img src="@url" class="responsive-img" alt="" /> }
-                            }
+            @if(trail.imageAdjust != Some("hide")) {
+                @trail.trailPicture(5,3).map{ imageContainer =>
+                    @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
+                        <div class="item__media-wrapper">
+                            <div class="item__image-container @if(inlineImages){ inlined-image}" data-src="@imgSrc" @if(isFirstContainer){ data-force-upgrade="desktop wide"}>
+                                @if(inlineImages){
+                                    @Item300.bestFor(imageContainer).map{ url => <img src="@url" class="responsive-img" alt="" /> }
+                                }
+                            </div>
                         </div>
-                    </div>
+                    }
                 }
             }
         </a>

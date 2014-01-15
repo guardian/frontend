@@ -13,6 +13,7 @@
         margin-top: 0;
         position: static; // Children should be relative to the row__item
         padding-bottom: 0;
+        @include clearfix;
 
         @include rem((
             margin-bottom: $gs-baseline/2
@@ -38,9 +39,12 @@
         }
     }
     .collection {
-        overflow: visible; // Prevents height issue in Firefox < 22
         margin-left: auto;
         margin-right: auto;
+
+        @include mq(tablet) {
+            overflow: visible; // Prevents height issue in Firefox < 22
+        }
     }
     .collection-wrapper {
         @include rem((
@@ -133,29 +137,41 @@
         }
     }
     .l-row--items-4 {
-        
+        .item__standfirst,
+        .item__media-wrapper {
+            display: none;
+        }
+        .item--imageadjust-highlight {
+            .item__media-wrapper {
+                display: block;
+            }
+        }
+        @include mq(tablet) {
+            .item--has-image .item__media-wrapper,
+            .item--has-no-image .item__standfirst {
+                display: block;
+            }
+        }
     }
 }
 
 .item--thumbnail {
-    .l-row--items-3 & ,
-    .l-row--items-4 & {
-        .item__standfirst {
-            display: block;
+    .item__standfirst {
+        display: block;
 
-            @include rem((
-                margin-top: 2px
-            ));
-        }
-        .item__media-wrapper {
-            float: left;
-            clear: both;
-
-            @include rem((
-                margin-right: $gs-gutter/2
-            ));
-        }
+        @include rem((
+            margin-top: 2px
+        ));
     }
+    .item__media-wrapper {
+        float: left;
+        clear: both;
+
+        @include rem((
+            margin-right: $gs-gutter/2
+        ));
+    }
+    .l-row--items-2 &,
     .l-row--items-3 & {
         .item__media-wrapper {
             @include rem((
@@ -168,18 +184,5 @@
                 ));
             }
         }
-    }
-    .l-row--items-4 & {
-        .item__media-wrapper {
-            @include rem((
-                width: 56px
-            ));
-            @include mq(desktop) {
-                @include rem((
-                    width: 88px
-                ));
-            }
-        }
-
     }
 }

@@ -32,11 +32,11 @@ class Content protected (val delegate: ApiContent) extends Trail with MetaData {
   lazy val isSponsored: Boolean = tags.exists(_.id == "tone/sponsoredfeatures")
   lazy val sponsor: Option[Sponsor] = {
     if (isSponsored) {
-      Sponsors.find(tags.filter(_.tagType == "keyword").head.id) 
+      Sponsors.find(tags.filter(_.tagType == "keyword").head.id)
     } else {
       None
     }
-  } 
+  }
 
   lazy val witnessAssignment = delegate.references.find(_.`type` == "witness-assignment")
     .map(_.id).map(Reference(_)).map(_._2)
@@ -67,7 +67,7 @@ class Content protected (val delegate: ApiContent) extends Trail with MetaData {
 
     souped getOrElse Nil
   }
-  
+
   override lazy val byline: Option[String] = fields.get("byline")
   override lazy val trailType: Option[String] = {
     if (tags.exists(_.id == "tone/comment")) {
@@ -117,7 +117,7 @@ class Content protected (val delegate: ApiContent) extends Trail with MetaData {
     "og:url" -> webUrl,
     "og:description" -> trailText.map(StripHtmlTagsAndUnescapeEntities(_)).getOrElse("")
   )
-    
+
   override def cards: List[(String, Any)] = super.cards ++ List(
     "twitter:app:url:googleplay" -> webUrl.replace("http", "guardian")
   )
@@ -181,7 +181,7 @@ class Article(content: ApiContent) extends Content(content) {
     "og:image" -> openGraphImage
   ) ++ tags.map("article:tag" -> _.name) ++
     tags.filter(_.isContributor).map("article:author" -> _.webUrl)
-  
+
   override def cards: List[(String, Any)] = super.cards ++ List(
     "twitter:card" -> "summary_large_image"
   ) ++ mainPicture.flatMap(_.largestImage.map( "twitter:image:src" -> _.path ))
@@ -256,7 +256,7 @@ class Gallery(content: ApiContent) extends Content(content) {
 
   private lazy val galleryImages: Seq[ImageElement] = images.filter(_.isGallery)
   lazy val largestCrops: Seq[ImageAsset] = galleryImages.flatMap(_.largestImage)
-  
+
   override def cards: List[(String, Any)] = super.cards ++ List(
     "twitter:card" -> "gallery",
     "twitter:title" -> linkText
@@ -277,7 +277,7 @@ class ImageContent(content: ApiContent) extends Content(content) {
   lazy val contentType = "ImageContent"
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
-  
+
   override def cards: List[(String, Any)] = super.cards ++ List(
     "twitter:card" -> "photo"
   ) ++ mainPicture.flatMap(_.largestImage.map( "twitter:image:src" -> _.path ))
@@ -289,4 +289,5 @@ class ContentWithMetaData(
                            metaData: Map[String, JsValue]) extends Content(content) {
   override lazy val headline: String = metaData.get("headline").flatMap(_.asOpt[String]).getOrElse(super.headline)
   override lazy val group: Option[String] = metaData.get("group").flatMap(_.asOpt[String])
+  override lazy val imageAdjust: Option[String] = metaData.get("imageAdjust").flatMap(_.asOpt[String])
 }

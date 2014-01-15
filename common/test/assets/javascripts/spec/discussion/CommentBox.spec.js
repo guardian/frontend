@@ -27,6 +27,26 @@ define([
                 fixtures: [
                     '<form class="component js-comment-box d-comment-box">'+
                         '<label for="body" class="d-comment-box__add-comment cta">Add your comment</label>'+
+
+                        '<div class="d-comment-box__meta">' +
+                            '<span class="d-comment-box__avatar-wrapper">' +
+                            '</span>' +
+                            '<div class="d-comment-box__meta-text">' +
+                                '<span class="d-comment-box__author"></span>' +
+                                '<span class="i i-in-reply-arrow"></span>' +
+                                '<span class="d-comment-box__reply-to-author"></span>' +
+                                '<span class="u-fauxlink d-comment-box__show-parent" role="button">Show comment</span>' +
+                                '<span class="u-fauxlink d-comment-box__hide-parent" role="button">Hide comment</span>' +
+                            '</div>' +
+                        '</div>' +
+                        '<div class="d-comment-box__parent-comment-wrapper">' +
+                            '<div class="d-comment-box__parent-comment-spout"></div>' +
+                            '<div class="d-comment-box__parent-comment">' +
+                                '<span class="d-comment-box__parent-comment-author"></span>' +
+                                '<div class="d-comment-box__parent-comment-body"></div>' +
+                                '<span class="u-fauxlink d-comment-box__hide-parent" role="button">Hide comment</span>' +
+                            '</div>' +
+                        '</div>' +
                         '<div class="d-comment-box__content">'+
                             '<div class="d-comment-box__messages"></div>'+
                             '<div class="d-comment-box__error d-comment-box__premod">Your comments are currently being pre-moderated (<a href="/community-faqs#311" target="_blank">why?</a>)</div>'+
@@ -52,6 +72,9 @@ define([
                 discussionId: discussionId,
                 maxLength: maxCommentLength
             });
+
+            spyOn(commentBox, 'getUserData').andReturn({ displayName: "testy", id: 1 });
+
             commentBox.attachToDefault();
         });
 

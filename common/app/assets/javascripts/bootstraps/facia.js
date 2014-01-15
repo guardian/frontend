@@ -107,48 +107,6 @@ define([
             });
         },
 
-        showUserzoom: function(config) {
-            var path,
-                steps;
-
-            if (config.switches.userzoom && config.switches.faciaUkAlpha) {
-                path = window.location.pathname.substring(1);
-
-                if (path !== 'uk' && path !=='uk-alpha') { return; }
-
-                steps = [
-                    {
-                        pageId: 'uk-alpha',
-                        visits: 0,
-                        script: 'userzoom-uk-alpha'
-                    },
-                    {
-                        pageId: '',
-                        visits: 2,
-                        script: 'userzoom-uk'
-                    }
-                ];
-
-                mediator.on('page:front:ready', function(config, context) {
-                    steps.some(function(step) {
-                        var storeKey,
-                            visits;
-
-                        if (step.pageId === config.page.pageId) {
-                            storeKey = 'gu.userzoom.uk.' + step.pageId;
-                            visits = parseInt(storage.local.get(storeKey) || 0, 10);
-                            if(visits >= step.visits) {
-                                require(['js!' + step.script]);
-                            } else {
-                                storage.local.set(storeKey, visits + 1);
-                            }
-                            return true;
-                        }
-                    });
-                });
-            }
-        },
-
         displayAlphaMessage: function(config) {
             // only run on 5% of (mobile) users
             var isAChosenOne = parseInt(mvtCookie.getMvtValue(), 10) < (mvtCookie.MAX_INT * 0.05) && detect.getMobileOS();
@@ -169,15 +127,21 @@ define([
                                   'We\'re trying out some new things on our website and would love your feedback. <a href="' + preferenceUrl.replace('[OPT]', 'optin') + '">Click here</a> to explore a test version of the site.' +
                               '</p>';
                     } else { // opt out
+                        var userZoomSurvey = {
+                            '/us': 'MSBDMTBTMTE1',
+                            '/au': 'MSBDMTBTMTE2'
+                        }[page];
                         msg = '<p class="site-message__message">' +
                                   'You\'re viewing a test version of the Guardian website.' +
                               '</p>' +
                               '<ul class="site-message__actions unstyled">' +
-                                  // TODO - need to get the omniture survey url
-                                  //'<li class="site-message__actions__item">' +
-                                  //    '<i class="i i-comment-grey"></i>' +
-                                  //    '<a href="http://survey.omniture.com/d1/hosted/815f9cfba1" data-link-name="feedback" target="_blank">We’d love to hear your feedback</a>' +
-                                  //'</li>' +
+                                  (
+                                      (userZoomSurvey) ?
+                                      '<li class="site-message__actions__item">' +
+                                          '<i class="i i-comment-grey"></i>' +
+                                          '<a href="https://s.userzoom.com/m/' + userZoomSurvey + '" data-link-name="feedback" target="_blank">We’d love to hear your feedback</a>' +
+                                      '</li>' : ''
+                                  ) +
                                   '<li class="site-message__actions__item">' +
                                       '<i class="i i-back"></i>' +
                                       '<a class="js-main-site-link" rel="nofollow" href="' + preferenceUrl.replace('[OPT]', 'optout') + '"' +
@@ -201,7 +165,6 @@ define([
             modules.showContainerToggle();
             modules.showFootballFixtures();
             modules.showPopular();
-            modules.showUserzoom(config);
             modules.displayAlphaMessage(config);
         }
         mediator.emit("page:front:ready", config, context);

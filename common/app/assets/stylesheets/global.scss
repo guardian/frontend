@@ -49,7 +49,7 @@
 @import "module/facia/_extends";
 @import "module/facia/_mixins";
 @import "module/containers/_popular";
-@import "module/onward/_right-ear";
+@import "module/onward/_right-hand-most-popular";
 @import "module/_social";
     @include socialDelayed;
 @import "module/_clamp";
@@ -71,9 +71,6 @@
    ========================================================================== */
 
 @import "module/experiments/_ab-inline-link-card";
-@import "module/experiments/_highlight-panel";
-@import "module/experiments/_right-hand-most-popular";
-@import "module/experiments/_underline-links";
 
 /* ==========================================================================
    Icons

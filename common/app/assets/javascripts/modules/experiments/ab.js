@@ -4,18 +4,12 @@ define([
     'common/modules/analytics/mvt-cookie',
 
     //Current tests
-
     'common/modules/experiments/tests/aa',
     'common/modules/experiments/tests/mobile-facebook-autosignin',
-    'common/modules/experiments/tests/onward-intrusive',
-    'common/modules/experiments/tests/onward-highlights-panel',
     'common/modules/experiments/tests/alpha-comm',
     'common/modules/experiments/tests/identity-email-signup',
     'common/modules/experiments/tests/commercial-in-article-desktop',
     'common/modules/experiments/tests/commercial-in-article-mobile',
-    'common/modules/experiments/tests/right-most-popular',
-    'common/modules/experiments/tests/right-most-popular-control',
-    'common/modules/experiments/tests/underline-links',
     'common/modules/experiments/tests/chartbeat-desktop'
 ], function (
     common,
@@ -24,30 +18,20 @@ define([
 
     Aa,
     MobileFacebookAutosignin,
-    OnwardIntrusive,
-    OnwardHighlightsPanel,
     AlphaComm,
     EmailSignup,
     CommercialInArticlesDesktop,
     CommercialInArticlesMobile,
-    RightPopular,
-    RightPopularControl,
-    UnderlineLinks,
     ChartbeatDesktop
     ) {
 
     var TESTS = [
             new Aa(),
             new MobileFacebookAutosignin(),
-            new OnwardIntrusive(),
-            new OnwardHighlightsPanel(),
             new AlphaComm(),
             new EmailSignup(),
             new CommercialInArticlesDesktop(),
             new CommercialInArticlesMobile(),
-            new RightPopular(),
-            new RightPopularControl(),
-            new UnderlineLinks(),
             new ChartbeatDesktop()
         ],
         participationsKey = 'gu.ab.participations';
