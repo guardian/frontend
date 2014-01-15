@@ -397,7 +397,7 @@ define([
         });
     };
 
-    var ready = function (config, context, contextHtml) {
+    var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
             modules.windowEventListeners();
@@ -422,8 +422,8 @@ define([
         mediator.emit("page:common:ready", config, context);
     };
 
-    var init = function (config, context, contextHtml) {
-        ready(config, context, contextHtml);
+    var init = function (config, context) {
+        ready(config, context);
         deferrable(config, context);
     };
 
