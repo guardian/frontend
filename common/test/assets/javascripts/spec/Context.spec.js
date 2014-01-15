@@ -1,10 +1,14 @@
-define(['common/utils/contextualiser', 'common/utils/context'], function(contextualiser, context) {
+define(['common/utils/context'], function(context) {
 
     describe('Context', function() {
         it ('should return document as default context', function() {
-            expect(context).toBe(document);
-            contextualiser.set(5);
-            console.info(context);
+            expect(context()).toBe(document);
+        });
+
+        it ('should set context to given value', function() {
+            var b = document.querySelector('body');
+            context.set(b);
+            expect(context()).toBe(b);
         });
     });
 
