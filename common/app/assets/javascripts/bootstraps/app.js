@@ -6,10 +6,8 @@ define([
     'common/utils/ajax',
     'common/utils/detect',
     'common/utils/config',
-    'common/utils/contextualiser',
     'common/utils/context',
-    'common/utils/t',
-    
+
     'common/modules/analytics/errors',
     'common/modules/ui/fonts',
     'common/modules/router',
@@ -35,9 +33,7 @@ define([
     ajax,
     detect,
     config,
-    contextualiser,
-    c,
-    T,
+    Context,
 
     Errors,
     Fonts,
@@ -104,10 +100,7 @@ define([
             var context = document.getElementById('preload-1'),
                 contextHtml = context.cloneNode(false).innerHTML;
 
-            var t = new T();
-            contextualiser.set(context);
-            t = new T();
-
+            Context.set(context);
 
             modules.initialiseAjax(config);
             modules.initialiseDiscussionApi(config);

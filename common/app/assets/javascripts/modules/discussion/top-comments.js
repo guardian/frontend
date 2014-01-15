@@ -211,7 +211,7 @@ TopComments.prototype.replyToComment = function(e) {
         replyToAuthor = replyToComment.getAttribute('data-comment-author'),
         replyToAuthorId = replyToComment.getAttribute('data-comment-author-id'),
         $replyToComment = bonzo(replyToComment),
-        commentBox = new CommentBox(this.context, this.mediator, {
+        commentBox = new CommentBox(this.context, {
             discussionId: this.options.discussionId,
             premod: this.user.privateFields.isPremoderated,
             state: 'response',

@@ -48,7 +48,7 @@ define([
             server = sinon.fakeServer.create();
             fixtures.render(fixture);
             context = document.getElementById(fixturesId);
-            commentBox = new CommentBox(context, common.mediator, {
+            commentBox = new CommentBox(context, {
                 discussionId: discussionId,
                 maxLength: maxCommentLength
             });
