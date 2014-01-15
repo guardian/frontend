@@ -1,6 +1,6 @@
 define(function() {
 
-var c = document,
+var c = document.body,
     context = function() { return c; };
 
 /** @param {Element} */
