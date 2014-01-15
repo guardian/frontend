@@ -49,11 +49,17 @@ function (
         .done(function(results){
             results.forEach(function(article){
                 cache.put('contentApi', article.id, article);
-                _.filter(items,function(item){
+                _.filter(items, function(item){
                     return item.props.id() === article.id;
                 }).forEach(function(item){
                     populate(article, item);
                 });
+            });
+
+            _.filter(items, function(item){
+                return !item.props.webPublicationDate();
+            }).forEach(function(item){
+                item.state.is404(true);
             });
         });
     }

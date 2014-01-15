@@ -267,6 +267,10 @@ a, a:hover {
     text-decoration: none;
 }
 
+.is-404 {
+    color: #d61d00;
+}
+
 div.trailtext {
     padding-right: 50px;
     box-sizing: border-box;

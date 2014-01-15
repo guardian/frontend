@@ -44,8 +44,6 @@ define([
                 'thumbnail',
                 'shortId']);
 
-            this.fields.headline('...');
-
             this.meta = asObservableProps([
                 'headline',
                 'trailText',
@@ -55,8 +53,7 @@ define([
             this.state = asObservableProps([
                 'underDrag',
                 'open',
-                'shares',
-                'comments',
+                'is404',
                 'totalHits',
                 'pageViewsSeries']);
 

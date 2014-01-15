@@ -260,6 +260,11 @@
                         text: meta.headline() || fields.headline(),
                         attr: {href: props.id()}"></a>
 
+                    <!-- ko if: state.is404 -->
+                        <div class="headline is-404">This content has been deleted, or now has another URL:</div>
+                        <div class="trailtext" data-bind="text: props.id"></div>
+                    <!-- /ko -->
+
                     <!-- ko if: meta.supporting && meta.supporting.items().length -->
                         <span class="count">(<span class="non-zero" data-bind="text: meta.supporting.items().length"></span>)</span>
                     <!-- /ko -->
