@@ -29,7 +29,6 @@ define([
     'common/modules/adverts/adverts',
     'common/utils/cookies',
     'common/modules/analytics/omnitureMedia',
-    'common/modules/analytics/adverts',
     'common/modules/analytics/livestats',
     'common/modules/experiments/ab',
     "common/modules/adverts/video",
@@ -71,7 +70,6 @@ define([
     Adverts,
     Cookies,
     OmnitureMedia,
-    AdvertsAnalytics,
     liveStats,
     ab,
     VideoAdvert,
@@ -200,9 +198,6 @@ define([
                     }
                 });
 
-                if (config.switches.adslotImpressionStats) {
-                    var advertsAnalytics = new AdvertsAnalytics(config, context);
-                }
             });
 
             if (config.switches.ophanMultiEvent) {
