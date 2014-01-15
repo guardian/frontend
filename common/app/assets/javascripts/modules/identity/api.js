@@ -1,13 +1,11 @@
 /*global escape:true */
 define([
-    'common/$',
     'common/utils/atob',
     'common/utils/cookies',
     'common/utils/storage',
     'common/utils/ajax',
     'common/modules/asyncCallMerger'
 ], function(
-    $,
     utilAtob,
     cookies,
     storage,
@@ -16,7 +14,7 @@ define([
 ) {
 
     /**
-     * Left this as an object as there are onlty static methods
+     * Left this as an object as there are only static methods
      * We'll need to change this once there is some state change
      * TODO(jamesgorrie): Allow this to show policies too (not needed yet)
      */
@@ -32,14 +30,7 @@ define([
     Id.init = function(conf) {
         Id.idApiRoot = conf.page.idApiUrl;
         Id.idUrl = conf.page.idUrl;
-        // Small DOM init for elements that need to be signed in
-        if (Id.isUserLoggedIn()) {
-            $('html').addClass('id--signed-in');
-        } else {
-            $('html').addClass('id--signed-out');
-        }
     };
-
 
     /**
      * Clears the caches and state, primarily for testing.
@@ -92,7 +83,6 @@ define([
         return Id.idUrl;
     };
 
-
     /**
      * Gets the currently logged in user data from the identity api
      * @param {function} callback
@@ -101,7 +91,7 @@ define([
         function(mergingCallback) {
             if(Id.isUserLoggedIn()) {
                 ajax({
-                    url: Id.idApiRoot + "/user/me",
+                    url: Id.idApiRoot + '/user/me',
                     type: 'jsonp',
                     crossOrigin: true
                 }).then(
@@ -161,36 +151,46 @@ define([
     };
 
     /**
-     * Returns true if a there is no signed in user and the user has not signed in the last 24 hous
+     * Returns true if a there is no signed in user and the user has not signed in the last 24 hours
      */
     Id.shouldAutoSigninInUser = function() {
-        var signedInUser = !!cookies.get(Id.cookieName);
-        var checkFacebook = !!storage.local.get(Id.fbCheckKey);
+        var signedInUser = !!cookies.get(Id.cookieName),
+            checkFacebook = !!storage.local.get(Id.fbCheckKey);
         return !signedInUser && !checkFacebook && !this.hasUserSignedOutInTheLast24Hours();
     };
 
     Id.setNextFbCheckTime = function(nextFbCheckDue) {
-        storage.local.set(Id.fbCheckKey, {}, {expires: nextFbCheckDue});
+        storage.local.set(Id.fbCheckKey, {}, { expires: nextFbCheckDue });
     };
 
     Id.emailSignup = function (listId) {
-
-        var endpoint = '/useremails/'+Id.getUserFromCookie().id+'/subscriptions';
-
-        var data = { 'listId': listId };
-
-        var request = ajax({
-            url: Id.idApiRoot + endpoint,
-            type: 'jsonp',
-            crossOrigin: true,
-            data: {
-                body: JSON.stringify(data),
-                method: 'post'
-            }
-        });
+        var endpoint = '/useremails/'+ Id.getUserFromCookie().id +'/subscriptions',
+            data = { 'listId': listId },
+            request = ajax({
+                url: Id.idApiRoot + endpoint,
+                type: 'jsonp',
+                crossOrigin: true,
+                data: {
+                    body: JSON.stringify(data),
+                    method: 'post'
+                }
+            });
 
         return request;
+    };
 
+    Id.sendValidationEmail = function() {
+        var endpoint = '/user/send-validation-email',
+            request = ajax({
+                url: Id.idApiRoot + endpoint,
+                type: 'jsonp',
+                crossOrigin: true,
+                data: {
+                    method: 'post'
+                }
+            });
+
+        return request;
     };
 
     return Id;

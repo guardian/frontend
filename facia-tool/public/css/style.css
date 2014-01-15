@@ -167,6 +167,10 @@ a, a:hover {
     color: #666666;
 }
 
+.list-header__timings.has-concurrent-user {
+    color: #d61d00;
+}
+
 .collections {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
