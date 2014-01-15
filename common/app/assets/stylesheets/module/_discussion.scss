@@ -477,6 +477,7 @@ $replyIndent: 26px;
 .d-comment--response,
 .d-comment-box--response {
     border-top: 1px dotted $c-neutral3;
+    margin-left: $replyIndent;
 
     @include mq($comment-meta-breakpoint) {
         margin-left: 160px + $replyIndent;
@@ -956,9 +957,6 @@ $replyIndent: 26px;
     }
 }
 
-.d-comment .d-comment-box {
-    padding-left: $replyIndent;
-}
 
 .d-comment-box--invalid {
     .d-comment-box__body {
