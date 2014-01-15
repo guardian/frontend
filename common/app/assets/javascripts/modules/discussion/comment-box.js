@@ -57,8 +57,7 @@ CommentBox.prototype.componentClass = 'd-comment-box';
  * @type {Object.<string.string>}
  * @override
  */
-CommentBox.prototype.classes = {
-};
+CommentBox.prototype.classes = {};
 
 /**
  * @type {Object.<string.string>}
