@@ -35,7 +35,7 @@
             data-age="newer"
             data-page="@(page.currentPage - 1)">
             <span class="d-discussion__show-more-button"><i class="i i-plus-white-large"></i></span>
-            <span class="d-discussion__show-more-text">Show @if(page.orderBy == "newest"){earlier}else{previous} comments</span>
+            <span class="d-discussion__show-more-text">Show @if(page.orderBy == "newest"){newer}else{older} comments</span>
         </a>
         }
     </div>
@@ -63,7 +63,7 @@
             data-age="older"
             data-page="@(page.currentPage + 1)">
             <span class="d-discussion__show-more-button"><i class="i i-plus-white-large"></i></span>
-            <span class="d-discussion__show-more-text">Show @if(page.orderBy == "oldest"){earlier}else{previous} comments</span>
+            <span class="d-discussion__show-more-text">Show more comments</span>
         </a>
         }
     </div>
