@@ -50,3 +50,4 @@ developer.properties
 *-spec-runner.html
 
 static/requirejs
+static/abtests.json

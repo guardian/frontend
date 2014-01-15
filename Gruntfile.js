@@ -270,6 +270,17 @@ module.exports = function (grunt) {
                     stderr: true,
                     failOnError: false
                 }
+            },
+
+            abTestInfo: {
+                command: 'node tools/ab-test-info/ab-test-info.js ' +
+                         'common/app/assets/javascripts/modules/experiments/tests ' +
+                         'static/abtests.json',
+                options: {
+                    stdout: true,
+                    stderr: true,
+                    failOnError: true
+                }
             }
         },
 
@@ -786,4 +797,8 @@ module.exports = function (grunt) {
     // Miscellaneous task
     grunt.registerTask('hookmeup', ['clean:hooks', 'shell:copyHooks']);
     grunt.registerTask('snap', ['clean:screenshots', 'mkdir:screenshots', 'env:casperjs', 'casperjs:screenshot', 's3:screenshots']);
+    grunt.registerTask('emitAbTestInfo', function() {
+        // Generate a json file that contains ab-test information.
+        grunt.task.run(['shell:abTestInfo']);
+    });
 };
