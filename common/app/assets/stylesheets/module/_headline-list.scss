@@ -67,10 +67,6 @@
 
 .headline-list--large {
 
-    @include mq(rightCol, wide) {
-        margin-left: 50%;
-    }
-
     .headline-list__link {
         display: block;
         overflow: hidden;
@@ -133,42 +129,6 @@
                 height: 1px;
                 background-color: $c-neutral4;
             }
-        }
-
-        @include mq(rightCol, wide) {
-            width: 100%;
-            float: left;
-            clear: left;
-            margin-left: -100%;
-            padding-right: $gs-gutter/2;
-            padding-left: gs-span(1);
-
-            @include box-sizing(border-box);
-
-            &:nth-child(n+6) {
-                width: 100%;
-                float: none;
-                clear: none;
-                margin-left: 0px;
-                padding-right: 0;
-
-                &:before {
-                    right: 0;
-                    left: $gs-gutter/2;
-                }
-
-                .headline-list__count {
-                    left: $gs-gutter/2;
-                }
-            }
-
-            &:nth-child(1),
-            &:nth-child(6) {
-                &:before {
-                    height: 0;
-                }
-            }
-
         }
 
         @include mq(wide) {
