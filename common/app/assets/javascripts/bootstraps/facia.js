@@ -8,7 +8,6 @@ define([
     'common/utils/detect',
     'common/utils/storage',
     'common/utils/to-array',
-    'common/modules/facia/popular',
     'common/modules/facia/collection-show-more',
     'common/modules/facia/container-toggle',
     'common/modules/sport/football/fixtures',
@@ -23,7 +22,6 @@ define([
     detect,
     storage,
     toArray,
-    popular,
     CollectionShowMore,
     ContainerToggle,
     FootballFixtures,
@@ -77,27 +75,6 @@ define([
                         numVisible: config.page.pageId === "" ? 3 : 5
                     }).init();
                 }
-            });
-        },
-
-        showPopular: function () {
-            mediator.on('page:front:ready', function(config, context) {
-                var opts = {};
-                // put popular after the first container if this is us-alpha front
-                if (config.page.pageId === 'us-alpha') {
-                    opts.insertAfter = $('.container').first();
-                } else if (config.page.pageId === 'uk-alpha') {
-                    // place before the contributors container
-                    var containers = toArray(context.getElementsByClassName('container'));
-                    containers.some(function(container, i) {
-                        if ($(container).hasClass('container--comment')) {
-                            opts.insertAfter = containers[i -1];
-                            return true;
-                        }
-                    });
-
-                }
-                popular.render(config, opts);
             });
         },
 
@@ -164,7 +141,6 @@ define([
             modules.showCollectionShowMore();
             modules.showContainerToggle();
             modules.showFootballFixtures();
-            modules.showPopular();
             modules.displayAlphaMessage(config);
         }
         mediator.emit("page:front:ready", config, context);
