@@ -3,6 +3,8 @@
 
     .article__popular {
 
+        border-top: 1px solid  $c-neutral4;
+
         .page-sub-header {
             display: none;
         }
@@ -16,13 +18,16 @@
         .tabs__tab:first-child {
             width: 100%;
             border-top: none;
+            padding: $gs-baseline/1.5;
 
             a {
+                padding: 0;
                 color: $c-neutral1;
                 @include fs-header(2);
             }
 
             span {
+                padding: 0;
                 height: auto;
                 width: auto;
                 position: static;
@@ -37,6 +42,8 @@
             float:left;
             clear: none;
             width: gs-span(12);
+            padding-top: $gs-baseline/2;
+            border-top: none;
         }
 
         .headline-list--large {
@@ -58,7 +65,8 @@
                     padding-bottom: $gs-baseline;
 
                     .headline-list__count {
-                        top: gs-height(3) + $gs-baseline*1.2;
+                        top: gs-height(3);
+                        @include rem((font-size: 45px));
                     }
 
                     .headline-list__body {
@@ -84,6 +92,8 @@
 
             .headline-list__count {
                 left: 0;
+                top: 4px;
+                @include rem((font-size: 45px));
             }
             
             .headline-list__image {
