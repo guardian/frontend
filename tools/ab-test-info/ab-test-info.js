@@ -17,14 +17,12 @@ function traverse(object, visitor) {
 
     visitor.call(null, object);
 
-    for (var key in object) {
-        if (object.hasOwnProperty(key)) {
-            var child = object[key];
-            if (typeof child === 'object' && child !== null) {
-                traverse(child, visitor)
-            }
+    Object.keys(object).forEach(function(key) {
+        var child = object[key];
+        if (typeof child === 'object' && child !== null) {
+            traverse(child, visitor)
         }
-    }
+    });
 }
 
 // Look for AssignmentExpressions where the left is a this,
@@ -38,8 +36,7 @@ function examineExpressions(node) {
         var property = node.left.property.name,
             value = node.right.value;
 
-        switch( property )
-        {
+        switch( property ) {
             case 'audience':
             case 'audienceOffset':
             case 'expiry':
