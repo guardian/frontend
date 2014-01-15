@@ -195,6 +195,11 @@ define([
                 s.prop30 = 'non-content';
             }
 
+            if(s.getQueryParam('INTCMP') !== '') {
+                s.eVar50 = s.getQueryParam('INTCMP');
+            }
+            s.eVar50 = s.getValOnce(s.eVar50,'s_intcampaign', 0);
+
             // the number of Guardian links inside the body
             if (config.page.inBodyInternalLinkCount) {
                 s.prop58 = config.page.inBodyInternalLinkCount;
