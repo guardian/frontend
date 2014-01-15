@@ -171,7 +171,24 @@
             margin-right: $gs-gutter/2
         ));
     }
-    .l-row--items-2 &,
+    .l-row--items-2 & {
+        .item__media-wrapper {
+            @include rem((
+                width: 88px
+            ));
+            @include mq(tablet) {
+                @include rem((
+                    width: 122px
+                ));
+            }
+            @include mq(desktop) {
+                @include rem((
+                    width: gs-span(3),
+                    margin-right: $gs-gutter
+                ));
+            }
+        }
+    }
     .l-row--items-3 & {
         .item__media-wrapper {
             @include rem((

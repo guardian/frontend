@@ -1,29 +1,12 @@
 @(config: Config, items: Seq[Trail], style: Container, containerIndex: Int)(implicit request: RequestHeader)
 <div class="collection-wrapper">
-    <ul class="unstyled l-row l-row--items-2 collection">
-        @items.slice(0, 1).zipWithIndex.map{ case (trail, index) =>
-            <li class="l-row__item collection__item collection__item--volume-@trail.group.getOrElse("0") item--support-show">
-                @if(trail.imageAdjust == Some("highlight")) {
-                    @fragments.items.standard(trail, containerIndex, 0, "div")
-                }else{
-                    @fragments.items.thumbnail(trail, index, containerIndex, "div")
-                }
-            </li>
-        }
-        @items.slice(1, 2).zipWithIndex.map{ case (trail, index) =>
-            <li class="l-row__item collection__item collection__item--volume-@trail.group.getOrElse("0")">
-                @if(trail.imageAdjust == Some("highlight")) {
-                    @fragments.items.standard(trail, index, 0, "div")
-                }else{
-                    @fragments.items.thumbnail(trail, index, 0, "div")
-                }
-            </li>
-        }
-    </ul>
+    @items.slice(0, 1).zipWithIndex.map{ case (trail, index) =>
+        @fragments.items.fromage(trail, 0)
+    }
 </div>
 <div class="collection-wrapper">
-    <ul class="unstyled l-row l-row--items-3 collection">
-        @items.slice(2, 5).zipWithIndex.map{ case (trail, index) =>
+    <ul class="unstyled l-row l-row--items-2 collection">
+        @items.slice(1, 3).zipWithIndex.map{ case (trail, index) =>
             <li class="l-row__item collection__item collection__item--volume-@trail.group.getOrElse("0")">
                 @if(trail.imageAdjust == Some("highlight")) {
                     @fragments.items.standard(trail, index, 0, "div")
@@ -36,7 +19,7 @@
 </div>
 <div class="collection-wrapper">
     <ul class="unstyled l-row l-row--items-4 collection">
-        @items.slice(5, 9).zipWithIndex.map{ case (trail, index) =>
+        @items.slice(4, 8).zipWithIndex.map{ case (trail, index) =>
             <li class="l-row__item collection__item collection__item--volume-@trail.group.getOrElse("0")">
                 @fragments.items.standard(trail, index, 0, "div")
             </li>
@@ -45,7 +28,7 @@
 </div>
 <div>
     <ul class="l-columns linkslist">
-        @items.slice(9, 22).zipWithIndex.map{ case (trail, index) =>
+        @items.slice(8, 21).zipWithIndex.map{ case (trail, index) =>
             <li class="l-columns__item linkslist__item">
                 <a href="@LinkTo{@trail.url}" class="linkslist__action">
                     @RemoveOuterParaHtml(trail.headline)
