@@ -7,6 +7,7 @@ define([ 'common/common',
 
         describe("ArticleBodyAdverts", function() {
             var style;
+            var articleBodyAdverts;
             var conf = {
                     id: 'article',
                     fixtures: [
@@ -17,27 +18,38 @@ define([ 'common/common',
 
             beforeEach(function() {
                 fixtures.render(conf);
+
+                articleBodyAdverts = new ArticleBodyAdverts({
+                    isArticle: true
+                });
+
+                style = bonzo(bonzo.create('<style type="text/css"></style>'))
+                    .html('body:after{ content: "wide"}')
+                    .appendTo('head');
             });
 
             afterEach(function() {
                 fixtures.clean();
                 style.remove();
+                articleBodyAdverts.destroyAds();
             });
 
             it("Should insert an ad container in the secondary column", function() {
-                style = bonzo(bonzo.create('<style type="text/css"></style>'))
-                    .html('body:after{ content: "wide"}')
-                    .appendTo('head');
-
-                new ArticleBodyAdverts().init();
-
+                articleBodyAdverts.init();
                 expect(document.querySelectorAll('.ad-slot--mpu-banner-ad').length).toBe(1);
             });
 
             it("Should insert an 2 inline ad containers to the content", function() {
-                new ArticleBodyAdverts().init();
-
+                articleBodyAdverts.init();
                 expect(document.querySelectorAll('.ad-slot--inline').length).toBe(2);
+            });
+
+            it("Should destroy the ads", function() {
+                articleBodyAdverts.init();
+                expect(document.querySelectorAll('.ad-slot--mpu-banner-ad, .ad-slot--inline').length).toBe(3);
+
+                articleBodyAdverts.destroyAds();
+                expect(document.querySelectorAll('.ad-slot--mpu-banner-ad, .ad-slot--inline').length).toBe(0);
             });
         });
     });

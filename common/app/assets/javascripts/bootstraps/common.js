@@ -246,9 +246,30 @@ define([
             });
         },
 
-        loadAdverts: function () {
+        loadAdverts: function (config) {
             if (!userPrefs.isOff('adverts')){
-                var articleBodyAdverts = new ArticleBodyAdverts().init();
+
+                var delay = false;
+                var articleBodyAdverts = new ArticleBodyAdverts({
+                    isArticle: (config.page.contentType === 'Article')
+                });
+
+                // Added the body adverts to the article page
+                articleBodyAdverts.init();
+
+                // Prevents the resize and orientation events from triggering 2 ad reloads in one go
+                var delayResizeAndOrientationChange = function(type) {
+                    if(delay !== false) {
+                        return false;
+                    }
+
+                    delay = window.setTimeout(function() { delay = false; }, 100);
+
+                    hasBreakpointChanged(function() {
+                        articleBodyAdverts.reloadAds();
+                        Adverts.reloadAds();
+                    });
+                };
 
                 mediator.on('page:common:deferred:loaded', function(config, context) {
                     if (config.switches && config.switches.adverts && !config.page.blockAds) {
@@ -259,12 +280,8 @@ define([
                     Adverts.loadAds();
                 });
 
-                mediator.on('window:resize', function () {
-                    hasBreakpointChanged(Adverts.reloadAds);
-                });
-                mediator.on('window:orientationchange', function () {
-                    Adverts.hideAds();
-                });
+                mediator.on('window:resize', delayResizeAndOrientationChange);
+                mediator.on('window:orientationchange', delayResizeAndOrientationChange);
             }
         },
 
@@ -393,7 +410,7 @@ define([
                 self.initialisedDeferred = true;
                 modules.initAbTests(config);
                 modules.logLiveStats(config);
-                modules.loadAdverts();
+                modules.loadAdverts(config);
                 modules.loadAnalytics(config, context);
                 modules.cleanupCookies(context);
                 modules.runAbTests(config, context);
