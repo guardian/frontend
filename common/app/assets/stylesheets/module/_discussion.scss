@@ -555,12 +555,18 @@ $replyIndent: 26px;
 }
 
 .d-discussion__error {
+    @include fs-data(4);
+    color: $c-error;
     margin-top: $baseline*2;
     .d-discussion__error-text {
+        display: inline-block;
         margin-left: 24px;
-        line-height: 24px;
     }
     .i-alert { position: absolute; }
+}
+
+.d-comment-box__error-meta {
+    color: $c-neutral2;
 }
 
 .d-thread--responses .d-discussion__error {
@@ -954,6 +960,12 @@ $replyIndent: 26px;
     padding-left: $replyIndent;
 }
 
+.d-comment-box--invalid {
+    .d-comment-box__body {
+        border-color: $c-error;
+    }
+}
+
 .d-comment-box__body {
     @include box-sizing(border-box);
     border: 1px solid $c-neutral3;
@@ -1025,6 +1037,7 @@ $replyIndent: 26px;
     bottom: $gs-baseline;
     display: none;
 }
+
 .d-comment-box--expanded .d-comment-box__cancel,
 .d-comment-box--response .d-comment-box__cancel {
     display: inline-block;

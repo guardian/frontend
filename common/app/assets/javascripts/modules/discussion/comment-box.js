@@ -4,7 +4,7 @@ define([
     'common/modules/discussion/api',
     'common/modules/identity/api',
     'common/modules/component',
-    "common/modules/discussion/user-avatars"
+    'common/modules/discussion/user-avatars'
 ], function(
     bean,
     bonzo,
@@ -25,6 +25,9 @@ function CommentBox(context, mediator, options) {
     this.context = context || document;
     this.mediator = mediator;
     this.setOptions(options);
+
+    mediator.on('module:identity:validation-email:success', this.verificationEmailSuccess.bind(this));
+    mediator.on('module:identity:validation-email:fail', this.verificationEmailFail.bind(this));
 }
 Component.define(CommentBox);
 
@@ -62,7 +65,14 @@ CommentBox.prototype.errorMessages = {
     COMMENT_TOO_LONG: 'Your comment must be fewer than 5000 characters long.',
     ENHANCE_YOUR_CALM: 'You can only post one comment every minute. Please try again in a moment.',
     USER_BANNED: 'Commenting has been disabled for this account (<a href="/community-faqs#321a">why?</a>).',
-    API_ERROR: 'Sorry, there was a problem posting your comment.'
+    API_ERROR: 'Sorry, there was a problem posting your comment.',
+    EMAIL_VERIFIED: '<span class="d-comment-box__error-meta">Sent. Please check your email to verify '+
+        (IdentityApi.getUserFromCookie() ? IdentityApi.getUserFromCookie().primaryEmailAddress : ' your email address') +'</span>.',
+    EMAIL_VERIFIED_FAIL: 'We are having technical difficulties. Please try again later or '+
+        '<a href="/send/email" class="js-id-send-validation-email"><strong>resend the verification</strong></a>.',
+    EMAIL_NOT_VERIFIED: 'Please confirm your email address to post your first comment.<br />'+
+        '<a href="_#" class="js-id-send-validation-email"><strong>Send verification email</strong></a><span class="d-comment-box__error-meta"> to '+
+        (IdentityApi.getUserFromCookie() ? IdentityApi.getUserFromCookie().primaryEmailAddress : ' your email address') + '.</span>'
 };
 
 /**
@@ -158,15 +168,15 @@ CommentBox.prototype.postComment = function(e) {
         };
 
     e.preventDefault();
-    this.getElem('messages').innerHTML = '';
-    this.errors = [];
+    this.clearErrors();
 
     if (comment.body === '') {
         this.error('EMPTY_COMMENT_BODY');
     }
 
     else if (comment.body.length > this.options.maxLength) {
-        this.error('COMMENT_TOO_LONG', '<b>Comments must be shorter than '+ this.options.maxLength +' characters.</b> Yours is currently '+ (comment.body.length-this.options.maxLength) +' characters too long.');
+        this.error('COMMENT_TOO_LONG', '<b>Comments must be shorter than '+ this.options.maxLength +' characters.</b>'+
+            'Yours is currently '+ (comment.body.length-this.options.maxLength) +' characters too long.');
     }
 
     if (this.options.replyTo) {
@@ -188,6 +198,8 @@ CommentBox.prototype.postComment = function(e) {
  */
 CommentBox.prototype.error = function(type, message) {
     message = message || this.errorMessages[type];
+
+    this.setState('invalid');
     var error = bonzo.create(
         '<div class="d-discussion__error '+ this.getClass('error', true) +'">'+
             '<i class="i i-alert"></i>'+
@@ -257,6 +269,12 @@ CommentBox.prototype.setFormState = function(disabled) {
     }
 };
 
+CommentBox.prototype.clearErrors = function() {
+    this.getElem('messages').innerHTML = '';
+    this.errors = [];
+    this.removeState('invalid');
+};
+
 /**
  * @param {Event=} e (optional)
  */
@@ -267,16 +285,31 @@ CommentBox.prototype.setExpanded = function(e) {
 /**
  * @param {Event=} e (optional)
  */
+CommentBox.prototype.verificationEmailSuccess = function(e) {
+    this.clearErrors();
+    this.error('EMAIL_VERIFIED');
+};
+
+/**
+ * @param {Event=} e (optional)
+ */
+CommentBox.prototype.verificationEmailFail = function(e) {
+    this.clearErrors();
+    this.error('EMAIL_VERIFIED_FAIL');
+};
+
+/**
+ * @param {Event=} e (optional)
+ */
 CommentBox.prototype.cancelComment = function(e) {
     if (this.options.state === 'response') {
         this.destroy();
     } else {
-        this.getElem('body').value = "";
+        this.getElem('body').value = '';
         this.setFormState();
         this.removeState('expanded');
     }
 };
-
 
 return CommentBox;
 
