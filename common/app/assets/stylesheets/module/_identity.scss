@@ -191,13 +191,19 @@
     padding: 0;
 }
 
+.film-awards-banner {
+  background-color: #000000;
+  height: 90px;
+  margin-bottom: - $baseline*8;
+}
+
 .ethical-awards-banner {
     background-color: #294100;
     height: 90px;
     margin-bottom: - $baseline*8;
 }
 
-.ethical-awards-banner__image {
+.ethical-awards-banner__image, .film-awards-banner__image {
     display: block;
     margin: 0 auto;
     width: 480px;
