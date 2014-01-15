@@ -797,8 +797,5 @@ module.exports = function (grunt) {
     // Miscellaneous task
     grunt.registerTask('hookmeup', ['clean:hooks', 'shell:copyHooks']);
     grunt.registerTask('snap', ['clean:screenshots', 'mkdir:screenshots', 'env:casperjs', 'casperjs:screenshot', 's3:screenshots']);
-    grunt.registerTask('emitAbTestInfo', function() {
-        // Generate a json file that contains ab-test information.
-        grunt.task.run(['shell:abTestInfo']);
-    });
+    grunt.registerTask('emitAbTestInfo', ['shell:abTestInfo']);
 };
