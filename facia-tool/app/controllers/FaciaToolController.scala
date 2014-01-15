@@ -15,7 +15,8 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
   implicit val updateListRead = Json.reads[UpdateList]
 
   def index() = ExpiringAuthentication { request =>
-    Ok(views.html.fronts(Configuration.environment.stage))
+    val identity = Identity(request).get
+    Ok(views.html.fronts(Configuration.environment.stage, Option(identity)))
   }
 
   def listCollections = AjaxExpiringAuthentication { request =>
