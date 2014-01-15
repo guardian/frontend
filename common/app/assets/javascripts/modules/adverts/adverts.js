@@ -91,6 +91,18 @@ function (
         }
     }
 
+    function destroyAds() {
+        for (var i = 0, j = slots.length; i<j; ++i) {
+            slots[i].el.innerHTML = '';
+            slots[i].loaded = false;
+        }
+    }
+
+    function reloadAds() {
+        destroyAds();
+        init(currConfig, currContext);
+    }
+
     function isOnScreen(el) {
         return (
             el.offsetTop < (window.innerHeight + window.pageYOffset) &&
@@ -125,6 +137,7 @@ function (
         hideAds: hideAds,
         init: init,
         loadAds: loadAds,
+        reloadAds: reloadAds,
         isOnScreen: isOnScreen
     };
 

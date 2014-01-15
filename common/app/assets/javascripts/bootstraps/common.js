@@ -86,6 +86,8 @@ define([
     TagContainer
 ) {
 
+    var hasBreakpointChanged = detect.hasCrossedBreakpoint();
+
     var modules = {
 
         upgradeImages: function () {
@@ -258,7 +260,7 @@ define([
                 });
 
                 mediator.on('window:resize', function () {
-                    Adverts.hideAds();
+                    hasBreakpointChanged(Adverts.reloadAds);
                 });
                 mediator.on('window:orientationchange', function () {
                     Adverts.hideAds();
