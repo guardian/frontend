@@ -149,11 +149,8 @@ $replyIndent: 26px;
     margin-right: $baseline*2;
     margin-top: $baseline;
     float: left;
-    @include mq($comment-meta-breakpoint) {
+    @include mq($comment-meta-breakpoint, wide) {
         float: none;
-    }
-    @include mq(wide) {
-        float: left;
     }
 }
 

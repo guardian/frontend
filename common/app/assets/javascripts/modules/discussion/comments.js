@@ -310,7 +310,7 @@ Comments.prototype.loadMore = function(e) {
     var $button = bonzo(button),
         $container = $button.parent();
     $button.remove();
-    var $loadingElem = bonzo.create('<span class="' + this.getClass('showMoreLoading',true) + '">Loading...</span>');
+    var $loadingElem = bonzo.create('<span class="' + this.getClass('showMoreLoading',true) + '">Loading…</span>');
     $container.empty().append($loadingElem);
 
     return this.fetchComments({
