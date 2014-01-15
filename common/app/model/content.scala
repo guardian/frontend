@@ -51,7 +51,7 @@ class Content protected (val delegate: ApiContent) extends Trail with MetaData {
   override lazy val linkText: String = webTitle
   override def headline: String = fields("headline")
   override lazy val url: String = SupportedUrl(delegate)
-  override lazy val trailText: Option[String] = fields.get("trailText")
+  override def trailText: Option[String] = fields.get("trailText")
   override lazy val section: String = delegate.sectionId.getOrElse("")
   override lazy val sectionName: String = delegate.sectionName.getOrElse("")
   override lazy val thumbnailPath: Option[String] = fields.get("thumbnail").map(ImgSrc(_, Naked))
@@ -288,6 +288,7 @@ class ContentWithMetaData(
                            override val supporting: List[Content],
                            metaData: Map[String, JsValue]) extends Content(content) {
   override lazy val headline: String = metaData.get("headline").flatMap(_.asOpt[String]).getOrElse(super.headline)
+  override lazy val trailText: Option[String] = metaData.get("trailText").flatMap(_.asOpt[String]).orElse(super.trailText)
   override lazy val group: Option[String] = metaData.get("group").flatMap(_.asOpt[String])
   override lazy val imageAdjust: Option[String] = metaData.get("imageAdjust").flatMap(_.asOpt[String])
 }
