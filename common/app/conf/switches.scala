@@ -317,7 +317,7 @@ object Switches extends Collections {
 
   val TagLinking = Switch("Feature Switches", "tag-linking",
     "If this is switched on articles that have no in body links will auto link to their tags where possible",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 20)
+    safeState = Off, sellByDate = endOfQ4 
   )
 
   // Sport Switch
