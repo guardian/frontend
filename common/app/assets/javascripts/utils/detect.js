@@ -284,7 +284,6 @@ define([
 
     return {
         getMobileOS: getMobileOS,
-        canSwipe: canSwipe,
         hasCrossedBreakpoint: hasCrossedBreakpoint,
         getPixelRatio: getPixelRatio,
         getConnectionSpeed: getConnectionSpeed,

@@ -181,7 +181,7 @@ define([
                 s.events = s.apl(s.events, config.page.omnitureEvent, ',');
             }
 
-            s.prop56    = detect.canSwipe() ? 'Javascript with swipe' : 'Javascript';
+            s.prop56    = 'Javascript';
 
             s.prop65    = config.page.headline || '';
 

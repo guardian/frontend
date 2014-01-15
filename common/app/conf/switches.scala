@@ -180,18 +180,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 15)
   )
 
-  // Swipe Switches
-
-  val SwipeNav = Switch("Swipe Navigation", "swipe-nav",
-    "If this switch is on then swipe navigation is enabled.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 20)
-  )
-
-  val SwipeNavOnClick = Switch("Swipe Navigation", "swipe-nav-on-click",
-    "If this switch is also on then swipe navigation on clicks is enabled.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 20)
-  )
-
   // Feature Switches
 
   val ReleaseMessageSwitch = Switch("Feature Switches", "release-message",
