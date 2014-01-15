@@ -302,10 +302,6 @@ define([
                       '</p>' +
                       '<ul class="site-message__actions unstyled">' +
                            '<li class="site-message__actions__item">' +
-                               '<i class="i i-comment-grey"></i>' +
-                               '<a href="http://survey.omniture.com/d1/hosted/815f9cfba1" data-link-name="feedback" target="_blank">We’d love to hear your feedback</a>' +
-                           '</li>' +
-                           '<li class="site-message__actions__item">' +
                                '<i class="i i-back"></i>' +
                                    '<a class="js-main-site-link" rel="nofollow" href="' + exitLink + '"' +
                                        'data-link-name="opt-out">Opt-out and return to standard desktop site </a>' +
