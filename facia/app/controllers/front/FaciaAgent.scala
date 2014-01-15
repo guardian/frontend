@@ -150,15 +150,24 @@ trait ParseCollection extends ExecutionContexts with Logging {
         }
         val response = ContentApi.item(collectionItem.id, edition).showFields("all").response
 
-        response.onFailure{case t: Throwable => log.warn("%s: %s".format(collectionItem.id, t.toString))}
+        val content = response.map(_.content).recover {
+          case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 404 => {
+            log.warn(s"Content API Error: 404 for ${collectionItem.id}")
+            None
+          }
+          case t: Throwable => {
+            log.warn("%s: %s".format(collectionItem.id, t.toString))
+            throw t
+          }
+        }
         supportingAsContent.onFailure{case t: Throwable => log.warn("Supporting links: %s: %s".format(collectionItem.id, t.toString))}
 
         for {
           contentList <- foldListFuture
-          itemResponse <- response
+          itemResponse <- content
           supporting <- supportingAsContent
         } yield {
-          itemResponse.content.map(Content(_, supporting, collectionItem.metaData)).map(_ +: contentList).getOrElse(contentList)
+          itemResponse.map(Content(_, supporting, collectionItem.metaData)).map(_ +: contentList).getOrElse(contentList)
         }
       }
       val sorted = results map { _.sortBy(t => collectionItems.indexWhere(_.id == t.id))}

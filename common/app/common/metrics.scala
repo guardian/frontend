@@ -119,11 +119,19 @@ object ContentApiMetrics {
     "Elastic Content api calls that timeout"
   )
 
+  object ContentApi404Metric extends CountMetric(
+    "404",
+    "content-api-404-responses",
+    "Content API 404 responses",
+    "Number of times the Content API has responded with a 404"
+  )
+
   val all: Seq[Metric] = Seq(
     HttpTimingMetric,
     HttpTimeoutCountMetric,
     ElasticHttpTimeoutCountMetric,
-    ElasticHttpTimingMetric
+    ElasticHttpTimingMetric,
+    ContentApi404Metric
   )
 }
 
