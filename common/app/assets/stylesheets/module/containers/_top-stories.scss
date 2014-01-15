@@ -5,7 +5,7 @@
         margin: 0 auto;
     }
     @include mq(wide) {
-        @include rem((width: gs-span(12) + $gs-gutter));
+        @include rem((width: gs-span(12)));
         margin: 0 auto;
     }
     .item {
