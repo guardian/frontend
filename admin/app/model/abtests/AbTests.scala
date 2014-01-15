@@ -26,9 +26,9 @@ object AbTests {
 
         val cloudwatchResults = variants.map { variant =>
           CloudWatch.euWestClient.getMetricStatisticsAsync( new GetMetricStatisticsRequest()
-            .withStartTime(new DateTime().minusHours(24).toDate)
+            .withStartTime(new DateTime().minusHours(6).toDate)
             .withEndTime(new DateTime().toDate)
-            .withPeriod(300)
+            .withPeriod(360)
             .withStatistics("Average")
             .withNamespace("AbTests")
             .withMetricName(s"$abTest-$variant")
