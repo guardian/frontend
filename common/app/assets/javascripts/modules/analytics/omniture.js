@@ -205,7 +205,7 @@ define([
                 s.prop69 = config.page.inBodyExternalLinkCount;
             }
 
-            /* Retrieve navigation interaction data, incl. swipe */
+            /* Retrieve navigation interaction data */
             var ni = storage.session.get('gu.analytics.referrerVars');
             if (ni) {
                 var d = new Date().getTime();

@@ -133,27 +133,3 @@
 .really-serious-copyright {
     margin-bottom: $baseline;
 }
-
-.swipe-switches {
-    display: none;
-
-    .can-swipe & {
-        display: block;
-    }
-}
-
-.swipe-switches__button {
-    border: 0;
-    background: inherit;
-    padding: 0;
-    color: $c-brandBlue;
-}
-
-.has-swipe .swipe-switches__button--off {
-    display: inline-block;
-}
-
-.swipe-switches__button--off,
-.has-swipe .swipe-switches__button--on {
-    display: none;
-}

@@ -197,25 +197,6 @@ define([
         return mobileOS;
     }
 
-    function canSwipe() {
-        var os;
-        if (!hasPushStateSupport()) {
-            return false;
-        }
-        os = getMobileOS();
-        // iOS
-        if (os.name === 'iOS' && os.version >= 6) {
-            return true;
-        }
-        /*
-        // Android
-        if (os.name === 'Android' && os.version >= 4) {
-            return true;
-        }
-        */
-        return false;
-    }
-
     function getOrientation() {
         return (window.innerHeight > window.innerWidth) ? 'portrait' : 'landscape';
     }

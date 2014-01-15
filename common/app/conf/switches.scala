@@ -393,8 +393,6 @@ object Switches extends Collections {
     DiscussionPostCommentSwitch,
     DiscussionTopCommentsSwitch,
     OpenCtaSwitch,
-    SwipeNav,
-    SwipeNavOnClick,
     FontSwitch,
     NetworkFrontAppealSwitch,
     WitnessVideoSwitch,
