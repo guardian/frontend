@@ -123,25 +123,3 @@ casper.test.begin('Items display their comment count', function(test) {
     })
 });
 */
-
-/**
-* Scenario: Popular container appears at the bottom of the page
-*    Given I visit the network front
-*    Then I should see the popular container
-**/
-casper.test.begin('Popular container appears at the bottom of the page', function(test) {
-    var popContainerSelector = '.container--popular';
-    casper.waitForSelector(popContainerSelector, function(){
-        test.assertExists(popContainerSelector, 'popular container displayed');
-        // only 5 should be seen
-        var i = 6;
-        while (i <= 10) {
-            test.assertNotVisible(popContainerSelector + ' .item:nth-child(' + i + ')', 'item is not visible');
-            i++;
-        }
-    });
-
-    casper.run(function() {
-        test.done();
-    })
-});

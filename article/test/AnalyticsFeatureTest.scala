@@ -30,7 +30,7 @@ class AnalyticsFeatureTest extends FeatureSpec with GivenWhenThen with Matchers 
         Then("the Omniture webbug should record my visit")
         val webbug = findFirst("#omnitureNoScript img")
 
-        webbug.getAttribute("src") should startWith("http://hits.theguardian.com/b/ss/guardiangu-frontend-dev/1/H.24.2/")
+        webbug.getAttribute("src") should startWith("http://hits.theguardian.com/b/ss/guardiangu-frontend-dev/1/H.25.3/")
 
         // test a few token properties in the web bug
         webbug.getAttribute("src") should include("c11=sport")
