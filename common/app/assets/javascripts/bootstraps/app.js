@@ -1,8 +1,7 @@
 /*global guardian:true */
 define([
-    'common/common',
-    'qwery',
     'domReady',
+    'common/utils/mediator',
     'common/utils/ajax',
     'common/utils/detect',
     'common/utils/config',
@@ -27,9 +26,8 @@ define([
     'common/bootstraps/interactive',
     'common/bootstraps/identity'
 ], function (
-    common,
-    qwery,
     domReady,
+    mediator,
     ajax,
     detect,
     config,
@@ -74,7 +72,7 @@ define([
                 beaconUrl: config.page.beaconUrl
             });
             e.init();
-            common.mediator.on('module:error', e.log);
+            mediator.on('module:error', e.log);
         },
 
         loadFonts: function(config, ua) {
@@ -160,8 +158,8 @@ define([
                 r.init();
             };
 
-            common.mediator.on('page:ready', pageRoute);
-            common.mediator.emit('page:ready', config, context, contextHtml);
+            mediator.on('page:ready', pageRoute);
+            mediator.emit('page:ready', config, context, contextHtml);
         });
     };
 

@@ -10,9 +10,7 @@ trait DiagnosticsLifecycle extends GlobalSettings with Logging {
     Jobs.schedule("DiagnosticsLoadJob", "0 * * * * ?") {
       model.diagnostics.alpha.LoadJob.run()
       model.diagnostics.javascript.LoadJob.run()
-      model.diagnostics.viewability.LoadJob.run()
       model.diagnostics.abtests.UploadJob.run()
-      model.diagnostics.viewability.CountUploadJob.run()
     }
   }
 

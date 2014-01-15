@@ -4,14 +4,18 @@ define([
     'common/utils/context',
     'common/utils/mediator',
     'common/modules/discussion/api',
-    'common/modules/component'
+    'common/modules/identity/api',
+    'common/modules/component',
+    'common/modules/discussion/user-avatars'
 ], function(
     bean,
     bonzo,
     context,
     mediator,
     DiscussionApi,
-    Component
+    IdentityApi,
+    Component,
+    UserAvatars
 ) {
 
 /**
@@ -25,6 +29,9 @@ function CommentBox(options) {
     this.context = context();
     this.mediator = mediator;
     this.setOptions(options);
+
+    mediator.on('module:identity:validation-email:success', this.verificationEmailSuccess.bind(this));
+    mediator.on('module:identity:validation-email:fail', this.verificationEmailFail.bind(this));
 }
 Component.define(CommentBox);
 
@@ -51,7 +58,6 @@ CommentBox.prototype.componentClass = 'd-comment-box';
  * @override
  */
 CommentBox.prototype.classes = {
-    bodyExpanded: 'd-comment-box__body--expanded'
 };
 
 /**
@@ -63,7 +69,14 @@ CommentBox.prototype.errorMessages = {
     COMMENT_TOO_LONG: 'Your comment must be fewer than 5000 characters long.',
     ENHANCE_YOUR_CALM: 'You can only post one comment every minute. Please try again in a moment.',
     USER_BANNED: 'Commenting has been disabled for this account (<a href="/community-faqs#321a">why?</a>).',
-    API_ERROR: 'Sorry, there was a problem posting your comment.'
+    API_ERROR: 'Sorry, there was a problem posting your comment.',
+    EMAIL_VERIFIED: '<span class="d-comment-box__error-meta">Sent. Please check your email to verify '+
+        (IdentityApi.getUserFromCookie() ? IdentityApi.getUserFromCookie().primaryEmailAddress : ' your email address') +'</span>.',
+    EMAIL_VERIFIED_FAIL: 'We are having technical difficulties. Please try again later or '+
+        '<a href="/send/email" class="js-id-send-validation-email"><strong>resend the verification</strong></a>.',
+    EMAIL_NOT_VERIFIED: 'Please confirm your email address to post your first comment.<br />'+
+        '<a href="_#" class="js-id-send-validation-email"><strong>Send verification email</strong></a><span class="d-comment-box__error-meta"> to '+
+        (IdentityApi.getUserFromCookie() ? IdentityApi.getUserFromCookie().primaryEmailAddress : ' your email address') + '.</span>'
 };
 
 /**
@@ -76,8 +89,7 @@ CommentBox.prototype.defaultOptions = {
     premod: false,
     focus: false,
     state: 'top-level',
-    replyTo: null,
-    cancelable: false
+    replyTo: null
 };
 
 /**
@@ -85,24 +97,43 @@ CommentBox.prototype.defaultOptions = {
  */
 CommentBox.prototype.errors = [];
 
-/** @oevrride */
+CommentBox.prototype.getUserData = function() {
+    return IdentityApi.getUserFromCookie();
+};
+
+/** @override */
 CommentBox.prototype.prerender = function() {
     if (!this.options.premod) {
         this.getElem('premod').parentNode.removeChild(this.getElem('premod'));
     }
 
+    var userData = this.getUserData();
+
+    this.getElem('author').innerHTML = userData.displayName;
+
     if (this.options.state === 'response') {
         this.getElem('submit').innerHTML = 'Post reply';
+    } else {
+        var avatar = this.getElem('avatar-wrapper');
+        avatar.setAttribute('userid', userData.id);
+        UserAvatars.avatarify(avatar);
     }
 
     if (this.options.replyTo) {
-        var elem = document.createElement('label');
-        elem.setAttribute('for', 'reply-to-'+ this.options.replyTo.commentId);
-        elem.className = 'label '+ this.getClass('reply-to', true);
-        elem.innerHTML = 'to '+ this.options.replyTo.author;
-        this.getElem('body').id = 'reply-to-'+ this.options.replyTo.commentId;
-        bonzo(elem).insertAfter(this.getElem('submit'));
+        var replyToAuthor = this.getElem('reply-to-author');
+        replyToAuthor.innerHTML = this.options.replyTo.author;
+        this.getElem('parent-comment-author').innerHTML = this.options.replyTo.author + " @ " + this.options.replyTo.timestamp + " said:";
+
+        this.getElem('parent-comment-body').innerHTML = this.options.replyTo.body;
+
+        var setSpoutMargin = function() {
+            var spoutOffset = replyToAuthor.offsetLeft + (replyToAuthor.getBoundingClientRect().width/2);
+            this.getElem('parent-comment-spout').style.marginLeft = spoutOffset + 'px';
+        };
+        window.setTimeout(setSpoutMargin.bind(this), 0);
+
     }
+
 };
 
 /** @override */
@@ -120,7 +151,9 @@ CommentBox.prototype.ready = function() {
     bean.on(this.context, 'submit', [this.elem], this.postComment.bind(this));
     bean.on(this.context, 'change keyup', [commentBody], this.setFormState.bind(this));
     bean.on(commentBody, 'focus', this.setExpanded.bind(this)); // this isn't delegated as bean doesn't support it
-    this.on('click', this.getClass('cancel'), this.cancel);
+    this.on('click', this.getClass('cancel'), this.cancelComment);
+    this.on('click', this.getClass('show-parent'), this.setState.bind(this, 'parent-visible', false));
+    this.on('click', this.getClass('hide-parent'), this.removeState.bind(this, 'parent-visible', false));
 
     this.setState(this.options.state);
 
@@ -139,15 +172,15 @@ CommentBox.prototype.postComment = function(e) {
         };
 
     e.preventDefault();
-    this.getElem('messages').innerHTML = '';
-    this.errors = [];
+    this.clearErrors();
 
     if (comment.body === '') {
         this.error('EMPTY_COMMENT_BODY');
     }
 
     else if (comment.body.length > this.options.maxLength) {
-        this.error('COMMENT_TOO_LONG', '<b>Comments must be shorter than '+ this.options.maxLength +' characters.</b> Yours is currently '+ (comment.body.length-this.options.maxLength) +' characters too long.');
+        this.error('COMMENT_TOO_LONG', '<b>Comments must be shorter than '+ this.options.maxLength +' characters.</b>'+
+            'Yours is currently '+ (comment.body.length-this.options.maxLength) +' characters too long.');
     }
 
     if (this.options.replyTo) {
@@ -169,6 +202,8 @@ CommentBox.prototype.postComment = function(e) {
  */
 CommentBox.prototype.error = function(type, message) {
     message = message || this.errorMessages[type];
+
+    this.setState('invalid');
     var error = bonzo.create(
         '<div class="d-discussion__error '+ this.getClass('error', true) +'">'+
             '<i class="i i-alert"></i>'+
@@ -214,19 +249,6 @@ CommentBox.prototype.fail = function(xhr) {
 };
 
 /**
- * @param {Event}
- * Destroy the box if reply, removes text if top level
- */
-CommentBox.prototype.cancel = function(e) {
-    if (this.hasState('top-level')) {
-        this.getElem('body').value = '';
-        this.setFormState();
-    } else {
-        this.destroy();
-    }
-};
-
-/**
  * TODO: remove the replace, get the Scala to be better
  * @return {string}
  */
@@ -251,6 +273,12 @@ CommentBox.prototype.setFormState = function(disabled) {
     }
 };
 
+CommentBox.prototype.clearErrors = function() {
+    this.getElem('messages').innerHTML = '';
+    this.errors = [];
+    this.removeState('invalid');
+};
+
 /**
  * @param {Event=} e (optional)
  */
@@ -258,6 +286,34 @@ CommentBox.prototype.setExpanded = function(e) {
     this.setState('expanded');
 };
 
+/**
+ * @param {Event=} e (optional)
+ */
+CommentBox.prototype.verificationEmailSuccess = function(e) {
+    this.clearErrors();
+    this.error('EMAIL_VERIFIED');
+};
+
+/**
+ * @param {Event=} e (optional)
+ */
+CommentBox.prototype.verificationEmailFail = function(e) {
+    this.clearErrors();
+    this.error('EMAIL_VERIFIED_FAIL');
+};
+
+/**
+ * @param {Event=} e (optional)
+ */
+CommentBox.prototype.cancelComment = function(e) {
+    if (this.options.state === 'response') {
+        this.destroy();
+    } else {
+        this.getElem('body').value = '';
+        this.setFormState();
+        this.removeState('expanded');
+    }
+};
 
 return CommentBox;
 

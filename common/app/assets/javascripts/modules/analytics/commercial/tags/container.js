@@ -3,12 +3,10 @@
  */
 define([
     'common/modules/analytics/commercial/tags/common/audience-science',
-    'common/modules/analytics/commercial/tags/common/quantcast',
     'common/modules/analytics/commercial/tags/common/imrworldwide',
     'common/modules/analytics/commercial/tags/au/amaa'
 ], function(
     AudienceScience,
-    Quantcast,
     IMRWorldwide,
     Amaa
 ) {
@@ -29,10 +27,6 @@ define([
                 
                 if (config.switches.audienceScience) {
                     AudienceScience.load(config.page);
-                }
-                
-                if (config.switches.quantcast) {
-                    Quantcast.load();
                 }
                 
                 if (config.switches.imrWorldwide) {

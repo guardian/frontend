@@ -6,7 +6,6 @@ define([
     //Current tests
     'common/modules/experiments/tests/aa',
     'common/modules/experiments/tests/mobile-facebook-autosignin',
-    'common/modules/experiments/tests/alpha-comm',
     'common/modules/experiments/tests/identity-email-signup',
     'common/modules/experiments/tests/commercial-in-article-desktop',
     'common/modules/experiments/tests/commercial-in-article-mobile',
@@ -18,7 +17,6 @@ define([
 
     Aa,
     MobileFacebookAutosignin,
-    AlphaComm,
     EmailSignup,
     CommercialInArticlesDesktop,
     CommercialInArticlesMobile,
@@ -28,7 +26,6 @@ define([
     var TESTS = [
             new Aa(),
             new MobileFacebookAutosignin(),
-            new AlphaComm(),
             new EmailSignup(),
             new CommercialInArticlesDesktop(),
             new CommercialInArticlesMobile(),

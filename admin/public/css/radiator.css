@@ -15,7 +15,7 @@ header {
     color: #B8FAA0;
 
 } 
-.down, .Failed, .Expiring { color: red; }
+.down, .Failed { color: red; }
 .Running { color: orange; }
 ul {
     margin: 0;
@@ -43,10 +43,13 @@ ul {
     background-color: #B8FAA0;
 }
 
-#pingdom li.down, .riffraff li.Failed, .Expiring {
+#pingdom li.down, .riffraff li.Failed {
     background-color: red;
 }
 
+.Expiring {
+    background-color: orange;
+}
 
 
 .riffraff,
