@@ -52,4 +52,8 @@ From: London, UK
 
 User Experience Architect: Alastair Jardine
 Twitter: @aj_ux
-From: London, UK 
+From: London, UK
+
+QA: Michael McNamara
+Twitter: @m_w_mcnamara
+From: Melbourne, Aus
