@@ -35,9 +35,6 @@ define([
     Component.prototype.classes = null;
 
     /** @type {Element|null} */
-    Component.prototype.context = null;
-
-    /** @type {Element|null} */
     Component.prototype.elem = null;
 
     /** @type {Object|string|null} */
@@ -75,20 +72,6 @@ define([
             this._prerender();
             this._ready();
         }
-    };
-
-    /**
-     * Uses the this.componentClass
-     */
-    Component.prototype.attachToDefault = function() {
-        this.checkAttached();
-        var elem = qwery('.'+ this.componentClass, this.context);
-        if (elem.length === 0) {
-            throw new ComponentError('No element of type "'+ '.'+ this.componentClass +'" to attach to.');
-        }
-        this.elem = elem[0];
-        this._prerender();
-        this._ready();
     };
 
     /**

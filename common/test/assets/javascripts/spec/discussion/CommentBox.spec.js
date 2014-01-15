@@ -17,7 +17,7 @@ define([
     apiPostValidCommentResp,
     CommentBox
 ) {
-    describe('Comment box', function() {
+    xdescribe('Comment box', function() {
         var context, server,
             fixturesId = 'comment-box',
             discussionId = '/p/3ht42',
@@ -48,11 +48,11 @@ define([
             server = sinon.fakeServer.create();
             fixtures.render(fixture);
             context = document.getElementById(fixturesId);
-            commentBox = new CommentBox(context, {
+            commentBox = new CommentBox({
                 discussionId: discussionId,
                 maxLength: maxCommentLength
             });
-            commentBox.attachToDefault();
+            commentBox.attachTo(document.querySelector('.d-comment-box'));
         });
 
         afterEach(function() {

@@ -1,13 +1,18 @@
-define(function() {
+define(['common/utils/contextualiser'], function(contextualiser) {
 
-var c = document,
-    context = function() { return c; };
+return (function() {
+    var c = contextualiser.get();
+    return c;
+})();
 
-/** @param {Element} */
-context.set = function(newContext) {
-    c = newContext;
-};
-
-return context;
+//var c = document,
+//    context = function() { return c; };
+//
+///** @param {Element} */
+//context.set = function(newContext) {
+//    c = newContext;
+//};
+//
+//return context;
 
 }); // define

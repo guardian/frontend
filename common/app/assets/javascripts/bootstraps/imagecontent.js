@@ -11,7 +11,7 @@ define([
             mediator.on("page:imagecontent:ready", function(config, context) {
                 if (config.page.commentable) {
                     var discussionLoader = new DiscussionLoader(context, mediator, {}, config.switches.discussionTopComments);
-                    discussionLoader.attachToDefault();
+                    discussionLoader.attachTo($('.discussion')[0]);
                 }
             });
         }

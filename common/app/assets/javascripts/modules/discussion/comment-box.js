@@ -1,12 +1,14 @@
 define([
     'bean',
     'bonzo',
+    'common/utils/context',
     'common/utils/mediator',
     'common/modules/discussion/api',
     'common/modules/component'
 ], function(
     bean,
     bonzo,
+    context,
     mediator,
     DiscussionApi,
     Component
@@ -19,8 +21,8 @@ define([
  * @param {Object} mediator
  * @param {Object=} options
  */
-function CommentBox(context, options) {
-    this.context = context || document;
+function CommentBox(options) {
+    this.context = context();
     this.mediator = mediator;
     this.setOptions(options);
 }
