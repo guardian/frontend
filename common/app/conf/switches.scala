@@ -103,11 +103,6 @@ object Switches extends Collections {
   val AmaaSwitch = Switch("Commercial Tags", "amaa",
     "Enable the AMAA audience segment tracking.",
     safeState = Off, sellByDate = endOfQ4)
-  
-  val QuantcastSwitch = Switch("Commercial Tags", "quantcast",
-    "Enable the Quantcast audience segment tracking.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 20)
-  )
 
   // Analytics Switches
 
@@ -385,7 +380,6 @@ object Switches extends Collections {
     AdvertSwitch,
     VideoAdvertSwitch,
     AudienceScienceSwitch,
-    QuantcastSwitch,
     DiscussionSwitch,
     DiscussionPostCommentSwitch,
     DiscussionTopCommentsSwitch,
