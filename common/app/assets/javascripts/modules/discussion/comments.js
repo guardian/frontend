@@ -353,13 +353,13 @@ Comments.prototype.renderComments = function(position, resp) {
 
     var replaceButton = function(name) {
         var newButton = qwery(this.getClass(name), html),
-            currentButton = this.getElem(name),
+            currentButton = qwery(this.getClass(name), this.elem),
             container = this.getElem(name + 'Container');
         $(this.getClass('showMoreLoading'), container).remove(); // remove loading text span
 
         if (newButton.length === 0) {
             bonzo(container).addClass('u-h');
-        } else if (currentButton) {
+        } else if (currentButton.length === 0) {
             bonzo(container).append(newButton);
         }
     }.bind(this);
