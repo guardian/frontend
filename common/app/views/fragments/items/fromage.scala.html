@@ -15,9 +15,7 @@
                @if(trail.isLive){fromage--live}
                tone-@tone
                tone-accent-border"
-        data-link-name="trail"
-        @trail.discussionId.map{ id => data-discussion-id="@id" }
-        data-discussion-closed="@trail.isClosedForComments">
+        data-link-name="trail">
 
         <div class="fromage__container">
             <a href="@LinkTo{@trail.url}" class="fromage__link" data-link-name="@{index + 1}">
@@ -51,7 +49,9 @@
             @trail.trailText.map { text =>
                 <div class="fromage__standfirst">@Html(text)</div>
             }
-            <div class="fromage__meta">
+            <div class="fromage__meta"
+                 @trail.discussionId.map{ id => data-discussion-id="@id" }
+                 data-discussion-closed="@trail.isClosedForComments">
                 <time class="fromage__timestamp js-item__timestamp"
                       itemprop="datePublished"
                       datetime="@trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
