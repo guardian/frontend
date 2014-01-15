@@ -402,7 +402,7 @@ video {
 }
 
 .article__meta-heading {
-    @include fs-headline(2);
+    @include fs-header(2);
     padding-top: $baseline;
     padding-bottom: $baseline*4;
     border-top: 1px dotted $c-neutral5;
@@ -438,6 +438,7 @@ video {
     }
 }
 .main-caption {
+    min-height: $baseline*7;
     max-width: gs-span(7);
 
     @include mq(tablet) {
@@ -503,7 +504,7 @@ video {
         display: table-cell;
         width: $a-rightCol-width;
     }
-    .article__secondary-column__inner {
+    .article__secondary-column__inner--fill-vertically {
         top: 0;
         bottom: 0;
         position: absolute;

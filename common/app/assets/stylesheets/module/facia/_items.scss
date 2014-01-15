@@ -355,16 +355,14 @@ $c-live: #e81818;
 }
 
 
-// Image tone
+// Image adjust
 // values: [hide|highlight] in the fronts tool
-.item--imagetone-hide {
-    .item__image {
-        
+item--imagetone-hide {
+    .item__media-wrapper {
     }
 }
-.item--imagetone-highlight {
-    .item__image {
-        
+.item--imageadjust-highlight {
+    .item__media-wrapper {
     }
 }
 

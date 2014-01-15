@@ -38,7 +38,8 @@ define([
     "common/modules/onward/history",
     "common/modules/onward/sequence",
     "common/modules/ui/message",
-    "common/modules/identity/autosignin"
+    "common/modules/identity/autosignin",
+    "common/modules/analytics/commercial/tags/container"
 ], function (
     $,
     mediator,
@@ -79,7 +80,8 @@ define([
     History,
     sequence,
     Message,
-    AutoSignin
+    AutoSignin,
+    TagContainer
 ) {
 
     var modules = {
@@ -348,6 +350,12 @@ define([
                 }
             });
         },
+        
+        loadTags : function() {
+            mediator.on('page:common:ready', function(config) {
+                TagContainer.init(config);
+            });
+        },
 
         windowEventListeners: function() {
             var events = {
@@ -409,6 +417,7 @@ define([
             modules.logReadingHistory();
             modules.unshackleParagraphs(config, context);
             modules.initAutoSignin(config);
+            modules.loadTags(config);
         }
         mediator.emit("page:common:ready", config, context);
     };

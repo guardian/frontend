@@ -3,13 +3,15 @@ define([
     'bonzo',
     'common/modules/discussion/api',
     'common/modules/identity/api',
-    'common/modules/component'
+    'common/modules/component',
+    'common/modules/discussion/user-avatars'
 ], function(
     bean,
     bonzo,
     DiscussionApi,
     IdentityApi,
-    Component
+    Component,
+    UserAvatars
 ) {
 
 /**
@@ -52,7 +54,6 @@ CommentBox.prototype.componentClass = 'd-comment-box';
  * @override
  */
 CommentBox.prototype.classes = {
-    bodyExpanded: 'd-comment-box__body--expanded'
 };
 
 /**
@@ -84,8 +85,7 @@ CommentBox.prototype.defaultOptions = {
     premod: false,
     focus: false,
     state: 'top-level',
-    replyTo: null,
-    cancelable: false
+    replyTo: null
 };
 
 /**
@@ -93,24 +93,43 @@ CommentBox.prototype.defaultOptions = {
  */
 CommentBox.prototype.errors = [];
 
-/** @oevrride */
+CommentBox.prototype.getUserData = function() {
+    return IdentityApi.getUserFromCookie();
+};
+
+/** @override */
 CommentBox.prototype.prerender = function() {
     if (!this.options.premod) {
         this.getElem('premod').parentNode.removeChild(this.getElem('premod'));
     }
 
+    var userData = this.getUserData();
+
+    this.getElem('author').innerHTML = userData.displayName;
+
     if (this.options.state === 'response') {
         this.getElem('submit').innerHTML = 'Post reply';
+    } else {
+        var avatar = this.getElem('avatar-wrapper');
+        avatar.setAttribute('userid', userData.id);
+        UserAvatars.avatarify(avatar);
     }
 
     if (this.options.replyTo) {
-        var elem = document.createElement('label');
-        elem.setAttribute('for', 'reply-to-'+ this.options.replyTo.commentId);
-        elem.className = 'label '+ this.getClass('reply-to', true);
-        elem.innerHTML = 'to '+ this.options.replyTo.author;
-        this.getElem('body').id = 'reply-to-'+ this.options.replyTo.commentId;
-        bonzo(elem).insertAfter(this.getElem('submit'));
+        var replyToAuthor = this.getElem('reply-to-author');
+        replyToAuthor.innerHTML = this.options.replyTo.author;
+        this.getElem('parent-comment-author').innerHTML = this.options.replyTo.author + " @ " + this.options.replyTo.timestamp + " said:";
+
+        this.getElem('parent-comment-body').innerHTML = this.options.replyTo.body;
+
+        var setSpoutMargin = function() {
+            var spoutOffset = replyToAuthor.offsetLeft + (replyToAuthor.getBoundingClientRect().width/2);
+            this.getElem('parent-comment-spout').style.marginLeft = spoutOffset + 'px';
+        };
+        window.setTimeout(setSpoutMargin.bind(this), 0);
+
     }
+
 };
 
 /** @override */
@@ -128,7 +147,9 @@ CommentBox.prototype.ready = function() {
     bean.on(this.context, 'submit', [this.elem], this.postComment.bind(this));
     bean.on(this.context, 'change keyup', [commentBody], this.setFormState.bind(this));
     bean.on(commentBody, 'focus', this.setExpanded.bind(this)); // this isn't delegated as bean doesn't support it
-    this.on('click', this.getClass('cancel'), this.cancel);
+    this.on('click', this.getClass('cancel'), this.cancelComment);
+    this.on('click', this.getClass('show-parent'), this.setState.bind(this, 'parent-visible', false));
+    this.on('click', this.getClass('hide-parent'), this.removeState.bind(this, 'parent-visible', false));
 
     this.setState(this.options.state);
 
@@ -224,19 +245,6 @@ CommentBox.prototype.fail = function(xhr) {
 };
 
 /**
- * @param {Event}
- * Destroy the box if reply, removes text if top level
- */
-CommentBox.prototype.cancel = function(e) {
-    if (this.hasState('top-level')) {
-        this.getElem('body').value = '';
-        this.setFormState();
-    } else {
-        this.destroy();
-    }
-};
-
-/**
  * TODO: remove the replace, get the Scala to be better
  * @return {string}
  */
@@ -288,6 +296,19 @@ CommentBox.prototype.verificationEmailSuccess = function(e) {
 CommentBox.prototype.verificationEmailFail = function(e) {
     this.clearErrors();
     this.error('EMAIL_VERIFIED_FAIL');
+};
+
+/**
+ * @param {Event=} e (optional)
+ */
+CommentBox.prototype.cancelComment = function(e) {
+    if (this.options.state === 'response') {
+        this.destroy();
+    } else {
+        this.getElem('body').value = '';
+        this.setFormState();
+        this.removeState('expanded');
+    }
 };
 
 return CommentBox;

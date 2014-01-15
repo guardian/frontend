@@ -3,7 +3,7 @@ package conf
 import com.gu.management.{ DefaultSwitch, Switchable }
 import common._
 import implicits.Collections
-import play.api.Plugin
+import play.api.{Application, Plugin}
 import play.api.libs.ws.WS
 import org.joda.time.DateMidnight
 
@@ -88,24 +88,32 @@ object Switches extends Collections {
 
   val iPhoneAppSwitch = Switch("Advertising", "iphone-app",
     "If this switch is on then the iPhone app upsell will be enabled.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 30)
+    safeState = Off, sellByDate = new DateMidnight(2014, 1, 30))
+
+  // Commercial Tags
+  
+  val AudienceScienceSwitch = Switch("Commercial Tags", "audience-science",
+    "If this switch is on the Audience Science will be enabled.",
+    safeState = Off, sellByDate = endOfQ4)
+
+  val ImrWorldwideSwitch = Switch("Commercial Tags", "imr-worldwide",
+    "Enable the IMR Worldwide audience segment tracking.",
+    safeState = Off, sellByDate = endOfQ4)
+  
+  val AmaaSwitch = Switch("Commercial Tags", "amaa",
+    "Enable the AMAA audience segment tracking.",
+    safeState = Off, sellByDate = endOfQ4)
+  
+  val QuantcastSwitch = Switch("Commercial Tags", "quantcast",
+    "Enable the Quantcast audience segment tracking.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 1, 20)
   )
 
   // Analytics Switches
 
-  val AudienceScienceSwitch = Switch("Analytics", "audience-science",
-    "If this switch is on the Audience Science will be enabled.",
-    safeState = Off, sellByDate = endOfQ4
-  )
-
   val AdDwellTimeLoggerSwitch = Switch("Analytics", "ad-dwell-times-logging",
     "If this is on the in-view advert tracker will log some data to the Play logs",
     safeState = On, sellByDate = new DateMidnight(2014, 1, 20)
-  )
-
-  val QuantcastSwitch = Switch("Analytics", "quantcast",
-    "Enable the Quantcast audience segment tracking.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 20)
   )
 
   val AdSlotImpressionStatsSwitch = Switch("Analytics", "adslot-impression-stats",
@@ -138,8 +146,8 @@ object Switches extends Collections {
     safeState = Off, new DateMidnight(2014, 2, 28)
   )
 
-  val BeaconRequestLogging = Switch("Performance Switches", "enable-beacon-request-logging",
-    "If this switch is on, then extra logging will be done for beacon redirects.",
+  val DiagnosticsRequestLogging = Switch("Diagnostics", "enable-diagnostics-request-logging",
+    "If this switch is on, then requests to the Diagnostics servers will be logged.",
     safeState = Off, new DateMidnight(2014, 2, 28)
   )
 
@@ -276,6 +284,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val RightHandMostPopularSwitch = Switch("Feature Switches", "right-hand-most-popular",
+    "If this switch is on, a component with most popular content from around the Guardian is displayed in the article right hand column at desktop breakpoints.",
+    safeState = Off, sellByDate = endOfQ4
+  )
+
   val IdentityEthicalAwardsSwitch = Switch("Feature Switches", "id-ethical-awards",
     "If this switch is on, Ethical awards forms will be available",
     safeState = Off, sellByDate = endOfQ4)
@@ -283,6 +296,7 @@ object Switches extends Collections {
   val IdentityFilmAwardsSwitch = Switch("Feature Switches", "id-film-awards",
     "If this switch is on, Film awards forms will be available",
     safeState = Off, sellByDate = endOfQ4)
+
 
   // A/B Test Switches
 
@@ -316,38 +330,13 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 1, 20)
   )
 
-  val ABOnwardIntrusive = Switch("A/B Tests", "ab-onward-intrusive",
-    "If this is switched on an AB test runs to test intrusive onward components",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 20)
-  )
-
-  val ABOnwardHighlightsPanel = Switch("A/B Tests", "ab-onward-highlights-panel",
-    "If this is switched on an AB test runs to test onward highlights panel",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 20)
-  )
-
   val ABEmailSignup = Switch("A/B Tests", "ab-email-signup",
     "If this is switched on an AB test runs to test article page email signups",
     safeState = Off, sellByDate = new DateMidnight(2014, 1, 24)
   )
 
-  val ABRightPopular = Switch("A/B Tests", "ab-right-popular",
-    "If this is switched on an AB test runs to trail a right hand side most popular component",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 20)
-  )
-
-  val ABRightPopularControl = Switch("A/B Tests", "ab-right-popular-control",
-    "If this is switched on an AB test runs as a control variant for right most popular",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 20)
-  )
-
   val TagLinking = Switch("Feature Switches", "tag-linking",
     "If this is switched on articles that have no in body links will auto link to their tags where possible",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 20)
-  )
-
-  val ABUnderlineLinks = Switch("A/B Tests", "ab-underline-links",
-    "If this is switched on an AB test runs whereby links in articles are underline (with CSS)",
     safeState = Off, sellByDate = new DateMidnight(2014, 1, 20)
   )
 
@@ -447,28 +436,26 @@ object Switches extends Collections {
     EditionRedirectLoggingSwitch,
     FacebookAutoSigninSwitch,
     IdentityFormstackSwitch,
+    RightHandMostPopularSwitch,
     IdentityEthicalAwardsSwitch,
     IdentityFilmAwardsSwitch,
     ABAa,
-    ABOnwardIntrusive,
-    ABOnwardHighlightsPanel,
     ABAlphaComm,
     ABCommercialInArticleDesktop,
     ABCommercialInArticleMobile,
     ABChartbeatDesktop,
-    ABRightPopularControl,
     ABMobileFacebookAutosignin,
-    ABRightPopular,
     AdDwellTimeLoggerSwitch,
     ABEmailSignup,
     NetworkFrontUkAlpha,
     NetworkFrontUsAlpha,
     NetworkFrontAuAlpha,
     TagLinking,
-    ABUnderlineLinks,
     SponsoredContentSwitch,
     OphanMultiEventSwitch,
-    BeaconRequestLogging,
+    AmaaSwitch,
+    ImrWorldwideSwitch,
+    DiagnosticsRequestLogging,
     OmnitureVerificationSwitch
   )
 
@@ -477,7 +464,7 @@ object Switches extends Collections {
   def byName(name: String): Option[Switch] = all.find(_.name.equals(name))
 }
 
-
+class SwitchBoardPlugin(app: Application) extends SwitchBoardAgent(Configuration)
 class SwitchBoardAgent(config: GuardianConfiguration) extends Plugin with ExecutionContexts with Logging {
 
   def refresh() {

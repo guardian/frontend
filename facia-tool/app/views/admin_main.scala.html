@@ -1,4 +1,4 @@
-@(title: String, env: String, isAuthed: Boolean = false, identity: String = "{}")(content: Html)
+@(title: String, env: String, isAuthed: Boolean = false, identity: Option[Identity] = None)(content: Html)
 
 <!DOCTYPE html>
 
@@ -43,7 +43,8 @@
         <script>
             define('config', function() {
                 return {
-                    env:    '@env.toLowerCase'
+                    env: '@env.toLowerCase',
+                    email: '@identity.map(_.email).getOrElse("")'
                 }
             });
         </script>

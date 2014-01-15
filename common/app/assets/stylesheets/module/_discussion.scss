@@ -41,9 +41,6 @@ $replyIndent: 26px;
 .discussion__comment-count {
     color: $c-neutral3;
 }
-.d-thread--responses,
-.d-comment-box--response {
-}
 
 .show-more__container {
     margin-bottom: $baseline*2;
@@ -116,19 +113,20 @@ $replyIndent: 26px;
 
 .d-comment__inner {
     position: relative;
-    padding-top: $baseline;
+    padding-top: $gs-baseline;
     overflow: hidden;
 }
 
 .d-comment--top-level {
-    border-top: 1px solid $c-neutral4;
+    border-top: 1px solid $c-neutral3;
 }
 
 .d-comment:target {
     background-color: $c-neutral7;
 }
 
-.d-comment__meta {
+.d-comment__meta,
+.d-comment-box__meta {
     height: $avatarSize + $baseline;
     margin-bottom: $baseline*2;
     white-space: nowrap;
@@ -145,20 +143,35 @@ $replyIndent: 26px;
     }
 }
 
-.d-comment__avatar-wrapper {
+.d-comment-box__meta {
+    margin-top: $gs-baseline/2;
+    position: relative;
+    display: none;
+    @include mq($comment-meta-breakpoint) {
+        display: block;
+    }
+}
+
+.d-comment__avatar-wrapper,
+.d-comment-box__avatar-wrapper {
     margin-right: $baseline*2;
     margin-top: $baseline;
     float: left;
+    @include mq($comment-meta-breakpoint, wide) {
+        float: none;
+    }
 }
 
-.d-comment__avatar {
+.d-comment__avatar,
+.user-avatar__image {
     width: $avatarSize;
     height: $avatarSize;
     @include rounded-corners(36px);
     overflow:hidden;
 }
 
-.d-comment__meta-text {
+.d-comment__meta-text,
+.d-comment-box__meta-text {
     padding-right: 50px;
     @include box-sizing(border-box);
     @include mq(desktop) {
@@ -174,7 +187,8 @@ $replyIndent: 26px;
     padding-right: 0;
 }
 
-.d-comment__author {
+.d-comment__author,
+.d-comment-box__author {
     @include fs-data(4);
     color: $c-neutral1;
     font-weight: bold;
@@ -201,10 +215,15 @@ $replyIndent: 26px;
     a { color: $c-neutral2; }
 }
 
-.d-comment__reply-to-author {
+.d-comment__reply-to-author,
+.d-comment-box__reply-to-author {
     color: $c-neutral1;
     @include fs-data(3);
     display: none;
+}
+
+.d-comment-box__reply-to-author {
+    display: inline;
 }
 
 .d-comment--new {
@@ -262,6 +281,11 @@ $replyIndent: 26px;
         margin-top: 0;
         min-height: 3.5em;
     }
+
+    blockquote {
+        margin: $gs-baseline $gs-gutter;
+        padding-left: $gs-gutter/2;
+    }
 }
 
 /* Recommend
@@ -270,7 +294,7 @@ $replyIndent: 26px;
 .d-comment__recommend {
     position: absolute;
     right: 0;
-    top: $gs-baseline/2;
+    top: $gs-baseline;
     z-index: 1;
     @include mq(tablet){
         min-width: 28px;
@@ -319,7 +343,8 @@ $replyIndent: 26px;
     }
 }
 
-.d-comment__recommend-count--new, .d-comment__recommend-count--old {
+.d-comment__recommend-count--new,
+.d-comment__recommend-count--old {
     display: block;
     position: relative;
 }
@@ -327,7 +352,8 @@ $replyIndent: 26px;
 .d-comment__recommend--active {
     cursor: pointer;
 
-    .d-comment__recommend-button, .d-comment__recommend-pulse {
+    .d-comment__recommend-button,
+    .d-comment__recommend-pulse {
         background-color: $c-newsDefault;
     }
     .d-comment__recommend-count {
@@ -348,7 +374,8 @@ $replyIndent: 26px;
 
 .d-comment__recommend--user-recommended {
 
-    .d-comment__recommend-button, .d-comment__recommend-pulse {
+    .d-comment__recommend-button,
+    .d-comment__recommend-pulse {
         @include transition(background-color 0.25s ease-in-out);
         background-color: $c-commentDefault;
     }
@@ -361,7 +388,8 @@ $replyIndent: 26px;
         color: $c-commentDefault;
     }
 
-    .d-comment__recommend-count--old, .d-comment__recommend-count--new {
+    .d-comment__recommend-count--old,
+    .d-comment__recommend-count--new {
         top: -1.6rem;
         @include transition(top 0.15s ease-in-out);
         @include transition-delay(0.15s);
@@ -381,26 +409,27 @@ $replyIndent: 26px;
     bottom: 0;
 }
 
-.d-comment__reply-wrapper {
-    display: inline;
+.d-comment__action {
+    color: $c-newsDefault;
+    font-weight: bold;
+    display: inline-block;
+    line-height: 2rem;
+}
+
+.d-comment__action--reply {
     cursor: pointer;
     &:hover {
         text-decoration: underline;
     }
 }
+
 .d-comment__reply-button {
     @include icon-button(18px, -5px, -6px);
     background-color: $c-newsDefault;
     position: absolute;
-    margin-top: -3px;
 }
 
-.d-comment__action {
-    color: $c-newsDefault;
-    font-weight: bold;
-}
-
-.d-comment__action--reply {
+.d-comment__action--reply-text {
     padding-left: 25px;
 }
 
@@ -420,8 +449,9 @@ $replyIndent: 26px;
 }
 
 .discussion--open {
-    .d-comment__reply-wrapper, .d-comment__action-separator {
-        display: inline;
+    .d-comment__reply-wrapper,
+    .d-comment__action-separator {
+        display: inline-block;
     }
 }
 
@@ -444,8 +474,8 @@ $replyIndent: 26px;
 /* Reply comment
    ========================================================================== */
 
-.d-comment--response {
-    margin-left: $replyIndent;
+.d-comment--response,
+.d-comment-box--response {
     border-top: 1px dotted $c-neutral3;
 
     @include mq($comment-meta-breakpoint) {
@@ -466,6 +496,7 @@ $replyIndent: 26px;
         margin-left: 0;
     }
     .d-comment__inner {
+        padding-top: $gs-baseline/2;
     }
     .d-comment__body {
         color: $c-replyText;
@@ -475,22 +506,52 @@ $replyIndent: 26px;
         }
     }
     .d-comment__recommend {
-        top: $baseline;
+        top: $gs-baseline/2;
     }
+    .d-comment__timestamp { margin-top: -4px; }
+}
+.d-comment-box--response {
+    .d-comment-box {
+        padding-left: none;
+    }
+    .d-comment-box__content {
+        margin-left: 0
+    }
+    .d-comment-box__avatar-wrapper {
+        display: none;
+    }
+}
+.d-comment--response,
+.d-comment-box--response {
 
-    .d-comment__meta {
+    .d-comment__meta,
+    .d-comment-box__meta {
         height: auto;
         display: block;
         float: none;
         width: 100%;
         .d-comment__timestamp { display: none; }
-        .d-comment__author { display: inline; @include fs-data(4); }
-        .i-in-reply-arrow { display: inline-block; }
-        .d-comment__reply-to-author { display: inline; }
         .d-comment__avatar-wrapper { display: none; }
     }
-    .d-comment__meta-text { margin-left: 0; position: static; }
-    .d-comment__timestamp { margin-top: -4px; }
+
+    .i-in-reply-arrow {
+        display: inline-block;
+    }
+    .d-comment__author,
+    .d-comment-box__author {
+        display: inline;
+        @include fs-data(4);
+        padding-right: 0;
+    }
+    .d-comment__meta-text,
+    .d-comment-box__meta-text {
+        margin-left: 0;
+        position: static;
+    }
+    .d-comment__reply-to-author,
+    .d-comment-box__reply-to-author {
+        display: inline;
+    }
 }
 
 .d-discussion__error {
@@ -605,7 +666,10 @@ $replyIndent: 26px;
         }
     }
 
-    .show-more__container--newer, .show-more__container--older { display: none; }
+    .show-more__container--newer,
+    .show-more__container--older {
+        display: none;
+    }
 
     .d-comment__actions { display: none; }
     .d-comment__content {
@@ -865,7 +929,22 @@ $replyIndent: 26px;
     margin-bottom: $baseline*4;
 }
 
-.d-comment-box {
+.d-comment-box__body {
+    @include box-sizing(border-box);
+    border: 1px solid $c-neutral3;
+    height: 50px;
+    margin: $baseline*2 0;
+    padding: $baseline*2 $gutter/2;
+    resize: vertical;
+    width: 100%;
+    word-break: break-word;
+
+}
+
+.d-comment-box__content {
+
+    position: relative;
+
     @include mq($comment-meta-breakpoint) {
         margin-left: 160px;
     }
@@ -874,16 +953,6 @@ $replyIndent: 26px;
     }
     @include mq(wide) {
         margin-left:  $a-leftColWide-width + $gs-gutter;
-    }
-}
-
-.d-comment-box--expanded {
-    .d-comment-box__body {
-        height: gs-height(3);
-    }
-
-    .d-comment-box__cancel {
-        display: inline-block;
     }
 }
 
@@ -900,16 +969,22 @@ $replyIndent: 26px;
 .d-comment-box__body {
     @include box-sizing(border-box);
     border: 1px solid $c-neutral3;
-    height: gs-height(1.5);
+    height: 50px;
     margin: $baseline*2 0;
     padding: $baseline*2 $gutter/2;
     resize: vertical;
     width: 100%;
     word-break: break-word;
+    blockquote {
+        margin: $gs-baseline $gs-gutter;
+        padding-left: $gs-gutter/2;
+        border-left: 3px solid $c-neutral4;
+
+    }
 }
 
-.d-comment-box__body--expanded {
-    height: 150px;
+.d-comment-box--expanded .d-comment-box__body {
+    height: gs-height(3);
 }
 
 .d-comment-box__add-comment {
@@ -927,14 +1002,49 @@ $replyIndent: 26px;
 .d-comment-box__cancel {
     @include fs-data(2);
     color: $c-neutral1;
+}
+.d-comment-box__hide-parent,
+.d-comment-box__show-parent {
+    @include fs-data(3);
+    margin-left: $gs-gutter;
+    display: none;
+}
+
+.d-comment-box--response {
+    .d-comment-box__show-parent {
+        display: inline;
+    }
+
+    &.d-comment-box--parent-visible {
+        .d-comment-box__hide-parent {
+            display: inline;
+        }
+        .d-comment-box__show-parent {
+            display: none;
+        }
+    }
+}
+
+
+.d-comment-box__reply-to {
     display: inline-block;
 }
 
 .d-comment-box__cancel {
     color: $c-neutral2;
+    position: absolute;
+    right: 0;
+    bottom: $gs-baseline;
     display: none;
-    float: right;
-    margin-top: $baseline*3;
+}
+
+.d-comment-box--expanded .d-comment-box__cancel,
+.d-comment-box--response .d-comment-box__cancel {
+    display: inline-block;
+}
+
+.d-comment-box--response .d-comment__meta {
+    display: none;
 }
 
 .open-cta {
@@ -947,5 +1057,43 @@ $replyIndent: 26px;
     .clamp__fade-content {
         border-top: 1px solid $c-neutral3;
         background: $c-neutral7;
+    }
+}
+
+.d-comment-box__parent-comment-spout {
+    display: block;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-right: 16px solid transparent;
+    border-bottom: 16px solid $c-neutral7;
+    border-right-style: inset;
+    margin-left: $gs-gutter*2;
+}
+
+.d-comment-box__parent-comment {
+    background-color: $c-neutral7;
+    padding: $gs-baseline $gs-gutter;
+    .d-comment-box__hide-parent {
+        margin-left: 0;
+    }
+}
+
+.d-comment-box__parent-comment-author {
+    font-weight: bold;
+    margin-bottom: $gs-baseline/2;
+    color: $c-neutral1;
+    display: inline-block;
+}
+.d-comment-box__parent-comment-body {
+    position: relative;
+}
+.d-comment-box__parent-comment-wrapper {
+    margin-top: $gs-baseline/2;
+    display: none;
+}
+.d-comment-box--parent-visible {
+    .d-comment-box__parent-comment-wrapper {
+        display: block;
     }
 }
