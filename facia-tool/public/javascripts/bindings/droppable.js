@@ -161,7 +161,8 @@ define([
                         alertBadContent();
                     })
                     .done(function() {
-                        var itemMeta;
+                        var itemMeta,
+                            timestamp;
 
                         if (_.isFunction(targetList.reflow)) {
                             targetList.reflow();
@@ -188,8 +189,8 @@ define([
                             delete itemMeta.group;
                         }
 
-                        itemMeta.updatedAt = itemMeta.updatedAt ? itemMeta.updatedAt + ',' : "";
-                        itemMeta.updatedAt = itemMeta.updatedAt + Math.floor(new Date().getTime()/1000);
+                        timestamp = Math.floor(new Date().getTime()/1000);
+                        itemMeta.updatedAt = itemMeta.updatedAt ? itemMeta.updatedAt + ',' + timestamp : timestamp + ':f90'; // orange for the initial flag
 
                         authedAjax.updateCollection(
                             'post',

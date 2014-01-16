@@ -3,7 +3,6 @@ define([
     'modules/vars',
     'utils/as-observable-props',
     'utils/populate-observables',
-    'utils/number-with-commas',
     'utils/full-trim',
     'models/group',
     'modules/authed-ajax',
@@ -15,7 +14,6 @@ define([
         vars,
         asObservableProps,
         populateObservables,
-        numberWithCommas,
         fullTrim,
         Group,
         authedAjax,
@@ -56,16 +54,15 @@ define([
                 'open',
                 'shares',
                 'comments',
-                'totalHits',
-                'pageViewsSeries']);
+                'sparkUrl']);
 
             // Computeds
             this.humanDate = ko.computed(function(){
                 return this.props.webPublicationDate() ? humanized_time_span(this.props.webPublicationDate()) : '';
             }, this);
 
-            this.totalHitsFormatted = ko.computed(function(){
-                return numberWithCommas(this.state.totalHits());
+            this.sparkUrl = ko.computed(function(){
+                return vars.CONST.sparksBase + this.props.id() + (this.meta.updatedAt() ? '&markers=' + this.meta.updatedAt() : '');
             }, this);
 
             this.headlineInput  = this.overrider('headline');
@@ -189,7 +186,9 @@ define([
         };
 
         Article.prototype._save = function() {
-            var self = this;
+            var self = this,
+                timestamp,
+                itemMeta;
 
             if (!this.parent) {
                 return;
@@ -202,13 +201,18 @@ define([
             }
 
             if (this.parentType === 'Collection') {
+                itemMeta = this.getMeta();
+                timestamp = Math.floor(new Date().getTime()/1000);
+                
+                itemMeta.updatedAt = (itemMeta.updatedAt ? itemMeta.updatedAt + ',' : '') + timestamp + ':0C0'; // green for overrides etc.
+                
                 authedAjax.updateCollection(
                     'post',
                     this.parent,
                     {
                         item:     self.props.id(),
                         position: self.props.id(),
-                        itemMeta: self.getMeta(),
+                        itemMeta: itemMeta,
                         live:     vars.state.liveMode(),
                         draft:   !vars.state.liveMode()
                     }

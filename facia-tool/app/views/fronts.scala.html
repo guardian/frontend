@@ -251,8 +251,7 @@
 
             <div data-bind="if: !state.open()">
                 <a class="article_stats u-cf" target="ophan" data-bind="attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + props.id()}">
-                    <img data-bind="
-                        attr: {src: 'http://ec2-54-216-179-11.eu-west-1.compute.amazonaws.com:8080/?graphs=other:09f,google:090,guardian:009&showStats=1&showHours=1&width=100&height=40&page=/' + props.id() + '&markers=' + (meta.updatedAt() || '') }" />
+                    <img data-bind="attr: {src: sparkUrl}" />
                 </a>
 
                 <div class="article_content" data-bind="click: open,">
