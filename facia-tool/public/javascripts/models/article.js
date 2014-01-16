@@ -8,7 +8,6 @@ define([
     'models/group',
     'modules/authed-ajax',
     'modules/content-api',
-    'modules/ophan-api',
     'knockout',
     'js!humanized-time-span'
 ],
@@ -21,7 +20,6 @@ define([
         Group,
         authedAjax,
         contentApi,
-        ophanApi,
         ko
         ){
         function Article(opts) {
@@ -92,7 +90,6 @@ define([
                 });
 
                 contentApi.decorateItems(self.meta.supporting.items());
-                ophanApi.decorateItems(self.meta.supporting.items());
             }
         }
 

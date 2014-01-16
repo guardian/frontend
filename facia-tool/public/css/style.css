@@ -235,7 +235,7 @@ a, a:hover {
     border-bottom: 0;
 }
 
-.article img {
+.article .thumb {
     float: left;
     width: 75px;
     height: 45px;
@@ -245,7 +245,7 @@ a, a:hover {
 }
 
 .article_content {
-    margin: 0 100px 0 85px;
+    margin: 0 110px 0 85px;
     line-height: 0;
 }
 
@@ -705,7 +705,7 @@ button {
         margin-left: 0;
         margin-right: 5px;
     }
-    .article img,
+    .article .thumb,
     .article__date {
         display: none;
     }

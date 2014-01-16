@@ -9,7 +9,6 @@ define([
     'models/group',
     'models/article',
     'modules/content-api',
-    'modules/ophan-api',
     'js!humanized-time-span'
 ], function(
     config,
@@ -20,8 +19,7 @@ define([
     authedAjax,
     Group,
     Article,
-    contentApi,
-    ophanApi
+    contentApi
     ) {
     function Collection(opts) {
         var self = this;
@@ -233,7 +231,6 @@ define([
     Collection.prototype.decorate = function() {
         _.each(this.groups, function(group) {
             contentApi.decorateItems(group.items());
-            ophanApi.decorateItems(group.items());
         });
     };
 

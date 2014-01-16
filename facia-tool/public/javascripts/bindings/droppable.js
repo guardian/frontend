@@ -8,8 +8,7 @@ define([
     'modules/authed-ajax',
     'models/group',
     'models/article',
-    'modules/content-api',
-    'modules/ophan-api'
+    'modules/content-api'
 ], function(
     ko,
     vars,
@@ -19,8 +18,7 @@ define([
     authedAjax,
     Group,
     Article,
-    contentApi,
-    ophanApi
+    contentApi
 ) {
     var sourceList,
         storage = window.localStorage,
@@ -164,8 +162,6 @@ define([
                     })
                     .done(function() {
                         var itemMeta;
-
-                        ophanApi.decorateItems([article]);
 
                         if (_.isFunction(targetList.reflow)) {
                             targetList.reflow();
