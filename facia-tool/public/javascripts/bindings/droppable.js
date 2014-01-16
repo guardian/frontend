@@ -188,6 +188,9 @@ define([
                             delete itemMeta.group;
                         }
 
+                        itemMeta.updatedAt = itemMeta.updatedAt ? itemMeta.updatedAt + ',' : "";
+                        itemMeta.updatedAt = itemMeta.updatedAt + Math.floor(new Date().getTime()/1000);
+
                         authedAjax.updateCollection(
                             'post',
                             targetList.parent,

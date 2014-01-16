@@ -45,6 +45,7 @@ define([
             this.fields.headline('...');
 
             this.meta = asObservableProps([
+                'updatedAt',
                 'headline',
                 'trailText',
                 'imageAdjust',

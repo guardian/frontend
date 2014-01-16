@@ -29,7 +29,7 @@ trait UpdateActions {
 
   lazy val defaultMinimumTrailblocks = 0
   lazy val defaultMaximumTrailblocks = 20
-  val itemMetaWhitelistFields: Seq[String] = Seq("headline", "trailText", "group", "supporting", "imageAdjust")
+  val itemMetaWhitelistFields: Seq[String] = Seq("headline", "trailText", "group", "supporting", "imageAdjust", "updatedAt")
 
   def getBlock(id: String): Option[Block] = FaciaApi.getBlock(id)
 
