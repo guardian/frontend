@@ -1,6 +1,6 @@
-define(['common/modules/facia/popular', 'bonzo', 'common/$', 'bean', 'helpers/fixtures', 'common/utils/ajax'], function(popular, bonzo, $, bean, fixtures, ajax) {
+define(['common/modules/onward/popular-fronts', '../../../../.', 'common/$', 'bean', 'helpers/fixtures', 'common/utils/ajax'], function(popular, bonzo, $, bean, fixtures, ajax) {
 
-    describe('Popular', function() {
+    describe('Popular Fronts', function() {
 
         var server,
             response = JSON.stringify({

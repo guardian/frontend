@@ -46,29 +46,34 @@ module.exports = function (grunt) {
         },
 
         requirejs: {
-            compile: {
+            options: {
+                baseUrl: staticRequireDir,
+                paths: {
+                    bean:         'common/components/bean/bean',
+                    bonzo:        'common/components/bonzo/src/bonzo',
+                    domReady:     'common/components/domready/ready',
+                    EventEmitter: 'common/components/eventEmitter/EventEmitter',
+                    qwery:        'common/components/qwery/mobile/qwery-mobile',
+                    reqwest:      'common/components/reqwest/src/reqwest',
+                    postscribe:   'common/components/postscribe/dist/postscribe',
+                    swipe:        'common/components/swipe/swipe',
+                    swipeview:    'common/components/swipeview/src/swipeview',
+                    lodash:       'common/components/lodash-amd/modern',
+                    imager:       'common/components/imager.js/src/strategies/container',
+                    omniture:     '../../common/app/public/javascripts/vendor/omniture',
+                    'ophan/ng':   'empty:'
+                },
+                optimize: (isDev) ? 'none' : 'uglify2',
+                useSourceUrl: (isDev) ? true : false,
+                preserveLicenseComments: false
+            },
+            common: {
                 options: {
-                    baseUrl: staticRequireDir,
-                    name: "common/bootstraps/app",
-                    out: staticTargetDir + "javascripts/bootstraps/app.js",
-                    paths: {
-                        bean:         "common/components/bean/bean",
-                        bonzo:        "common/components/bonzo/src/bonzo",
-                        domReady:     "common/components/domready/ready",
-                        EventEmitter: "common/components/eventEmitter/EventEmitter",
-                        qwery:        "common/components/qwery/mobile/qwery-mobile",
-                        reqwest:      "common/components/reqwest/src/reqwest",
-                        postscribe:   "common/components/postscribe/dist/postscribe",
-                        swipe:        "common/components/swipe/swipe",
-                        swipeview:    "common/components/swipeview/src/swipeview",
-                        lodash:       "common/components/lodash-amd/modern",
-                        imager:       'common/components/imager.js/src/strategies/container',
-                        omniture:     '../../common/app/public/javascripts/vendor/omniture',
-                        'ophan/ng':   'empty:'
-                    },
+                    name: 'common/bootstraps/app',
+                    out: staticTargetDir + 'javascripts/bootstraps/app.js',
                     shim: {
                         postscribe: {
-                            exports: "postscribe"
+                            exports: 'postscribe'
                         },
                         imager: {
                             deps: ['common/components/imager.js/src/imager'],
@@ -79,51 +84,29 @@ module.exports = function (grunt) {
                         }
                     },
                     wrap: {
-                        startFile: "common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js",
-                        endFile:   "common/app/assets/javascripts/bootstraps/go.js"
-                    },
-                    optimize: (isDev) ? 'none' : 'uglify2',
-                    useSourceUrl: (isDev) ? true : false,
-                    preserveLicenseComments: false
+                        startFile: 'common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js',
+                        endFile:   'common/app/assets/javascripts/bootstraps/go.js'
+                    }
                 }
             },
             admin: {
                 options: {
-                    baseUrl: staticRequireDir,
-                    name: "bootstraps/admin",
-                    out: staticTargetDir + "javascripts/bootstraps/admin.js",
-                    paths: {
-                        bean:         "common/components/bean/bean",
-                        bonzo:        "common/components/bonzo/src/bonzo",
-                        domReady:     "common/components/domready/ready",
-                        EventEmitter: "common/components/eventEmitter/EventEmitter",
-                        qwery:        "common/components/qwery/mobile/qwery-mobile",
-                        reqwest:      "common/components/reqwest/src/reqwest",
-                        postscribe:   "common/components/postscribe/dist/postscribe",
-                        swipe:        "common/components/swipe/swipe",
-                        swipeview:    "common/components/swipeview/src/swipeview",
-                        lodash:       "common/components/lodash-amd/modern",
-                        imager:       'common/components/imager.js/src/strategies/container',
-                        omniture:     '../../common/app/public/javascripts/vendor/omniture'
-                    },
-                    shim: {
-                        postscribe: {
-                            exports: "postscribe"
-                        },
-                        imager: {
-                            deps: ['common/components/imager.js/src/imager'],
-                            exports: 'Imager'
-                        },
-                        omniture: {
-                            exports: 's'
-                        }
-                    },
+                    name: 'bootstraps/admin',
+                    out: staticTargetDir + 'javascripts/bootstraps/admin.js',
                     wrap: {
-                        startFile: "common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js"
-                    },
-                    optimize: (isDev) ? 'none' : 'uglify2',
-                    useSourceUrl: (isDev) ? true : false,
-                    preserveLicenseComments: false
+                        startFile: 'common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js'
+                    }
+                }
+            },
+            facia: {
+                options: {
+                    dir: staticTargetDir + 'javascripts',
+                    modules: [
+                        {
+                            name: 'bootstraps/facia',
+                            exclude: ['common/bootstraps/app']
+                        }
+                    ]
                 }
             }
         },
@@ -755,12 +738,10 @@ module.exports = function (grunt) {
         }
         // When an app defines it's own javascript application, the requirejs task will need to compile both
         // common and app.
-        grunt.task.run('requirejs:compile');
-
-        // Admin has its own application.
-        if (app && app === "admin") {
-            grunt.task.run('requirejs:admin');
+        if (app) {
+            grunt.task.run('requirejs:' + app);
         }
+        grunt.task.run('requirejs:common');
     });
     grunt.registerTask('compile:fonts', ['clean:fonts', 'mkdir:fontsTarget', 'webfontjson']);
     grunt.registerTask('compile:flash', ['clean:flash', 'copy:flash']);

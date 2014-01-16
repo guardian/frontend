@@ -1,7 +1,7 @@
 define([
-    'common/modules/facia/container-toggle',
+    'common/modules/ui/container-toggle',
     'common/common',
-    'bonzo',
+    '../../../../.',
     'bean',
     'common/modules/userPrefs'
 ], function(ContainerDisplayToggle, common, bonzo, bean, userPrefs) {
