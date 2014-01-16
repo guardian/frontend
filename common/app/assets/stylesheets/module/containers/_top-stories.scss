@@ -91,6 +91,9 @@
                 @include fs-headline(2, true);
                 clear: both;
             }
+            .item--thumbnail .item__standfirst {
+                clear: none;
+            }
             .item--has-image {
                 .item__title {
                     @include fs-headline(5, true);
