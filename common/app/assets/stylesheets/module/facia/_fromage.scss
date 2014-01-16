@@ -1,0 +1,457 @@
+/**
+ * Fromage object
+ * 
+ * Single full width story, featuring:
+ * - volume
+ * - image adjustment (hide/default/highlight)
+ * - supporting links
+ */
+
+// Enhance contrast of grey text on light grey background
+$c-neutral2-contrasted: darken($c-neutral2, 3%);
+
+
+/* Wrapper
+   ===========================================================================*/
+
+.fromage {
+    @include rem((
+        margin: 0 $gs-gutter/2 $gs-baseline*2
+    ));
+    border-top-width: 2px;
+    border-top-style: solid;
+}
+.fromage,
+.fromage__container {
+    @include clearfix;
+}
+.fromage__container {
+    border-top: 2px solid white;
+
+    @include mq(tablet) {
+        @include rem((
+            padding-left: gs-span(5) + $gs-gutter
+        ));
+    }
+    @include mq(desktop) {
+        @include rem((
+            padding-left: gs-span(6) + $gs-gutter
+        ));
+    }
+}
+
+/* Main elements
+   ===========================================================================*/
+
+.fromage__link {
+    color: $c-neutral1;
+
+    &:hover,
+    &:focus {
+        .fromage__title {
+            text-decoration: underline;
+        }
+    }
+    &:visited {
+        &,
+        .fromage__title {
+            color: $c-neutral2;
+        }
+    }
+
+    @include mq(tablet) {
+        float: left;
+        @include rem((
+            width: gs-span(5),
+            margin-left: (gs-span(5) + $gs-gutter) * -1
+        ));
+    }
+    @include mq(desktop) {
+        @include rem((
+            width: gs-span(6),
+            margin-left: (gs-span(6) + $gs-gutter) * -1
+        ));
+    }
+}
+.fromage__media-wrapper {
+    @include mq(tablet) {
+        float: left;
+        position: relative;
+        @include rem((
+            width: gs-span(3),
+            margin-left: (gs-span(3) + $gs-gutter) * -1
+        ));
+    }
+}
+.fromage__image-container {
+    position: relative;
+    padding-bottom: 60%;
+
+    .responsive-img {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+}
+.fromage__title {
+    @include fs-headline(2, true);
+    @include rem((
+        margin-top: $gs-baseline/3,
+        margin-bottom: $gs-baseline
+    ));
+    @include mq(tablet) {
+        display: table-cell;
+        width: 100000px;
+        max-width: 100%;
+        padding-top: 3px; // Align x-height with standfirst
+        margin-bottom: 0;
+        @include fs-headline(4, true);
+    }
+    @include mq(desktop) {
+        @include fs-headline(5, true);
+    }
+}
+.fromage__standfirst {
+    @include fs-headline(1);
+    color: $c-neutral2;
+
+    @include rem((
+        margin-top: $gs-baseline / 2,
+        margin-bottom: $gs-baseline*1.5
+    ));
+    @include mq(tablet) {
+        @include rem((
+            margin-bottom: $gs-baseline
+        ));
+    }
+    @include mq(desktop) {
+        @include fs-headline(2, true);
+    }
+}
+.fromage__title,
+.fromage__standfirst {
+    @include mq(tablet) {
+        @include rem((
+            max-width: gs-span(5)
+        ));
+    }
+}
+
+
+/* Meta
+   ===========================================================================*/
+
+.fromage__meta {
+    overflow: hidden;
+    @include fs-data(1);
+    color: $c-neutral2;
+
+    @include mq(tablet) {
+        @include fs-data(3, true);
+    }
+
+    .fromage__timestamp,
+    .trail__count {
+        position: relative;
+        float: left;
+
+        i {
+            position: absolute;
+            left: 0;
+            top: 2px;
+            margin: 0;
+        }
+    }
+    .fromage__timestamp {
+        min-width: gs-span(1) - 16;
+        padding-right: $gs-gutter/2;
+        padding-left: 14px;
+
+        i {
+            left: 0;
+            top: 3px;
+            @include mq(tablet) {
+                top: 2px;
+            }
+        }
+    }
+    .trail__count {
+        padding-left: 28px;
+        top: 0;
+
+        a {
+            line-height: inherit;
+            color: inherit;
+        }
+        i {
+            top: 3px;
+            left: $gs-gutter/2 - 1;
+        }
+    }
+}
+.fromage__timestamp {
+    min-width: 44px;
+    padding-right: 10px;
+    padding-left: 14px;
+    position: relative;
+    float: left;
+}
+
+
+/* Support
+   ===========================================================================*/
+
+.fromage__support {
+    clear: both;
+
+    @include rem((
+        margin-top: $gs-baseline/2
+    ));
+}
+.fromage__support-list {
+    margin: 0;
+    list-style-type: none;
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+.fromage__support__item {
+    border-top: 1px solid $c-neutral5;
+
+    @include mq(tablet) {
+        display: table-cell;
+
+        & + & {
+            border-left: 1px solid $c-neutral5;
+
+            .fromage__support__action {
+                @include rem((
+                    padding-left: $gs-gutter/4
+                ));
+            }
+        }
+    }
+}
+.fromage__support__action {
+    display: block;
+    margin: 0;
+    color: $c-neutral2-contrasted;
+    @include rem((
+        padding-top: $gs-baseline/2,
+        padding-bottom: $gs-baseline/2,
+        padding-right: $gs-gutter/4
+    ));
+}
+
+
+/* Modifier: image hide/default/highlight
+   ===========================================================================*/
+
+.fromage--has-no-image {
+    .fromage__container {
+        border-top-width: 0;
+    }
+    .fromage__media-wrapper {
+        display: none;
+    }
+    .fromage__link {
+        @include mq(tablet) {
+            @include clearfix;
+        }
+    }
+    .fromage__title {
+        @include fs-headline(4, true);
+
+        @include mq(tablet) {
+            @include fs-headline(5, true);
+            @include rem((
+                padding-left: $gs-gutter/4
+            ));
+        }
+        @include mq(desktop) {
+            @include fs-headline(6, true);
+        }
+    }
+}
+.fromage--has-image {
+    .fromage__title,
+    .fromage__standfirst {
+        @include mq(desktop) {
+            @include rem((
+                max-width: gs-span(4)
+            ));
+        }
+    }
+    .fromage__link {
+        @include mq(tablet, desktop) {
+            width: auto;
+            margin-left: 0;
+            padding-left: 0;
+            float: none;
+        }
+        @include mq(desktop) {
+            @include rem((
+                width: gs-span(4),
+                padding-left: gs-span(3) + $gs-gutter,
+                margin-left: (gs-span(7) + $gs-gutter) * -1
+            ));
+        }
+    }
+    .fromage__container {
+        @include mq(tablet) {
+            @include rem((
+                padding-left: gs-span(3) + $gs-gutter
+            ));
+        }
+        @include mq(desktop) {
+            @include rem((
+                padding-left: gs-span(7) + $gs-gutter
+            ));
+        }
+    }
+    .fromage__media-wrapper {
+        @include mq(tablet) {
+            @include rem((
+                width: gs-span(3),
+                margin-left: (gs-span(3) + $gs-gutter) * -1
+            ));
+        }
+    }
+    &.fromage--imageadjust-highlight {
+        .fromage__link {
+            @include mq(tablet) {
+                width: auto;
+                margin-left: 0;
+                padding-left: 0;
+                float: none;
+            }
+        }
+        .fromage__container {
+            @include mq(tablet) {
+                @include rem((
+                    padding-left: gs-span(4) + $gs-gutter
+                ));
+            }
+            @include mq(desktop) {
+                @include rem((
+                    padding-left: gs-span(6) + $gs-gutter
+                ));
+            }
+        }
+        .fromage__media-wrapper {
+            @include mq(tablet) {
+                @include rem((
+                    width: gs-span(4),
+                    margin-left: (gs-span(4) + $gs-gutter) * -1
+                ));
+            }
+            @include mq(desktop) {
+                @include rem((
+                    width: gs-span(6),
+                    margin-left: (gs-span(6) + $gs-gutter) * -1
+                ));
+            }
+        }
+    }
+}
+
+
+/* Modifier: Volume 0, 1, 2
+   ===========================================================================*/
+
+.fromage--volume-1,
+.fromage--volume-2 {
+    .fromage__container {
+        border-top-width: 2px;
+    }
+    .fromage__support__item {
+        border-top-color: #ffffff;
+
+        @include mq(tablet) {
+            + .fromage__support__item {
+                border-left-color: #ffffff;
+            }
+        }
+    }
+    .fromage__title,
+    .fromage__meta,
+    .fromage__standfirst {
+        // Add some breathing space to children since they're in a box
+        // that has a background color
+        @include rem((
+            padding-left: $gs-gutter/4,
+            padding-right: $gs-gutter/4
+        ));
+    }
+    &.fromage--has-image {
+        .fromage__title {
+            @include fs-headline(3, true);
+        }
+        .fromage__title,
+        .fromage__meta,
+        .fromage__standfirst {
+            @include mq(tablet) {
+                @include rem((
+                    padding-left: 0
+                ));
+            }
+        }
+    }
+    .fromage__support__action {
+        @include rem((
+            padding-left: $gs-gutter/4,
+            padding-right: $gs-gutter/4
+        ));
+    }
+}
+.fromage--volume-1 {
+    &,
+    .fromage__container,
+    .fromage__support {
+        background: $c-neutral7;
+    }
+    .fromage__container {
+        @include mq(tablet) {
+            border-top-width: 0;
+        }
+    }
+    .fromage__standfirst,
+    .fromage__support__action {
+        color: $c-neutral2-contrasted;
+    }
+}
+.fromage--volume-2 {
+    -webkit-font-smoothing: antialiased; // Prevent fonts from being too bold                                            // on the dark background
+    &,
+    .fromage__container {
+        background-color: $c-brandBlue;
+    }
+    .fromage__container {
+        @include mq(tablet) {
+            border-top-width: 1px;
+        }
+    }
+    &,
+    .fromage__container,
+    .fromage__title,
+    .fromage__standfirst,
+    .fromage__meta,
+    .fromage__support__action,
+    .fromage__link {
+        color: #ffffff;
+    }
+    .fromage__link {
+        &:visited {
+            &,
+            .fromage__title {
+                color: rgba(#ffffff, .9);
+            }
+        }
+    }
+    .fromage__support {
+        background-color: lighten($c-brandBlue, 7%);
+    }
+}

@@ -9,7 +9,6 @@ import com.amazonaws.util.StringInputStream
 import scala.io.Source
 import org.joda.time.DateTime
 import play.Play
-import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
 import play.api.libs.ws.WS
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
@@ -73,20 +72,6 @@ trait S3 extends Logging {
 
     client.putObject(request)
   }
-
-  private def getListing(prefix: String, dropText: String): List[String] = {
-    import scala.collection.JavaConversions._
-    val summaries = client.listObjects(bucket, prefix).getObjectSummaries.toList
-    summaries
-      .map(_.getKey.split(prefix))
-      .filter(_.nonEmpty)
-      .map(_.last)
-      .filterNot(_.endsWith("/"))
-      .map(_.split(dropText).head)
-  }
-
-  def getConfigIds(prefix: String): List[String] = getListing(prefix, "/config.json")
-  def getCollectionIds(prefix: String): List[String] = getListing(prefix, "/collection.json")
 }
 
 object S3 extends S3
@@ -111,6 +96,20 @@ object S3FrontsApi extends S3 {
     val now = DateTime.now
     putPrivate(s"${location}/history/collection/${id}/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/${now}.json", json, "application/json")
   }
+
+  private def getListing(prefix: String, dropText: String): List[String] = {
+    import scala.collection.JavaConversions._
+    val summaries = client.listObjects(bucket, prefix).getObjectSummaries.toList
+    summaries
+      .map(_.getKey.split(prefix))
+      .filter(_.nonEmpty)
+      .map(_.last)
+      .filterNot(_.endsWith("/"))
+      .map(_.split(dropText).head)
+  }
+
+  def getConfigIds(prefix: String): List[String] = getListing(prefix, "/config.json")
+  def getCollectionIds(prefix: String): List[String] = getListing(prefix, "/collection.json")
 }
 
 trait SecureS3Request extends implicits.Dates with Logging {

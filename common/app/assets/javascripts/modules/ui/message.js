@@ -36,6 +36,7 @@ define([
         $('#header').addClass('js-site-message');
         $('.site-message').removeClass('u-h');
         if (this.permanent) {
+            $('.site-message').addClass('site-message--permanent');
             $('.site-message__close').addClass('u-h');
         } else {
             bean.on(document, 'click', '.js-site-message-close', this.acknowledge.bind(this));

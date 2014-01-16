@@ -1,0 +1,84 @@
+@(trail: model.Trail, index: Int, element: String = "div")(implicit request: RequestHeader)
+
+@defining((VisualTone(trail))) { case (tone) =>
+    <@element
+        class="fromage
+               fromage--volume-@trail.group.getOrElse("0")
+               @if(trail.trailPicture(5,3).isEmpty || trail.imageAdjust == Some("hide")){
+                   fromage--has-no-image
+               }else{
+                   fromage--has-image
+                   @trail.imageAdjust.map{adjustValue =>
+                       fromage--imageadjust-@adjustValue
+                   }
+               }
+               @if(trail.isLive){fromage--live}
+               tone-@tone
+               tone-accent-border"
+        data-link-name="trail">
+
+        <div class="fromage__container">
+            <a href="@LinkTo{@trail.url}" class="fromage__link" data-link-name="@{index + 1}">
+                @if(trail.imageAdjust != Some("hide")) {
+                    @trail.trailPicture(5,3).map{ imageContainer =>
+                        @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
+                            <div class="fromage__media-wrapper">
+                                <div class="fromage__image-container js-image-upgrade inlined-image" data-src="@imgSrc" data-force-upgrade="desktop wide">
+                                    @Item300.bestFor(imageContainer).map{ url => <img src="@url" class="responsive-img" alt="" /> }
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+                <h1 class="fromage__title">
+                    @if(trail.isLive){
+                        <span class="item__live-indicator">Live</span>
+                    }
+                    @if(tone == "comment") {
+                        <span class="i i-quote-light-grey"></span>
+                    }
+                    @RemoveOuterParaHtml(trail.headline)
+                </h1>
+            </a>
+            @if(tone == "comment") {
+                @trail.byline.map { byLine =>
+                    <p class="fromage__byline tone-colour">@Html(byLine)</p>
+                }
+            }
+
+            @trail.trailText.map { text =>
+                <div class="fromage__standfirst">@Html(text)</div>
+            }
+            <div class="fromage__meta"
+                 @trail.discussionId.map{ id => data-discussion-id="@id" }
+                 data-discussion-closed="@trail.isClosedForComments">
+                <time class="fromage__timestamp js-item__timestamp"
+                      itemprop="datePublished"
+                      datetime="@trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
+                      data-timestamp="@trail.webPublicationDate.getMillis"
+                      data-relativeformat="short">
+                    <i class="i i-clock-light-grey"></i>
+                    <span class="timestamp__text"><span class="u-h">Published: </span>@Format(trail.webPublicationDate, "d MMM y")</span>
+                </time>
+            </div>
+        </div>
+        @if(trail.supporting.nonEmpty){
+            <div class="fromage__support">
+                <h2 class="fromage__support__title u-h">More on this story:</h2>
+
+                <ul class="fromage__support-list">
+                    @trail.supporting.map{ supporting =>
+                        <li class="fromage__support__item
+                                   fromage__support__fromage--@VisualTone(supporting)
+                                   @if(supporting.isLive){fromage__support__fromage--live}">
+                            <a href="@LinkTo{@supporting.url}"
+                               class="fromage__support__action">
+                                @supporting.headline
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        }
+    </@element>
+}
