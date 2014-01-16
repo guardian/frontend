@@ -147,7 +147,6 @@
                 }
 
                 .headline-list__count {
-                    margin-top: 6px;
                     left: 0;
                     @include rem((font-size: 65px));
                 }
@@ -178,13 +177,8 @@
     }
 
     .headline-list__standfirst {
-        @include mq(wide) {
+        @include mq(rightCol) {
             display: block;
-            padding-top: $baseline*6;
         }
-    }
-
-    .headline-list__image {
-        display: none;
     }
 }

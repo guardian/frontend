@@ -62,13 +62,16 @@
                     padding-bottom: $gs-baseline;
 
                     .headline-list__count {
-                        top: gs-height(3) + $gs-baseline/2;
-                        @include rem((font-size: 45px));
+                        top: 10px;
+                        @include rem((font-size: 52px));
                     }
 
                     .headline-list__body {
-                        @include fs-headline(1, true);
-                        padding-left: $gs-column-width;
+                        width: auto;
+                        min-height: gs-height(2);
+                        padding-left: 50px;
+                        padding-bottom: 25px;
+                        @include fs-headline(2, true);
                     }
 
                     &:before {
@@ -85,16 +88,12 @@
 
             .headline-list__count {
                 left: 0;
-                top: 4px;
+                top: $gs-baseline/2;
                 @include rem((font-size: 45px));
             }
 
-            .headline-list__image {
-                display: block;
-
-                img {
-                    width: 100%;
-                }
+            .headline-list__body {
+                width: auto;
             }
         }
     }
@@ -146,10 +145,6 @@
             float: left;
             clear: none;
             margin-left: 0;
-        }
-
-        .headline-list__body {
-            width: gs-span(2) + $gs-gutter;
         }
 
     }
