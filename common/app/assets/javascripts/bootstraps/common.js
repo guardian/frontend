@@ -249,7 +249,7 @@ define([
         loadAdverts: function (config) {
             if(!userPrefs.isOff('adverts')) {
 
-                var resizeOrOrientationChanged = function() {
+                var resizeCallback = function() {
                     hasBreakpointChanged(Adverts.reloadAds);
                 };
 
@@ -261,7 +261,7 @@ define([
                     // Add the body adverts to the article page
                     articleBodyAdverts.init();
 
-                    resizeOrOrientationChanged = function(e) {
+                    resizeCallback = function(e) {
                         hasBreakpointChanged(function() {
                             articleBodyAdverts.reloadAds();
                             Adverts.reloadAds();
@@ -278,7 +278,7 @@ define([
                     Adverts.loadAds();
                 });
 
-                mediator.on('window:resize', debounce(resizeOrOrientationChanged, 2000));
+                mediator.on('window:resize', debounce(resizeCallback, 2000));
             }
         },
 
