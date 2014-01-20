@@ -9,6 +9,7 @@ import conf.Configuration
 import tools.FaciaApi
 import services.S3FrontsApi
 import play.api.libs.ws.WS
+import model.Cached
 
 
 object FaciaToolController extends Controller with Logging with ExecutionContexts {
@@ -40,9 +41,11 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
 
   def getConfig(id: String) = AjaxExpiringAuthentication { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
-    S3FrontsApi.getConfig(id) map {json =>
-      Ok(json).as("application/json")
-    } getOrElse NotFound
+    Cached(60) {
+      S3FrontsApi.getConfig(id) map {json =>
+        Ok(json).as("application/json")
+      } getOrElse NotFound
+    }
   }
 
   def publishCollection(id: String) = AjaxExpiringAuthentication { request =>
