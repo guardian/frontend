@@ -249,27 +249,33 @@ define([
         loadAdverts: function (config) {
             if (!userPrefs.isOff('adverts')){
 
-                var delay = false;
-                var articleBodyAdverts = new ArticleBodyAdverts({
-                    isArticle: (config.page.contentType === 'Article')
-                });
+                var isDelayed = false;
+                var delayResizeAndOrientationChange = function() {};
 
-                // Added the body adverts to the article page
-                articleBodyAdverts.init();
-
-                // Prevents the resize and orientation events from triggering 2 ad reloads in one go
-                var delayResizeAndOrientationChange = function(type) {
-                    if(delay !== false) {
-                        return false;
-                    }
-
-                    delay = window.setTimeout(function() { delay = false; }, 100);
-
-                    hasBreakpointChanged(function() {
-                        articleBodyAdverts.reloadAds();
-                        Adverts.reloadAds();
+                if(config.page.contentType === 'Article') {
+                    var articleBodyAdverts = new ArticleBodyAdverts({
+                        isArticle: (config.page.contentType === 'Article')
                     });
-                };
+
+                    // Added the body adverts to the article page
+                    articleBodyAdverts.init();
+
+                    // Prevents the resize and orientation events from triggering 2 ad reloads simultaneously
+                    delayResizeAndOrientationChange = function(type) {
+                        if(isDelayed === true) {
+                            return false;
+                        }
+
+                        isDelayed = window.setTimeout(function() {
+                            isDelayed = false;
+                        }, 100);
+
+                        hasBreakpointChanged(function() {
+                            articleBodyAdverts.reloadAds();
+                            Adverts.reloadAds();
+                        });
+                    };
+                }
 
                 mediator.on('page:common:deferred:loaded', function(config, context) {
                     if (config.switches && config.switches.adverts && !config.page.blockAds) {
