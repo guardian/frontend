@@ -53,7 +53,8 @@ define([
             this.state = asObservableProps([
                 'underDrag',
                 'open',
-                'is404',
+                'isLoaded',
+                'isEmpty',
                 'totalHits',
                 'pageViewsSeries']);
 
@@ -112,11 +113,12 @@ define([
             };
         };
 
-        Article.prototype.populate = function(opts) {
+        Article.prototype.populate = function(opts, withContent) {
             populateObservables(this.props,  opts);
             populateObservables(this.meta,   opts.meta);
             populateObservables(this.fields, opts.fields);
             populateObservables(this.state,  opts.state);
+            this.state.isLoaded(!!withContent);
         };
 
         Article.prototype.toggleImageAdjustHide = function() {

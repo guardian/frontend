@@ -56,16 +56,14 @@ function (
                 });
             });
 
-            _.filter(items, function(item){
-                return !item.props.webPublicationDate();
-            }).forEach(function(item){
-                item.state.is404(true);
+            _.each(items, function(item){
+                item.state.isEmpty(!item.state.isLoaded());
             });
         });
     }
 
     function populate(opts, article) {
-        article.populate(opts);
+        article.populate(opts, true);
     }
 
     function fetchData(ids) {
@@ -81,7 +79,7 @@ function (
             authedAjax.request({
                 url: apiUrl
             }).always(function(resp) {
-                if (resp.response && resp.response.results && resp.response.results.length) {
+                if (resp.response && _.isArray(resp.response.results)) {
                     defer.resolve(resp.response.results);
                 } else {
                     defer.reject();
