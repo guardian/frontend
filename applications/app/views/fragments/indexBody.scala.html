@@ -1,20 +1,11 @@
-@(index: services.IndexPage)(implicit request: RequestHeader)
+@(index: services.IndexPage)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
 
-<section class="front-section zone-@index.page.section" role="main">
+<div class="facia-container monocolumn-wrapper monocolumn-wrapper--no-limit" data-link-name="Front" role="main">
 
-    @fragments.headers.sectionHead(index.page.webTitle)
+    @fragments.containers.sport(index.page, Config(s"${index.page.id}/news/regular-stories", displayName = Some(index.page.webTitle)), Collection(index.trails, None), SportContainer(showMore = false), containerIndex = 0)
 
-    @fragments.contributor(index.page)
+    <section class="article-zone-no-indent">
+        @fragments.footballNav(index.page)
+    </section>
 
-    <div class="trailblock" data-count="@index.trails.length" data-link-name="Section | block | @index.page.section">
-        @fragments.trailblocks.section(index.trails, numWithImages = 3, numItemsVisible = index.trails.size)
-    </div>
-
-</section>
-
-<div class="box-indent article-zone-no-indent">
-
-    @fragments.footballNav(index.page)
-
-    @fragments.mostPopularPlaceholder(index.page.section)
 </div>
