@@ -149,7 +149,7 @@
 }
 
 
-/* Preloads (for swipe)
+/* Preloads
    ========================================================================== */
 
 #preloads-inner {
@@ -157,17 +157,6 @@
     top: 0;
     height: 100%;
     width: 100%;
-}
-
-.has-swipe {
-    .preload {
-        position: absolute;
-        width: 100%;
-    }
-
-    #preload-0 { left: -100%; }
-    #preload-1 { left:     0; }
-    #preload-2 { left:  100%; }
 }
 
 

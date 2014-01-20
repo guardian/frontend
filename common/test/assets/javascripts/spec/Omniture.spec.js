@@ -16,7 +16,7 @@ define(['fixtures/config', 'analytics/omniture', 'common/common'], function(test
             };
             config.switches = {};
 
-            s = { t: function(){}, tl: function(){}, apl: function(){} };
+            s = { t: function(){}, tl: function(){}, apl: function(){}, getQueryParam: function(){ return 'test'; }, getValOnce: function(){ return 'test'; } };
             sinon.spy(s, "t");
             sinon.spy(s, "tl");
             sinon.spy(s, "apl");
@@ -87,6 +87,7 @@ define(['fixtures/config', 'analytics/omniture', 'common/common'], function(test
             expect(s.prop19).toBe("frontend");
             expect(s.prop67).toBe("nextgen-served");
             expect(s.eVar19).toBe("frontend");
+            expect(s.eVar50).toBe("test");
             expect(s.cookieDomainPeriods).toBe("2")
             expect(s.trackingServer).toBe("hits.theguardian.com");
             expect(s.trackingServerSecure).toBe('hits-secure.theguardian.com');

@@ -74,5 +74,10 @@ define([
             expect($('.site-message__close').hasClass('u-h')).toBeTruthy();
         })
 
+        it("permanent message should have class added", function(){
+            new Message('a', { permanent: true }).show('message one');
+            expect($('.site-message--permanent').length).toEqual(1);
+        })
+
     })
 });

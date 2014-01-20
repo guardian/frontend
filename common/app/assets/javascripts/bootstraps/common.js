@@ -29,7 +29,6 @@ define([
     'common/modules/adverts/adverts',
     'common/utils/cookies',
     'common/modules/analytics/omnitureMedia',
-    'common/modules/analytics/adverts',
     'common/modules/analytics/livestats',
     'common/modules/experiments/ab',
     "common/modules/adverts/video",
@@ -71,7 +70,6 @@ define([
     Adverts,
     Cookies,
     OmnitureMedia,
-    AdvertsAnalytics,
     liveStats,
     ab,
     VideoAdvert,
@@ -200,9 +198,6 @@ define([
                     }
                 });
 
-                if (config.switches.adslotImpressionStats) {
-                    var advertsAnalytics = new AdvertsAnalytics(config, context);
-                }
             });
 
             if (config.switches.ophanMultiEvent) {
@@ -238,7 +233,7 @@ define([
                     return viewData;
                 });
 
-                Ophan.sendLog(config.swipe ? config.swipe.referrer : undefined, true);
+                Ophan.sendLog(undefined, true);
             });
         },
 
@@ -301,10 +296,6 @@ define([
                             'You’re viewing an alpha release of the Guardian’s responsive website. <a href="/help/2013/oct/04/alpha-testing-and-evolution-of-our-mobile-site">Find out more</a>' +
                       '</p>' +
                       '<ul class="site-message__actions unstyled">' +
-                           '<li class="site-message__actions__item">' +
-                               '<i class="i i-comment-grey"></i>' +
-                               '<a href="http://survey.omniture.com/d1/hosted/815f9cfba1" data-link-name="feedback" target="_blank">We’d love to hear your feedback</a>' +
-                           '</li>' +
                            '<li class="site-message__actions__item">' +
                                '<i class="i i-back"></i>' +
                                    '<a class="js-main-site-link" rel="nofollow" href="' + exitLink + '"' +
@@ -397,7 +388,7 @@ define([
         });
     };
 
-    var ready = function (config, context, contextHtml) {
+    var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
             modules.windowEventListeners();
@@ -422,8 +413,8 @@ define([
         mediator.emit("page:common:ready", config, context);
     };
 
-    var init = function (config, context, contextHtml) {
-        ready(config, context, contextHtml);
+    var init = function (config, context) {
+        ready(config, context);
         deferrable(config, context);
     };
 

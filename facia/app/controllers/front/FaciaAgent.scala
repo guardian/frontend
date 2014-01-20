@@ -66,7 +66,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
   case class CollectionItem(id: String, metaData: Option[Map[String, JsValue]])
 
   //Curated and editorsPicks are the same, we will get rid of either
-  case class Result(curated: List[Content], editorsPicks: List[Content], contentApiResults: List[Content])
+  case class Result(curated: List[Content], editorsPicks: List[Content], mostViewed: List[Content], contentApiResults: List[Content])
 
   def requestCollection(id: String): Future[Response] = {
     val s3BucketLocation: String = s"${S3FrontsApi.location}/collection/$id/collection.json"
@@ -82,7 +82,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
       collectionList <- getCuratedList(response, edition, id, isWarmedUp)
       displayName    <- parseDisplayName(response).fallbackTo(Future.successful(None))
       contentApiList <- executeContentApiQuery(config.contentApiQuery, edition)
-    } yield Collection(collectionList, contentApiList.editorsPicks, contentApiList.contentApiResults, displayName)
+    } yield Collection(collectionList, contentApiList.editorsPicks, contentApiList.mostViewed, contentApiList.contentApiResults, displayName)
   }
 
   def getCuratedList(response: Future[Response], edition: Edition, id: String, isWarmedUp: Boolean): Future[List[Content]] = {
@@ -150,15 +150,24 @@ trait ParseCollection extends ExecutionContexts with Logging {
         }
         val response = ContentApi.item(collectionItem.id, edition).showFields("all").response
 
-        response.onFailure{case t: Throwable => log.warn("%s: %s".format(collectionItem.id, t.toString))}
+        val content = response.map(_.content).recover {
+          case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 404 => {
+            log.warn(s"Content API Error: 404 for ${collectionItem.id}")
+            None
+          }
+          case t: Throwable => {
+            log.warn("%s: %s".format(collectionItem.id, t.toString))
+            throw t
+          }
+        }
         supportingAsContent.onFailure{case t: Throwable => log.warn("Supporting links: %s: %s".format(collectionItem.id, t.toString))}
 
         for {
           contentList <- foldListFuture
-          itemResponse <- response
+          itemResponse <- content
           supporting <- supportingAsContent
         } yield {
-          itemResponse.content.map(Content(_, supporting, collectionItem.metaData)).map(_ +: contentList).getOrElse(contentList)
+          itemResponse.map(Content(_, supporting, collectionItem.metaData)).map(_ +: contentList).getOrElse(contentList)
         }
       }
       val sorted = results map { _.sortBy(t => collectionItems.indexWhere(_.id == t.id))}
@@ -184,7 +193,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
           case (query, (key, value)) => query.stringParam(key, value)
         }.showFields("all")
         newSearch.response map { r =>
-          Result(Nil, Nil, r.results.map(Content(_)))
+          Result(Nil, Nil, Nil, r.results.map(Content(_)))
         }
       }
       case Path(id)  => {
@@ -196,14 +205,14 @@ trait ParseCollection extends ExecutionContexts with Logging {
           case (query, (key, value)) => query.stringParam(key, value)
         }.showFields("all")
         newSearch.response map { r =>
-          Result(Nil, r.editorsPicks.map(Content(_)), r.results.map(Content(_)))
+          Result(Nil, r.editorsPicks.map(Content(_)), r.mostViewed.map(Content(_)), r.results.map(Content(_)))
         }
       }
     }
 
     newSearch onFailure {case t: Throwable => log.warn("Content API Query failed: %s: %s".format(queryString, t.toString))}
     newSearch
-  } getOrElse Future(Result(Nil, Nil, Nil))
+  } getOrElse Future(Result(Nil, Nil, Nil, Nil))
 
 }
 

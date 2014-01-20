@@ -9,6 +9,7 @@ import conf.Configuration
 import tools.FaciaApi
 import services.S3FrontsApi
 import play.api.libs.ws.WS
+import model.{NoCache, Cached}
 
 
 object FaciaToolController extends Controller with Logging with ExecutionContexts {
@@ -16,33 +17,40 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
   implicit val collectionMetaRead = Json.reads[CollectionMetaUpdate]
 
   def index() = ExpiringAuthentication { request =>
-    Ok(views.html.fronts(Configuration.environment.stage))
+    val identity = Identity(request).get
+    Ok(views.html.fronts(Configuration.environment.stage, Option(identity)))
   }
 
   def listCollections = AjaxExpiringAuthentication { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
-    Ok(Json.toJson(S3FrontsApi.listCollectionIds))
+    NoCache { Ok(Json.toJson(S3FrontsApi.listCollectionIds)) }
   }
 
   def getConfig = AjaxExpiringAuthentication { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
-    S3FrontsApi.getMasterConfig map { json =>
-      Ok(json).as("application/json")
-    } getOrElse NotFound
+    NoCache {
+      S3FrontsApi.getMasterConfig map { json =>
+        Ok(json).as("application/json")
+      } getOrElse NotFound
+    }
   }
 
   def readBlock(id: String) = AjaxExpiringAuthentication { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
-    S3FrontsApi.getBlock(id) map { json =>
-      Ok(json).as("application/json")
-    } getOrElse NotFound
+    NoCache {
+      S3FrontsApi.getBlock(id) map { json =>
+        Ok(json).as("application/json")
+      } getOrElse NotFound
+    }
   }
 
   def getConfig(id: String) = AjaxExpiringAuthentication { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
-    S3FrontsApi.getConfig(id) map {json =>
-      Ok(json).as("application/json")
-    } getOrElse NotFound
+    Cached(60) {
+      S3FrontsApi.getConfig(id) map {json =>
+        Ok(json).as("application/json")
+      } getOrElse NotFound
+    }
   }
 
   def publishCollection(id: String) = AjaxExpiringAuthentication { request =>

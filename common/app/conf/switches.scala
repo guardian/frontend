@@ -103,23 +103,8 @@ object Switches extends Collections {
   val AmaaSwitch = Switch("Commercial Tags", "amaa",
     "Enable the AMAA audience segment tracking.",
     safeState = Off, sellByDate = endOfQ4)
-  
-  val QuantcastSwitch = Switch("Commercial Tags", "quantcast",
-    "Enable the Quantcast audience segment tracking.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 20)
-  )
 
   // Analytics Switches
-
-  val AdDwellTimeLoggerSwitch = Switch("Analytics", "ad-dwell-times-logging",
-    "If this is on the in-view advert tracker will log some data to the Play logs",
-    safeState = On, sellByDate = new DateMidnight(2014, 1, 20)
-  )
-
-  val AdSlotImpressionStatsSwitch = Switch("Analytics", "adslot-impression-stats",
-    "Track when adslots (and possible ad slots) are scrolled into view.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 20)
-  )
 
   val LiveStatsSwitch = Switch("Analytics", "live-stats",
     "Turns on our real-time KPIs",
@@ -180,18 +165,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 15)
   )
 
-  // Swipe Switches
-
-  val SwipeNav = Switch("Swipe Navigation", "swipe-nav",
-    "If this switch is on then swipe navigation is enabled.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 20)
-  )
-
-  val SwipeNavOnClick = Switch("Swipe Navigation", "swipe-nav-on-click",
-    "If this switch is also on then swipe navigation on clicks is enabled.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 20)
-  )
-
   // Feature Switches
 
   val ReleaseMessageSwitch = Switch("Feature Switches", "release-message",
@@ -227,11 +200,6 @@ object Switches extends Collections {
   val SearchSwitch = Switch("Feature Switches", "google-search",
     "If this switch is turned on then Google search is added to the sections nav.",
     safeState = Off, sellByDate = endOfQ4
-  )
-
-  val AustraliaFrontSwitch = Switch("Feature Switches", "australia-front",
-    "If this switch is on the australia front will be available. Otherwise it will 404.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 20)
   )
 
   val LocalNavSwitch = Switch("Feature Switches", "local-nav",
@@ -305,29 +273,19 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val ABAlphaComm = Switch("A/B Tests", "ab-alpha-comm",
-    "If this is switched on an AB test runs to trial new advertising user experiences and commercial models",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 24)
-  )
-
   val ABCommercialInArticleDesktop = Switch("A/B Tests", "ab-commercial-in-articles-desktop",
     "If this is on an AB test inserts commercial components in the inline and MPU advert slots (scope to desktop)",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 21)
+    safeState = Off, sellByDate = new DateMidnight(2014, 1, 28)
   )
 
   val ABCommercialInArticleMobile = Switch("A/B Tests", "ab-commercial-in-articles-mobile",
     "If this is on an AB test inserts commercial components in the inline and MPU advert slots (scope to mobile browsers)",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 21)
+    safeState = Off, sellByDate = new DateMidnight(2014, 1, 28)
   )
 
   val ABChartbeatDesktop = Switch("A/B Tests", "ab-chartbeat-desktop",
     "This enables Chartbeat tracking on the site. ",
     safeState = Off, sellByDate = new DateMidnight(2014, 1, 24)
-  )
-
-  val ABMobileFacebookAutosignin = Switch("A/B Tests", "ab-mobile-facebook-autosignin",
-    "If this is switched on an AB test runs to test facebook autosignin for mobile users",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 20)
   )
 
   val ABEmailSignup = Switch("A/B Tests", "ab-email-signup",
@@ -337,7 +295,7 @@ object Switches extends Collections {
 
   val TagLinking = Switch("Feature Switches", "tag-linking",
     "If this is switched on articles that have no in body links will auto link to their tags where possible",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 20)
+    safeState = Off, sellByDate = endOfQ4 
   )
 
   // Sport Switch
@@ -400,13 +358,10 @@ object Switches extends Collections {
     AdvertSwitch,
     VideoAdvertSwitch,
     AudienceScienceSwitch,
-    QuantcastSwitch,
     DiscussionSwitch,
     DiscussionPostCommentSwitch,
     DiscussionTopCommentsSwitch,
     OpenCtaSwitch,
-    SwipeNav,
-    SwipeNavOnClick,
     FontSwitch,
     NetworkFrontAppealSwitch,
     WitnessVideoSwitch,
@@ -414,7 +369,6 @@ object Switches extends Collections {
     SearchSwitch,
     ImageServerSwitch,
     ReleaseMessageSwitch,
-    AustraliaFrontSwitch,
     IntegrationTestSwitch,
     iPhoneAppSwitch,
     ClientSideErrorSwitch,
@@ -427,7 +381,6 @@ object Switches extends Collections {
     LiveStatsSwitch,
     LiveAbTestStatsSwitch,
     UserzoomSwitch,
-    AdSlotImpressionStatsSwitch,
     CssFromStorageSwitch,
     ElasticSearchSwitch,
     ShowUnsupportedEmbedsSwitch,
@@ -440,12 +393,9 @@ object Switches extends Collections {
     IdentityEthicalAwardsSwitch,
     IdentityFilmAwardsSwitch,
     ABAa,
-    ABAlphaComm,
     ABCommercialInArticleDesktop,
     ABCommercialInArticleMobile,
     ABChartbeatDesktop,
-    ABMobileFacebookAutosignin,
-    AdDwellTimeLoggerSwitch,
     ABEmailSignup,
     NetworkFrontUkAlpha,
     NetworkFrontUsAlpha,

@@ -180,7 +180,7 @@ Loader.prototype.loadComments = function(args) {
                 self.comments.showHiddenComments(e);
                 self.cleanUpOnShowComments();
             });
-            bonzo(commentsContainer).removeClass('u-h');
+            bonzo(commentsContainer).removeClass('js-hidden');
         }).fail(self.loadingError.bind(self));
 };
 
