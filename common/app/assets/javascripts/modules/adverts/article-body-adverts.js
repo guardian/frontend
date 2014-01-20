@@ -39,7 +39,7 @@ define([
         $(paragraphSelector, article).each(function(el, i) {
             // This protects against empty paragraph tags and paragraphs being used
             // instead of order/unordered lists
-            if(el.innerText.length < 120) {
+            if(bonzo(el).text().length < 120) {
                 return false;
             }
 
