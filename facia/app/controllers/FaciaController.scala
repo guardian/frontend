@@ -209,7 +209,7 @@ object FrontPage {
     },
 
     new FrontPage(isNetworkFront = true) {
-      override val id = "uk-alpha"
+      override val id = "uk-beta"
       override val section = ""
       override val webTitle = "The Guardian"
       override lazy val analyticsName = "GFE:Network Front"

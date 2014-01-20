@@ -15,10 +15,10 @@
                @if(trail.isLive){fromage--live}
                tone-@tone
                tone-accent-border"
-        data-link-name="trail">
+        data-link-name="trail | @{index + 1}">
 
         <div class="fromage__container">
-            <a href="@LinkTo{@trail.url}" class="fromage__link" data-link-name="@{index + 1}">
+            <a href="@LinkTo{@trail.url}" class="fromage__link">
                 @if(trail.imageAdjust != Some("hide")) {
                     @trail.trailPicture(5,3).map{ imageContainer =>
                         @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>

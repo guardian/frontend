@@ -16,6 +16,7 @@
         data-link-name="trail | @{index + 1}"
         @trail.discussionId.map{ id => data-discussion-id="@id" }
         data-discussion-closed="@trail.isClosedForComments">
+
         <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border">
             <h@if(isFirstContainer && index == 0){1}else{2} class="item__title">
                 @if(trail.isLive){
