@@ -1,7 +1,7 @@
 package controllers.front
 
 import common._
-import conf.{ ContentApi, Configuration }
+import conf.{ SwitchingContentApi=>ContentApi, Configuration }
 import model._
 import play.api.libs.json.Json._
 import play.api.libs.json._
@@ -148,17 +148,26 @@ trait ParseCollection extends ExecutionContexts with Logging {
           lazy val supportingLinks: List[CollectionItem] = retrieveSupportingLinks(collectionItem)
           if (!hasParent) getArticles(supportingLinks, edition, hasParent=true) else Future.successful(Nil)
         }
-        val response = ContentApi.item(collectionItem.id, edition).showFields("all").response
+        val response = ContentApi().item(collectionItem.id, edition).showFields("all").response
 
-        response.onFailure{case t: Throwable => log.warn("%s: %s".format(collectionItem.id, t.toString))}
+        val content = response.map(_.content).recover {
+          case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 404 => {
+            log.warn(s"Content API Error: 404 for ${collectionItem.id}")
+            None
+          }
+          case t: Throwable => {
+            log.warn("%s: %s".format(collectionItem.id, t.toString))
+            throw t
+          }
+        }
         supportingAsContent.onFailure{case t: Throwable => log.warn("Supporting links: %s: %s".format(collectionItem.id, t.toString))}
 
         for {
           contentList <- foldListFuture
-          itemResponse <- response
+          itemResponse <- content
           supporting <- supportingAsContent
         } yield {
-          itemResponse.content.map(Content(_, supporting, collectionItem.metaData)).map(_ +: contentList).getOrElse(contentList)
+          itemResponse.map(Content(_, supporting, collectionItem.metaData)).map(_ +: contentList).getOrElse(contentList)
         }
       }
       val sorted = results map { _.sortBy(t => collectionItems.indexWhere(_.id == t.id))}
@@ -177,7 +186,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
 
     val newSearch = queryString match {
       case Path(Seg("search" ::  Nil)) => {
-        val search = ContentApi.search(edition)
+        val search = ContentApi().search(edition)
                        .showElements("all")
                        .pageSize(20)
         val newSearch = queryParamsWithEdition.foldLeft(search){
@@ -188,7 +197,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
         }
       }
       case Path(id)  => {
-        val search = ContentApi.item(id, edition)
+        val search = ContentApi().item(id, edition)
                        .showElements("all")
                        .showEditorsPicks(true)
                        .pageSize(20)

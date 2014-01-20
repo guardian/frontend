@@ -38,11 +38,10 @@ define([
  * @param {Object} mediator
  * @param {Object=} options
  */
-var Loader = function(context, mediator, options, topCommentsSwitch) {
+var Loader = function(context, mediator, options) {
     this.context = context || document;
     this.mediator = mediator;
     this.setOptions(options);
-    this.topCommentsSwitch = topCommentsSwitch; // Pass through topComments switch
 };
 Component.define(Loader);
 
@@ -103,7 +102,7 @@ Loader.prototype.ready = function() {
         this.topComments = new TopComments(self.context, self.mediator, {
             discussionId: this.getDiscussionId(),
             user: self.user
-        }, this.topCommentsSwitch);
+        });
 
         this.topComments
             .fetch(topCommentsElem)
@@ -180,7 +179,7 @@ Loader.prototype.loadComments = function(args) {
                 self.comments.showHiddenComments(e);
                 self.cleanUpOnShowComments();
             });
-            bonzo(commentsContainer).removeClass('u-h');
+            bonzo(commentsContainer).removeClass('js-hidden');
         }).fail(self.loadingError.bind(self));
 };
 

@@ -138,7 +138,7 @@
                         value: collectionMeta.displayName,
                         hasFocus: true" placeholder="Title"/>
                     <span>
-                        <a class="tool" data-bind="click: saveConfig">Save</a>
+                        <a class="tool" data-bind="click: saveMeta">Save</a>
                         <a class="tool" data-bind="click: reset">Cancel</a>
                     </span>
                 </div>
@@ -255,10 +255,18 @@
                     <div class="pageviews-graph" data-bind="if: state.pageViewsSeries(), sparkline: state.pageViewsSeries"></div>
                 </a>
 
-                <div class="article_content" data-bind="click: open,">
+                <div class="article_content is-empty" data-bind="if: state.isEmpty">
+                    This content is unavailable, deleted, or has a new URL
+                    <a target="article" class="is-empty__url" data-bind="
+                        attr: {href: props.id},
+                        text: props.id"></a>
+                </div>
+
+                <div class="article_content" data-bind="if: !state.isEmpty()">
                     <a class="headline" target="article" data-bind="
                         text: meta.headline() || fields.headline(),
-                        attr: {href: props.id()}"></a>
+                        attr: {href: props.id()},
+                        click: open"></a>
 
                     <!-- ko if: meta.supporting && meta.supporting.items().length -->
                         <span class="count">(<span class="non-zero" data-bind="text: meta.supporting.items().length"></span>)</span>

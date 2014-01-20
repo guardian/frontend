@@ -139,42 +139,15 @@ object Switches extends Collections {
   // Discussion Switches
 
   val DiscussionSwitch = Switch("Discussion", "discussion",
-    "If this switch is on, comments are displayed on articles.",
-    safeState = Off, sellByDate = endOfQ4
-  )
-
-  val DiscussionCommentRecommend = Switch("Discussion", "discussion-comment-recommend",
-    "If this switch is on, users can recommend comments",
-    safeState = Off, sellByDate = endOfQ4
-  )
-
-  val DiscussionPostCommentSwitch = Switch("Discussion", "discussion-post-comment",
-    "If this switch is on, users will be able to post comments",
-    safeState = Off, sellByDate = endOfQ4
-  )
-
-  val DiscussionTopCommentsSwitch = Switch("Discussion", "discussion-top-comments",
-    "If this switch is on, users will see top comments if there are any",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 15)
+    "If this switch is on, comments are displayed on articles. Turn this off if the Discussion API is blowing up.",
+    safeState = Off, sellByDate = never
   )
 
   // Open
 
   val OpenCtaSwitch = Switch("Open", "open-cta",
-    "If this switch is on, will see a CTA to comments on the right hand side",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 15)
-  )
-
-  // Swipe Switches
-
-  val SwipeNav = Switch("Swipe Navigation", "swipe-nav",
-    "If this switch is on then swipe navigation is enabled.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 20)
-  )
-
-  val SwipeNavOnClick = Switch("Swipe Navigation", "swipe-nav-on-click",
-    "If this switch is also on then swipe navigation on clicks is enabled.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 20)
+    "If this switch is on, will see a CTA to comments on the right hand side. Turn this off if the Open API is blowing up.",
+    safeState = Off, sellByDate = never
   )
 
   // Feature Switches
@@ -212,11 +185,6 @@ object Switches extends Collections {
   val SearchSwitch = Switch("Feature Switches", "google-search",
     "If this switch is turned on then Google search is added to the sections nav.",
     safeState = Off, sellByDate = endOfQ4
-  )
-
-  val AustraliaFrontSwitch = Switch("Feature Switches", "australia-front",
-    "If this switch is on the australia front will be available. Otherwise it will 404.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 20)
   )
 
   val LocalNavSwitch = Switch("Feature Switches", "local-nav",
@@ -305,11 +273,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 1, 24)
   )
 
-  val ABMobileFacebookAutosignin = Switch("A/B Tests", "ab-mobile-facebook-autosignin",
-    "If this is switched on an AB test runs to test facebook autosignin for mobile users",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 20)
-  )
-
   val ABEmailSignup = Switch("A/B Tests", "ab-email-signup",
     "If this is switched on an AB test runs to test article page email signups",
     safeState = Off, sellByDate = new DateMidnight(2014, 1, 24)
@@ -381,11 +344,7 @@ object Switches extends Collections {
     VideoAdvertSwitch,
     AudienceScienceSwitch,
     DiscussionSwitch,
-    DiscussionPostCommentSwitch,
-    DiscussionTopCommentsSwitch,
     OpenCtaSwitch,
-    SwipeNav,
-    SwipeNavOnClick,
     FontSwitch,
     NetworkFrontAppealSwitch,
     WitnessVideoSwitch,
@@ -393,7 +352,6 @@ object Switches extends Collections {
     SearchSwitch,
     ImageServerSwitch,
     ReleaseMessageSwitch,
-    AustraliaFrontSwitch,
     IntegrationTestSwitch,
     iPhoneAppSwitch,
     ClientSideErrorSwitch,
@@ -421,7 +379,6 @@ object Switches extends Collections {
     ABCommercialInArticleDesktop,
     ABCommercialInArticleMobile,
     ABChartbeatDesktop,
-    ABMobileFacebookAutosignin,
     ABEmailSignup,
     NetworkFrontUkAlpha,
     NetworkFrontUsAlpha,

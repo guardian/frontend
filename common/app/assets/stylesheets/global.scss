@@ -8,6 +8,7 @@
 @import "_mixins";
 @import "module/_discussion-mixins";
 @import "_extends-only";
+@import "components/guss-layout/_columns";
 
 
 /* ==========================================================================
@@ -50,6 +51,7 @@
 @import "module/facia/_mixins";
 @import "module/containers/_popular";
 @import "module/onward/_right-hand-most-popular";
+@import "module/onward/_popular";
 @import "module/_social";
     @include socialDelayed;
 @import "module/_clamp";

@@ -64,9 +64,7 @@ define([
         bonzo(document.body).removeClass('has-overlay');
 
         // Restore previous scroll pos
-        // Due to how swipe sets the height of the content at set intervals,
-        // we need to wait long enough for that to happen before restoring scroll position
-        var scrollDelay = (document.body.className.indexOf('has-swipe') !== -1) ? 1010 : 0;
+        var scrollDelay = 0;
         setTimeout(function() {
             window.scrollTo(window.pageXOffset, self._savedPos);
         }, scrollDelay);

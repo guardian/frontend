@@ -1,7 +1,7 @@
 /* Accessible hidden content.
    ========================================================================== */
 
-.u-h {
+@mixin u-h {
     border: 0 !important;
     clip: rect(0 0 0 0) !important;
     height: 1px !important;
@@ -10,6 +10,16 @@
     padding: 0 !important;
     position: absolute !important;
     width: 1px !important;
+}
+
+.u-h {
+    @include u-h;
+}
+
+.u-h--up-to-right-col {
+    @include mq($to: rightCol) {
+        @include u-h;
+    }
 }
 
 .is-hidden,

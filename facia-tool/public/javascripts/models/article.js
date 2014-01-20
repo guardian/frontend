@@ -44,8 +44,6 @@ define([
                 'thumbnail',
                 'shortId']);
 
-            this.fields.headline('...');
-
             this.meta = asObservableProps([
                 'headline',
                 'trailText',
@@ -55,8 +53,8 @@ define([
             this.state = asObservableProps([
                 'underDrag',
                 'open',
-                'shares',
-                'comments',
+                'isLoaded',
+                'isEmpty',
                 'totalHits',
                 'pageViewsSeries']);
 
@@ -102,7 +100,9 @@ define([
                     return this.meta[key]() || this.fields[key]();
                 },
                 write: function(value) {
-                    this.meta[key](value);
+                    var el = document.createElement('div');
+                    el.innerHTML = value;
+                    this.meta[key](el.innerHTML);
                 },
                 owner: this
             });
@@ -115,11 +115,12 @@ define([
             };
         };
 
-        Article.prototype.populate = function(opts) {
+        Article.prototype.populate = function(opts, withContent) {
             populateObservables(this.props,  opts);
             populateObservables(this.meta,   opts.meta);
             populateObservables(this.fields, opts.fields);
             populateObservables(this.state,  opts.state);
+            this.state.isLoaded(!!withContent);
         };
 
         Article.prototype.toggleImageAdjustHide = function() {

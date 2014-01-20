@@ -233,7 +233,7 @@ define([
                     return viewData;
                 });
 
-                Ophan.sendLog(config.swipe ? config.swipe.referrer : undefined, true);
+                Ophan.sendLog(undefined, true);
             });
         },
 
@@ -388,7 +388,7 @@ define([
         });
     };
 
-    var ready = function (config, context, contextHtml) {
+    var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
             modules.windowEventListeners();
@@ -413,8 +413,8 @@ define([
         mediator.emit("page:common:ready", config, context);
     };
 
-    var init = function (config, context, contextHtml) {
-        ready(config, context, contextHtml);
+    var init = function (config, context) {
+        ready(config, context);
         deferrable(config, context);
     };
 

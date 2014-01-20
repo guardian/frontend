@@ -25,7 +25,6 @@ requirejs.config({
         reqwest:      'common/components/reqwest/src/reqwest',
         postscribe:   'common/components/postscribe/dist/postscribe',
         swipe:        'common/components/swipe/swipe',
-        swipeview:    'common/components/swipeview/src/swipeview',
         lodash:       'common/components/lodash-amd/modern',
         imager:       'common/components/imager.js/src/strategies/container'
     },
