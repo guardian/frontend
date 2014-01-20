@@ -5,8 +5,13 @@
     }
 </div>
 <div class="collection-wrapper">
+    @items.slice(1, 2).zipWithIndex.map{ case (trail, index) =>
+        @fragments.items.fromage(trail, 0)
+    }
+</div>
+<div class="collection-wrapper">
     <ul class="unstyled l-row l-row--items-2 collection">
-        @items.slice(1, 3).zipWithIndex.map{ case (trail, index) =>
+        @items.slice(2, 4).zipWithIndex.map{ case (trail, index) =>
             <li class="l-row__item collection__item collection__item--volume-@trail.group.getOrElse("0")">
                 @if(trail.imageAdjust == Some("highlight")) {
                     @fragments.items.standard(trail, index, 0, "div")
@@ -19,7 +24,7 @@
 </div>
 <div class="collection-wrapper">
     <ul class="unstyled l-row l-row--items-4 collection">
-        @items.slice(3, 7).zipWithIndex.map{ case (trail, index) =>
+        @items.slice(4, 8).zipWithIndex.map{ case (trail, index) =>
             <li class="l-row__item collection__item collection__item--volume-@trail.group.getOrElse("0")">
                 @fragments.items.standard(trail, index, 0, "div")
             </li>
@@ -28,7 +33,7 @@
 </div>
 <div>
     <ul class="l-columns linkslist">
-        @items.slice(7, 21).zipWithIndex.map{ case (trail, index) =>
+        @items.slice(8, 24).zipWithIndex.map{ case (trail, index) =>
             <li class="l-columns__item linkslist__item">
                 <a href="@LinkTo{@trail.url}" class="linkslist__action">
                     @RemoveOuterParaHtml(trail.headline)

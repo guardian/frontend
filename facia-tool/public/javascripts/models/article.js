@@ -102,7 +102,9 @@ define([
                     return this.meta[key]() || this.fields[key]();
                 },
                 write: function(value) {
-                    this.meta[key](value);
+                    var el = document.createElement('div');
+                    el.innerHTML = value;
+                    this.meta[key](el.innerHTML);
                 },
                 owner: this
             });
