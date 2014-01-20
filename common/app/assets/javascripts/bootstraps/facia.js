@@ -92,7 +92,7 @@ define([
                     messageId = 'facia-alpha';
                 if (config.page.pageId === "") {
                     // only run on 5% of (mobile) users
-                    var isAChosenOne = parseInt(mvtCookie.getMvtValue(), 10) < (mvtCookie.MAX_INT * 0.05) && detect.getMobileOS(),
+                    var isAChosenOne = (parseInt(mvtCookie.getMvtValue(), 10) < (mvtCookie.MAX_INT * 0.05) && detect.getMobileOS()) || window.location.hash === '#show-alpha-opt-in',
                         alphaSwitch = {
                             '/uk': 'networkFrontUkAlpha',
                             '/us': 'networkFrontUsAlpha',
