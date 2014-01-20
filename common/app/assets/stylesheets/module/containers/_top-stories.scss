@@ -155,6 +155,11 @@
                 display: block;
             }
         }
+        @include mq(tablet, desktop) {
+            .item--has-image .item__title {
+                @include fs-headline(1, true);
+            }
+        }
     }
 }
 
