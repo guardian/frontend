@@ -47,7 +47,7 @@ define([
                 cls    = (i % 2 === 0) ? 'is-odd' : 'is-even';
 
             // Places the advert after h2 tags on all breakpoints except mobile
-            if(detect.getBreakpoint() !== 'mobile' && el.nextElementSibling && el.nextElementSibling.nodeName === 'H2') {
+            if(detect.getBreakpoint() !== 'mobile' && el.nextElementSibling && el.nextElementSibling.nodeName.toLowerCase() === 'h2') {
                 target = el.nextElementSibling;
             }
 
