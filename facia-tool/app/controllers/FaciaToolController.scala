@@ -14,6 +14,7 @@ import model.{NoCache, Cached}
 
 object FaciaToolController extends Controller with Logging with ExecutionContexts {
   implicit val updateListRead = Json.reads[UpdateList]
+  implicit val collectionMetaRead = Json.reads[CollectionMetaUpdate]
 
   def index() = ExpiringAuthentication { request =>
     val identity = Identity(request).get
@@ -65,6 +66,19 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     FaciaApi.discardBlock(id, identity)
     notifyContentApi(id)
     Ok
+  }
+
+  def updateCollectionMeta(id: String): Action[AnyContent] = AjaxExpiringAuthentication { request =>
+    FaciaToolMetrics.ApiUsageCount.increment()
+    request.body.asJson flatMap(_.asOpt[CollectionMetaUpdate]) map {
+      case update: CollectionMetaUpdate => {
+        val identity = Identity(request).get
+        UpdateActions.updateCollectionMeta(id, update, identity)
+        notifyContentApi(id)
+        Ok
+      }
+      case _ => NotFound
+    } getOrElse NotFound
   }
 
   def updateBlock(id: String): Action[AnyContent] = AjaxExpiringAuthentication { request =>

@@ -24,6 +24,7 @@ case class Trail(
 
 
 case class UpdateList(item: String, position: Option[String], after: Option[Boolean], itemMeta: Option[Map[String, JsValue]], live: Boolean, draft: Boolean)
+case class CollectionMetaUpdate(displayName: Option[String])
 
 trait UpdateActions {
 
@@ -45,7 +46,7 @@ trait UpdateActions {
           draft=block.draft.map {
             l => updateList(update, l)}.orElse {
               Option(updateList(update, block.live))
-          }
+          }.filter(_ != block.live)
         )
     else
       block
@@ -62,6 +63,9 @@ trait UpdateActions {
     else
       block
 
+  def updateCollectionMeta(block: Block, update: CollectionMetaUpdate, identity: Identity): Block =
+    block.copy(displayName=update.displayName)
+
   def putBlock(id: String, block: Block, identity: Identity): Option[Block] = {
     FaciaApi.archive(id, block)
     FaciaApi.putBlock(id, block, identity)
@@ -69,8 +73,8 @@ trait UpdateActions {
 
   def updateCollectionList(id: String, update: UpdateList, identity: Identity): Option[Block] =
     getBlock(id)
-      .map(insertIntoDraft(update, _))
       .map(insertIntoLive(update, _))
+      .map(insertIntoDraft(update, _))
       .flatMap(putBlock(id, _, identity))
       .orElse(createBlock(id, identity, update))
 
@@ -78,6 +82,11 @@ trait UpdateActions {
     getBlock(id)
       .map(deleteFromLive(update, _))
       .map(deleteFromDraft(update, _))
+      .flatMap(putBlock(id, _, identity))
+
+  def updateCollectionMeta(id: String, update: CollectionMetaUpdate, identity: Identity): Option[Block] =
+    getBlock(id)
+      .map(updateCollectionMeta(_, update, identity))
       .flatMap(putBlock(id, _, identity))
 
   private def updateList(update: UpdateList, blocks: List[Trail]): List[Trail] = {
