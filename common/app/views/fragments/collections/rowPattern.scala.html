@@ -1,21 +1,20 @@
 @(config: Config,
   items: Seq[Trail],
   style: Container,
-  containerIndex: Int,
-  isCurated: Boolean = false
+  containerIndex: Int
 )(implicit request: RequestHeader)
 <div class="collection-wrapper">
     @items.slice(0, 1).zipWithIndex.map{ case (trail, index) =>
-        @if(isCurated){
+        @if(!trail.group.isEmpty){ @* Means this is a curated container *@
             @fragments.items.fromage(trail, 0)
-        }else{
+        }else{ @* Not a curated container: we fake hierarchy *@
             @fragments.items.fromage(trail, 0, 1, "highlight")
         }
     }
 </div>
 <div class="collection-wrapper">
     @items.slice(1, 2).zipWithIndex.map{ case (trail, index) =>
-        @if(isCurated){
+        @if(!trail.group.isEmpty){
             @fragments.items.fromage(trail, 1)
         }else{
             @fragments.items.fromage(trail, 1, 0, "default")
