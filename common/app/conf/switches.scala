@@ -202,11 +202,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val AustraliaFrontSwitch = Switch("Feature Switches", "australia-front",
-    "If this switch is on the australia front will be available. Otherwise it will 404.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 20)
-  )
-
   val LocalNavSwitch = Switch("Feature Switches", "local-nav",
     "If this switch is on, a secondary local nav is shown.",
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
@@ -374,7 +369,6 @@ object Switches extends Collections {
     SearchSwitch,
     ImageServerSwitch,
     ReleaseMessageSwitch,
-    AustraliaFrontSwitch,
     IntegrationTestSwitch,
     iPhoneAppSwitch,
     ClientSideErrorSwitch,
