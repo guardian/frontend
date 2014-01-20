@@ -16,8 +16,8 @@
     @include u-h;
 }
 
-.u-h--up-to-desktop {
-    @include mq($to: desktop) {
+.u-h--up-to-right-col {
+    @include mq($to: rightCol) {
         @include u-h;
     }
 }
