@@ -245,20 +245,16 @@ define([
         });
     };
 
-    Collection.prototype.saveConfig = function() {
+    Collection.prototype.saveMeta = function() {
         var self = this;
 
         this.state.editingConfig(false);
         this.setPending(true);
 
         authedAjax.request({
-            url: vars.CONST.apiBase + '/collection/' + this.id,
+            url: vars.CONST.apiBase + '/collectionmeta/' + this.id,
             type: 'post',
-            data: JSON.stringify({
-                config: {
-                    displayName: this.collectionMeta.displayName()
-                }
-            })
+            data: JSON.stringify({ displayName: this.collectionMeta.displayName() })
         })
         .then(function(){
             self.load();
