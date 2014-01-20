@@ -41,7 +41,7 @@
                             @if(info.isFirst) {
                                 @trail.trailText.map { text =>
                                     <p class="headline-list__standfirst">
-                                        @Html(text)
+                                        @cleanTrailText(text)
                                     </p>
                                 }
                             }
