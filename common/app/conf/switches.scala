@@ -139,30 +139,15 @@ object Switches extends Collections {
   // Discussion Switches
 
   val DiscussionSwitch = Switch("Discussion", "discussion",
-    "If this switch is on, comments are displayed on articles.",
-    safeState = Off, sellByDate = endOfQ4
-  )
-
-  val DiscussionCommentRecommend = Switch("Discussion", "discussion-comment-recommend",
-    "If this switch is on, users can recommend comments",
-    safeState = Off, sellByDate = endOfQ4
-  )
-
-  val DiscussionPostCommentSwitch = Switch("Discussion", "discussion-post-comment",
-    "If this switch is on, users will be able to post comments",
-    safeState = Off, sellByDate = endOfQ4
-  )
-
-  val DiscussionTopCommentsSwitch = Switch("Discussion", "discussion-top-comments",
-    "If this switch is on, users will see top comments if there are any",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 15)
+    "If this switch is on, comments are displayed on articles. Turn this off if the Discussion API is blowing up.",
+    safeState = Off, sellByDate = never
   )
 
   // Open
 
   val OpenCtaSwitch = Switch("Open", "open-cta",
-    "If this switch is on, will see a CTA to comments on the right hand side",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 15)
+    "If this switch is on, will see a CTA to comments on the right hand side. Turn this off if the Open API is blowing up.",
+    safeState = Off, sellByDate = never
   )
 
   // Feature Switches
@@ -359,8 +344,6 @@ object Switches extends Collections {
     VideoAdvertSwitch,
     AudienceScienceSwitch,
     DiscussionSwitch,
-    DiscussionPostCommentSwitch,
-    DiscussionTopCommentsSwitch,
     OpenCtaSwitch,
     FontSwitch,
     NetworkFrontAppealSwitch,

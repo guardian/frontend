@@ -10,7 +10,7 @@ define([
         initDiscussion: function() {
             mediator.on("page:imagecontent:ready", function(config, context) {
                 if (config.page.commentable) {
-                    var discussionLoader = new DiscussionLoader(context, mediator, {}, config.switches.discussionTopComments);
+                    var discussionLoader = new DiscussionLoader(context, mediator);
                     discussionLoader.attachToDefault();
                 }
             });
