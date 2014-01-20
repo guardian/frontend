@@ -250,7 +250,7 @@ define([
             if(!userPrefs.isOff('adverts')) {
 
                 var resizeCallback = function() {
-                    hasBreakpointChanged(Adverts.reloadAds);
+                    hasBreakpointChanged(Adverts.reload);
                 };
 
                 if(config.page.contentType === 'Article' && !config.page.isLiveBlog) {
@@ -261,8 +261,8 @@ define([
 
                     resizeCallback = function(e) {
                         hasBreakpointChanged(function() {
-                            articleBodyAdverts.reloadAds();
-                            Adverts.reloadAds();
+                            articleBodyAdverts.reload();
+                            Adverts.reload();
                         });
                     };
                 }
@@ -272,7 +272,7 @@ define([
                         Adverts.init(config, context);
                     }
                 });
-                mediator.on('modules:adverts:docwrite:loaded', Adverts.loadAds);
+                mediator.on('modules:adverts:docwrite:loaded', Adverts.load);
 
                 mediator.on('window:resize', debounce(resizeCallback, 2000));
             }

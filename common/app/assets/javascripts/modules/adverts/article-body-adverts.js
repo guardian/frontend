@@ -61,12 +61,12 @@ define([
         $('.js-mpu-ad-slot .social-wrapper').after(bonzo.create(template.replace(/%slot%/g, id))[0]);
     };
 
-    ArticleBodyAdverts.prototype.destroyAds = function() {
+    ArticleBodyAdverts.prototype.destroy = function() {
         $('.ad-slot--inline, .ad-slot--mpu-banner-ad').remove();
     };
 
-    ArticleBodyAdverts.prototype.reloadAds = function() {
-        this.destroyAds();
+    ArticleBodyAdverts.prototype.reload = function() {
+        this.destroy();
         this.init();
     };
 

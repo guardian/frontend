@@ -20,8 +20,7 @@ define([ 'common/common',
             beforeEach(function() {
                 fixtures.render(conf);
 
-                articleBodyAdverts = new ArticleBodyAdverts({
-                });
+                articleBodyAdverts = new ArticleBodyAdverts();
 
                 style = bonzo(bonzo.create('<style type="text/css"></style>'))
                     .html('body:after{ content: "wide"}')
@@ -31,7 +30,7 @@ define([ 'common/common',
             afterEach(function() {
                 fixtures.clean();
                 style.remove();
-                articleBodyAdverts.destroyAds();
+                articleBodyAdverts.destroy();
             });
 
             it("Should insert an ad container in the secondary column", function() {
@@ -64,7 +63,7 @@ define([ 'common/common',
                 articleBodyAdverts.init();
                 expect(document.querySelectorAll('.ad-slot--mpu-banner-ad, .ad-slot--inline').length).toBe(3);
 
-                articleBodyAdverts.destroyAds();
+                articleBodyAdverts.destroy();
                 expect(document.querySelectorAll('.ad-slot--mpu-banner-ad, .ad-slot--inline').length).toBe(0);
             });
         });
