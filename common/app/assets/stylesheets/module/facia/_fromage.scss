@@ -320,48 +320,51 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
             ));
         }
     }
-    &.fromage--imageadjust-highlight {
-        .fromage__title {
-            @include mq(tablet) {
-                @include fs-headline(5, true);
-            }
-            @include mq(desktop) {
-                @include fs-headline(6, true);
-            }
+}
+.fromage--imageadjust-highlight {
+    .fromage__title {
+        @include mq(tablet) {
+            @include fs-headline(5, true);
         }
-        .fromage__link {
-            @include mq(tablet) {
-                width: auto;
-                margin-left: 0;
-                padding-left: 0;
-                float: none;
-            }
+        @include mq(desktop) {
+            @include fs-headline(6, true);
+            @include rem((
+                max-width: gs-span(5)
+            ));
         }
-        .fromage__container {
-            @include mq(tablet) {
-                @include rem((
-                    padding-left: gs-span(4) + $gs-gutter
-                ));
-            }
-            @include mq(desktop) {
-                @include rem((
-                    padding-left: gs-span(6) + $gs-gutter
-                ));
-            }
+    }
+    .fromage__link {
+        @include mq(tablet) {
+            width: auto;
+            margin-left: 0;
+            padding-left: 0;
+            float: none;
         }
-        .fromage__media-wrapper {
-            @include mq(tablet) {
-                @include rem((
-                    width: gs-span(4),
-                    margin-left: (gs-span(4) + $gs-gutter) * -1
-                ));
-            }
-            @include mq(desktop) {
-                @include rem((
-                    width: gs-span(6),
-                    margin-left: (gs-span(6) + $gs-gutter) * -1
-                ));
-            }
+    }
+    .fromage__container {
+        @include mq(tablet) {
+            @include rem((
+                padding-left: gs-span(4) + $gs-gutter
+            ));
+        }
+        @include mq(desktop) {
+            @include rem((
+                padding-left: gs-span(6) + $gs-gutter
+            ));
+        }
+    }
+    .fromage__media-wrapper {
+        @include mq(tablet) {
+            @include rem((
+                width: gs-span(4),
+                margin-left: (gs-span(4) + $gs-gutter) * -1
+            ));
+        }
+        @include mq(desktop) {
+            @include rem((
+                width: gs-span(6),
+                margin-left: (gs-span(6) + $gs-gutter) * -1
+            ));
         }
     }
 }
