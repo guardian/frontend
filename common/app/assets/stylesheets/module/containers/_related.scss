@@ -5,7 +5,7 @@
     @include mq(rightCol) {
 
         .page-sub-header {
-            border-top: 1px solid  $c-neutral4;
+            border-top: 1px solid $c-neutral4;
             padding-top: 5px;
             padding-bottom: 0;
             margin-bottom: 0;
@@ -70,7 +70,7 @@
 
     @include mq(leftCol) {
         padding-top: $gs-baseline/1.5;
-        border-top: 1px solid  $c-neutral4;
+        border-top: 1px solid $c-neutral4;
         margin-left: $a-leftCol-width + $gs-gutter/2;
         margin-right: - $gs-gutter/2;
     }
