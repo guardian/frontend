@@ -181,7 +181,7 @@ define([
                 s.events = s.apl(s.events, config.page.omnitureEvent, ',');
             }
 
-            s.prop56    = detect.canSwipe() ? 'Javascript with swipe' : 'Javascript';
+            s.prop56    = 'Javascript';
 
             s.prop65    = config.page.headline || '';
 
@@ -210,7 +210,7 @@ define([
                 s.prop69 = config.page.inBodyExternalLinkCount;
             }
 
-            /* Retrieve navigation interaction data, incl. swipe */
+            /* Retrieve navigation interaction data */
             var ni = storage.session.get('gu.analytics.referrerVars');
             if (ni) {
                 var d = new Date().getTime();
