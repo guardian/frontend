@@ -28,11 +28,10 @@ being signed off.
 
 ================================================================= */
 
-var TopComments = function(context, mediator, options, topCommentsSwitch) {
+var TopComments = function(context, mediator, options) {
     this.context = context || document;
     this.mediator = mediator;
     this.setOptions(options);
-    this.topCommentsSwitch = topCommentsSwitch;
 };
 Component.define(TopComments);
 
@@ -106,7 +105,7 @@ TopComments.prototype.fetch = function(parent) {
     }).then(
         function render(resp) {
             // Success: Render Top or Regular comments
-            if (resp.currentCommentCount > 0 && self.topCommentsSwitch) {
+            if (resp.currentCommentCount > 0) {
 
                 // Render Top Comments
 
