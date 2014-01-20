@@ -177,17 +177,5 @@ define([
         return request;
     };
 
-    Id.resendValidationEmail = function () {
-        if(Id.isUserLoggedIn()) {
-            return ajax({
-                url: Id.idApiRoot + "/user/send-validation-email",
-                type: 'jsonp',
-                crossOrigin: true,
-                withCredentials: true,
-                data: {method: 'post'}
-            });
-        }
-    };
-
     return Id;
 });
