@@ -267,6 +267,17 @@ a, a:hover {
     text-decoration: none;
 }
 
+.is-empty {
+    font-size: 14px;
+    line-height: 16px;
+    color: #d61d00;
+}
+
+.is-empty__url {
+    display: block;
+    font-size: 12px;
+}
+
 div.trailtext {
     padding-right: 50px;
     box-sizing: border-box;
