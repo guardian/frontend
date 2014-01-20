@@ -254,9 +254,7 @@ define([
                 };
 
                 if(config.page.contentType === 'Article' && !config.page.isLiveBlog) {
-                    var articleBodyAdverts = new ArticleBodyAdverts({
-                        isArticle: (config.page.contentType === 'Article')
-                    });
+                    var articleBodyAdverts = new ArticleBodyAdverts();
 
                     // Add the body adverts to the article page
                     articleBodyAdverts.init();
@@ -274,9 +272,7 @@ define([
                         Adverts.init(config, context);
                     }
                 });
-                mediator.on('modules:adverts:docwrite:loaded', function(){
-                    Adverts.loadAds();
-                });
+                mediator.on('modules:adverts:docwrite:loaded', Adverts.loadAds);
 
                 mediator.on('window:resize', debounce(resizeCallback, 2000));
             }
