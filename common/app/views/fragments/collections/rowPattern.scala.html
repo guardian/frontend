@@ -1,4 +1,9 @@
-@(config: Config, items: Seq[Trail], style: Container, containerIndex: Int, isCurated: Boolean = false)(implicit request: RequestHeader)
+@(config: Config,
+  items: Seq[Trail],
+  style: Container,
+  containerIndex: Int,
+  isCurated: Boolean = false
+)(implicit request: RequestHeader)
 <div class="collection-wrapper">
     @items.slice(0, 1).zipWithIndex.map{ case (trail, index) =>
         @if(isCurated){
