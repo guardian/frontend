@@ -253,7 +253,7 @@ define([
                     hasBreakpointChanged(Adverts.reloadAds);
                 };
 
-                if(config.page.contentType === 'Article') {
+                if(config.page.contentType === 'Article' && !config.page.isLiveBlog) {
                     var articleBodyAdverts = new ArticleBodyAdverts({
                         isArticle: (config.page.contentType === 'Article')
                     });
