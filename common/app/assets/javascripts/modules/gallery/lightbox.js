@@ -71,11 +71,6 @@ define([
                     });
                 });
 
-                // Disable URL changes when the app-wide swipe is on
-                if(document.body.className.indexOf('has-swipe') !== -1) {
-                    pushUrlChanges = false;
-                }
-
                 // Load gallery straight away if url contains a direct image link
                 var urlParams = url.getUrlVars();
                 if (urlParams.index) {

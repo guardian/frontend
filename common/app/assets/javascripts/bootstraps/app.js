@@ -93,8 +93,7 @@ define([
 
     var routes = function() {
         domReady(function() {
-            var context = document.getElementById('preload-1'),
-                contextHtml = context.cloneNode(false).innerHTML;
+            var context = document.getElementById('preload-1');
 
             modules.initialiseAjax(config);
             modules.initialiseDiscussionApi(config);
@@ -103,12 +102,12 @@ define([
             modules.initId(config, context);
             modules.initUserAdTargeting();
 
-            var pageRoute = function(config, context, contextHtml) {
+            var pageRoute = function(config, context) {
 
                 // We should rip out this router:
                 var r = new Router();
 
-                bootstrapCommon.init(config, context, contextHtml);
+                bootstrapCommon.init(config, context);
 
                 // Front
                 if (config.page.isFront) {
@@ -155,7 +154,7 @@ define([
             };
 
             mediator.on('page:ready', pageRoute);
-            mediator.emit('page:ready', config, context, contextHtml);
+            mediator.emit('page:ready', config, context);
         });
     };
 
