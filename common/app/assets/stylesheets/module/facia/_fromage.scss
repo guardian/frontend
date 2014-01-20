@@ -16,10 +16,16 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
 
 .fromage {
     @include rem((
-        margin: 0 $gs-gutter/2 $gs-baseline*2
+        margin: 0 $gs-gutter/2 $gs-baseline/2
     ));
     border-top-width: 2px;
     border-top-style: solid;
+
+    @include mq(tablet) {
+        @include rem((
+            margin-bottom: $gs-baseline
+        ));
+    }
 }
 .fromage,
 .fromage__container {
@@ -96,7 +102,7 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
     }
 }
 .fromage__title {
-    @include fs-headline(2, true);
+    @include fs-headline(3, true);
     @include rem((
         margin-top: $gs-baseline/3,
         margin-bottom: $gs-baseline
