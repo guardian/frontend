@@ -1,15 +1,27 @@
-@(trail: model.Trail, index: Int, element: String = "div")(implicit request: RequestHeader)
+@(trail: model.Trail,
+  index: Int,
+  volumeOverride: Int = 0,
+  imageAdjustOverride: String = "none"
+)(implicit request: RequestHeader)
 
 @defining((VisualTone(trail))) { case (tone) =>
-    <@element
+    <div
         class="fromage
-               fromage--volume-@trail.group.getOrElse("0")
+               @if(volumeOverride != 0) {
+                   fromage--volume-@volumeOverride
+               }else{
+                   fromage--volume-@trail.group.getOrElse("0")
+               }
                @if(trail.trailPicture(5,3).isEmpty || trail.imageAdjust == Some("hide")){
                    fromage--has-no-image
                }else{
                    fromage--has-image
-                   @trail.imageAdjust.map{adjustValue =>
-                       fromage--imageadjust-@adjustValue
+                   @if(imageAdjustOverride != "none"){
+                       fromage--imageadjust-@imageAdjustOverride
+                   }else{
+                       @trail.imageAdjust.map{adjustValue =>
+                           fromage--imageadjust-@adjustValue
+                       }
                    }
                }
                @if(trail.isLive){fromage--live}
@@ -80,5 +92,5 @@
                 </ul>
             </div>
         }
-    </@element>
+    </div>
 }
