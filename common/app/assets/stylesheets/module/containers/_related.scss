@@ -1,8 +1,15 @@
 .related {
     position: relative;
-    margin-bottom: $gs-baseline*4.5;
+    margin-bottom: $gs-baseline*6;
 
     @include mq(rightCol) {
+
+        .page-sub-header {
+            border-top: 1px solid $c-neutral4;
+            padding-top: 5px;
+            padding-bottom: 0;
+            margin-bottom: 0;
+        }
 
         .item {
             &:first-child {
@@ -58,11 +65,12 @@
     margin-bottom: $gs-baseline;
 
     @include mq(rightCol) {
-        padding-top: $gs-baseline/3;
         margin-left: -1*($gs-gutter/2);
     }
 
     @include mq(leftCol) {
+        padding-top: $gs-baseline/1.5;
+        border-top: 1px solid $c-neutral4;
         margin-left: $a-leftCol-width + $gs-gutter/2;
         margin-right: - $gs-gutter/2;
     }
@@ -285,6 +293,7 @@
         @include box-sizing(border-box);
 
         @include mq(rightCol) {
+            border-bottom: none;
             padding-right: $gs-gutter;
         }
     }
