@@ -247,29 +247,21 @@ define([
         },
 
         loadAdverts: function (config) {
-            if (!userPrefs.isOff('adverts')){
+            if(!userPrefs.isOff('adverts')) {
 
-                var isDelayed = false;
-                var delayResizeAndOrientationChange = function() {};
+                var resizeOrOrientationChanged = function() {
+                    hasBreakpointChanged(Adverts.reloadAds);
+                };
 
                 if(config.page.contentType === 'Article') {
                     var articleBodyAdverts = new ArticleBodyAdverts({
                         isArticle: (config.page.contentType === 'Article')
                     });
 
-                    // Added the body adverts to the article page
+                    // Add the body adverts to the article page
                     articleBodyAdverts.init();
 
-                    // Prevents the resize and orientation events from triggering 2 ad reloads simultaneously
-                    delayResizeAndOrientationChange = function(type) {
-                        if(isDelayed === true) {
-                            return false;
-                        }
-
-                        isDelayed = window.setTimeout(function() {
-                            isDelayed = false;
-                        }, 100);
-
+                    resizeOrOrientationChanged = function(e) {
                         hasBreakpointChanged(function() {
                             articleBodyAdverts.reloadAds();
                             Adverts.reloadAds();
@@ -286,8 +278,7 @@ define([
                     Adverts.loadAds();
                 });
 
-                mediator.on('window:resize', delayResizeAndOrientationChange);
-                mediator.on('window:orientationchange', delayResizeAndOrientationChange);
+                mediator.on('window:resize', debounce(resizeOrOrientationChanged, 2000));
             }
         },
 
