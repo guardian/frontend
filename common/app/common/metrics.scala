@@ -193,7 +193,7 @@ object FaciaMetrics {
 
   object S3AuthorizationError extends CountMetric(
     "facia-front",
-    "facia-s3-authorization",
+    "facia-s3-authorization-403",
     "Facia S3 403 (Unauthorized) error count",
     "Number of requests to S3 by facia that have resulted in a 403"
   )
