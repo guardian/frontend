@@ -9,7 +9,7 @@ import conf.Configuration
 import tools.FaciaApi
 import services.S3FrontsApi
 import play.api.libs.ws.WS
-import model.Cached
+import model.{NoCache, Cached}
 
 
 object FaciaToolController extends Controller with Logging with ExecutionContexts {
@@ -22,21 +22,25 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
 
   def listCollections = AjaxExpiringAuthentication { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
-    Ok(Json.toJson(S3FrontsApi.listCollectionIds))
+    NoCache { Ok(Json.toJson(S3FrontsApi.listCollectionIds)) }
   }
 
   def getConfig = AjaxExpiringAuthentication { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
-    S3FrontsApi.getMasterConfig map { json =>
-      Ok(json).as("application/json")
-    } getOrElse NotFound
+    NoCache {
+      S3FrontsApi.getMasterConfig map { json =>
+        Ok(json).as("application/json")
+      } getOrElse NotFound
+    }
   }
 
   def readBlock(id: String) = AjaxExpiringAuthentication { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
-    S3FrontsApi.getBlock(id) map { json =>
-      Ok(json).as("application/json")
-    } getOrElse NotFound
+    NoCache {
+      S3FrontsApi.getBlock(id) map { json =>
+        Ok(json).as("application/json")
+      } getOrElse NotFound
+    }
   }
 
   def getConfig(id: String) = AjaxExpiringAuthentication { request =>
