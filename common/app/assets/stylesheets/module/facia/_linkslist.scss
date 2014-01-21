@@ -10,6 +10,12 @@
                                          // extra space at the beginning of a
                                          // new column break as margins do
     ));
+
+    @include mq($to: tablet) {
+        &.show-more--hidden {
+            display: none;
+        }
+    }
 }
 .linkslist__action {
     color: $c-neutral1;

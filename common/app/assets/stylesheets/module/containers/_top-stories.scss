@@ -156,6 +156,12 @@
             }
         }
     }
+
+    @include mq(tablet) {
+        .collection__show-more {
+            display: none;
+        }
+    }
 }
 
 .item--thumbnail {
