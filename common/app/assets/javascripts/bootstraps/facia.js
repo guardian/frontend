@@ -87,7 +87,7 @@ define([
         displayAlphaMessage: function(config) {
             if (config.page.contentType === 'Network Front') {
                 var page = window.location.pathname.replace('-alpha', ''),
-                    preferenceUrl = '/preference' + page + 'alpha/[OPT]?page=' + page,
+                    preferenceUrl = '/preference' + page + 'alpha/[OPT]?page=' + page + '%3Ftime=' + (new Date().getTime()),
                     msg,
                     messageId = 'facia-alpha';
                 if (config.page.pageId === "") {
