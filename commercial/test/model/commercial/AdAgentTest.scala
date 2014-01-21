@@ -26,14 +26,6 @@ class AdAgentTest extends FlatSpec with Matchers with ExecutionContexts {
     protected def updateCurrentAds(ads: Seq[Ad]) = {}
   }
 
-  "isTargetedAt" should "not match any ads for a new visitor" in {
-    val segment = Segment(Context(None, Nil), Seq("new"))
-
-    val ads = adAgent.adsTargetedAt(segment)
-
-    ads should be(empty)
-  }
-
   "isTargetedAt" should "match ads for a repeat visitor" in {
     val segment = Segment(Context(None, Nil), Seq("repeat"))
 
