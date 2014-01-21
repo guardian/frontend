@@ -246,9 +246,14 @@ define([
 
         getAbLoggableObject: function(config) {
             var abLogObject = {};
+
             getActiveTests().forEach(function (test) {
-                if (isParticipating(test) && isTestSwitchedOn(test, config) && getTestVariant(test.id) !== 'notintest') {
-                    abLogObject['ab' + test.id] = getTestVariant(test.id);
+
+                if (isParticipating(test)) {
+                    var variant = getTestVariant(test.id);
+                    if (isTestSwitchedOn(test, config) && variant && variant !== 'notintest') {
+                        abLogObject['ab' + test.id] = variant;
+                    }
                 }
             });
 
