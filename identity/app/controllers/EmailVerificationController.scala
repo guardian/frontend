@@ -28,7 +28,7 @@ class EmailVerificationController @Inject()( api: IdApiClient,
               errors.head.message match {
                 case "User Already Validated" => validated
                 case "Token expired" => expired
-                case _ => invalid
+                case error => logger.warn("Error validating email: " + error); invalid
               }
 
             case Right(ok) => validated
