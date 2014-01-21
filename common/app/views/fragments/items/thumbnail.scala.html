@@ -16,6 +16,7 @@
         data-link-name="trail | @{index + 1}"
         @trail.discussionId.map{ id => data-discussion-id="@id" }
         data-discussion-closed="@trail.isClosedForComments">
+
         <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border">
             <h@if(isFirstContainer && index == 0){1}else{2} class="item__title">
                 @if(trail.isLive){
@@ -30,7 +31,7 @@
                 @trail.trailPicture(5,3).map{ imageContainer =>
                     @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
                         <div class="item__media-wrapper">
-                            <div class="item__image-container @if(inlineImages){ inlined-image}" data-src="@imgSrc" @if(isFirstContainer){ data-force-upgrade="desktop wide"}>
+                            <div class="item__image-container js-image-upgrade @if(inlineImages){ inlined-image}" data-src="@imgSrc" @if(isFirstContainer){ data-force-upgrade="desktop wide"}>
                                 @if(inlineImages){
                                     @Item300.bestFor(imageContainer).map{ url => <img src="@url" class="responsive-img" alt="" /> }
                                 }

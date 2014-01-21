@@ -65,72 +65,12 @@
         }
     }
 
-    // Volume
-    .l-row--items-2 .collection__item--volume-2 {
-        .item__media-wrapper {
-            @include mq(mobileLandscape) {
-                float: left;
-                @include rem((
-                    width: gs-span(3),
-                    margin-right: $gs-gutter/2
-                ));
-            }
-            @include mq(600px, tablet) {
-                @include rem((
-                    width: gs-span(4)
-                ));
-            }
-        }
+    .l-row--items-2 {
         .item__title {
             @include fs-headline(3, true);
-        }
-
-        @include mq(tablet) {
-            @include flex-grow(3);
-            .item__standfirst {
-                @include fs-headline(2, true);
-                clear: both;
-            }
-            .item--thumbnail .item__standfirst {
-                clear: none;
-            }
-            .item--has-image {
-                .item__title {
-                    @include fs-headline(5, true);
-                }
-            }
-            .item--has-no-image {
-                .item__title {
-                    @include fs-headline(7, true);
-                }
-            }
-            .item__standfirst,
-            .item__support {
-                @include rem((
-                    max-width: gs-span(8)
-                ));
-            }
-        }
-        .item__media-wrapper {
-            @include mq(tablet) {
-                float: left;
-                margin-bottom: $gs-baseline;
-
-                @include rem((
-                    width: 219px, // same size as the image in the right column
-                    margin-right: $gs-gutter/2
-                ));
-            }
-            @include mq(desktop) {
-                @include rem((
-                    width: gs-span(4)
-                ));
-            }
-        }
-        @include mq(desktop) {
-            .item__title {
-                @include fs-headline(5, true);
-            }
+            @include rem((
+                margin-bottom: 14px
+            ));
         }
     }
     .l-row--items-2,
@@ -153,6 +93,11 @@
             .item--has-image .item__media-wrapper,
             .item--has-no-image .item__standfirst {
                 display: block;
+            }
+        }
+        @include mq(tablet, desktop) {
+            .item--has-image .item__title {
+                @include fs-headline(1, true);
             }
         }
     }
@@ -191,6 +136,16 @@
                 ));
             }
         }
+        @include mq(desktop) {
+            padding-bottom: 0;
+
+            .item__meta {
+                position: static;
+                @include rem((
+                    margin-top: $gs-baseline
+                ));
+            }
+        }
     }
     .l-row--items-3 & {
         .item__media-wrapper {
@@ -204,5 +159,26 @@
                 ));
             }
         }
+    }
+}
+.linkslist-container {
+    position: relative;
+    padding-top: 1px;
+    @include mq(tablet) {
+        @include rem((
+            margin-top: $gs-baseline
+        ));
+    }
+
+    &:before {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        width: 100%;
+        background: $c-newsAccent;
     }
 }

@@ -1,5 +1,5 @@
 @(projectName: Option[String])(implicit request: RequestHeader)
-<!--[if (gt IE 8) | (IEMobile)]><!-->
+<!--[if (gt IE 9) | (IEMobile)]><!-->
 @if(play.Play.isDev()) {
     <link rel="stylesheet" type="text/css" href="@Static("stylesheets/head" + projectName.map("." + _).getOrElse(".default") + ".css")" />
 } else {
@@ -10,7 +10,10 @@
 <!--<![endif]-->
 <!--[if (lt IE 9) & (!IEMobile)]>
     <link rel="stylesheet" type="text/css" href="@Static("stylesheets/webfonts.css")" />
-    <link rel="stylesheet" type="text/css" href="@Static(Static.css.oldIePath)" />
+    <link rel="stylesheet" type="text/css" href="@Static(Static.css.headOldIE(projectName))" />
+<![endif]-->
+<!--[if (IE 9) & (!IEMobile)]>
+    <link rel="stylesheet" type="text/css" href="@Static(Static.css.headIE9(projectName))" />
 <![endif]-->
 
 @* any images in head need to go here (or they'll be relative to the page)} *@
@@ -25,6 +28,9 @@
 
 <!--[if (lt IE 9) & (!IEMobile)]>
     <link rel="stylesheet" type="text/css" href="@Static("stylesheets/old-ie.global.css")" />
+<![endif]-->
+<!--[if (IE 9) & (!IEMobile)]>
+    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/ie9.global.css")" />
 <![endif]-->
 
 <style class="initial" data-cache-name="WebEgyptian" data-cache-file-woff="@Static("fonts/WebEgyptian.woff.json")" data-cache-file-ttf="@Static("fonts/WebEgyptian.ttf.json")"></style>

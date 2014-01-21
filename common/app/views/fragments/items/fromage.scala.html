@@ -1,24 +1,36 @@
-@(trail: model.Trail, index: Int, element: String = "div")(implicit request: RequestHeader)
+@(trail: model.Trail,
+  index: Int,
+  volumeOverride: Int = 0,
+  imageAdjustOverride: String = "none"
+)(implicit request: RequestHeader)
 
 @defining((VisualTone(trail))) { case (tone) =>
-    <@element
+    <div
         class="fromage
-               fromage--volume-@trail.group.getOrElse("0")
+               @if(volumeOverride != 0) {
+                   fromage--volume-@volumeOverride
+               }else{
+                   fromage--volume-@trail.group.getOrElse("0")
+               }
                @if(trail.trailPicture(5,3).isEmpty || trail.imageAdjust == Some("hide")){
                    fromage--has-no-image
                }else{
                    fromage--has-image
-                   @trail.imageAdjust.map{adjustValue =>
-                       fromage--imageadjust-@adjustValue
+                   @if(imageAdjustOverride != "none"){
+                       fromage--imageadjust-@imageAdjustOverride
+                   }else{
+                       @trail.imageAdjust.map{adjustValue =>
+                           fromage--imageadjust-@adjustValue
+                       }
                    }
                }
                @if(trail.isLive){fromage--live}
                tone-@tone
                tone-accent-border"
-        data-link-name="trail">
+        data-link-name="trail | @{index + 1}">
 
         <div class="fromage__container">
-            <a href="@LinkTo{@trail.url}" class="fromage__link" data-link-name="@{index + 1}">
+            <a href="@LinkTo{@trail.url}" class="fromage__link">
                 @if(trail.imageAdjust != Some("hide")) {
                     @trail.trailPicture(5,3).map{ imageContainer =>
                         @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
@@ -80,5 +92,5 @@
                 </ul>
             </div>
         }
-    </@element>
+    </div>
 }

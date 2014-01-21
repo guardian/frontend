@@ -21,9 +21,6 @@
     @include mq(desktop) {
         @include rem((width: gs-span(12)));
     }
-    @include mq(wide) {
-        @include rem((width: gs-span(16)));
-    }
 }
 
 @import "module/facia/_extends";

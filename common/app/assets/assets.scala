@@ -41,6 +41,8 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
   object css {
 
     def head(projectOverride: Option[String] = None) = css(projectOverride.getOrElse(Configuration.environment.projectName))
+    def headOldIE(projectOverride: Option[String] = None) = cssOldIE(projectOverride.getOrElse(Configuration.environment.projectName))
+    def headIE9(projectOverride: Option[String] = None) = cssIE9(projectOverride.getOrElse(Configuration.environment.projectName))
 
     // A mutable map of 'project url' keys to 'css content' values
     private val memoizedCss: MutableMap[java.net.URL, String] = MutableMap()
@@ -64,10 +66,19 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
       })
     }
 
-    def oldIePath: String = Configuration.environment.projectName match {
-      case "facia" => "stylesheets/old-ie.head.facia.css"
-      case "identity" => "stylesheets/old-ie.head.identity.css"
-      case _ => "stylesheets/old-ie.head.default.css"
+    private def cssOldIE(project: String): String = {
+      project match {
+        case "facia" => "stylesheets/old-ie.head.facia.css"
+        case "identity" => "stylesheets/old-ie.head.identity.css"
+        case _ => "stylesheets/old-ie.head.default.css"
+      }
+    }
+    private def cssIE9(project: String): String = {
+      project match {
+        case "facia" => "stylesheets/ie9.head.facia.css"
+        case "identity" => "stylesheets/ie9.head.identity.css"
+        case _ => "stylesheets/ie9.head.default.css"
+      }
     }
   }
 }

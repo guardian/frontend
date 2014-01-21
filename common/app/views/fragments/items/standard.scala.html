@@ -13,14 +13,13 @@
                }
                @if(trail.isLive){item--live}
                tone-@tone
-               @if(isFirstContainer){item--force-image-upgrade}
-               "
-        data-link-name="trail"
+               @if(isFirstContainer){item--force-image-upgrade}"
+        data-link-name="trail | @{index + 1}"
         @trail.discussionId.map{ id => data-discussion-id="@id" }
         data-discussion-closed="@trail.isClosedForComments">
 
         <div class="item__container">
-            <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border" data-link-name="@{index + 1}">
+            <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border">
                 @if(trail.imageAdjust != Some("hide")) {
                     @trail.trailPicture(5,3).map{ imageContainer =>
                         @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
