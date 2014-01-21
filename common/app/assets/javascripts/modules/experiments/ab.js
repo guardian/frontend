@@ -169,7 +169,8 @@ define([
     }
 
     function getTestVariant(testId) {
-        return getParticipations()[testId].variant;
+        var participation = getParticipations()[testId];
+        return participation && participation.variant;
     }
 
     var ab = {
