@@ -34,6 +34,9 @@
                     }
                 }
                 <h@if(isFirstContainer && index == 0){1}else{2} class="item__title">
+                    @if(trail.breaking){
+                        <span class="item__live-indicator">Breaking</span>
+                    }
                     @if(trail.isLive){
                         <span class="item__live-indicator">Live</span>
                     }

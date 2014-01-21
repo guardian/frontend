@@ -25,6 +25,7 @@
                    }
                }
                @if(trail.isLive){fromage--live}
+               @if(trail.breaking){fromage--breaking}
                tone-@tone
                tone-accent-border"
         @trail.discussionId.map{ id => data-discussion-id="@id" }
@@ -45,6 +46,9 @@
                     }
                 }
                 <h1 class="fromage__title">
+                    @if(trail.breaking){
+                        <span class="item__live-indicator">Breaking</span>
+                    }
                     @if(trail.isLive){
                         <span class="item__live-indicator">Live</span>
                     }
