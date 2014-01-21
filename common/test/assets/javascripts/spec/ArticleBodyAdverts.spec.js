@@ -1,9 +1,10 @@
 define([ 'common/common',
+         'common/$',
          'bean',
          'bonzo',
          'common/modules/adverts/article-body-adverts',
          'helpers/fixtures'
-    ], function(common, bean, bonzo, ArticleBodyAdverts, fixtures) {
+    ], function(common, $, bean, bonzo, ArticleBodyAdverts, fixtures) {
 
 
         describe("ArticleBodyAdverts", function() {
@@ -55,7 +56,7 @@ define([ 'common/common',
 
             it("Should insert an ad container after a figure tag", function() {
                 articleBodyAdverts.init();
-                expect(/ad-slot--inline/.test(document.querySelector('#test_figure').nextElementSibling.className)).toBe(true);
+                expect($('#test_figure').next().hasClass('ad-slot--inline')).toBeTruthy();
             });
 
             it("Should NOT insert an ad container after a H2 tag when on a mobile device", function() {
