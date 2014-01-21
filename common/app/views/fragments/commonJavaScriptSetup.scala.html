@@ -41,6 +41,16 @@
     (function(isModern) {
         if (!isModern) { return false; }
 
+        // Focus Custom Google Search field when loaded
+        window.focusSearchField = function() {
+            if (document.querySelector('input.gsc-input')) {
+                document.querySelector('input.gsc-input').focus();
+            }
+        };
+        window.__gcse = {
+            callback: focusSearchField
+        };
+
         @if(CssFromStorageSwitch.isSwitchedOn) {
             function loadCssFromStorage() {
                 var c = localStorage.getItem('gu.css.@Static("stylesheets/global.css").md5Key'), s, sc;

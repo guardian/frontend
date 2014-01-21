@@ -1,3 +1,4 @@
+/*global focusSearchField*/
 define([
     'common/common',
     'bean',
@@ -7,8 +8,8 @@ define([
     bean,
     bonzo
 ) {
-
     var Search = function (config) {
+
 
         var enabled,
             gcsUrl,
@@ -17,7 +18,7 @@ define([
             self = this;
 
         if (config.switches.googleSearch && config.page.googleSearchUrl && config.page.googleSearchId) {
-            
+
             enabled = true;
             gcsUrl = config.page.googleSearchUrl + '?cx=' + config.page.googleSearchId;
 
@@ -27,6 +28,7 @@ define([
 
             bean.on(document, 'click touchstart', '.control--search', function(e) {
                 searchLoader();
+                focusSearchField();
                 e.preventDefault();
             });
 
@@ -53,7 +55,7 @@ define([
 
             // Load the Google search monolith, if not already present in this context.
             // We have to re-run their script each time we do this.
-            if (! container.innerHTML) {
+            if (!container.innerHTML) {
                 container.innerHTML = '' +
                     '<div class="search-box" role="search">' +
                         '<gcse:searchbox></gcse:searchbox>' +
