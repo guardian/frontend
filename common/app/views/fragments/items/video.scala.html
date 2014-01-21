@@ -10,7 +10,7 @@
         <div class="item__container">
             @trail.trailPicture(5,3).map{ imageContainer =>
                 @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
-                    <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border">
+                    <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border" data-link-name="article">
                         <div class="item__media-wrapper">
                             <div class="item__cta item--video">
                                 <p>Play</p>
@@ -25,7 +25,7 @@
                     </a>
                 }
             }.getOrElse{
-                <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border">
+                <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border" data-link-name="article">
                     <div class="item__media-wrapper">
                         <div class="item__cta item--video">
                             <p>Play</p>
