@@ -19,7 +19,7 @@
         data-discussion-closed="@trail.isClosedForComments">
 
         <div class="item__container">
-            <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border">
+            <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border" data-link-name="article">
                 @if(trail.imageAdjust != Some("hide")) {
                     @trail.trailPicture(5,3).map{ imageContainer =>
                         @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
