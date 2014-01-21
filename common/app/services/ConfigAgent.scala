@@ -14,6 +14,19 @@ trait ConfigAgent extends ExecutionContexts {
     (json \ "fronts").asOpt[Map[String, JsValue]].map { _.keys.toList } getOrElse Nil
   }
 
+  def getConfigCollectionMap: Map[String, Seq[String]] = {
+    val json = configAgent.get()
+    (json \ "fronts").asOpt[Map[String, JsValue]].map { m =>
+      m.mapValues{j => (j \ "collections").asOpt[Seq[String]].getOrElse(Nil)}
+    } getOrElse Map.empty
+  }
+
+  def getConfigsUsingCollectionId(id: String): Seq[String] = {
+    getConfigCollectionMap.collect{
+      case (configId, collectionIds) if collectionIds.contains(id) => configId
+    }.toSeq
+  }
+
   def getConfigForId(id: String): Option[List[Config]] = {
     val json = configAgent.get()
     (json \ "fronts" \ id \ "collections").asOpt[List[String]] map { configList =>
