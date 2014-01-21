@@ -11,6 +11,7 @@ trait DiagnosticsLifecycle extends GlobalSettings with Logging {
       model.diagnostics.alpha.LoadJob.run()
       model.diagnostics.javascript.LoadJob.run()
       model.diagnostics.abtests.UploadJob.run()
+      model.diagnostics.analytics.UploadJob.run()
     }
   }
 

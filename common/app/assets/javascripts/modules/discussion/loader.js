@@ -263,7 +263,7 @@ Loader.prototype.renderCommentBox = function() {
     } else if (!this.user.privateFields.canPostComment) {
         this.renderUserBanned();
     } else {
-        this.commentBox = new CommentBox(this.context, this.mediator, {
+        this.commentBox = new CommentBox({
             discussionId: this.getDiscussionId(),
             premod: this.user.privateFields.isPremoderated
         });
@@ -302,7 +302,7 @@ Loader.prototype.renderUserBanned = function() {
  */
 Loader.prototype.renderBottomCommentBox = function() {
     if (this.bottomCommentBox) { return; }
-    this.bottomCommentBox = new CommentBox(this.context, this.mediator, {
+    this.bottomCommentBox = new CommentBox({
         discussionId: this.getDiscussionId(),
         premod: this.user.privateFields.isPremoderated
     });

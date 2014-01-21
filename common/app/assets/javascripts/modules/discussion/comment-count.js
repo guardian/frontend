@@ -44,7 +44,7 @@ define([
                 data = data.replace("[LABEL]", (c.count === 1 ? "comment" : "comments"));
 
                 // put in trail__meta, if exists
-                var meta = node.querySelector('.item__meta, .card__meta'),
+                var meta = node.querySelector('.item__meta, .card__meta, .js-append-commentcount'),
                     $node = meta ? bonzo(meta) : bonzo(node);
 
                 $node.append(data.replace("[COUNT]", c.count));

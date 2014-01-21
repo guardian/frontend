@@ -9,6 +9,7 @@ define([
     'common/utils/storage',
     'common/utils/to-array',
     'common/modules/facia/collection-show-more',
+    'common/modules/facia/container-show-more',
     'common/modules/facia/container-toggle',
     'common/modules/sport/football/fixtures',
     'common/modules/sport/cricket',
@@ -23,6 +24,7 @@ define([
     storage,
     toArray,
     CollectionShowMore,
+    ContainerShowMore,
     ContainerToggle,
     FootballFixtures,
     cricket,
@@ -38,6 +40,9 @@ define([
                     $('.js-collection--show-more', container).each(function(collection) {
                         new CollectionShowMore(collection).addShowMore();
                     });
+                });
+                $('.container--top-stories', context).each(function(container) {
+                    new ContainerShowMore(container).addShowMore();
                 });
             });
         },
@@ -87,18 +92,18 @@ define([
         displayAlphaMessage: function(config) {
             if (config.page.contentType === 'Network Front') {
                 var page = window.location.pathname.replace('-alpha', ''),
-                    preferenceUrl = '/preference' + page + 'alpha/[OPT]?page=' + page,
+                    preferenceUrl = '/preference' + page + 'alpha/[OPT]?page=' + page + '%3Ftime=' + (new Date().getTime()),
                     msg,
                     messageId = 'facia-alpha';
                 if (config.page.pageId === "") {
                     // only run on 5% of (mobile) users
-                    var isAChosenOne = (parseInt(mvtCookie.getMvtValue(), 10) < (mvtCookie.MAX_INT * 0.05) && detect.getMobileOS()) || window.location.hash === '#show-alpha-opt-in',
+                    var isAChosenOne = parseInt(mvtCookie.getMvtValue(), 10) < (mvtCookie.MAX_INT * 0.05) && detect.getMobileOS(),
                         alphaSwitch = {
                             '/uk': 'networkFrontUkAlpha',
                             '/us': 'networkFrontUsAlpha',
                             '/au': 'networkFrontAuAlpha'
                         }[page];
-                    if (isAChosenOne && config.switches[alphaSwitch] === true) {
+                    if ((isAChosenOne && config.switches[alphaSwitch] === true) || window.location.hash === '#show-alpha-opt-in') {
                         msg =
                             '<p class="site-message__message">' +
                                 'We’re trying out some new things on our website and would love your feedback. <a href="' +

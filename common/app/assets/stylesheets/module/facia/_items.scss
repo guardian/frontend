@@ -201,6 +201,10 @@ $c-live: #e81818;
     display: none;
     margin: 20px 0 0;
     @include fs-headline(1, $size-only: true);
+
+    p {
+        margin-bottom: 0; // Some trail texts are wrapped in a paragraph
+    }
 }
 .item__meta {
     position: absolute;

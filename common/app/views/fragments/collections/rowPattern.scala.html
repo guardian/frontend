@@ -1,12 +1,24 @@
-@(config: Config, items: Seq[Trail], style: Container, containerIndex: Int)(implicit request: RequestHeader)
+@(config: Config,
+  items: Seq[Trail],
+  style: Container,
+  containerIndex: Int
+)(implicit request: RequestHeader)
 <div class="collection-wrapper">
     @items.slice(0, 1).zipWithIndex.map{ case (trail, index) =>
-        @fragments.items.fromage(trail, 0)
+        @if(!trail.group.isEmpty){ @* Means this is a curated container *@
+            @fragments.items.fromage(trail, 0)
+        }else{ @* Not a curated container: we fake hierarchy *@
+            @fragments.items.fromage(trail, 0, 1, "highlight")
+        }
     }
 </div>
 <div class="collection-wrapper">
     @items.slice(1, 2).zipWithIndex.map{ case (trail, index) =>
-        @fragments.items.fromage(trail, 0)
+        @if(!trail.group.isEmpty){
+            @fragments.items.fromage(trail, 1)
+        }else{
+            @fragments.items.fromage(trail, 1, 0, "default")
+        }
     }
 </div>
 <div class="collection-wrapper">
@@ -14,9 +26,9 @@
         @items.slice(2, 4).zipWithIndex.map{ case (trail, index) =>
             <li class="l-row__item collection__item collection__item--volume-@trail.group.getOrElse("0")">
                 @if(trail.imageAdjust == Some("highlight")) {
-                    @fragments.items.standard(trail, index, 0, "div")
+                    @fragments.items.standard(trail, index + 2, 0, "div")
                 }else{
-                    @fragments.items.thumbnail(trail, index, 0, "div")
+                    @fragments.items.thumbnail(trail, index + 2, 0, "div")
                 }
             </li>
         }
@@ -26,12 +38,12 @@
     <ul class="unstyled l-row l-row--items-4 collection">
         @items.slice(4, 8).zipWithIndex.map{ case (trail, index) =>
             <li class="l-row__item collection__item collection__item--volume-@trail.group.getOrElse("0")">
-                @fragments.items.standard(trail, index, 0, "div")
+                @fragments.items.standard(trail, index + 4, 0, "div")
             </li>
         }
     </ul>
 </div>
-<div>
+<div class="linkslist-container">
     <ul class="l-columns linkslist">
         @items.slice(8, 24).zipWithIndex.map{ case (trail, index) =>
             <li class="l-columns__item linkslist__item">
