@@ -336,7 +336,7 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
         @include mq(desktop) {
             @include fs-headline(6, true);
             @include rem((
-                max-width: gs-span(5)
+                max-width: none
             ));
         }
     }
