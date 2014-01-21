@@ -1,0 +1,27 @@
+@(products: Seq[model.commercial.moneysupermarket.EasyAccessProduct])(implicit request: RequestHeader)
+
+<link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
+
+@products.map { product =>
+    <table>
+        <tr>
+            <td>Provider</td>
+            <td>@product.provider</td>
+        </tr>
+        <tr>
+            <td>Provider Logo</td>
+            <td><img src="@product.logoUrl" /></td>
+        </tr>
+        <tr>
+            <td>Product Name</td>
+            <td>@product.name</td>
+        </tr>
+        <tr>
+            <td>Interest Rate</td>
+            <td>@product.interestRate</td>
+        </tr>
+        <tr>
+            <td><a href="@product.applyUrl">Apply URL</a></td>
+        </tr>
+    </table>
+}

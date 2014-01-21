@@ -33,6 +33,7 @@ define([
                 sectionHeader: 'formstack-heading',
                 sectionHeaderFirst: 'formstack-heading--first',
                 sectionText: 'formstack-section',
+                characterCount: 'formstack-count',
                 hide: 'is-hidden'
             },
             fsSelectors: {
@@ -51,6 +52,7 @@ define([
                 sectionHeader: '.fsSectionHeading',
                 sectionHeaderFirst: '.fsSection:first-child .fsSectionHeading',
                 sectionText: '.fsSectionText',
+                characterCount: '.fsCounter',
                 hide: '.hidden, .fsHidden, .ui-datepicker-trigger'
             },
             hiddenSelectors: {

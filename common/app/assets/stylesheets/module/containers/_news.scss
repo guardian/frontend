@@ -101,6 +101,12 @@
             }
         }
     }
+
+    @include mq(tablet) {
+        .collection__show-more {
+            display: none;
+        }
+    }
 }
 
 .item--thumbnail {
@@ -141,7 +147,6 @@
 
             .item__meta {
                 position: static;
-
                 @include rem((
                     margin-top: $gs-baseline
                 ));
