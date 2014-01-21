@@ -55,6 +55,7 @@
     .i {
         position: relative;
         top: 2px;
+        margin-left: 4px;
     }
     .commercial__head & {
         @include rem((

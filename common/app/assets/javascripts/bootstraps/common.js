@@ -38,6 +38,7 @@ define([
     "common/modules/onward/sequence",
     "common/modules/ui/message",
     "common/modules/identity/autosignin",
+    'common/modules/adverts/article-body-adverts',
     "common/modules/analytics/commercial/tags/container"
 ], function (
     $,
@@ -79,8 +80,11 @@ define([
     sequence,
     Message,
     AutoSignin,
+    ArticleBodyAdverts,
     TagContainer
 ) {
+
+    var hasBreakpointChanged = detect.hasCrossedBreakpoint();
 
     var modules = {
 
@@ -237,23 +241,33 @@ define([
             });
         },
 
-        loadAdverts: function () {
-            if (!userPrefs.isOff('adverts')){
-                mediator.on('page:common:deferred:loaded', function(config, context) {
-                    if (config.switches && config.switches.adverts && !config.page.blockAds) {
-                        Adverts.init(config, context);
-                    }
-                });
-                mediator.on('modules:adverts:docwrite:loaded', function(){
-                    Adverts.loadAds();
-                });
+        loadAdverts: function (config) {
+            if(!userPrefs.isOff('adverts') && config.switches && config.switches.adverts && !config.page.blockAds) {
 
-                mediator.on('window:resize', function () {
-                    Adverts.hideAds();
+                var resizeCallback = function() {
+                    hasBreakpointChanged(Adverts.reload);
+                };
+
+                if(config.page.contentType === 'Article' && !config.page.isLiveBlog) {
+                    var articleBodyAdverts = new ArticleBodyAdverts();
+
+                    // Add the body adverts to the article page
+                    articleBodyAdverts.init();
+
+                    resizeCallback = function(e) {
+                        hasBreakpointChanged(function() {
+                            articleBodyAdverts.reload();
+                            Adverts.reload();
+                        });
+                    };
+                }
+
+                mediator.on('page:common:deferred:loaded', function(config, context) {
+                    Adverts.init(config, context);
                 });
-                mediator.on('window:orientationchange', function () {
-                    Adverts.hideAds();
-                });
+                mediator.on('modules:adverts:docwrite:loaded', Adverts.load);
+
+                mediator.on('window:resize', debounce(resizeCallback, 2000));
             }
         },
 
@@ -341,7 +355,7 @@ define([
                 }
             });
         },
-        
+
         loadTags : function() {
             mediator.on('page:common:ready', function(config) {
                 TagContainer.init(config);
@@ -378,7 +392,7 @@ define([
                 self.initialisedDeferred = true;
                 modules.initAbTests(config);
                 modules.logLiveStats(config);
-                modules.loadAdverts();
+                modules.loadAdverts(config);
                 modules.loadAnalytics(config, context);
                 modules.cleanupCookies(context);
                 modules.runAbTests(config, context);
