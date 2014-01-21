@@ -1,6 +1,8 @@
 define([
     'bean',
     'bonzo',
+    'common/utils/context',
+    'common/utils/mediator',
     'common/modules/discussion/api',
     'common/modules/identity/api',
     'common/modules/component',
@@ -8,6 +10,8 @@ define([
 ], function(
     bean,
     bonzo,
+    context,
+    mediator,
     DiscussionApi,
     IdentityApi,
     Component,
@@ -21,8 +25,8 @@ define([
  * @param {Object} mediator
  * @param {Object=} options
  */
-function CommentBox(context, mediator, options) {
-    this.context = context || document;
+function CommentBox(options) {
+    this.context = context();
     this.mediator = mediator;
     this.setOptions(options);
 
@@ -53,8 +57,7 @@ CommentBox.prototype.componentClass = 'd-comment-box';
  * @type {Object.<string.string>}
  * @override
  */
-CommentBox.prototype.classes = {
-};
+CommentBox.prototype.classes = {};
 
 /**
  * @type {Object.<string.string>}

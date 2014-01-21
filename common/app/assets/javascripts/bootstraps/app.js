@@ -4,11 +4,12 @@ define([
     'common/utils/mediator',
     'common/utils/ajax',
     'common/utils/detect',
-    
+    'common/utils/config',
+    'common/utils/context',
+
     'common/modules/analytics/errors',
     'common/modules/ui/fonts',
     'common/modules/router',
-    'common/utils/config',
     'common/modules/adverts/userAdTargeting',
     'common/modules/discussion/api',
 
@@ -29,11 +30,12 @@ define([
     mediator,
     ajax,
     detect,
+    config,
+    Context,
 
     Errors,
     Fonts,
     Router,
-    config,
     UserAdTargeting,
     DiscussionApi,
 
@@ -94,6 +96,8 @@ define([
     var routes = function() {
         domReady(function() {
             var context = document.getElementById('preload-1');
+
+            Context.set(context);
 
             modules.initialiseAjax(config);
             modules.initialiseDiscussionApi(config);

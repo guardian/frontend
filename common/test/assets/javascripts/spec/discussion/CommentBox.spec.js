@@ -1,6 +1,7 @@
 define([
     'common/common',
     'common/utils/ajax',
+    'common/utils/context',
     'bean',
     'helpers/fixtures',
     'fixtures/discussion/discussion',
@@ -10,6 +11,7 @@ define([
 ], function(
     common,
     ajax,
+    context,
     bean,
     fixtures,
     discussionJson,
@@ -18,7 +20,7 @@ define([
     CommentBox
 ) {
     describe('Comment box', function() {
-        var context, server,
+        var server,
             fixturesId = 'comment-box',
             discussionId = '/p/3ht42',
             maxCommentLength = 2500,
@@ -67,15 +69,14 @@ define([
         beforeEach(function() {
             server = sinon.fakeServer.create();
             fixtures.render(fixture);
-            context = document.getElementById(fixturesId);
-            commentBox = new CommentBox(context, common.mediator, {
+            context.set(document.getElementById(fixturesId));
+            commentBox = new CommentBox({
                 discussionId: discussionId,
                 maxLength: maxCommentLength
             });
 
             spyOn(commentBox, 'getUserData').andReturn({ displayName: "testy", id: 1 });
-
-            commentBox.attachToDefault();
+            commentBox.attachTo(document.querySelector('.d-comment-box'));
         });
 
         afterEach(function() {
