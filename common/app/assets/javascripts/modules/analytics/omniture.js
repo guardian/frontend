@@ -150,9 +150,9 @@ define([
                     s.eVar51  = alphaTag + s.eVar51;
                 }
 
-                // is user is viewing uk-alpha front
-                if (config.page.pageId === 'uk-alpha') {
-                    var ukAlphaTag = 'uk-alpha,';
+                // is user is viewing an alpha front
+                if (/^.+-alpha$/.test(config.page.pageId)) {
+                    var ukAlphaTag = config.page.pageId;
                     s.prop51  = ukAlphaTag + s.prop51;
                     s.eVar51  = ukAlphaTag + s.eVar51;
                 }

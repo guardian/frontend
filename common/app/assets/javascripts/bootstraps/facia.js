@@ -92,13 +92,13 @@ define([
                     messageId = 'facia-alpha';
                 if (config.page.pageId === "") {
                     // only run on 5% of (mobile) users
-                    var isAChosenOne = (parseInt(mvtCookie.getMvtValue(), 10) < (mvtCookie.MAX_INT * 0.05) && detect.getMobileOS()) || window.location.hash === '#show-alpha-opt-in',
+                    var isAChosenOne = parseInt(mvtCookie.getMvtValue(), 10) < (mvtCookie.MAX_INT * 0.05) && detect.getMobileOS(),
                         alphaSwitch = {
                             '/uk': 'networkFrontUkAlpha',
                             '/us': 'networkFrontUsAlpha',
                             '/au': 'networkFrontAuAlpha'
                         }[page];
-                    if (isAChosenOne && config.switches[alphaSwitch] === true) {
+                    if ((isAChosenOne && config.switches[alphaSwitch] === true) || window.location.hash === '#show-alpha-opt-in') {
                         msg =
                             '<p class="site-message__message">' +
                                 'We’re trying out some new things on our website and would love your feedback. <a href="' +
