@@ -20,6 +20,33 @@
 
     <h1 class="identity-title">Edit your profile</h1>
 
+    <div class="identity-tabs-container">
+        
+        <div class="identity-tabs-container__tab public-profile-tab"></div>
+        <div class="identity-tabs-container__tab account-profile-tab"></div>
+
+    </div>
+
+
+
+<div class="tabs u-cf">
+    <ol class="tabs__container js-tabs" id="js-popular-tabs" role="tablist" data-is-bound="true">
+        <li class="tabs__tab tabs__tab--selected tone-colour tone-accent-border" role="tab" id="tabs-popular-1-tab" aria-selected="true" aria-controls="tabs-popular-1">
+            <a href="#tabs-popular-1" data-link-name="tab 1 World news"><span class="u-h--up-to-right-col">Popular in </span>World news</a>
+        </li>
+        <li class="tabs__tab" role="tab" id="tabs-popular-2-tab" aria-controls="tabs-popular-2" aria-selected="false">
+            <a href="#tabs-popular-2" data-link-name="tab 2 The Guardian"><span class="u-h--up-to-right-col">Popular in </span>The Guardian</a>
+        </li>
+    </ol>
+    
+    <div class="tabs__content">
+        <div id="tabs-popular-1" class="tabs__pane  headline-list u-cf" role="tabpanel" aria-labelledby="tabs-popular-1-tab" data-link-name="World news" data-link-context="most-read/world" style="">
+        </div>
+        <div id="tabs-popular-2" class="tabs__pane headline-list u-cf" role="tabpanel" aria-labelledby="tabs-popular-2-tab" data-link-name="The Guardian" data-link-context="most-read/" style="display: none;">
+        </div>
+    </div>
+</div>
+
     <form class="form" novalidate action="@idUrlBuilder.buildUrl("/profile/public", idRequest)" role="main" method="post">
         @views.html.helper.CSRF.formField
 
