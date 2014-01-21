@@ -25,6 +25,7 @@ define([
     Component.define(ArticleBodyAdverts);
 
     ArticleBodyAdverts.prototype.config = {
+        inlineAdLimit: null,
         nthParagraph: 7,
         inlineAdTemplate: '<div class="ad-slot ad-slot--inline" data-base="%slot%" data-median="%slot%"><div class="ad-container"></div></div>',
         mpuAdTemplate: '<div class="ad-slot ad-slot--mpu-banner-ad" data-link-name="ad slot mpu-banner-ad" data-base="%slot%" data-median="%slot%"><div class="ad-container"></div></div>'
@@ -33,10 +34,16 @@ define([
     // inserts a few inline advert slots in to the page
     ArticleBodyAdverts.prototype.createInlineAdSlots = function(id) {
         var paragraphSelector = 'p:nth-of-type('+ this.config.nthParagraph +'n)',
+            limit             = this.config.inlineAdLimit,
             template          = this.config.inlineAdTemplate,
             article           = document.getElementsByClassName('js-article__container')[0];
 
         $(paragraphSelector, article).each(function(el, i) {
+            // Checking if we've exceeded the limit
+            if(limit !== null && limit < (i + 1)) {
+                return false;
+            }
+
             // This protects against empty paragraph tags and paragraphs being used
             // instead of order/unordered lists
             if(bonzo(el).text().length < 120) {

@@ -76,5 +76,14 @@ define([ 'common/common',
                 articleBodyAdverts.destroy();
                 expect(document.querySelectorAll('.ad-slot--mpu-banner-ad, .ad-slot--inline').length).toBe(0);
             });
+
+            describe('When setting a limit of 1 inline ad', function() {
+
+                it("Should insert only 1 inline ad container to the content", function() {
+                    articleBodyAdverts.config.inlineAdLimit = 1;
+                    articleBodyAdverts.init();
+                    expect(document.querySelectorAll('.ad-slot--inline').length).toBe(1);
+                });
+            });
         });
     });
