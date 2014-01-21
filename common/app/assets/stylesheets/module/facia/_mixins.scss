@@ -165,18 +165,6 @@ $item-top-border-height: 2px;
         margin-top: 0;
     }
 }
-@mixin when-image($pseudo-selector: '') {
-    .connection--not-low &.item--has-image#{$pseudo-selector} {
-        @content;
-    }
-}
-@mixin when-no-image($pseudo-selector: '') {
-    .connection--low &.item--has-image#{$pseudo-selector},
-    &.item--has-no-image#{$pseudo-selector} {
-        @content;
-    }
-}
-
 @mixin vertical-item-separator {
     &:before {
         content: '';
