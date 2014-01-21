@@ -18,10 +18,4 @@ trait PreferenceController extends Results {
       .withCookies(Cookie(cookie._1, cookie._2, maxAge = Some(5184000))) // 60 days, this is seconds
     )
   } else Forbidden("will not redirect there")
-
-  def switchTo303(cookie: (String, String), url: String)(implicit request: RequestHeader) = if (allowedUrl(url)){
-    NoCache(SeeOther(url)
-      .withCookies(Cookie(cookie._1, cookie._2, maxAge = Some(5184000))) // 60 days, this is seconds
-    )
-  } else Forbidden("will not redirect there")
 }
