@@ -43,12 +43,17 @@ define([
                 return false;
             }
 
-            var target = this,
+            var target = el,
                 cls    = (i % 2 === 0) ? 'is-odd' : 'is-even';
 
             // Places the advert after h2 tags on all breakpoints except mobile
-            if(detect.getBreakpoint() !== 'mobile' && el.nextElementSibling && el.nextElementSibling.nodeName.toLowerCase() === 'h2') {
-                target = el.nextElementSibling;
+            if(detect.getBreakpoint() !== 'mobile' && target.nextElementSibling && target.nextElementSibling.nodeName.toLowerCase() === 'h2') {
+                target = target.nextElementSibling;
+            }
+
+            // If the next element is a figure, then place the ad after that.
+            if(target.nextElementSibling && target.nextElementSibling.nodeName.toLowerCase() === 'figure') {
+                target = target.nextElementSibling;
             }
 
             bonzo(bonzo.create(template.replace(/%slot%/g, id))).addClass(cls).insertAfter(target);
