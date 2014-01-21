@@ -9,20 +9,23 @@ import model.Config
 
 trait FrontPress extends ExecutionContexts {
 
-  def generateJson(json: String): Future[JsObject] = {
-    val id = (Json.parse(json) \ "Message").as[String]
-    val pressedJson = pressPage(id).map(_.map{case (config, collection) =>
-      Json.obj(
-      ("id", id),
-      ("collections", Json.arr(Json.obj(config.id -> generateCollectionJson(config, collection))))
+  def generateJson(id: String): Future[JsObject] = {
+    pressPage(id)
+      .map(_.map{case (config, collection) =>
+        Json.obj(
+          config.id -> generateCollectionJson(config, collection)
+        )})
+      .map(_.foldLeft(Json.arr()){case (l, jsObject) => l :+ jsObject})
+      .map( c =>
+        Json.obj(
+          ("id", id),
+          ("collections", c)
+        )
       )
-    })
-    pressedJson.map(_.foldLeft(Json.obj()){case (fj, j) => j ++ fj}) //Flatten the json using JsObject.++
   }
 
-  def pressPage(id: String): Future[List[(Config, Collection)]] = {
+  def pressPage(id: String): Future[Iterable[(Config, Collection)]] = {
     val collectionIds: List[Config] = PorterConfigAgent.getConfigForId(id).getOrElse(Nil)
-
     val collections = collectionIds.map(config => PorterCollectionParser.getCollection(config.id, config, Uk, isWarmedUp=true).map((config, _)))
     Future.sequence(collections)
   }
