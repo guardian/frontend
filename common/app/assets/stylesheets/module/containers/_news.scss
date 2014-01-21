@@ -141,6 +141,10 @@
 
             .item__meta {
                 position: static;
+
+                @include rem((
+                    margin-top: $gs-baseline
+                ));
             }
         }
     }
