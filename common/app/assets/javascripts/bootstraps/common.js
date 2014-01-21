@@ -247,7 +247,7 @@ define([
         },
 
         loadAdverts: function (config) {
-            if(!userPrefs.isOff('adverts')) {
+            if(!userPrefs.isOff('adverts') && config.switches && config.switches.adverts && !config.page.blockAds) {
 
                 var resizeCallback = function() {
                     hasBreakpointChanged(Adverts.reload);
@@ -268,9 +268,7 @@ define([
                 }
 
                 mediator.on('page:common:deferred:loaded', function(config, context) {
-                    if (config.switches && config.switches.adverts && !config.page.blockAds) {
-                        Adverts.init(config, context);
-                    }
+                    Adverts.init(config, context);
                 });
                 mediator.on('modules:adverts:docwrite:loaded', Adverts.load);
 
