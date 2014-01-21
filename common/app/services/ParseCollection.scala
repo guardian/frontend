@@ -27,7 +27,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
   case class CollectionItem(id: String, metaData: Option[Map[String, JsValue]])
 
   //Curated and editorsPicks are the same, we will get rid of either
-  case class Result(curated: List[Content], editorsPicks: List[Content], contentApiResults: List[Content])
+  case class Result(curated: List[Content], editorsPicks: List[Content], mostViewed: List[Content], contentApiResults: List[Content])
 
   def requestCollection(id: String): Future[Response] = {
     val s3BucketLocation: String = s"${S3FrontsApi.location}/collection/$id/collection.json"
@@ -43,7 +43,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
       collectionList <- getCuratedList(response, edition, id, isWarmedUp)
       displayName    <- parseDisplayName(response).fallbackTo(Future.successful(None))
       contentApiList <- executeContentApiQuery(config.contentApiQuery, edition)
-    } yield Collection(collectionList, contentApiList.editorsPicks, contentApiList.contentApiResults, displayName)
+    } yield Collection(collectionList, contentApiList.editorsPicks, contentApiList.mostViewed, contentApiList.contentApiResults, displayName)
   }
 
   def getCuratedList(response: Future[Response], edition: Edition, id: String, isWarmedUp: Boolean): Future[List[Content]] = {
@@ -145,7 +145,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
           case (query, (key, value)) => query.stringParam(key, value)
         }.showFields("all")
         newSearch.response map { r =>
-          Result(Nil, Nil, r.results.map(Content(_)))
+          Result(Nil, Nil, Nil, r.results.map(Content(_)))
         }
       }
       case Path(id)  => {
@@ -157,13 +157,13 @@ trait ParseCollection extends ExecutionContexts with Logging {
           case (query, (key, value)) => query.stringParam(key, value)
         }.showFields("all")
         newSearch.response map { r =>
-          Result(Nil, r.editorsPicks.map(Content(_)), r.results.map(Content(_)))
+          Result(Nil, r.editorsPicks.map(Content(_)), r.mostViewed.map(Content(_)), r.results.map(Content(_)))
         }
       }
     }
 
     newSearch onFailure {case t: Throwable => log.warn("Content API Query failed: %s: %s".format(queryString, t.toString))}
     newSearch
-  } getOrElse Future(Result(Nil, Nil, Nil))
+  } getOrElse Future(Result(Nil, Nil, Nil, Nil))
 
 }
