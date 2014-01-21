@@ -51,7 +51,8 @@ $item-top-border-height: 2px;
 @mixin card-mobile-image {
     @include image-meta;
     .connection--not-low & .item__title {
-        margin-top: $gs-baseline*(2/3);
+        margin-top: $gs-baseline/3;
+        margin-bottom: $gs-baseline/3;
     }
 }
 @mixin card-half-width($with-image: false) {
