@@ -738,7 +738,7 @@ module.exports = function (grunt) {
         }
         // When an app defines it's own javascript application, the requirejs task will need to compile both
         // common and app.
-        if (app) {
+        if (grunt.config('requirejs')[app]) {
             grunt.task.run('requirejs:' + app);
         }
         grunt.task.run('requirejs:common');
