@@ -8,7 +8,6 @@
                 case style: SportContainer      => { @containers.sport(front, block._1, block._2, style, index) }
                 case style: CommentContainer    => { @containers.comment(block._1, block._2, style, index) }
                 case style: FeaturesContainer   => { @containers.features(block._1, block._2, style, index) }
-                case style: TopStoriesContainer => { @containers.topStories(block._1, block._2, style, index) }
                 case style: PopularContainer    => { @containers.popular(block._1, block._2, style, index) }
                 case style                      => { @containers.section(block._1, block._2, style, index) }
             }
