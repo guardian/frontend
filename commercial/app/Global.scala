@@ -4,6 +4,7 @@ import conf.RequestMeasurementMetrics
 import dev.DevParametersLifecycle
 import model.commercial.masterclasses.MasterClassAgent
 import model.commercial.jobs.{Industries, JobsAgent}
+import model.commercial.moneysupermarket.MoneysupermarketAggregatingAgent
 import model.commercial.soulmates.SoulmatesAggregatingAgent
 import model.commercial.travel.{Countries, OffersAgent}
 import play.api.mvc.WithFilters
@@ -12,60 +13,26 @@ import scala.util.{Failure, Success, Random}
 
 trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionContexts {
 
+  private val refreshJobs: List[RefreshJob] = List {
+    SoulmatesRefresh
+    MasterclassesRefresh
+    CountriesRefresh
+    TravelOffersRefresh
+    IndustriesRefresh
+    JobsRefresh
+    MoneySupermarketRefresh
+  }
+
   override def onStart(app: PlayApp) {
 
     val randomFactor = Random.nextInt(15)
+
     def randomStartSchedule(minsLater: Int = 0) = s"0 ${randomFactor + minsLater}/15 * * * ?"
 
     super.onStart(app)
 
-    Jobs.deschedule("SoulmatesRefreshJob")
-    Jobs.deschedule("MasterClassRefreshJob")
-    Jobs.deschedule("CountryRefreshJob")
-    Jobs.deschedule("TravelOffersRefreshJob")
-    Jobs.deschedule("IndustryRefreshJob")
-    Jobs.deschedule("JobsRefreshJob")
-
-    // fire every 15 mins
-    val soulmatesRefreshSchedule = randomStartSchedule()
-    log.info(s"Soulmates refresh on schedule $soulmatesRefreshSchedule")
-    Jobs.schedule("SoulmatesRefreshJob", soulmatesRefreshSchedule) {
-      SoulmatesAggregatingAgent.refresh()
-    }
-
-    // fire every 15 minutes
-    val masterClassRefreshSchedule = randomStartSchedule(minsLater = 1)
-    log.info(s"Masterclass refresh on schedule $masterClassRefreshSchedule")
-    Jobs.schedule("MasterClassRefreshJob", masterClassRefreshSchedule) {
-      MasterClassAgent.refresh()
-    }
-
-    // fire every 15 mins
-    val countryRefreshSchedule = randomStartSchedule(minsLater = 2)
-    log.info(s"Country refresh on schedule $countryRefreshSchedule")
-    Jobs.schedule("CountryRefreshJob", countryRefreshSchedule) {
-      Countries.refresh()
-    }
-
-    // fire every 15 mins
-    val travelRefreshSchedule = randomStartSchedule(minsLater = 3)
-    log.info(s"Travel offers refresh on schedule $travelRefreshSchedule")
-    Jobs.schedule("TravelOffersRefreshJob", travelRefreshSchedule) {
-      OffersAgent.refresh()
-    }
-
-    // fire every 15 mins
-    val industryRefreshSchedule = randomStartSchedule(minsLater = 4)
-    log.info(s"Industry refresh on schedule $industryRefreshSchedule")
-    Jobs.schedule("IndustryRefreshJob", industryRefreshSchedule) {
-      Industries.refresh()
-    }
-
-    // fire every 15 mins
-    val jobsRefreshSchedule = randomStartSchedule(minsLater = 5)
-    log.info(s"Jobs refresh on schedule $jobsRefreshSchedule")
-    Jobs.schedule("JobsRefreshJob", jobsRefreshSchedule) {
-      JobsAgent.refresh()
+    refreshJobs.zipWithIndex foreach {
+      case (job, i) => job.start(randomStartSchedule(minsLater = i))
     }
 
     AkkaAsync {
@@ -82,23 +49,13 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
         case Success(_) => JobsAgent.refresh()
         case Failure(e) => log.warn(s"Failed to refresh job industries: ${e.getMessage}")
       }
+
+      MoneysupermarketAggregatingAgent.refresh()
     }
   }
 
   override def onStop(app: PlayApp) {
-    Jobs.deschedule("SoulmatesRefreshJob")
-    Jobs.deschedule("MasterClassRefreshJob")
-    Jobs.deschedule("CountryRefreshJob")
-    Jobs.deschedule("TravelOffersRefreshJob")
-    Jobs.deschedule("IndustryRefreshJob")
-    Jobs.deschedule("JobsRefreshJob")
-
-    SoulmatesAggregatingAgent.stop()
-    MasterClassAgent.stop()
-    Countries.stop()
-    OffersAgent.stop()
-    Industries.stop()
-    JobsAgent.stop()
+    refreshJobs foreach (_.stop())
 
     super.onStop(app)
   }
@@ -108,4 +65,82 @@ object Global
   extends WithFilters(RequestMeasurementMetrics.asFilters: _*) with CommercialLifecycle with DevParametersLifecycle
   with CloudWatchApplicationMetrics {
   override lazy val applicationName = Management.applicationName
+}
+
+trait RefreshJob extends Logging {
+  val name: String
+
+  protected def refresh()
+
+  protected def stopJob()
+
+  def start(schedule: String) {
+    Jobs.deschedule(s"${name}RefreshJob")
+
+    log.info(s"$name refresh on schedule $schedule")
+    Jobs.schedule(s"${name}RefreshJob", schedule) {
+      refresh()
+    }
+  }
+
+  def stop() {
+    Jobs.deschedule(s"${name}RefreshJob")
+    stopJob()
+  }
+}
+
+object SoulmatesRefresh extends RefreshJob {
+  val name: String = "Soulmates"
+
+  def refresh() = SoulmatesAggregatingAgent.refresh()
+
+  def stopJob() = SoulmatesAggregatingAgent.stop()
+}
+
+object MasterclassesRefresh extends RefreshJob {
+  val name: String = "Masterclasses"
+
+  def refresh() = MasterClassAgent.refresh()
+
+  def stopJob() = MasterClassAgent.stop()
+}
+
+object CountriesRefresh extends RefreshJob {
+  val name: String = "Countries"
+
+  def refresh() = Countries.refresh()
+
+  def stopJob() = Countries.stop()
+}
+
+object TravelOffersRefresh extends RefreshJob {
+  val name: String = "TravelOffers"
+
+  def refresh() = OffersAgent.refresh()
+
+  def stopJob() = OffersAgent.stop()
+}
+
+object IndustriesRefresh extends RefreshJob {
+  val name: String = "Industries"
+
+  def refresh() = Industries.refresh()
+
+  def stopJob() = Industries.stop()
+}
+
+object JobsRefresh extends RefreshJob {
+  val name: String = "Jobs"
+
+  def refresh() = JobsAgent.refresh()
+
+  def stopJob() = JobsAgent.stop()
+}
+
+object MoneySupermarketRefresh extends RefreshJob {
+  val name: String = "MoneySupermarket"
+
+  def refresh() = MoneysupermarketAggregatingAgent.refresh()
+
+  def stopJob() = MoneysupermarketAggregatingAgent.stop()
 }

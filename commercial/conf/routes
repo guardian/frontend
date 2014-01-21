@@ -20,3 +20,7 @@ GET        /commercial/masterclasses.json          controllers.commercial.Master
 # Soulmates
 GET        /commercial/soulmates/mixed             controllers.commercial.SoulmateAds.renderAds
 GET        /commercial/soulmates/mixed.json        controllers.commercial.SoulmateAds.mixed
+
+# Money offers
+GET        /commercial/money/easyaccess            controllers.commercial.MoneyOffers.easyAccessProductsHtml
+GET        /commercial/money/easyaccess.json       controllers.commercial.MoneyOffers.easyAccessProductsJson
