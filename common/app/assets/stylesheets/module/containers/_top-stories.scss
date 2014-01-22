@@ -71,6 +71,9 @@
             @include rem((
                 margin-bottom: 14px
             ));
+            @include mq(tablet) {
+                @include fs-headline(3, true);
+            }
         }
         @include mq($to: tablet) {
             display: -webkit-flex;

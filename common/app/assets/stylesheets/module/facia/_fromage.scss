@@ -118,7 +118,6 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
         display: table-cell;
         width: 100000px;
         max-width: 100%;
-        padding-top: 3px; // Align x-height with standfirst
         margin-bottom: 0;
         @include fs-headline(4, true);
     }
