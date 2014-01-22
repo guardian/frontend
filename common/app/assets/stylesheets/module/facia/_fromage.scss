@@ -377,9 +377,11 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
         }
     }
     .fromage__standfirst {
-        @include rem((
-            margin-top: $gs-baseline*2
-        ));
+        @include mq(tablet) {
+            @include rem((
+                margin-top: $gs-baseline*2
+            ));
+        }
     }
     .fromage__link {
         @include mq(tablet) {
