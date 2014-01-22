@@ -4,11 +4,11 @@ import conf.RequestMeasurementMetrics
 import dev.DevParametersLifecycle
 import model.commercial.masterclasses.MasterClassAgent
 import model.commercial.jobs.{Industries, JobsAgent}
-import model.commercial.moneysupermarket.MoneysupermarketAggregatingAgent
+import model.commercial.moneysupermarket.BestBuysAgent
 import model.commercial.soulmates.SoulmatesAggregatingAgent
 import model.commercial.travel.{Countries, OffersAgent}
 import play.api.mvc.WithFilters
-import play.api.{Application => PlayApp, GlobalSettings}
+import play.api.{Application => PlayApp, Mode, GlobalSettings}
 import scala.util.{Failure, Success, Random}
 
 trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionContexts {
@@ -20,7 +20,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
     TravelOffersRefresh
     IndustriesRefresh
     JobsRefresh
-    MoneySupermarketRefresh
+    MoneyBestBuysRefresh
   }
 
   override def onStart(app: PlayApp) {
@@ -35,22 +35,25 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
       case (job, i) => job.start(randomStartSchedule(minsLater = i))
     }
 
-    AkkaAsync {
-      SoulmatesAggregatingAgent.refresh()
+    // Don't start up agents in test mode
+    if (app.mode != Mode.Test) {
+      AkkaAsync {
+        SoulmatesAggregatingAgent.refresh()
 
-      MasterClassAgent.refresh()
+        MasterClassAgent.refresh()
 
-      Countries.refresh() andThen {
-        case Success(_) => OffersAgent.refresh()
-        case Failure(e) => log.warn(s"Failed to refresh travel offer countries: ${e.getMessage}")
+        Countries.refresh() andThen {
+          case Success(_) => OffersAgent.refresh()
+          case Failure(e) => log.warn(s"Failed to refresh travel offer countries: ${e.getMessage}")
+        }
+
+        Industries.refresh() andThen {
+          case Success(_) => JobsAgent.refresh()
+          case Failure(e) => log.warn(s"Failed to refresh job industries: ${e.getMessage}")
+        }
+
+        BestBuysAgent.refresh()
       }
-
-      Industries.refresh() andThen {
-        case Success(_) => JobsAgent.refresh()
-        case Failure(e) => log.warn(s"Failed to refresh job industries: ${e.getMessage}")
-      }
-
-      MoneysupermarketAggregatingAgent.refresh()
     }
   }
 
@@ -137,10 +140,10 @@ object JobsRefresh extends RefreshJob {
   def stopJob() = JobsAgent.stop()
 }
 
-object MoneySupermarketRefresh extends RefreshJob {
-  val name: String = "MoneySupermarket"
+object MoneyBestBuysRefresh extends RefreshJob {
+  val name: String = "Best Buys"
 
-  def refresh() = MoneysupermarketAggregatingAgent.refresh()
+  def refresh() = BestBuysAgent.refresh()
 
-  def stopJob() = MoneysupermarketAggregatingAgent.stop()
+  def stopJob() = BestBuysAgent.stop()
 }
