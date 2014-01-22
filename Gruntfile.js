@@ -4,8 +4,9 @@ module.exports = function (grunt) {
         singleRun = grunt.option('single-run') !== false,
         env = grunt.option('env') || 'code',
         screenshotsDir = './screenshots',
-        staticTargetDir = 'static/target/',
-        staticRequireDir = 'static/requirejs/',
+        staticDir = 'static/',
+        staticTargetDir = staticDir + 'target/',
+        staticRequireDir = staticDir + 'requirejs/',
         testConfDir = 'common/test/assets/javascripts/conf/',
         propertiesFile = (isDev) ? process.env.HOME + '/.gu/frontend.properties' : '/etc/gu/frontend.properties';
 
@@ -288,13 +289,13 @@ module.exports = function (grunt) {
                     expand: true,
                     cwd: 'common/app/assets/javascripts',
                     src: ['**/*.js'],
-                    dest: staticRequireDir + 'common'
+                    dest: staticRequireDir + 'javascripts/common'
                 },
                 {
                     expand: true,
-                    cwd: 'common/test/assets/javascripts',
+                    cwd: 'common/test/assets/javascripts/spec',
                     src: ['**/*.js'],
-                    dest: staticRequireDir + 'common-test'
+                    dest: staticRequireDir + 'tests/specs'
                 }]
             },
             'javascript-admin': {
@@ -311,122 +312,34 @@ module.exports = function (grunt) {
                     dest: staticRequireDir + 'admin-public'
                 }]
             },
-            'javascript-applications': {
-                files: [{
-                    expand: true,
-                    cwd: 'applications/app/assets/javascripts',
-                    src: ['**/*.js'],
-                    dest: staticRequireDir
-                }]
-            },
-            'javascript-article': {
-                files: [{
-                    expand: true,
-                    cwd: 'article/app/assets/javascripts',
-                    src: ['**/*.js'],
-                    dest: staticRequireDir
-                }]
-            },
-            'javascript-commercial': {
-                files: [{
-                    expand: true,
-                    cwd: 'commercial/app/assets/javascripts',
-                    src: ['**/*.js'],
-                    dest: staticRequireDir
-                }]
-            },
-            'javascript-core-navigation': {
-                files: [{
-                    expand: true,
-                    cwd: 'core-navigation/app/assets/javascripts',
-                    src: ['**/*.js'],
-                    dest: staticRequireDir
-                }]
-            },
-            'javascript-discussion': {
-                files: [{
-                    expand: true,
-                    cwd: 'discussion/app/assets/javascripts',
-                    src: ['**/*.js'],
-                    dest: staticRequireDir
-                }]
-            },
             'javascript-facia': {
                 files: [{
                     expand: true,
                     cwd: 'facia/app/assets/javascripts',
                     src: ['**/*.js'],
-                    dest: staticRequireDir
+                    dest: staticRequireDir + 'javascripts'
                 },
                 {
                     expand: true,
-                    cwd: 'facia/test/assets/javascripts',
+                    cwd: 'facia/test/assets/javascripts/spec',
                     src: ['**/*.js'],
-                    dest: staticRequireDir + 'facia-test'
+                    dest: staticRequireDir + 'tests/specs'
                 }]
             },
-            'javascript-facia-tool': {
+            testUtils: {
                 files: [{
                     expand: true,
-                    cwd: 'facia-tool/app/assets/javascripts',
-                    src: ['**/*.js'],
-                    dest: staticRequireDir
+                    cwd: 'common/test/assets/javascripts',
+                    src: ['**/*', '!spec/**'],
+                    dest: staticRequireDir + 'tests'
                 }]
             },
-            'javascript-identity': {
+            commonModules: {
                 files: [{
                     expand: true,
-                    cwd: 'identity/app/assets/javascripts',
+                    cwd: 'common/app/assets/javascripts',
                     src: ['**/*.js'],
-                    dest: staticRequireDir
-                }]
-            },
-            'javascript-image': {
-                files: [{
-                    expand: true,
-                    cwd: 'image/app/assets/javascripts',
-                    src: ['**/*.js'],
-                    dest: staticRequireDir
-                }]
-            },
-            'javascript-onward': {
-                files: [{
-                    expand: true,
-                    cwd: 'onward/app/assets/javascripts',
-                    src: ['**/*.js'],
-                    dest: staticRequireDir
-                }]
-            },
-            'javascript-porter': {
-                files: [{
-                    expand: true,
-                    cwd: 'porter/app/assets/javascripts',
-                    src: ['**/*.js'],
-                    dest: staticRequireDir
-                }]
-            },
-            'javascript-sport': {
-                files: [{
-                    expand: true,
-                    cwd: 'sport/app/assets/javascripts',
-                    src: ['**/*.js'],
-                    dest: staticRequireDir
-                }]
-            },
-            'javascript-router': {
-                files: [{
-                    expand: true,
-                    cwd: 'router/app/assets/javascripts',
-                    src: ['**/*.js'],
-                    dest: staticRequireDir
-                }]
-            },
-            'javascript-diagnostics': {
-                files: [{
-                    expand: true,
-                    cwd: 'diagnostics/app/assets/javascripts',
-                    src: ['**/*.js'],
-                    dest: staticRequireDir
+                    dest: staticRequireDir + 'javascripts/common'
                 }]
             },
             images: {
@@ -517,12 +430,6 @@ module.exports = function (grunt) {
             },
             facia: {
                 configFile: testConfDir + 'facia.js'
-            },
-            discussion: {
-                configFile: testConfDir + 'discussion.js'
-            },
-            identity: {
-                configFile: testConfDir + 'identity.js'
             },
             admin: {
                 configFile: testConfDir + 'admin.js'
@@ -666,6 +573,7 @@ module.exports = function (grunt) {
 
         // Clean stuff up
         clean: {
+            'static': [staticDir],
             staticTarget: [staticTargetDir],
             js: [staticTargetDir + 'javascripts', staticRequireDir],
             css: [staticTargetDir + 'stylesheets'],
@@ -736,7 +644,7 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:css', ['clean:css', 'sass:compile']);
     grunt.registerTask('compile:js', function(app) {
         grunt.task.run(['clean:js', 'copy:javascript-common']);
-        if (app) {
+        if (app && grunt.config('copy')['javascript-' + app]) {
             grunt.task.run('copy:javascript-' + app);
         }
         if (!isDev) {
@@ -760,18 +668,18 @@ module.exports = function (grunt) {
 
     // Test tasks
     grunt.registerTask('test:integration', function(app) {
-        app = app || 'allexceptadmin';
+        // does a casperjs setup exist for this app
+        grunt.config.requires(['casperjs', app]);
         grunt.config('casperjsLogFile', app + '.xml');
         grunt.task.run(['env:casperjs', 'casperjs:' + app]);
     });
-    grunt.registerTask('test', ['jshint:common', 'test:unit', 'test:integration']);
     grunt.registerTask('test:unit', function(app) {
-        grunt.config.set('karma.options.singleRun', (singleRun === false) && app ? false : true);
-        // Target common when no app is specified, because karma can only test what has been js-compiled.
-        var actualApp = app || 'common';
-        grunt.task.run('copy:javascript-' + actualApp);
-        grunt.task.run('karma:' + actualApp);
+        // does a karma setup exist for this app
+        grunt.config.requires(['karma', app]);
+        grunt.config.set('karma.options.singleRun', (singleRun === false) ? false : true);
+        grunt.task.run(['clean:static', 'copy:testUtils', 'copy:commonModules', 'copy:javascript-' + app, 'karma:' + app]);
     });
+    grunt.registerTask('test', ['jshint:common', 'test:unit', 'test:integration']);
 
     // Analyse tasks
     grunt.registerTask('analyse:css', ['compile:css', 'cssmetrics:common']);
