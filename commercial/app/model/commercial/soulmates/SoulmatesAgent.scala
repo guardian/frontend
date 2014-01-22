@@ -40,9 +40,9 @@ trait SoulmatesAgent extends AdAgent[Member] with ExecutionContexts {
 }
 
 object SoulmatesMenAgent extends SoulmatesAgent {
-  protected def membersLoaded = SoulmatesApi.getMenMembers
+  protected def membersLoaded = MaleSoulmatesApi.loadAds()
 }
 
 object SoulmatesWomenAgent extends SoulmatesAgent {
-  protected def membersLoaded = SoulmatesApi.getWomenMembers
+  protected def membersLoaded = FemaleSoulmatesApi.loadAds()
 }
