@@ -290,8 +290,10 @@ module.exports = function (grunt) {
                     cwd: 'common/app/assets/javascripts',
                     src: ['**/*.js'],
                     dest: staticRequireDir + 'javascripts/common'
-                },
-                {
+                }]
+            },
+            'javascript-common-tests': {
+                files: [{
                     expand: true,
                     cwd: 'common/test/assets/javascripts/spec',
                     src: ['**/*.js'],
@@ -303,13 +305,13 @@ module.exports = function (grunt) {
                     expand: true,
                     cwd: 'admin/app/assets/javascripts',
                     src: ['**/*.js'],
-                    dest: staticRequireDir
+                    dest: staticRequireDir + 'javascripts'
                 },
                 {
                     expand: true,
                     cwd: 'admin/public/javascripts',
                     src: ['**/*.js'],
-                    dest: staticRequireDir + 'admin-public'
+                    dest: staticRequireDir + 'javascripts'
                 }]
             },
             'javascript-facia': {
@@ -318,8 +320,10 @@ module.exports = function (grunt) {
                     cwd: 'facia/app/assets/javascripts',
                     src: ['**/*.js'],
                     dest: staticRequireDir + 'javascripts'
-                },
-                {
+                }]
+            },
+            'javascript-facia-tests': {
+                files: [{
                     expand: true,
                     cwd: 'facia/test/assets/javascripts/spec',
                     src: ['**/*.js'],
@@ -682,7 +686,7 @@ module.exports = function (grunt) {
         // does a karma setup exist for this app
         grunt.config.requires(['karma', app]);
         grunt.config.set('karma.options.singleRun', (singleRun === false) ? false : true);
-        grunt.task.run(['clean:static', 'copy:testUtils', 'copy:commonModules', 'copy:javascript-' + app, 'karma:' + app]);
+        grunt.task.run(['clean:static', 'copy:testUtils', 'copy:commonModules', 'copy:javascript-' + app, 'copy:javascript-' + app + '-tests', 'karma:' + app]);
     });
     // TODO - don't have common as default?
     grunt.registerTask('test', ['jshint:common', 'test:unit:common', 'test:integration:common']);
