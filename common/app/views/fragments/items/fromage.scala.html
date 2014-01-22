@@ -12,7 +12,7 @@
                }else{
                    fromage--volume-@trail.group.getOrElse("0")
                }
-               @if(trail.trailPicture(5,3).isEmpty || trail.imageAdjust == Some("hide")){
+               @if(trail.trailPicture(5,3).isEmpty || trail.imageAdjust == Some("hide") || imageAdjustOverride == "hide"){
                    fromage--has-no-image
                }else{
                    fromage--has-image
@@ -33,7 +33,7 @@
 
         <div class="fromage__container">
             <a href="@LinkTo{@trail.url}" class="fromage__link" data-link-name="article">
-                @if(trail.imageAdjust != Some("hide")) {
+                @if(trail.imageAdjust != Some("hide") && imageAdjustOverride != "hide") {
                     @trail.trailPicture(5,3).map{ imageContainer =>
                         @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
                             <div class="fromage__media-wrapper fromage__media-wrapper--first">
@@ -61,7 +61,7 @@
                     <p class="fromage__byline tone-colour">@Html(byLine)</p>
                 }
             }
-            @if(trail.imageAdjust != Some("hide") && trail.imageAdjust != Some("highlight")) {
+            @if(trail.imageAdjust != Some("hide") && trail.imageAdjust != Some("highlight") && imageAdjustOverride != "hide") {
                 @trail.trailPicture(5,3).map{ imageContainer =>
                     @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
                         <a href="@LinkTo{@trail.url}" data-link-name="article">

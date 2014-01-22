@@ -1,13 +1,4 @@
 .container--news {
-    // Cap new collections to a width of 12 columns
-    @include mq(gs-span(7) + $gs-gutter*3, tablet) {
-        @include rem((width: gs-span(7)));
-        margin: 0 auto;
-    }
-    @include mq(wide) {
-        @include rem((width: gs-span(12)));
-        margin: 0 auto;
-    }
     .item {
         display: block;
         margin-top: 0;

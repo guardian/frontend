@@ -13,6 +13,10 @@
 @include guss-row-utility;
 
 .facia-container {
+    @include mq(gs-span(7) + $gs-gutter*3, tablet) {
+        @include rem((width: gs-span(7)));
+        margin: 0 auto;
+    }
     @include mq(tablet) {
         @include rem((width: gs-span(9)));
         padding-left: 0;

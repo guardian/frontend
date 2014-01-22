@@ -70,20 +70,6 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
             color: $c-neutral2;
         }
     }
-
-    @include mq(tablet) {
-        float: left;
-        @include rem((
-            width: gs-span(5),
-            margin-left: (gs-span(5) + $gs-gutter) * -1
-        ));
-    }
-    @include mq(desktop) {
-        @include rem((
-            width: gs-span(6),
-            margin-left: (gs-span(6) + $gs-gutter) * -1
-        ));
-    }
 }
 .fromage__media-wrapper {
     @include mq(tablet) {
@@ -116,6 +102,7 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
     ));
     @include mq(tablet) {
         display: table-cell;
+        vertical-align: top;
         width: 100000px;
         max-width: 100%;
         margin-bottom: 0;
@@ -143,7 +130,6 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
         @include fs-headline(2, true);
     }
 }
-.fromage__title,
 .fromage__standfirst {
     @include mq(tablet) {
         @include rem((
@@ -298,7 +284,19 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
     }
     .fromage__link {
         @include mq(tablet) {
-            @include clearfix;
+            float: left;
+            padding-left: 0;
+
+            @include rem((
+                width: gs-span(5),
+                margin-left: gs-span(5) * -1 - $gs-gutter
+            ));
+        }
+        @include mq(desktop) {
+            @include rem((
+                width: gs-span(6),
+                margin-left: gs-span(6) * -1 - $gs-gutter
+            ));
         }
     }
     .fromage__title {
@@ -306,36 +304,24 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
 
         @include mq(tablet) {
             @include fs-headline(5, true);
-            @include rem((
-                padding-left: $gs-gutter/4
-            ));
         }
         @include mq(desktop) {
             @include fs-headline(6, true);
         }
     }
-}
-.fromage--has-image {
-    .fromage__title,
     .fromage__standfirst {
-        @include mq(desktop) {
+        @include mq(tablet) {
             @include rem((
-                max-width: gs-span(4)
+                padding-right: $gs-gutter/5
             ));
         }
     }
-    .fromage__link {
-        @include mq(tablet, desktop) {
-            width: auto;
-            margin-left: 0;
-            padding-left: 0;
-            float: none;
-        }
+}
+.fromage--has-image {
+    .fromage__standfirst {
         @include mq(desktop) {
             @include rem((
-                width: gs-span(4),
-                padding-left: gs-span(3) + $gs-gutter,
-                margin-left: (gs-span(7) + $gs-gutter) * -1
+                max-width: gs-span(7)
             ));
         }
     }
@@ -347,7 +333,7 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
         }
         @include mq(desktop) {
             @include rem((
-                padding-left: gs-span(7) + $gs-gutter
+                padding-left: gs-span(4) + $gs-gutter
             ));
         }
     }
@@ -358,9 +344,23 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
                 margin-left: (gs-span(3) + $gs-gutter) * -1
             ));
         }
+        @include mq(desktop) {
+            @include rem((
+                width: gs-span(4),
+                margin-left: (gs-span(4) + $gs-gutter) * -1
+            ));
+        }
     }
 }
-
+.fromage--imageadjust-default {
+    .fromage__standfirst {
+        @include mq(tablet) {
+            @include rem((
+                margin-top: $gs-baseline*1.5
+            ));
+        }
+    }
+}
 .fromage--imageadjust-highlight {
     .fromage__title {
         @include rem((
@@ -385,10 +385,8 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
     }
     .fromage__link {
         @include mq(tablet) {
-            width: auto;
             margin-left: 0;
             padding-left: 0;
-            float: none;
         }
     }
     .fromage__container {
