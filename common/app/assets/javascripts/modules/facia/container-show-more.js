@@ -69,8 +69,11 @@ define([
         };
 
         this.addShowMore = function() {
-            this._$collection = $('.linkslist-container:last-child', this._container)
+            this._$collection = $('.js-container--show-more', this._container)
                 .addClass(this._className);
+            if (this._$collection.length === 0) {
+                return false;
+            }
             this._items = $('.linkslist > .linkslist__item', this._$collection)
                 .addClass(this._className)
                 .map(function(item) { return item; });
