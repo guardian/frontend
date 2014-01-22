@@ -63,7 +63,7 @@
             @trail.trailText.map { text =>
                 <div class="fromage__standfirst">@Html(text)</div>
             }
-            <div class="fromage__meta">
+            <div class="fromage__meta js-append-commentcount">
                 <time class="fromage__timestamp js-item__timestamp"
                       itemprop="datePublished"
                       datetime="@trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
@@ -75,7 +75,7 @@
             </div>
         </div>
         @if(trail.supporting.nonEmpty){
-            <div class="fromage__support js-append-commentcount">
+            <div class="fromage__support">
                 <h2 class="fromage__support__title u-h">More on this story:</h2>
 
                 <ul class="fromage__support-list">

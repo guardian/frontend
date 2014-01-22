@@ -103,7 +103,7 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
     }
 }
 .fromage__title {
-    @include fs-headline(3, true);
+    @include fs-headline(3);
     @include rem((
         margin-top: $gs-baseline/3,
         margin-bottom: $gs-baseline
