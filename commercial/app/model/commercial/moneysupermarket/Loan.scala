@@ -9,22 +9,21 @@ case class Loan(name: String,
                 apr: Double,
                 minAdvance: Double,
                 maxAdvance: Double,
-                example: RepresentativeExample,
+                example: LoanExample,
                 logoUrl: String,
-                detailsUrl: String,
-                index: Int
+                detailsUrl: String
                  ) extends Ad {
 
   def isTargetedAt(segment: Segment): Boolean = true
 }
 
 
-case class RepresentativeExample(amount: Double,
-                                 duration: Int,
-                                 monthlyPayment: Double,
-                                 totalChargeForCredit: Double,
-                                 totalAmountPayable: Double,
-                                 interestRate: Double)
+case class LoanExample(amount: Double,
+                       duration: Int,
+                       monthlyPayment: Double,
+                       totalChargeForCredit: Double,
+                       totalAmountPayable: Double,
+                       interestRate: Double)
 
 
 object LoansApi extends MoneySupermarketApi[Loan] {
@@ -35,8 +34,8 @@ object LoansApi extends MoneySupermarketApi[Loan] {
 
   def parse(xml: Elem): Seq[Loan] = {
 
-    def parseRepresentativeExample(product: Node): RepresentativeExample = {
-      RepresentativeExample(
+    def parseLoanExample(product: Node) = {
+      LoanExample(
         (product \ "LoanAmount").text.toDouble,
         (product \ "LoanDuration").text.toInt,
         (product \ "MonthlyPayment").text.toDouble,
@@ -55,10 +54,9 @@ object LoansApi extends MoneySupermarketApi[Loan] {
           (product \ "Apr").text.toDouble,
           (product \ "MinAdvance").text.toDouble,
           (product \ "MaxAdvance").text.toDouble,
-          parseRepresentativeExample(product),
+          parseLoanExample(product),
           (product \ "LogoUrl").text,
-          (product \ "DetailsUrl").text,
-          (product \ "OrderId").text.toInt
+          (product \ "DetailsUrl").text
         )
     }
   }

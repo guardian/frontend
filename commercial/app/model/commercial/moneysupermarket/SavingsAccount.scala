@@ -3,28 +3,28 @@ package model.commercial.moneysupermarket
 import model.commercial.{Segment, Ad}
 import scala.xml.Elem
 
-case class EasyAccessProduct(
-                              provider: String,
-                              name: String,
-                              interestRate: Double,
-                              logoUrl: String,
-                              applyUrl: String)
+case class SavingsAccount(
+                           provider: String,
+                           name: String,
+                           interestRate: Double,
+                           logoUrl: String,
+                           applyUrl: String)
   extends Ad {
 
   def isTargetedAt(segment: Segment): Boolean = true
 }
 
 
-object EasyAccessApi extends MoneySupermarketApi[EasyAccessProduct] {
+object SavingsApi extends MoneySupermarketApi[SavingsAccount] {
 
   protected val adTypeName = "Easy Access Products"
 
   protected lazy val path = "savings/easy-access"
 
-  def parse(xml: Elem): Seq[EasyAccessProduct] = {
+  def parse(xml: Elem): Seq[SavingsAccount] = {
     xml \ "Product" map {
       product =>
-        EasyAccessProduct(
+        SavingsAccount(
           (product \ "ProviderName").text,
           (product \ "ProductName").text,
           (product \ "InterestRate").text.toDouble,
@@ -36,6 +36,6 @@ object EasyAccessApi extends MoneySupermarketApi[EasyAccessProduct] {
 }
 
 
-object EasyAccessAgent extends MoneysupermarketAgent[EasyAccessProduct] {
-  protected def loadProducts() = EasyAccessApi.loadAds()
+object SavingsAgent extends MoneysupermarketAgent[SavingsAccount] {
+  protected def loadProducts() = SavingsApi.loadAds()
 }

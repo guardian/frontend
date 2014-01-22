@@ -28,7 +28,7 @@ package object moneysupermarket {
     def refresh() {
       for {
         products <- loadProducts()
-      } updateCurrentAds(products)
+      } updateCurrentAds(products.take(3))
     }
   }
 

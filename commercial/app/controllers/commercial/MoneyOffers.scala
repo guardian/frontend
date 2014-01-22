@@ -11,8 +11,10 @@ object MoneyOffers extends Controller {
     implicit request =>
       (BestBuysAgent.adsTargetedAt(segment), format) match {
         case ((Nil, Nil, Nil), _) => NotFound
-        case (products, "json") => Cached(60)(JsonComponent(views.html.moneysupermarket.bestBuys(products._1, products._2, products._3)))
-        case (products, "html") => Cached(60)(Ok(views.html.moneysupermarket.bestBuys(products._1, products._2, products._3)))
+        case ((creditCards, loans, savingsAccounts), "json") =>
+          Cached(60)(JsonComponent(views.html.moneysupermarket.bestBuys(creditCards, loans, savingsAccounts)))
+        case ((creditCards, loans, savingsAccounts), "html") =>
+          Cached(60)(Ok(views.html.moneysupermarket.bestBuys(creditCards, loans, savingsAccounts)))
       }
   }
 }
