@@ -27,6 +27,10 @@
         .item__media-wrapper,
         .item__image-container {
             display: block;
+
+            .js-off & {
+                display: none !important;
+            }
         }
     }
     .collection {

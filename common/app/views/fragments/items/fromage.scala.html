@@ -38,7 +38,7 @@
                         @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
                             <div class="fromage__media-wrapper fromage__media-wrapper--first">
                                 <div class="fromage__image-container js-image-upgrade inlined-image" data-src="@imgSrc" data-force-upgrade="desktop wide">
-                                    @if(trail.imageAdjust == Some("highlight")) {
+                                    @if(trail.imageAdjust == Some("highlight") || imageAdjustOverride == "highlight") {
                                         @Item300.bestFor(imageContainer).map{ url => <img src="@url" class="responsive-img" alt="" /> }
                                     }
                                 </div>
