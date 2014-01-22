@@ -346,7 +346,9 @@ define([
                         }
                     });
                 }
-                sequence.init('/' + config.page.pageId);
+                if (config.page.section !== 'identity') {
+                    sequence.init('/' + config.page.pageId);
+                }
             });
         },
 
