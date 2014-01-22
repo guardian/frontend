@@ -1,42 +1,47 @@
 define([
     'common/modules/experiments/ab',
     'qwery',
+    'bean',
     'modules/abtests/participation',
-    'modules/abtests/breakdown'
+    'modules/abtests/abtest-item'
 ], function(
     abTests,
     qwery,
+    bean,
     Participation,
-    Breakdown
+    Item
 ) {
-    function renderParticipations() {
-        var elem = qwery('.participation-section');
-
+    function renderTests(tests, active, elem){
         if (elem) {
-            var active = abTests.getActiveTests();
-
-            active.forEach(function(test) {
-                var participation = new Participation({ test: test});
-                participation.render(elem);
+            tests.forEach(function(test){
+                new Item({test: test, active: active}).render(elem);
             });
         }
     }
 
-    function renderBreakdown() {
-        var elem = qwery('.breakdown-section');
+    function render() {
+        renderTests(abTests.getActiveTests(), true, qwery('.abtests-active'));
+        renderTests(abTests.getExpiredTests(), false, qwery('.abtests-expired'));
 
-        if (elem) {
-            var expired = abTests.getExpiredTests();
-            var active = abTests.getActiveTests();
-
-            var breakdown = new Breakdown({ active: active, expired: expired});
-            breakdown.render(elem);
-        }
+        bean.on(qwery('.abtests-expired-title a')[0], 'click', function(e) {
+            e.preventDefault();
+            var $expired = qwery('.abtests-expired')[0];
+            if (e.currentTarget.textContent == "show") {
+                e.currentTarget.textContent = "hide";
+                $expired.style.display = "block";
+            } else {
+                e.currentTarget.textContent = "show";
+                $expired.style.display = "none";
+            }
+        });
     }
 
     function initialise() {
-        renderBreakdown();
-        renderParticipations();
+        render();
+        //renderParticipations();
+        setTimeout(function() {
+            bean.fire(qwery('.abtests-expired-title a')[0], 'click');
+        }, 0);
     }
 
     return {

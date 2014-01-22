@@ -24,12 +24,11 @@ define([
 
     Participation.prototype.templateName = 'participation-template';
     Participation.prototype.componentClass = 'participation';
-    Participation.prototype.classes = { test: 'test', links: 'links', optOut: 'opt-out'};
+    Participation.prototype.classes = { links: 'links', optOut: 'opt-out'};
     Participation.prototype.useBem = true;
 
     Participation.prototype.prerender = function() {
         var test = this.config.test;
-        this.getElem(this.classes.test).textContent = test.id;
         this.getElem(this.classes.optOut).href = "http://www.theguardian.com/uk#ab-" + test.id + "=notintest";
 
         var linksContainer = this.getElem(this.classes.links);
