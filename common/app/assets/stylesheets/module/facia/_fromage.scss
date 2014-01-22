@@ -312,7 +312,7 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
     .fromage__standfirst {
         @include mq(tablet) {
             @include rem((
-                padding-right: $gs-gutter/5
+                padding-right: $gs-gutter/4
             ));
         }
     }
@@ -460,6 +460,13 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
                     padding-left: 0
                 ));
             }
+        }
+    }
+    &.fromage--imageadjust-default {
+        .fromage__media-wrapper--second {
+            @include rem((
+                margin-left: $gs-gutter/4
+            ));
         }
     }
     &.fromage--imageadjust-highlight {
