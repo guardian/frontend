@@ -1,10 +1,9 @@
 package services
 
-import frontsapi.model.Block
 import model.Config
 import scala.concurrent.Future
 import tools.FaciaApi
-import play.api.libs.json.Json
+import play.api.libs.json.{Reads, JsNumber, JsValue, Json}
 import play.api.libs.ws.{Response, WS}
 import common.{Logging, ExecutionContexts}
 import com.ning.http.client.Realm
@@ -16,25 +15,20 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
 
   case class Item(
                    id: String,
-                   headline: Option[String]
+                   meta: Option[Map[String, JsValue]]
                    )
-
-  case class Group(
-                    title: String,
-                    content: Seq[Item]
-                    )
 
   case class ContentApiPut(
                             `type`: String,
-                            title: Option[String],
-                            groups: Seq[Group],
+                            displayName: Option[String],
+                            groups: Seq[String],
+                            curated: Seq[Item],
                             backfill: Option[String],
                             lastModified: String,
                             modifiedBy: String
                             )
 
   implicit val contentApiPutWriteItem = Json.writes[Item]
-  implicit val contentApiPutWriteGroup = Json.writes[Group]
   implicit val contentApiPutWriteContentApiPut = Json.writes[ContentApiPut]
 
   lazy val endpoint = Configuration.contentApi.write.endpoint
@@ -72,12 +66,17 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
 
   private def generateContentApiPut(config: Config): Option[ContentApiPut] = {
     FaciaApi.getBlock(config.id) map { block =>
-      val groups = generateGroups(config, block)
 
       ContentApiPut(
         config.roleName.getOrElse("Default"),
         config.displayName,
-        groups,
+        config.groups,
+        block.live.map {t =>
+          Item(t.id, t.meta.map(_.map{
+            case (id, jsValue) if id == "group" => (id, jsValue.asOpt[BigDecimal].map(JsNumber.apply).getOrElse(jsValue))
+            case j  => j
+          }))
+        },
         config.contentApiQuery.flatMap(_.split('?').headOption.filter(_.nonEmpty)),
         block.lastUpdated,
         block.updatedEmail
@@ -85,21 +84,6 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
     }
   }
 
-  private def generateGroups(config: Config, block: Block): Seq[Group] = {
-    config.groups.zipWithIndex.map {case (group, index) =>
-    val trails = block.live.filter(_.meta.exists(_.get("group").exists(_.asOpt[String].map(_.toInt).exists(_ == index))))
-      Group(
-        title = group,
-        content = trails.map { trail =>
-          Item(
-            id=trail.id,
-            headline=trail.meta.flatMap(_.get("headline").flatMap(_.asOpt[String]))
-          )
-        }
-      )
-    //TODO: Reverse until this is merged: https://github.com/guardian/skeleton/pull/32
-    }.reverse
-  }
 }
 
 object ContentApiWrite extends ContentApiWrite
