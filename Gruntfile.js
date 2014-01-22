@@ -48,7 +48,7 @@ module.exports = function (grunt) {
 
         requirejs: {
             options: {
-                baseUrl: staticRequireDir,
+                baseUrl: staticRequireDir + 'javascripts',
                 paths: {
                     bean:         'common/components/bean/bean',
                     bonzo:        'common/components/bonzo/src/bonzo',
@@ -61,7 +61,7 @@ module.exports = function (grunt) {
                     swipeview:    'common/components/swipeview/src/swipeview',
                     lodash:       'common/components/lodash-amd/modern',
                     imager:       'common/components/imager.js/src/strategies/container',
-                    omniture:     '../../common/app/public/javascripts/vendor/omniture',
+                    omniture:     'common/vendor/omniture',
                     'ophan/ng':   'empty:'
                 },
                 optimize: (isDev) ? 'none' : 'uglify2',
@@ -283,7 +283,7 @@ module.exports = function (grunt) {
                     expand: true,
                     cwd: 'common/app/public/javascripts',
                     src: ['**/*.js'],
-                    dest: staticTargetDir + 'javascripts'
+                    dest: staticRequireDir + 'javascripts/common'
                 },
                 {
                     expand: true,
@@ -430,9 +430,6 @@ module.exports = function (grunt) {
             },
             facia: {
                 configFile: testConfDir + 'facia.js'
-            },
-            admin: {
-                configFile: testConfDir + 'admin.js'
             }
         },
 
@@ -668,18 +665,27 @@ module.exports = function (grunt) {
 
     // Test tasks
     grunt.registerTask('test:integration', function(app) {
+        if (!app) {
+            grunt.log.error('No app specified.');
+            return false;
+        }
         // does a casperjs setup exist for this app
         grunt.config.requires(['casperjs', app]);
         grunt.config('casperjsLogFile', app + '.xml');
         grunt.task.run(['env:casperjs', 'casperjs:' + app]);
     });
     grunt.registerTask('test:unit', function(app) {
+        if (!app) {
+            grunt.log.error('No app specified.');
+            return false;
+        }
         // does a karma setup exist for this app
         grunt.config.requires(['karma', app]);
         grunt.config.set('karma.options.singleRun', (singleRun === false) ? false : true);
         grunt.task.run(['clean:static', 'copy:testUtils', 'copy:commonModules', 'copy:javascript-' + app, 'karma:' + app]);
     });
-    grunt.registerTask('test', ['jshint:common', 'test:unit', 'test:integration']);
+    // TODO - don't have common as default?
+    grunt.registerTask('test', ['jshint:common', 'test:unit:common', 'test:integration:common']);
 
     // Analyse tasks
     grunt.registerTask('analyse:css', ['compile:css', 'cssmetrics:common']);
