@@ -54,3 +54,20 @@
 .abtest-item__participation {
     margin-bottom: 12px;
 }
+
+.abtest-item__chart-container {
+    position: relative;
+    height: 200px;
+}
+
+.abtest-item__chart-placeholder {
+    width: 95%;
+    margin-left: 15px;
+    text-align: center;
+    font-size: 32px;
+    margin-top: 0;
+    border-bottom: 1px solid;
+    line-height: 150px;
+    position: absolute;
+    color: #444;
+}

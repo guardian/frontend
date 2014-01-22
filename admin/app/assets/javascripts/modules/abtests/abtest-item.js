@@ -45,18 +45,18 @@ define([
                 colors: chart.colors,
                 curveType: 'function',
                 chartArea: {
-                    width: "100%",
+                    width: "95%",
                     height: 160,
                     top: 0,
-                    left: "10px"
+                    left: 15
                 },
                 legend: {
                     position: "in"
                 },
                 vAxis: {
                     title: 'Pageviews/session',
-                        textPosition: 'in',
-                        titleTextStyle: {
+                    textPosition: 'in',
+                    titleTextStyle: {
                         fontSize: 11
                     }
                 },
