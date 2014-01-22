@@ -1,8 +1,35 @@
-@(loans: Seq[model.commercial.moneysupermarket.Loan], savings: Seq[model.commercial.moneysupermarket.EasyAccessProduct])(implicit request: RequestHeader)
+@(creditCards: Seq[model.commercial.moneysupermarket.CreditCard], loans: Seq[model.commercial.moneysupermarket.Loan], savings: Seq[model.commercial.moneysupermarket.SavingsAccount])(implicit request: RequestHeader)
 
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
-<h1>Loans</h1>
+<h1>Best Buys</h1>
+
+<h2>Credit Cards</h2>
+@creditCards.map { card =>
+    <table>
+        <tr>
+            <td>Provider Logo</td>
+            <td><img src="@card.logoUrl" /></td>
+        </tr>
+        <tr>
+            <td>Card Name</td>
+            <td>@card.name</td>
+        </tr>
+        <tr>
+            <td>Balance Transfer Rate</td>
+            <td>@card.balanceTransferRate</td>
+        </tr>
+        <tr>
+            <td>Balance Transfer Rate Duration</td>
+            <td>@card.balanceTransferRateDuration</td>
+        </tr>
+        <tr>
+            <td><a href="@card.applyUrl">Apply URL</a></td>
+        </tr>
+    </table>
+}
+
+<h2>Loans</h2>
 @loans.map { loan =>
     <table>
         <tr>
@@ -27,7 +54,7 @@
     </table>
 }
 
-<h1>Savings</h1>
+<h2>Savings</h2>
 @savings.map { product =>
     <table>
         <tr>
