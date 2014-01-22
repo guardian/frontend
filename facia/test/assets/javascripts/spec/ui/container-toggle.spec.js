@@ -1,5 +1,5 @@
 define([
-    'common/modules/ui/container-toggle',
+    'modules/ui/container-toggle',
     'common/common',
     'bonzo',
     'bean',

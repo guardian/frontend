@@ -357,6 +357,12 @@ module.exports = function (grunt) {
                     cwd: 'facia/app/assets/javascripts',
                     src: ['**/*.js'],
                     dest: staticRequireDir
+                },
+                {
+                    expand: true,
+                    cwd: 'facia/test/assets/javascripts',
+                    src: ['**/*.js'],
+                    dest: staticRequireDir + 'facia-test'
                 }]
             },
             'javascript-facia-tool': {
