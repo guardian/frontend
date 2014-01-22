@@ -450,6 +450,13 @@ module.exports = function (grunt) {
                     src: ['**/*.js', '!components/**', '!utils/atob.js']
                 }]
             },
+            facia: {
+                files: [{
+                    expand: true,
+                    cwd: 'facia/app/assets/javascripts/',
+                    src: ['**/*.js']
+                }]
+            },
             faciaTool: {
                 files: [{
                     expand: true,
@@ -640,6 +647,17 @@ module.exports = function (grunt) {
 
     grunt.registerTask('default', ['compile', 'test', 'analyse']);
 
+    grunt.registerTask('validate', function(app) {
+        if (!app) {
+            grunt.task.run('jshint');
+        } else {
+            // jsihnt target exist?
+            if (grunt.config('jshint')[app]) {
+                grunt.task.run('jshint:' + app);
+            }
+        }
+    });
+
     // Compile tasks
     grunt.registerTask('compile:images', ['clean:images', 'copy:images', 'shell:spriteGeneration', 'imagemin']);
     grunt.registerTask('compile:css', ['clean:css', 'sass:compile']);
@@ -670,8 +688,7 @@ module.exports = function (grunt) {
     // Test tasks
     grunt.registerTask('test:integration', function(app) {
         if (!app) {
-            grunt.log.error('No app specified.');
-            return false;
+            grunt.fail.fatal('No app specified.');
         }
         // does a casperjs setup exist for this app
         grunt.config.requires(['casperjs', app]);
@@ -683,7 +700,10 @@ module.exports = function (grunt) {
         // have we supplied an app
         if (app) {
             // does a karma setup exist for this app
-            grunt.config.requires(['karma', app]);
+            if (!grunt.config('karma')[app]) {
+                grunt.log.warn('No tests for app "' + app + '"');
+                return true;
+            }
             apps = [app];
         } else { // otherwise run all
             apps = Object.keys(grunt.config('karma')).filter(function(app) { return app !== 'options'; });
