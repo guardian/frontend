@@ -36,9 +36,11 @@
                 @if(trail.imageAdjust != Some("hide")) {
                     @trail.trailPicture(5,3).map{ imageContainer =>
                         @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
-                            <div class="fromage__media-wrapper">
+                            <div class="fromage__media-wrapper fromage__media-wrapper--first">
                                 <div class="fromage__image-container js-image-upgrade inlined-image" data-src="@imgSrc" data-force-upgrade="desktop wide">
-                                    @Item300.bestFor(imageContainer).map{ url => <img src="@url" class="responsive-img" alt="" /> }
+                                    @if(trail.imageAdjust == Some("highlight")) {
+                                        @Item300.bestFor(imageContainer).map{ url => <img src="@url" class="responsive-img" alt="" /> }
+                                    }
                                 </div>
                             </div>
                         }
@@ -59,7 +61,18 @@
                     <p class="fromage__byline tone-colour">@Html(byLine)</p>
                 }
             }
-
+            @if(trail.imageAdjust != Some("hide") && trail.imageAdjust != Some("highlight")) {
+                @trail.trailPicture(5,3).map{ imageContainer =>
+                    @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
+                        <a href="@LinkTo{@trail.url}" data-link-name="article">
+                            <div class="fromage__media-wrapper fromage__media-wrapper--second">
+                                <div class="fromage__image-container js-image-upgrade inlined-image" data-src="@imgSrc" data-force-upgrade="desktop wide">
+                                </div>
+                            </div>
+                        </a>
+                    }
+                }
+            }
             @trail.trailText.map { text =>
                 <div class="fromage__standfirst">@Html(text)</div>
             }
