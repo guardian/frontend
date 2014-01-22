@@ -18,9 +18,13 @@ define([
 
         this._$container = bonzo(container);
 
+        this._$collection = null;
+
         this._items = [];
 
         this._showCount = 8;
+
+        this._className = 'show-more--hidden';
 
         this._$button = bonzo(bonzo.create(
             '<button class="collection__show-more tone-background tone-news" data-link-name="Show more | 0">' +
@@ -53,8 +57,9 @@ define([
 
         this.showMore = function(e) {
             this._$button.attr('disabled', true);
+            this._$collection.removeClass(this._className);
             bonzo(this._items.splice(0, this._showCount))
-                .removeClass('show-more--hidden');
+                .removeClass(this._className);
             this._incrementButtonCounter();
             if (this._items.length === 0) {
                 this._removeButton();
@@ -64,8 +69,13 @@ define([
         };
 
         this.addShowMore = function() {
-            this._items = $('div:last-child > .linkslist > .linkslist__item', this._container)
-                .addClass('show-more--hidden')
+            this._$collection = $('.js-container--show-more', this._container)
+                .addClass(this._className);
+            if (this._$collection.length === 0) {
+                return false;
+            }
+            this._items = $('.linkslist > .linkslist__item', this._$collection)
+                .addClass(this._className)
                 .map(function(item) { return item; });
             this._renderButton();
         };
