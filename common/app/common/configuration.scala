@@ -74,6 +74,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val timeout = configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000)
   }
 
+  object ophan {
+    lazy val jsLocation = configuration.getStringProperty("ophan.js.location").getOrElse("http://j.ophan.co.uk/ophan.ng")
+  }
+
   object frontend {
     lazy val store = configuration.getMandatoryStringProperty("frontend.store")
   }
@@ -182,7 +186,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       "discussionApiRoot" -> discussion.apiRoot,
       ("secureDiscussionApiRoot", discussion.secureApiRoot),
       "discussionApiClientHeader" -> discussion.apiClientHeader,
-      ("ophanJsUrl", "http://j.ophan.co.uk/ophan.ng")
+      ("ophanJsUrl", ophan.jsLocation)
     )
 
     lazy val pageData: Map[String, String] = {

@@ -23,7 +23,7 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
 
     @include mq(tablet) {
         @include rem((
-            margin-bottom: $gs-baseline
+            margin-bottom: $gs-baseline*2
         ));
     }
 }
@@ -33,10 +33,16 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
 }
 .fromage__container {
     border-top: 2px solid white;
+    position: relative;
+    @include rem((
+        padding-bottom: 32px
+    ));
 
     @include mq(tablet) {
+        padding-bottom: 0;
+
         @include rem((
-            padding-left: gs-span(5) + $gs-gutter
+            padding-left: gs-span(5) + $gs-gutter,
         ));
     }
     @include mq(desktop) {
@@ -64,25 +70,12 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
             color: $c-neutral2;
         }
     }
-
-    @include mq(tablet) {
-        float: left;
-        @include rem((
-            width: gs-span(5),
-            margin-left: (gs-span(5) + $gs-gutter) * -1
-        ));
-    }
-    @include mq(desktop) {
-        @include rem((
-            width: gs-span(6),
-            margin-left: (gs-span(6) + $gs-gutter) * -1
-        ));
-    }
 }
 .fromage__media-wrapper {
     @include mq(tablet) {
         float: left;
         position: relative;
+
         @include rem((
             width: gs-span(3),
             margin-left: (gs-span(3) + $gs-gutter) * -1
@@ -101,17 +94,17 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
         left: 0;
     }
 }
+
 .fromage__title {
-    @include fs-headline(3, true);
+    @include fs-headline(3);
     @include rem((
-        margin-top: $gs-baseline/3,
-        margin-bottom: $gs-baseline
+        margin-bottom: $gs-baseline + 2px
     ));
     @include mq(tablet) {
         display: table-cell;
+        vertical-align: top;
         width: 100000px;
         max-width: 100%;
-        padding-top: 3px; // Align x-height with standfirst
         margin-bottom: 0;
         @include fs-headline(4, true);
     }
@@ -123,12 +116,13 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
     @include fs-headline(1);
     color: $c-neutral2;
 
-    @include rem((
-        margin-top: $gs-baseline / 2,
-        margin-bottom: $gs-baseline*1.5
-    ));
+    p {
+        margin-bottom: 0; // Some trail texts are wrapped in a paragraph
+    }
+
     @include mq(tablet) {
         @include rem((
+            margin-top: $gs-baseline/2,
             margin-bottom: $gs-baseline
         ));
     }
@@ -136,7 +130,6 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
         @include fs-headline(2, true);
     }
 }
-.fromage__title,
 .fromage__standfirst {
     @include mq(tablet) {
         @include rem((
@@ -150,6 +143,8 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
    ===========================================================================*/
 
 .fromage__meta {
+    position: absolute;
+    bottom: -1px;
     overflow: hidden;
     @include fs-data(1);
     color: $c-neutral2;
@@ -158,6 +153,7 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
     ));
 
     @include mq(tablet) {
+        position: static;
         @include fs-data(3, true);
     }
 
@@ -180,7 +176,6 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
 
         i {
             left: 0;
-            top: 3px;
             @include mq(tablet) {
                 top: 2px;
             }
@@ -195,7 +190,6 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
             color: inherit;
         }
         i {
-            top: 3px;
             left: $gs-gutter/2 - 1;
         }
     }
@@ -256,6 +250,31 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
 /* Modifier: image hide/default/highlight
    ===========================================================================*/
 
+.fromage__media-wrapper--first {
+    display: none;
+}
+.fromage__media-wrapper--second {
+    float: left;
+    clear: both;
+
+    @include rem((
+        margin-top: 4px,
+        margin-right: $gs-gutter/2
+    ));
+
+    @include rem((
+        width: 122px
+    ));
+}
+@include mq(tablet) {
+    .fromage__media-wrapper--first {
+        display: block;
+    }
+    .fromage__media-wrapper--second {
+        display: none;
+    }
+}
+
 .fromage--has-no-image {
     .fromage__container {
         border-top-width: 0;
@@ -265,7 +284,19 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
     }
     .fromage__link {
         @include mq(tablet) {
-            @include clearfix;
+            float: left;
+            padding-left: 0;
+
+            @include rem((
+                width: gs-span(5),
+                margin-left: gs-span(5) * -1 - $gs-gutter
+            ));
+        }
+        @include mq(desktop) {
+            @include rem((
+                width: gs-span(6),
+                margin-left: gs-span(6) * -1 - $gs-gutter
+            ));
         }
     }
     .fromage__title {
@@ -273,36 +304,24 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
 
         @include mq(tablet) {
             @include fs-headline(5, true);
-            @include rem((
-                padding-left: $gs-gutter/4
-            ));
         }
         @include mq(desktop) {
             @include fs-headline(6, true);
         }
     }
-}
-.fromage--has-image {
-    .fromage__title,
     .fromage__standfirst {
-        @include mq(desktop) {
+        @include mq(tablet) {
             @include rem((
-                max-width: gs-span(4)
+                padding-right: $gs-gutter/4
             ));
         }
     }
-    .fromage__link {
-        @include mq(tablet, desktop) {
-            width: auto;
-            margin-left: 0;
-            padding-left: 0;
-            float: none;
-        }
+}
+.fromage--has-image {
+    .fromage__standfirst {
         @include mq(desktop) {
             @include rem((
-                width: gs-span(4),
-                padding-left: gs-span(3) + $gs-gutter,
-                margin-left: (gs-span(7) + $gs-gutter) * -1
+                max-width: gs-span(7)
             ));
         }
     }
@@ -314,7 +333,7 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
         }
         @include mq(desktop) {
             @include rem((
-                padding-left: gs-span(7) + $gs-gutter
+                padding-left: gs-span(4) + $gs-gutter
             ));
         }
     }
@@ -325,30 +344,56 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
                 margin-left: (gs-span(3) + $gs-gutter) * -1
             ));
         }
+        @include mq(desktop) {
+            @include rem((
+                width: gs-span(4),
+                margin-left: (gs-span(4) + $gs-gutter) * -1
+            ));
+        }
+    }
+}
+.fromage--imageadjust-default {
+    .fromage__standfirst {
+        @include mq(tablet) {
+            @include rem((
+                margin-top: $gs-baseline*1.5
+            ));
+        }
     }
 }
 .fromage--imageadjust-highlight {
     .fromage__title {
+        @include rem((
+            margin-top: $gs-baseline/3
+        ));
         @include mq(tablet) {
             @include fs-headline(5, true);
         }
         @include mq(desktop) {
             @include fs-headline(6, true);
             @include rem((
-                max-width: gs-span(5)
+                max-width: none
+            ));
+        }
+    }
+    .fromage__standfirst {
+        @include mq(tablet) {
+            @include rem((
+                margin-top: $gs-baseline*2
             ));
         }
     }
     .fromage__link {
         @include mq(tablet) {
-            width: auto;
             margin-left: 0;
             padding-left: 0;
-            float: none;
         }
     }
     .fromage__container {
+        border-top-width: 4px;
+
         @include mq(tablet) {
+            border-top-width: 2px;
             @include rem((
                 padding-left: gs-span(4) + $gs-gutter
             ));
@@ -373,6 +418,12 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
             ));
         }
     }
+    .fromage__media-wrapper--first {
+        display: block;
+    }
+    .fromage__media-wrapper--second {
+        display: none;
+    }
 }
 
 
@@ -381,9 +432,6 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
 
 .fromage--volume-1,
 .fromage--volume-2 {
-    .fromage__container {
-        border-top-width: 2px;
-    }
     .fromage__support__item {
         border-top-color: #ffffff;
 
@@ -410,6 +458,22 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
             @include mq(tablet) {
                 @include rem((
                     padding-left: 0
+                ));
+            }
+        }
+    }
+    &.fromage--imageadjust-default {
+        .fromage__media-wrapper--second {
+            @include rem((
+                margin-left: $gs-gutter/4
+            ));
+        }
+    }
+    &.fromage--imageadjust-highlight {
+        .fromage__standfirst {
+            @include mq(desktop) {
+                @include rem((
+                    margin-top: $gs-baseline*2
                 ));
             }
         }

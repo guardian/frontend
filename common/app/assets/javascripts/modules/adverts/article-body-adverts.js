@@ -25,6 +25,7 @@ define([
     Component.define(ArticleBodyAdverts);
 
     ArticleBodyAdverts.prototype.config = {
+        inlineAdLimit: null,
         nthParagraph: 7,
         inlineAdTemplate: '<div class="ad-slot ad-slot--inline" data-base="%slot%" data-median="%slot%"><div class="ad-container"></div></div>',
         mpuAdTemplate: '<div class="ad-slot ad-slot--mpu-banner-ad" data-link-name="ad slot mpu-banner-ad" data-base="%slot%" data-median="%slot%"><div class="ad-container"></div></div>'
@@ -33,25 +34,25 @@ define([
     // inserts a few inline advert slots in to the page
     ArticleBodyAdverts.prototype.createInlineAdSlots = function(id) {
         var paragraphSelector = 'p:nth-of-type('+ this.config.nthParagraph +'n)',
+            limit             = this.config.inlineAdLimit,
             template          = this.config.inlineAdTemplate,
             article           = document.getElementsByClassName('js-article__container')[0];
 
         $(paragraphSelector, article).each(function(el, i) {
-            // This protects against empty paragraph tags and paragraphs being used
-            // instead of order/unordered lists
-            if(bonzo(el).text().length < 120) {
+            var $el = $(el),
+                cls = (i % 2 === 0) ? 'is-odd' : 'is-even';
+
+            /*
+             - Checks if limit is set and if so, checks it hasn't been exceeded
+             - Checks is the $target element exists. If not, then you are at the end of the article
+             - Checks if the text length is below 120 characters - helps prevent against empty paragraphs
+               and paragraphs being used instead of order/unordered lists
+             */
+            if(limit !== null && limit < (i + 1) || $el.next()[0] === undefined || $el.text().length < 120) {
                 return false;
             }
 
-            var target = this,
-                cls    = (i % 2 === 0) ? 'is-odd' : 'is-even';
-
-            // Places the advert after h2 tags on all breakpoints except mobile
-            if(detect.getBreakpoint() !== 'mobile' && el.nextElementSibling && el.nextElementSibling.nodeName.toLowerCase() === 'h2') {
-                target = el.nextElementSibling;
-            }
-
-            bonzo(bonzo.create(template.replace(/%slot%/g, id))).addClass(cls).insertAfter(target);
+            bonzo(bonzo.create(template.replace(/%slot%/g, id))).addClass(cls).insertBefore($el);
         });
     };
 

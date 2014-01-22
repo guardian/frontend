@@ -205,7 +205,9 @@ define([
             });
 
             if (config.switches.ophanMultiEvent) {
-                require('ophan/ng', function () {});
+                require('ophan/ng', function (ophan) {
+                    ophan.record({'ab': ab.getParticipations()});
+                });
             }
 
             require(config.page.ophanUrl, function (Ophan) {
@@ -249,7 +251,11 @@ define([
                 };
 
                 if(config.page.contentType === 'Article' && !config.page.isLiveBlog) {
-                    var articleBodyAdverts = new ArticleBodyAdverts();
+                    // Limiting inline ads to 1 until support for different inline
+                    // ads is enabled
+                    var articleBodyAdverts = new ArticleBodyAdverts({
+                        inlineAdLimit: 1
+                    });
 
                     // Add the body adverts to the article page
                     articleBodyAdverts.init();

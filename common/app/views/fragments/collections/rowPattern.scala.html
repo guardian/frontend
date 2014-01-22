@@ -8,7 +8,7 @@
         @if(!trail.group.isEmpty){ @* Means this is a curated container *@
             @fragments.items.fromage(trail, 0)
         }else{ @* Not a curated container: we fake hierarchy *@
-            @fragments.items.fromage(trail, 0, 1, "highlight")
+            @fragments.items.fromage(trail, 0, 0, "highlight")
         }
     }
 </div>
@@ -43,7 +43,7 @@
         }
     </ul>
 </div>
-<div class="linkslist-container">
+<div class="linkslist-container js-container--show-more">
     <ul class="l-columns linkslist">
         @items.slice(8, 24).zipWithIndex.map{ case (trail, index) =>
             <li class="l-columns__item linkslist__item">

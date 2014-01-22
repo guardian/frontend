@@ -191,6 +191,16 @@
     padding: 0;
 }
 
+.formstack-count {
+    position: absolute;
+    color: #545454;
+    font-family: $sans-serif;
+    font-size: 13px;
+    font-size: 1.3rem;
+    margin-left: 6px;
+    padding-top: $baseline*9;
+}
+
 .film-awards-banner {
     background-color: #000000;
     height: 90px;
