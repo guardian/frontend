@@ -8,7 +8,8 @@ define([
     'common/modules/identity/api',
     'common/modules/adverts/userAdTargeting',
     'common/modules/discussion/user-avatars',
-    'common/utils/mediator'
+    'common/utils/mediator',
+    'common/modules/ui/tabs'
 ], function(
     $,
     Identity,
@@ -19,7 +20,8 @@ define([
     Id,
     UserAdTargeting,
     UserAvatars,
-    mediator
+    mediator,
+    Tabs
 ) {
 
     var modules = {
@@ -80,6 +82,13 @@ define([
             mediator.on('page:identity:ready', function(config, context) {
                 ValidationEmail.init(context);
             });
+        },
+
+        tabs: function () {
+            var tabs = new Tabs();
+            mediator.on('page:identity:ready', function(config, context) {
+                tabs.init(context);
+            });
         }
     };
 
@@ -95,6 +104,7 @@ define([
             modules.userAdTargeting();
             modules.userAvatars();
             modules.validationEmail();
+            modules.tabs();
         }
         mediator.emit('page:identity:ready', config, context);
     };

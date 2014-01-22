@@ -20,82 +20,113 @@
 
     <h1 class="identity-title">Edit your profile</h1>
 
-    <div class="identity-tabs-container">
+    <div class="tabs u-cf">
+        <ol class="tabs__container js-tabs" id="js-popular-tabs" role="tablist" data-is-bound="true">
+            <li class="tabs__tab tabs__tab--selected tone-colour tone-accent-border" role="tab" id="tabs-popular-1-tab" aria-selected="true" aria-controls="tabs-popular-1">
+                <a href="#tabs-popular-1" data-link-name="tab 1 World news">Public</a>
+            </li>
+            <li class="tabs__tab" role="tab" id="tabs-popular-2-tab" aria-controls="tabs-popular-2" aria-selected="false">
+                <a href="#tabs-popular-2" data-link-name="tab 2 The Guardian">Account details</a>
+            </li>
+        </ol>
         
-        <div class="identity-tabs-container__tab public-profile-tab"></div>
-        <div class="identity-tabs-container__tab account-profile-tab"></div>
-
-    </div>
-
-
-
-<div class="tabs u-cf">
-    <ol class="tabs__container js-tabs" id="js-popular-tabs" role="tablist" data-is-bound="true">
-        <li class="tabs__tab tabs__tab--selected tone-colour tone-accent-border" role="tab" id="tabs-popular-1-tab" aria-selected="true" aria-controls="tabs-popular-1">
-            <a href="#tabs-popular-1" data-link-name="tab 1 World news"><span class="u-h--up-to-right-col">Popular in </span>World news</a>
-        </li>
-        <li class="tabs__tab" role="tab" id="tabs-popular-2-tab" aria-controls="tabs-popular-2" aria-selected="false">
-            <a href="#tabs-popular-2" data-link-name="tab 2 The Guardian"><span class="u-h--up-to-right-col">Popular in </span>The Guardian</a>
-        </li>
-    </ol>
-    
-    <div class="tabs__content">
-        <div id="tabs-popular-1" class="tabs__pane  headline-list u-cf" role="tabpanel" aria-labelledby="tabs-popular-1-tab" data-link-name="World news" data-link-context="most-read/world" style="">
-        </div>
-        <div id="tabs-popular-2" class="tabs__pane headline-list u-cf" role="tabpanel" aria-labelledby="tabs-popular-2-tab" data-link-name="The Guardian" data-link-context="most-read/" style="display: none;">
-        </div>
-    </div>
-</div>
-
-    <form class="form" novalidate action="@idUrlBuilder.buildUrl("/profile/public", idRequest)" role="main" method="post">
-        @views.html.helper.CSRF.formField
-
-        <fieldset class="fieldset">
-            <div class="fieldset__heading">
-                <div class="user-avatar" data-userid="@user.id"></div>
-                <h2 class="form__heading">
-                    @user.publicFields.displayName
-                </h2>
-                @user.dates.accountCreatedDate.map { joinDate =>
-                    <p class="form-field__note">Joined: @joinDate.toString("d MMM yyyy")</p>
-                }
-            </div>
-        </fieldset>
-
-        @if(profileForm.globalError.isDefined) {
-            <div class="form__error">@profileForm.globalErrors.map(_.message).mkString(", ")</div>
-        }
-
-        <fieldset class="fieldset">
-
-            <div class="fieldset__heading">
-                <h2 class="form__heading">Your public details.</h2>
-                <div class="form__note">This information is publicly available on your profile.</div>                    
-            </div>
+        <div class="tabs__content">
+            <div id="tabs-popular-1" class="tabs__pane u-cf" role="tabpanel" aria-labelledby="tabs-popular-1-tab" data-link-name="Public Profile" data-link-context="Identity/profile" style="">
             
-            <div class="fieldset__fields">
-                <ul class="unstyled">
-                    @inputField(Input(profileForm("publicFields.location"), '_label -> "Location"))
-                    @select(
-                        profileForm("privateFields.gender"),
-                        List("Male" -> "Male", "Female" -> "Female", "unknown" -> "Prefer not to say"),
-                        '_label -> "Gender",
-                        '_default -> ""
-                    )
+                <form class="form" novalidate action="@idUrlBuilder.buildUrl("/profile/public", idRequest)" role="main" method="post">
+                    @views.html.helper.CSRF.formField
 
-                    @textareaField(Input(profileForm("publicFields.aboutMe"), ('_label, "About me"), ('class, "textarea--long")))
-                    @textareaField(Input(profileForm("publicFields.interests"), ('_label, "Interests")))
-                    @inputField(Input(profileForm("publicFields.webPage"), ('_label, "Website (enter full address)")))
+                    <fieldset class="fieldset">
+                        <div class="fieldset__heading">
+                            <div class="user-avatar" data-userid="@user.id"></div>
+                            <h2 class="form__heading">
+                                @user.publicFields.displayName
+                            </h2>
+                            @user.dates.accountCreatedDate.map { joinDate =>
+                                <p class="form-field__note">Joined: @joinDate.toString("d MMM yyyy")</p>
+                            }
+                        </div>
+                    </fieldset>
 
-                    <li>
-                        <button type="submit" class="submit-input" data-link-name="Create account">Save changes</button>
-                    </li>
-                </ul>                    
-            </div> 
+                    @if(profileForm.globalError.isDefined) {
+                        <div class="form__error">@profileForm.globalErrors.map(_.message).mkString(", ")</div>
+                    }
 
-        </fieldset>
+                    <fieldset class="fieldset">
 
-    </form>
+                        <div class="fieldset__heading">
+                            <h2 class="form__heading">Public profile.</h2>
+                            <div class="form__note">These details will be visible to everyone who sees your profile.</div>
+                        </div>
+
+                        <div class="fieldset__fields">
+                            <ul class="unstyled">
+                                @inputField(Input(profileForm("publicFields.location"), ('_label, "Location")))
+                                @select(
+                                    profileForm("privateFields.gender"),
+                                    List(("Male", "Male"), ("Female", "Female"), ("unknown", "Prefer not to say")),
+                                    ('_label, "Gender"),
+                                    ('_default, "")
+                                )
+
+                                @textareaField(Input(profileForm("publicFields.aboutMe"), ('_label, "About me"), ('class, "textarea--long")))
+                                @textareaField(Input(profileForm("publicFields.interests"), ('_label, "Interests")))
+                                @inputField(Input(profileForm("publicFields.webPage"), ('_label, "Website (enter full address)")))
+
+                                <li>
+                                    <button type="submit" class="submit-input" data-link-name="Create account">Save changes</button>
+                                </li>
+                            </ul>                    
+                        </div> 
+
+                    </fieldset>
+
+                </form>
+
+            </div>
+            <div id="tabs-popular-2" class="tabs__pane u-cf" role="tabpanel" aria-labelledby="tabs-popular-2-tab" data-link-name="Account" data-link-context="Identity/profile" style="display: none;">
+
+                <form class="form" novalidate action="@idUrlBuilder.buildUrl("/profile/public", idRequest)" role="main" method="post">
+                    @views.html.helper.CSRF.formField
+
+                    @if(profileForm.globalError.isDefined) {
+                        <div class="form__error">@profileForm.globalErrors.map(_.message).mkString(", ")</div>
+                    }
+
+                    <fieldset class="fieldset">
+
+                        <div class="fieldset__heading">
+                            <h2 class="form__heading">Contact information.</h2>
+                            <div class="form__note">These details will only be visible to yourself and the Guardian.</div>
+                        </div>
+                        
+                        <div class="fieldset__fields">
+                            <ul class="unstyled">
+                                @inputField(Input(profileForm("publicFields.email"), ('_label, "Email address")))
+                                @select(
+                                    profileForm("privateFields.gender"),
+                                    List(("Male", "Male"), ("Female", "Female"), ("unknown", "Prefer not to say")),
+                                    ('_label, "Gender"),
+                                    ('_default, "")
+                                )
+
+                                @textareaField(Input(profileForm("publicFields.aboutMe"), ('_label, "About me"), ('class, "textarea--long")))
+                                @textareaField(Input(profileForm("publicFields.interests"), ('_label, "Interests")))
+                                @inputField(Input(profileForm("publicFields.webPage"), ('_label, "Website (enter full address)")))
+
+                                <li>
+                                    <button type="submit" class="submit-input" data-link-name="Create account">Save changes</button>
+                                </li>
+                            </ul>                    
+                        </div> 
+
+                    </fieldset>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
 
     @registrationFooter(page, idRequest, idUrlBuilder)
 </div>

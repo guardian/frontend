@@ -30,6 +30,9 @@
 .fieldset {
     border: none;
     border-top: 1px solid $c-neutral7;
+    &:first-of-type {
+        border-top: none;
+    }
     display: table;
     padding: ($baseline * 4 - 1) 0 ($baseline * 6);
     margin: 0;
