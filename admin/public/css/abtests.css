@@ -13,3 +13,61 @@
 .ab-panel__label {
     margin-right: 20px;
 }
+
+.abtest-item {
+    border-top: 1px solid #ccc;
+}
+
+.abtest-item__name {
+    display: inline-block;
+}
+
+.abtest-item__description {
+    display: inline-block;
+}
+
+.abtest-item--active .abtest-item__expiry {
+    color: #5a5;
+}
+
+.abtest-item--expired .abtest-item__expiry {
+    color: #a55;
+}
+
+.abtests-expired-title a {
+    font-size: 20px;
+}
+
+.abtest-item__active-label,
+.abtest-item__expired-label {
+    display: none;
+}
+
+.abtest-item--active .abtest-item__active-label,
+.abtest-item--expired .abtest-item__expired-label
+{
+    display: inline-block;
+    position: relative;
+    top: -5px;
+}
+
+.abtest-item__participation {
+    margin-bottom: 12px;
+}
+
+.abtest-item__chart-container {
+    position: relative;
+    height: 200px;
+}
+
+.abtest-item__chart-placeholder {
+    width: 95%;
+    margin-left: 15px;
+    text-align: center;
+    font-size: 32px;
+    margin-top: 0;
+    border-bottom: 1px solid;
+    line-height: 150px;
+    position: absolute;
+    color: #444;
+}
