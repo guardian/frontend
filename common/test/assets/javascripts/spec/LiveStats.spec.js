@@ -1,28 +1,35 @@
-define(['common/common', 'common/modules/analytics/livestats', 'common/utils/cookies'], function(common, LiveStats) {
+define(['common/common', 'common/modules/analytics/livestats', 'common/utils/cookies'], function(common, liveStats) {
 
     describe("LiveStats", function() {
        
-        var ls;
+        var beacon;
+        var config;
        
         beforeEach(function() {
             window.sessionStorage.clear();
             document.cookie="GU_ALPHA=true;expires=" + new Date(2054,1,1).toUTCString();
-            common.$g('#js-livestats').remove();
-            ls = new LiveStats({ beaconUrl: 'beacon.gu.com' });
+            common.$g('#js-livestats-px').remove();
+            common.$g('#js-livestats-ab').remove();
+            beacon = { beaconUrl: 'beacon.gu.com' };
+            config = { switches: {
+                            liveStats : true,
+                            liveAbTestStats : false
+                        }
+                     }
         });
         
         it("should log a new session as type 'session'", function(){
-            ls.log();
-            expect(document.getElementById('js-livestats').getAttribute('src')).toContain(
-                'beacon.gu.com/px.gif?type=session&platform=responsive'
+            liveStats.log(beacon, config);
+            expect(document.getElementById('js-livestats-px').getAttribute('src')).toContain(
+                'beacon.gu.com/px.gif?platform=responsive&type=session'
             );
         });
         
         it("should log a second page view as type 'view'", function(){
             window.sessionStorage.setItem("gu.session", true);
-            ls.log();
-            expect(document.getElementById('js-livestats').getAttribute('src')).toContain(
-                'beacon.gu.com/px.gif?type=view&platform=responsive'
+            liveStats.log(beacon, config);
+            expect(document.getElementById('js-livestats-px').getAttribute('src')).toContain(
+                'beacon.gu.com/px.gif?platform=responsive&type=view'
             );
         });
 

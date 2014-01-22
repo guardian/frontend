@@ -1,26 +1,28 @@
-@(config: Config, collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader)
+@(config: Config, collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
 
 @defining(config.displayName.orElse(collection.displayName)) { title =>
 
-    @if(collection.items.nonEmpty) {
-        <section class="container container--@style.containerType @if(containerIndex > 0 && title.nonEmpty){js-container--toggle}"
-                 data-link-name="block | @config.id"
-                 data-id="@config.id"
-                 data-type="@style.containerType">
+    @defining(templateDeduping(5, collection.items)) { items =>
+        @if(items.nonEmpty) {
+            <section class="container container--@style.containerType @if(containerIndex > 0 && title.nonEmpty){js-container--toggle}"
+                     data-link-name="block | @config.id"
+                     data-id="@config.id"
+                     data-type="@style.containerType">
 
-            @title.map { title =>
-                <h2 class="container__title tone-@style.tone tone-background tone-accent-border">
-                    @if(style.headerLink) {
-                        <a data-link-name="section heading" href="@LinkTo{/@config.section}">@Html(title)</a>
-                    } else {
-                        @Html(title)
-                    }
-                </h2>
-            }
+                @title.map { title =>
+                    <h2 class="container__title tone-@style.tone tone-background tone-accent-border">
+                        @config.href.map { href =>
+                            <a data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
+                        }.getOrElse{
+                            @Html(title)
+                        }
+                    </h2>
+                }
 
-            @fragments.collections.standard(config, collection, style, containerIndex, 9)
+                @fragments.collections.standard(config, items, style, containerIndex, 9)
 
-        </section>
+            </section>
+        }
     }
 
 }

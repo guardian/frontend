@@ -119,11 +119,19 @@ object ContentApiMetrics {
     "Elastic Content api calls that timeout"
   )
 
+  object ContentApi404Metric extends CountMetric(
+    "404",
+    "content-api-404-responses",
+    "Content API 404 responses",
+    "Number of times the Content API has responded with a 404"
+  )
+
   val all: Seq[Metric] = Seq(
     HttpTimingMetric,
     HttpTimeoutCountMetric,
     ElasticHttpTimeoutCountMetric,
-    ElasticHttpTimingMetric
+    ElasticHttpTimingMetric,
+    ContentApi404Metric
   )
 }
 
@@ -183,8 +191,16 @@ object FaciaMetrics {
     "Number of errors whilst parsing JSON out of S3"
   )
 
+  object S3AuthorizationError extends CountMetric(
+    "facia-front",
+    "facia-s3-authorization-403",
+    "Facia S3 403 (Unauthorized) error count",
+    "Number of requests to S3 by facia that have resulted in a 403"
+  )
+
   val all: Seq[Metric] = Seq(
-    JsonParsingErrorCount
+    JsonParsingErrorCount,
+    S3AuthorizationError
   )
 }
 

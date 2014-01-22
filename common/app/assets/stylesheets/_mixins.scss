@@ -147,6 +147,12 @@
     transition: $args;
 }
 
+@mixin transition-delay($args...) {
+    -webkit-transition-delay: $args;
+    -moz-transition-delay: $args;
+    transition-delay: $args;
+}
+
 @mixin transform($args) {
     -webkit-transform: $args;
     -moz-transform: $args;
@@ -303,5 +309,26 @@
 // (won't show `…` at the end of the block)
     @if $line-height {
         @include rem((max-height: $line-height * $lines));
+    }
+}
+
+// icon button (circular element containing an offset/centered icon)
+@mixin icon-button($buttonSize, $iconOffsetX, $iconOffsetY: "") {
+    width: $buttonSize;
+    height: $buttonSize;
+    @include rounded-corners($buttonSize);
+    position: relative;
+    display: inline-block;
+    .i {
+        position: absolute;
+        text-indent: -9999px;
+        top: 50%;
+        left: 50%;
+        margin-top: $iconOffsetX;
+        @if $iconOffsetY == "" { 
+            margin-left: $iconOffsetX; 
+        } @else { 
+            margin-left: $iconOffsetY; 
+        }
     }
 }

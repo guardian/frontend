@@ -5,10 +5,10 @@
 /**
  * A "columns pattern" will fit as many "$guss-column-min-width"-wide columns
  * in any type of context: full-width container, sidebar…
- * Examples: http://sassmeister.com/gist/7987988
  *
  * Usage 1: Sass mixin
  * @include guss-columns('.classname');
+ * Examples: http://sassmeister.com/gist/7987988
  *
  * Usage 2: utility class set as `$guss-columns-utility-class`
  * @include guss-columns-utility;
@@ -41,31 +41,43 @@ $guss-columns-fallback-width: 940px !default;
 // Number of columns in the non-responsive version
 $guss-columns-fallback-columns: 3 !default;
 
-@mixin guss-columns($base-class) {
-    @if $browser-supports-columns {
+@mixin guss-columns($base-class,
+                    $column-min-width: $guss-column-min-width,
+                    $column-rule: $guss-column-rule,
+                    $column-gap: $guss-column-gap,
+                    $columns-fallback-width: $guss-columns-fallback-width,
+                    $columns-fallback-columns: $guss-columns-fallback-columns,
+                    $css3-columns-support: $browser-supports-columns) {
+    @if $css3-columns-support {
         #{$base-class} {
-            -webkit-column-width: $guss-column-min-width;
-            -webkit-column-rule: $guss-column-rule;
-            -webkit-column-gap: $guss-column-gap;
+            -webkit-column-width: rem($column-min-width);
+            -webkit-column-rule: $column-rule;
+            -webkit-column-gap: rem($column-gap);
 
-            -moz-column-width: $guss-column-min-width;
-            -moz-column-rule: $guss-column-rule;
-            -moz-column-gap: $guss-column-gap;
+            -moz-column-width: rem($column-min-width);
+            -moz-column-rule: $column-rule;
+            -moz-column-gap: rem($column-gap);
 
-            column-width: $guss-column-min-width;
-            column-rule: $guss-column-rule;
-            column-gap: $guss-column-gap;
+            column-width: rem($column-min-width);
+            column-rule: $column-rule;
+            column-gap: rem($column-gap);
         }
         #{$base-class}__item {
             -webkit-column-break-inside: avoid;
                -moz-column-break-inside: avoid;
                     column-break-inside: avoid;
+            // column-break-inside: avoid; does not work in all browsers
+            // so we use inline-block instead
+            display: inline-block;
+            width: 100%;
         }
     } @else {
         #{$base-class} {
-            width: $guss-columns-fallback-width + $guss-column-gap;
-            margin-left: $guss-column-gap / 2 * -1;
-            margin-right: $guss-column-gap / 2 * -1;
+            @include rem((
+                width: $columns-fallback-width + $column-gap,
+                margin-left: $column-gap / 2 * -1,
+                margin-right: $column-gap / 2 * -1
+            ));
 
             // Micro clearfix (http://nicolasgallagher.com/micro-clearfix-hack/)
             zoom: 1;
@@ -80,25 +92,30 @@ $guss-columns-fallback-columns: 3 !default;
             }
         }
         #{$base-class}__item {
+            box-sizing: border-box;
             position: relative;
             float: left;
-            width: $guss-columns-fallback-width / $guss-columns-fallback-columns - $guss-column-gap;
-            margin-left: $guss-column-gap / 2;
-            margin-right: $guss-column-gap / 2;
-            box-sizing: border-box;
-
-            &:nth-child(n+1):before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: $guss-column-gap / 2 * -1;
-                bottom: 0;
-                height: 100%;
-                width: 1px;
-                background: nth($guss-column-rule, 3);
-            }
-            &:nth-child(#{$guss-columns-fallback-columns}n+1):before {
-                display: none;
+            @include rem((
+                width: $columns-fallback-width / $columns-fallback-columns - $column-gap,
+                margin-left: $column-gap / 2,
+                margin-right: $column-gap / 2
+            ));
+            @if $column-rule != none {
+                &:nth-child(n+1):before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    @include rem((
+                        left: $column-gap / 2 * -1
+                    ));
+                    bottom: 0;
+                    height: 100%;
+                    width: 1px;
+                    background: nth($column-rule, 3);
+                }
+                &:nth-child(#{$columns-fallback-columns}n+1):before {
+                    display: none;
+                }
             }
         }
     }

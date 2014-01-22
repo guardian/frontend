@@ -1,8 +1,0 @@
-@(metaData: model.MetaData, formId: String, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder)(implicit request: RequestHeader)
-
-@identityMain(metaData, conf.Switches.all) {
-} {
-    <div class="identity-wrapper">
-        <iframe src="@idUrlBuilder.buildUrl(s"/form/$formId")" class="js-formstack-iframe formstack-iframe is-hidden"></iframe>
-    </div>
-}

@@ -6,7 +6,9 @@ module.exports = function (grunt) {
         screenshotsDir = './screenshots',
         staticTargetDir = 'static/target/',
         staticRequireDir = 'static/requirejs/',
-        testConfDir = 'common/test/assets/javascripts/conf/';
+        testConfDir = 'common/test/assets/javascripts/conf/',
+        propertiesFile = (isDev) ? process.env.HOME + '/.gu/frontend.properties' : '/etc/gu/frontend.properties';
+
 
     if (isDev) {
         grunt.log.subhead('Running Grunt in DEV mode');
@@ -61,7 +63,8 @@ module.exports = function (grunt) {
                         swipeview:    "common/components/swipeview/src/swipeview",
                         lodash:       "common/components/lodash-amd/modern",
                         imager:       'common/components/imager.js/src/strategies/container',
-                        omniture:     '../../common/app/public/javascripts/vendor/omniture'
+                        omniture:     '../../common/app/public/javascripts/vendor/omniture',
+                        'ophan/ng':   'empty:'
                     },
                     shim: {
                         postscribe: {
@@ -78,6 +81,45 @@ module.exports = function (grunt) {
                     wrap: {
                         startFile: "common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js",
                         endFile:   "common/app/assets/javascripts/bootstraps/go.js"
+                    },
+                    optimize: (isDev) ? 'none' : 'uglify2',
+                    useSourceUrl: (isDev) ? true : false,
+                    preserveLicenseComments: false
+                }
+            },
+            admin: {
+                options: {
+                    baseUrl: staticRequireDir,
+                    name: "bootstraps/admin",
+                    out: staticTargetDir + "javascripts/bootstraps/admin.js",
+                    paths: {
+                        bean:         "common/components/bean/bean",
+                        bonzo:        "common/components/bonzo/src/bonzo",
+                        domReady:     "common/components/domready/ready",
+                        EventEmitter: "common/components/eventEmitter/EventEmitter",
+                        qwery:        "common/components/qwery/mobile/qwery-mobile",
+                        reqwest:      "common/components/reqwest/src/reqwest",
+                        postscribe:   "common/components/postscribe/dist/postscribe",
+                        swipe:        "common/components/swipe/swipe",
+                        swipeview:    "common/components/swipeview/src/swipeview",
+                        lodash:       "common/components/lodash-amd/modern",
+                        imager:       'common/components/imager.js/src/strategies/container',
+                        omniture:     '../../common/app/public/javascripts/vendor/omniture'
+                    },
+                    shim: {
+                        postscribe: {
+                            exports: "postscribe"
+                        },
+                        imager: {
+                            deps: ['common/components/imager.js/src/imager'],
+                            exports: 'Imager'
+                        },
+                        omniture: {
+                            exports: 's'
+                        }
+                    },
+                    wrap: {
+                        startFile: "common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js"
                     },
                     optimize: (isDev) ? 'none' : 'uglify2',
                     useSourceUrl: (isDev) ? true : false,
@@ -227,6 +269,17 @@ module.exports = function (grunt) {
                     stdout: true,
                     stderr: true,
                     failOnError: false
+                }
+            },
+
+            abTestInfo: {
+                command: 'node tools/ab-test-info/ab-test-info.js ' +
+                         'common/app/assets/javascripts/modules/experiments/tests ' +
+                         'static/abtests.json',
+                options: {
+                    stdout: true,
+                    stderr: true,
+                    failOnError: true
                 }
             }
         },
@@ -579,6 +632,19 @@ module.exports = function (grunt) {
                 }
             }
         },
+        assetmonitor: {
+            common: {
+                src: [
+                    staticTargetDir + 'javascripts/bootstraps/app.js',
+                    staticTargetDir + 'stylesheets/head.default.css',
+                    staticTargetDir + 'stylesheets/head.facia.css',
+                    staticTargetDir + 'stylesheets/global.css'
+                ],
+                options: {
+                    credentials: propertiesFile
+                }
+            }
+        },
 
         /*
          * Miscellaneous
@@ -675,6 +741,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-asset-monitor');
 
     grunt.registerTask('default', ['compile', 'test', 'analyse']);
 
@@ -692,6 +759,11 @@ module.exports = function (grunt) {
         // When an app defines it's own javascript application, the requirejs task will need to compile both
         // common and app.
         grunt.task.run('requirejs:compile');
+
+        // Admin has its own application.
+        if (app && app === "admin") {
+            grunt.task.run('requirejs:admin');
+        }
     });
     grunt.registerTask('compile:fonts', ['clean:fonts', 'mkdir:fontsTarget', 'webfontjson']);
     grunt.registerTask('compile:flash', ['clean:flash', 'copy:flash']);
@@ -712,14 +784,18 @@ module.exports = function (grunt) {
     grunt.registerTask('test:unit', function(app) {
         grunt.config.set('karma.options.singleRun', (singleRun === false) && app ? false : true);
         // Target common when no app is specified, because karma can only test what has been js-compiled.
-        grunt.task.run('karma' + (app ? ':' + app : ':common'));
+        var actualApp = app || 'common';
+        grunt.task.run('copy:javascript-' + actualApp);
+        grunt.task.run('karma:' + actualApp);
     });
 
     // Analyse tasks
     grunt.registerTask('analyse:css', ['compile:css', 'cssmetrics:common']);
+    grunt.registerTask('analyse:monitor', ['monitor:common']);
     grunt.registerTask('analyse', ['analyse:css']);
 
     // Miscellaneous task
     grunt.registerTask('hookmeup', ['clean:hooks', 'shell:copyHooks']);
     grunt.registerTask('snap', ['clean:screenshots', 'mkdir:screenshots', 'env:casperjs', 'casperjs:screenshot', 's3:screenshots']);
+    grunt.registerTask('emitAbTestInfo', ['shell:abTestInfo']);
 };

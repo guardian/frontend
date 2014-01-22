@@ -14,8 +14,11 @@
 .site-message__message {
     @include fs-headline(2);
     color: $c-neutral2;
-    padding-bottom: $baseline*6;
-    padding-right: $baseline*6;
+    margin-bottom: 0;
+    margin-right: $gs-gutter*(6/5);
+    .site-message--permanent & {
+        margin-right: 0;
+    }
 }
 
 .site-message__message--tall { padding-bottom: $baseline*11; }
@@ -23,10 +26,12 @@
 .site-message__actions {
     width: 100%;
     border-top: 1px dotted $c-neutral2;
+    margin-top: $baseline*6;
+    overflow: hidden;
 }
 
 .site-message__actions__item {
-    display: inline;
+    float: left;
     @include fs-data(4);
     margin-right: $gs-gutter;
 

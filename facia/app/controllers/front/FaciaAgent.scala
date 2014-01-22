@@ -1,14 +1,16 @@
 package controllers.front
 
 import common._
-import conf.{ ContentApi, Configuration }
+import conf.{ SwitchingContentApi=>ContentApi, Configuration }
 import model._
 import play.api.libs.json.Json._
 import play.api.libs.json._
 import play.api.libs.ws.{ WS, Response }
 import play.api.libs.json.JsObject
-import services.S3FrontsApi
+import services.{SecureS3Request, S3FrontsApi}
 import scala.concurrent.Future
+import common.FaciaMetrics.S3AuthorizationError
+import scala.collection.immutable.SortedMap
 
 object Path {
   def unapply[T](uri: String) = Some(uri.split('?')(0))
@@ -53,7 +55,8 @@ trait ParseConfig extends ExecutionContexts with Logging {
       (json \ "id").as[String],
       (json \ "contentApiQuery").asOpt[String].filter(_.nonEmpty),
       (json \ "displayName").asOpt[String],
-      (json \ "tone").asOpt[String]
+      (json \ "tone").asOpt[String],
+      (json \ "href").asOpt[String]
     )
 
 }
@@ -62,10 +65,14 @@ trait ParseCollection extends ExecutionContexts with Logging {
 
   case class CollectionItem(id: String, metaData: Option[Map[String, JsValue]])
 
+  //Curated and editorsPicks are the same, we will get rid of either
+  case class Result(curated: List[Content], editorsPicks: List[Content], mostViewed: List[Content], contentApiResults: List[Content])
+
   def requestCollection(id: String): Future[Response] = {
-    val collectionUrl = s"${Configuration.frontend.store}/${S3FrontsApi.location}/collection/$id/collection.json"
-    log.info(s"loading running order configuration from: $collectionUrl")
-    WS.url(collectionUrl).withRequestTimeout(2000).get()
+    val s3BucketLocation: String = s"${S3FrontsApi.location}/collection/$id/collection.json"
+    log.info(s"loading running order configuration from: ${Configuration.frontend.store}/$s3BucketLocation")
+    val request = SecureS3Request.urlGet(s3BucketLocation)
+    request.withRequestTimeout(2000).get()
   }
 
   def getCollection(id: String, config: Config, edition: Edition, isWarmedUp: Boolean): Future[Collection] = {
@@ -75,7 +82,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
       collectionList <- getCuratedList(response, edition, id, isWarmedUp)
       displayName    <- parseDisplayName(response).fallbackTo(Future.successful(None))
       contentApiList <- executeContentApiQuery(config.contentApiQuery, edition)
-    } yield Collection(collectionList ++ contentApiList, displayName)
+    } yield Collection(collectionList, contentApiList.editorsPicks, contentApiList.mostViewed, contentApiList.contentApiResults, displayName)
   }
 
   def getCuratedList(response: Future[Response], edition: Edition, id: String, isWarmedUp: Boolean): Future[List[Content]] = {
@@ -111,10 +118,16 @@ trait ParseCollection extends ExecutionContexts with Logging {
               throw e
             }
           }
+        case 403 => {
+          S3AuthorizationError.increment()
+          val errorString: String = s"Request failed to authenticate with S3: $id"
+          log.warn(errorString)
+          Future.failed(throw new Exception(errorString))
+        }
         case (httpResponseCode: Int) if httpResponseCode >= 500 =>
           Future.failed(throw new Exception("S3 returned a 5xx"))
         case _ =>
-          log.warn(s"Could not load running order: ${r.status} ${r.statusText}")
+          log.warn(s"Could not load running order: ${r.status} ${r.statusText} $id")
           // NOTE: better way of handling fallback
           Future(Nil)
       }
@@ -135,17 +148,26 @@ trait ParseCollection extends ExecutionContexts with Logging {
           lazy val supportingLinks: List[CollectionItem] = retrieveSupportingLinks(collectionItem)
           if (!hasParent) getArticles(supportingLinks, edition, hasParent=true) else Future.successful(Nil)
         }
-        val response = ContentApi.item(collectionItem.id, edition).showFields("all").response
+        val response = ContentApi().item(collectionItem.id, edition).showFields("all").response
 
-        response.onFailure{case t: Throwable => log.warn("%s: %s".format(collectionItem.id, t.toString))}
+        val content = response.map(_.content).recover {
+          case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 404 => {
+            log.warn(s"Content API Error: 404 for ${collectionItem.id}")
+            None
+          }
+          case t: Throwable => {
+            log.warn("%s: %s".format(collectionItem.id, t.toString))
+            throw t
+          }
+        }
         supportingAsContent.onFailure{case t: Throwable => log.warn("Supporting links: %s: %s".format(collectionItem.id, t.toString))}
 
         for {
           contentList <- foldListFuture
-          itemResponse <- response
+          itemResponse <- content
           supporting <- supportingAsContent
         } yield {
-          itemResponse.content.map(Content(_, supporting, collectionItem.metaData)).map(_ +: contentList).getOrElse(contentList)
+          itemResponse.map(Content(_, supporting, collectionItem.metaData)).map(_ +: contentList).getOrElse(contentList)
         }
       }
       val sorted = results map { _.sortBy(t => collectionItems.indexWhere(_.id == t.id))}
@@ -158,26 +180,24 @@ trait ParseCollection extends ExecutionContexts with Logging {
     .map(json => CollectionItem((json \ "id").as[String], (json \ "meta").asOpt[Map[String, JsValue]]))
   ).getOrElse(Nil)
 
-  def executeContentApiQuery(s: Option[String], edition: Edition): Future[List[Content]] = s filter(_.nonEmpty) map { queryString =>
+  def executeContentApiQuery(s: Option[String], edition: Edition): Future[Result] = s filter(_.nonEmpty) map { queryString =>
     val queryParams: Map[String, String] = QueryParams.get(queryString).mapValues{_.mkString("")}
     val queryParamsWithEdition = queryParams + ("edition" -> queryParams.getOrElse("edition", Edition.defaultEdition.id))
 
     val newSearch = queryString match {
       case Path(Seg("search" ::  Nil)) => {
-        val search = ContentApi.search(edition)
-                       .tag("type/gallery|type/article|type/video|type/sudoku")
+        val search = ContentApi().search(edition)
                        .showElements("all")
                        .pageSize(20)
         val newSearch = queryParamsWithEdition.foldLeft(search){
           case (query, (key, value)) => query.stringParam(key, value)
         }.showFields("all")
         newSearch.response map { r =>
-          r.results.map(Content(_))
+          Result(Nil, Nil, Nil, r.results.map(Content(_)))
         }
       }
       case Path(id)  => {
-        val search = ContentApi.item(id, edition)
-                       .tag("type/gallery|type/article|type/video|type/sudoku")
+        val search = ContentApi().item(id, edition)
                        .showElements("all")
                        .showEditorsPicks(true)
                        .pageSize(20)
@@ -185,14 +205,14 @@ trait ParseCollection extends ExecutionContexts with Logging {
           case (query, (key, value)) => query.stringParam(key, value)
         }.showFields("all")
         newSearch.response map { r =>
-          r.editorsPicks.map(Content(_)) ++ r.results.map(Content(_))
+          Result(Nil, r.editorsPicks.map(Content(_)), r.mostViewed.map(Content(_)), r.results.map(Content(_)))
         }
       }
     }
 
     newSearch onFailure {case t: Throwable => log.warn("Content API Query failed: %s: %s".format(queryString, t.toString))}
     newSearch
-  } getOrElse Future(Nil)
+  } getOrElse Future(Result(Nil, Nil, Nil, Nil))
 
 }
 
@@ -207,14 +227,21 @@ object CollectionAgent extends ParseCollection {
 
   def updateCollection(id: String, collection: Collection): Unit = collectionAgent.send { _.updated(id, collection) }
 
-  def updateCollectionById(id: String): Unit = {
-    val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(id, None, None, None))
+  def updateCollectionById(id: String): Unit = updateCollectionById(id, isWarmedUp=true)
+
+  def updateCollectionById(id: String, isWarmedUp: Boolean): Unit = {
+    val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(id))
     val edition = Edition.byId(id.take(2)).getOrElse(Edition.defaultEdition)
     //TODO: Refactor isWarmedUp into method by ID
-    updateCollection(id, config, edition, isWarmedUp=true)
+    updateCollection(id, config, edition, isWarmedUp=isWarmedUp)
   }
 
   def close(): Unit = collectionAgent.close()
+
+  def contentsAsJsonString: String = {
+    val contents: SortedMap[String, Seq[String]] = SortedMap(collectionAgent.get().mapValues{v => v.items.map(_.url)}.toSeq:_*)
+    Json.prettyPrint(Json.toJson(contents))
+  }
 }
 
 object QueryAgents {
@@ -228,7 +255,7 @@ object QueryAgents {
 }
 
 trait ConfigAgent extends ExecutionContexts {
-  private val configAgent = AkkaAgent[JsValue](JsNull)
+  private val configAgent = AkkaAgent[JsValue](FaciaDefaults.getDefaultConfig)
 
   def refresh() = S3FrontsApi.getMasterConfig map {s => configAgent.send(Json.parse(s))}
 
@@ -251,7 +278,8 @@ trait ConfigAgent extends ExecutionContexts {
         id,
         (collectionJson \ "apiQuery").asOpt[String],
         (collectionJson \ "displayName").asOpt[String].filter(_.nonEmpty),
-        (collectionJson \ "tone").asOpt[String]
+        (collectionJson \ "tone").asOpt[String],
+        (collectionJson \ "href").asOpt[String]
       )
     }
   }
@@ -264,6 +292,8 @@ trait ConfigAgent extends ExecutionContexts {
   }
 
   def close() = configAgent.close()
+
+  def contentsAsJsonString: String = Json.prettyPrint(configAgent.get)
 }
 
 object ConfigAgent extends ConfigAgent

@@ -4,71 +4,74 @@
 @if(CssFromStorageSwitch.isSwitchedOn) {
 
     <noscript>
-        <!--[if (gt IE 8) | (IEMobile)]><!-->
+        <!--[if (gt IE 9) | (IEMobile)]><!-->
             <link rel="stylesheet" id="global-css" type="text/css" href="@Static("stylesheets/global.css")" />
         <!--<![endif]-->
     </noscript>
-    <script>
-        (function() {
-            function injectElement(e) {
-                var sc = document.getElementsByTagName('script')[0];
-                sc.parentNode.insertBefore(e, sc);
-            }
-
-            function inlineCss(c) {
-                var s = document.createElement('style');
-                s.innerHTML = c;
-                s.setAttribute('data-loaded-from', 'ajax');
-                injectElement(s);
-            }
-
-            function storeCss(c) {
-                Object.keys(localStorage ).forEach(function(key) {
-                    if(key.match(/^gu.css./g)) { localStorage.removeItem(key); }
-                });
-                try {
-                    localStorage.setItem('gu.css.@Static("stylesheets/global.css").md5Key', c);
-                } catch(e) {
-
+    <!--[if (gt IE 9) | (IEMobile)]>
+        <link rel="stylesheet" type="text/css" href="@Static("stylesheets/global.css")" />
+    <![endif]-->
+    <!--[if (gt IE 9) & (!IEMobile)]><!-->
+        <script>
+            (function() {
+                function injectElement(e) {
+                    var sc = document.getElementsByTagName('script')[0];
+                    sc.parentNode.insertBefore(e, sc);
                 }
-            }
 
-            function loadCssWithLink() {
-                var l = document.createElement('link');
+                function inlineCss(c) {
+                    var s = document.createElement('style');
+                    s.innerHTML = c;
+                    s.setAttribute('data-loaded-from', 'ajax');
+                    injectElement(s);
+                }
 
-                l.rel = "stylesheet"; l.type = 'text/css';
-                l.href = '@Static("stylesheets/global.css")';
-                injectElement(l);
-            }
+                function storeCss(c) {
+                    Object.keys(localStorage ).forEach(function(key) {
+                        if(key.match(/^gu.css./g)) { localStorage.removeItem(key); }
+                    });
+                    try {
+                        localStorage.setItem('gu.css.@Static("stylesheets/global.css").md5Key', c);
+                    } catch(e) {
 
-            function loadCssWithAjax() {
-                var xhr = new XMLHttpRequest();
-                xhr.open('GET', '@Static("stylesheets/global.css")?type=ajax', true);
-                xhr.onreadystatechange = function() {
-                    if (xhr.readyState === 4) {
-                        if(xhr.status === 200) {
-                            inlineCss(xhr.responseText);
-                            storeCss(xhr.responseText);
-                        } else {
-                            loadCssWithLink();
-                        };
                     }
                 }
-                xhr.timeout = 5000;
-                xhr.send();
-            }
 
-            if(guardian.isModernBrowser && !guardian.css.loaded && 'withCredentials' in new XMLHttpRequest()) {
-                loadCssWithAjax();
-            } else if(!guardian.isModernBrowser || !('withCredentials' in new XMLHttpRequest())){
-                loadCssWithLink();
-            }
-        })();
-    </script>
+                function loadCssWithLink() {
+                    var l = document.createElement('link');
 
+                    l.rel = "stylesheet"; l.type = 'text/css';
+                    l.href = '@Static("stylesheets/global.css")';
+                    injectElement(l);
+                }
+
+                function loadCssWithAjax() {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('GET', '@Static("stylesheets/global.css")?type=ajax', true);
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState === 4) {
+                            if(xhr.status === 200) {
+                                inlineCss(xhr.responseText);
+                                storeCss(xhr.responseText);
+                            } else {
+                                loadCssWithLink();
+                            };
+                        }
+                    }
+                    xhr.timeout = 5000;
+                    xhr.send();
+                }
+
+                if(guardian.isModernBrowser && !guardian.css.loaded && 'withCredentials' in new XMLHttpRequest()) {
+                    loadCssWithAjax();
+                } else if(!guardian.isModernBrowser || !('withCredentials' in new XMLHttpRequest())){
+                    loadCssWithLink();
+                }
+            })();
+        </script>
+    <!--<![endif]-->
 } else {
-
-    <!--[if (gt IE 8) | (IEMobile)]><!-->
+    <!--[if (gt IE 9) | (IEMobile)]><!-->
         <link rel="stylesheet" id="global-css" type="text/css" href="@Static("stylesheets/global.css")" />
     <!--<![endif]-->
 

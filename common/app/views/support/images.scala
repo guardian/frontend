@@ -29,9 +29,6 @@ object Contributor extends Profile("c", Some(140), Some(140), 70) {}
 object GalleryLargeImage extends Profile("gli", Some(1024), None, 70) {}
 object GalleryLargeTrail extends Profile("glt", Some(480), Some(288), 70) {}
 object GallerySmallTrail extends Profile("gst", Some(280), Some(168), 70) {}
-object FeaturedTrail extends Profile("f", Some(640), None, 70) {}
-object ArticleMainPicture extends Profile("a", Some(640), None, 70) {}
-object LargeThumbnail extends Profile("thumb", Some(220), None, 70)
 object Item140 extends Profile("item-140", Some(140), None, 70) {}
 object Item220 extends Profile("item-220", Some(220), None, 70) {}
 object Item300 extends Profile("item-300", Some(300), None, 70) {}
@@ -48,10 +45,7 @@ object Profile {
     GalleryLargeImage,
     GalleryLargeTrail,
     GallerySmallTrail,
-    FeaturedTrail,
     Naked,
-    ArticleMainPicture,
-    LargeThumbnail,
     Item140,
     Item220,
     Item300,
@@ -78,11 +72,10 @@ object ImgSrc {
     } else s"${url}"
   }
 
-  def imager(imageContainer: ImageContainer): Option[String] = {
-    imageContainer.largestImage.flatMap { largestImage =>
-      largestImage.url.map { url =>
-        ImgSrc(url, Profile("item-{width}"))
-      }
+  // always, and I mean ALWAYS think carefully about the size image you use
+  def imager(imageContainer: ImageContainer, profile: Profile): Option[String] = {
+    profile.elementFor(imageContainer).flatMap(_.url).map{ largestImage =>
+      ImgSrc(largestImage, Profile("item-{width}"))
     }
   }
 

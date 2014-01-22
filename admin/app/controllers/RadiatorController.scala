@@ -10,18 +10,23 @@ import play.api.libs.concurrent.Execution.Implicits._
 import play.api.libs.json.Json
 import conf.Configuration
 import model.NoCache
+import conf.Switches
+import org.joda.time.DateTime
 
 object RadiatorController extends Controller with Logging with AuthLogging {
 
   // if you are reading this you are probably being rate limited...
-
   // you can read about github rate limiting here http://developer.github.com/v3/#rate-limiting
-
   // If you want a personal token you can create one here https://github.com/settings/tokens/new
   // but realise it is a PERSONAL token setup against YOUR github account
   // put it in your properties file as github.token=XXXXXXX
   lazy val githubAccessToken = Configuration.github.token.map{ token => s"?access_token=$token" }.getOrElse("")
 
+  def switchesExpiringThisWeek() = {  
+    Switches.all.filter { switch =>
+      switch.sellByDate.isBefore(new DateTime().plusDays(7))
+    }
+  }
 
   // proxy call to github so we do not leak the access key
   def commitDetail(hash: String) = Authenticated.async { implicit request =>
@@ -35,7 +40,8 @@ object RadiatorController extends Controller with Logging with AuthLogging {
     val graphs = (CloudWatch.shortStackLatency ++ CloudWatch.fastlyErrors).map(_.withFormat(ChartFormat.SingleLineBlack))
     val multilineGraphs = CloudWatch.fastlyHitMissStatistics.map(_.withFormat(ChartFormat.DoubleLineBlueRed))
     val jsErrors = CloudWatch.jsErrors.withFormat(ChartFormat.MultiLine)
-    NoCache(Ok(views.html.radiator(graphs, multilineGraphs, jsErrors, CloudWatch.cost, Configuration.environment.stage)))
+    val switches = switchesExpiringThisWeek
+    NoCache(Ok(views.html.radiator(graphs, multilineGraphs, jsErrors, CloudWatch.cost, switches, Configuration.environment.stage)))
   }
 
   def pingdom() = Authenticated.async { implicit request =>
@@ -59,13 +65,4 @@ object RadiatorController extends Controller with Logging with AuthLogging {
     NoCache(Ok(views.html.liveStats(responsive, desktop, Configuration.environment.stage)))
   }
   
-  def adsInView() = Authenticated { implicit request =>
-    val topSeconds = CloudWatch.adsInView("ads.top.secondsInView")
-    val topCount = CloudWatch.adsInView("ads.top.count")
-    val bottomSeconds = CloudWatch.adsInView("ads.bottom.secondsInView")
-    val inlineSeconds = CloudWatch.adsInView("ads.inline.secondsInView")
-    val mpuSeconds = CloudWatch.adsInView("ads.mpu.secondsInView")
-    val pageviews = CloudWatch.adsInView("ads.views")
-    NoCache(Ok(views.html.adsInView(topSeconds, topCount, bottomSeconds, inlineSeconds, mpuSeconds, pageviews, Configuration.environment.stage)))
-  }
 }

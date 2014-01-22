@@ -26,6 +26,12 @@ $trailblockImgWidthLarge: 140px;
 $headerHeight: 58px;
 
 
+// Guss defaults
+// =============================================================================
+
+$guss-column-rule: none;
+
+
 // Breakpoints
 // =============================================================================
 
@@ -119,6 +125,7 @@ $fs-data: (
 // @todo: Blues need comments to associate with brand/logo colours
 
 $c-brandBlue: #214583;
+$c-error: #d61d00;
 
 $c-neutral1: #333333;
 $c-neutral2: #767676;
@@ -127,6 +134,9 @@ $c-neutral4: #dcdcdc;
 $c-neutral5: #e3e3db;
 $c-neutral6: #edede7;
 $c-neutral7: #f4f4ee;
+$c-neutral8: #f6f6f6;
+
+$c-live: #F23B54;
 
 
 // Tones

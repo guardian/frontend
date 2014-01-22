@@ -29,7 +29,7 @@ define([
     'common/modules/adverts/adverts',
     'common/utils/cookies',
     'common/modules/analytics/omnitureMedia',
-    'common/modules/analytics/adverts',
+    'common/modules/analytics/livestats',
     'common/modules/experiments/ab',
     "common/modules/adverts/video",
     "common/modules/discussion/comment-count",
@@ -37,7 +37,9 @@ define([
     "common/modules/onward/history",
     "common/modules/onward/sequence",
     "common/modules/ui/message",
-    "common/modules/identity/autosignin"
+    "common/modules/identity/autosignin",
+    'common/modules/adverts/article-body-adverts',
+    "common/modules/analytics/commercial/tags/container"
 ], function (
     $,
     mediator,
@@ -69,7 +71,7 @@ define([
     Adverts,
     Cookies,
     OmnitureMedia,
-    AdvertsAnalytics,
+    liveStats,
     ab,
     VideoAdvert,
     CommentCount,
@@ -77,8 +79,12 @@ define([
     History,
     sequence,
     Message,
-    AutoSignin
+    AutoSignin,
+    ArticleBodyAdverts,
+    TagContainer
 ) {
+
+    var hasBreakpointChanged = detect.hasCrossedBreakpoint();
 
     var modules = {
 
@@ -176,6 +182,10 @@ define([
             ab.run(config, context);
         },
 
+        logLiveStats: function (config) {
+            liveStats.log({ beaconUrl: config.page.beaconUrl }, config);
+        },
+
         loadAnalytics: function (config, context) {
             var omniture = new Omniture();
 
@@ -192,10 +202,13 @@ define([
                     }
                 });
 
-                if (config.switches.adslotImpressionStats) {
-                    var advertsAnalytics = new AdvertsAnalytics(config, context);
-                }
             });
+
+            if (config.switches.ophanMultiEvent) {
+                require('ophan/ng', function (ophan) {
+                    ophan.record({'ab': ab.getParticipations()});
+                });
+            }
 
             require(config.page.ophanUrl, function (Ophan) {
 
@@ -226,27 +239,37 @@ define([
                     return viewData;
                 });
 
-                Ophan.sendLog(config.swipe ? config.swipe.referrer : undefined, true);
+                Ophan.sendLog(undefined, true);
             });
         },
 
-        loadAdverts: function () {
-            if (!userPrefs.isOff('adverts')){
-                mediator.on('page:common:deferred:loaded', function(config, context) {
-                    if (config.switches && config.switches.adverts && !config.page.blockAds) {
-                        Adverts.init(config, context);
-                    }
-                });
-                mediator.on('modules:adverts:docwrite:loaded', function(){
-                    Adverts.loadAds();
-                });
+        loadAdverts: function (config) {
+            if(!userPrefs.isOff('adverts') && config.switches && config.switches.adverts && !config.page.blockAds) {
 
-                mediator.on('window:resize', function () {
-                    Adverts.hideAds();
+                var resizeCallback = function() {
+                    hasBreakpointChanged(Adverts.reload);
+                };
+
+                if(config.page.contentType === 'Article' && !config.page.isLiveBlog) {
+                    var articleBodyAdverts = new ArticleBodyAdverts();
+
+                    // Add the body adverts to the article page
+                    articleBodyAdverts.init();
+
+                    resizeCallback = function(e) {
+                        hasBreakpointChanged(function() {
+                            articleBodyAdverts.reload();
+                            Adverts.reload();
+                        });
+                    };
+                }
+
+                mediator.on('page:common:deferred:loaded', function(config, context) {
+                    Adverts.init(config, context);
                 });
-                mediator.on('window:orientationchange', function () {
-                    Adverts.hideAds();
-                });
+                mediator.on('modules:adverts:docwrite:loaded', Adverts.load);
+
+                mediator.on('window:resize', debounce(resizeCallback, 2000));
             }
         },
 
@@ -289,10 +312,6 @@ define([
                             'You’re viewing an alpha release of the Guardian’s responsive website. <a href="/help/2013/oct/04/alpha-testing-and-evolution-of-our-mobile-site">Find out more</a>' +
                       '</p>' +
                       '<ul class="site-message__actions unstyled">' +
-                           '<li class="site-message__actions__item">' +
-                               '<i class="i i-comment-grey"></i>' +
-                               '<a href="http://survey.omniture.com/d1/hosted/815f9cfba1" data-link-name="feedback" target="_blank">We’d love to hear your feedback</a>' +
-                           '</li>' +
                            '<li class="site-message__actions__item">' +
                                '<i class="i i-back"></i>' +
                                    '<a class="js-main-site-link" rel="nofollow" href="' + exitLink + '"' +
@@ -339,6 +358,12 @@ define([
             });
         },
 
+        loadTags : function() {
+            mediator.on('page:common:ready', function(config) {
+                TagContainer.init(config);
+            });
+        },
+
         windowEventListeners: function() {
             var events = {
                     resize: 'window:resize',
@@ -368,7 +393,8 @@ define([
             if (!self.initialisedDeferred) {
                 self.initialisedDeferred = true;
                 modules.initAbTests(config);
-                modules.loadAdverts();
+                modules.logLiveStats(config);
+                modules.loadAdverts(config);
                 modules.loadAnalytics(config, context);
                 modules.cleanupCookies(context);
                 modules.runAbTests(config, context);
@@ -378,7 +404,7 @@ define([
         });
     };
 
-    var ready = function (config, context, contextHtml) {
+    var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
             modules.windowEventListeners();
@@ -398,12 +424,13 @@ define([
             modules.logReadingHistory();
             modules.unshackleParagraphs(config, context);
             modules.initAutoSignin(config);
+            modules.loadTags(config);
         }
         mediator.emit("page:common:ready", config, context);
     };
 
-    var init = function (config, context, contextHtml) {
-        ready(config, context, contextHtml);
+    var init = function (config, context) {
+        ready(config, context);
         deferrable(config, context);
     };
 

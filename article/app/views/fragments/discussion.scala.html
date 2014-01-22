@@ -1,5 +1,5 @@
 @(discussionClosed: Boolean, discussionId: String)(implicit request: RequestHeader)
-<div id="comments" class="discussion@if(discussionClosed){ discussion--closed}"
+<div id="comments" class="discussion discussion--@if(discussionClosed){closed} else {open}"
     data-discussion-key="@discussionId"
     data-discussion-closed="@discussionClosed">
 
@@ -9,8 +9,8 @@
         </div>
     </div>
 
-    <div class="discussion__comments__container u-h">
-        <h2 class="page-sub-header discussion__heading">All Comments</h2>
+    <div class="discussion__comments__container js-hidden">
+        <h2 class="page-sub-header discussion__heading js-visible">All Comments</h2>
 
         <div class="discussion__comment-box discussion__comment-box--top"></div>
         <div class="discussion__comments"></div>

@@ -3,6 +3,7 @@ package model
 import com.gu.openplatform.contentapi.model.{Content => ApiContent}
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
+import common.{Reference, Sponsor, Sponsors}
 import common.{LinkCounts, LinkTo, Reference}
 import org.jsoup.Jsoup
 import collection.JavaConversions._
@@ -11,7 +12,7 @@ import views.support.StripHtmlTagsAndUnescapeEntities
 import com.gu.openplatform.contentapi.model.{Content => ApiContent,Element =>ApiElement}
 import play.api.libs.json.JsValue
 
-class Content protected (val delegate: ApiContent) extends Trail with Tags with MetaData {
+class Content protected (val delegate: ApiContent) extends Trail with MetaData {
 
   lazy val publication: String = fields.get("publication").getOrElse("")
   lazy val lastModified: DateTime = fields("lastModified").parseISODateTime
@@ -28,6 +29,14 @@ class Content protected (val delegate: ApiContent) extends Trail with Tags with 
   lazy val blockAds: Boolean = videoAssets.exists(_.blockAds)
   lazy val isLiveBlog: Boolean = delegate.isLiveBlog
   lazy val openGraphImage: String = mainPicture.flatMap(_.largestImage.flatMap(_.url)).getOrElse(conf.Configuration.facebook.imageFallback)
+  lazy val isSponsored: Boolean = tags.exists(_.id == "tone/sponsoredfeatures")
+  lazy val sponsor: Option[Sponsor] = {
+    if (isSponsored) {
+      Sponsors.find(tags.filter(_.tagType == "keyword").head.id)
+    } else {
+      None
+    }
+  }
 
   lazy val witnessAssignment = delegate.references.find(_.`type` == "witness-assignment")
     .map(_.id).map(Reference(_)).map(_._2)
@@ -42,7 +51,7 @@ class Content protected (val delegate: ApiContent) extends Trail with Tags with 
   override lazy val linkText: String = webTitle
   override def headline: String = fields("headline")
   override lazy val url: String = SupportedUrl(delegate)
-  override lazy val trailText: Option[String] = fields.get("trailText")
+  override def trailText: Option[String] = fields.get("trailText")
   override lazy val section: String = delegate.sectionId.getOrElse("")
   override lazy val sectionName: String = delegate.sectionName.getOrElse("")
   override lazy val thumbnailPath: Option[String] = fields.get("thumbnail").map(ImgSrc(_, Naked))
@@ -58,6 +67,7 @@ class Content protected (val delegate: ApiContent) extends Trail with Tags with 
 
     souped getOrElse Nil
   }
+
   override lazy val byline: Option[String] = fields.get("byline")
   override lazy val trailType: Option[String] = {
     if (tags.exists(_.id == "tone/comment")) {
@@ -107,7 +117,7 @@ class Content protected (val delegate: ApiContent) extends Trail with Tags with 
     "og:url" -> webUrl,
     "og:description" -> trailText.map(StripHtmlTagsAndUnescapeEntities(_)).getOrElse("")
   )
-    
+
   override def cards: List[(String, Any)] = super.cards ++ List(
     "twitter:app:url:googleplay" -> webUrl.replace("http", "guardian")
   )
@@ -155,7 +165,7 @@ class Article(content: ApiContent) extends Content(content) {
       .orElse(mainPicture).orElse(videos.headOption)
 
 
-  private lazy val linkCounts = LinkTo.countLinks(body) + standfirst.map(LinkTo.countLinks).getOrElse(LinkCounts.None)
+  lazy val linkCounts = LinkTo.countLinks(body) + standfirst.map(LinkTo.countLinks).getOrElse(LinkCounts.None)
   override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
     ("content-type", contentType),
     ("isLiveBlog", isLiveBlog),
@@ -171,7 +181,7 @@ class Article(content: ApiContent) extends Content(content) {
     "og:image" -> openGraphImage
   ) ++ tags.map("article:tag" -> _.name) ++
     tags.filter(_.isContributor).map("article:author" -> _.webUrl)
-  
+
   override def cards: List[(String, Any)] = super.cards ++ List(
     "twitter:card" -> "summary_large_image"
   ) ++ mainPicture.flatMap(_.largestImage.map( "twitter:image:src" -> _.path ))
@@ -246,7 +256,7 @@ class Gallery(content: ApiContent) extends Content(content) {
 
   private lazy val galleryImages: Seq[ImageElement] = images.filter(_.isGallery)
   lazy val largestCrops: Seq[ImageAsset] = galleryImages.flatMap(_.largestImage)
-  
+
   override def cards: List[(String, Any)] = super.cards ++ List(
     "twitter:card" -> "gallery",
     "twitter:title" -> linkText
@@ -267,7 +277,7 @@ class ImageContent(content: ApiContent) extends Content(content) {
   lazy val contentType = "ImageContent"
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
-  
+
   override def cards: List[(String, Any)] = super.cards ++ List(
     "twitter:card" -> "photo"
   ) ++ mainPicture.flatMap(_.largestImage.map( "twitter:image:src" -> _.path ))
@@ -278,5 +288,7 @@ class ContentWithMetaData(
                            override val supporting: List[Content],
                            metaData: Map[String, JsValue]) extends Content(content) {
   override lazy val headline: String = metaData.get("headline").flatMap(_.asOpt[String]).getOrElse(super.headline)
+  override lazy val trailText: Option[String] = metaData.get("trailText").flatMap(_.asOpt[String]).orElse(super.trailText)
   override lazy val group: Option[String] = metaData.get("group").flatMap(_.asOpt[String])
+  override lazy val imageAdjust: Option[String] = metaData.get("imageAdjust").flatMap(_.asOpt[String])
 }

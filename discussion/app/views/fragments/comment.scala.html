@@ -1,4 +1,6 @@
 @(comment: Comment, isClosedForRecommendation: Boolean = true, isResponse: Boolean = false, isTopComment: Boolean = false)(implicit request: RequestHeader)
+@import conf.Configuration
+
 @* Please don't use the isTopComment switch - we've kept it pretty clean without it, but just need a solution for IDs *@
 <li class="d-comment
            @if(isResponse){d-comment--response}else{d-comment--top-level}
@@ -24,7 +26,7 @@
                 <img src="@comment.profile.avatar" alt="" class="d-comment__avatar"/>
             </span>
             <div class="d-comment__meta-text">
-                <span class="d-comment__author" itemprop="author">@comment.profile.displayName</span>
+                <span class="d-comment__author" itemprop="author" title="@comment.profile.displayName">@comment.profile.displayName</span>
                 @if(!comment.responseTo.isEmpty){  
                     <span class="i i-in-reply-arrow"></span>
                     <span class="d-comment__reply-to-author">@comment.responseTo.map(_.displayName)</span>
@@ -35,7 +37,7 @@
                     <span class="d-comment__author-label">Contributor</span>}
                 }
                 <div class="d-comment__timestamp">
-                    <a href="http://discussion.theguardian.com/comment-permalink/@comment.id" class="d-comment__timestamp">
+                    <a href="@Configuration.discussion.url/comment-permalink/@comment.id" class="d-comment__timestamp">
                         <time class="js-timestamp" itemprop="dateCreated" datetime="@comment.date.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")" data-timestamp="@comment.date.getMillis" title="Permalink to this comment">
                             @Format(comment.date, "d MMM y HH:mm")
                         </time>
@@ -54,9 +56,13 @@
                     data-recommend-count="@comment.numRecommends"
                     title="@comment.numRecommends recommendations">
                     <span class="d-comment__recommend-button">
+                        <span class="d-comment__recommend-pulse"></span>
                         <i class="i i-recommend"></i>
                     </span>
-                    <span class="d-comment__recommend-count js-recommend-count">@comment.numRecommends</span>
+                    <span class="d-comment__recommend-count js-recommend-count">
+                        <span class="d-comment__recommend-count--old">@comment.numRecommends</span>
+                        <span class="d-comment__recommend-count--new">@(comment.numRecommends+1)</span>
+                    </span>
                 </div>
             }
             <div class="d-comment__main">
@@ -75,7 +81,7 @@
                     }
                     @if(isResponse){
                         <div class="d-comment__timestamp">
-                            <a href="http://discussion.theguardian.com/comment-permalink/@comment.id" itemprop="url">
+                            <a href="@Configuration.discussion.url/comment-permalink/@comment.id" itemprop="url">
                                 <time class="js-timestamp" datetime="@comment.date.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")" data-timestamp="@comment.date.getMillis" title="Permalink to this comment">
                                     @Format(comment.date, "d MMM y HH:mm")
                                 </time>
@@ -85,12 +91,12 @@
                 </div>
                 @if(!comment.isBlocked){
                     <div class="d-comment__actions">
-                        <div class="d-comment__actions__main">
-                            <div class="d-comment__reply-wrapper sign-in-required">
+                        <div class="d-comment__actions__main sign-in-required">
+                            <div class="d-comment__action d-comment__action--reply" data-link-name="reply to comment" data-comment-id="@comment.id" role="button">
                                 <span class="d-comment__reply-button">
                                     <i class="i i-reply-arrow-white"></i>
                                 </span>
-                                <span class="u-fauxlink d-comment__action d-comment__action--reply" role="button" data-link-name="reply to comment" data-comment-id="@comment.id">Reply</span>
+                                <span class="u-fauxlink d-comment__action--reply-text">Reply</span>
                             </div>
 
                             <span class="d-staff-required">
@@ -99,8 +105,8 @@
                                     data-comment-id="@comment.id"
                                     data-comment-highlighted="@comment.isHighlighted">@if(comment.isHighlighted){Unpick}else{Pick}</span>
                             </span>
-                            <a href="http://discussion.theguardian.com/components/report-abuse/@comment.id" class="d-comment__action d-comment__action--report" target="_blank">Report</a>
                         </div>
+                        <a href="@Configuration.discussion.url/components/report-abuse/@comment.id" class="d-comment__action d-comment__action--report" target="_blank">Report</a>
                     </div>
                 }
             </div>

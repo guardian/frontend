@@ -17,17 +17,19 @@ GET           /assets/*file              controllers.Assets.at(path="/public", f
 
 # Fronts
 GET           /                          controllers.FaciaToolController.index()
-GET           /config/*id                controllers.FaciaToolController.getConfig(id)
+
+POST          /collection/publish/*id    controllers.FaciaToolController.publishCollection(id)
+POST          /collection/discard/*id    controllers.FaciaToolController.discardCollection(id)
 
 GET           /collection/*id            controllers.FaciaToolController.readBlock(id)
 POST          /collection/*id            controllers.FaciaToolController.updateBlock(id)
 DELETE        /collection/*id            controllers.FaciaToolController.deleteTrail(id)
 GET           /collection                controllers.FaciaToolController.listCollections
-GET           /config                    controllers.FaciaToolController.listConfigs
+GET           /config                    controllers.FaciaToolController.getConfig
+
+POST          /collectionmeta/*id        controllers.FaciaToolController.updateCollectionMeta(id)
 
 # endpoints for proxying https
 GET           /api/proxy/*path           controllers.FaciaContentApiProxy.proxy(path)
 GET           /json/proxy/*absUrl        controllers.FaciaContentApiProxy.json(absUrl)
 GET           /ophan/pageviews/*path     controllers.FaciaOphanApiController.pageViews(path)
-
-GET           /admin                     controllers.FaciaToolController.admin()

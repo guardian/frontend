@@ -176,7 +176,7 @@ define([
                         }
 
                         if (targetList.parentType === 'Article') {
-                            targetList.parent.saveMetaEdit();
+                            targetList.parent.save();
                             return;
                         }
                         
@@ -185,7 +185,12 @@ define([
                         }
 
                         itemMeta = sourceItem && sourceItem.meta ? sourceItem.meta : {};
-                        itemMeta.group = targetList.group + '';
+
+                        if (targetList.parent.groups && targetList.parent.groups.length > 1) {
+                            itemMeta.group = targetList.group + '';
+                        } else {
+                            delete itemMeta.group;
+                        }
 
                         authedAjax.updateCollection(
                             'post',
@@ -196,7 +201,7 @@ define([
                                 after:    isAfter,
                                 live:     vars.state.liveMode(),
                                 draft:   !vars.state.liveMode(),
-                                itemMeta: itemMeta
+                                itemMeta: _.isEmpty(itemMeta) ? undefined : itemMeta
                             }
                         );
 

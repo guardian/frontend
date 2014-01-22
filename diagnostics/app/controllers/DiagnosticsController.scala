@@ -2,8 +2,10 @@ package controllers
 
 import common._
 import play.api.mvc.{ Content => _, _ }
-import model.diagnostics.javascript._
-import model.diagnostics.viewability._
+import model.diagnostics.javascript.JavaScript
+import model.diagnostics.alpha.Alpha
+import model.diagnostics.abtests.AbTests
+import model.diagnostics.analytics.Analytics
 
 object DiagnosticsController extends Controller with Logging {
 
@@ -15,11 +17,16 @@ object DiagnosticsController extends Controller with Logging {
   def px = Action { implicit request =>
     Alpha.report(request.queryString)
     OnePix()
-  } 
-  
-  def ads(top: Option[Int], bottom: Option[Int], inline: Option[Int], mpu: Option[Int], first: Option[Int], layout: Option[String], variant: Option[String], id: Option[String]) = Action { implicit request =>
-    Viewability.report(top, bottom, inline, mpu, first, layout, variant, id)
+  }
+
+  def ab = Action { implicit request =>
+    AbTests.report(request.queryString)
     OnePix()
-  } 
+  }
+
+  def analytics(prefix: String) = Action {
+    Analytics.report(prefix)
+    OnePix()
+  }
 
 }

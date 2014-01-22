@@ -14,21 +14,13 @@ body {
     user-select: none;
 }
 
-a {
+p {
+    margin: 0;
+}
+
+a, a:hover {
     text-decoration: none;
     cursor: pointer;
-}
-
-fieldset,
-input[type=text] {
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    height: inherit;
-}
-
-#environment {
-    line-height: 40px;
-    position: absolute;
 }
 
 .scrollable {
@@ -111,8 +103,17 @@ input[type=text] {
     padding: 0 0 0 4px;
 }
 
-.collections .title {
-    padding-left: 4px;
+.count {
+    color: #CCCCCC;
+    font-weight: normal;
+}
+
+.count span {
+    margin: 0 2px;
+}
+
+.count span.non-zero {
+    color: #333333;
 }
 
 .droppable {
@@ -125,19 +126,20 @@ input[type=text] {
 }
 
 .supporting .droppable {
-    padding: 0 0 25px 0;
+    padding: 0 0 15px 0;
+    border-top: 1px dashed #dddddd;
 }
 
 .droppable.underDrag {
     background-color: #f89406;
 }
 
-.editingMeta .droppable.underDrag {
+.open .droppable.underDrag {
     background-color: #999999;
 }
 
 .pending {
-    opacity: 0.5;
+    opacity: 0.7;
     pointer-events: none;
 }
 
@@ -145,20 +147,28 @@ input[type=text] {
     color: #999999;
     overflow: hidden;
     padding: 5px 0 1px 0;
-    min-width: 300px;
+    height: 20px;
 }
 
-.list-header__saving  {
-    color: #999999;
+.list-header.collapsed {
+    opacity: 0.5;
+}
+
+.list-header__collapser {
     float: right;
-    font-size: 12px;
+    margin: 2px 0 0 6px;
+    opacity: 0.75;
 }
 
 .list-header__timings {
+    float: right;
     font-weight: normal;
     font-size: 10px;
-    color: #999999;
-    padding: 0 0 0 4px;
+    color: #666666;
+}
+
+.list-header__timings.has-concurrent-user {
+    color: #d61d00;
 }
 
 .collections {
@@ -186,11 +196,11 @@ input[type=text] {
     border-bottom: 1px solid #CCCCCC;
 }
 
-.trail {
+.article {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     overflow: hidden;
-    padding: 0 4px 3px 4px;;
+    padding: 0 2px 3px 4px;
     position: relative;
     background: #FFFFFF;
     border-top: 5px solid #FFFFFF;
@@ -199,69 +209,57 @@ input[type=text] {
             transition: border-color 150ms;
 }
 
-.live-mode .trail {
+.live-mode .article {
     border-color: #EEFFEE;
     background: #EEFFEE;        
 }
 
-.supporting .trail {
+.supporting .article {
     border-color: #CCCCCC;
     background: #CCCCCC;
 }
 
-.trail.editingMeta {
+.article.open {
     background: #CCCCCC;
 }
 
-.trail.underDrag {
+.article.underDrag {
     border-top-color: #f89406; 
 }
 
-.editingMeta .trail.underDrag {
+.open .article.underDrag {
     border-top-color: #999999; 
 }
 
-.trail:last-child {
+.article:last-child {
     border-bottom: 0;
 }
 
-.trail.redundant {
-    opacity: 0.2;
-}
-
-.trail-count {
-    position: absolute;
-    top: 16px;
-    left: 7px;
-    color: #FFFFFF;
-    font-size: 14px;
-    font-weight: bold;
-}
-
-.trail img {
+.article img {
     float: left;
     width: 75px;
     height: 45px;
     margin: 3px 0 0 0;
     background-color: #EEEEEE;
-    border-radius: 3px;
+    border-radius: 2px;
 }
 
-.content {
-    margin: -1px 100px 0 80px;
+.article_content {
+    margin: 0 100px 0 85px;
     line-height: 0;
 }
 
-.content .icon-pencil {
+.article_content .icon-pencil {
     cursor: pointer;
     opacity: 0.5;
 }
 
 .headline {
-    font-size: 15px;
-    line-height: 18px;
+    font-size: 14px;
+    line-height: 16px;
     color: #000000;
     cursor: move;
+    margin: 1px 0 0 0;
 }
 
 .headline:hover {
@@ -269,23 +267,56 @@ input[type=text] {
     text-decoration: none;
 }
 
-.trail .trail__meta {
+.is-empty {
+    font-size: 14px;
+    line-height: 16px;
+    color: #d61d00;
+}
+
+.is-empty__url {
+    display: block;
+    font-size: 12px;
+}
+
+div.trailtext {
+    padding-right: 50px;
+    box-sizing: border-box;
+    width: 100%;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    word-wrap: break-word;
+    height: 15px;
+    line-height: 16px;
+    font-size: 12px;
+    color: #999999;
+}
+
+.supporting .trailtext {
+    display: none;
+}
+
+.article__date {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     position: absolute;
-    top: 35px;
+    top: 3px;
     left: 4px;
     width: 75px;
-    padding: 0 0 0 3px;
+    height: 13px;
+    overflow: hidden;
+    padding: 0 0 0 2px;
     color: #FFFFFF;
-    font-size: 9px;
-    line-height: 13px;
+    font-size: 10px;
+    line-height: 14px;
     background: rgba(0,0,0,0.2);
-    border-bottom-left-radius: 3px;
-    border-bottom-right-radius: 3px;
+    border-bottom-top-radius: 2px;
+    border-bottom-top-radius: 2px;
 }
 
-.trail .trail__remove {
+.article__remove {
     display: none;
     position: absolute;
     top: 3px;
@@ -299,46 +330,80 @@ input[type=text] {
     border-radius: 2px;
 }
 
-.droppable .trail:hover > .trail__remove {
+.droppable .article:hover > .article__remove {
     display: block;
 }
 
-.droppable .trail .trail__remove:hover {
+.droppable .article__remove:hover {
     background: #0077BB;
 }
 
-.trail_tweaks {
-    margin: 1px 0 0 80px;;
+.article__overrides {
+    position: relative;
+    margin: 1px 0 0 80px;
+    padding: 0 55px 0 0;
     color: #CCCCCC;
 }
 
-.trail_tweaks input {
+.article__overrides input {
     z-index: 99;
     background: #eeeeee;
     width: 100%;
-
 }
 
-.trail_tweaks a {
-    display: inline-block;
+.article__overrides a {
     font-size: 12px;
     line-height: 13px;
 }
 
-.trail_tweaks a:first-child {
-    font-weight: bold;
-    border-left: none;
+.image__overrides {
+    color: #AAAAAA;
+    font-size: 12px;
 }
 
+.supporting .image__overrides {
+    display: none;
+}
+
+.image__overrides a.selected {
+    color: #000000;
+    font-weight: bold;
+}
+
+.revert {
+    position: absolute;
+    right: 8px;
+}
+
+.revert--headline {
+    top: 7px;
+}
+
+.revert--trailtext {
+    top: 23px;
+}
+
+select,
 input[type="text"] {
-    margin: 2px 0 0 0;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    height: 23px;
     padding: 1px 5px;
-    background: #ffffff;
+    margin: 1px 0 0 0;
     color: #000000;
 }
 
-select {
+textarea.trailtext {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    font-size: 12px;
+    line-height: 14px;
+    padding: 3px 5px 0px 5px;
+    min-height: 35px;
     margin: 0;
+    color: #333333;
+    background: #eeeeee;
 }
 
 button {
@@ -357,18 +422,11 @@ button {
     border-bottom: 1px solid #CCCCCC;
 }
 
-.collection-config {
-    padding: 5px 7px 7px 7px;
-    font-size: 10px;
-    background: #CCCCCC;
-    color: #000000;
+.collection-overrides {
+    margin: -6px 0 0 3px;
 }
 
-.collection-config.editable {
-    background-color: #eee;
-}
-
-.trail_stats {
+.article_stats {
     position: absolute;
     right: 4px;
     height: 30px;
@@ -380,7 +438,7 @@ button {
     color: #999999;
     font-weight: bold;
     position: absolute;
-    bottom: -12px;
+    bottom: -14px;
     right: 1px;
 }
 
@@ -465,7 +523,6 @@ button {
 
 .linky:hover {
     color: #005580;
-    text-decoration: underline;
 }
 
 .toolbar {
@@ -508,7 +565,7 @@ button {
     line-height: 20px;
     color: #FFFFFF;
     margin-top: 5px;
-    border-radius: 3px;
+    border-radius: 2px;
     border: 0;
     cursor: pointer;
 }
@@ -526,20 +583,20 @@ button {
     color: #999999;
 }
 
-.list-header .tools {
+.collection .tools {
     margin: 0 0 2px 4px;
 }
 
-.tools .tool.draft-warning {
+.tool.draft-warning {
     font-weight: bold;
     margin-right: 4px;
 }
 
-.tools .tool:first-child {
+.tool:first-child {
     background: #0088cc;
 }
 
-.tools .tool:first-child:hover {
+.tool:first-child:hover {
     background: #0077BB;
 }
 
@@ -579,36 +636,24 @@ button {
 }
 
 .supporting {
-    margin: 4px -4px -4px -4px;
+    margin: 0 -2px -4px -4px;
 }
+
 
 .supporting-message {
     position: absolute;
-    bottom: 2px;
+    top: 53px;
     z-index: 2;
     left: 4px;
-    font-size: 11px;
-    color: #FFFFFF;
-}
-
-.supporting-count {
-    width: 125px;
-    margin: 3px 0 -2px 0;
     font-size: 10px;
     line-height: 12px;
-    color: #999999;
-    cursor: pointer;
+    color: #666666;
+    width: 75px;
 }
-
-.supporting-count strong {
-    font-size: 12px;
-    font-weight: bold;
-}
-
-.trail .tools {
+.article .tools {
     position: absolute;
-    bottom: 2px;
-    right: 3px;
+    top: 34px;
+    right: 2px;
 }
 
 @media (max-width: 1100px) {
@@ -620,11 +665,10 @@ button {
     .finder {
         width: 40%;
     }
-    .finder .trail .content {
-        margin: 0 0 0 80px;
+    .finder .article .article_content {
+        margin-right: 0;
     }
-    .finder .trail .trail_stats,
-    .finder .trail .trail__meta {
+    .finder .article .article_stats {
         display: none;
     }
 }
@@ -645,7 +689,7 @@ button {
     .collections {
         left: 0;
         width: 100%;
-        padding-left: 10px;
+        padding: 10px 0 0 10px;
     }
     .scrollable {
         overflow-y: inherit
@@ -659,23 +703,24 @@ button {
 }
 
 @media (max-width: 525px) {
-    .trail .content {
-        margin: 0 0 0 80px;
+    .article .article_content {
+        margin-right: 0;
     }
-    .trail .trail_stats {
+    .article .article_stats {
         display: none;
     }
 }
 
 @media (max-width: 350px) {
-    .trail .content {
-        margin: 5px 0 0 0;
+    .article .article_content {
+        margin-left: 0;
+        margin-right: 5px;
     }
-    .trail img,
-    .trail .trail__meta {
+    .article img,
+    .article__date {
         display: none;
     }
-    .trail_tweaks {
+    .article__overrides {
         margin: 0;
     }
 }

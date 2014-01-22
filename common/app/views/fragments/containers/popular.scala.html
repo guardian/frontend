@@ -10,15 +10,15 @@
 
             @title.map { title =>
                 <h2 class="container__title tone-@style.tone tone-background tone-accent-border">
-                    @if(style.headerLink) {
-                        <a data-link-name="section heading" href="@LinkTo{/@config.section}">@Html(title)</a>
-                    } else {
+                    @config.href.map { href =>
+                        <a data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
+                    }.getOrElse{
                         @Html(title)
                     }
                 </h2>
             }
 
-            @fragments.collections.standard(config, collection, style, containerIndex, 10)
+            @fragments.collections.standard(config, collection.items, style, 1, 10)
 
         </section>
     }

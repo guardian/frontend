@@ -37,7 +37,6 @@ trait TestSettings {
 
       throw new RuntimeException(message)
     }
-
   }
 
   private def toRecorderHttp(http: Http[Future]) = new Http[Future] {
@@ -52,7 +51,7 @@ trait TestSettings {
 
     verify(
       Configuration.contentApi.elasticSearchHost,
-      "973dff7baa408e6f2334e3cf4ca36a960f1743b6d09911ff68723db9cbe62163",
+      "37f3bee67d016a9fec7959aa5bc5e53fa7fdc688f987c0dea6fa0f6af6979079",
       "YOU ARE NOT USING THE CORRECT ELASTIC SEARCH CONTENT API HOST"
     )
 

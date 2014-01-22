@@ -38,11 +38,10 @@ define([
  * @param {Object} mediator
  * @param {Object=} options
  */
-var Loader = function(context, mediator, options, topCommentsSwitch) {
+var Loader = function(context, mediator, options) {
     this.context = context || document;
     this.mediator = mediator;
     this.setOptions(options);
-    this.topCommentsSwitch = topCommentsSwitch; // Pass through topComments switch
 };
 Component.define(Loader);
 
@@ -103,7 +102,7 @@ Loader.prototype.ready = function() {
         this.topComments = new TopComments(self.context, self.mediator, {
             discussionId: this.getDiscussionId(),
             user: self.user
-        }, this.topCommentsSwitch);
+        });
 
         this.topComments
             .fetch(topCommentsElem)
@@ -157,7 +156,8 @@ Loader.prototype.loadComments = function(args) {
         initialShow: commentId ? 10 : args.amount,
         discussionId: this.getDiscussionId(),
         user: this.user,
-        commentId: commentId ? commentId : null
+        commentId: commentId ? commentId : null,
+        order: this.getDiscussionClosed() ? 'oldest' : 'newest'
     });
 
     // Doing this makes sure there is only one redraw
@@ -179,7 +179,7 @@ Loader.prototype.loadComments = function(args) {
                 self.comments.showHiddenComments(e);
                 self.cleanUpOnShowComments();
             });
-            bonzo(commentsContainer).removeClass('u-h');
+            bonzo(commentsContainer).removeClass('js-hidden');
         }).fail(self.loadingError.bind(self));
 };
 
@@ -263,7 +263,7 @@ Loader.prototype.renderCommentBox = function() {
     } else if (!this.user.privateFields.canPostComment) {
         this.renderUserBanned();
     } else {
-        this.commentBox = new CommentBox(this.context, this.mediator, {
+        this.commentBox = new CommentBox({
             discussionId: this.getDiscussionId(),
             premod: this.user.privateFields.isPremoderated
         });
@@ -301,7 +301,8 @@ Loader.prototype.renderUserBanned = function() {
  * When you load more comments
  */
 Loader.prototype.renderBottomCommentBox = function() {
-    this.bottomCommentBox = new CommentBox(this.context, this.mediator, {
+    if (this.bottomCommentBox) { return; }
+    this.bottomCommentBox = new CommentBox({
         discussionId: this.getDiscussionId(),
         premod: this.user.privateFields.isPremoderated
     });

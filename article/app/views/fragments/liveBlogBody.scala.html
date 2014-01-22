@@ -72,9 +72,6 @@
                                         @BodyCleaner(article, blockGroup)
                                     </div>
                                 }
-                                <button class="h u-button-reset cta cta--read-more" data-link-name="live blog | read more">
-                                    Read more <i class="i i-swipe-arrow cta--read-more__icon"></i>
-                                </button>
                             }  else {
                                 @BodyCleaner(article, article.body)
                             }
@@ -108,7 +105,7 @@
                                         </div>
                                     }
                                     @if(Switches.SocialSwitch.isSwitchedOn) {
-                                        <h2 class="article__meta-heading tone-colour">Share this live blog</h2>
+                                        <h2 class="article__meta-heading">Share this live blog</h2>
                                     }
                                     @fragments.social(article, "next to content")
                                 </div>
@@ -119,19 +116,14 @@
             </div>
         </article>
 
-        <div class="article__inner">
-            @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
+        @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
+            <div class="article__inner">
                 @fragments.discussion(article.isClosedForComments, article.shortUrlId)
-            }
-            @if(storyPackage.nonEmpty) {
-                <aside role="complementary">
-                    @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
-                </aside>
-            } else {
-                <aside class="js-related" role="complementary"></aside>
-            }
+            </div>
+        }
 
-        </div>
+        @fragments.storyPackagePlaceholder(storyPackage)
+
         @fragments.mostPopularPlaceholder(article.section)
     </div>
 

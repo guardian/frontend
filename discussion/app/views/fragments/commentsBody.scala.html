@@ -8,58 +8,71 @@
     @page.switches.map{ switch =>
         data-@switch.name="@switch.state"
     }>
-    
     <div class="d-discussion__header d-discussion__comment-count">
         <div class="d-discussion__meta d-meta-item">
             @if(page.commentCount > 0){
                 @page.commentCount comment@if(page.commentCount != 1){s} in @page.topLevelCommentCount thread@if(page.topLevelCommentCount != 1){s}. 
             }
-            Comments sorted newest first.
+        </div>
+
+        <div class="d-discussion__meta d-meta-item">
+            Comments sorted
+            <select class="d-discussion__order-control">
+                <option value="oldest"@if(page.orderBy == "oldest"){ selected="selected"}>oldest</option>
+                <option value="newest"@if(page.orderBy == "newest"){ selected="selected"}>newest</option>
+            </select>
+            first.
         </div>
     </div>
 
     <div class="js-new-comments"></div>
 
-    @if(page.currentPage != 1){
-        <div class="show-more__container show-more__container--newer">
-            <a class="d-discussion__show-more d-discussion__show-more--newer"
-                href="@LinkTo{/@page.id?page=@(page.currentPage - 1)}"
-                data-link-name="Show more comments"
-                data-age="newer"
-                data-page="@(page.currentPage - 1)"
-                title="Show newer comments">
-                <span class="d-discussion__show-more-button"><i class="i i-plus-white-large"></i></span>
-                <span class="d-discussion__show-more-text">Show newer comments</span>
-            </a>
-        </div>
-    }
+    <div class="show-more__container show-more__container--newer">
+        @if(page.currentPage != 1){
+        <a class="d-discussion__show-more d-discussion__show-more--newer"
+            href="@LinkTo{/discussion@if(page.orderBy == "oldest"){/oldest}/@page.id?page=@(page.currentPage - 1)}"
+            data-link-name="Show more comments"
+            data-age="newer"
+            data-page="@(page.currentPage - 1)">
+            <span class="d-discussion__show-more-button"><i class="i i-plus-white-large"></i></span>
+            <span class="d-discussion__show-more-text">Show @if(page.orderBy == "newest"){newer}else{older} comments</span>
+        </a>
+        }
+    </div>
 
+    <div class="preload-msg d-discussion__loader u-h">Loading comments…<div class="is-updating"></div></div>
     <ul class="d-thread d-thread--top-level">
         @page.comments.map{ comment =>
             @fragments.comment(comment, page.isClosedForRecommendation, false, isTopComments)
         }
         <li class="d-image-fade u-h"></li>
     </ul>
-    
+
+    <div class="show-more__container show-more__container--hidden u-h">
+        <a class="d-discussion__show-hidden d-discussion__show-more" data-link-name="Show hidden comments" data-disabled="true" title="Show comments">
+            <span class="d-discussion__show-more-button"><i class="i i-plus-white-large"></i></span>
+            <span class="d-discussion__show-more-text">Show comments</span>
+        </a>
+    </div>
+
     <div class="show-more__container show-more__container--older">
-    @if(page.currentPage + 1 <= page.pages){
+        @if(page.currentPage + 1 <= page.pages){
         <a class="d-discussion__show-more d-discussion__show-more--older"
-            href="@LinkTo{/@page.id?page=@(page.currentPage + 1)}"
+            href="@LinkTo{/discussion@if(page.orderBy == "oldest"){/oldest}@page.id?page=@(page.currentPage + 1)}"
             data-link-name="Show more comments"
             data-age="older"
-            data-page="@(page.currentPage + 1)"
-            title="Show older comments">
+            data-page="@(page.currentPage + 1)">
             <span class="d-discussion__show-more-button"><i class="i i-plus-white-large"></i></span>
-            <span class="d-discussion__show-more-text">Show older comments</span>
+            <span class="d-discussion__show-more-text">Show more comments</span>
         </a>
-    }
+        }
     </div>
 
     <div class="show-more__container show-more__container--featured u-h">
         <a class="js-show-more-top-comments d-discussion__show-more d-discussion__show-more--featured"
             data-link-name="Show more featured comments"    
             data-remove="true" 
-            href="@LinkTo{/@page.id?page=1}"
+            href="@LinkTo{/discussion@if(page.orderBy == "oldest"){/oldest}/@page.id?page=1}"
             title="Show more featured comments">
             <span class="d-discussion__show-more-button"><i class="i i-plus-white-large"></i></span>
             <span class="d-discussion__show-more-text">Show more featured comments</span>

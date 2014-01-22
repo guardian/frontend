@@ -78,20 +78,14 @@
                 </div>
             </div>
             <div class="article__secondary-column" aria-hidden="true">
-                <h2 class="article__meta-heading tone-colour">Share this gallery</h2>
+                <h2 class="article__meta-heading">Share this gallery</h2>
                 @fragments.social(gallery, "next to content")
             </div>
         </div>
     </article>
-    <div class="article__inner">
-        @if(storyPackage.nonEmpty) {
-            <aside role="complementary">
-                @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
-            </aside>
-        } else {
-            <aside class="js-related" role="complementary"></aside>
-        }
-    </div>
+
+    @fragments.storyPackagePlaceholder(storyPackage)
+
     @fragments.mostPopularPlaceholder(gallery.section)
 </div>
 

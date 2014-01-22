@@ -8,8 +8,9 @@ define([
 
         var _config;
         this.id = 'EmailSignup';
-        this.expiry = '2014-01-15';
-        this.audience = 0.08;
+        this.expiry = '2014-01-24';
+        this.audience = 0.2;
+        this.audienceOffset = 0.1;
         this.description = 'Displays email signup button on relevant article pages';
         this.canRun = function (config) {
             _config = config;

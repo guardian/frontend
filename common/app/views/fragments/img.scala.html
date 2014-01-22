@@ -1,20 +1,17 @@
 @(image: Option[model.ImageContainer])
-@import views.support.ImgSrc
-@import views.support.LargeThumbnail
-@import views.support.ArticleMainPicture
+@import views.support.{ImgSrc, Item220, Item620}
 
 @image.map{ picture =>
-
     <figure itemprop="associatedMedia primaryImageOfPage" itemscope itemtype="http://schema.org/ImageObject" class="media-primary media-content">
-        <div class="item__image-container" data-src="@ImgSrc.imager(picture)" data-force-upgrade>
-            <img src="@LargeThumbnail.bestFor(picture)"
+        <div class="js-image-upgrade" data-src="@ImgSrc.imager(picture, Item620)" data-force-upgrade>
+            <img src="@Item220.bestFor(picture)"
                  class="maxed main-image responsive-img"
                  itemprop="contentURL"
-                 title="@ArticleMainPicture.altTextFor(picture).getOrElse("")"
-                 alt="@ArticleMainPicture.altTextFor(picture).getOrElse("")" />
+                 title="@Item620.altTextFor(picture).getOrElse("")"
+                 alt="@Item620.altTextFor(picture).getOrElse("")" />
         </div>
 
-        @LargeThumbnail.captionFor(picture).map{ caption =>
+        @Item220.captionFor(picture).map{ caption =>
             <figcaption class="main-caption" itemprop="description">@Html(caption)</figcaption>
         }
 

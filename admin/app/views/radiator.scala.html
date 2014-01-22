@@ -1,54 +1,52 @@
-@(charts: Seq[tools.LineChart], hitMissCharts: Seq[tools.LineChart], jsErrors: tools.LineChart, cost: tools.MaximumMetric, env: String)
+@(  charts: Seq[tools.LineChart],
+    hitMissCharts: Seq[tools.LineChart],
+    jsErrors: tools.LineChart,
+    cost: tools.MaximumMetric,
+    switches: List[conf.Switch],
+    env: String)
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="refresh" content="60">
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>theguardian.com radiator</title>
-        <link rel="stylesheet" type="text/css" href="/assets/css/radiator.css">
-        <script src="@routes.Assets.at("javascripts/components/jquery/jquery.js")"></script>
-        <script src="@routes.Assets.at("javascripts/components/underscore/underscore.js")"></script>
-        <script src="https://www.google.com/jsapi"></script>
-        <script type="text/javascript">
-            google.load("visualization", "1", {packages:["corechart"]});
-        </script>
-    </head>
-  <body>
+@admin_main("theguardian.com radiator", env, isAuthed = true, hasCharts = true, autoRefresh = true) {
 
-        <header>
-            <span id="logo">the<span class="white">guardian</span>.com dashboard</span>
-            <div class="cost"><strong>$@cost.max.toLong</strong> this month</div>
-        </header>
+    <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/radiator.css")">
 
-        <div class="pingdom-wrapper">
-            <h2>Pingdom <small>(external monitoring of our host names)</small></h2>
-            <ul id="pingdom"></ul>
+    <header>
+        <span id="logo">the<span class="white">guardian</span>.com dashboard</span>
+        <div class="cost"><strong>$@cost.max.toLong</strong> this month</div>
+    </header>
+
+    <div class="pingdom-wrapper">
+        <h2>Pingdom <small>(external monitoring of our host names)</small></h2>
+        <ul id="pingdom"></ul>
+    </div>
+    
+    <div class="expiring-wrapper">
+        <h2>Expiring features</h2>
+        <ul id="sell-by-date">
+            @switches.map{ switch =>  
+                <li class="Expiring" title="@switch.name">@switch.name</li>
+            }
+        </ul>
+    </div>
+    <br clear="all"/>
+    <div class="pageviews-wrapper">
+        <h2>Pageviews <span class="pageviews-per-second"></span></h2>
+        <div id="pageviews"></div>
+    </div>
+
+    <div class="monitoring-wrapper">
+        <div class="riffraff-wrapper">
+            <h2>CODE Deployments</h2>
+            <ul class="riffraff" id="riffraffCODE"></ul>
+            <ul class="deployers" id="deployersCODE"></ul>
         </div>
-
-        <div class="pageviews-wrapper">
-            <h2>Pageviews <span class="pageviews-per-second"></span></h2>
-            <div id="pageviews"></div>
+        <div class="riffraff-wrapper">
+            <h2>PROD Deployments</h2>
+            <ul class="riffraff" id="riffraffPROD"></ul>
+            <ul class="deployers" id="deployersPROD"></ul>
         </div>
+    </div>
 
-        <div class="monitoring-wrapper">
-            <div class="riffraff-wrapper">
-                <h2>CODE Deployments</h2>
-                <ul class="riffraff" id="riffraffCODE"></ul>
-                <ul class="deployers" id="deployersCODE"></ul>
-            </div>
-            <div class="riffraff-wrapper">
-                <h2>PROD Deployments</h2>
-                <ul class="riffraff" id="riffraffPROD"></ul>
-                <ul class="deployers" id="deployersPROD"></ul>
-            </div>
-        </div>
-
-        @charts.map{ chart => @fragments.lineChart(chart)  }
-        @hitMissCharts.map{ chart => @fragments.lineChart(chart) }
-        @fragments.lineChart(jsErrors)
-
-        <script src="/assets/javascripts/radiator/bootstrap.js" defer></script>
-  </body>
-</html>
+    @charts.map{ chart => @fragments.lineChart(chart)  }
+    @hitMissCharts.map{ chart => @fragments.lineChart(chart) }
+    @fragments.lineChart(jsErrors)
+}

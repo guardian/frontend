@@ -184,3 +184,33 @@
 .formstack-required {
     margin-left: 2px;
 }
+
+.formstack-fieldset {
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+.formstack-count {
+    position: absolute;
+    color: #545454;
+}
+
+.film-awards-banner {
+    background-color: #000000;
+    height: 90px;
+    margin-bottom: - $baseline*8;
+}
+
+.ethical-awards-banner {
+    background-color: #294100;
+    height: 90px;
+    margin-bottom: - $baseline*8;
+}
+
+.ethical-awards-banner__image,
+.film-awards-banner__image {
+    display: block;
+    margin: 0 auto;
+    width: 480px;
+}

@@ -21,14 +21,12 @@
     @include mq(desktop) {
         @include rem((width: gs-span(12)));
     }
-    @include mq(wide) {
-        @include rem((width: gs-span(16)));
-    }
 }
 
 @import "module/facia/_extends";
 @import "module/facia/_mixins";
 @import "module/facia/_items";
+@import "module/facia/_fromage";
 
 @import "module/containers/_news";
 @import "module/containers/_top-stories";

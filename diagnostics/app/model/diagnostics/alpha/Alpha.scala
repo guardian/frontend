@@ -1,10 +1,6 @@
-package model.diagnostics.javascript 
+package model.diagnostics.alpha
 
-import common._
-import conf._
-import net.sf.uadetector.service.UADetectorServiceFactory
-import model.diagnostics.alpha._
-import play.api.mvc.{ Content => _, _ }
+import common.Logging
 
 object Alpha extends Logging {
   

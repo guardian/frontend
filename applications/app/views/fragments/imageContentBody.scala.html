@@ -43,7 +43,7 @@
                         <div class="u-table">
                             <div class="u-table__row">
                                 <div class="u-table__cell u-table__cell--top">
-                                    <h2 class="article__meta-heading tone-colour">Share this article</h2>
+                                    <h2 class="article__meta-heading">Share this article</h2>
                                     @fragments.social(image, "next to content")
                                 </div>
                             </div>
@@ -53,19 +53,12 @@
             </div>
         </article>
 
+        @if(DiscussionSwitch.isSwitchedOn && image.isCommentable) {
+            @fragments.discussion(image.isClosedForComments, image.shortUrlId)
+        }
 
-        <div class="article__inner">
-            @if(DiscussionSwitch.isSwitchedOn && image.isCommentable) {
-                @fragments.discussion(image.isClosedForComments, image.shortUrlId)
-            }
-            @if(storyPackage.nonEmpty) {
-                <aside role="complementary">
-                    @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 5)
-                </aside>
-            } else {
-                <aside class="js-related" role="complementary"></aside>
-            }
-        </div>
+        @fragments.storyPackagePlaceholder(storyPackage)
+
         @fragments.mostPopularPlaceholder(image.section)
     </div>
 }

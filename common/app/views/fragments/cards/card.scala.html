@@ -6,9 +6,9 @@
         <h2 class="card__title">@title</h2>
         <a href="@trail.url" data-link-name="@linkName" class="card__action">
             @trail.trailPicture.map { imgContainer =>
-                @ImgSrc.imager(imgContainer).map{ imgSrc =>
+                @ImgSrc.imager(imgContainer, Item620).map{ imgSrc =>
                     <div class="item__image-container" data-src="@imgSrc" data-force-upgrade>
-                        <img src="@LargeThumbnail.bestFor(imgContainer)" class="card__media responsive-img" alt="" itemprop="contentURL" />
+                        <img src="@Item220.bestFor(imgContainer)" class="card__media responsive-img" alt="" itemprop="contentURL" />
                     </div>
                 }
             }
