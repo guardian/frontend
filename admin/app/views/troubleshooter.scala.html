@@ -1,7 +1,7 @@
 @(loadbalancers: Seq[tools.LoadBalancer])
 @import tools.LoadBalancer
 
-@admin_main("Front editor", "PROD", isAuthed = true) {
+@admin_main("Troubleshooting", "PROD", isAuthed = true) {
 
     @loadbalancers.map{ lb =>
         <div class="row-fluid">
