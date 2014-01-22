@@ -378,7 +378,7 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
     }
     .fromage__standfirst {
         @include rem((
-            margin-top: $gs-baseline/2
+            margin-top: $gs-baseline*2
         ));
     }
     .fromage__link {
@@ -458,6 +458,15 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
             @include mq(tablet) {
                 @include rem((
                     padding-left: 0
+                ));
+            }
+        }
+    }
+    &.fromage--imageadjust-highlight {
+        .fromage__standfirst {
+            @include mq(desktop) {
+                @include rem((
+                    margin-top: $gs-baseline*2
                 ));
             }
         }
