@@ -679,14 +679,19 @@ module.exports = function (grunt) {
         grunt.task.run(['env:casperjs', 'casperjs:' + app]);
     });
     grunt.registerTask('test:unit', function(app) {
-        if (!app) {
-            grunt.log.error('No app specified.');
-            return false;
+        var apps = [];
+        // have we supplied an app
+        if (app) {
+            // does a karma setup exist for this app
+            grunt.config.requires(['karma', app]);
+            apps = [app];
+        } else { // otherwise run all
+            apps = Object.keys(grunt.config('karma')).filter(function(app) { return app !== 'options'; });
         }
-        // does a karma setup exist for this app
-        grunt.config.requires(['karma', app]);
         grunt.config.set('karma.options.singleRun', (singleRun === false) ? false : true);
-        grunt.task.run(['clean:static', 'copy:testUtils', 'copy:commonModules', 'copy:javascript-' + app, 'copy:javascript-' + app + '-tests', 'karma:' + app]);
+        apps.forEach(function(app) {
+            grunt.task.run(['clean:static', 'copy:testUtils', 'copy:commonModules', 'copy:javascript-' + app, 'copy:javascript-' + app + '-tests', 'karma:' + app]);
+        });
     });
     // TODO - don't have common as default?
     grunt.registerTask('test', ['jshint:common', 'test:unit:common', 'test:integration:common']);

@@ -11,7 +11,7 @@ set -o errexit
 #
 ################################################################################
 
-./grunt-tc clean compile:$1 jshint:common test:unit assetmonitor:common emitAbTestInfo
+./grunt-tc clean compile:$1 jshint:common test:unit:$1 assetmonitor:common emitAbTestInfo
 ./sbt-tc "project $1" compile test assembly
 
 
