@@ -27,7 +27,7 @@ define([
         active: true
     };
 
-    ABTestItem. prototype.templateName = 'abtest-item-template';
+    ABTestItem.prototype.templateName = 'abtest-item-template';
     ABTestItem.prototype.componentClass = 'abtest-item';
     ABTestItem.prototype.classes = {
         name: 'name',
@@ -39,7 +39,6 @@ define([
     ABTestItem.prototype.useBem = true;
 
     ABTestItem.prototype.renderChart = function(chart) {
-
         new google.visualization.LineChart(this.getElem('chart'))
             .draw(google.visualization.arrayToDataTable(chart.data), {
                 colors: chart.colors,
@@ -62,12 +61,9 @@ define([
                 },
                 fontName : 'Helvetica'
             });
-
-    }
+    };
 
     ABTestItem.prototype.prerender = function() {
-
-        console.log(this.config.test);
 
         this.elem.className += this.config.active ? " abtest-item--active" : " abtest-item--expired";
         this.elem.setAttribute('data-abtest-name', this.config.test.id);
@@ -81,7 +77,6 @@ define([
 
         var participation = new Participation({ test: this.config.test });
         participation.render(this.getElem('participation'));
-
     };
 
     ABTestItem.prototype.ready = function() {
