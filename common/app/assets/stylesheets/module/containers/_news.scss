@@ -210,4 +210,8 @@
         width: 100%;
         background: $c-newsAccent;
     }
+
+    &.show-more--hidden:before {
+        display: none;
+    }
 }
