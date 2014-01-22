@@ -3,7 +3,7 @@ package services
 import model.Config
 import scala.concurrent.Future
 import tools.FaciaApi
-import play.api.libs.json.{Reads, JsNumber, JsValue, Json}
+import play.api.libs.json.{JsNumber, JsValue, Json}
 import play.api.libs.ws.{Response, WS}
 import common.{Logging, ExecutionContexts}
 import com.ning.http.client.Realm
