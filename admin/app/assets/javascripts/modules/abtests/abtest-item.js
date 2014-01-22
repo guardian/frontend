@@ -29,13 +29,6 @@ define([
 
     ABTestItem.prototype.templateName = 'abtest-item-template';
     ABTestItem.prototype.componentClass = 'abtest-item';
-    ABTestItem.prototype.classes = {
-        name: 'name',
-        expiry: 'expiry',
-        audience: 'audience',
-        audienceOffset: 'audience-offset',
-        description: 'description'
-    };
     ABTestItem.prototype.useBem = true;
 
     ABTestItem.prototype.renderChart = function(chart) {
@@ -69,11 +62,11 @@ define([
         this.elem.setAttribute('data-abtest-name', this.config.test.id);
         if (!this.config.active) { this.getElem('expiry-title').textContent = "Expired"; }
 
-        this.getElem(this.classes.name).textContent = this.config.test.id;
-        this.getElem(this.classes.description).textContent = " - " + this.config.test.description;
-        this.getElem(this.classes.expiry).textContent = this.config.test.expiry;
-        this.getElem(this.classes.audience).textContent = (this.config.test.audience * 100) + "%";
-        this.getElem(this.classes.audienceOffset).textContent = (this.config.test.audienceOffset * 100) + "%";
+        this.getElem('name').textContent = this.config.test.id;
+        this.getElem('description').textContent = " - " + this.config.test.description;
+        this.getElem('expiry').textContent = this.config.test.expiry;
+        this.getElem('audience').textContent = (this.config.test.audience * 100) + "%";
+        this.getElem('audience-offset').textContent = (this.config.test.audienceOffset * 100) + "%";
 
         var participation = new Participation({ test: this.config.test });
         participation.render(this.getElem('participation'));

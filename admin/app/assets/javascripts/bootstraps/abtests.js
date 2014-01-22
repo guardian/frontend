@@ -38,7 +38,7 @@ define([
 
     function initialise() {
         render();
-        //renderParticipations();
+        // timeout on this to allow google charts to render before hiding the container
         setTimeout(function() {
             bean.fire(qwery('.abtests-expired-title a')[0], 'click');
         }, 0);
