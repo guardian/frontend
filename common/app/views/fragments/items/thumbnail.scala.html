@@ -19,7 +19,7 @@
 
         <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border">
             <h@if(isFirstContainer && index == 0){1}else{2} class="item__title">
-                @if(trail.breaking){
+                @if(trail.isBreaking){
                     <span class="item__live-indicator">Breaking</span>
                 }
                 @if(trail.isLive){

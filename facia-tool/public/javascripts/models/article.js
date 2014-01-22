@@ -48,7 +48,7 @@ define([
                 'headline',
                 'trailText',
                 'imageAdjust',
-                'breaking',
+                'isBreaking',
                 'group']);
 
             this.state = asObservableProps([
@@ -124,8 +124,8 @@ define([
             this.state.isLoaded(!!withContent);
         };
 
-        Article.prototype.toggleBreaking = function() {
-            this.meta.breaking(!this.meta.breaking());
+        Article.prototype.toggleIsBreaking = function() {
+            this.meta.isBreaking(!this.meta.isBreaking());
             this._save();
         };
 

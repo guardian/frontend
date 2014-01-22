@@ -35,5 +35,5 @@ trait FaciaFields {
   def group: Option[String] = None
   def supporting: List[Trail] = Nil
   def imageAdjust: Option[String] = None
-  def breaking: Boolean = false
+  def isBreaking: Boolean = false
 }
