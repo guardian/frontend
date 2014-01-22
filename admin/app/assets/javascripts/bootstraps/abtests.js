@@ -19,13 +19,15 @@ define([
         }
     }
 
-    function render() {
+    function initialise() {
+
         renderTests(abTests.getActiveTests(), true, qwery('.abtests-active'));
         renderTests(abTests.getExpiredTests(), false, qwery('.abtests-expired'));
 
+        var $expired = qwery('.abtests-expired')[0];
+
         bean.on(qwery('.abtests-expired-title a')[0], 'click', function(e) {
             e.preventDefault();
-            var $expired = qwery('.abtests-expired')[0];
             if (e.currentTarget.textContent == "show") {
                 e.currentTarget.textContent = "hide";
                 $expired.style.display = "block";
@@ -34,14 +36,9 @@ define([
                 $expired.style.display = "none";
             }
         });
-    }
 
-    function initialise() {
-        render();
         // timeout on this to allow google charts to render before hiding the container
-        setTimeout(function() {
-            bean.fire(qwery('.abtests-expired-title a')[0], 'click');
-        }, 0);
+        setTimeout(function() { $expired.style.display = 'none'; }, 0);
     }
 
     return {
