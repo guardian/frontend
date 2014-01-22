@@ -205,7 +205,9 @@ define([
             });
 
             if (config.switches.ophanMultiEvent) {
-                require('ophan/ng', function () {});
+                require('ophan/ng', function (ophan) {
+                    ophan.record({'ab': ab.getParticipations()});
+                });
             }
 
             require(config.page.ophanUrl, function (Ophan) {

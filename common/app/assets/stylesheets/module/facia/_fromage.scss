@@ -32,9 +32,10 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
     @include clearfix;
 }
 .fromage__container {
-    border-top: 2px solid white;
+    border-top: 4px solid white;
 
     @include mq(tablet) {
+        border-top-width: 2px;
         @include rem((
             padding-left: gs-span(5) + $gs-gutter
         ));
@@ -102,7 +103,7 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
     }
 }
 .fromage__title {
-    @include fs-headline(3, true);
+    @include fs-headline(3);
     @include rem((
         margin-top: $gs-baseline/3,
         margin-bottom: $gs-baseline
@@ -335,7 +336,7 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
         @include mq(desktop) {
             @include fs-headline(6, true);
             @include rem((
-                max-width: gs-span(5)
+                max-width: none
             ));
         }
     }
@@ -381,9 +382,6 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
 
 .fromage--volume-1,
 .fromage--volume-2 {
-    .fromage__container {
-        border-top-width: 2px;
-    }
     .fromage__support__item {
         border-top-color: #ffffff;
 
