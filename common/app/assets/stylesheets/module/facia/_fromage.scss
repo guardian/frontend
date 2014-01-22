@@ -23,7 +23,7 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
 
     @include mq(tablet) {
         @include rem((
-            margin-bottom: $gs-baseline
+            margin-bottom: $gs-baseline*2
         ));
     }
 }
