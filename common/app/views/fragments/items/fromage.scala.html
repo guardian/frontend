@@ -64,10 +64,12 @@
             @if(trail.imageAdjust != Some("hide") && trail.imageAdjust != Some("highlight")) {
                 @trail.trailPicture(5,3).map{ imageContainer =>
                     @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
-                        <div class="fromage__media-wrapper fromage__media-wrapper--second">
-                            <div class="fromage__image-container js-image-upgrade inlined-image" data-src="@imgSrc" data-force-upgrade="desktop wide">
+                        <a href="@LinkTo{@trail.url}" data-link-name="article">
+                            <div class="fromage__media-wrapper fromage__media-wrapper--second">
+                                <div class="fromage__image-container js-image-upgrade inlined-image" data-src="@imgSrc" data-force-upgrade="desktop wide">
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     }
                 }
             }
