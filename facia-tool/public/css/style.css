@@ -126,7 +126,8 @@ a, a:hover {
 }
 
 .supporting .droppable {
-    padding: 0 0 25px 0;
+    padding: 0 0 15px 0;
+    border-top: 1px dashed #dddddd;
 }
 
 .droppable.underDrag {
@@ -164,6 +165,10 @@ a, a:hover {
     font-weight: normal;
     font-size: 10px;
     color: #666666;
+}
+
+.list-header__timings.has-concurrent-user {
+    color: #d61d00;
 }
 
 .collections {
@@ -262,6 +267,17 @@ a, a:hover {
     text-decoration: none;
 }
 
+.is-empty {
+    font-size: 14px;
+    line-height: 16px;
+    color: #d61d00;
+}
+
+.is-empty__url {
+    display: block;
+    font-size: 12px;
+}
+
 div.trailtext {
     padding-right: 50px;
     box-sizing: border-box;
@@ -333,7 +349,6 @@ div.trailtext {
     z-index: 99;
     background: #eeeeee;
     width: 100%;
-
 }
 
 .article__overrides a {
@@ -342,33 +357,22 @@ div.trailtext {
 }
 
 .image__overrides {
-    position: absolute;
-    top: 49px;
-    font-size: 10px;
-    line-height: 14px;
     color: #AAAAAA;
-    font-size: 11px;
+    font-size: 12px;
 }
 
 .supporting .image__overrides {
     display: none;
 }
 
-.image__overrides a {
-    color: #666666;
-}
-
-.image__overrides a:hover {
-    color: #0088cc;
-}
-
 .image__overrides a.selected {
     color: #000000;
+    font-weight: bold;
 }
 
 .revert {
     position: absolute;
-    right: 10px;
+    right: 8px;
 }
 
 .revert--headline {
@@ -376,7 +380,7 @@ div.trailtext {
 }
 
 .revert--trailtext {
-    top: 30px;
+    top: 23px;
 }
 
 select,
@@ -632,21 +636,23 @@ button {
 }
 
 .supporting {
-    margin: 4px -2px -4px -4px;
+    margin: 0 -2px -4px -4px;
 }
+
 
 .supporting-message {
     position: absolute;
-    bottom: 2px;
+    top: 53px;
     z-index: 2;
     left: 4px;
-    font-size: 11px;
-    color: #FFFFFF;
+    font-size: 10px;
+    line-height: 12px;
+    color: #666666;
+    width: 75px;
 }
-
 .article .tools {
     position: absolute;
-    bottom: 2px;
+    top: 34px;
     right: 2px;
 }
 

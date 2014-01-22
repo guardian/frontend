@@ -7,6 +7,8 @@ import common.ExecutionContexts
 import java.util.concurrent.TimeoutException
 import play.api.libs.ws.WS
 import com.gu.management.{CountMetric, TimingMetric}
+import com.gu.openplatform.contentapi.ApiError
+import common.ContentApiMetrics.ContentApi404Metric
 
 class WsHttp(val httpTimingMetric: TimingMetric, val httpTimeoutMetric: CountMetric) extends Http[Future]
                                                                                               with ExecutionContexts {
@@ -23,7 +25,10 @@ class WsHttp(val httpTimingMetric: TimingMetric, val httpTimeoutMetric: CountMet
 
     // record metrics
     response.onSuccess {
-      case _ => httpTimingMetric.recordTimeSpent(currentTimeMillis - start)
+      case r => {
+        if (r.status == 404) ContentApi404Metric.increment()
+        httpTimingMetric.recordTimeSpent(currentTimeMillis - start)
+      }
     }
     response.onFailure {
       case e: Throwable if isTimeout(e) => httpTimeoutMetric.increment

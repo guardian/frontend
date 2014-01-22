@@ -49,17 +49,21 @@ function (
         .done(function(results){
             results.forEach(function(article){
                 cache.put('contentApi', article.id, article);
-                _.filter(items,function(item){
+                _.filter(items, function(item){
                     return item.props.id() === article.id;
                 }).forEach(function(item){
                     populate(article, item);
                 });
             });
+
+            _.each(items, function(item){
+                item.state.isEmpty(!item.state.isLoaded());
+            });
         });
     }
 
     function populate(opts, article) {
-        article.populate(opts);
+        article.populate(opts, true);
     }
 
     function fetchData(ids) {
@@ -75,7 +79,7 @@ function (
             authedAjax.request({
                 url: apiUrl
             }).always(function(resp) {
-                if (resp.response && resp.response.results && resp.response.results.length) {
+                if (resp.response && _.isArray(resp.response.results)) {
                     defer.resolve(resp.response.results);
                 } else {
                     defer.reject();

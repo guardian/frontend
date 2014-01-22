@@ -26,12 +26,8 @@ trait BaseAdAgent[T <: Ad] {
   def defaultAds: Seq[T] = Nil
 
   def adsTargetedAt(segment: Segment): Seq[T] = {
-    if (segment.isRepeatVisitor) {
-      val targetedAds = Random.shuffle(currentAds filter (_.isTargetedAt(segment)))
-      if (targetedAds.isEmpty) defaultAds
-      else targetedAds
-    } else {
-      Nil
-    }
+    val targetedAds = Random.shuffle(currentAds filter (_.isTargetedAt(segment)))
+    if (targetedAds.isEmpty) defaultAds
+    else targetedAds
   }
 }

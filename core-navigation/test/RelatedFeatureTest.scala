@@ -27,7 +27,7 @@ class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         import browser._
 
         Then("I should see the related links")
-        $("li") should have length 10
+        $("li") should have length 5
 
       }
     }
@@ -45,11 +45,11 @@ class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
         val article = findFirst("li")
         article.findFirst("a").getAttribute("href").length should be > 0
-        article.findFirst("h3").getText.length should be > 0
-        article.find(".trail__text").size should be > 0
+        article.findFirst("h2").getText.length should be > 0
+        article.find(".item__standfirst").size should be > 0
         article.findFirst("time").getAttribute("data-timestamp") should not be empty
 
-        findFirst("ul").find(".trail__headline") should have length 5
+        findFirst("ul").find(".item__title") should have length 5
       }
     }
 
@@ -61,7 +61,7 @@ class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
         Then("I see each trail block displays the published date of the corresponding article")
 
-        $(".relative-timestamp") should have length 10
+        $(".item__timestamp") should have length 5
 
       }
     }

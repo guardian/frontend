@@ -8,8 +8,8 @@ define([
     'common/utils/detect',
     'common/utils/storage',
     'common/utils/to-array',
-    'common/modules/facia/popular',
     'common/modules/facia/collection-show-more',
+    'common/modules/facia/container-show-more',
     'common/modules/facia/container-toggle',
     'common/modules/sport/football/fixtures',
     'common/modules/sport/cricket',
@@ -23,8 +23,8 @@ define([
     detect,
     storage,
     toArray,
-    popular,
     CollectionShowMore,
+    ContainerShowMore,
     ContainerToggle,
     FootballFixtures,
     cricket,
@@ -40,6 +40,9 @@ define([
                     $('.js-collection--show-more', container).each(function(collection) {
                         new CollectionShowMore(collection).addShowMore();
                     });
+                });
+                $('.container--top-stories', context).each(function(container) {
+                    new ContainerShowMore(container).addShowMore();
                 });
             });
         },
@@ -80,115 +83,61 @@ define([
             });
         },
 
-        showPopular: function () {
-            mediator.on('page:front:ready', function(config, context) {
-                var opts = {};
-                // put popular after the first container if this is us-alpha front
-                if (config.page.pageId === 'us-alpha') {
-                    opts.insertAfter = $('.container').first();
-                } else if (config.page.pageId === 'uk-alpha') {
-                    // place before the contributors container
-                    var containers = toArray(context.getElementsByClassName('container'));
-                    containers.some(function(container, i) {
-                        if ($(container).hasClass('container--comment')) {
-                            opts.insertAfter = containers[i -1];
-                            return true;
-                        }
-                    });
-
-                }
-                popular.render(config, opts);
-            });
-        },
-
         showCricket: function(){
             mediator.on('page:front:ready', function(config, context) {
                 cricket.cricketTrail(config, context);
             });
         },
 
-        showUserzoom: function(config) {
-            var path,
-                steps;
-
-            if (config.switches.userzoom && config.switches.faciaUkAlpha) {
-                path = window.location.pathname.substring(1);
-
-                if (path !== 'uk' && path !=='uk-alpha') { return; }
-
-                steps = [
-                    {
-                        pageId: 'uk-alpha',
-                        visits: 0,
-                        script: 'userzoom-uk-alpha'
-                    },
-                    {
-                        pageId: '',
-                        visits: 2,
-                        script: 'userzoom-uk'
-                    }
-                ];
-
-                mediator.on('page:front:ready', function(config, context) {
-                    steps.some(function(step) {
-                        var storeKey,
-                            visits;
-
-                        if (step.pageId === config.page.pageId) {
-                            storeKey = 'gu.userzoom.uk.' + step.pageId;
-                            visits = parseInt(storage.local.get(storeKey) || 0, 10);
-                            if(visits >= step.visits) {
-                                require(['js!' + step.script]);
-                            } else {
-                                storage.local.set(storeKey, visits + 1);
-                            }
-                            return true;
-                        }
-                    });
-                });
-            }
-        },
-
         displayAlphaMessage: function(config) {
-            // only run on 5% of the users
-            var isAChosenOne = parseInt(mvtCookie.getMvtValue(), 10) < (mvtCookie.MAX_INT * 0.05);
-            if (config.page.contentType === 'Network Front' && isAChosenOne) {
+            if (config.page.contentType === 'Network Front') {
                 var page = window.location.pathname.replace('-alpha', ''),
-                    alphaSwitch = {
-                        '/uk': 'networkFrontUkAlpha',
-                        '/us': 'networkFrontUsAlpha',
-                        '/au': 'networkFrontAuAlpha'
-                    }[page];
-                if (config.switches[alphaSwitch] === true) {
-                    var preferenceUrl = '/preference' + page + 'alpha/[OPT]?page=' + page,
-                        msg,
-                        opts = {};
-                    // opt in
-                    if (config.page.pageId === "") {
-                        msg = '<p class="site-message__message">' +
-                                  'We\'re trying out some new things on our website and would love your feedback. <a href="' + preferenceUrl.replace('[OPT]', 'optin') + '">Click here</a> to explore a test version of the site.' +
-                              '</p>';
-                    } else { // opt out
-                        msg = '<p class="site-message__message">' +
-                                  'You\'re viewing a test version of the Guardian website.' +
-                              '</p>' +
-                              '<ul class="site-message__actions unstyled">' +
-                                  // TODO - need to get the omniture survey url
-                                  //'<li class="site-message__actions__item">' +
-                                  //    '<i class="i i-comment-grey"></i>' +
-                                  //    '<a href="http://survey.omniture.com/d1/hosted/815f9cfba1" data-link-name="feedback" target="_blank">We’d love to hear your feedback</a>' +
-                                  //'</li>' +
-                                  '<li class="site-message__actions__item">' +
-                                      '<i class="i i-back"></i>' +
-                                      '<a class="js-main-site-link" rel="nofollow" href="' + preferenceUrl.replace('[OPT]', 'optout') + '"' +
-                                          'data-link-name="opt-out">Opt-out and return to standard desktop site </a>' +
-                                  '</li>' +
-                              '</ul>';
-                        opts = {
-                            permanent: true
-                        };
+                    preferenceUrl = '/preference' + page + 'alpha/[OPT]?page=' + page + '%3Ftime=' + (new Date().getTime()),
+                    msg,
+                    messageId = 'facia-alpha';
+                if (config.page.pageId === "") {
+                    // only run on 50% of (mobile) users
+                    var isAChosenOne = parseInt(mvtCookie.getMvtValue(), 10) < (mvtCookie.MAX_INT * 0.5) && detect.getMobileOS(),
+                        alphaSwitch = {
+                            '/uk': 'networkFrontUkAlpha',
+                            '/us': 'networkFrontUsAlpha',
+                            '/au': 'networkFrontAuAlpha'
+                        }[page];
+                    if ((isAChosenOne && config.switches[alphaSwitch] === true) || window.location.hash === '#show-alpha-opt-in') {
+                        msg =
+                            '<p class="site-message__message">' +
+                                'We’re trying out some new things on our website and would love your feedback. <a href="' +
+                                    preferenceUrl.replace('[OPT]', 'optin') + '">Click here</a> to explore a test version of the site.' +
+                            '</p>';
+                        new Message(messageId).show(msg);
                     }
-                    new Message('facia-alpha', opts).show(msg);
+                } else {
+                    var userZoomSurvey = {
+                        '/us': 'MSBDMTBTMTE1',
+                        '/au': 'MSBDMTBTMTE2'
+                    }[page];
+                    msg =
+                        '<p class="site-message__message">' +
+                            'You’re viewing a test version of the Guardian website.' +
+                        '</p>' +
+                        '<ul class="site-message__actions unstyled">' +
+                            (
+                                (userZoomSurvey) ?
+                                    '<li class="site-message__actions__item">' +
+                                        '<i class="i i-comment-grey"></i>' +
+                                        '<a href="https://s.userzoom.com/m/' + userZoomSurvey + '" data-link-name="feedback" target="_blank">We’d love to hear your feedback</a>' +
+                                    '</li>' : ''
+                            ) +
+                            '<li class="site-message__actions__item">' +
+                                '<i class="i i-back"></i>' +
+                                '<a class="js-main-site-link" rel="nofollow" href="' + preferenceUrl.replace('[OPT]', 'optout') + '"' +
+                                    'data-link-name="opt-out">Opt-out and return to the standard site</a>' +
+                            '</li>' +
+                        '</ul>';
+                    var opts = {
+                        permanent: true
+                    };
+                    new Message(messageId, opts).show(msg);
                 }
             }
         }
@@ -200,8 +149,6 @@ define([
             modules.showCollectionShowMore();
             modules.showContainerToggle();
             modules.showFootballFixtures();
-            modules.showPopular();
-            modules.showUserzoom(config);
             modules.displayAlphaMessage(config);
         }
         mediator.emit("page:front:ready", config, context);

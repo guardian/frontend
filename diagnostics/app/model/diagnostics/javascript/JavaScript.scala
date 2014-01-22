@@ -1,10 +1,7 @@
 package model.diagnostics.javascript 
 
-import common._
-import conf._
+import common.Logging
 import net.sf.uadetector.service.UADetectorServiceFactory
-import model.diagnostics._
-import play.api.mvc.{ Content => _, _ }
 
 object JavaScript extends Logging {
   
@@ -30,7 +27,6 @@ object JavaScript extends Logging {
       
       val qs = queryString.map { case (k,v) => k -> v.mkString }
       val osFamily = getOperatingSystem(userAgent).toString
-      val platform = qs.get("platform")
 
       if (qs.contains("type") && !isHealthCheck(userAgent)) {
         

@@ -1,5 +1,6 @@
 @(page: model.MetaData)( implicit request:RequestHeader)
 @import conf.Configuration
+@import conf.Switches.OmnitureVerificationSwitch
 
 @*<!-- TODO temporary till after dotcom switch -->*@
 @defining("hits.theguardian.com"){ analyticsHost =>
@@ -7,19 +8,19 @@
     @defining(request.host + request.path) { path =>
 
         @defining(
-        (s"http://$analyticsHost/b/ss/${Configuration.javascript.pageData("guardian.page.omnitureAccount")}/1/H.24.2/?${OmnitureAnalyticsData(page, "No Javascript", path)}",
+        (s"http://$analyticsHost/b/ss/${Configuration.javascript.pageData("guardian.page.omnitureAccount")}/1/H.25.3/?${OmnitureAnalyticsData(page, "No Javascript", path)}",
         Configuration.javascript.pageData("guardian.page.omnitureAccount"))
         ){ case (omnitureCall, omnitureAccount) =>
                 <noscript id="omnitureNoScript">
                     <div>
                         <img id="omnitureNoScriptImage" alt=""
-                             src="@omnitureCall" width="1" height="1" class="u-h" />
+                             src="@Html(omnitureCall)" width="1" height="1" class="u-h" />
                     </div>
                 </noscript>
         }
 
         @defining(
-            s"http://$analyticsHost/b/ss/${Configuration.javascript.pageData("guardian.page.omnitureAccount")}/1/H.24.2/?${OmnitureAnalyticsData(page, "Partial Javascript", path)}"
+            s"http://$analyticsHost/b/ss/${Configuration.javascript.pageData("guardian.page.omnitureAccount")}/1/H.25.3/?${OmnitureAnalyticsData(page, "Partial Javascript", path)}"
         ){ omnitureCall =>
                 <script>
                     @*
@@ -28,7 +29,7 @@
                      *@
                     if (!guardian.isModernBrowser) {
                         var analyticsImage = document.createElement("img");
-                        analyticsImage.src = "@omnitureCall";
+                        analyticsImage.src = "@Html(omnitureCall)";
                         analyticsImage.width = "1";
                         analyticsImage.height = "1";
                         document.body.appendChild(analyticsImage);
@@ -44,21 +45,31 @@
                     }
                 </script>
         }
+
+        @if(OmnitureVerificationSwitch.isSwitchedOn) {
+            @defining(
+                s"http://$analyticsHost/b/ss/guardiangu-mobileverify/1/H.25.3/?${OmnitureAnalyticsData(page, "Partial Javascript", path)}"
+            ){ omnitureCall =>
+                <script>
+                    var verificationImage = new Image(1, 1);
+                    verificationImage.src = '@Html(omnitureCall)';
+                </script>
+            }
+            @defining(
+                s"http://$analyticsHost/b/ss/guardiangu-mobileverify/1/H.25.3/?${OmnitureAnalyticsData(page, "No Javascript", path)}"
+            ){ omnitureCall =>
+                <noscript id="omnitureVerificationNoScript">
+                    <div>
+                        <img id="omnitureVerificationNoScriptImage" alt=""
+                        src="@Html(omnitureCall)" width="1" height="1" class="u-h" />
+                    </div>
+                </noscript>
+            }
+        }
     }
 }
 
-<script>
-  (function() {
-    var d = new Image(1, 1);
-    d.src = ["//secure-uk.imrworldwide.com/cgi-bin/m?ci=uk-305078h&cg=0&cc=1&si=", escape(window.location.href), "&rp=", escape(document.referrer), "&ts=compact&rnd=", (new Date()).getTime()].join('');
-  })();
-</script>
-<noscript>
-    <img src="//secure-uk.imrworldwide.com/cgi-bin/m?ci=uk-305078h&amp;cg=0&amp;cc=1&amp;ts=noscript"
-    width="1" height="1" alt="" />
-</noscript>
-
 @* there is currently no SSL version of the beacon *@
 @if(!Configuration.environment.secure){
-    <img src="@Configuration.debug.beaconUrl/count/pv.gif" alt="" style="display: none;"/>
+    <img src="@Configuration.debug.beaconUrl/count/pv.gif" alt="" style="display: none;" rel="nofollow"/>
 }

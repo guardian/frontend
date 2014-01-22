@@ -32,8 +32,6 @@ RUNNING_PID
 
 *.sublime-*
 
-tags
-
 local.sbt
 
 node_modules
@@ -50,3 +48,4 @@ developer.properties
 *-spec-runner.html
 
 static/requirejs
+static/abtests.json

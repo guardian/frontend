@@ -11,7 +11,7 @@ import java.util.concurrent.Executors
 
 case class LoadBalancer(id: String, name: String, project: String)
 
-object CloudWatch {
+object CloudWatch extends implicits.Futures{
 
   def shutdown() {
     euWestClient.shutdown()
@@ -19,6 +19,7 @@ object CloudWatch {
   }
 
   val stage = new Dimension().withName("Stage").withValue(environment.stage)
+  val stageFilter = new DimensionFilter().withName("Stage").withValue(environment.stage)
 
   lazy val euWestClient = {
     val client = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials)
@@ -44,7 +45,8 @@ object CloudWatch {
     LoadBalancer("frontend-SportLoa-GLJK02HUD48W", "Sport", "frontend-sport"),
     LoadBalancer("frontend-Commerci-12ZQ79RIOLIYE", "Commercial", "frontend-commercial"),
     LoadBalancer("frontend-OnwardLo-14YIUHL6HIW63", "Onward", "frontend-onward"),
-    LoadBalancer("frontend-R2Footba-9BHU0R3R3DHV", "R2 Football", "frontend-r2football")
+    LoadBalancer("frontend-R2Footba-9BHU0R3R3DHV", "R2 Football", "frontend-r2football"),
+    LoadBalancer("frontend-Diagnost-1SCNCG3BR1RFE", "Diagnostics", "frontend-diagnostics" )
   )
 
   val loadBalancers = primaryLoadBalancers ++ secondaryLoadBalancers
@@ -88,6 +90,13 @@ object CloudWatch {
       }
     }
     def onSuccess(request: GetMetricStatisticsRequest, result: GetMetricStatisticsResult ) { }
+  }
+
+  object listMetricsHandler extends AsyncHandler[ListMetricsRequest, ListMetricsResult] with Logging {
+    def onError(exception: Exception) {
+      log.info(s"CloudWatch ListMetricsRequest error: ${exception.getMessage}")
+    }
+    def onSuccess(request: ListMetricsRequest, result: ListMetricsResult ) { }
   }
 
   // TODO - this file is getting a bit long/ complicated. It needs to be split up a bit
@@ -143,17 +152,6 @@ object CloudWatch {
     new LineChart("JavaScript Errors", Seq("Time") ++ jsErrorMetrics.map{ case(title, name) => name}.toSeq, metrics:_*)
   }
   
-  def adsInView(statistic: String) = new LineChart(statistic, Nil,
-    euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
-      .withStartTime(new DateTime().minusHours(1).toDate)
-      .withEndTime(new DateTime().toDate)
-      .withPeriod(120)
-      .withStatistics("Sum")
-      .withNamespace("Diagnostics")
-      .withMetricName(statistic)
-      .withDimensions(stage),
-      asyncHandler))
-
   def fastlyErrors = fastlyMetrics.map{ case (graphTitle, metric, region, service) =>
     new LineChart(graphTitle, Seq("Time", metric),
       euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
@@ -169,7 +167,7 @@ object CloudWatch {
     )
   }.toSeq
   
-  def liveStats(statistic: String) = new LineChart(statistic, Nil,
+  def liveStats(statistic: String) = new LineChart(statistic, Seq("Time", statistic),
     euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
       .withStartTime(new DateTime().minusHours(6).toDate)
       .withEndTime(new DateTime().toDate)
@@ -237,4 +235,11 @@ object CloudWatch {
       .withMetricName("ophan-percent-conversion")
       .withDimensions(stage),
       asyncHandler))
+
+  def AbMetricNames() = {
+    euWestClient.listMetricsAsync( new ListMetricsRequest()
+      .withNamespace("AbTests")
+      .withDimensions(stageFilter),
+      listMetricsHandler).toScalaFuture
+  }
 }

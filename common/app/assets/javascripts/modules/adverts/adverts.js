@@ -8,10 +8,7 @@ define([
     'common/modules/adverts/document-write',
     'common/modules/adverts/documentwriteslot',
     'common/modules/adverts/dimensionMap',
-    'common/modules/adverts/audience-science',
-    'common/modules/adverts/quantcast',
     'common/modules/adverts/userAdTargeting'
-
 ],
 function (
     $,
@@ -24,8 +21,6 @@ function (
     documentWrite,
     DocumentWriteSlot,
     dimensionMap,
-    audienceScience,
-    quantcast,
     userAdTargeting
 ) {
 
@@ -68,14 +63,6 @@ function (
             }
         }
 
-        if (currConfig.switches.audienceScience) {
-            audienceScience.load(currConfig.page);
-        }
-
-        if (currConfig.switches.quantcast) {
-            quantcast.load();
-        }
-
         //Make the request to ad server
         documentWrite.load({
             config: currConfig,
@@ -84,7 +71,7 @@ function (
         });
     }
 
-    function loadAds() {
+    function load() {
         //Run through adslots and check if they are on screen. Load if so.
         for (var i = 0, j = slots.length; i<j; ++i) {
             //Add && isOnScreen(slots[i].el) to conditional below to trigger lazy loading
@@ -104,6 +91,18 @@ function (
         }
     }
 
+    function destroy() {
+        for (var i = 0, j = slots.length; i<j; ++i) {
+            slots[i].el.innerHTML = '';
+            slots[i].loaded = false;
+        }
+    }
+
+    function reload() {
+        destroy();
+        init(currConfig, currContext);
+    }
+
     function isOnScreen(el) {
         return (
             el.offsetTop < (window.innerHeight + window.pageYOffset) &&
@@ -111,7 +110,7 @@ function (
         );
     }
 
-    function hideAds() {
+    function hide() {
         $('.ad-slot').addClass('is-invisible');
     }
 
@@ -135,9 +134,10 @@ function (
     }
 
     return {
-        hideAds: hideAds,
+        hide: hide,
         init: init,
-        loadAds: loadAds,
+        load: load,
+        reload: reload,
         isOnScreen: isOnScreen
     };
 

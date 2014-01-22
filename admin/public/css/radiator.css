@@ -9,7 +9,7 @@ header {
     font-size: 18px;
 }
 .navbar { display: none; }
-#pingdom li, #riffraff li { font-size: 30px; line-height: 30px; } 
+#pingdom li, #riffraff li, #sell-by-date li { font-size: 30px; line-height: 30px; } 
 #pingdom small, #riffraff small { font-size: 20px; }
 .up, .Completed {
     color: #B8FAA0;
@@ -28,7 +28,8 @@ ul {
 }
 
 #pingdom li,
-.riffraff li {
+.riffraff li,
+#sell-by-date li {
     min-width: 30px;
     min-height: 30px;
     font-size: 0;
@@ -46,10 +47,14 @@ ul {
     background-color: red;
 }
 
+.Expiring {
+    background-color: orange;
+}
 
 
 .riffraff,
-#pingdom {
+#pingdom,
+#sell-by-date {
     overflow: hidden;
     padding: 0;
     margin-bottom: 20px;
@@ -118,6 +123,12 @@ a {
     
     .charts-full {
         width: 100%;
+    }
+    
+    .pingdom-wrapper,
+    .expiring-wrapper {
+        float: left;
+        width: 50%;
     }
 
     .monitoring-wrapper,

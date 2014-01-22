@@ -295,6 +295,7 @@ case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition
     links.foreach { link =>
       link.attr("href", LinkTo(link.attr("href"), edition))
       link.attr("data-link-name", dataLinkName)
+      link.addClass("u-underline")
     }
     body
   }
@@ -326,7 +327,7 @@ class TagLinker(article: Article)(implicit val edition: Edition) extends HtmlCle
 
       // order by length of name so we do not make simple match errors
       // e.g 'Northern Ireland' & 'Ireland'
-      article.keywords.sortBy(_.name.length).reverse.foreach{ keyword =>
+      article.keywords.filterNot(_.isSectionTag).sortBy(_.name.length).reverse.foreach{ keyword =>
         // don't link again in paragraphs we have already upgraded
         val unlinkedParas = paragraphs.filterNot(_.html.contains("<a"))
         unlinkedParas.find(_.text().contains(keyword.name)).foreach{ p =>

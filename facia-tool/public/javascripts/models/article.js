@@ -44,19 +44,17 @@ define([
                 'thumbnail',
                 'shortId']);
 
-            this.fields.headline('...');
-
             this.meta = asObservableProps([
                 'headline',
                 'trailText',
-                'imageTone',
+                'imageAdjust',
                 'group']);
 
             this.state = asObservableProps([
                 'underDrag',
                 'open',
-                'shares',
-                'comments',
+                'isLoaded',
+                'isEmpty',
                 'totalHits',
                 'pageViewsSeries']);
 
@@ -102,7 +100,9 @@ define([
                     return this.meta[key]() || this.fields[key]();
                 },
                 write: function(value) {
-                    this.meta[key](value);
+                    var el = document.createElement('div');
+                    el.innerHTML = value;
+                    this.meta[key](el.innerHTML);
                 },
                 owner: this
             });
@@ -115,20 +115,21 @@ define([
             };
         };
 
-        Article.prototype.populate = function(opts) {
+        Article.prototype.populate = function(opts, withContent) {
             populateObservables(this.props,  opts);
             populateObservables(this.meta,   opts.meta);
             populateObservables(this.fields, opts.fields);
             populateObservables(this.state,  opts.state);
+            this.state.isLoaded(!!withContent);
         };
 
-        Article.prototype.toggleImageToneHide = function() {
-            this.meta.imageTone(this.meta.imageTone() === 'hide' ? undefined : 'hide');
+        Article.prototype.toggleImageAdjustHide = function() {
+            this.meta.imageAdjust(this.meta.imageAdjust() === 'hide' ? undefined : 'hide');
             this._save();
         };
 
-        Article.prototype.toggleImageToneHighlight = function() {
-            this.meta.imageTone(this.meta.imageTone() === 'highlight' ? undefined : 'highlight');
+        Article.prototype.toggleImageAdjustHighlight = function() {
+            this.meta.imageAdjust(this.meta.imageAdjust() === 'highlight' ? undefined : 'highlight');
             this._save();
         };
 
@@ -181,7 +182,7 @@ define([
                 })
                 // drop empty arrays:
                 .filter(function(p){ return _.isArray(p[1]) ? p[1].length : true; })
-                // return as obj, or as undefined if empty (this ommits it from any subsequent JSON.stringify result) 
+                // return as obj, or as undefined if empty (this ommits it from any subsequent JSON.stringify result)
                 .reduce(function(obj, p, key) {
                     obj = obj || {};
                     obj[p[0]] = p[1];

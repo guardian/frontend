@@ -6,7 +6,7 @@ define(['common/modules/ui/images', 'helpers/fixtures', 'common/$', 'bonzo', 'co
             lowClassName = 'connection--low',
             notLowClassName = 'connection--not-low',
             dataSrc = '/item-{width}/cat.jpg',
-            imgClass = 'item__image-container';
+            imgClass = 'js-image-upgrade';
 
         beforeEach(function() {
             $('html').addClass(notLowClassName);

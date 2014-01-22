@@ -1,4 +1,4 @@
-define(['common/modules/adverts/audience-science'], function(AudienceScience) {
+define(['common/modules/analytics/commercial/tags/common/audience-science'], function(AudienceScience) {
    
     describe("AudienceScience", function() {
 

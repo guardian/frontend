@@ -1,4 +1,9 @@
-@(charts: Seq[tools.LineChart], hitMissCharts: Seq[tools.LineChart], jsErrors: tools.LineChart, cost: tools.MaximumMetric, env: String)
+@(  charts: Seq[tools.LineChart],
+    hitMissCharts: Seq[tools.LineChart],
+    jsErrors: tools.LineChart,
+    cost: tools.MaximumMetric,
+    switches: List[conf.Switch],
+    env: String)
 
 @admin_main("theguardian.com radiator", env, isAuthed = true, hasCharts = true, autoRefresh = true) {
 
@@ -13,7 +18,16 @@
         <h2>Pingdom <small>(external monitoring of our host names)</small></h2>
         <ul id="pingdom"></ul>
     </div>
-
+    
+    <div class="expiring-wrapper">
+        <h2>Expiring features</h2>
+        <ul id="sell-by-date">
+            @switches.map{ switch =>  
+                <li class="Expiring" title="@switch.name">@switch.name</li>
+            }
+        </ul>
+    </div>
+    <br clear="all"/>
     <div class="pageviews-wrapper">
         <h2>Pageviews <span class="pageviews-per-second"></span></h2>
         <div id="pageviews"></div>

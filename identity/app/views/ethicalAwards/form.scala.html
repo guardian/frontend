@@ -1,0 +1,11 @@
+@(metaData: model.MetaData, formId: String, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder)(implicit request: RequestHeader)
+
+@identityMain(metaData, conf.Switches.all) {
+} {
+    <div class="ethical-awards-banner hide-on-mobile">
+        <img class="ethical-awards-banner__image" src="https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/1/14/1389697731897/ethical-awards-ecover-banner.png" alt="The Observer Ethical Awards" />
+    </div>
+    <div class="identity-wrapper monocolumn-wrapper">
+        <iframe src="@idUrlBuilder.buildUrl(s"/form/$formId")" class="js-formstack-iframe formstack-iframe is-hidden"></iframe>
+    </div>
+}

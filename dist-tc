@@ -11,7 +11,7 @@ set -o errexit
 #
 ################################################################################
 
-./grunt-tc clean compile:$1 jshint:common test:unit assetmonitor:common
+./grunt-tc clean compile:$1 jshint:common test:unit assetmonitor:common emitAbTestInfo
 ./sbt-tc "project $1" compile test assembly
 
 
@@ -34,6 +34,7 @@ mkdir -p "$1/target/dist/packages/frontend-$1"
 cp "$1/conf/deploy.json" "$1/target/dist"
 cp "$1/target/scala-2.10/frontend-$1.jar" "$1/target/dist/packages/frontend-$1"
 cp -r "static/target" "$1/target/dist/packages/frontend-static"
+cp -r "$PWD/static/abtests.json" "$1/target/dist/packages/frontend-abtests"
 
 
 # And zip up the packet

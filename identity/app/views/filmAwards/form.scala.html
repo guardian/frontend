@@ -1,0 +1,11 @@
+@(metaData: model.MetaData, formId: String, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder)(implicit request: RequestHeader)
+
+@identityMain(metaData, conf.Switches.all) {
+} {
+    <div class="film-awards-banner hide-on-mobile">
+        <img class="film-awards-banner__image" src="https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/1/15/1389790307027/film-awards-banner.png" alt="The Guardian Film Awards" />
+    </div>
+    <div class="identity-wrapper monocolumn-wrapper">
+        <iframe src="@idUrlBuilder.buildUrl(s"/form/$formId")" class="js-formstack-iframe formstack-iframe is-hidden"></iframe>
+    </div>
+}

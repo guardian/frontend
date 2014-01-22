@@ -4,48 +4,29 @@ define([
     'common/modules/analytics/mvt-cookie',
 
     //Current tests
-
     'common/modules/experiments/tests/aa',
-    'common/modules/experiments/tests/mobile-facebook-autosignin',
-    'common/modules/experiments/tests/onward-intrusive',
-    'common/modules/experiments/tests/onward-highlights-panel',
-    'common/modules/experiments/tests/alpha-comm',
     'common/modules/experiments/tests/identity-email-signup',
     'common/modules/experiments/tests/commercial-in-article-desktop',
     'common/modules/experiments/tests/commercial-in-article-mobile',
-    'common/modules/experiments/tests/right-most-popular',
-    'common/modules/experiments/tests/right-most-popular-control',
-    'common/modules/experiments/tests/underline-links'
+    'common/modules/experiments/tests/chartbeat-desktop'
 ], function (
     common,
     store,
     mvtCookie,
 
     Aa,
-    MobileFacebookAutosignin,
-    OnwardIntrusive,
-    OnwardHighlightsPanel,
-    AlphaComm,
     EmailSignup,
     CommercialInArticlesDesktop,
     CommercialInArticlesMobile,
-    RightPopular,
-    RightPopularControl,
-    UnderlineLinks
+    ChartbeatDesktop
     ) {
 
     var TESTS = [
             new Aa(),
-            new MobileFacebookAutosignin(),
-            new OnwardIntrusive(),
-            new OnwardHighlightsPanel(),
-            new AlphaComm(),
             new EmailSignup(),
             new CommercialInArticlesDesktop(),
             new CommercialInArticlesMobile(),
-            new RightPopular(),
-            new RightPopularControl(),
-            new UnderlineLinks()
+            new ChartbeatDesktop()
         ],
         participationsKey = 'gu.ab.participations';
 
@@ -114,7 +95,7 @@ define([
 
     function testCanBeRun(test, config) {
         var expired = (new Date() - new Date(test.expiry)) > 0;
-        return (test.canRun(config) && !expired && config.switches['ab' + test.id]);
+        return (test.canRun(config) && !expired && isTestSwitchedOn(test, config));
     }
 
     function getTest(id) {
@@ -181,6 +162,15 @@ define([
         } else {
             addParticipation(test, "notintest");
         }
+    }
+
+    function isTestSwitchedOn(test, config) {
+        return config.switches['ab' + test.id];
+    }
+
+    function getTestVariant(testId) {
+        var participation = getParticipations()[testId];
+        return participation && participation.variant;
     }
 
     var ab = {
@@ -255,14 +245,27 @@ define([
             });
         },
 
-        getTestVariant: function(testId) {
-            return getParticipations()[testId].variant;
+        getAbLoggableObject: function(config) {
+            var abLogObject = {};
+
+            getActiveTests().forEach(function (test) {
+
+                if (isParticipating(test)) {
+                    var variant = getTestVariant(test.id);
+                    if (isTestSwitchedOn(test, config) && variant && variant !== 'notintest') {
+                        abLogObject['ab' + test.id] = variant;
+                    }
+                }
+            });
+
+            return abLogObject;
         },
 
         getParticipations: getParticipations,
         makeOmnitureTag: makeOmnitureTag,
         getExpiredTests: getExpiredTests,
-        getActiveTests: getActiveTests
+        getActiveTests: getActiveTests,
+        getTestVariant: getTestVariant
     };
 
     return ab;
