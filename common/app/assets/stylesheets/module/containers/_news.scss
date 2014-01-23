@@ -20,11 +20,9 @@
             border-top-style: solid;
         }
     }
-    .item__media-wrapper {
-        &,
-        .item__image-container {
-            display: none;
-        }
+    .item__media-wrapper,
+    .item__image-container {
+        display: none;
     }
     .item--has-image {
         .item__media-wrapper,
