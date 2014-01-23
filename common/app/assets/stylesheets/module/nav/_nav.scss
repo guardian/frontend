@@ -150,17 +150,9 @@
    ========================================================================== */
 
 .localnav-container {
-    @include box-sizing(border-box);
     display: none;
-    overflow: auto;
     background-color: #ffffff;
     border-bottom: 1px solid $c-neutral6;
-    margin: 0 $gs-gutter/2;
-
-    @include mq(mobileLandscape) {
-        margin-left: $gs-gutter;
-        margin-right: $gs-gutter;
-    }
 
     @include mq(tablet) {
         display: block;
@@ -168,15 +160,16 @@
 }
 
 .nav--local {
-    @include box-sizing(border-box);
     display: none;
-    float: left;
-    clear: left;
-    width: 100%;
     height: 52px;
     overflow: hidden;
     padding: 0;
-    background-color: #ffffff;
+    margin: 0 $gs-gutter/2;
+
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter;
+        margin-right: $gs-gutter;
+    }
 
     @include mq(tablet) { display: block; }
 
@@ -207,7 +200,6 @@
     }
 
     .nav__item:first-child .nav__link { padding-left: 0; }
-    .nav__item:last-child  .nav__link { border-right: none; }
 }
 
 
