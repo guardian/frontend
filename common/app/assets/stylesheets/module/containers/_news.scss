@@ -74,9 +74,22 @@
             display: -webkit-flex;
             display: flex;
 
-            .l-row__item {
+            .collection__item {
                 flex-basis: 50%;
                 -webkit-flex-basis: 50%;
+            }
+        }
+        @include mq(tablet) {
+            .collection__item {
+                margin-bottom: $gs-baseline*2;
+            }
+        }
+        @include mq(desktop) {
+            .collection__item {
+                padding-bottom: 0;
+            }
+            .item {
+                margin-bottom: 0;
             }
         }
     }
