@@ -10,6 +10,7 @@ GET        /onward/card/*path.json                  controllers.OnwardCardContro
 GET        /onward/trail/*path.json                 controllers.OnwardCardController.renderTrail(path)
 GET        /onward/most-read.json                   controllers.MostPopularOnwardController.mostRead()
 GET        /onward/latest.json                      controllers.LatestContentController.renderLatest()
+GET        /onward/gravity.json                     controllers.StubGravityOnwardController.renderRecommends()
 
 # A websocket for recently published content
 GET        /onward/recently-published               controllers.LatestContentController.recentlyPublished()
