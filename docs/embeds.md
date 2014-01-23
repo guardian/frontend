@@ -44,7 +44,7 @@ Embeds that are added multiple times on a single page MUST NOT degrade the page 
 
 Applications MUST BE monitored and named contact.
 
-Embed code MUST provide it's own stats.
+Embed code MUST provide its own stats.
 
 # QA
 
