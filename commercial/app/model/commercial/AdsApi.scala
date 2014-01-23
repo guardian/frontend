@@ -6,8 +6,11 @@ import play.api.libs.ws.WS
 import common.{ExecutionContexts, Logging}
 import scala.xml.{XML, Elem}
 import com.ning.http.util.AsyncHttpProviderUtils
+import conf.Switch
 
 trait AdsApi[F, T <: Ad] extends ExecutionContexts with Logging {
+
+  protected val switch: Switch
 
   protected val adTypeName: String
 
@@ -22,7 +25,7 @@ trait AdsApi[F, T <: Ad] extends ExecutionContexts with Logging {
 
   def parse(feed: F): Seq[T]
 
-  def loadAds(): Future[Seq[T]] = {
+  def loadAds(): Future[Seq[T]] = doIfSwitchedOn {
     url map {
       u =>
         val fads = WS.url(u) withRequestTimeout loadTimeout get() map {
@@ -50,6 +53,15 @@ trait AdsApi[F, T <: Ad] extends ExecutionContexts with Logging {
 
     } getOrElse {
       log.warn(s"Missing $adTypeName URL")
+      Future(Nil)
+    }
+  }
+
+  private def doIfSwitchedOn(action: => Future[Seq[T]]): Future[Seq[T]] = {
+    if (switch.isSwitchedOn) {
+      action
+    } else {
+      log.warn(s"Feed for $adTypeName switched off")
       Future(Nil)
     }
   }

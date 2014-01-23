@@ -104,6 +104,30 @@ object Switches extends Collections {
     "Enable the AMAA audience segment tracking.",
     safeState = Off, sellByDate = endOfQ4)
 
+
+  // Commercial Feeds
+
+  val TravelOffersFeedSwitch = Switch("Commercial Feeds", "gu-travel-offers",
+    "If this switch is on, commercial components will be fed by travel offer feed.",
+    safeState = Off, sellByDate = endOfQ4)
+
+  val JobFeedSwitch = Switch("Commercial Feeds", "gu-jobs",
+    "If this switch is on, commercial components will be fed by job feed.",
+    safeState = Off, sellByDate = endOfQ4)
+
+  val MasterclassFeedSwitch = Switch("Commercial Feeds", "gu-masterclasses",
+    "If this switch is on, commercial components will be fed by masterclass feed.",
+    safeState = Off, sellByDate = endOfQ4)
+
+  val SoulmatesFeedSwitch = Switch("Commercial Feeds", "gu-soulmates",
+    "If this switch is on, commercial components will be fed by soulmates feed.",
+    safeState = Off, sellByDate = endOfQ4)
+
+  val MoneysupermarketFeedsSwitch = Switch("Commercial Feeds", "moneysupermarket",
+    "If this switch is on, commercial components will be fed by Moneysupermarket feeds.",
+    safeState = Off, sellByDate = endOfQ4)
+
+
   // Analytics Switches
 
   val LiveStatsSwitch = Switch("Analytics", "live-stats",
@@ -389,7 +413,12 @@ object Switches extends Collections {
     AmaaSwitch,
     ImrWorldwideSwitch,
     DiagnosticsRequestLogging,
-    OmnitureVerificationSwitch
+    OmnitureVerificationSwitch,
+    TravelOffersFeedSwitch,
+    JobFeedSwitch,
+    MasterclassFeedSwitch,
+    SoulmatesFeedSwitch,
+    MoneysupermarketFeedsSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

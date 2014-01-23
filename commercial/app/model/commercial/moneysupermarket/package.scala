@@ -1,12 +1,14 @@
 package model.commercial
 
-import conf.CommercialConfiguration
+import conf.{Switches, CommercialConfiguration}
 import common.ExecutionContexts
 import scala.concurrent.Future
 
 package object moneysupermarket {
 
   trait MoneySupermarketApi[T <: Ad] extends XmlAdsApi[T] {
+
+    protected val switch = Switches.MoneysupermarketFeedsSwitch
 
     protected val path: String
 
