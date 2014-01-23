@@ -249,7 +249,8 @@ define([
         },
 
         loadAdverts: function (config) {
-            if(!userPrefs.isOff('adverts') && config.switches && config.switches.adverts && !config.page.shouldHideAdverts) {
+            if(!userPrefs.isOff('adverts') && config.switches && config.switches.adverts
+                && !config.page.blockVideoAds && !config.page.shouldHideAdverts) {
                 var resizeCallback = function() {
                     hasBreakpointChanged(Adverts.reload);
                 };

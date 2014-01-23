@@ -26,7 +26,7 @@ class Content protected (val delegate: ApiContent) extends Trail with MetaData {
   lazy val allowUserGeneratedContent: Boolean = fields.get("allowUgc").exists(_.toBoolean)
   lazy val isCommentable: Boolean = fields.get("commentable").exists(_ == "true")
   lazy val isExpired = delegate.isExpired.getOrElse(false)
-  lazy val blockVideoAds: Boolean = videoAssets.exists(_.blockAds)
+  lazy val blockVideoAds: Boolean = videoAssets.exists(_.blockVideoAds)
   lazy val isLiveBlog: Boolean = delegate.isLiveBlog
   lazy val openGraphImage: String = mainPicture.flatMap(_.largestImage.flatMap(_.url)).getOrElse(conf.Configuration.facebook.imageFallback)
   lazy val isSponsored: Boolean = tags.exists(_.id == "tone/sponsoredfeatures")
