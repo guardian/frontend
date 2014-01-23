@@ -145,6 +145,8 @@ define([
 
         if (opts.isRefresh && this.isPending()) { return; }
 
+        if (this.configMeta.uneditable()) { return; }
+
         return authedAjax.request({
             url: vars.CONST.apiBase + '/collection/' + this.id
         })
@@ -239,6 +241,14 @@ define([
 
         this.load({
             isRefresh: true
+        });
+    };
+
+    Collection.prototype.refreshSparklines = function() {
+        _.each(this.groups, function(group) {
+            _.each(group.items(), function(item) {
+                item.sparkline();
+            });
         });
     };
 

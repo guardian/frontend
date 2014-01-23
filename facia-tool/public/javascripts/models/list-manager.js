@@ -53,7 +53,9 @@ define([
                     keepCopy:  true
                 }),
 
-                liveMode: vars.state.liveMode
+                liveMode: vars.state.liveMode,
+
+                frontSparkUrl: ko.observable()
             };
 
         model.setModeLive = function() {
@@ -107,6 +109,7 @@ define([
                     );
                 })
             );
+            model.frontSparkUrl(vars.CONST.sparksBase + getFront());
         }
 
         var startPoller = _.once(function() {
@@ -118,6 +121,21 @@ define([
                         list.refresh();
                     }, index * period / (model.collections().length || 1)); // stagger requests
                 });
+            }, period);
+        });
+
+        var startSparksRefresher = _.once(function() {
+            var period = vars.CONST.sparksRefreshMs || 60000;
+
+            setInterval(function(){
+                model.collections().forEach(function(list, index){
+                    setTimeout(function(){
+                        list.refreshSparklines();
+                    }, index * period / (model.collections().length || 1)); // stagger requests
+                });
+
+                model.frontSparkUrl(undefined);
+                model.frontSparkUrl(vars.CONST.sparksBase + getFront());
             }, period);
         });
 
@@ -172,6 +190,7 @@ define([
                 window.onresize = updateLayout;
 
                 startPoller();
+                startSparksRefresher();
 
                 model.latestArticles.search();
                 model.latestArticles.startPoller();

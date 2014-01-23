@@ -7,15 +7,10 @@
     <img class="ophan-legend" src="@routes.Assets.at("images/ophan-legend.png")" title="Pageview graph colours" />
 
     <div class="toolbar" data-bind="visible: true" style="display: none">
-
-        <span class="tool-label">
-            Editing front
-        </span>
+        <span class="tool-label">Front</span>
         <select class="tool-select" data-bind="options: fronts, value: front, optionsCaption: 'choose...'"></select>
 
-        <span class="tool-label">
-            Edit Mode
-        </span>
+        <span class="tool-label">Mode</span>
 
         <a class="tool pref-draft" data-bind="
             click: setModeDraft,
@@ -24,12 +19,15 @@
             click: setModeLive,
             css: {active: liveMode}">Live</a>
 
-        <a class="tool logout" href="/logout">Logout</a>
-
         <a class="tool preview" target="preview" data-bind="
             attr: {href: previewUrl},
             visible: front">View Live</a>
 
+        <a class="spark" target="ophan" data-bind="
+            visible: frontSparkUrl,
+            attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + front()}">
+            <img data-bind="attr: {src: frontSparkUrl}" />
+        </a>
     </div>
 
     <div class="finder">
@@ -250,8 +248,10 @@
             </div>
 
             <div data-bind="if: !state.open()">
-                <a class="article_stats u-cf" target="ophan" data-bind="attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + props.id()}">
-                    <img data-bind="attr: {src: sparkUrl}" />
+                <a class="spark" target="ophan" data-bind="
+                    visible: state.sparkUrl,
+                    attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + props.id()}">
+                    <img data-bind="attr: {src: state.sparkUrl}" />
                 </a>
 
                 <div class="article_content" data-bind="click: open,">

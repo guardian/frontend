@@ -60,6 +60,7 @@
         @if(Play.isDev && Configuration.facia.stage.toLowerCase != "dev") {
             <span class="message message--important">editing @Configuration.facia.stage.toUpperCase!</span>
         }
+        @if(isAuthed){<a class="log-in-out" href="/logout">Logout</a>}
     </h1>
 
     @if(isAuthed) {

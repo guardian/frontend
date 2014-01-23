@@ -61,10 +61,6 @@ define([
                 return this.props.webPublicationDate() ? humanized_time_span(this.props.webPublicationDate()) : '';
             }, this);
 
-            this.sparkUrl = ko.computed(function(){
-                return vars.CONST.sparksBase + this.props.id() + (this.meta.updatedAt() ? '&markers=' + this.meta.updatedAt() : '');
-            }, this);
-
             this.headlineInput  = this.overrider('headline');
             this.headlineRevert = this.reverter('headline');
 
@@ -89,6 +85,8 @@ define([
 
                 contentApi.decorateItems(self.meta.supporting.items());
             }
+
+            this.sparkline();
         }
 
         Article.prototype.overrider = function(key) {
@@ -115,6 +113,11 @@ define([
             populateObservables(this.meta,   opts.meta);
             populateObservables(this.fields, opts.fields);
             populateObservables(this.state,  opts.state);
+        };
+
+        Article.prototype.sparkline = function(opts) {
+            this.state.sparkUrl(undefined);
+            this.state.sparkUrl(vars.CONST.sparksBase + this.props.id() + (this.meta.updatedAt() ? '&markers=' + this.meta.updatedAt() : ''));
         };
 
         Article.prototype.toggleImageAdjustHide = function() {

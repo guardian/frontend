@@ -17,7 +17,8 @@ define(['knockout'], function(ko) {
             latestArticlesPollMs:  30000, // 10 seconds
             cacheExpiryMs:         60000, // 1 min
 
-            sparksBase:            'http://ec2-54-216-179-11.eu-west-1.compute.amazonaws.com:8080/?graphs=other:09f,google:090,guardian:009&showStats=1&showHours=1&width=100&height=40&page=/',
+            sparksBase:            'http://sparklines.ophan.co.uk/png?graphs=other:09f,google:090,guardian:009&showStats=1&showHours=1&width=100&height=40&page=/',
+            sparksRefreshMs:       60000, // 1 min
 
             apiBase:               '',
             apiSearchBase:         '/api/proxy'

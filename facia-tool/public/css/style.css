@@ -45,7 +45,6 @@ a, a:hover {
     font-size: 26px;
     line-height: 30px;
     color: #000;
-    text-transform: lowercase;
     font-weight: normal;
 }
 
@@ -352,6 +351,7 @@ div.trailtext {
 
 .supporting .image__overrides {
     display: none;
+    text-shadow: 0px 0px 2px #000000;
 }
 
 .image__overrides a.selected {
@@ -415,28 +415,10 @@ button {
     margin: -6px 0 0 3px;
 }
 
-.article_stats {
+.article .spark {
     position: absolute;
     right: 4px;
     height: 30px;
-    font-size: 9px;
-    line-height: 12px;
-}
-
-.pageviews {
-    color: #999999;
-    font-weight: bold;
-    position: absolute;
-    bottom: -14px;
-    right: 1px;
-}
-
-.pageviews-graph canvas {
-    max-width: 140px;
-    float: right;
-    position: absolute;
-    bottom: -2px;
-    right: 0;
 }
 
 .group-name {
@@ -537,6 +519,11 @@ button {
     margin-bottom: 20px;
 }
 
+.toolbar .spark {
+    float: right;
+    margin: -5px 28px 0 0;
+}
+
 .tool-select {
     float: left;
     font-weight: bold;
@@ -589,9 +576,13 @@ button {
     background: #0077BB;
 }
 
-.logout,
+.log-in-out {
+    margin-left: 5px;
+    font-size: 10px;
+    text-transform: uppercase;
+}
+
 .preview {
-    float: right;
     margin-left: 10px;
 }
 
@@ -618,12 +609,6 @@ button {
     background: #46c430;
 }
 
-.ophan-legend {
-    position: absolute;
-    right: 51%;
-    top: 10px;
-}
-
 .supporting {
     margin: 0 -2px -4px -4px;
 }
@@ -645,6 +630,12 @@ button {
     right: 2px;
 }
 
+.ophan-legend {
+    position: absolute;
+    right: 51%;
+    top: 10px;
+}
+
 @media (max-width: 1100px) {
     .toolbar,
     .collections {
@@ -657,7 +648,7 @@ button {
     .finder .article .article_content {
         margin-right: 0;
     }
-    .finder .article .article_stats {
+    .finder .article .spark {
         display: none;
     }
 }
@@ -674,6 +665,9 @@ button {
         width: 100%;
         height: 50px;
         padding: 10px 15px 10px 45px;
+    }
+    .toolbar .spark {
+        margin-right: -5px;
     }
     .collections {
         left: 0;
@@ -695,7 +689,7 @@ button {
     .article .article_content {
         margin-right: 0;
     }
-    .article .article_stats {
+    .article .spark {
         display: none;
     }
 }
