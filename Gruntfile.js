@@ -408,12 +408,12 @@ module.exports = function (grunt) {
         },
 
         uglify: {
-            vendor: {
+            components: {
                 files: [{
                     expand: true,
-                    cwd: staticTargetDir + 'javascripts/vendor/',
+                    cwd: staticTargetDir + 'javascripts/components/',
                     src: '**/*.js',
-                    dest: staticTargetDir + 'javascripts/vendor/'
+                    dest: staticTargetDir + 'javascripts/components/'
                 }]
             }
         },
@@ -667,7 +667,7 @@ module.exports = function (grunt) {
             grunt.task.run('copy:javascript-' + app);
         }
         if (!isDev) {
-            grunt.task.run('uglify:vendor');
+            grunt.task.run('uglify:components');
         }
         grunt.task.run('requirejs:common');
         // When an app defines it's own javascript application, the requirejs task will need to compile both
