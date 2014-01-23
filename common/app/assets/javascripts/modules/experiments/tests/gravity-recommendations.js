@@ -14,7 +14,7 @@ define([
         this.audience = 0.2;
         this.description = 'Dropping Gravity\'s beacon javascript on the site';
         this.canRun = function(config) {
-            return (config.page.contentType === 'Article'  && (/wide|desktop/).test(detect.getBreakpoint()));
+            return true;
         };
         this.variants = [
             {
