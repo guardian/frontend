@@ -1,11 +1,11 @@
-@(creditCards: Seq[model.commercial.moneysupermarket.CreditCard], loans: Seq[model.commercial.moneysupermarket.Loan], savings: Seq[model.commercial.moneysupermarket.SavingsAccount])(implicit request: RequestHeader)
+@(bestBuys: model.commercial.moneysupermarket.BestBuys)(implicit request: RequestHeader)
 
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
 <h1>Best Buys</h1>
 
 <h2>Credit Cards</h2>
-@creditCards.map { card =>
+@bestBuys.creditCards.map { card =>
     <table>
         <tr>
             <td>Provider Logo</td>
@@ -30,7 +30,7 @@
 }
 
 <h2>Loans</h2>
-@loans.map { loan =>
+@bestBuys.loans.map { loan =>
     <table>
         <tr>
             <td>Provider Logo</td>
@@ -54,27 +54,52 @@
     </table>
 }
 
-<h2>Savings</h2>
-@savings.map { product =>
+<h2>Savings Accounts</h2>
+@bestBuys.savings.map { account =>
     <table>
         <tr>
             <td>Provider</td>
-            <td>@product.provider</td>
+            <td>@account.provider</td>
         </tr>
         <tr>
             <td>Provider Logo</td>
-            <td><img src="@product.logoUrl" /></td>
+            <td><img src="@account.logoUrl" /></td>
         </tr>
         <tr>
-            <td>Product Name</td>
-            <td>@product.name</td>
+            <td>Account Name</td>
+            <td>@account.name</td>
         </tr>
         <tr>
             <td>Interest Rate</td>
-            <td>@product.interestRate</td>
+            <td>@account.interestRate</td>
         </tr>
         <tr>
-            <td><a href="@product.applyUrl">Apply URL</a></td>
+            <td><a href="@account.applyUrl">Apply URL</a></td>
+        </tr>
+    </table>
+}
+
+<h2>Current Accounts</h2>
+@bestBuys.currentAccounts.map { account =>
+    <table>
+        <tr>
+            <td>Provider</td>
+            <td>@account.provider</td>
+        </tr>
+        <tr>
+            <td>Provider Logo</td>
+            <td><img src="@account.logoUrl" /></td>
+        </tr>
+        <tr>
+            <td>Account Name</td>
+            <td>@account.name</td>
+        </tr>
+        <tr>
+            <td>Interest Rate</td>
+            <td>@account.interestRate</td>
+        </tr>
+        <tr>
+            <td><a href="@account.applyUrl">Apply URL</a></td>
         </tr>
     </table>
 }
