@@ -25,11 +25,12 @@ define(['common/common', 'common/modules/analytics/livestats', 'common/utils/coo
             );
         });
         
-        it("should log a second page view as type 'view'", function(){
+        it("should log a second page view as type 'session'", function(){
+            // The isNewSession() query is memoized.
             window.sessionStorage.setItem("gu.session", true);
             liveStats.log(beacon, config);
             expect(document.getElementById('js-livestats-px').getAttribute('src')).toContain(
-                'beacon.gu.com/px.gif?platform=responsive&type=view'
+                'beacon.gu.com/px.gif?platform=responsive&type=session'
             );
         });
 

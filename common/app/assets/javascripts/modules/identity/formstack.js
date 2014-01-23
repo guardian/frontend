@@ -109,6 +109,11 @@ define([
                 $(config.fsSelectors.formError, dom.$form).addClass(config.idClasses.formError);
                 $(config.fsSelectors.fieldError, dom.$form).addClass(config.idClasses.fieldError);
 
+                // Update character count absolute positions
+                $(config.fsSelectors.textArea, el).each(function(textarea) {
+                    bean.fire(textarea, 'keyup');
+                });
+
                 self.postMessage('refreshHeight');
             }, 100);
         };

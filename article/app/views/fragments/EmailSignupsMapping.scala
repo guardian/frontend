@@ -25,7 +25,7 @@ object EmailSignupsMapping {
     ("poverty-matters", MailingListDetails(id = 113, label = "Poverty matters", title = "Sign up for the Poverty matters email", copyText = "The most important debate and discussion from around the world delivered every fortnight.",link = "Sign up for the Poverty matters email")),
     ("society-briefing", MailingListDetails(id = 208, label = "Society briefing", title = "Sign up for the Society briefing email", copyText = "Stay on top of the latest policy announcements, legislation and keep ahead of current thinking.",link = "Sign up for the Society briefing email")),
     ("sleeve-notes", MailingListDetails(id = 39, label = "Sleeve notes", title = "Get the Guardian's Sleeve notes email", copyText = "Everything you need to know from the Guardian's music site, squeezed into one handy email.",link = "Sign up for the Sleeve notes email")),
-    ("speakers-corner", MailingListDetails(id = 2313, label = "Speakers' Corner", title = "Get the Speakers' Corner email", copyText = "The most shared comment, analysis and editorial articles delivered every weekday lunchtime.",link = "Sign up for the Speakers' Corner email")),
+    ("comment-is-free", MailingListDetails(id = 2313, label = "Comment is free", title = "Get the best of Comment is free", copyText = "The most shared comment, analysis and editorial articles delivered every weekday lunchtime.",link = "Sign up for the Comment is free email")),
     ("the-breakdown", MailingListDetails(id = 219, label = "The Breakdown", title = "Sign up for The Breakdown email", copyText = "Every Thursday Paul Rees gives his thoughts on the big stories and reviews the latest action.",link = "Sign up for The Breakdown email")),
     ("the-fiver", MailingListDetails(id = 218, label = "The Fiver", title = "Sign up for The Fiver email", copyText = "The Guardian's free football email, delivered every weekday at around 5pm — hence the name.",link = "Sign up for The Fiver email")),
     ("the-flyer", MailingListDetails(id = 2211, label = "The Flyer", title = "Sign up for The Flyer email", copyText = "All the latest travel stories, UK hotel and restaurant reviews, insider tips and inspiring top 10s.",link = "Sign up for The Flyer email")),
@@ -51,7 +51,7 @@ object EmailSignupsMapping {
 		("world", "daily-email"),
 		("football", "the-fiver"),
 		("travel", "the-flyer"),
-		("commentisfree", "speakers-corner")
+		("commentisfree", "comment-is-free")
 	)
 
 	val FormIdFromTag: Map[String, String] = Map(

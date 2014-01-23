@@ -1,4 +1,4 @@
-var container = '.container:nth-child(2)',
+var container = '.container--sport',
     button = container + ' .container__toggle';
 
 /**

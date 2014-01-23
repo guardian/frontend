@@ -35,15 +35,11 @@
 }
 
 .search-box {
-    margin: 0 $gutter;
+    margin: 0 $gs-gutter;
 }
 
 .gsc-search-box .gsib_a {
     padding-top: 2px;
-}
-
-.gsc-search-box .gsc-input {
-    padding: 0;
 }
 
 .gsc-search-box .gsc-input-box {
@@ -52,6 +48,7 @@
 
 .gsc-search-box .gsc-input {
     padding: 0 !important;
+    margin: 0 !important;
 }
 
 td.gsc-search-button {
@@ -73,12 +70,12 @@ input.gsc-search-button-v2 {
 }
 
 .gsc-control-cse {
-    padding: 0 $gutter !important;
+    padding: 0 $gs-gutter !important;
 }
 
-.gsc-results .gsc-thumbnail-inside, 
+.gsc-results .gsc-thumbnail-inside,
 .gsc-results .gsc-url-top {
-    padding-left: 0; 
+    padding-left: 0;
 }
 
 .gsc-results .gs-snippet {
@@ -90,7 +87,7 @@ input.gsc-search-button-v2 {
     overflow: hidden;
 }
 
-.gsc-result .gs-title, 
+.gsc-result .gs-title,
 .gsc-result .gs-title * {
     height: inherit !important;
     overflow: visible !important;

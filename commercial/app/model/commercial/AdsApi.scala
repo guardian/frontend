@@ -6,21 +6,26 @@ import play.api.libs.ws.WS
 import common.{ExecutionContexts, Logging}
 import scala.xml.{XML, Elem}
 import com.ning.http.util.AsyncHttpProviderUtils
+import conf.Switch
 
 trait AdsApi[F, T <: Ad] extends ExecutionContexts with Logging {
 
+  protected val switch: Switch
+
   protected val adTypeName: String
+
+  protected def url: Option[String]
 
   // following RFC-2616#3.7.1
   protected val characterEncoding: String = AsyncHttpProviderUtils.DEFAULT_CHARSET
 
   protected val loadTimeout: Int = 2000
 
-  def transform(body: String): F
+  protected def transform(body: String): F
 
   def parse(feed: F): Seq[T]
 
-  def loadAds(url: Option[String]): Future[Seq[T]] = {
+  def loadAds(): Future[Seq[T]] = doIfSwitchedOn {
     url map {
       u =>
         val fads = WS.url(u) withRequestTimeout loadTimeout get() map {
@@ -51,20 +56,29 @@ trait AdsApi[F, T <: Ad] extends ExecutionContexts with Logging {
       Future(Nil)
     }
   }
+
+  private def doIfSwitchedOn(action: => Future[Seq[T]]): Future[Seq[T]] = {
+    if (switch.isSwitchedOn) {
+      action
+    } else {
+      log.warn(s"Feed for $adTypeName switched off")
+      Future(Nil)
+    }
+  }
 }
 
 trait JsonAdsApi[T <: Ad] extends AdsApi[JsValue, T] {
 
-  def transform(body: String): JsValue = Json.parse(body)
+  final def transform(body: String): JsValue = Json.parse(body)
 
   def parse(json: JsValue): Seq[T]
 }
 
 trait XmlAdsApi[T <: Ad] extends AdsApi[Elem, T] {
 
-  def cleanResponseBody(body: String): String = body
+  protected def cleanResponseBody(body: String): String = body
 
-  def transform(body: String): Elem = XML.loadString(cleanResponseBody(body))
+  final def transform(body: String): Elem = XML.loadString(cleanResponseBody(body))
 
   def parse(xml: Elem): Seq[T]
 }

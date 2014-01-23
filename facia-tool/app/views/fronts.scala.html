@@ -194,44 +194,62 @@
                 underDrag: state.underDrag
             }">
 
-            <a target="article" data-bind="attr: {href: 'http://www.theguardian.com/' + props.id()}">
+            <a target="article" data-bind="
+                attr: {href: 'http://www.theguardian.com/' + props.id()},
+                click: open">
                 <img draggable="false" data-bind="
-                    attr: {src: fields.thumbnail, title: props.id}" />
+                    attr: {src: fields.thumbnail, title: props.id}"/>
             </a>
+
             <div class="article__date" data-bind="text: humanDate"></div>
-            <div class="article__remove" data-bind="click: $parent.omitItem">
-                <i class="icon-trash icon-white"></i>
-            </div>
 
             <div data-bind="if: state.open">
-                <div class="article__overrides u-cf">
-                    <input class="headline-input" type="text" data-bind="
-                        value: headlineInput,
-                        event: {blur: save},
-                        attr: {placeholder: fields.headline}"/>
-                    <a class="revert revert--headline" data-bind="
-                        click: headlineRevert,
-                        attr: {title: fields.headline},
-                        visible: meta.headline">Revert</a>
-
-                    <textarea class="trailtext" type="text" data-bind="
-                        value: trailTextInput,
-                        event: {blur: save},
-                        attr: {placeholder: fields.trailText}"/></textarea>
-                    <a class="revert revert--trailtext" data-bind="
-                        click: trailTextRevert,
-                        attr: {title: 'Revert to: ' + fields.trailText},
-                        visible: meta.trailText">Revert</a>
-
-                    <div class="image__overrides">
-                        <a data-bind="
-                        click: toggleImageAdjustHide,
-                        css: {selected: meta.imageAdjust() === 'hide'}">Hide image</a>
-                        |
-                        <a data-bind="
+                <div class="image__overrides">
+                    <a data-bind="
                         click: toggleImageAdjustHighlight,
-                        css: {selected: meta.imageAdjust() === 'highlight'}">Highlight image</a>
+                        text: meta.imageAdjust() === 'highlight' ? 'Highlighted' : 'Highlight',
+                        css: {selected: meta.imageAdjust() === 'highlight'}"></a>
+                    <a data-bind="
+                        click: toggleImageAdjustHide,
+                        text: meta.imageAdjust() === 'hide' ? 'Hidden' : 'Hide',
+                        css: {selected: meta.imageAdjust() === 'hide'}">Hide</a>
+                </div>
+
+                <div class="article__overrides u-cf">
+                    <div class="article__overrides__fields">
+                        <input type="text" data-bind="
+                            value: headlineInput,
+                            event: {blur: save},
+                            attr: {placeholder: fields.headline}"/>
+                        <a class="revert revert--headline" data-bind="
+                            click: headlineRevert,
+                            attr: {title: 'Revert to: ' + fields.headline()},
+                            visible: meta.headline"><i class="icon-fast-backward"></i></a>
+
+                        <textarea class="trailtext" type="text" data-bind="
+                            value: trailTextInput,
+                            event: {blur: save},
+                            attr: {placeholder: fields.trailText}"/></textarea>
+                        <a class="revert revert--trailtext" data-bind="
+                            click: trailTextRevert,
+                            attr: {title: 'Revert to: ' + fields.trailText()},
+                            visible: meta.trailText"><i class="icon-fast-backward"></i></a>
                     </div>
+
+                    <div class="tools">
+                        <a class="tool tool--done" data-bind="click: close">Done</a
+                       ><a class="tool tool--remove" data-bind="click: $parent.omitItem">
+                            <i class="icon-trash"></i>
+                        </a>
+                    </div>
+
+                    <div class="misc__overrides">
+                        Mark as: <a data-bind="
+                            click: toggleIsBreaking,
+                            css: {selected: meta.isBreaking}">breaking news</a>
+                    </div>
+
+                    <div class="supporting-message">Add supporting content below</div>
                 </div>
 
                 <div data-bind="if: parentType === 'Collection' || parentType === 'Clipboard'">
@@ -242,15 +260,24 @@
                             template: {name: 'template_article', foreach: items}"></div>
 
                     </div>
-                    <div class="supporting-message">Add supporting content below</div>
-                    <div class="tools">
-                        <a class="tool" data-bind="click: close">Close</a>
-                    </div>
                 </div>
             </div>
 
-            <div data-bind="if: !state.open()">
-                <a class="article_stats u-cf" target="ophan" data-bind="attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + props.id()}">
+            <div class="closed" data-bind="if: !state.open()">
+                <div class="image__overrides" data-bind="
+                    visible: meta.imageAdjust,
+                    click: open">
+                    <span class="selected" data-bind="
+                        visible: meta.imageAdjust() === 'highlight'">Highlighted</span>
+                    <span class="selected" data-bind="
+                        visible: meta.imageAdjust() === 'hide'">Hidden</span>
+                </div>
+
+                <a class="tool tool--remove" data-bind="click: $parent.omitItem">
+                    <i class="icon-trash"></i>
+                </a>
+
+                <a class="article__stats u-cf" target="ophan" data-bind="attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + props.id()}">
                     <div class="pageviews" data-bind="if: totalHitsFormatted()"><span data-bind="text: totalHitsFormatted"></span></div>
                     <div class="pageviews-graph" data-bind="if: state.pageViewsSeries(), sparkline: state.pageViewsSeries"></div>
                 </a>

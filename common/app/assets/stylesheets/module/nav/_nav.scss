@@ -30,6 +30,7 @@
     }
 }
 
+
 /* ==========================================================================
    Nav Modifiers
    ========================================================================== */
@@ -353,6 +354,7 @@
     }
 }
 
+
 /* Identity Menu
    ========================================================================== */
 
@@ -366,14 +368,17 @@
     @include mq(desktop) {
         width: auto;
     }
+
     > .nav {
-        padding-left: 4px;
-        padding-right: 4px;
+        padding-left: $gs-gutter/5;
+        padding-right: $gs-gutter/5;
+
         > .nav__item {
             width: 100%;
             padding: 0 $gs-gutter/2;
+
             .nav__link {
-                padding: $gs-gutter/2 0;
+                padding: 10px 0;
                 border: none;
             }
         }

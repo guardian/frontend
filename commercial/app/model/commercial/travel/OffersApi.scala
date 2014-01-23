@@ -1,18 +1,17 @@
 package model.commercial.travel
 
-import scala.concurrent.Future
 import org.joda.time.format.DateTimeFormat
 import scala.xml.{Elem, Node}
 import model.commercial.XmlAdsApi
-import conf.CommercialConfiguration
+import conf.{Switches, CommercialConfiguration}
 
-object OffersApi extends XmlAdsApi[Offer] {
+trait OffersApi extends XmlAdsApi[Offer] {
 
-  protected val adTypeName = "Travel Offers"
+  protected val switch = Switches.TravelOffersFeedSwitch
 
-  private lazy val url = CommercialConfiguration.getProperty("traveloffers.api.url")
-  private lazy val allUrl = url map (u => s"$u/xmloffers")
-  private lazy val mostPopularUrl = url map (u => s"$u/xmlmostpopular")
+  protected val path: String
+
+  protected val url = CommercialConfiguration.getProperty("traveloffers.api.url") map (u => s"$u/$path")
 
   override protected val loadTimeout = 30000
 
@@ -37,8 +36,16 @@ object OffersApi extends XmlAdsApi[Offer] {
       case (offerXml, idx) => buildOffer(idx, offerXml)
     }
   }
+}
 
-  def getAllOffers: Future[List[Offer]] = loadAds(allUrl) map (_.toList)
 
-  def getMostPopularOffers: Future[List[Offer]] = loadAds(mostPopularUrl) map (_.toList)
+object AllOffersApi extends OffersApi {
+  protected val adTypeName = "All Travel Offers"
+  protected lazy val path = "xmloffers"
+}
+
+
+object MostPopularOffersApi extends OffersApi {
+  protected val adTypeName = "Most Popular Travel Offers"
+  protected lazy val path = "xmlmostpopular"
 }

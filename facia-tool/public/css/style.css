@@ -92,10 +92,6 @@ a, a:hover {
     padding: 0 0 0 4px;
 }
 
-.finder .latest-articles {
-    padding: 0 10px 0 0;
-}
-
 .title {
     font-size: 18px;
     font-weight: bold;
@@ -156,7 +152,7 @@ a, a:hover {
 
 .list-header__collapser {
     float: right;
-    margin: 2px 0 0 6px;
+    margin: 2px 7px 0 8px;
     opacity: 0.75;
 }
 
@@ -188,7 +184,7 @@ a, a:hover {
 .collections__inner {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    padding: 0 10px 0 0;
+    padding: 0 5px 0 0;
 }
 
 .collection {
@@ -245,7 +241,7 @@ a, a:hover {
 }
 
 .article_content {
-    margin: 0 100px 0 85px;
+    margin: 0 125px 0 85px;
     line-height: 0;
 }
 
@@ -305,82 +301,109 @@ div.trailtext {
     top: 3px;
     left: 4px;
     width: 75px;
-    height: 13px;
+    height: 14px;
     overflow: hidden;
-    padding: 0 0 0 2px;
+    padding: 1px 0 0 4px;
     color: #FFFFFF;
     font-size: 10px;
     line-height: 14px;
     background: rgba(0,0,0,0.2);
-    border-bottom-top-radius: 2px;
-    border-bottom-top-radius: 2px;
-}
-
-.article__remove {
-    display: none;
-    position: absolute;
-    top: 3px;
-    left: 59px;
-    background: #0088cc;
-    width: 14px;
-    height: 20px;
-    padding: 0px 3px;
-    cursor: pointer;
-    z-index: 99;
-    border-radius: 2px;
-}
-
-.droppable .article:hover > .article__remove {
-    display: block;
-}
-
-.droppable .article__remove:hover {
-    background: #0077BB;
+    z-index: 1;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
 }
 
 .article__overrides {
     position: relative;
     margin: 1px 0 0 80px;
-    padding: 0 55px 0 0;
-    color: #CCCCCC;
+    padding: 0 0 3px 0;
+    color: #666666;
+    font-size: 12px;
+    line-height: 19px;
 }
 
 .article__overrides input {
-    z-index: 99;
+    padding-right: 10px;
     background: #eeeeee;
     width: 100%;
 }
 
 .article__overrides a {
-    font-size: 12px;
-    line-height: 13px;
+}
+
+.article__overrides .tools {
+    float: right;
+}
+
+.article__overrides__fields {
+    padding: 0 25px 0 0;
+}
+
+.misc__overrides {
+    margin: 0 0 0 6px;
+}
+
+.misc__overrides .selected {
+    color: #d61d00;
+    font-weight: bold;
 }
 
 .image__overrides {
-    color: #AAAAAA;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    position: absolute;
+    top: 3px;
+    left: 4px;
+    width: 75px;
+    height: 45px;
     font-size: 12px;
+    line-height: 14px;
+    color: #666666;
+    background: rgba(0,0,0,0.2);
+    padding: 16px 0 0 4px;
 }
 
-.supporting .image__overrides {
-    display: none;
+.image__overrides a,
+.image__overrides span {
+    display: block;
+    color: #CCCCCC;
 }
 
-.image__overrides a.selected {
-    color: #000000;
+.image__overrides .selected {
+    color: #FFFFFF;
     font-weight: bold;
+}
+
+.supporting-message {
+    font-size: 10px;
+    line-height: 6px;
+    color: #999999;
+    padding: 0 0 0 6px;
+}
+
+.supporting .tool--done,
+.supporting .supporting-message,
+.supporting .image__overrides,
+.supporting .misc__overrides {
+    display: none;
 }
 
 .revert {
     position: absolute;
-    right: 8px;
+    right: 5px;
+    opacity: 0.5;
+}
+
+.revert:hover {
+    opacity: 0.9;
 }
 
 .revert--headline {
-    top: 7px;
+    top: 2px;
 }
 
 .revert--trailtext {
-    top: 23px;
+    top: 30px;
 }
 
 select,
@@ -426,9 +449,10 @@ button {
     margin: -6px 0 0 3px;
 }
 
-.article_stats {
+.article__stats {
     position: absolute;
-    right: 4px;
+    top: 2px;
+    right: 27px;
     height: 30px;
     font-size: 9px;
     line-height: 12px;
@@ -592,12 +616,44 @@ button {
     margin-right: 4px;
 }
 
-.tool:first-child {
+.tools .tool:first-child {
     background: #0088cc;
 }
 
-.tool:first-child:hover {
+.tools .tool:first-child:hover {
     background: #0077BB;
+}
+
+.tool--remove {
+    background: #FFFFFF;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0 4px;
+    margin: 0 1px 0 3px;
+}
+
+.tool--remove i {
+    margin: 0;
+}
+
+.latest-articles .tool--remove {
+    display: none;
+}
+
+.article .closed .tool--remove {
+    opacity: 0.3;
+    margin: 27px 1px 0 0;
+    float: right;
+}
+
+.article:hover .closed .tool--remove {
+    background: #EEEEEE;
+    opacity: 1;
+}
+
+.article .closed .tool--remove:hover {
+    background: #CCCCCC;
+    opacity: 1;
 }
 
 .logout,
@@ -639,23 +695,6 @@ button {
     margin: 0 -2px -4px -4px;
 }
 
-
-.supporting-message {
-    position: absolute;
-    top: 53px;
-    z-index: 2;
-    left: 4px;
-    font-size: 10px;
-    line-height: 12px;
-    color: #666666;
-    width: 75px;
-}
-.article .tools {
-    position: absolute;
-    top: 34px;
-    right: 2px;
-}
-
 @media (max-width: 1100px) {
     .toolbar,
     .collections {
@@ -668,7 +707,7 @@ button {
     .finder .article .article_content {
         margin-right: 0;
     }
-    .finder .article .article_stats {
+    .finder .article .article__stats {
         display: none;
     }
 }
@@ -706,7 +745,7 @@ button {
     .article .article_content {
         margin-right: 0;
     }
-    .article .article_stats {
+    .article .article__stats {
         display: none;
     }
 }

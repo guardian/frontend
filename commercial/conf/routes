@@ -22,5 +22,5 @@ GET        /commercial/soulmates/mixed             controllers.commercial.Soulma
 GET        /commercial/soulmates/mixed.json        controllers.commercial.SoulmateAds.mixed
 
 # Money offers
-GET        /commercial/money/easyaccess            controllers.commercial.MoneyOffers.easyAccessProductsHtml
-GET        /commercial/money/easyaccess.json       controllers.commercial.MoneyOffers.easyAccessProductsJson
+GET        /commercial/money/bestbuys              controllers.commercial.MoneyOffers.bestBuys(format="html")
+GET        /commercial/money/bestbuys.json         controllers.commercial.MoneyOffers.bestBuys(format="json")

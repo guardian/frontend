@@ -1,11 +1,11 @@
 define([
+    'common/$',
     'common/common',
-    'bean',
-    'bonzo'
+    'bean'
 ], function (
+    $,
     common,
-    bean,
-    bonzo
+    bean
 ) {
 
     var Search = function (config) {
@@ -27,6 +27,7 @@ define([
 
             bean.on(document, 'click touchstart', '.control--search', function(e) {
                 searchLoader();
+                self.focusSearchField();
                 e.preventDefault();
             });
 
@@ -38,11 +39,23 @@ define([
             });
         }
 
+        this.focusSearchField = function() {
+            var $input = $('input.gsc-input');
+            if ($input.length > 0) {
+                $input.focus();
+            }
+        };
+
         this.load = function() {
             var s,
                 x;
 
             container = currentContext.querySelector('.nav-popup-search');
+
+            // Set so Google know what to do
+            window.__gcse = {
+                callback: self.focusSearchField
+            };
 
             // Unload any search placeholders elsewhere in the DOM
             Array.prototype.forEach.call(document.querySelectorAll('.nav-popup-search'), function(c){
@@ -53,7 +66,7 @@ define([
 
             // Load the Google search monolith, if not already present in this context.
             // We have to re-run their script each time we do this.
-            if (! container.innerHTML) {
+            if (!container.innerHTML) {
                 container.innerHTML = '' +
                     '<div class="search-box" role="search">' +
                         '<gcse:searchbox></gcse:searchbox>' +

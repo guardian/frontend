@@ -34,7 +34,10 @@
                     }
                 }
                 <h@if(isFirstContainer && index == 0){1}else{2} class="item__title">
-                    @if(trail.isLive){
+                    @if(trail.isBreaking){
+                        <span class="item__live-indicator">Breaking News</span>
+                    }
+                    @if(trail.isLive && !trail.isBreaking){
                         <span class="item__live-indicator">Live</span>
                     }
                     @if(tone == "comment") {

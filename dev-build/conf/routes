@@ -143,7 +143,7 @@ GET         /commercial/travel/offers.json                                      
 GET         /commercial/jobs.json                                                                                    controllers.commercial.JobAds.jobs
 GET         /commercial/masterclasses.json                                                                           controllers.commercial.MasterClasses.list
 GET         /commercial/soulmates/mixed.json                                                                         controllers.commercial.SoulmateAds.mixed
-GET         /commercial/money/easyaccess.json                                                                        controllers.commercial.MoneyOffers.easyAccessProductsJson
+GET         /commercial/money/bestbuys.json                                                                          controllers.commercial.MoneyOffers.bestBuys(format="json")
 
 # Onward journeys
 GET         /onward/popular-onward/*path.json                                                                        controllers.MostPopularOnwardController.popularOnward(path)

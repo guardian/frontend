@@ -1,6 +1,7 @@
 define([
     'common/common',
     'common/utils/storage',
+    'common/utils/mediator',
     'common/modules/analytics/mvt-cookie',
 
     //Current tests
@@ -12,6 +13,7 @@ define([
 ], function (
     common,
     store,
+    mediator,
     mvtCookie,
 
     Aa,
@@ -248,15 +250,22 @@ define([
         getAbLoggableObject: function(config) {
             var abLogObject = {};
 
-            getActiveTests().forEach(function (test) {
+            try {
+                getActiveTests().forEach(function (test) {
 
-                if (isParticipating(test)) {
-                    var variant = getTestVariant(test.id);
-                    if (isTestSwitchedOn(test, config) && variant && variant !== 'notintest') {
-                        abLogObject['ab' + test.id] = variant;
+                    if (isParticipating(test)) {
+                        var variant = getTestVariant(test.id);
+                        if (isTestSwitchedOn(test, config) && variant && variant !== 'notintest') {
+                            abLogObject['ab' + test.id] = variant;
+                        }
                     }
-                }
-            });
+                });
+            } catch (error) {
+                // Encountering an error should invalidate the logging process.
+                abLogObject = {};
+
+                mediator.emit('module:error', error, 'common/modules/experiments/ab.js', 267);
+            }
 
             return abLogObject;
         },

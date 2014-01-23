@@ -184,16 +184,21 @@ class OffersApiTest extends FlatSpec with Matchers with ExecutionContexts {
     """.stripMargin
   }
 
+  private val api = new OffersApi {
+    protected lazy val path: String = "test"
+    protected val adTypeName: String = "test"
+  }
+
   "OffersApi" should "build Offers from XML" in {
-    val offers = OffersApi.parse(xml)
+    val offers = api.parse(xml)
     offers should be(Fixtures.untaggedOffers)
   }
 
   "Hydrated Offers" should "provide duration in words" in {
-    val offers = OffersApi.parse(xml)
+    val offers = api.parse(xml)
 
-    offers.find(_.id == 2).head.durationInWords should be ("1 night")
-    offers.find(_.id == 0).head.durationInWords should be ("12 nights")
+    offers.find(_.id == 2).head.durationInWords should be("1 night")
+    offers.find(_.id == 0).head.durationInWords should be("12 nights")
   }
 
 }

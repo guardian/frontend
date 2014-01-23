@@ -1,8 +1,7 @@
 package model.commercial.jobs
 
-import scala.concurrent.Future
 import scala.xml.Elem
-import conf.CommercialConfiguration
+import conf.{Switches, CommercialConfiguration}
 import model.commercial.Utils.OptString
 import model.commercial.XmlAdsApi
 import org.joda.time.format.DateTimeFormat
@@ -10,12 +9,14 @@ import org.apache.commons.lang.StringEscapeUtils.unescapeHtml
 
 object JobsApi extends XmlAdsApi[Job] {
 
+  protected val switch = Switches.JobFeedSwitch
+
   protected val adTypeName = "Jobs"
 
   override protected val characterEncoding = "utf-8"
 
   // url changes daily so cannot be val
-  private def url = {
+  protected def url = {
     val feedDate = DateTimeFormat.forPattern("yyyy-MM-dd").print(System.currentTimeMillis)
     val urlTemplate = CommercialConfiguration.getProperty("jobs.api.url.template")
     urlTemplate map (_ replace("yyyy-MM-dd", feedDate))
@@ -38,6 +39,4 @@ object JobsApi extends XmlAdsApi[Job] {
         )
     }
   }
-
-  def getJobs: Future[Seq[Job]] = loadAds(url)
 }

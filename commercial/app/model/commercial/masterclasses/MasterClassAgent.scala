@@ -22,7 +22,7 @@ object MasterClassAgent extends Logging with ExecutionContexts {
   }
 
   def refresh() {
-    MasterClassesApi.getAll onSuccess {
+    MasterClassesApi.loadAds() onSuccess {
       case results => {
         val upcomingEvents: List[MasterClass] = results.toList.filter(_.isOpen)
         if (!upcomingEvents.isEmpty) agent send upcomingEvents

@@ -51,6 +51,9 @@ ul {
     background-color: orange;
 }
 
+.expiry-days-0, .expiry-days-1, .expiry-days-2 {
+    background-color: red;
+}
 
 .riffraff,
 #pingdom,
