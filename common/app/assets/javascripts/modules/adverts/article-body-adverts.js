@@ -46,8 +46,8 @@ define([
             template          = this.config.inlineAdTemplate,
             article           = document.getElementsByClassName('js-article__container')[0];
 
-        // Placed is the number of adverts currently placed inline. This is more accurate than
-        // using the `i` from the each function
+        // `adsPlaced` is the number of adverts currently placed inline. This is more accurate than
+        // using the `i` from the each function as that can skip ads depending on content length
         if(adPlacedAtBeginning) {
             adsPlaced++;
             limit++;
