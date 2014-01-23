@@ -297,11 +297,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 1, 24)
   )
 
-  val ABEmailSignup = Switch("A/B Tests", "ab-email-signup",
-    "If this is switched on an AB test runs to test article page email signups",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 24)
-  )
-
   val TagLinking = Switch("Feature Switches", "tag-linking",
     "If this is switched on articles that have no in body links will auto link to their tags where possible",
     safeState = Off, sellByDate = endOfQ4 
@@ -403,7 +398,6 @@ object Switches extends Collections {
     ABCommercialInArticleDesktop,
     ABCommercialInArticleMobile,
     ABChartbeatDesktop,
-    ABEmailSignup,
     NetworkFrontUkAlpha,
     NetworkFrontUsAlpha,
     NetworkFrontAuAlpha,
