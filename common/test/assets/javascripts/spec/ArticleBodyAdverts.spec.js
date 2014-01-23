@@ -51,10 +51,10 @@ define([ 'common/common',
 
             it("Should destroy the ads", function() {
                 articleBodyAdverts.init();
-                expect(document.querySelectorAll('.ad-slot--mpu-banner-ad, .ad-slot--inline').length).toBe(3);
+                expect($('.ad-slot--mpu-banner-ad, .ad-slot--inline').length).toBe(3);
 
                 articleBodyAdverts.destroy();
-                expect(document.querySelectorAll('.ad-slot--mpu-banner-ad, .ad-slot--inline').length).toBe(0);
+                expect($('.ad-slot--mpu-banner-ad, .ad-slot--inline').length).toBe(0);
             });
 
             describe('When setting a limit of 1 inline ad', function() {
@@ -62,7 +62,7 @@ define([ 'common/common',
                 it("Should insert only 1 inline ad container to the content", function() {
                     articleBodyAdverts.config.inlineAdLimit = 1;
                     articleBodyAdverts.init();
-                    expect(document.querySelectorAll('.ad-slot--inline').length).toBe(1);
+                    expect($('.ad-slot--inline').length).toBe(1);
                 });
             });
         });
