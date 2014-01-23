@@ -18,7 +18,7 @@ trait AdsApi[F, T <: Ad] extends ExecutionContexts with Logging {
 
   protected val loadTimeout: Int = 2000
 
-  def transform(body: String): F
+  protected def transform(body: String): F
 
   def parse(feed: F): Seq[T]
 
@@ -57,16 +57,16 @@ trait AdsApi[F, T <: Ad] extends ExecutionContexts with Logging {
 
 trait JsonAdsApi[T <: Ad] extends AdsApi[JsValue, T] {
 
-  def transform(body: String): JsValue = Json.parse(body)
+  final def transform(body: String): JsValue = Json.parse(body)
 
   def parse(json: JsValue): Seq[T]
 }
 
 trait XmlAdsApi[T <: Ad] extends AdsApi[Elem, T] {
 
-  def cleanResponseBody(body: String): String = body
+  protected def cleanResponseBody(body: String): String = body
 
-  def transform(body: String): Elem = XML.loadString(cleanResponseBody(body))
+  final def transform(body: String): Elem = XML.loadString(cleanResponseBody(body))
 
   def parse(xml: Elem): Seq[T]
 }
