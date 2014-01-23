@@ -1,3 +1,4 @@
+This document follows http://www.ietf.org/rfc/rfc2119.txt
 
 # Guidance on embeds on NGW
 
