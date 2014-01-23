@@ -34,7 +34,7 @@
     }
 
     a,
-    &.tabs__tab--selected {
+    span {
         @include fs-headline(1);
         @include box-sizing(border-box);
         min-height: $gs-row-height;
@@ -65,21 +65,24 @@
     }
     
     & + & a {
-        border-left: 1px solid rgba(255, 255, 255, 0.5);
-        padding-left: 7px;
+        border-left: 2px solid rgba(255, 255, 255, 0.75);
+        padding-left: 6px;
+    }
+}
+
+.tabs__tab--selected {
+
+    span {
+        background: #ffffff;
     }
 
-    &.tabs__tab--selected {
-        background: #ffffff;
+    & + .tabs__tab a {
+        border-left: 0;
+        padding-left: 8px;
+    }
 
-        & + .tabs__tab a {
-            border-left: 0;
-            padding-left: 8px;
-        }
-
-        @include mq(tablet) {
-            border-bottom-color: #ffffff !important;
-        }
+    @include mq(tablet) {
+        border-bottom-color: #ffffff !important;
     }
 }
 
