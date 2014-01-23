@@ -17,7 +17,7 @@ case class SavingsAccount(
 
 object SavingsApi extends MoneySupermarketApi[SavingsAccount] {
 
-  protected val adTypeName = "Easy Access Products"
+  protected val adTypeName = "Savings Accounts"
 
   protected lazy val path = "savings/easy-access"
 
