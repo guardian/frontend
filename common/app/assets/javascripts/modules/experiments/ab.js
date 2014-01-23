@@ -5,21 +5,18 @@ define([
     'common/modules/analytics/mvt-cookie',
 
     //Current tests
-    'common/modules/experiments/tests/aa',
-    'common/modules/experiments/tests/identity-email-signup'
+    'common/modules/experiments/tests/aa'
 ], function (
     common,
     store,
     mediator,
     mvtCookie,
 
-    Aa,
-    EmailSignup
+    Aa
     ) {
 
     var TESTS = [
-            new Aa(),
-            new EmailSignup()
+            new Aa()
         ],
         participationsKey = 'gu.ab.participations';
 
