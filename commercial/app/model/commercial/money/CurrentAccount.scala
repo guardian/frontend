@@ -49,6 +49,6 @@ object CurrentAccountsApi extends MoneySupermarketApi[CurrentAccount] {
 }
 
 
-object CurrentAccountsAgent extends MoneysupermarketAgent[CurrentAccount] {
+object CurrentAccountsAgent extends MoneyAgent[CurrentAccount] {
   protected def loadProducts() = CurrentAccountsApi.loadAds()
 }

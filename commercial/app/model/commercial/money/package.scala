@@ -23,7 +23,7 @@ package object money {
   }
 
 
-  trait MoneysupermarketAgent[T <: Ad] extends AdAgent[T] with ExecutionContexts {
+  trait MoneyAgent[T <: Ad] extends AdAgent[T] with ExecutionContexts {
 
     protected def loadProducts(): Future[Seq[T]]
 

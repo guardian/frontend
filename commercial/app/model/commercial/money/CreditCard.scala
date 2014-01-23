@@ -61,6 +61,6 @@ object CreditCardsApi extends MoneySupermarketApi[CreditCard] {
 }
 
 
-object CreditCardsAgent extends MoneysupermarketAgent[CreditCard] {
+object CreditCardsAgent extends MoneyAgent[CreditCard] {
   protected def loadProducts() = CreditCardsApi.loadAds()
 }

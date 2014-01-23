@@ -36,6 +36,6 @@ object SavingsApi extends MoneySupermarketApi[SavingsAccount] {
 }
 
 
-object SavingsAgent extends MoneysupermarketAgent[SavingsAccount] {
+object SavingsAgent extends MoneyAgent[SavingsAccount] {
   protected def loadProducts() = SavingsApi.loadAds()
 }

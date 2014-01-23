@@ -63,6 +63,6 @@ object LoansApi extends MoneySupermarketApi[Loan] {
 }
 
 
-object LoansAgent extends MoneysupermarketAgent[Loan] {
+object LoansAgent extends MoneyAgent[Loan] {
   protected def loadProducts() = LoansApi.loadAds()
 }
