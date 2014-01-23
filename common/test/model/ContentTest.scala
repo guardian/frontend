@@ -108,7 +108,7 @@ class ContentTest extends FlatSpec with Matchers with implicits.Dates {
     Content(closedComments).isClosedForComments should be(true)
   }
 
-  it should "realise that it shoudl not show ads" in {
+  it should "realise that it should not show ads" in {
     val sensitive = article.copy(fields =  Some(Map("shouldHideAdverts" -> "true")))
 
     Content(article).shouldHideAdverts should be(false)
