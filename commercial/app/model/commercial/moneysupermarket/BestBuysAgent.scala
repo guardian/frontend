@@ -4,12 +4,13 @@ import model.commercial.Segment
 
 object BestBuysAgent {
 
-  protected val agents = Seq(LoansAgent, EasyAccessAgent)
+  protected val agents = Seq(CreditCardsAgent, LoansAgent, SavingsAgent)
 
-  def adsTargetedAt(segment: Segment): (Seq[Loan], Seq[EasyAccessProduct]) = {
+  def adsTargetedAt(segment: Segment): (Seq[CreditCard], Seq[Loan], Seq[SavingsAccount]) = {
     (
-      LoansAgent.currentAds.sortBy(_.index).take(3),
-      EasyAccessAgent.currentAds.sortBy(_.interestRate).take(3)
+      CreditCardsAgent.currentAds,
+      LoansAgent.currentAds,
+      SavingsAgent.currentAds
       )
   }
 
