@@ -5,6 +5,8 @@
     switches: List[conf.Switch],
     env: String)
 
+@import org.joda.time.{DateTime, Days}
+
 @admin_main("theguardian.com radiator", env, isAuthed = true, hasCharts = true, autoRefresh = true) {
 
     <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/radiator.css")">
@@ -22,8 +24,12 @@
     <div class="expiring-wrapper">
         <h2>Expiring features</h2>
         <ul id="sell-by-date">
-            @switches.map{ switch =>  
-                <li class="Expiring" title="@switch.name">@switch.name</li>
+            @switches.map{ switch =>
+                @defining(Days.daysBetween(new DateTime(), switch.sellByDate).getDays()) { days =>
+                    <li class="Expiring expiry-days-@days" title="@switch.name - expires in @days days">
+                        @switch.name
+                    </li>
+                }
             }
         </ul>
     </div>
