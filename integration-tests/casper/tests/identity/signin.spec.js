@@ -7,10 +7,11 @@
 
  casper.test.setUp(function() {
     casper.start(idHost +'signin?view=mobile');
+    console.log(environment);
 });
 
 
- casper.test.begin("Page loads and key elements are present", function(test) {
+ casper.test.begin("Signin page loads and key elements are present", function(test) {
     casper.then(function testKeyEventsToggle() {
         casper.waitForSelector(".identity-wrapper", function() {
             test.assertTitle('Sign in', 'expected: Sign in');
