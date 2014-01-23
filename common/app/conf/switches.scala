@@ -414,6 +414,8 @@ object Switches extends Collections {
     LCMortgageFeedSwitch
   )
 
+  val abTestSwitches: Seq[Switch] = all.filter(_.group == "A/B Tests")
+
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
 
   def byName(name: String): Option[Switch] = all.find(_.name.equals(name))

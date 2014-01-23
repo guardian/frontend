@@ -26,5 +26,10 @@
         window.abCharts = {
             @charts.map{ lineChart => @chartJson(lineChart) }
         };
+	window.abSwitches = {
+	    @conf.Switches.abTestSwitches.map{ s =>
+		"@JavaScriptVariableName(s.name)": @s.isSwitchedOn,
+	    }
+	}
     </script>
 }
