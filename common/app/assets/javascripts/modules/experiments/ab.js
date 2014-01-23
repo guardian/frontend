@@ -8,8 +8,7 @@ define([
     'common/modules/experiments/tests/aa',
     'common/modules/experiments/tests/identity-email-signup',
     'common/modules/experiments/tests/commercial-in-article-desktop',
-    'common/modules/experiments/tests/commercial-in-article-mobile',
-    'common/modules/experiments/tests/chartbeat-desktop'
+    'common/modules/experiments/tests/commercial-in-article-mobile'
 ], function (
     common,
     store,
@@ -19,16 +18,14 @@ define([
     Aa,
     EmailSignup,
     CommercialInArticlesDesktop,
-    CommercialInArticlesMobile,
-    ChartbeatDesktop
+    CommercialInArticlesMobile
     ) {
 
     var TESTS = [
             new Aa(),
             new EmailSignup(),
             new CommercialInArticlesDesktop(),
-            new CommercialInArticlesMobile(),
-            new ChartbeatDesktop()
+            new CommercialInArticlesMobile()
         ],
         participationsKey = 'gu.ab.participations';
 

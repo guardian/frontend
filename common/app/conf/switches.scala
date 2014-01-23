@@ -292,11 +292,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 1, 28)
   )
 
-  val ABChartbeatDesktop = Switch("A/B Tests", "ab-chartbeat-desktop",
-    "This enables Chartbeat tracking on the site. ",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 24)
-  )
-
   val ABEmailSignup = Switch("A/B Tests", "ab-email-signup",
     "If this is switched on an AB test runs to test article page email signups",
     safeState = Off, sellByDate = new DateMidnight(2014, 1, 24)
@@ -402,7 +397,6 @@ object Switches extends Collections {
     ABAa,
     ABCommercialInArticleDesktop,
     ABCommercialInArticleMobile,
-    ABChartbeatDesktop,
     ABEmailSignup,
     NetworkFrontUkAlpha,
     NetworkFrontUsAlpha,
