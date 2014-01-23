@@ -99,14 +99,10 @@ module.exports = function (grunt) {
             },
             facia: {
                 options: {
-                    dir: staticTargetDir + 'javascripts',
                     keepBuildDir: true,
-                    modules: [
-                        {
-                            name: 'bootstraps/facia',
-                            exclude: ['common/bootstraps/app']
-                        }
-                    ]
+                    name: 'bootstraps/facia',
+                    exclude: ['common/bootstraps/app'],
+                    out: staticTargetDir + 'javascripts/bootstraps/facia.js'
                 }
             }
         },

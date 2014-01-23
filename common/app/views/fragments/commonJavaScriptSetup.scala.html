@@ -32,9 +32,10 @@
         apiName: 'require',
         paths: {
             facebook: '//connect.facebook.net/en_US/all.js',
-            swipe: '@Static("javascripts/components/swipe/swipe.js")',
+            swipe: '@Static("javascripts/vendor/swipe.js")',
             zxcvbn: '@Static("javascripts/components/zxcvbn/index.js")',
-            'ophan/ng': '@{Configuration.javascript.config("ophanJsUrl")}'
+            'ophan/ng': '@{Configuration.javascript.config("ophanJsUrl")}',
+            'bootstraps/facia': '@Static("javascripts/bootstraps/facia.js")'
         }
     };
 
