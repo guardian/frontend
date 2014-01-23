@@ -1,14 +1,13 @@
 .ad-slot {
     width: 100%;
-    padding: 10px 0 6px 0;
+    padding: 10px 0 4px 0;
     text-align: center;
-    height: 54px;
+    min-height: 56px;
 
     //For expandables
     position: relative;
     z-index: 1000;
     @include mq(desktopAd) {
-        height: auto;
         min-height: 96px;
     }
 
@@ -28,10 +27,7 @@
 }
 
 .top-banner-ad-container {
-    height: 70px;
-    @include mq(desktopAd) {
-        height: auto;
-    }
+    min-height: 70px;
 }
 
 .ad-slot--top-banner-ad {
