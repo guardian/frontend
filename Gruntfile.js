@@ -102,6 +102,7 @@ module.exports = function (grunt) {
             facia: {
                 options: {
                     dir: staticTargetDir + 'javascripts',
+                    keepBuildDir: true,
                     modules: [
                         {
                             name: 'bootstraps/facia',
@@ -669,12 +670,12 @@ module.exports = function (grunt) {
         if (!isDev) {
             grunt.task.run('uglify:vendor');
         }
+        grunt.task.run('requirejs:common');
         // When an app defines it's own javascript application, the requirejs task will need to compile both
         // common and app.
         if (grunt.config('requirejs')[app]) {
             grunt.task.run('requirejs:' + app);
         }
-        grunt.task.run('requirejs:common');
     });
     grunt.registerTask('compile:fonts', ['clean:fonts', 'mkdir:fontsTarget', 'webfontjson']);
     grunt.registerTask('compile:flash', ['clean:flash', 'copy:flash']);
