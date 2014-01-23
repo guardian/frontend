@@ -27,9 +27,11 @@ object AnalyticsSanityCheckJob extends ExecutionContexts with implicits.Futures 
     }
 
     sequence(Seq(omniture, ophan)).foreach{ case (omniture :: ophan :: Nil) =>
+      log.info("Adding omniture = "+omniture+" ophan="+ophan+" ratio"+(omniture/ophan *100))
       model.diagnostics.CloudWatch.put("Analytics", Map(
         "omniture-percent-conversion" -> omniture,
-        "ophan-percent-conversion" -> ophan
+        "ophan-percent-conversion" -> ophan,
+        "omniture-ophan-correlation" -> omniture/ophan * 100
       ))
     }
  }
