@@ -13,7 +13,9 @@ stylesheets, cascading JavaScript errors, co-dependencies being created between 
 
 ## Basics
 
-Embeds MUST provide an URL over HTTP or code fragment
+Embeds MUST provide an URLor code fragment that calls an iframe to reference the application that needs embeding.
+
+Explicitly, the embed code is not 500 lines of HTML and CSS pasted in to the CMS as per Code Objects in R2.
 
 TODO? - Embeds SHOULD work over HTTPS.  
 
