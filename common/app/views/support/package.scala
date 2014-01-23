@@ -86,10 +86,6 @@ case class PopularContainer(showMore: Boolean = true) extends Container {
   val containerType = "popular"
   val tone: String = "news"
 }
-case class TopStoriesContainer(showMore: Boolean = true) extends Container {
-  val containerType = "top-stories"
-  val tone = "news"
-}
 case class SectionContainer(showMore: Boolean = true, tone: String = "news") extends Container {
   val containerType = "section"
 }
@@ -336,6 +332,7 @@ class TagLinker(article: Article)(implicit val edition: Edition) extends HtmlCle
           tagLink.attr("href", LinkTo(keyword.url, edition))
           tagLink.text(keyword.name)
           tagLink.attr("data-link-name", "auto-linked-tag")
+          tagLink.addClass("u-underline")
 
           p.html(p.html().replaceFirst(keyword.name, tagLink.toString))
         }

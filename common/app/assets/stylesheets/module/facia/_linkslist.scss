@@ -4,13 +4,19 @@
 .linkslist__item {
     border-top: 1px solid $c-neutral5;
     @include rem((
-        min-height: nth(nth($fs-headlines, 1), 2) + 1, // Line height of the action
+        min-height: nth(nth($fs-headlines, 1), 2) + 1,
         padding-top: $gs-baseline/3,
-        padding-bottom: $gs-baseline*1.5 // Simulates margins and don't create
-                                         // extra space at the beginning of a
-                                         // new column break as margins do
+        padding-bottom: $gs-baseline * 1.5 // Simulates margins and don't create
+                                           // extra space at the beginning of a
+                                           // new column break as margins do
     ));
-
+    @include mq(tablet) {
+        @include rem((
+            // Twice the line height of the action
+            min-height: nth(nth($fs-headlines, 1), 2) * 2 + 1,
+            padding-bottom: $gs-baseline
+        ));
+    }
     @include mq($to: tablet) {
         &.show-more--hidden {
             display: none;

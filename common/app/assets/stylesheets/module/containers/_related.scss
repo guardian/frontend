@@ -181,10 +181,6 @@
         .item__meta {
             border-bottom: none;
         }
-
-        .trail__count i {
-            top: 0;
-        }
     }
 
     .item__title {
@@ -243,7 +239,7 @@
         }
 
         .item__live-indicator,
-        .i,
+        .i-clock-light-grey,
         .timestamp__text {
             display: none;
         }

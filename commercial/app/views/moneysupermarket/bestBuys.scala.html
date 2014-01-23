@@ -1,0 +1,53 @@
+@(loans: Seq[model.commercial.moneysupermarket.Loan], savings: Seq[model.commercial.moneysupermarket.EasyAccessProduct])(implicit request: RequestHeader)
+
+<link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
+
+<h1>Loans</h1>
+@loans.map { loan =>
+    <table>
+        <tr>
+            <td>Provider Logo</td>
+            <td><img src="@loan.logoUrl" /></td>
+        </tr>
+        <tr>
+            <td>Loan Name</td>
+            <td>@loan.name</td>
+        </tr>
+        <tr>
+            <td>Headline APR</td>
+            <td>@loan.headlineApr</td>
+        </tr>
+        <tr>
+            <td>APR</td>
+            <td>@loan.apr</td>
+        </tr>
+        <tr>
+            <td><a href="@loan.detailsUrl">Details URL</a></td>
+        </tr>
+    </table>
+}
+
+<h1>Savings</h1>
+@savings.map { product =>
+    <table>
+        <tr>
+            <td>Provider</td>
+            <td>@product.provider</td>
+        </tr>
+        <tr>
+            <td>Provider Logo</td>
+            <td><img src="@product.logoUrl" /></td>
+        </tr>
+        <tr>
+            <td>Product Name</td>
+            <td>@product.name</td>
+        </tr>
+        <tr>
+            <td>Interest Rate</td>
+            <td>@product.interestRate</td>
+        </tr>
+        <tr>
+            <td><a href="@product.applyUrl">Apply URL</a></td>
+        </tr>
+    </table>
+}

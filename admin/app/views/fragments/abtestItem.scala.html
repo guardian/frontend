@@ -1,0 +1,32 @@
+@()
+<div class="abtest-item">
+    <span class="label label-success abtest-item__active-label">active</span>
+    <span class="label label-important abtest-item__expired-label">expired</span>
+    <h3 class="abtest-item__name"></h3>
+    <span class="abtest-item__description"></span>
+    <div class="abtest-item__participation"></div>
+    <div class="row-fluid">
+        <div class="span3 abtest__details">
+            <table class="abtest__table table table-striped table-bordered table-hover table-condensed">
+                <tbody>
+                <tr>
+                    <th class="abtest-item__expiry-title">Expires</th>
+                    <td class="abtest-item__expiry"></td>
+                </tr>
+                <tr>
+                    <th class="abtest-item__audience-title">Audience</th>
+                    <td class="abtest-item__audience"></td>
+                </tr>
+                <tr>
+                    <th class="abtest-teim__audience-offset-title">Offset</th>
+                    <td class="abtest-item__audience-offset"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="abtest-item__chart-container span9">
+            <div class="abtest-item__chart-placeholder">No chart data</div>
+            <div class="abtest-item__chart"></div>
+        </div>
+    </div>
+</div>

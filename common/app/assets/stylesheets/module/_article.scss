@@ -614,6 +614,10 @@ video {
 
 }
 
+.email-signup___inline {
+    margin-top: $baseline*4;
+}
+
 .email-signup___left-body, { // Left-body AB variant
     top: 0;
     @include mq(leftCol) {

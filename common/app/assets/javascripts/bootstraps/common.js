@@ -204,22 +204,13 @@ define([
 
             });
 
-            if (config.switches.ophanMultiEvent) {
-                require('ophan/ng', function (ophan) {
-                    ophan.record({'ab': ab.getParticipations()});
-                });
-            }
-
-            require(config.page.ophanUrl, function (Ophan) {
-
-                if (!Ophan.isInitialised) {
-                    Ophan.isInitialised = true;
-                    Ophan.initLog();
+            function recordOphanSingleEvent(ophan, viewData) {
+                if (!ophan.isInitialised) {
+                    ophan.isInitialised = true;
+                    ophan.initLog();
                 }
 
-                Ophan.additionalViewData(function() {
-
-                    var viewData = {};
+                ophan.additionalViewData(function() {
 
                     var audsci = storage.local.get('gu.ads.audsci');
                     if (audsci) {
@@ -239,8 +230,22 @@ define([
                     return viewData;
                 });
 
-                Ophan.sendLog(undefined, true);
-            });
+                ophan.sendLog(undefined, true);
+            }
+
+            if (config.switches.ophanMultiEvent) {
+                require('ophan/ng', function (ophanMultiEvent) {
+                    ophanMultiEvent.record({'ab': ab.getParticipations()});
+                });
+
+                require(['ophan/ng', config.page.ophanUrl], function (ophanMultiEvent, ophanSingleEvent) {
+                    recordOphanSingleEvent(ophanSingleEvent, { viewId: ophanMultiEvent.viewId });
+                });
+            } else {
+                require(config.page.ophanUrl, function (ophanSingleEvent) {
+                    recordOphanSingleEvent(ophanSingleEvent, {});
+                });
+            }
         },
 
         loadAdverts: function (config) {
@@ -251,7 +256,11 @@ define([
                 };
 
                 if(config.page.contentType === 'Article' && !config.page.isLiveBlog) {
-                    var articleBodyAdverts = new ArticleBodyAdverts();
+                    // Limiting inline ads to 1 until support for different inline
+                    // ads is enabled
+                    var articleBodyAdverts = new ArticleBodyAdverts({
+                        inlineAdLimit: 1
+                    });
 
                     // Add the body adverts to the article page
                     articleBodyAdverts.init();

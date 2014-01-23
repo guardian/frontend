@@ -11,6 +11,8 @@ trait AdsApi[F, T <: Ad] extends ExecutionContexts with Logging {
 
   protected val adTypeName: String
 
+  protected def url: Option[String]
+
   // following RFC-2616#3.7.1
   protected val characterEncoding: String = AsyncHttpProviderUtils.DEFAULT_CHARSET
 
@@ -20,7 +22,7 @@ trait AdsApi[F, T <: Ad] extends ExecutionContexts with Logging {
 
   def parse(feed: F): Seq[T]
 
-  def loadAds(url: Option[String]): Future[Seq[T]] = {
+  def loadAds(): Future[Seq[T]] = {
     url map {
       u =>
         val fads = WS.url(u) withRequestTimeout loadTimeout get() map {

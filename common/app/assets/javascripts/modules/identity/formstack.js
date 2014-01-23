@@ -33,6 +33,7 @@ define([
                 sectionHeader: 'formstack-heading',
                 sectionHeaderFirst: 'formstack-heading--first',
                 sectionText: 'formstack-section',
+                characterCount: 'formstack-count',
                 hide: 'is-hidden'
             },
             fsSelectors: {
@@ -51,6 +52,7 @@ define([
                 sectionHeader: '.fsSectionHeading',
                 sectionHeaderFirst: '.fsSection:first-child .fsSectionHeading',
                 sectionText: '.fsSectionText',
+                characterCount: '.fsCounter',
                 hide: '.hidden, .fsHidden, .ui-datepicker-trigger'
             },
             hiddenSelectors: {
@@ -106,6 +108,11 @@ define([
                 // Handle new errors
                 $(config.fsSelectors.formError, dom.$form).addClass(config.idClasses.formError);
                 $(config.fsSelectors.fieldError, dom.$form).addClass(config.idClasses.fieldError);
+
+                // Update character count absolute positions
+                $(config.fsSelectors.textArea, el).each(function(textarea) {
+                    bean.fire(textarea, 'keyup');
+                });
 
                 self.postMessage('refreshHeight');
             }, 100);
