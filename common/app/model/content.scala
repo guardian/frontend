@@ -291,4 +291,5 @@ class ContentWithMetaData(
   override lazy val trailText: Option[String] = metaData.get("trailText").flatMap(_.asOpt[String]).orElse(super.trailText)
   override lazy val group: Option[String] = metaData.get("group").flatMap(_.asOpt[String])
   override lazy val imageAdjust: Option[String] = metaData.get("imageAdjust").flatMap(_.asOpt[String])
+  override lazy val isBreaking: Boolean = metaData.get("isBreaking").flatMap(_.asOpt[Boolean]).getOrElse(false)
 }
