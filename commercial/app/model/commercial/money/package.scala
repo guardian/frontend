@@ -4,7 +4,7 @@ import conf.{Switches, CommercialConfiguration}
 import common.ExecutionContexts
 import scala.concurrent.Future
 
-package object moneysupermarket {
+package object money {
 
   trait MoneySupermarketApi[T <: Ad] extends XmlAdsApi[T] {
 

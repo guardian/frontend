@@ -1,4 +1,4 @@
-package model.commercial.moneysupermarket
+package model.commercial.money
 
 import model.commercial.{Segment, Ad}
 import scala.xml.Elem

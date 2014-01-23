@@ -3,7 +3,7 @@ package controllers.commercial
 import play.api.mvc._
 import model.Cached
 import common.JsonComponent
-import model.commercial.moneysupermarket.BestBuysAgent
+import model.commercial.money.BestBuysAgent
 
 object MoneyOffers extends Controller {
 
