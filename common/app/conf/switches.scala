@@ -286,21 +286,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val ABCommercialInArticleDesktop = Switch("A/B Tests", "ab-commercial-in-articles-desktop",
-    "If this is on an AB test inserts commercial components in the inline and MPU advert slots (scope to desktop)",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 28)
-  )
-
-  val ABCommercialInArticleMobile = Switch("A/B Tests", "ab-commercial-in-articles-mobile",
-    "If this is on an AB test inserts commercial components in the inline and MPU advert slots (scope to mobile browsers)",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 28)
-  )
-
-  val ABChartbeatDesktop = Switch("A/B Tests", "ab-chartbeat-desktop",
-    "This enables Chartbeat tracking on the site. ",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 24)
-  )
-
   val TagLinking = Switch("Feature Switches", "tag-linking",
     "If this is switched on articles that have no in body links will auto link to their tags where possible",
     safeState = Off, sellByDate = endOfQ4 
@@ -399,9 +384,6 @@ object Switches extends Collections {
     IdentityEthicalAwardsSwitch,
     IdentityFilmAwardsSwitch,
     ABAa,
-    ABCommercialInArticleDesktop,
-    ABCommercialInArticleMobile,
-    ABChartbeatDesktop,
     NetworkFrontUkAlpha,
     NetworkFrontUsAlpha,
     NetworkFrontAuAlpha,
