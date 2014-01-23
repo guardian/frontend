@@ -7,17 +7,20 @@ define([
     'common/modules/component',
     'modules/abtests/participation',
     'bonzo',
-    'qwery'
+    'qwery',
+    'bean'
 ], function (
     _,
     Component,
     Participation,
     bonzo,
-    qwery
+    qwery,
+    bean
     ) {
 
     function ABTestItem(config) {
         this.config = _.extend(this.config, config);
+	this.chart = window.abCharts["ab" + this.config.test.id];
     }
 
     Component.define(ABTestItem);
@@ -31,13 +34,13 @@ define([
     ABTestItem.prototype.componentClass = 'abtest-item';
     ABTestItem.prototype.useBem = true;
 
-    ABTestItem.prototype.renderChart = function(chart) {
+    ABTestItem.prototype.renderChart = function() {
         new google.visualization.LineChart(this.getElem('chart'))
-            .draw(google.visualization.arrayToDataTable(chart.data), {
-                colors: chart.colors,
+	    .draw(google.visualization.arrayToDataTable(this.chart.data), {
+		colors: this.chart.colors,
                 curveType: 'function',
                 chartArea: {
-                    width: "95%",
+		    width: "100%",
                     height: 160,
                     top: 0,
                     left: 15
@@ -74,8 +77,15 @@ define([
 
     ABTestItem.prototype.ready = function() {
         if (window.abCharts) {
-            var chart = window.abCharts["ab" + this.config.test.id];
-            if (chart) { this.renderChart(chart); }
+	    if (this.chart) {
+		var redraw = this.renderChart.bind(this);
+		redraw();
+		var timerid;
+		bean.on(window, 'resize', function() {
+		    if (timerid) { window.clearTimeout(timerid); }
+		    timerid = window.setTimeout(redraw, 150);
+		})
+	    }
         }
     };
 
