@@ -161,7 +161,12 @@ object Switches extends Collections {
 
   val DiagnosticsRequestLogging = Switch("Diagnostics", "enable-diagnostics-request-logging",
     "If this switch is on, then requests to the Diagnostics servers will be logged.",
-    safeState = Off, new DateMidnight(2014, 2, 28)
+    safeState = Off, endOfQ4
+  )
+
+  val DiagnosticsJavascriptErrorLogging = Switch("Diagnostics", "enable-diagnostics-js-error-logging",
+    "If this switch is on, then js error reports sent to the Diagnostics servers will be logged.",
+    safeState = Off, endOfQ4
   )
 
   // Discussion Switches
@@ -393,6 +398,7 @@ object Switches extends Collections {
     AmaaSwitch,
     ImrWorldwideSwitch,
     DiagnosticsRequestLogging,
+    DiagnosticsJavascriptErrorLogging,
     OmnitureVerificationSwitch,
     TravelOffersFeedSwitch,
     JobFeedSwitch,
