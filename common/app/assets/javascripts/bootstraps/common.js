@@ -283,7 +283,7 @@ define([
 
         loadVideoAdverts: function(config) {
             mediator.on('page:common:ready', function(config, context) {
-                if(config.switches.videoAdverts && !config.page.blockAds) {
+                if(config.switches.videoAdverts && !config.page.blockVideoAds) {
                     Array.prototype.forEach.call(context.querySelectorAll('video'), function(el) {
                         var support = detect.getVideoFormatSupport();
                         var a = new VideoAdvert({
