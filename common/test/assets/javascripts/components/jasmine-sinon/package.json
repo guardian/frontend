@@ -1,6 +1,6 @@
 {
   "name": "jasmine-sinon",
-  "version": "0.2.1",
+  "version": "0.3.1",
   "description": "Jasmine BDD matchers for Sinon.JS",
   "main": "lib/jasmine-sinon.js",
   "scripts": {
