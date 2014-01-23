@@ -9,7 +9,8 @@ define([
     'common/modules/experiments/tests/identity-email-signup',
     'common/modules/experiments/tests/commercial-in-article-desktop',
     'common/modules/experiments/tests/commercial-in-article-mobile',
-    'common/modules/experiments/tests/chartbeat-desktop'
+    'common/modules/experiments/tests/chartbeat-desktop',
+    'common/modules/experiments/tests/gravity-recommendations'
 ], function (
     common,
     store,
@@ -20,7 +21,8 @@ define([
     EmailSignup,
     CommercialInArticlesDesktop,
     CommercialInArticlesMobile,
-    ChartbeatDesktop
+    ChartbeatDesktop,
+    GravityRecommendations
     ) {
 
     var TESTS = [
@@ -28,7 +30,8 @@ define([
             new EmailSignup(),
             new CommercialInArticlesDesktop(),
             new CommercialInArticlesMobile(),
-            new ChartbeatDesktop()
+            new ChartbeatDesktop(),
+            new GravityRecommendations()
         ],
         participationsKey = 'gu.ab.participations';
 
