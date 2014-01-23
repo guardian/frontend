@@ -17,8 +17,7 @@ define([
     'common/bootstraps/tag',
     'common/bootstraps/section',
     'common/bootstraps/imagecontent',
-    
-    'common/bootstraps/facia',
+
     'common/bootstraps/football',
     'common/bootstraps/article',
     'common/bootstraps/video',
@@ -43,7 +42,7 @@ define([
     Tag,
     Section,
     ImageContent,
-    Facia,
+
     Football,
     Article,
     Video,
@@ -115,7 +114,9 @@ define([
 
                 // Front
                 if (config.page.isFront) {
-                    Facia.init(config, context);
+                    require('bootstraps/facia', function(facia) {
+                        facia.init(config, context);
+                    });
                 }
 
                 //Football
