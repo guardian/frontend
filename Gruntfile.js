@@ -57,7 +57,6 @@ module.exports = function (grunt) {
                     qwery:        'common/components/qwery/mobile/qwery-mobile',
                     reqwest:      'common/components/reqwest/src/reqwest',
                     postscribe:   'common/components/postscribe/dist/postscribe',
-                    swipe:        'common/components/swipe/swipe',
                     lodash:       'common/components/lodash-amd/modern',
                     imager:       'common/components/imager.js/src/strategies/container',
                     omniture:     'common/components/omniture/omniture',
