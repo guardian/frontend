@@ -37,8 +37,6 @@ define([
                 testData
             ]);
 
-            commentCount.init(document);
-
             server.respond();
         });
 
@@ -55,18 +53,21 @@ define([
         });
 
         it("should get comment counts from ajax end-point", function(){
+            commentCount.init(document);
             waits(function() {
                 expect(common.mediator.emit).toHaveBeenCalledWith('modules:commentcount:loaded');
             });
         });
 
         it("should append comment counts to DOM", function(){
+            commentCount.init(document);
             waits(function() {
                 expect(query.selectorAll('.trail__count--commentcount').length).toBe(3)
             });
         });
 
         it("re run when new trail appear in DOM", function(){
+            commentCount.init(document);
             waits(function() {
                 //common.mediator.emit('module:trailblock-show-more:render');
                 expect(commentCount.getCommentCounts.calledTwice).toBe(true)

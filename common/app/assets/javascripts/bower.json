@@ -9,10 +9,10 @@
     "postscribe": "krux/postscribe",
     "eventEmitter": "~4.2.6",
     "qwery": "~3.4.1",
-    "reqwest": "guardian/reqwest#v0.8.2-alpha",
     "swipe": "guardian/Swipe",
     "imager.js": "oncletom/Imager.js#feature-separation",
     "lodash-amd": "~2.4.1",
+    "reqwest": "~0.9.7",
     "omniture": "guardian/omniture"
   }
 }
