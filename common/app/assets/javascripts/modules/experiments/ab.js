@@ -6,7 +6,6 @@ define([
 
     //Current tests
     'common/modules/experiments/tests/aa',
-    'common/modules/experiments/tests/identity-email-signup',
     'common/modules/experiments/tests/commercial-in-article-desktop',
     'common/modules/experiments/tests/commercial-in-article-mobile',
     'common/modules/experiments/tests/chartbeat-desktop'
@@ -17,7 +16,6 @@ define([
     mvtCookie,
 
     Aa,
-    EmailSignup,
     CommercialInArticlesDesktop,
     CommercialInArticlesMobile,
     ChartbeatDesktop
@@ -25,7 +23,6 @@ define([
 
     var TESTS = [
             new Aa(),
-            new EmailSignup(),
             new CommercialInArticlesDesktop(),
             new CommercialInArticlesMobile(),
             new ChartbeatDesktop()
