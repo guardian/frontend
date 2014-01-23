@@ -1,0 +1,28 @@
+@(loadbalancers: Seq[tools.LoadBalancer])
+@import tools.LoadBalancer
+
+@admin_main("Troubleshooting", "PROD", isAuthed = true) {
+
+    @loadbalancers.map{ lb =>
+        <div class="row-fluid">
+            <div class="span12 well">
+            <form method="GET" action="/troubleshoot/test">
+                <fieldset>
+                    <legend>@lb.name</legend>
+                    @if(lb.name == "Applications"){
+                        You can also use Applicaitons to test...
+                        <ul>
+                            <li>Galleries: /fashion/gallery/2014/jan/22/paris-ss14-couture-shows-in-pictures</li>
+                            <li>Video: /sport/video/2014/jan/22/michelle-obama-miami-heat-lets-move-video</li>
+                            <li>Tags: /world/iraq</li>
+                        </ul>
+                    }
+                    <input type="hidden" value="@lb.project" name="id"/>
+                    <input class="span9" name="testPath" value="@lb.testPath"/>
+                    <input class="btn btn-primary" type="submit" value="Test"/>
+                </fieldset>
+            </form>
+            </div>
+        </div>
+    }
+}
