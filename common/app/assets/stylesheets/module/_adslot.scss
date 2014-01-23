@@ -79,18 +79,9 @@
     @include mq(tablet) {
         width: auto;
         height: auto;
-        float: right;
         padding-top: $baseline;
         padding-left: $gs-gutter;
-    }
-}
-
-.ad-slot--inline.is-even,
-.test-inline-adverts--on .ad-slot--inline {
-    @include mq(tablet) {
-        float: left;
-        padding-right: $gs-gutter;
-        padding-left: 0;
+        float: right;
     }
 }
 

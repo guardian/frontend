@@ -58,8 +58,7 @@ define([
 
         paragraphs.each(function(el, i) {
             var $el   = $(el),
-                words = $el.text().split(' '),
-                cls   = (adsPlaced % 2 === 0) ? '' : 'is-even';
+                words = $el.text().split(' ');
 
             totalWords += words.length;
 
@@ -75,7 +74,7 @@ define([
                     return false;
                 }
 
-                bonzo(bonzo.create(template.replace(/%slot%/g, id))).addClass(cls)[insertMethod]($el);
+                bonzo(bonzo.create(template.replace(/%slot%/g, id)))[insertMethod]($el);
                 // console.log('Placing ad in this element', el, totalWords);
                 adsPlaced++;
             }
