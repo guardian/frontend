@@ -67,7 +67,6 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
   def discardCollection(id: String) = AjaxExpiringAuthentication { request =>
     val identity = Identity(request).get
     FaciaApi.discardBlock(id, identity)
-    notifyContentApi(id)
     Ok
   }
 
