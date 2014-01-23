@@ -24,9 +24,13 @@ $gs-max-columns: 16;
 @mixin gs-container {
     position: relative;
     margin: 0 auto;
-    max-width: gs-span(14) + $gs-gutter*2;
+    @include rem((
+        max-width: gs-span(14) + $gs-gutter*2
+    ));
     @include mq(wide) {
-        max-width: gs-span(16) + $gs-gutter*2;
+        @include rem((
+            max-width: gs-span(16) + $gs-gutter*2
+        ));
     }
 }
 
