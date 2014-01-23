@@ -19,7 +19,7 @@ define([
     ) {
 
     function ABTestItem(config) {
-        this.config = _.extend(this.config, config);
+	this.config = _.extend(_.clone(this.config), config);
 	this.chart = window.abCharts["ab" + this.config.test.id];
     }
 
@@ -66,7 +66,7 @@ define([
         if (!this.config.active) { this.getElem('expiry-title').textContent = "Expired"; }
 
         this.getElem('name').textContent = this.config.test.id;
-        this.getElem('description').textContent = " - " + this.config.test.description;
+	this.getElem('description').textContent = " " + this.config.test.description;
         this.getElem('expiry').textContent = this.config.test.expiry;
         this.getElem('audience').textContent = (this.config.test.audience * 100) + "%";
         this.getElem('audience-offset').textContent = (this.config.test.audienceOffset * 100) + "%";

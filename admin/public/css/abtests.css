@@ -32,6 +32,7 @@
 
 .abtest-item__description {
     display: inline-block;
+    margin-left: 10px;
 }
 
 .abtest-item--active .abtest-item__expiry {
