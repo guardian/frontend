@@ -43,6 +43,7 @@ define([
 
         var totalWords          = 0,
             adsPlaced           = 0,
+            insertMethod        = this.getInsertMethod(),
             limit               = this.config.inlineAdLimit,
             template            = this.config.inlineAdTemplate,
             minWordsInParagraph = this.config.minWordsInParagraph,
@@ -56,14 +57,13 @@ define([
         }
 
         paragraphs.each(function(el, i) {
-            var words = el.innerText.split(' ');
+            var $el   = $(el),
+                words = $el.text().split(' '),
+                cls   = (adsPlaced % 2 === 0) ? '' : 'is-even';
 
             totalWords += words.length;
 
             if(totalWords > ((adsPlaced + 1) * wordsPerAd)) {
-
-                var $el = $(el),
-                    cls = (adsPlaced % 2 === 0) ? '' : 'is-even';
 
                 /*
                  - Checks if limit is set and if so, checks it hasn't been exceeded
@@ -75,7 +75,7 @@ define([
                     return false;
                 }
 
-                bonzo(bonzo.create(template.replace(/%slot%/g, id))).addClass(cls).insertBefore($el);
+                bonzo(bonzo.create(template.replace(/%slot%/g, id))).addClass(cls)[insertMethod]($el);
                 // console.log('Placing ad in this element', el, totalWords);
                 adsPlaced++;
             }
@@ -93,6 +93,10 @@ define([
         var template = this.config.inlineAdTemplate;
 
         $('.js-article__container .article-body p').first().prepend(bonzo(bonzo.create(template.replace(/%slot%/g, id))));
+    };
+
+    ArticleBodyAdverts.prototype.getInsertMethod = function() {
+        return (/mobile/).test(detect.getBreakpoint()) ? 'insertAfter' : 'insertBefore';
     };
 
     ArticleBodyAdverts.prototype.destroy = function() {
