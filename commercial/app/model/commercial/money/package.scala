@@ -4,7 +4,7 @@ import conf.{Switches, CommercialConfiguration}
 import common.ExecutionContexts
 import scala.concurrent.Future
 
-package object moneysupermarket {
+package object money {
 
   trait MoneySupermarketApi[T <: Ad] extends XmlAdsApi[T] {
 
@@ -23,7 +23,7 @@ package object moneysupermarket {
   }
 
 
-  trait MoneysupermarketAgent[T <: Ad] extends AdAgent[T] with ExecutionContexts {
+  trait MoneyAgent[T <: Ad] extends AdAgent[T] with ExecutionContexts {
 
     protected def loadProducts(): Future[Seq[T]]
 

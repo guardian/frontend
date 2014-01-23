@@ -1,8 +1,25 @@
-@(bestBuys: model.commercial.moneysupermarket.BestBuys)(implicit request: RequestHeader)
+@(bestBuys: model.commercial.money.BestBuys)(implicit request: RequestHeader)
 
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
 <h1>Best Buys</h1>
+
+<h2>Mortgages</h2>
+@bestBuys.mortgages.map { mortgage =>
+    <table>
+        <tr>
+            <td>Lender</td>
+            <td>@mortgage.lender</td>
+        </tr>
+        <tr>
+            <td>Interest Rate</td>
+            <td>@mortgage.rate</td>
+        </tr>
+        <tr>
+            <td><a href="@mortgage.detailsUrl">Details URL</a></td>
+        </tr>
+    </table>
+}
 
 <h2>Credit Cards</h2>
 @bestBuys.creditCards.map { card =>

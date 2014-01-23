@@ -209,18 +209,6 @@ object FrontPage {
     },
 
     new FrontPage(isNetworkFront = true) {
-      override val id = "uk-beta"
-      override val section = ""
-      override val webTitle = "The Guardian"
-      override lazy val analyticsName = "GFE:Network Front"
-
-      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
-        "content-type" -> "Network Front",
-        "is-front" -> true
-      )
-    },
-
-    new FrontPage(isNetworkFront = true) {
       override val id = "us-alpha"
       override val section = ""
       override val webTitle = "The Guardian"
