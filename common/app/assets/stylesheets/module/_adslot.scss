@@ -72,16 +72,13 @@
 }
 
 .ad-slot--inline {
-    min-height: auto;
-    padding: 0;
-    padding-bottom: $baseline;
-    max-width: 300px;
     .ad-container {
         line-height: 0;
     }
 
     @include mq(tablet) {
         width: auto;
+        height: auto;
         float: right;
         padding-top: $baseline;
         padding-left: $gs-gutter;

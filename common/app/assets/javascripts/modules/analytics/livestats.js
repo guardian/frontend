@@ -1,18 +1,29 @@
 define([
     'common/utils/cookies',
+    'common/utils/storage',
     'common/modules/experiments/ab'
 ], function (
     Cookies,
+    storage,
     ab
 ) {
+    var newSession;
+
     function isNewSession() {
         var key = 'gu.session';
-        if (window.sessionStorage && !!window.sessionStorage.getItem(key)) {
-            return false;
-        } else {
-            window.sessionStorage.setItem(key, "true");
-            return true;
+
+        if (typeof(newSession) !== 'undefined') {
+            return newSession;
         }
+
+        if (storage.session.get(key)) {
+            newSession = false;
+        } else {
+            storage.session.set(key, "true");
+            newSession = true;
+        }
+
+        return newSession;
     }
 
     function createImage(url, id) {

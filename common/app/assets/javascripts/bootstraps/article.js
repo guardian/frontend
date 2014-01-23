@@ -92,8 +92,8 @@ define([
 
             common.mediator.on('page:article:ready', function(config, context) {
                 if (config.page.commentable && config.switches.discussion) {
-                    var discussionLoader = new DiscussionLoader(context, common.mediator, {}, config.switches.discussionTopComments);
-                    discussionLoader.attachToDefault();
+                    var discussionLoader = new DiscussionLoader(context, common.mediator);
+                    discussionLoader.attachTo($('.discussion')[0]);
                 }
             });
         },

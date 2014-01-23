@@ -45,7 +45,7 @@ We do this by evaluating the client's capability, like so :-
 
 ```
 var isModern = function() { 
-     return ('querySelector' in document && 'addEventListener' in window && 'localStorage' in window)
+     return ('querySelector' in document && 'addEventListener' in window && 'localStorage' in window && 'sessionStorage' in window)
 })
 ```
 

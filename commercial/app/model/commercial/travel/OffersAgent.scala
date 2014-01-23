@@ -18,7 +18,7 @@ object AllOffersAgent extends AdAgent[Offer] with Logging with ExecutionContexts
   override def defaultAds = MostPopularOffersAgent.currentAds
 
   def refresh() = {
-    for {offers <- OffersApi.getAllOffers}
+    for {offers <- AllOffersApi.loadAds()}
     yield updateCurrentAds(populateKeywords(offers))
   }
 
@@ -41,6 +41,6 @@ object AllOffersAgent extends AdAgent[Offer] with Logging with ExecutionContexts
 object MostPopularOffersAgent extends AdAgent[Offer] with ExecutionContexts {
 
   def refresh() {
-    OffersApi.getMostPopularOffers map updateCurrentAds
+    MostPopularOffersApi.loadAds() map updateCurrentAds
   }
 }

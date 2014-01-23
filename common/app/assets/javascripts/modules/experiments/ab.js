@@ -1,32 +1,22 @@
 define([
     'common/common',
     'common/utils/storage',
+    'common/utils/mediator',
     'common/modules/analytics/mvt-cookie',
 
     //Current tests
-    'common/modules/experiments/tests/aa',
-    'common/modules/experiments/tests/identity-email-signup',
-    'common/modules/experiments/tests/commercial-in-article-desktop',
-    'common/modules/experiments/tests/commercial-in-article-mobile',
-    'common/modules/experiments/tests/chartbeat-desktop'
+    'common/modules/experiments/tests/aa'
 ], function (
     common,
     store,
+    mediator,
     mvtCookie,
 
-    Aa,
-    EmailSignup,
-    CommercialInArticlesDesktop,
-    CommercialInArticlesMobile,
-    ChartbeatDesktop
+    Aa
     ) {
 
     var TESTS = [
-            new Aa(),
-            new EmailSignup(),
-            new CommercialInArticlesDesktop(),
-            new CommercialInArticlesMobile(),
-            new ChartbeatDesktop()
+            new Aa()
         ],
         participationsKey = 'gu.ab.participations';
 
@@ -169,7 +159,8 @@ define([
     }
 
     function getTestVariant(testId) {
-        return getParticipations()[testId].variant;
+        var participation = getParticipations()[testId];
+        return participation && participation.variant;
     }
 
     var ab = {
@@ -246,11 +237,23 @@ define([
 
         getAbLoggableObject: function(config) {
             var abLogObject = {};
-            getActiveTests().forEach(function (test) {
-                if (isParticipating(test) && isTestSwitchedOn(test, config) && getTestVariant(test.id) !== 'notintest') {
-                    abLogObject['ab' + test.id] = getTestVariant(test.id);
-                }
-            });
+
+            try {
+                getActiveTests().forEach(function (test) {
+
+                    if (isParticipating(test)) {
+                        var variant = getTestVariant(test.id);
+                        if (isTestSwitchedOn(test, config) && variant && variant !== 'notintest') {
+                            abLogObject['ab' + test.id] = variant;
+                        }
+                    }
+                });
+            } catch (error) {
+                // Encountering an error should invalidate the logging process.
+                abLogObject = {};
+
+                mediator.emit('module:error', error, 'common/modules/experiments/ab.js', 267);
+            }
 
             return abLogObject;
         },

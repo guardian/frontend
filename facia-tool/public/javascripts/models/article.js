@@ -40,20 +40,19 @@ define([
                 'thumbnail',
                 'shortId']);
 
-            this.fields.headline('...');
-
             this.meta = asObservableProps([
                 'updatedAt',
                 'headline',
                 'trailText',
                 'imageAdjust',
+                'isBreaking',
                 'group']);
 
             this.state = asObservableProps([
                 'underDrag',
                 'open',
-                'shares',
-                'comments',
+                'isLoaded',
+                'isEmpty',
                 'sparkUrl']);
 
             // Computeds
@@ -95,7 +94,9 @@ define([
                     return this.meta[key]() || this.fields[key]();
                 },
                 write: function(value) {
-                    this.meta[key](value);
+                    var el = document.createElement('div');
+                    el.innerHTML = value;
+                    this.meta[key](el.innerHTML);
                 },
                 owner: this
             });
@@ -108,11 +109,17 @@ define([
             };
         };
 
-        Article.prototype.populate = function(opts) {
+        Article.prototype.populate = function(opts, withContent) {
             populateObservables(this.props,  opts);
             populateObservables(this.meta,   opts.meta);
             populateObservables(this.fields, opts.fields);
             populateObservables(this.state,  opts.state);
+            this.state.isLoaded(!!withContent);
+        };
+
+        Article.prototype.toggleIsBreaking = function() {
+            this.meta.isBreaking(!this.meta.isBreaking());
+            this._save();
         };
 
         Article.prototype.sparkline = function(opts) {
@@ -163,6 +170,8 @@ define([
                 .map(function(p){ return [p[0], _.isFunction(p[1]) ? p[1]() : p[1]]; })
                 // reject undefined properties:
                 .filter(function(p){ return !_.isUndefined(p[1]); })
+                // reject false properties:
+                .filter(function(p){ return p[1] !== false; })
                 // trim strings:
                 .map(function(p){ return [p[0], _.isString(p[1]) ? fullTrim(p[1]) : p[1]]; })
                 // reject whitespace-only strings:

@@ -116,7 +116,7 @@ $c-live: #e81818;
     @include box-sizing(border-box);
     padding-left: $gs-gutter/2;
     padding-right: $gs-gutter/2;
-    padding-bottom: 14px;
+    padding-bottom: 18px;
 
     @include mq(tablet) {
         display: inline-block;
@@ -153,7 +153,7 @@ $c-live: #e81818;
 .item__image-container {
     display: none;
     position: relative;
-    margin-top: 2px;
+    margin-top: 4px;
     padding-bottom: 60%;
 
     &.inlined-image {
@@ -190,7 +190,8 @@ $c-live: #e81818;
     word-wrap: break-word;
 }
 .item__byline {
-    margin: $gs-baseline/3 0 0;
+    margin-top: $gs-baseline/3;
+    margin-bottom: $gs-baseline/3;
     @include fs-header(2, $size-only: true);
 }
 .item__standfirst,
@@ -201,6 +202,10 @@ $c-live: #e81818;
     display: none;
     margin: 20px 0 0;
     @include fs-headline(1, $size-only: true);
+
+    p {
+        margin-bottom: 0; // Some trail texts are wrapped in a paragraph
+    }
 }
 .item__meta {
     position: absolute;
@@ -351,18 +356,6 @@ $c-live: #e81818;
         left: 50%;
         margin-top: -5px;
         margin-left: -12px;
-    }
-}
-
-
-// Image adjust
-// values: [hide|highlight] in the fronts tool
-.item--imagetone-hide {
-    .item__media-wrapper {
-    }
-}
-.item--imageadjust-highlight {
-    .item__media-wrapper {
     }
 }
 

@@ -11,6 +11,7 @@ trait DiagnosticsLifecycle extends GlobalSettings with Logging {
       model.diagnostics.alpha.LoadJob.run()
       model.diagnostics.javascript.LoadJob.run()
       model.diagnostics.abtests.UploadJob.run()
+      model.diagnostics.analytics.UploadJob.run()
     }
   }
 
@@ -32,6 +33,9 @@ trait DiagnosticsLifecycle extends GlobalSettings with Logging {
   override def onRouteRequest(request: RequestHeader): Option[Handler] = {
     if(Switches.DiagnosticsRequestLogging.isSwitchedOn) {
       log.info(RequestLog(request))
+    }
+    if(Switches.DiagnosticsJavascriptErrorLogging.isSwitchedOn && request.uri.startsWith("/js.gif")) {
+      log.info(diagnostics.JavascriptRequestLog(request))
     }
     super.onRouteRequest(request)
   }

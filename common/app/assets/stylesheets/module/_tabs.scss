@@ -33,12 +33,12 @@
         border-bottom: 1px solid $c-neutral5;
     }
 
-    a {
+    a,
+    .tab__link {
         @include fs-headline(1);
         @include box-sizing(border-box);
         min-height: $gs-row-height;
         text-align: left;
-        color: inherit;
         padding: $baseline 8px 0;
         display: block;
         text-decoration: none;
@@ -59,9 +59,30 @@
             padding: $baseline $gs-gutter/2 0;
         }
     }
+
+    a {
+        color: inherit;
+    }
+    
     & + & a {
-        border-left: 1px solid rgba(255, 255, 255, 0.5);
-        padding-left: 7px;
+        border-left: 2px solid rgba(255, 255, 255, 0.75);
+        padding-left: 6px;
+    }
+}
+
+.tabs__tab--selected {
+    a,
+    .tab__link {
+        background: #ffffff;
+    }
+
+    & + .tabs__tab a {
+        border-left: 0;
+        padding-left: 8px;
+    }
+
+    @include mq(tablet) {
+        border-bottom-color: #ffffff !important;
     }
 }
 
@@ -78,26 +99,13 @@
     display: none;
 }
 
-.tabs__tab--selected {
-    @include mq(tablet) {
-        border-bottom-color: #ffffff !important;
-    }
-    a {
-        background: #ffffff;
-    }
-    & + .tabs__tab a {
-        border-left: 0;
-        padding-left: 8px;
-    }
-}
-
 /* Multiple tabs
  *
  * used for cases where more than 2 tabs are wanted (eg not two 50% width tabs)
  *
    ========================================================================== */
 
-.tabs__continer--multiple {
+.tabs__container--multiple {
     display: table;
     table-layout: fixed;
     width: 100%;

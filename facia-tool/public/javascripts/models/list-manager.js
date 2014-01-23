@@ -109,7 +109,7 @@ define([
                     );
                 })
             );
-            model.frontSparkUrl(vars.CONST.sparksBase + getFront());
+            model.frontSparkUrl(vars.CONST.sparksBaseFront + getFront());
         }
 
         var startPoller = _.once(function() {
@@ -135,7 +135,7 @@ define([
                 });
 
                 model.frontSparkUrl(undefined);
-                model.frontSparkUrl(vars.CONST.sparksBase + getFront());
+                model.frontSparkUrl(vars.CONST.sparksBaseFront + getFront());
             }, period);
         });
 

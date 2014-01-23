@@ -18,6 +18,7 @@ define(['knockout'], function(ko) {
             cacheExpiryMs:         60000, // 1 min
 
             sparksBase:            'http://sparklines.ophan.co.uk/png?graphs=other:09f,google:090,guardian:009&showStats=1&showHours=1&width=100&height=40&page=/',
+            sparksBaseFront:       'http://sparklines.ophan.co.uk/png?graphs=other:09f,google:090,guardian:009&showStats=1&width=100&height=35&hotLevel=250&page=/',
             sparksRefreshMs:       60000, // 1 min
 
             apiBase:               '',

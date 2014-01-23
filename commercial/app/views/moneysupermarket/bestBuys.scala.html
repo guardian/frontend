@@ -1,0 +1,122 @@
+@(bestBuys: model.commercial.money.BestBuys)(implicit request: RequestHeader)
+
+<link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
+
+<h1>Best Buys</h1>
+
+<h2>Mortgages</h2>
+@bestBuys.mortgages.map { mortgage =>
+    <table>
+        <tr>
+            <td>Lender</td>
+            <td>@mortgage.lender</td>
+        </tr>
+        <tr>
+            <td>Interest Rate</td>
+            <td>@mortgage.rate</td>
+        </tr>
+        <tr>
+            <td><a href="@mortgage.detailsUrl">Details URL</a></td>
+        </tr>
+    </table>
+}
+
+<h2>Credit Cards</h2>
+@bestBuys.creditCards.map { card =>
+    <table>
+        <tr>
+            <td>Provider Logo</td>
+            <td><img src="@card.logoUrl" /></td>
+        </tr>
+        <tr>
+            <td>Card Name</td>
+            <td>@card.name</td>
+        </tr>
+        <tr>
+            <td>Balance Transfer Rate</td>
+            <td>@card.balanceTransferRate</td>
+        </tr>
+        <tr>
+            <td>Balance Transfer Rate Duration</td>
+            <td>@card.balanceTransferRateDuration</td>
+        </tr>
+        <tr>
+            <td><a href="@card.applyUrl">Apply URL</a></td>
+        </tr>
+    </table>
+}
+
+<h2>Loans</h2>
+@bestBuys.loans.map { loan =>
+    <table>
+        <tr>
+            <td>Provider Logo</td>
+            <td><img src="@loan.logoUrl" /></td>
+        </tr>
+        <tr>
+            <td>Loan Name</td>
+            <td>@loan.name</td>
+        </tr>
+        <tr>
+            <td>Headline APR</td>
+            <td>@loan.headlineApr</td>
+        </tr>
+        <tr>
+            <td>APR</td>
+            <td>@loan.apr</td>
+        </tr>
+        <tr>
+            <td><a href="@loan.detailsUrl">Details URL</a></td>
+        </tr>
+    </table>
+}
+
+<h2>Savings Accounts</h2>
+@bestBuys.savings.map { account =>
+    <table>
+        <tr>
+            <td>Provider</td>
+            <td>@account.provider</td>
+        </tr>
+        <tr>
+            <td>Provider Logo</td>
+            <td><img src="@account.logoUrl" /></td>
+        </tr>
+        <tr>
+            <td>Account Name</td>
+            <td>@account.name</td>
+        </tr>
+        <tr>
+            <td>Interest Rate</td>
+            <td>@account.interestRate</td>
+        </tr>
+        <tr>
+            <td><a href="@account.applyUrl">Apply URL</a></td>
+        </tr>
+    </table>
+}
+
+<h2>Current Accounts</h2>
+@bestBuys.currentAccounts.map { account =>
+    <table>
+        <tr>
+            <td>Provider</td>
+            <td>@account.provider</td>
+        </tr>
+        <tr>
+            <td>Provider Logo</td>
+            <td><img src="@account.logoUrl" /></td>
+        </tr>
+        <tr>
+            <td>Account Name</td>
+            <td>@account.name</td>
+        </tr>
+        <tr>
+            <td>Interest Rate</td>
+            <td>@account.interestRate</td>
+        </tr>
+        <tr>
+            <td><a href="@account.applyUrl">Apply URL</a></td>
+        </tr>
+    </table>
+}

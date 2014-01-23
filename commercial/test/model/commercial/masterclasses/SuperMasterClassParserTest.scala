@@ -11,7 +11,7 @@ import concurrent.duration._
 // This is a sanity check test. Run only when applicable.
 class SuperMasterClassParserTest extends FlatSpec with Matchers with ExecutionContexts {
   ignore  should "Be able to parse everything out of the EventBrite feed" in {
-      val futureChicken: Future[Seq[MasterClass]] = MasterClassesApi.getAll
+      val futureChicken: Future[Seq[MasterClass]] = MasterClassesApi.loadAds()
 
       val events = Await.result(futureChicken, 30 seconds)
 

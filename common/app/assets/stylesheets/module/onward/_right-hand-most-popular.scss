@@ -3,7 +3,9 @@
 }
 
 .right-most-popular__title {
-    height: gs-height(1);
+    @include rem((
+        height: gs-height(1)
+    ));
     padding-top: $baseline;
     margin-bottom: $gs-baseline/1.5;
     border-top: 1px dotted $c-neutral5;
@@ -13,9 +15,11 @@
 
 .right-most-popular-item {
     clear: left;
-    height: $gs-row-height*2 + 3px;
-    padding-top: $baseline*2;
-    margin-bottom: $gs-baseline*2;
+    @include rem((
+        height: $gs-row-height*2 + 3px,
+        padding-top: $baseline*2,
+        margin-bottom: $gs-baseline*2
+    ));
     border-top: 1px dotted $c-neutral5;
 
     &:first-child {

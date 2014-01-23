@@ -59,3 +59,6 @@ GET         /radiator/livestats           controllers.admin.RadiatorController.l
 
 # Football Troubleshooter
 GET         /troubleshoot/football        controllers.admin.FootballTroubleshooterController.renderFootballTroubleshooter()
+
+GET         /troubleshoot/pages           controllers.admin.TroubleshooterController.index()
+GET         /troubleshoot/test            controllers.admin.TroubleshooterController.test(id, testPath)

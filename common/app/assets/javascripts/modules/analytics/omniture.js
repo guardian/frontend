@@ -150,11 +150,11 @@ define([
                     s.eVar51  = alphaTag + s.eVar51;
                 }
 
-                // is user is viewing uk-alpha front
-                if (config.page.pageId === 'uk-alpha') {
-                    var ukAlphaTag = 'uk-alpha,';
-                    s.prop51  = ukAlphaTag + s.prop51;
-                    s.eVar51  = ukAlphaTag + s.eVar51;
+                // is user is viewing an alpha front
+                if (/^.+-alpha$/.test(config.page.pageId)) {
+                    var frontAlphaTag = config.page.pageId + ',';
+                    s.prop51  = frontAlphaTag + s.prop51;
+                    s.eVar51  = frontAlphaTag + s.eVar51;
                 }
 
                 s.events = s.apl(s.events,'event58',',');
@@ -181,7 +181,7 @@ define([
                 s.events = s.apl(s.events, config.page.omnitureEvent, ',');
             }
 
-            s.prop56    = detect.canSwipe() ? 'Javascript with swipe' : 'Javascript';
+            s.prop56    = 'Javascript';
 
             s.prop65    = config.page.headline || '';
 
@@ -210,7 +210,7 @@ define([
                 s.prop69 = config.page.inBodyExternalLinkCount;
             }
 
-            /* Retrieve navigation interaction data, incl. swipe */
+            /* Retrieve navigation interaction data */
             var ni = storage.session.get('gu.analytics.referrerVars');
             if (ni) {
                 var d = new Date().getTime();

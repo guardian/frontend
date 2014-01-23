@@ -4,11 +4,12 @@ define([
     'common/utils/mediator',
     'common/utils/ajax',
     'common/utils/detect',
-    
+    'common/utils/config',
+    'common/utils/context',
+
     'common/modules/analytics/errors',
     'common/modules/ui/fonts',
     'common/modules/router',
-    'common/utils/config',
     'common/modules/adverts/userAdTargeting',
     'common/modules/discussion/api',
 
@@ -16,8 +17,7 @@ define([
     'common/bootstraps/tag',
     'common/bootstraps/section',
     'common/bootstraps/imagecontent',
-    
-    'common/bootstraps/facia',
+
     'common/bootstraps/football',
     'common/bootstraps/article',
     'common/bootstraps/video',
@@ -29,11 +29,12 @@ define([
     mediator,
     ajax,
     detect,
+    config,
+    Context,
 
     Errors,
     Fonts,
     Router,
-    config,
     UserAdTargeting,
     DiscussionApi,
 
@@ -41,7 +42,7 @@ define([
     Tag,
     Section,
     ImageContent,
-    Facia,
+
     Football,
     Article,
     Video,
@@ -93,8 +94,9 @@ define([
 
     var routes = function() {
         domReady(function() {
-            var context = document.getElementById('preload-1'),
-                contextHtml = context.cloneNode(false).innerHTML;
+            var context = document.getElementById('preload-1');
+
+            Context.set(context);
 
             modules.initialiseAjax(config);
             modules.initialiseDiscussionApi(config);
@@ -103,16 +105,18 @@ define([
             modules.initId(config, context);
             modules.initUserAdTargeting();
 
-            var pageRoute = function(config, context, contextHtml) {
+            var pageRoute = function(config, context) {
 
                 // We should rip out this router:
                 var r = new Router();
 
-                bootstrapCommon.init(config, context, contextHtml);
+                bootstrapCommon.init(config, context);
 
                 // Front
                 if (config.page.isFront) {
-                    Facia.init(config, context);
+                    require('bootstraps/facia', function(facia) {
+                        facia.init(config, context);
+                    });
                 }
 
                 //Football
@@ -155,7 +159,7 @@ define([
             };
 
             mediator.on('page:ready', pageRoute);
-            mediator.emit('page:ready', config, context, contextHtml);
+            mediator.emit('page:ready', config, context);
         });
     };
 

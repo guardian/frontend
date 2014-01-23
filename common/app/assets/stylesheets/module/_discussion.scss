@@ -68,6 +68,7 @@ $replyIndent: 26px;
 .d-discussion__show-more-button {
     @include icon-button(30px, -15px);
     position: absolute;
+    left: 0;
     background-color: $c-newsDefault;
 }
 .d-discussion__show-more-text {
@@ -629,6 +630,7 @@ $replyIndent: 26px;
     color: $c-neutral1;
     border-top: 1px dotted $c-neutral3;
     margin-bottom: 0;
+    padding-top: $baseline/2;
 }
 
 .discussion__comments--top-comments {

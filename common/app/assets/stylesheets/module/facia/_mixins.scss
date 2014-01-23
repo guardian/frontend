@@ -51,7 +51,8 @@ $item-top-border-height: 2px;
 @mixin card-mobile-image {
     @include image-meta;
     .connection--not-low & .item__title {
-        margin-top: $gs-baseline*(2/3);
+        margin-top: $gs-baseline/3;
+        margin-bottom: $gs-baseline/3;
     }
 }
 @mixin card-half-width($with-image: false) {
@@ -88,34 +89,22 @@ $item-top-border-height: 2px;
     }
 }
 @mixin card($with-image: false) {
-    width: gs-span(3) + $gs-gutter;
+    @include rem((width: gs-span(3) + $gs-gutter));
     min-height: gs-height(3);
 
-    @include mq(wide) {
-        width: gs-span(4) + $gs-gutter;
-        min-height: gs-height(4);
-    }
     @if $with-image {
         @include card-mobile;
     }
 }
 @mixin card-image {
     min-height: gs-height(6);
-
-    @include mq(wide) {
-        min-height: gs-height(8);
-    }
     @include image-meta;
 }
 @mixin card-double-width {
     float: left;
-    width: gs-span(6) + $gs-gutter;
+    @include rem((width: gs-span(6) + $gs-gutter));
     min-height: gs-height(9);
 
-    @include mq(wide) {
-        width: gs-span(8) + $gs-gutter;
-        min-height: gs-height(12);
-    }
     .item__title {
         @include fs-headline(5, $size-only: true);
     }
@@ -130,13 +119,9 @@ $item-top-border-height: 2px;
 }
 @mixin card-triple-width {
     float: left;
-    width: gs-span(9) + $gs-gutter;
+    @include rem((width: gs-span(9) + $gs-gutter));
     min-height: gs-height(12);
 
-    @include mq(wide) {
-        width: gs-span(12) + $gs-gutter;
-        min-height: gs-height(16);
-    }
     @include image-meta;
     .item__title {
         @include fs-headline(5, $size-only: true);
@@ -181,18 +166,6 @@ $item-top-border-height: 2px;
         margin-top: 0;
     }
 }
-@mixin when-image($pseudo-selector: '') {
-    .connection--not-low &.item--has-image#{$pseudo-selector} {
-        @content;
-    }
-}
-@mixin when-no-image($pseudo-selector: '') {
-    .connection--low &.item--has-image#{$pseudo-selector},
-    &.item--has-no-image#{$pseudo-selector} {
-        @content;
-    }
-}
-
 @mixin vertical-item-separator {
     &:before {
         content: '';

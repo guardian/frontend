@@ -9,6 +9,8 @@ GET         /assets/*path                                               dev.DevA
 GET        /sections                                                    controllers.SectionsController.renderSections()
 GET        /sections.json                                               controllers.SectionsController.renderSectionsJson()
 
+GET        /humans.txt                                                  controllers.Assets.at(path="/public", file="humans.txt")
+
 # Gallery paths
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>/lightbox.json        controllers.GalleryController.renderLightbox(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>.json                 controllers.GalleryController.renderJson(path)

@@ -26,7 +26,7 @@ class Content protected (val delegate: ApiContent) extends Trail with MetaData {
   lazy val allowUserGeneratedContent: Boolean = fields.get("allowUgc").exists(_.toBoolean)
   lazy val isCommentable: Boolean = fields.get("commentable").exists(_ == "true")
   lazy val isExpired = delegate.isExpired.getOrElse(false)
-  lazy val blockAds: Boolean = videoAssets.exists(_.blockAds)
+  lazy val blockVideoAds: Boolean = videoAssets.exists(_.blockVideoAds)
   lazy val isLiveBlog: Boolean = delegate.isLiveBlog
   lazy val openGraphImage: String = mainPicture.flatMap(_.largestImage.flatMap(_.url)).getOrElse(conf.Configuration.facebook.imageFallback)
   lazy val isSponsored: Boolean = tags.exists(_.id == "tone/sponsoredfeatures")
@@ -37,6 +37,8 @@ class Content protected (val delegate: ApiContent) extends Trail with MetaData {
       None
     }
   }
+
+  lazy val shouldHideAdverts: Boolean = fields.get("shouldHideAdverts").exists(_.toBoolean)
 
   lazy val witnessAssignment = delegate.references.find(_.`type` == "witness-assignment")
     .map(_.id).map(Reference(_)).map(_._2)
@@ -51,7 +53,7 @@ class Content protected (val delegate: ApiContent) extends Trail with MetaData {
   override lazy val linkText: String = webTitle
   override def headline: String = fields("headline")
   override lazy val url: String = SupportedUrl(delegate)
-  override lazy val trailText: Option[String] = fields.get("trailText")
+  override def trailText: Option[String] = fields.get("trailText")
   override lazy val section: String = delegate.sectionId.getOrElse("")
   override lazy val sectionName: String = delegate.sectionName.getOrElse("")
   override lazy val thumbnailPath: Option[String] = fields.get("thumbnail").map(ImgSrc(_, Naked))
@@ -170,7 +172,8 @@ class Article(content: ApiContent) extends Content(content) {
     ("content-type", contentType),
     ("isLiveBlog", isLiveBlog),
     ("inBodyInternalLinkCount", linkCounts.internal),
-    ("inBodyExternalLinkCount", linkCounts.external)
+    ("inBodyExternalLinkCount", linkCounts.external),
+    ("shouldHideAdverts", shouldHideAdverts)
   )
 
   override def openGraph: List[(String, Any)] = super.openGraph ++ List(
@@ -218,7 +221,7 @@ class Video(content: ApiContent) extends Content(content) {
   lazy val source: Option[String] = videoAssets.headOption.flatMap(_.source)
 
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
-  override lazy val metaData: Map[String, Any] = super.metaData +("content-type" -> contentType, "blockAds" -> blockAds, "source" -> source.getOrElse(""))
+  override lazy val metaData: Map[String, Any] = super.metaData +("content-type" -> contentType, "blockVideoAds" -> blockVideoAds, "source" -> source.getOrElse(""))
 
   override def openGraph: List[(String, Any)] = super.openGraph ++ List(
     "og:type" -> "video",
@@ -288,6 +291,8 @@ class ContentWithMetaData(
                            override val supporting: List[Content],
                            metaData: Map[String, JsValue]) extends Content(content) {
   override lazy val headline: String = metaData.get("headline").flatMap(_.asOpt[String]).getOrElse(super.headline)
+  override lazy val trailText: Option[String] = metaData.get("trailText").flatMap(_.asOpt[String]).orElse(super.trailText)
   override lazy val group: Option[String] = metaData.get("group").flatMap(_.asOpt[String])
   override lazy val imageAdjust: Option[String] = metaData.get("imageAdjust").flatMap(_.asOpt[String])
+  override lazy val isBreaking: Boolean = metaData.get("isBreaking").flatMap(_.asOpt[Boolean]).getOrElse(false)
 }
