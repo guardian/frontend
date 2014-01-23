@@ -127,6 +127,10 @@ object Switches extends Collections {
     "If this switch is on, commercial components will be fed by Moneysupermarket feeds.",
     safeState = Off, sellByDate = endOfQ4)
 
+  val LCMortgageFeedSwitch = Switch("Commercial Feeds", "lc-mortgages",
+    "If this switch is on, commercial components will be fed by London & Country mortgage feed.",
+    safeState = Off, sellByDate = endOfQ4)
+
 
   // Analytics Switches
 
@@ -412,7 +416,8 @@ object Switches extends Collections {
     JobFeedSwitch,
     MasterclassFeedSwitch,
     SoulmatesFeedSwitch,
-    MoneysupermarketFeedsSwitch
+    MoneysupermarketFeedsSwitch,
+    LCMortgageFeedSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
