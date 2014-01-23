@@ -36,27 +36,6 @@
     @include mq(tablet) {
         background-color: #ffffff;
     }
-
-    @include mq($to: desktop) {
-        &.is-affixed {
-            z-index: 1001;
-            position: fixed;
-            top: 0;
-            padding: 10px 0;
-        }
-    }
-
-    @include mq($from: tablet, $to: desktop) {
-        &.is-affixed {
-            .ad-container {
-                width: 100%;
-                height: 54px;
-                max-width: gs-span(8);
-                margin: 0 auto;
-                border-bottom: 1px solid $c-neutral5;
-            }
-        }
-    }
 }
 
 .parts__head {
@@ -80,8 +59,7 @@
     }
 }
 
-.ad-slot--inline.is-even,
-.test-inline-adverts--on .ad-slot--inline {
+.ad-slot--inline.is-even {
     @include mq(tablet) {
         float: left;
         padding-right: $gs-gutter;
@@ -89,40 +67,9 @@
     }
 }
 
-
 .mpu-context {
     // Provides context to sticky positioned blocks
     height: 100%;
-}
-
-.mpu-container {
-    &.is-affixed {
-        width: 300px; // Needed as it doesn't respect the container width when fixed
-        position: fixed;
-    }
-    &.is-sticky {
-        top: $baseline*3;
-        @include sticky;
-    }
-}
-
-.mpu-container--sticky {
-    @include sticky;
-    background: #ffffff;
-    margin-top: -$baseline*4;
-    padding-top: $baseline*4;
-    top: 0;
-}
-
-.ad-slot--middle-banner-ad {
-    background-color: #ffffff;
-    min-height: 0;
-    border-bottom: 1px solid $c-neutral6;
-}
-
-.ad-slot--middle-banner-ad .ad-container {
-    max-height: 50px;
-    padding: 5px 0 10px 0;
 }
 
 .ad-slot--mpu-banner-ad {

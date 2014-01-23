@@ -86,34 +86,21 @@
    ========================================================================== */
 
 .nav-container {
-    @include box-sizing(border-box);
     display: none;
-    overflow: auto;
-    width: 100%;
-    padding: 0 $gs-gutter/2;
-    @include mq(mobileLandscape) {
-        padding-left: $gs-gutter;
-        padding-right: $gs-gutter;
-    }
     background-color: $c-neutral7;
     border-bottom: 1px solid $c-neutral5;
 
     @include mq(tablet) {
         display: block;
-        position: absolute;
-        top: $headerHeight;
     }
 }
 
 .nav--global {
     @include box-sizing(border-box);
     display: none;
-    float: left;
-    clear: left;
-    width: 100%;
     height: 40px;
     overflow: hidden;
-    padding: 0 50px 0 0;
+    padding: 0 $gs-gutter;
 
     @include mq(tablet) { display: block; }
 
@@ -169,6 +156,7 @@
     background-color: #ffffff;
     border-bottom: 1px solid $c-neutral6;
     margin: 0 $gs-gutter/2;
+
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter;
         margin-right: $gs-gutter;
@@ -176,9 +164,6 @@
 
     @include mq(tablet) {
         display: block;
-        top: 99px;
-        position: absolute;
-        left: 0; right: 0;
     }
 }
 
@@ -374,8 +359,15 @@
         padding-right: $gs-gutter/5;
 
         > .nav__item {
-            width: 100%;
+            float: none;
+            display: block;
+            width: auto;
             padding: 0 $gs-gutter/2;
+
+            @include mq(tablet) {
+                padding-left: $gs-gutter;
+                padding-right: $gs-gutter;
+            }
 
             .nav__link {
                 padding: 10px 0;
