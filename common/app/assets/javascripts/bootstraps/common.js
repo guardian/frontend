@@ -259,7 +259,8 @@ define([
                     // Limiting inline ads to 1 until support for different inline
                     // ads is enabled
                     var articleBodyAdverts = new ArticleBodyAdverts({
-                        inlineAdLimit: 1
+                        inlineAdLimit: 1,
+                        wordCount: config.page.wordCount
                     });
 
                     // Add the body adverts to the article page
