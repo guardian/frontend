@@ -61,7 +61,7 @@ module.exports = function (grunt) {
                     swipeview:    'common/components/swipeview/src/swipeview',
                     lodash:       'common/components/lodash-amd/modern',
                     imager:       'common/components/imager.js/src/strategies/container',
-                    omniture:     'common/vendor/omniture',
+                    omniture:     'common/components/omniture/omniture',
                     'ophan/ng':   'empty:'
                 },
                 optimize: (isDev) ? 'none' : 'uglify2',
@@ -283,7 +283,7 @@ module.exports = function (grunt) {
                     expand: true,
                     cwd: 'common/app/public/javascripts',
                     src: ['**/*.js'],
-                    dest: staticRequireDir + 'javascripts/common'
+                    dest: staticTargetDir + 'javascripts'
                 },
                 {
                     expand: true,
