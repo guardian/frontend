@@ -1,4 +1,4 @@
-package model.commercial.moneysupermarket
+package model.commercial.money
 
 import model.commercial.{Segment, Ad}
 import scala.xml.Elem
@@ -36,6 +36,6 @@ object SavingsApi extends MoneySupermarketApi[SavingsAccount] {
 }
 
 
-object SavingsAgent extends MoneysupermarketAgent[SavingsAccount] {
+object SavingsAgent extends MoneyAgent[SavingsAccount] {
   protected def loadProducts() = SavingsApi.loadAds()
 }

@@ -127,6 +127,10 @@ object Switches extends Collections {
     "If this switch is on, commercial components will be fed by Moneysupermarket feeds.",
     safeState = Off, sellByDate = endOfQ4)
 
+  val LCMortgageFeedSwitch = Switch("Commercial Feeds", "lc-mortgages",
+    "If this switch is on, commercial components will be fed by London & Country mortgage feed.",
+    safeState = Off, sellByDate = endOfQ4)
+
 
   // Analytics Switches
 
@@ -157,7 +161,12 @@ object Switches extends Collections {
 
   val DiagnosticsRequestLogging = Switch("Diagnostics", "enable-diagnostics-request-logging",
     "If this switch is on, then requests to the Diagnostics servers will be logged.",
-    safeState = Off, new DateMidnight(2014, 2, 28)
+    safeState = Off, endOfQ4
+  )
+
+  val DiagnosticsJavascriptErrorLogging = Switch("Diagnostics", "enable-diagnostics-js-error-logging",
+    "If this switch is on, then js error reports sent to the Diagnostics servers will be logged.",
+    safeState = Off, endOfQ4
   )
 
   // Discussion Switches
@@ -282,6 +291,7 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
+<<<<<<< HEAD
   val ABCommercialInArticleDesktop = Switch("A/B Tests", "ab-commercial-in-articles-desktop",
     "If this is on an AB test inserts commercial components in the inline and MPU advert slots (scope to desktop)",
     safeState = Off, sellByDate = new DateMidnight(2014, 1, 28)
@@ -307,6 +317,8 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 24)
   )
 
+=======
+>>>>>>> origin/master
   val TagLinking = Switch("Feature Switches", "tag-linking",
     "If this is switched on articles that have no in body links will auto link to their tags where possible",
     safeState = Off, sellByDate = endOfQ4 
@@ -405,11 +417,14 @@ object Switches extends Collections {
     IdentityEthicalAwardsSwitch,
     IdentityFilmAwardsSwitch,
     ABAa,
+<<<<<<< HEAD
     ABCommercialInArticleDesktop,
     ABCommercialInArticleMobile,
     ABChartbeatDesktop,
     ABGravityRecommendations,
     ABEmailSignup,
+=======
+>>>>>>> origin/master
     NetworkFrontUkAlpha,
     NetworkFrontUsAlpha,
     NetworkFrontAuAlpha,
@@ -419,12 +434,14 @@ object Switches extends Collections {
     AmaaSwitch,
     ImrWorldwideSwitch,
     DiagnosticsRequestLogging,
+    DiagnosticsJavascriptErrorLogging,
     OmnitureVerificationSwitch,
     TravelOffersFeedSwitch,
     JobFeedSwitch,
     MasterclassFeedSwitch,
     SoulmatesFeedSwitch,
-    MoneysupermarketFeedsSwitch
+    MoneysupermarketFeedsSwitch,
+    LCMortgageFeedSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

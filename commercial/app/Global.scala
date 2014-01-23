@@ -4,7 +4,7 @@ import conf.RequestMeasurementMetrics
 import dev.DevParametersLifecycle
 import model.commercial.masterclasses.MasterClassAgent
 import model.commercial.jobs.{Industries, JobsAgent}
-import model.commercial.moneysupermarket.BestBuysAgent
+import model.commercial.money.BestBuysAgent
 import model.commercial.soulmates.SoulmatesAggregatingAgent
 import model.commercial.travel.{Countries, OffersAgent}
 import play.api.mvc.WithFilters

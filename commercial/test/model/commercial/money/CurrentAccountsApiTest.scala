@@ -1,4 +1,4 @@
-package model.commercial.moneysupermarket
+package model.commercial.money
 
 import org.scalatest.{Matchers, FlatSpec}
 
