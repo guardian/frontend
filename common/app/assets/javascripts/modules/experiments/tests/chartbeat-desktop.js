@@ -1,8 +1,10 @@
 /*global guardian */
 define([
-    'common/utils/detect'
+    'common/utils/detect',
+    'common/components/chartbeat/chartbeat_pub'
 ], function (
-    detect
+    detect,
+    chartbeat
 ) {
 
     var ChartbeatDesktop = function () {
@@ -15,13 +17,13 @@ define([
         this.audienceOffset = 0.5;
         this.description = 'Integration test for Chartbeat monitoring';
         this.canRun = function(config) {
-            return (/wide|desktop/).test(detect.getBreakpoint());
+            return ((/wide|desktop/).test(detect.getBreakpoint())
+            );
         };
         this.variants = [
             {
                 id: 'control',
                 test: function(context, config) {
-                    require(['js!chartbeat'], function () {});
                 }
             }
         ];
