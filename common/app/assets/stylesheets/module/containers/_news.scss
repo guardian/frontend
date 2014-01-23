@@ -21,7 +21,10 @@
         }
     }
     .item__media-wrapper {
-        display: none;
+        &,
+        .item__image-container {
+            display: none;
+        }
     }
     .item--has-image {
         .item__media-wrapper,
@@ -101,16 +104,19 @@
     }
     .l-row--items-4 {
         .item__standfirst,
-        .item__media-wrapper {
+        .item__media-wrapper,
+        .item__image-container {
             display: none;
         }
         .item--imageadjust-highlight {
-            .item__media-wrapper {
+            .item__media-wrapper,
+            .item__image-container {
                 display: block;
             }
         }
         @include mq(tablet) {
             .item--has-image .item__media-wrapper,
+            .item--has-image .item__image-container,
             .item--has-no-image .item__standfirst {
                 display: block;
             }
