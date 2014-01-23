@@ -38,6 +38,8 @@ class Content protected (val delegate: ApiContent) extends Trail with MetaData {
     }
   }
 
+  lazy val shouldHideAdverts: Boolean = fields.get("shouldHideAdverts").exists(_.toBoolean)
+
   lazy val witnessAssignment = delegate.references.find(_.`type` == "witness-assignment")
     .map(_.id).map(Reference(_)).map(_._2)
 
@@ -170,7 +172,8 @@ class Article(content: ApiContent) extends Content(content) {
     ("content-type", contentType),
     ("isLiveBlog", isLiveBlog),
     ("inBodyInternalLinkCount", linkCounts.internal),
-    ("inBodyExternalLinkCount", linkCounts.external)
+    ("inBodyExternalLinkCount", linkCounts.external),
+    ("shouldHideAdverts", shouldHideAdverts)
   )
 
   override def openGraph: List[(String, Any)] = super.openGraph ++ List(
