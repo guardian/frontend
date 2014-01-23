@@ -11,9 +11,11 @@ trait AdminLifecycle extends GlobalSettings {
       model.abtests.AbTestJob.run()
     }
 
-    Jobs.schedule("LoadBalancerLoadJob", "* 0/15 * * * ?") {
-      LoadBalancer.refresh()
-    }
+    // TODO - need to tweak AWS permissions first
+    // so disable for now
+    //Jobs.schedule("LoadBalancerLoadJob", "* 0/15 * * * ?") {
+    //  LoadBalancer.refresh()
+    //}
 
     AkkaAsync{
       LoadBalancer.refresh()

@@ -48,6 +48,7 @@ define([
                 'headline',
                 'trailText',
                 'imageAdjust',
+                'isBreaking',
                 'group']);
 
             this.state = asObservableProps([
@@ -123,6 +124,11 @@ define([
             this.state.isLoaded(!!withContent);
         };
 
+        Article.prototype.toggleIsBreaking = function() {
+            this.meta.isBreaking(!this.meta.isBreaking());
+            this._save();
+        };
+
         Article.prototype.toggleImageAdjustHide = function() {
             this.meta.imageAdjust(this.meta.imageAdjust() === 'hide' ? undefined : 'hide');
             this._save();
@@ -166,6 +172,8 @@ define([
                 .map(function(p){ return [p[0], _.isFunction(p[1]) ? p[1]() : p[1]]; })
                 // reject undefined properties:
                 .filter(function(p){ return !_.isUndefined(p[1]); })
+                // reject false properties:
+                .filter(function(p){ return p[1] !== false; })
                 // trim strings:
                 .map(function(p){ return [p[0], _.isString(p[1]) ? fullTrim(p[1]) : p[1]]; })
                 // reject whitespace-only strings:

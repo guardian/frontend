@@ -104,6 +104,34 @@ object Switches extends Collections {
     "Enable the AMAA audience segment tracking.",
     safeState = Off, sellByDate = endOfQ4)
 
+
+  // Commercial Feeds
+
+  val TravelOffersFeedSwitch = Switch("Commercial Feeds", "gu-travel-offers",
+    "If this switch is on, commercial components will be fed by travel offer feed.",
+    safeState = Off, sellByDate = endOfQ4)
+
+  val JobFeedSwitch = Switch("Commercial Feeds", "gu-jobs",
+    "If this switch is on, commercial components will be fed by job feed.",
+    safeState = Off, sellByDate = endOfQ4)
+
+  val MasterclassFeedSwitch = Switch("Commercial Feeds", "gu-masterclasses",
+    "If this switch is on, commercial components will be fed by masterclass feed.",
+    safeState = Off, sellByDate = endOfQ4)
+
+  val SoulmatesFeedSwitch = Switch("Commercial Feeds", "gu-soulmates",
+    "If this switch is on, commercial components will be fed by soulmates feed.",
+    safeState = Off, sellByDate = endOfQ4)
+
+  val MoneysupermarketFeedsSwitch = Switch("Commercial Feeds", "moneysupermarket",
+    "If this switch is on, commercial components will be fed by Moneysupermarket feeds.",
+    safeState = Off, sellByDate = endOfQ4)
+
+  val LCMortgageFeedSwitch = Switch("Commercial Feeds", "lc-mortgages",
+    "If this switch is on, commercial components will be fed by London & Country mortgage feed.",
+    safeState = Off, sellByDate = endOfQ4)
+
+
   // Analytics Switches
 
   val LiveStatsSwitch = Switch("Analytics", "live-stats",
@@ -263,26 +291,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val ABCommercialInArticleDesktop = Switch("A/B Tests", "ab-commercial-in-articles-desktop",
-    "If this is on an AB test inserts commercial components in the inline and MPU advert slots (scope to desktop)",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 28)
-  )
-
-  val ABCommercialInArticleMobile = Switch("A/B Tests", "ab-commercial-in-articles-mobile",
-    "If this is on an AB test inserts commercial components in the inline and MPU advert slots (scope to mobile browsers)",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 28)
-  )
-
-  val ABChartbeatDesktop = Switch("A/B Tests", "ab-chartbeat-desktop",
-    "This enables Chartbeat tracking on the site. ",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 24)
-  )
-
-  val ABEmailSignup = Switch("A/B Tests", "ab-email-signup",
-    "If this is switched on an AB test runs to test article page email signups",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 24)
-  )
-
   val TagLinking = Switch("Feature Switches", "tag-linking",
     "If this is switched on articles that have no in body links will auto link to their tags where possible",
     safeState = Off, sellByDate = endOfQ4 
@@ -381,10 +389,6 @@ object Switches extends Collections {
     IdentityEthicalAwardsSwitch,
     IdentityFilmAwardsSwitch,
     ABAa,
-    ABCommercialInArticleDesktop,
-    ABCommercialInArticleMobile,
-    ABChartbeatDesktop,
-    ABEmailSignup,
     NetworkFrontUkAlpha,
     NetworkFrontUsAlpha,
     NetworkFrontAuAlpha,
@@ -395,7 +399,13 @@ object Switches extends Collections {
     ImrWorldwideSwitch,
     DiagnosticsRequestLogging,
     DiagnosticsJavascriptErrorLogging,
-    OmnitureVerificationSwitch
+    OmnitureVerificationSwitch,
+    TravelOffersFeedSwitch,
+    JobFeedSwitch,
+    MasterclassFeedSwitch,
+    SoulmatesFeedSwitch,
+    MoneysupermarketFeedsSwitch,
+    LCMortgageFeedSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

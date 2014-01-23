@@ -34,7 +34,7 @@
     }
 
     a,
-    span {
+    .tab__link {
         @include fs-headline(1);
         @include box-sizing(border-box);
         min-height: $gs-row-height;
@@ -71,7 +71,8 @@
 }
 
 .tabs__tab--selected {
-    span {
+    a,
+    .tab__link {
         background: #ffffff;
     }
 

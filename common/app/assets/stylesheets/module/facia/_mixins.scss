@@ -89,7 +89,7 @@ $item-top-border-height: 2px;
     }
 }
 @mixin card($with-image: false) {
-    width: gs-span(3) + $gs-gutter;
+    @include rem((width: gs-span(3) + $gs-gutter));
     min-height: gs-height(3);
 
     @if $with-image {
@@ -102,7 +102,7 @@ $item-top-border-height: 2px;
 }
 @mixin card-double-width {
     float: left;
-    width: gs-span(6) + $gs-gutter;
+    @include rem((width: gs-span(6) + $gs-gutter));
     min-height: gs-height(9);
 
     .item__title {
@@ -119,7 +119,7 @@ $item-top-border-height: 2px;
 }
 @mixin card-triple-width {
     float: left;
-    width: gs-span(9) + $gs-gutter;
+    @include rem((width: gs-span(9) + $gs-gutter));
     min-height: gs-height(12);
 
     @include image-meta;

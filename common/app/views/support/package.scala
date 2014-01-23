@@ -332,6 +332,7 @@ class TagLinker(article: Article)(implicit val edition: Edition) extends HtmlCle
           tagLink.attr("href", LinkTo(keyword.url, edition))
           tagLink.text(keyword.name)
           tagLink.attr("data-link-name", "auto-linked-tag")
+          tagLink.addClass("u-underline")
 
           p.html(p.html().replaceFirst(keyword.name, tagLink.toString))
         }
