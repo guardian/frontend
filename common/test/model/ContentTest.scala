@@ -108,6 +108,13 @@ class ContentTest extends FlatSpec with Matchers with implicits.Dates {
     Content(closedComments).isClosedForComments should be(true)
   }
 
+  it should "realise that it should not show ads" in {
+    val sensitive = article.copy(fields =  Some(Map("shouldHideAdverts" -> "true")))
+
+    Content(article).shouldHideAdverts should be(false)
+    Content(sensitive).shouldHideAdverts should be(true)
+  }
+
   private def tag(id: String = "/id", tagType: String = "keyword", name: String = "", url: String = "") = {
     ApiTag(id = id, `type` = tagType, webTitle = name,
       sectionId = None, sectionName = None, webUrl = url, apiUrl = "apiurl", references = Nil)
