@@ -1,5 +1,6 @@
 package services
 
+import frontsapi.model.Trail
 import model.Config
 import scala.concurrent.Future
 import tools.FaciaApi
@@ -71,18 +72,23 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
         config.roleName.getOrElse("Default"),
         config.displayName,
         config.groups,
-        block.live.map {t =>
-          Item(t.id, t.meta.map(_.map{
-            case (id, jsValue) if id == "group" => (id, jsValue.asOpt[BigDecimal].map(JsNumber.apply).getOrElse(jsValue))
-            case j  => j
-          }))
-        },
+        generateItems(block.live),
         config.contentApiQuery.flatMap(_.split('?').headOption.filter(_.nonEmpty)),
         block.lastUpdated,
         block.updatedEmail
       )
     }
   }
+
+  private def generateItems(items: List[Trail]): List[Item] =
+    items.map { trail =>
+      Item(trail.id, trail.meta.map(_.map {
+            case (id, jsValue) if id == "group" => (id, jsValue.asOpt[BigDecimal].map(JsNumber.apply).getOrElse(jsValue))
+            case j  => j
+          }
+        )
+      )
+    }
 
 }
 
