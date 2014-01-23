@@ -47,7 +47,10 @@
                     }
                 }
                 <h1 class="fromage__title">
-                    @if(trail.isLive){
+                    @if(trail.isBreaking){
+                        <span class="item__live-indicator">Breaking News</span>
+                    }
+                    @if(trail.isLive && !trail.isBreaking){
                         <span class="item__live-indicator">Live</span>
                     }
                     @if(tone == "comment") {
@@ -66,7 +69,7 @@
                     @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
                         <a href="@LinkTo{@trail.url}" data-link-name="article">
                             <div class="fromage__media-wrapper fromage__media-wrapper--second">
-                                <div class="fromage__image-container js-image-upgrade inlined-image" data-src="@imgSrc" data-force-upgrade="desktop wide">
+                                <div class="fromage__image-container js-image-upgrade inlined-image" data-src="@imgSrc">
                                 </div>
                             </div>
                         </a>

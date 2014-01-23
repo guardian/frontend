@@ -4,7 +4,7 @@ define([
     'common/$',
     'common/utils/mediator',
     'common/utils/ajax',
-    'common/modules/facia/collection-show-more'
+    'common/modules/ui/collection-show-more'
 ], function(bonzo, bean, $, mediator, ajax, CollectionShowMore) {
 
     describe('Collection Show More', function() {

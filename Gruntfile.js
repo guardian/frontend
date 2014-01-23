@@ -4,8 +4,9 @@ module.exports = function (grunt) {
         singleRun = grunt.option('single-run') !== false,
         env = grunt.option('env') || 'code',
         screenshotsDir = './screenshots',
-        staticTargetDir = 'static/target/',
-        staticRequireDir = 'static/requirejs/',
+        staticDir = 'static/',
+        staticTargetDir = staticDir + 'target/',
+        staticRequireDir = staticDir + 'requirejs/',
         testConfDir = 'common/test/assets/javascripts/conf/',
         propertiesFile = (isDev) ? process.env.HOME + '/.gu/frontend.properties' : '/etc/gu/frontend.properties';
 
@@ -46,29 +47,34 @@ module.exports = function (grunt) {
         },
 
         requirejs: {
-            compile: {
+            options: {
+                baseUrl: staticRequireDir + 'javascripts',
+                paths: {
+                    bean:         'common/components/bean/bean',
+                    bonzo:        'common/components/bonzo/src/bonzo',
+                    domReady:     'common/components/domready/ready',
+                    EventEmitter: 'common/components/eventEmitter/EventEmitter',
+                    qwery:        'common/components/qwery/mobile/qwery-mobile',
+                    reqwest:      'common/components/reqwest/src/reqwest',
+                    postscribe:   'common/components/postscribe/dist/postscribe',
+                    swipe:        'common/components/swipe/swipe',
+                    swipeview:    'common/components/swipeview/src/swipeview',
+                    lodash:       'common/components/lodash-amd/modern',
+                    imager:       'common/components/imager.js/src/strategies/container',
+                    omniture:     'common/components/omniture/omniture',
+                    'ophan/ng':   'empty:'
+                },
+                optimize: (isDev) ? 'none' : 'uglify2',
+                useSourceUrl: (isDev) ? true : false,
+                preserveLicenseComments: false
+            },
+            common: {
                 options: {
-                    baseUrl: staticRequireDir,
-                    name: "common/bootstraps/app",
-                    out: staticTargetDir + "javascripts/bootstraps/app.js",
-                    paths: {
-                        bean:         "common/components/bean/bean",
-                        bonzo:        "common/components/bonzo/src/bonzo",
-                        domReady:     "common/components/domready/ready",
-                        EventEmitter: "common/components/eventEmitter/EventEmitter",
-                        qwery:        "common/components/qwery/mobile/qwery-mobile",
-                        reqwest:      "common/components/reqwest/src/reqwest",
-                        postscribe:   "common/components/postscribe/dist/postscribe",
-                        swipe:        "common/components/swipe/swipe",
-                        swipeview:    "common/components/swipeview/src/swipeview",
-                        lodash:       "common/components/lodash-amd/modern",
-                        imager:       'common/components/imager.js/src/strategies/container',
-                        omniture:     '../../common/app/public/javascripts/vendor/omniture',
-                        'ophan/ng':   'empty:'
-                    },
+                    name: 'common/bootstraps/app',
+                    out: staticTargetDir + 'javascripts/bootstraps/app.js',
                     shim: {
                         postscribe: {
-                            exports: "postscribe"
+                            exports: 'postscribe'
                         },
                         imager: {
                             deps: ['common/components/imager.js/src/imager'],
@@ -79,51 +85,30 @@ module.exports = function (grunt) {
                         }
                     },
                     wrap: {
-                        startFile: "common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js",
-                        endFile:   "common/app/assets/javascripts/bootstraps/go.js"
-                    },
-                    optimize: (isDev) ? 'none' : 'uglify2',
-                    useSourceUrl: (isDev) ? true : false,
-                    preserveLicenseComments: false
+                        startFile: 'common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js',
+                        endFile:   'common/app/assets/javascripts/bootstraps/go.js'
+                    }
                 }
             },
             admin: {
                 options: {
-                    baseUrl: staticRequireDir,
-                    name: "bootstraps/admin",
-                    out: staticTargetDir + "javascripts/bootstraps/admin.js",
-                    paths: {
-                        bean:         "common/components/bean/bean",
-                        bonzo:        "common/components/bonzo/src/bonzo",
-                        domReady:     "common/components/domready/ready",
-                        EventEmitter: "common/components/eventEmitter/EventEmitter",
-                        qwery:        "common/components/qwery/mobile/qwery-mobile",
-                        reqwest:      "common/components/reqwest/src/reqwest",
-                        postscribe:   "common/components/postscribe/dist/postscribe",
-                        swipe:        "common/components/swipe/swipe",
-                        swipeview:    "common/components/swipeview/src/swipeview",
-                        lodash:       "common/components/lodash-amd/modern",
-                        imager:       'common/components/imager.js/src/strategies/container',
-                        omniture:     '../../common/app/public/javascripts/vendor/omniture'
-                    },
-                    shim: {
-                        postscribe: {
-                            exports: "postscribe"
-                        },
-                        imager: {
-                            deps: ['common/components/imager.js/src/imager'],
-                            exports: 'Imager'
-                        },
-                        omniture: {
-                            exports: 's'
-                        }
-                    },
+                    name: 'bootstraps/admin',
+                    out: staticTargetDir + 'javascripts/bootstraps/admin.js',
                     wrap: {
-                        startFile: "common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js"
-                    },
-                    optimize: (isDev) ? 'none' : 'uglify2',
-                    useSourceUrl: (isDev) ? true : false,
-                    preserveLicenseComments: false
+                        startFile: 'common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js'
+                    }
+                }
+            },
+            facia: {
+                options: {
+                    dir: staticTargetDir + 'javascripts',
+                    keepBuildDir: true,
+                    modules: [
+                        {
+                            name: 'bootstraps/facia',
+                            exclude: ['common/bootstraps/app']
+                        }
+                    ]
                 }
             }
         },
@@ -305,13 +290,15 @@ module.exports = function (grunt) {
                     expand: true,
                     cwd: 'common/app/assets/javascripts',
                     src: ['**/*.js'],
-                    dest: staticRequireDir + 'common'
-                },
-                {
+                    dest: staticRequireDir + 'javascripts/common'
+                }]
+            },
+            'javascript-common-tests': {
+                files: [{
                     expand: true,
-                    cwd: 'common/test/assets/javascripts',
+                    cwd: 'common/test/assets/javascripts/spec',
                     src: ['**/*.js'],
-                    dest: staticRequireDir + 'common-test'
+                    dest: staticRequireDir + 'tests/specs'
                 }]
             },
             'javascript-admin': {
@@ -319,53 +306,13 @@ module.exports = function (grunt) {
                     expand: true,
                     cwd: 'admin/app/assets/javascripts',
                     src: ['**/*.js'],
-                    dest: staticRequireDir
+                    dest: staticRequireDir + 'javascripts'
                 },
                 {
                     expand: true,
                     cwd: 'admin/public/javascripts',
                     src: ['**/*.js'],
-                    dest: staticRequireDir + 'admin-public'
-                }]
-            },
-            'javascript-applications': {
-                files: [{
-                    expand: true,
-                    cwd: 'applications/app/assets/javascripts',
-                    src: ['**/*.js'],
-                    dest: staticRequireDir
-                }]
-            },
-            'javascript-article': {
-                files: [{
-                    expand: true,
-                    cwd: 'article/app/assets/javascripts',
-                    src: ['**/*.js'],
-                    dest: staticRequireDir
-                }]
-            },
-            'javascript-commercial': {
-                files: [{
-                    expand: true,
-                    cwd: 'commercial/app/assets/javascripts',
-                    src: ['**/*.js'],
-                    dest: staticRequireDir
-                }]
-            },
-            'javascript-core-navigation': {
-                files: [{
-                    expand: true,
-                    cwd: 'core-navigation/app/assets/javascripts',
-                    src: ['**/*.js'],
-                    dest: staticRequireDir
-                }]
-            },
-            'javascript-discussion': {
-                files: [{
-                    expand: true,
-                    cwd: 'discussion/app/assets/javascripts',
-                    src: ['**/*.js'],
-                    dest: staticRequireDir
+                    dest: staticRequireDir + 'javascripts'
                 }]
             },
             'javascript-facia': {
@@ -373,71 +320,31 @@ module.exports = function (grunt) {
                     expand: true,
                     cwd: 'facia/app/assets/javascripts',
                     src: ['**/*.js'],
-                    dest: staticRequireDir
+                    dest: staticRequireDir + 'javascripts'
                 }]
             },
-            'javascript-facia-tool': {
+            'javascript-facia-tests': {
                 files: [{
                     expand: true,
-                    cwd: 'facia-tool/app/assets/javascripts',
+                    cwd: 'facia/test/assets/javascripts/spec',
                     src: ['**/*.js'],
-                    dest: staticRequireDir
+                    dest: staticRequireDir + 'tests/specs'
                 }]
             },
-            'javascript-identity': {
+            testUtils: {
                 files: [{
                     expand: true,
-                    cwd: 'identity/app/assets/javascripts',
-                    src: ['**/*.js'],
-                    dest: staticRequireDir
+                    cwd: 'common/test/assets/javascripts',
+                    src: ['**/*', '!spec/**'],
+                    dest: staticRequireDir + 'tests'
                 }]
             },
-            'javascript-image': {
+            commonModules: {
                 files: [{
                     expand: true,
-                    cwd: 'image/app/assets/javascripts',
+                    cwd: 'common/app/assets/javascripts',
                     src: ['**/*.js'],
-                    dest: staticRequireDir
-                }]
-            },
-            'javascript-onward': {
-                files: [{
-                    expand: true,
-                    cwd: 'onward/app/assets/javascripts',
-                    src: ['**/*.js'],
-                    dest: staticRequireDir
-                }]
-            },
-            'javascript-porter': {
-                files: [{
-                    expand: true,
-                    cwd: 'porter/app/assets/javascripts',
-                    src: ['**/*.js'],
-                    dest: staticRequireDir
-                }]
-            },
-            'javascript-sport': {
-                files: [{
-                    expand: true,
-                    cwd: 'sport/app/assets/javascripts',
-                    src: ['**/*.js'],
-                    dest: staticRequireDir
-                }]
-            },
-            'javascript-router': {
-                files: [{
-                    expand: true,
-                    cwd: 'router/app/assets/javascripts',
-                    src: ['**/*.js'],
-                    dest: staticRequireDir
-                }]
-            },
-            'javascript-diagnostics': {
-                files: [{
-                    expand: true,
-                    cwd: 'diagnostics/app/assets/javascripts',
-                    src: ['**/*.js'],
-                    dest: staticRequireDir
+                    dest: staticRequireDir + 'javascripts/common'
                 }]
             },
             images: {
@@ -528,15 +435,6 @@ module.exports = function (grunt) {
             },
             facia: {
                 configFile: testConfDir + 'facia.js'
-            },
-            discussion: {
-                configFile: testConfDir + 'discussion.js'
-            },
-            identity: {
-                configFile: testConfDir + 'identity.js'
-            },
-            admin: {
-                configFile: testConfDir + 'admin.js'
             }
         },
 
@@ -551,6 +449,13 @@ module.exports = function (grunt) {
                     expand: true,
                     cwd: 'common/app/assets/javascripts/',
                     src: ['**/*.js', '!components/**', '!utils/atob.js']
+                }]
+            },
+            facia: {
+                files: [{
+                    expand: true,
+                    cwd: 'facia/app/assets/javascripts/',
+                    src: ['**/*.js']
                 }]
             },
             faciaTool: {
@@ -677,6 +582,7 @@ module.exports = function (grunt) {
 
         // Clean stuff up
         clean: {
+            'static': [staticDir],
             staticTarget: [staticTargetDir],
             js: [staticTargetDir + 'javascripts', staticRequireDir],
             css: [staticTargetDir + 'stylesheets'],
@@ -742,24 +648,33 @@ module.exports = function (grunt) {
 
     grunt.registerTask('default', ['compile', 'test', 'analyse']);
 
+    grunt.registerTask('validate', function(app) {
+        if (!app) {
+            grunt.task.run('jshint');
+        } else {
+            // jsihnt target exist?
+            if (grunt.config('jshint')[app]) {
+                grunt.task.run('jshint:' + app);
+            }
+        }
+    });
+
     // Compile tasks
     grunt.registerTask('compile:images', ['clean:images', 'copy:images', 'shell:spriteGeneration', 'imagemin']);
     grunt.registerTask('compile:css', ['clean:css', 'sass:compile']);
     grunt.registerTask('compile:js', function(app) {
         grunt.task.run(['clean:js', 'copy:javascript-common']);
-        if (app) {
+        if (app && grunt.config('copy')['javascript-' + app]) {
             grunt.task.run('copy:javascript-' + app);
         }
         if (!isDev) {
             grunt.task.run('uglify:vendor');
         }
+        grunt.task.run('requirejs:common');
         // When an app defines it's own javascript application, the requirejs task will need to compile both
         // common and app.
-        grunt.task.run('requirejs:compile');
-
-        // Admin has its own application.
-        if (app && app === "admin") {
-            grunt.task.run('requirejs:admin');
+        if (grunt.config('requirejs')[app]) {
+            grunt.task.run('requirejs:' + app);
         }
     });
     grunt.registerTask('compile:fonts', ['clean:fonts', 'mkdir:fontsTarget', 'webfontjson']);
@@ -773,18 +688,34 @@ module.exports = function (grunt) {
 
     // Test tasks
     grunt.registerTask('test:integration', function(app) {
-        app = app || 'allexceptadmin';
+        if (!app) {
+            grunt.fail.fatal('No app specified.');
+        }
+        // does a casperjs setup exist for this app
+        grunt.config.requires(['casperjs', app]);
         grunt.config('casperjsLogFile', app + '.xml');
         grunt.task.run(['env:casperjs', 'casperjs:' + app]);
     });
-    grunt.registerTask('test', ['jshint:common', 'test:unit', 'test:integration']);
     grunt.registerTask('test:unit', function(app) {
-        grunt.config.set('karma.options.singleRun', (singleRun === false) && app ? false : true);
-        // Target common when no app is specified, because karma can only test what has been js-compiled.
-        var actualApp = app || 'common';
-        grunt.task.run('copy:javascript-' + actualApp);
-        grunt.task.run('karma:' + actualApp);
+        var apps = [];
+        // have we supplied an app
+        if (app) {
+            // does a karma setup exist for this app
+            if (!grunt.config('karma')[app]) {
+                grunt.log.warn('No tests for app "' + app + '"');
+                return true;
+            }
+            apps = [app];
+        } else { // otherwise run all
+            apps = Object.keys(grunt.config('karma')).filter(function(app) { return app !== 'options'; });
+        }
+        grunt.config.set('karma.options.singleRun', (singleRun === false) ? false : true);
+        apps.forEach(function(app) {
+            grunt.task.run(['clean:static', 'copy:testUtils', 'copy:commonModules', 'copy:javascript-' + app, 'copy:javascript-' + app + '-tests', 'karma:' + app]);
+        });
     });
+    // TODO - don't have common as default?
+    grunt.registerTask('test', ['jshint:common', 'test:unit:common', 'test:integration:common']);
 
     // Analyse tasks
     grunt.registerTask('analyse:css', ['compile:css', 'cssmetrics:common']);

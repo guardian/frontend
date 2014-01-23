@@ -163,22 +163,6 @@ define([
         storage.local.set(Id.fbCheckKey, {}, { expires: nextFbCheckDue });
     };
 
-    Id.emailSignup = function (listId) {
-        var endpoint = '/useremails/'+ Id.getUserFromCookie().id +'/subscriptions',
-            data = { 'listId': listId },
-            request = ajax({
-                url: Id.idApiRoot + endpoint,
-                type: 'jsonp',
-                crossOrigin: true,
-                data: {
-                    body: JSON.stringify(data),
-                    method: 'post'
-                }
-            });
-
-        return request;
-    };
-
     Id.sendValidationEmail = function() {
         var endpoint = '/user/send-validation-email',
             request = ajax({

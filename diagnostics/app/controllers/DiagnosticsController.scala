@@ -10,7 +10,7 @@ import model.diagnostics.analytics.Analytics
 object DiagnosticsController extends Controller with Logging {
 
   def js = Action { implicit request =>
-    JavaScript.report(request.queryString, request.headers.get("user-agent").getOrElse("UNKNOWN USER AGENT"))
+    JavaScript.report(request)
     OnePix()
   } 
   

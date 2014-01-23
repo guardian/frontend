@@ -53,6 +53,7 @@
 
     @include mq(tablet) {
         width: auto;
+        height: auto;
         float: right;
         padding-top: $baseline;
         padding-left: $gs-gutter;

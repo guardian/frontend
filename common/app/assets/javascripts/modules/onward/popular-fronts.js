@@ -4,7 +4,7 @@ define([
     'common/utils/ajax',
     'bonzo',
     'common/modules/ui/relativedates',
-    'common/modules/facia/collection-show-more',
+    'common/modules/ui/collection-show-more',
     'common/modules/ui/images',
     'common/modules/discussion/comment-count'
 ], function (
