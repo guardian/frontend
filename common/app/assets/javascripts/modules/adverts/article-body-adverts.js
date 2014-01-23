@@ -26,50 +26,60 @@ define([
 
     ArticleBodyAdverts.prototype.config = {
         inlineAdLimit: null,
-        nthParagraph: 7,
-        wordCountThreshold: 200,
+        wordsPerAd: 350,
+        minWordsInParagraph: 120,
         inlineAdTemplate: '<div class="ad-slot ad-slot--inline" data-base="%slot%" data-median="%slot%"><div class="ad-container"></div></div>',
         mpuAdTemplate: '<div class="ad-slot ad-slot--mpu-banner-ad" data-link-name="ad slot mpu-banner-ad" data-base="%slot%" data-median="%slot%"><div class="ad-container"></div></div>'
     };
 
     // inserts a few inline advert slots in to the page
-    ArticleBodyAdverts.prototype.createInlineAdSlots = function(id, adPlacedAtBeginning) {
+    ArticleBodyAdverts.prototype.createInlineAdSlots = function(id, includesAdSlotAtTopOfArticle) {
+        var wordsPerAd = this.config.wordsPerAd;
 
         // Prevent any inline ads being showed on short articles
-        if(this.config.wordCount && this.config.wordCount < this.config.wordCountThreshold) {
+        if(this.config.wordCount && this.config.wordCount < wordsPerAd) {
             return false;
         }
 
-        var adsPlaced         = 0,
-            paragraphSelector = 'p:nth-of-type('+ this.config.nthParagraph +'n)',
-            limit             = this.config.inlineAdLimit,
-            template          = this.config.inlineAdTemplate,
-            article           = document.getElementsByClassName('js-article__container')[0];
+        var totalWords          = 0,
+            adsPlaced           = 0,
+            limit               = this.config.inlineAdLimit,
+            template            = this.config.inlineAdTemplate,
+            minWordsInParagraph = this.config.minWordsInParagraph,
+            paragraphs          = $('.js-article__container .article-body > p');
 
         // `adsPlaced` is the number of adverts currently placed inline. This is more accurate than
         // using the `i` from the each function as that can skip ads depending on content length
-        if(adPlacedAtBeginning) {
+        if(includesAdSlotAtTopOfArticle) {
             adsPlaced++;
             limit++;
         }
 
-        $(paragraphSelector, article).each(function(el, i) {
-            var $el = $(el),
-                cls = (adsPlaced % 2 === 0) ? '' : 'is-even';
+        paragraphs.each(function(el, i) {
+            var words = el.innerText.split(' ');
 
-            /*
-             - Checks if limit is set and if so, checks it hasn't been exceeded
-             - Checks is the $target element exists. If not, then you are at the end of the article
-             - Checks if the text length is below 120 characters - helps prevent against empty paragraphs
-               and paragraphs being used instead of order/unordered lists
-             */
-            if(limit !== null && limit < (adsPlaced + 1) || $el.next()[0] === undefined || $el.text().length < 120) {
-                return false;
+            totalWords += words.length;
+
+            if(totalWords > ((adsPlaced + 1) * wordsPerAd)) {
+
+                var $el = $(el),
+                    cls = (adsPlaced % 2 === 0) ? '' : 'is-even';
+
+                /*
+                 - Checks if limit is set and if so, checks it hasn't been exceeded
+                 - Checks is the $target element exists. If not, then you are at the end of the article
+                 - Checks if the text length is below 120 characters - helps prevent against empty paragraphs
+                   and paragraphs being used instead of order/unordered lists
+                 */
+                if(limit !== null && adsPlaced >= limit  || $el.next()[0] === undefined || $el.text().length < minWordsInParagraph) {
+                    return false;
+                }
+
+                bonzo(bonzo.create(template.replace(/%slot%/g, id))).addClass(cls).insertBefore($el);
+                // console.log('Placing ad in this element', el, totalWords);
+                adsPlaced++;
             }
 
-            bonzo(bonzo.create(template.replace(/%slot%/g, id))).addClass(cls).insertBefore($el);
-
-            adsPlaced++;
         });
     };
 
@@ -82,8 +92,7 @@ define([
     ArticleBodyAdverts.prototype.createAdSlotAtTopOfArticle = function(id) {
         var template = this.config.inlineAdTemplate;
 
-        var el = bonzo(bonzo.create(template.replace(/%slot%/g, id)));
-        el.prependTo($('.js-article__container .article-body p')[0]);
+        $('.js-article__container .article-body p').first().prepend(bonzo(bonzo.create(template.replace(/%slot%/g, id))));
     };
 
     ArticleBodyAdverts.prototype.destroy = function() {
