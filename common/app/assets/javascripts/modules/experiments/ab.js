@@ -209,6 +209,8 @@ define([
             getActiveTests().forEach(function(test) {
                 run(test, config, context);
             });
+
+            mediator.emit("page:tests:ready");
         },
 
         isEventApplicableToAnActiveTest: function (event) {
