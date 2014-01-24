@@ -81,15 +81,15 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     } getOrElse NotFound
   }
 
-  def updateBlock(id: String): Action[AnyContent] = AjaxExpiringAuthentication { request =>
+  def collectionEdits(): Action[AnyContent] = AjaxExpiringAuthentication { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
     request.body.asJson flatMap (_.asOpt[Map[String, UpdateList]]) map {
       case update: Map[String, UpdateList] => {
         val identity: Identity = Identity(request).get
-        update.flatMap {
-          case (verb, updateList) if verb == "update" => UpdateActions.updateCollectionList(id, updateList, identity)
-          case (verb, updateList) if verb == "delete" => UpdateActions.updateCollectionFilter(id, updateList, identity)
-        }
+        update.collect {
+          case (verb, updateList) if verb == "update" => UpdateActions.updateCollectionList(updateList.id, updateList, identity)
+          case (verb, updateList) if verb == "delete" => UpdateActions.updateCollectionFilter(updateList.id, updateList, identity)
+        }.flatten
         Ok
       }
       case _ => NotFound

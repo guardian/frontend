@@ -23,7 +23,7 @@ case class Trail(
                   )
 
 
-case class UpdateList(item: String, position: Option[String], after: Option[Boolean], itemMeta: Option[Map[String, JsValue]], live: Boolean, draft: Boolean)
+case class UpdateList(id: String, item: String, position: Option[String], after: Option[Boolean], itemMeta: Option[Map[String, JsValue]], live: Boolean, draft: Boolean)
 case class CollectionMetaUpdate(displayName: Option[String])
 
 trait UpdateActions {
