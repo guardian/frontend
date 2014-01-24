@@ -275,7 +275,7 @@ object Switches extends Collections {
 
   val ABEmailSignup = Switch("A/B Tests", "ab-email-signup",
     "If this is switched on an AB test runs to test article page email signups",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 24)
+    safeState = Off, sellByDate = new DateMidnight(2014, 5, 24)
   )
 
   val TagLinking = Switch("Feature Switches", "tag-linking",

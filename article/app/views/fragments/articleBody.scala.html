@@ -81,21 +81,11 @@
                             </div>
                         }
 
-                        @if(ABEmailSignup.isSwitchedOn) {
-                            <div class="email-signup email-signup___left-body is-hidden">
-                                @fragments.emailSignup(article, Edition(request))
-                            </div>
-                        }
                     </div>
 
                     <div class="social-wrapper">
                         @fragments.social(article)
                     </div>
-                    @if(ABEmailSignup.isSwitchedOn) {
-                        <div class="email-signup email-signup___inline is-hidden">
-                            @fragments.emailSignup(article, Edition(request))
-                        </div>
-                    }
                 </div>
                 <div class="article__secondary-column" aria-hidden="true">
                     <div class="article__secondary-column__inner@if(storyPackage.nonEmpty) { article__secondary-column__inner--fill-vertically}">
