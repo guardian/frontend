@@ -39,7 +39,8 @@ define([
     "common/modules/ui/message",
     "common/modules/identity/autosignin",
     'common/modules/adverts/article-body-adverts',
-    "common/modules/analytics/commercial/tags/container"
+    "common/modules/analytics/commercial/tags/container",
+    "common/modules/interactive/loader"
 ], function (
     $,
     mediator,
@@ -81,6 +82,7 @@ define([
     Message,
     AutoSignin,
     ArticleBodyAdverts,
+    Interactive,
     TagContainer
 ) {
 
@@ -396,6 +398,15 @@ define([
             if (window.self !== window.top) {
                 $('html').addClass('iframed');
             }
+        },
+
+        augmentInteractive: function () {
+            mediator.on('page:common:ready', function(config, context) {
+                var interactives = context.querySelectorAll('figure.interactive');
+                Array.prototype.forEach.call(interactives, function (i) {
+                    new Interactive(i, context, config).init();
+                });
+            });
         }
     };
 
@@ -437,6 +448,7 @@ define([
             modules.unshackleParagraphs(config, context);
             modules.initAutoSignin(config);
             modules.loadTags(config);
+            modules.augmentInteractive();
         }
         mediator.emit("page:common:ready", config, context);
     };
