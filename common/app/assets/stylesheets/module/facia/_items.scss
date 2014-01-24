@@ -188,6 +188,16 @@ $c-live: #e81818;
     margin-top: 2px;
     @include fs-headline(2, $size-only: true);
     word-wrap: break-word;
+
+    .i-quote-light-grey {
+        float: left;
+        margin-right: $gs-gutter/4;
+        position: relative;
+        top: 3px;
+        width: 26px;
+        height: 16px;
+        background-size: 100%;
+    }
 }
 .item__byline {
     margin-top: $gs-baseline/3;
