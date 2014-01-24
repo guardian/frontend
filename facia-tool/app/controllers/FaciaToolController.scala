@@ -96,19 +96,6 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     } getOrElse NotFound
   }
 
-  def deleteTrail(id: String) = AjaxExpiringAuthentication { request =>
-    FaciaToolMetrics.ApiUsageCount.increment()
-    request.body.asJson flatMap (_.asOpt[UpdateList]) map {
-      case update: UpdateList => {
-        val identity = Identity(request).get
-        UpdateActions.updateCollectionFilter(id, update, identity)
-        notifyContentApi(id)
-        Ok
-      }
-      case _ => NotFound
-    } getOrElse NotFound
-  }
-
   def notifyContentApi(id: String): Unit = {
     Configuration.faciatool.contentApiPostEndpoint map { postUrl =>
       val url = "%s/collection/%s".format(postUrl, id)
