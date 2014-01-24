@@ -65,7 +65,6 @@
     }
     .l-row--items-2 {
         .item__title {
-            @include fs-headline(1, true);
             @include rem((
                 margin-bottom: 14px
             ));
