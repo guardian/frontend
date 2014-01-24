@@ -53,9 +53,11 @@ define([ 'common/common',
 
             it("Should destroy the ads", function() {
                 articleBodyAdverts.init();
+                expect(articleBodyAdverts.inlineAdsPlaced).toBe(2);
                 expect($('.ad-slot--mpu-banner-ad, .ad-slot--inline').length).toBe(3);
 
                 articleBodyAdverts.destroy();
+                expect(articleBodyAdverts.inlineAdsPlaced).toBe(0);
                 expect($('.ad-slot--mpu-banner-ad, .ad-slot--inline').length).toBe(0);
             });
 

@@ -37,9 +37,9 @@ define([
     /**
      * Function to create the inline ad slots on article pages.
      *
-     * @param {string} id               The id of the slot to render, i.e. 'Middle'
-     * @param {string} topSlotId        The id of the slot to be rendered at the top of the article.
-     *                                  If no id is provided, then the ad at the top isn't rendered.
+     * @param id               The id of the slot to render, i.e. 'Middle'
+     * @param topSlotId        The id of the slot to be rendered at the top of the article. If no
+     *                         id is provided, then the ad at the top isn't rendered.
      */
     ArticleBodyAdverts.prototype.createInlineAdSlots = function(id, topSlotId) {
         var wordsPerAd = this.config.wordsPerAd;
@@ -112,6 +112,7 @@ define([
 
     ArticleBodyAdverts.prototype.destroy = function() {
         $('.ad-slot--inline, .ad-slot--mpu-banner-ad').remove();
+        this.inlineAdsPlaced = 0;
     };
 
     ArticleBodyAdverts.prototype.reload = function() {
