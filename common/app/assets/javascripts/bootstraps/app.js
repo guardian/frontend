@@ -22,7 +22,6 @@ define([
     'common/bootstraps/article',
     'common/bootstraps/video',
     'common/bootstraps/gallery',
-    'common/bootstraps/interactive',
     'common/bootstraps/identity'
 ], function (
     domReady,
@@ -47,7 +46,6 @@ define([
     Article,
     Video,
     Gallery,
-    Interactive,
     Identity
 ) {
 
@@ -135,10 +133,6 @@ define([
 
                 if (config.page.contentType === 'Gallery') {
                     Gallery.init(config, context);
-                }
-
-                if (config.page.contentType === 'Interactive') {
-                    Interactive.init(config, context);
                 }
 
                 if (config.page.contentType === 'Tag') {
