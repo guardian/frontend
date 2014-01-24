@@ -7,27 +7,15 @@
         .item:first-child {
             @include card-mobile-image;
         }
-        .item:nth-child(n+2):nth-child(-n+3),{
-            .item__title {
-                @include fs-headline(2, $size-only: true);
-                @include mq(mobileLandscape) {
-                    @include fs-headline(3, $size-only: true);
-                }
-                .svg & .i {
-                    width: 26px;
-                    height: 16px;
-                    background-size: 100%;
-                }
-            }
-            .item__byline {
-                @include fs-header(2, $size-only: true);
-                @include mq(mobileLandscape) {
-                    @include fs-header(3, $size-only: true);
-                }
-            }
+        .item__byline {
+            @include fs-header(2, $size-only: true);
         }
         .item:nth-child(n+4) {
             @extend %item-show-more;
+
+            .item__byline {
+                @include fs-header(1, $size-only: true);
+            }
         }
         .js-collection--show-more {
             .item:nth-child(n+4) {
@@ -36,6 +24,13 @@
         }
     }
     @include mq(tablet) {
+        .item:first-child {
+            .item__title .i-quote-light-grey {
+                width: 34px;
+                height: 20px;
+                top: 4px;
+            }
+        }
         .item:nth-child(n+2) {
             @include card;
         }
@@ -46,15 +41,6 @@
     @include mq(tablet, desktop) {
         .item:first-child {
             @include card-full-width;
-        }
-        .item:nth-child(3) {
-            min-height: gs-height(6);
-            .item__title {
-                @include fs-headline(3, $size-only: true);
-            }
-            .item__byline {
-                @include fs-header(4, $size-only: true);
-            }
         }
         .item:nth-child(4) {
             @include card-image;
