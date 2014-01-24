@@ -49,7 +49,7 @@ object LoadBalancer {
 
   def all: Seq[LoadBalancer] = agent()
 
-  def apply(id: String): Option[LoadBalancer] = agent().find(_.id == id)
+  def apply(project: String): Option[LoadBalancer] = agent().find(_.project == project)
 
   def shutdown() { agent.close() }
 
