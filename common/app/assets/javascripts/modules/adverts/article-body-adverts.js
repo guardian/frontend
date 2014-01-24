@@ -123,6 +123,12 @@ define([
     ArticleBodyAdverts.prototype.init = function() {
         var breakpoint = detect.getBreakpoint();
 
+        // This is a dirty hack to be removed once the content API starts to generate the
+        // word count from articles written in Composer. Was raised on 24/01/2014
+        if(this.config.wordCount === '1') {
+            this.config.wordCount = $('.js-article__container .article-body').text().replace(/(\r\n|\n|\r)/gm, '').split(' ').length;
+        }
+
         if((/wide|desktop/).test(breakpoint)) {
             this.createInlineAdSlots('Middle1');
             this.createMpuAdSlot('Middle');
