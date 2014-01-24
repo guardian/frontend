@@ -210,7 +210,7 @@ define([
                 run(test, config, context);
             });
 
-            mediator.emit("page:tests:ready");
+            mediator.emit("page:ab-tests:ready");
         },
 
         isEventApplicableToAnActiveTest: function (event) {

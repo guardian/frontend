@@ -24,6 +24,9 @@ define([
         this.config = extend(this.config, config);
         this.maxTrails = ('maxTrails' in config) ? config.maxTrails : 5;
         this.mediator = mediator;
+        mediator.on("page:ab-tests:ready", function() {
+            console.log("++ The tests have run now");
+        });
         this.fetch();
     }
 

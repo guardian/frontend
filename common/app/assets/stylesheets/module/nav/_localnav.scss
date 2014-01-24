@@ -2,19 +2,6 @@
 ========================================================================== */
 
 #preloads.has-localnav {
-    @include mq(tablet) {
-        margin-top: 156px;
-    }
-    .parts__head {
-        @include mq(tablet) {
-            padding-top: $baseline*12;
-        }
-    }
-    .parts__body {
-        @include mq(tablet) {
-            margin-top: 0;
-        }
-    }
     .ad-slot-top-banner-ad {
         padding-top: 5px;
         background-color: #eee;

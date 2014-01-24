@@ -1,27 +1,32 @@
 .site-message {
-  display: none;
-  background: $c-neutral6;
-  display: block;
+    background: $c-neutral6;
+    display: block;
 }
 
 .site-message__inner {
+    padding: $baseline*3 $gs-gutter/2;
     @include box-sizing(border-box);
-    @include gs-container;
-    position: relative;
-    padding: $baseline*3 $gs-gutter;
+
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
 }
 
 .site-message__message {
     @include fs-headline(2);
     color: $c-neutral2;
     margin-bottom: 0;
-    margin-right: $gs-gutter*(6/5);
+    margin-right: $gs-gutter*2;
+
     .site-message--permanent & {
         margin-right: 0;
     }
 }
 
-.site-message__message--tall { padding-bottom: $baseline*11; }
+.site-message__message--tall {
+    padding-bottom: $baseline*11;
+}
 
 .site-message__actions {
     width: 100%;
@@ -48,8 +53,8 @@
 .site-message__close {
     display: block;
     position: absolute;
-    top: $baseline*3;
-    right: 20px;
+    top: $gs-baseline;
+    right: $gs-gutter*3/4;
     padding: 0;
     width: 22px;
     height: 22px;

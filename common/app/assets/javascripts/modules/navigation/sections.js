@@ -185,7 +185,7 @@ define([
                     var localNavHtml = '<ul class="nav nav--local" data-link-name="Local Navigation">' +
                                          localNavItems.splice(1).join('') + // Skip the first link to the top section for desktop
                                        '</ul>';
-                    common.$g('.control--topstories', headerNode).after('<div class="localnav-container">' + localNavHtml + '</div>');
+                    common.$g('.js-localnav-placeholder', headerNode).html('<div class="localnav-container gs-container u-cf">' + localNavHtml + '</div>');
 
                     common.$g('#preloads').addClass('has-localnav');
 
