@@ -1,10 +1,12 @@
 package model.commercial.soulmates
 
-import conf.CommercialConfiguration
+import conf.{Switches, CommercialConfiguration}
 import play.api.libs.json.{JsArray, JsValue}
 import model.commercial.JsonAdsApi
 
 trait SoulmatesApi extends JsonAdsApi[Member] {
+
+  protected val switch = Switches.SoulmatesFeedSwitch
 
   protected val path: String
 

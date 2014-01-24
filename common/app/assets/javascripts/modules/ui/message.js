@@ -29,15 +29,14 @@ define([
 
     Message.prototype.show = function(message) {
         // don't let messages unknowingly overwrite each other
-        if ((!$('.site-message').hasClass('u-h') && !this.important) || this.hasSeen()) {
+        if ((!$('.site-message').hasClass('is-hidden') && !this.important) || this.hasSeen()) {
             return false;
         }
         $('.js-site-message-copy').html(message);
-        $('#header').addClass('js-site-message');
-        $('.site-message').removeClass('u-h');
+        $('.site-message').removeClass('is-hidden');
         if (this.permanent) {
             $('.site-message').addClass('site-message--permanent');
-            $('.site-message__close').addClass('u-h');
+            $('.site-message__close').addClass('is-hidden');
         } else {
             bean.on(document, 'click', '.js-site-message-close', this.acknowledge.bind(this));
         }
@@ -45,7 +44,7 @@ define([
 
     Message.prototype.hide = function() {
         $('#header').removeClass('js-site-message');
-        $('.site-message').addClass('u-h');
+        $('.site-message').addClass('is-hidden');
     };
 
     Message.prototype.hasSeen = function() {

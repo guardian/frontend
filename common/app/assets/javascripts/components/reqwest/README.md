@@ -36,7 +36,7 @@ reqwest({
 reqwest({
     url: 'path/to/html'
   , method: 'get'
-  , data: { [ name: 'foo', value: 'bar' ], [ name: 'baz', value: 100 ] }
+  , data: [ { name: 'foo', value: 'bar' }, { name: 'baz', value: 100 } ]
   , success: function (resp) {
       qwery('#content').html(resp)
     }

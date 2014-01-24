@@ -102,7 +102,7 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
 }
 
 .fromage__title {
-    @include fs-headline(3);
+    @include fs-headline(2);
     @include rem((
         margin-bottom: $gs-baseline + 2px
     ));
@@ -257,27 +257,34 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
    ===========================================================================*/
 
 .fromage__media-wrapper--first {
-    display: none;
+    &,
+    .fromage__image-container {
+        display: none;
+    }
 }
 .fromage__media-wrapper--second {
     float: left;
     clear: both;
+    width: 50%;
+    @include box-sizing(border-box);
 
     @include rem((
-        margin-top: 4px,
-        margin-right: $gs-gutter/2
-    ));
-
-    @include rem((
-        width: 122px
+        margin-top: 3px,
+        padding-right: $gs-gutter/2
     ));
 }
 @include mq(tablet) {
     .fromage__media-wrapper--first {
-        display: block;
+        &,
+        .fromage__image-container {
+            display: block;
+        }
     }
     .fromage__media-wrapper--second {
-        display: none;
+        &,
+        .fromage__image-container {
+            display: none;
+        }
     }
 }
 
@@ -285,8 +292,9 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
     .fromage__container {
         border-top-width: 0;
     }
-    .fromage__media-wrapper {
-        display: none;
+    .fromage__media-wrapper,
+    .fromage__image-container {
+        display: none !important;
     }
     .fromage__link {
         @include mq(tablet) {
@@ -306,7 +314,7 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
         }
     }
     .fromage__title {
-        @include fs-headline(4, true);
+        @include fs-headline(3, true);
 
         @include mq(tablet) {
             @include fs-headline(5, true);
@@ -425,10 +433,16 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
         }
     }
     .fromage__media-wrapper--first {
-        display: block;
+        &,
+        .fromage__image-container {
+            display: block;
+        }
     }
     .fromage__media-wrapper--second {
-        display: none;
+        &,
+        .fromage__image-container {
+            display: none;
+        }
     }
 }
 

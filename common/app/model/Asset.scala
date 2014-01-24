@@ -49,7 +49,7 @@ case class VideoAsset(private val delegate: Asset, image: Option[ImageContainer]
   // The video duration in seconds
   lazy val duration: Int = fields.get("durationSeconds").getOrElse("0").toInt +
                            (fields.get("durationMinutes").getOrElse("0").toInt * 60)
-  lazy val blockAds: Boolean = fields.get("blockAds").exists(_.toBoolean)
+  lazy val blockVideoAds: Boolean = fields.get("blockAds").exists(_.toBoolean)
 
   lazy val source: Option[String] = fields.get("source")
 }

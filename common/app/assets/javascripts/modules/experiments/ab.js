@@ -5,30 +5,18 @@ define([
     'common/modules/analytics/mvt-cookie',
 
     //Current tests
-    'common/modules/experiments/tests/aa',
-    'common/modules/experiments/tests/identity-email-signup',
-    'common/modules/experiments/tests/commercial-in-article-desktop',
-    'common/modules/experiments/tests/commercial-in-article-mobile',
-    'common/modules/experiments/tests/chartbeat-desktop'
+    'common/modules/experiments/tests/aa'
 ], function (
     common,
     store,
     mediator,
     mvtCookie,
 
-    Aa,
-    EmailSignup,
-    CommercialInArticlesDesktop,
-    CommercialInArticlesMobile,
-    ChartbeatDesktop
+    Aa
     ) {
 
     var TESTS = [
-            new Aa(),
-            new EmailSignup(),
-            new CommercialInArticlesDesktop(),
-            new CommercialInArticlesMobile(),
-            new ChartbeatDesktop()
+            new Aa()
         ],
         participationsKey = 'gu.ab.participations';
 
