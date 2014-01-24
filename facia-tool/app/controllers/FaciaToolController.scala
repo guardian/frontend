@@ -83,12 +83,13 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
 
   def updateBlock(id: String): Action[AnyContent] = AjaxExpiringAuthentication { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
-    request.body.asJson flatMap (_.asOpt[UpdateList]) map {
-      case update: UpdateList => {
-        val identity = Identity(request).get
-        UpdateActions.updateCollectionList(id, update, identity)
-        //TODO: How do we know if it was updated or created? Do we need to know?
-        notifyContentApi(id)
+    request.body.asJson flatMap (_.asOpt[Map[String, UpdateList]]) map {
+      case update: Map[String, UpdateList] => {
+        val identity: Identity = Identity(request).get
+        update.flatMap {
+          case (verb, updateList) if verb == "update" => UpdateActions.updateCollectionList(id, updateList, identity)
+          case (verb, updateList) if verb == "delete" => UpdateActions.updateCollectionFilter(id, updateList, identity)
+        }
         Ok
       }
       case _ => NotFound
