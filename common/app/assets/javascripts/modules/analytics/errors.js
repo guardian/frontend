@@ -12,36 +12,44 @@ define([
         var c = config || {},
             isDev = (c.isDev !== undefined) ? c.isDev : false,
             url = config.beaconUrl,
-            path = '/js.gif',
             cons = c.console || window.console,
             win = c.window || window,
-            body = document.body,
             prefs = c.userPrefs || userPrefs,
+            buildNumber = c.buildNumber || 'unknown',
+
             createImage = function(url) {
                 var image = new Image();
                 image.id = 'js-err';
                 image.className = 'u-h';
                 image.src = url;
-                body.appendChild(image);
+                document.body.appendChild(image);
             },
-            makeUrl = function(properties, isAd) {
+
+            makeUrl = function(properties) {
                 var query = [];
-                properties.type = (isAd === true) ? 'ads' : 'js';
-                properties.build = c.buildNumber || 'unknown';
+
                 for (var name in properties) {
                     query.push(name + '=' + encodeURIComponent(properties[name]));
                 }
-                return url + path + '?' + query.join('&');
+                return url + '/js.gif?' + query.join('&');
             },
+
             log = function(message, filename, lineno, isUncaught) {
                 // error events are thrown by script elements
                 if (message.toString() === '[object Event]' && message.target instanceof HTMLScriptElement) {
                     message = 'Syntax or http error: ' + message.target.src;
                 }
+                var errorType = 'js';
+                if (filename === 'common/modules/adverts/documentwriteslot.js' || message === 'Script error.') {
+                    errorType = 'ads';
+                }
+
                 var error = {
                     message: message,
                     filename: filename,
-                    lineno: lineno
+                    lineno: lineno,
+                    build: buildNumber,
+                    type: errorType
                 };
                 if (isDev) {
                     if (isUncaught !== true) {
@@ -49,11 +57,12 @@ define([
                     }
                     return false;
                 } else {
-                    var url = makeUrl(error, (filename === 'common/modules/adverts/documentwriteslot.js' || message === 'Script error.'));
+                    var url = makeUrl(error);
                     createImage(url);
                     return (prefs.isOn('showErrors')) ? false : true;
                 }
             },
+
             init = function() {
                 win.onerror = function(message, filename, lineno) {
                     return log(message, filename, lineno, true);
