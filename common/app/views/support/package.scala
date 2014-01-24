@@ -349,7 +349,8 @@ object InBodyElementCleaner extends HtmlCleaner {
     "element-video",
     "element-image",
     "element-witness",
-    "element-comment"
+    "element-comment",
+    "element-interactive"
   )
 
   override def clean(document: Document): Document = {
