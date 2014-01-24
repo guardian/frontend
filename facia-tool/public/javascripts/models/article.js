@@ -213,17 +213,17 @@ define([
             }
 
             if (this.parentType === 'Collection') {
-                authedAjax.updateCollection(
-                    'post',
-                    this.parent,
-                    {
+                authedAjax.updateCollection({
+                    update: {
+                        id:       this.parent.id,
                         item:     self.props.id(),
                         position: self.props.id(),
                         itemMeta: self.getMeta(),
                         live:     vars.state.liveMode(),
                         draft:   !vars.state.liveMode()
                     }
-                );
+                }, [this.parent]);
+
                 this.parent.setPending(true);
             }
         };

@@ -126,15 +126,14 @@ define([
 
         self.setPending(true);
 
-        authedAjax.request({
-            type: 'delete',
-            url: vars.CONST.apiBase + '/collection/' + self.id,
-            data: JSON.stringify({
-                item: item.props.id(),
+        authedAjax.updateCollection({
+            remove: {
+                id:     self.id,
+                item:   item.props.id(),
                 live:   vars.state.liveMode(),
                 draft: !vars.state.liveMode()
-            })
-        })
+            }
+        }, [self])
         .then(function() {
             self.load();
         });

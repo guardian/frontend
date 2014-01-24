@@ -13,17 +13,21 @@ define(['modules/vars'], function(vars) {
         });
     }
 
-    function updateCollection(method, collection, data) {
-        collection.setPending(true);
+    function updateCollection(edits, collections) {
+        _.each(collections, function(collection) {
+            collection.setPending(true);
+        });
 
         return request({
-            url: vars.CONST.apiBase + '/collection/' + collection.id,
-            type: method,
-            data: JSON.stringify(data)
+            url: vars.CONST.apiBase + '/edits',
+            type: 'POST',
+            data: JSON.stringify(edits)
         }).fail(function(xhr) {
-            window.console.log(['Failed', method.toUpperCase(), ":", xhr.status, xhr.statusText, JSON.stringify(data)].join(' '));
+            window.console.log(['Failed: ', xhr.status, xhr.statusText, JSON.stringify(edits)].join(' '));
         }).always(function() {
-            collection.load();
+            _.each(collections, function(collection) {
+                collection.load();
+            });
         });
     }
 
