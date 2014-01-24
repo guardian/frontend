@@ -72,7 +72,7 @@
                 @include fs-headline(3, true);
             }
         }
-        @include mq($to: tablet) {
+        @include mq(mobile, tablet) {
             display: -webkit-flex;
             display: flex;
 
@@ -158,7 +158,7 @@
                 display: block;
             }
         }
-        @include mq($to: tablet) {
+        @include mq(mobile, tablet) {
             .item__link {
                 display: -webkit-flex;
                 display: flex;
