@@ -221,7 +221,7 @@ define([
                             collections.push(sourceList.parent);
                         }
 
-                        authedAjax.updateCollection(edits, collections);
+                        authedAjax.updateCollections(edits, collections);
                     });
                 }, false);
             }
