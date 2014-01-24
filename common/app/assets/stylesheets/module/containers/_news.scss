@@ -128,7 +128,8 @@
     }
 
     @include mq(tablet) {
-        .collection__show-more {
+        .collection__show-more,
+        .item--sport-stats {
             display: none;
         }
     }
