@@ -156,6 +156,7 @@ GET         /onward/most-read.json                                              
 GET         /onward/latest.json                                                                                      controllers.LatestContentController.renderLatest()
 GET         /onward/recently-published                                                                               controllers.LatestContentController.recentlyPublished()
 
+
 # Facia
 GET         /                                                                                                        controllers.FaciaController.editionRedirect(path = "")
 GET         /$path<(culture|sport|australia|commentisfree|business|money)>                                           controllers.FaciaController.editionRedirect(path)
