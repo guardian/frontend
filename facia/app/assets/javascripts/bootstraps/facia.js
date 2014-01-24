@@ -114,7 +114,8 @@ define([
                 } else {
                     var userZoomSurvey = {
                         '/us': 'MSBDMTBTMTE1',
-                        '/au': 'MSBDMTBTMTE2'
+                        '/au': 'MSBDMTBTMTE2',
+                        '/uk': 'MSBDMTBTMTE3'
                     }[page];
                     msg =
                         '<p class="site-message__message">' +
