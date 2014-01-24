@@ -12,6 +12,14 @@ object RequestQuery  {
   }
 }
 
+case class ErrorParameters(
+  message: String,
+  filename: String,
+  lineno: String,
+  build: String,
+  errorType: String
+)
+
 class RequestQuery(private val request: RequestHeader) {
 
   lazy val isHealthCheck = userAgent startsWith "ELB-HealthChecker"
@@ -28,20 +36,23 @@ class RequestQuery(private val request: RequestHeader) {
       case _            => "unknown"
     }
   }
+  lazy val errorInfo = {
+    ErrorParameters(
+      message = queryString.getOrElse("message", "no message"),
+      filename = queryString.getOrElse("filename", "no filename"),
+      lineno = queryString.getOrElse("lineno", "no line no"),
+      build = queryString.getOrElse("build", "no build no"),
+      errorType = queryString.getOrElse("type", "no error type")
+    )
+  }
 }
 
 object JavascriptRequestLog {
 
   def apply(r: RequestHeader): String = {
 
-    val query = RequestQuery(r)
+    val error = RequestQuery(r).errorInfo
 
-    val errorLog = Seq(Some("JsError reported"),
-                       query.queryString.get("message"),
-                       query.queryString.get("filename"),
-                       query.queryString.get("lineno"),
-                       Some(query.osFamily)).flatten
-
-    errorLog.mkString(", ")
+    s"JsError: ${error.message}, at: ${error.filename}#${error.lineno}, buildNo: ${error.build}, type: ${error.errorType}"
   }
 }

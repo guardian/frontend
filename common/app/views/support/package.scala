@@ -1,27 +1,23 @@
 package views.support
 
 import common._
-import java.net.URLEncoder._
+import conf.Switches.{ShowUnsupportedEmbedsSwitch, TagLinking}
 import model._
-import org.jsoup.nodes.{ Element, Document }
-import org.jsoup.Jsoup
-import org.jsoup.safety.{ Whitelist, Cleaner }
+
+import java.net.URLEncoder._
+import org.apache.commons.lang.StringEscapeUtils
 import org.jboss.dna.common.text.Inflector
-import play.api.libs.json.Writes
-import play.api.libs.json.Json._
-import play.api.templates.Html
-import scala.collection.JavaConversions._
-import play.api.mvc.RequestHeader
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
-import org.apache.commons.lang.StringEscapeUtils
-import conf.Switches.ShowUnsupportedEmbedsSwitch
-import model.ImageAsset
-import scala.Some
+import org.jsoup.Jsoup
+import org.jsoup.nodes.{ Element, Document }
+import org.jsoup.safety.{ Whitelist, Cleaner }
+import play.api.libs.json.Json._
+import play.api.libs.json.Writes
+import play.api.mvc.RequestHeader
 import play.api.mvc.SimpleResult
-import model.Tag
-import model.VideoAsset
-import conf.Switches.{TagLinking}
+import play.api.templates.Html
+import scala.collection.JavaConversions._
 
 sealed trait Style {
   val className: String
