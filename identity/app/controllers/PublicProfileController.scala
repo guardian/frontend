@@ -20,7 +20,7 @@ class PublicProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
                                         idRequestParser: IdRequestParser)
   extends Controller with ExecutionContexts with SafeLogging {
 
-  val form = Form(
+  val publicProfileForm = Form(
     Forms.tuple(
       "publicFields.location" -> Forms.optional(Forms.text(maxLength = 255)),
       "privateFields.gender" -> Forms.optional(Forms.text).verifying { genderOpt =>
@@ -32,17 +32,29 @@ class PublicProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
     )
   )
 
+  val textField = Forms.optional(Forms.text(maxLength = 255))
+  
+  val accountDetailsForm = Form(
+    Forms.tuple(
+      "primaryEmailAddress" -> textField,
+      "password1" -> textField,
+      "password2" -> textField,
+      "privateFields.firstName" -> textField,
+      "privateFields.secondName" -> textField
+    )
+  )
+
   val page = IdentityPage("/profile/public", "Public profile", "public profile")
 
   def displayForm = CSRFAddToken {
     authActionWithUser.apply { implicit request =>
       val idRequest = idRequestParser(request)
-      Ok(views.html.public_profile(page.tracking(idRequest), request.user, bindFormFromUser(request.user), idRequest, idUrlBuilder))
+      Ok(views.html.public_profile(page.tracking(idRequest), request.user, bindPublicProfileFormFromUser(request.user), bindAccountDetailsFormFromUser(request.user), idRequest, idUrlBuilder))
     }
   }
 
-  def bindFormFromUser(user: User): Form[(Option[String], Option[String], Option[String], Option[String], Option[String])] = {
-    form.bind(
+  def bindPublicProfileFormFromUser(user: User): Form[(Option[String], Option[String], Option[String], Option[String], Option[String])] = {
+    publicProfileForm.bind(
       List(
         user.publicFields.location.map("publicFields.location" -> _),
         user.privateFields.gender.map("privateFields.gender" -> _),
@@ -53,10 +65,22 @@ class PublicProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
     )
   }
 
+  def bindAccountDetailsFormFromUser(user: User): Form[(Option[String], Option[String], Option[String], Option[String], Option[String])] = {
+    accountDetailsForm.bind(
+      List(
+        user.primaryEmailAddress.map("primaryEmailAddress" -> _),
+        user.primaryEmailAddress.map("primaryEmailAddress" -> _),
+        user.primaryEmailAddress.map("primaryEmailAddress" -> _),
+        user.privateFields.firstName.map("privateFields.firstName" -> _),
+        user.privateFields.secondName.map("privateFields.secondName" -> _)
+      ).flatten.toMap
+    )
+  }
+
   def submitForm = CSRFCheck {
     authActionWithUser.async { implicit request =>
       val idRequest = idRequestParser(request)
-      val formData = form.bindFromRequest()
+      val formData = publicProfileForm.bindFromRequest()
 
       val userUpdate = UserUpdate(
         publicFields = Some(PublicFields(
@@ -78,7 +102,7 @@ class PublicProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
           Ok(views.html.public_profile(page.tracking(idRequest), request.user, formDataWithErrors, idRequest, idUrlBuilder))
         }
         case Right(user) => {
-          Ok(views.html.public_profile(page.accountEdited(idRequest), request.user, bindFormFromUser(user), idRequest, idUrlBuilder))
+          Ok(views.html.public_profile(page.accountEdited(idRequest), request.user, bindPublicProfileFormFromUser(user), idRequest, idUrlBuilder))
         }
       }
     }

@@ -1,7 +1,8 @@
 @(
         page: model.MetaData with tracking.TrackingParams,
         user: com.gu.identity.model.User,
-        profileForm: Form[(Option[String], Option[String], Option[String], Option[String], Option[String])],
+        publicProfileForm: Form[(Option[String], Option[String], Option[String], Option[String], Option[String])],
+        accountDetailsForm: Form[(Option[String], Option[String], Option[String], Option[String], Option[String])],
         idRequest: services.IdentityRequest,
         idUrlBuilder: services.IdentityUrlBuilder
 )(implicit request: RequestHeader)
@@ -48,8 +49,8 @@
                         </div>
                     </fieldset>
 
-                    @if(profileForm.globalError.isDefined) {
-                        <div class="form__error">@profileForm.globalErrors.map(_.message).mkString(", ")</div>
+                    @if(publicProfileForm.globalError.isDefined) {
+                        <div class="form__error">@publicProfileForm.globalErrors.map(_.message).mkString(", ")</div>
                     }
 
                     <fieldset class="fieldset">
@@ -61,17 +62,17 @@
 
                         <div class="fieldset__fields">
                             <ul class="unstyled">
-                                @inputField(Input(profileForm("publicFields.location"), ('_label, "Location")))
+                                @inputField(Input(publicProfileForm("publicFields.location"), ('_label, "Location")))
                                 @select(
-                                    profileForm("privateFields.gender"),
+                                    publicProfileForm("privateFields.gender"),
                                     List(("Male", "Male"), ("Female", "Female"), ("unknown", "Prefer not to say")),
                                     ('_label, "Gender"),
                                     ('_default, "")
                                 )
 
-                                @textareaField(Input(profileForm("publicFields.aboutMe"), ('_label, "About me"), ('class, "textarea--long")))
-                                @textareaField(Input(profileForm("publicFields.interests"), ('_label, "Interests")))
-                                @inputField(Input(profileForm("publicFields.webPage"), ('_label, "Website (enter full address)")))
+                                @textareaField(Input(publicProfileForm("publicFields.aboutMe"), ('_label, "About me"), ('class, "textarea--long")))
+                                @textareaField(Input(publicProfileForm("publicFields.interests"), ('_label, "Interests")))
+                                @inputField(Input(publicProfileForm("publicFields.webPage"), ('_label, "Website (enter full address)")))
 
                                 <li>
                                     <button type="submit" class="submit-input" data-link-name="Create account">Save changes</button>
@@ -89,8 +90,8 @@
                 <form class="form" novalidate action="@idUrlBuilder.buildUrl("/profile/public", idRequest)" role="main" method="post">
                     @views.html.helper.CSRF.formField
 
-                    @if(profileForm.globalError.isDefined) {
-                        <div class="form__error">@profileForm.globalErrors.map(_.message).mkString(", ")</div>
+                    @if(accountDetailsForm.globalError.isDefined) {
+                        <div class="form__error">@accountDetailsForm.globalErrors.map(_.message).mkString(", ")</div>
                     }
 
                     <fieldset class="fieldset">
@@ -102,17 +103,7 @@
                         
                         <div class="fieldset__fields">
                             <ul class="unstyled">
-                                @inputField(Input(profileForm("publicFields.email"), ('_label, "Email address")))
-                                @select(
-                                    profileForm("privateFields.gender"),
-                                    List(("Male", "Male"), ("Female", "Female"), ("unknown", "Prefer not to say")),
-                                    ('_label, "Gender"),
-                                    ('_default, "")
-                                )
-
-                                @textareaField(Input(profileForm("publicFields.aboutMe"), ('_label, "About me"), ('class, "textarea--long")))
-                                @textareaField(Input(profileForm("publicFields.interests"), ('_label, "Interests")))
-                                @inputField(Input(profileForm("publicFields.webPage"), ('_label, "Website (enter full address)")))
+                                @inputField(Input(accountDetailsForm("primaryEmailAddress"), ('_label, "Email address")))
 
                                 <li>
                                     <button type="submit" class="submit-input" data-link-name="Create account">Save changes</button>
