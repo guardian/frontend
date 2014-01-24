@@ -60,10 +60,12 @@
             @include vertical-item-separator; // Restore inter-item separator
         }
     }
-
+    .item__title {
+        @include fs-headline(1, true);
+    }
     .l-row--items-2 {
         .item__title {
-            @include fs-headline(2, true);
+            @include fs-headline(1, true);
             @include rem((
                 margin-bottom: 14px
             ));
