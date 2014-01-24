@@ -1,6 +1,7 @@
 /* global module: false, process: false */
 module.exports = function (grunt) {
-    var isDev = grunt.option('dev') || process.env.GRUNT_ISDEV === '1',
+
+    var isDev = (grunt.option('dev') !== undefined) ? Boolean(grunt.option('dev')) : process.env.GRUNT_ISDEV === '1',
         singleRun = grunt.option('single-run') !== false,
         env = grunt.option('env') || 'code',
         screenshotsDir = './screenshots',
@@ -9,7 +10,6 @@ module.exports = function (grunt) {
         staticRequireDir = staticDir + 'requirejs/',
         testConfDir = 'common/test/assets/javascripts/conf/',
         propertiesFile = (isDev) ? process.env.HOME + '/.gu/frontend.properties' : '/etc/gu/frontend.properties';
-
 
     if (isDev) {
         grunt.log.subhead('Running Grunt in DEV mode');
