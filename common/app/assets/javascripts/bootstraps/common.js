@@ -402,10 +402,12 @@ define([
 
         augmentInteractive: function () {
             mediator.on('page:common:ready', function(config, context) {
-                var interactives = context.querySelectorAll('figure.interactive');
-                Array.prototype.forEach.call(interactives, function (i) {
-                    new Interactive(i, context, config).init();
-                });
+                if (/Article|Interactive/.test(config.page.contentType)) {
+                    var interactives = context.querySelectorAll('figure.interactive');
+                    Array.prototype.forEach.call(interactives, function (i) {
+                        new Interactive(i, context, config).init();
+                    });
+                }
             });
         }
     };
