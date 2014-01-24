@@ -8,11 +8,6 @@ define([
     'common/modules/experiments/tests/aa',
     'common/modules/experiments/tests/gravity-recommendations'
 ], function (
-    common,
-    store,
-    mediator,
-    mvtCookie,
-
     Aa,
     GravityRecommendations
     ) {
@@ -20,8 +15,8 @@ define([
     var TESTS = [
             new Aa(),
             new GravityRecommendations()
-        ],
-        participationsKey = 'gu.ab.participations';
+       ],
+       participationsKey = 'gu.ab.participations';
 
     function getParticipations() {
         return store.local.get(participationsKey) || {};
