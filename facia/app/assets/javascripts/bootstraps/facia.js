@@ -57,7 +57,7 @@ define([
 
         showFootballFixtures: function(path) {
             mediator.on('page:front:ready', function(config, context) {
-                if (config.page.edition === 'UK' && (config.page.pageId === "" || config.page.pageId === "sport" || config.page.pageId === "uk-alpha" )) {
+                if (config.page.edition === 'UK' && (['', 'sport', 'uk-alpha'].indexOf(config.page.pageId) !== -1)) {
                     // wrap the return sports stats component in an 'item'
                     var prependTo = bonzo(bonzo.create('<li class="item item--sport-stats item--sport-stats-tall"></li>'));
                     mediator.on('modules:footballfixtures:render', function() {
