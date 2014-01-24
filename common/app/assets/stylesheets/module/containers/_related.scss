@@ -66,13 +66,16 @@
 
     @include mq(rightCol) {
         margin-left: -1*($gs-gutter/2);
+
+        > ul {
+            margin-right: - $gs-gutter/2;
+        }
     }
 
     @include mq(leftCol) {
         padding-top: $gs-baseline/1.5;
         border-top: 1px solid $c-neutral4;
         margin-left: $a-leftCol-width + $gs-gutter/2;
-        margin-right: - $gs-gutter/2;
     }
 
     @include mq(wide) {
