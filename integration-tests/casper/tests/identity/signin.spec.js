@@ -7,7 +7,6 @@
 
  casper.test.setUp(function() {
     casper.start(idHost +'signin?view=mobile');
-    console.log(environment);
 });
 
 
