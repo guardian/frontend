@@ -86,10 +86,10 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     request.body.asJson flatMap (_.asOpt[Map[String, UpdateList]]) map {
       case update: Map[String, UpdateList] => {
         val identity: Identity = Identity(request).get
-        update.flatMap {
+        update.collect {
           case (verb, updateList) if verb == "update" => UpdateActions.updateCollectionList(updateList.id, updateList, identity)
           case (verb, updateList) if verb == "delete" => UpdateActions.updateCollectionFilter(updateList.id, updateList, identity)
-        }
+        }.flatten
         Ok
       }
       case _ => NotFound
