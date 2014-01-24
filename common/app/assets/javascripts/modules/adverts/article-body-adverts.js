@@ -34,11 +34,17 @@ define([
 
     ArticleBodyAdverts.prototype.inlineAdsPlaced = 0;
 
-    // inserts a few inline advert slots in to the page
-    ArticleBodyAdverts.prototype.createInlineAdSlots = function(id, createTopOfArticleSlot) {
+    /**
+     * Function to create the inline ad slots on article pages.
+     *
+     * @param {string} id               The id of the slot to render, i.e. 'Middle'
+     * @param {string} topSlotId        The id of the slot to be rendered at the top of the article.
+     *                                  If no id is provided, then the ad at the top isn't rendered.
+     */
+    ArticleBodyAdverts.prototype.createInlineAdSlots = function(id, topSlotId) {
         var wordsPerAd = this.config.wordsPerAd;
 
-        // Prevent any inline ads being showed on short articles
+        // Prevents any inline ads being showed on short articles
         if(this.config.wordCount && this.config.wordCount < wordsPerAd) {
             return false;
         }
@@ -54,14 +60,14 @@ define([
         $paragraphs.each(function(el, i) {
             var $el                    = $(el),
                 words                  = $el.text().split(' '),
-                renderTopOfArticleSlot = !!createTopOfArticleSlot && self.inlineAdsPlaced === 0;
+                renderTopOfArticleSlot = !!topSlotId && self.inlineAdsPlaced === 0;
 
             // Increment our running total of words
             totalWords += words.length;
 
             // Check to see if we should try to render an advert at the top of the article
             if(renderTopOfArticleSlot && totalWords > topOfArticleWordsLimit) {
-                self.renderInlineAdSlot(createTopOfArticleSlot, $el);
+                self.renderInlineAdSlot(topSlotId, $el);
                 limit++;
             } else if(totalWords > ((self.inlineAdsPlaced + 1) * wordsPerAd)) {
 
@@ -86,8 +92,6 @@ define([
             insertMethod = this.getInsertMethod();
 
         bonzo(bonzo.create(template.replace(/%slot%/g, id)))[insertMethod]($el);
-
-        // console.log('Placing ad in this element', el, totalWords);
 
         this.inlineAdsPlaced++;
     };
