@@ -233,6 +233,18 @@ object CloudWatch extends implicits.Futures{
       .withDimensions(stage),
       asyncHandler))
 
+  def ratioConfidence = new LineChart("omniture-ophan-correlation", Seq("Time", "%"),
+    euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
+      .withStartTime(new DateTime().minusWeeks(2).toDate)
+      .withEndTime(new DateTime().toDate)
+      .withPeriod(900)
+      .withStatistics("Average")
+      .withNamespace("Analytics")
+      .withMetricName("omniture-ophan-correlation")
+      .withDimensions(stage),
+      asyncHandler))
+
+
   def AbMetricNames() = {
     euWestClient.listMetricsAsync( new ListMetricsRequest()
       .withNamespace("AbTests")

@@ -25,7 +25,7 @@ trait MetaData extends Tags {
     "web-title" -> webTitle,
     "build-number" -> buildNumber,
     "analytics-name" -> analyticsName,
-    "blockAds" -> false
+    "blockVideoAds" -> false
   )
 
   def openGraph: List[(String, Any)] = List(

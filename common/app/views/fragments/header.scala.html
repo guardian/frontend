@@ -16,17 +16,6 @@ to apply any necessary changes to non-shared code there too.
 
         <span class="release">Alpha</span>
 
-        <div class="nav-container">
-            <ul class="nav nav--global" data-link-name="Sections">
-            @Edition(request).navigation(page).map{ nav =>
-                <li class="nav__item @if(nav.currentFor(page)){is-active}">
-                    <a href="@LinkTo{@nav.name.href}" data-link-name="@nav.name.linkName"
-                       class="nav__link">@nav.name.title</a>
-                </li>
-            }
-            </ul>
-        </div>
-
         <a href="#footer-nav" data-link-name="Sections" data-toggle="nav-popup-sections"
            class="control control--sections">
             <i class="i i-nav-divider"></i>
@@ -71,5 +60,17 @@ to apply any necessary changes to non-shared code there too.
         <div class="nav-popup-sections nav-popup nav-popup--small is-off">
             @fragments.sections(page, false)
         </div>
+
+        <div class="nav-container gs-container u-cf">
+            <ul class="nav nav--global" data-link-name="Sections">
+            @Edition(request).navigation(page).map{ nav =>
+                <li class="nav__item @if(nav.currentFor(page)){is-active}">
+                    <a href="@LinkTo{@nav.name.href}" data-link-name="@nav.name.linkName"
+                       class="nav__link">@nav.name.title</a>
+                </li>
+            }
+            </ul>
+        </div>
+        <div class="js-localnav-placeholder"></div>
     </div>
  </header>

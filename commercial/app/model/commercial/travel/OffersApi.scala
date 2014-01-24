@@ -3,9 +3,11 @@ package model.commercial.travel
 import org.joda.time.format.DateTimeFormat
 import scala.xml.{Elem, Node}
 import model.commercial.XmlAdsApi
-import conf.CommercialConfiguration
+import conf.{Switches, CommercialConfiguration}
 
 trait OffersApi extends XmlAdsApi[Offer] {
+
+  protected val switch = Switches.TravelOffersFeedSwitch
 
   protected val path: String
 

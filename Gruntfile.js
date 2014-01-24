@@ -57,8 +57,6 @@ module.exports = function (grunt) {
                     qwery:        'common/components/qwery/mobile/qwery-mobile',
                     reqwest:      'common/components/reqwest/src/reqwest',
                     postscribe:   'common/components/postscribe/dist/postscribe',
-                    swipe:        'common/components/swipe/swipe',
-                    swipeview:    'common/components/swipeview/src/swipeview',
                     lodash:       'common/components/lodash-amd/modern',
                     imager:       'common/components/imager.js/src/strategies/container',
                     omniture:     'common/components/omniture/omniture',
@@ -101,13 +99,10 @@ module.exports = function (grunt) {
             },
             facia: {
                 options: {
-                    dir: staticTargetDir + 'javascripts',
-                    modules: [
-                        {
-                            name: 'bootstraps/facia',
-                            exclude: ['common/bootstraps/app']
-                        }
-                    ]
+                    name: 'bootstraps/facia',
+                    out: staticTargetDir + 'javascripts/bootstraps/facia.js',
+                    exclude: ['common/bootstraps/app'],
+                    keepBuildDir: true
                 }
             }
         },
@@ -408,12 +403,12 @@ module.exports = function (grunt) {
         },
 
         uglify: {
-            vendor: {
+            components: {
                 files: [{
                     expand: true,
-                    cwd: staticTargetDir + 'javascripts/vendor/',
+                    cwd: staticTargetDir + 'javascripts/components/',
                     src: '**/*.js',
-                    dest: staticTargetDir + 'javascripts/vendor/'
+                    dest: staticTargetDir + 'javascripts/components/'
                 }]
             }
         },
@@ -513,6 +508,9 @@ module.exports = function (grunt) {
             },
             facia: {
                 src: ['integration-tests/casper/tests/facia/*.spec.js']
+            },
+            identity: {
+                src: ['integration-tests/casper/tests/identity/*.spec.js']
             },
             open: {
                 src: ['integration-tests/casper/tests/open/*.spec.js']
@@ -667,14 +665,14 @@ module.exports = function (grunt) {
             grunt.task.run('copy:javascript-' + app);
         }
         if (!isDev) {
-            grunt.task.run('uglify:vendor');
+            grunt.task.run('uglify:components');
         }
+        grunt.task.run('requirejs:common');
         // When an app defines it's own javascript application, the requirejs task will need to compile both
         // common and app.
         if (grunt.config('requirejs')[app]) {
             grunt.task.run('requirejs:' + app);
         }
-        grunt.task.run('requirejs:common');
     });
     grunt.registerTask('compile:fonts', ['clean:fonts', 'mkdir:fontsTarget', 'webfontjson']);
     grunt.registerTask('compile:flash', ['clean:flash', 'copy:flash']);

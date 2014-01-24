@@ -11,6 +11,7 @@ GET         /assets/*path                                                       
 # Diagnostics
 GET         /px.gif                                                                                                  controllers.DiagnosticsController.px
 GET         /ab.gif                                                                                                  controllers.DiagnosticsController.ab
+GET         /js.gif                                                                                                  controllers.DiagnosticsController.js
 GET         /count/$prefix<.+>.gif                                                                                   controllers.DiagnosticsController.analytics(prefix)
 
 # Discussion
@@ -137,13 +138,14 @@ GET         /radiator/pingdom                                                   
 GET         /radiator/commit/*hash                                                                                   controllers.admin.RadiatorController.commitDetail(hash)
 GET         /radiator/livestats                                                                                      controllers.admin.RadiatorController.liveStats()
 GET         /troubleshoot/football                                                                                   controllers.admin.FootballTroubleshooterController.renderFootballTroubleshooter()
+GET         /troubleshoot/pages                                                                                      controllers.admin.TroubleshooterController.index()
+GET         /troubleshoot/test                                                                                       controllers.admin.TroubleshooterController.test(id, testPath)
 
 # Commercial
 GET         /commercial/travel/offers.json                                                                           controllers.commercial.TravelOffers.listOffers
 GET         /commercial/jobs.json                                                                                    controllers.commercial.JobAds.jobs
 GET         /commercial/masterclasses.json                                                                           controllers.commercial.MasterClasses.list
 GET         /commercial/soulmates/mixed.json                                                                         controllers.commercial.SoulmateAds.mixed
-GET         /commercial/money/easyaccess.json                                                                        controllers.commercial.MoneyOffers.easyAccessProductsJson
 GET         /commercial/money/bestbuys.json                                                                          controllers.commercial.MoneyOffers.bestBuys(format="json")
 
 # Onward journeys
@@ -154,11 +156,12 @@ GET         /onward/most-read.json                                              
 GET         /onward/latest.json                                                                                      controllers.LatestContentController.renderLatest()
 GET         /onward/recently-published                                                                               controllers.LatestContentController.recentlyPublished()
 
+
 # Facia
 GET         /                                                                                                        controllers.FaciaController.editionRedirect(path = "")
 GET         /$path<(culture|sport|australia|commentisfree|business|money)>                                           controllers.FaciaController.editionRedirect(path)
-GET         /$path<(us|uk|au|us-alpha|uk-alpha|uk-beta|au-alpha)?>                                                   controllers.FaciaController.renderEditionFront(path)
-GET         /$path<(us|uk|au|us-alpha|uk-alpha|uk-beta|au-alpha)?>.json                                              controllers.FaciaController.renderEditionFrontJson(path)
+GET         /$path<(us|uk|au|us-alpha|uk-alpha|au-alpha)?>                                                           controllers.FaciaController.renderEditionFront(path)
+GET         /$path<(us|uk|au|us-alpha|uk-alpha|au-alpha)?>.json                                                      controllers.FaciaController.renderEditionFrontJson(path)
 GET         /$path<((uk|us|au)/)?(film|travel|football|culture|sport|australia|commentisfree|business|money)>        controllers.FaciaController.renderEditionSectionFront(path)
 GET         /$path<((uk|us|au)/)?(culture|sport|australia|commentisfree|business|money)>.json                        controllers.FaciaController.renderEditionSectionFrontJson(path)
 GET         /$path<(football/arsenal|world/nsa|world/edward-snowden|artanddesign/photography)>                       controllers.FaciaController.renderArbitraryFront(path)

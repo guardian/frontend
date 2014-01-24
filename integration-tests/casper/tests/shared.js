@@ -6,6 +6,11 @@ host = {
     code:   'http://m.code.dev-theguardian.com/',
     prod:   'http://www.theguardian.com/'
 }[environment];
+idHost = {
+    dev:    'https://profile.thegulocal.com/',
+    code:   'https://profile.code.dev-theguardian.com/',
+    prod:   'https://profile.theguardian.com/'
+}[environment];
 
 viewports = {
 	mobile:  {width: 320, height: 480},

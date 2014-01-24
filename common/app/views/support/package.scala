@@ -326,7 +326,7 @@ class TagLinker(article: Article)(implicit val edition: Edition) extends HtmlCle
       article.keywords.filterNot(_.isSectionTag).sortBy(_.name.length).reverse.foreach{ keyword =>
         // don't link again in paragraphs we have already upgraded
         val unlinkedParas = paragraphs.filterNot(_.html.contains("<a"))
-        unlinkedParas.find(_.text().contains(keyword.name)).foreach{ p =>
+        unlinkedParas.find(_.text().contains(" " + keyword.name + " ")).foreach{ p =>
 
           val tagLink = d.createElement("a")
           tagLink.attr("href", LinkTo(keyword.url, edition))
@@ -349,7 +349,8 @@ object InBodyElementCleaner extends HtmlCleaner {
     "element-video",
     "element-image",
     "element-witness",
-    "element-comment"
+    "element-comment",
+    "element-interactive"
   )
 
   override def clean(document: Document): Document = {

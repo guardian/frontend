@@ -249,8 +249,8 @@ define([
         },
 
         loadAdverts: function (config) {
-            if(!userPrefs.isOff('adverts') && config.switches && config.switches.adverts && !config.page.blockAds) {
-
+            if(!userPrefs.isOff('adverts') && config.switches && config.switches.adverts
+                && !config.page.blockVideoAds && !config.page.shouldHideAdverts) {
                 var resizeCallback = function() {
                     hasBreakpointChanged(Adverts.reload);
                 };
@@ -285,7 +285,7 @@ define([
 
         loadVideoAdverts: function(config) {
             mediator.on('page:common:ready', function(config, context) {
-                if(config.switches.videoAdverts && !config.page.blockAds) {
+                if(config.switches.videoAdverts && !config.page.blockVideoAds) {
                     Array.prototype.forEach.call(context.querySelectorAll('video'), function(el) {
                         var support = detect.getVideoFormatSupport();
                         var a = new VideoAdvert({
@@ -356,7 +356,9 @@ define([
                         }
                     });
                 }
-                sequence.init('/' + config.page.pageId);
+                if (config.page.section !== 'identity') {
+                    sequence.init('/' + config.page.pageId);
+                }
             });
         },
 

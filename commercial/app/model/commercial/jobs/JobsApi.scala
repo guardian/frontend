@@ -1,13 +1,15 @@
 package model.commercial.jobs
 
 import scala.xml.Elem
-import conf.CommercialConfiguration
+import conf.{Switches, CommercialConfiguration}
 import model.commercial.Utils.OptString
 import model.commercial.XmlAdsApi
 import org.joda.time.format.DateTimeFormat
 import org.apache.commons.lang.StringEscapeUtils.unescapeHtml
 
 object JobsApi extends XmlAdsApi[Job] {
+
+  protected val switch = Switches.JobFeedSwitch
 
   protected val adTypeName = "Jobs"
 
