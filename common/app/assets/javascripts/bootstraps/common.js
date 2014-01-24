@@ -82,8 +82,8 @@ define([
     Message,
     AutoSignin,
     ArticleBodyAdverts,
-    Interactive,
-    TagContainer
+    TagContainer,
+    Interactive
 ) {
 
     var hasBreakpointChanged = detect.hasCrossedBreakpoint();
