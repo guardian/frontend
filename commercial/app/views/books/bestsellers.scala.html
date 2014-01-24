@@ -1,0 +1,19 @@
+@(books: Seq[model.commercial.books.Book])(implicit request: RequestHeader)
+
+<link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
+
+<h1>Books</h1>
+
+<table>
+@books.map { book =>
+    <tr>
+        <td><img src="@book.jacketUrl" /></td>
+        <td><a href="@book.buyUrl">@book.title</a></td>
+        <td>@book.author</td>
+        <td>@book.isbn</td>
+        <td>@book.price</td>
+        <td>@book.offerPrice</td>
+        <td>@book.description</td>
+    </tr>
+}
+</table>
