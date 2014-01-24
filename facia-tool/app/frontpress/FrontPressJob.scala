@@ -55,6 +55,15 @@ object FrontPressJob extends ExecutionContexts with Logging with implicits.Colle
     }
   }
 
+  def pressByCollectionId(id: String): Unit = {
+    for {
+      path <- PorterConfigAgent.getConfigsUsingCollectionId(id)
+      json <- FrontPress.generateJson(path)
+    } {
+      (json \ "id").asOpt[String].foreach(S3FrontsApi.putPressedJson(_, Json.prettyPrint(json)))
+    }
+  }
+
   def getConfigFromMessage(message: Message): List[String] = {
     val id = (Json.parse(message.getBody) \ "Message").as[String]
     val configIds: Seq[String] = PorterConfigAgent.getConfigsUsingCollectionId(id)

@@ -2,6 +2,7 @@ package controllers
 
 import frontsapi.model._
 import frontsapi.model.UpdateList
+import jobs.FrontPressJob
 import play.api.mvc.{AnyContent, Action, Controller}
 import play.api.libs.json._
 import common.{FaciaToolMetrics, ExecutionContexts, Logging}
