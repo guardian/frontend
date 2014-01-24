@@ -26,51 +26,74 @@ define([
 
     ArticleBodyAdverts.prototype.config = {
         inlineAdLimit: null,
-        nthParagraph: 7,
-        wordCountThreshold: 200,
+        wordsPerAd: 350,
+        minWordsInParagraph: 120,
         inlineAdTemplate: '<div class="ad-slot ad-slot--inline" data-base="%slot%" data-median="%slot%"><div class="ad-container"></div></div>',
         mpuAdTemplate: '<div class="ad-slot ad-slot--mpu-banner-ad" data-link-name="ad slot mpu-banner-ad" data-base="%slot%" data-median="%slot%"><div class="ad-container"></div></div>'
     };
 
-    // inserts a few inline advert slots in to the page
-    ArticleBodyAdverts.prototype.createInlineAdSlots = function(id, adPlacedAtBeginning) {
+    ArticleBodyAdverts.prototype.inlineAdsPlaced = 0;
 
-        // Prevent any inline ads being showed on short articles
-        if(this.config.wordCount && this.config.wordCount < this.config.wordCountThreshold) {
+    /**
+     * Function to create the inline ad slots on article pages.
+     *
+     * @param id               The id of the slot to render, i.e. 'Middle'
+     * @param topSlotId        The id of the slot to be rendered at the top of the article. If no
+     *                         id is provided, then the ad at the top isn't rendered.
+     */
+    ArticleBodyAdverts.prototype.createInlineAdSlots = function(id, topSlotId) {
+        var wordsPerAd = this.config.wordsPerAd;
+
+        // Prevents any inline ads being showed on short articles
+        if(this.config.wordCount && this.config.wordCount < wordsPerAd) {
             return false;
         }
 
-        var adsPlaced         = 0,
-            paragraphSelector = 'p:nth-of-type('+ this.config.nthParagraph +'n)',
-            limit             = this.config.inlineAdLimit,
-            template          = this.config.inlineAdTemplate,
-            article           = document.getElementsByClassName('js-article__container')[0];
+        var self                   = this,
+            totalWords             = 0,
+            adsPlaced              = 0,
+            limit                  = this.config.inlineAdLimit,
+            minWordsInParagraph    = this.config.minWordsInParagraph,
+            topOfArticleWordsLimit = this.getTopOfArticleSlotWordLimit(),
+            $paragraphs            = $('.js-article__container .article-body > p');
 
-        // `adsPlaced` is the number of adverts currently placed inline. This is more accurate than
-        // using the `i` from the each function as that can skip ads depending on content length
-        if(adPlacedAtBeginning) {
-            adsPlaced++;
-            limit++;
-        }
+        $paragraphs.each(function(el, i) {
+            var $el                    = $(el),
+                words                  = $el.text().split(' '),
+                renderTopOfArticleSlot = !!topSlotId && self.inlineAdsPlaced === 0;
 
-        $(paragraphSelector, article).each(function(el, i) {
-            var $el = $(el),
-                cls = (adsPlaced % 2 === 0) ? '' : 'is-even';
+            // Increment our running total of words
+            totalWords += words.length;
 
-            /*
-             - Checks if limit is set and if so, checks it hasn't been exceeded
-             - Checks is the $target element exists. If not, then you are at the end of the article
-             - Checks if the text length is below 120 characters - helps prevent against empty paragraphs
-               and paragraphs being used instead of order/unordered lists
-             */
-            if(limit !== null && limit < (adsPlaced + 1) || $el.next()[0] === undefined || $el.text().length < 120) {
-                return false;
+            // Check to see if we should try to render an advert at the top of the article
+            if(renderTopOfArticleSlot && totalWords > topOfArticleWordsLimit) {
+                self.renderInlineAdSlot(topSlotId, $el);
+                limit++;
+            } else if(totalWords > ((self.inlineAdsPlaced + 1) * wordsPerAd)) {
+
+                /*
+                 - Checks if limit is set and if so, checks it hasn't been exceeded
+                 - Checks is the $target element exists. If not, then you are at the end of the article
+                 - Checks if the text length is below 120 characters - helps prevent against empty paragraphs
+                   and paragraphs being used instead of order/unordered lists
+                 */
+                if(limit !== null && self.inlineAdsPlaced >= limit  || $el.next()[0] === undefined || $el.text().length < minWordsInParagraph) {
+                    return false;
+                }
+
+                self.renderInlineAdSlot(id, $el);
             }
 
-            bonzo(bonzo.create(template.replace(/%slot%/g, id))).addClass(cls).insertBefore($el);
-
-            adsPlaced++;
         });
+    };
+
+    ArticleBodyAdverts.prototype.renderInlineAdSlot = function(id, $el) {
+        var template     = this.config.inlineAdTemplate,
+            insertMethod = this.getInsertMethod();
+
+        bonzo(bonzo.create(template.replace(/%slot%/g, id)))[insertMethod]($el);
+
+        this.inlineAdsPlaced++;
     };
 
     ArticleBodyAdverts.prototype.createMpuAdSlot = function(id) {
@@ -79,15 +102,17 @@ define([
         $('.js-mpu-ad-slot .social-wrapper').after(bonzo.create(template.replace(/%slot%/g, id))[0]);
     };
 
-    ArticleBodyAdverts.prototype.createAdSlotAtTopOfArticle = function(id) {
-        var template = this.config.inlineAdTemplate;
+    ArticleBodyAdverts.prototype.getInsertMethod = function() {
+        return (/mobile/).test(detect.getBreakpoint()) ? 'insertAfter' : 'insertBefore';
+    };
 
-        var el = bonzo(bonzo.create(template.replace(/%slot%/g, id)));
-        el.prependTo($('.js-article__container .article-body p')[0]);
+    ArticleBodyAdverts.prototype.getTopOfArticleSlotWordLimit = function() {
+        return (/mobile/).test(detect.getBreakpoint()) ? Math.floor(this.config.wordsPerAd / 2) : 0;
     };
 
     ArticleBodyAdverts.prototype.destroy = function() {
         $('.ad-slot--inline, .ad-slot--mpu-banner-ad').remove();
+        this.inlineAdsPlaced = 0;
     };
 
     ArticleBodyAdverts.prototype.reload = function() {
@@ -98,18 +123,23 @@ define([
     ArticleBodyAdverts.prototype.init = function() {
         var breakpoint = detect.getBreakpoint();
 
+        // This is a dirty hack to be removed once the content API starts to generate the
+        // word count from articles written in Composer. Was raised on 24/01/2014
+        if(this.config.wordCount === '1') {
+            this.config.wordCount = $('.js-article__container .article-body').text().replace(/(\r\n|\n|\r)/gm, '').split(' ').length;
+        }
+
         if((/wide|desktop/).test(breakpoint)) {
             this.createInlineAdSlots('Middle1');
             this.createMpuAdSlot('Middle');
         }
 
         if((/tablet/).test(breakpoint)) {
-            this.createAdSlotAtTopOfArticle('Middle');
-            this.createInlineAdSlots('Middle1', true);
+            this.createInlineAdSlots('Middle1', 'Middle');
         }
 
         if((/mobile/).test(breakpoint)) {
-            this.createInlineAdSlots('x49');
+            this.createInlineAdSlots('x49', 'x49');
         }
     };
 
