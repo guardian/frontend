@@ -7,7 +7,7 @@
         <span class="tool-label">Front</span>
         <select class="tool-select" data-bind="options: fronts, value: front, optionsCaption: 'choose...'"></select>
 
-        <a class="spark" target="ophan" data-bind="
+        <a class="spark" target="ophan" title="Dark blue: Guardian. Green: Google. Light blue: Other." data-bind="
             visible: frontSparkUrl,
             attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + front()}">
             <img data-bind="attr: {src: frontSparkUrl}" /></a>
@@ -257,7 +257,7 @@
             </div>
 
             <div class="closed" data-bind="if: !state.open()">
-                <a class="spark" target="ophan" data-bind="
+                <a class="spark" target="ophan" title="Dark blue: Guardian. Green: Google. Light blue: Other." data-bind="
                     visible: state.sparkUrl,
                     attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + props.id()}">
                     <img data-bind="attr: {src: state.sparkUrl}" />

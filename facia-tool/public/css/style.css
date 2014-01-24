@@ -151,7 +151,7 @@ a, a:hover {
 
 .list-header__collapser {
     float: right;
-    margin: 2px 7px 0 8px;
+    margin: 2px 6px 0 8px;
     opacity: 0.75;
 }
 
@@ -572,7 +572,7 @@ button {
     font-weight: bold;
     font-size: 16px;
     color: #000000;
-    margin-right: 15px;
+    margin: 3px 15px 0 0;
     width: 150px;
 }
 
@@ -643,8 +643,9 @@ button {
 
 .article .closed .tool--remove {
     opacity: 0.2;
-    margin: 27px 1px 0 0;
-    float: right;
+    position: absolute;
+    right: 2px;
+    top: 27px;
 }
 
 .article:hover .closed .tool--remove {
@@ -717,9 +718,6 @@ button {
         height: 50px;
         padding: 10px 15px 10px 45px;
     }
-    .toolbar .spark {
-        margin-right: -5px;
-    }
     .collections {
         left: 0;
         width: 100%;
@@ -738,8 +736,12 @@ button {
 
 @media (max-width: 525px) {
     .article .article_content {
-        margin-right: 0;
+        margin-right: 25px;
     }
+    .article .closed .tool--remove {
+        top: 0;
+    }
+    .toolbar .spark,
     .article .spark {
         display: none;
     }
@@ -748,10 +750,10 @@ button {
 @media (max-width: 350px) {
     .article .article_content {
         margin-left: 0;
-        margin-right: 5px;
     }
     .article .thumb,
-    .article__date {
+    .article__date,
+    .image__overrides {
         display: none;
     }
     .article__overrides {
