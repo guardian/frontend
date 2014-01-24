@@ -660,18 +660,15 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:images', ['clean:images', 'copy:images', 'shell:spriteGeneration', 'imagemin']);
     grunt.registerTask('compile:css', ['clean:css', 'sass:compile']);
     grunt.registerTask('compile:js', function(app) {
-        grunt.task.run(['clean:js', 'copy:javascript-common']);
-        if (app && grunt.config('copy')['javascript-' + app]) {
-            grunt.task.run('copy:javascript-' + app);
-        }
+        grunt.task.run(['clean:js', 'copy:javascript-common', 'requirejs:common']);
+        // if no app supplied, compile all apps
+        var apps = app ?
+            [app] : Object.keys(grunt.config('requirejs')).filter(function(app) { return ['options', 'common'].indexOf(app) === -1; });
+        apps.forEach(function(app) {
+            grunt.task.run('copy:javascript-' + app, 'requirejs:' + app);
+        });
         if (!isDev) {
             grunt.task.run('uglify:components');
-        }
-        grunt.task.run('requirejs:common');
-        // When an app defines it's own javascript application, the requirejs task will need to compile both
-        // common and app.
-        if (grunt.config('requirejs')[app]) {
-            grunt.task.run('requirejs:' + app);
         }
     });
     grunt.registerTask('compile:fonts', ['clean:fonts', 'mkdir:fontsTarget', 'webfontjson']);
