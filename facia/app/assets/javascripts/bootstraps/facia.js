@@ -96,8 +96,8 @@ define([
                     msg,
                     messageId = 'facia-alpha';
                 if (config.page.pageId === "") {
-                    // only run on 50% of (mobile) users
-                    var isAChosenOne = parseInt(mvtCookie.getMvtValue(), 10) < (mvtCookie.MAX_INT * 0.5) && detect.getMobileOS(),
+                    // only run on 5% of (mobile) users
+                    var isAChosenOne = parseInt(mvtCookie.getMvtValue(), 10) < (mvtCookie.MAX_INT * 0.05) && detect.getMobileOS(),
                         alphaSwitch = {
                             '/uk': 'networkFrontUkAlpha',
                             '/us': 'networkFrontUsAlpha',
@@ -114,7 +114,8 @@ define([
                 } else {
                     var userZoomSurvey = {
                         '/us': 'MSBDMTBTMTE1',
-                        '/au': 'MSBDMTBTMTE2'
+                        '/au': 'MSBDMTBTMTE2',
+                        '/uk': 'MSBDMTBTMTE3'
                     }[page];
                     msg =
                         '<p class="site-message__message">' +
