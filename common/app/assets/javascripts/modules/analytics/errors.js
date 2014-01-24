@@ -1,9 +1,11 @@
 /*global Event:true */
 define([
     'common/modules/userPrefs',
+    'common/modules/analytics/beacon',
     'common/common'
 ], function (
     userPrefs,
+    beacon,
     common
 ) {
 
@@ -11,19 +13,10 @@ define([
 
         var c = config || {},
             isDev = (c.isDev !== undefined) ? c.isDev : false,
-            url = config.beaconUrl,
             cons = c.console || window.console,
             win = c.window || window,
             prefs = c.userPrefs || userPrefs,
             buildNumber = c.buildNumber || 'unknown',
-
-            createImage = function(url) {
-                var image = new Image();
-                image.id = 'js-err';
-                image.className = 'u-h';
-                image.src = url;
-                document.body.appendChild(image);
-            },
 
             makeUrl = function(properties) {
                 var query = [];
@@ -31,7 +24,7 @@ define([
                 for (var name in properties) {
                     query.push(name + '=' + encodeURIComponent(properties[name]));
                 }
-                return url + '/js.gif?' + query.join('&');
+                return '/js.gif?' + query.join('&');
             },
 
             log = function(message, filename, lineno, isUncaught) {
@@ -57,8 +50,7 @@ define([
                     }
                     return false;
                 } else {
-                    var url = makeUrl(error);
-                    createImage(url);
+                    beacon.fire(makeUrl(error));
                     return (prefs.isOn('showErrors')) ? false : true;
                 }
             },

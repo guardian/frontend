@@ -67,7 +67,6 @@ define([
             }
             var e = new Errors({
                 isDev: config.page.isDev,
-                beaconUrl: config.page.beaconUrl,
                 buildNumber: config.page.buildNumber
             });
             e.init();
