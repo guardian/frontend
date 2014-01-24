@@ -8,6 +8,11 @@ define([
     'common/modules/experiments/tests/aa',
     'common/modules/experiments/tests/gravity-recommendations'
 ], function (
+    common,
+    store,
+    mediator,
+    mvtCookie,
+
     Aa,
     GravityRecommendations
     ) {
