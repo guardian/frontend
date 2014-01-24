@@ -34,11 +34,11 @@ $item-top-border-height: 2px;
 }
 @mixin card-mobile($with-image: false) {
     .item__title {
-        @include fs-headline(3, $size-only: true);
+        @include fs-headline(2, $size-only: true);
     }
-    @include mq(mobileLandscape) {
+    @include mq(tablet) {
         .item__title {
-            @include fs-headline(4, $size-only: true);
+            @include fs-headline(3, $size-only: true);
         }
         .item__standfirst {
             @include fs-headline(2, $size-only: true);
@@ -62,13 +62,13 @@ $item-top-border-height: 2px;
 
     .item__title {
         @include fs-headline(1, $size-only: true);
-        @include mq(mobileLandscape) {
+        @include mq(tablet) {
             @include fs-headline(2, $size-only: true);
         }
     }
     .item__byline {
         @include fs-header(1, $size-only: true);
-        @include mq(mobileLandscape) {
+        @include mq(tablet) {
             @include fs-header(2, $size-only: true);
         }
     }
