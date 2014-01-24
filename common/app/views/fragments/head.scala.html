@@ -1,4 +1,4 @@
-@(metaData: MetaData, projectName: Option[String] = None, head: Html, curlPaths: Map[String, String])(implicit request: RequestHeader)
+@(metaData: MetaData, projectName: Option[String] = None, head: Html, curlPaths: Map[String, String] = Map())(implicit request: RequestHeader)
 
 <meta charset="utf-8" />
 <title>@Html(metaData.webTitle)</title>
