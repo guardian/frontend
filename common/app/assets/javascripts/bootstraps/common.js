@@ -183,7 +183,7 @@ define([
         },
 
         logLiveStats: function (config) {
-            liveStats.log({ beaconUrl: config.page.beaconUrl }, config);
+            liveStats.log(config);
         },
 
         loadAnalytics: function (config, context) {
