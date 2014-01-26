@@ -49,7 +49,7 @@ object GalleryController extends Controller with Logging with ExecutionContexts 
 
         val model = gallery map { g => GalleryPage(g, storyPackage.filterNot(_.id == g.id), index, isTrail) }
         ModelOrResult(model, response)
-    }.recover{suppressApiNotFound}
+    }.recover{convertApiExceptions}
   }
 
   private def renderGallery(model: GalleryPage)(implicit request: RequestHeader) = {

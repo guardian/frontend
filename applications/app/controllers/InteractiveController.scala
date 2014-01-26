@@ -45,7 +45,7 @@ object InteractiveController extends Controller with Logging with ExecutionConte
       ModelOrResult(model, response)
     }
 
-    result recover suppressApiNotFound
+    result recover convertApiExceptions
   }
 
 

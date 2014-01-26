@@ -70,7 +70,7 @@ object ArticleController extends Controller with Logging with ExecutionContexts 
       ModelOrResult(content, response)
     }
 
-    result recover suppressApiNotFound
+    result recover convertApiExceptions
   }
 
   private def render(model: ArticleWithStoryPackage)(implicit request: RequestHeader) = model match {

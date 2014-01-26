@@ -49,7 +49,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
             val page = Page(s"$leftSide+$rightSide", tag1.section, pageName, s"GFE:${tag1.section}:$pageName")
             Left(IndexPage(page, trails))
         }
-    }.recover(suppressApiNotFound)
+    }.recover(convertApiExceptions)
   }
 
   def index(edition: Edition, path: String)(implicit request: RequestHeader) = {
@@ -59,7 +59,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
       .response.map {response =>
       val page = response.tag.flatMap(t => tag(response)).orElse(response.section.flatMap(t => section(response)))
       ModelOrResult(page, response)
-    }.recover(suppressApiNotFound)
+    }.recover(convertApiExceptions)
   }
 
   private def section(response: ItemResponse) = {
@@ -104,6 +104,6 @@ trait ImageQuery extends ConciergeRepository with QueryDefaults {
       mainContent.map { content => Left(ImageContentPage(content,storyPackage)) }.getOrElse(Right(NotFound))
     }
 
-    response recover suppressApiNotFound
+    response recover convertApiExceptions
   }
 }
