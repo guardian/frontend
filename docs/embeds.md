@@ -1,3 +1,4 @@
+This document follows http://www.ietf.org/rfc/rfc2119.txt
 
 # Guidance on embeds on NGW
 
@@ -21,7 +22,7 @@ being created between the embed and NGW code, libraries etc.
 ## Basics
 
 Embeds MUST provide a URL or a small (~5 lines) code fragment
-to load the embed application, Eg.
+to load the embeded application/functionality, Eg.
 
 ```
 <blockquote class="twitter-tweet"><p>Coast by Opera. Is it just me or is that trailer slightly over-dramatic? <a href="http://t.co/m4YZi5xL8A">http://t.co/m4YZi5xL8A</a></p>&mdash; Sébastien Cevey (@theefer) <a href="https://twitter.com/theefer/statuses/377077814379679746">September 9, 2013</a></blockquote> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
@@ -74,9 +75,9 @@ Eg. let the host optionally control init and context.
 
 Embedded applications MUST be monitored and provide a named contact.
 
-Embed code SHOULD provide it's own usage stats.
+Embeds MUST work on the following [device and OS]() - TODO.
 
-Embeds MUST work, and be approved, on the following [device and OS]().
+Embed code SHOULD provide it's own usage stats.
 
 ## Apps 
 
