@@ -1,10 +1,10 @@
 package model.commercial.jobs
 
 import model.commercial.{Keyword, Ad, Segment}
-import model.commercial.Utils._
 import common.{AkkaAgent, ExecutionContexts}
 import scala.concurrent.duration._
 import scala.concurrent.Future
+import model.commercial.intersects
 
 case class Job(id: Int,
                title: String,
