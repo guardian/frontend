@@ -92,7 +92,10 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
           case (verb, updateList) if verb == "update" => UpdateActions.updateCollectionList(updateList.id, updateList, identity)
           case (verb, updateList) if verb == "remove" => UpdateActions.updateCollectionFilter(updateList.id, updateList, identity)
         }.flatten.map(b => (b.id, b)).toMap
-        Ok(Json.toJson(updatedCollections)).as("application/json")
+        if (updatedCollections.nonEmpty)
+          Ok(Json.toJson(updatedCollections)).as("application/json")
+        else
+          NotFound
       }
       case _ => NotFound
     } getOrElse NotFound
