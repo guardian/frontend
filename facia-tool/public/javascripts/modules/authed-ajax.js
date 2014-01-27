@@ -23,10 +23,13 @@ define(['modules/vars'], function(vars) {
             type: 'POST',
             data: JSON.stringify(edits)
         }).fail(function(xhr) {
-            window.console.log(['Failed: ', xhr.status, xhr.statusText, JSON.stringify(edits)].join(' '));
-        }).always(function() {
             _.each(collections, function(collection) {
                 collection.load();
+            });
+            window.console.log(['Failed: ', xhr.status, xhr.statusText, JSON.stringify(edits)].join(' '));
+        }).done(function(resp) {
+            _.each(collections, function(collection) {
+                collection.populate(resp[collection.id]);
             });
         });
     }

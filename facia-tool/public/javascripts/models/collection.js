@@ -159,7 +159,7 @@ define([
             self.state.hasConcurrentEdits(false);
 
             if (raw.lastUpdated !== self.state.lastUpdated()) {
-                self.populateLists(raw);
+                self.populate(raw);
             }
 
             if (!self.state.editingConfig()) {
@@ -181,7 +181,7 @@ define([
         }, false);
     };
 
-    Collection.prototype.populateLists = function(raw) {
+    Collection.prototype.populate = function(raw) {
         var self = this,
             list;
 
