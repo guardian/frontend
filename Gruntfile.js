@@ -666,7 +666,7 @@ module.exports = function (grunt) {
             if (grunt.config('requirejs')[app]) {
                 apps.push(app);
             } else {
-                grunt.log.warn('No compile for app "' + app + '"');
+                grunt.log.warn('No compile target for app "' + app + '"');
             }
         } else { // if no app supplied, compile all apps
             apps = apps.concat(Object.keys(grunt.config('requirejs')).filter(function(app) { return ['options', 'common'].indexOf(app) === -1; }));
