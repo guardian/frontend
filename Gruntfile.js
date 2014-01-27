@@ -534,9 +534,10 @@ module.exports = function (grunt) {
         assetmonitor: {
             common: {
                 src: [
-                    staticTargetDir + 'javascripts/bootstraps/app.js',
+                    staticTargetDir + 'javascripts/bootstraps/*.js',
                     staticTargetDir + 'stylesheets/head.default.css',
                     staticTargetDir + 'stylesheets/head.facia.css',
+                    staticTargetDir + 'stylesheets/head.identity.css',
                     staticTargetDir + 'stylesheets/global.css'
                 ],
                 options: {
