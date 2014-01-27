@@ -9,11 +9,11 @@ object BookOffers extends Controller {
 
   def bestsellers(format: String) = Action {
     implicit request =>
-      (BestsellersAgent.adsTargetedAt(segment), format) match {
-        case (Nil, _) => NotFound
-        case (books, "json") =>
+      BestsellersAgent.adsTargetedAt(segment) match {
+        case Nil => NotFound
+        case books if format == "json" =>
           Cached(60)(JsonComponent(views.html.books.bestsellers(books)))
-        case (books, "html") =>
+        case books if format == "html" =>
           Cached(60)(Ok(views.html.books.bestsellers(books)))
       }
   }
