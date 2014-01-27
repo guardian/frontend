@@ -7,6 +7,7 @@
 <table>
 @books.map { book =>
     <tr>
+        <td>@book.position</td>
         <td>@book.jacketUrl.map { url => <img src="@url" />}</td>
         <td><a href="@book.buyUrl">@book.title</a></td>
         <td>@book.author</td>

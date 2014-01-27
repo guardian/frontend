@@ -4,7 +4,6 @@ import model.commercial.{AdAgent, Segment, Ad}
 import common.ExecutionContexts
 import scala.concurrent.Future
 import model.commercial.intersects
-import scala.util.Try
 
 case class Book(title: String,
                 author: Option[String],
@@ -14,6 +13,7 @@ case class Book(title: String,
                 description: Option[String],
                 jacketUrl: Option[String],
                 buyUrl: String,
+                position: Int,
                 category: String,
                 keywords: Seq[String])
   extends Ad {
@@ -38,6 +38,8 @@ object BestsellersAgent extends AdAgent[Book] with ExecutionContexts {
     FoodDrinkBestsellersFeed
   )
 
+  override def adsTargetedAt(segment: Segment): Seq[Book] = super.adsTargetedAt(segment).sortBy(_.position)
+
   override def defaultAds: Seq[Book] = currentAds filter (_.category == "General")
 
   def refresh() {
@@ -49,8 +51,9 @@ object BestsellersAgent extends AdAgent[Book] with ExecutionContexts {
     val bookListsLoading = Future.sequence {
       feeds.foldLeft(Seq[Future[Seq[Book]]]()) {
         (soFar, feed) =>
-          val books = Try(feed.loadAds()).getOrElse(Future(Nil))
-          soFar :+ books
+          soFar :+ feed.loadAds().recover {
+            case _ => Nil
+          }
       }
     }
 

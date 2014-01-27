@@ -21,17 +21,20 @@ trait BestsellersApi extends XmlAdsApi[Book] {
   override protected val loadTimeout = 5000
 
   def parse(xml: Elem): Seq[Book] = {
-    xml \ "Entry" \ "book" map {
-      book =>
+
+    xml \ "Entry" map {
+      entry =>
+        val book = entry \ "book"
         Book(
-          (book \ "title").text,
-          OptString((book \ "author").text),
-          (book \ "isbn").text,
-          (book \ "price").text.toDouble,
-          (book \ "offerprice").headOption.map(_.text).map(_.toDouble),
-          OptString((book \ "description").text),
-          (book \ "jacketurl").headOption.map(node => s"http:${node.text}"),
-          (book \ "bookurl").text,
+          title = (book \ "title").text,
+          author = OptString((book \ "author").text),
+          isbn = (book \ "isbn").text,
+          price = (book \ "price").text.toDouble,
+          offerPrice = (book \ "offerprice").headOption.map(_.text).map(_.toDouble),
+          description = OptString((book \ "description").text),
+          jacketUrl = (book \ "jacketurl").headOption.map(node => s"http:${node.text}"),
+          buyUrl = (book \ "bookurl").text,
+          position = (entry \ "Position").text.toInt,
           category,
           keywords
         )
