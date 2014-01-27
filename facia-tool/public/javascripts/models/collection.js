@@ -213,8 +213,6 @@ define([
         this.state.count(list.length);
 
         this.decorate();
-
-        return this;
     };
 
     Collection.prototype.closeAllArticles = function() {
