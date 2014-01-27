@@ -351,7 +351,7 @@ object Switches extends Collections {
 
   val ImageServerSwitch = Switch("Image Server", "image-server",
     "If this switch is on images will be served off i.guim.co.uk (dynamic image host).",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 7)
+    safeState = On, sellByDate = new DateMidnight(2014, 2, 7)
   )
 
   val ImageServiceSwitch = Switch("Image Service", "image-service",
