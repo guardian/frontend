@@ -27,7 +27,7 @@
             @charts.map{ lineChart => @chartJson(lineChart) }
         };
 	window.abSwitches = {
-	    @conf.Switches.abTestSwitches.map{ s =>
+	    @conf.Switches.all.filter(_.group == "A/B Tests").map{ s =>
 		"@JavaScriptVariableName(s.name)": @s.isSwitchedOn,
 	    }
 	}
