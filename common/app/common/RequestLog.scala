@@ -14,6 +14,7 @@ object RequestLog {
     r.host,
     r.headers.safe("X-Gu-Edition"),
     r.headers.safe("X-GU-GeoLocation"),
+    r.headers.safe("X-Gu-Xid"), // a unique id for this request
     s""" "${r.headers.safe("User-Agent")}" """.trim
   ).mkString(", ")
 
