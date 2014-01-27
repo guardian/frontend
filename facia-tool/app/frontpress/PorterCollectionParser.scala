@@ -1,3 +1,0 @@
-package services
-
-object PorterCollectionParser extends ParseCollection
