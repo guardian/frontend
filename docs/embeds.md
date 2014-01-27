@@ -50,8 +50,8 @@ Specifically,
 
 Embeds MUST be usable at 320px viewport and upwards.
 
-Embeds MUST be usable within 3 seconds (TODO - what is fair here?) after
-the page has rendered on a 3g network. 
+Embeds MUST be usable within 3 seconds on a 3g network after
+the page has rendered, or provide some indication of loading progress.
 
 The embedded content SHOULD show evidence of being able to respond to
 the varying network speeds of users accessing our website, offline
@@ -75,7 +75,7 @@ Eg. let the host optionally control init and context.
 
 Embedded applications MUST be monitored and provide a named contact.
 
-Embeds MUST work on the following [device and OS]() - TODO.
+Embeds MUST work on a [good proportion](https://frontend.gutools.co.uk/analytics/browsers) of our mobile and desktop traffic.
 
 Embed code SHOULD provide it's own usage stats.
 
@@ -85,4 +85,5 @@ _TODO_
 
 ## See also
 
-- [Fence](https://github.com/guardian/fence).
+- [Fence](https://github.com/guardian/fence) - Utility to render custom code safely in a sandbox.
+
