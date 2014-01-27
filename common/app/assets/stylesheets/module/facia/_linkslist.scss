@@ -37,14 +37,21 @@ $linkslist-icon-width: 23px;
 $linkslist-icon-rightspace: 7px;
 
 .linkslist__action--has-icon {
-    padding-left: $linkslist-icon-width + $linkslist-icon-rightspace;
+    @include rem((
+        padding-left: $linkslist-icon-width + $linkslist-icon-rightspace
+    ));
 
     .linkslist__icon {
         float: left;
-        margin-left: ($linkslist-icon-width + $linkslist-icon-rightspace) * -1;
+        @include rem((
+            margin-left: ($linkslist-icon-width + $linkslist-icon-rightspace) * -1
+        ));
+        margin-top: 3px; // Align icon with text
     }
 }
 .i.linkslist__icon { // Chained selector to overrule icon code from global.css
-    width: $linkslist-icon-width;
+    @include rem((
+        width: $linkslist-icon-width
+    ));
     background-size: contain;
 }
