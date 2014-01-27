@@ -48,6 +48,12 @@
             margin-right: $gs-gutter/2 * -1,
             margin-top: $gs-baseline
         ));
+
+        + .collection-wrapper {
+            @include rem((
+                margin-top: $gs-baseline
+            ));
+        }
     }
     .collection__item {
         position: relative; // Replace .item as a relative context
