@@ -164,7 +164,6 @@ define([
                     })
                     .done(function() {
                         var edits = {},
-                            collections = [],
                             itemMeta;
 
                         ophanApi.decorateItems([article]);
@@ -197,7 +196,7 @@ define([
                         }
 
                         edits.update = {
-                            id: targetList.parent.id,
+                            collection: targetList.parent,
                             item:     id,
                             position: position,
                             after:    isAfter,
@@ -205,7 +204,6 @@ define([
                             draft:   !vars.state.liveMode(),
                             itemMeta: _.isEmpty(itemMeta) ? undefined : itemMeta
                         };
-                        collections.push(targetList.parent);
 
                         // Is a delete also required?
                         if (sourceList &&
@@ -214,16 +212,17 @@ define([
                            !sourceList.keepCopy) {
 
                             removeMatchingItems(sourceList, id);
+
                             edits.remove = {
+                                collection: sourceList.parent,
                                 id:     sourceList.parent.id,
                                 item:   id,
                                 live:   vars.state.liveMode(),
                                 draft: !vars.state.liveMode()
                             };
-                            collections.push(sourceList.parent);
                         }
 
-                        authedAjax.updateCollections(edits, collections);
+                        authedAjax.updateCollections(edits);
                     });
                 }, false);
             }

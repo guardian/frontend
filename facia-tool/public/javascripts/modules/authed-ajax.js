@@ -13,9 +13,14 @@ define(['modules/vars'], function(vars) {
         });
     }
 
-    function updateCollections(edits, collections) {
-        _.each(collections, function(collection) {
-            collection.setPending(true);
+    function updateCollections(edits) {
+        var collections = [];
+
+        _.each(edits, function(edit) {
+            edit.collection.setPending(true);
+            edit.id = edit.collection.id;
+            collections.push(edit.collection);
+            delete edit.collection;
         });
 
         return request({
@@ -23,14 +28,9 @@ define(['modules/vars'], function(vars) {
             type: 'POST',
             data: JSON.stringify(edits)
         }).fail(function(xhr) {
-            _.each(collections, function(collection) {
-                collection.load();
-            });
-            window.console.log(['Failed: ', xhr.status, xhr.statusText, JSON.stringify(edits)].join(' '));
+            _.each(collections, function(collection) { collection.load(); });
         }).done(function(resp) {
-            _.each(collections, function(collection) {
-                collection.populate(resp[collection.id]);
-            });
+            _.each(collections, function(collection) { collection.populate(resp[collection.id]); });
         });
     }
 

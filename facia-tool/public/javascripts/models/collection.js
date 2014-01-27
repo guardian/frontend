@@ -122,20 +122,15 @@ define([
     };
 
     Collection.prototype.drop = function(item) {
-        var self = this;
-
-        self.setPending(true);
+        this.setPending(true);
 
         authedAjax.updateCollections({
             remove: {
-                id:     self.id,
-                item:   item.props.id(),
-                live:   vars.state.liveMode(),
-                draft: !vars.state.liveMode()
+                collection: this,
+                item:       item.props.id(),
+                live:       vars.state.liveMode(),
+                draft:     !vars.state.liveMode()
             }
-        }, [self])
-        .then(function() {
-            self.load();
         });
     };
 
