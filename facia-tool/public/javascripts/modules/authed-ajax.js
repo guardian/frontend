@@ -13,7 +13,7 @@ define(['modules/vars'], function(vars) {
         });
     }
 
-    function updateCollection(edits, collections) {
+    function updateCollections(edits, collections) {
         _.each(collections, function(collection) {
             collection.setPending(true);
         });
@@ -33,6 +33,6 @@ define(['modules/vars'], function(vars) {
 
     return {
         request: request,
-        updateCollection: updateCollection
+        updateCollections: updateCollections
     };
 });

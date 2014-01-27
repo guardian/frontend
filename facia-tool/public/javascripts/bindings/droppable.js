@@ -186,6 +186,8 @@ define([
                             return;
                         }
 
+                        targetList.parent.closeAllArticles();
+
                         itemMeta = sourceItem && sourceItem.meta ? sourceItem.meta : {};
 
                         if (targetList.parent.groups && targetList.parent.groups.length > 1) {
@@ -221,7 +223,7 @@ define([
                             collections.push(sourceList.parent);
                         }
 
-                        authedAjax.updateCollection(edits, collections);
+                        authedAjax.updateCollections(edits, collections);
                     });
                 }, false);
             }

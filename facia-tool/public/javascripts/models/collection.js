@@ -126,7 +126,7 @@ define([
 
         self.setPending(true);
 
-        authedAjax.updateCollection({
+        authedAjax.updateCollections({
             remove: {
                 id:     self.id,
                 item:   item.props.id(),

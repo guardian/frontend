@@ -213,7 +213,7 @@ define([
             }
 
             if (this.parentType === 'Collection') {
-                authedAjax.updateCollection({
+                authedAjax.updateCollections({
                     update: {
                         id:       this.parent.id,
                         item:     self.props.id(),
