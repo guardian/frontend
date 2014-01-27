@@ -35,8 +35,10 @@ trait UpdateActions {
   def getBlock(id: String): Option[Block] = FaciaApi.getBlock(id)
 
   def insertIntoLive(update: UpdateList, block: Block): Block =
-    if (update.live)
-      block.copy(live=updateList(update, block.live))
+    if (update.live) {
+      val live = updateList(update, block.live)
+      block.copy(live=live, draft=block.draft.filter(_ != live))
+    }
     else
       block
 
