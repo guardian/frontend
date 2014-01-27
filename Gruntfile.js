@@ -538,6 +538,7 @@ module.exports = function (grunt) {
                     staticTargetDir + 'javascripts/bootstraps/facia.js',
                     staticTargetDir + 'stylesheets/head.default.css',
                     staticTargetDir + 'stylesheets/head.facia.css',
+                    staticTargetDir + 'stylesheets/head.identity.css',
                     staticTargetDir + 'stylesheets/global.css'
                 ],
                 options: {
