@@ -13,3 +13,6 @@ GET        /onward/latest.json                      controllers.LatestContentCon
 
 # A websocket for recently published content
 GET        /onward/recently-published               controllers.LatestContentController.recentlyPublished()
+
+
+GET        /status                                  controllers.StatusTestController.render(status, msg)
