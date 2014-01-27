@@ -167,8 +167,6 @@ define([
                 self.collectionMeta.updatedBy(raw.updatedEmail === config.email ? 'you' : raw.updatedBy);
                 self.state.timeAgo(self.getTimeAgo(raw.lastUpdated));
             }
-
-            self.state.hasDraft(_.isArray(raw.draft));
         })
         .fail(function() {
             self.setPending(false);
@@ -185,12 +183,13 @@ define([
         var self = this,
             list;
 
+        this.setPending(false);
+
         raw = raw ? raw : this.raw;
         this.raw = raw;
+        if (!raw) { return; }
 
-        if (!raw) {
-            return;
-        }
+        this.state.hasDraft(_.isArray(raw.draft));
 
         if (this.hasOpenArticles()) {
             this.state.hasConcurrentEdits(raw.updatedEmail !== config.email && self.state.lastUpdated());
@@ -219,6 +218,8 @@ define([
         this.state.count(list.length);
 
         this.decorate();
+
+        return this;
     };
 
     Collection.prototype.closeAllArticles = function() {
