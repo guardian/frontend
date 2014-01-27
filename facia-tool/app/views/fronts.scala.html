@@ -96,6 +96,22 @@
                 css: {collapsed: state.collapsed() || configMeta.uneditable()}">
 
                 <div data-bind="visible: !state.editingConfig()">
+
+                    <span class="tools" data-bind="visible: state.hasDraft">
+                        <a class="draft-warning" data-bind="
+                            click: $root.setModeDraft,
+                            visible: $root.liveMode">
+                            <span class="tool draft-publish draft-warning">!</span>Draft Exists</a>
+
+                        <span data-bind="visible: !$root.liveMode()">
+                            <a class="tool draft-publish" data-bind="
+                                click: publishDraft">Publish</a>
+
+                            <a class="tool draft-discard" data-bind="
+                                click: discardDraft">Discard</a>
+                        </span >
+                    </span>
+
                     <span class="title" data-bind="
                         text: configMeta.displayName() || collectionMeta.displayName() || configMeta.roleName() || id"></span>
 
@@ -145,26 +161,11 @@
 
             </div>
 
-            <div data-bind="if: !state.collapsed()">
-                <div class="tools" data-bind="visible: state.hasDraft">
-                    <a class="draft-warning" data-bind="
-                        click: $root.setModeDraft,
-                        visible: $root.liveMode">
-                        <span class="tool draft-publish draft-warning">!</span>Unpublished edits exist</a>
-
-                    <div data-bind="visible: !$root.liveMode()">
-                        <a class="tool draft-publish" data-bind="
-                            click: publishDraft">Publish container</a>
-
-                        <a class="tool draft-discard" data-bind="
-                            click: discardDraft">Discard changes</a>
-                    </div>
-                </div>
-
+            <!-- ko if: !state.collapsed() -->
                 <div data-bind="
                     css: {'pending': isPending()},
                     template: {name: 'template_groups', foreach: groups}"></div>
-            </div>
+            <!-- /ko -->
         </div>
     </script>
 
