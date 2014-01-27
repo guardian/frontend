@@ -151,7 +151,7 @@ object Switches extends Collections {
 
   val OphanMultiEventSwitch = Switch("Analytics", "ophan-multi-event",
     "Enables the new Ophan tracking javascript which support multiple events per page",
-    safeState = Off, endOfQ4
+    safeState = On, endOfQ4
   )
 
   val OmnitureVerificationSwitch = Switch("Analytics", "omniture-verification",
