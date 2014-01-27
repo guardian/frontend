@@ -67,7 +67,6 @@ define([
 
         this.elem.className += this.config.active ? " abtest-item--active" : " abtest-item--expired";
         this.elem.setAttribute('data-abtest-name', this.config.test.id);
-        if (!this.config.active) { this.getElem('expiry-title').textContent = "Expired"; }
         bonzo(this.elem).addClass(window.abSwitches['ab'+this.config.test.id] ? 'abtest-item--switched-on' : 'abtest-item--switched-off');
 
         this.getElem('name').textContent = this.config.test.id;
