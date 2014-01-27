@@ -356,7 +356,7 @@ object Switches extends Collections {
 
   val ImageServiceSwitch = Switch("Image Service", "image-service",
     "If this switch is on images will be served off ak.i.guim.co.uk (dynamic image host). Part of the CDN test. Relies on ImageServerSwitch also being on",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 7)
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 7))
 
   val all: List[Switch] = List(
     AutoRefreshSwitch,
