@@ -15,6 +15,8 @@ import model.{NoCache, Cached}
 object FaciaToolController extends Controller with Logging with ExecutionContexts {
   implicit val updateListRead = Json.reads[UpdateList]
   implicit val collectionMetaRead = Json.reads[CollectionMetaUpdate]
+  implicit val trailWrite = Json.writes[Trail]
+  implicit val blockWrite = Json.writes[Block]
 
   def index() = ExpiringAuthentication { request =>
     val identity = Identity(request).get
@@ -86,11 +88,11 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     request.body.asJson flatMap (_.asOpt[Map[String, UpdateList]]) map {
       case update: Map[String, UpdateList] => {
         val identity: Identity = Identity(request).get
-        update.collect {
+        val updatedCollections: Map[String, Block] = update.collect {
           case (verb, updateList) if verb == "update" => UpdateActions.updateCollectionList(updateList.id, updateList, identity)
           case (verb, updateList) if verb == "remove" => UpdateActions.updateCollectionFilter(updateList.id, updateList, identity)
-        }.flatten
-        Ok
+        }.flatten.map(b => (b.id, b)).toMap
+        Ok(Json.toJson(updatedCollections)).as("application/json")
       }
       case _ => NotFound
     } getOrElse NotFound
