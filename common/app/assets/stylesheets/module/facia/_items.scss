@@ -190,12 +190,12 @@ $c-live: #e81818;
 
     .i-quote-orange {
         float: left;
-        margin-right: $gs-gutter/4;
+        margin-right: 7px;
         position: relative;
         top: 3px;
-        width: 26px;
-        height: 16px;
-        background-size: 100%;
+        width: 1.45em;
+        height: 1em;
+        background-size: contain;
     }
 }
 .item__byline {
