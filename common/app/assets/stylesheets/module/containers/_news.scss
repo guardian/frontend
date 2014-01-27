@@ -45,7 +45,8 @@
     .collection-wrapper {
         @include rem((
             margin-left: $gs-gutter/2 * -1,
-            margin-right: $gs-gutter/2 * -1
+            margin-right: $gs-gutter/2 * -1,
+            margin-top: $gs-baseline
         ));
     }
     .collection__item {
@@ -95,13 +96,15 @@
             }
         }
     }
-    .l-row--items-2,
-    .l-row--items-3 {
+    .l-row--items-2 {
         .item__standfirst {
             display: block;
         }
     }
     .l-row--items-4 {
+        .item__byline {
+            @include fs-headline(1, true);
+        }
         .item__standfirst,
         .item__media-wrapper,
         .item__image-container {
@@ -118,11 +121,6 @@
             .item--has-image .item__image-container,
             .item--has-no-image .item__standfirst {
                 display: block;
-            }
-        }
-        @include mq(tablet, desktop) {
-            .item--has-image .item__title {
-                @include fs-headline(1, true);
             }
         }
     }
@@ -199,17 +197,57 @@
             }
         }
     }
-    .l-row--items-3 & {
-        .item__media-wrapper {
-            @include rem((
-                width: 88px
-            ));
+}
+.container--news .collection__item--tone-comment {
+    &,
+    .item__meta {
+        background: $c-neutral7;
+    }
 
-            @include mq(desktop) {
-                @include rem((
-                    width: 122px
-                ));
-            }
+    &:after,
+    &:before {
+        content: '';
+        position: absolute;
+        display: block;
+        top: 0;
+        bottom: 0;
+        height: 100%;
+        width: $gs-gutter/2 !important;
+        width: rem($gs-gutter/2) !important;
+        @include box-sizing(border-box);
+        background: #ffffff;
+        z-index: 1;
+    }
+    &:after { right: 0; }
+
+    .item__title,
+    .item__standfirst,
+    .item__byline,
+    .item__meta {
+        @include rem((
+            padding-left: 7px,
+            padding-right: 7px
+        ));
+    }
+    .item__meta {
+        width: 100%;
+        @include box-sizing(border-box);
+
+        @include rem((
+            padding-bottom: $gs-baseline / 2,
+            margin-bottom: -$gs-baseline / 2
+        ));
+    }
+    @include mq(tablet) {
+        .item__meta {
+            width: auto;
+            @include rem((
+                left: $gs-gutter/2,
+                right: $gs-gutter/2,
+                padding-left: 7px,
+                padding-bottom: $gs-baseline,
+                margin-bottom: -$gs-baseline
+            ));
         }
     }
 }

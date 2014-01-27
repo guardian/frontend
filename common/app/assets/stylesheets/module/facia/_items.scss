@@ -17,8 +17,7 @@ $c-live: #e81818;
         display: none;
     }
 }
-.container__title,
-.item__byline {
+.container__title {
     @include f-header;
 }
 .container__title {
@@ -189,20 +188,20 @@ $c-live: #e81818;
     @include fs-headline(2, $size-only: true);
     word-wrap: break-word;
 
-    .i-quote-light-grey {
+    .i-quote-orange {
         float: left;
-        margin-right: $gs-gutter/4;
+        margin-right: 7px;
         position: relative;
         top: 3px;
-        width: 26px;
-        height: 16px;
-        background-size: 100%;
+        width: 1.45em;
+        height: 1em;
+        background-size: contain;
     }
 }
 .item__byline {
+    @include fs-headline(2);
     margin-top: $gs-baseline/3;
     margin-bottom: $gs-baseline/3;
-    @include fs-header(2, $size-only: true);
 }
 .item__standfirst,
 .item__meta {
