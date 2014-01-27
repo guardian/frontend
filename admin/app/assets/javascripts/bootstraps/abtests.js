@@ -12,15 +12,15 @@ define([
     Item
 ) {
     function renderTests(tests, active, elem){
-	var items = tests.map(function(test){ return new Item({test: test, active: active}); });
-	items.forEach(function(i) { i.render(elem); });
-	return items;
+        var items = tests.map(function(test){ return new Item({test: test, active: active}); });
+        items.forEach(function(i) { i.render(elem); });
+        return items;
     }
 
     function initialise() {
 
         renderTests(abTests.getActiveTests(), true, qwery('.abtests-active'));
-	var expiredTests = renderTests(abTests.getExpiredTests(), false, qwery('.abtests-expired'));
+        var expiredTests = renderTests(abTests.getExpiredTests(), false, qwery('.abtests-expired'));
 
         var $expired = qwery('.abtests-expired')[0];
 
@@ -29,7 +29,7 @@ define([
             if (e.currentTarget.textContent == "show") {
                 e.currentTarget.textContent = "hide";
                 $expired.style.display = "block";
-		expiredTests.forEach(function(t){t.renderChart();});
+                expiredTests.forEach(function(t){t.renderChart();});
             } else {
                 e.currentTarget.textContent = "show";
                 $expired.style.display = "none";
