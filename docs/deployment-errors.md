@@ -11,7 +11,8 @@ shouldDecrementDesiredCapacity flag to false or lower group's min size.
 Show exception details
 ```
 
-- ? 
+- The deployment process is attempting to scale down, but this would leave the autoscaling group empty.
+- You need to re-deploy this project.
 
 ```
 java.lang.RuntimeException Autoscaling group does not have the capacity
