@@ -1,4 +1,3 @@
-
 ## What to do when a deployment breaks
 
 ```
@@ -28,7 +27,8 @@ AmazonElasticLoadBalancing, AWS Request ID:
 fad7ad53-8516-11e3-a6c5-937056a56545,
 ```
 
-- ? 
+- A communication problem between the deployment and load balancer.
+- Check the infrastructure is in a good state then try again.
 
 ```
 AWS Error Code: Throttling, AWS Error Message: Rate exceeded Show
@@ -55,14 +55,8 @@ deployment.DeployStoppedException Deploy has been stopped by Matt
 Chadburn Show exception details
 ```
 
-- Someone stopped your build manually.
-- If that person isn't you then go and talk to them.
-
-```
-java.lang.ExceptionInInitializerError Show exception details
-```
-
-- ?
+- Someone (me in this case!) stopped your build manually.
+- If that person isn't you then go and talk to them about why they stopped it.
 
 ```
 com.amazonaws.services.s3.model.AmazonS3Exception Status Code: 400, AWS
@@ -72,4 +66,7 @@ was not read from or written to within the timeout period. Idle
 connections will be closed. Show exception details
 ```
 
-- ?
+- The build artefacts could not be downloaded from the S3.
+- The problem is probably temporary, so it's safe to try deploying again.
+
+
