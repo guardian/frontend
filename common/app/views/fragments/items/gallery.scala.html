@@ -2,7 +2,7 @@
 
 @defining((VisualTone(trail), containerIndex == 0, containerIndex == 0 && index < 3)) { case (tone, isFirstContainer, inlineImages) =>
     <@element
-        class="item item--dark item--gallery tone-@tone @if(isFirstContainer){ item--force-image-upgrade}"
+        class="item item--dark item--gallery tone-@tone @if(isFirstContainer){ item--force-image-upgrade} item--has-image"
         data-link-name="trail | @{index + 1}"
         @trail.discussionId.map{ id => data-discussion-id="@id" }
         data-discussion-closed="@trail.isClosedForComments">

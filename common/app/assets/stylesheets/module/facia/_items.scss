@@ -319,6 +319,26 @@ $c-live: #e81818;
     }
 }
 
+.item--gallery {
+    .item__container {
+        border-top: 2px solid $c-newsAccent;
+    }
+    .item__link {
+        margin: 0;
+        border-top: 0;
+    }
+    .gallerythumbs {
+        border-top: 4px solid #ffffff;
+    }
+    .item__image-container {
+        margin: 0;
+    }
+    .item__meta {
+        @include box-sizing(border-box);
+        width: 100%;
+    }
+}
+
 .item--dark {
 
     .item__container,

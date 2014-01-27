@@ -44,7 +44,10 @@
                        collection__item
                        collection__item--volume-@trail.group.getOrElse("0")
                        collection__item--tone-@VisualTone(trail)">
-                @fragments.items.standard(trail, index + 4, 0, "div")
+                @trail match {
+                    case gallery: Gallery => { @fragments.items.gallery(gallery, index + 4, 0, "div") }
+                    case other => { @fragments.items.standard(trail, index + 4, 0, "div") }
+                }
             </li>
         }
     </ul>
