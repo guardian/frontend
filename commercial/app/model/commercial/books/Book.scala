@@ -1,9 +1,9 @@
 package model.commercial.books
 
-import model.commercial.{AdAgent, XmlAdsApi, Segment, Ad}
-import scala.xml.Elem
-import conf.{CommercialConfiguration, Switches}
+import model.commercial.{AdAgent, Segment, Ad}
 import common.ExecutionContexts
+import scala.concurrent.Future
+import model.commercial.intersects
 
 case class Book(title: String,
                 author: String,
@@ -12,44 +12,47 @@ case class Book(title: String,
                 offerPrice: Double,
                 description: String,
                 jacketUrl: String,
-                buyUrl: String)
+                buyUrl: String,
+                category: String,
+                keywords: Seq[String])
   extends Ad {
 
-  def isTargetedAt(segment: Segment): Boolean = true
-}
-
-
-object BestsellersApi extends XmlAdsApi[Book] {
-
-  protected val switch = Switches.GuBookshopFeedsSwitch
-
-  protected val adTypeName = "Books"
-
-  protected def url = CommercialConfiguration.getProperty("gu.bookshop.api.url") map (_ + "/Feed6.jsp")
-
-  def parse(xml: Elem): Seq[Book] = {
-    xml \ "Entry" \ "book" map {
-      book =>
-        Book(
-          (book \ "title").text,
-          (book \ "author").text,
-          (book \ "isbn").text,
-          (book \ "price").text.toDouble,
-          (book \ "offerprice").text.toDouble,
-          (book \ "description").text,
-          "http:" + (book \ "jacketurl").text,
-          (book \ "bookurl").text
-        )
-    }
-  }
+  def isTargetedAt(segment: Segment): Boolean = intersects(keywords, segment.context.keywords)
 }
 
 
 object BestsellersAgent extends AdAgent[Book] with ExecutionContexts {
 
+  private val feeds = Seq(
+    GeneralBestsellersFeed,
+    TravelBestsellersFeed,
+    ScienceBestsellersFeed,
+    TechnologyBestsellersFeed,
+    EnvironmentBestsellersFeed,
+    SocietyBestsellersFeed,
+    PoliticsBestsellersFeed,
+    MusicFilmBestsellersFeed,
+    SportBestsellersFeed,
+    HomeGardenBestsellersFeed,
+    FoodDrinkBestsellersFeed
+  )
+
+  override def defaultAds: Seq[Book] = currentAds filter (_.category == "General")
+
   def refresh() {
-    for {
-      books <- BestsellersApi.loadAds()
-    } updateCurrentAds(books take 5)
+
+    def takeFromEachList(allBooks: Seq[Seq[Book]], n: Int): Seq[Seq[Book]] = {
+      for (books <- allBooks) yield books take n
+    }
+
+    val bookListsLoading = Future.sequence {
+      feeds.foldLeft(Seq[Future[Seq[Book]]]()) {
+        (soFar, feed) => soFar :+ feed.loadAds()
+      }
+    }
+
+    for (books <- bookListsLoading) {
+      updateCurrentAds(takeFromEachList(books, 5).flatten)
+    }
   }
 }

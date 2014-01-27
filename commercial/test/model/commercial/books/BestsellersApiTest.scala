@@ -5,6 +5,12 @@ import scala.xml.XML
 
 class BestsellersApiTest extends FlatSpec with Matchers {
 
+  private val bestsellersApi = new BestsellersApi {
+    protected val path = "path"
+    protected lazy val category = "General Bestsellers"
+    protected val keywords = Seq("testkeyword1", "testkeyword2")
+  }
+
   private val xmlStr =
     """<BestSellers><Category>General Bestsellers</Category>
       |<Entry><Position>1</Position><book><title>Guardian Quick Crosswords 5 &#38; 6</title><author></author><isbn>5038495113238</isbn><price>13.98</price><offerprice>8.00</offerprice><description></description><jacketurl>//images.bertrams.com/ProductImages/services/GetImage?Source=BERT&amp;Quality=WEB&amp;Component=FRONTCOVER&amp;EAN13=5038495113238</jacketurl><bookurl>http://www.guardianbookshop.co.uk/BerteShopWeb/viewProduct.do?ISBN=5038495113238</bookurl></book></Entry>
@@ -15,32 +21,37 @@ class BestsellersApiTest extends FlatSpec with Matchers {
       |</BestSellers>""".stripMargin
 
   "parse" should "parse books from xml feed" in {
-    val books = BestsellersApi.parse(XML.loadString(xmlStr))
+    val books = bestsellersApi.parse(XML.loadString(xmlStr))
 
     books should be(Seq(
 
       Book("Guardian Quick Crosswords 5 & 6", "", "5038495113238", 13.98, 8.0, "",
         "http://images.bertrams.com/ProductImages/services/GetImage?Source=BERT&Quality=WEB&Component=FRONTCOVER&EAN13=5038495113238",
-        "http://www.guardianbookshop.co.uk/BerteShopWeb/viewProduct.do?ISBN=5038495113238"),
+        "http://www.guardianbookshop.co.uk/BerteShopWeb/viewProduct.do?ISBN=5038495113238",
+        "General Bestsellers", Seq("testkeyword1", "testkeyword2")),
 
       Book("Twelve Years a Slave", "Solomon Northup", "9780141393827", 7.99, 6.39,
         "Solomon Northup is a free man, living in New York. Then he is kidnapped and sold into slavery. Drugged, beaten, given a new name and transported away from his wife and children to a Louisiana cotton plantation, Solomon will die if he reveals his true identity.",
         "http://images.bertrams.com/ProductImages/services/GetImage?Source=BERT&Quality=WEB&Component=FRONTCOVER&EAN13=9780141393827",
-        "http://www.guardianbookshop.co.uk/BerteShopWeb/viewProduct.do?ISBN=9780141393827"),
+        "http://www.guardianbookshop.co.uk/BerteShopWeb/viewProduct.do?ISBN=9780141393827",
+        "General Bestsellers", Seq("testkeyword1", "testkeyword2")),
 
       Book("How to Be Alone", "Sara Maitland", "9780230768086", 7.99, 6.39,
         "Learn how to enjoy solitude and find happiness without others",
         "http://images.bertrams.com/ProductImages/services/GetImage?Source=BERT&Quality=WEB&Component=FRONTCOVER&EAN13=9780230768086",
-        "http://www.guardianbookshop.co.uk/BerteShopWeb/viewProduct.do?ISBN=9780230768086"),
+        "http://www.guardianbookshop.co.uk/BerteShopWeb/viewProduct.do?ISBN=9780230768086",
+        "General Bestsellers", Seq("testkeyword1", "testkeyword2")),
 
       Book("1941: The Year That Keeps Returning", "Slavko Goldstein", "9781590176733", 19.99, 15.49, "",
         "http://images.bertrams.com/ProductImages/services/GetImage?Source=BERT&Quality=WEB&Component=FRONTCOVER&EAN13=9781590176733",
-        "http://www.guardianbookshop.co.uk/BerteShopWeb/viewProduct.do?ISBN=9781590176733"),
+        "http://www.guardianbookshop.co.uk/BerteShopWeb/viewProduct.do?ISBN=9781590176733",
+        "General Bestsellers", Seq("testkeyword1", "testkeyword2")),
 
       Book("Examined Life", "Stephen Grosz", "9780099549031", 8.99, 6.99,
         "Reveals how the art of insight can illuminate the most complicated, confounding and human of experiences. This title includes stories about our everyday lives: they are about the people we love and the lies that we tell; the changes we bear, and the grief.",
         "http://images.bertrams.com/ProductImages/services/GetImage?Source=BERT&Quality=WEB&Component=FRONTCOVER&EAN13=9780099549031",
-        "http://www.guardianbookshop.co.uk/BerteShopWeb/viewProduct.do?ISBN=9780099549031")
+        "http://www.guardianbookshop.co.uk/BerteShopWeb/viewProduct.do?ISBN=9780099549031",
+        "General Bestsellers", Seq("testkeyword1", "testkeyword2"))
 
     ))
   }
