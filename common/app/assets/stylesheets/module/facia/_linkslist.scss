@@ -32,3 +32,19 @@
         color: $c-neutral2;
     }
 }
+
+$linkslist-icon-width: 23px;
+$linkslist-icon-rightspace: 7px;
+
+.linkslist__action--has-icon {
+    padding-left: $linkslist-icon-width + $linkslist-icon-rightspace;
+
+    .linkslist__icon {
+        float: left;
+        margin-left: ($linkslist-icon-width + $linkslist-icon-rightspace) * -1;
+    }
+}
+.i.linkslist__icon { // Chained selector to overrule icon code from global.css
+    width: $linkslist-icon-width;
+    background-size: contain;
+}

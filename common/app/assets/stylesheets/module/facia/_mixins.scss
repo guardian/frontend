@@ -67,9 +67,9 @@ $item-top-border-height: 2px;
         }
     }
     .item__byline {
-        @include fs-header(1, $size-only: true);
+        @include fs-headline(1, $size-only: true);
         @include mq(tablet) {
-            @include fs-header(2, $size-only: true);
+            @include fs-headline(2, $size-only: true);
         }
     }
     .item__live-indicator {
