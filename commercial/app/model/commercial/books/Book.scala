@@ -4,14 +4,15 @@ import model.commercial.{AdAgent, Segment, Ad}
 import common.ExecutionContexts
 import scala.concurrent.Future
 import model.commercial.intersects
+import scala.util.Try
 
 case class Book(title: String,
-                author: String,
+                author: Option[String],
                 isbn: String,
                 price: Double,
-                offerPrice: Double,
-                description: String,
-                jacketUrl: String,
+                offerPrice: Option[Double],
+                description: Option[String],
+                jacketUrl: Option[String],
                 buyUrl: String,
                 category: String,
                 keywords: Seq[String])
@@ -47,7 +48,9 @@ object BestsellersAgent extends AdAgent[Book] with ExecutionContexts {
 
     val bookListsLoading = Future.sequence {
       feeds.foldLeft(Seq[Future[Seq[Book]]]()) {
-        (soFar, feed) => soFar :+ feed.loadAds()
+        (soFar, feed) =>
+          val books = Try(feed.loadAds()).getOrElse(Future(Nil))
+          soFar :+ books
       }
     }
 

@@ -1,6 +1,7 @@
 package model.commercial.books
 
 import model.commercial.XmlAdsApi
+import model.commercial.OptString
 import conf.{CommercialConfiguration, Switches}
 import scala.xml.Elem
 
@@ -24,12 +25,12 @@ trait BestsellersApi extends XmlAdsApi[Book] {
       book =>
         Book(
           (book \ "title").text,
-          (book \ "author").text,
+          OptString((book \ "author").text),
           (book \ "isbn").text,
           (book \ "price").text.toDouble,
-          (book \ "offerprice").text.toDouble,
-          (book \ "description").text,
-          "http:" + (book \ "jacketurl").text,
+          (book \ "offerprice").headOption.map(_.text).map(_.toDouble),
+          OptString((book \ "description").text),
+          (book \ "jacketurl").headOption.map(node => s"http:${node.text}"),
           (book \ "bookurl").text,
           category,
           keywords
