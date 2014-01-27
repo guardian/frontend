@@ -1,4 +1,4 @@
-package services
+package frontpress
 
 import model.{Trail, Collection}
 import common.editions.Uk
@@ -25,8 +25,8 @@ trait FrontPress extends ExecutionContexts {
   }
 
   def pressPage(id: String): Future[Iterable[(Config, Collection)]] = {
-    val collectionIds: List[Config] = PorterConfigAgent.getConfigForId(id).getOrElse(Nil)
-    val collections = collectionIds.map(config => PorterCollectionParser.getCollection(config.id, config, Uk, isWarmedUp=true).map((config, _)))
+    val collectionIds: List[Config] = FaciaToolConfigAgent.getConfigForId(id).getOrElse(Nil)
+    val collections = collectionIds.map(config => FaciaToolCollectionParser.getCollection(config.id, config, Uk, isWarmedUp=true).map((config, _)))
     Future.sequence(collections)
   }
 

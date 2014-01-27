@@ -6,11 +6,12 @@ import conf.Configuration
 import com.amazonaws.services.sqs.model._
 import com.amazonaws.regions.{Regions, Region}
 import scala.collection.JavaConversions._
-import services.{PorterConfigAgent, S3FrontsApi, FrontPress}
+import services.S3FrontsApi
 import play.api.libs.json.Json
 import scala.util.Success
 import scala.concurrent.duration._
 import scala.concurrent.Await
+import frontpress.{FaciaToolConfigAgent, FrontPress}
 
 object FrontPressJob extends ExecutionContexts with Logging with implicits.Collections {
 
@@ -57,7 +58,7 @@ object FrontPressJob extends ExecutionContexts with Logging with implicits.Colle
 
   def pressByCollectionId(id: String): Unit = {
     for {
-      path <- PorterConfigAgent.getConfigsUsingCollectionId(id)
+      path <- FaciaToolConfigAgent.getConfigsUsingCollectionId(id)
       json <- FrontPress.generateJson(path)
     } {
       (json \ "id").asOpt[String].foreach(S3FrontsApi.putPressedJson(_, Json.prettyPrint(json)))
@@ -66,7 +67,7 @@ object FrontPressJob extends ExecutionContexts with Logging with implicits.Colle
 
   def getConfigFromMessage(message: Message): List[String] = {
     val id = (Json.parse(message.getBody) \ "Message").as[String]
-    val configIds: Seq[String] = PorterConfigAgent.getConfigsUsingCollectionId(id)
+    val configIds: Seq[String] = FaciaToolConfigAgent.getConfigsUsingCollectionId(id)
     configIds.toList
   }
 
