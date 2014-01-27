@@ -535,9 +535,7 @@ module.exports = function (grunt) {
             common: {
                 src: [
                     staticTargetDir + 'javascripts/bootstraps/*.js',
-                    staticTargetDir + 'stylesheets/head.default.css',
-                    staticTargetDir + 'stylesheets/head.facia.css',
-                    staticTargetDir + 'stylesheets/head.identity.css',
+                    staticTargetDir + 'stylesheets/head.*.css',
                     staticTargetDir + 'stylesheets/global.css'
                 ],
                 options: {
