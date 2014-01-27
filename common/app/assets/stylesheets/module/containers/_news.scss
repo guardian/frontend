@@ -45,8 +45,7 @@
     .collection-wrapper {
         @include rem((
             margin-left: $gs-gutter/2 * -1,
-            margin-right: $gs-gutter/2 * -1,
-            margin-top: $gs-baseline
+            margin-right: $gs-gutter/2 * -1
         ));
 
         + .collection-wrapper {
@@ -105,6 +104,19 @@
     .l-row--items-2 {
         .item__standfirst {
             display: block;
+        }
+        .item--imageadjust-highlight {
+            padding-bottom: 0;
+
+            .item__standfirst {
+                display: none;
+            }
+            .item__meta {
+                position: static;
+                @include rem((
+                    margin-top: $gs-baseline
+                ));
+            }
         }
     }
     .l-row--items-4 {
