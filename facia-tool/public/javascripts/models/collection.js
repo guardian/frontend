@@ -122,21 +122,15 @@ define([
     };
 
     Collection.prototype.drop = function(item) {
-        var self = this;
+        this.setPending(true);
 
-        self.setPending(true);
-
-        authedAjax.request({
-            type: 'delete',
-            url: vars.CONST.apiBase + '/collection/' + self.id,
-            data: JSON.stringify({
-                item: item.props.id(),
-                live:   vars.state.liveMode(),
-                draft: !vars.state.liveMode()
-            })
-        })
-        .then(function() {
-            self.load();
+        authedAjax.updateCollections({
+            remove: {
+                collection: this,
+                item:       item.props.id(),
+                live:       vars.state.liveMode(),
+                draft:     !vars.state.liveMode()
+            }
         });
     };
 
@@ -160,7 +154,7 @@ define([
             self.state.hasConcurrentEdits(false);
 
             if (raw.lastUpdated !== self.state.lastUpdated()) {
-                self.populateLists(raw);
+                self.populate(raw);
             }
 
             if (!self.state.editingConfig()) {
@@ -168,8 +162,6 @@ define([
                 self.collectionMeta.updatedBy(raw.updatedEmail === config.email ? 'you' : raw.updatedBy);
                 self.state.timeAgo(self.getTimeAgo(raw.lastUpdated));
             }
-
-            self.state.hasDraft(_.isArray(raw.draft));
         })
         .fail(function() {
             self.setPending(false);
@@ -182,16 +174,17 @@ define([
         }, false);
     };
 
-    Collection.prototype.populateLists = function(raw) {
+    Collection.prototype.populate = function(raw) {
         var self = this,
             list;
 
+        this.setPending(false);
+
         raw = raw ? raw : this.raw;
         this.raw = raw;
+        if (!raw) { return; }
 
-        if (!raw) {
-            return;
-        }
+        this.state.hasDraft(_.isArray(raw.draft));
 
         if (this.hasOpenArticles()) {
             this.state.hasConcurrentEdits(raw.updatedEmail !== config.email && self.state.lastUpdated());

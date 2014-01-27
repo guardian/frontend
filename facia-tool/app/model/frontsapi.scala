@@ -23,7 +23,7 @@ case class Trail(
                   )
 
 
-case class UpdateList(item: String, position: Option[String], after: Option[Boolean], itemMeta: Option[Map[String, JsValue]], live: Boolean, draft: Boolean)
+case class UpdateList(id: String, item: String, position: Option[String], after: Option[Boolean], itemMeta: Option[Map[String, JsValue]], live: Boolean, draft: Boolean)
 case class CollectionMetaUpdate(displayName: Option[String])
 
 trait UpdateActions {
@@ -35,8 +35,10 @@ trait UpdateActions {
   def getBlock(id: String): Option[Block] = FaciaApi.getBlock(id)
 
   def insertIntoLive(update: UpdateList, block: Block): Block =
-    if (update.live)
-      block.copy(live=updateList(update, block.live))
+    if (update.live) {
+      val live = updateList(update, block.live)
+      block.copy(live=live, draft=block.draft.filter(_ != live))
+    }
     else
       block
 
