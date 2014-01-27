@@ -677,10 +677,16 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:fonts', ['clean:fonts', 'mkdir:fontsTarget', 'webfontjson']);
     grunt.registerTask('compile:flash', ['clean:flash', 'copy:flash']);
     grunt.registerTask('compile', function(app) {
-        grunt.task.run(['clean:staticTarget', 'compile:images', 'compile:css', 'compile:js' + (app ? ':' + app : ''), 'compile:fonts', 'compile:flash']);
-        if (!isDev) {
-            grunt.task.run(['clean:assets', 'copy:headCss', 'hash']);
-        }
+        grunt.task.run([
+            'compile:images',
+            'compile:css',
+            'compile:js' + (app ? ':' + app : ''),
+            'compile:fonts',
+            'compile:flash',
+            'clean:assets',
+            'copy:headCss',
+            'hash'
+        ]);
     });
 
     // Test tasks
