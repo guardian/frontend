@@ -341,7 +341,14 @@ object Switches extends Collections {
     "If this is switched on then the au alpha network fronts will be served if a GU_AU_ALPHA cookie has been dropped",
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 7)
   )
-  
+
+  // Facia Tool
+
+  val ToolSparklines = Switch("Facia Tool", "tool-sparklines",
+    "If this is switched on then the fronts tool renders images from sparklines.ophan.co.uk",
+    safeState = Off, sellByDate = never
+  )
+
   // Image Switch
 
   val ServeWebPImagesSwitch = Switch("Image Server", "serve-webp-images",
@@ -402,6 +409,7 @@ object Switches extends Collections {
     NetworkFrontUkAlpha,
     NetworkFrontUsAlpha,
     NetworkFrontAuAlpha,
+    ToolSparklines,
     TagLinking,
     SponsoredContentSwitch,
     OphanMultiEventSwitch,
