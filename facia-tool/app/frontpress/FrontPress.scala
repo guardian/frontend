@@ -11,7 +11,7 @@ import common.FaciaToolMetrics.{FrontPressSuccess, FrontPressFailure}
 trait FrontPress extends ExecutionContexts with Logging {
 
   def generateJson(id: String): Future[JsObject] = {
-    pressPage(id)
+    retrieveFrontByPath(id)
       .map(_.map{case (config, collection) =>
         Json.obj(
           config.id -> generateCollectionJson(config, collection)
@@ -25,7 +25,7 @@ trait FrontPress extends ExecutionContexts with Logging {
       )
   }
 
-  def pressPage(id: String): Future[Iterable[(Config, Collection)]] = {
+  private def retrieveFrontByPath(id: String): Future[Iterable[(Config, Collection)]] = {
     val collectionIds: List[Config] = FaciaToolConfigAgent.getConfigForId(id).getOrElse(Nil)
     val collections = collectionIds.map(config => FaciaToolCollectionParser.getCollection(config.id, config, Uk, isWarmedUp=true).map((config, _)))
     val futureSequence = Future.sequence(collections)
