@@ -15,9 +15,7 @@ casper.test.begin("Show Related Content trails", function(test) {
     casper.then(function testRelatedContent() {
         casper.waitForSelector("#related-content-head", function() {
           test.assertSelectorHasText('#related-content-head', 'Related content');
-          test.assertEval(function() {
-            return __utils__.findAll(".related__container .item__container").length == 5;
-            }, "5 related content items are in the DOM");
+          test.assertElementCount('.related__container .item__container', 5, '5 related content items are in the DOM');
           test.assertVisible('.related__container .item:nth-child(5)','5th trail is visible');
           test.done();
         }, function timeout(){
