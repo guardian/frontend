@@ -14,9 +14,10 @@ casper.test.setUp(function() {
 casper.test.begin("Show Related Content trails", function(test) {
     casper.then(function testRelatedContent() {
         casper.waitForSelector("#related-content-head", function() {
-          var relatedArticles = this.evaluate(function() { return document.querySelectorAll('.related__container .item__container').length; })
           test.assertSelectorHasText('#related-content-head', 'Related content');
-          test.assertEquals(relatedArticles, 5, '5 related content items are in the DOM');
+          test.assertEval(function() {
+            return __utils__.findAll(".related__container .item__container").length == 5;
+            }, "5 related content items are in the DOM");
           test.done();
 
         }, function timeout(){
