@@ -1,5 +1,7 @@
 @(config: Config, collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
 
+@import org.joda.time.DateTime
+
 @defining(config.displayName.orElse(collection.displayName)) { title =>
 
     @defining(templateDeduping(8, collection.items)) { items =>
@@ -11,20 +13,11 @@
 
                 <div class="container__title">
                     <span class="container__title__label today u-text-hyphenate">
-                        <script>
-                            var today = new Date(),
-                                weekday = new Array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'),
-                                dayOfWeek = weekday[today.getDay()],
-                                months = new Array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'),
-                                curMonth = months[today.getMonth()],
-                                curYear = today.getFullYear(),
-                                dayOfMonth = today.getDate();
-                        </script>
-                        <span class="today__dayofweek"><script>document.write(dayOfWeek)</script></span>
+                        <span class="today__dayofweek js-dayofweek">@Format(DateTime.now(), "EEEE")</span>
                         <span class="u-nobr">
-                            <span class="today__dayofmonth"><script>document.write(dayOfMonth)</script></span>
-                            <span class="today__month"><script>document.write(curMonth)</script></span>
-                            <span class="today__year"><script>document.write(curYear)</script></span>
+                            <span class="today__dayofmonth js-dayofmonth">@Format(DateTime.now(), "d")</span>
+                            <span class="today__month">@Format(DateTime.now(), "MMMM")</span>
+                            <span class="today__year">@Format(DateTime.now(), "yyyy")</span>
                         </span>
                     </span>
                 </div>
