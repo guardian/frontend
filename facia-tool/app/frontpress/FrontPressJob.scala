@@ -15,7 +15,7 @@ import frontpress.{FaciaToolConfigAgent, FrontPress}
 
 object FrontPressJob extends ExecutionContexts with Logging with implicits.Collections {
 
-  val queueUrl: String = ""
+  val queueUrl: Option[String] = None
 
   def newClient = {
     val c = new AmazonSQSAsyncClient(Configuration.aws.credentials)
@@ -25,34 +25,36 @@ object FrontPressJob extends ExecutionContexts with Logging with implicits.Colle
 
   def run() {
     val client = newClient
-    try {
-      val receiveMessageResult = client.receiveMessage(new ReceiveMessageRequest(queueUrl).withMaxNumberOfMessages(10))
-      receiveMessageResult.getMessages
-        .map(getConfigFromMessage)
-        .flatten
-        .distinct
-        .map { config =>
-          val f = FrontPress.generateJson(config).andThen {
-            case Success(json) => {
-              (json \ "id").asOpt[String].foreach(S3FrontsApi.putPressedJson(_, Json.prettyPrint(json)))
+    for(queueUrl <- queueUrl) {
+      try {
+        val receiveMessageResult = client.receiveMessage(new ReceiveMessageRequest(queueUrl).withMaxNumberOfMessages(10))
+        receiveMessageResult.getMessages
+          .map(getConfigFromMessage)
+          .flatten
+          .distinct
+          .map { config =>
+            val f = FrontPress.generateJson(config).andThen {
+              case Success(json) => {
+                (json \ "id").asOpt[String].foreach(S3FrontsApi.putPressedJson(_, Json.prettyPrint(json)))
+              }
             }
-          }
-          f.onSuccess {
-            case _ =>
-              client.deleteMessageBatch(
-                new DeleteMessageBatchRequest(
-                  queueUrl,
-                  receiveMessageResult.getMessages.map { msg => new DeleteMessageBatchRequestEntry(msg.getMessageId, msg.getReceiptHandle)}
+            f.onSuccess {
+              case _ =>
+                client.deleteMessageBatch(
+                  new DeleteMessageBatchRequest(
+                    queueUrl,
+                    receiveMessageResult.getMessages.map { msg => new DeleteMessageBatchRequestEntry(msg.getMessageId, msg.getReceiptHandle)}
+                  )
                 )
-              )
-          }
-          f.onFailure {
-            case t: Throwable => log.warn(t.toString)
-          }
-          Await.ready(f, 20.seconds) //Block until ready!
+            }
+            f.onFailure {
+              case t: Throwable => log.warn(t.toString)
+            }
+            Await.ready(f, 20.seconds) //Block until ready!
+        }
+      } catch {
+        case t: Throwable => log.warn(t.toString)
       }
-    } catch {
-      case t: Throwable => log.warn(t.toString)
     }
   }
 
