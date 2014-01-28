@@ -77,7 +77,7 @@ object ImgSrc {
       if(ImageServiceSwitch.isSwitchedOn) {
         // this is the img for the CDN image service test
         // NOTE the order of the parameters is important - read the docs...
-        s"$imageServiceHost/${uri.getPath}?interpolation=progressive-bilinear&downsize=${imageType.resizeString}"
+        s"$imageServiceHost${uri.getPath}?interpolation=progressive-bilinear&downsize=${imageType.resizeString}"
       } else {
         // this is our current image
         s"$imageHost/${imageType.prefix}${uri.getPath}"
