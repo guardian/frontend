@@ -1,0 +1,8 @@
+@(trail: Trail, index: Int)(implicit request: RequestHeader)
+
+<li class="l-columns__item linkslist__item" data-link-name="trail | @index">
+    <a href="@LinkTo{@trail.url}" class="linkslist__action linkslist__action--has-icon" data-link-name="article">
+        <span class="i i-quote-orange linkslist__icon"></span>
+        @RemoveOuterParaHtml(trail.headline)
+    </a>
+</li>

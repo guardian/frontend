@@ -59,17 +59,11 @@
 <div class="linkslist-container js-container--show-more">
     <ul class="l-columns linkslist">
         @items.slice(8, 24).zipWithIndex.map{ case (trail, index) =>
-            <li class="l-columns__item linkslist__item">
-                <a href="@LinkTo{@trail.url}"
-                   class="@RenderClasses(Map(
-                            "linkslist__action" -> true,
-                            "linkslist__action--has-icon" -> (VisualTone(trail) == "comment")))">
-                    @if(VisualTone(trail) == "comment") {
-                        <span class="i i-quote-orange linkslist__icon"></span>
-                    }
-                    @RemoveOuterParaHtml(trail.headline)
-                </a>
-            </li>
+            @trail match {
+                case g: Gallery                      => { @fragments.items.linkList.gallery(g, index) }
+                case c if VisualTone(c) == "comment" => { @fragments.items.linkList.comment(c, index) }
+                case t                               => { @fragments.items.linkList.standard(t, index) }
+            }
         }
     </ul>
 </div>
