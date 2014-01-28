@@ -59,7 +59,7 @@ class ImgSrcTest extends FlatSpec with Matchers  {
     ImageServerSwitch.switchOn()
     ImageServiceSwitch.switchOn()
     val image = ImageContainer(Seq(ImageAsset(asset.copy(file = Some("http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.jpg")),0)), null, 0)
-    GalleryLargeTrail.bestFor(image) should be (Some("http://ak.i.guim.co.uk//sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.jpg?interpolation=progressive-bicubic&downsize=480:288"))
+    GalleryLargeTrail.bestFor(image) should be (Some("http://ak.i.guim.co.uk//sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.jpg?interpolation=progressive-bilinear&downsize=480:288"))
 
   }
 
