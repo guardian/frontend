@@ -154,6 +154,9 @@ $c-live: #e81818;
     &:hover {
         .item__cta {
             background-color: rgba($c-neutral2, 1);
+            &.item__cta--gallery {
+                background-color: $c-neutral1;
+            }
         }
     }
 }
@@ -310,6 +313,30 @@ $c-live: #e81818;
         width: 0;
         height: 0;
         text-indent: -999em;
+    }
+}
+.item__cta--gallery {
+    width: 36px;
+    height: 36px;
+    background-color: #FBBA0F;
+    @include rounded-corners(36px);
+
+    .i {
+        top: 50%;
+        left: 50%;
+        margin-top: -7px;
+        margin-left: -9px;
+    }
+    .i--hover {
+        display: none
+    }
+    .item__link:hover & {
+        .i {
+            display: none;
+        }
+        .i--hover {
+            display: block;
+        }
     }
 }
 
