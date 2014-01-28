@@ -57,7 +57,7 @@ object FrontPressJob extends ExecutionContexts with Logging with implicits.Colle
   }
 
   def pressByCollectionIds(ids: Set[String]): Unit = {
-    val paths = for {
+    val paths: Set[String] = for {
       id <- ids
       path <- FaciaToolConfigAgent.getConfigsUsingCollectionId(id)
 
