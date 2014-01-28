@@ -2,6 +2,7 @@ import common._
 import conf.Management
 import conf.RequestMeasurementMetrics
 import dev.DevParametersLifecycle
+import model.commercial.books.BestsellersAgent
 import model.commercial.masterclasses.MasterClassAgent
 import model.commercial.jobs.{Industries, JobsAgent}
 import model.commercial.money.BestBuysAgent
@@ -21,6 +22,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
     IndustriesRefresh
     JobsRefresh
     MoneyBestBuysRefresh
+    BooksRefresh
   }
 
   override def onStart(app: PlayApp) {
@@ -53,6 +55,8 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
         }
 
         BestBuysAgent.refresh()
+
+        BestsellersAgent.refresh()
       }
     }
   }
@@ -146,4 +150,12 @@ object MoneyBestBuysRefresh extends RefreshJob {
   def refresh() = BestBuysAgent.refresh()
 
   def stopJob() = BestBuysAgent.stop()
+}
+
+object BooksRefresh extends RefreshJob {
+  val name: String = "Books"
+
+  def refresh() = BestsellersAgent.refresh()
+
+  def stopJob() = BestsellersAgent.stop()
 }

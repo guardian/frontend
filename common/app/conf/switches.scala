@@ -131,6 +131,10 @@ object Switches extends Collections {
     "If this switch is on, commercial components will be fed by London & Country mortgage feed.",
     safeState = Off, sellByDate = endOfQ4)
 
+  val GuBookshopFeedsSwitch = Switch("Commercial Feeds", "gu-bookshop",
+    "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
+    safeState = Off, sellByDate = endOfQ4)
+
 
   // Analytics Switches
 
@@ -416,6 +420,7 @@ object Switches extends Collections {
     SoulmatesFeedSwitch,
     MoneysupermarketFeedsSwitch,
     LCMortgageFeedSwitch,
+    GuBookshopFeedsSwitch,
     ImageServiceSwitch
   )
 
