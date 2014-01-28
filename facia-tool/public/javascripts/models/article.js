@@ -122,9 +122,11 @@ define([
             this._save();
         };
 
-        Article.prototype.sparkline = function(opts) {
+        Article.prototype.sparkline = function() {
             this.state.sparkUrl(undefined);
-            this.state.sparkUrl(vars.CONST.sparksBase + this.props.id() + (this.meta.updatedAt() ? '&markers=' + this.meta.updatedAt() : ''));
+            if (vars.state.switches['facia-tool-sparklines']) {
+                this.state.sparkUrl(vars.CONST.sparksBase + this.props.id() + (this.meta.updatedAt() ? '&markers=' + this.meta.updatedAt() : ''));
+            }
         };
 
         Article.prototype.toggleImageAdjustHide = function() {

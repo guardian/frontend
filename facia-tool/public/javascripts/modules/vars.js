@@ -12,12 +12,12 @@ define(['knockout'], function(ko) {
             pvmWarm:               25,    // pageviews-per-min to qualify as 'warm'
             pvmPeriod:             5,     // num of recent datapoints over which to calc pageviews
 
-            ophanCallsPerSecond:   4,     // n.b. times number of blocks
             collectionsPollMs:     10000,
             latestArticlesPollMs:  30000,
+            configSwitchesPollMs:  60000,
             cacheExpiryMs:         60000,
 
-            sparksRefreshMs:       60000, // 1 min
+            sparksRefreshMs:       60000,
             sparksBase:            'http://sparklines.ophan.co.uk/png?graphs=other:09f,google:090,guardian:009&showStats=1&showHours=1&width=100&height=40&page=/',
             sparksBaseFront:       'http://sparklines.ophan.co.uk/png?graphs=other:09f,google:090,guardian:009&showStats=1&width=100&height=35&hotLevel=250&page=/',
 
@@ -26,6 +26,7 @@ define(['knockout'], function(ko) {
         },
 
         state: {
+            switches: {}, // placeholder
             liveMode: ko.observable(false) // default to live mode?
         }
     };

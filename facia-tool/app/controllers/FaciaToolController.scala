@@ -10,6 +10,7 @@ import tools.FaciaApi
 import services.S3FrontsApi
 import play.api.libs.ws.WS
 import model.{NoCache, Cached}
+import conf.Switches
 
 
 object FaciaToolController extends Controller with Logging with ExecutionContexts {

@@ -37,7 +37,7 @@ define([
 
         var self = this,
             model = {
-                config: null,
+                config: ko.observable(),
 
                 collections: ko.observableArray(),
                 fronts: ko.observableArray(),
@@ -70,23 +70,43 @@ define([
             return vars.CONST.viewer + '#env=' + config.env + '&url=' + model.front() + encodeURIComponent('?view=mobile');
         });
 
-        function fetchFronts() {
+        function terminate() {
+            window.location.href = '/logout';
+        }
+
+        function terminateWithMessage(msg) {
+            window.alert("Please contact support. Error: " + (msg || 'unknown'));
+            terminate();
+        }
+
+        function fetchConfig() {
             return authedAjax.request({
                 url: vars.CONST.apiBase + '/config'
             })
             .fail(function () {
-                window.alert("Oops, the fronts configuration was not available! Please contact support.");
-                return;
+                terminateWithMessage("the config was not available");
             })
             .done(function(resp) {
-
                 if (!(_.isObject(resp.fronts) && _.isObject(resp.collections))) {
-                    window.alert("Oops, the fronts configuration is invalid! Please contact support.");
-                    return;
+                    terminateWithMessage("the config is invalid.");
                 }
-
-                model.config = resp;
+                model.config(resp);
                 model.fronts(_.keys(resp.fronts).sort());
+            });
+        }
+
+        function fetchSwitches() {
+            return authedAjax.request({
+                url: vars.CONST.apiBase + '/switches'
+            })
+            .fail(function () {
+                terminateWithMessage("the switches are unavailable");
+            })
+            .done(function(switches) {
+                if (switches['facia-tool-disable']) {
+                    terminate();
+                }
+                vars.state.switches = switches || {};
             });
         }
 
@@ -101,18 +121,25 @@ define([
         function renderFront(id) {
             history.pushState({}, "", window.location.pathname + '?' + ammendedQueryStr('front', id));
             model.collections(
-                ((model.config.fronts[getFront()] || {}).collections || [])
-                .filter(function(id){ return !!model.config.collections[id]; })
+                ((model.config().fronts[getFront()] || {}).collections || [])
+                .filter(function(id){ return !!model.config().collections[id]; })
                 .map(function(id){
                     return new Collection(
-                        _.extend(model.config.collections[id], {id: id})
+                        _.extend(model.config().collections[id], {id: id})
                     );
                 })
             );
-            model.frontSparkUrl(vars.CONST.sparksBaseFront + getFront());
+            showFrontSpark();
         }
 
-        var startPoller = _.once(function() {
+        function showFrontSpark() {
+            model.frontSparkUrl(undefined);
+            if (vars.state.switches['facia-tool-sparklines']) {
+                model.frontSparkUrl(vars.CONST.sparksBaseFront + getFront());
+            }
+        }
+
+        var startCollectionsPoller = _.once(function() {
             var period = vars.CONST.collectionsPollMs || 60000;
 
             setInterval(function(){
@@ -124,7 +151,7 @@ define([
             }, period);
         });
 
-        var startSparksRefresher = _.once(function() {
+        var startSparksPoller = _.once(function() {
             var period = vars.CONST.sparksRefreshMs || 60000;
 
             setInterval(function(){
@@ -133,10 +160,15 @@ define([
                         list.refreshSparklines();
                     }, index * period / (model.collections().length || 1)); // stagger requests
                 });
-
-                model.frontSparkUrl(undefined);
-                model.frontSparkUrl(vars.CONST.sparksBaseFront + getFront());
+                showFrontSpark();
             }, period);
+        });
+
+        var startConfigAndSwitchesPoller = _.once(function() {
+            setInterval(function(){
+                fetchConfig();
+                fetchSwitches();
+            }, vars.CONST.configSwitchesPollMs || 60000);
         });
 
         model.front.subscribe(function(front) {
@@ -153,7 +185,7 @@ define([
         this.init = function() {
             droppable.init();
 
-            fetchFronts()
+            $.when(fetchConfig(), fetchSwitches())
             .done(function(){
                 setfront();
                 window.onpopstate = setfront;
@@ -163,8 +195,9 @@ define([
                 updateLayout();
                 window.onresize = updateLayout;
 
-                startPoller();
-                startSparksRefresher();
+                startCollectionsPoller();
+                startSparksPoller();
+                startConfigAndSwitchesPoller();
 
                 model.latestArticles.search();
                 model.latestArticles.startPoller();

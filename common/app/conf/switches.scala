@@ -344,7 +344,12 @@ object Switches extends Collections {
 
   // Facia Tool
 
-  val ToolSparklines = Switch("Facia Tool", "tool-sparklines",
+  val ToolDisable = Switch("Facia Tool", "facia-tool-disable",
+    "If this is switched on then the fronts tool is disabled",
+    safeState = Off, sellByDate = never
+  )
+
+  val ToolSparklines = Switch("Facia Tool", "facia-tool-sparklines",
     "If this is switched on then the fronts tool renders images from sparklines.ophan.co.uk",
     safeState = Off, sellByDate = never
   )
@@ -409,6 +414,7 @@ object Switches extends Collections {
     NetworkFrontUkAlpha,
     NetworkFrontUsAlpha,
     NetworkFrontAuAlpha,
+    ToolDisable,
     ToolSparklines,
     TagLinking,
     SponsoredContentSwitch,

@@ -48,28 +48,30 @@ a, a:hover {
     font-weight: normal;
 }
 
-.tool-title .message {
+.message {
+    float: left;
+    margin: 8px 10px 0 0;
     color: #CCCCCC;
     font-size: 26px;
-    font-style: italic;
+    line-height: 30px;
     font-weight: normal;
 }
 
-.tool-title .message--important {
+.message--important {
     color: #d61d00;
 }
 
-.tool-title .message--loading {
+.message--loading {
     display: none;
 }
 
-.is-authed .tool-title .message--loading {
-    display: inline;
+.is-authed .message--loading {
+    display: block;
 }
 
 .login-form {
     float: left;
-    margin: 10px 10px 0 0;
+    margin: 13px 10px 0 0;
 }
 
 .finder {
@@ -625,9 +627,10 @@ button {
 }
 
 .log-in-out {
-    margin-left: 5px;
+    margin: 19px 0 0 0px;
     font-size: 10px;
     text-transform: uppercase;
+    float: left;
 }
 
 .tool--remove {
