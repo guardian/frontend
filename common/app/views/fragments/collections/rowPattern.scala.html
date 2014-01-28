@@ -24,10 +24,11 @@
 <div class="collection-wrapper">
     <ul class="unstyled l-row l-row--items-2 collection">
         @items.slice(2, 4).zipWithIndex.map{ case (trail, index) =>
-            <li class="l-row__item
-                       collection__item
-                       collection__item--volume-@trail.group.getOrElse("0")
-                       collection__item--tone-@VisualTone(trail)">
+            <li class="@RenderClasses(
+                            "l-row__item",
+                            "collection__item",
+                            s"collection__item--volume-${trail.group.getOrElse("0")}",
+                            s"collection__item--tone-${VisualTone(trail)}")">
                 @if(trail.imageAdjust == Some("highlight")) {
                     @fragments.items.standard(trail, index + 2, 0, "div")
                 }else{
@@ -40,10 +41,11 @@
 <div class="collection-wrapper">
     <ul class="unstyled l-row l-row--items-4 collection">
         @items.slice(4, 8).zipWithIndex.map{ case (trail, index) =>
-            <li class="l-row__item
-                       collection__item
-                       collection__item--volume-@trail.group.getOrElse("0")
-                       collection__item--tone-@VisualTone(trail)">
+            <li class="@RenderClasses(
+                            "l-row__item",
+                            "collection__item",
+                            s"collection__item--volume-${trail.group.getOrElse("0")}",
+                            s"collection__item--tone-${VisualTone(trail)}")">
                 @trail match {
                     case gallery: Gallery => { @fragments.items.gallery(gallery, index + 4, 0, "div") }
                     case other => { @fragments.items.standard(trail, index + 4, 0, "div") }
@@ -57,8 +59,9 @@
         @items.slice(8, 24).zipWithIndex.map{ case (trail, index) =>
             <li class="l-columns__item linkslist__item">
                 <a href="@LinkTo{@trail.url}"
-                   class="linkslist__action
-                          @if(VisualTone(trail) == "comment"){linkslist__action--has-icon}">
+                   class="@RenderClasses(Map(
+                            "linkslist__action" -> true,
+                            "linkslist__action--has-icon" -> (VisualTone(trail) == "comment")))">
                     @if(VisualTone(trail) == "comment") {
                         <span class="i i-quote-orange linkslist__icon"></span>
                     }
