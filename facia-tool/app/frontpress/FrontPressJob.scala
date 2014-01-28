@@ -56,10 +56,15 @@ object FrontPressJob extends ExecutionContexts with Logging with implicits.Colle
     }
   }
 
-  def pressByCollectionId(id: String): Unit = {
-    for {
+  def pressByCollectionIds(ids: Set[String]): Unit = {
+    val paths = for {
+      id <- ids
       path <- FaciaToolConfigAgent.getConfigsUsingCollectionId(id)
-      json <- FrontPress.generateJson(path)
+
+    } yield path
+    for {
+      p <- paths
+      json <- FrontPress.generateJson(p)
     } {
       (json \ "id").asOpt[String].foreach(S3FrontsApi.putPressedJson(_, Json.prettyPrint(json)))
     }
