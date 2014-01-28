@@ -1,8 +1,5 @@
-@(config: Config,
-  items: Seq[Trail],
-  style: Container,
-  containerIndex: Int
-)(implicit request: RequestHeader)
+@(config: Config, items: Seq[Trail], style: Container, containerIndex: Int)(implicit request: RequestHeader)
+
 <div class="collection-wrapper">
     @items.slice(0, 1).zipWithIndex.map{ case (trail, index) =>
         @if(!trail.group.isEmpty){ @* Means this is a curated container *@
@@ -31,9 +28,9 @@
                             s"collection__item--tone-${VisualTone(trail)}" -> true,
                             s"collection__item--content-type-gallery" -> {trail match { case g: Gallery => true; case _ => false }}))">
                 @trail match {
-                    case g: Gallery => { @fragments.items.thumbnailGallery(g, index + 2, 0, "div") }
+                    case g: Gallery                                  => { @fragments.items.thumbnailGallery(g, index + 2, 0, "div") }
                     case _ if trail.imageAdjust == Some("highlight") => { @fragments.items.standard(trail, index + 2, 0, "div") }
-                    case _ => { @fragments.items.thumbnail(trail, index + 2, 0, "div") }
+                    case _                                           => { @fragments.items.thumbnail(trail, index + 2, 0, "div") }
                 }
             </li>
         }
@@ -50,7 +47,7 @@
                             s"collection__item--content-type-gallery" -> {trail match { case g: Gallery => true; case _ => false }}))">
                 @trail match {
                     case g: Gallery => { @fragments.items.gallery(g, index + 4, 0, "div") }
-                    case other => { @fragments.items.standard(trail, index + 4, 0, "div") }
+                    case other      => { @fragments.items.standard(trail, index + 4, 0, "div") }
                 }
             </li>
         }
