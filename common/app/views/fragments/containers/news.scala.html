@@ -9,15 +9,25 @@
                      data-id="@config.id"
                      data-type="@style.containerType">
 
-                @title.map { title =>
-                    <h2 class="container__title tone-@style.tone tone-background tone-accent-border">
-                        @config.href.map { href =>
-                            <a data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
-                        }.getOrElse{
-                            @Html(title)
-                        }
-                    </h2>
-                }
+                <div class="container__title">
+                    <span class="container__title__label today u-text-hyphenate">
+                        <script>
+                            var today = new Date(),
+                                weekday = new Array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'),
+                                dayOfWeek = weekday[today.getDay()],
+                                months = new Array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'),
+                                curMonth = months[today.getMonth()],
+                                curYear = today.getFullYear(),
+                                dayOfMonth = today.getDate();
+                        </script>
+                        <span class="today__dayofweek"><script>document.write(dayOfWeek)</script></span>
+                        <span class="u-nobr">
+                            <span class="today__dayofmonth"><script>document.write(dayOfMonth)</script></span>
+                            <span class="today__month"><script>document.write(curMonth)</script></span>
+                            <span class="today__year"><script>document.write(curYear)</script></span>
+                        </span>
+                    </span>
+                </div>
 
                 @fragments.collections.rowPattern(config, items, style, containerIndex)
 

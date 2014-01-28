@@ -1,4 +1,9 @@
 .container--news {
+    .container__title {
+        display: none;
+        color: $c-neutral1;
+        margin-bottom: 0;
+    }
     .item {
         display: block;
         margin-top: 0;
@@ -293,4 +298,11 @@
     &.show-more--hidden:before {
         display: none;
     }
+}
+
+.today {
+    color: $c-neutral2;
+}
+.today__dayofweek {
+    color: $c-neutral1;
 }
