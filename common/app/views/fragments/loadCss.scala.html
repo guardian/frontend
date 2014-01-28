@@ -1,7 +1,7 @@
 @()(implicit request: RequestHeader)
 @import conf.Switches._
 
-@if(CssFromStorageSwitch.isSwitchedOn) {
+@if(CssFromStorageSwitch.isSwitchedOn && !play.Play.isDev()) {
 
     <noscript>
         <!--[if (gt IE 9) | (IEMobile)]><!-->
@@ -47,7 +47,7 @@
 
                 function loadCssWithAjax() {
                     var xhr = new XMLHttpRequest();
-                    xhr.open('GET', '@Static("stylesheets/global.css")?type=ajax', true);
+                    xhr.open('GET', '@Static("stylesheets/global.css")?page=ajax', true);
                     xhr.onreadystatechange = function() {
                         if (xhr.readyState === 4) {
                             if(xhr.status === 200) {
@@ -62,7 +62,7 @@
                     xhr.send();
                 }
 
-                if(guardian.isModernBrowser && !guardian.css.loaded && 'withCredentials' in new XMLHttpRequest()) {
+                if(guardian.isModernBrowser && !guardian.css.loaded && 'withCredentials' in new XMLHttpRequest() && !/Windows Phone/.test(navigator.userAgent)) {
                     loadCssWithAjax();
                 } else if(!guardian.isModernBrowser || !('withCredentials' in new XMLHttpRequest())){
                     loadCssWithLink();
