@@ -537,10 +537,8 @@ module.exports = function (grunt) {
                     staticTargetDir + 'javascripts/bootstraps/*.js',
                     staticTargetDir + 'stylesheets/*.css',
                     // ignore hashed files
-                    '!' + staticTargetDir + 'javascripts/bootstraps/*.*.js',
-                    '!' + staticTargetDir + 'stylesheets/head.*.*.css',
-                    '!' + staticTargetDir + 'stylesheets/ie9.*.*.*.css',
-                    '!' + staticTargetDir + 'stylesheets/old-ie.*.*.*.css'
+                    '!' + '**/*.<%= Array(1 + hash.options.hashLength).join("?") %>.js',
+                    '!' + '**/*.<%= Array(1 + hash.options.hashLength).join("?") %>.css'
                 ],
                 options: {
                     credentials: propertiesFile
@@ -732,4 +730,5 @@ module.exports = function (grunt) {
     grunt.registerTask('hookmeup', ['clean:hooks', 'shell:copyHooks']);
     grunt.registerTask('snap', ['clean:screenshots', 'mkdir:screenshots', 'env:casperjs', 'casperjs:screenshot', 's3:screenshots']);
     grunt.registerTask('emitAbTestInfo', ['shell:abTestInfo']);
+
 };
