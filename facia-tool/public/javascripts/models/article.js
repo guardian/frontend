@@ -213,22 +213,23 @@ define([
             }
 
             if (this.parentType === 'Collection') {
+
                 itemMeta = this.getMeta();
                 timestamp = Math.floor(new Date().getTime()/1000);
                 
                 itemMeta.updatedAt = (itemMeta.updatedAt ? itemMeta.updatedAt + ',' : '') + timestamp + ':0C0'; // green for overrides etc.
                 
-                authedAjax.updateCollection(
-                    'post',
-                    this.parent,
-                    {
-                        item:     self.props.id(),
-                        position: self.props.id(),
-                        itemMeta: itemMeta,
-                        live:     vars.state.liveMode(),
-                        draft:   !vars.state.liveMode()
+                authedAjax.updateCollections({
+                    update: {
+                        collection: this.parent,
+                        item:       this.props.id(),
+                        position:   this.props.id(),
+                        itemMeta:   this.getMeta(),
+                        live:       vars.state.liveMode(),
+                        draft:     !vars.state.liveMode()
                     }
-                );
+                });
+
                 this.parent.setPending(true);
             }
         };

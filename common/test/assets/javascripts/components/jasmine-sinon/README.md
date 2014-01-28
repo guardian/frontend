@@ -137,6 +137,13 @@ These matchers will work on spies, individual spy calls, stubs and mocks.
 
 You can also use Jasmine spies alongside your Sinon spies. _jasmine-sinon_ will detect which you're using and use the appropriate matcher.
 
+You can also use Jasmine's fuzzy matchers `any()` and `objectContaining()` in expectations, e.g.
+
+```javascript
+    expect(spy).toHaveBeenCalledWith(jasmine.any(Date));
+    expect(spy).toHaveBeenCalledWith(jasmine.objectContaining({name: 'froots'}))
+```
+
 ## Contributors
 
 Thanks to:
@@ -144,3 +151,4 @@ Thanks to:
 * @aelesbao for Exception matchers
 * @theinterned for, er, match matchers
 * @milichev for graceful spy matchers
+* @reinseth for Jasmine fuzzy matcher support

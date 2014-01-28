@@ -1,0 +1,9 @@
+{
+  "name": "frontend-common-public-js",
+  "version": "0.1.0 ",
+  "dependencies": {
+    "html5shiv": "~3.7.0",
+    "swipe": "~2.0.0",
+    "zxcvbn": "https://raw2.github.com/lowe/zxcvbn/master/zxcvbn.js"
+  }
+}

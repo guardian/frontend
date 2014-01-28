@@ -323,7 +323,9 @@
       , type: 'json'
       , async: false
       })
-      ok(eval('(' + r.request.responseText + ')').boosh == 'boosh', 'can make sync calls')
+      var request = r.request,
+        responseText = request.response !== undefined ? request.response : request.responseText
+      ok(eval('(' + responseText + ')').boosh == 'boosh', 'can make sync calls')
       done()
     })
 
@@ -424,6 +426,7 @@
       })
         .then(function (resp) {
             ok(resp, 'received response in promise success callback')
+            return resp;
         })
         .then(function (resp) {
             ok(resp, 'received response in second promise success callback')
@@ -508,6 +511,48 @@
   }
 
   sink('Connection Object', function (test, ok) {
+
+    test('use xhr factory provided in the options', function (complete) {
+      var reqwest
+      , xhr
+
+      if (typeof XMLHttpRequest !== 'undefined') {
+          xhr = new XMLHttpRequest()
+      } else if (typeof ActiveXObject !== 'undefined') {
+          xhr = new ActiveXObject('Microsoft.XMLHTTP')
+      } else {
+        ok(false, 'browser not supported')
+      }
+
+      reqwest = ajax({
+          url: '/tests/fixtures/fixtures.html',
+          xhr: function () {
+            return xhr
+          }
+      })
+
+      ok(reqwest.request === xhr, 'uses factory')
+      complete()
+    })
+
+    test('fallbacks to own xhr factory if falsy is returned', function (complete) {
+      var reqwest
+
+      FakeXHR.setup()
+      try {
+        reqwest = ajax({
+            url: '/tests/fixtures/fixtures.html',
+            xhr: function () {
+              return null
+            }
+        })
+
+        ok(reqwest.request instanceof FakeXHR, 'fallbacks correctly')
+        complete()
+      } finally {
+        FakeXHR.restore()
+      }
+    })
 
     test('setRequestHeaders', function (complete) {
       ajax({
@@ -1615,6 +1660,43 @@
         )
     })
 
+    test('then is chainable', 2, function () {
+      ajax({
+          url: '/tests/fixtures/fixtures.json'
+        , type: 'json'
+      })
+        .then(
+            function (resp) {
+              ok(true, 'first success callback fired')
+              return 'new value';
+            }
+        )
+        .then(
+            function (resp) {
+              ok(resp === 'new value', 'second success callback fired')
+            }
+        )
+    })
+
+    test('success does not chain with then', 2, function () {
+      ajax({
+          url: '/tests/fixtures/fixtures.json'
+        , type: 'json'
+        , success: function() {
+          ok(true, 'success callback fired')
+          return 'some independent value';
+        }
+      })
+        .then(
+            function (resp) {
+              ok(
+                resp && resp !== 'some independent value'
+                , 'then callback fired'
+              )
+            }
+        )
+    })
+
     test('then & always handlers can be added after a response is received'
           , 2
           , function () {
@@ -1635,6 +1717,26 @@
               ).always(function () {
                 ok(true, 'complete callback called')
               })
+          }, 1)
+        })
+    })
+
+    test('then is chainable after a response is received'
+          , 2
+          , function () {
+
+      var a = ajax({
+          url: '/tests/fixtures/fixtures.json'
+        , type: 'json'
+      })
+        .always(function () {
+          setTimeout(function () {
+            a.then(function () {
+              ok(true, 'first success callback called')
+              return 'new value';
+            }).then(function (resp) {
+              ok(resp === 'new value', 'second success callback called')
+            })
           }, 1)
         })
     })

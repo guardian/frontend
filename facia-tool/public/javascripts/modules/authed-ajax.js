@@ -13,22 +13,29 @@ define(['modules/vars'], function(vars) {
         });
     }
 
-    function updateCollection(method, collection, data) {
-        collection.setPending(true);
+    function updateCollections(edits) {
+        var collections = [];
+
+        _.each(edits, function(edit) {
+            edit.collection.setPending(true);
+            edit.id = edit.collection.id;
+            collections.push(edit.collection);
+            delete edit.collection;
+        });
 
         return request({
-            url: vars.CONST.apiBase + '/collection/' + collection.id,
-            type: method,
-            data: JSON.stringify(data)
+            url: vars.CONST.apiBase + '/edits',
+            type: 'POST',
+            data: JSON.stringify(edits)
         }).fail(function(xhr) {
-            window.console.log(['Failed', method.toUpperCase(), ":", xhr.status, xhr.statusText, JSON.stringify(data)].join(' '));
-        }).always(function() {
-            collection.load();
+            _.each(collections, function(collection) { collection.load(); });
+        }).done(function(resp) {
+            _.each(collections, function(collection) { collection.populate(resp[collection.id]); });
         });
     }
 
     return {
         request: request,
-        updateCollection: updateCollection
+        updateCollections: updateCollections
     };
 });

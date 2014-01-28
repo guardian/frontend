@@ -13,8 +13,6 @@ object MostPopularAgent extends Logging with ExecutionContexts {
 
   def mostPopular(edition: Edition): Seq[Content] = agent().get(edition.id).getOrElse(Nil)
 
-  def await() { quietly(agent.await(2.seconds)) }
-
   def refresh() {
     log.info("Refreshing most popular.")
     Edition.all foreach refresh
@@ -36,8 +34,6 @@ object MostPopularExpandableAgent extends Logging with ExecutionContexts {
   private val agent = AkkaAgent[Map[String, Seq[Content]]](Map.empty)
 
   def mostPopular(edition: Edition): Seq[Content] = agent().get(edition.id).getOrElse(Nil)
-
-  def await() { quietly(agent.await(2.seconds)) }
 
   def refresh() {
     log.info("Refreshing most popular.")

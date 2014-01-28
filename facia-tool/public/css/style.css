@@ -134,7 +134,6 @@ a, a:hover {
 }
 
 .pending {
-    opacity: 0.7;
     pointer-events: none;
 }
 
@@ -142,7 +141,7 @@ a, a:hover {
     color: #999999;
     overflow: hidden;
     padding: 5px 0 1px 0;
-    height: 20px;
+    height: 23px;
 }
 
 .list-header.collapsed {
@@ -565,6 +564,13 @@ button {
     display: inline-block;
     margin: -2px 15px 0 0;
     float: left;
+    width: 100px;
+}
+
+.toolbar .tool,
+.article__overrides .tool,
+.collection-overrides .tool {
+    margin-top: 5px;
 }
 
 .tool-select {
@@ -572,7 +578,7 @@ button {
     font-weight: bold;
     font-size: 16px;
     color: #000000;
-    margin: 3px 15px 0 0;
+    margin: 4px 15px 0 0;
     width: 150px;
 }
 
@@ -583,7 +589,6 @@ button {
     font-size: 12px;
     line-height: 20px;
     color: #FFFFFF;
-    margin-top: 5px;
     border-radius: 2px;
     border: 0;
     cursor: pointer;

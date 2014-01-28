@@ -162,13 +162,14 @@ define([
                     })
                     .done(function() {
                         var itemMeta,
-                            timestamp;
+                            timestamp,
+                            edits = {};
 
                         if (_.isFunction(targetList.reflow)) {
                             targetList.reflow();
                         }
 
-                        if (!targetList.parent) { // no need for persistence
+                        if (!targetList.parent) {
                             return;
                         }
 
@@ -181,6 +182,8 @@ define([
                             return;
                         }
 
+                        targetList.parent.closeAllArticles();
+
                         itemMeta = sourceItem && sourceItem.meta ? sourceItem.meta : {};
 
                         if (targetList.parent.groups && targetList.parent.groups.length > 1) {
@@ -192,38 +195,34 @@ define([
                         timestamp = Math.floor(new Date().getTime()/1000);
                         itemMeta.updatedAt = itemMeta.updatedAt ? itemMeta.updatedAt + ',' + timestamp : timestamp + ':f90'; // orange for the initial flag
 
-                        authedAjax.updateCollection(
-                            'post',
-                            targetList.parent,
-                            {
-                                item:     id,
-                                position: position,
-                                after:    isAfter,
-                                live:     vars.state.liveMode(),
-                                draft:   !vars.state.liveMode(),
-                                itemMeta: _.isEmpty(itemMeta) ? undefined : itemMeta
-                            }
-                        );
+                        edits.update = {
+                            collection: targetList.parent,
+                            item:     id,
+                            position: position,
+                            after:    isAfter,
+                            live:     vars.state.liveMode(),
+                            draft:   !vars.state.liveMode(),
+                            itemMeta: _.isEmpty(itemMeta) ? undefined : itemMeta
+                        };
 
-                        if (!sourceList || sourceList.keepCopy || sourceList.parentType !== 'Collection') {
-                            return;
-                        }
+                        // Is a delete also required?
+                        if (sourceList &&
+                            sourceList.parentType === 'Collection' &&
+                            sourceList.parent.id !== targetList.parent.id  &&
+                           !sourceList.keepCopy) {
 
-                        if (sourceList.parent.id === targetList.parent.id) {
-                            return;
-                        }
+                            removeMatchingItems(sourceList, id);
 
-                        removeMatchingItems(sourceList, id);
-
-                        authedAjax.updateCollection(
-                            'delete',
-                            sourceList.parent,
-                            {
+                            edits.remove = {
+                                collection: sourceList.parent,
+                                id:     sourceList.parent.id,
                                 item:   id,
                                 live:   vars.state.liveMode(),
                                 draft: !vars.state.liveMode()
-                            }
-                        );
+                            };
+                        }
+
+                        authedAjax.updateCollections(edits);
                     });
                 }, false);
             }

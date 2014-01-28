@@ -221,7 +221,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
         val review = findFirst("article[itemtype='http://schema.org/Review']")
 
         review.findFirst(".stars").getText should be("3 / 5 stars")
-        review.findFirst("[itemprop=reviewRating]").getAttribute("content") should be("3")
+        review.findFirst("[itemprop=ratingValue]").getText should be("3")
       }
     }
 
@@ -240,18 +240,18 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
 
       Given("An article that has no in body links")
       Switches.TagLinking.switchOn()
-      HtmlUnit("/business/2014/jan/09/morrisons-issues-profit-warning-sales-down") { browser =>
+      HtmlUnit("/law/2014/jan/20/pakistan-drone-strike-relative-loses-gchq-court-case") { browser =>
         import browser._
 
-        Then("It should automatucally link to tags")
+        Then("It should automatically link to tags")
         val taglinks = $("a[data-link-name=auto-linked-tag]")
 
         taglinks.length should be (2)
 
-        taglinks(0).getText should be ("Morrisons")
-        taglinks(0).getAttribute("href") should endWith ("/business/morrisons")
+        taglinks(0).getText should be ("GCHQ")
+        taglinks(0).getAttribute("href") should endWith ("/uk/gchq")
 
-        taglinks(1).getText should be ("Tesco")
+        taglinks(1).getText should be ("Pakistan")
       }
     }
 

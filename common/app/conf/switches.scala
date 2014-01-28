@@ -151,7 +151,7 @@ object Switches extends Collections {
 
   val OphanMultiEventSwitch = Switch("Analytics", "ophan-multi-event",
     "Enables the new Ophan tracking javascript which support multiple events per page",
-    safeState = Off, endOfQ4
+    safeState = On, endOfQ4
   )
 
   val OmnitureVerificationSwitch = Switch("Analytics", "omniture-verification",
@@ -291,6 +291,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
+  val ABGravityRecommendations = Switch("A/B Tests", "ab-gravity-recommendations",
+    "Enables gravity beacon code on the site",
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 24)
+  )
+
   val TagLinking = Switch("Feature Switches", "tag-linking",
     "If this is switched on articles that have no in body links will auto link to their tags where possible",
     safeState = Off, sellByDate = endOfQ4 
@@ -349,6 +354,10 @@ object Switches extends Collections {
     safeState = On, sellByDate = new DateMidnight(2014, 2, 7)
   )
 
+  val ImageServiceSwitch = Switch("Image Service", "image-service",
+    "If this switch is on images will be served off ak.i.guim.co.uk (dynamic image host). Part of the CDN test. Relies on ImageServerSwitch also being on",
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 7))
+
   val all: List[Switch] = List(
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
@@ -389,6 +398,7 @@ object Switches extends Collections {
     IdentityEthicalAwardsSwitch,
     IdentityFilmAwardsSwitch,
     ABAa,
+    ABGravityRecommendations,
     NetworkFrontUkAlpha,
     NetworkFrontUsAlpha,
     NetworkFrontAuAlpha,
@@ -405,7 +415,8 @@ object Switches extends Collections {
     MasterclassFeedSwitch,
     SoulmatesFeedSwitch,
     MoneysupermarketFeedsSwitch,
-    LCMortgageFeedSwitch
+    LCMortgageFeedSwitch,
+    ImageServiceSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
