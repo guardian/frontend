@@ -341,6 +341,26 @@ define([
             }
         },
 
+        displayOnboardMessage: function (config) {
+            if(window.location.hash === '#opt-in-message') {
+                var message = new Message('onboard', { type: 'modal' });
+                var path = (document.location.pathname) ? document.location.pathname : '/';
+                var exitLink = '/preference/platform/desktop?page=' + encodeURIComponent(path + '?view=desktop');
+                var msg = '<h2 class="site-message__header">Welcome!</h2>' +
+                    '<div class="site-message__message">' +
+                    'You’re viewing an alpha release of the Guardian’s responsive website. <a href="/help/2013/oct/04/alpha-testing-and-evolution-of-our-mobile-site">Find out more</a>' +
+                    '</p>' +
+                    '<ul class="site-message__actions unstyled">' +
+                    '<li class="site-message__actions__item">' +
+                    '<i class="i i-back"></i>' +
+                    '<a class="js-main-site-link" rel="nofollow" href="' + exitLink + '"' +
+                    'data-link-name="opt-out">Opt-out and return to standard desktop site </a>' +
+                    '</li>' +
+                    '</ul>';
+                message.show(msg);
+            }
+        },
+
         unshackleParagraphs: function (config, context) {
             if (userPrefs.isOff('para-indents')) {
                 $('.paragraph-spacing--indents', context).removeClass('paragraph-spacing--indents');
@@ -432,6 +452,7 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
+            modules.displayOnboardMessage(config);
             modules.windowEventListeners();
             modules.checkIframe();
             modules.upgradeImages();

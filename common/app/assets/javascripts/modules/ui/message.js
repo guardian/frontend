@@ -24,6 +24,7 @@ define([
         this.id = id;
         this.important = opts.important || false;
         this.permanent = opts.permanent || false;
+        this.type = opts.type || 'banner';
         this.prefs = 'messages';
     };
 
@@ -33,6 +34,7 @@ define([
             return false;
         }
         $('.js-site-message-copy').html(message);
+        $('.site-message').addClass('site-message--' + this.type);
         $('.site-message').removeClass('is-hidden');
         if (this.permanent) {
             $('.site-message').addClass('site-message--permanent');
