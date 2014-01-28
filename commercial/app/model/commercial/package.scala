@@ -1,6 +1,6 @@
-package model.commercial
+package model
 
-object Utils {
+package object commercial {
 
   def intersects[T](seq1: Seq[T], seq2: Seq[T]) = !(seq1 intersect seq2).isEmpty
 

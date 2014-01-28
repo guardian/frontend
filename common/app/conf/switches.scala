@@ -131,6 +131,10 @@ object Switches extends Collections {
     "If this switch is on, commercial components will be fed by London & Country mortgage feed.",
     safeState = Off, sellByDate = endOfQ4)
 
+  val GuBookshopFeedsSwitch = Switch("Commercial Feeds", "gu-bookshop",
+    "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
+    safeState = Off, sellByDate = endOfQ4)
+
 
   // Analytics Switches
 
@@ -366,7 +370,7 @@ object Switches extends Collections {
     safeState = On, sellByDate = new DateMidnight(2014, 2, 7)
   )
 
-  val ImageServiceSwitch = Switch("Image Service", "image-service",
+  val ImageServiceSwitch = Switch("Image Server", "image-service",
     "If this switch is on images will be served off ak.i.guim.co.uk (dynamic image host). Part of the CDN test. Relies on ImageServerSwitch also being on",
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 7))
 
@@ -430,6 +434,7 @@ object Switches extends Collections {
     SoulmatesFeedSwitch,
     MoneysupermarketFeedsSwitch,
     LCMortgageFeedSwitch,
+    GuBookshopFeedsSwitch,
     ImageServiceSwitch
   )
 

@@ -25,6 +25,42 @@
     @include mq(desktop) {
         @include rem((width: gs-span(12)));
     }
+    @include mq(wide) {
+        @include rem((width: gs-span(16)));
+        .container {
+            padding-left: (gs-span(4) + $gs-gutter);
+        }
+        .container__title {
+            margin-left: (gs-span(4) + $gs-gutter) * -1;
+        }
+        .container__title__label {
+            display: block;
+            max-width: (gs-span(3) + $gs-gutter);
+        }
+        .container__toggle {
+            right: (gs-span(12) + $gs-gutter);
+            min-width: 40px;
+        }
+        .collection {
+            margin-top: -42px;
+        }
+        .container--news {
+            .container__title {
+                display: block;
+            }
+            .collection {
+                margin-top: 0;
+            }
+            .container__title:first-child + .collection-wrapper {
+                margin-top: -52px;
+
+                .fromage,
+                .fromage__container {
+                    border-top-width: 0;
+                }
+            }
+        }
+    }
 }
 
 @import "module/facia/_extends";
