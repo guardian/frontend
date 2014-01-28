@@ -70,20 +70,21 @@ object ImgSrc {
 
     val isSupportedImage =
       uri.getHost == "static.guim.co.uk" &&
-      !uri.getPath.toLowerCase().endsWith(".gif")
+      !uri.getPath.toLowerCase.endsWith(".gif")
 
     if (ImageServerSwitch.isSwitchedOn && isSupportedImage) {
 
       if(ImageServiceSwitch.isSwitchedOn) {
         // this is the img for the CDN image service test
-        s"$imageServiceHost/${uri.getPath}?downsize=${imageType.resizeString}"
+        // NOTE the order of the parameters is important - read the docs...
+        s"$imageServiceHost/${uri.getPath}?interpolation=progressive-bicubic&downsize=${imageType.resizeString}"
       } else {
         // this is our current image
         s"$imageHost/${imageType.prefix}${uri.getPath}"
       }
 
 
-    } else s"${url}"
+    } else url
   }
 
   object Imager extends Profile("item-{width}", None, None, 70) {
