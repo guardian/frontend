@@ -684,7 +684,7 @@ module.exports = function (grunt) {
         grunt.task.run([
             'compile:images',
             'compile:css',
-            'compile:js:' + app,
+            'compile:js:' + (app || ''),
             'compile:fonts',
             'compile:flash',
             'clean:assets',
