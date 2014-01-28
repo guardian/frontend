@@ -24,15 +24,16 @@
 <div class="collection-wrapper">
     <ul class="unstyled l-row l-row--items-2 collection">
         @items.slice(2, 4).zipWithIndex.map{ case (trail, index) =>
-            <li class="@RenderClasses(
-                            "l-row__item",
-                            "collection__item",
-                            s"collection__item--volume-${trail.group.getOrElse("0")}",
-                            s"collection__item--tone-${VisualTone(trail)}")">
-                @if(trail.imageAdjust == Some("highlight")) {
-                    @fragments.items.standard(trail, index + 2, 0, "div")
-                }else{
-                    @fragments.items.thumbnail(trail, index + 2, 0, "div")
+            <li class="@RenderClasses(Map(
+                            "l-row__item" -> true,
+                            "collection__item" -> true,
+                            s"collection__item--volume-${trail.group.getOrElse("0")}" -> true,
+                            s"collection__item--tone-${VisualTone(trail)}" -> true,
+                            s"collection__item--content-type-gallery" -> {trail match { case g: Gallery => true; case _ => false }}))">
+                @trail match {
+                    case g: Gallery => { @fragments.items.thumbnailGallery(g, index + 2, 0, "div") }
+                    case _ if trail.imageAdjust == Some("highlight") => { @fragments.items.standard(trail, index + 2, 0, "div") }
+                    case _ => { @fragments.items.thumbnail(trail, index + 2, 0, "div") }
                 }
             </li>
         }

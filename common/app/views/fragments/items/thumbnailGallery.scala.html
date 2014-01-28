@@ -1,19 +1,32 @@
-@(trail: model.Trail, index: Int, containerIndex: Int, element: String = "li")(implicit request: RequestHeader)
+@(trail: model.Gallery, index: Int, containerIndex: Int, element: String = "li")(implicit request: RequestHeader)
 
 @defining((VisualTone(trail), containerIndex == 0, containerIndex == 0 && index < 3)) { case (tone, isFirstContainer, inlineImages) =>
     <@element
-        class="@RenderClasses(Map(
-                    "item" -> true,
-                    "item--dark" -> true,
-                    "item--gallery" -> true,
-                    s"tone-$tone" -> true,
-                    "item--has-image" -> true,
-                    "item--force-image-upgrade" -> isFirstContainer))"
+        class="@RenderClasses(
+                    "item",
+                    "item--dark",
+                    "item--thumbnail",
+                    "item--has-image",
+                    s"tone-$tone",
+                    "item--force-image-upgrade")"
         data-link-name="trail | @{index + 1}"
         @trail.discussionId.map{ id => data-discussion-id="@id" }
         data-discussion-closed="@trail.isClosedForComments">
 
         <div class="item__container">
+
+            <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border" data-link-name="article">
+                <h@if(isFirstContainer && index == 0){1}else{2} class="item__title">
+                    @if(trail.isBreaking){
+                        <span class="item__live-indicator">Breaking News</span>
+                    }
+                    @if(trail.isLive && !trail.isBreaking){
+                        <span class="item__live-indicator">Live</span>
+                    }
+                    @RemoveOuterParaHtml(trail.headline)
+                </h@if(isFirstContainer && index == 0){1}else{2}>
+            </a>
+
             @trail.trailPicture(5,3).map{ imageContainer =>
                 @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
                     <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border gallerythumbs" data-link-name="article">
@@ -23,10 +36,10 @@
                                 <i class="i i-expand-white"></i>
                             </div>
                             <div class="item__image-container js-image-upgrade @if(inlineImages){ inlined-image}" data-src="@imgSrc" @if(isFirstContainer){ data-force-upgrade="desktop wide"}>
-                                @if(inlineImages){
-                                    @Item300.bestFor(imageContainer).map{ url => <img src="@url" class="responsive-img" alt="" /> }
-                                }
-                            </div>
+                            @if(inlineImages){
+                                @Item300.bestFor(imageContainer).map{ url => <img src="@url" class="responsive-img" alt="" /> }
+                            }
+                        </div>
                         </div>
                     </a>
                 }
@@ -44,13 +57,6 @@
                 </a>
             }
 
-            <a href="@LinkTo{@trail.url}" class="item__link">
-                <h@if(isFirstContainer && index == 0){1}else{2} class="item__title">
-                    <span class="item__title-type">Gallery </span>
-                    @RemoveOuterParaHtml(trail.headline)
-                </h@if(isFirstContainer && index == 0){1}else{2}>
-            </a>
-
             @trail.trailText.map { text =>
                 <div class="item__standfirst">@Html(text)</div>
             }
@@ -65,6 +71,7 @@
                     <span class="timestamp__text"><span class="u-h">Published: </span>@Format(trail.webPublicationDate, "d MMM y")</span>
                 </time>
             </div>
-        </div>
+
+        </a>
     </@element>
 }
