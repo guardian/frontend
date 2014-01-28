@@ -6,60 +6,22 @@ import play.api.mvc.{ SimpleResult, Result, RequestHeader }
 import play.api.templates.Html
 import model.{NoCache, Cached}
 import com.gu.management.Switchable
+import java.util.concurrent.TimeoutException
 
 object `package` extends implicits.Strings with implicits.Requests with play.api.mvc.Results {
 
 
-  // TODO - we don't need 3 of these surely
-  def suppressApi404[T](block: => Option[T])(implicit log: Logger): Option[T] = {
-    try {
-      block
-    } catch {
-      case ApiError(404, message) =>
-        log.info(s"Got a 404 while calling content api: $message")
-        None
-      case ApiError(410, message) =>
-        log.info(s"Got a 410 while calling content api: $message")
-        None
-    }
-  }
-
-  def suppressApiNotFound[T](implicit log: Logger): PartialFunction[Throwable, Either[T, SimpleResult]] = {
+  def convertApiExceptions[T](implicit log: Logger): PartialFunction[Throwable, Either[T, SimpleResult]] = {
     case ApiError(404, message) =>
       log.info(s"Got a 404 while calling content api: $message")
       Right(NoCache(NotFound))
     case ApiError(410, message) =>
       log.info(s"Got a 410 while calling content api: $message")
       Right(NoCache(Gone))
+    case timeout: TimeoutException =>
+      log.info(s"Got a timeout while calling content api: ${timeout.getMessage}")
+      Right(NoCache(GatewayTimeout(timeout.getMessage)))
   }
-
-  def suppressApi404[T](block: => Either[T, Result])(implicit log: Logger): Either[T, Result] = {
-    try {
-      block
-    } catch {
-      case ApiError(404, message) =>
-        log.info(s"Got a 404 while calling content api: $message")
-        Right(NoCache(NotFound))
-      case ApiError(410, message) =>
-        log.info(s"Got a 410 while calling content api: $message")
-        Right(NoCache(Gone))
-    }
-  }
-
-  def quietly[A](block: => A)(implicit log: Logger) = try {
-    block
-  } catch {
-    case e: Throwable => log.error(s"Failing quietly on: ${e.getMessage}", e)
-  }
-
-  def quietlyWithDefault[A](default: A)(block: => A)(implicit log: Logger) = try {
-    block
-  } catch {
-    case e: Throwable =>
-      log.error(s"Failing quietly on: ${e.getMessage}", e)
-      default
-  }
-
 
   /*
     NOTE: The htmlResponse & jsonResponse are () => Html functions so that you do not do all the rendering twice.

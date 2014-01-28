@@ -163,7 +163,8 @@ define([
                         alertBadContent();
                     })
                     .done(function() {
-                        var itemMeta;
+                        var edits = {},
+                            itemMeta;
 
                         ophanApi.decorateItems([article]);
 
@@ -171,7 +172,7 @@ define([
                             targetList.reflow();
                         }
 
-                        if (!targetList.parent) { // no need for persistence
+                        if (!targetList.parent) {
                             return;
                         }
 
@@ -184,6 +185,8 @@ define([
                             return;
                         }
 
+                        targetList.parent.closeAllArticles();
+
                         itemMeta = sourceItem && sourceItem.meta ? sourceItem.meta : {};
 
                         if (targetList.parent.groups && targetList.parent.groups.length > 1) {
@@ -192,38 +195,34 @@ define([
                             delete itemMeta.group;
                         }
 
-                        authedAjax.updateCollection(
-                            'post',
-                            targetList.parent,
-                            {
-                                item:     id,
-                                position: position,
-                                after:    isAfter,
-                                live:     vars.state.liveMode(),
-                                draft:   !vars.state.liveMode(),
-                                itemMeta: _.isEmpty(itemMeta) ? undefined : itemMeta
-                            }
-                        );
+                        edits.update = {
+                            collection: targetList.parent,
+                            item:     id,
+                            position: position,
+                            after:    isAfter,
+                            live:     vars.state.liveMode(),
+                            draft:   !vars.state.liveMode(),
+                            itemMeta: _.isEmpty(itemMeta) ? undefined : itemMeta
+                        };
 
-                        if (!sourceList || sourceList.keepCopy || sourceList.parentType !== 'Collection') {
-                            return;
-                        }
+                        // Is a delete also required?
+                        if (sourceList &&
+                            sourceList.parentType === 'Collection' &&
+                            sourceList.parent.id !== targetList.parent.id  &&
+                           !sourceList.keepCopy) {
 
-                        if (sourceList.parent.id === targetList.parent.id) {
-                            return;
-                        }
+                            removeMatchingItems(sourceList, id);
 
-                        removeMatchingItems(sourceList, id);
-
-                        authedAjax.updateCollection(
-                            'delete',
-                            sourceList.parent,
-                            {
+                            edits.remove = {
+                                collection: sourceList.parent,
+                                id:     sourceList.parent.id,
                                 item:   id,
                                 live:   vars.state.liveMode(),
                                 draft: !vars.state.liveMode()
-                            }
-                        );
+                            };
+                        }
+
+                        authedAjax.updateCollections(edits);
                     });
                 }, false);
             }

@@ -5,19 +5,22 @@ define([
     'common/modules/analytics/mvt-cookie',
 
     //Current tests
-    'common/modules/experiments/tests/aa'
+    'common/modules/experiments/tests/aa',
+    'common/modules/experiments/tests/gravity-recommendations'
 ], function (
     common,
     store,
     mediator,
     mvtCookie,
 
-    Aa
+    Aa,
+    GravityRecommendations
     ) {
 
     var TESTS = [
-            new Aa()
-        ],
+            new Aa(),
+            new GravityRecommendations()
+       ],
         participationsKey = 'gu.ab.participations';
 
     function getParticipations() {

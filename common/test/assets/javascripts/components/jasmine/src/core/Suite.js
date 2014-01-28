@@ -1,82 +1,90 @@
-/**
- * Internal representation of a Jasmine suite.
- *
- * @constructor
- * @param {jasmine.Env} env
- * @param {String} description
- * @param {Function} specDefinitions
- * @param {jasmine.Suite} parentSuite
- */
-jasmine.Suite = function(env, description, specDefinitions, parentSuite) {
-  var self = this;
-  self.id = env.nextSuiteId ? env.nextSuiteId() : null;
-  self.description = description;
-  self.queue = new jasmine.Queue(env);
-  self.parentSuite = parentSuite;
-  self.env = env;
-  self.before_ = [];
-  self.after_ = [];
-  self.children_ = [];
-  self.suites_ = [];
-  self.specs_ = [];
-};
+getJasmineRequireObj().Suite = function() {
+  function Suite(attrs) {
+    this.env = attrs.env;
+    this.id = attrs.id;
+    this.parentSuite = attrs.parentSuite;
+    this.description = attrs.description;
+    this.onStart = attrs.onStart || function() {};
+    this.resultCallback = attrs.resultCallback || function() {};
+    this.clearStack = attrs.clearStack || function(fn) {fn();};
 
-jasmine.Suite.prototype.getFullName = function() {
-  var fullName = this.description;
-  for (var parentSuite = this.parentSuite; parentSuite; parentSuite = parentSuite.parentSuite) {
-    fullName = parentSuite.description + ' ' + fullName;
+    this.beforeFns = [];
+    this.afterFns = [];
+    this.queueRunner = attrs.queueRunner || function() {};
+    this.disabled = false;
+
+    this.children = [];
+
+    this.result = {
+      id: this.id,
+      status: this.disabled ? 'disabled' : '',
+      description: this.description,
+      fullName: this.getFullName()
+    };
   }
-  return fullName;
+
+  Suite.prototype.getFullName = function() {
+    var fullName = this.description;
+    for (var parentSuite = this.parentSuite; parentSuite; parentSuite = parentSuite.parentSuite) {
+      if (parentSuite.parentSuite) {
+        fullName = parentSuite.description + ' ' + fullName;
+      }
+    }
+    return fullName;
+  };
+
+  Suite.prototype.disable = function() {
+    this.disabled = true;
+  };
+
+  Suite.prototype.beforeEach = function(fn) {
+    this.beforeFns.unshift(fn);
+  };
+
+  Suite.prototype.afterEach = function(fn) {
+    this.afterFns.unshift(fn);
+  };
+
+  Suite.prototype.addChild = function(child) {
+    this.children.push(child);
+  };
+
+  Suite.prototype.execute = function(onComplete) {
+    var self = this;
+    if (this.disabled) {
+      complete();
+      return;
+    }
+
+    var allFns = [];
+
+    for (var i = 0; i < this.children.length; i++) {
+      allFns.push(wrapChildAsAsync(this.children[i]));
+    }
+
+    this.onStart(this);
+
+    this.queueRunner({
+      fns: allFns,
+      onComplete: complete
+    });
+
+    function complete() {
+      self.resultCallback(self.result);
+
+      if (onComplete) {
+        onComplete();
+      }
+    }
+
+    function wrapChildAsAsync(child) {
+      return function(done) { child.execute(done); };
+    }
+  };
+
+  return Suite;
 };
 
-jasmine.Suite.prototype.finish = function(onComplete) {
-  this.env.reporter.reportSuiteResults(this);
-  this.finished = true;
-  if (typeof(onComplete) == 'function') {
-    onComplete();
-  }
-};
-
-jasmine.Suite.prototype.beforeEach = function(beforeEachFunction) {
-  beforeEachFunction.typeName = 'beforeEach';
-  this.before_.unshift(beforeEachFunction);
-};
-
-jasmine.Suite.prototype.afterEach = function(afterEachFunction) {
-  afterEachFunction.typeName = 'afterEach';
-  this.after_.unshift(afterEachFunction);
-};
-
-jasmine.Suite.prototype.results = function() {
-  return this.queue.results();
-};
-
-jasmine.Suite.prototype.add = function(suiteOrSpec) {
-  this.children_.push(suiteOrSpec);
-  if (suiteOrSpec instanceof jasmine.Suite) {
-    this.suites_.push(suiteOrSpec);
-    this.env.currentRunner().addSuite(suiteOrSpec);
-  } else {
-    this.specs_.push(suiteOrSpec);
-  }
-  this.queue.add(suiteOrSpec);
-};
-
-jasmine.Suite.prototype.specs = function() {
-  return this.specs_;
-};
-
-jasmine.Suite.prototype.suites = function() {
-  return this.suites_;
-};
-
-jasmine.Suite.prototype.children = function() {
-  return this.children_;
-};
-
-jasmine.Suite.prototype.execute = function(onComplete) {
-  var self = this;
-  this.queue.start(function () {
-    self.finish(onComplete);
-  });
-};
+if (typeof window == void 0 && typeof exports == "object") {
+  exports.Suite = jasmineRequire.Suite;
+}

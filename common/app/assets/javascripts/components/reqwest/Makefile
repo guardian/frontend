@@ -6,3 +6,7 @@ boosh:
 
 test:
 	npm test
+
+bump: boosh
+	node node_modules/bump/bump.js
+	node make/bump

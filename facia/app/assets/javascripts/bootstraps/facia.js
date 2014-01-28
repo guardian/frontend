@@ -57,18 +57,25 @@ define([
 
         showFootballFixtures: function(path) {
             mediator.on('page:front:ready', function(config, context) {
-                if (config.page.edition === 'UK' && (config.page.pageId === "" || config.page.pageId === "sport")) {
+                if (config.page.edition === 'UK' && (['', 'sport', 'uk-alpha'].indexOf(config.page.pageId) !== -1)) {
                     // wrap the return sports stats component in an 'item'
                     var prependTo = bonzo(bonzo.create('<li class="item item--sport-stats item--sport-stats-tall"></li>'));
                     mediator.on('modules:footballfixtures:render', function() {
-                        var $container = $('.container--sport', context).first();
+                        var isUkAlpha = config.page.pageId === 'uk-alpha',
+                            $container = $(isUkAlpha ? '.container--news' : '.container--sport', context).first();
                         if ($container[0]) {
-                            var $collection = $('.collection', $container[0]);
-                            $('.item:first-child', $collection[0])
-                                // add empty item
-                                .after(prependTo);
-                            $collection.removeClass('collection--without-sport-stats')
-                                .addClass('collection--with-sport-stats');
+                            if (isUkAlpha) {
+                                var $collectionWrapper = $('.collection-wrapper', $container[0]).last();
+                                $('.collection', $collectionWrapper[0]).append(prependTo);
+                            } else {
+                                var $collection = $('.container--sport .collection', context).first();
+                                $('.item:first-child', $collection[0])
+                                    // add empty item
+                                    .after(prependTo);
+                                $collection
+                                    .removeClass('collection--without-sport-stats')
+                                    .addClass('collection--with-sport-stats');
+                            }
                         }
                     });
                     new FootballFixtures({
@@ -96,8 +103,8 @@ define([
                     msg,
                     messageId = 'facia-alpha';
                 if (config.page.pageId === "") {
-                    // only run on 50% of (mobile) users
-                    var isAChosenOne = parseInt(mvtCookie.getMvtValue(), 10) < (mvtCookie.MAX_INT * 0.5) && detect.getMobileOS(),
+                    // only run on 5% of (mobile) users
+                    var isAChosenOne = parseInt(mvtCookie.getMvtValue(), 10) < (mvtCookie.MAX_INT * 0.05) && detect.getMobileOS(),
                         alphaSwitch = {
                             '/uk': 'networkFrontUkAlpha',
                             '/us': 'networkFrontUsAlpha',
@@ -114,7 +121,8 @@ define([
                 } else {
                     var userZoomSurvey = {
                         '/us': 'MSBDMTBTMTE1',
-                        '/au': 'MSBDMTBTMTE2'
+                        '/au': 'MSBDMTBTMTE2',
+                        '/uk': 'MSBDMTBTMTE3'
                     }[page];
                     msg =
                         '<p class="site-message__message">' +
