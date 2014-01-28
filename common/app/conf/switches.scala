@@ -276,7 +276,7 @@ object Switches extends Collections {
 
   val RightHandMostPopularSwitch = Switch("Feature Switches", "right-hand-most-popular",
     "If this switch is on, a component with most popular content from around the Guardian is displayed in the article right hand column at desktop breakpoints.",
-    safeState = Off, sellByDate = endOfQ4
+    safeState = On, sellByDate = endOfQ4
   )
 
   val IdentityEthicalAwardsSwitch = Switch("Feature Switches", "id-ethical-awards",
