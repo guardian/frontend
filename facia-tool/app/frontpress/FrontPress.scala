@@ -3,11 +3,12 @@ package frontpress
 import model.{Trail, Collection}
 import common.editions.Uk
 import scala.concurrent.Future
-import common.ExecutionContexts
+import common.{Logging, ExecutionContexts}
 import play.api.libs.json._
 import model.Config
+import common.FaciaToolMetrics.{FrontPressSuccess, FrontPressFailure}
 
-trait FrontPress extends ExecutionContexts {
+trait FrontPress extends ExecutionContexts with Logging {
 
   def generateJson(id: String): Future[JsObject] = {
     pressPage(id)
@@ -27,7 +28,16 @@ trait FrontPress extends ExecutionContexts {
   def pressPage(id: String): Future[Iterable[(Config, Collection)]] = {
     val collectionIds: List[Config] = FaciaToolConfigAgent.getConfigForId(id).getOrElse(Nil)
     val collections = collectionIds.map(config => FaciaToolCollectionParser.getCollection(config.id, config, Uk, isWarmedUp=true).map((config, _)))
-    Future.sequence(collections)
+    val futureSequence = Future.sequence(collections)
+    futureSequence.onFailure{case t: Throwable =>
+      FrontPressFailure.increment()
+      log.warn(t.toString)
+    }
+    futureSequence.onSuccess{case _ =>
+      FrontPressSuccess.increment()
+      log.info(s"Successful press of $id")
+    }
+    futureSequence
   }
 
   private def generateCollectionJson(config: Config, collection: Collection): JsValue = {
