@@ -1,5 +1,7 @@
 package model
 
+import org.joda.time.DateTime
+
 case class Config(
                    id: String,
                    contentApiQuery: Option[String] = None,
@@ -21,14 +23,17 @@ case class Collection(curated: Seq[Trail],
                       editorsPicks: Seq[Trail],
                       mostViewed: Seq[Trail],
                       results: Seq[Trail],
-                      displayName: Option[String]) extends implicits.Collections {
+                      displayName: Option[String],
+                      lastUpdated: String,
+                      updatedBy: String,
+                      updatedEmail: String) extends implicits.Collections {
 
   lazy val items: Seq[Trail] = (curated ++ editorsPicks ++ mostViewed ++ results).distinctBy(_.url)
 }
 
 object Collection {
-  def apply(curated: Seq[Trail]): Collection = Collection(curated, Nil, Nil, Nil, None)
-  def apply(curated: Seq[Trail], displayName: Option[String]): Collection = Collection(curated, Nil, Nil, Nil, displayName)
+  def apply(curated: Seq[Trail]): Collection = Collection(curated, Nil, Nil, Nil, None, DateTime.now.toString, "", "")
+  def apply(curated: Seq[Trail], displayName: Option[String]): Collection = Collection(curated, Nil, Nil, Nil, displayName, DateTime.now.toString, "", "")
 }
 
 case class FaciaPage(
