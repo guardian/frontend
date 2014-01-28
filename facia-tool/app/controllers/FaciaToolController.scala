@@ -14,6 +14,7 @@ import scala.concurrent.Future
 import conf.Switches.ContentApiPutSwitch
 import services.S3FrontsApi
 import model.{NoCache, Cached}
+import frontpress.FaciaToolConfigAgent
 
 
 object FaciaToolController extends Controller with Logging with ExecutionContexts {
@@ -95,6 +96,9 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
           case (verb, updateList) if verb == "update" => UpdateActions.updateCollectionList(updateList.id, updateList, identity)
           case (verb, updateList) if verb == "remove" => UpdateActions.updateCollectionFilter(updateList.id, updateList, identity)
         }.flatten.map(b => (b.id, b)).toMap
+
+        FrontPressJob.pressByCollectionIds(updatedCollections.keySet)
+
         if (updatedCollections.nonEmpty)
           Ok(Json.toJson(updatedCollections)).as("application/json")
         else
