@@ -1,13 +1,20 @@
 @()
 <div class="abtest-item">
-    <span class="label label-success abtest-item__active-label">active</span>
-    <span class="label label-important abtest-item__expired-label">expired</span>
-    <h3 class="abtest-item__name"></h3>
-    <span class="abtest-item__description"></span>
+    <div class="abtest-item__titlebar">
+        <span class="label label-success abtest-item__active-label">active</span>
+        <span class="label label-important abtest-item__expired-label">expired</span>
+        <span class="label label-success abtest-item__switched-on-label">on</span>
+        <span class="label label-important abtest-item__switched-off-label">off</span>
+        <span class="abtest-item__name"></span>
+        <span class="abtest-item__description"></span>
+    </div>
     <div class="abtest-item__participation"></div>
     <div class="row-fluid">
         <div class="span3 abtest__details">
-            <table class="abtest__table table table-striped table-bordered table-hover table-condensed">
+            <table class="abtest__table table table-r table-bordered table-hover">
+                <thead>
+                <th colspan="2">Details</th>
+                </thead>
                 <tbody>
                 <tr>
                     <th class="abtest-item__expiry-title">Expires</th>
@@ -24,9 +31,18 @@
                 </tbody>
             </table>
         </div>
-        <div class="abtest-item__chart-container span9">
-            <div class="abtest-item__chart-placeholder">No chart data</div>
-            <div class="abtest-item__chart"></div>
+        <div class="span9">
+            <table class="table table-r table-bordered table-condensed">
+                <thead><tr><th>Chart</th></tr></thead>
+                <tbody>
+                <tr><td>
+                    <div class="abtest-item__chart-container">
+                        <div class="abtest-item__chart-placeholder">No chart data</div>
+                        <div class="abtest-item__chart"></div>
+                    </div>
+                </td></tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
