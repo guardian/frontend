@@ -1,6 +1,6 @@
 @(trail: Gallery, index: Int)(implicit request: RequestHeader)
 
-<li class="l-columns__item linkslist__item" data-link-name="trail | @index">
+<li class="l-columns__item linkslist__item linkslist__item--content-type-gallery" data-link-name="trail | @index">
     <a href="@LinkTo{@trail.url}" class="linkslist__action linkslist__action--has-icon" data-link-name="article">
         <span class="i i-gallery-yellow-small linkslist__icon"></span>
         @RemoveOuterParaHtml(trail.headline)

@@ -26,9 +26,11 @@
                             "collection__item" -> true,
                             s"collection__item--volume-${trail.group.getOrElse("0")}" -> true,
                             s"collection__item--tone-${VisualTone(trail)}" -> true,
-                            s"collection__item--content-type-gallery" -> {trail match { case g: Gallery => true; case _ => false }}))">
+                            s"collection__item--content-type-gallery" -> {trail match { case _: Gallery => true; case _ => false  }},
+                            s"collection__item--content-type-video" -> {trail match { case _: Video => true; case _ => false }}))">
                 @trail match {
                     case g: Gallery                                  => { @fragments.items.thumbnailGallery(g, index + 2, 0, "div") }
+                    case v: Video                                    => { @fragments.items.thumbnailVideo(v, index + 2, 0, "div") }
                     case _ if trail.imageAdjust == Some("highlight") => { @fragments.items.standard(trail, index + 2, 0, "div") }
                     case _                                           => { @fragments.items.thumbnail(trail, index + 2, 0, "div") }
                 }
@@ -44,9 +46,11 @@
                             "collection__item" -> true,
                             s"collection__item--volume-${trail.group.getOrElse("0")}" -> true,
                             s"collection__item--tone-${VisualTone(trail)}" -> true,
-                            s"collection__item--content-type-gallery" -> {trail match { case g: Gallery => true; case _ => false }}))">
+                            s"collection__item--content-type-gallery" -> {trail match { case _: Gallery => true; case _ => false }},
+                            s"collection__item--content-type-video" -> {trail match { case _: Video => true; case _ => false }}))">
                 @trail match {
                     case g: Gallery => { @fragments.items.gallery(g, index + 4, 0, "div") }
+                    case v: Video   => { @fragments.items.video(v, index + 4, 0, "div") }
                     case other      => { @fragments.items.standard(trail, index + 4, 0, "div") }
                 }
             </li>
@@ -57,9 +61,10 @@
     <ul class="l-columns linkslist">
         @items.slice(8, 24).zipWithIndex.map{ case (trail, index) =>
             @trail match {
-                case g: Gallery                      => { @fragments.items.linkList.gallery(g, index) }
-                case c if VisualTone(c) == "comment" => { @fragments.items.linkList.comment(c, index) }
-                case t                               => { @fragments.items.linkList.standard(t, index) }
+                case g: Gallery                      => { @fragments.items.linkList.gallery(g, index + 9) }
+                case v: Video                        => { @fragments.items.linkList.video(v, index + 9) }
+                case c if VisualTone(c) == "comment" => { @fragments.items.linkList.comment(c, index + 9) }
+                case t                               => { @fragments.items.linkList.standard(t, index + 9) }
             }
         }
     </ul>

@@ -158,6 +158,9 @@
     .svg-i-message-close { background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMiIgaGVpZ2h0PSIyMiI+PHBvbHlnb24gZmlsbD0iIzMzMyIgcG9pbnRzPSIyMS4zNTQsMjAuMTM1IDE0LjIyOSwxMC45NzUgMjEuMzUyLDEuODE1IDIwLjEzLDAuNTk0IDEwLjk3Miw3LjcxOSAxLjgxNSwwLjU5NyAwLjU5NCwxLjgxOCA3LjcxNiwxMC45NzUgMC41OTQsMjAuMTM1IDEuODE1LDIxLjM1NiAxMC45NzMsMTQuMjMxIDIwLjEzMywyMS4zNTYiLz48L3N2Zz4=); background-position: 0 0; background-repeat: no-repeat; }
     .svg .i-message-close { @extend .svg-i-message-close !optional; }
 
+    .svg-i-play-black { background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMi4wNzgiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjEzLjcxMSAxMCAxMi4wNzggMTYiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMTMuNzExIDEwIDEyLjA3OCAxNiI+PHBvbHlnb24gZmlsbD0iIzMzMyIgcG9pbnRzPSIxNC43MzMsMTAgMTMuNzExLDEwLjUzOCAxMy43MTEsMjUuMzU5IDE0LjUwMiwyNiAyNS43ODksMTguNjE5IDI1Ljc4OSwxNy45NDgiLz48L3N2Zz4=); background-position: 0 0; background-repeat: no-repeat; }
+    .svg .i-play-black { @extend .svg-i-play-black !optional; }
+
     .svg-i-play { background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCI+PHBvbHlnb24gZmlsbD0iI2ZmZiIgcG9pbnRzPSIzLjE0OSwwLjA3OCAyLDAuNjgzIDIsMTcuMzU3IDIuODksMTguMDc4IDE1LjU4OCw5Ljc3NCAxNS41ODgsOS4wMTkiLz48L3N2Zz4=); background-position: 0 0; background-repeat: no-repeat; }
     .svg .i-play { @extend .svg-i-play !optional; }
 
@@ -256,6 +259,9 @@
 
     .svg-i-top-stories { background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCI+PGcgZmlsbD0iI2ZmZiI+PHBvbHlnb24gcG9pbnRzPSIyLjk5OSwyLjk2MyAyLjQwNSwyIDEsMiAxLDguNjg4IDEsMTcuOTE4IDMsMTgiLz48cG9seWdvbiBwb2ludHM9IjE1LjM3NSw5Ljk4NiAxMi43NSw2LjUgMTUuMzc1LDMgNCwzIDQsMTAiLz48L2c+PC9zdmc+); background-position: 0 0; background-repeat: no-repeat; }
     .svg .i-top-stories { @extend .svg-i-top-stories !optional; }
+
+    .svg-i-video-yellow-small { background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+PGNpcmNsZSBmaWxsPSIjRkJCQTBGIiBjeD0iMTAiIGN5PSIxMCIgcj0iMTAiLz48cG9seWdvbiBmaWxsPSIjMzMzIiBwb2ludHM9IjcuNTk2LDQuNSA2Ljg5NCw0Ljg3IDYuODk0LDE1LjA1OSA3LjQzOCwxNS41IDE1LjE5NSwxMC40MjQgMTUuMTk1LDkuOTY0Ii8+PC9zdmc+); background-position: 0 0; background-repeat: no-repeat; }
+    .svg .i-video-yellow-small { @extend .svg-i-video-yellow-small !optional; }
 
     .svg-i-yellow-card { background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5IiBoZWlnaHQ9IjEyIj48cmVjdCBmaWxsPSIjRkFCMDM2IiB3aWR0aD0iOSIgaGVpZ2h0PSIxMiIvPjwvc3ZnPg==); background-position: 0 0; background-repeat: no-repeat; }
     .svg .i-yellow-card { @extend .svg-i-yellow-card !optional; }

@@ -46,7 +46,9 @@ $linkslist-icon-rightspace: 7px;
         @include rem((
             margin-left: ($linkslist-icon-width + $linkslist-icon-rightspace) * -1
         ));
-        margin-top: 3px; // Align icon with text
+        .linkslist__item--tone-comment {
+            margin-top: 3px; // Align icon with text
+        }
     }
 }
 .i.linkslist__icon { // Chained selector to overrule icon code from global.css
