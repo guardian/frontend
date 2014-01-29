@@ -1,8 +1,32 @@
 @(page: MetaData, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder)(implicit request: RequestHeader)
 
+@import views.html.fragments.registrationFooter
+
 @identityMain(page, Switches.all){
 }{
-<div class="identity-wrapper monocolumn-wrapper">
-    <h1 class="identity-title">Your Email has been verified!</h1>
-</div>
+
+	@if(false){ @* Validated *@
+		<div class="identity-wrapper monocolumn-wrapper">
+		    <h1 class="identity-title">Thankyou! Your email address has been validated.</h1>
+
+		    <p>You will now be able to comment.</p>
+
+		    <p><a href="@LinkTo{/}" data-link-name="Home">Return to the homepage</a>, <a href="@idUrlBuilder.buildUrl("/profile/public", idRequest)" data-link-name="Edit profile">edit your profile</a>.</p>
+
+			@registrationFooter(page, idRequest, idUrlBuilder)
+
+		</div>
+	}else{ @* Expired *@
+		<div class="identity-wrapper monocolumn-wrapper">
+		    <h1 class="identity-title">Your email conformation link has expired</h1>
+
+		    <p>The link in the email we sent you is valid for 30 minutes for security.</p>
+
+		    <button type="button" class="submit-input js-resend-validation-email" data-link-name="Resend verification email">Resend my verification email</button>
+
+			@registrationFooter(page, idRequest, idUrlBuilder)
+
+		</div>
+	}
+
 }

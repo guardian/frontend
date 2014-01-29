@@ -219,3 +219,16 @@
     margin: 0 auto;
     width: 480px;
 }
+
+/* Email Validation
+   ========================================================================== */
+
+.form-field.email-validation {
+    position: relative;
+    padding-left: 24px;
+    i {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+}

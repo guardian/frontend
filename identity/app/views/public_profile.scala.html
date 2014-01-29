@@ -20,7 +20,7 @@
 
     <h1 class="identity-title">Edit your profile</h1>
 
-    <form class="form" novalidate action="@idUrlBuilder.buildUrl("/profile/public", idRequest)" role="main" method="post">
+    <form class="form js-profile-form" novalidate action="@idUrlBuilder.buildUrl("/profile/public", idRequest)" role="main" method="post">
         @views.html.helper.CSRF.formField
 
         <fieldset class="fieldset">
@@ -48,6 +48,20 @@
 
             <div class="fieldset__fields">
                 <ul class="unstyled">
+                    
+                    <li class="form-field email-validation">
+                        @if(user.statusFields.userEmailValidated.getOrElse(false)){
+                            <i class="i i-id-ok"></i>
+                            <p class="form__note">Your email address has been validated.</p>
+                        }else{
+                            <i class="i i-id-alert"></i>
+                            <p class="form__note">
+                            Please confirm your email address to post comments.</br>
+                            <a class="js-resend-validation-email" data-link-name="Resend verification email">Send validation email</a>
+                            </p>
+                        }
+                    </li>
+
                     @inputField(Input(profileForm("publicFields.location"), '_label -> "Location"))
                     @select(
                         profileForm("privateFields.gender"),
