@@ -534,10 +534,11 @@ module.exports = function (grunt) {
         assetmonitor: {
             common: {
                 src: [
-                    staticTargetDir + 'javascripts/bootstraps/app.js',
-                    staticTargetDir + 'stylesheets/head.default.css',
-                    staticTargetDir + 'stylesheets/head.facia.css',
-                    staticTargetDir + 'stylesheets/global.css'
+                    staticTargetDir + 'javascripts/bootstraps/*.js',
+                    staticTargetDir + 'stylesheets/*.css',
+                    // ignore hashed files
+                    '!' + '**/*.<%= Array(1 + hash.options.hashLength).join("?") %>.js',
+                    '!' + '**/*.<%= Array(1 + hash.options.hashLength).join("?") %>.css'
                 ],
                 options: {
                     credentials: propertiesFile
@@ -733,4 +734,5 @@ module.exports = function (grunt) {
     grunt.registerTask('hookmeup', ['clean:hooks', 'shell:copyHooks']);
     grunt.registerTask('snap', ['clean:screenshots', 'mkdir:screenshots', 'env:casperjs', 'casperjs:screenshot', 's3:screenshots']);
     grunt.registerTask('emitAbTestInfo', ['shell:abTestInfo']);
+
 };
