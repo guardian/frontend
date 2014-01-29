@@ -9,6 +9,7 @@ import play.api.libs.json.{JsObject, JsValue}
 import play.api.libs.ws.Response
 import scala.concurrent.Future
 import scala.Some
+import org.joda.time.DateTime
 
 object Path {
   def unapply[T](uri: String) = Some(uri.split('?')(0))
@@ -23,6 +24,11 @@ object Seg {
 }
 
 trait ParseCollection extends ExecutionContexts with Logging {
+
+  case class CollectionMeta(lastUpdated: Option[String], updatedBy: Option[String], updatedEmail: Option[String])
+  object CollectionMeta {
+    def empty: CollectionMeta = CollectionMeta(None, None, None)
+  }
 
   case class CollectionItem(id: String, metaData: Option[Map[String, JsValue]])
 
@@ -41,9 +47,19 @@ trait ParseCollection extends ExecutionContexts with Logging {
     val response = requestCollection(id)
     for {
       collectionList <- getCuratedList(response, edition, id, isWarmedUp)
+      collectionMeta <- getCollectionMeta(response).fallbackTo(Future.successful(CollectionMeta.empty))
       displayName    <- parseDisplayName(response).fallbackTo(Future.successful(None))
       contentApiList <- executeContentApiQuery(config.contentApiQuery, edition)
-    } yield Collection(collectionList, contentApiList.editorsPicks, contentApiList.mostViewed, contentApiList.contentApiResults, displayName)
+    } yield Collection(
+      collectionList,
+      contentApiList.editorsPicks,
+      contentApiList.mostViewed,
+      contentApiList.contentApiResults,
+      displayName,
+      collectionMeta.lastUpdated,
+      collectionMeta.updatedBy,
+      collectionMeta.updatedEmail
+    )
   }
 
   def getCuratedList(response: Future[Response], edition: Edition, id: String, isWarmedUp: Boolean): Future[List[Content]] = {
@@ -53,6 +69,18 @@ trait ParseCollection extends ExecutionContexts with Logging {
       curatedList
     else
       curatedList fallbackTo { Future.successful(Nil) }
+  }
+
+  private def getCollectionMeta(response: Future[Response]): Future[CollectionMeta] = {
+    response.map { r =>
+      println(r.body)
+      val bodyJson = parse(r.body)
+      CollectionMeta(
+          (bodyJson \ "lastUpdated").asOpt[String],
+          (bodyJson \ "updatedBy").asOpt[String],
+          (bodyJson \ "updatedEmail").asOpt[String]
+      )
+    }
   }
 
   private def parseDisplayName(response: Future[Response]): Future[Option[String]] = response.map {r =>
