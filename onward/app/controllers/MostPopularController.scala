@@ -33,7 +33,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
         case popular => Cached(900) {
           JsonComponent(
             "html" -> views.html.fragments.mostPopular(popular, 5),
-            "faciaHtml" -> views.html.fragments.containers.popular(Config(s"${path}/most-viewed/regular-stories", displayName = Option("Most popular")), Collection(popular.headOption.map(_.trails).getOrElse(Nil).take(10), None), PopularContainer(showMore = true), containerIndex = 1),
+            "faciaHtml" -> views.html.fragments.containers.popular(Config(s"$path/most-viewed/regular-stories", displayName = Option("Most popular")), Collection(popular.headOption.map(_.trails).getOrElse(Nil).take(10), None), PopularContainer(showMore = true), containerIndex = 1),
             "trails" -> JsArray(popular.headOption.map(_.trails).getOrElse(Nil).map(TrailToJson(_)))
           )
         }
@@ -59,22 +59,8 @@ object MostPopularController extends Controller with Logging with ExecutionConte
       .showMostViewed(true)
       .response.map{response =>
       val heading = response.section.map(s => s.webTitle).getOrElse("The Guardian")
-          val popular = response.mostViewed map { Content(_) } take (10)
+          val popular = response.mostViewed map { Content(_) } take 10
           if (popular.isEmpty) None else Some(MostPopular(heading, path, popular))
-    }
-  }
-
-  private def lookupExpandable(edition: Edition, path: String)(implicit request: RequestHeader) = {
-    log.info(s"Fetching most popular: $path for edition $edition")
-    ContentApi.item(path, edition)
-      .tag(None)
-      .showMostViewed(true)
-      .showFields("headline,trail-text,liveBloggingNow,thumbnail,hasStoryPackage,wordcount,shortUrl,body")
-      .response.map{response =>
-      val heading = response.section.map(s => s.webTitle).getOrElse("The Guardian")
-      val popular = response.mostViewed map { Content(_) } take (10)
-
-      if (popular.isEmpty) None else Some(MostPopular(heading, path, popular))
     }
   }
 }

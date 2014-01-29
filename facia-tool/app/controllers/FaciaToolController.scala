@@ -7,8 +7,11 @@ import play.api.libs.json._
 import common.{FaciaToolMetrics, ExecutionContexts, Logging}
 import conf.Configuration
 import tools.FaciaApi
+import services.{ConfigAgent, ContentApiWrite}
+import play.api.libs.ws.Response
+import scala.concurrent.Future
+import conf.Switches.ContentApiPutSwitch
 import services.S3FrontsApi
-import play.api.libs.ws.WS
 import model.{NoCache, Cached}
 
 
@@ -66,7 +69,6 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
   def discardCollection(id: String) = AjaxExpiringAuthentication { request =>
     val identity = Identity(request).get
     FaciaApi.discardBlock(id, identity)
-    notifyContentApi(id)
     Ok
   }
 
@@ -101,13 +103,10 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     } getOrElse NotFound
   }
 
-  def notifyContentApi(id: String): Unit = {
-    Configuration.faciatool.contentApiPostEndpoint map { postUrl =>
-      val url = "%s/collection/%s".format(postUrl, id)
-      val r = WS.url(url).post("")
-      r.onSuccess{case s => log.info("Content API POST: %s %s".format(s.status.toString, s.body))}
-      r.onFailure{case e: Throwable => log.error("Error posting to Content API: %s".format(e.toString))}
-    }
-  }
+  def notifyContentApi(id: String): Option[Future[Response]] =
+    if (ContentApiPutSwitch.isSwitchedOn)
+      ConfigAgent.getConfig(id)
+        .map {config => ContentApiWrite.writeToContentapi(config)}
+    else None
 
 }
