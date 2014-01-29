@@ -338,7 +338,8 @@ $c-live: #e81818;
     .i--hover {
         display: none
     }
-    .item__link:hover & {
+    .item__link:hover &,
+    .item__link:focus & {
         .i {
             display: none;
         }
