@@ -7,13 +7,12 @@ import play.api.libs.json.Json._
 import play.api.libs.json._
 import play.api.libs.ws.{ WS, Response }
 import play.api.libs.json.JsObject
-import services.ConfigAgentTrait
-import play.api.http.Status
-import services.{SecureS3Request, S3FrontsApi}
+import services.{ConfigAgentTrait, SecureS3Request, S3FrontsApi}
 import scala.concurrent.Future
 import common.FaciaMetrics.S3AuthorizationError
 import scala.collection.immutable.SortedMap
 import akka.agent.Agent
+import org.joda.time.DateTime
 
 object Path {
   def unapply[T](uri: String) = Some(uri.split('?')(0))
@@ -87,7 +86,16 @@ trait ParseCollection extends ExecutionContexts with Logging {
       collectionList <- getCuratedList(response, edition, id, isWarmedUp)
       displayName    <- parseDisplayName(response).fallbackTo(Future.successful(None))
       contentApiList <- executeContentApiQuery(config.contentApiQuery, edition)
-    } yield Collection(collectionList, contentApiList.editorsPicks, contentApiList.mostViewed, contentApiList.contentApiResults, displayName)
+    } yield Collection(
+      curated      = collectionList,
+      editorsPicks = contentApiList.editorsPicks,
+      mostViewed   = contentApiList.mostViewed,
+      results      = contentApiList.contentApiResults,
+      displayName  = displayName,
+      lastUpdated  = Option(DateTime.now.toString),
+      updatedBy    = None,
+      updatedEmail = None
+    )
   }
 
   def getCuratedList(response: Future[Response], edition: Edition, id: String, isWarmedUp: Boolean): Future[List[Content]] = {
