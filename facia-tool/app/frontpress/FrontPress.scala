@@ -1,11 +1,10 @@
 package frontpress
 
-import model.{Trail, Collection}
+import model.{ContentWithMetaData, Trail, Collection, Config}
 import common.editions.Uk
 import scala.concurrent.Future
 import common.{Logging, ExecutionContexts}
 import play.api.libs.json._
-import model.Config
 import common.FaciaToolMetrics.{FrontPressSuccess, FrontPressFailure}
 
 trait FrontPress extends ExecutionContexts with Logging {
@@ -47,12 +46,15 @@ trait FrontPress extends ExecutionContexts with Logging {
       ("tone", config.collectionTone),
       ("curated", collection.curated.map(generateTrailJson)),
       ("editorsPicks", collection.editorsPicks.map(generateTrailJson)),
-      ("results", collection.results.map(generateTrailJson))
+      ("results", collection.results.map(generateTrailJson)),
+      ("lastModified", collection.lastUpdated),
+      ("updatedBy", collection.updatedBy),
+      ("updatedEmail", collection.updatedEmail)
       //TODO: lastModified, modifiedBy
     )
   }
 
-  private def generateTrailJson(trail: Trail): JsValue = {
+  private def generateTrailJson(trail: Trail): JsValue =
     Json.obj(
       ("webTitle", trail.headline),
       ("webPublicationDate", trail.webPublicationDate),
@@ -60,11 +62,40 @@ trait FrontPress extends ExecutionContexts with Logging {
       ("sectionId", trail.section),
       ("id", trail.url),
       ("webUrl", trail.webUrl),
-      ("meta", Json.obj()),
       ("trailText", trail.trailText),
-      ("linkText", trail.linkText)
+      ("linkText", trail.linkText),
+        ("meta", Json.obj
+          (
+            ("headline", trail.headline),
+            ("trailText", trail.trailText),
+            ("group", trail.group),
+            ("imageAdjust", trail.imageAdjust),
+            ("isBreaking", trail.isBreaking),
+            ("supporting", trail.supporting.map(generateInnerTrailJson))
+          )
+        )
     )
-  }
+
+  private def generateInnerTrailJson(trail: Trail): JsValue =
+    Json.obj(
+      ("webTitle", trail.headline),
+      ("webPublicationDate", trail.webPublicationDate),
+      ("sectionName", trail.sectionName),
+      ("sectionId", trail.section),
+      ("id", trail.url),
+      ("webUrl", trail.webUrl),
+      ("trailText", trail.trailText),
+      ("linkText", trail.linkText),
+      ("meta", Json.obj
+        (
+          ("headline", trail.headline),
+          ("trailText", trail.trailText),
+          ("group", trail.group),
+          ("imageAdjust", trail.imageAdjust),
+          ("isBreaking", trail.isBreaking)
+        )
+      )
+    )
 }
 
 object FrontPress extends FrontPress

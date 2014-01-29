@@ -73,7 +73,6 @@ trait ParseCollection extends ExecutionContexts with Logging {
 
   private def getCollectionMeta(response: Future[Response]): Future[CollectionMeta] = {
     response.map { r =>
-      println(r.body)
       val bodyJson = parse(r.body)
       CollectionMeta(
           (bodyJson \ "lastUpdated").asOpt[String],
