@@ -1,8 +1,8 @@
 @(supporting: Video, index: Int)(implicit request: RequestHeader)
 
-<li class="fromage__support__item fromage__support__item--content-type-video">
-    <a href="@LinkTo{@supporting.url}" class="fromage__support__action fromage__support__action--has-icon" data-link-name="supporting | @index">
-        <span class="i i-video-yellow-small fromage__support__icon"></span>
+<li class="fromage__support__item">
+    <a href="@LinkTo{@supporting.url}" class="fromage__support__action action--has-icon" data-link-name="supporting | @index">
+        <span class="i i-video-yellow-small"></span>
         @supporting.headline
     </a>
 </li>

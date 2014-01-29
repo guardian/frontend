@@ -30,33 +30,3 @@
         color: $c-neutral2;
     }
 }
-
-$linkslist-icon-width: 23px;
-$linkslist-icon-rightspace: 7px;
-
-.fromage__support__action--has-icon,
-.linkslist__action--has-icon {
-    @include rem((
-        padding-left: $linkslist-icon-width + $linkslist-icon-rightspace
-    ));
-}
-.fromage__support__item + .fromage__support__item .fromage__support__action--has-icon{
-    @include rem((
-        padding-left: $linkslist-icon-width + ($linkslist-icon-rightspace * 2)
-    ));
-}
-.fromage__support__icon,
-.linkslist__icon {
-    float: left;
-    @include rem((
-        margin-left: ($linkslist-icon-width + $linkslist-icon-rightspace) * -1
-    ));
-}
-.fromage__support__item--tone-comment .fromage__support__icon,
-.linkslist__item--tone-comment .linkslist__icon {
-    margin-top: 3px; // Align icon with text
-}
-.i.linkslist__icon { // Chained selector to overrule icon code from global.css
-    width: 1.45em;
-    background-size: contain;
-}

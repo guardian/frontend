@@ -97,6 +97,7 @@
                 <ul class="fromage__support-list">
                     @trail.supporting.zipWithIndex.map{ case (supporting, index) =>
                         @supporting match {
+                            case l: LiveBlog if l.isLive         => { @fragments.items.supporting.live(l, index + 1) }
                             case g: Gallery                      => { @fragments.items.supporting.gallery(g, index + 1) }
                             case v: Video                        => { @fragments.items.supporting.video(v, index + 1) }
                             case c if VisualTone(c) == "comment" => { @fragments.items.supporting.comment(c, index + 1) }
