@@ -62,7 +62,7 @@
                     xhr.send();
                 }
 
-                if(guardian.isModernBrowser && !guardian.css.loaded && 'withCredentials' in new XMLHttpRequest() && !/Windows Phone/.test(navigator.userAgent)) {
+                if(guardian.isModernBrowser && !guardian.css.loaded && 'withCredentials' in new XMLHttpRequest() && !/W(indows Phone|PDesktop)/.test(navigator.userAgent)) {
                     loadCssWithAjax();
                 } else if(!guardian.isModernBrowser || !('withCredentials' in new XMLHttpRequest())){
                     loadCssWithLink();
