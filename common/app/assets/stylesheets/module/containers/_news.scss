@@ -1,9 +1,8 @@
-.container--news {
-    .container__title {
-        display: none;
-        color: $c-neutral1;
-        margin-bottom: 0;
-    }
+.container--rolled-up .collection-wrapper {
+    display: none;
+}
+
+.container--row-pattern {
     .item {
         display: block;
         margin-top: 0;
@@ -58,7 +57,7 @@
 
         + .collection-wrapper {
             @include rem((
-                margin-top: $gs-baseline
+                margin-top: ($gs-baseline/3)*2
             ));
         }
     }
@@ -76,6 +75,36 @@
     }
     .item__title {
         @include fs-headline(1, true);
+    }
+    .l-row--items-4 {
+        .item__byline {
+            @include fs-headline(1, true);
+        }
+        .item__standfirst,
+        .item__media-wrapper,
+        .item__image-container {
+            display: none;
+        }
+        .item--imageadjust-highlight {
+            .item__media-wrapper,
+            .item__image-container {
+                display: block;
+            }
+        }
+        @include mq(tablet) {
+            .item--has-image .item__media-wrapper,
+            .item--has-image .item__image-container,
+            .item--has-no-image .item__standfirst {
+                display: block;
+            }
+        }
+    }
+}
+.container--news {
+    .container__title {
+        display: none;
+        color: $c-neutral1;
+        margin-bottom: 0;
     }
     .l-row--items-2 {
         .item__title {
@@ -127,32 +156,7 @@
             }
         }
     }
-    .l-row--items-4 {
-        .item__byline {
-            @include fs-headline(1, true);
-        }
-        .item__standfirst,
-        .item__media-wrapper,
-        .item__image-container {
-            display: none;
-        }
-        .item--imageadjust-highlight {
-            .item__media-wrapper,
-            .item__image-container {
-                display: block;
-            }
-        }
-        @include mq(tablet) {
-            .item--has-image .item__media-wrapper,
-            .item--has-image .item__image-container,
-            .item--has-no-image .item__standfirst {
-                display: block;
-            }
-        }
-    }
-
     @include mq(tablet) {
-        .collection__show-more,
         .item--sport-stats {
             display: none;
         }
@@ -224,24 +228,13 @@
         }
     }
 }
-.container--news .collection__item--tone-comment,
-.container--news .collection__item--content-type-gallery,
-.container--news .collection__item--content-type-video {
-    &:after,
-    &:before {
-        content: '';
-        position: absolute;
-        display: block;
-        top: 0;
-        bottom: 0;
-        height: 100%;
-        width: $gs-gutter/2 !important;
-        width: rem($gs-gutter/2) !important;
-        @include box-sizing(border-box);
-        background: #ffffff;
-        z-index: 1;
+.container--news .collection__item--tone-comment {
+    &,
+    .item__meta {
+        background: $c-neutral7;
     }
-    &:after { right: 0; }
+
+    @include hide-background-on-item-sides;
 
     .item__title,
     .item__standfirst,
@@ -274,12 +267,14 @@
         }
     }
 }
+
 .container--news .collection__item--tone-comment {
     &,
     .item__meta {
         background: $c-neutral7;
     }
 }
+
 .container--news .collection__item--content-type-gallery,
 .container--news .collection__item--content-type-video {
     &,
@@ -322,8 +317,12 @@
         background: $c-newsAccent;
     }
 
-    &.show-more--hidden:before {
+    &.show-more--hidden {
         display: none;
+
+        &:before {
+            display: none;
+        }
     }
 }
 

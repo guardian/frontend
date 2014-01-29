@@ -141,11 +141,11 @@ object GetContainer {
       ("technology/most-viewed/regular-stories", PopularContainer())
     )),
     ("travel", Map(
-      ("travel/latest-news/regular-stories", FeaturesContainer(showMore = false)),
+      ("travel/latest-news/regular-stories", SectionContainer(showMore = false)),
       ("travel/most-viewed/regular-stories", PopularContainer())
     )),
     ("film", Map(
-      ("film/latest-news/regular-stories", FeaturesContainer(showMore = false)),
+      ("film/latest-news/regular-stories", SectionContainer(showMore = false)),
       ("film/most-viewed/regular-stories", PopularContainer())
     )),
     ("world/nsa", Map(
@@ -161,7 +161,7 @@ object GetContainer {
       ("football/arsenal/most-viewed/regular-stories", PopularContainer())
     )),
     ("artanddesign/photography", Map(
-      ("artanddesign/photography/latest-news/regular-stories", FeaturesContainer(showMore = false)),
+      ("artanddesign/photography/latest-news/regular-stories", SectionContainer(showMore = false)),
       ("artanddesign/photography/most-viewed/regular-stories", PopularContainer())
     ))
   )
