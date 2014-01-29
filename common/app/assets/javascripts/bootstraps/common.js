@@ -343,18 +343,24 @@ define([
 
         displayOnboardMessage: function (config) {
             if(window.location.hash === '#opt-in-message') {
-                var message = new Message('onboard', { type: 'modal' });
-                var path = (document.location.pathname) ? document.location.pathname : '/';
-                var exitLink = '/preference/platform/desktop?page=' + encodeURIComponent(path + '?view=desktop');
-                var msg = '<h2 class="site-message__header">Welcome!</h2>' +
+                bean.on('click', '.js-site-message-close', function() {
+                    Cookies.add("GU_VIEW", "mobile", 365);
+                    Cookies.add("GU_ALPHA", "true", 365);
+                });
+                var message = new Message('onboard', { type: 'modal' }),
+                    path = (document.location.pathname) ? document.location.pathname : '/',
+                    exitLink = '/preference/platform/desktop?page=' + encodeURIComponent(path + '?view=desktop'),
+                    msg = '<h2 class="site-message__header">Welcome!</h2>' +
                     '<div class="site-message__message">' +
-                    'You’re viewing an alpha release of the Guardian’s responsive website. <a href="/help/2013/oct/04/alpha-testing-and-evolution-of-our-mobile-site">Find out more</a>' +
+                    'You’re viewing an alpha release of the Guardian’s responsive website. <a href="http://next.theguardian.com/">Find out more</a>' +
                     '</p>' +
                     '<ul class="site-message__actions unstyled">' +
+                    '<li class="site-message__actions__item"><i class="forward-white"></i>  '+
+                    '<a class="js-site-message-close" data-link-name="R2 alpha opt in">Enter website</a>' +
                     '<li class="site-message__actions__item">' +
-                    '<i class="i i-back"></i>' +
+                    '<i class="i i-back-white"></i>' +
                     '<a class="js-main-site-link" rel="nofollow" href="' + exitLink + '"' +
-                    'data-link-name="opt-out">Opt-out and return to standard desktop site </a>' +
+                    'data-link-name="R2 alpha opt out">Opt-out and return to standard desktop site </a>' +
                     '</li>' +
                     '</ul>';
                 message.show(msg);

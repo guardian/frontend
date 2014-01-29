@@ -16,6 +16,8 @@
     .site-message__inner {
         margin: 0 auto;
         width: 90%;
+        padding-left: $gs-gutter/2;
+        padding-right: $gs-gutter/2;
         margin-top: $gs-baseline*3;
         background-color: #4bc6df;
         color: #ffffff;
@@ -29,9 +31,35 @@
     }
 
     .site-message__header {
-        @include fs-headline(1);
-        border-bottom: 1ps dotted #ffffff;
+        @include fs-headline(8);
+        color: #ffffff;
+        border-bottom: 1px dotted #ffffff;
         padding-bottom: $gs-baseline*2;
+    }
+
+    .site-message__message {
+        color: #ffffff;
+        margin-right: 0;
+        padding-top: $gs-baseline;
+
+        a {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+    }
+
+    .site-message__actions {
+        margin-top: $gs-baseline*2;
+        padding-top: $gs-baseline;
+        border-top-color: #ffffff;
+
+        @include mq(desktop) {
+            margin-top: $gs-baseline*4;
+        }
+    }
+
+    .site-message__actions__item {
+        @include fs-data(4);
     }
 
     .site-message__close {
