@@ -99,6 +99,7 @@
                         @supporting match {
                             case g: Gallery                      => { @fragments.items.supporting.gallery(g, index + 1) }
                             case v: Video                        => { @fragments.items.supporting.video(v, index + 1) }
+                            case c if VisualTone(c) == "comment" => { @fragments.items.supporting.comment(c, index + 1) }
                             case s                               => { @fragments.items.supporting.standard(s, index + 1) }
                         }
                     }
