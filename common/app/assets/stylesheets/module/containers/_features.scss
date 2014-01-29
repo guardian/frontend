@@ -1,89 +1,74 @@
 .container--features {
     .collection-wrapper {
-        margin-left: 0;
-        margin-right: 0;
-        @include rem((margin-top: $gs-baseline/3));
-
+        @include rem((margin-top: $gs-baseline/4));
         + .collection-wrapper {
             margin-top: 0;
         }
-    }
-    .collection__item {
-        margin-top: 0;
-        margin-bottom: 1px;
-        background-color: $c-features-primary;
+        @include mq(tablet) {
+            @include rem((margin-top: $gs-baseline/3));
 
-        &:nth-child(2n) {
-            background-color: $c-features-secondary;
-        }
-        &:nth-child(3n) {
-            background-color: $c-features-tertiary;
-        }
-        + .collection__item:before {
-            border-left-color: #ffffff;
-            z-index: 1;
-            display: none;
-
-            @include mq(tablet) {
-                display: block;
+            + .collection-wrapper {
+                @include rem((margin-top: $gs-baseline/3*2));
             }
         }
-    }
-    .item {
-        margin-bottom: 0;
-        padding-bottom: 0;
-        padding-left: 0;
-        padding-right: 0;
     }
     .item__meta {
         display: none;
     }
-    .item__title,
-    .item__standfirst {
-        @include rem((
-            padding-left: 7px,
-            padding-right: 7px
-        ));
-    }
-    .item--has-no-image {
-        .item__title {
-            padding-top: $baseline/4;
-        }
-    }
-    .item__link,
-    .item__title,
-    .item__standfirst {
-        color: #ffffff;
-    }
-    .item__standfirst {
-        color: rgba(#ffffff, .8);
-    }
-    .item__link {
-        border-top: 0;
-    }
-    .item__image-container {
-        margin-top: 0;
+    .collection__item {
+        padding-bottom: 0;
     }
     .l-row--items-2 {
         .collection__item {
-            padding-bottom: 0;
+            background-color: $c-features-primary;
+
+            &:nth-child(2n) {
+                background-color: $c-features-secondary;
+            }
+            &:nth-child(3n) {
+                background-color: $c-features-tertiary;
+            }
+            @include hide-background-on-item-sides($separator: false);
+            + .collection__item {
+                &:before {
+                    border-left-width: 0;
+                }
+            }
         }
         .item {
             margin-bottom: 0;
         }
-        .item__title {
-            position: absolute;
-            bottom: 0;
+        .item__title,
+        .item__standfirst {
             @include rem((
-                padding-top: $gs-baseline/3,
-                padding-bottom: $gs-baseline
+                padding-left: 7px,
+                padding-right: 7px
             ));
-            @include fs-headline(2, true);
-            @include mq(tablet) {
-                @include rem((
-                    padding-bottom: $gs-baseline*2
-                ));
+        }
+        .item--has-no-image {
+            .item__title {
+                padding-top: $baseline/4;
             }
+        }
+        .item__link,
+        .item__title,
+        .item__standfirst {
+            color: #ffffff;
+        }
+        .item__standfirst {
+            color: rgba(#ffffff, .8);
+        }
+        .item__link {
+            border-top: 0;
+        }
+        .item__image-container {
+            margin-top: 0;
+        }
+        .item__title {
+            @include fs-headline(2, true);
+            @include rem((
+                padding-bottom: $gs-baseline*2
+            ));
             @include mq(desktop) {
                 @include fs-headline(3, true);
             }
@@ -105,28 +90,16 @@
                 text-decoration: underline;
             }
         }
-        
-    }
-    .l-row--items-3 {
-        .item__title {
-            @include mq(tablet) {
-                @include fs-headline(2, true);
-            }
-        }
-        @include mq(mobile, tablet) {
-            display: -webkit-flex;
-            display: flex;
-
-            .collection__item {
-                flex-basis: 50%;
-                -webkit-flex-basis: 50%;
-            }
-        }
-    }
-    .l-row--items-4 {
-        .collection__item {
-            @include mq($to: tablet) {
-                @include rem((padding-top: 2px));
+        .item--has-image {
+            .item__title {
+                position: absolute;
+                bottom: 0;
+                @include rem((
+                    left: $gs-gutter/2,
+                    right: $gs-gutter/2,
+                    padding-top: $gs-baseline/3,
+                    padding-bottom: $gs-baseline
+                ));
             }
         }
     }

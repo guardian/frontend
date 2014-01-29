@@ -54,7 +54,7 @@
 
         + .collection-wrapper {
             @include rem((
-                margin-top: $gs-baseline
+                margin-top: $gs-baseline/3*2
             ));
         }
     }
@@ -286,8 +286,12 @@
         background: $c-newsAccent;
     }
 
-    &.show-more--hidden:before {
+    &.show-more--hidden {
         display: none;
+
+        &:before {
+            display: none;
+        }
     }
 }
 

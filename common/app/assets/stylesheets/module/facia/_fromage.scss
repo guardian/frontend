@@ -32,7 +32,7 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
     @include clearfix;
 }
 .fromage__container {
-    border-top: 4px solid white;
+    border-top: 0 solid white;
     position: relative;
     @include rem((
         padding-bottom: 32px
@@ -286,6 +286,11 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
 .fromage--has-no-image {
     .fromage__container {
         border-top-width: 0;
+        @include mq(desktop) {
+            @include rem((
+                padding-left: gs-span(6) + $gs-gutter
+            ));
+        }
     }
     .fromage__media-wrapper,
     .fromage__image-container {
@@ -392,7 +397,6 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
         border-top-width: 4px;
 
         @include mq(tablet) {
-            border-top-width: 2px;
             @include rem((
                 padding-left: gs-span(4) + $gs-gutter
             ));
