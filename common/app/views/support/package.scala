@@ -536,7 +536,7 @@ object VisualTone {
 }
 
 object RenderOtherStatus {
-  def gonePage(implicit request: RequestHeader) = model.Page(request.path, "news", "Gone", "GFE:Gone")
+  def gonePage(implicit request: RequestHeader) = model.Page(request.path, "news", "This page has been removed", "GFE:Gone")
   def apply(result: SimpleResult)(implicit request: RequestHeader) = result.header.status match {
     case 404 => NoCache(NotFound)
     case 410 if request.isJson => Cached(60)(JsonComponent(gonePage, "status" -> "GONE"))
