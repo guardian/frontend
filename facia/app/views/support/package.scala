@@ -44,6 +44,7 @@ object GetContainer {
       ("au/commentisfree/most-viewed/regular-stories", PopularContainer())
     )),
     ("au/culture", Map(
+      ("au/culture/regular-stories", FeaturesContainer()),
       ("au/culture/most-viewed/regular-stories", PopularContainer())
     )),
     ("au/money", Map(
@@ -81,6 +82,7 @@ object GetContainer {
       ("uk/commentisfree/most-viewed/regular-stories", PopularContainer())
     )),
     ("uk/culture", Map(
+      ("uk/culture/regular-stories", FeaturesContainer()),
       ("uk/culture/most-viewed/regular-stories", PopularContainer())
     )),
     ("uk/money", Map(
@@ -118,6 +120,7 @@ object GetContainer {
       ("us/commentisfree/most-viewed/regular-stories", PopularContainer())
     )),
     ("us/culture", Map(
+      ("us/culture/regular-stories", FeaturesContainer()),
       ("us/culture/most-viewed/regular-stories", PopularContainer())
     )),
     ("us/money", Map(
@@ -138,9 +141,11 @@ object GetContainer {
       ("technology/most-viewed/regular-stories", PopularContainer())
     )),
     ("travel", Map(
+      ("travel/latest-news/regular-stories", SectionContainer(showMore = false)),
       ("travel/most-viewed/regular-stories", PopularContainer())
     )),
     ("film", Map(
+      ("film/latest-news/regular-stories", SectionContainer(showMore = false)),
       ("film/most-viewed/regular-stories", PopularContainer())
     )),
     ("world/nsa", Map(
@@ -156,6 +161,7 @@ object GetContainer {
       ("football/arsenal/most-viewed/regular-stories", PopularContainer())
     )),
     ("artanddesign/photography", Map(
+      ("artanddesign/photography/latest-news/regular-stories", SectionContainer(showMore = false)),
       ("artanddesign/photography/most-viewed/regular-stories", PopularContainer())
     ))
   )
