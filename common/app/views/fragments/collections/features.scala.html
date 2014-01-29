@@ -23,14 +23,8 @@
                             "l-row__item" -> true,
                             "collection__item" -> true,
                             s"collection__item--volume-${trail.group.getOrElse("0")}" -> true,
-                            s"collection__item--tone-${VisualTone(trail)}" -> true,
-                            s"collection__item--content-type-gallery" -> {trail match { case _: Gallery => true; case _ => false }},
-                            s"collection__item--content-type-video" -> {trail match { case _: Video => true; case _ => false }}))">
-                @trail match {
-                    case g: Gallery => { @fragments.items.gallery(g, index + 2, 0, "div") }
-                    case v: Video   => { @fragments.items.video(v, index + 2, 0, "div") }
-                    case other      => { @fragments.items.standard(trail, index + 2, 0, "div") }
-                }
+                            s"collection__item--tone-${VisualTone(trail)}" -> true))">
+                @fragments.items.standard(trail, index + 2, 0, "div")
             </li>
         }
     </ul>
