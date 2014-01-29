@@ -22,7 +22,6 @@ object LoadBalancer {
       ),
       LoadBalancer("frontend-FaciaLoa-I92TZ7OEAX7W", "Front", "frontend-facia", testPath = Some("/uk")),
       LoadBalancer("frontend-Applicat-V36EHVHAEI15", "Applications", "frontend-applications", testPath = Some("/books")),
-      LoadBalancer("frontend-CoreNavi-19L03IVT6RTL5", "CoreNav", "frontend-core-navigation"),
       LoadBalancer("frontend-Discussi-KC65SADEVHIE", "Discussion", "frontend-discussion"),
       LoadBalancer("frontend-Identity-1ITBJ706CLQIC", "Identity", "frontend-identity"),
       LoadBalancer("frontend-ImageLoa-Y3FM3W6ZRJC1", "Image", "frontend-image"),

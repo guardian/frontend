@@ -35,7 +35,6 @@ object CloudWatch extends implicits.Futures{
   ).flatten
 
   val secondaryLoadBalancers = Seq(
-    LoadBalancer( "frontend-core-navigation"),
     LoadBalancer( "frontend-discussion"),
     LoadBalancer( "frontend-identity"),
     LoadBalancer( "frontend-image"),
