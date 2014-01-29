@@ -17,10 +17,8 @@
             padding-bottom: $gs-baseline
         ));
     }
-    @include mq($to: tablet) {
-        &.show-more--hidden {
-            display: none;
-        }
+    &.show-more--hidden {
+        display: none;
     }
 }
 .linkslist__action {

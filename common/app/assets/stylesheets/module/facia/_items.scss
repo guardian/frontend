@@ -3,9 +3,9 @@ $c-live: #e81818;
 .container {
     position: relative;
     overflow: hidden;
-    margin-top: $gs-baseline;
+    @include rem((margin-top: $gs-baseline));
     @include mq(tablet) {
-        margin-top: $gs-baseline*2;
+        @include rem((margin-top: $gs-baseline*2));
     }
 }
 .container:first-child {
@@ -69,9 +69,11 @@ $c-live: #e81818;
 
 .container__toggle {
     position: absolute;
-    min-height: gs-height(1);
-    min-width: gs-span(1);
-    top: $gs-baseline/3;
+    @include rem((
+        min-height: gs-height(1),
+        min-width: gs-span(1),
+        top: $gs-baseline/3
+    ));
     right: 0;
     border: none;
     background-color: transparent;
@@ -80,7 +82,7 @@ $c-live: #e81818;
 
     .container__toggle__text {
         position: relative;
-        top: -6px;
+        @include rem((top: -6px));
     }
     @include mq($to: tablet) {
         border-left: 1px solid #ffffff;
@@ -97,7 +99,7 @@ $c-live: #e81818;
         }
     }
     @include mq(tablet) {
-        top: $gs-baseline/2;
+        @include rem((top: $gs-baseline/2));
         text-align: right;
         color: $c-neutral2;
 
@@ -114,8 +116,10 @@ $c-live: #e81818;
 .collection {
     font-size: 0;
     overflow: hidden;
-    margin-left: -$gs-gutter/2;
-    margin-right: -$gs-gutter/2;
+    @include rem((
+        margin-left: -$gs-gutter/2,
+        margin-right: -$gs-gutter/2
+    ));
 }
 .item {
     position: relative;

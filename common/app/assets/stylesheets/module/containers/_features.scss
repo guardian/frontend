@@ -1,51 +1,136 @@
 .container--features {
-    @include mq($to: tablet) {
-        @include first-row(1);
-        .item:first-child {
-            @include card-mobile($with-image: true);
+    .collection-wrapper {
+        margin-left: 0;
+        margin-right: 0;
+        @include rem((margin-top: $gs-baseline/3));
+
+        + .collection-wrapper {
+            margin-top: 0;
         }
-        .item:nth-child(n+2):nth-child(-n+3) {
-            @include card-half-width($with-image: true);
+    }
+    .collection__item {
+        margin-top: 0;
+        margin-bottom: 1px;
+        background-color: $c-features-primary;
+
+        &:nth-child(2n) {
+            background-color: $c-features-secondary;
         }
-        .item:nth-child(n+4) {
-            @extend %item-show-more;
+        &:nth-child(3n) {
+            background-color: $c-features-tertiary;
         }
-        .js-collection--show-more {
-            .item:nth-child(n+4) {
-                display: none;
+        + .collection__item:before {
+            border-left-color: #ffffff;
+            z-index: 1;
+            display: none;
+
+            @include mq(tablet) {
+                display: block;
             }
         }
     }
-    @include mq(tablet) {
-        .item:nth-child(n+2) {
-            @include card;
-        }
-        .item:nth-child(n+2):nth-child(-n+3) {
-            @include card-image;
+    .item {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .item__meta {
+        display: none;
+    }
+    .item__title,
+    .item__standfirst {
+        @include rem((
+            padding-left: 7px,
+            padding-right: 7px
+        ));
+    }
+    .item--has-no-image {
+        .item__title {
+            padding-top: $baseline/4;
         }
     }
-    @include mq(tablet, desktop) {
-        .item:first-child {
-            @include card-full-width-feature;
+    .item__link,
+    .item__title,
+    .item__standfirst {
+        color: #ffffff;
+    }
+    .item__standfirst {
+        color: rgba(#ffffff, .8);
+    }
+    .item__link {
+        border-top: 0;
+    }
+    .item__image-container {
+        margin-top: 0;
+    }
+    .l-row--items-2 {
+        .collection__item {
+            padding-bottom: 0;
         }
-        .item:nth-child(4)  {
-            @include card-image;
+        .item {
+            margin-bottom: 0;
         }
-        .js-collection--show-more {
-            .item:nth-child(n+5) {
-                display: none;
+        .item__title {
+            position: absolute;
+            bottom: 0;
+            @include rem((
+                padding-top: $gs-baseline/3,
+                padding-bottom: $gs-baseline
+            ));
+            @include fs-headline(2, true);
+            @include mq(tablet) {
+                @include rem((
+                    padding-bottom: $gs-baseline*2
+                ));
+            }
+            @include mq(desktop) {
+                @include fs-headline(3, true);
+            }
+            background-color: $c-features-primary;
+            background-color: rgba($c-features-primary, .8);
+        }
+        .collection__item:nth-child(2n) .item__title {
+            background-color: $c-features-secondary;
+            background-color: rgba($c-features-secondary, .8);
+        }
+        .collection__item:nth-child(3n) .item__title {
+            background-color: $c-features-tertiary;
+            background-color: rgba($c-features-tertiary, .8);
+        }
+        .item__link:hover,
+        .item__link:focus {
+            .item__title {
+                // Restore lost underline because of the absolute positioning
+                text-decoration: underline;
+            }
+        }
+        
+    }
+    .l-row--items-3 {
+        .item__title {
+            @include mq(tablet) {
+                @include fs-headline(2, true);
+            }
+        }
+        @include mq(mobile, tablet) {
+            display: -webkit-flex;
+            display: flex;
+
+            .collection__item {
+                flex-basis: 50%;
+                -webkit-flex-basis: 50%;
             }
         }
     }
-    @include mq(desktop) {
-        @include first-row(2);
-        .item:first-child {
-            @include card-triple-width;
-        }
-        .js-collection--show-more {
-            .item:nth-child(n+4) {
-                display: none;
+    .l-row--items-4 {
+        .collection__item {
+            @include mq($to: tablet) {
+                @include rem((padding-top: 2px));
             }
         }
+    }
+    .linkslist-container:before {
+        background: $c-featureAccent;
     }
 }
