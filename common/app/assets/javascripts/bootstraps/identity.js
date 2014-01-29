@@ -76,9 +76,9 @@ define([
                 UserAvatars.init();
             });
         },
-        resendValidationEmail: function () {
+        validationEmail: function() {
             mediator.on('page:identity:ready', function(config, context) {
-                Identity.resendValidationEmail(config, context);
+                ValidationEmail.init(context);
             });
         }
     };
@@ -94,7 +94,7 @@ define([
             modules.passwordToggle();
             modules.userAdTargeting();
             modules.userAvatars();
-            modules.resendValidationEmail();
+            modules.validationEmail();
         }
         mediator.emit('page:identity:ready', config, context);
     };

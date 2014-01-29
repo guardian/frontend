@@ -176,13 +176,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  // Identity Switches
-
-  val IdentityEmailVerificationSwitch = Switch("Identity Email verification", "id-email-verification",
-    "If this switch is on, the option to resend your verification email is displayed.",
-    safeState = Off, sellByDate = endOfQ4
-  )
-
   // Open
 
   val OpenCtaSwitch = Switch("Open", "open-cta",
@@ -381,7 +374,6 @@ object Switches extends Collections {
     VideoAdvertSwitch,
     AudienceScienceSwitch,
     DiscussionSwitch,
-    IdentityEmailVerificationSwitch,
     OpenCtaSwitch,
     FontSwitch,
     SocialSwitch,
