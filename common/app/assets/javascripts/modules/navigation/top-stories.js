@@ -2,12 +2,14 @@ define([
     'common/common',
     'common/utils/ajax',
     'bonzo',
-    'common/modules/lazyload'
+    'common/modules/lazyload',
+    'common/utils/config'
 ], function (
     common,
     ajax,
     bonzo,
-    LazyLoad
+    LazyLoad,
+    config
 ) {
 
     function TopStories() {
@@ -16,7 +18,7 @@ define([
 
         this.load = function (config, context) {
 
-            var url = '/top-stories/trails.json?page-size=10&view=link',
+            var url = '/top-stories/trails.json?page-size=10&view=link&_edition=' + config.page.edition,
                 container = context.querySelector('.nav-popup-topstories');
 
             if(container) {
