@@ -8,8 +8,7 @@ define([
     'modules/authed-ajax',
     'models/group',
     'models/article',
-    'modules/content-api',
-    'modules/ophan-api'
+    'modules/content-api'
 ], function(
     ko,
     vars,
@@ -19,8 +18,7 @@ define([
     authedAjax,
     Group,
     Article,
-    contentApi,
-    ophanApi
+    contentApi
 ) {
     var sourceList,
         storage = window.localStorage,
@@ -163,10 +161,9 @@ define([
                         alertBadContent();
                     })
                     .done(function() {
-                        var edits = {},
-                            itemMeta;
-
-                        ophanApi.decorateItems([article]);
+                        var itemMeta,
+                            timestamp,
+                            edits = {};
 
                         if (_.isFunction(targetList.reflow)) {
                             targetList.reflow();
@@ -194,6 +191,9 @@ define([
                         } else {
                             delete itemMeta.group;
                         }
+
+                        timestamp = Math.floor(new Date().getTime()/1000);
+                        itemMeta.updatedAt = itemMeta.updatedAt ? itemMeta.updatedAt + ',' + timestamp : timestamp + ':f90'; // orange for the initial flag
 
                         edits.update = {
                             collection: targetList.parent,

@@ -3,12 +3,10 @@ define([
     'modules/vars',
     'utils/as-observable-props',
     'utils/populate-observables',
-    'utils/number-with-commas',
     'utils/full-trim',
     'models/group',
     'modules/authed-ajax',
     'modules/content-api',
-    'modules/ophan-api',
     'knockout',
     'js!humanized-time-span'
 ],
@@ -16,12 +14,10 @@ define([
         vars,
         asObservableProps,
         populateObservables,
-        numberWithCommas,
         fullTrim,
         Group,
         authedAjax,
         contentApi,
-        ophanApi,
         ko
         ){
         function Article(opts) {
@@ -45,6 +41,7 @@ define([
                 'shortId']);
 
             this.meta = asObservableProps([
+                'updatedAt',
                 'headline',
                 'trailText',
                 'imageAdjust',
@@ -56,16 +53,11 @@ define([
                 'open',
                 'isLoaded',
                 'isEmpty',
-                'totalHits',
-                'pageViewsSeries']);
+                'sparkUrl']);
 
             // Computeds
             this.humanDate = ko.computed(function(){
                 return this.props.webPublicationDate() ? humanized_time_span(this.props.webPublicationDate()) : '';
-            }, this);
-
-            this.totalHitsFormatted = ko.computed(function(){
-                return numberWithCommas(this.state.totalHits());
             }, this);
 
             this.headlineInput  = this.overrider('headline');
@@ -91,8 +83,9 @@ define([
                 });
 
                 contentApi.decorateItems(self.meta.supporting.items());
-                ophanApi.decorateItems(self.meta.supporting.items());
             }
+
+            this.sparkline();
         }
 
         Article.prototype.overrider = function(key) {
@@ -127,6 +120,13 @@ define([
         Article.prototype.toggleIsBreaking = function() {
             this.meta.isBreaking(!this.meta.isBreaking());
             this._save();
+        };
+
+        Article.prototype.sparkline = function() {
+            this.state.sparkUrl(undefined);
+            if (vars.state.switches['facia-tool-sparklines']) {
+                this.state.sparkUrl(vars.sparksBase + this.props.id() + (this.meta.updatedAt() ? '&markers=' + this.meta.updatedAt() : ''));
+            }
         };
 
         Article.prototype.toggleImageAdjustHide = function() {
@@ -200,7 +200,13 @@ define([
         };
 
         Article.prototype._save = function() {
-            if (!this.parent) { return; }
+            var self = this,
+                timestamp,
+                itemMeta;
+
+            if (!this.parent) {
+                return;
+            }
 
             if (this.parentType === 'Article') {
                 this.parent._save();
@@ -209,6 +215,12 @@ define([
             }
 
             if (this.parentType === 'Collection') {
+
+                itemMeta = this.getMeta();
+                timestamp = Math.floor(new Date().getTime()/1000);
+                
+                itemMeta.updatedAt = (itemMeta.updatedAt ? itemMeta.updatedAt + ',' : '') + timestamp + ':0C0'; // green for overrides etc.
+                
                 authedAjax.updateCollections({
                     update: {
                         collection: this.parent,

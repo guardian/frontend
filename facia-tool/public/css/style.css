@@ -45,32 +45,33 @@ a, a:hover {
     font-size: 26px;
     line-height: 30px;
     color: #000;
-    text-transform: lowercase;
     font-weight: normal;
 }
 
-.tool-title .message {
+.message {
+    float: left;
+    margin: 8px 10px 0 0;
     color: #CCCCCC;
     font-size: 26px;
-    font-style: italic;
+    line-height: 30px;
     font-weight: normal;
 }
 
-.tool-title .message--important {
+.message--important {
     color: #d61d00;
 }
 
-.tool-title .message--loading {
+.message--loading {
     display: none;
 }
 
-.is-authed .tool-title .message--loading {
-    display: inline;
+.is-authed .message--loading {
+    display: block;
 }
 
 .login-form {
     float: left;
-    margin: 10px 10px 0 0;
+    margin: 13px 10px 0 0;
 }
 
 .finder {
@@ -142,7 +143,7 @@ a, a:hover {
     color: #999999;
     overflow: hidden;
     padding: 5px 0 1px 0;
-    height: 20px;
+    height: 23px;
 }
 
 .list-header.collapsed {
@@ -151,7 +152,7 @@ a, a:hover {
 
 .list-header__collapser {
     float: right;
-    margin: 2px 7px 0 8px;
+    margin: 2px 6px 0 8px;
     opacity: 0.75;
 }
 
@@ -230,7 +231,7 @@ a, a:hover {
     border-bottom: 0;
 }
 
-.article img {
+.article .thumb {
     float: left;
     width: 75px;
     height: 45px;
@@ -240,7 +241,7 @@ a, a:hover {
 }
 
 .article_content {
-    margin: 0 125px 0 85px;
+    margin: 0 130px 0 85px;
     line-height: 0;
 }
 
@@ -362,14 +363,18 @@ div.trailtext {
     padding: 16px 0 0 4px;
 }
 
+.supporting .image__overrides {
+    display: none;
+}
+
 .image__overrides a,
 .image__overrides span {
     display: block;
-    color: #CCCCCC;
+    color: #FFFFFF;
+    text-shadow: 0px 0px 2px #666666;
 }
 
 .image__overrides .selected {
-    color: #FFFFFF;
     font-weight: bold;
 }
 
@@ -448,29 +453,15 @@ button {
     margin: -6px 0 0 3px;
 }
 
-.article__stats {
+.article .spark {
     position: absolute;
-    top: 2px;
+    top: 3px;
     right: 27px;
     height: 30px;
-    font-size: 9px;
-    line-height: 12px;
 }
 
-.pageviews {
-    color: #999999;
-    font-weight: bold;
-    position: absolute;
-    bottom: -14px;
-    right: 1px;
-}
-
-.pageviews-graph canvas {
-    max-width: 140px;
-    float: right;
-    position: absolute;
-    bottom: -2px;
-    right: 0;
+.latest-articles .article .spark {
+    right: 15px;
 }
 
 .group-name {
@@ -478,7 +469,7 @@ button {
     font-size: 10px;
     line-height: 12px;
     color: #666666;
-    text-transform: capitalize;
+    text-transform: uppercase;
 }
 
 .search-form {
@@ -571,6 +562,13 @@ button {
     margin-bottom: 20px;
 }
 
+.toolbar .spark {
+    display: inline-block;
+    margin: -2px 15px 0 0;
+    float: left;
+    width: 100px;
+}
+
 .toolbar .tool,
 .article__overrides .tool,
 .collection-overrides .tool {
@@ -628,6 +626,13 @@ button {
     background: #0077BB;
 }
 
+.log-in-out {
+    margin: 19px 0 0 0px;
+    font-size: 10px;
+    text-transform: uppercase;
+    float: left;
+}
+
 .tool--remove {
     background: #FFFFFF;
     -moz-box-sizing: border-box;
@@ -645,9 +650,10 @@ button {
 }
 
 .article .closed .tool--remove {
-    opacity: 0.3;
-    margin: 27px 1px 0 0;
-    float: right;
+    opacity: 0.2;
+    position: absolute;
+    right: 2px;
+    top: 27px;
 }
 
 .article:hover .closed .tool--remove {
@@ -660,9 +666,7 @@ button {
     opacity: 1;
 }
 
-.logout,
 .preview {
-    float: right;
     margin-left: 10px;
 }
 
@@ -689,12 +693,6 @@ button {
     background: #46c430;
 }
 
-.ophan-legend {
-    position: absolute;
-    right: 51%;
-    top: 10px;
-}
-
 .supporting {
     margin: 0 -2px -4px -4px;
 }
@@ -711,15 +709,14 @@ button {
     .finder .article .article_content {
         margin-right: 0;
     }
-    .finder .article .article__stats {
+    .finder .article .spark {
         display: none;
     }
 }
 
 @media (max-width: 875px) {
     .is-authed .tool-title,
-    .finder,
-    .ophan-legend {
+    .finder {
         display: none;
     }
     .toolbar {
@@ -747,9 +744,13 @@ button {
 
 @media (max-width: 525px) {
     .article .article_content {
-        margin-right: 0;
+        margin-right: 25px;
     }
-    .article .article__stats {
+    .article .closed .tool--remove {
+        top: 0;
+    }
+    .toolbar .spark,
+    .article .spark {
         display: none;
     }
 }
@@ -757,10 +758,10 @@ button {
 @media (max-width: 350px) {
     .article .article_content {
         margin-left: 0;
-        margin-right: 5px;
     }
-    .article img,
-    .article__date {
+    .article .thumb,
+    .article__date,
+    .image__overrides {
         display: none;
     }
     .article__overrides {
