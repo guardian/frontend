@@ -42,7 +42,9 @@ trait ConfigAgent extends ExecutionContexts {
         (collectionJson \ "apiQuery").asOpt[String],
         (collectionJson \ "displayName").asOpt[String].filter(_.nonEmpty),
         (collectionJson \ "tone").asOpt[String],
-        (collectionJson \ "href").asOpt[String]
+        (collectionJson \ "href").asOpt[String],
+        (collectionJson \ "groups").asOpt[Seq[String]] getOrElse Nil,
+        (collectionJson \ "roleName").asOpt[String]
       )
     }
   }
