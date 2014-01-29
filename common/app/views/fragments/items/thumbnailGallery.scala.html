@@ -1,11 +1,11 @@
-@(trail: model.Trail, index: Int, containerIndex: Int, element: String = "li")(implicit request: RequestHeader)
+@(trail: model.Gallery, index: Int, containerIndex: Int, element: String = "li")(implicit request: RequestHeader)
 
 @defining((VisualTone(trail), containerIndex == 0, containerIndex == 0 && index < 3)) { case (tone, isFirstContainer, inlineImages) =>
     <@element
         class="@RenderClasses(
                     "item",
                     "item--dark",
-                    "item--gallery",
+                    "item--thumbnail",
                     "item--has-image",
                     s"tone-$tone",
                     "item--force-image-upgrade")"
@@ -14,6 +14,18 @@
         data-discussion-closed="@trail.isClosedForComments">
 
         <div class="item__container tone-border">
+
+            <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border" data-link-name="article">
+                <h@if(isFirstContainer && index == 0){1}else{2} class="item__title">
+                    @if(trail.isBreaking){
+                        <span class="item__live-indicator">Breaking News</span>
+                    }
+                    @if(trail.isLive && !trail.isBreaking){
+                        <span class="item__live-indicator">Live</span>
+                    }
+                    @RemoveOuterParaHtml(trail.headline)
+                </h@if(isFirstContainer && index == 0){1}else{2}>
+            </a>
 
             @trail.trailPicture(5,3).map{ imageContainer =>
                 @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
@@ -46,13 +58,6 @@
                     </div>
                 </a>
             }
-
-            <a href="@LinkTo{@trail.url}" class="item__link">
-                <h@if(isFirstContainer && index == 0){1}else{2} class="item__title">
-                    <span class="item__title-type">Gallery </span>
-                    @RemoveOuterParaHtml(trail.headline)
-                </h@if(isFirstContainer && index == 0){1}else{2}>
-            </a>
 
             @trail.trailText.map { text =>
                 <div class="item__standfirst">@Html(text)</div>

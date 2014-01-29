@@ -542,3 +542,11 @@ object RenderOtherStatus {
     case _ => result
   }
 }
+
+object RenderClasses {
+
+  def apply(classes: Map[String, Boolean]): String = classes.filter(_._2).keys.toSeq.sorted.mkString(" ")
+
+  def apply(classes: String*): String = classes.sorted.mkString(" ")
+
+}
