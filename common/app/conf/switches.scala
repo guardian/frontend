@@ -358,6 +358,13 @@ object Switches extends Collections {
     safeState = On, sellByDate = new DateMidnight(2014, 2, 7)
   )
 
+  // Facia Tool Switches
+
+  val ContentApiPutSwitch = Switch("Facia Tool", "facia-tool-contentapi-put",
+    "If this switch is on facia tool will PUT all collection changes to content api",
+    safeState = Off, sellByDate = never
+  )
+
   val ImageServiceSwitch = Switch("Image Server", "image-service",
     "If this switch is on images will be served off ak.i.guim.co.uk (dynamic image host). Part of the CDN test. Relies on ImageServerSwitch also being on",
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 7))
@@ -409,6 +416,7 @@ object Switches extends Collections {
     TagLinking,
     SponsoredContentSwitch,
     OphanMultiEventSwitch,
+    ContentApiPutSwitch,
     AmaaSwitch,
     ImrWorldwideSwitch,
     DiagnosticsRequestLogging,
