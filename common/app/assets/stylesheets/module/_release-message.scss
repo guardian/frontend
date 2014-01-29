@@ -16,6 +16,7 @@
     .site-message__inner {
         margin: 0 auto;
         width: 90%;
+        padding-top: $baseline*2;
         padding-left: $gs-gutter/2;
         padding-right: $gs-gutter/2;
         margin-top: $gs-baseline*3;
@@ -25,26 +26,45 @@
 
         @include mq(tablet) { width: 60%; }
         @include mq(desktop) {
-            width: 40%;
+            width: gs-span(7);
             margin-top: 20%;
         }
     }
 
     .site-message__header {
         @include fs-headline(8);
+        font-weight: 200;
         color: #ffffff;
         border-bottom: 1px dotted #ffffff;
         padding-bottom: $gs-baseline*2;
     }
 
     .site-message__message {
+        @include fs-header(1);
         color: #ffffff;
         margin-right: 0;
-        padding-top: $gs-baseline;
+        padding-top: $gs-baseline/2;
 
         a {
             color: #ffffff;
             text-decoration: underline;
+        }
+    }
+
+    .site-message__list {
+        list-style: none;
+        margin-left: 4px;
+    }
+
+    .site-message__list__item {
+        @include faux-bullet-point;
+        @include fs-headline(1);
+        font-weight: 200;
+
+        &:before {
+            top: 0;
+            @include rem((left: -18px));
+            color: #ffffff;
         }
     }
 
@@ -54,12 +74,30 @@
         border-top-color: #ffffff;
 
         @include mq(desktop) {
-            margin-top: $gs-baseline*4;
+            margin-top: $gs-baseline*3;
         }
     }
 
     .site-message__actions__item {
         @include fs-data(4);
+
+        &:first-child {
+            @include fs-data(5, true);
+            i {
+                margin-right: 0;
+                margin-bottom: -4px;
+            }
+        }
+
+        &:last-child {
+            margin-top: $gs-baseline/2;
+            font-weight: normal;
+            @include mq(mobileLandscape) { margin-top: 0; }
+            @include mq(desktop) {
+                float: right;
+                margin-right: 0;
+                margin-top: 2px; }
+        }
     }
 
     .site-message__close {

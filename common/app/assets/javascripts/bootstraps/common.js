@@ -352,10 +352,11 @@ define([
                     exitLink = '/preference/platform/desktop?page=' + encodeURIComponent(path + '?view=desktop'),
                     msg = '<h2 class="site-message__header">Welcome!</h2>' +
                     '<div class="site-message__message">' +
-                    'You’re viewing an alpha release of the Guardian’s responsive website. <a href="http://next.theguardian.com/">Find out more</a>' +
+                    '<p>You’re viewing an alpha release of the Guardian’s responsive website. <a href="http://next.theguardian.com/">Find out more</a>' +
                     '</p>' +
+                    '<ul class="site-message__list"><li class="site-message__list__item">Section pages</li><li class="site-message__list__item">Articles will lorem ipsum</li></ul>' +
                     '<ul class="site-message__actions unstyled">' +
-                    '<li class="site-message__actions__item"><i class="forward-white"></i>  '+
+                    '<li class="site-message__actions__item"><i class="i i-arrow-white-circle"></i>  '+
                     '<a class="js-site-message-close" data-link-name="R2 alpha opt in">Enter website</a>' +
                     '<li class="site-message__actions__item">' +
                     '<i class="i i-back-white"></i>' +
