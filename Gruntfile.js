@@ -497,6 +497,9 @@ module.exports = function (grunt) {
             admin: {
                 src: ['integration-tests/casper/tests/admin/*.spec.js']
             },
+            article: {
+                src: ['integration-tests/casper/tests/article/*.spec.js']
+            },
             applications: {
                 src: ['integration-tests/casper/tests/applications/*.spec.js']
             },
