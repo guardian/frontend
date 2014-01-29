@@ -19,7 +19,11 @@
         </div>
 
         <div class="article__container">
-            <figure class="interactive" data-interactive="@request.path.drop(1)"></figure>
+            @if(interactive.body.isEmpty) {
+                <figure class="interactive" data-interactive="@request.path.drop(1)"></figure>
+            } else {
+                @HtmlFormat.raw(interactive.body)
+            }
         </div>
     </article>
 </div>
