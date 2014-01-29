@@ -1,5 +1,5 @@
 package frontpress
 
-import services.ConfigAgent
+import services.ConfigAgentTrait
 
-object FaciaToolConfigAgent extends ConfigAgent
+object FaciaToolConfigAgent extends ConfigAgentTrait
