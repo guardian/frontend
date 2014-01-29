@@ -200,11 +200,7 @@ define([
         };
 
         Article.prototype._save = function() {
-            var self = this;
-
-            if (!this.parent) {
-                return;
-            }
+            if (!this.parent) { return; }
 
             if (this.parentType === 'Article') {
                 this.parent._save();
@@ -213,17 +209,17 @@ define([
             }
 
             if (this.parentType === 'Collection') {
-                authedAjax.updateCollection(
-                    'post',
-                    this.parent,
-                    {
-                        item:     self.props.id(),
-                        position: self.props.id(),
-                        itemMeta: self.getMeta(),
-                        live:     vars.state.liveMode(),
-                        draft:   !vars.state.liveMode()
+                authedAjax.updateCollections({
+                    update: {
+                        collection: this.parent,
+                        item:       this.props.id(),
+                        position:   this.props.id(),
+                        itemMeta:   this.getMeta(),
+                        live:       vars.state.liveMode(),
+                        draft:     !vars.state.liveMode()
                     }
-                );
+                });
+
                 this.parent.setPending(true);
             }
         };

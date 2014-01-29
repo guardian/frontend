@@ -1,6 +1,7 @@
 /* global module: false, process: false */
 module.exports = function (grunt) {
-    var isDev = grunt.option('dev') || process.env.GRUNT_ISDEV === '1',
+
+    var isDev = (grunt.option('dev') !== undefined) ? Boolean(grunt.option('dev')) : process.env.GRUNT_ISDEV === '1',
         singleRun = grunt.option('single-run') !== false,
         env = grunt.option('env') || 'code',
         screenshotsDir = './screenshots',
@@ -9,7 +10,6 @@ module.exports = function (grunt) {
         staticRequireDir = staticDir + 'requirejs/',
         testConfDir = 'common/test/assets/javascripts/conf/',
         propertiesFile = (isDev) ? process.env.HOME + '/.gu/frontend.properties' : '/etc/gu/frontend.properties';
-
 
     if (isDev) {
         grunt.log.subhead('Running Grunt in DEV mode');
@@ -57,8 +57,6 @@ module.exports = function (grunt) {
                     qwery:        'common/components/qwery/mobile/qwery-mobile',
                     reqwest:      'common/components/reqwest/src/reqwest',
                     postscribe:   'common/components/postscribe/dist/postscribe',
-                    swipe:        'common/components/swipe/swipe',
-                    swipeview:    'common/components/swipeview/src/swipeview',
                     lodash:       'common/components/lodash-amd/modern',
                     imager:       'common/components/imager.js/src/strategies/container',
                     omniture:     'common/components/omniture/omniture',
@@ -101,14 +99,10 @@ module.exports = function (grunt) {
             },
             facia: {
                 options: {
-                    dir: staticTargetDir + 'javascripts',
-                    keepBuildDir: true,
-                    modules: [
-                        {
-                            name: 'bootstraps/facia',
-                            exclude: ['common/bootstraps/app']
-                        }
-                    ]
+                    name: 'bootstraps/facia',
+                    out: staticTargetDir + 'javascripts/bootstraps/facia.js',
+                    exclude: ['common/bootstraps/app'],
+                    keepBuildDir: true
                 }
             }
         },
@@ -409,12 +403,12 @@ module.exports = function (grunt) {
         },
 
         uglify: {
-            vendor: {
+            components: {
                 files: [{
                     expand: true,
-                    cwd: staticTargetDir + 'javascripts/vendor/',
+                    cwd: staticTargetDir + 'javascripts/components/',
                     src: '**/*.js',
-                    dest: staticTargetDir + 'javascripts/vendor/'
+                    dest: staticTargetDir + 'javascripts/components/'
                 }]
             }
         },
@@ -514,6 +508,9 @@ module.exports = function (grunt) {
             },
             facia: {
                 src: ['integration-tests/casper/tests/facia/*.spec.js']
+            },
+            identity: {
+                src: ['integration-tests/casper/tests/identity/*.spec.js']
             },
             open: {
                 src: ['integration-tests/casper/tests/open/*.spec.js']
@@ -663,27 +660,37 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:images', ['clean:images', 'copy:images', 'shell:spriteGeneration', 'imagemin']);
     grunt.registerTask('compile:css', ['clean:css', 'sass:compile']);
     grunt.registerTask('compile:js', function(app) {
-        grunt.task.run(['clean:js', 'copy:javascript-common']);
-        if (app && grunt.config('copy')['javascript-' + app]) {
-            grunt.task.run('copy:javascript-' + app);
+        grunt.task.run(['clean:js']);
+        var apps = ['common'];
+        if (app) {
+            if (grunt.config('requirejs')[app]) {
+                apps.push(app);
+            } else {
+                grunt.log.warn('No compile target for app "' + app + '"');
+            }
+        } else { // if no app supplied, compile all apps
+            apps = apps.concat(Object.keys(grunt.config('requirejs')).filter(function(app) { return ['options', 'common'].indexOf(app) === -1; }));
         }
+        apps.forEach(function(app) {
+            grunt.task.run('copy:javascript-' + app, 'requirejs:' + app);
+        });
         if (!isDev) {
-            grunt.task.run('uglify:vendor');
-        }
-        grunt.task.run('requirejs:common');
-        // When an app defines it's own javascript application, the requirejs task will need to compile both
-        // common and app.
-        if (grunt.config('requirejs')[app]) {
-            grunt.task.run('requirejs:' + app);
+            grunt.task.run('uglify:components');
         }
     });
     grunt.registerTask('compile:fonts', ['clean:fonts', 'mkdir:fontsTarget', 'webfontjson']);
     grunt.registerTask('compile:flash', ['clean:flash', 'copy:flash']);
     grunt.registerTask('compile', function(app) {
-        grunt.task.run(['clean:staticTarget', 'compile:images', 'compile:css', 'compile:js' + (app ? ':' + app : ''), 'compile:fonts', 'compile:flash']);
-        if (!isDev) {
-            grunt.task.run(['clean:assets', 'copy:headCss', 'hash']);
-        }
+        grunt.task.run([
+            'compile:images',
+            'compile:css',
+            'compile:js:' + (app || ''),
+            'compile:fonts',
+            'compile:flash',
+            'clean:assets',
+            'copy:headCss',
+            'hash'
+        ]);
     });
 
     // Test tasks

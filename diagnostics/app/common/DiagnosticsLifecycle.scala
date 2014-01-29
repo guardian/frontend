@@ -34,6 +34,9 @@ trait DiagnosticsLifecycle extends GlobalSettings with Logging {
     if(Switches.DiagnosticsRequestLogging.isSwitchedOn) {
       log.info(RequestLog(request))
     }
+    if(Switches.DiagnosticsJavascriptErrorLogging.isSwitchedOn && request.uri.startsWith("/js.gif")) {
+      log.info(diagnostics.JavascriptRequestLog(request))
+    }
     super.onRouteRequest(request)
   }
 }

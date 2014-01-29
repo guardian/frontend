@@ -4,9 +4,9 @@
 
     @include mq(rightCol) {
 
-        .page-sub-header {
+        .related__header {
             border-top: 1px solid $c-neutral4;
-            padding-top: 5px;
+            padding-top: $baseline/2;
             padding-bottom: 0;
             margin-bottom: 0;
         }
@@ -24,7 +24,7 @@
         }
 
         &.more-on-this-story {
-            .item{
+            .item {
                 &:first-child {
                     display: none;
                 }
@@ -66,13 +66,16 @@
 
     @include mq(rightCol) {
         margin-left: -1*($gs-gutter/2);
+
+        > ul {
+            margin-right: - $gs-gutter/2;
+        }
     }
 
     @include mq(leftCol) {
         padding-top: $gs-baseline/1.5;
         border-top: 1px solid $c-neutral4;
         margin-left: $a-leftCol-width + $gs-gutter/2;
-        margin-right: - $gs-gutter/2;
     }
 
     @include mq(wide) {
@@ -131,7 +134,8 @@
                 .item__title {
                     min-height: 0;
                     padding-bottom: $gs-baseline*3;
-                    @include fs-headline(3, true);
+                    padding-top: 4px;
+                    @include fs-headline(2, true);
                 }
 
                 .item__meta {
@@ -145,6 +149,7 @@
                 margin-bottom: 20px;
 
                 .item__title {
+                    @include fs-headline(3, true);
                     min-height: 0;
                     padding-bottom: $gs-row-height;
                 }
@@ -185,13 +190,13 @@
 
     .item__title {
         margin-top: 0;
-        padding-top: 6px; //Magic
+        padding-top: 2px; // Same as other similar patterns
         padding-bottom: $gs-baseline;
         min-height: $gs-row-height*3 - $gs-baseline; //96px
         @include fs-headline(1, true);
         @include box-sizing(border-box);
 
-        @include mq(mobileLandscape, rightCol) {
+        @include mq(tablet, rightCol) {
             @include fs-headline(2, true);
         }
 
@@ -208,7 +213,9 @@
 
         &:first-child {
             @include mq($to: rightCol) {
-                @include fs-headline(3, true);
+                .item__title {
+                    @include fs-headline(3, true);
+                }
 
                 .item__container {
                     min-height: gs-height(2);
@@ -299,9 +306,9 @@
     }
 
     .item__media-wrapper {
-        position: relative;    
+        position: relative;
     }
-    
+
     .item__image-container {
         margin-top: 0;
         display: block;
@@ -311,7 +318,7 @@
         border-top: none;
     }
 
-    .i-quote-light-grey,
+    .i-quote-orange,
     .item__byline {
         display: none;
     }

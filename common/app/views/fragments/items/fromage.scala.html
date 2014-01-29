@@ -54,7 +54,7 @@
                         <span class="item__live-indicator">Live</span>
                     }
                     @if(tone == "comment") {
-                        <span class="i i-quote-light-grey"></span>
+                        <span class="i i-quote-orange"></span>
                     }
                     @RemoveOuterParaHtml(trail.headline)
                 </h1>
@@ -69,7 +69,7 @@
                     @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
                         <a href="@LinkTo{@trail.url}" data-link-name="article">
                             <div class="fromage__media-wrapper fromage__media-wrapper--second">
-                                <div class="fromage__image-container js-image-upgrade inlined-image" data-src="@imgSrc" data-force-upgrade="desktop wide">
+                                <div class="fromage__image-container js-image-upgrade inlined-image" data-src="@imgSrc">
                                 </div>
                             </div>
                         </a>

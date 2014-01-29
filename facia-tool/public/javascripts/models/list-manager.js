@@ -154,7 +154,7 @@ define([
         model.liveMode.subscribe(function() {
             _.each(model.collections(), function(collection) {
                 collection.closeAllArticles();
-                collection.populateLists();
+                collection.populate();
             });
         });
 

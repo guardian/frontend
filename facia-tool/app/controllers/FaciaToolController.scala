@@ -18,6 +18,8 @@ import model.{NoCache, Cached}
 object FaciaToolController extends Controller with Logging with ExecutionContexts {
   implicit val updateListRead = Json.reads[UpdateList]
   implicit val collectionMetaRead = Json.reads[CollectionMetaUpdate]
+  implicit val trailWrite = Json.writes[Trail]
+  implicit val blockWrite = Json.writes[Block]
 
   def index() = ExpiringAuthentication { request =>
     val identity = Identity(request).get
@@ -83,28 +85,19 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     } getOrElse NotFound
   }
 
-  def updateBlock(id: String): Action[AnyContent] = AjaxExpiringAuthentication { request =>
+  def collectionEdits(): Action[AnyContent] = AjaxExpiringAuthentication { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
-    request.body.asJson flatMap (_.asOpt[UpdateList]) map {
-      case update: UpdateList => {
-        val identity = Identity(request).get
-        UpdateActions.updateCollectionList(id, update, identity)
-        //TODO: How do we know if it was updated or created? Do we need to know?
-        if (update.live) notifyContentApi(id)
-        Ok
-      }
-      case _ => NotFound
-    } getOrElse NotFound
-  }
-
-  def deleteTrail(id: String) = AjaxExpiringAuthentication { request =>
-    FaciaToolMetrics.ApiUsageCount.increment()
-    request.body.asJson flatMap (_.asOpt[UpdateList]) map {
-      case update: UpdateList => {
-        val identity = Identity(request).get
-        UpdateActions.updateCollectionFilter(id, update, identity)
-        if (update.live) notifyContentApi(id)
-        Ok
+    request.body.asJson flatMap (_.asOpt[Map[String, UpdateList]]) map {
+      case update: Map[String, UpdateList] => {
+        val identity: Identity = Identity(request).get
+        val updatedCollections: Map[String, Block] = update.collect {
+          case (verb, updateList) if verb == "update" => UpdateActions.updateCollectionList(updateList.id, updateList, identity)
+          case (verb, updateList) if verb == "remove" => UpdateActions.updateCollectionFilter(updateList.id, updateList, identity)
+        }.flatten.map(b => (b.id, b)).toMap
+        if (updatedCollections.nonEmpty)
+          Ok(Json.toJson(updatedCollections)).as("application/json")
+        else
+          NotFound
       }
       case _ => NotFound
     } getOrElse NotFound

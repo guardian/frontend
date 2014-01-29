@@ -6,15 +6,25 @@ define([
 
     function Interactive(el, context, config) {
 
-        var url = config.page.interactiveUrl + el.getAttribute('data-interactive'),
-            element = el;
-        
+        var interactiveAttr = el.getAttribute('data-interactive'),
+            element = el,
+            bootUrl;
+
+        // Backward compatibility with relative paths.
+        // data-interactive attributes should be absolute from now
+        // onwards.
+        if (/^https?:\/\//.test(interactiveAttr)) {
+            bootUrl = interactiveAttr;
+        } else {
+            bootUrl = config.page.interactiveUrl + interactiveAttr + '/boot.js';
+        }
+
         this.init = function () {
 
             // The contract here is that the interactive module MUST return an object
             // with a method called 'boot'.
 
-            require(url + '/boot.js', function (interactive) {
+            require(bootUrl, function (interactive) {
 
                 // We pass the standard context and config here, but also inject the
                 // mediator so the external interactive can respond to our events.

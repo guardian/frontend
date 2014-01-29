@@ -12,9 +12,9 @@
                 @title.map { title =>
                     <h2 class="container__title tone-@style.tone tone-background tone-accent-border">
                         @config.href.map { href =>
-                            <a data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
+                            <a class="container__title__label u-text-hyphenate" data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
                         }.getOrElse{
-                            @Html(title)
+                            <span class="container__title__label u-text-hyphenate">@Html(title)</span>
                         }
                     </h2>
                 }

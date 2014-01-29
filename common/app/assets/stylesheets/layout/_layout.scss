@@ -4,29 +4,15 @@
 #preloads {
     @include gs-container;
     clear: both;
-    margin-top: $headerHeight;
-}
-
-@include mq(tablet) {
-    #header.has-nav + #preloads {
-        margin-top: 104px;
-    }
 }
 
 
 /* Global header and navigation
    ========================================================================== */
 
-#header.js-site-message {
-    top: auto
-}
-
 #header {
     min-height: $headerHeight;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
+    position: relative;
     z-index: 1050; // On top of Google "Adchoices" label which has z-index: 1040…
 
     /* These styles extend the top bars to the screen edges */
@@ -47,6 +33,7 @@
         }
 
         &.has-nav {
+            min-height: $headerHeight + 40px;
             &:after {
                 top: $headerHeight;
                 height: 40px;
@@ -127,6 +114,9 @@
 }
 
 
+/* Inline images: included here for faster painting
+   ========================================================================== */
+
 .img--inline {
     width: $inArticleInlineImgWidth;
     float: left;
@@ -146,17 +136,6 @@
 .img-tiny.img--inline {
     width: auto;
     max-width: $inArticleInlineImgWidth;
-}
-
-
-/* Preloads
-   ========================================================================== */
-
-#preloads-inner {
-    position: relative;
-    top: 0;
-    height: 100%;
-    width: 100%;
 }
 
 

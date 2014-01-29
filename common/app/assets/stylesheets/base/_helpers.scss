@@ -126,15 +126,26 @@
     border: 0;
     width: 100%;
     background: transparent;
-    
+
     &:focus {
         outline: 0;
     }
 }
 
+
 /**
- * underlines text 
+ * underlines text
  */
+
 .u-underline {
     text-decoration: underline;
+}
+
+
+/**
+ * Prevent line breaks
+ */
+
+.u-nobr {
+    white-space: nowrap;
 }

@@ -127,6 +127,14 @@ object Switches extends Collections {
     "If this switch is on, commercial components will be fed by Moneysupermarket feeds.",
     safeState = Off, sellByDate = endOfQ4)
 
+  val LCMortgageFeedSwitch = Switch("Commercial Feeds", "lc-mortgages",
+    "If this switch is on, commercial components will be fed by London & Country mortgage feed.",
+    safeState = Off, sellByDate = endOfQ4)
+
+  val GuBookshopFeedsSwitch = Switch("Commercial Feeds", "gu-bookshop",
+    "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
+    safeState = Off, sellByDate = endOfQ4)
+
 
   // Analytics Switches
 
@@ -147,7 +155,7 @@ object Switches extends Collections {
 
   val OphanMultiEventSwitch = Switch("Analytics", "ophan-multi-event",
     "Enables the new Ophan tracking javascript which support multiple events per page",
-    safeState = Off, endOfQ4
+    safeState = On, endOfQ4
   )
 
   val OmnitureVerificationSwitch = Switch("Analytics", "omniture-verification",
@@ -157,7 +165,12 @@ object Switches extends Collections {
 
   val DiagnosticsRequestLogging = Switch("Diagnostics", "enable-diagnostics-request-logging",
     "If this switch is on, then requests to the Diagnostics servers will be logged.",
-    safeState = Off, new DateMidnight(2014, 2, 28)
+    safeState = Off, endOfQ4
+  )
+
+  val DiagnosticsJavascriptErrorLogging = Switch("Diagnostics", "enable-diagnostics-js-error-logging",
+    "If this switch is on, then js error reports sent to the Diagnostics servers will be logged.",
+    safeState = Off, endOfQ4
   )
 
   // Discussion Switches
@@ -263,7 +276,7 @@ object Switches extends Collections {
 
   val RightHandMostPopularSwitch = Switch("Feature Switches", "right-hand-most-popular",
     "If this switch is on, a component with most popular content from around the Guardian is displayed in the article right hand column at desktop breakpoints.",
-    safeState = Off, sellByDate = endOfQ4
+    safeState = On, sellByDate = endOfQ4
   )
 
   val IdentityEthicalAwardsSwitch = Switch("Feature Switches", "id-ethical-awards",
@@ -282,24 +295,9 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val ABCommercialInArticleDesktop = Switch("A/B Tests", "ab-commercial-in-articles-desktop",
-    "If this is on an AB test inserts commercial components in the inline and MPU advert slots (scope to desktop)",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 28)
-  )
-
-  val ABCommercialInArticleMobile = Switch("A/B Tests", "ab-commercial-in-articles-mobile",
-    "If this is on an AB test inserts commercial components in the inline and MPU advert slots (scope to mobile browsers)",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 28)
-  )
-
-  val ABChartbeatDesktop = Switch("A/B Tests", "ab-chartbeat-desktop",
-    "This enables Chartbeat tracking on the site. ",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 24)
-  )
-
-  val ABEmailSignup = Switch("A/B Tests", "ab-email-signup",
-    "If this is switched on an AB test runs to test article page email signups",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 24)
+  val ABGravityRecommendations = Switch("A/B Tests", "ab-gravity-recommendations",
+    "Enables gravity beacon code on the site",
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 24)
   )
 
   val TagLinking = Switch("Feature Switches", "tag-linking",
@@ -367,6 +365,10 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val ImageServiceSwitch = Switch("Image Server", "image-service",
+    "If this switch is on images will be served off ak.i.guim.co.uk (dynamic image host). Part of the CDN test. Relies on ImageServerSwitch also being on",
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 7))
+
   val all: List[Switch] = List(
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
@@ -407,10 +409,7 @@ object Switches extends Collections {
     IdentityEthicalAwardsSwitch,
     IdentityFilmAwardsSwitch,
     ABAa,
-    ABCommercialInArticleDesktop,
-    ABCommercialInArticleMobile,
-    ABChartbeatDesktop,
-    ABEmailSignup,
+    ABGravityRecommendations,
     NetworkFrontUkAlpha,
     NetworkFrontUsAlpha,
     NetworkFrontAuAlpha,
@@ -421,12 +420,16 @@ object Switches extends Collections {
     AmaaSwitch,
     ImrWorldwideSwitch,
     DiagnosticsRequestLogging,
+    DiagnosticsJavascriptErrorLogging,
     OmnitureVerificationSwitch,
     TravelOffersFeedSwitch,
     JobFeedSwitch,
     MasterclassFeedSwitch,
     SoulmatesFeedSwitch,
-    MoneysupermarketFeedsSwitch
+    MoneysupermarketFeedsSwitch,
+    LCMortgageFeedSwitch,
+    GuBookshopFeedsSwitch,
+    ImageServiceSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

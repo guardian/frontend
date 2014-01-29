@@ -132,7 +132,6 @@ object Frontend extends Build with Prototypes {
       facia,
       applications,
       sport,
-      coreNavigation,
       discussion,
       router,
       diagnostics,

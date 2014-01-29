@@ -39,7 +39,8 @@ define([
     "common/modules/ui/message",
     "common/modules/identity/autosignin",
     'common/modules/adverts/article-body-adverts',
-    "common/modules/analytics/commercial/tags/container"
+    "common/modules/analytics/commercial/tags/container",
+    "common/modules/interactive/loader"
 ], function (
     $,
     mediator,
@@ -81,7 +82,8 @@ define([
     Message,
     AutoSignin,
     ArticleBodyAdverts,
-    TagContainer
+    TagContainer,
+    Interactive
 ) {
 
     var hasBreakpointChanged = detect.hasCrossedBreakpoint();
@@ -183,7 +185,7 @@ define([
         },
 
         logLiveStats: function (config) {
-            liveStats.log({ beaconUrl: config.page.beaconUrl }, config);
+            liveStats.log(config);
         },
 
         loadAnalytics: function (config, context) {
@@ -249,8 +251,8 @@ define([
         },
 
         loadAdverts: function (config) {
-            if(!userPrefs.isOff('adverts') && config.switches && config.switches.adverts && !config.page.blockAds) {
-
+            if(!userPrefs.isOff('adverts') && config.switches && config.switches.adverts
+                && !config.page.blockVideoAds && !config.page.shouldHideAdverts) {
                 var resizeCallback = function() {
                     hasBreakpointChanged(Adverts.reload);
                 };
@@ -285,7 +287,7 @@ define([
 
         loadVideoAdverts: function(config) {
             mediator.on('page:common:ready', function(config, context) {
-                if(config.switches.videoAdverts && !config.page.blockAds) {
+                if(config.switches.videoAdverts && !config.page.blockVideoAds) {
                     Array.prototype.forEach.call(context.querySelectorAll('video'), function(el) {
                         var support = detect.getVideoFormatSupport();
                         var a = new VideoAdvert({
@@ -356,7 +358,9 @@ define([
                         }
                     });
                 }
-                sequence.init('/' + config.page.pageId);
+                if (config.page.section !== 'identity') {
+                    sequence.init('/' + config.page.pageId);
+                }
             });
         },
 
@@ -394,6 +398,17 @@ define([
             if (window.self !== window.top) {
                 $('html').addClass('iframed');
             }
+        },
+
+        augmentInteractive: function () {
+            mediator.on('page:common:ready', function(config, context) {
+                if (/Article|Interactive/.test(config.page.contentType)) {
+                    var interactives = context.querySelectorAll('figure.interactive');
+                    Array.prototype.forEach.call(interactives, function (i) {
+                        new Interactive(i, context, config).init();
+                    });
+                }
+            });
         }
     };
 
@@ -435,6 +450,7 @@ define([
             modules.unshackleParagraphs(config, context);
             modules.initAutoSignin(config);
             modules.loadTags(config);
+            modules.augmentInteractive();
         }
         mediator.emit("page:common:ready", config, context);
     };
