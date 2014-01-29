@@ -135,7 +135,7 @@ define([
         function showFrontSpark() {
             model.frontSparkUrl(undefined);
             if (vars.state.switches['facia-tool-sparklines']) {
-                model.frontSparkUrl(vars.CONST.sparksBaseFront + getFront());
+                model.frontSparkUrl(vars.sparksBaseFront + getFront());
             }
         }
 

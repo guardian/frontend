@@ -125,7 +125,7 @@ define([
         Article.prototype.sparkline = function() {
             this.state.sparkUrl(undefined);
             if (vars.state.switches['facia-tool-sparklines']) {
-                this.state.sparkUrl(vars.CONST.sparksBase + this.props.id() + (this.meta.updatedAt() ? '&markers=' + this.meta.updatedAt() : ''));
+                this.state.sparkUrl(vars.sparksBase + this.props.id() + (this.meta.updatedAt() ? '&markers=' + this.meta.updatedAt() : ''));
             }
         };
 
