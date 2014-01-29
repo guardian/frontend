@@ -2,7 +2,7 @@ package common
 
 import model.Trail
 import play.api.libs.json.{JsValue, Json}
-import views.support.{Profile, ImgSrc, cleanTrailText}
+import views.support.{Item140, Profile, ImgSrc, cleanTrailText}
 import play.api.mvc.RequestHeader
 
 object TrailToJson {
@@ -13,10 +13,8 @@ object TrailToJson {
       ("trailText", trail.trailText.map{ text =>
         cleanTrailText(text)(Edition(request)).toString()
       }),
-      ("itemPicture", trail.trailPicture(5,3).map{ trailPictures =>
-        trailPictures.largestImage.map { largestImage =>
-          largestImage.url.map(ImgSrc(_, Profile("item-{width}")))
-        }
+      ("itemPicture", trail.trailPicture(5, 3).map{ img =>
+        ImgSrc.imager(img, Item140)
       }),
       ("discussionId", trail.discussionId.map{ id => id }),
       ("webPublicationDate", Json.obj(

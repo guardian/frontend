@@ -30,7 +30,7 @@ define(['common/utils/mediator', 'common/utils/ajax', 'common/modules/onward/seq
             server = sinon.fakeServer.create();
             server.autoRespond = true;
             server.autoRespondAfter = 20;
-            server.respondWith('/uk/news.json?_edition=UK', [200, {}, response]);
+            server.respondWith('/uk/news.json', [200, {}, response]);
             //Set up storage
             setStorageItem('context.path', 'uk/news', 'sessionStorage');
             setStorageItem('context.name', 'uk news', 'sessionStorage');
@@ -65,7 +65,7 @@ define(['common/utils/mediator', 'common/utils/ajax', 'common/modules/onward/seq
             server = sinon.fakeServer.create();
             server.autoRespond = true;
             server.autoRespondAfter = 20;
-            server.respondWith('/most-read/sport.json?_edition=UK', [200, {}, response]);
+            server.respondWith('/most-read/sport.json', [200, {}, response]);
 
             runs(function() {
                 sequence.init();

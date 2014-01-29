@@ -72,7 +72,7 @@ define([
             Id.getUserFromApi(apiCallback);
 
             expect(apiCallback.getCall(0).args[0]).toBe(expectedUser);
-            expect(ajax.reqwest.getCall(0).args[0]["url"]).toBe("https://idapi.theguardian.com/user/me?_edition=undefined");
+            expect(ajax.reqwest.getCall(0).args[0]["url"]).toBe("https://idapi.theguardian.com/user/me");
             expect(ajax.reqwest.getCall(0).args[0]["type"]).toBe("jsonp");
             expect(ajax.reqwest.getCall(0).args[0]["crossOrigin"]).toBe(true);
         });
@@ -103,7 +103,7 @@ define([
             Id.getUserFromApi(apiCallback);
 
             expect(apiCallback.getCall(0).args[0]).toBe(expectedUser);
-            expect(ajax.reqwest.getCall(0).args[0]["url"]).toBe("https://idapi.theguardian.com/user/me?_edition=undefined");
+            expect(ajax.reqwest.getCall(0).args[0]["url"]).toBe("https://idapi.theguardian.com/user/me");
             expect(ajax.reqwest.getCall(0).args[0]["type"]).toBe("jsonp");
             expect(ajax.reqwest.getCall(0).args[0]["crossOrigin"]).toBe(true);
         });

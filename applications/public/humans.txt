@@ -57,3 +57,7 @@ From: London, UK
 QA: Michael McNamara
 Twitter: @m_w_mcnamara
 From: Melbourne, Aus
+
+Software Engineer in Test: Gideon Goldberg
+Twitter: @gidsg
+From: London, UK, Earth, the Universe
