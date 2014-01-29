@@ -51,7 +51,7 @@
                 <ul class="unstyled">
 
                     @if(IdentityEmailVerificationSwitch.isSwitchedOn){
-                        <li class="form-field email-validation">
+                        <li class="form-field form-field--email-validation">
                             @if(user.statusFields.userEmailValidated.getOrElse(false)){
                                 <i class="i i-id-ok"></i>
                                 <p class="form__note">Your email address has been validated.</p>
