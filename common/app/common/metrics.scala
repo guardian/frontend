@@ -255,6 +255,7 @@ object FaciaToolMetrics {
     "faciatool-contentapi-put-failure",
     "Facia tool contentapi put failure count",
     "Number of PUT requests that have failed to the content api"
+  )
 
   object FrontPressSuccess extends CountMetric(
     "facia-front-press",
