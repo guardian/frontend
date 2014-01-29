@@ -45,7 +45,7 @@ class VideoControllerTest extends FlatSpec with Matchers with UsesElasticSearch 
   it should "display an expired message for expired content" in Fake {
     val result = controllers.VideoController.render("world/video/2008/dec/11/guantanamo-bay")(TestRequest("/world/video/2008/dec/11/guantanamo-bay"))
     status(result) should be(410)
-    contentAsString(result) should include("Sorry - the page you are looking for has been removed")
+    contentAsString(result) should include("Sorry - this page has been removed.")
   }
 
 }

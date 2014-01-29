@@ -1,7 +1,7 @@
 package views.support
 
 import common._
-import conf.Switches.{ShowUnsupportedEmbedsSwitch, TagLinking}
+import conf.Switches.TagLinking
 import model._
 
 import java.net.URLEncoder._
@@ -350,12 +350,10 @@ object InBodyElementCleaner extends HtmlCleaner {
   )
 
   override def clean(document: Document): Document = {
-    if (ShowUnsupportedEmbedsSwitch.isSwitchedOff) {
-      // this code removes unsupported embeds
-      val embeddedElements = document.getElementsByTag("figure").filter(_.hasClass("element"))
-      val unsupportedElements = embeddedElements.filterNot(e => supportedElements.exists(e.hasClass))
-      unsupportedElements.foreach(_.remove())
-    }
+    // this code removes unsupported embeds
+    val embeddedElements = document.getElementsByTag("figure").filter(_.hasClass("element"))
+    val unsupportedElements = embeddedElements.filterNot(e => supportedElements.exists(e.hasClass))
+    unsupportedElements.foreach(_.remove())
     document
   }
 }
@@ -536,11 +534,19 @@ object VisualTone {
 }
 
 object RenderOtherStatus {
-  def gonePage(implicit request: RequestHeader) = model.Page(request.path, "news", "Gone", "GFE:Gone")
+  def gonePage(implicit request: RequestHeader) = model.Page(request.path, "news", "This page has been removed", "GFE:Gone")
   def apply(result: SimpleResult)(implicit request: RequestHeader) = result.header.status match {
     case 404 => NoCache(NotFound)
     case 410 if request.isJson => Cached(60)(JsonComponent(gonePage, "status" -> "GONE"))
     case 410 => Cached(60)(Gone(views.html.expired(gonePage)))
     case _ => result
   }
+}
+
+object RenderClasses {
+
+  def apply(classes: Map[String, Boolean]): String = classes.filter(_._2).keys.toSeq.sorted.mkString(" ")
+
+  def apply(classes: String*): String = classes.sorted.mkString(" ")
+
 }

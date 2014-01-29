@@ -9,7 +9,6 @@ define([
     'models/group',
     'models/article',
     'modules/content-api',
-    'modules/ophan-api',
     'js!humanized-time-span'
 ], function(
     config,
@@ -20,8 +19,7 @@ define([
     authedAjax,
     Group,
     Article,
-    contentApi,
-    ophanApi
+    contentApi
     ) {
     function Collection(opts) {
         var self = this;
@@ -141,6 +139,8 @@ define([
 
         if (opts.isRefresh && this.isPending()) { return; }
 
+        if (this.configMeta.uneditable()) { return; }
+
         return authedAjax.request({
             url: vars.CONST.apiBase + '/collection/' + this.id
         })
@@ -226,7 +226,6 @@ define([
     Collection.prototype.decorate = function() {
         _.each(this.groups, function(group) {
             contentApi.decorateItems(group.items());
-            ophanApi.decorateItems(group.items());
         });
     };
 
@@ -235,6 +234,14 @@ define([
 
         this.load({
             isRefresh: true
+        });
+    };
+
+    Collection.prototype.refreshSparklines = function() {
+        _.each(this.groups, function(group) {
+            _.each(group.items(), function(item) {
+                item.sparkline();
+            });
         });
     };
 
