@@ -26,12 +26,13 @@ casper.test.begin("Show Related Content trails", function(test) {
 });
 
 casper.test.begin("Correct amount of related content trails are visible at different viewports", function(test) {
-        casper.viewport(viewports.desktop.width, viewports.desktop.height);
-        test.assertNotVisible('.related__container .item:nth-child(5)','5th trail is not visible at desktop viewport');
-        test.done();
+    casper.viewport(viewports.desktop.width, viewports.desktop.height);
+          test.assertVisible('.related__container .item','1st trail is visible at desktop viewport');
+          test.assertNotVisible('.related__container .item:nth-child(5)','5th trail is not visible at desktop viewport');
+          test.done();
         }, function timeout(){
-    casper.capture(screens + 'related-content-desktop-fail.png');
-    test.fail("5th trail is visible at desktop viewpoer");
+            casper.capture(screens + 'related-content-desktop-fail.png');
+            test.fail("5th trail is visible at desktop viewport");
         });
 
 casper.run(function() {
