@@ -47,6 +47,7 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
     }
 }
 
+
 /* Main elements
    ===========================================================================*/
 
@@ -95,7 +96,6 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
         left: 0;
     }
 }
-
 .fromage__title {
     @include fs-headline(2);
     @include rem((
@@ -396,7 +396,6 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
         }
     }
     .fromage__container {
-
         @include mq(tablet) {
             @include rem((
                 padding-left: gs-span(4) + $gs-gutter
@@ -461,10 +460,16 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
             padding-right: $gs-gutter/4
         ));
     }
+    .fromage__standfirst,
+    .fromage__meta {
+        @include mq(tablet) {
+            @include rem((
+                padding-left: 0
+            ));
+        }
+    }
     &.fromage--has-image {
-        .fromage__title,
-        .fromage__meta,
-        .fromage__standfirst {
+        .fromage__title {
             @include mq(tablet) {
                 @include rem((
                     padding-left: 0
@@ -507,7 +512,8 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
     }
 }
 .fromage--volume-2 {
-    -webkit-font-smoothing: antialiased; // Prevent fonts from being too bold                                            // on the dark background
+    -webkit-font-smoothing: antialiased; // Prevent fonts from being too bold
+                                         // on the dark background
     &,
     .fromage__container {
         background-color: $c-brandBlue;
