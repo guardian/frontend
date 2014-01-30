@@ -106,9 +106,6 @@ define([
                 if (switches['facia-tool-disable']) {
                     terminate();
                 }
-                //// REMOVE !!!!!!!!
-                switches['facia-tool-sparklines'] = true;
-
                 vars.state.switches = switches || {};
             });
         }
