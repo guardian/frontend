@@ -61,3 +61,7 @@ From: Melbourne, Aus
 Software Engineer in Test: Gideon Goldberg
 Twitter: @gidsg
 From: London, UK, Earth, the Universe
+
+Agile Programme Manager: Nichola Johnson
+linkedin: nicholajohnson
+Location: London, UK
