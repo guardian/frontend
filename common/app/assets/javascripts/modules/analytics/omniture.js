@@ -142,7 +142,7 @@ define([
                 s.eVar51  = mvt;
 
                 // prefix all the MVT tests with the alpha user tag if present
-                if (Cookies.get('GU_ALPHA') === "true") {
+                if (Cookies.get('GU_ALPHA') === "true" || Cookies.get('GU_ALPHA_PHASE_2') === "true") {
                     var alphaTag = 'r2alpha,';
                     s.prop51  = alphaTag + s.prop51;
                     s.eVar51  = alphaTag + s.eVar51;

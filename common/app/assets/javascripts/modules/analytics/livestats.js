@@ -41,7 +41,7 @@ define([
         log : function (config) {
 
             if (config.switches.liveStats) {
-                var inAlphaTest = !!Cookies.get('GU_ALPHA');
+                var inAlphaTest = !!Cookies.get('GU_ALPHA') || !!Cookies.get('GU_ALPHA_PHASE_2');
 
                 if (inAlphaTest) {
                     var liveStatsView = {platform: 'responsive'};
