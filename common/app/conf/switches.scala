@@ -287,6 +287,10 @@ object Switches extends Collections {
     "If this switch is on, Film awards forms will be available",
     safeState = Off, sellByDate = endOfQ4)
 
+  val NetworkFrontOptIn = Switch("Feature Switches", "network-front-opt-in",
+    "If this is switched on then an opt-in message will be displayed to users coming from the R2 network front",
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
+  )
 
   // A/B Test Switches
 
@@ -421,7 +425,8 @@ object Switches extends Collections {
     MoneysupermarketFeedsSwitch,
     LCMortgageFeedSwitch,
     GuBookshopFeedsSwitch,
-    ImageServiceSwitch
+    ImageServiceSwitch,
+    NetworkFrontOptIn
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
