@@ -33,10 +33,10 @@
     <ul class="l-columns linkslist">
         @items.slice(6, 22).zipWithIndex.map{ case (trail, index) =>
             @trail match {
-                case g: Gallery                      => { @fragments.items.linkList.gallery(g, index + 6) }
-                case v: Video                        => { @fragments.items.linkList.video(v, index + 6) }
-                case c if VisualTone(c) == "comment" => { @fragments.items.linkList.comment(c, index + 6) }
-                case t                               => { @fragments.items.linkList.standard(t, index + 6) }
+                case g: Gallery                      => { @fragments.items.linksList.gallery(g, index + 6) }
+                case v: Video                        => { @fragments.items.linksList.video(v, index + 6) }
+                case c if VisualTone(c) == "comment" => { @fragments.items.linksList.comment(c, index + 6) }
+                case t                               => { @fragments.items.linksList.standard(t, index + 6) }
             }
         }
     </ul>

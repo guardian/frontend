@@ -433,3 +433,21 @@ $c-live: #e81818;
         ));
     }
 }
+
+.action--has-icon {
+    @include rem((
+        padding-left: $action-icon-width + $action-icon-rightspace
+    ));
+
+    .i {
+        float: left;
+        @include rem((
+            margin-left: ($action-icon-width + $action-icon-rightspace) * -1
+        ));
+    }
+}
+.action--tone-comment .i.i-quote-orange { // Chained selector to overrule icon code from global.css
+    margin-top: 3px; // Align icon with text
+    width: 1.45em;
+    background-size: contain;
+}

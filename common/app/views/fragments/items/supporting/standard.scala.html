@@ -1,0 +1,7 @@
+@(supporting: Trail, index: Int)(implicit request: RequestHeader)
+
+<li class="fromage__support__item">
+    <a href="@LinkTo{@supporting.url}" class="fromage__support__action" data-link-name="supporting | @{index + 1}">
+        @supporting.headline
+    </a>
+</li>
