@@ -343,7 +343,7 @@ define([
 
         displayOnboardMessage: function (config) {
             if(window.location.hash === '#opt-in-message' && config.switches.networkFrontOptIn) {
-                bean.on('click', '.js-site-message-close', function() {
+                bean.on(document, 'click', '.js-site-message-close', function() {
                     Cookies.add("GU_VIEW", "mobile", 365);
                     Cookies.add("GU_ALPHA", "true", 365);
                 });
