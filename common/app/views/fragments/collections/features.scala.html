@@ -31,7 +31,7 @@
 </div>
 <div class="linkslist-container js-container--show-more">
     <ul class="l-columns linkslist">
-        @items.slice(8, 24).zipWithIndex.map{ case (trail, index) =>
+        @items.slice(6, 22).zipWithIndex.map{ case (trail, index) =>
             @trail match {
                 case g: Gallery                      => { @fragments.items.linkList.gallery(g, index + 6) }
                 case v: Video                        => { @fragments.items.linkList.video(v, index + 6) }
