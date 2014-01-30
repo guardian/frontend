@@ -110,7 +110,7 @@
         }
     }
     .linkslist-container:before {
-        background: $c-featureAccent;
+        background: $c-featureAccent; // Change color of border on top of the links list container
     }
     .l-row--items-4 {
         // Compensate lost space caused by loss of meta
