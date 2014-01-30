@@ -11,7 +11,7 @@ set -o errexit
 #
 ################################################################################
 
-./grunt-tc clean compile jshint:common test:unit
+./grunt-tc clean jshint:common test:unit compile
 ./sbt-tc compile test
 
 echo "Done testing."

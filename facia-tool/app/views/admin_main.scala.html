@@ -54,20 +54,25 @@
 
     <img class="logo" src="@routes.Assets.at("images/logo.png")" />
 
-    <h1 class="tool-title">
-        Fronts Editor
-        <span class="message message--loading" data-bind="visible: false">loading...</span>
-        @if(Play.isDev && Configuration.facia.stage.toLowerCase != "dev") {
-            <span class="message message--important">editing @Configuration.facia.stage.toUpperCase!</span>
-        }
-    </h1>
+    <h1 class="tool-title">Fronts Editor</h1>
 
-    @if(isAuthed) {
-        @content
+    @if(Switches.ToolDisable.isSwitchedOn) {
+        <span class="message message--important">Temporarily disabled. Please try again shortly.</span>
     } else {
-        <form action="@routes.Login.loginPost()" method="post" class="login-form">
-            <input value="Log In" class="tool" type="submit" id="login-button">
-        </form>
+        @if(isAuthed) {
+            <span class="message message--loading" data-bind="visible: false">Loading...</span>
+
+            @if(Play.isDev && Configuration.facia.stage.toLowerCase != "dev") {
+                <span class="message message--important">Editing @Configuration.facia.stage.toUpperCase!</span>
+            }
+
+            <a class="log-in-out" href="/logout">Logout</a>
+            @content
+        } else {
+            <form action="@routes.Login.loginPost()" method="post" class="login-form tools">
+                <input value="Log In" class="tool" type="submit" id="login-button">
+            </form>
+        }
     }
 
     <link href='//fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>

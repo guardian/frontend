@@ -39,7 +39,7 @@ object VideoController extends Controller with Logging with ExecutionContexts {
       ModelOrResult(model, response)
     }
 
-    result recover suppressApiNotFound
+    result recover convertApiExceptions
   }
 
   private def renderVideo(model: VideoPage)(implicit request: RequestHeader): SimpleResult = {

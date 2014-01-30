@@ -3,12 +3,14 @@ define([
     'bonzo',
     'bean',
     'qwery',
+    'common/utils/detect',
     'common/utils/mediator'
 ], function (
     $,
     bonzo,
     bean,
     qwery,
+    detect,
     mediator
 ) {
 
@@ -22,7 +24,7 @@ define([
 
         this._items = [];
 
-        this._showCount = 8;
+        this._showCount = (detect.getBreakpoint() === 'mobile') ? 8 : 1000000; // Show everything at once on multi column layouts
 
         this._className = 'show-more--hidden';
 

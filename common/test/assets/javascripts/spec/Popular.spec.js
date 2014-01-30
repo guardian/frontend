@@ -28,7 +28,7 @@ define(['common/common', 'bonzo', 'common/utils/ajax', 'common/modules/onward/po
         it("should request the most popular feed and graft it on to the dom", function(){
 
             var section = 'culture';
-            server.respondWith('/most-read/' + section + '.json?_edition=UK', [200, {}, '{ "html": "<b>popular</b>" }']);
+            server.respondWith('/most-read/' + section + '.json', [200, {}, '{ "html": "<b>popular</b>" }']);
 
             appendTo = document.querySelector('.js-popular');
 
@@ -47,7 +47,7 @@ define(['common/common', 'bonzo', 'common/utils/ajax', 'common/modules/onward/po
 
         it('should not pass section if section is "global"', function(){
 
-            server.respondWith('/most-read.json?_edition=UK', [200, {}, '{ "html": "<b>popular</b>" }']);
+            server.respondWith('/most-read.json', [200, {}, '{ "html": "<b>popular</b>" }']);
 
             appendTo = document.querySelector('.js-popular');
 

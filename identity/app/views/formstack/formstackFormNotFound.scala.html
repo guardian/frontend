@@ -2,18 +2,18 @@
 
 <!DOCTYPE html>
 <html class="js-off" lang="en-GB">
-    <head>
-        <meta charset="utf-8" />
-        <title>@Html(metaData.webTitle)</title>
-        @fragments.commonCssSetup(projectName)
-        @fragments.commonJavaScriptSetup(metaData, "app")
-    </head>
-    <body id="top" itemscope itemtype="http://schema.org/WebPage" itemref="schema-WebPage">
+<head>
+    <meta charset="utf-8" />
+    <title>@Html(metaData.webTitle)</title>
+    @fragments.commonCssSetup(projectName)
+    @fragments.commonJavaScriptSetup(metaData)
+</head>
+<body id="top" itemscope itemtype="http://schema.org/WebPage" itemref="schema-WebPage">
 
-        <div id="preload-1">
-            <h2 class="formstack-heading formstack-heading--first">Form not found</h2>
-            <p>Sorry - we haven't been able to serve the page you asked for.</p>
-        </div>
+    <div id="preload-1">
+        <h2 class="formstack-heading formstack-heading--first">Form not found</h2>
+        <p>Sorry - we haven't been able to serve the page you asked for.</p>
+    </div>
 
-    </body>
+</body>
 </html>

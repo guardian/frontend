@@ -5,7 +5,6 @@ define([
     'common/modules/experiments/ab',
     'common/utils/storage',
     'common/modules/identity/api',
-    'common/modules/analytics/errors',
     'common/utils/cookies',
     'omniture',
     'common/modules/analytics/mvt-cookie',
@@ -16,11 +15,10 @@ define([
     ab,
     storage,
     id,
-    Errors,
     Cookies,
     s,
     mvtCookie,
-    Beacon
+    beacon
     ) {
 
     // https://developer.omniture.com/en_US/content_page/sitecatalyst-tagging/c-tagging-overview
@@ -276,12 +274,9 @@ define([
         });
 
         common.mediator.on('module:analytics:omniture:pageview:sent', function(){
-            // there is currently no SSL version of the beacon
-            if(!config.page.isSSL){
-                // independently log this page view
-                // used for checking we have not broken analytics
-                new Beacon("/count/pva.gif").fire();
-            }
+            // independently log this page view
+            // used for checking we have not broken analytics
+            beacon.fire("/count/pva.gif");
         });
 
     }

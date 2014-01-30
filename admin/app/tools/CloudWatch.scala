@@ -35,7 +35,6 @@ object CloudWatch extends implicits.Futures{
   ).flatten
 
   val secondaryLoadBalancers = Seq(
-    LoadBalancer( "frontend-core-navigation"),
     LoadBalancer( "frontend-discussion"),
     LoadBalancer( "frontend-identity"),
     LoadBalancer( "frontend-image"),
@@ -68,9 +67,11 @@ object CloudWatch extends implicits.Futures{
 
   val assetsFiles = Seq(
     "app.js",
+    "facia.js",
     "global.css",
     "head.default.css",
-    "head.facia.css"
+    "head.facia.css",
+    "head.identity.css"
   )
 
   def shortStackLatency = latency(primaryLoadBalancers)
@@ -133,8 +134,8 @@ object CloudWatch extends implicits.Futures{
       )
     }.toSeq
   }
-  
-  def jsErrors = { 
+
+  def jsErrors = {
     val metrics = jsErrorMetrics.map{ case (graphTitle, metric) =>
         euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
           .withStartTime(new DateTime().minusHours(6).toDate)
@@ -148,7 +149,7 @@ object CloudWatch extends implicits.Futures{
         }
     new LineChart("JavaScript Errors", Seq("Time") ++ jsErrorMetrics.map{ case(title, name) => name}.toSeq, metrics:_*)
   }
-  
+
   def fastlyErrors = fastlyMetrics.map{ case (graphTitle, metric, region, service) =>
     new LineChart(graphTitle, Seq("Time", metric),
       euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
@@ -163,7 +164,7 @@ object CloudWatch extends implicits.Futures{
         asyncHandler)
     )
   }.toSeq
-  
+
   def liveStats(statistic: String) = new LineChart(statistic, Seq("Time", statistic),
     euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
       .withStartTime(new DateTime().minusHours(6).toDate)

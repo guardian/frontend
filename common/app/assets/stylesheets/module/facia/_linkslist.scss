@@ -17,10 +17,8 @@
             padding-bottom: $gs-baseline
         ));
     }
-    @include mq($to: tablet) {
-        &.show-more--hidden {
-            display: none;
-        }
+    &.show-more--hidden {
+        display: none;
     }
 }
 .linkslist__action {
@@ -31,4 +29,27 @@
     &:visited {
         color: $c-neutral2;
     }
+}
+
+$linkslist-icon-width: 23px;
+$linkslist-icon-rightspace: 7px;
+
+.linkslist__action--has-icon {
+    @include rem((
+        padding-left: $linkslist-icon-width + $linkslist-icon-rightspace
+    ));
+
+    .linkslist__icon {
+        float: left;
+        @include rem((
+            margin-left: ($linkslist-icon-width + $linkslist-icon-rightspace) * -1
+        ));
+        .linkslist__item--tone-comment {
+            margin-top: 3px; // Align icon with text
+        }
+    }
+}
+.i.linkslist__icon { // Chained selector to overrule icon code from global.css
+    width: 1.45em;
+    background-size: contain;
 }

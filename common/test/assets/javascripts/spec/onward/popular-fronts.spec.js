@@ -47,7 +47,7 @@ define(['common/modules/onward/popular-fronts', 'bonzo', 'common/$', 'bean', 'he
 
         it('should call correct most-read endpoint', function() {
             var section = 'sport';
-            server.respondWith('/most-read/' + section + '.json?_edition=UK', [200, {}, response]);
+            server.respondWith('/most-read/' + section + '.json', [200, {}, response]);
             popular.render({
                 page: {
                     section: section

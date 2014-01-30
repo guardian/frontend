@@ -2,8 +2,7 @@ package model.commercial.jobs
 
 import scala.xml.Elem
 import conf.{Switches, CommercialConfiguration}
-import model.commercial.Utils.OptString
-import model.commercial.XmlAdsApi
+import model.commercial.{OptString, XmlAdsApi}
 import org.joda.time.format.DateTimeFormat
 import org.apache.commons.lang.StringEscapeUtils.unescapeHtml
 
