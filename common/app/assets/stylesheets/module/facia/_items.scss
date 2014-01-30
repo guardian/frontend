@@ -446,10 +446,8 @@ $c-live: #e81818;
         ));
     }
 }
-.action--tone-comment .i {
+.action--tone-comment .i.i-quote-orange { // Chained selector to overrule icon code from global.css
     margin-top: 3px; // Align icon with text
-}
-.action--has-icon .i.i-quote-orange { // Chained selector to overrule icon code from global.css
     width: 1.45em;
     background-size: contain;
 }
