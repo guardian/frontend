@@ -9,27 +9,27 @@ import scala.io.Source
 import services.S3
 import play.api.templates.Html
 
-// looks yonder for an archived file in S3 bucket
+// looks for an archived file in S3 bucket
 object S3Yonder extends S3 {
  override lazy val bucket = "aws-frontend-archive"
  def getHtml(path: String) = get(path) 
 }
 
-// Yonder
 object ArchiveController extends Controller with Logging with ExecutionContexts {
  
-  // A giant database of redirects that will some day live in the Content API
+  // A big _database_ of redirects that will some day live in the Content API
   def isRedirect(path: String) = Source.fromFile("resources/redirects__1000-lines").getLines.contains(path) 
 
-  // ...
+  // do we have an archived copy of this resource? 
   def existsInS3(path: String) = S3Yonder.getHtml(path)  
 
-  // accepts a path in Guardian webspace, then looks it up in r2-land
+  //  
   def archive(path: String) = Action { implicit request =>
    
     val subDomain = request.headers("Host").split("""\.""")(0)
     val host = s"""$subDomain.theguardian.com/"""
 
+    // redirect -> 301? s3 -> 200? no -> then 404. 
     isRedirect(s"""$subDomain/$path""") match { 
       case true => Ok("301")
       case _ => {  
