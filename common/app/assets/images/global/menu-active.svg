@@ -1,1 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" height="12" width="18" enable-background="new 0 0.5 18 12" viewBox="0 0.5 18 12"><rect y=".5" width="18" fill="#004179" height="2"/><rect y="5.5" width="18" fill="#004179" height="2"/><polygon points="0,10.5,18,10.5,18,12.5,2.563,12.5,0,12.5" fill="#004179"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" height="12" width="18" enable-background="new 0 0.5 18 12" viewBox="0 0.5 18 12"><path fill="#004179" d="M0 .5h18v2h-18zm0 5h18v2h-18zm0 5h18v2h-18z"/></svg>
