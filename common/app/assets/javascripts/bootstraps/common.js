@@ -350,18 +350,22 @@ define([
                 var message = new Message('onboard', { type: 'modal' }),
                     path = (document.location.pathname) ? document.location.pathname : '/',
                     exitLink = '/preference/platform/desktop?page=' + encodeURIComponent(path + '?view=desktop'),
-                    msg = '<h2 class="site-message__header">Welcome!</h2>' +
+                    msg = '<h2 class="site-message__header">Thanks for joining us.</h2>' +
                     '<div class="site-message__message">' +
-                    '<p>You’re viewing an alpha release of the Guardian’s responsive website. <a href="http://next.theguardian.com/">Find out more</a>' +
+                    '<p>You’re looking at a prototype of our new website. Opt-out any time by clicking "Classic version" at the bottom of the page. <a href="http://next.theguardian.com/">Find out more</a>.' +
                     '</p>' +
-                    '<ul class="site-message__list"><li class="site-message__list__item">Section pages</li><li class="site-message__list__item">Articles will lorem ipsum</li></ul>' +
+                    '<ul class="site-message__list">' +
+                    '<li class="site-message__list__item">Our new front pages and content pages are a work in progress.</li>' +
+                    '<li class="site-message__list__item">We love feedback - <a href="http://next.theguardian.com/feedback/">let us know yours</a>.</li>' +
+                    '<li class="site-message__list__item">Stay up to date with new releases on <a href="http://next.theguardian.com/updates/">our blog</a>.</li>' +
+                    '</ul>' +
                     '<ul class="site-message__actions unstyled">' +
                     '<li class="site-message__actions__item"><i class="i i-arrow-white-circle"></i>  '+
-                    '<a class="js-site-message-close" data-link-name="R2 alpha opt in">Enter website</a>' +
+                    '<a class="js-site-message-close" data-link-name="R2 alpha opt in">Got it</a>' +
                     '<li class="site-message__actions__item">' +
                     '<i class="i i-back-white"></i>' +
                     '<a class="js-main-site-link" rel="nofollow" href="' + exitLink + '"' +
-                    'data-link-name="R2 alpha opt out">Opt-out and return to standard desktop site </a>' +
+                    'data-link-name="R2 alpha opt out">Opt-out and return to the old site </a>' +
                     '</li>' +
                     '</ul>';
                 message.show(msg);
