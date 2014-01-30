@@ -5,7 +5,6 @@ define([
     'utils/url-abs-path',
     'modules/auto-complete',
     'models/article',
-    'modules/ophan-api',
     'modules/cache',
     'modules/authed-ajax',
     'knockout'
@@ -15,7 +14,6 @@ define([
     urlAbsPath,
     autoComplete,
     Article,
-    ophanApi,
     cache,
     authedAjax,
     ko
@@ -121,8 +119,6 @@ define([
                         self.articles.push(new Article(article));
                         cache.put('contentApi', article.id, article);
                     });
-
-                    ophanApi.decorateItems(self.articles());
                 });
             }, 300);
 

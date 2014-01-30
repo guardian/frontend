@@ -2,19 +2,27 @@
 
 @defining((VisualTone(trail), containerIndex == 0, containerIndex == 0 && index < 3)) { case (tone, isFirstContainer, inlineImages) =>
     <@element
-        class="item item--dark item--gallery tone-@tone @if(isFirstContainer){ item--force-image-upgrade}"
+        class="@RenderClasses(
+                    "item",
+                    "item--dark",
+                    "item--gallery",
+                    "item--has-image",
+                    s"tone-$tone",
+                    "item--force-image-upgrade")"
         data-link-name="trail | @{index + 1}"
         @trail.discussionId.map{ id => data-discussion-id="@id" }
         data-discussion-closed="@trail.isClosedForComments">
 
-        <div class="item__container">
+        <div class="item__container tone-border">
+
             @trail.trailPicture(5,3).map{ imageContainer =>
                 @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
                     <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border gallerythumbs" data-link-name="article">
                         <div class="item__media-wrapper">
-                            <div class="item__cta item--gallery">
+                            <div class="item__cta item__cta--gallery">
                                 <p>Expand</p>
-                                <i class="i i-expand-white"></i>
+                                <i class="i i-camera-black-large i--default"></i>
+                                <i class="i i-camera-yellow-large i--hover"></i>
                             </div>
                             <div class="item__image-container js-image-upgrade @if(inlineImages){ inlined-image}" data-src="@imgSrc" @if(isFirstContainer){ data-force-upgrade="desktop wide"}>
                                 @if(inlineImages){
@@ -27,9 +35,10 @@
             }.getOrElse{
                 <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border gallerythumbs" data-link-name="article">
                     <div class="item__media-wrapper">
-                        <div class="item__cta item--gallery">
+                        <div class="item__cta item__cta--gallery">
                             <p>Expand</p>
-                            <i class="i i-expand-white"></i>
+                            <i class="i i-camera-black-large i--default"></i>
+                            <i class="i i-camera-yellow-large i--hover"></i>
                         </div>
                         <div class="item__image-container">
                             <img src="@Static("images/no-image.png")" class="responsive-img" alt="" />
@@ -59,6 +68,8 @@
                     <span class="timestamp__text"><span class="u-h">Published: </span>@Format(trail.webPublicationDate, "d MMM y")</span>
                 </time>
             </div>
+
         </div>
+
     </@element>
 }

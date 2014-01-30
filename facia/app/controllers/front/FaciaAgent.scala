@@ -7,10 +7,13 @@ import play.api.libs.json.Json._
 import play.api.libs.json._
 import play.api.libs.ws.{ WS, Response }
 import play.api.libs.json.JsObject
+import services.ConfigAgentTrait
+import play.api.http.Status
 import services.{SecureS3Request, S3FrontsApi}
 import scala.concurrent.Future
 import common.FaciaMetrics.S3AuthorizationError
 import scala.collection.immutable.SortedMap
+import akka.agent.Agent
 
 object Path {
   def unapply[T](uri: String) = Some(uri.split('?')(0))
@@ -56,7 +59,9 @@ trait ParseConfig extends ExecutionContexts with Logging {
       (json \ "contentApiQuery").asOpt[String].filter(_.nonEmpty),
       (json \ "displayName").asOpt[String],
       (json \ "tone").asOpt[String],
-      (json \ "href").asOpt[String]
+      (json \ "href").asOpt[String],
+      (json \ "groups").asOpt[Seq[String]] getOrElse Nil,
+      (json \ "roleName").asOpt[String]
     )
 
 }
@@ -254,46 +259,6 @@ object QueryAgents {
   def apply(id: String): Option[FaciaPage] = items(id).map(FaciaPage(id, _))
 }
 
-trait ConfigAgent extends ExecutionContexts {
-  private val configAgent = AkkaAgent[JsValue](FaciaDefaults.getDefaultConfig)
-
-  def refresh() = S3FrontsApi.getMasterConfig map {s => configAgent.send(Json.parse(s))}
-
-  def getPathIds: List[String] = {
-    val json = configAgent.get()
-    (json \ "fronts").asOpt[Map[String, JsValue]].map { _.keys.toList } getOrElse Nil
-  }
-
-  def getConfigForId(id: String): Option[List[Config]] = {
-    val json = configAgent.get()
-    (json \ "fronts" \ id \ "collections").asOpt[List[String]] map { configList =>
-      configList flatMap getConfig
-    }
-  }
-
-  def getConfig(id: String): Option[Config] = {
-    val json = configAgent.get()
-    (json \ "collections" \ id).asOpt[JsValue] map { collectionJson =>
-      Config(
-        id,
-        (collectionJson \ "apiQuery").asOpt[String],
-        (collectionJson \ "displayName").asOpt[String].filter(_.nonEmpty),
-        (collectionJson \ "tone").asOpt[String],
-        (collectionJson \ "href").asOpt[String]
-      )
-    }
-  }
-
-  def getAllCollectionIds: List[String] = {
-    val json = configAgent.get()
-    (json \ "collections").asOpt[Map[String, JsValue]] map { collectionMap =>
-      collectionMap.keys.toList
-    } getOrElse Nil
-  }
-
-  def close() = configAgent.close()
-
-  def contentsAsJsonString: String = Json.prettyPrint(configAgent.get)
+object ConfigAgent extends ConfigAgentTrait with ExecutionContexts {
+  val configAgent: Agent[JsValue] = AkkaAgent[JsValue](FaciaDefaults.getDefaultConfig)
 }
-
-object ConfigAgent extends ConfigAgent

@@ -1,7 +1,8 @@
 import java.io.File
 import play.api._
+import services.FaciaToolLifecycle
 
-object Global extends GlobalSettings {
+object Global extends FaciaToolLifecycle with GlobalSettings {
 
   lazy val devConfig = Configuration.from(Map("session.secure" -> "false"))
 

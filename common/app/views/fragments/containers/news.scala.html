@@ -1,23 +1,26 @@
 @(config: Config, collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
 
+@import org.joda.time.DateTime
+
 @defining(config.displayName.orElse(collection.displayName)) { title =>
 
     @defining(templateDeduping(8, collection.items)) { items =>
         @if(items.nonEmpty) {
-            <section class="container container--@style.containerType @if(containerIndex > 0 && title.nonEmpty){js-container--toggle}"
+            <section class="container container--row-pattern container--@style.containerType @if(containerIndex > 0 && title.nonEmpty){js-container--toggle} js-container-add-show-more"
                      data-link-name="block | @config.id"
                      data-id="@config.id"
                      data-type="@style.containerType">
 
-                @title.map { title =>
-                    <h2 class="container__title tone-@style.tone tone-background tone-accent-border">
-                        @config.href.map { href =>
-                            <a data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
-                        }.getOrElse{
-                            @Html(title)
-                        }
-                    </h2>
-                }
+                <h2 class="container__title">
+                    <span class="container__title__label today u-text-hyphenate">
+                        <span class="today__dayofweek js-dayofweek">@Format(DateTime.now(), "EEEE")</span>
+                        <span class="u-nobr">
+                            <span class="today__dayofmonth js-dayofmonth">@Format(DateTime.now(), "d")</span>
+                            <span class="today__month">@Format(DateTime.now(), "MMMM")</span>
+                            <span class="today__year">@Format(DateTime.now(), "yyyy")</span>
+                        </span>
+                    </span>
+                </h2>
 
                 @fragments.collections.rowPattern(config, items, style, containerIndex)
 
