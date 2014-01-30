@@ -24,7 +24,11 @@
                             "collection__item" -> true,
                             s"collection__item--volume-${trail.group.getOrElse("0")}" -> true,
                             s"collection__item--tone-${VisualTone(trail)}" -> true))">
-                @fragments.items.standard(trail, index + 2, 0, "div")
+                @trail match {
+                    case g: Gallery => { @fragments.items.gallery(g, index + 2, 0, "div") }
+                    case v: Video   => { @fragments.items.video(v, index + 2, 0, "div") }
+                    case t          => { @fragments.items.standard(t, index + 2, 0, "div") }
+                }
             </li>
         }
     </ul>

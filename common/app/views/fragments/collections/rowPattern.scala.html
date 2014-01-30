@@ -31,8 +31,8 @@
                 @trail match {
                     case g: Gallery                                  => { @fragments.items.thumbnailGallery(g, index + 2, 0, "div") }
                     case v: Video                                    => { @fragments.items.thumbnailVideo(v, index + 2, 0, "div") }
-                    case _ if trail.imageAdjust == Some("highlight") => { @fragments.items.standard(trail, index + 2, 0, "div") }
-                    case _                                           => { @fragments.items.thumbnail(trail, index + 2, 0, "div") }
+                    case t if trail.imageAdjust == Some("highlight") => { @fragments.items.standard(t, index + 2, 0, "div") }
+                    case t                                           => { @fragments.items.thumbnail(t, index + 2, 0, "div") }
                 }
             </li>
         }
@@ -51,7 +51,7 @@
                 @trail match {
                     case g: Gallery => { @fragments.items.gallery(g, index + 4, 0, "div") }
                     case v: Video   => { @fragments.items.video(v, index + 4, 0, "div") }
-                    case other      => { @fragments.items.standard(trail, index + 4, 0, "div") }
+                    case t          => { @fragments.items.standard(t, index + 4, 0, "div") }
                 }
             </li>
         }
