@@ -228,12 +228,9 @@
         }
     }
 }
+.container--news .collection__item--content-type-gallery,
+.container--news .collection__item--content-type-video,
 .container--news .collection__item--tone-comment {
-    &,
-    .item__meta {
-        background: $c-neutral7;
-    }
-
     @include hide-background-on-item-sides;
 
     .item__title,
