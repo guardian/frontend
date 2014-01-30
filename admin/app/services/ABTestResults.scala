@@ -1,6 +1,6 @@
 package services
 
-import conf.PorterConfiguration
+import conf.AdminConfiguration
 import scala.slick.jdbc.StaticQuery
 import scala.slick.session.Session
 import scala.math.BigDecimal
@@ -17,7 +17,7 @@ object ABTestResults extends implicits.Dates with Logging {
 
     log info ("Running SQL:\n%s" format sql)
 
-    val data = PorterConfiguration.analytics.db withSession {
+    val data = AdminConfiguration.analytics.db withSession {
       implicit session: Session => StaticQuery.queryNA[(Int, String, Double)](sql).list()
     }
 
