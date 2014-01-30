@@ -11,9 +11,10 @@
     <ul class="unstyled l-row l-row--items-4 collection">
         @items.slice(2, 6).zipWithIndex.map{ case (trail, index) =>
             @trail match {
-                case g: Gallery => { @fragments.items.rowPattern.standardGallery(g, index + 2, 0) }
-                case v: Video   => { @fragments.items.rowPattern.standardVideo(v, index + 2, 0) }
-                case t          => { @fragments.items.rowPattern.standard(t, index + 2, 0) }
+                case g: Gallery                      => { @fragments.items.rowPattern.standardGallery(g, index + 2, 0) }
+                case v: Video                        => { @fragments.items.rowPattern.standardVideo(v, index + 2, 0) }
+                case c if VisualTone(c) == "comment" => { @fragments.items.rowPattern.standardComment(c, index + 2, 0) }
+                case t                               => { @fragments.items.rowPattern.standard(t, index + 2, 0) }
             }
         }
     </ul>
