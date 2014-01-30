@@ -11,6 +11,12 @@ casper.test.setUp(function() {
     casper.start(host + "environment/2014/jan/26/power-failures-future-frequent-blackouts-electricity-supply");
 });
 
+/**
+* Scenario: Show related content trails
+* Given I am on an article with no story package
+* Then I can see 5 related content trails
+**/
+
 casper.test.begin("Show Related Content trails", function(test) {
     casper.then(function testRelatedContent() {
         casper.waitForSelector("#related-content-head", function() {
@@ -24,6 +30,13 @@ casper.test.begin("Show Related Content trails", function(test) {
         });
     });
 });
+
+/**
+* Scenario: Show 4 related content trails on Desktop
+* Given I am on a desktop viewport
+* When I load an article with no story package
+* Then I can see 4 related content trails
+**/
 
 casper.test.begin("Correct amount of related content trails are visible at different viewports", function(test) {
     casper.viewport(viewports.desktop.width, viewports.desktop.height);
