@@ -51,13 +51,14 @@
 .guardian-logo-wrapper {
     float: left;
     margin: 20px 0 18px $gs-gutter/2;
+    @include rem((margin-left: $gs-gutter/2));
 
     i {
         display: block;
     }
 
     @include mq(mobileLandscape) {
-        margin-left: $gs-gutter;
+        @include rem((margin-left: $gs-gutter));
     }
 }
 
@@ -66,12 +67,16 @@
    ========================================================================== */
 
 .monocolumn-wrapper {
-    padding-left: $gs-gutter / 2;
-    padding-right: $gs-gutter / 2;
+    @include rem((
+        padding-left: $gs-gutter / 2,
+        padding-right: $gs-gutter / 2
+    ));
 
     @include mq(mobileLandscape) {
-        padding-left: $gs-gutter;
-        padding-right: $gs-gutter;
+        @include rem((
+            padding-left: $gs-gutter,
+            padding-right: $gs-gutter
+        ));
     }
 
     .page-header,
@@ -83,7 +88,7 @@
 
 @include mq(tablet) {
     .monocolumn-wrapper {
-        max-width: gs-span(8);
+        @include rem((max-width: gs-span(8)));
         margin-left: auto;
         margin-right: auto;
     }
@@ -101,15 +106,17 @@
  */
 
 .component {
-    margin-bottom: 20px;
+    @include rem((margin-bottom: 20px));
 }
 
 .box-indent {
-    padding: 0 $gs-gutter/2 $baseline;
+    @include rem((padding: 0 $gs-gutter/2 $baseline));
 
     @include mq(mobileLandscape) {
-        padding-left: $gs-gutter;
-        padding-right: $gs-gutter;
+        @include rem((
+            padding-left: $gs-gutter,
+            padding-right: $gs-gutter
+        ));
     }
 }
 
@@ -118,24 +125,26 @@
    ========================================================================== */
 
 .img--inline {
-    width: $inArticleInlineImgWidth;
     float: left;
     clear: left;
-    margin: 3px $gs-gutter 0 0;
+    @include rem((
+        width: $inArticleInlineImgWidth,
+        margin: 3px $gs-gutter 0 0
+    ));
 
     @include mq(mobileLandscape) {
-        width: gs-span(2);
+        @include rem((width: gs-span(2)));
     }
 
     figcaption {
-        padding-top: $baseline;
+        @include rem((padding-top: $baseline));
         word-wrap: break-word;
     }
 }
 
 .img-tiny.img--inline {
     width: auto;
-    max-width: $inArticleInlineImgWidth;
+    @include rem((max-width: $inArticleInlineImgWidth));
 }
 
 
@@ -143,11 +152,11 @@
    ========================================================================== */
 
 .preload-msg {
-    padding: 50px 50px 250px 50px;
+    @include rem((padding: 50px 50px 250px 50px));
     text-align: center;
 }
 
 .preload-msg .is-updating {
     display: block;
-    margin: 10px auto;
+    @include rem((margin: 10px auto));
 }
