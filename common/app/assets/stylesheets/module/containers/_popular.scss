@@ -1,4 +1,18 @@
 .container--popular {
+
+    #most-popular-head{
+        display: none;
+    }
+    @include mq($to: wide) {
+        .headline-list {
+            @include rem((
+                margin-left: ($gs-gutter/4) * -1,
+                margin-right: ($gs-gutter/2) * -1,
+                padding: 0 $gs-gutter/2
+            ));
+        }
+    }
+
     @include mq($to: tablet) {
         counter-reset: popular;
         .item__link {

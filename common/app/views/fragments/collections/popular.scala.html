@@ -1,0 +1,60 @@
+@(popular: Seq[model.MostPopular], config: Config, style: Container, containerIndex: Int, showSize: Int = 4)(implicit request: RequestHeader)
+
+@defining(popular.size > 1){ isTabbed =>
+
+    <div id="popular-trails" data-link-name="most popular">
+
+        <h2 id="most-popular-head" class="page-sub-header">Popular</h2>
+
+        @if(isTabbed) {
+            <div class="tabs u-cf">
+                <ol class="tabs__container js-tabs" id="js-popular-tabs" role="tablist">
+                    @popular.zipWithRowInfo.map{ case (section, info) =>
+                        <li class="tabs__tab@if(info.isFirst){ tabs__tab--selected tone-colour tone-accent-border}" role="tab" id="tabs-popular-@info.rowNum-tab"@if(info.isFirst){ aria-selected="true"} aria-controls="tabs-popular-@info.rowNum">
+                            <a href="#tabs-popular-@info.rowNum" data-link-name="tab @info.rowNum @section.heading"><span class="u-h--up-to-right-col">Popular in </span>@Html(section.heading)</a>
+                        </li>
+                    }
+                </ol>
+                <div class="tabs__content">
+        }
+
+        @popular.zipWithRowInfo.map{ case (section, info) =>
+            <div id="tabs-popular-@info.rowNum"
+                 class="@if(isTabbed){tabs__pane @if(!info.isFirst){js-hidden}} headline-list u-cf"
+                 @if(isTabbed){
+                     role="tabpanel"
+                     aria-labelledby="tabs-popular-@info.rowNum-tab"
+                 }
+                 data-link-name="@section.heading"
+                 data-link-context="most-read/@section.section">
+
+                <ul class="unstyled headline-list headline-list--large headline-column">
+                    @section.trails.zipWithRowInfo.map{ case (trail, info) =>
+                        <li class="headline-list__item headline-column__item">
+                            <a href="@LinkTo{@trail.url}" class="headline-list__link" data-link-name="@info.rowNum | text">
+                                <span class="headline-list__count">@info.rowNum</span>
+                                <h4 class="headline-list__body">
+                                    @Html(trail.linkText)
+                                </h4>
+                            </a>
+                            @if(info.isFirst) {
+                                @trail.trailText.map { text =>
+                                    <p class="headline-list__standfirst">
+                                        @cleanTrailText(text)
+                                    </p>
+                                }
+                            }
+                        </li>
+                    }
+                </ul>
+            </div>
+        }
+
+        @if(isTabbed) {
+                </div>
+            </div>
+        }
+
+    </div>
+
+}

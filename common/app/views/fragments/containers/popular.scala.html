@@ -19,9 +19,13 @@
                     }
                 </h2>
             }
+
             <div class="container__body container--rolled-up-hide">
-                @fragments.collections.standard(config, collection.items, style, 1, 10)
+                @defining(Seq(MostPopular("Popular", "popular", collection.items.slice(0, 10)))){ popular =>
+                    @fragments.collections.popular(popular, config, style, 1, 10)
+                }
             </div>
+
         </section>
     }
 
