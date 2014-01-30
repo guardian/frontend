@@ -1,7 +1,7 @@
 package services
 
 import common.{ Logging, ExecutionContexts }
-import conf.PorterConfiguration
+import conf.AdminConfiguration
 import com.amazonaws.services.cloudwatch.model.{ Dimension, MetricDatum }
 import org.joda.time.DateTime
 import play.api.libs.ws.WS
@@ -27,7 +27,7 @@ object Fastly extends ExecutionContexts with Logging {
 
     val futureResponses: Future[List[String]] = Future.sequence( regions map { region =>
         WS.url(s"https://api.fastly.com/stats?by=minute&from=45+minutes+ago&to=15+minutes+ago&region=${region}"
-        ).withHeaders("Fastly-Key" -> PorterConfiguration.fastly.key).get() map { _.body } })
+        ).withHeaders("Fastly-Key" -> AdminConfiguration.fastly.key).get() map { _.body } })
 
     futureResponses map { responses =>
 

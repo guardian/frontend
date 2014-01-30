@@ -2,7 +2,9 @@ package model
 
 import play.api.{Application => PlayApp, GlobalSettings}
 import tools.{LoadBalancer, CloudWatch}
-import common.{AkkaAsync, Jobs}
+import common.{CloudWatchApplicationMetrics, AkkaAsync, Jobs}
+import conf.Management
+import jobs.{AnalyticsSanityCheckJob, FastlyCloudwatchLoadJob, ABTestResultsLoadJob, AnalyticsLoadJob}
 
 trait AdminLifecycle extends GlobalSettings {
 
@@ -34,6 +36,42 @@ trait AdminLifecycle extends GlobalSettings {
   override def onStop(app: play.api.Application) {
     descheduleJobs()
     CloudWatch.shutdown()
+    super.onStop(app)
+  }
+}
+
+trait PorterLifecycle extends GlobalSettings {
+
+  def scheduleJobs() {
+    Jobs.schedule("AnalyticsLoadJob", "0 0 7/24 * * ?") {
+      AnalyticsLoadJob.run()
+    }
+    Jobs.schedule("ABTestResultsLoadJob", "0 0 7/24 * * ?") {
+      ABTestResultsLoadJob.run()
+    }
+    Jobs.schedule("FastlyCloudwatchLoadJob", "0 0/2 * * * ?") {
+      FastlyCloudwatchLoadJob.run()
+    }
+    Jobs.schedule("AnalyticsSanityCheckJob", "0 0/15 * * * ?") {
+      AnalyticsSanityCheckJob.run()
+    }
+  }
+
+  def descheduleJobs() {
+    Jobs.deschedule("AnalyticsLoadJob")
+    Jobs.deschedule("ABTestResultsLoadJob")
+    Jobs.deschedule("FastlyCloudwatchLoadJob")
+    Jobs.deschedule("AnalyticsSanityCheckJob")
+  }
+
+  override def onStart(app: play.api.Application) {
+    super.onStart(app)
+    descheduleJobs()
+    scheduleJobs()
+  }
+
+  override def onStop(app: play.api.Application) {
+    descheduleJobs()
     super.onStop(app)
   }
 }
