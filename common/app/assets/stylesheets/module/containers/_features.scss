@@ -112,4 +112,15 @@
     .linkslist-container:before {
         background: $c-featureAccent;
     }
+    .l-row--items-4 {
+        // Compensate lost space caused by loss of meta
+        @include mq($to: tablet) {
+            .collection__item {
+                @include rem((
+                    min-height: nth(nth($fs-headlines, 1), 2)*2 + $gs-baseline/3,
+                    margin-bottom: $gs-baseline
+                ));
+            }
+        }
+    }
 }
