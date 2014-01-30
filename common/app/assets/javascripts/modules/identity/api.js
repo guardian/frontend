@@ -177,5 +177,16 @@ define([
         return request;
     };
 
+    Id.resendValidationEmail = function () {
+        if(Id.isUserLoggedIn()) {
+            return ajax({
+                url: Id.idApiRoot + "/resend-verify-email",
+                type: 'jsonp',
+                crossOrigin: true,
+                method: 'POST'
+            });
+        }
+    };
+
     return Id;
 });
