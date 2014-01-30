@@ -42,6 +42,12 @@ define([
         } else {
             bean.on(document, 'click', '.js-site-message-close', this.acknowledge.bind(this));
         }
+        if(this.type === 'modal') { this.bindModalListeners(); }
+    };
+
+    Message.prototype.bindModalListeners = function() {
+        bean.on(document, 'click', '.js-site-message', this.acknowledge.bind(this));
+        bean.on(document, 'click', '.js-site-message-innner', function(e) { e.preventDefault(); });
     };
 
     Message.prototype.hide = function() {
