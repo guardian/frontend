@@ -133,6 +133,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   override lazy val group: Option[String] = apiContent.metaData.get("group").flatMap(_.asOpt[String])
   override lazy val imageAdjust: Option[String] = apiContent.metaData.get("imageAdjust").flatMap(_.asOpt[String])
   override lazy val isBreaking: Boolean = apiContent.metaData.get("isBreaking").flatMap(_.asOpt[Boolean]).getOrElse(false)
+  override lazy val supporting: List[Trail] = apiContent.supporting
 }
 
 object Content {
