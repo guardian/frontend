@@ -51,14 +51,16 @@ $item-top-border-height: 2px;
 @mixin card-mobile-image {
     @include image-meta;
     .connection--not-low & .item__title {
-        margin-top: $gs-baseline/3;
-        margin-bottom: $gs-baseline/3;
+        @include rem((
+            margin-top: $gs-baseline/3,
+            margin-bottom: $gs-baseline/3
+        ));
     }
 }
 @mixin card-half-width($with-image: false) {
-    width: 50%;
-    min-height: gs-height(3);
     float: left;
+    width: 50%;
+    @include rem((min-height: gs-height(3)));
 
     .item__title {
         @include fs-headline(1, $size-only: true);
@@ -74,7 +76,7 @@ $item-top-border-height: 2px;
     }
     .item__live-indicator {
         @include fs-data(1, true);
-        top: -3px;
+        @include rem((top: -3px));
     }
     @if $with-image {
         @include card-half-width-image;
@@ -82,58 +84,66 @@ $item-top-border-height: 2px;
 }
 @mixin card-half-width-image {
     .connection--not-low & {
-        min-height: gs-height(5);
+        @include rem((min-height: gs-height(5)));
         .item__image-container {
             display: block;
         }
     }
 }
 @mixin card($with-image: false) {
-    @include rem((width: gs-span(3) + $gs-gutter));
-    min-height: gs-height(3);
+    @include rem((
+        width: gs-span(3) + $gs-gutter,
+        min-height: gs-height(3)
+    ));
 
     @if $with-image {
         @include card-mobile;
     }
 }
 @mixin card-image {
-    min-height: gs-height(6);
+    @include rem((min-height: gs-height(6)));
     @include image-meta;
 }
 @mixin card-double-width {
     float: left;
-    @include rem((width: gs-span(6) + $gs-gutter));
-    min-height: gs-height(9);
+    @include rem((
+        width: gs-span(6) + $gs-gutter,
+        min-height: gs-height(9)
+    ));
 
     .item__title {
         @include fs-headline(5, $size-only: true);
     }
     .connection--not-low &.item--has-image .item__title {
-        margin-top: $gs-baseline;
+        @include rem((margin-top: $gs-baseline));
     }
     @include image-meta;
     .item__live-indicator {
         @include fs-data(6, true);
-        top: -3px;
+        @include rem((top: -3px));
     }
 }
 @mixin card-triple-width {
     float: left;
-    @include rem((width: gs-span(9) + $gs-gutter));
-    min-height: gs-height(12);
+    @include rem((
+        width: gs-span(9) + $gs-gutter,
+        min-height: gs-height(12)
+    ));
 
     @include image-meta;
     .item__title {
         @include fs-headline(5, $size-only: true);
     }
     .connection--not-low & .item__title {
-        margin-top: $gs-baseline*(2/3);
+        @include rem((margin-top: $gs-baseline*(2/3)));
     }
 }
 @mixin card-full-width {
     .connection--not-low &.item--has-image {
-        min-height: gs-height(6);
-        padding-left: gs-span(6) + $gs-gutter*1.5;
+        @include rem((
+            min-height: gs-height(6),
+            padding-left: gs-span(6) + $gs-gutter*1.5
+        ));
     }
     .item__title {
         @include fs-headline(4, $size-only: true);
@@ -144,11 +154,15 @@ $item-top-border-height: 2px;
     @include image-meta;
     .connection--not-low & .item__image-container {
         margin-top: 0;
-        width: gs-span(6);
-        height: gs-height(6);
+        @include rem((
+            width: gs-span(6),
+            height: gs-height(6)
+        ));
         position: absolute;
         top: 0;
-        left: $gs-gutter/2;
+        @include rem((
+            left: $gs-gutter/2
+        ));
         padding-bottom: 0;
     }
 }
@@ -160,7 +174,7 @@ $item-top-border-height: 2px;
         @include fs-headline(4, $size-only: true);
     }
     .connection--not-low & .item__title {
-        margin-top: $gs-baseline*(2/3);
+        @include rem((margin-top: $gs-baseline*(2/3)));
     }
     .connection--not-low & .item__image-container {
         margin-top: 0;
