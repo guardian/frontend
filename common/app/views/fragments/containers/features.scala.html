@@ -5,7 +5,11 @@
     @defining(templateDeduping(5, collection.items)) { items =>
         @if(items.nonEmpty) {
             <section
-                class="container container--row-pattern container--@style.containerType @if(containerIndex > 0 && title.nonEmpty){js-container--toggle} js-container-add-show-more"
+                class="@RenderClasses(Map(
+                    "container container--row-pattern" -> true,
+                    s"container--${style.containerType}" -> true,
+                    "js-container--toggle" -> (containerIndex > 0 && title.nonEmpty),
+                    "js-container-add-show-more" -> true))"
                 data-link-name="block | @config.id"
                 data-id="@config.id"
                 data-tone="@style.tone"
