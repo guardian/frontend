@@ -345,7 +345,11 @@ define([
             if(window.location.hash === '#opt-in-message' && config.switches.networkFrontOptIn) {
                 bean.on(document, 'click', '.js-site-message-close', function() {
                     Cookies.add("GU_VIEW", "mobile", 365);
-                    Cookies.add("GU_ALPHA_PHASE_2", "true", 365);
+                    Cookies.add("GU_ALPHA", "2", 365);
+                });
+                bean.on(document, 'click', '.js-site-message', function() {
+                    Cookies.add("GU_VIEW", "mobile", 365);
+                    Cookies.add("GU_ALPHA", "2", 365);
                 });
                 var message = new Message('onboard', { type: 'modal' }),
                     path = (document.location.pathname) ? document.location.pathname : '/',
