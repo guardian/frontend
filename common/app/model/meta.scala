@@ -109,6 +109,7 @@ trait Elements {
 
 trait Tags {
   def tags: Seq[Tag] = Nil
+  def contributorAvatar: Option[String] = tags.flatMap(_.contributorImagePath).headOption
 
   private def tagsOfType(tagType: String): Seq[Tag] = tags.filter(_.tagType == tagType)
 

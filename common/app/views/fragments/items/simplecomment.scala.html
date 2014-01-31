@@ -9,6 +9,11 @@
 
         <div class="item__container">
             <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border" data-link-name="article">
+                @trail.contributorAvatar.map{ url =>
+                    <div class="item__avatar">
+                        <img src="@url" alt="" class="item__avatar__media" />
+                    </div>
+                }
                 <h@if(isFirstContainer && index == 0){1}else{2} class="item__title">
                     <span class="i i-quote-orange"></span>
                     @RemoveOuterParaHtml(trail.headline)
