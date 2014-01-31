@@ -222,8 +222,10 @@ $c-live: #e81818;
 }
 .item__byline {
     @include fs-headline(2);
-    margin-top: $gs-baseline/3;
-    margin-bottom: $gs-baseline/3;
+    @include rem((
+        margin-top: $gs-baseline/3,
+        margin-bottom: $gs-baseline/3
+    ));
 }
 .item__standfirst,
 .item__meta {
@@ -524,7 +526,7 @@ $c-live: #e81818;
             border-top: 0;
 
             &:first-child {
-                margin-top: $gs-baseline/3;
+                @include rem((margin-top: $gs-baseline/3));
             }
         }
         .item__image-container {
