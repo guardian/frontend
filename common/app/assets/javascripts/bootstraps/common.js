@@ -359,6 +359,7 @@ define([
                     '<p>You’re looking at a prototype of our new website. Opt-out any time by clicking "Classic version" at the bottom of the page.</p>' +
                     '<ul class="site-message__list">' +
                     '<li class="site-message__list__item">Our new front pages and content pages are a work in progress.</li>' +
+                    '<li class="site-message__list__item">We\'ll be launching our product site and feedback form later this week.</li>' +
                     '</ul>' +
                     '<ul class="site-message__actions unstyled">' +
                     '<li class="site-message__actions__item"><i class="i i-arrow-white-circle"></i>  '+
