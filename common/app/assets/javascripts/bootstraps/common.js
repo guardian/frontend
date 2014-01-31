@@ -320,7 +320,7 @@ define([
 
             var path = (document.location.pathname) ? document.location.pathname : '/',
                 exitLink = '/preference/platform/desktop?page=' + encodeURIComponent(path + '?view=desktop'),
-                msg = '<p class="site-message__message">' +
+                msg = '<p class="site-message__message" id="site-message__message">' +
                             'You’re viewing an alpha release of the Guardian’s responsive website. <a href="/help/2013/oct/04/alpha-testing-and-evolution-of-our-mobile-site">Find out more</a>' +
                       '</p>' +
                       '<ul class="site-message__actions unstyled">' +
@@ -355,7 +355,7 @@ define([
                     path = (document.location.pathname) ? document.location.pathname : '/',
                     exitLink = '/preference/platform/desktop?page=' + encodeURIComponent(path + '?view=desktop'),
                     msg = '<h2 class="site-message__header">Thanks for joining us.</h2>' +
-                    '<div class="site-message__message">' +
+                    '<div class="site-message__message" id="site-message__message">' +
                     '<p>You’re looking at a prototype of our new website. Opt-out any time by clicking "Classic version" at the bottom of the page. <a href="http://next.theguardian.com/">Find out more</a>.' +
                     '</p>' +
                     '<ul class="site-message__list">' +
