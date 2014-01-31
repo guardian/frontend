@@ -79,28 +79,33 @@ define([
             terminate();
         }
 
-        function fetchConfig() {
+        function fetchConfig(terminateOnFail) {
             return authedAjax.request({
                 url: vars.CONST.apiBase + '/config'
             })
             .fail(function () {
-                terminateWithMessage("the config was not available");
+                if(terminateOnFail) {
+                    terminateWithMessage("the config was not available");
+                }
             })
             .done(function(resp) {
-                if (!(_.isObject(resp.fronts) && _.isObject(resp.collections))) {
+                if (_.isObject(resp.fronts) && _.isObject(resp.collections)) {
+                    model.config(resp);
+                    model.fronts(_.keys(resp.fronts));
+                } else if (terminateOnFail ) {
                     terminateWithMessage("the config is invalid.");
                 }
-                model.config(resp);
-                model.fronts(_.keys(resp.fronts).sort());
             });
         }
 
-        function fetchSwitches() {
+        function fetchSwitches(terminateOnFail) {
             return authedAjax.request({
                 url: vars.CONST.apiBase + '/switches'
             })
             .fail(function () {
-                terminateWithMessage("the switches are unavailable");
+                if(terminateOnFail) {
+                    terminateWithMessage("the switches are unavailable");
+                }
             })
             .done(function(switches) {
                 if (switches['facia-tool-disable']) {
@@ -185,7 +190,7 @@ define([
         this.init = function() {
             droppable.init();
 
-            $.when(fetchConfig(), fetchSwitches())
+            $.when(fetchConfig(true), fetchSwitches(true))
             .done(function(){
                 setfront();
                 window.onpopstate = setfront;
