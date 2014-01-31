@@ -210,6 +210,11 @@ a, a:hover {
     background: #EEFFEE;        
 }
 
+.article:hover,
+.live-mode .article:hover {
+    background-color: #eeeeee;
+}
+
 .supporting .article {
     border-color: #CCCCCC;
     background: #CCCCCC;
@@ -241,7 +246,7 @@ a, a:hover {
 }
 
 .article_content {
-    margin: 0 130px 0 85px;
+    margin: 1px 130px 0 85px;
     line-height: 0;
 }
 
@@ -253,14 +258,14 @@ a, a:hover {
 .headline {
     font-size: 14px;
     line-height: 16px;
-    color: #000000;
+    color: #333333;
     cursor: move;
     margin: 1px 0 0 0;
+    text-decoration: none;
 }
 
 .headline:hover {
-    color: #f89406;
-    text-decoration: none;
+    color: #000000;
 }
 
 .is-empty {
@@ -455,9 +460,8 @@ button {
 
 .article .spark {
     position: absolute;
-    top: 3px;
-    right: 27px;
-    height: 30px;
+    top: 5px;
+    right: 28px;
 }
 
 .latest-articles .article .spark {
@@ -653,11 +657,10 @@ button {
     opacity: 0.2;
     position: absolute;
     right: 2px;
-    top: 27px;
+    top: 28px;
 }
 
 .article:hover .closed .tool--remove {
-    background: #EEEEEE;
     opacity: 1;
 }
 
