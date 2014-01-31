@@ -62,6 +62,9 @@ Software Engineer in Test: Gideon Goldberg
 Twitter: @gidsg
 From: London, UK, Earth, the Universe
 
+Developer Manager(ID/Discussion): Nick Smith
+From: London, UK
+
 Agile Programme Manager: Nichola Johnson
 linkedin: nicholajohnson
 Location: London, UK
