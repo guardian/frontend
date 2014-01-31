@@ -356,16 +356,13 @@ define([
                     exitLink = '/preference/platform/desktop?page=' + encodeURIComponent(path + '?view=desktop'),
                     msg = '<h2 class="site-message__header">Thanks for joining us.</h2>' +
                     '<div class="site-message__message" id="site-message__message">' +
-                    '<p>You’re looking at a prototype of our new website. Opt-out any time by clicking "Classic version" at the bottom of the page. <a href="http://next.theguardian.com/">Find out more</a>.' +
-                    '</p>' +
+                    '<p>You’re looking at a prototype of our new website. Opt-out any time by clicking "Classic version" at the bottom of the page.</p>' +
                     '<ul class="site-message__list">' +
                     '<li class="site-message__list__item">Our new front pages and content pages are a work in progress.</li>' +
-                    '<li class="site-message__list__item">We love feedback - <a href="http://next.theguardian.com/feedback/">let us know yours</a>.</li>' +
-                    '<li class="site-message__list__item">Stay up to date with new releases on <a href="http://next.theguardian.com/updates/">our blog</a>.</li>' +
                     '</ul>' +
                     '<ul class="site-message__actions unstyled">' +
                     '<li class="site-message__actions__item"><i class="i i-arrow-white-circle"></i>  '+
-                    '<a class="js-site-message-close" data-link-name="R2 alpha opt in">Got it</a>' +
+                    '<a class="js-site-message-close" data-link-name="R2 alpha opt in" href="#" tabindex=1>Got it</a>' +
                     '<li class="site-message__actions__item">' +
                     '<i class="i i-back-white"></i>' +
                     '<a class="js-main-site-link" rel="nofollow" href="' + exitLink + '"' +
