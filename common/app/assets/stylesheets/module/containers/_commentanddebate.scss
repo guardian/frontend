@@ -1,12 +1,11 @@
 .container--commentanddebate {
     .collection-wrapper {
-        @include rem((margin-top: $gs-baseline/4));
+        @include rem((margin-top: $gs-baseline/3));
         + .collection-wrapper {
             margin-top: 0;
         }
-        @include mq(tablet) {
+        @include mq(wide) {
             @include rem((
-                margin-top: $gs-baseline/3,
                 padding-top: $gs-baseline
             ));
 
@@ -22,12 +21,20 @@
                 margin-bottom: $gs-baseline*2;
             }
         }
+        .item__title {
+            margin-top: 0;
+        }
         .item__title,
         .item__byline {
             @include fs-headline(2, true);
 
-            @include mq(tablet) {
+            @include mq(desktop) {
                 @include fs-headline(3, true);
+            }
+        }
+        @include mq($to: tablet) {
+            .collection__item:first-child {
+                @include item--hide-tone-border;
             }
         }
         @include mq(tablet) {
@@ -38,6 +45,14 @@
 
                 .item__title,
                 .item__byline {
+                    @include fs-headline(3, true);
+                }
+            }
+        }
+        @include mq(desktop) {
+            .collection__item:first-child {
+                .item__title,
+                .item__byline {
                     @include fs-headline(4, true);
                 }
             }
@@ -45,5 +60,8 @@
     }
     .linkslist-container:before {
         background: $c-commentAccent; // Change color of border on top of the links list container
+    }
+    .item__timestamp {
+        display: none;
     }
 }
