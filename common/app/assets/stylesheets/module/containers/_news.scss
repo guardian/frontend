@@ -1,5 +1,8 @@
-.container--rolled-up .collection-wrapper {
-    display: none;
+.container--rolled-up {
+    .collection-wrapper,
+    .linkslist-container {
+        display: none;
+    }
 }
 
 .container--row-pattern {
