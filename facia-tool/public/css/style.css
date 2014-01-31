@@ -661,7 +661,7 @@ button {
 }
 
 .article:hover .closed .tool--remove {
-    opacity: 1;
+    opacity: 0.6;
 }
 
 .article .closed .tool--remove:hover {
