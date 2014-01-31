@@ -1,4 +1,4 @@
-@(popular: Seq[model.MostPopular], config: Config, style: Container, containerIndex: Int, showSize: Int = 4)(implicit request: RequestHeader)
+@(popular: Seq[model.MostPopular])(implicit request: RequestHeader)
 
 @defining(popular.size > 1){ isTabbed =>
 
