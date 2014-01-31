@@ -86,3 +86,6 @@ From: London, England
 Product Manager: Cantlin Ashrowan
 Twitter: @cantlin
 Location: London, UK
+
+Developer: Matt Osborn
+Location: London, UK
