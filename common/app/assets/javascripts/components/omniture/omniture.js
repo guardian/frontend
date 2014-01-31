@@ -43,6 +43,8 @@ function s_doPlugins(s) {
     }
     s.eVar38=s.getValOnce(s.eVar38,'s_eVar38',0);
 
+    s.timestamp=Math.round((new Date()).getTime()/1000);
+
     /* Campaign stacking */
 //    s.eVar40=s.crossVisitParticipation(s.campaign,'s_ev40','30','5','>','',1);
 
