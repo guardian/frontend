@@ -16,17 +16,49 @@
         }
     }
     .l-row--items-3 {
-        .item__byline {
-            @include mq(tablet) {
-                margin-bottom: $gs-baseline*2;
-            }
-        }
         .item__title,
         .item__byline {
-            @include fs-headline(2, true);
+            @include fs-headline(1, true);
+        }
+        @include mq(tablet) {
+            .item--has-no-image {
+                .item__title,
+                .item__byline {
+                    @include fs-headline(3, true);
+                }
+                .item__standfirst {
+                    display: block;
+                }
+            }
+        }
+        .collection__item + .collection__item {
+            .item__media-wrapper,
+            .item__image-container {
+                display: none;
 
-            @include mq(desktop) {
-                @include fs-headline(3, true);
+                @include mq(tablet) {
+                    display: block;
+                }
+            }
+        }
+        .collection__item:first-child {
+            .item__title,
+            .item__byline {
+                @include fs-headline(2, true);
+
+                @include mq(desktop) {
+                    @include fs-headline(3, true);
+                }
+            }
+            .item--has-no-image {
+                .item__title,
+                .item__byline {
+                    @include fs-headline(3, true);
+
+                    @include mq(desktop) {
+                        @include fs-headline(4, true);
+                    }
+                }
             }
         }
         @include mq($to: tablet) {
@@ -42,7 +74,7 @@
 
                 .item__title,
                 .item__byline {
-                    @include fs-headline(3, true);
+                    @include fs-headline(2, true);
                 }
             }
             .collection__item + .collection__item {
@@ -64,16 +96,8 @@
                 }
             }
         }
-        @include mq(desktop) {
-            .collection__item:first-child {
-                .item__title,
-                .item__byline {
-                    @include fs-headline(4, true);
-                }
-            }
-        }
     }
     .linkslist-container:before {
-        background: $c-featureDefault; // Change color of border on top of the links list container
+        background: $c-featureAccent; // Change color of border on top of the links list container
     }
 }
