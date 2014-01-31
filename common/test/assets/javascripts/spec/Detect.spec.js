@@ -1,8 +1,5 @@
 define(['common/utils/detect', 'bonzo'], function(detect, bonzo) {
 
-    var windowWidth = window.innerWidth,
-        windowHeight = window.innerHeight;
-
     describe("Breakpoint", function() {
 
         it("should default to 'mobile' breakpoint", function(){

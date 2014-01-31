@@ -67,9 +67,9 @@ $item-top-border-height: 2px;
         }
     }
     .item__byline {
-        @include fs-header(1, $size-only: true);
+        @include fs-headline(1, $size-only: true);
         @include mq(tablet) {
-            @include fs-header(2, $size-only: true);
+            @include fs-headline(2, $size-only: true);
         }
     }
     .item__live-indicator {
@@ -178,4 +178,27 @@ $item-top-border-height: 2px;
         height: 100%;
         border-left: 1px solid $c-neutral5;
     }
+}
+@mixin hide-background-on-item-sides($separator: true) {
+    &:after,
+    &:before {
+        content: '';
+        position: absolute;
+        display: block;
+        top: 0;
+        bottom: 0;
+        height: 100%;
+        width: $gs-gutter/2 !important;
+        width: rem($gs-gutter/2) !important;
+        @include box-sizing(border-box);
+        background: #ffffff;
+        z-index: 1;
+
+        // By default, .item:before is used as a 1px border separator
+        // Set $separator: false to hide it
+        @if $separator == false {
+            border-left-width: 0;
+        }
+    }
+    &:after { right: 0; }
 }

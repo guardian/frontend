@@ -2,19 +2,26 @@
 
 @defining((VisualTone(trail), containerIndex == 0, containerIndex == 0 && index < 3)) { case (tone, isFirstContainer, inlineImages) =>
     <@element
-        class="item item--dark item--video tone-@tone @if(isFirstContainer){ item--force-image-upgrade}"
+        class="@RenderClasses(
+            "item",
+            "item--dark",
+            "item--video",
+            "item--has-image",
+            s"tone-$tone",
+            "item--force-image-upgrade")"
         data-link-name="trail | @{index + 1}"
         @trail.discussionId.map{ id => data-discussion-id="@id" }
         data-discussion-closed="@trail.isClosedForComments">
 
-        <div class="item__container">
+        <div class="item__container tone-accent-border">
+
             @trail.trailPicture(5,3).map{ imageContainer =>
                 @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
                     <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border" data-link-name="article">
                         <div class="item__media-wrapper">
-                            <div class="item__cta item--video">
+                            <div class="item__cta item__cta--video">
                                 <p>Play</p>
-                                <i class="i i-play"></i>
+                                <i class="i i-play-black"></i>
                             </div>
                             <div class="item__image-container js-image-upgrade @if(inlineImages){ inlined-image}" data-src="@imgSrc" @if(isFirstContainer){ data-force-upgrade="desktop wide"}>
                                 @if(inlineImages){
@@ -27,9 +34,9 @@
             }.getOrElse{
                 <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border" data-link-name="article">
                     <div class="item__media-wrapper">
-                        <div class="item__cta item--video">
+                        <div class="item__cta item__cta--video">
                             <p>Play</p>
-                            <i class="i i-play"></i>
+                            <i class="i i-play-black"></i>
                         </div>
                         <div class="item__image-container">
                             <img src="@Static("images/no-image.png")" class="responsive-img" alt="" />

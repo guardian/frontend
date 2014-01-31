@@ -1,6 +1,7 @@
 /* global module: false, process: false */
 module.exports = function (grunt) {
-    var isDev = grunt.option('dev') || process.env.GRUNT_ISDEV === '1',
+
+    var isDev = (grunt.option('dev') !== undefined) ? Boolean(grunt.option('dev')) : process.env.GRUNT_ISDEV === '1',
         singleRun = grunt.option('single-run') !== false,
         env = grunt.option('env') || 'code',
         screenshotsDir = './screenshots',
@@ -9,7 +10,6 @@ module.exports = function (grunt) {
         staticRequireDir = staticDir + 'requirejs/',
         testConfDir = 'common/test/assets/javascripts/conf/',
         propertiesFile = (isDev) ? process.env.HOME + '/.gu/frontend.properties' : '/etc/gu/frontend.properties';
-
 
     if (isDev) {
         grunt.log.subhead('Running Grunt in DEV mode');
@@ -497,6 +497,9 @@ module.exports = function (grunt) {
             admin: {
                 src: ['integration-tests/casper/tests/admin/*.spec.js']
             },
+            article: {
+                src: ['integration-tests/casper/tests/article/*.spec.js']
+            },
             applications: {
                 src: ['integration-tests/casper/tests/applications/*.spec.js']
             },
@@ -534,10 +537,11 @@ module.exports = function (grunt) {
         assetmonitor: {
             common: {
                 src: [
-                    staticTargetDir + 'javascripts/bootstraps/app.js',
-                    staticTargetDir + 'stylesheets/head.default.css',
-                    staticTargetDir + 'stylesheets/head.facia.css',
-                    staticTargetDir + 'stylesheets/global.css'
+                    staticTargetDir + 'javascripts/bootstraps/*.js',
+                    staticTargetDir + 'stylesheets/*.css',
+                    // ignore hashed files
+                    '!' + '**/*.<%= Array(1 + hash.options.hashLength).join("?") %>.js',
+                    '!' + '**/*.<%= Array(1 + hash.options.hashLength).join("?") %>.css'
                 ],
                 options: {
                     credentials: propertiesFile
@@ -660,27 +664,37 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:images', ['clean:images', 'copy:images', 'shell:spriteGeneration', 'imagemin']);
     grunt.registerTask('compile:css', ['clean:css', 'sass:compile']);
     grunt.registerTask('compile:js', function(app) {
-        grunt.task.run(['clean:js', 'copy:javascript-common']);
-        if (app && grunt.config('copy')['javascript-' + app]) {
-            grunt.task.run('copy:javascript-' + app);
+        grunt.task.run(['clean:js']);
+        var apps = ['common'];
+        if (app) {
+            if (grunt.config('requirejs')[app]) {
+                apps.push(app);
+            } else {
+                grunt.log.warn('No compile target for app "' + app + '"');
+            }
+        } else { // if no app supplied, compile all apps
+            apps = apps.concat(Object.keys(grunt.config('requirejs')).filter(function(app) { return ['options', 'common'].indexOf(app) === -1; }));
         }
+        apps.forEach(function(app) {
+            grunt.task.run('copy:javascript-' + app, 'requirejs:' + app);
+        });
         if (!isDev) {
             grunt.task.run('uglify:components');
-        }
-        grunt.task.run('requirejs:common');
-        // When an app defines it's own javascript application, the requirejs task will need to compile both
-        // common and app.
-        if (grunt.config('requirejs')[app]) {
-            grunt.task.run('requirejs:' + app);
         }
     });
     grunt.registerTask('compile:fonts', ['clean:fonts', 'mkdir:fontsTarget', 'webfontjson']);
     grunt.registerTask('compile:flash', ['clean:flash', 'copy:flash']);
     grunt.registerTask('compile', function(app) {
-        grunt.task.run(['clean:staticTarget', 'compile:images', 'compile:css', 'compile:js' + (app ? ':' + app : ''), 'compile:fonts', 'compile:flash']);
-        if (!isDev) {
-            grunt.task.run(['clean:assets', 'copy:headCss', 'hash']);
-        }
+        grunt.task.run([
+            'compile:images',
+            'compile:css',
+            'compile:js:' + (app || ''),
+            'compile:fonts',
+            'compile:flash',
+            'clean:assets',
+            'copy:headCss',
+            'hash'
+        ]);
     });
 
     // Test tasks
@@ -723,4 +737,5 @@ module.exports = function (grunt) {
     grunt.registerTask('hookmeup', ['clean:hooks', 'shell:copyHooks']);
     grunt.registerTask('snap', ['clean:screenshots', 'mkdir:screenshots', 'env:casperjs', 'casperjs:screenshot', 's3:screenshots']);
     grunt.registerTask('emitAbTestInfo', ['shell:abTestInfo']);
+
 };

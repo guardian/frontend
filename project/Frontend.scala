@@ -46,7 +46,7 @@ object Frontend extends Build with Prototypes {
       "football.controllers._"
     )
   )
-  val coreNavigation = application("core-navigation").dependsOn(commonWithTests).aggregate(common)
+
   val image = application("image").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
       "org.imgscalr" % "imgscalr-lib" % "4.2",
@@ -67,7 +67,12 @@ object Frontend extends Build with Prototypes {
     )
   )
 
-  val admin = application("admin").dependsOn(commonWithTests).aggregate(common)
+  val admin = application("admin").dependsOn(commonWithTests).aggregate(common).settings(
+    libraryDependencies ++= Seq(
+      "com.typesafe.slick" %% "slick" % "1.0.0",
+      "postgresql" % "postgresql" % "8.4-703.jdbc4" from "http://jdbc.postgresql.org/download/postgresql-8.4-703.jdbc4.jar"
+    )
+  )
   val faciaTool = application("facia-tool").dependsOn(commonWithTests)
   val porter = application("porter").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
@@ -132,7 +137,6 @@ object Frontend extends Build with Prototypes {
       facia,
       applications,
       sport,
-      coreNavigation,
       discussion,
       router,
       diagnostics,
@@ -148,13 +152,11 @@ object Frontend extends Build with Prototypes {
     article,
     applications,
     sport,
-    coreNavigation,
     image,
     discussion,
     router,
     diagnostics,
     admin,
-    porter,
     identity,
     commercial,
     onward

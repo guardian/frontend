@@ -66,6 +66,12 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val elasticSearchHost = configuration.getMandatoryStringProperty("content.api.elastic.host")
     lazy val key = configuration.getMandatoryStringProperty("content.api.key")
     lazy val timeout: Int = configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000)
+
+    object write {
+      lazy val username: Option[String] = configuration.getStringProperty("contentapi.write.username")
+      lazy val password: Option[String] = configuration.getStringProperty("contentapi.write.password")
+      lazy val endpoint: Option[String] = configuration.getStringProperty("contentapi.write.endpoint")
+    }
   }
 
   object ophanApi {
@@ -138,6 +144,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object images {
     lazy val path = configuration.getMandatoryStringProperty("images.path")
+    lazy val servicePath = configuration.getStringProperty("image.service.path").getOrElse("http://ak.i.guim.co.uk")
   }
 
   object assets {
@@ -173,6 +180,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val ctaApiRoot = configuration.getMandatoryStringProperty("open.cta.apiRoot")
   }
 
+  object interactive {
+    lazy val url = "http://interactive.guim.co.uk/next-gen/"
+  }
+
   object javascript {
     // This is config that is avaliable to both Javascript and Scala
     // But does not change across environments
@@ -180,7 +191,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val config: Map[String, String] = Map(
       "ophanUrl" -> "http://s.ophan.co.uk/js/ophan.min",
       "googleSearchUrl" -> "http://www.google.co.uk/cse/cse.js",
-      "interactiveUrl" -> "http://interactive.guim.co.uk/next-gen/",
       "idWebAppUrl" -> id.webappUrl,
       "idApiUrl" -> id.apiRoot,
       "discussionApiRoot" -> discussion.apiRoot,

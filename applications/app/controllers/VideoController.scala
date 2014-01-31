@@ -33,13 +33,13 @@ object VideoController extends Controller with Logging with ExecutionContexts {
 
     val result = response map { response =>
       val storyPackage = response.storyPackage map { Content(_) }
-      val videoOption = response.content filter { _.isVideo } map { new Video(_) }
+      val videoOption = response.content filter { _.isVideo } map { Video(_) }
       val model = videoOption map { video => VideoPage(video, storyPackage.filterNot(_.id == video.id)) }
 
       ModelOrResult(model, response)
     }
 
-    result recover suppressApiNotFound
+    result recover convertApiExceptions
   }
 
   private def renderVideo(model: VideoPage)(implicit request: RequestHeader): SimpleResult = {

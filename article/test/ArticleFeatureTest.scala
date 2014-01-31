@@ -493,7 +493,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
         import browser._
 
         Then("I should see a fancy gallery trail")
-        $(".item--gallery") should have size 2
+        $(".item--gallery") should have size 1
 
         //And("should show a total image count of 12")
         //$(".trail__count--imagecount").getText should be("12 images")
@@ -549,7 +549,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
         $("meta[property='twitter:image:src']").getAttributes("content").head should startWith ("http://i.gucode.co.uk/n/")
       }
     }
-    
+
     scenario("Signify to the user an article is sponsored"){
       Given("I visit a sponsored article entitled 'Young people debt worries'")
       SponsoredContentSwitch.switchOn()

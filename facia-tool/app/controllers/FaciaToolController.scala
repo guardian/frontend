@@ -7,14 +7,19 @@ import play.api.libs.json._
 import common.{FaciaToolMetrics, ExecutionContexts, Logging}
 import conf.Configuration
 import tools.FaciaApi
+import services.{ConfigAgent, ContentApiWrite}
+import play.api.libs.ws.Response
+import scala.concurrent.Future
+import conf.Switches.ContentApiPutSwitch
 import services.S3FrontsApi
-import play.api.libs.ws.WS
 import model.{NoCache, Cached}
 
 
 object FaciaToolController extends Controller with Logging with ExecutionContexts {
   implicit val updateListRead = Json.reads[UpdateList]
   implicit val collectionMetaRead = Json.reads[CollectionMetaUpdate]
+  implicit val trailWrite = Json.writes[Trail]
+  implicit val blockWrite = Json.writes[Block]
 
   def index() = ExpiringAuthentication { request =>
     val identity = Identity(request).get
@@ -64,7 +69,6 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
   def discardCollection(id: String) = AjaxExpiringAuthentication { request =>
     val identity = Identity(request).get
     FaciaApi.discardBlock(id, identity)
-    notifyContentApi(id)
     Ok
   }
 
@@ -81,40 +85,28 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     } getOrElse NotFound
   }
 
-  def updateBlock(id: String): Action[AnyContent] = AjaxExpiringAuthentication { request =>
+  def collectionEdits(): Action[AnyContent] = AjaxExpiringAuthentication { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
-    request.body.asJson flatMap (_.asOpt[UpdateList]) map {
-      case update: UpdateList => {
-        val identity = Identity(request).get
-        UpdateActions.updateCollectionList(id, update, identity)
-        //TODO: How do we know if it was updated or created? Do we need to know?
-        notifyContentApi(id)
-        Ok
+    request.body.asJson flatMap (_.asOpt[Map[String, UpdateList]]) map {
+      case update: Map[String, UpdateList] => {
+        val identity: Identity = Identity(request).get
+        val updatedCollections: Map[String, Block] = update.collect {
+          case (verb, updateList) if verb == "update" => UpdateActions.updateCollectionList(updateList.id, updateList, identity)
+          case (verb, updateList) if verb == "remove" => UpdateActions.updateCollectionFilter(updateList.id, updateList, identity)
+        }.flatten.map(b => (b.id, b)).toMap
+        if (updatedCollections.nonEmpty)
+          Ok(Json.toJson(updatedCollections)).as("application/json")
+        else
+          NotFound
       }
       case _ => NotFound
     } getOrElse NotFound
   }
 
-  def deleteTrail(id: String) = AjaxExpiringAuthentication { request =>
-    FaciaToolMetrics.ApiUsageCount.increment()
-    request.body.asJson flatMap (_.asOpt[UpdateList]) map {
-      case update: UpdateList => {
-        val identity = Identity(request).get
-        UpdateActions.updateCollectionFilter(id, update, identity)
-        notifyContentApi(id)
-        Ok
-      }
-      case _ => NotFound
-    } getOrElse NotFound
-  }
-
-  def notifyContentApi(id: String): Unit = {
-    Configuration.faciatool.contentApiPostEndpoint map { postUrl =>
-      val url = "%s/collection/%s".format(postUrl, id)
-      val r = WS.url(url).post("")
-      r.onSuccess{case s => log.info("Content API POST: %s %s".format(s.status.toString, s.body))}
-      r.onFailure{case e: Throwable => log.error("Error posting to Content API: %s".format(e.toString))}
-    }
-  }
+  def notifyContentApi(id: String): Option[Future[Response]] =
+    if (ContentApiPutSwitch.isSwitchedOn)
+      ConfigAgent.getConfig(id)
+        .map {config => ContentApiWrite.writeToContentapi(config)}
+    else None
 
 }

@@ -1,4 +1,8 @@
-.container--news {
+.container--rolled-up .collection-wrapper {
+    display: none;
+}
+
+.container--row-pattern {
     .item {
         display: block;
         margin-top: 0;
@@ -24,6 +28,9 @@
     .item__image-container {
         display: none;
     }
+    .item__media-wrapper {
+        position: relative;
+    }
     .item--has-image {
         .item__media-wrapper,
         .item__image-container {
@@ -47,6 +54,12 @@
             margin-left: $gs-gutter/2 * -1,
             margin-right: $gs-gutter/2 * -1
         ));
+
+        + .collection-wrapper {
+            @include rem((
+                margin-top: ($gs-baseline/3)*2
+            ));
+        }
     }
     .collection__item {
         position: relative; // Replace .item as a relative context
@@ -62,6 +75,36 @@
     }
     .item__title {
         @include fs-headline(1, true);
+    }
+    .l-row--items-4 {
+        .item__byline {
+            @include fs-headline(1, true);
+        }
+        .item__standfirst,
+        .item__media-wrapper,
+        .item__image-container {
+            display: none;
+        }
+        .item--imageadjust-highlight {
+            .item__media-wrapper,
+            .item__image-container {
+                display: block;
+            }
+        }
+        @include mq(tablet) {
+            .item--has-image .item__media-wrapper,
+            .item--has-image .item__image-container,
+            .item--has-no-image .item__standfirst {
+                display: block;
+            }
+        }
+    }
+}
+.container--news {
+    .container__title {
+        display: none;
+        color: $c-neutral1;
+        margin-bottom: 0;
     }
     .l-row--items-2 {
         .item__title {
@@ -95,40 +138,25 @@
             }
         }
     }
-    .l-row--items-2,
-    .l-row--items-3 {
+    .l-row--items-2 {
         .item__standfirst {
             display: block;
         }
-    }
-    .l-row--items-4 {
-        .item__standfirst,
-        .item__media-wrapper,
-        .item__image-container {
-            display: none;
-        }
         .item--imageadjust-highlight {
-            .item__media-wrapper,
-            .item__image-container {
-                display: block;
+            padding-bottom: 0;
+
+            .item__standfirst {
+                display: none;
             }
-        }
-        @include mq(tablet) {
-            .item--has-image .item__media-wrapper,
-            .item--has-image .item__image-container,
-            .item--has-no-image .item__standfirst {
-                display: block;
-            }
-        }
-        @include mq(tablet, desktop) {
-            .item--has-image .item__title {
-                @include fs-headline(1, true);
+            .item__meta {
+                position: static;
+                @include rem((
+                    margin-top: $gs-baseline
+                ));
             }
         }
     }
-
     @include mq(tablet) {
-        .collection__show-more,
         .item--sport-stats {
             display: none;
         }
@@ -199,20 +227,8 @@
             }
         }
     }
-    .l-row--items-3 & {
-        .item__media-wrapper {
-            @include rem((
-                width: 88px
-            ));
-
-            @include mq(desktop) {
-                @include rem((
-                    width: 122px
-                ));
-            }
-        }
-    }
 }
+
 .linkslist-container {
     position: relative;
     padding-top: 1px;
@@ -234,7 +250,18 @@
         background: $c-newsAccent;
     }
 
-    &.show-more--hidden:before {
+    &.show-more--hidden {
         display: none;
+
+        &:before {
+            display: none;
+        }
     }
+}
+
+.today {
+    color: $c-neutral2;
+}
+.today__dayofweek {
+    color: $c-neutral1;
 }

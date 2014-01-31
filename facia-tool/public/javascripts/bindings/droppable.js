@@ -8,8 +8,7 @@ define([
     'modules/authed-ajax',
     'models/group',
     'models/article',
-    'modules/content-api',
-    'modules/ophan-api'
+    'modules/content-api'
 ], function(
     ko,
     vars,
@@ -19,8 +18,7 @@ define([
     authedAjax,
     Group,
     Article,
-    contentApi,
-    ophanApi
+    contentApi
 ) {
     var sourceList,
         storage = window.localStorage,
@@ -163,15 +161,15 @@ define([
                         alertBadContent();
                     })
                     .done(function() {
-                        var itemMeta;
-
-                        ophanApi.decorateItems([article]);
+                        var itemMeta,
+                            timestamp,
+                            edits = {};
 
                         if (_.isFunction(targetList.reflow)) {
                             targetList.reflow();
                         }
 
-                        if (!targetList.parent) { // no need for persistence
+                        if (!targetList.parent) {
                             return;
                         }
 
@@ -184,6 +182,8 @@ define([
                             return;
                         }
 
+                        targetList.parent.closeAllArticles();
+
                         itemMeta = sourceItem && sourceItem.meta ? sourceItem.meta : {};
 
                         if (targetList.parent.groups && targetList.parent.groups.length > 1) {
@@ -192,38 +192,37 @@ define([
                             delete itemMeta.group;
                         }
 
-                        authedAjax.updateCollection(
-                            'post',
-                            targetList.parent,
-                            {
-                                item:     id,
-                                position: position,
-                                after:    isAfter,
-                                live:     vars.state.liveMode(),
-                                draft:   !vars.state.liveMode(),
-                                itemMeta: _.isEmpty(itemMeta) ? undefined : itemMeta
-                            }
-                        );
+                        timestamp = Math.floor(new Date().getTime()/1000);
+                        itemMeta.updatedAt = itemMeta.updatedAt ? itemMeta.updatedAt + ',' + timestamp : timestamp + ':f90'; // orange for the initial flag
 
-                        if (!sourceList || sourceList.keepCopy || sourceList.parentType !== 'Collection') {
-                            return;
-                        }
+                        edits.update = {
+                            collection: targetList.parent,
+                            item:     id,
+                            position: position,
+                            after:    isAfter,
+                            live:     vars.state.liveMode(),
+                            draft:   !vars.state.liveMode(),
+                            itemMeta: _.isEmpty(itemMeta) ? undefined : itemMeta
+                        };
 
-                        if (sourceList.parent.id === targetList.parent.id) {
-                            return;
-                        }
+                        // Is a delete also required?
+                        if (sourceList &&
+                            sourceList.parentType === 'Collection' &&
+                            sourceList.parent.id !== targetList.parent.id  &&
+                           !sourceList.keepCopy) {
 
-                        removeMatchingItems(sourceList, id);
+                            removeMatchingItems(sourceList, id);
 
-                        authedAjax.updateCollection(
-                            'delete',
-                            sourceList.parent,
-                            {
+                            edits.remove = {
+                                collection: sourceList.parent,
+                                id:     sourceList.parent.id,
                                 item:   id,
                                 live:   vars.state.liveMode(),
                                 draft: !vars.state.liveMode()
-                            }
-                        );
+                            };
+                        }
+
+                        authedAjax.updateCollections(edits);
                     });
                 }, false);
             }

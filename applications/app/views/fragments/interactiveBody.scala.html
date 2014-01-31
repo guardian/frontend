@@ -19,7 +19,11 @@
         </div>
 
         <div class="article__container">
-            <figure class="interactive" data-interactive="@request.path.drop(1)"></figure>
+            @interactive.body.map { body =>
+                @HtmlFormat.raw(body)
+            }.getOrElse {
+                <figure class="interactive" data-interactive="@conf.Configuration.interactive.url@request.path.drop(1)/boot.js"></figure>
+            }
         </div>
     </article>
 </div>

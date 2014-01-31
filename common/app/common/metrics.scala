@@ -5,6 +5,7 @@ import com.gu.management._
 import conf.RequestMeasurementMetrics
 import java.lang.management.ManagementFactory
 import model.diagnostics.CloudWatch
+import java.io.File
 
 trait TimingMetricLogging extends Logging { self: TimingMetric =>
   override def measure[T](block: => T): T = {
@@ -59,6 +60,14 @@ object SystemMetrics extends implicits.Numbers {
     () => ManagementFactory.getOperatingSystemMXBean.getAvailableProcessors
   )
 
+  object FreeDiskSpaceMetric extends GaugeMetric("system", "free-disk-space", "Free disk space (MB)", "Free disk space (MB)",
+    () => new File("/").getUsableSpace.toDouble / 1048576
+  )
+
+  object TotalDiskSpaceMetric extends GaugeMetric("system", "total-disk-space", "Total disk space (MB)", "Total disk space (MB)",
+    () => new File("/").getTotalSpace.toDouble / 1048576
+  )
+
   // yeah, casting to com.sun.. ain't too pretty
   object TotalPhysicalMemoryMetric extends GaugeMetric("system", "total-physical-memory", "Total physical memory", "Total physical memory",
     () => ManagementFactory.getOperatingSystemMXBean match {
@@ -86,7 +95,7 @@ object SystemMetrics extends implicits.Numbers {
 
   val all = Seq(MaxHeapMemoryMetric, UsedHeapMemoryMetric,
     MaxNonHeapMemoryMetric, UsedNonHeapMemoryMetric, BuildNumberMetric, LoadAverageMetric, AvailableProcessorsMetric,
-    TotalPhysicalMemoryMetric, FreePhysicalMemoryMetric
+    TotalPhysicalMemoryMetric, FreePhysicalMemoryMetric, FreeDiskSpaceMetric, TotalDiskSpaceMetric
   )
 }
 
@@ -234,9 +243,23 @@ object FaciaToolMetrics {
     "Number of drafts that have been published"
   )
 
+  object ContentApiPutSuccess extends CountMetric(
+    "facia-api",
+    "faciatool-contentapi-put-success",
+    "Facia tool contentapi put success count",
+    "Number of PUT requests that have been successful to the content api"
+  )
+
+  object ContentApiPutFailure extends CountMetric(
+    "facia-api",
+    "faciatool-contentapi-put-failure",
+    "Facia tool contentapi put failure count",
+    "Number of PUT requests that have failed to the content api"
+  )
+
   val all: Seq[Metric] = Seq(
     ApiUsageCount, ProxyCount, ExpiredRequestCount,
-    DraftPublishCount
+    DraftPublishCount, ContentApiPutSuccess, ContentApiPutFailure
   )
 }
 
@@ -309,17 +332,21 @@ trait CloudWatchApplicationMetrics extends GlobalSettings {
   def report() {
 
     val metrics = Map(
-      s"$applicationName-max-heap-memory" -> SystemMetrics.MaxHeapMemoryMetric.getValue().toDouble,
-      s"$applicationName-used-heap-memory" -> SystemMetrics.UsedHeapMemoryMetric.getValue().toDouble,
+      (s"$applicationName-max-heap-memory", SystemMetrics.MaxHeapMemoryMetric.getValue().toDouble),
+      (s"$applicationName-used-heap-memory", SystemMetrics.UsedHeapMemoryMetric.getValue().toDouble),
 
-      s"$applicationName-total-physical-memory" -> SystemMetrics.TotalPhysicalMemoryMetric.getValue().toDouble,
-      s"$applicationName-free-physical-memory" -> SystemMetrics.FreePhysicalMemoryMetric.getValue().toDouble,
+      (s"$applicationName-total-physical-memory", SystemMetrics.TotalPhysicalMemoryMetric.getValue().toDouble),
+      (s"$applicationName-free-physical-memory", SystemMetrics.FreePhysicalMemoryMetric.getValue().toDouble),
 
-      s"$applicationName-available-processors" -> SystemMetrics.AvailableProcessorsMetric.getValue().toDouble,
+      (s"$applicationName-available-processors", SystemMetrics.AvailableProcessorsMetric.getValue().toDouble),
 
-      s"$applicationName-load-average" -> SystemMetrics.LoadAverageMetric.getValue().toDouble,
+      (s"$applicationName-load-average", SystemMetrics.LoadAverageMetric.getValue()),
 
-      s"$applicationName-build-number" -> SystemMetrics.BuildNumberMetric.getValue().toDouble
+      (s"$applicationName-build-number", SystemMetrics.BuildNumberMetric.getValue().toDouble),
+
+      (s"$applicationName-free-disk-space", SystemMetrics.FreeDiskSpaceMetric.getValue()),
+      (s"$applicationName-total-disk-space", SystemMetrics.TotalDiskSpaceMetric.getValue())
+
     )
 
     CloudWatch.put("ApplicationSystemMetrics", metrics)

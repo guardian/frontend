@@ -86,10 +86,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val iPhoneAppSwitch = Switch("Advertising", "iphone-app",
-    "If this switch is on then the iPhone app upsell will be enabled.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 30))
-
   // Commercial Tags
   
   val AudienceScienceSwitch = Switch("Commercial Tags", "audience-science",
@@ -131,6 +127,10 @@ object Switches extends Collections {
     "If this switch is on, commercial components will be fed by London & Country mortgage feed.",
     safeState = Off, sellByDate = endOfQ4)
 
+  val GuBookshopFeedsSwitch = Switch("Commercial Feeds", "gu-bookshop",
+    "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
+    safeState = Off, sellByDate = endOfQ4)
+
 
   // Analytics Switches
 
@@ -151,7 +151,7 @@ object Switches extends Collections {
 
   val OphanMultiEventSwitch = Switch("Analytics", "ophan-multi-event",
     "Enables the new Ophan tracking javascript which support multiple events per page",
-    safeState = Off, endOfQ4
+    safeState = On, endOfQ4
   )
 
   val OmnitureVerificationSwitch = Switch("Analytics", "omniture-verification",
@@ -176,6 +176,13 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  // Identity Switches
+
+  val IdentityEmailVerificationSwitch = Switch("Identity Email verification", "id-email-verification",
+    "If this switch is on, the option to resend your verification email is displayed.",
+    safeState = Off, sellByDate = endOfQ4
+  )
+
   // Open
 
   val OpenCtaSwitch = Switch("Open", "open-cta",
@@ -198,16 +205,6 @@ object Switches extends Collections {
   val SponsoredContentSwitch = Switch("Feature Switches", "sponsored-content",
     "If this is switched on the articles will display a simple 'Advertisement feature' notice.",
     safeState = Off, sellByDate = endOfQ4
-  )
-
-  val NetworkFrontAppealSwitch = Switch("Feature Switches", "network-front-appeal",
-    "Switch to show the appeal trailblock on the network front.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 30)
-  )
-
-  val WitnessVideoSwitch = Switch("Feature Switches", "witness-video",
-    "Switch this switch off to disable witness video embeds.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 30)
   )
 
   val SocialSwitch = Switch("Feature Switches", "social-icons",
@@ -237,17 +234,16 @@ object Switches extends Collections {
 
   val ExternalLinksCardsSwitch = Switch("Feature Switches", "external-links-cards",
     "If this switch is on, external links are turned into cards in body content on wide viewports.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 31)
+    safeState = Off,
+
+    // WARNING - this has had one extension, no more.
+    // if we cannot make a decision next time it goes
+    sellByDate = new DateMidnight(2014, 2, 28)
   )
 
   val LiveSummarySwitch = Switch("Feature Switches", "live-summary",
     "If this is switched on the live events will show a summary at the beginning of the page on mobile next to the article on wider devices.",
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
-  )
-
-  val ShowUnsupportedEmbedsSwitch = Switch("Feature Switches", "unsupported-embeds",
-    "If this is switched on then unsupported embeds will be included in article bodies.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 31)
   )
 
   val ArticleKeywordsSwitch = Switch("Feature Switches", "article-keywords",
@@ -272,7 +268,7 @@ object Switches extends Collections {
 
   val RightHandMostPopularSwitch = Switch("Feature Switches", "right-hand-most-popular",
     "If this switch is on, a component with most popular content from around the Guardian is displayed in the article right hand column at desktop breakpoints.",
-    safeState = Off, sellByDate = endOfQ4
+    safeState = On, sellByDate = endOfQ4
   )
 
   val IdentityEthicalAwardsSwitch = Switch("Feature Switches", "id-ethical-awards",
@@ -341,7 +337,19 @@ object Switches extends Collections {
     "If this is switched on then the au alpha network fronts will be served if a GU_AU_ALPHA cookie has been dropped",
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 7)
   )
-  
+
+  // Facia Tool
+
+  val ToolDisable = Switch("Facia Tool", "facia-tool-disable",
+    "If this is switched on then the fronts tool is disabled",
+    safeState = Off, sellByDate = never
+  )
+
+  val ToolSparklines = Switch("Facia Tool", "facia-tool-sparklines",
+    "If this is switched on then the fronts tool renders images from sparklines.ophan.co.uk",
+    safeState = Off, sellByDate = never
+  )
+
   // Image Switch
 
   val ServeWebPImagesSwitch = Switch("Image Server", "serve-webp-images",
@@ -354,6 +362,17 @@ object Switches extends Collections {
     safeState = On, sellByDate = new DateMidnight(2014, 2, 7)
   )
 
+  // Facia Tool Switches
+
+  val ContentApiPutSwitch = Switch("Facia Tool", "facia-tool-contentapi-put",
+    "If this switch is on facia tool will PUT all collection changes to content api",
+    safeState = Off, sellByDate = never
+  )
+
+  val ImageServiceSwitch = Switch("Image Server", "image-service",
+    "If this switch is on images will be served off ak.i.guim.co.uk (dynamic image host). Part of the CDN test. Relies on ImageServerSwitch also being on",
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 7))
+
   val all: List[Switch] = List(
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
@@ -362,16 +381,14 @@ object Switches extends Collections {
     VideoAdvertSwitch,
     AudienceScienceSwitch,
     DiscussionSwitch,
+    IdentityEmailVerificationSwitch,
     OpenCtaSwitch,
     FontSwitch,
-    NetworkFrontAppealSwitch,
-    WitnessVideoSwitch,
     SocialSwitch,
     SearchSwitch,
     ImageServerSwitch,
     ReleaseMessageSwitch,
     IntegrationTestSwitch,
-    iPhoneAppSwitch,
     ClientSideErrorSwitch,
     LocalNavSwitch,
     LightboxGalleriesSwitch,
@@ -384,7 +401,6 @@ object Switches extends Collections {
     UserzoomSwitch,
     CssFromStorageSwitch,
     ElasticSearchSwitch,
-    ShowUnsupportedEmbedsSwitch,
     ServeWebPImagesSwitch,
     ArticleKeywordsSwitch,
     EditionRedirectLoggingSwitch,
@@ -398,9 +414,12 @@ object Switches extends Collections {
     NetworkFrontUkAlpha,
     NetworkFrontUsAlpha,
     NetworkFrontAuAlpha,
+    ToolDisable,
+    ToolSparklines,
     TagLinking,
     SponsoredContentSwitch,
     OphanMultiEventSwitch,
+    ContentApiPutSwitch,
     AmaaSwitch,
     ImrWorldwideSwitch,
     DiagnosticsRequestLogging,
@@ -411,7 +430,9 @@ object Switches extends Collections {
     MasterclassFeedSwitch,
     SoulmatesFeedSwitch,
     MoneysupermarketFeedsSwitch,
-    LCMortgageFeedSwitch
+    LCMortgageFeedSwitch,
+    GuBookshopFeedsSwitch,
+    ImageServiceSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

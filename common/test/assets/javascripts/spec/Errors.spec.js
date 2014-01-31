@@ -8,7 +8,7 @@ define(['common/common', 'bean', 'common/modules/analytics/errors'], function(co
             fakeError = { 'message': 'foo', lineno: 1, filename: 'foo.js' };
         
         beforeEach(function() {
-            e = new Errors({window: w, beaconUrl: 'beacon.gu.com', buildNumber: 643});
+            e = new Errors({window: w, buildNumber: 643});
             e.init();
         });
         
@@ -22,7 +22,6 @@ define(['common/common', 'bean', 'common/modules/analytics/errors'], function(co
 
         it("should log javascript errors with the error message, line number, build number, and file", function(){
             expect(e.log(fakeError.message, fakeError.filename, fakeError.lineno)).toBeTruthy();
-            expect(document.getElementById('js-err').getAttribute('src')).toContain('beacon.gu.com/js.gif?message=foo&filename=foo.js&lineno=1&type=js&build=643');
         });
 
         it("after logging, should let browser handle error if user pref switch 'showErrors is on", function(){
@@ -46,29 +45,12 @@ define(['common/common', 'bean', 'common/modules/analytics/errors'], function(co
             var cons = {
                     error: jasmine.createSpy('error')
                 },
-                e = new Errors({ isDev: true, console: cons });
+                e = new Errors({ isDev: true, console: cons, buildNumber: 643 });
             expect(e.log(fakeError.message, fakeError.filename, fakeError.lineno)).toBeFalsy(false);
             expect(cons.error.mostRecentCall.args[0]).toEqual({
-                message: fakeError.message, filename: fakeError.filename, lineno: fakeError.lineno
+                message: fakeError.message, filename: fakeError.filename, lineno: fakeError.lineno,
+                build: 643, type: 'js'
             });
-        });
-        
-        describe('Advert errors', function() {
-            
-            it("it should log 'documentwriteslot.js' errors as advert errors", function(){
-                e.log(fakeError.message, 'common/modules/adverts/documentwriteslot.js', fakeError.lineno);
-                expect(document.getElementById('js-err').getAttribute('src')).toContain(
-                    'beacon.gu.com/js.gif?message=foo&filename=common%2Fmodules%2Fadverts%2Fdocumentwriteslot.js&lineno=1&type=ads'
-                );
-            });
-            
-            it("it should log 'Script error.' errors as advert errors", function(){
-                e.log('Script error.', fakeError.filename, fakeError.lineno);
-                expect(document.getElementById('js-err').getAttribute('src')).toContain(
-                    'beacon.gu.com/js.gif?message=Script%20error.&filename=foo.js&lineno=1&type=ads'
-                );
-            });
-            
         });
 
         it("should correctly parse [object Event] errors", function(){
@@ -77,8 +59,7 @@ define(['common/common', 'bean', 'common/modules/analytics/errors'], function(co
             script.src = 'http://foo.com/bar.js';
             // fake event
             bean.on(script, 'error', function(event) {
-                e.log(event.originalEvent, fakeError.filename, fakeError.lineno);
-                expect(document.getElementById('js-err').getAttribute('src')).toContain('Syntax%20or%20http%20error%3A%20http%3A%2F%2Ffoo.com%2Fbar.js');
+                expect(e.log(event.originalEvent, fakeError.filename, fakeError.lineno)).toBeTruthy();
             })
             bean.fire(script, 'error');
         });

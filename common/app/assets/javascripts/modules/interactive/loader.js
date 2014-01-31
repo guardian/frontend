@@ -6,18 +6,8 @@ define([
 
     function Interactive(el, context, config) {
 
-        var interactiveAttr = el.getAttribute('data-interactive'),
-            element = el,
-            bootUrl;
-
-        // Backward compatibility with relative paths.
-        // data-interactive attributes should be absolute from now
-        // onwards.
-        if (/^https?:\/\//.test(interactiveAttr)) {
-            bootUrl = interactiveAttr;
-        } else {
-            bootUrl = config.page.interactiveUrl + interactiveAttr + '/boot.js';
-        }
+        var bootUrl = el.getAttribute('data-interactive'),
+            element = el;
 
         this.init = function () {
 

@@ -42,7 +42,7 @@ define(['common/common', 'common/utils/ajax',  'qwery', 'common/modules/sport/fo
         // json test needs to be run asynchronously
         it("should request the given competitions from the tables api", function(){
 
-            server.respondWith('/football/api/competitiontable.json?&competitionId=100&_edition=UK', [200, {}, '{ "html": "<p>foo</p>" }']);
+            server.respondWith('/football/api/competitiontable.json?&competitionId=100', [200, {}, '{ "html": "<p>foo</p>" }']);
 
             runs(function(){
                 new FootballTable({
@@ -58,7 +58,7 @@ define(['common/common', 'common/utils/ajax',  'qwery', 'common/modules/sport/fo
 
         xit("should prepend a succesful table request to the DOM", function() {
 
-            server.respondWith('/football/api/competitiontable.json?&competitionId=100&_edition=UK', [200, {}, '{ "html": "<p>foo</p>" }']);
+            server.respondWith('/football/api/competitiontable.json?&competitionId=100', [200, {}, '{ "html": "<p>foo</p>" }']);
 
             runs(function(){
                 new FootballTable({
@@ -76,7 +76,7 @@ define(['common/common', 'common/utils/ajax',  'qwery', 'common/modules/sport/fo
 
         it("should fail silently if no response is returned from table request", function() {
 
-            server.respondWith('/football/api/competitiontable?&competitionId=100&_edition=UK', [200, {}, '{ "html": "<p>foo</p>" }']);
+            server.respondWith('/football/api/competitiontable?&competitionId=100', [200, {}, '{ "html": "<p>foo</p>" }']);
 
             runs(function(){
                 new FootballTable({

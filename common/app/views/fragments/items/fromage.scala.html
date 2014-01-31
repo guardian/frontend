@@ -54,7 +54,7 @@
                         <span class="item__live-indicator">Live</span>
                     }
                     @if(tone == "comment") {
-                        <span class="i i-quote-light-grey"></span>
+                        <span class="i i-quote-orange"></span>
                     }
                     @RemoveOuterParaHtml(trail.headline)
                 </h1>
@@ -95,15 +95,14 @@
                 <h2 class="fromage__support__title u-h">More on this story:</h2>
 
                 <ul class="fromage__support-list">
-                    @trail.supporting.map{ supporting =>
-                        <li class="fromage__support__item
-                                   fromage__support__fromage--@VisualTone(supporting)
-                                   @if(supporting.isLive){fromage__support__fromage--live}">
-                            <a href="@LinkTo{@supporting.url}"
-                               class="fromage__support__action">
-                                @supporting.headline
-                            </a>
-                        </li>
+                    @trail.supporting.zipWithIndex.map{ case (supporting, index) =>
+                        @supporting match {
+                            case l: LiveBlog if l.isLive         => { @fragments.items.supporting.live(l, index) }
+                            case g: Gallery                      => { @fragments.items.supporting.gallery(g, index) }
+                            case v: Video                        => { @fragments.items.supporting.video(v, index) }
+                            case c if VisualTone(c) == "comment" => { @fragments.items.supporting.comment(c, index) }
+                            case s                               => { @fragments.items.supporting.standard(s, index) }
+                        }
                     }
                 </ul>
             </div>

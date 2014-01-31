@@ -3,20 +3,16 @@
 @admin_main("Fronts editor", env, isAuthed = true, identity) {
 
 <div style="display: none;" data-bind="visible: true">
-
-    <img class="ophan-legend" src="@routes.Assets.at("images/ophan-legend.png")" title="Pageview graph colours" />
-
     <div class="toolbar" data-bind="visible: true" style="display: none">
-
-        <span class="tool-label">
-            Editing front
-        </span>
+        <span class="tool-label">Front</span>
         <select class="tool-select" data-bind="options: fronts, value: front, optionsCaption: 'choose...'"></select>
 
-        <span class="tool-label">
-            Edit Mode
-        </span>
+        <a class="spark" target="ophan" title="Dark blue: Guardian. Green: Google. Light blue: Other." data-bind="
+            visible: frontSparkUrl,
+            attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + front()}">
+            <img data-bind="attr: {src: frontSparkUrl}" /></a>
 
+        <span class="tool-label">Mode</span>
         <a class="tool pref-draft" data-bind="
             click: setModeDraft,
             css: {active: !liveMode()}">Draft</a
@@ -24,12 +20,9 @@
             click: setModeLive,
             css: {active: liveMode}">Live</a>
 
-        <a class="tool logout" href="/logout">Logout</a>
-
         <a class="tool preview" target="preview" data-bind="
             attr: {href: previewUrl},
             visible: front">View Live</a>
-
     </div>
 
     <div class="finder">
@@ -96,6 +89,22 @@
                 css: {collapsed: state.collapsed() || configMeta.uneditable()}">
 
                 <div data-bind="visible: !state.editingConfig()">
+
+                    <span class="tools" data-bind="visible: state.hasDraft">
+                        <a class="draft-warning" data-bind="
+                            click: $root.setModeDraft,
+                            visible: $root.liveMode">
+                            <span class="tool draft-publish draft-warning">!</span>Draft Exists</a>
+
+                        <span data-bind="visible: !$root.liveMode()">
+                            <a class="tool draft-publish" data-bind="
+                                click: publishDraft">Publish</a>
+
+                            <a class="tool draft-discard" data-bind="
+                                click: discardDraft">Discard</a>
+                        </span >
+                    </span>
+
                     <span class="title" data-bind="
                         text: configMeta.displayName() || collectionMeta.displayName() || configMeta.roleName() || id"></span>
 
@@ -145,26 +154,11 @@
 
             </div>
 
-            <div data-bind="if: !state.collapsed()">
-                <div class="tools" data-bind="visible: state.hasDraft">
-                    <a class="draft-warning" data-bind="
-                        click: $root.setModeDraft,
-                        visible: $root.liveMode">
-                        <span class="tool draft-publish draft-warning">!</span>Unpublished edits exist</a>
-
-                    <div data-bind="visible: !$root.liveMode()">
-                        <a class="tool draft-publish" data-bind="
-                            click: publishDraft">Publish container</a>
-
-                        <a class="tool draft-discard" data-bind="
-                            click: discardDraft">Discard changes</a>
-                    </div>
-                </div>
-
+            <!-- ko if: !state.collapsed() -->
                 <div data-bind="
                     css: {'pending': isPending()},
                     template: {name: 'template_groups', foreach: groups}"></div>
-            </div>
+            <!-- /ko -->
         </div>
     </script>
 
@@ -197,7 +191,7 @@
             <a target="article" data-bind="
                 attr: {href: 'http://www.theguardian.com/' + props.id()},
                 click: open">
-                <img draggable="false" data-bind="
+                <img class="thumb" draggable="false" data-bind="
                     attr: {src: fields.thumbnail, title: props.id}"/>
             </a>
 
@@ -264,6 +258,12 @@
             </div>
 
             <div class="closed" data-bind="if: !state.open()">
+                <a class="spark" target="ophan" title="Dark blue: Guardian. Green: Google. Light blue: Other." data-bind="
+                    visible: state.sparkUrl,
+                    attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + props.id()}">
+                    <img data-bind="attr: {src: state.sparkUrl}" />
+                </a>
+
                 <div class="image__overrides" data-bind="
                     visible: meta.imageAdjust,
                     click: open">
@@ -275,11 +275,6 @@
 
                 <a class="tool tool--remove" data-bind="click: $parent.omitItem">
                     <i class="icon-trash"></i>
-                </a>
-
-                <a class="article__stats u-cf" target="ophan" data-bind="attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + props.id()}">
-                    <div class="pageviews" data-bind="if: totalHitsFormatted()"><span data-bind="text: totalHitsFormatted"></span></div>
-                    <div class="pageviews-graph" data-bind="if: state.pageViewsSeries(), sparkline: state.pageViewsSeries"></div>
                 </a>
 
                 <div class="article_content is-empty" data-bind="if: state.isEmpty">

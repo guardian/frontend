@@ -37,7 +37,7 @@ define([
 
         var self = this,
             model = {
-                config: null,
+                config: ko.observable(),
 
                 collections: ko.observableArray(),
                 fronts: ko.observableArray(),
@@ -53,7 +53,9 @@ define([
                     keepCopy:  true
                 }),
 
-                liveMode: vars.state.liveMode
+                liveMode: vars.state.liveMode,
+
+                frontSparkUrl: ko.observable()
             };
 
         model.setModeLive = function() {
@@ -68,23 +70,43 @@ define([
             return vars.CONST.viewer + '#env=' + config.env + '&url=' + model.front() + encodeURIComponent('?view=mobile');
         });
 
-        function fetchFronts() {
+        function terminate() {
+            window.location.href = '/logout';
+        }
+
+        function terminateWithMessage(msg) {
+            window.alert("Please contact support. Error: " + (msg || 'unknown'));
+            terminate();
+        }
+
+        function fetchConfig() {
             return authedAjax.request({
                 url: vars.CONST.apiBase + '/config'
             })
             .fail(function () {
-                window.alert("Oops, the fronts configuration was not available! Please contact support.");
-                return;
+                terminateWithMessage("the config was not available");
             })
             .done(function(resp) {
-
                 if (!(_.isObject(resp.fronts) && _.isObject(resp.collections))) {
-                    window.alert("Oops, the fronts configuration is invalid! Please contact support.");
-                    return;
+                    terminateWithMessage("the config is invalid.");
                 }
-
-                model.config = resp;
+                model.config(resp);
                 model.fronts(_.keys(resp.fronts).sort());
+            });
+        }
+
+        function fetchSwitches() {
+            return authedAjax.request({
+                url: vars.CONST.apiBase + '/switches'
+            })
+            .fail(function () {
+                terminateWithMessage("the switches are unavailable");
+            })
+            .done(function(switches) {
+                if (switches['facia-tool-disable']) {
+                    terminate();
+                }
+                vars.state.switches = switches || {};
             });
         }
 
@@ -99,17 +121,25 @@ define([
         function renderFront(id) {
             history.pushState({}, "", window.location.pathname + '?' + ammendedQueryStr('front', id));
             model.collections(
-                ((model.config.fronts[getFront()] || {}).collections || [])
-                .filter(function(id){ return !!model.config.collections[id]; })
+                ((model.config().fronts[getFront()] || {}).collections || [])
+                .filter(function(id){ return !!model.config().collections[id]; })
                 .map(function(id){
                     return new Collection(
-                        _.extend(model.config.collections[id], {id: id})
+                        _.extend(model.config().collections[id], {id: id})
                     );
                 })
             );
+            showFrontSpark();
         }
 
-        var startPoller = _.once(function() {
+        function showFrontSpark() {
+            model.frontSparkUrl(undefined);
+            if (vars.state.switches['facia-tool-sparklines']) {
+                model.frontSparkUrl(vars.sparksBaseFront + getFront());
+            }
+        }
+
+        var startCollectionsPoller = _.once(function() {
             var period = vars.CONST.collectionsPollMs || 60000;
 
             setInterval(function(){
@@ -121,31 +151,25 @@ define([
             }, period);
         });
 
-        ko.bindingHandlers.sparkline = {
-            update: function (element, valueAccessor, allBindingsAccessor, model) {
-                var graphs = ko.utils.unwrapObservable(valueAccessor()),
-                    max;
+        var startSparksPoller = _.once(function() {
+            var period = vars.CONST.sparksRefreshMs || 60000;
 
-                if (!_.isArray(graphs)) { return; }
-                max = _.max(_.pluck(graphs, 'max'));
-                if (!max) { return; }
-
-                _.each(_.toArray(graphs).reverse(), function(graph, i){
-                    $(element).sparkline(graph.data, {
-                        chartRangeMax: max,
-                        defaultPixelsPerValue: graph.data.length < 50 ? graph.data.length < 30 ? 3 : 2 : 1,
-                        height: Math.round(Math.max(5, Math.min(30, max))),
-                        lineColor: '#' + graph.color,
-                        spotColor: false,
-                        minSpotColor: false,
-                        maxSpotColor: false,
-                        lineWidth: graph.activity || 1,
-                        fillColor: false,
-                        composite: i > 0
-                    });
+            setInterval(function(){
+                model.collections().forEach(function(list, index){
+                    setTimeout(function(){
+                        list.refreshSparklines();
+                    }, index * period / (model.collections().length || 1)); // stagger requests
                 });
-            }
-        };
+                showFrontSpark();
+            }, period);
+        });
+
+        var startConfigAndSwitchesPoller = _.once(function() {
+            setInterval(function(){
+                fetchConfig();
+                fetchSwitches();
+            }, vars.CONST.configSwitchesPollMs || 60000);
+        });
 
         model.front.subscribe(function(front) {
             renderFront(front);
@@ -154,14 +178,14 @@ define([
         model.liveMode.subscribe(function() {
             _.each(model.collections(), function(collection) {
                 collection.closeAllArticles();
-                collection.populateLists();
+                collection.populate();
             });
         });
 
         this.init = function() {
             droppable.init();
 
-            fetchFronts()
+            $.when(fetchConfig(), fetchSwitches())
             .done(function(){
                 setfront();
                 window.onpopstate = setfront;
@@ -171,7 +195,9 @@ define([
                 updateLayout();
                 window.onresize = updateLayout;
 
-                startPoller();
+                startCollectionsPoller();
+                startSparksPoller();
+                startConfigAndSwitchesPoller();
 
                 model.latestArticles.search();
                 model.latestArticles.startPoller();

@@ -140,3 +140,12 @@
 .u-underline {
     text-decoration: underline;
 }
+
+
+/**
+ * Prevent line breaks
+ */
+
+.u-nobr {
+    white-space: nowrap;
+}
