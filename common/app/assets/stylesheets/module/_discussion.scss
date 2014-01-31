@@ -109,7 +109,7 @@ $replyIndent: 26px;
    Comment
    ========================================================================== */
 .d-comment {
-    margin: 1px 0 0 0;
+    margin: 1px 0 0;
     padding: 0;
     display: block;
     clear: both;
@@ -457,7 +457,7 @@ $replyIndent: 26px;
     @include fs-data(1);
     color: $c-neutral2;
     display: inline-block;
-    @include rem((margin: 0 $gs-gutter/(5*2)));
+    @include rem((margin: 0 ($gs-gutter/5)*2));
     position: relative;
     bottom: 1px;
 }
@@ -635,7 +635,7 @@ $replyIndent: 26px;
         background-color: $c-newsDefault;
         @include rem((
             margin-bottom: $baseline * -1,
-            margin-right: $gs-gutter/(5*2)
+            margin-right: ($gs-gutter/5)*2
         ));
     }
 }
@@ -648,7 +648,7 @@ $replyIndent: 26px;
     color: $c-neutral1;
     border-top: 1px dotted $c-neutral3;
     margin-bottom: 0;
-    @include rem((padding-top: $baseline/2));
+    @include rem((padding-top: $gs-baseline/10));
 }
 
 .discussion__comments--top-comments {
@@ -658,7 +658,7 @@ $replyIndent: 26px;
         overflow: hidden;
     }
     .d-comment {
-        @include rem((margin-bottom: $baseline*2));
+        @include rem((margin-bottom: ($gs-baseline/5)*2));
         overflow: hidden;
     }
     .d-comment__main {
@@ -702,7 +702,7 @@ $replyIndent: 26px;
     .d-comment__content {
         background-color: $c-neutral7;
         @include rem((
-            padding: $baseline*2 $gs-gutter/(5*3),
+            padding: $baseline*2 ($gs-gutter/5)*3,
             margin-bottom: $baseline*3
         ));
         position: relative;

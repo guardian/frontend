@@ -51,7 +51,7 @@
 .guardian-logo-wrapper {
     float: left;
     margin: 20px 0 18px $gs-gutter/2;
-    @include rem((margin-left: $gs-gutter/2));
+    margin-left: rem($gs-gutter/2); // Only horizontal space is scalable
 
     i {
         display: block;
