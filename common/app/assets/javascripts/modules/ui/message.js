@@ -46,8 +46,13 @@ define([
     };
 
     Message.prototype.bindModalListeners = function() {
+        bean.on(document, 'click', '.js-site-message-inner', function(e) {
+            // Suppress same-level and parent handling, but allow default click behaviour.
+            // This handler must come first.
+            e.stopImmediatePropagation();
+            e.stopPropagation();
+        });
         bean.on(document, 'click', '.js-site-message', this.acknowledge.bind(this));
-        bean.on(document, 'click', '.js-site-message-inner', function(e) { e.preventDefault(); });
     };
 
     Message.prototype.hide = function() {
