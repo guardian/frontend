@@ -216,3 +216,11 @@ $item-top-border-height: 2px;
     }
     &:after { right: 0; }
 }
+@mixin item--hide-tone-border {
+    .item__link {
+        border-top-width: 0 !important;
+    }
+    .item__image-container {
+        margin-top: 0 !important;
+    }
+}
