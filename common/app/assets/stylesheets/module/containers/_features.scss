@@ -67,21 +67,25 @@
         .item__title {
             @include fs-headline(2, true);
             @include rem((
-                padding-bottom: $gs-baseline*2
+                padding-bottom: $gs-baseline,
+                min-height: nth(nth($fs-headlines, 2), 2)*2
             ));
             @include mq(desktop) {
                 @include fs-headline(3, true);
+                @include rem((
+                    min-height: nth(nth($fs-headlines, 3), 2)*2 + $gs-baseline/3
+                ));
             }
             background-color: $c-features-primary;
-            background-color: rgba($c-features-primary, .8);
+            @include mq(tablet) { background-color: rgba($c-features-primary, .8); }
         }
         .collection__item:nth-child(2n) .item__title {
             background-color: $c-features-secondary;
-            background-color: rgba($c-features-secondary, .8);
+            @include mq(tablet) { background-color: rgba($c-features-secondary, .8); }
         }
         .collection__item:nth-child(3n) .item__title {
             background-color: $c-features-tertiary;
-            background-color: rgba($c-features-tertiary, .8);
+            @include mq(tablet) { background-color: rgba($c-features-tertiary, .8); }
         }
         .item__link:hover,
         .item__link:focus {
@@ -91,19 +95,31 @@
             }
         }
         .item--has-image {
-            .item__title {
-                position: absolute;
-                bottom: 0;
-                @include rem((
-                    left: $gs-gutter/2,
-                    right: $gs-gutter/2,
-                    padding-top: $gs-baseline/3,
-                    padding-bottom: $gs-baseline
-                ));
+            @include mq(tablet) {
+                .item__title {
+                    position: absolute;
+                    bottom: 0;
+                    @include rem((
+                        left: $gs-gutter/2,
+                        right: $gs-gutter/2,
+                        padding-top: $gs-baseline/3
+                    ));
+                }
             }
         }
     }
     .linkslist-container:before {
-        background: $c-featureAccent;
+        background: $c-featureAccent; // Change color of border on top of the links list container
+    }
+    .l-row--items-4 {
+        // Compensate lost space caused by loss of meta
+        @include mq($to: tablet) {
+            .collection__item {
+                @include rem((
+                    min-height: nth(nth($fs-headlines, 1), 2)*2 + $gs-baseline/3,
+                    margin-bottom: $gs-baseline
+                ));
+            }
+        }
     }
 }
