@@ -162,12 +162,10 @@ $c-live: #e81818;
     &:hover {
         .item__cta {
             background-color: rgba($c-neutral2, 1);
-            &.item__cta--gallery {
-                background-color: $c-neutral1;
-            }
-            &.item__cta--video {
-                background-color: $c-media-icon;
-            }
+        }
+        .item__cta--gallery,
+        .item__cta--video {
+            background-color: $c-media-icon;
         }
     }
 }
@@ -532,5 +530,29 @@ $c-live: #e81818;
         .item__image-container {
             margin: 0;
         }
+    }
+}
+
+.item__gallery-lightbox {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+
+    &:before {
+        content: "";
+        display: block;
+        padding-top: 60%;
+    }
+    .item__cta {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        @include rem((
+            padding-top: 8px,
+            padding-left: 8px
+        ));
     }
 }
