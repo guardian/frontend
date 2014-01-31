@@ -50,6 +50,9 @@
                 @include rem((padding-top: 1px));
             }
         }
+        .item__byline {
+            display: none;
+        }
         .item__link,
         .item__title,
         .item__standfirst {
