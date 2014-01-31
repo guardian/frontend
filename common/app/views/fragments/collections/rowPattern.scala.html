@@ -1,8 +1,5 @@
-@(config: Config,
-  items: Seq[Trail],
-  style: Container,
-  containerIndex: Int
-)(implicit request: RequestHeader)
+@(config: Config, items: Seq[Trail], style: Container, containerIndex: Int)(implicit request: RequestHeader)
+
 <div class="collection-wrapper">
     @items.slice(0, 1).zipWithIndex.map{ case (trail, index) =>
         @if(!trail.group.isEmpty){ @* Means this is a curated container *@
@@ -24,14 +21,18 @@
 <div class="collection-wrapper">
     <ul class="unstyled l-row l-row--items-2 collection">
         @items.slice(2, 4).zipWithIndex.map{ case (trail, index) =>
-            <li class="l-row__item
-                       collection__item
-                       collection__item--volume-@trail.group.getOrElse("0")
-                       collection__item--tone-@VisualTone(trail)">
-                @if(trail.imageAdjust == Some("highlight")) {
-                    @fragments.items.standard(trail, index + 2, 0, "div")
-                }else{
-                    @fragments.items.thumbnail(trail, index + 2, 0, "div")
+            <li class="@RenderClasses(Map(
+                            "l-row__item" -> true,
+                            "collection__item" -> true,
+                            s"collection__item--volume-${trail.group.getOrElse("0")}" -> true,
+                            s"collection__item--tone-${VisualTone(trail)}" -> true,
+                            s"collection__item--content-type-gallery" -> {trail match { case _: Gallery => true; case _ => false  }},
+                            s"collection__item--content-type-video" -> {trail match { case _: Video => true; case _ => false }}))">
+                @trail match {
+                    case g: Gallery                                  => { @fragments.items.thumbnailGallery(g, index + 2, 0, "div") }
+                    case v: Video                                    => { @fragments.items.thumbnailVideo(v, index + 2, 0, "div") }
+                    case _ if trail.imageAdjust == Some("highlight") => { @fragments.items.standard(trail, index + 2, 0, "div") }
+                    case _                                           => { @fragments.items.thumbnail(trail, index + 2, 0, "div") }
                 }
             </li>
         }
@@ -40,11 +41,18 @@
 <div class="collection-wrapper">
     <ul class="unstyled l-row l-row--items-4 collection">
         @items.slice(4, 8).zipWithIndex.map{ case (trail, index) =>
-            <li class="l-row__item
-                       collection__item
-                       collection__item--volume-@trail.group.getOrElse("0")
-                       collection__item--tone-@VisualTone(trail)">
-                @fragments.items.standard(trail, index + 4, 0, "div")
+            <li class="@RenderClasses(Map(
+                            "l-row__item" -> true,
+                            "collection__item" -> true,
+                            s"collection__item--volume-${trail.group.getOrElse("0")}" -> true,
+                            s"collection__item--tone-${VisualTone(trail)}" -> true,
+                            s"collection__item--content-type-gallery" -> {trail match { case _: Gallery => true; case _ => false }},
+                            s"collection__item--content-type-video" -> {trail match { case _: Video => true; case _ => false }}))">
+                @trail match {
+                    case g: Gallery => { @fragments.items.gallery(g, index + 4, 0, "div") }
+                    case v: Video   => { @fragments.items.video(v, index + 4, 0, "div") }
+                    case other      => { @fragments.items.standard(trail, index + 4, 0, "div") }
+                }
             </li>
         }
     </ul>
@@ -52,16 +60,13 @@
 <div class="linkslist-container js-container--show-more">
     <ul class="l-columns linkslist">
         @items.slice(8, 24).zipWithIndex.map{ case (trail, index) =>
-            <li class="l-columns__item linkslist__item">
-                <a href="@LinkTo{@trail.url}"
-                   class="linkslist__action
-                          @if(VisualTone(trail) == "comment"){linkslist__action--has-icon}">
-                    @if(VisualTone(trail) == "comment") {
-                        <span class="i i-quote-orange linkslist__icon"></span>
-                    }
-                    @RemoveOuterParaHtml(trail.headline)
-                </a>
-            </li>
+            @trail match {
+                case l: LiveBlog if l.isLive         => { @fragments.items.linksList.live(l, index + 8) }
+                case g: Gallery                      => { @fragments.items.linksList.gallery(g, index + 8) }
+                case v: Video                        => { @fragments.items.linksList.video(v, index + 8) }
+                case c if VisualTone(c) == "comment" => { @fragments.items.linksList.comment(c, index + 8) }
+                case t                               => { @fragments.items.linksList.standard(t, index + 8) }
+            }
         }
     </ul>
 </div>

@@ -12,16 +12,8 @@ define([
         throw new Error("Edition has not been initialised yet");
     };
 
-    function appendEdition(params) {
-        var delimiter = params.url.indexOf('?') > -1 ? '&' : '?';
-        params.url = params.url + delimiter + '_edition=' + edition;
-        return params;
-    }
 
     function ajax(params) {
-
-        params = appendEdition(params);
-
         if (!params.url.match('^https?://')) {
             params.url = makeAbsolute(params.url);
         }

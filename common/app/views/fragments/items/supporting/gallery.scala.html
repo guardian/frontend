@@ -1,0 +1,8 @@
+@(supporting: Gallery, index: Int)(implicit request: RequestHeader)
+
+<li class="fromage__support__item">
+    <a href="@LinkTo{@supporting.url}" class="fromage__support__action action--has-icon" data-link-name="supporting | @{index + 1}">
+        <span class="i i-gallery-yellow-small"></span>
+        @supporting.headline
+    </a>
+</li>

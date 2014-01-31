@@ -67,7 +67,12 @@ object Frontend extends Build with Prototypes {
     )
   )
 
-  val admin = application("admin").dependsOn(commonWithTests).aggregate(common)
+  val admin = application("admin").dependsOn(commonWithTests).aggregate(common).settings(
+    libraryDependencies ++= Seq(
+      "com.typesafe.slick" %% "slick" % "1.0.0",
+      "postgresql" % "postgresql" % "8.4-703.jdbc4" from "http://jdbc.postgresql.org/download/postgresql-8.4-703.jdbc4.jar"
+    )
+  )
   val faciaTool = application("facia-tool").dependsOn(commonWithTests)
   val porter = application("porter").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
@@ -152,7 +157,6 @@ object Frontend extends Build with Prototypes {
     router,
     diagnostics,
     admin,
-    porter,
     identity,
     commercial,
     onward

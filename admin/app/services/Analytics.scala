@@ -1,7 +1,7 @@
 package services
 
 import common.Logging
-import conf.PorterConfiguration
+import conf.AdminConfiguration
 import scala.slick.jdbc.StaticQuery
 import scala.slick.session.Session
 import org.joda.time.{DateMidnight, DateTime}
@@ -9,7 +9,7 @@ import org.joda.time.{DateMidnight, DateTime}
 object Analytics extends Logging with implicits.Dates with implicits.Collections with implicits.Tuples with implicits.Statistics {
 
   def getPageviewsByDay(): Map[DateMidnight, Long] = {
-    val pageviews: Map[DateMidnight, Long] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
+    val pageviews: Map[DateMidnight, Long] = AdminConfiguration.analytics.db withSession { implicit session: Session =>
       val data = StaticQuery.queryNA[(Int, Int, Int, Long)]("""
         select year, month, day_of_month, count(*) as total
         from pageviews
@@ -38,7 +38,7 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
   }
 
   def getNewPageviewsByDay(): Map[DateMidnight, Long] = {
-    val pageviews: Map[DateMidnight, Long] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
+    val pageviews: Map[DateMidnight, Long] = AdminConfiguration.analytics.db withSession { implicit session: Session =>
       val data = StaticQuery.queryNA[(Int, Int, Int, Long)]("""
         select year, month, day_of_month, count(*) as total
         from pageviews
@@ -68,7 +68,7 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
   }
 
   def getPageviewsByCountry(): Map[String, Long] = {
-    val pageviews: Map[String, Long] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
+    val pageviews: Map[String, Long] = AdminConfiguration.analytics.db withSession { implicit session: Session =>
       val data: List[(String, Long)] = StaticQuery.queryNA[(String, Long)]("""
         select country, count(*) as total
         from pageviews
@@ -91,7 +91,7 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
   }
  
   def getPageviewsByOperatingSystemAndBrowser(): Map[String, Long] = {
-    val pageviews: List[(String, String, String, String, String, String, Long)] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
+    val pageviews: List[(String, String, String, String, String, String, Long)] = AdminConfiguration.analytics.db withSession { implicit session: Session =>
       StaticQuery.queryNA[(String, String, String, String, String, String, Long)]( s"""
         select os_family, os_version_major, browser_family, browser_version_major, month, year, count(*) as total
         from pageviews
@@ -111,7 +111,7 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
   }
 
   def getPageviewsByOperatingSystem(): Map[String, Long] = {
-    val pageviews: List[(String, String, String, String, Long)] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
+    val pageviews: List[(String, String, String, String, Long)] = AdminConfiguration.analytics.db withSession { implicit session: Session =>
       StaticQuery.queryNA[(String, String, String, String, Long)]( s"""
         select os_family, os_version_major, month, year, count(*) as total
         from pageviews
@@ -131,7 +131,7 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
   }
 
   def getPageviewsByBrowser(): Map[String, Long] = {
-    val pageviews: List[(String, String, String, String, Long)] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
+    val pageviews: List[(String, String, String, String, Long)] = AdminConfiguration.analytics.db withSession { implicit session: Session =>
       StaticQuery.queryNA[(String, String, String, String, Long)]( s"""
         select browser_family, browser_version_major, month, year, count(*) as total
         from pageviews
@@ -151,7 +151,7 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
   }
 
   def getPageviewsPerUserByDay(): Map[DateMidnight, Double] = {
-    val pageviews: List[(DateMidnight, Int, Long)] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
+    val pageviews: List[(DateMidnight, Int, Long)] = AdminConfiguration.analytics.db withSession { implicit session: Session =>
       val data = StaticQuery.queryNA[(Int, Int, Int, Int, Long)]( """
         select year, month, day_of_month, user_pageviews_for_day, count(*) as count from
         (
@@ -190,7 +190,7 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
   }
 
   def getWeeklyPageviewsPerUserByDay(): Map[DateMidnight, Double] = {
-    val pageviews: List[(DateMidnight, Int, Long)] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
+    val pageviews: List[(DateMidnight, Int, Long)] = AdminConfiguration.analytics.db withSession { implicit session: Session =>
       val data = StaticQuery.queryNA[(Int, Int, Int, Int, Long)]( """
         with day as (
           select year, month, day_of_month, days_since_epoch, ophan, count(*) as pageviews
@@ -239,7 +239,7 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
   }
 
   def getFourWeeklyPageviewsPerUserByDay(): Map[DateMidnight, Double] = {
-    val pageviews: List[(DateMidnight, Int, Long)] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
+    val pageviews: List[(DateMidnight, Int, Long)] = AdminConfiguration.analytics.db withSession { implicit session: Session =>
       val data = StaticQuery.queryNA[(Int, Int, Int, Int, Long)]( """
         with day as (
           select year, month, day_of_month, days_since_epoch, ophan, count(*) as pageviews
@@ -288,7 +288,7 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
   }
 
   def getUsersByDay(): Map[DateMidnight, Long] = {
-    val users: Map[DateMidnight, Long] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
+    val users: Map[DateMidnight, Long] = AdminConfiguration.analytics.db withSession { implicit session: Session =>
       val data = StaticQuery.queryNA[(Int, Int, Int, Long)]("""
         select year, month, day_of_month, count(*) as total
         from (
@@ -321,7 +321,7 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
   }
 
   def getWeeklyUsersByDay(): Map[DateMidnight, Long] = {
-    val users: Map[DateMidnight, Long] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
+    val users: Map[DateMidnight, Long] = AdminConfiguration.analytics.db withSession { implicit session: Session =>
       val data = StaticQuery.queryNA[(Int, Int, Int, Long)]("""
         with day as (
           select year, month, day_of_month, days_since_epoch, ophan
@@ -365,7 +365,7 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
   }
 
   def getFourWeeklyUsersByDay(): Map[DateMidnight, Long] = {
-    val users: Map[DateMidnight, Long] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
+    val users: Map[DateMidnight, Long] = AdminConfiguration.analytics.db withSession { implicit session: Session =>
       val data = StaticQuery.queryNA[(Int, Int, Int, Long)]("""
         with day as (
           select year, month, day_of_month, days_since_epoch, ophan
@@ -409,7 +409,7 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
   }
 
   def getReturnUsersByDay(): Map[DateMidnight, Long] = {
-    val returns: Map[DateMidnight, Long] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
+    val returns: Map[DateMidnight, Long] = AdminConfiguration.analytics.db withSession { implicit session: Session =>
       val data = StaticQuery.queryNA[(Int, Int, Int, Long)]( """
         with day as (
           select year, month, day_of_month, days_since_epoch, ophan
@@ -450,7 +450,7 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
   }
 
   def getWeeklyReturnUsersByDay(): Map[DateMidnight, Long] = {
-    val returns: Map[DateMidnight, Long] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
+    val returns: Map[DateMidnight, Long] = AdminConfiguration.analytics.db withSession { implicit session: Session =>
       val data = StaticQuery.queryNA[(Int, Int, Int, Long)]( """
         with day as (
           select year, month, day_of_month, days_since_epoch, ophan
@@ -492,7 +492,7 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
   }
 
   def getFourWeeklyReturnUsersByDay(): Map[DateMidnight, Long] = {
-    val returns: Map[DateMidnight, Long] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
+    val returns: Map[DateMidnight, Long] = AdminConfiguration.analytics.db withSession { implicit session: Session =>
       val data = StaticQuery.queryNA[(Int, Int, Int, Long)]( """
         with day as (
           select year, month, day_of_month, days_since_epoch, ophan
@@ -534,7 +534,7 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
   }
 
   def getWeeklyDaysSeenPerUserByDay(): Map[DateMidnight, Double] = {
-    val daysSeen: List[(DateMidnight, Int, Long)] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
+    val daysSeen: List[(DateMidnight, Int, Long)] = AdminConfiguration.analytics.db withSession { implicit session: Session =>
       val data = StaticQuery.queryNA[(Int, Int, Int, Int, Long)]( """
         with day as (
           select year, month, day_of_month, days_since_epoch, ophan
@@ -583,7 +583,7 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
   }
 
   def getWeeklyDaysSeenByDay(): Map[Int, Map[DateMidnight, Long]] = {
-    val daysSeen: List[(DateMidnight, Int, Long)] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
+    val daysSeen: List[(DateMidnight, Int, Long)] = AdminConfiguration.analytics.db withSession { implicit session: Session =>
       val data = StaticQuery.queryNA[(Int, Int, Int, Int, Long)]( """
         with day as (
           select year, month, day_of_month, days_since_epoch, ophan
@@ -637,7 +637,7 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
   }
 
   def getFourWeeklyDaysSeenPerUserByDay(): Map[DateMidnight, Double] = {
-    val daysSeen: List[(DateMidnight, Int, Long)] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
+    val daysSeen: List[(DateMidnight, Int, Long)] = AdminConfiguration.analytics.db withSession { implicit session: Session =>
       val data = StaticQuery.queryNA[(Int, Int, Int, Int, Long)]( """
         with day as (
           select year, month, day_of_month, days_since_epoch, ophan
@@ -686,7 +686,7 @@ object Analytics extends Logging with implicits.Dates with implicits.Collections
   }
 
   def getFourWeeklyDaysSeenByDay(): Map[Int, Map[DateMidnight, Long]] = {
-    val daysSeen: List[(DateMidnight, Int, Long)] = PorterConfiguration.analytics.db withSession { implicit session: Session =>
+    val daysSeen: List[(DateMidnight, Int, Long)] = AdminConfiguration.analytics.db withSession { implicit session: Session =>
       val data = StaticQuery.queryNA[(Int, Int, Int, Int, Long)]( """
         with day as (
           select year, month, day_of_month, days_since_epoch, ophan

@@ -41,7 +41,7 @@ define([
                         new CollectionShowMore(collection).addShowMore();
                     });
                 });
-                $('.container--news', context).each(function(container) {
+                $('.js-container-add-show-more', context).each(function(container) {
                     new ContainerShowMore(container).addShowMore();
                 });
             });

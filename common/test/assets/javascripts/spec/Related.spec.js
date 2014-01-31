@@ -32,7 +32,7 @@ define(['common/common', 'common/utils/ajax', 'common/modules/onward/related', '
 
             var pageId = 'some/news';
 
-            server.respondWith('/related/' + pageId + '.json?_edition=UK', [200, {}, '{ "html": "<b>1</b>" }']);
+            server.respondWith('/related/' + pageId + '.json', [200, {}, '{ "html": "<b>1</b>" }']);
 
             appendTo = document.querySelector('.js-related');
 

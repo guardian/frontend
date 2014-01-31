@@ -86,10 +86,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val iPhoneAppSwitch = Switch("Advertising", "iphone-app",
-    "If this switch is on then the iPhone app upsell will be enabled.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 30))
-
   // Commercial Tags
   
   val AudienceScienceSwitch = Switch("Commercial Tags", "audience-science",
@@ -180,6 +176,13 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  // Identity Switches
+
+  val IdentityEmailVerificationSwitch = Switch("Identity Email verification", "id-email-verification",
+    "If this switch is on, the option to resend your verification email is displayed.",
+    safeState = Off, sellByDate = endOfQ4
+  )
+
   // Open
 
   val OpenCtaSwitch = Switch("Open", "open-cta",
@@ -202,16 +205,6 @@ object Switches extends Collections {
   val SponsoredContentSwitch = Switch("Feature Switches", "sponsored-content",
     "If this is switched on the articles will display a simple 'Advertisement feature' notice.",
     safeState = Off, sellByDate = endOfQ4
-  )
-
-  val NetworkFrontAppealSwitch = Switch("Feature Switches", "network-front-appeal",
-    "Switch to show the appeal trailblock on the network front.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 30)
-  )
-
-  val WitnessVideoSwitch = Switch("Feature Switches", "witness-video",
-    "Switch this switch off to disable witness video embeds.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 30)
   )
 
   val SocialSwitch = Switch("Feature Switches", "social-icons",
@@ -241,17 +234,16 @@ object Switches extends Collections {
 
   val ExternalLinksCardsSwitch = Switch("Feature Switches", "external-links-cards",
     "If this switch is on, external links are turned into cards in body content on wide viewports.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 31)
+    safeState = Off,
+
+    // WARNING - this has had one extension, no more.
+    // if we cannot make a decision next time it goes
+    sellByDate = new DateMidnight(2014, 2, 28)
   )
 
   val LiveSummarySwitch = Switch("Feature Switches", "live-summary",
     "If this is switched on the live events will show a summary at the beginning of the page on mobile next to the article on wider devices.",
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
-  )
-
-  val ShowUnsupportedEmbedsSwitch = Switch("Feature Switches", "unsupported-embeds",
-    "If this is switched on then unsupported embeds will be included in article bodies.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 1, 31)
   )
 
   val ArticleKeywordsSwitch = Switch("Feature Switches", "article-keywords",
@@ -389,16 +381,14 @@ object Switches extends Collections {
     VideoAdvertSwitch,
     AudienceScienceSwitch,
     DiscussionSwitch,
+    IdentityEmailVerificationSwitch,
     OpenCtaSwitch,
     FontSwitch,
-    NetworkFrontAppealSwitch,
-    WitnessVideoSwitch,
     SocialSwitch,
     SearchSwitch,
     ImageServerSwitch,
     ReleaseMessageSwitch,
     IntegrationTestSwitch,
-    iPhoneAppSwitch,
     ClientSideErrorSwitch,
     LocalNavSwitch,
     LightboxGalleriesSwitch,
@@ -411,7 +401,6 @@ object Switches extends Collections {
     UserzoomSwitch,
     CssFromStorageSwitch,
     ElasticSearchSwitch,
-    ShowUnsupportedEmbedsSwitch,
     ServeWebPImagesSwitch,
     ArticleKeywordsSwitch,
     EditionRedirectLoggingSwitch,
