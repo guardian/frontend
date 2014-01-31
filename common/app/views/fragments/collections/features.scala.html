@@ -1,16 +1,12 @@
 @(config: Config, items: Seq[Trail], style: Container, containerIndex: Int)(implicit request: RequestHeader)
 
-@defining(items.slice(0, 2)) { items =>
-    @if(items.nonEmpty) {
-        <div class="collection-wrapper">
-            <ul class="unstyled l-row l-row--items-2 collection">
-                @items.zipWithIndex.map{ case (trail, index) =>
-                    @fragments.items.rowPattern.standard(trail, index, 0)
-                }
-            </ul>
-        </div>
-    }
-}
+<div class="collection-wrapper">
+    <ul class="unstyled l-row l-row--items-2 collection">
+        @items.slice(0, 2).zipWithIndex.map{ case (trail, index) =>
+            @fragments.items.rowPattern.standard(trail, index, 0)
+        }
+    </ul>
+</div>
 @defining(items.slice(2, 6)) { items =>
     @if(items.nonEmpty) {
         <div class="collection-wrapper">
