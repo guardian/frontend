@@ -226,7 +226,7 @@ define([
                         collection: this.parent,
                         item:       this.props.id(),
                         position:   this.props.id(),
-                        itemMeta:   this.getMeta(),
+                        itemMeta:   itemMeta,
                         live:       vars.state.liveMode(),
                         draft:     !vars.state.liveMode()
                     }
