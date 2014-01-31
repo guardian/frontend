@@ -47,7 +47,7 @@
         }
         .item--has-no-image {
             .item__title {
-                padding-top: $baseline/4;
+                @include rem((padding-top: 1px));
             }
         }
         .item__link,

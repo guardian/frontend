@@ -126,7 +126,9 @@
         }
         @include mq(tablet) {
             .collection__item {
-                margin-bottom: $gs-baseline*2;
+                @include rem((
+                    margin-bottom: $gs-baseline*2
+                ));
             }
         }
         @include mq(desktop) {

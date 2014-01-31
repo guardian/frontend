@@ -264,13 +264,13 @@
     @extend %type-10;
     display: none;
     margin: 0 $gs-gutter/2 0 $gs-gutter;
-    padding: $baseline*3 0 0;
+    padding: $gs-baseline 0 0;
     @include mq(tablet) { display: block; }
 
     .nav__item {
-        margin: $baseline 0 0 0;
+        margin: $baseline 0 0;
         padding: $baseline $gs-gutter/2;
-        color: #fff;
+        color: #ffffff;
         border-right: 1px solid #94B1CA;
 
         &:last-child { border-right: none; }

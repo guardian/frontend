@@ -12,14 +12,14 @@
     }
 
     p {
-        margin-bottom: 12px;
+        @include rem((margin-bottom: 12px));
     }
-    
+
     blockquote {
         margin-top: 0;
         margin-left: 0;
         margin-right: 0;
-        padding-left: 14px;
+        @include rem((padding-left: 14px));
         border-left: 2px solid #cfcfcd !important; // To override .block blockquote
 
         &,
