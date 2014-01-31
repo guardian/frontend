@@ -34,8 +34,9 @@
                     //    this does a minimal tracking for those devices
                      *@
                     if (!guardian.isModernBrowser) {
+                        var ts = Math.round((new Date()).getTime()/1000); 
                         var analyticsImage = document.createElement("img");
-                        analyticsImage.src = "@Html(omnitureCall)";
+                        analyticsImage.src = "@Html(omnitureCall)" + "&ts=" + ts;
                         analyticsImage.width = "1";
                         analyticsImage.height = "1";
                         document.body.appendChild(analyticsImage);
