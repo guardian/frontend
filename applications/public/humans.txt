@@ -69,3 +69,8 @@ Location: London, UK
 Developer: Matt Andrews
 Twitter: @mattpointblank
 Location: London, UK
+
+Software Engineer in Test: Marc Jones
+Twitter: @marcpjones
+LinkedIn: jonesmarc
+Location: London, UK
