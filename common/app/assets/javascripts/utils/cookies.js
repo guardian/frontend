@@ -32,6 +32,7 @@ define(function () {
             while (cookie.charAt(0) === ' ') {
                 cookie = cookie.substring(1, cookie.length);
             }
+            //console.log("++ Cookie: " + cookie);
             if (cookie.indexOf(nameEq) === 0) {
                 cookieVal = cookie.substring(nameEq.length, cookie.length);
                 return cookieVal;

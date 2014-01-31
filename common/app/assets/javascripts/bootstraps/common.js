@@ -39,7 +39,8 @@ define([
     "common/modules/ui/message",
     "common/modules/identity/autosignin",
     'common/modules/adverts/article-body-adverts',
-    "common/modules/analytics/commercial/tags/container"
+    "common/modules/analytics/commercial/tags/container",
+    "common/modules/onward/right-most-popular"
 ], function (
     $,
     mediator,
@@ -81,7 +82,8 @@ define([
     Message,
     AutoSignin,
     ArticleBodyAdverts,
-    TagContainer
+    TagContainer,
+    RightMostPopular
 ) {
 
     var hasBreakpointChanged = detect.hasCrossedBreakpoint();
@@ -182,6 +184,12 @@ define([
             ab.run(config, context);
         },
 
+        initRightMostPopular: function(config, context) {
+           if(config.switches.rightHandMostPopular && config.page.contentType === 'Article') {
+              var r = new RightMostPopular(mediator, {type: 'image', maxTrails: 5});
+           }
+        },
+
         logLiveStats: function (config) {
             liveStats.log({ beaconUrl: config.page.beaconUrl }, config);
         },
@@ -201,7 +209,6 @@ define([
                         }).init();
                     }
                 });
-
             });
 
             function recordOphanSingleEvent(ophan, viewData) {
@@ -411,6 +418,7 @@ define([
                 modules.cleanupCookies(context);
                 modules.runAbTests(config, context);
                 modules.transcludeRelated(config, context);
+                modules.initRightMostPopular(config, context);
             }
             mediator.emit("page:common:deferred:loaded", config, context);
         });

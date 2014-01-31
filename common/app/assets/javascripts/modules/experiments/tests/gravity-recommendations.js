@@ -1,8 +1,12 @@
 /*global guardian */
 define([
-    'common/utils/detect'
+    'common/utils/detect',
+    'common/utils/mediator',
+    'common/modules/onward/right-most-popular'
 ], function (
-    detect
+    detect,
+    mediator,
+    RightMostPopular
     ) {
 
     var GravityRecommendations = function () {
@@ -26,6 +30,7 @@ define([
             {
                 id: 'show-gravity-recommendations',
                 test: function(context, config) {
+                    RightMostPopular.bar();
                     require(['js!gravity'], function(){});
                 }
             }
