@@ -3,23 +3,26 @@
     background: $c-neutral7;
     border-top: 1px solid $c-neutral5;
     @include font-size(14, 20);
-    margin-top: $baseline*2;
+    @include rem((margin-top: $baseline*2));
 
     @include mq(tablet) {
         border-top: 0;
-        margin-top: $baseline;
+        @include rem((margin-top: $baseline));
     }
 }
 .switcher {
     clear: both;
-    padding-top: $baseline*3;
-    padding-bottom: $baseline*3;
-    margin-left: $gs-gutter/2;
-    margin-right: $gs-gutter/2;
-
+    @include rem((
+        padding-top: $baseline*3,
+        padding-bottom: $baseline*3,
+        margin-left: $gs-gutter/2,
+        margin-right: $gs-gutter/2
+    ));
     @include mq(mobileLandscape) {
-        margin-left: $gs-gutter;
-        margin-right: $gs-gutter;
+        @include rem((
+            margin-left: $gs-gutter,
+            margin-right: $gs-gutter
+        ));
     }
 
     & + & {
@@ -53,8 +56,10 @@
 .switcher__option {
     @include box-sizing(border-box);
     width: 33.333333333%; // of 75% = 25%
-    padding-left: $gs-gutter/2;
-    padding-right: $gs-gutter/2;
+    @include rem((
+        padding-left: $gs-gutter/2,
+        padding-right: $gs-gutter/2
+    ));
 
     &,
     a {
@@ -70,11 +75,13 @@
     &:before {
         content: '';
         display: inline-block;
-        width: 12px;
-        height: 12px;
-        @include rounded-corners(12px);
+        @include rounded-corners(50%);
         background: $c-neutral3;
-        margin-left: -15px;
-        vertical-align: -1px;
+        @include rem((
+            margin-left: -15px,
+            vertical-align: -1px,
+            width: 12px,
+            height: 12px
+        ));
     }
 }

@@ -19,10 +19,10 @@ object Config {
   = Config(id, None, displayName, None, None, Nil, None)
 }
 
-case class Collection(curated: Seq[Trail],
-                      editorsPicks: Seq[Trail],
-                      mostViewed: Seq[Trail],
-                      results: Seq[Trail],
+case class Collection(curated: Seq[Content],
+                      editorsPicks: Seq[Content],
+                      mostViewed: Seq[Content],
+                      results: Seq[Content],
                       displayName: Option[String],
                       lastUpdated: Option[String],
                       updatedBy: Option[String],
@@ -32,8 +32,8 @@ case class Collection(curated: Seq[Trail],
 }
 
 object Collection {
-  def apply(curated: Seq[Trail]): Collection = Collection(curated, Nil, Nil, Nil, None, Option(DateTime.now.toString), None, None)
-  def apply(curated: Seq[Trail], displayName: Option[String]): Collection = Collection(curated, Nil, Nil, Nil, displayName, Option(DateTime.now.toString), None, None)
+  def apply(curated: Seq[Content]): Collection = Collection(curated, Nil, Nil, Nil, None, Option(DateTime.now.toString), None, None)
+  def apply(curated: Seq[Content], displayName: Option[String]): Collection = Collection(curated, Nil, Nil, Nil, displayName, Option(DateTime.now.toString), None, None)
 }
 
 case class FaciaPage(

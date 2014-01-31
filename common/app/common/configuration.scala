@@ -180,6 +180,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val ctaApiRoot = configuration.getMandatoryStringProperty("open.cta.apiRoot")
   }
 
+  object interactive {
+    lazy val url = "http://interactive.guim.co.uk/next-gen/"
+  }
+
   object javascript {
     // This is config that is avaliable to both Javascript and Scala
     // But does not change across environments
@@ -187,7 +191,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val config: Map[String, String] = Map(
       "ophanUrl" -> "http://s.ophan.co.uk/js/ophan.min",
       "googleSearchUrl" -> "http://www.google.co.uk/cse/cse.js",
-      "interactiveUrl" -> "http://interactive.guim.co.uk/next-gen/",
       "idWebAppUrl" -> id.webappUrl,
       "idApiUrl" -> id.apiRoot,
       "discussionApiRoot" -> discussion.apiRoot,

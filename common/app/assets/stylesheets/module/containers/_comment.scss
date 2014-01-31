@@ -28,7 +28,9 @@
             .item__title .i-quote-orange {
                 width: 34px;
                 height: 20px;
-                top: 4px;
+                @include rem((
+                    top: 4px
+                ));
             }
         }
         .item:nth-child(n+2) {

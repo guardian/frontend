@@ -287,7 +287,7 @@ object Gallery {
 
 class Interactive(content: ApiContentWithMeta) extends Content(content) {
   lazy val contentType = "Interactive"
-  lazy val body: String = delegate.safeFields("body")
+  lazy val body: Option[String] = delegate.safeFields.get("body")
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
 }
