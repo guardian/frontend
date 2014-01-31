@@ -3,17 +3,17 @@
 @defining((VisualTone(trail), containerIndex == 0, containerIndex == 0 && index < 3)) { case (tone, isFirstContainer, inlineImages) =>
     <@element
         class="@RenderClasses(
-                    "item",
-                    "item--dark",
-                    "item--gallery",
-                    "item--has-image",
-                    s"tone-$tone",
-                    "item--force-image-upgrade")"
+            "item",
+            "item--dark",
+            "item--gallery",
+            "item--has-image",
+            s"tone-$tone",
+            "item--force-image-upgrade")"
         data-link-name="trail | @{index + 1}"
         @trail.discussionId.map{ id => data-discussion-id="@id" }
         data-discussion-closed="@trail.isClosedForComments">
 
-        <div class="item__container tone-border">
+        <div class="item__container tone-accent-border">
 
             @trail.trailPicture(5,3).map{ imageContainer =>
                 @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>

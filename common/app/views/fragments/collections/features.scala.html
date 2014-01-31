@@ -1,31 +1,21 @@
-@(config: Config,
-  items: Seq[Trail],
-  style: Container,
-  containerIndex: Int
-)(implicit request: RequestHeader)
+@(config: Config, items: Seq[Trail], style: Container, containerIndex: Int)(implicit request: RequestHeader)
+
 <div class="collection-wrapper">
     <ul class="unstyled l-row l-row--items-2 collection">
         @items.slice(0, 2).zipWithIndex.map{ case (trail, index) =>
-            <li class="@RenderClasses(Map(
-                            "l-row__item" -> true,
-                            "collection__item" -> true,
-                            s"collection__item--volume-${trail.group.getOrElse("0")}" -> true,
-                            s"collection__item--tone-${VisualTone(trail)}" -> true))">
-                @fragments.items.standard(trail, index, 0, "div")
-            </li>
+            @fragments.items.rowPattern.standard(trail, index, 0)
         }
     </ul>
 </div>
 <div class="collection-wrapper">
     <ul class="unstyled l-row l-row--items-4 collection">
         @items.slice(2, 6).zipWithIndex.map{ case (trail, index) =>
-            <li class="@RenderClasses(Map(
-                            "l-row__item" -> true,
-                            "collection__item" -> true,
-                            s"collection__item--volume-${trail.group.getOrElse("0")}" -> true,
-                            s"collection__item--tone-${VisualTone(trail)}" -> true))">
-                @fragments.items.standard(trail, index + 2, 0, "div")
-            </li>
+            @trail match {
+                case g: Gallery                      => { @fragments.items.rowPattern.standardGallery(g, index + 2, 0) }
+                case v: Video                        => { @fragments.items.rowPattern.standardVideo(v, index + 2, 0) }
+                case c if VisualTone(c) == "comment" => { @fragments.items.rowPattern.standardComment(c, index + 2, 0) }
+                case t                               => { @fragments.items.rowPattern.standard(t, index + 2, 0) }
+            }
         }
     </ul>
 </div>
@@ -33,10 +23,10 @@
     <ul class="l-columns linkslist">
         @items.slice(6, 22).zipWithIndex.map{ case (trail, index) =>
             @trail match {
-                case g: Gallery                      => { @fragments.items.linkList.gallery(g, index + 6) }
-                case v: Video                        => { @fragments.items.linkList.video(v, index + 6) }
-                case c if VisualTone(c) == "comment" => { @fragments.items.linkList.comment(c, index + 6) }
-                case t                               => { @fragments.items.linkList.standard(t, index + 6) }
+                case g: Gallery                      => { @fragments.items.linksList.gallery(g, index + 6) }
+                case v: Video                        => { @fragments.items.linksList.video(v, index + 6) }
+                case c if VisualTone(c) == "comment" => { @fragments.items.linksList.comment(c, index + 6) }
+                case t                               => { @fragments.items.linksList.standard(t, index + 6) }
             }
         }
     </ul>

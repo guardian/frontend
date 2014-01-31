@@ -1,6 +1,6 @@
 /**
  * Fromage object
- * 
+ *
  * Single full width story, featuring:
  * - volume
  * - image adjustment (hide/default/highlight)
@@ -230,6 +230,11 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
             .fromage__support__action {
                 @include rem((
                     padding-left: $gs-gutter/4
+                ));
+            }
+            .action--has-icon {
+                @include rem((
+                    padding-left: $action-icon-width + ($action-icon-rightspace * 2)
                 ));
             }
         }
