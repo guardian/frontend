@@ -8,6 +8,7 @@ import play.api.mvc._
 import play.api.libs.json.{JsArray, Json}
 import Switches.EditionRedirectLoggingSwitch
 import views.support.{TemplateDeduping, NewsContainer}
+import scala.concurrent.Future
 
 abstract class FrontPage(val isNetworkFront: Boolean) extends MetaData
 
@@ -330,6 +331,29 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
           }
         }
       }.getOrElse(Cached(60)(NotFound))
+  }
+
+  def renderFaciaPress(path: String) = Action.async { implicit request =>
+
+    FrontPage(path).map { frontPage =>
+      FrontJson.get(path).map(_.map{ faciaPage =>
+
+        Cached(frontPage) {
+          if (request.isJson) {
+            val html = views.html.fragments.frontBody(frontPage, faciaPage)
+            JsonComponent(
+              "html" -> html,
+              "trails" -> JsArray(faciaPage.collections.filter(_._1.contentApiQuery.isDefined).take(1).flatMap(_._2.items.map(TrailToJson(_)))),
+              "config" -> Json.parse(views.html.fragments.javaScriptConfig(frontPage).body)
+            )
+          }
+          else
+            Ok(views.html.front(frontPage, faciaPage))
+        }
+
+      }.getOrElse(Cached(60)(NotFound("No Facia Page"))))
+    }.getOrElse(Future.successful(Cached(60)(NotFound("No Front Page"))))
+
   }
 
   def renderCollection(id: String) = Action { implicit request =>
