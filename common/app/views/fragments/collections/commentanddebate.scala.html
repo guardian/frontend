@@ -1,33 +1,33 @@
 @(config: Config, items: Seq[Trail], style: Container, containerIndex: Int)(implicit request: RequestHeader)
 
-@defining(items.slice(0, 2)) { items =>
+@defining(items.slice(0, 3)) { items =>
     @if(items.nonEmpty) {
         <div class="collection-wrapper">
-            <ul class="unstyled l-row l-row--items-2 collection">
+            <ul class="unstyled l-row l-row--items-3 collection">
                 @items.zipWithIndex.map{ case (trail, index) =>
-                    @fragments.items.rowPattern.standard(trail, index, 0)
+                    @fragments.items.rowPattern.simplecomment(trail, index, containerIndex, "item--hide-tone-border")
                 }
             </ul>
         </div>
     }
 }
-@defining(items.slice(2, 6)) { items =>
+@defining(items.slice(3, 7)) { items =>
     @if(items.nonEmpty) {
         <div class="collection-wrapper">
             <ul class="unstyled l-row l-row--items-4 collection">
                 @items.zipWithIndex.map{ case (trail, index) =>
                     @trail match {
-                        case g: Gallery                      => { @fragments.items.rowPattern.standardGallery(g, index + 2, 0) }
-                        case v: Video                        => { @fragments.items.rowPattern.standardVideo(v, index + 2, 0) }
-                        case c if VisualTone(c) == "comment" => { @fragments.items.rowPattern.standardComment(c, index + 2, 0) }
-                        case t                               => { @fragments.items.rowPattern.standard(t, index + 2, 0) }
+                        case g: Gallery                      => { @fragments.items.rowPattern.standardGallery(g, index + 4, 0) }
+                        case v: Video                        => { @fragments.items.rowPattern.standardVideo(v, index + 4, 0) }
+                        case c if VisualTone(c) == "comment" => { @fragments.items.rowPattern.standardComment(c, index + 4, 0) }
+                        case t                               => { @fragments.items.rowPattern.standard(t, index + 4, 0) }
                     }
                 }
             </ul>
         </div>
     }
 }
-@defining(items.slice(6, 22)) { items =>
+@defining(items.slice(7, 23)) { items =>
     @if(items.nonEmpty) {
         <div class="linkslist-container js-container--show-more">
             <ul class="l-columns linkslist">

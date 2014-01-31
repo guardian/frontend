@@ -223,7 +223,6 @@ $c-live: #e81818;
 .item__byline {
     @include fs-headline(2);
     @include rem((
-        margin-top: $gs-baseline/3,
         margin-bottom: $gs-baseline/3
     ));
 }
@@ -414,7 +413,6 @@ $c-live: #e81818;
         color: #9c9c9c; //Darkest we can go to pass accessiblity
     }
 }
-
 .collection__show-more {
     border-style: none;
     width: 30px;

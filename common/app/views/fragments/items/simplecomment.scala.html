@@ -1,0 +1,29 @@
+@(trail: model.Trail, index: Int, containerIndex: Int, element: String = "li", classes: String = "")(implicit request: RequestHeader)
+
+@defining((VisualTone(trail), containerIndex == 0, containerIndex == 0 && index < 3)) { case (tone, isFirstContainer, inlineImages) =>
+    <@element
+        class="item tone-comment @classes"
+        data-link-name="trail | @{index + 1}"
+        @trail.discussionId.map{ id => data-discussion-id="@id" }
+        data-discussion-closed="@trail.isClosedForComments">
+
+        <div class="item__container">
+            <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border" data-link-name="article">
+                <h@if(isFirstContainer && index == 0){1}else{2} class="item__title">
+                    <span class="i i-quote-orange"></span>
+                    @RemoveOuterParaHtml(trail.headline)
+                </h@if(isFirstContainer && index == 0){1}else{2}>
+            </a>
+            @trail.byline.map { byLine =>
+                <p class="item__byline tone-colour">@Html(byLine)</p>
+            }
+            @*
+            @trail.trailText.map { text =>
+                <div class="item__standfirst">@Html(text)</div>
+            }
+            *@
+
+            <div class="item__meta"></div>
+        </div>
+    </@element>
+}

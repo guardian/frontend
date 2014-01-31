@@ -224,7 +224,8 @@
             .item__meta {
                 position: static;
                 @include rem((
-                    margin-top: $gs-baseline
+                    margin-top: $gs-baseline,
+                    margin-bottom: $gs-baseline
                 ));
             }
         }
