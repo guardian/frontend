@@ -232,7 +232,7 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
                     padding-left: $gs-gutter/4
                 ));
             }
-            .action--has-icon{
+            .action--has-icon {
                 @include rem((
                     padding-left: $action-icon-width + ($action-icon-rightspace * 2)
                 ));

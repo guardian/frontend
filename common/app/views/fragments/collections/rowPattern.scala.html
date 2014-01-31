@@ -21,39 +21,25 @@
 <div class="collection-wrapper">
     <ul class="unstyled l-row l-row--items-2 collection">
         @items.slice(2, 4).zipWithIndex.map{ case (trail, index) =>
-            <li class="@RenderClasses(Map(
-                            "l-row__item" -> true,
-                            "collection__item" -> true,
-                            s"collection__item--volume-${trail.group.getOrElse("0")}" -> true,
-                            s"collection__item--tone-${VisualTone(trail)}" -> true,
-                            s"collection__item--content-type-gallery" -> {trail match { case _: Gallery => true; case _ => false  }},
-                            s"collection__item--content-type-video" -> {trail match { case _: Video => true; case _ => false }}))">
-                @trail match {
-                    case g: Gallery                                  => { @fragments.items.thumbnailGallery(g, index + 2, 0, "div") }
-                    case v: Video                                    => { @fragments.items.thumbnailVideo(v, index + 2, 0, "div") }
-                    case _ if trail.imageAdjust == Some("highlight") => { @fragments.items.standard(trail, index + 2, 0, "div") }
-                    case _                                           => { @fragments.items.thumbnail(trail, index + 2, 0, "div") }
-                }
-            </li>
+            @trail match {
+                case g: Gallery                                  => { @fragments.items.rowPattern.thumbnailGallery(g, index + 2, 0) }
+                case v: Video                                    => { @fragments.items.rowPattern.thumbnailVideo(v, index + 2, 0) }
+                case c if VisualTone(c) == "comment"             => { @fragments.items.rowPattern.thumbnailComment(c, index + 2, 0) }
+                case t if trail.imageAdjust == Some("highlight") => { @fragments.items.rowPattern.standard(t, index + 2, 0) }
+                case t                                           => { @fragments.items.rowPattern.thumbnail(t, index + 2, 0) }
+            }
         }
     </ul>
 </div>
 <div class="collection-wrapper">
     <ul class="unstyled l-row l-row--items-4 collection">
         @items.slice(4, 8).zipWithIndex.map{ case (trail, index) =>
-            <li class="@RenderClasses(Map(
-                            "l-row__item" -> true,
-                            "collection__item" -> true,
-                            s"collection__item--volume-${trail.group.getOrElse("0")}" -> true,
-                            s"collection__item--tone-${VisualTone(trail)}" -> true,
-                            s"collection__item--content-type-gallery" -> {trail match { case _: Gallery => true; case _ => false }},
-                            s"collection__item--content-type-video" -> {trail match { case _: Video => true; case _ => false }}))">
-                @trail match {
-                    case g: Gallery => { @fragments.items.gallery(g, index + 4, 0, "div") }
-                    case v: Video   => { @fragments.items.video(v, index + 4, 0, "div") }
-                    case other      => { @fragments.items.standard(trail, index + 4, 0, "div") }
-                }
-            </li>
+            @trail match {
+                case g: Gallery                      => { @fragments.items.rowPattern.standardGallery(g, index + 4, 0) }
+                case v: Video                        => { @fragments.items.rowPattern.standardVideo(v, index + 4, 0) }
+                case c if VisualTone(c) == "comment" => { @fragments.items.rowPattern.standardComment(c, index + 4, 0) }
+                case t                               => { @fragments.items.rowPattern.standard(t, index + 4, 0) }
+            }
         }
     </ul>
 </div>
