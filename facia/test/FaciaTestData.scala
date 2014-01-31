@@ -9,16 +9,34 @@ import model.FaciaPage
 import org.joda.time.DateTime
 import com.gu.openplatform.contentapi.model.{Content => ApiContent}
 
-case class TestTrail(url: String) extends Trail {
-  def webPublicationDate: DateTime = DateTime.now
-  def shortUrl: String = ""
-  def linkText: String = ""
-  def webUrl: String = ""
-  def headline: String = ""
-  def trailText: Option[String] = None
-  def section: String = ""
-  def sectionName: String = ""
-  def isLive: Boolean = true
+object TestContent {
+
+  def newApiContent: ApiContent = ApiContent(
+    id="",
+    sectionId=None,
+    sectionName=None,
+    webPublicationDate=DateTime.now,
+    webTitle="",
+    webUrl="",
+    apiUrl="",
+    elements=None
+  )
+
+  def apiContentWithMeta: ApiContentWithMeta = ApiContentWithMeta(newApiContent)
+
+}
+
+case class TestTrail(u: String) extends Content(TestContent.apiContentWithMeta) {
+  override lazy val url = u
+  override lazy val webPublicationDate: DateTime = DateTime.now
+  override lazy val shortUrl: String = ""
+  override lazy val linkText: String = ""
+  override lazy val webUrl: String = ""
+  override lazy val headline: String = ""
+  override lazy val trailText: Option[String] = None
+  override lazy val section: String = ""
+  override lazy val sectionName: String = ""
+  override lazy val isLive: Boolean = true
 }
 
 class TestPageFront(val id: String, edition: Edition, faciaPage: FaciaPage) {
@@ -30,7 +48,7 @@ class TestPageFront(val id: String, edition: Edition, faciaPage: FaciaPage) {
 trait ModelHelper {
   def configWithId(id: String) = Config(id, None, None, None)
 
-  def trailWithUrl(url: String): Trail = TestTrail(url)
+  def trailWithUrl(url: String): Content = TestTrail(url)
   def trailsWithUrl(url: Seq[String]): Seq[Trail] = url map trailWithUrl
 }
 
@@ -73,11 +91,11 @@ trait FaciaTestData extends ModelHelper {
     )
 
 
-  val ukFrontTrails: Seq[Trail]= ukFrontTrailIds map trailWithUrl
-  val usFrontTrails: Seq[Trail]= usFrontTrailIds map trailWithUrl
-  val auFrontTrails: Seq[Trail]= auFrontTrailIds map trailWithUrl
+  val ukFrontTrails: Seq[Content]= ukFrontTrailIds map trailWithUrl
+  val usFrontTrails: Seq[Content]= usFrontTrailIds map trailWithUrl
+  val auFrontTrails: Seq[Content]= auFrontTrailIds map trailWithUrl
 
-  val cultureFrontTrails: Seq[Trail] = cultureTrailIds map trailWithUrl
+  val cultureFrontTrails: Seq[Content] = cultureTrailIds map trailWithUrl
 
   val ukFaciaPage: FaciaPage = FaciaPage(
     id = "uk",

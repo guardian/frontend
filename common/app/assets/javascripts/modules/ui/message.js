@@ -24,6 +24,7 @@ define([
         this.id = id;
         this.important = opts.important || false;
         this.permanent = opts.permanent || false;
+        this.type = opts.type || 'banner';
         this.prefs = 'messages';
     };
 
@@ -33,6 +34,7 @@ define([
             return false;
         }
         $('.js-site-message-copy').html(message);
+        $('.site-message').addClass('site-message--' + this.type);
         $('.site-message').removeClass('is-hidden');
         if (this.permanent) {
             $('.site-message').addClass('site-message--permanent');
@@ -40,6 +42,17 @@ define([
         } else {
             bean.on(document, 'click', '.js-site-message-close', this.acknowledge.bind(this));
         }
+        if(this.type === 'modal') { this.bindModalListeners(); }
+    };
+
+    Message.prototype.bindModalListeners = function() {
+        bean.on(document, 'click', '.js-site-message-inner', function(e) {
+            // Suppress same-level and parent handling, but allow default click behaviour.
+            // This handler must come first.
+            e.stopImmediatePropagation();
+            e.stopPropagation();
+        });
+        bean.on(document, 'click', '.js-site-message', this.acknowledge.bind(this));
     };
 
     Message.prototype.hide = function() {

@@ -30,7 +30,7 @@ object GetContainer {
       ("au-alpha/news/regular-stories", NewsContainer()),
       ("au-alpha/features/feature-stories", FeaturesContainer()),
       ("au-alpha/special/special-story", SportContainer()),
-      ("au-alpha/contributors/feature-stories", CommentContainer()),
+      ("au-alpha/contributors/feature-stories", CommentAndDebateContainer()),
       ("au-alpha/people-in-the-news/feature-stories", PeopleContainer()),
       ("au-alpha/special-other/special-story", SportContainer()),
       ("au/most-viewed/regular-stories", PopularContainer())
@@ -68,7 +68,7 @@ object GetContainer {
       ("uk-alpha/news/regular-stories", NewsContainer()),
       ("uk-alpha/features/feature-stories", FeaturesContainer()),
       ("uk-alpha/special/special-story", SportContainer()),
-      ("uk-alpha/contributors/feature-stories", CommentContainer()),
+      ("uk-alpha/contributors/feature-stories", CommentAndDebateContainer()),
       ("uk-alpha/people-in-the-news/feature-stories", PeopleContainer()),
       ("uk-alpha/special-other/special-story", SportContainer()),
       ("uk/most-viewed/regular-stories", PopularContainer())
@@ -106,7 +106,7 @@ object GetContainer {
       ("us-alpha/news/regular-stories", NewsContainer()),
       ("us-alpha/features/feature-stories", FeaturesContainer()),
       ("us-alpha/special/special-story", SportContainer()),
-      ("us-alpha/contributors/feature-stories", CommentContainer()),
+      ("us-alpha/contributors/feature-stories", CommentAndDebateContainer()),
       ("us-alpha/people-in-the-news/feature-stories", PeopleContainer()),
       ("us-alpha/special-other/special-story", SportContainer()),
       ("us/most-viewed/regular-stories", PopularContainer())
