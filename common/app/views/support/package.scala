@@ -195,7 +195,7 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
       val asset = findVideoFromId(mediaId)
 
       // add the poster url
-      asset.flatMap(_.image).flatMap(Item620.bestFor).foreach{ url =>
+      asset.flatMap(_.image).flatMap(Item620.bestFor).map(_.toString()).foreach{ url =>
         element.attr("poster", url)
       }
 
@@ -234,7 +234,7 @@ case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner 
           fig.addClass("img")
           img.attr("itemprop", "contentURL")
           val src = img.attr("src")
-          img.attr("src", ImgSrc(src, Naked))
+          img.attr("src", ImgSrc(src, Naked).toString())
 
           asset.foreach { image =>
             fig.addClass(image.width match {

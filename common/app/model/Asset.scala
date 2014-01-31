@@ -3,6 +3,7 @@ package model
 import com.gu.openplatform.contentapi.model.Asset
 import org.apache.commons.math3.fraction.Fraction
 import views.support.{Naked, ImgSrc}
+import play.api.templates.Html
 
 case class ImageAsset(private val delegate: Asset, index: Int) {
 
@@ -18,10 +19,10 @@ case class ImageAsset(private val delegate: Asset, index: Int) {
   lazy val mediaType: String = delegate.`type`
 
   lazy val url: Option[String] = delegate.file
-  lazy val path: Option[String] = url.map(ImgSrc(_, Naked))
+  lazy val path: Option[Html] = url.map(ImgSrc(_, Naked))
 
   lazy val thumbnail: Option[String] = fields.get("thumbnail")
-  lazy val thumbnailPath: Option[String] = thumbnail.map(ImgSrc(_, Naked))
+  lazy val thumbnailPath: Option[Html] = thumbnail.map(ImgSrc(_, Naked))
 
   lazy val width: Int = fields.get("width").map(_.toInt).getOrElse(0)
   lazy val height: Int = fields.get("height").map(_.toInt).getOrElse(0)

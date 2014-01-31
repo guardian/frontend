@@ -14,7 +14,7 @@ object TrailToJson {
         cleanTrailText(text)(Edition(request)).toString()
       }),
       ("itemPicture", trail.trailPicture(5, 3).map{ img =>
-        ImgSrc.imager(img, Item140)
+        ImgSrc.imager(img, Item140).map(_.toString())
       }),
       ("discussionId", trail.discussionId.map{ id => id }),
       ("webPublicationDate", Json.obj(

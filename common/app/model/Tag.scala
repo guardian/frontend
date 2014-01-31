@@ -3,6 +3,7 @@ package model
 import com.gu.openplatform.contentapi.model.{ Tag => ApiTag }
 import common.Reference
 import views.support.{Contributor, ImgSrc}
+import play.api.templates.Html
 
 case class Tag(private val delegate: ApiTag) extends MetaData {
   lazy val name: String = webTitle
@@ -18,7 +19,7 @@ case class Tag(private val delegate: ApiTag) extends MetaData {
 
   override lazy val url: String = SupportedUrl(delegate)
 
-  lazy val contributorImagePath: Option[String] = delegate.bylineImageUrl.map(ImgSrc(_, Contributor))
+  lazy val contributorImagePath: Option[Html] = delegate.bylineImageUrl.map(ImgSrc(_, Contributor))
 
   lazy val isContributor: Boolean = id.startsWith("profile/")
   lazy val bio: String = delegate.bio.getOrElse("")
