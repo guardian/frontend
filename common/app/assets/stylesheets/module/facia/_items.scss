@@ -513,24 +513,10 @@ $c-live: #e81818;
     }
 
     &.collection__item--content-type-gallery,
-    &.collection__item--content-type-video{
+    &.collection__item--content-type-video {
         &,
         .item__meta {
             background: $c-neutral1;
-        }
-        .item__container {
-            border-top-width: 2px;
-            border-top-style: solid;
-        }
-        .item__link {
-            border-top: 0;
-
-            &:first-child {
-                @include rem((margin-top: $gs-baseline/3));
-            }
-        }
-        .item__image-container {
-            margin: 0;
         }
     }
 }
