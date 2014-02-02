@@ -7,8 +7,9 @@ import com.google.common.cache.CacheBuilder
 import PerformanceMetrics._
 import conf.Switches
 import Switches.DogpileSwitch
+import implicits.Requests
 
-object DogpileAction extends ExecutionContexts {
+object DogpileAction extends ExecutionContexts with Requests {
 
   private val dogpile = CacheBuilder.newBuilder()
     .concurrencyLevel(4)
@@ -43,11 +44,14 @@ object DogpileAction extends ExecutionContexts {
     // this is set upstream, and is used in case of e.g. AB tests
     val upstreamCacheKey = headers.getOrElse("X-Gu-Cache-Key", "")
 
+    //Trequest.uri includes both path and query string.
+    val url = s"${request.host}${request.uri}"
+
+    // these 2 are possibly (probably) not necessary (they should be implicit to the key parts above)
+    // however I'm putting them in for now just to be safe
+    val isJson = request.isJson
     val edition = Edition(request).id
 
-    //The complete request URI, containing both path and query string.
-    val uri = request.uri
-
-    s"$uri $edition $upstreamCacheKey"
+    s"$edition $upstreamCacheKey $isJson $url"
   }
 }
