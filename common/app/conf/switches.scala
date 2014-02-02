@@ -48,6 +48,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val DogpileSwitch = Switch("Performance Switches", "dogpile",
+    "If switched on this will enable the anti-dogpile cache, which will help absorb large spikes on single pieces of content e.g. live blogs",
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
+  )
+
   val DoubleCacheTimesSwitch = Switch("Performance Switches", "double-cache-times",
     "Doubles the cache time of every endpoint. Turn on to help handle exceptional load.",
     safeState = On, sellByDate = never
@@ -437,7 +442,8 @@ object Switches extends Collections {
     LCMortgageFeedSwitch,
     GuBookshopFeedsSwitch,
     ImageServiceSwitch,
-    NetworkFrontOptIn
+    NetworkFrontOptIn,
+    DogpileSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
