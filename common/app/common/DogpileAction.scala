@@ -12,6 +12,7 @@ import implicits.Requests
 object DogpileAction extends ExecutionContexts with Requests {
 
   private val dogpile = CacheBuilder.newBuilder()
+    //http://docs.guava-libraries.googlecode.com/git/javadoc/com/google/common/cache/CacheBuilder.html#concurrencyLevel(int)
     .concurrencyLevel(4)
     .maximumSize(500)
     .expireAfterWrite(2, TimeUnit.SECONDS)
