@@ -6,7 +6,8 @@ define([
     'common/modules/discussion/api',
     'common/modules/identity/api',
     'common/modules/component',
-    'common/modules/discussion/user-avatars'
+    'common/modules/discussion/user-avatars',
+    'common/modules/identity/validation-email'
 ], function(
     bean,
     bonzo,
@@ -15,7 +16,8 @@ define([
     DiscussionApi,
     IdentityApi,
     Component,
-    UserAvatars
+    UserAvatars,
+    ValidationEmail
 ) {
 
 /**
@@ -173,7 +175,14 @@ CommentBox.prototype.postComment = function(e) {
     e.preventDefault();
     this.clearErrors();
 
-    if (comment.body === '') {
+    this.emailVerified = true;
+
+    if (!this.emailVerified) {
+        this.error('EMAIL_NOT_VERIFIED');
+        ValidationEmail.init(this.context);
+    }
+
+    else if (comment.body === '') {
         this.error('EMPTY_COMMENT_BODY');
     }
 
