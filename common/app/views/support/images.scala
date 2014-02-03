@@ -1,12 +1,12 @@
 package views.support
 
 import model.{ImageContainer, ImageAsset}
-import conf.Switches.{ImageServerSwitch, ThirdPartyImageServiceSwitch, NewImageServerSwitch}
+import conf.Switches.{ImageServerSwitch, ThirdPartyImageServiceSwitch}
 import java.net.URI
 import conf.Configuration
 import play.api.templates.Html
 
-case class Profile(prefix: String, width: Option[Int] = None, height: Option[Int] = None, compression: Int = 95) {
+case class Profile(width: Option[Int] = None, height: Option[Int] = None, compression: Int = 95) {
 
   def elementFor(image: ImageContainer): Option[ImageAsset] = {
     val sortedCorps = image.imageCrops.sortBy(_.width)
@@ -33,19 +33,19 @@ case class Profile(prefix: String, width: Option[Int] = None, height: Option[Int
 }
 
 // Configuration of our different image profiles
-object Contributor extends Profile("c", Some(140), Some(140))
-object GalleryLargeImage extends Profile("gli", Some(1024), None)
-object GalleryLargeTrail extends Profile("glt", Some(480), Some(288))
-object GallerySmallTrail extends Profile("gst", Some(280), Some(168))
-object Item140 extends Profile("item-140", Some(140), None)
-object Item220 extends Profile("item-220", Some(220), None)
-object Item300 extends Profile("item-300", Some(300), None)
-object Item460 extends Profile("item-460", Some(460), None)
-object Item620 extends Profile("item-620", Some(620), None)
-object Item700 extends Profile("item-700", Some(700), None)
+object Contributor extends Profile(Some(140), Some(140))
+object GalleryLargeImage extends Profile(Some(1024), None)
+object GalleryLargeTrail extends Profile(Some(480), Some(288))
+object GallerySmallTrail extends Profile(Some(280), Some(168))
+object Item140 extends Profile(Some(140), None)
+object Item220 extends Profile(Some(220), None)
+object Item300 extends Profile(Some(300), None)
+object Item460 extends Profile(Some(460), None)
+object Item620 extends Profile(Some(620), None)
+object Item700 extends Profile(Some(700), None)
 
 // Just degrade the image quality without adjusting the width/height
-object Naked extends Profile("n", None, None)
+object Naked extends Profile(None, None)
 
 object Profile {
   lazy val all = Seq(
@@ -79,26 +79,20 @@ object ImgSrc {
       dontUseImageServiceFor(url)
   }
   
-  // TODO sorry for all these switches
-  // We will simplify as soon as possible (i.e. once the planets align)
   private def useImageServiceFor(uri: URI, imageType: Profile) = {
     if(ThirdPartyImageServiceSwitch.isSwitchedOn) {
       // this is the img for the CDN image service test (a trial we are running)
       // NOTE the order of the parameters is important - read the docs...
       s"$imageServiceHost${uri.getPath}?interpolation=progressive-bilinear&downsize=${imageType.thirdPartyResizeString}"
-    } else if (NewImageServerSwitch.isSwitchedOn) {
+    } else {
       // this is our own image server
       s"$imageHost${uri.getPath}?${imageType.resizeString}"
-    } else {
-      // this is legacy and will be killed off
-      s"$imageHost/${imageType.prefix}${uri.getPath}"
     }
-    
   }
 
   private def dontUseImageServiceFor(url: String) = url
 
-  object Imager extends Profile("item-{width}", None, None) {
+  object Imager extends Profile(None, None) {
     override val thirdPartyResizeString = s"{width}:*"
     override val resizeString = s"width={width}&height=-&quality=$compression"
   }
