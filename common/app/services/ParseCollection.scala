@@ -9,7 +9,6 @@ import play.api.libs.json.{JsObject, JsValue}
 import play.api.libs.ws.Response
 import scala.concurrent.Future
 import scala.Some
-import org.joda.time.DateTime
 
 object Path {
   def unapply[T](uri: String) = Some(uri.split('?')(0))

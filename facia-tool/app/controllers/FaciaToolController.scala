@@ -14,7 +14,6 @@ import scala.concurrent.Future
 import conf.Switches.ContentApiPutSwitch
 import services.S3FrontsApi
 import model.{NoCache, Cached}
-import frontpress.FaciaToolConfigAgent
 
 
 object FaciaToolController extends Controller with Logging with ExecutionContexts {

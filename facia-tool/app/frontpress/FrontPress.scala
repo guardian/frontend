@@ -3,7 +3,7 @@ package frontpress
 import model.{Content, Trail, Collection, Config}
 import common.editions.Uk
 import scala.concurrent.Future
-import common.{Logging, ExecutionContexts}
+import common.Logging
 import play.api.libs.json._
 import common.FaciaToolMetrics.{FrontPressSuccess, FrontPressFailure}
 import play.api.libs.concurrent.Akka
