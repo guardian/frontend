@@ -24,9 +24,9 @@
                                 <i class="i i-camera-black-large i--default"></i>
                                 <i class="i i-camera-yellow-large i--hover"></i>
                             </div>
-                            <div class="item__image-container js-image-upgrade @if(inlineImages){ inlined-image}" data-src="@imgSrc" @if(isFirstContainer){ data-force-upgrade="desktop wide"}>
+                            <div class="item__image-container js-image-upgrade @if(inlineImages){ inlined-image}" data-src="@Html(imgSrc)" @if(isFirstContainer){ data-force-upgrade="desktop wide"}>
                                 @if(inlineImages){
-                                    @Item300.bestFor(imageContainer).map{ url => <img src="@url" class="responsive-img" alt="" /> }
+                                    @Item300.bestFor(imageContainer).map{ url => <img src="@Html(url)" class="responsive-img" alt="" /> }
                                 }
                             </div>
                         </div>

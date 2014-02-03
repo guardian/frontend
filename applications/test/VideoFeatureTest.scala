@@ -31,7 +31,7 @@ class VideoFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with
         $(".player object") should have size (1)
 
         And("the ultimate fallback should be an image")
-        findFirst(".player object img").getAttribute("src") should endWith ("/sys-images/Guardian/Pix/audio/video/2013/8/13/1376401939039/Chloe-Grace-Moretz-talks--027.jpg")
+        findFirst(".player object img").getAttribute("src") should endWith ("/Chloe-Grace-Moretz-talks--027.jpg?width=620&height=-&quality=95")
       }
     }
   }
