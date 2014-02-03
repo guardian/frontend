@@ -14,7 +14,11 @@ $c-live: #e81818;
 }
 .container__border {
     border-top-style: solid;
-    border-top-width: 2px;
+    border-top-width: 4px;
+
+    @include mq(tablet) {
+        border-top-width: 2px;
+    }
 }
 .container__title {
     @include fs-header(5);
@@ -26,12 +30,12 @@ $c-live: #e81818;
     color: #ffffff;
 
     @include mq(tablet) {
+        @include fs-header(3, true);
         min-height: 0;
         padding-left: 0;
         padding-right: 0;
         background-color: transparent !important;
         @include rem((
-            padding-top: $gs-baseline/6,
             margin-bottom: $gs-baseline
         ));
         line-height: 1;
@@ -51,8 +55,11 @@ $c-live: #e81818;
     color: inherit;
 }
 @include mq($to: tablet) {
-    .has-localnav .container:first-child .container__title {
-        display: none;
+    .has-localnav .container:first-child {
+        .container__title,
+        .container__border {
+            display: none;
+        }
     }
 }
 
