@@ -89,3 +89,9 @@ Location: London, UK
 
 Developer: Matt Osborn
 Location: London, UK
+
+Front-end Developer: Chris Finch
+Twitter: @chrisfinchy
+Linkedin: chrisfinch
+From: Brighton, England
+Location: London, England
