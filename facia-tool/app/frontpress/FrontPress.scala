@@ -1,6 +1,6 @@
 package frontpress
 
-import model.{ContentWithMetaData, Trail, Collection, Config}
+import model.{Content, Trail, Collection, Config}
 import common.editions.Uk
 import scala.concurrent.Future
 import common.{Logging, ExecutionContexts}
@@ -49,30 +49,52 @@ trait FrontPress extends ExecutionContexts with Logging {
       ("results", collection.results.map(generateTrailJson)),
       ("lastModified", collection.lastUpdated),
       ("updatedBy", collection.updatedBy),
-      ("updatedEmail", collection.updatedEmail)
-      //TODO: lastModified, modifiedBy
+      ("updatedEmail", collection.updatedEmail),
+      ("groups", config.groups),
+      ("roleName", config.roleName),
+      ("href", config.href)
     )
   }
 
-  private def generateTrailJson(trail: Trail): JsValue =
+  private def generateTrailJson(content: Content): JsValue =
     Json.obj(
-      ("webTitle", trail.headline),
-      ("webPublicationDate", trail.webPublicationDate),
-      ("sectionName", trail.sectionName),
-      ("sectionId", trail.section),
-      ("id", trail.url),
-      ("webUrl", trail.webUrl),
-      ("trailText", trail.trailText),
-      ("linkText", trail.linkText),
-        ("meta", Json.obj
-          (
-            ("headline", trail.headline),
-            ("trailText", trail.trailText),
-            ("group", trail.group),
-            ("imageAdjust", trail.imageAdjust),
-            ("isBreaking", trail.isBreaking),
-            ("supporting", trail.supporting.map(generateInnerTrailJson))
+      ("webTitle", content.webTitle),
+      ("webPublicationDate", content.webPublicationDate),
+      ("sectionName", content.sectionName),
+      ("sectionId", content.section),
+      ("id", content.url),
+      ("webUrl", content.webUrl),
+      ("safeFields", content.delegate.safeFields),
+      ("elements", content.elements.map(e => Json.obj(
+        "id" -> e.id,
+        "relation" -> e.delegate.relation,
+        "type" -> e.delegate.`type`,
+        "assets" -> e.delegate.assets.map(a =>
+          Json.obj(
+            "type" -> a.`type`,
+            "mimeType" -> a.mimeType,
+            "file" -> a.file,
+            "typeData" -> Json.obj(
+              ("source", a.typeData.get("source")),
+              //("altText", a.typeData.get("altText")),
+              ("height", a.typeData.get("height")),
+              //("credit", a.typeData.get("credit")),
+              //("caption", a.typeData.get("caption")),
+              ("width", a.typeData.get("width"))
+            )
           )
+        )
+      ))),
+      ("linkText", content.linkText),
+      ("meta", Json.obj
+        (
+          ("headline", content.headline),
+          ("trailText", content.trailText),
+          ("group", content.group),
+          ("imageAdjust", content.imageAdjust),
+          ("isBreaking", content.isBreaking),
+          ("supporting", content.supporting.map(generateInnerTrailJson))
+        )
         )
     )
 
