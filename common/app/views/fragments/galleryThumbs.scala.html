@@ -23,7 +23,7 @@
             <a href="@LinkTo{@gallery.url?index=@image.index}"
                class="js-image-upgrade"
                data-link-name="@info.rowNum | gallery thumb"
-               data-src="@ImgSrc(url, Profile("item-{width}"))">
+               data-src="@Html(ImgSrc(url, Profile("item-{width}")))">
                 <img class="gallerythumbs__img responsive-img" alt="@image.altText.getOrElse("")" />
             </a>
         </li>

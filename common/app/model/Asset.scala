@@ -3,6 +3,8 @@ package model
 import com.gu.openplatform.contentapi.model.Asset
 import org.apache.commons.math3.fraction.Fraction
 import views.support.{Naked, ImgSrc}
+import play.api.templates.Html
+import java.net.URI
 
 case class ImageAsset(private val delegate: Asset, index: Int) {
 
