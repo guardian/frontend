@@ -1,12 +1,14 @@
 package frontpress
 
-import model.{Content, Trail, Collection, Config}
+import model._
 import common.editions.Uk
 import scala.concurrent.Future
 import common.Logging
 import play.api.libs.json._
 import common.FaciaToolMetrics.{FrontPressSuccess, FrontPressFailure}
 import play.api.libs.concurrent.Akka
+import play.api.libs.json.JsObject
+import com.gu.openplatform.contentapi.model.Asset
 
 trait FrontPress extends Logging {
 
@@ -69,26 +71,7 @@ trait FrontPress extends Logging {
       ("id", content.url),
       ("webUrl", content.webUrl),
       ("safeFields", content.delegate.safeFields),
-      ("elements", content.elements.map(e => Json.obj(
-        "id" -> e.id,
-        "relation" -> e.delegate.relation,
-        "type" -> e.delegate.`type`,
-        "assets" -> e.delegate.assets.map(a =>
-          Json.obj(
-            "type" -> a.`type`,
-            "mimeType" -> a.mimeType,
-            "file" -> a.file,
-            "typeData" -> Json.obj(
-              ("source", a.typeData.get("source")),
-              //("altText", a.typeData.get("altText")),
-              ("height", a.typeData.get("height")),
-              //("credit", a.typeData.get("credit")),
-              //("caption", a.typeData.get("caption")),
-              ("width", a.typeData.get("width"))
-            )
-          )
-        )
-      ))),
+      ("elements", content.elements.map(generateElement)),
       ("linkText", content.linkText),
       ("meta", Json.obj
         (
@@ -122,6 +105,30 @@ trait FrontPress extends Logging {
         )
       )
     )
+
+  private def generateElement(element: Element): JsValue =
+    Json.obj(
+    "id" -> element.id,
+    "relation" -> element.delegate.relation,
+    "type" -> element.delegate.`type`,
+    "assets" -> element.delegate.assets.map(generateAsset)
+  )
+
+  private def generateAsset(asset: Asset): JsValue =
+    Json.obj(
+      "type" -> asset.`type`,
+      "mimeType" -> asset.mimeType,
+      "file" -> asset.file,
+      "typeData" -> Json.obj(
+        ("source", asset.typeData.get("source")),
+        //("altText", a.typeData.get("altText")),
+        ("height", asset.typeData.get("height")),
+        //("credit", a.typeData.get("credit")),
+        //("caption", a.typeData.get("caption")),
+        ("width", asset.typeData.get("width"))
+      )
+    )
+
 }
 
 object FrontPress extends FrontPress
