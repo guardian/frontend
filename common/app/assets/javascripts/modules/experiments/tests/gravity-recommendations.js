@@ -31,9 +31,8 @@ define([
             {
                 id: 'show-gravity-recommendations',
                 test: function(context, config) {
-                    console.log("+++ Test");
                     RightHandComponent.setRecommenedForYou();
-                    require(['js!gravity'], function(){s});
+                    require(['js!gravity'], function(){});
                 }
             }
         ];

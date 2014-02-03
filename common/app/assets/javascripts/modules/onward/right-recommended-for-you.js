@@ -69,7 +69,7 @@ define([
             crossOrigin: true,
             jsonpCallback: 'c',
             success: function(resp) {
-                self._render(resp)
+                self._render(resp);
             }
         });
     };

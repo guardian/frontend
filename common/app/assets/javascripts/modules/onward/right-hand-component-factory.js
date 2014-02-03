@@ -19,15 +19,15 @@ define( [
 
     RightHandComponentFactory.recommended = false;
     RightHandComponentFactory.setRecommenedForYou = function() {
-        RightHandComponentFactory.recommended = true
+        RightHandComponentFactory.recommended = true;
     };
 
     RightHandComponentFactory.prototype.renderRightHandComponent = function() {
 
         if(RightHandComponentFactory.recommended) {
-            new RightRecommendedForYou(this.mediator,  {type: 'image', maxTrails: 5});
+            var rmd = new RightRecommendedForYou(this.mediator,  {type: 'image', maxTrails: 5});
         } else {
-            new RightMostPopular(this.mediator, {type: 'image', maxTrails: 5});
+            var rmp = new RightMostPopular(this.mediator, {type: 'image', maxTrails: 5});
         }
     };
 

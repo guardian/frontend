@@ -1,4 +1,4 @@
-+define([
+define([
     //Commmon libraries
     'common/$',
     'common/utils/mediator',
