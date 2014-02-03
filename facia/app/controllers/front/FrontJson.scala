@@ -6,30 +6,66 @@ import play.api.libs.ws.{Response, WS}
 import play.api.libs.json.{JsValue, Json}
 import common.ExecutionContexts
 import model.FaciaPage
+import services.SecureS3Request
+import conf.Configuration
 
 trait FrontJson extends ExecutionContexts {
 
-  val bucketAddress: String = ""
+  val stage: String = Configuration.environment.stage.toUpperCase
+  val bucketLocation: String = s"$stage/frontsapi/collection/pressed"
 
-  def getAddressForPath(path: String): String = s"$bucketAddress/$path/pressed.json"
+  private def getAddressForPath(path: String): String = s"$bucketLocation/$path/pressed.json"
 
   def get(path: String): Future[Option[FaciaPage]] = {
-    val response = WS.url(getAddressForPath(path)).get()
+    val response = SecureS3Request.urlGet(getAddressForPath(path)).get()
     parseResponse(response)
   }
 
   private def parseCollection(json: JsValue): Collection = {
-    val curated = (json \ "curated").asOpt[List[JsValue]].getOrElse(Nil)
-    val trails = curated.flatMap(Content.fromPressedJsonByDelegate)
-    Collection(trails)
+    val displayName: Option[String] = (json \ "displayName").asOpt[String]
+    val curated =      (json \ "curated").asOpt[List[JsValue]].getOrElse(Nil)
+      .flatMap(Content.fromPressedJsonByDelegate)
+    val editorsPicks = (json \ "editorsPicks").asOpt[List[JsValue]].getOrElse(Nil)
+      .flatMap(Content.fromPressedJsonByDelegate)
+    val mostViewed = (json \ "mostViewed").asOpt[List[JsValue]].getOrElse(Nil)
+      .flatMap(Content.fromPressedJsonByDelegate)
+    val results = (json \ "results").asOpt[List[JsValue]].getOrElse(Nil)
+      .flatMap(Content.fromPressedJsonByDelegate)
+
+    val lastUpdated = (json \ "lastUpdated").asOpt[String]
+    val updatedBy = (json \ "updatedBy").asOpt[String]
+    val updatedEmail = (json \ "updatedEmail").asOpt[String]
+
+    Collection(
+      curated=curated,
+      editorsPicks=editorsPicks,
+      mostViewed=mostViewed,
+      results=results,
+      displayName=displayName,
+      lastUpdated=lastUpdated,
+      updatedBy=updatedBy,
+      updatedEmail=updatedEmail
+    )
   }
 
   private def parseOutTuple(json: JsValue): List[(Config, Collection)] = {
     (json \ "collections").as[List[Map[String, JsValue]]].flatMap { m =>
       m.map { case (id, j) =>
-        (Config(id), parseCollection(j))
+        (parseConfig(id, j), parseCollection(j))
       }
     }
+  }
+
+  def parseConfig(id: String, json: JsValue): Config = {
+    Config(
+      id = id,
+      contentApiQuery = (json \ "apiQuery").asOpt[String],
+      displayName     = (json \ "displayName").asOpt[String],
+      collectionTone  = (json \ "tone").asOpt[String],
+      href            = (json \ "href").asOpt[String],
+      groups          = (json \ "groups").asOpt[List[String]].getOrElse(Nil),
+      roleName        = (json \ "roleName").asOpt[String]
+    )
   }
 
   private def parsePressedJson(j: String): Option[FaciaPage] = {

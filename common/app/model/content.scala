@@ -1,6 +1,6 @@
 package model
 
-import com.gu.openplatform.contentapi.model.{Content => ApiContent}
+import com.gu.openplatform.contentapi.model.{Content => ApiContent, Element => ApiElement, Asset}
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import common.{Sponsor, Sponsors}
@@ -9,10 +9,10 @@ import org.jsoup.Jsoup
 import collection.JavaConversions._
 import views.support.{Naked, ImgSrc}
 import views.support.StripHtmlTagsAndUnescapeEntities
-import com.gu.openplatform.contentapi.model.{Content => ApiContent,Element =>ApiElement}
 import play.api.libs.json.JsValue
 import play.api.templates.Html
 import java.net.URI
+import org.joda.time
 
 class Content protected (val apiContent: ApiContentWithMeta) extends Trail with MetaData {
 
@@ -160,6 +160,68 @@ object Content {
   }
 
   def apply(delegate: ApiContent): Content = apply(ApiContentWithMeta(delegate))
+
+  def fromPressedJson(json: JsValue): Option[Trail] = {
+    Option(new Trail {
+      def url: String = (json \ "webUrl").as[String]
+      def isLive: Boolean = false
+      def section: String = (json \ "sectionName").as[String]
+      def trailText: Option[String] = (json \ "trailText").asOpt[String]
+      def webPublicationDate: time.DateTime = (json \ "webPublicationDate").asOpt[String].map(DateTime.parse).getOrElse(DateTime.now)
+      //sectionId
+      def sectionName: String = (json \ "sectionName").as[String]
+      def linkText: String = (json \ "linkText").as[String]
+      def headline: String = (json \ "meta" \ "headline").asOpt[String].getOrElse("No Headline")
+      def webUrl: String = (json \ "webUrl").as[String]
+      override def thumbnailPath: Option[String] = (json \ "thumbnailPath").asOpt[String]    }
+    )
+  }
+
+  def fromPressedJsonByDelegate(json: JsValue): Option[Content] = {
+    val contentFields: Option[Map[String, String]] = (json \ "safeFields").asOpt[Map[String, String]]
+    Option(
+      Content(ApiContentWithMeta(
+          ApiContent(
+            id                  = (json \ "id").as[String],
+            sectionId           = (json \ "sectionId").asOpt[String],
+            sectionName         = (json \ "sectionName").asOpt[String],
+            webPublicationDate  = (json \ "webPublicationDate").asOpt[String].map(DateTime.parse).getOrElse(DateTime.now),
+            webTitle            = (json \ "webTitle").as[String],
+            webUrl              = (json \ "webUrl").as[String],
+            apiUrl              = "",
+            elements            = Option(parseElements(json)),
+            fields              = contentFields
+          ),
+          supporting=(json \ "meta" \ "supporting").asOpt[List[JsValue]].getOrElse(Nil)
+            .flatMap(Content.fromPressedJsonByDelegate),
+          metaData=(json \ "meta").asOpt[Map[String, JsValue]].getOrElse(Map.empty)
+        )
+      )
+    )
+  }
+
+  def parseElements(json: JsValue): List[ApiElement] = {
+    (json \ "elements").asOpt[List[JsValue]].map(_.map{ elementJson =>
+        ApiElement(
+        (elementJson \ "id").as[String],
+        (elementJson \ "relation").as[String],
+        (elementJson \ "type").as[String],
+        (elementJson \ "galleryIndex").asOpt[Int],
+        parseAssets(elementJson)
+       )
+    }).getOrElse(Nil)
+  }
+
+  def parseAssets(json: JsValue): List[Asset] = {
+    (json \ "assets").asOpt[List[JsValue]].map(_.map{ assetJson =>
+      Asset(
+        (assetJson \ "type").as[String],
+        (assetJson \ "mimeType").asOpt[String],
+        (assetJson \ "file").asOpt[String],
+        (assetJson \ "typeData").asOpt[Map[String, String]].getOrElse(Map.empty)
+      )
+    }).getOrElse(Nil)
+  }
 }
 
 class Article(content: ApiContentWithMeta) extends Content(content) {
