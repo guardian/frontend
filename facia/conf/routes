@@ -11,7 +11,7 @@ GET        /                                                                cont
 GET        /$path<(culture|sport|australia|commentisfree|business|money)>   controllers.FaciaController.editionRedirect(path)
 
 #Facia Press
-GET        /pressed/$path<(us|uk|au|us-alpha|uk-alpha|au-alpha)?>           controllers.FaciaController.renderFaciaPress(path)
+GET        /pressed/*path          controllers.FaciaController.renderFaciaPress(path)
 
 # Editionalised pages
 GET        /$path<(us|uk|au|us-alpha|uk-alpha|au-alpha)?>                   controllers.FaciaController.renderEditionFront(path)
