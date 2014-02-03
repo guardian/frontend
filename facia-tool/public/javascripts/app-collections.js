@@ -1,11 +1,11 @@
 /* global curl: true */
 curl([
-    'models/list-manager'
+    'models/main-collections'
 ]).then(function(
-    ListManager
+    CollectionsEditor
 ){
     if ('localStorage' in window) {
-        new ListManager().init();
+        new CollectionsEditor().init();
     } else {
         window.alert('Sorry, this browser is not supported');
     }

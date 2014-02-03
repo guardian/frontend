@@ -61,7 +61,8 @@
         // top margin on the first collection
         .container--news,
         .container--features,
-        .container--commentanddebate {
+        .container--commentanddebate,
+        .container--people {
             .collection {
                 margin-top: 0;
             }
@@ -94,5 +95,6 @@
 @import "module/containers/_comment";
 @import "module/containers/_section";
 @import "module/containers/_commentanddebate";
+@import "module/containers/_people";
 
 @import "module/facia/_linkslist";

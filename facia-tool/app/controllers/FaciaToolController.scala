@@ -21,9 +21,14 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
   implicit val trailWrite = Json.writes[Trail]
   implicit val blockWrite = Json.writes[Block]
 
-  def index() = ExpiringAuthentication { request =>
+  def collectionsEditor() = ExpiringAuthentication { request =>
     val identity = Identity(request).get
-    Ok(views.html.fronts(Configuration.environment.stage, Option(identity)))
+    Cached(60) { Ok(views.html.collections(Configuration.environment.stage, Option(identity))) }
+  }
+
+  def configEditor() = ExpiringAuthentication { request =>
+    val identity = Identity(request).get
+    Cached(60) { Ok(views.html.config(Configuration.environment.stage, Option(identity))) }
   }
 
   def listCollections = AjaxExpiringAuthentication { request =>

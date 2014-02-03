@@ -368,8 +368,19 @@ object Switches extends Collections {
 
   val ImageServerSwitch = Switch("Image Server", "image-server",
     "If this switch is on images will be served off i.guim.co.uk (dynamic image host).",
-    safeState = On, sellByDate = new DateMidnight(2014, 2, 7)
+    safeState = On, sellByDate = never // this is a performance related switch, not a feature switch
   )
+
+  val ThirdPartyImageServiceSwitch = Switch("Image Server", "image-service",
+    "If this switch is on images will be served off ak.i.guim.co.uk (dynamic image host). Part of the CDN test. Relies on ImageServerSwitch also being on",
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 7))
+
+  // TODO - once again I can only apologise for the proliferation of image server switches
+  // while I wait for the planets to align
+  val NewImageServerSwitch = Switch("Image Server", "new-image-server",
+    "If this switch is on images will be served off i.guim.co.uk using the new image server. Relies on ImageServerSwitch also being on",
+    safeState = On, sellByDate = new DateMidnight(2014, 2, 28))
+
 
   // Facia Tool Switches
 
@@ -378,9 +389,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val ImageServiceSwitch = Switch("Image Server", "image-service",
-    "If this switch is on images will be served off ak.i.guim.co.uk (dynamic image host). Part of the CDN test. Relies on ImageServerSwitch also being on",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 7))
 
   val all: List[Switch] = List(
     AutoRefreshSwitch,
@@ -395,7 +403,6 @@ object Switches extends Collections {
     FontSwitch,
     SocialSwitch,
     SearchSwitch,
-    ImageServerSwitch,
     ReleaseMessageSwitch,
     IntegrationTestSwitch,
     ClientSideErrorSwitch,
@@ -441,9 +448,11 @@ object Switches extends Collections {
     MoneysupermarketFeedsSwitch,
     LCMortgageFeedSwitch,
     GuBookshopFeedsSwitch,
-    ImageServiceSwitch,
     NetworkFrontOptIn,
-    DogpileSwitch
+    DogpileSwitch,
+    ImageServerSwitch,
+    ThirdPartyImageServiceSwitch,
+    NewImageServerSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

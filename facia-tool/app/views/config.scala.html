@@ -1,0 +1,10 @@
+@(env: String, identity: Option[Identity])
+
+@admin_main("Fronts editor", env, isAuthed = true, identity) {
+
+<div style="display: none;" data-bind="visible: true">
+    <pre style="margin: 50px 0 0 0" data-bind="text: splat"></pre>
+</div>
+
+<script src="@routes.Assets.at("javascripts/app-config.js")"></script>
+}

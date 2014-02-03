@@ -99,8 +99,6 @@ define([
             s.trackingServer="hits.theguardian.com";
             s.trackingServerSecure="hits-secure.theguardian.com";
 
-            s.timestamp=Math.round((new Date()).getTime()/1000); // see https://github.com/guardian/frontend/issues/2970
-
             s.ce= "UTF-8";
             s.pageName  = config.page.analyticsName;
 

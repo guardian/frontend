@@ -10,6 +10,8 @@ import play.api.libs.json.JsObject
 import scala.concurrent.Future
 import services.S3FrontsApi
 import views.support.Style
+import play.api.templates.Html
+import java.net.URI
 
 
 trait Trail extends Elements with Tags with FaciaFields {
