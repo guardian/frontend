@@ -342,7 +342,7 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 7)
   )
 
-  // Facia Tool
+  // Facia Tool Switches
 
   val ToolDisable = Switch("Facia Tool", "facia-tool-disable",
     "If this is switched on then the fronts tool is disabled",
@@ -351,6 +351,16 @@ object Switches extends Collections {
 
   val ToolSparklines = Switch("Facia Tool", "facia-tool-sparklines",
     "If this is switched on then the fronts tool renders images from sparklines.ophan.co.uk",
+    safeState = Off, sellByDate = never
+  )
+
+  val ContentApiPutSwitch = Switch("Facia Tool", "facia-tool-contentapi-put",
+    "If this switch is on facia tool will PUT all collection changes to content api",
+    safeState = Off, sellByDate = never
+  )
+
+  val FaciaToolPressSwitch = Switch("Facia Tool", "facia-tool-press-front",
+    "If this switch is on facia tool will press fronts on each change",
     safeState = Off, sellByDate = never
   )
 
@@ -375,14 +385,6 @@ object Switches extends Collections {
   val NewImageServerSwitch = Switch("Image Server", "new-image-server",
     "If this switch is on images will be served off i.guim.co.uk using the new image server. Relies on ImageServerSwitch also being on",
     safeState = On, sellByDate = new DateMidnight(2014, 2, 28))
-
-
-  // Facia Tool Switches
-
-  val ContentApiPutSwitch = Switch("Facia Tool", "facia-tool-contentapi-put",
-    "If this switch is on facia tool will PUT all collection changes to content api",
-    safeState = Off, sellByDate = never
-  )
 
 
   val all: List[Switch] = List(
@@ -444,10 +446,10 @@ object Switches extends Collections {
     LCMortgageFeedSwitch,
     GuBookshopFeedsSwitch,
     NetworkFrontOptIn,
-
     ImageServerSwitch,
     ThirdPartyImageServiceSwitch,
-    NewImageServerSwitch
+    NewImageServerSwitch,
+    FaciaToolPressSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
