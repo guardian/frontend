@@ -59,7 +59,7 @@ define([
 			this.DOM.$container.css("height", this.DOM.$container.css("height"));
 			self.DOM.$container.addClass("loading");
 			IdApi.emailSignup(self.listId).then(function success (res) {
-				self.DOM.$container.removeClass("loading").addClass("done");
+				self.DOM.$container.removeClass("loading").addClass("email-signup--done");
 				if (res.status === "ok") {
 					self.DOM.$button.remove();
 					self.DOM.title.innerHTML = "Your subscription will be activated within 24 hours";
@@ -113,7 +113,7 @@ define([
 		// {listIds: [123, 456, 789, ... ]}
 
 		var options = {}; // possibility to add expiry date
-		
+
 		this.storageData.listIds.push(id);
 		Storage.local.set(this.storageKey, this.storageData, options);
 	};

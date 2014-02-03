@@ -672,7 +672,7 @@ video {
 
     @include mq($to: wide) {
         .email-signup__title {
-            @include fs-header(1);            
+            @include fs-header(1);
         }
         .email-signup__copy {
             @include fs-bodyCopy(1);
@@ -681,7 +681,7 @@ video {
 
     @include mq(leftCol) {
         .email-signup__title {
-            @include font($sans-serif, normal, 13, 16);
+            @include fs-data(3);
             padding-top: 4px;
             min-height: 32px;
         }
@@ -689,7 +689,8 @@ video {
 }
 
 .email-signup.loading {
-    .email-signup__title, .email-signup__copy {
+    .email-signup__title,
+    .email-signup__copy {
         display: none;
     }
     .email-signup__inner {
@@ -705,8 +706,8 @@ video {
     }
 }
 
-.email-signup.done {
-    
+.email-signup--done {
+
     .email-signup__inner {
         display: table;
         height: 100%;
