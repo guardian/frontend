@@ -6,8 +6,12 @@ import scala.concurrent.Future
 import common.{Logging, ExecutionContexts}
 import play.api.libs.json._
 import common.FaciaToolMetrics.{FrontPressSuccess, FrontPressFailure}
+import play.api.libs.concurrent.Akka
 
-trait FrontPress extends ExecutionContexts with Logging {
+trait FrontPress extends Logging {
+
+  import play.api.Play.current
+  private lazy implicit val frontPressContext = Akka.system.dispatchers.lookup("play.akka.actor.front-press")
 
   def generateJson(id: String): Future[JsObject] = {
     retrieveFrontByPath(id)
