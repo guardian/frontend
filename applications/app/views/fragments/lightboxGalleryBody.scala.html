@@ -8,11 +8,11 @@
                 data-index="@row.rowNum">
                     <figure itemprop="associatedMedia" itemtype="http://schema.org/ImageObject" itemscope>
                         <img class="gallery__img"
-                             src="@image.url.map(ImgSrc(_, GallerySmallTrail))"
+                             src="@image.url.map(ImgSrc(_, GallerySmallTrail)).map(Html(_))"
                              alt="@image.altText"
-                             data-src="@image.url.map(ImgSrc(_, GallerySmallTrail))"
+                             data-src="@image.url.map(ImgSrc(_, GallerySmallTrail)).map(Html(_))"
                              @if(image.width >= 1024) {
-                                 data-fullsrc="@image.url.map(ImgSrc(_, GalleryLargeImage))"
+                                 data-fullsrc="@image.url.map(ImgSrc(_, GalleryLargeImage)).map(Html(_))"
                              } else {
                                  data-fullsrc="@image.path"
                              }
