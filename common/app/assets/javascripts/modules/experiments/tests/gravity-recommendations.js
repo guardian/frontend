@@ -2,11 +2,11 @@
 define([
     'common/utils/detect',
     'common/utils/mediator',
-    'common/modules/onward/right-most-popular'
+    'common/modules/onward/right-hand-component-factory'
 ], function (
     detect,
     mediator,
-    RightMostPopular
+    RightHandComponent
     ) {
 
     var GravityRecommendations = function () {
@@ -31,8 +31,9 @@ define([
             {
                 id: 'show-gravity-recommendations',
                 test: function(context, config) {
-                    RightMostPopular.bar();
-                    require(['js!gravity'], function(){});
+                    console.log("+++ Test");
+                    RightHandComponent.setRecommenedForYou();
+                    require(['js!gravity'], function(){s});
                 }
             }
         ];

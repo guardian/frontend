@@ -1,4 +1,4 @@
-define([
++define([
     //Commmon libraries
     'common/$',
     'common/utils/mediator',
@@ -41,7 +41,7 @@ define([
     'common/modules/adverts/article-body-adverts',
     "common/modules/analytics/commercial/tags/container",
     "common/modules/interactive/loader",
-    "common/modules/onward/right-most-popular"
+    "common/modules/onward/right-hand-component-factory"
 ], function (
     $,
     mediator,
@@ -85,7 +85,7 @@ define([
     ArticleBodyAdverts,
     TagContainer,
     Interactive,
-    RightMostPopular
+    RightHandComponentFactory
 ) {
 
     var hasBreakpointChanged = detect.hasCrossedBreakpoint();
@@ -186,9 +186,10 @@ define([
             ab.run(config, context);
         },
 
-        initRightMostPopular: function(config, context) {
-           if(config.switches.rightHandMostPopular && config.page.contentType === 'Article') {
-              var r = new RightMostPopular(mediator, {type: 'image', maxTrails: 5});
+        initRightHandComponent: function(config, context) {
+
+            if(config.switches.rightHandMostPopular && config.page.contentType === 'Article') {
+              var r = new RightHandComponentFactory(mediator);
            }
         },
 
@@ -431,7 +432,7 @@ define([
                 modules.cleanupCookies(context);
                 modules.runAbTests(config, context);
                 modules.transcludeRelated(config, context);
-                modules.initRightMostPopular(config, context);
+                modules.initRightHandComponent(config, context);
             }
             mediator.emit("page:common:deferred:loaded", config, context);
         });
