@@ -15,7 +15,7 @@ case class Profile(prefix: String, width: Option[Int] = None, height: Option[Int
     }.orElse(image.largestImage)
   }
 
-  def bestFor(image: ImageContainer): Option[Html] =
+  def bestFor(image: ImageContainer): Option[String] =
     elementFor(image).flatMap(_.url).map{ url => ImgSrc(url, this) }
 
   def captionFor(image: ImageContainer): Option[String] =
@@ -68,15 +68,15 @@ object ImgSrc {
   val imageHost = Configuration.images.path
   val imageServiceHost = Configuration.images.servicePath
 
-  def apply(url: String, imageType: Profile): Html = {
+  def apply(url: String, imageType: Profile): String = {
     val uri = new URI(url.trim)
 
     val isSupportedImage = uri.getHost == "static.guim.co.uk" && !uri.getPath.toLowerCase.endsWith(".gif")
 
     if (ImageServerSwitch.isSwitchedOn && isSupportedImage)
-      Html(useImageServiceFor(uri, imageType))
+      useImageServiceFor(uri, imageType)
     else 
-      Html(dontUseImageServiceFor(url))
+      dontUseImageServiceFor(url)
   }
   
   // TODO sorry for all these switches
@@ -104,7 +104,7 @@ object ImgSrc {
   }
   
   // always, and I mean ALWAYS think carefully about the size image you use
-  def imager(imageContainer: ImageContainer, profile: Profile): Option[Html] = {
+  def imager(imageContainer: ImageContainer, profile: Profile): Option[String] = {
     profile.elementFor(imageContainer).flatMap(_.url).map{ largestImage =>
       ImgSrc(largestImage, Imager)
     }

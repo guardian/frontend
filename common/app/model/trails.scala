@@ -11,6 +11,7 @@ import scala.concurrent.Future
 import services.S3FrontsApi
 import views.support.Style
 import play.api.templates.Html
+import java.net.URI
 
 
 trait Trail extends Elements with Tags with FaciaFields {
@@ -22,7 +23,7 @@ trait Trail extends Elements with Tags with FaciaFields {
   def trailText: Option[String]
   def section: String //sectionId
   def sectionName: String
-  def thumbnailPath: Option[Html] = None
+  def thumbnailPath: Option[String] = None
   def isLive: Boolean
   def discussionId: Option[String] = None
   def isClosedForComments: Boolean = false

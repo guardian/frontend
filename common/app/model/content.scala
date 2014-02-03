@@ -12,6 +12,7 @@ import views.support.StripHtmlTagsAndUnescapeEntities
 import com.gu.openplatform.contentapi.model.{Content => ApiContent,Element =>ApiElement}
 import play.api.libs.json.JsValue
 import play.api.templates.Html
+import java.net.URI
 
 class Content protected (val apiContent: ApiContentWithMeta) extends Trail with MetaData {
 
@@ -57,7 +58,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   override lazy val url: String = SupportedUrl(delegate)
   override lazy val section: String = delegate.sectionId.getOrElse("")
   override lazy val sectionName: String = delegate.sectionName.getOrElse("")
-  override lazy val thumbnailPath: Option[Html] = fields.get("thumbnail").map(ImgSrc(_, Naked))
+  override lazy val thumbnailPath: Option[String] = fields.get("thumbnail").map(ImgSrc(_, Naked))
   override lazy val isLive: Boolean = fields("liveBloggingNow").toBoolean
   override lazy val discussionId = Some(shortUrlPath)
   override lazy val isClosedForComments: Boolean = !fields.get("commentCloseDate").exists(_.parseISODateTime.isAfterNow)

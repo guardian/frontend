@@ -28,7 +28,7 @@ class ImgSrcTest extends FlatSpec with Matchers  {
     ImageServerSwitch.switchOn()
     NewImageServerSwitch.switchOff()
 
-    GalleryLargeTrail.bestFor(image).map(_.toString()) should be (Some(s"$imageHost/glt/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.jpeg"))
+    GalleryLargeTrail.bestFor(image) should be (Some(s"$imageHost/glt/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.jpeg"))
 
   }
 
@@ -37,7 +37,7 @@ class ImgSrcTest extends FlatSpec with Matchers  {
     ImageServerSwitch.switchOff()
     NewImageServerSwitch.switchOff()
 
-    GalleryLargeTrail.bestFor(image).map(_.toString()) should be (Some("http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.jpeg"))
+    GalleryLargeTrail.bestFor(image) should be (Some("http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.jpeg"))
 
   }
 
@@ -47,7 +47,7 @@ class ImgSrcTest extends FlatSpec with Matchers  {
     NewImageServerSwitch.switchOff()
 
     val gifImage = ImageContainer(Seq(ImageAsset(asset.copy(file = Some("http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.gif")),0)), null, 0)
-    GalleryLargeTrail.bestFor(gifImage).map(_.toString()) should be (Some("http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.gif"))
+    GalleryLargeTrail.bestFor(gifImage) should be (Some("http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.gif"))
 
   }
 
@@ -57,7 +57,7 @@ class ImgSrcTest extends FlatSpec with Matchers  {
     NewImageServerSwitch.switchOff()
 
     val someoneElsesImage = ImageContainer(Seq(ImageAsset(asset.copy(file = Some("http://foo.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.gif")),0)), null, 0)
-    GalleryLargeTrail.bestFor(someoneElsesImage).map(_.toString()) should be (Some("http://foo.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.gif"))
+    GalleryLargeTrail.bestFor(someoneElsesImage) should be (Some("http://foo.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.gif"))
 
   }
 
@@ -67,7 +67,7 @@ class ImgSrcTest extends FlatSpec with Matchers  {
     NewImageServerSwitch.switchOff()
     ThirdPartyImageServiceSwitch.switchOn()
     val image = ImageContainer(Seq(ImageAsset(asset.copy(file = Some("http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.jpg")),0)), null, 0)
-    GalleryLargeTrail.bestFor(image).map(_.toString()) should be (Some("http://ak.i.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.jpg?interpolation=progressive-bilinear&downsize=480:288"))
+    GalleryLargeTrail.bestFor(image) should be (Some("http://ak.i.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.jpg?interpolation=progressive-bilinear&downsize=480:288"))
   }
 
   it should "not convert the URL for the new image server" in {
@@ -76,7 +76,7 @@ class ImgSrcTest extends FlatSpec with Matchers  {
     ThirdPartyImageServiceSwitch.switchOff()
     NewImageServerSwitch.switchOn()
 
-    GalleryLargeTrail.bestFor(image).map(_.toString()) should be (Some(s"$imageHost/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.jpeg?width=480&height=288&quality=95"))
+    GalleryLargeTrail.bestFor(image) should be (Some(s"$imageHost/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.jpeg?width=480&height=288&quality=95"))
 
   }
 
