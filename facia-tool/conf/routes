@@ -16,7 +16,8 @@ GET           /assets/*file              controllers.Assets.at(path="/public", f
 #######################################################
 
 # Fronts
-GET           /                          controllers.FaciaToolController.index()
+GET           /                          controllers.FaciaToolController.collectionsEditor()
+GET           /edit-config               controllers.FaciaToolController.configEditor()
 
 POST          /collection/publish/*id    controllers.FaciaToolController.publishCollection(id)
 POST          /collection/discard/*id    controllers.FaciaToolController.discardCollection(id)

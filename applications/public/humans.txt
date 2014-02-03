@@ -54,6 +54,10 @@ User Experience Architect: Alastair Jardine
 Twitter: @aj_ux
 From: London, UK
 
+Developer: Ben James
+Twitter: @bmjames
+From: Liverpool, UK
+
 QA: Michael McNamara
 Twitter: @m_w_mcnamara
 From: Melbourne, Aus
@@ -61,6 +65,10 @@ From: Melbourne, Aus
 Software Engineer in Test: Gideon Goldberg
 Twitter: @gidsg
 From: London, UK, Earth, the Universe
+
+Developer: Max Harlow
+Twitter: @maxharlow
+From: London, UK
 
 Developer: Robert Berry
 Twitter: @yrrebjr

@@ -320,7 +320,7 @@ define([
 
             var path = (document.location.pathname) ? document.location.pathname : '/',
                 exitLink = '/preference/platform/desktop?page=' + encodeURIComponent(path + '?view=desktop'),
-                msg = '<p class="site-message__message">' +
+                msg = '<p class="site-message__message" id="site-message__message">' +
                             'You’re viewing an alpha release of the Guardian’s responsive website. <a href="/help/2013/oct/04/alpha-testing-and-evolution-of-our-mobile-site">Find out more</a>' +
                       '</p>' +
                       '<ul class="site-message__actions unstyled">' +
@@ -338,6 +338,39 @@ define([
                 // force the visitor in to the alpha release for subsequent visits
                 Cookies.add("GU_VIEW", "mobile", 365);
                 releaseMessage.show(msg);
+            }
+        },
+
+        displayOnboardMessage: function (config) {
+            if(window.location.hash === '#opt-in-message' && config.switches.networkFrontOptIn) {
+                bean.on(document, 'click', '.js-site-message-close', function() {
+                    Cookies.add("GU_VIEW", "mobile", 365);
+                    Cookies.add("GU_ALPHA", "2", 365);
+                });
+                bean.on(document, 'click', '.js-site-message', function() {
+                    Cookies.add("GU_VIEW", "mobile", 365);
+                    Cookies.add("GU_ALPHA", "2", 365);
+                });
+                var message = new Message('onboard', { type: 'modal' }),
+                    path = (document.location.pathname) ? document.location.pathname : '/',
+                    exitLink = '/preference/platform/desktop?page=' + encodeURIComponent(path + '?view=desktop'),
+                    msg = '<h2 class="site-message__header">Thanks for joining us.</h2>' +
+                    '<div class="site-message__message" id="site-message__message">' +
+                    '<p>You’re looking at a prototype of our new website. Opt-out any time by clicking "Classic version" at the bottom of the page.</p>' +
+                    '<ul class="site-message__list">' +
+                    '<li class="site-message__list__item">Our new front pages and content pages are a work in progress.</li>' +
+                    '<li class="site-message__list__item">We\'ll be launching our product site and feedback form later this week.</li>' +
+                    '</ul>' +
+                    '<ul class="site-message__actions unstyled">' +
+                    '<li class="site-message__actions__item"><i class="i i-arrow-white-circle"></i>  '+
+                    '<a class="js-site-message-close" data-link-name="R2 alpha opt in" href="#" tabindex=1>Got it</a>' +
+                    '<li class="site-message__actions__item">' +
+                    '<i class="i i-back-white"></i>' +
+                    '<a class="js-main-site-link" rel="nofollow" href="' + exitLink + '"' +
+                    'data-link-name="R2 alpha opt out">Opt-out and return to the old site </a>' +
+                    '</li>' +
+                    '</ul>';
+                message.show(msg);
             }
         },
 
@@ -432,6 +465,7 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
+            modules.displayOnboardMessage(config);
             modules.windowEventListeners();
             modules.checkIframe();
             modules.upgradeImages();

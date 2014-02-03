@@ -313,7 +313,6 @@ div.trailtext {
     font-size: 10px;
     line-height: 14px;
     background: rgba(0,0,0,0.2);
-    z-index: 1;
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;
 }

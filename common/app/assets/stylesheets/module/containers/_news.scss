@@ -1,5 +1,8 @@
-.container--rolled-up .collection-wrapper {
-    display: none;
+.container--rolled-up {
+    .collection-wrapper,
+    .linkslist-container {
+        display: none;
+    }
 }
 
 .container--row-pattern {
@@ -224,7 +227,8 @@
             .item__meta {
                 position: static;
                 @include rem((
-                    margin-top: $gs-baseline
+                    margin-top: $gs-baseline,
+                    margin-bottom: $gs-baseline
                 ));
             }
         }

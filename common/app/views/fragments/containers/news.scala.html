@@ -6,10 +6,12 @@
 
     @defining(templateDeduping(8, collection.items)) { items =>
         @if(items.nonEmpty) {
-            <section class="container container--row-pattern container--@style.containerType @if(containerIndex > 0 && title.nonEmpty){js-container--toggle} js-container-add-show-more"
-                     data-link-name="block | @config.id"
-                     data-id="@config.id"
-                     data-type="@style.containerType">
+            <section
+                class="container container--row-pattern container--@style.containerType @if(containerIndex > 0 && title.nonEmpty){js-container--toggle} js-container-add-show-more"
+                data-link-name="block | @config.id"
+                data-id="@config.id"
+                data-tone="@style.tone"
+                data-type="@style.containerType">
 
                 <h2 class="container__title">
                     <span class="container__title__label today u-text-hyphenate">
