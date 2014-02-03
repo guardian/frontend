@@ -57,9 +57,9 @@ define([
             this.redirectToSignin();
         } else {
             this.DOM.$container.css("height", this.DOM.$container.css("height"));
-            self.DOM.$container.addClass("loading");
+            self.DOM.$container.addClass("email-signup--loading");
             IdApi.emailSignup(self.listId).then(function success (res) {
-                self.DOM.$container.removeClass("loading").addClass("email-signup--done");
+                self.DOM.$container.removeClass("email-signup--loading").addClass("email-signup--done");
                 if (res.status === "ok") {
                     self.DOM.$button.remove();
                     self.DOM.title.innerHTML = "Your subscription will be activated within 24 hours";
@@ -69,7 +69,7 @@ define([
                     self.DOM.title.innerHTML = "An error occured, please reload and try again";
                 }
             }, function error () {
-                self.DOM.$container.removeClass("loading");
+                self.DOM.$container.removeClass("email-signup--loading");
                 self.DOM.$button.remove();
                 self.DOM.title.innerHTML = "An error occured, please reload and try again";
             });
