@@ -12,7 +12,7 @@ import controllers.ImageContentPage
 import scala.concurrent.Future
 import play.api.mvc.{RequestHeader, SimpleResult}
 
-case class IndexPage(page: MetaData, trails: Seq[Trail])
+case class IndexPage(page: MetaData, trails: Seq[Content])
 
 trait Index extends ConciergeRepository with QueryDefaults {
 

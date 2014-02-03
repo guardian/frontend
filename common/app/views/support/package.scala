@@ -74,6 +74,10 @@ case class CommentContainer(showMore: Boolean = true) extends Container {
   val containerType = "comment"
   val tone = "comment"
 }
+case class CommentAndDebateContainer(showMore: Boolean = true) extends Container {
+  val containerType = "commentanddebate"
+  val tone = "comment"
+}
 case class FeaturesContainer(showMore: Boolean = true) extends Container {
   val containerType = "features"
   val tone: String = "feature"
@@ -81,6 +85,10 @@ case class FeaturesContainer(showMore: Boolean = true) extends Container {
 case class PopularContainer(showMore: Boolean = true) extends Container {
   val containerType = "popular"
   val tone: String = "news"
+}
+case class PeopleContainer(showMore: Boolean = true) extends Container {
+  val containerType = "people"
+  val tone: String = "feature"
 }
 case class SectionContainer(showMore: Boolean = true, tone: String = "news") extends Container {
   val containerType = "section"
@@ -195,7 +203,7 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
       val asset = findVideoFromId(mediaId)
 
       // add the poster url
-      asset.flatMap(_.image).flatMap(Item620.bestFor).foreach{ url =>
+      asset.flatMap(_.image).flatMap(Item620.bestFor).map(_.toString()).foreach{ url =>
         element.attr("poster", url)
       }
 
@@ -234,7 +242,7 @@ case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner 
           fig.addClass("img")
           img.attr("itemprop", "contentURL")
           val src = img.attr("src")
-          img.attr("src", ImgSrc(src, Naked))
+          img.attr("src", ImgSrc(src, Naked).toString())
 
           asset.foreach { image =>
             fig.addClass(image.width match {

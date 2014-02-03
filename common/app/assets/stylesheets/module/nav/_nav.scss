@@ -13,7 +13,7 @@
 .nav {
     list-style: none;
     margin: 0;
-    padding: $baseline*2 0 $baseline;
+    @include rem((padding: $baseline*2 0 $baseline));
 
     .nav__item--full {
         width: 100%;
@@ -39,29 +39,31 @@
    ========================================================================== */
 
 .nav--columns {
-    padding: 0 $gs-gutter/2;
+    @include rem((padding: 0 $gs-gutter/2));
     @include mq(mobileLandscape) {
-        padding-left: $gs-gutter;
-        padding-right: $gs-gutter;
+        @include rem((
+            padding-left: $gs-gutter,
+            padding-right: $gs-gutter
+        ));
     }
     > .nav__item {
         float: left;
         width: 50%;
         @include box-sizing(border-box);
-        padding-right: $gs-gutter/2;
+        @include rem((padding-right: $gs-gutter/2));
 
         &:nth-child(odd) {
             clear: left;
         }
         &:nth-child(even) {
             padding-right: 0;
-            padding-left: $gs-gutter/2;
+            @include rem((padding-left: $gs-gutter/2));
         }
     }
 
     .nav__link {
         display: block;
-        padding: 3px 0 $baseline*4;
+        @include rem((padding: 3px 0 $baseline*4));
         border-top: 1px solid $c-neutral7;
         height: auto;
         background-color: transparent;
@@ -72,8 +74,10 @@
 
 .nav--columns-football {
     @extend .nav--no-horizontal-spacing;
-    padding-top: $baseline*2;
-    padding-bottom: $baseline;
+    @include rem((
+        padding-top: $baseline*2,
+        padding-bottom: $baseline
+    ));
 }
 
 .nav--top-border-off > .nav__item:nth-child(-n+2) .nav__link {
@@ -100,7 +104,7 @@
     display: none;
     height: 40px;
     overflow: hidden;
-    padding: 0 $gs-gutter;
+    @include rem((padding: 0 $gs-gutter));
 
     @include mq(tablet) { display: block; }
 
@@ -124,8 +128,10 @@
     .nav__link {
         color: $c-neutral1;
         display: block;
-        margin: 10px 0 $baseline*3;
-        padding: 2px 9px 0 9px;
+        @include rem((
+            margin: 10px 0 $baseline*3,
+            padding: 2px 9px 0 9px
+        ));
         @include font-size(14, 19);
     }
 
@@ -164,7 +170,7 @@
     height: 52px;
     overflow: hidden;
     padding: 0;
-    margin: 0 $gs-gutter;
+    @include rem((margin: 0 $gs-gutter));
     border-bottom: 1px solid $c-neutral6;
 
     @include mq(tablet) {
@@ -177,11 +183,12 @@
     .nav__link {
         color: $c-neutral2;
         display: block;
-        margin: $baseline*4 0 $baseline*3 0;
-        padding: 2px 9px 0;
+        @include rem((
+            margin: $baseline*4 0 $baseline*3 0,
+            padding: 2px 9px 0,
+            font-size: 14px
+        ));
         font-family: $serif !important;
-        font-size: 14px;
-        font-size: 1.4rem;
         font-weight: bold;
 
         &,
@@ -194,6 +201,7 @@
     .is-active .nav__link {
         font-family: $serifheadline !important;
         line-height: 18px !important;
+        line-height: rem(18px) !important;
         font-weight: bold;
     }
 
@@ -237,13 +245,15 @@
 
 .localnav__inner {
     position: relative;
-    margin: 0 $gs-gutter/2;
+    @include rem((margin: 0 $gs-gutter/2));
     border-bottom: 1px solid $c-neutral6;
     border-bottom-color: $c-neutral6 !important;
 
     @include mq(mobileLandscape) {
-        margin-left: $gs-gutter;
-        margin-right: $gs-gutter;
+        @include rem((
+            margin-left: $gs-gutter,
+            margin-right: $gs-gutter
+        ));
     }
 }
 
@@ -253,6 +263,7 @@
     float: left;
     border: 0 !important;
     height: $gs-row-height + $baseline - 3 !important;
+    height: rem($gs-row-height + $baseline - 3) !important;
     padding-left: 0 !important;
 }
 
@@ -263,14 +274,18 @@
 .nav--toolbar {
     @extend %type-10;
     display: none;
-    margin: 0 $gs-gutter/2 0 $gs-gutter;
-    padding: $baseline*3 0 0;
+    @include rem((
+        margin: 0 $gs-gutter/2 0 $gs-gutter,
+        padding: $gs-baseline 0 0
+    ));
     @include mq(tablet) { display: block; }
 
     .nav__item {
-        margin: $baseline 0 0 0;
-        padding: $baseline $gs-gutter/2;
-        color: #fff;
+        @include rem((
+            margin: $baseline 0 0,
+            padding: $baseline $gs-gutter/2
+        ));
+        color: #ffffff;
         border-right: 1px solid #94B1CA;
 
         &:last-child { border-right: none; }
@@ -311,13 +326,17 @@
 
 @include mq(tablet) {
     .nav--additional-sections {
-        padding-left: $gs-gutter/2;
-        padding-right: $gs-gutter/2;
+        @include rem((
+            padding-left: $gs-gutter/2,
+            padding-right: $gs-gutter/2
+        ));
 
         > .nav__item {
             clear: none !important;
             padding-left: $gs-gutter/2 !important;
             padding-right: $gs-gutter/2 !important;
+            padding-left: rem($gs-gutter/2) !important;
+            padding-right: rem($gs-gutter/2) !important;
         }
     }
     .nav--guardian-services {
@@ -344,22 +363,26 @@
     }
 
     > .nav {
-        padding-left: $gs-gutter/5;
-        padding-right: $gs-gutter/5;
+        @include rem((
+            padding-left: $gs-gutter/5,
+            padding-right: $gs-gutter/5
+        ));
 
         > .nav__item {
             float: none;
             display: block;
             width: auto;
-            padding: 0 $gs-gutter/2;
+            @include rem((padding: 0 $gs-gutter/2));
 
             @include mq(tablet) {
-                padding-left: $gs-gutter;
-                padding-right: $gs-gutter;
+                @include rem((
+                    padding-left: $gs-gutter,
+                    padding-right: $gs-gutter
+                ));
             }
 
             .nav__link {
-                padding: 10px 0;
+                @include rem((padding: 10px 0));
                 border: none;
             }
         }

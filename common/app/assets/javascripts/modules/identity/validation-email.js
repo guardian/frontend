@@ -1,31 +1,44 @@
 define([
     'bean',
+    'bonzo',
     'common/utils/mediator',
     'common/modules/identity/api'
 ], function(
     bean,
+    bonzo,
     mediator,
     IdentityApi
 ) {
 
-function init(context) {
-    bean.on(context, 'click', '.js-id-send-validation-email', function(e) {
-        e.preventDefault();
-        IdentityApi.sendValidationEmail().then(
-            function success(resp) {
-                if (resp.status === 'error') {
-                    mediator.emit('module:identity:validation-email:fail');
-                } else {
-                    mediator.emit('module:identity:validation-email:success');
-                }
-            },
-            function fail(err, resp) {
-                mediator.emit('module:identity:validation-email:fail');
-            }
-        );
-    });
-}
+    return {
+        init: function (context) {
 
-return { init: init };
+            var resendButton = context.querySelector('.js-id-send-validation-email');
+
+            if (resendButton) {
+                var $resendButton = bonzo(resendButton);
+                bean.on(resendButton, 'click', function (event) {
+                    event.preventDefault();
+                    if(IdentityApi.isUserLoggedIn()) {
+                        IdentityApi.sendValidationEmail().then(
+                            function success (resp) {
+                                if (resp.status === 'error') {
+                                    mediator.emit('module:identity:validation-email:fail');
+                                    $resendButton.innerHTML = "An error occured, please click here to try again.";
+                                } else {
+                                    mediator.emit('module:identity:validation-email:success');
+                                    $resendButton.replaceWith("<p>Sent. Please check your email and follow the link.</p>");
+                                }
+                            },
+                            function fail (err, resp) {
+                                mediator.emit('module:identity:validation-email:fail');
+                                $resendButton.innerHTML = "An error occured, please click here to try again.";
+                            }
+                        );
+                    }
+                });
+            }
+        }
+    };
 
 }); // define
