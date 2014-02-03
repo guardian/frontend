@@ -12,7 +12,7 @@ import conf.Configuration
 trait FrontJson extends ExecutionContexts {
 
   val stage: String = Configuration.environment.stage.toUpperCase
-  val bucketLocation: String = s"$stage/frontsapi/collection/pressed"
+  val bucketLocation: String = s"$stage/frontsapi/pressed"
 
   private def getAddressForPath(path: String): String = s"$bucketLocation/$path/pressed.json"
 
