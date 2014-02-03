@@ -3,6 +3,8 @@ define([
     'config',
     'knockout',
     'modules/vars',
+    'utils/fetch-config',
+    'utils/fetch-switches',
     'utils/query-params',
     'utils/ammended-query-str',
     'bindings/droppable',
@@ -15,6 +17,8 @@ define([
     config,
     ko,
     vars,
+    fetchConfig,
+    fetchSwitches,
     queryParams,
     ammendedQueryStr,
     droppable,
@@ -35,8 +39,7 @@ define([
             });
         }
 
-        var self = this,
-            model = {
+        var model = {
                 config: ko.observable(),
 
                 collections: ko.observableArray(),
@@ -69,46 +72,6 @@ define([
         model.previewUrl = ko.computed(function() {
             return vars.CONST.viewer + '#env=' + config.env + '&url=' + model.front() + encodeURIComponent('?view=mobile');
         });
-
-        function terminate() {
-            window.location.href = '/logout';
-        }
-
-        function terminateWithMessage(msg) {
-            window.alert("Please contact support. Error: " + (msg || 'unknown'));
-            terminate();
-        }
-
-        function fetchConfig() {
-            return authedAjax.request({
-                url: vars.CONST.apiBase + '/config'
-            })
-            .fail(function () {
-                terminateWithMessage("the config was not available");
-            })
-            .done(function(resp) {
-                if (!(_.isObject(resp.fronts) && _.isObject(resp.collections))) {
-                    terminateWithMessage("the config is invalid.");
-                }
-                model.config(resp);
-                model.fronts(_.keys(resp.fronts).sort());
-            });
-        }
-
-        function fetchSwitches() {
-            return authedAjax.request({
-                url: vars.CONST.apiBase + '/switches'
-            })
-            .fail(function () {
-                terminateWithMessage("the switches are unavailable");
-            })
-            .done(function(switches) {
-                if (switches['facia-tool-disable']) {
-                    terminate();
-                }
-                vars.state.switches = switches || {};
-            });
-        }
 
         function getFront() {
             return queryParams().front;
@@ -166,7 +129,7 @@ define([
 
         var startConfigAndSwitchesPoller = _.once(function() {
             setInterval(function(){
-                fetchConfig();
+                fetchConfig(model);
                 fetchSwitches();
             }, vars.CONST.configSwitchesPollMs || 60000);
         });
@@ -185,8 +148,8 @@ define([
         this.init = function() {
             droppable.init();
 
-            $.when(fetchConfig(), fetchSwitches())
-            .done(function(){
+            $.when(fetchConfig(model, true), fetchSwitches(true))
+            .done(function(config, switches) {
                 setfront();
                 window.onpopstate = setfront;
 

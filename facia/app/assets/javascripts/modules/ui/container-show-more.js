@@ -29,12 +29,13 @@ define([
         this._className = 'show-more--hidden';
 
         this._$button = bonzo(bonzo.create(
-            '<button class="collection__show-more tone-background tone-news" data-link-name="Show more | 0">' +
+            '<button class="collection__show-more tone-background" data-link-name="Show more | 0">' +
                 '<span class="i i-arrow-white-large">Show more</span>' +
             '</button>'
         ));
 
         this._renderButton = function() {
+            this._$button.addClass('tone-' + (this._$container.attr('data-tone') || 'news'));
             this._$container.append(this._$button);
             bean.on(this._$button[0], 'click', this.showMore.bind(this));
             mediator.emit('modules:containerShowMore:renderButton', this);

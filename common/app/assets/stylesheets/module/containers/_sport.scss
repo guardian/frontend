@@ -126,6 +126,7 @@
         .item--sport-stats-tall {
             float: left;
             min-height: gs-height(9) !important;
+            min-height: rem(gs-height(9)) !important;
         }
     }
 }

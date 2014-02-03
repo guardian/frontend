@@ -14,16 +14,16 @@ import scala.util.{Failure, Success, Random}
 
 trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionContexts {
 
-  private val refreshJobs: List[RefreshJob] = List {
-    SoulmatesRefresh
-    MasterclassesRefresh
-    CountriesRefresh
-    TravelOffersRefresh
-    IndustriesRefresh
-    JobsRefresh
-    MoneyBestBuysRefresh
+  private val refreshJobs: List[RefreshJob] = List(
+    SoulmatesRefresh,
+    MasterclassesRefresh,
+    CountriesRefresh,
+    TravelOffersRefresh,
+    IndustriesRefresh,
+    JobsRefresh,
+    MoneyBestBuysRefresh,
     BooksRefresh
-  }
+  )
 
   override def onStart(app: PlayApp) {
 

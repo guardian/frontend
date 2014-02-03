@@ -13,10 +13,10 @@ define(['knockout'], function(ko) {
         pvmPeriod:             5,     // num of recent datapoints over which to calc pageviews
 
         collectionsPollMs:     10000,
-        latestArticlesPollMs:  30000,
-        configSwitchesPollMs:  60000,
+        latestArticlesPollMs:  20000,
+        configSwitchesPollMs:  30000,
         cacheExpiryMs:         60000,
-        sparksRefreshMs:       60000,
+        sparksRefreshMs:       300000,
 
         apiBase:               '',
         apiSearchBase:         '/api/proxy',

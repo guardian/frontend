@@ -1,5 +1,8 @@
-.container--rolled-up .collection-wrapper {
-    display: none;
+.container--rolled-up {
+    .collection-wrapper,
+    .linkslist-container {
+        display: none;
+    }
 }
 
 .container--row-pattern {
@@ -126,7 +129,9 @@
         }
         @include mq(tablet) {
             .collection__item {
-                margin-bottom: $gs-baseline*2;
+                @include rem((
+                    margin-bottom: $gs-baseline*2
+                ));
             }
         }
         @include mq(desktop) {
@@ -222,13 +227,13 @@
             .item__meta {
                 position: static;
                 @include rem((
-                    margin-top: $gs-baseline
+                    margin-top: $gs-baseline,
+                    margin-bottom: $gs-baseline
                 ));
             }
         }
     }
 }
-
 .linkslist-container {
     position: relative;
     padding-top: 1px;
