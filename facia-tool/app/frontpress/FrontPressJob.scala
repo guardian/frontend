@@ -35,7 +35,7 @@ object FrontPressJob extends ExecutionContexts with Logging with implicits.Colle
           .map { config =>
             val f = FrontPress.generateJson(config).andThen {
               case Success(json) => {
-                (json \ "id").asOpt[String].foreach(S3FrontsApi.putPressedJson(_, Json.prettyPrint(json)))
+                (json \ "id").asOpt[String].foreach(S3FrontsApi.putPressedJson(_, Json.stringify(json)))
               }
             }
             f.onSuccess {
@@ -68,7 +68,7 @@ object FrontPressJob extends ExecutionContexts with Logging with implicits.Colle
       p <- paths
       json <- FrontPress.generateJson(p)
     } {
-      (json \ "id").asOpt[String].foreach(S3FrontsApi.putPressedJson(_, Json.prettyPrint(json)))
+      (json \ "id").asOpt[String].foreach(S3FrontsApi.putPressedJson(_, Json.stringify(json)))
     }
   }
 
