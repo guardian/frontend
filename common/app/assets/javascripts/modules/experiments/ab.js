@@ -6,7 +6,8 @@ define([
 
     //Current tests
     'common/modules/experiments/tests/aa',
-    'common/modules/experiments/tests/gravity-recommendations'
+    'common/modules/experiments/tests/gravity-recommendations',
+    'common/modules/experiments/tests/onward-inline-elements'
 ], function (
     common,
     store,
@@ -14,12 +15,14 @@ define([
     mvtCookie,
 
     Aa,
-    GravityRecommendations
+    GravityRecommendations,
+    InlineElements
     ) {
 
     var TESTS = [
             new Aa(),
-            new GravityRecommendations()
+            new GravityRecommendations(),
+            new InlineElements()
        ],
         participationsKey = 'gu.ab.participations';
 
