@@ -216,6 +216,10 @@ $c-live: #e81818;
         width: 1.45em;
         height: 1em;
         background-size: contain;
+
+        // This is a scalable icon,
+        // it will only work if SVG is active
+        @include show-only-if-svg-is-supported;
     }
 }
 .item__byline {
@@ -440,15 +444,22 @@ $c-live: #e81818;
 }
 
 .action--has-icon {
-    @include rem((
-        padding-left: $action-icon-width + $action-icon-rightspace
-    ));
-
     .i {
-        float: left;
+        // This is a scalable icon,
+        // it will only work if SVG is active
+        @include show-only-if-svg-is-supported;
+    }
+    .svg & {
         @include rem((
-            margin-left: ($action-icon-width + $action-icon-rightspace) * -1
+            padding-left: $action-icon-width + $action-icon-rightspace
         ));
+
+        .i {
+            float: left;
+            @include rem((
+                margin-left: ($action-icon-width + $action-icon-rightspace) * -1
+            ));
+        }
     }
 }
 .action--tone-comment .i.i-quote-orange { // Chained selector to overrule icon code from global.css
