@@ -6,7 +6,7 @@ import jobs.FrontPressJob
 import play.api.mvc.{AnyContent, Action, Controller}
 import play.api.libs.json._
 import common.{FaciaToolMetrics, ExecutionContexts, Logging}
-import conf.Configuration
+import conf.{Switches, Configuration}
 import tools.FaciaApi
 import services.{ConfigAgent, ContentApiWrite}
 import play.api.libs.ws.Response
@@ -101,7 +101,9 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
           case (verb, updateList) if verb == "remove" => UpdateActions.updateCollectionFilter(updateList.id, updateList, identity)
         }.flatten.map(b => (b.id, b)).toMap
 
-        FrontPressJob.pressByCollectionIds(updatedCollections.keySet)
+        if (Switches.FaciaToolPressSwitch.isSwitchedOn) {
+          FrontPressJob.pressByCollectionIds(updatedCollections.keySet)
+        }
 
         if (updatedCollections.nonEmpty)
           Ok(Json.toJson(updatedCollections)).as("application/json")
