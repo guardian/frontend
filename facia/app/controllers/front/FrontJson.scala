@@ -24,13 +24,13 @@ trait FrontJson extends ExecutionContexts {
   private def parseCollection(json: JsValue): Collection = {
     val displayName: Option[String] = (json \ "displayName").asOpt[String]
     val curated =      (json \ "curated").asOpt[List[JsValue]].getOrElse(Nil)
-      .flatMap(Content.fromPressedJsonByDelegate)
+      .flatMap(Content.fromPressedJson)
     val editorsPicks = (json \ "editorsPicks").asOpt[List[JsValue]].getOrElse(Nil)
-      .flatMap(Content.fromPressedJsonByDelegate)
+      .flatMap(Content.fromPressedJson)
     val mostViewed = (json \ "mostViewed").asOpt[List[JsValue]].getOrElse(Nil)
-      .flatMap(Content.fromPressedJsonByDelegate)
+      .flatMap(Content.fromPressedJson)
     val results = (json \ "results").asOpt[List[JsValue]].getOrElse(Nil)
-      .flatMap(Content.fromPressedJsonByDelegate)
+      .flatMap(Content.fromPressedJson)
 
     val lastUpdated = (json \ "lastUpdated").asOpt[String]
     val updatedBy = (json \ "updatedBy").asOpt[String]

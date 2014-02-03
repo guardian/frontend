@@ -159,7 +159,7 @@ object Content {
 
   def apply(delegate: ApiContent): Content = apply(ApiContentWithMeta(delegate))
 
-  def fromPressedJsonByDelegate(json: JsValue): Option[Content] = {
+  def fromPressedJson(json: JsValue): Option[Content] = {
     val contentFields: Option[Map[String, String]] = (json \ "safeFields").asOpt[Map[String, String]]
     Option(
       Content(ApiContentWithMeta(
@@ -175,14 +175,14 @@ object Content {
           fields = contentFields
         ),
         supporting = (json \ "meta" \ "supporting").asOpt[List[JsValue]].getOrElse(Nil)
-          .flatMap(Content.fromPressedJsonByDelegate),
+          .flatMap(Content.fromPressedJson),
         metaData = (json \ "meta").asOpt[Map[String, JsValue]].getOrElse(Map.empty)
       )
       )
     )
   }
 
-  def parseElements(json: JsValue): List[ApiElement] = {
+  private def parseElements(json: JsValue): List[ApiElement] = {
     (json \ "elements").asOpt[List[JsValue]].map(_.map{ elementJson =>
         ApiElement(
         (elementJson \ "id").as[String],
@@ -194,7 +194,7 @@ object Content {
     }).getOrElse(Nil)
   }
 
-  def parseAssets(json: JsValue): List[Asset] = {
+  private def parseAssets(json: JsValue): List[Asset] = {
     (json \ "assets").asOpt[List[JsValue]].map(_.map{ assetJson =>
       Asset(
         (assetJson \ "type").as[String],
