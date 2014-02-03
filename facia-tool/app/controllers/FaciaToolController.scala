@@ -23,12 +23,12 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
 
   def collectionsEditor() = ExpiringAuthentication { request =>
     val identity = Identity(request).get
-    Ok(views.html.collections(Configuration.environment.stage, Option(identity)))
+    Cached(60) { Ok(views.html.collections(Configuration.environment.stage, Option(identity))) }
   }
 
   def configEditor() = ExpiringAuthentication { request =>
     val identity = Identity(request).get
-    Ok(views.html.config(Configuration.environment.stage, Option(identity)))
+    Cached(60) { Ok(views.html.config(Configuration.environment.stage, Option(identity))) }
   }
 
   def listCollections = AjaxExpiringAuthentication { request =>

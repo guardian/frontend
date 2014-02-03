@@ -39,8 +39,7 @@ define([
             });
         }
 
-        var self = this,
-            model = {
+        var model = {
                 config: ko.observable(),
 
                 collections: ko.observableArray(),
