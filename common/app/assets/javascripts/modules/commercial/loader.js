@@ -64,7 +64,7 @@ define([
     };
 
     /**
-     * @param {Element}  target                                                        N
+     * @param {Element}  target
      */
     Loader.prototype.load = function(url, target) {
         var self = this;
