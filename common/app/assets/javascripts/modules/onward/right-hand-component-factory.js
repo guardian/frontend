@@ -8,7 +8,6 @@ define( [
 
     RightMostPopular,
     RightRecommendedForYou
-
 ){
 
     function RightHandComponentFactory(mediator, config) {

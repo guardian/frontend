@@ -49,7 +49,7 @@ define([
     RightRecommendedForYou.prototype.classes = { items: 'items' };
     RightRecommendedForYou.prototype.useBem = true;
 
-    RightRecommendedForYou.prototype.template = '<div class="right-most-popular"><h3 class="right-most-popular__title">Most popular</h3>' +
+    RightRecommendedForYou.prototype.template = '<div class="right-most-popular"><h3 class="right-most-popular__title">Recommended for you</h3>' +
         '<ul class="right-most-popular__items u-unstyled"></ul></div></div>';
 
     RightRecommendedForYou.prototype.fetch = function() {
