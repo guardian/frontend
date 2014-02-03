@@ -20,6 +20,8 @@ define([
 
         this._$container = bonzo(container);
 
+        this._$appendButtonTo = $('.js-container-append-button', this._$container);
+
         this._$collection = null;
 
         this._items = [];
@@ -36,7 +38,7 @@ define([
 
         this._renderButton = function() {
             this._$button.addClass('tone-' + (this._$container.attr('data-tone') || 'news'));
-            this._$container.append(this._$button);
+            this._$appendButtonTo.append(this._$button);
             bean.on(this._$button[0], 'click', this.showMore.bind(this));
             mediator.emit('modules:containerShowMore:renderButton', this);
         };
