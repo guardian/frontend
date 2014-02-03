@@ -1,7 +1,7 @@
 package views.support
 
 import model.{ImageContainer, ImageAsset}
-import conf.Switches.{ImageServerSwitch, ThirdPartyImageServiceSwitch}
+import conf.Switches.ImageServerSwitch
 import java.net.URI
 import conf.Configuration
 import play.api.templates.Html
@@ -24,8 +24,6 @@ case class Profile(width: Option[Int] = None, height: Option[Int] = None, compre
   def altTextFor(image: ImageContainer): Option[String] =
     elementFor(image).flatMap(_.altText)
 
-  // TODO sorry about the duplication, some of this just needs to live side by side for a while
-  val thirdPartyResizeString = s"${toThirdPartyResizeString(width)}:${toThirdPartyResizeString(height)}"
   val resizeString = s"width=${toResizeString(width)}&height=${toResizeString(height)}&quality=$compression"
 
   private def toThirdPartyResizeString(size: Option[Int]) = size.map(_.toString).getOrElse("*")
@@ -74,26 +72,12 @@ object ImgSrc {
     val isSupportedImage = uri.getHost == "static.guim.co.uk" && !uri.getPath.toLowerCase.endsWith(".gif")
 
     if (ImageServerSwitch.isSwitchedOn && isSupportedImage)
-      useImageServiceFor(uri, imageType)
-    else 
-      dontUseImageServiceFor(url)
+      s"$imageHost${uri.getPath}?${imageType.resizeString}"
+    else
+      url
   }
   
-  private def useImageServiceFor(uri: URI, imageType: Profile) = {
-    if(ThirdPartyImageServiceSwitch.isSwitchedOn) {
-      // this is the img for the CDN image service test (a trial we are running)
-      // NOTE the order of the parameters is important - read the docs...
-      s"$imageServiceHost${uri.getPath}?interpolation=progressive-bilinear&downsize=${imageType.thirdPartyResizeString}"
-    } else {
-      // this is our own image server
-      s"$imageHost${uri.getPath}?${imageType.resizeString}"
-    }
-  }
-
-  private def dontUseImageServiceFor(url: String) = url
-
   object Imager extends Profile(None, None) {
-    override val thirdPartyResizeString = s"{width}:*"
     override val resizeString = s"width={width}&height=-&quality=$compression"
   }
   

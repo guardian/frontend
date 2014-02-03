@@ -361,10 +361,6 @@ object Switches extends Collections {
     safeState = On, sellByDate = never // this is a performance related switch, not a feature switch
   )
 
-  val ThirdPartyImageServiceSwitch = Switch("Image Server", "image-service",
-    "If this switch is on images will be served off ak.i.guim.co.uk (dynamic image host). Part of the CDN test. Relies on ImageServerSwitch also being on",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 7))
-
   // Facia Tool Switches
 
   val ContentApiPutSwitch = Switch("Facia Tool", "facia-tool-contentapi-put",
@@ -432,8 +428,7 @@ object Switches extends Collections {
     GuBookshopFeedsSwitch,
     NetworkFrontOptIn,
 
-    ImageServerSwitch,
-    ThirdPartyImageServiceSwitch
+    ImageServerSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
