@@ -23,7 +23,7 @@ case class Collection(curated: Seq[Content],
                       results: Seq[Content],
                       displayName: Option[String]) extends implicits.Collections {
 
-  lazy val items: Seq[Trail] = (curated ++ editorsPicks ++ mostViewed ++ results).distinctBy(_.url)
+  lazy val items: Seq[Content] = (curated ++ editorsPicks ++ mostViewed ++ results).distinctBy(_.url)
 }
 
 object Collection {
