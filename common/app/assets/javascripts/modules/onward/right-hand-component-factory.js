@@ -2,7 +2,7 @@ define( [
     'lodash/objects/assign',
 
     'common/modules/onward/right-most-popular',
-    'common/modules/onward/right-recommended-for-you'
+    'common/modules/onward/right-recommended'
 ], function (
     extend,
 
@@ -32,4 +32,4 @@ define( [
 
     return RightHandComponentFactory;
 
-});
+});                                             l
