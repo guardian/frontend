@@ -127,9 +127,6 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
             margin-bottom: $gs-baseline
         ));
     }
-    @include mq(desktop) {
-        @include fs-headline(2, true);
-    }
 }
 .fromage__standfirst {
     @include mq(tablet) {
