@@ -18,26 +18,8 @@
                 }
             }
 
-            &:last-child {
+            &:nth-child(n+5) {
                 display: none;
-            }
-        }
-
-        &.more-on-this-story {
-            .item {
-                &:first-child {
-                    display: none;
-                }
-
-                &:last-child {
-                    display: block;
-                }
-
-                &:nth-child(2) {
-                    &:before {
-                        border-left: none;
-                    }
-                }
             }
         }
 
