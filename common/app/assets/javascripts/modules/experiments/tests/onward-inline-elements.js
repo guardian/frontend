@@ -1,7 +1,9 @@
 define([
-    'common/utils/detect'
+    'common/utils/detect',
+    "common/modules/experiments/inline-elements",
 ], function(
-    detect
+    detect,
+    inlineElements
     ) {
 
     var rendered = false;
@@ -20,6 +22,7 @@ define([
             {
                 id: 'inlineElements',
                 test: function (context, config) {
+                    inlineElements.init();
                 }
             },
             {
