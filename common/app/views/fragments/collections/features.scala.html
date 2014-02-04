@@ -1,12 +1,20 @@
 @(config: Config, items: Seq[Trail], style: Container, containerIndex: Int)(implicit request: RequestHeader)
 
 <div class="collection-wrapper">
-    <ul class="unstyled l-row l-row--items-2 collection">
+    <ul class="unstyled l-row l-row--items-3 collection">
         @items.slice(0, 2).zipWithIndex.map{ case (trail, index) =>
             @fragments.items.rowPattern.standard(trail, index, 0)
         }
+        <li class="l-row__item l-row__item--mpu-300 hide-on-mobile">
+            <img src="http://creative.mathads.com/0001/b6/61/82/24/2053153fa77038512cf290da81c9b80a.gif" alt="" />
+        </li>
     </ul>
 </div>
+
+<div class="mobile-only">
+    <img src="http://imageceu1.247realmedia.com/RealMedia/ads/Creatives/Guardian/Ventures_Guardian_Escapes_Banner_ROM/Mobile-ad-GuardEscapes-December.gif/1390572841" alt="" />
+</div>
+
 @defining(items.slice(2, 6)) { items =>
     @if(items.nonEmpty) {
         <div class="collection-wrapper">

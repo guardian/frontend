@@ -18,7 +18,7 @@
     .collection__item {
         padding-bottom: 0;
     }
-    .l-row--items-2 {
+    .l-row--items-3 {
         .collection__item {
             background-color: $c-features-primary;
 
@@ -110,6 +110,9 @@
                 }
             }
         }
+    }
+    .l-row__item--mpu-300 {
+        min-width: gs-span(4) + $gs-gutter;
     }
     .linkslist-container:before {
         background: $c-featureAccent; // Change color of border on top of the links list container
