@@ -30,8 +30,6 @@ class TagFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with U
 
       Given("I visit the 'Jemima Kiss' contributor page")
       Switches.ImageServerSwitch.switchOn()
-      Switches.ThirdPartyImageServiceSwitch.switchOff()
-      Switches.NewImageServerSwitch.switchOn()
 
       HtmlUnit("/profile/jemimakiss") { browser =>
         import browser._

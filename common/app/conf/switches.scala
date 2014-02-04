@@ -371,26 +371,10 @@ object Switches extends Collections {
 
   // Image Switch
 
-  val ServeWebPImagesSwitch = Switch("Image Server", "serve-webp-images",
-    "If this is switched on the Image server will use the webp format when requested.",
-    safeState = On, sellByDate = new DateMidnight(2014, 2, 15)
-  )
-
   val ImageServerSwitch = Switch("Image Server", "image-server",
     "If this switch is on images will be served off i.guim.co.uk (dynamic image host).",
     safeState = On, sellByDate = never // this is a performance related switch, not a feature switch
   )
-
-  val ThirdPartyImageServiceSwitch = Switch("Image Server", "image-service",
-    "If this switch is on images will be served off ak.i.guim.co.uk (dynamic image host). Part of the CDN test. Relies on ImageServerSwitch also being on",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 7))
-
-  // TODO - once again I can only apologise for the proliferation of image server switches
-  // while I wait for the planets to align
-  val NewImageServerSwitch = Switch("Image Server", "new-image-server",
-    "If this switch is on images will be served off i.guim.co.uk using the new image server. Relies on ImageServerSwitch also being on",
-    safeState = On, sellByDate = new DateMidnight(2014, 2, 28))
-
 
   // Facia Tool Switches
 
@@ -427,7 +411,6 @@ object Switches extends Collections {
     UserzoomSwitch,
     CssFromStorageSwitch,
     ElasticSearchSwitch,
-    ServeWebPImagesSwitch,
     ArticleKeywordsSwitch,
     EditionRedirectLoggingSwitch,
     FacebookAutoSigninSwitch,
@@ -463,9 +446,7 @@ object Switches extends Collections {
     DogpileSwitch,
     ShowAllArticleEmbedsSwitch,
 
-    ImageServerSwitch,
-    ThirdPartyImageServiceSwitch,
-    NewImageServerSwitch
+    ImageServerSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
