@@ -3,14 +3,14 @@
 @profile(tag: model.Tag) = {
     <div class="profile media">
         @tag.contributorImagePath.map { url =>
-            <div class="profile-img media__img">
+            <div class="profile__img media__img">
                 <img src="@url" alt="@tag.webTitle" />
             </div>
         }
         @if(tag.bio) {
-            <p class="type-7 profile-bio">
-            @RemoveOuterParaHtml(tag.bio)
-            </p>
+            <div class="profile__bio">
+                @RemoveOuterParaHtml(tag.bio)
+            </div>
         }
     </div>
 }
