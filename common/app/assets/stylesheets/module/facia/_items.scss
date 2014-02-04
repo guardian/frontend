@@ -413,7 +413,6 @@ $c-live: #e81818;
     width: 32px;
     height: 32px;
     @include rounded-corners(50%);
-    @include fs-data(4, $size-only: true);
     position: relative;
     left: 50%;
     margin-top: $gs-baseline;
@@ -425,8 +424,14 @@ $c-live: #e81818;
         top: 0;
         left: 0;
     }
+    .show-more__hover--show { display: none; } // Nested to override global styles
 }
 
+.collection__show-more:hover,
+.collection__show-more:focus {
+    .show-more__hover--hide { display: none; }
+    .show-more__hover--show { display: inline-block; }
+}
 
 // Thumbnail element order:
 // 1. Title
