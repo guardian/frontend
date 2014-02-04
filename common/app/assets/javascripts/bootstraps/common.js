@@ -214,46 +214,9 @@ define([
                 });
             });
 
-            function recordOphanSingleEvent(ophan, viewData) {
-                if (!ophan.isInitialised) {
-                    ophan.isInitialised = true;
-                    ophan.initLog();
-                }
-
-                ophan.additionalViewData(function() {
-
-                    var audsci = storage.local.get('gu.ads.audsci');
-                    if (audsci) {
-                        viewData.audsci_json = JSON.stringify(audsci);
-                    }
-
-                    var participations = ab.getParticipations(),
-                        participationsKeys = Object.keys(participations);
-
-                    if (participationsKeys.length > 0) {
-                        var testData = participationsKeys.map(function(k) {
-                            return { id: k, variant: participations[k].variant };
-                        });
-                        viewData.experiments_json = JSON.stringify(testData);
-                    }
-
-                    return viewData;
-                });
-
-                ophan.sendLog(undefined, true);
-            }
-
-            if (config.switches.ophanMultiEvent) {
-                require('ophan/ng', function (ophanMultiEvent) {
-                    ophanMultiEvent.record({'ab': ab.getParticipations()});
-                });
-
-                require(['ophan/ng', config.page.ophanUrl], function (ophanMultiEvent, ophanSingleEvent) {
-                    recordOphanSingleEvent(ophanSingleEvent, { viewId: ophanMultiEvent.viewId });
-                });
-            } else {
-                require(config.page.ophanUrl, function (ophanSingleEvent) {
-                    recordOphanSingleEvent(ophanSingleEvent, {});
+            if (config.switches.ophan) {
+                require('ophan/ng', function (ophan) {
+                    ophan.record({'ab': ab.getParticipations()});
                 });
             }
         },
