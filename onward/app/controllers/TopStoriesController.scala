@@ -60,8 +60,7 @@ object TopStoriesController extends Controller with Logging with Paging with Exe
     Cached(900) {
       if (request.isJson)
         JsonComponent(
-          "html" -> jsonResponse(),
-          "trails" -> JsArray(trails.map(TrailToJson(_)))
+          "html" -> jsonResponse()
         )
       else
         Ok(htmlResponse())
