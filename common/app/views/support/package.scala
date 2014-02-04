@@ -18,6 +18,7 @@ import play.api.mvc.RequestHeader
 import play.api.mvc.SimpleResult
 import play.api.templates.Html
 import scala.collection.JavaConversions._
+import conf.Switches.ShowAllArticleEmbedsSwitch
 
 sealed trait Style {
   val className: String
@@ -348,7 +349,7 @@ class TagLinker(article: Article)(implicit val edition: Edition) extends HtmlCle
 
 object InBodyElementCleaner extends HtmlCleaner {
 
-  private val supportedElements = Seq(
+  private val supportedElements = Set(
     "element-tweet",
     "element-video",
     "element-image",
@@ -358,10 +359,12 @@ object InBodyElementCleaner extends HtmlCleaner {
   )
 
   override def clean(document: Document): Document = {
-    // this code removes unsupported embeds
-    val embeddedElements = document.getElementsByTag("figure").filter(_.hasClass("element"))
-    val unsupportedElements = embeddedElements.filterNot(e => supportedElements.exists(e.hasClass))
-    unsupportedElements.foreach(_.remove())
+    // this code REMOVES unsupported embeds
+    if(ShowAllArticleEmbedsSwitch.isSwitchedOff) {
+      val embeddedElements = document.getElementsByTag("figure").filter(_.hasClass("element"))
+      val unsupportedElements = embeddedElements.filterNot(e => supportedElements.exists(e.hasClass))
+      unsupportedElements.foreach(_.remove())
+    }
     document
   }
 }

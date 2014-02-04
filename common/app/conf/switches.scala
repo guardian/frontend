@@ -192,6 +192,11 @@ object Switches extends Collections {
 
   // Feature Switches
 
+  val ShowAllArticleEmbedsSwitch = Switch("Feature Switches", "show-all-embeds",
+    "If switched on then all embeds will be shown inside article bodies",
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
+  )
+
   val ReleaseMessageSwitch = Switch("Feature Switches", "release-message",
     "If this is switched on users will be messaged that they are inside the alpha/beta/whatever release",
     safeState = Off, sellByDate = endOfQ4
@@ -450,6 +455,7 @@ object Switches extends Collections {
     LCMortgageFeedSwitch,
     GuBookshopFeedsSwitch,
     NetworkFrontOptIn,
+    ShowAllArticleEmbedsSwitch,
 
     ImageServerSwitch,
     ThirdPartyImageServiceSwitch,
