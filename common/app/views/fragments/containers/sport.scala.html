@@ -9,8 +9,10 @@
                      data-id="@config.id"
                      data-type="@style.containerType">
 
+                <div class="container__border tone-@style.tone tone-accent-border"></div>
+
                 @title.map { title =>
-                    <h2 class="container__title tone-@style.tone tone-background tone-accent-border">
+                    <h2 class="container__title tone-@style.tone tone-background">
                         @config.href.map { href =>
                             <a class="container__title__label u-text-hyphenate" data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
                         }.getOrElse{
@@ -18,11 +20,11 @@
                         }
                     </h2>
                 }
+                <div class="container__body container--rolled-up-hide">
+                    @fragments.contributor(page)
 
-                @fragments.contributor(page)
-
-                @fragments.collections.standard(config, items, style, containerIndex, 6)
-
+                    @fragments.collections.standard(config, items, style, containerIndex, 6)
+                </div>
             </section>
         }
     }
