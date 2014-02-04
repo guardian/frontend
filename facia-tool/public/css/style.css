@@ -81,7 +81,6 @@ a, a:hover {
     top: 49px;
     width: 50%;
     padding: 10px 15px 0 12px;
-    color: #666666;
     border-right: 1px solid #cccccc;
     border-top: 1px solid #cccccc;
 }
@@ -698,6 +697,25 @@ button {
 .supporting {
     margin: 0 -2px -4px -4px;
 }
+
+/*****************************************/
+/* CONFIG EDITOR */
+/*****************************************/
+
+.cnf-front {
+    padding: 0 0 0 4px;
+}
+
+.cnf-collection {
+    padding: 0 0 0 5px;
+    color: #666666;
+    font-style: italic;
+}
+
+/*****************************************/
+/* MEDIA QUERIES */
+/*****************************************/
+
 
 @media (max-width: 1100px) {
     .toolbar,

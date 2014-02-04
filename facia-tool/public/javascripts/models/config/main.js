@@ -4,13 +4,15 @@ define([
     'knockout',
     'modules/vars',
     'utils/fetch-settings',
-    'utils/update-scrollables'
+    'utils/update-scrollables',
+    'models/config/front'
 ], function(
     config,
     ko,
     vars,
     fetchSettings,
-    updateScrollables
+    updateScrollables,
+    Front
 ) {
     return function() {
         var model = {
@@ -29,7 +31,7 @@ define([
                 );
 
                 model.fronts(_.map(config.fronts, function(val, key) {
-                    return {id: key, collections: val.collections};
+                    return new Front({id: key, collections: val.collections});
                 }));
 
                 vars.state.switches = switches || {};

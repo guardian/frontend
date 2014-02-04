@@ -4,10 +4,12 @@
 
 <div style="display: none;" data-bind="visible: true">
 
+    <div class="toolbar" data-bind="visible: true" style=""></div>
+
     <div class="left-col">
         <div class="title">Collections</div>
         <div class="scrollable" data-bind="
-            template: {name: 'template_collections', foreach: collections}"></div>
+            template: {name: 'template_collection', foreach: collections}"></div>
     </div>
 
     <div class="right-col">
@@ -16,12 +18,20 @@
             template: {name: 'template_front', foreach: fronts}"></div>
     </div>
 
-    <script type="text/html" id="template_collections">
-        <div data-bind="text: id"></div>
+    <script type="text/html" id="template_collection">
+        <div class="cnf-collection" data-bind="text: id"></div>
     </script>
 
     <script type="text/html" id="template_front">
-        <div data-bind="text: id"></div>
+        <div class="cnf-front">
+            <div data-bind="
+                click: toggleOpen,
+                text: id"></div>
+            <!-- ko if: state.open -->
+            <div data-bind="
+                template: {name: 'template_collection', foreach: group.items}"></div>
+            <!-- /ko -->
+        </div>
     </script>
 
 </div>
