@@ -16,8 +16,8 @@ define([
 
     Component.define(RightGravityRecommendation);
 
-    RightGravityRecommendation.prototype.templateName = 'right-recommended-item';
-    RightGravityRecommendation.prototype.componentClass = 'right-recommended-item';
+    RightGravityRecommendation.prototype.templateName = 'right-most-popular-item-item';
+    RightGravityRecommendation.prototype.componentClass = 'right-most-popular-item-item';
     RightGravityRecommendation.prototype.classes = {
         link: 'url',
         image: 'img',
@@ -26,9 +26,9 @@ define([
     RightGravityRecommendation.prototype.useBem = true;
     RightGravityRecommendation.prototype.showComments = false;
 
-    RightGravityRecommendation.prototype.template = '<li class="right-recommended-item"><a class="right-recommended-item__url media u-cf" href="">'
-        + '<div class="right-recommended-item__img media__img js-image-upgrade"><img class="responsive-img" src="" alt=""/></div>'
-        + '<h3 class="right-recommended-item__headline media__body">'
+    RightGravityRecommendation.prototype.template = '<li class="right-most-popular-item-item"><a class="right-most-popular-item-item__url media u-cf" href="">'
+        + '<div class="right-most-popular-item-item__img media__img js-image-upgrade"><img class="responsive-img" src="" alt=""/></div>'
+        + '<h3 class="right-most-popular-item-item__headline media__body">'
         + '</h3></a></li>';
 
     RightGravityRecommendation.prototype.prerender = function() {
