@@ -1,8 +1,8 @@
 package model
 
-import common.Jobs
+import common.{AkkaAsync, Jobs}
 import feed.{MostPopularExpandableAgent, MostPopularAgent}
-import play.api.{ Application => PlayApp, GlobalSettings }
+import play.api.{Application => PlayApp, Play, GlobalSettings}
 
 
 trait MostPopularLifecycle extends GlobalSettings {
@@ -15,6 +15,13 @@ trait MostPopularLifecycle extends GlobalSettings {
     Jobs.schedule("MostPopularAgentRefreshJob",  "0 * * * * ?") {
       MostPopularAgent.refresh()
       MostPopularExpandableAgent.refresh()
+    }
+
+    if (!Play.isTest(app)) {
+      AkkaAsync{
+        MostPopularAgent.refresh()
+        MostPopularExpandableAgent.refresh()
+      }
     }
   }
 
