@@ -4,6 +4,7 @@ $c-live: #e81818;
     position: relative;
     overflow: hidden;
     @include rem((margin-top: $gs-baseline));
+
     @include mq(tablet) {
         @include rem((margin-top: $gs-baseline*2));
     }
@@ -11,34 +12,32 @@ $c-live: #e81818;
 .container:first-child {
     margin-top: 0;
 }
-.container--rolled-up {
-    .collection,
-    .collection__show-more {
-        display: none;
+.container__border {
+    border-top-style: solid;
+    border-top-width: 4px;
+
+    @include mq(tablet) {
+        border-top-width: 2px;
     }
 }
 .container__title {
     @include fs-header(5);
-    border-top-style: solid;
-    border-top-color: $c-newsAccent;
-    border-top-width: $gs-baseline/3;
     @include rem((
         padding: $gs-baseline/3 $gs-gutter/5,
         min-height: gs-height(1) - $gs-baseline*(2/3)
-    ));;
+    ));
     background-color: $c-newsDefault;
     color: #ffffff;
 
     @include mq(tablet) {
+        @include fs-header(3, true);
         min-height: 0;
         padding-left: 0;
         padding-right: 0;
+        background-color: transparent !important;
         @include rem((
-            padding-top: $gs-baseline/6,
             margin-bottom: $gs-baseline
         ));
-        border-top-width: $item-top-border-height;
-        background-color: transparent !important;
         line-height: 1;
 
         &.tone-news {
@@ -56,8 +55,11 @@ $c-live: #e81818;
     color: inherit;
 }
 @include mq($to: tablet) {
-    .has-localnav .container:first-child .container__title {
-        display: none;
+    .has-localnav .container:first-child {
+        .container__title,
+        .container__border {
+            display: none;
+        }
     }
 }
 
@@ -216,6 +218,10 @@ $c-live: #e81818;
         width: 1.45em;
         height: 1em;
         background-size: contain;
+
+        // This is a scalable icon,
+        // it will only work if SVG is active
+        @include show-only-if-svg-is-supported;
     }
 }
 .item__byline {
@@ -440,15 +446,22 @@ $c-live: #e81818;
 }
 
 .action--has-icon {
-    @include rem((
-        padding-left: $action-icon-width + $action-icon-rightspace
-    ));
-
     .i {
-        float: left;
+        // This is a scalable icon,
+        // it will only work if SVG is active
+        @include show-only-if-svg-is-supported;
+    }
+    .svg & {
         @include rem((
-            margin-left: ($action-icon-width + $action-icon-rightspace) * -1
+            padding-left: $action-icon-width + $action-icon-rightspace
         ));
+
+        .i {
+            float: left;
+            @include rem((
+                margin-left: ($action-icon-width + $action-icon-rightspace) * -1
+            ));
+        }
     }
 }
 .action--tone-comment .i.i-quote-orange { // Chained selector to overrule icon code from global.css
@@ -500,48 +513,32 @@ $c-live: #e81818;
     }
 
     &.collection__item--content-type-gallery,
-    &.collection__item--content-type-video{
+    &.collection__item--content-type-video {
         &,
         .item__meta {
             background: $c-neutral1;
         }
-        .item__container {
-            border-top-width: 2px;
-            border-top-style: solid;
-        }
-        .item__link {
-            border-top: 0;
-
-            &:first-child {
-                @include rem((margin-top: $gs-baseline/3));
-            }
-        }
-        .item__image-container {
-            margin: 0;
-        }
     }
 }
 
-.item__gallery-lightbox {
-    position: absolute;
-    width: 100%;
-    top: 0;
-    left: 0;
-
-    &:before {
-        content: "";
-        display: block;
-        padding-top: 60%;
-    }
+.item__media-wrapper--has-icon {
     .item__cta {
         position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
         @include rem((
-            padding-top: 8px,
-            padding-left: 8px
+            top: 8px,
+            left: 8px
         ));
+    }
+    &:hover {
+        .item__cta--gallery {
+            background-color: $c-neutral1;
+
+            .i {
+                display: none;
+            }
+            .i--hover {
+                display: block;
+            }
+        }
     }
 }

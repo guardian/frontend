@@ -1,8 +1,5 @@
-.container--rolled-up {
-    .collection-wrapper,
-    .linkslist-container {
-        display: none;
-    }
+.container--rolled-up .container--rolled-up-hide {
+    display: none;
 }
 
 .container--row-pattern {
@@ -104,6 +101,16 @@
     }
 }
 .container--news {
+    .container__border {
+        display: none;
+
+        @include mq(wide) {
+            display: block;
+        }
+    }
+    .collection-wrapper:first-child .fromage {
+        border-top-width: 0;
+    }
     .container__title {
         display: none;
         color: $c-neutral1;
@@ -256,8 +263,7 @@
     }
 
     &.show-more--hidden {
-        display: none;
-
+        &,
         &:before {
             display: none;
         }
@@ -265,8 +271,9 @@
 }
 
 .today {
-    color: $c-neutral2;
+    color: $c-neutral1;
+    font-weight: normal;
 }
 .today__dayofweek {
-    color: $c-neutral1;
+    color: $c-newsDefault;
 }

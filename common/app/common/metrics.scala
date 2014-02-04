@@ -6,6 +6,7 @@ import conf.RequestMeasurementMetrics
 import java.lang.management.ManagementFactory
 import model.diagnostics.CloudWatch
 import java.io.File
+import java.util.concurrent.atomic.AtomicLong
 
 trait TimingMetricLogging extends Logging { self: TimingMetric =>
   override def measure[T](block: => T): T = {
@@ -340,6 +341,23 @@ object Metrics {
   lazy val faciaTool = FaciaToolMetrics.all
 }
 
+case class SimpleCountMetric(namespace: String, name: String) {
+  val count = new AtomicLong(0)
+  def increment() { count.incrementAndGet() }
+}
+
+object PerformanceMetrics {
+  val dogPileHitMetric = SimpleCountMetric(
+    "performance",
+    "dogpile-hits"
+  )
+
+  val dogPileMissMetric = SimpleCountMetric(
+    "performance",
+    "dogpile-miss"
+  )
+}
+
 trait CloudWatchApplicationMetrics extends GlobalSettings {
 
   def applicationName: String
@@ -360,8 +378,10 @@ trait CloudWatchApplicationMetrics extends GlobalSettings {
       (s"$applicationName-build-number", SystemMetrics.BuildNumberMetric.getValue().toDouble),
 
       (s"$applicationName-free-disk-space", SystemMetrics.FreeDiskSpaceMetric.getValue()),
-      (s"$applicationName-total-disk-space", SystemMetrics.TotalDiskSpaceMetric.getValue())
+      (s"$applicationName-total-disk-space", SystemMetrics.TotalDiskSpaceMetric.getValue()),
 
+      (s"$applicationName-dogpile-hits", PerformanceMetrics.dogPileHitMetric.count.getAndSet(0).toDouble),
+      (s"$applicationName-dogpile-miss", PerformanceMetrics.dogPileMissMetric.count.getAndSet(0).toDouble)
     )
 
     CloudWatch.put("ApplicationSystemMetrics", metrics)
