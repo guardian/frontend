@@ -98,6 +98,13 @@
                 display: block;
             }
         }
+        .item--has-no-image {
+            .item__title {
+                @include mq(desktop) {
+                    @include fs-headline(2, true);
+                }
+            }
+        }
     }
 }
 .container--news {
