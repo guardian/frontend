@@ -33,7 +33,6 @@ GET         /open/cta/article/*discussionKey.json                               
 # Core Navigation
 GET         /most-read                                                                                               controllers.MostPopularController.render(path = "")
 GET         /most-read.json                                                                                          controllers.MostPopularController.render(path = "")
-GET         /most-read/card.json                                                                                     controllers.MostPopularController.renderCard()
 GET         /most-read/*path.json                                                                                    controllers.MostPopularController.renderJson(path)
 GET         /most-read/*path                                                                                         controllers.MostPopularController.render(path)
 
@@ -43,7 +42,6 @@ GET         /top-stories/trails                                                 
 GET         /top-stories/trails.json                                                                                 controllers.TopStoriesController.renderJsonTrails()
 GET         /related/*path.json                                                                                      controllers.RelatedController.renderJson(path)
 GET         /related/*path                                                                                           controllers.RelatedController.render(path)
-GET         /recent/card.json                                                                                        controllers.RecentController.renderRecent()
 
 GET         /preference/platform/:platform                                                                           controllers.ChangeViewController.render(platform, page)
 GET         /preference/edition/:edition                                                                             controllers.ChangeEditionController.render(edition)
@@ -151,12 +149,9 @@ GET         /commercial/books/bestsellers.json                                  
 
 # Onward journeys
 GET         /onward/popular-onward/*path.json                                                                        controllers.MostPopularOnwardController.popularOnward(path)
-GET         /onward/card/*path.json                                                                                  controllers.OnwardCardController.renderCard(path)
-GET         /onward/trail/*path.json                                                                                 controllers.OnwardCardController.renderTrail(path)
 GET         /onward/most-read.json                                                                                   controllers.MostPopularOnwardController.mostRead()
 GET         /onward/latest.json                                                                                      controllers.LatestContentController.renderLatest()
 GET         /onward/recently-published                                                                               controllers.LatestContentController.recentlyPublished()
-
 
 # Facia
 GET         /                                                                                                        controllers.FaciaController.editionRedirect(path = "")
