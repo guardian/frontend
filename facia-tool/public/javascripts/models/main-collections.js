@@ -3,8 +3,7 @@ define([
     'config',
     'knockout',
     'modules/vars',
-    'utils/fetch-config',
-    'utils/fetch-switches',
+    'utils/fetch-settings',
     'utils/query-params',
     'utils/ammended-query-str',
     'bindings/droppable',
@@ -17,8 +16,7 @@ define([
     config,
     ko,
     vars,
-    fetchConfig,
-    fetchSwitches,
+    fetchSettings,
     queryParams,
     ammendedQueryStr,
     droppable,
@@ -127,13 +125,6 @@ define([
             }, period);
         });
 
-        var startConfigAndSwitchesPoller = _.once(function() {
-            setInterval(function(){
-                fetchConfig(model);
-                fetchSwitches();
-            }, vars.CONST.configSwitchesPollMs || 60000);
-        });
-
         model.front.subscribe(function(front) {
             renderFront(front);
         });
@@ -148,8 +139,12 @@ define([
         this.init = function() {
             droppable.init();
 
-            $.when(fetchConfig(model, true), fetchSwitches(true))
-            .done(function(config, switches) {
+            fetchSettings(function (config, switches) {
+                model.config(config);
+                model.fronts(_.keys(config.fronts));
+                vars.state.switches = switches || {};
+            }, vars.CONST.configSettingsPollMs)
+            .done(function() {
                 setfront();
                 window.onpopstate = setfront;
 
@@ -160,7 +155,6 @@ define([
 
                 startCollectionsPoller();
                 startSparksPoller();
-                startConfigAndSwitchesPoller();
 
                 model.latestArticles.search();
                 model.latestArticles.startPoller();

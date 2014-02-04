@@ -3,28 +3,26 @@ define([
     'config',
     'knockout',
     'modules/vars',
-    'utils/fetch-config',
-    'utils/fetch-switches'
+    'utils/fetch-settings'
 ], function(
     config,
     ko,
     vars,
-    fetchConfig,
-    fetchSwitches
+    fetchSettings
 ) {
     return function() {
         var model = {
                 config: ko.observable(),
-                fronts: ko.observableArray(),
-
                 splat: ko.observable()
             };
 
         this.init = function() {
-            $.when(fetchConfig(model, true), fetchSwitches(true))
-            .done(function(){
+            fetchSettings(function (config, switches) {
+                model.config(config);
+                vars.state.switches = switches || {};
+            }, vars.CONST.configSettingsPollMs)
+            .done(function() {
                 model.splat(JSON.stringify(model.config(), undefined, 2));
-
                 ko.applyBindings(model);
             });
         };
