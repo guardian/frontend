@@ -44,13 +44,13 @@ define([
             + guid + "/stories?limit=7&rec_type=personalized&c=thisthat";
     };
 
-    RightRecommendedForYou.prototype.templateName = 'right-most-popular';
-    RightRecommendedForYou.prototype.componentClass = 'right-most-popular';
+    RightRecommendedForYou.prototype.templateName = 'right-recommended';
+    RightRecommendedForYou.prototype.componentClass = 'right-recommended';
     RightRecommendedForYou.prototype.classes = { items: 'items' };
     RightRecommendedForYou.prototype.useBem = true;
 
-    RightRecommendedForYou.prototype.template = '<div class="right-most-popular"><h3 class="right-most-popular__title">Recommended for you</h3>' +
-        '<ul class="right-most-popular__items u-unstyled"></ul></div></div>';
+    RightRecommendedForYou.prototype.template = '<div class="right-recommended"><h3 class="right-recommended__title">Recommended for you</h3>' +
+        '<ul class="right-recommended__items u-unstyled"></ul></div></div>';
 
     RightRecommendedForYou.prototype.fetch = function() {
         this.checkAttached();
@@ -79,7 +79,7 @@ define([
 
         if(resp && 'payload' in resp) {
             self.data = resp.payload;
-            self.render(qwery('.mpu-context'));
+            self.render(qwery('.js-right-hand-component'));
         }
     };
 
@@ -94,6 +94,5 @@ define([
     };
 
     return RightRecommendedForYou;
-
 });
 

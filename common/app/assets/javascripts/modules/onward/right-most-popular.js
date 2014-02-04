@@ -62,7 +62,7 @@ define([
             function render(resp) {
                 if(resp && 'trails' in resp) {
                     self.data = resp.trails;
-                    self.render(qwery('.mpu-context'));
+                    self.render(qwery('.js-right-hand-component'));
                 }
             }
         );
