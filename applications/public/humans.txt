@@ -54,6 +54,10 @@ User Experience Architect: Alastair Jardine
 Twitter: @aj_ux
 From: London, UK
 
+Developer: Ben James
+Twitter: @bmjames
+From: Liverpool, UK
+
 QA: Michael McNamara
 Twitter: @m_w_mcnamara
 From: Melbourne, Aus
@@ -95,3 +99,11 @@ Twitter: @chrisfinchy
 Linkedin: chrisfinch
 From: Brighton, England
 Location: London, England
+
+Developer: Max Harlow
+Twitter: @maxharlow
+From: London, UK
+
+Developer: Robert Berry
+Twitter: @yrrebjr
+From: Manchester, UK

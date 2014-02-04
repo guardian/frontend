@@ -17,18 +17,18 @@ object Config {
   = Config(id, None, displayName, None, None, Nil, None)
 }
 
-case class Collection(curated: Seq[Trail],
-                      editorsPicks: Seq[Trail],
-                      mostViewed: Seq[Trail],
-                      results: Seq[Trail],
+case class Collection(curated: Seq[Content],
+                      editorsPicks: Seq[Content],
+                      mostViewed: Seq[Content],
+                      results: Seq[Content],
                       displayName: Option[String]) extends implicits.Collections {
 
   lazy val items: Seq[Trail] = (curated ++ editorsPicks ++ mostViewed ++ results).distinctBy(_.url)
 }
 
 object Collection {
-  def apply(curated: Seq[Trail]): Collection = Collection(curated, Nil, Nil, Nil, None)
-  def apply(curated: Seq[Trail], displayName: Option[String]): Collection = Collection(curated, Nil, Nil, Nil, displayName)
+  def apply(curated: Seq[Content]): Collection = Collection(curated, Nil, Nil, Nil, None)
+  def apply(curated: Seq[Content], displayName: Option[String]): Collection = Collection(curated, Nil, Nil, Nil, displayName)
 }
 
 case class FaciaPage(

@@ -7,27 +7,31 @@
  *
  **/
 casper.test.setUp(function() {
-    casper.start(host + 'science/grrlscientist/2012/aug/07/3?view=mobile');
+    casper.start(host + 'commentisfree/2013/aug/09/comment-week-having-children-selfless?view=mobile');
     casper.options.waitTimeout = 10000;
 });
 
 /**
  *   Scenario: Top comments in Open CTA
  *     Given I am on an article with picked comments
- *     Then I can see one of them in the Open CTA box
+ *     Then I can see them in the Open CTA box
  **/
 casper.test.begin('Read a top comment in Open CTA', function(test) {
-    casper.evaluate(function() {
-        guardian.config.switches.openCta = true;
+    casper.then(function() {
+        var openCtaSwitch =  casper.evaluate(function(){
+            return guardian.config.switches.openCta;
+        });
+        this.test.assert(openCtaSwitch = true, 'Open CTA switch is turned ON');
     });
-    casper.waitForSelector('.open-cta .comment',
+
+    casper.waitForSelector('#top-comments',
         function then() {
-            test.assertElementCount('.open-cta .comment', 1);
+            test.assertElementCount('li[id^="top-comment-"].d-comment--top-level', 3, '3 Featured Comments in the DOM');
             test.done();
         },
         function timeout() {
             casper.capture(screens + 'open-cta-fail.png');
-            test.fail('Top comment not loaded in Open CTA');
+            test.fail('Top comments not loaded in Open CTA');
         });
 });
 

@@ -210,6 +210,11 @@ a, a:hover {
     background: #EEFFEE;        
 }
 
+.article:hover,
+.live-mode .article:hover {
+    background-color: #eeeeee;
+}
+
 .supporting .article {
     border-color: #CCCCCC;
     background: #CCCCCC;
@@ -241,7 +246,7 @@ a, a:hover {
 }
 
 .article_content {
-    margin: 0 130px 0 85px;
+    margin: 1px 130px 0 85px;
     line-height: 0;
 }
 
@@ -256,11 +261,11 @@ a, a:hover {
     color: #000000;
     cursor: move;
     margin: 1px 0 0 0;
+    text-decoration: none;
 }
 
 .headline:hover {
-    color: #f89406;
-    text-decoration: none;
+    color: #000000;
 }
 
 .is-empty {
@@ -308,7 +313,6 @@ div.trailtext {
     font-size: 10px;
     line-height: 14px;
     background: rgba(0,0,0,0.2);
-    z-index: 1;
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;
 }
@@ -455,9 +459,8 @@ button {
 
 .article .spark {
     position: absolute;
-    top: 3px;
-    right: 27px;
-    height: 30px;
+    top: 5px;
+    right: 28px;
 }
 
 .latest-articles .article .spark {
@@ -653,12 +656,11 @@ button {
     opacity: 0.2;
     position: absolute;
     right: 2px;
-    top: 27px;
+    top: 28px;
 }
 
 .article:hover .closed .tool--remove {
-    background: #EEEEEE;
-    opacity: 1;
+    opacity: 0.6;
 }
 
 .article .closed .tool--remove:hover {

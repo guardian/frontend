@@ -2,6 +2,8 @@ package model
 
 import common.ManifestData
 import conf.Configuration
+import play.api.templates.Html
+import java.net.URI
 
 trait MetaData extends Tags {
   def id: String
@@ -109,6 +111,7 @@ trait Elements {
 
 trait Tags {
   def tags: Seq[Tag] = Nil
+  def contributorAvatar: Option[String] = tags.flatMap(_.contributorImagePath).headOption
 
   private def tagsOfType(tagType: String): Seq[Tag] = tags.filter(_.tagType == tagType)
 

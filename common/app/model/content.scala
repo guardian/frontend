@@ -3,7 +3,7 @@ package model
 import com.gu.openplatform.contentapi.model.{Content => ApiContent}
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
-import common.{Reference, Sponsor, Sponsors}
+import common.{Sponsor, Sponsors}
 import common.{LinkCounts, LinkTo, Reference}
 import org.jsoup.Jsoup
 import collection.JavaConversions._
@@ -11,6 +11,8 @@ import views.support.{Naked, ImgSrc}
 import views.support.StripHtmlTagsAndUnescapeEntities
 import com.gu.openplatform.contentapi.model.{Content => ApiContent,Element =>ApiElement}
 import play.api.libs.json.JsValue
+import play.api.templates.Html
+import java.net.URI
 
 class Content protected (val apiContent: ApiContentWithMeta) extends Trail with MetaData {
 
@@ -287,7 +289,7 @@ object Gallery {
 
 class Interactive(content: ApiContentWithMeta) extends Content(content) {
   lazy val contentType = "Interactive"
-  lazy val body: String = delegate.safeFields("body")
+  lazy val body: Option[String] = delegate.safeFields.get("body")
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
 }

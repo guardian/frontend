@@ -141,9 +141,20 @@ define([
                 s.prop51  = mvt;
                 s.eVar51  = mvt;
 
+                var alphaTag = 'notAlpha,';
+
                 // prefix all the MVT tests with the alpha user tag if present
-                if (Cookies.get('GU_ALPHA') === "true") {
-                    var alphaTag = 'r2alpha,';
+                if (Cookies.get('GU_ALPHA') === "2") {
+                    // This tag allows us to easily segment phase one, phase two, or phase one and two.
+                    alphaTag = 'r2alph2,';
+
+                    s.prop51  = alphaTag + s.prop51;
+                    s.eVar51  = alphaTag + s.eVar51;
+
+                } else if (Cookies.get('GU_ALPHA') === "true") {
+                    // A value of true means phase one.
+                    alphaTag = 'r2alpha,';
+
                     s.prop51  = alphaTag + s.prop51;
                     s.eVar51  = alphaTag + s.eVar51;
                 }
