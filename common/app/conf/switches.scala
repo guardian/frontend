@@ -445,17 +445,11 @@ object Switches extends Collections {
     LCMortgageFeedSwitch,
     GuBookshopFeedsSwitch,
     NetworkFrontOptIn,
-<<<<<<< HEAD
     ImageServerSwitch,
-    ThirdPartyImageServiceSwitch,
-    NewImageServerSwitch,
-    FaciaToolPressSwitch
-=======
+    FaciaToolPressSwitch,
     DogpileSwitch,
     ShowAllArticleEmbedsSwitch,
-
     ImageServerSwitch
->>>>>>> master
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
