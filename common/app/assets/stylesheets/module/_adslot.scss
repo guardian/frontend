@@ -48,12 +48,14 @@
 }
 
 .ad-slot--inline {
+    width: auto;
+
     .ad-container {
         line-height: 0;
     }
 
     @include mq(tablet) {
-        width: auto;
+        width: 300px;
         height: auto;
         padding-top: $baseline;
         padding-left: $gs-gutter;
