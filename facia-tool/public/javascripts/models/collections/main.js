@@ -6,12 +6,13 @@ define([
     'utils/fetch-settings',
     'utils/query-params',
     'utils/ammended-query-str',
+    'utils/update-scrollables',
     'bindings/droppable',
     'modules/authed-ajax',
-    'models/collection',
     'models/group',
-    'models/article',
-    'models/latest-articles'
+    'models/collections/collection',
+    'models/collections/article',
+    'models/collections/latest-articles'
 ], function(
     config,
     ko,
@@ -19,23 +20,17 @@ define([
     fetchSettings,
     queryParams,
     ammendedQueryStr,
+    updateScrollables,
     droppable,
     authedAjax,
-    Collection,
     Group,
+    Collection,
     Article,
     LatestArticles
 ) {
     var prefKeyDefaultMode = 'gu.frontsTool.defaultToLiveMode';
 
     return function() {
-
-        function updateLayout() {
-            var height = $(window).height();
-            $('.scrollable').each(function() {
-                $(this).height(Math.max(100, height - $(this).offset().top) - 2);
-            });
-        }
 
         var model = {
                 config: ko.observable(),
@@ -50,7 +45,7 @@ define([
 
                 clipboard: new Group({
                     parentType: 'Clipboard',
-                    reflow: updateLayout,
+                    reflow: updateScrollables,
                     keepCopy:  true
                 }),
 
@@ -150,8 +145,8 @@ define([
 
                 ko.applyBindings(model);
 
-                updateLayout();
-                window.onresize = updateLayout;
+                updateScrollables();
+                window.onresize = updateScrollables;
 
                 startCollectionsPoller();
                 startSparksPoller();

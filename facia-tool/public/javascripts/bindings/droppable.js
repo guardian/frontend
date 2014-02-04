@@ -7,7 +7,7 @@ define([
     'utils/clean-clone',
     'modules/authed-ajax',
     'models/group',
-    'models/article',
+    'models/collections/article',
     'modules/content-api'
 ], function(
     ko,

@@ -3,7 +3,27 @@
 @admin_main("Fronts editor", env, isAuthed = true, identity) {
 
 <div style="display: none;" data-bind="visible: true">
-    <pre style="margin: 50px 0 0 0" data-bind="text: splat"></pre>
+
+    <div class="left-col">
+        <div class="title">Collections</div>
+        <div class="scrollable" data-bind="
+            template: {name: 'template_collections', foreach: collections}"></div>
+    </div>
+
+    <div class="right-col">
+        <div class="title">Fronts</div>
+        <div class="scrollable" data-bind="
+            template: {name: 'template_front', foreach: fronts}"></div>
+    </div>
+
+    <script type="text/html" id="template_collections">
+        <div data-bind="text: id"></div>
+    </script>
+
+    <script type="text/html" id="template_front">
+        <div data-bind="text: id"></div>
+    </script>
+
 </div>
 
 <script src="@routes.Assets.at("javascripts/app-config.js")"></script>

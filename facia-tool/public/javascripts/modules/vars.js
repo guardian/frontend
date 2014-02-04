@@ -14,7 +14,7 @@ define(['knockout'], function(ko) {
 
         collectionsPollMs:     10000,
         latestArticlesPollMs:  20000,
-        configSettingsPollMs:  3000,
+        configSettingsPollMs:  30000,
         cacheExpiryMs:         60000,
         sparksRefreshMs:       300000,
 

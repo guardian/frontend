@@ -7,7 +7,7 @@ define([
     'utils/populate-observables',
     'modules/authed-ajax',
     'models/group',
-    'models/article',
+    'models/collections/article',
     'modules/content-api',
     'js!humanized-time-span'
 ], function(
