@@ -17,7 +17,7 @@ define([
 
             var component = document.querySelector(".email-signup");
 
-            return (typeof(component) !== 'undefined' && component !== null);
+            return config.page.contentType === 'Article' && (typeof(component) !== 'undefined' && component !== null);
         };
         this.variants = [
             {
