@@ -522,8 +522,6 @@ $c-live: #e81818;
 }
 
 .item__media-wrapper--has-icon {
-    z-index: 9999;
-
     .item__cta {
         position: absolute;
         @include rem((
