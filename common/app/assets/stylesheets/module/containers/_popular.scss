@@ -8,11 +8,11 @@
             &:first-child {
                 min-height: 0 !important;
             }
-            &:before {
-                height: 1px;
+            &:nth-child(n+2):before {
+                height: 1px !important;
             }
-            &:nth-child(4n + 3) {
-                height: 0;
+            &:nth-child(4n):before {
+                height: 0 !important;
             }
         }
     }

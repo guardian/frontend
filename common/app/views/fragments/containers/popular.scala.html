@@ -22,7 +22,7 @@
 
             <div class="container__body container--rolled-up-hide">
                 @defining(Seq(MostPopular("Popular", "popular", collection.items.slice(0, 10)))){ popular =>
-                    @fragments.collections.popular(popular, config, style, 1, 10)
+                    @fragments.collections.popular(popular)
                 }
             </div>
 
