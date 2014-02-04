@@ -16,36 +16,35 @@ define([
 
         var container = context.querySelector(".email-signup");
 
-        if (container) {
-            this.DOM = {
-                container: container,
-                button: container.querySelector(".email-signup__link"),
-                loader: container.querySelector(".is-updating"),
-                title: container.querySelector(".email-signup__title")
-            };
+        this.DOM = {
+            container: container,
+            button: container.querySelector(".email-signup__link"),
+            loader: container.querySelector(".is-updating"),
+            title: container.querySelector(".email-signup__title")
+        };
 
-            this.emailHash = "#email-subscribe";
-            this.storageKey = "gu.emails.subsriptions";
-            this.storageData = Storage.local.get(this.storageKey) || {listIds: []};
-            this.listId = this.DOM.button.getAttribute("data-list-id");
+        this.emailHash = "#email-subscribe";
+        this.storageKey = "gu.emails.subsriptions";
+        this.storageData = Storage.local.get(this.storageKey) || {listIds: []};
+        this.listId = this.DOM.button.getAttribute("data-list-id");
 
-            for (var key in this.DOM) {
-                if (this.DOM.hasOwnProperty(key)) {
-                    this.DOM["$" + key] = bonzo(this.DOM[key]);
-                }
-            }
-
-            if (this.DOM.container && (this.DOM.container.children && this.DOM.container.children.length > 0) && !this.checkStorage(this.listId)) {
-                this.DOM.$container.removeClass("is-hidden");
-                if (!this.checkHash(window.location.hash)) {
-                    var click = function (event) {
-                        event.preventDefault();
-                        this.requestEmailSignup();
-                    };
-                    bean.on(this.DOM.button, "click", click.bind(this));
-                }
+        for (var key in this.DOM) {
+            if (this.DOM.hasOwnProperty(key)) {
+                this.DOM["$" + key] = bonzo(this.DOM[key]);
             }
         }
+
+        if (this.DOM.container && (this.DOM.container.children && this.DOM.container.children.length > 0) && !this.checkStorage(this.listId)) {
+            this.DOM.$container.removeClass("is-hidden");
+            if (!this.checkHash(window.location.hash)) {
+                var click = function (event) {
+                    event.preventDefault();
+                    this.requestEmailSignup();
+                };
+                bean.on(this.DOM.button, "click", click.bind(this));
+            }
+        }
+
     };
 
     /*

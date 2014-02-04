@@ -14,7 +14,10 @@ define([
         this.description = 'Displays email signup button on relevant article pages';
         this.canRun = function (config) {
             _config = config;
-            return true;
+
+            var component = document.querySelector(".email-signup");
+
+            return (typeof(component) !== 'undefined' && component !== null);
         };
         this.variants = [
             {
