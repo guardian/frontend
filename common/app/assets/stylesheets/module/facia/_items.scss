@@ -410,24 +410,20 @@ $c-live: #e81818;
 }
 .collection__show-more {
     border-style: none;
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     @include rounded-corners(50%);
-    color: #ffffff;
     @include fs-data(4, $size-only: true);
     position: relative;
     left: 50%;
     margin-top: $gs-baseline;
-    margin-left: -15px;
+    margin-left: -16px;
     padding: 0;
 
     .i {
         position: absolute;
-        text-indent: -9999px;
-        top: 50%;
-        left: 50%;
-        margin-top: -5px;
-        margin-left: -12px;
+        top: 0;
+        left: 0;
     }
 }
 
