@@ -117,6 +117,10 @@
     }
     .collection-wrapper:first-child .fromage {
         border-top-width: 0;
+
+        @include mq(tablet, wide) {
+            border-top-width: 2px;
+        }
     }
     .container__title {
         display: none;
