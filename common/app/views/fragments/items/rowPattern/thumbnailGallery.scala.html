@@ -21,7 +21,7 @@
             @trail.discussionId.map{ id => data-discussion-id="@id" }
             data-discussion-closed="@trail.isClosedForComments">
 
-            <div class="item__container tone-accent-border">
+            <div class="item__container">
 
                 <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border" data-link-name="article">
                     <h@if(isFirstContainer && index == 0){1}else{2} class="item__title">
@@ -33,7 +33,7 @@
                         }
                         @RemoveOuterParaHtml(trail.headline)
                     </h@if(isFirstContainer && index == 0){1}else{2}>
-                    <div class="item__media-wrapper">
+                    <div class="item__media-wrapper item__media-wrapper--has-icon gallerythumbs" data-gallery-url="@LinkTo{@trail.url}">
                         <div class="item__cta item__cta--gallery">
                             <p>Expand</p>
                             <i class="i i-camera-black-large i--default"></i>

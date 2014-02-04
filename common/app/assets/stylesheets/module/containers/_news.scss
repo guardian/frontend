@@ -101,6 +101,13 @@
     }
 }
 .container--news {
+    .container__border {
+        display: none;
+
+        @include mq(wide) {
+            display: block;
+        }
+    }
     .collection-wrapper:first-child .fromage {
         border-top-width: 0;
     }

@@ -48,6 +48,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val DogpileSwitch = Switch("Performance Switches", "dogpile",
+    "If switched on this will enable the anti-dogpile cache, which will help absorb large spikes on single pieces of content e.g. live blogs",
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
+  )
+
   val DoubleCacheTimesSwitch = Switch("Performance Switches", "double-cache-times",
     "Doubles the cache time of every endpoint. Turn on to help handle exceptional load.",
     safeState = On, sellByDate = never
@@ -191,6 +196,11 @@ object Switches extends Collections {
   )
 
   // Feature Switches
+
+  val ShowAllArticleEmbedsSwitch = Switch("Feature Switches", "show-all-embeds",
+    "If switched on then all embeds will be shown inside article bodies",
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
+  )
 
   val ReleaseMessageSwitch = Switch("Feature Switches", "release-message",
     "If this is switched on users will be messaged that they are inside the alpha/beta/whatever release",
@@ -361,26 +371,10 @@ object Switches extends Collections {
 
   // Image Switch
 
-  val ServeWebPImagesSwitch = Switch("Image Server", "serve-webp-images",
-    "If this is switched on the Image server will use the webp format when requested.",
-    safeState = On, sellByDate = new DateMidnight(2014, 2, 15)
-  )
-
   val ImageServerSwitch = Switch("Image Server", "image-server",
     "If this switch is on images will be served off i.guim.co.uk (dynamic image host).",
     safeState = On, sellByDate = never // this is a performance related switch, not a feature switch
   )
-
-  val ThirdPartyImageServiceSwitch = Switch("Image Server", "image-service",
-    "If this switch is on images will be served off ak.i.guim.co.uk (dynamic image host). Part of the CDN test. Relies on ImageServerSwitch also being on",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 7))
-
-  // TODO - once again I can only apologise for the proliferation of image server switches
-  // while I wait for the planets to align
-  val NewImageServerSwitch = Switch("Image Server", "new-image-server",
-    "If this switch is on images will be served off i.guim.co.uk using the new image server. Relies on ImageServerSwitch also being on",
-    safeState = On, sellByDate = new DateMidnight(2014, 2, 28))
-
 
   // Facia Tool Switches
 
@@ -417,7 +411,6 @@ object Switches extends Collections {
     UserzoomSwitch,
     CssFromStorageSwitch,
     ElasticSearchSwitch,
-    ServeWebPImagesSwitch,
     ArticleKeywordsSwitch,
     EditionRedirectLoggingSwitch,
     FacebookAutoSigninSwitch,
@@ -450,10 +443,10 @@ object Switches extends Collections {
     LCMortgageFeedSwitch,
     GuBookshopFeedsSwitch,
     NetworkFrontOptIn,
+    DogpileSwitch,
+    ShowAllArticleEmbedsSwitch,
 
-    ImageServerSwitch,
-    ThirdPartyImageServiceSwitch,
-    NewImageServerSwitch
+    ImageServerSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
