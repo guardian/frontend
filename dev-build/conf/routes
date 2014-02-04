@@ -150,7 +150,6 @@ GET         /commercial/money/bestbuys.json                                     
 GET         /commercial/books/bestsellers.json                                                                       controllers.commercial.BookOffers.bestsellers(format="json")
 
 # Onward journeys
-GET         /onward/popular-onward/*path.json                                                                        controllers.MostPopularOnwardController.popularOnward(path)
 GET         /onward/card/*path.json                                                                                  controllers.OnwardCardController.renderCard(path)
 GET         /onward/trail/*path.json                                                                                 controllers.OnwardCardController.renderTrail(path)
 GET         /onward/most-read.json                                                                                   controllers.MostPopularOnwardController.mostRead()

@@ -41,8 +41,7 @@ trait IndexController extends Controller with Index with Logging with Paging wit
     Cached(model.page){
       if (request.isJson)
         JsonComponent(
-          "html" -> views.html.fragments.indexBody(model),
-          "trails" -> JsArray(model.trails.map(TrailToJson(_)))
+          "html" -> views.html.fragments.indexBody(model)
         )
       else
         Ok(views.html.index(model))

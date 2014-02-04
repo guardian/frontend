@@ -139,7 +139,7 @@ define([
         }
 
         if((/mobile/).test(breakpoint)) {
-            this.createInlineAdSlots('x49', 'x49');
+            this.createInlineAdSlots('Bottom2', 'x49');
         }
     };
 
