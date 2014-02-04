@@ -11,13 +11,13 @@ sealed trait SwitchState
 case object On extends SwitchState
 case object Off extends SwitchState
 
-case class Switch( group: String, 
+case class Switch( group: String,
                    name: String,
                    description: String,
                    safeState: SwitchState,
                    sellByDate: DateMidnight
                  ) extends Switchable {
-                   
+
   val delegate = DefaultSwitch(name, description, initiallyOn = safeState == On)
 
   def isSwitchedOn: Boolean = delegate.isSwitchedOn && new DateMidnight().isBefore(sellByDate)
@@ -37,7 +37,7 @@ case class Switch( group: String,
 object Switches extends Collections {
 
   // Switch names can be letters numbers and hyphens only
-  
+
   private lazy val never = new DateMidnight(2100, 1, 1)
   private lazy val endOfQ4 = new DateMidnight(2014, 4, 1)
 
@@ -87,7 +87,7 @@ object Switches extends Collections {
   )
 
   // Commercial Tags
-  
+
   val AudienceScienceSwitch = Switch("Commercial Tags", "audience-science",
     "If this switch is on the Audience Science will be enabled.",
     safeState = Off, sellByDate = endOfQ4)
@@ -95,7 +95,7 @@ object Switches extends Collections {
   val ImrWorldwideSwitch = Switch("Commercial Tags", "imr-worldwide",
     "Enable the IMR Worldwide audience segment tracking.",
     safeState = Off, sellByDate = endOfQ4)
-  
+
   val AmaaSwitch = Switch("Commercial Tags", "amaa",
     "Enable the AMAA audience segment tracking.",
     safeState = Off, sellByDate = endOfQ4)
@@ -291,6 +291,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
+  val ABEmailSignup = Switch("A/B Tests", "ab-email-signup",
+    "If this is switched on an AB test runs to test article page email signups",
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 14)
+  )
+
   val ABGravityRecommendations = Switch("A/B Tests", "ab-gravity-recommendations",
     "Enables gravity beacon code on the site",
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 24)
@@ -298,7 +303,7 @@ object Switches extends Collections {
 
   val TagLinking = Switch("Feature Switches", "tag-linking",
     "If this is switched on articles that have no in body links will auto link to their tags where possible",
-    safeState = Off, sellByDate = endOfQ4 
+    safeState = Off, sellByDate = endOfQ4
   )
 
   // Sport Switch
@@ -319,14 +324,14 @@ object Switches extends Collections {
     "Switch that is only used while running tests. You never need to change this switch.",
     safeState = On, sellByDate = never
   )
-  
+
   val AlwaysExpiredSwitch = Switch("Unwired Test Switch", "always-expired",
     "Switch that is only used while running tests. You never need to change this switch.",
     safeState = On, new DateMidnight().minusDays(1)
   )
 
-  // Facia 
-  
+  // Facia
+
   val NetworkFrontUkAlpha = Switch("Facia", "network-front-uk-alpha",
     "If this is switched on then the uk alpha network fronts will be served if a GU_UK_ALPHA cookie has been dropped",
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 7)
@@ -422,6 +427,7 @@ object Switches extends Collections {
     IdentityFilmAwardsSwitch,
     ABAa,
     ABGravityRecommendations,
+    ABEmailSignup,
     NetworkFrontUkAlpha,
     NetworkFrontUsAlpha,
     NetworkFrontAuAlpha,
