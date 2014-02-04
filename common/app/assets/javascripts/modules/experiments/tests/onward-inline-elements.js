@@ -14,7 +14,7 @@ define([
         this.audienceOffset = 0.0;
         this.description = 'Test whether inlining elements of the story package improves page views per session.';
         this.canRun = function(config) {
-            return detect.getBreakpoint() !== 'mobile' && config.page.contentType === 'Article';
+            return detect.getBreakpoint() !== 'mobile' && config.page.contentType === 'Article' && config.page.hasStoryPackage;
         };
         this.variants = [
             {
