@@ -127,3 +127,6 @@ QA: Troy Harris
 LinkedIn: troyharris
 Twitter: @troyharrisoz
 From: Wollongong, Australia
+
+Agile Project Manager: Huma Islam
+From: London, UK
