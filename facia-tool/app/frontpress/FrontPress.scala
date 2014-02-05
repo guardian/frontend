@@ -104,38 +104,19 @@ trait FrontPress extends Logging {
       ("webUrl", content.webUrl),
       ("safeFields", content.delegate.safeFields),
       ("elements", content.elements.map(generateElement)),
-      ("linkText", content.linkText),
-      ("meta", Json.obj
-        (
-          ("headline", content.headline),
-          ("trailText", content.trailText),
-          ("group", content.group),
-          ("imageAdjust", content.imageAdjust),
-          ("isBreaking", content.isBreaking),
-          ("supporting", content.supporting.map(generateInnerTrailJson))
-        )
-        )
+      ("meta", generateItemMeta(content))
     )
 
-  private def generateInnerTrailJson(trail: Trail): JsValue =
+  private def generateInnerTrailJson(content: Content): JsValue =
     Json.obj(
-      ("webTitle", trail.headline),
-      ("webPublicationDate", trail.webPublicationDate),
-      ("sectionName", trail.sectionName),
-      ("sectionId", trail.section),
-      ("id", trail.url),
-      ("webUrl", trail.webUrl),
-      ("trailText", trail.trailText),
-      ("linkText", trail.linkText),
-      ("meta", Json.obj
-        (
-          ("headline", trail.headline),
-          ("trailText", trail.trailText),
-          ("group", trail.group),
-          ("imageAdjust", trail.imageAdjust),
-          ("isBreaking", trail.isBreaking)
-        )
-      )
+      ("webPublicationDate", content.webPublicationDate),
+      ("sectionName", content.sectionName),
+      ("sectionId", content.section),
+      ("id", content.url),
+      ("webUrl", content.webUrl),
+      ("trailText", content.trailText),
+      ("safeFields", content.delegate.safeFields),
+      ("meta", generateItemMeta(content))
     )
 
   private def generateElement(element: Element): JsValue =
@@ -158,6 +139,18 @@ trait FrontPress extends Logging {
         //("credit", a.typeData.get("credit")),
         //("caption", a.typeData.get("caption")),
         ("width", asset.typeData.get("width"))
+      )
+    )
+
+  private def generateItemMeta(content: Content): JsValue =
+    Json.toJson(
+      ItemMeta(
+        headline =    content.apiContent.metaData.get("headline"),
+        trailText =   content.apiContent.metaData.get("trailText"),
+        group =       content.apiContent.metaData.get("group"),
+        imageAdjust = content.apiContent.metaData.get("imageAdjust"),
+        isBreaking =  content.apiContent.metaData.get("isBreaking").flatMap(_.asOpt[Boolean]),
+        supporting =  Option(content.supporting.map(generateInnerTrailJson)).filter(_.nonEmpty)
       )
     )
 
