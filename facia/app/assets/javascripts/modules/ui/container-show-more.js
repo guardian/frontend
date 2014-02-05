@@ -32,8 +32,10 @@ define([
 
         this._$button = bonzo(bonzo.create(
             '<button class="collection__show-more tone-background" data-link-name="Show more | 0">' +
-                '<span class="i i-plus-white-mask show-more__hover--hide"></span>' +
-                '<span class="i i-plus-white show-more__hover--show"></span>' +
+                '<span class="u-hover">' +
+                    '<span class="i i-plus-white-mask u-hover--hide"></span>' +
+                    '<span class="i i-plus-white u-hover--show"></span>' +
+                '</span>' +
                 '<span class="u-h">Show more</span>' +
             '</button>'
         ));
@@ -41,17 +43,17 @@ define([
         this._renderButton = function() {
             this._$button.addClass('tone-' + (this._$container.attr('data-tone') || 'news'));
             this._$appendButtonTo.append(this._$button);
-            bean.on(this._$button[0], 'click', this.showMore.bind(this));
+            var that = this;
+            bean.on(this._$button[0], 'click touchstart', function(e) {
+                e.preventDefault();
+                that.showMore();
+            });
+            // bean.on(this._$button[0], 'click', this.showMore.bind(this));
             mediator.emit('modules:containerShowMore:renderButton', this);
         };
 
         this._removeButton = function() {
-            // listen to the clickstream, as happens later, before removing
-            mediator.on('module:clickstream:click', function(clickSpec) {
-                if (qwery(clickSpec.target)[0] === this._$button[0]) {
-                    this._$button.remove();
-                }
-            }.bind(this));
+            this._$button.remove();
         };
 
         this._incrementButtonCounter = function() {
