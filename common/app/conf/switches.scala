@@ -154,9 +154,9 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 15)
   )
 
-  val OphanMultiEventSwitch = Switch("Analytics", "ophan-multi-event",
-    "Enables the new Ophan tracking javascript which support multiple events per page",
-    safeState = On, endOfQ4
+  val OphanSwitch = Switch("Analytics", "ophan",
+    "Enables the new Ophan tracking javascript",
+    safeState = On, never
   )
 
   val OmnitureVerificationSwitch = Switch("Analytics", "omniture-verification",
@@ -428,7 +428,7 @@ object Switches extends Collections {
     ToolSparklines,
     TagLinking,
     SponsoredContentSwitch,
-    OphanMultiEventSwitch,
+    OphanSwitch,
     ContentApiPutSwitch,
     AmaaSwitch,
     ImrWorldwideSwitch,

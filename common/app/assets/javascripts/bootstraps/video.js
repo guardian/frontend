@@ -1,36 +1,16 @@
 define([
     "common/utils/mediator",
     "common/utils/detect",
-    "common/utils/lazy-load-css",
-    "common/modules/analytics/video"
+    "common/utils/lazy-load-css"
 ], function(
     mediator,
     detect,
-    lazyLoadCss,
-    Videostream
+    lazyLoadCss
 ) {
-
-    var modules = {
-
-        initAnalytics: function () {
-            mediator.on('video:ads:finished', function(config, context) {
-                var v = new Videostream({
-                    id: config.page.pageId,
-                    el: context.querySelector('.player video'),
-                    ophanUrl: config.page.ophanUrl
-                });
-
-                v.init();
-            });
-        }
-    };
-
-
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
             lazyLoadCss('video', config);
-            modules.initAnalytics();
         }
         mediator.emit("page:video:ready", config, context);
     };

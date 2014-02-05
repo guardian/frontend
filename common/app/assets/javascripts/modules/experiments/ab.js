@@ -24,7 +24,7 @@ define([
             new GravityRecommendations(),
             new EmailSignup()
        ],
-        participationsKey = 'gu.ab.participations';
+       participationsKey = 'gu.ab.participations';
 
     function getParticipations() {
         return store.local.get(participationsKey) || {};
