@@ -107,3 +107,7 @@ From: London, UK
 Developer: Robert Berry
 Twitter: @yrrebjr
 From: Manchester, UK
+
+Developer (Tech Lead): Jenny Sivapalan
+Twitter: @jenny_sivapalan
+From: London, UK
