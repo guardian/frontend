@@ -18,14 +18,14 @@ function (
             defer.resolve();
         } else {
             fetchData([item.id])
-            .done(function(result){
-                if(result.length !== 1) {
+            .done(function(result) {
+                if(result.length === 1 && result[0].id) {
+                    cache.put('contentApi', result[0].id, result);
+                    populate(result[0], item);
+                    defer.resolve();
+                } else {
                     defer.reject();
                 }
-                result = result[0];
-                cache.put('contentApi', result.id, result);
-                populate(result, item);
-                defer.resolve();
             }).fail(function(){
                 defer.reject();
             });
