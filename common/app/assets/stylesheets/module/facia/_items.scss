@@ -408,33 +408,38 @@ $c-live: #e81818;
         color: #9c9c9c; //Darkest we can go to pass accessiblity
     }
 }
+$show-more-icon: (
+    width: 32px,
+    height: 32px,
+    space-between: 2px // to avoid overlaps/bleeding on zoom
+);
 .collection__show-more {
     border-style: none;
-    width: 32px;
-    height: 32px;
+    width: map-get($show-more-icon, width);
+    height: map-get($show-more-icon, height);
     @include rounded-corners(50%);
     position: relative;
     left: 50%;
     margin-top: $gs-baseline;
-    margin-left: -16px;
+    margin-left: -1 * map-get($show-more-icon, width) / 2;
     padding: 0;
     overflow: hidden;
 
     &:hover,
     &:focus {
-        .collection__show-more--icon {
-            margin-top: -34px;
+        .collection__show-more__icon {
+            margin-top: -1 * (map-get($show-more-icon, height) + map-get($show-more-icon, space-between));
         }
     }
     .i {
         display: block;
-        margin-bottom: 2px;
+        margin-bottom: map-get($show-more-icon, space-between); // a bit of space between icons to avoid 
     }
 }
-.collection__show-more--icon {
+.collection__show-more__icon {
     display: block;
-    height: 68px;
-    width: 32px;
+    height: (map-get($show-more-icon, height) + map-get($show-more-icon, space-between)) * 2;
+    width: map-get($show-more-icon, width);
 }
 
 

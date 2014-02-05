@@ -30,7 +30,7 @@ define([
 
         this._$button = bonzo(bonzo.create(
             '<button class="collection__show-more tone-background" data-link-name="' + buttonText + ' | 0">' +
-                '<span class="collection__show-more--icon">' +
+                '<span class="collection__show-more__icon">' +
                     '<span class="i i-plus-white-mask"></span>' +
                     '<span class="i i-plus-white"></span>' +
                 '</span>' +
