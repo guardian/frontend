@@ -92,6 +92,18 @@ module.exports = function (grunt) {
                 options: {
                     name: 'bootstraps/admin',
                     out: staticTargetDir + 'javascripts/bootstraps/admin.js',
+                    shim: {
+                        postscribe: {
+                            exports: 'postscribe'
+                        },
+                        imager: {
+                            deps: ['common/components/imager.js/src/imager'],
+                            exports: 'Imager'
+                        },
+                        omniture: {
+                            exports: 's'
+                        }
+                    },
                     wrap: {
                         startFile: 'common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js'
                     }
