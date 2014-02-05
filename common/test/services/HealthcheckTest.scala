@@ -9,6 +9,7 @@ import scala.concurrent.Await
 
 abstract class HealthcheckTest(warmupUrl: String) extends FlatSpec with Matchers with UsesElasticSearch {
 
+  // you have to actually hit a url (in dev/ test mode) before the management plugin will start, hence warmup url
   "Healthchecks" should "pass" in HtmlWithManagement(warmupUrl){ browser =>
     Await.result(WS.url("http://localhost:18080/management/healthcheck").get(), 10.seconds).status should be (200)
   }
