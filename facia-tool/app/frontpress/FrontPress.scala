@@ -97,7 +97,6 @@ trait FrontPress extends Logging {
 
   private def generateTrailJson(content: Content): JsValue =
     Json.obj(
-      ("webTitle", content.webTitle),
       ("webPublicationDate", content.webPublicationDate),
       ("sectionName", content.sectionName),
       ("sectionId", content.section),
