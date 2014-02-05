@@ -111,3 +111,6 @@ From: Manchester, UK
 Developer (Tech Lead): Jenny Sivapalan
 Twitter: @jenny_sivapalan
 From: London, UK
+
+Developer: Mariot Chauvin
+Twitter: @mchv
