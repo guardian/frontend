@@ -586,7 +586,10 @@ module.exports = function (grunt) {
             'static': [staticDir],
             staticTarget: [staticTargetDir],
             js: [staticTargetDir + 'javascripts', staticRequireDir],
-            css: [staticTargetDir + 'stylesheets'],
+            css: [
+                staticTargetDir + 'stylesheets',
+                '.sass-cache'
+            ],
             images: [staticTargetDir + 'images'],
             flash: [staticTargetDir + 'flash'],
             fonts: [staticTargetDir + 'fonts'],
