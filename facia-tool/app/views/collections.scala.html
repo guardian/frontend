@@ -189,10 +189,10 @@
             }">
 
             <a target="article" data-bind="
-                attr: {href: 'http://www.theguardian.com/' + props.id()},
+                attr: {href: 'http://www.theguardian.com/' + id},
                 click: open">
                 <img class="thumb" draggable="false" data-bind="
-                    attr: {src: fields.thumbnail, title: props.id}"/>
+                    attr: {src: fields.thumbnail, title: id}"/>
             </a>
 
             <div class="article__date" data-bind="text: humanDate"></div>
@@ -260,7 +260,7 @@
             <div class="closed" data-bind="if: !state.open()">
                 <a class="spark" target="ophan" title="Dark blue: Guardian. Green: Google. Light blue: Other." data-bind="
                     visible: state.sparkUrl,
-                    attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + props.id()}">
+                    attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + id}">
                     <img data-bind="attr: {src: state.sparkUrl}" />
                 </a>
 
@@ -280,14 +280,14 @@
                 <div class="article_content is-empty" data-bind="if: state.isEmpty">
                     This content is unavailable, deleted, or has a new URL
                     <a target="article" class="is-empty__url" data-bind="
-                        attr: {href: props.id},
-                        text: props.id"></a>
+                        attr: {href: id},
+                        text: id"></a>
                 </div>
 
                 <div class="article_content" data-bind="if: !state.isEmpty()">
                     <a class="headline" target="article" data-bind="
                         text: meta.headline() || fields.headline(),
-                        attr: {href: props.id()},
+                        attr: {href: id},
                         click: open"></a>
 
                     <!-- ko if: meta.supporting && meta.supporting.items().length -->
@@ -299,7 +299,7 @@
                     <!-- /ko -->
 
                     <div class="trailtext" data-bind="
-                        attr: {href: props.id()},
+                        attr: {href: id},
                         html: meta.trailText() || fields.trailText()"></div>
 
                 </div>

@@ -10,14 +10,14 @@ function (
     cache
 ){
     function validateItem (item) {
-        var data = cache.get('contentApi', item.props.id()),
+        var data = cache.get('contentApi', item.id),
             defer = $.Deferred();
 
         if(data) {
             populate(data, item);
             defer.resolve();
         } else {
-            fetchData([item.props.id()])
+            fetchData([item.id])
             .done(function(result){
                 if(result.length !== 1) {
                     defer.reject();
@@ -37,11 +37,11 @@ function (
         var ids = [];
 
         items.forEach(function(item){
-            var data = cache.get('contentApi', item.props.id());
+            var data = cache.get('contentApi', item.id);
             if(data) {
                 populate(data, item);
             } else {
-                ids.push(item.props.id());
+                ids.push(item.id);
             }
         });
 
@@ -50,7 +50,7 @@ function (
             results.forEach(function(article){
                 cache.put('contentApi', article.id, article);
                 _.filter(items, function(item){
-                    return item.props.id() === article.id;
+                    return item.id === article.id;
                 }).forEach(function(item){
                     populate(article, item);
                 });

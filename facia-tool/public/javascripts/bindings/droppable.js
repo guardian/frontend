@@ -97,7 +97,7 @@ define([
                         item.state.underDrag(false);
                     });
 
-                    // If the item isn't dropped onto an article, asssume it's to be appended *after* the other items in this group,
+                    // If the item isn't dropped onto an item, assume it's to be appended *after* the other items in this group,
                     if (targetItem.constructor === Group) {
                         targetItem = _.last(targetList.items());
                         if (targetItem) {
@@ -115,7 +115,7 @@ define([
                         }
                     }
 
-                    position = targetItem && targetItem.props ? targetItem.props.id() : undefined;
+                    position = targetItem && targetItem.id ? targetItem.id : undefined;
 
                     _.each(parseQueryParams(id), function(url){
                         if (url && url.match(/^http:\/\/www.theguardian.com/)) {
@@ -231,7 +231,7 @@ define([
 
     function removeMatchingItems(list, id) {
         list.items.remove(function(item) {
-            return item.props.id() === id;
+            return item.id === id;
         });
     }
 

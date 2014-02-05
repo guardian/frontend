@@ -125,7 +125,7 @@ define([
         authedAjax.updateCollections({
             remove: {
                 collection: this,
-                item:       item.props.id(),
+                item:       item.id,
                 live:       vars.state.liveMode(),
                 draft:     !vars.state.liveMode()
             }
