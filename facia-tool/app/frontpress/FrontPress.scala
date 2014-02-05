@@ -12,6 +12,38 @@ import com.gu.openplatform.contentapi.model.Asset
 
 trait FrontPress extends Logging {
 
+  //The ONLY reason I am using case classes with a Writes instance is to
+  //never have {"field": null} in the json, which inflates it
+  //E.g. Get out of this: Json.obj(("field", None))
+  case class CollectionJson
+  (
+    apiQuery:     Option[String],
+    displayName:  Option[String],
+    tone:         Option[String],
+    curated:      Seq[JsValue],
+    editorsPicks: Seq[JsValue],
+    results:      Seq[JsValue],
+    lastModified: Option[String],
+    updatedBy:    Option[String],
+    updatedEmail: Option[String],
+    groups:       Option[Seq[String]],
+    roleName:     Option[String],
+    href:         Option[String]
+  )
+  case class ItemMeta
+  (
+    headline:     Option[JsValue],
+    trailText:    Option[JsValue],
+    group:        Option[JsValue],
+    imageAdjust:  Option[JsValue],
+    isBreaking:   Option[Boolean],
+    supporting:   Option[Seq[JsValue]]
+  )
+
+  implicit val collectionJsonWrites = Json.writes[CollectionJson]
+  implicit val itemMetaJsonWrites = Json.writes[ItemMeta]
+
+
   import play.api.Play.current
   private lazy implicit val frontPressContext = Akka.system.dispatchers.lookup("play.akka.actor.front-press")
 
