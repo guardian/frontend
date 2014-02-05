@@ -120,7 +120,6 @@
             .item__title {
                 @include rem((
                     min-height: nth(nth($fs-headlines, 1), 2) + 1,
-                    padding-top: $gs-baseline/6,
                     padding-bottom: ($gs-baseline*5)/3
                 ));
                 @include mq(tablet) {
@@ -143,8 +142,6 @@
             }
         }
         @include mq(tablet) {
-            @include rem((margin-bottom: $gs-baseline*2));
-
             .item--has-image .item__media-wrapper,
             .item--has-image .item__image-container,
             .item--has-no-image .item__standfirst {
@@ -155,6 +152,11 @@
             .item__title {
                 @include fs-headline(2, true);
             }
+        }
+    }
+    @include mq(tablet) {
+        .linkslist-container {
+            @include rem((margin-top: $gs-baseline*2));
         }
     }
     .linkslist-container:before {
