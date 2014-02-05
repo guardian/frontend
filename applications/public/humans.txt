@@ -119,3 +119,11 @@ Developer: Nicolas Long
 Twitter: @room271
 Website: http://room271.net
 From: London, UK
+
+Developer: Justin Pinner
+Twitter: @_JustinPinner
+
+QA: Troy Harris
+LinkedIn: troyharris
+Twitter: @troyharrisoz
+From: Wollongong, Australia
