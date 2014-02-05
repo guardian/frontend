@@ -73,18 +73,3 @@
     height: 250px;
     overflow: hidden;
 }
-
-
-/**
- * Ads in containers / row patterns
- */
-
-.container {
-    .ad-slot {
-        padding: 0;
-        margin: 0 auto;
-    }
-}
-.l-row__item--mpu-300 {
-    min-width: gs-span(4) + $gs-gutter;
-}

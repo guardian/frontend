@@ -154,12 +154,15 @@
             }
         }
     }
-    @include mq(tablet) {
-        .linkslist-container {
+    .linkslist-container {
+        @include rem((margin-top: $gs-baseline));
+
+        @include mq(tablet) {
             @include rem((margin-top: $gs-baseline*2));
         }
-    }
-    .linkslist-container:before {
-        background: $c-featureAccent; // Change color of border on top of the links list container
+
+        &:before {
+            background: $c-featureAccent; // Change color of border on top of the links list container
+        }
     }
 }
