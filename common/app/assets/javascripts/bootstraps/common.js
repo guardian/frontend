@@ -26,6 +26,7 @@ define([
     'common/modules/ui/relativedates',
     'common/modules/analytics/clickstream',
     'common/modules/analytics/omniture',
+    'common/modules/analytics/scrollDepth',
     'common/modules/adverts/adverts',
     'common/utils/cookies',
     'common/modules/analytics/omnitureMedia',
@@ -69,6 +70,7 @@ define([
     RelativeDates,
     Clickstream,
     Omniture,
+    ScrollDepth,
     Adverts,
     Cookies,
     OmnitureMedia,
@@ -236,6 +238,9 @@ define([
             }
 
             if (config.switches.ophanMultiEvent) {
+
+                var sp = new ScrollDepth({});
+
                 require('ophan/ng', function (ophanMultiEvent) {
                     ophanMultiEvent.record({'ab': ab.getParticipations()});
                 });
