@@ -1,8 +1,12 @@
 /*global guardian */
 define([
-    'common/utils/detect'
+    'common/utils/detect',
+    'common/utils/mediator',
+    'common/modules/onward/right-hand-component-factory'
 ], function (
-    detect
+    detect,
+    mediator,
+    RightHandComponent
     ) {
 
     var GravityRecommendations = function () {
@@ -10,9 +14,9 @@ define([
         var self = this;
 
         this.id = 'GravityRecommendations';
-        this.expiry = '2014-02-08';
+        this.expiry = '2014-02-18';
         this.audience = 0.2;
-        this.offset = 0.8;
+        this.audienceOffset = 0.8;
         this.description = 'Dropping Gravity\'s beacon javascript on the site';
         this.canRun = function(config) {
             return true;
@@ -27,6 +31,7 @@ define([
             {
                 id: 'show-gravity-recommendations',
                 test: function(context, config) {
+                    RightHandComponent.setRecommenedForYou();
                     require(['js!gravity'], function(){});
                 }
             }

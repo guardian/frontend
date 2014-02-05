@@ -7,14 +7,12 @@ define([
     "common/modules/live/filter",
     "common/modules/live/summary",
     "common/modules/sport/football/matchnav",
-    "common/modules/analytics/reading",
     "common/modules/discussion/loader",
     "common/modules/sport/cricket",
     "common/modules/ui/notification-counter",
     "common/modules/experiments/left-hand-card",
     "common/modules/open/cta",
-    "common/modules/commercial/loader",
-    "common/modules/onward/right-most-popular"
+    "common/modules/commercial/loader"
 ], function (
     common,
     mediator,
@@ -24,14 +22,12 @@ define([
     LiveFilter,
     LiveSummary,
     MatchNav,
-    Reading,
     DiscussionLoader,
     Cricket,
     NotificationCounter,
     LeftHandCard,
     OpenCta,
-    CommercialLoader,
-    RightMostPopular
+    CommercialLoader
 ) {
 
     var modules = {
@@ -140,12 +136,6 @@ define([
                     }
                 }
             });
-        },
-
-        initRightMostPopular : function(config) {
-            if(config.switches.rightHandMostPopular) {
-                var r = new RightMostPopular(mediator, { type: 'image', maxTrails: 5 });
-            }
         }
     };
 
@@ -154,7 +144,6 @@ define([
             this.initialised = true;
             modules.matchNav();
             modules.initLiveBlogging();
-            modules.initRightMostPopular(config);
             modules.initDiscussion();
             modules.initCricket();
             modules.externalLinksCards();

@@ -8,7 +8,6 @@ define([
 
     function ScrollDepth(config) {
         this.config = extend(this.config, config);
-        this.start = new Date().getTime();
 
         this.init();
     }
@@ -16,14 +15,19 @@ define([
     ScrollDepth.prototype.config = {
         changeThreshold :10,
         isContent: false,
+        pageEl: document.body,
         contentEl: document.getElementById('article')
     };
 
     ScrollDepth.prototype.data = {
-        pageDepth: 0,
-        timeOnPage: 0,
-        contentDepth: 0,
-        timeOnContent: 0
+        page: {
+            start: new Date().getTime(),
+            depth: 0,
+            duration: 0
+        },
+        content: {
+            depth: 0
+        }
     };
 
     ScrollDepth.prototype.timeSince = function(time) {
@@ -50,23 +54,22 @@ define([
         return rect.top < (window.innerHeight || document.body.clientHeight) && rect.left < (window.innerWidth || document.body.clientWidth);
     };
 
-    ScrollDepth.prototype.setData = function(currentDepth) {
-        this.data.pageDepth = currentDepth;
-        this.data.timeOnPage = this.timeSince(this.start);
-        if(this.config.isContent && this.isInViewport(this.config.contentEl)) {
-            if(this.data.timeOnContent === 0) {
-                this.data.timeOnContent = new Date().getTime();
+    ScrollDepth.prototype.setData = function(type) {
+        var currentDepth = this.getPercentageInViewPort(this.config[type + 'El']);
+        if((currentDepth - this.data[type].depth) > this.config.changeThreshold) {
+            this.data[type].depth = currentDepth;
+            if(typeof this.data[type].duration === "number") {
+                this.data[type].duration = this.timeSince(this.data[type].start);
             }
-
-            this.timeOnContent = this.timeSince(this.data.timeOnContent);
-            this.contentDepth = this.getPercentageInViewPort(this.config.contentEl);
+            return true;
+        } else {
+            return false;
         }
     };
 
     ScrollDepth.prototype.hasDataChanged = function() {
-        var currentDepth = this.getPercentageInViewPort(document.body);
-        if((currentDepth - this.data.pageDepth) > this.config.changeThreshold) {
-            this.setData(currentDepth);
+        var page = this.setData('page'), content = this.setData('content');
+        if(page || content) {
             this.log();
         }
     };
@@ -80,7 +83,7 @@ define([
     };
 
     ScrollDepth.prototype.log = function() {
-
+        mediator.emit('scrolldepth:data', this.data);
     };
 
     ScrollDepth.prototype.init = function() {

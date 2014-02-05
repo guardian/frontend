@@ -154,9 +154,9 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 15)
   )
 
-  val OphanMultiEventSwitch = Switch("Analytics", "ophan-multi-event",
-    "Enables the new Ophan tracking javascript which support multiple events per page",
-    safeState = On, endOfQ4
+  val OphanSwitch = Switch("Analytics", "ophan",
+    "Enables the new Ophan tracking javascript",
+    safeState = On, never
   )
 
   val OmnitureVerificationSwitch = Switch("Analytics", "omniture-verification",
@@ -199,6 +199,11 @@ object Switches extends Collections {
 
   val ShowAllArticleEmbedsSwitch = Switch("Feature Switches", "show-all-embeds",
     "If switched on then all embeds will be shown inside article bodies",
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
+  )
+  
+  val ParagraphIndentsSwitch = Switch("Feature Switches", "paragraph-indents",
+    "If switched on whitespace between paragraphs will be reduced.",
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
   )
 
@@ -344,17 +349,17 @@ object Switches extends Collections {
 
   val NetworkFrontUkAlpha = Switch("Facia", "network-front-uk-alpha",
     "If this is switched on then the uk alpha network fronts will be served if a GU_UK_ALPHA cookie has been dropped",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 7)
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 13)
   )
 
   val NetworkFrontUsAlpha = Switch("Facia", "network-front-us-alpha",
     "If this is switched on then the us alpha network fronts will be served if a GU_US_ALPHA cookie has been dropped",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 7)
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 13)
   )
 
   val NetworkFrontAuAlpha = Switch("Facia", "network-front-au-alpha",
     "If this is switched on then the au alpha network fronts will be served if a GU_AU_ALPHA cookie has been dropped",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 7)
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 13)
   )
 
   // Facia Tool
@@ -428,7 +433,7 @@ object Switches extends Collections {
     ToolSparklines,
     TagLinking,
     SponsoredContentSwitch,
-    OphanMultiEventSwitch,
+    OphanSwitch,
     ContentApiPutSwitch,
     AmaaSwitch,
     ImrWorldwideSwitch,
@@ -445,7 +450,7 @@ object Switches extends Collections {
     NetworkFrontOptIn,
     DogpileSwitch,
     ShowAllArticleEmbedsSwitch,
-
+    ParagraphIndentsSwitch,
     ImageServerSwitch
   )
 

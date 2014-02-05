@@ -1,4 +1,4 @@
-@(popular: Seq[model.MostPopular], visibleTrails: Int)(implicit request: RequestHeader)
+@(popular: Seq[model.MostPopular])(implicit request: RequestHeader)
 
 @defining(popular.size > 1){ isTabbed =>
 
@@ -20,18 +20,17 @@
 
         @popular.zipWithRowInfo.map{ case (section, info) =>
             <div id="tabs-popular-@info.rowNum"
-                class="@if(isTabbed){tabs__pane @if(!info.isFirst){js-hidden}} headline-list u-cf"
-                @if(isTabbed){
-                    role="tabpanel"
-                    aria-labelledby="tabs-popular-@info.rowNum-tab"
-                }
-                data-link-name="@section.heading"
-                data-link-context="most-read/@section.section">
+                 class="@if(isTabbed){tabs__pane @if(!info.isFirst){js-hidden}} headline-list u-cf"
+                 @if(isTabbed){
+                     role="tabpanel"
+                     aria-labelledby="tabs-popular-@info.rowNum-tab"
+                 }
+                 data-link-name="@section.heading"
+                 data-link-context="most-read/@section.section">
 
                 <ul class="unstyled headline-list headline-list--large headline-column">
                     @section.trails.zipWithRowInfo.map{ case (trail, info) =>
                         <li class="headline-list__item headline-column__item">
-
                             <a href="@LinkTo{@trail.url}" class="headline-list__link" data-link-name="@info.rowNum | text">
                                 <span class="headline-list__count">@info.rowNum</span>
                                 <h4 class="headline-list__body">
@@ -57,4 +56,5 @@
         }
 
     </div>
+
 }
