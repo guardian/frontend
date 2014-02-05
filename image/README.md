@@ -15,22 +15,6 @@ Client -> i.guim.co.uk (CDN) -> Image Server ELB (AWS) -> Play app -> static.gui
 
 The source JPG or PNG is currently uploaded to S3 by R2.
 
-# Design decisions
-
-This explains the rationale for some of the implementation details of the image server.
-
-- The [im4java](im4java.sourceforge.net) library (ImageMagick for Java) produces slightly better results, albeit a few percent
-  larger, than the pure Java library we used ([Scalr](https://github.com/thebuzzmedia/imgscalr)).
-- im4java also provides better support for modern web formats like progressive JPG encoding and WebP (presently, WebP is unsupported by ImageMagick on ubuntu 12.04, 1/10/13).
-- GraphicsMagick is better supported by CentOS, so we used that over ImageMagick which didn't install cleanly from the standard EPEL repo.
-- The im4java library pipes out to the (blocking) GraphicsMagick command line tool (called 'gm').
-- We do not write to disk during the image transform. The origin image is represented in the response body of a Play request and piped
-  in to GraphicsMagick via STDIN. Likewise, post-transform, GraphicsMagick sends the output to STDOUT, which is read by im4java and sent back by Play
-  to the CDN in the response body. This, we assume, is better than lots of disk I/O.
-- Image processing is slightly more processor and memory intensive than a standard web GET request so we use large EC2 instances.
-- GraphicsMagick strips out all the meta-data (EXIF, IPTC) from the source images. If someone wants to view this meta-data it's still available on the
-  static host. (Legal do have some need for this).
-
 ## Profiles
 
 We made a decision not to include the dimensions of the images and other transform instructions in the URL, Eg.
@@ -63,5 +47,4 @@ This is for several reasons,
   probably need hooking up to that.
 - Probably the whole organisation would benefit from this service, so at some point this might be split out from the frontend project, or forked.
 - With the move to Varnish (and greater control over our cache logic) we can experiment with different image formats via the Accept header.
-- GraphicsMagick has no support for WebP, so we need to graft the scala/java implementation on to the image server.
 

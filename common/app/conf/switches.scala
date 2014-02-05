@@ -11,13 +11,13 @@ sealed trait SwitchState
 case object On extends SwitchState
 case object Off extends SwitchState
 
-case class Switch( group: String, 
+case class Switch( group: String,
                    name: String,
                    description: String,
                    safeState: SwitchState,
                    sellByDate: DateMidnight
                  ) extends Switchable {
-                   
+
   val delegate = DefaultSwitch(name, description, initiallyOn = safeState == On)
 
   def isSwitchedOn: Boolean = delegate.isSwitchedOn && new DateMidnight().isBefore(sellByDate)
@@ -37,7 +37,7 @@ case class Switch( group: String,
 object Switches extends Collections {
 
   // Switch names can be letters numbers and hyphens only
-  
+
   private lazy val never = new DateMidnight(2100, 1, 1)
   private lazy val endOfQ4 = new DateMidnight(2014, 4, 1)
 
@@ -46,6 +46,11 @@ object Switches extends Collections {
   val AutoRefreshSwitch = Switch("Performance Switches", "auto-refresh",
     "Enables auto refresh in pages such as live blogs and live scores. Turn off to help handle exceptional load.",
     safeState = Off, sellByDate = never
+  )
+
+  val DogpileSwitch = Switch("Performance Switches", "dogpile",
+    "If switched on this will enable the anti-dogpile cache, which will help absorb large spikes on single pieces of content e.g. live blogs",
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
   )
 
   val DoubleCacheTimesSwitch = Switch("Performance Switches", "double-cache-times",
@@ -87,7 +92,7 @@ object Switches extends Collections {
   )
 
   // Commercial Tags
-  
+
   val AudienceScienceSwitch = Switch("Commercial Tags", "audience-science",
     "If this switch is on the Audience Science will be enabled.",
     safeState = Off, sellByDate = endOfQ4)
@@ -95,7 +100,7 @@ object Switches extends Collections {
   val ImrWorldwideSwitch = Switch("Commercial Tags", "imr-worldwide",
     "Enable the IMR Worldwide audience segment tracking.",
     safeState = Off, sellByDate = endOfQ4)
-  
+
   val AmaaSwitch = Switch("Commercial Tags", "amaa",
     "Enable the AMAA audience segment tracking.",
     safeState = Off, sellByDate = endOfQ4)
@@ -149,9 +154,9 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 15)
   )
 
-  val OphanMultiEventSwitch = Switch("Analytics", "ophan-multi-event",
-    "Enables the new Ophan tracking javascript which support multiple events per page",
-    safeState = On, endOfQ4
+  val OphanSwitch = Switch("Analytics", "ophan",
+    "Enables the new Ophan tracking javascript",
+    safeState = On, never
   )
 
   val OmnitureVerificationSwitch = Switch("Analytics", "omniture-verification",
@@ -191,6 +196,16 @@ object Switches extends Collections {
   )
 
   // Feature Switches
+
+  val ShowAllArticleEmbedsSwitch = Switch("Feature Switches", "show-all-embeds",
+    "If switched on then all embeds will be shown inside article bodies",
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
+  )
+  
+  val ParagraphIndentsSwitch = Switch("Feature Switches", "paragraph-indents",
+    "If switched on whitespace between paragraphs will be reduced.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
+  )
 
   val ReleaseMessageSwitch = Switch("Feature Switches", "release-message",
     "If this is switched on users will be messaged that they are inside the alpha/beta/whatever release",
@@ -291,6 +306,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
+  val ABEmailSignup = Switch("A/B Tests", "ab-email-signup",
+    "If this is switched on an AB test runs to test article page email signups",
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 14)
+  )
+
   val ABGravityRecommendations = Switch("A/B Tests", "ab-gravity-recommendations",
     "Enables gravity beacon code on the site",
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 24)
@@ -298,7 +318,7 @@ object Switches extends Collections {
 
   val TagLinking = Switch("Feature Switches", "tag-linking",
     "If this is switched on articles that have no in body links will auto link to their tags where possible",
-    safeState = Off, sellByDate = endOfQ4 
+    safeState = Off, sellByDate = endOfQ4
   )
 
   // Sport Switch
@@ -319,27 +339,27 @@ object Switches extends Collections {
     "Switch that is only used while running tests. You never need to change this switch.",
     safeState = On, sellByDate = never
   )
-  
+
   val AlwaysExpiredSwitch = Switch("Unwired Test Switch", "always-expired",
     "Switch that is only used while running tests. You never need to change this switch.",
     safeState = On, new DateMidnight().minusDays(1)
   )
 
-  // Facia 
-  
+  // Facia
+
   val NetworkFrontUkAlpha = Switch("Facia", "network-front-uk-alpha",
     "If this is switched on then the uk alpha network fronts will be served if a GU_UK_ALPHA cookie has been dropped",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 7)
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 13)
   )
 
   val NetworkFrontUsAlpha = Switch("Facia", "network-front-us-alpha",
     "If this is switched on then the us alpha network fronts will be served if a GU_US_ALPHA cookie has been dropped",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 7)
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 13)
   )
 
   val NetworkFrontAuAlpha = Switch("Facia", "network-front-au-alpha",
     "If this is switched on then the au alpha network fronts will be served if a GU_AU_ALPHA cookie has been dropped",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 7)
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 13)
   )
 
   // Facia Tool
@@ -356,26 +376,10 @@ object Switches extends Collections {
 
   // Image Switch
 
-  val ServeWebPImagesSwitch = Switch("Image Server", "serve-webp-images",
-    "If this is switched on the Image server will use the webp format when requested.",
-    safeState = On, sellByDate = new DateMidnight(2014, 2, 15)
-  )
-
   val ImageServerSwitch = Switch("Image Server", "image-server",
     "If this switch is on images will be served off i.guim.co.uk (dynamic image host).",
     safeState = On, sellByDate = never // this is a performance related switch, not a feature switch
   )
-
-  val ThirdPartyImageServiceSwitch = Switch("Image Server", "image-service",
-    "If this switch is on images will be served off ak.i.guim.co.uk (dynamic image host). Part of the CDN test. Relies on ImageServerSwitch also being on",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 7))
-
-  // TODO - once again I can only apologise for the proliferation of image server switches
-  // while I wait for the planets to align
-  val NewImageServerSwitch = Switch("Image Server", "new-image-server",
-    "If this switch is on images will be served off i.guim.co.uk using the new image server. Relies on ImageServerSwitch also being on",
-    safeState = On, sellByDate = new DateMidnight(2014, 2, 28))
-
 
   // Facia Tool Switches
 
@@ -412,7 +416,6 @@ object Switches extends Collections {
     UserzoomSwitch,
     CssFromStorageSwitch,
     ElasticSearchSwitch,
-    ServeWebPImagesSwitch,
     ArticleKeywordsSwitch,
     EditionRedirectLoggingSwitch,
     FacebookAutoSigninSwitch,
@@ -422,6 +425,7 @@ object Switches extends Collections {
     IdentityFilmAwardsSwitch,
     ABAa,
     ABGravityRecommendations,
+    ABEmailSignup,
     NetworkFrontUkAlpha,
     NetworkFrontUsAlpha,
     NetworkFrontAuAlpha,
@@ -429,7 +433,7 @@ object Switches extends Collections {
     ToolSparklines,
     TagLinking,
     SponsoredContentSwitch,
-    OphanMultiEventSwitch,
+    OphanSwitch,
     ContentApiPutSwitch,
     AmaaSwitch,
     ImrWorldwideSwitch,
@@ -444,10 +448,10 @@ object Switches extends Collections {
     LCMortgageFeedSwitch,
     GuBookshopFeedsSwitch,
     NetworkFrontOptIn,
-
-    ImageServerSwitch,
-    ThirdPartyImageServiceSwitch,
-    NewImageServerSwitch
+    DogpileSwitch,
+    ShowAllArticleEmbedsSwitch,
+    ParagraphIndentsSwitch,
+    ImageServerSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

@@ -1,18 +1,10 @@
 .container--commentanddebate {
-    .collection-wrapper {
-        @include rem((margin-top: $gs-baseline/3));
-        + .collection-wrapper {
-            margin-top: 0;
-        }
-        @include mq(wide) {
-            @include rem((
-                padding-top: $gs-baseline
-            ));
-
-            + .collection-wrapper {
-                padding-top: 0;
-                @include rem((margin-top: ($gs-baseline/3)*2));
-            }
+    .container__body {
+        @include rem((
+            padding-top: $gs-baseline/3
+        ));
+        @include mq(tablet, wide) {
+            padding-top: 0;
         }
     }
     .l-row--items-3 {

@@ -5,6 +5,12 @@ import com.gu.management.{ PropertiesPage, StatusPage, ManifestPage }
 import com.gu.management.play.{ Management => GuManagement }
 import com.gu.management.logback.LogbackLevelPage
 
+object ImageServerHealthcheckPage extends UrlPagesHealthcheckManagementPage(
+  "/sys-images/Guardian/About/General/2013/9/6/1378491229277/Airbnb-house-in-Pioneerto-011.jpg?width=460&height=-&quality=95"
+){
+  override val base = "http://localhost"
+}
+
 
 object Management extends GuManagement {
   val applicationName = "frontend-image"
@@ -12,10 +18,7 @@ object Management extends GuManagement {
 
   lazy val pages = List(
     new ManifestPage,
-    new UrlPagesHealthcheckManagementPage(
-      // TODO: Add gif and png.
-      "/n/sys-images/Guardian/About/General/2013/9/6/1378491229277/Airbnb-house-in-Pioneerto-011.jpg"
-    ),
+    ImageServerHealthcheckPage,
     StatusPage(applicationName, metrics),
     new PropertiesPage(Configuration.toString),
     new LogbackLevelPage(applicationName)

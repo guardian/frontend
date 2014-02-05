@@ -66,6 +66,40 @@ Software Engineer in Test: Gideon Goldberg
 Twitter: @gidsg
 From: London, UK, Earth, the Universe
 
+Developer Manager (ID/Discussion): Nick Smith
+From: London, UK
+
+Agile Programme Manager: Nichola Johnson
+linkedin: nicholajohnson
+Location: London, UK
+
+Developer: Matt Andrews
+Twitter: @mattpointblank
+Location: London, UK
+
+Software Engineer in Test: Marc Jones
+Twitter: @marcpjones
+LinkedIn: jonesmarc
+Location: London, UK
+
+Developer: Darren Hurley
+Twitter: no
+Favourite John Carpenter film: The Thing
+From: London, England
+
+Product Manager: Cantlin Ashrowan
+Twitter: @cantlin
+Location: London, UK
+
+Developer: Matt Osborn
+Location: London, UK
+
+Front-end Developer: Chris Finch
+Twitter: @chrisfinchy
+Linkedin: chrisfinch
+From: Brighton, England
+Location: London, England
+
 Developer: Max Harlow
 Twitter: @maxharlow
 From: London, UK
@@ -73,3 +107,7 @@ From: London, UK
 Developer: Robert Berry
 Twitter: @yrrebjr
 From: Manchester, UK
+
+Software Architect/Hacker: Phil Wills
+Twitter: @philwills
+

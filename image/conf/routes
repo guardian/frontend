@@ -4,5 +4,5 @@
 
 # Nb. changing these URLs will bust the image cache. Be very careful!
 
-GET     /:profile/*path         controllers.ImageController.render(path, profile: String)
+GET     /                                                                       controllers.IndexController.index()
 

@@ -27,15 +27,19 @@
     }
     @include mq(wide) {
         @include rem((width: gs-span(16)));
-        .container {
-            @include rem((padding-left: gs-span(4) + $gs-gutter));
-        }
+
         .container__title {
-            @include rem((margin-left: (gs-span(4) + $gs-gutter) * -1));
+            float: left;
+            @include rem((
+                width: gs-span(3) + $gs-gutter,
+                margin-right: gs-span(1) + $gs-gutter
+            ));
         }
-        .container__title__label {
-            display: block;
-            @include rem((max-width: gs-span(3) + $gs-gutter));
+        .container__body {
+            overflow: hidden;
+            display: table-cell;
+            width: 100000px;
+            max-width: 100%;
         }
         .container__toggle {
             @include rem((
@@ -43,42 +47,9 @@
                 min-width: 40px
             ));
         }
-        .collection {
-            @include rem((margin-top: -42px));
-        }
         .container--news {
             .container__title {
                 display: block;
-            }
-            .container__title:first-child + .collection-wrapper {
-                .fromage,
-                .fromage__container {
-                    border-top-width: 0;
-                }
-            }
-        }
-        // Containers with multiple collections should only have a negative
-        // top margin on the first collection
-        .container--news,
-        .container--features,
-        .container--commentanddebate,
-        .container--people {
-            .collection {
-                margin-top: 0;
-            }
-            .collection-wrapper:first-of-type {
-                @include rem((margin-top: -50px));
-            }
-        }
-        .container--features .collection-wrapper:first-of-type {
-            @include rem((margin-top: -38px));
-
-            // Hide tone border on items from the first row
-            .item__link {
-                border-top: none;
-            }
-            .item__image-container {
-                margin-top: 0;
             }
         }
     }
