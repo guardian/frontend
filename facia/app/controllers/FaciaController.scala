@@ -132,15 +132,13 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
 
   private object JsonCollection{
     def apply(html: Html, collection: Collection)(implicit request: RequestHeader) = JsonComponent(
-      "html" -> html,
-      "trails" -> JsArray(collection.items.map(TrailToJson(_)))
+      "html" -> html
     )
   }
 
   private object JsonFront{
     def apply(frontPage: FrontPage, faciaPage: FaciaPage)(implicit request: RequestHeader) = JsonComponent(
       "html" -> views.html.fragments.frontBody(frontPage, faciaPage),
-      "trails" -> JsArray(faciaPage.collections.filter(_._1.contentApiQuery.isDefined).take(1).flatMap(_._2.items.map(TrailToJson(_)))),
       "config" -> Json.parse(views.html.fragments.javaScriptConfig(frontPage).body)
     )
   }

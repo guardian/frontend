@@ -16,7 +16,8 @@ body {
 
 body:after {
     content: "mobile";
-    display: none;
+    @include u-h;
+
     @include mq(tablet) {
         content: "tablet";
     }

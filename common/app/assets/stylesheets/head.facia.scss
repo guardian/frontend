@@ -36,6 +36,7 @@
             ));
         }
         .container__body {
+            overflow: hidden;
             display: table-cell;
             width: 100000px;
             max-width: 100%;

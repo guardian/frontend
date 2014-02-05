@@ -40,7 +40,8 @@ define([
     "common/modules/identity/autosignin",
     'common/modules/adverts/article-body-adverts',
     "common/modules/analytics/commercial/tags/container",
-    "common/modules/interactive/loader"
+    "common/modules/interactive/loader",
+    "common/modules/onward/right-hand-component-factory"
 ], function (
     $,
     mediator,
@@ -83,7 +84,8 @@ define([
     AutoSignin,
     ArticleBodyAdverts,
     TagContainer,
-    Interactive
+    Interactive,
+    RightHandComponentFactory
 ) {
 
     var hasBreakpointChanged = detect.hasCrossedBreakpoint();
@@ -184,6 +186,13 @@ define([
             ab.run(config, context);
         },
 
+        initRightHandComponent: function(config, context) {
+
+            if(config.switches.rightHandMostPopular && config.page.contentType === 'Article') {
+              var r = new RightHandComponentFactory(mediator);
+           }
+        },
+
         logLiveStats: function (config) {
             liveStats.log(config);
         },
@@ -203,49 +212,11 @@ define([
                         }).init();
                     }
                 });
-
             });
 
-            function recordOphanSingleEvent(ophan, viewData) {
-                if (!ophan.isInitialised) {
-                    ophan.isInitialised = true;
-                    ophan.initLog();
-                }
-
-                ophan.additionalViewData(function() {
-
-                    var audsci = storage.local.get('gu.ads.audsci');
-                    if (audsci) {
-                        viewData.audsci_json = JSON.stringify(audsci);
-                    }
-
-                    var participations = ab.getParticipations(),
-                        participationsKeys = Object.keys(participations);
-
-                    if (participationsKeys.length > 0) {
-                        var testData = participationsKeys.map(function(k) {
-                            return { id: k, variant: participations[k].variant };
-                        });
-                        viewData.experiments_json = JSON.stringify(testData);
-                    }
-
-                    return viewData;
-                });
-
-                ophan.sendLog(undefined, true);
-            }
-
-            if (config.switches.ophanMultiEvent) {
-                require('ophan/ng', function (ophanMultiEvent) {
-                    ophanMultiEvent.record({'ab': ab.getParticipations()});
-                });
-
-                require(['ophan/ng', config.page.ophanUrl], function (ophanMultiEvent, ophanSingleEvent) {
-                    recordOphanSingleEvent(ophanSingleEvent, { viewId: ophanMultiEvent.viewId });
-                });
-            } else {
-                require(config.page.ophanUrl, function (ophanSingleEvent) {
-                    recordOphanSingleEvent(ophanSingleEvent, {});
+            if (config.switches.ophan) {
+                require('ophan/ng', function (ophan) {
+                    ophan.record({'ab': ab.getParticipations()});
                 });
             }
         },
@@ -457,6 +428,7 @@ define([
                 modules.cleanupCookies(context);
                 modules.runAbTests(config, context);
                 modules.transcludeRelated(config, context);
+                modules.initRightHandComponent(config, context);
             }
             mediator.emit("page:common:deferred:loaded", config, context);
         });
