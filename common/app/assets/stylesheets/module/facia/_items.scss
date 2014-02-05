@@ -357,6 +357,9 @@ $video-cta-icon: (
         top: 8px;
         left: 8px;
     }
+    .i {
+        margin-bottom: 2px;
+    }
     &:hover,
     &:focus {
         .item__cta--gallery {
@@ -372,15 +375,15 @@ $video-cta-icon: (
     width: 36px;
     height: 36px;
     background-color: $c-media-icon;
-
-    .item__cta__icon {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-    }
 }
-.item__cta--gallery {
-    .item__cta__icon {
+.item__cta__icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    overflow: hidden;
+}
+.item__cta__icon {
+    .item__cta--gallery & {
         width: map-get($gallery-cta-icon, width);
         height: map-get($gallery-cta-icon, height);
 
@@ -389,9 +392,7 @@ $video-cta-icon: (
             margin-top: -1 * (map-get($gallery-cta-icon, height) / 2)
         ));
     }
-}
-.item__cta--video {
-    .item__cta__icon {
+    .item__cta--video & {
         width: map-get($video-cta-icon, width);
         height: map-get($video-cta-icon, height);
 
