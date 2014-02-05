@@ -354,10 +354,8 @@ $video-cta-icon: (
 .item__media-wrapper--has-icon {
     .item__cta {
         position: absolute;
-        @include rem((
-            top: 8px,
-            left: 8px
-        ));
+        top: 8px;
+        left: 8px;
     }
     &:hover,
     &:focus {
