@@ -427,12 +427,6 @@ $c-live: #e81818;
     .show-more__hover--show { display: none; } // Nested to override global styles
 }
 
-.collection__show-more:hover,
-.collection__show-more:focus {
-    .show-more__hover--hide { display: none; }
-    .show-more__hover--show { display: inline-block; }
-}
-
 // Thumbnail element order:
 // 1. Title
 // 2. Image + standfirst
