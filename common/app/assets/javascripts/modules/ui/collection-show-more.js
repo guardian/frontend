@@ -30,9 +30,9 @@ define([
 
         this._$button = bonzo(bonzo.create(
             '<button class="collection__show-more tone-background" data-link-name="' + buttonText + ' | 0">' +
-                '<span class="u-hover">' +
-                    '<span class="i i-plus-white-mask u-hover--hide"></span>' +
-                    '<span class="i i-plus-white u-hover--show"></span>' +
+                '<span class="collection__show-more--icon">' +
+                    '<span class="i i-plus-white-mask"></span>' +
+                    '<span class="i i-plus-white"></span>' +
                 '</span>' +
                 '<span class="u-h">' + buttonText+ '</span>' +
             '</button>'
@@ -43,16 +43,26 @@ define([
             this._$button.addClass('tone-' + (this._$collection.attr('data-tone') || 'news'));
             this._$collection.after(this._$button);
             var that = this;
-            bean.on(this._$button[0], 'click touchstart', function(e) {
-                e.preventDefault();
+            bean.on(this._$button[0], 'click', function() {
                 that._$button.attr('disabled', true);
                 that.showMore();
             });
             mediator.emit('modules:collectionShowMore:renderButton', this);
         };
 
-        this._removeButton = function() {
-            this._$button.remove();
+        this._removeButton = function(afterAjax) {
+            var that = this;
+            // if we've just made the ajax call, remove without waiting
+            if (afterAjax) {
+                this._$button.remove();
+            } else {
+                // listen to the clickstream, as happens later, before removing
+                mediator.on('module:clickstream:click', function(clickSpec) {
+                    if (qwery(clickSpec.target)[0] === that._$button[0]) {
+                        that._$button.remove();
+                    }
+                });
+            }
         };
 
         this._incrementButtonCounter = function() {
@@ -68,14 +78,14 @@ define([
             commentCount.init(this._collection);
         };
 
-        this._showItems = function() {
+        this._showItems = function(afterAjax) {
             var itemsToShow = this._items.splice(0, getShowMoreSize());
             this._$collection.append(itemsToShow);
             this._enrichItems();
             this._$button.attr('disabled', false);
             this._incrementButtonCounter();
             if (this._items.length === 0) {
-                this._removeButton();
+                this._removeButton(afterAjax || false);
             }
         };
 
@@ -152,7 +162,7 @@ define([
                                 $item.attr('data-link-name', updatedDataLinkName);
                                 return $item[0];
                             });
-                        that._showItems();
+                        that._showItems(true);
                     }).fail(function(req) {
                         mediator.emit('module:error', 'Failed to load items: ' + req.statusText);
                     }).always(function() {

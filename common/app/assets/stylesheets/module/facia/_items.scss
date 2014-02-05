@@ -418,6 +418,23 @@ $c-live: #e81818;
     margin-top: $gs-baseline;
     margin-left: -16px;
     padding: 0;
+    overflow: hidden;
+
+    &:hover,
+    &:focus {
+        .collection__show-more--icon {
+            margin-top: -34px;
+        }
+    }
+    .i {
+        display: block;
+        margin-bottom: 2px;
+    }
+}
+.collection__show-more--icon {
+    display: block;
+    height: 68px;
+    width: 32px;
 }
 
 

@@ -60,28 +60,6 @@
 
 
 /**
- * Hide / reveal children on element hover
- *
- * Usage:
- * <element class="u-hover">
- *     <element class="u-hover--hide">Hidden on hover</element>
- *     <element class="u-hover--show">Revealed on hover</element>
- * </element>
- */
-
-.u-hover--show { display: none !important; }
-
-.u-hover:hover,
-.u-hover:focus {
-    .u-hover--hide              { display: none !important; }
-    .u-hover--show              { display: block !important; }
-    // Uncomment if needed only
-    // .u-hover--show-inline       { display: inline !important; }
-    // .u-hover--show-inline-block { display: inline-block !important; }
-}
-
-
-/**
  * Text hyphenation
  *
  * Break strings when their length exceeds the width of their container
