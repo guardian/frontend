@@ -3,7 +3,7 @@ define([
     'config',
     'knockout',
     'modules/vars',
-    'bindings/droppable',
+    'bindings/collection-droppables.js',
     'utils/fetch-settings',
     'utils/update-scrollables',
     'models/config/front',
@@ -12,7 +12,7 @@ define([
     config,
     ko,
     vars,
-    droppable,
+    collectionDroppables,
     fetchSettings,
     updateScrollables,
     Front,
@@ -26,7 +26,7 @@ define([
             };
 
         this.init = function() {
-            droppable.init();
+            collectionDroppables();
 
             fetchSettings(function (config, switches) {
                 vars.state.switches = switches || {};

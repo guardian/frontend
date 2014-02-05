@@ -7,7 +7,7 @@ define([
     'utils/query-params',
     'utils/ammended-query-str',
     'utils/update-scrollables',
-    'bindings/droppable',
+    'bindings/collection-droppables.js',
     'modules/authed-ajax',
     'models/group',
     'models/collections/collection',
@@ -21,7 +21,7 @@ define([
     queryParams,
     ammendedQueryStr,
     updateScrollables,
-    droppable,
+    collectionDroppables,
     authedAjax,
     Group,
     Collection,
@@ -130,7 +130,7 @@ define([
         });
 
         this.init = function() {
-            droppable.init();
+            collectionDroppables();
 
             fetchSettings(function (config, switches) {
                 vars.state.config = config || {};

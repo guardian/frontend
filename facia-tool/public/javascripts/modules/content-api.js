@@ -18,10 +18,11 @@ function (
             defer.resolve();
         } else {
             fetchData([item.id])
-            .done(function(result) {
-                if(result.length === 1 && result[0].id) {
-                    cache.put('contentApi', result[0].id, result);
-                    populate(result[0], item);
+            .done(function(result){
+                if (result.length === 1) {
+                    result = result[0];
+                    cache.put('contentApi', result.id, result);
+                    populate(result, item);
                     defer.resolve();
                 } else {
                     defer.reject();
@@ -30,7 +31,7 @@ function (
                 defer.reject();
             });
         }
-        return defer;
+        return defer.promise();
     }
 
     function decorateItems (items) {

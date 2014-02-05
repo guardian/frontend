@@ -4,7 +4,6 @@ define([
     'modules/vars',
     'utils/parse-query-params',
     'utils/url-abs-path',
-    'utils/clean-clone',
     'modules/authed-ajax',
     'models/group',
     'models/collections/article',
@@ -14,17 +13,16 @@ define([
     vars,
     parseQueryParams,
     urlAbsPath,
-    cleanClone,
     authedAjax,
     Group,
     Article,
     contentApi
 ) {
-    var sourceList,
-        storage = window.localStorage,
+    var storage = window.localStorage,
         storageKey ='gu.fronts-tool.drag-source';
 
-    function init() {
+    function Droppable(opts) {
+        var sourceList;
 
         window.addEventListener("dragover", function(event) {
             event.preventDefault();
@@ -82,7 +80,7 @@ define([
                         id = event.testData ? event.testData : event.dataTransfer.getData('Text'),
                         sourceItem,
                         position,
-                        article,
+                        newItem,
                         groups,
                         insertAt,
                         isAfter = false;
@@ -145,17 +143,12 @@ define([
 
                     insertAt = targetList.items().indexOf(targetItem) + isAfter;
                     insertAt = insertAt === -1 ? targetList.items().length : insertAt;
- 
-                    article = new Article({
-                        id: id,
-                        meta: sourceItem ? cleanClone(sourceItem.meta) : undefined,
-                        parent: targetList.parent,
-                        parentType: targetList.parentType
-                    });
 
-                    targetList.items.splice(insertAt, 0, article);
+                    newItem = new opts.itemConstructor(id, sourceItem, targetList);
 
-                    contentApi.validateItem(article)
+                    targetList.items.splice(insertAt, 0, newItem);
+
+                    contentApi.validateItem(newItem)
                     .fail(function() {
                         removeMatchingItems(targetList, id);
                         alertBadContent();
@@ -177,7 +170,7 @@ define([
                             targetList.parent.save();
                             return;
                         }
-                        
+
                         if (targetList.parentType !== 'Collection') {
                             return;
                         }
@@ -239,7 +232,5 @@ define([
         window.alert('Sorry, that isn\'t a Guardian article!');
     }
 
-    return {
-        init: _.once(init)
-    };
+    return Droppable;
 });
