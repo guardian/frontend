@@ -40,7 +40,8 @@ define([
     "common/modules/identity/autosignin",
     'common/modules/adverts/article-body-adverts',
     "common/modules/analytics/commercial/tags/container",
-    "common/modules/interactive/loader"
+    "common/modules/interactive/loader",
+    "common/modules/onward/right-hand-component-factory"
 ], function (
     $,
     mediator,
@@ -83,7 +84,8 @@ define([
     AutoSignin,
     ArticleBodyAdverts,
     TagContainer,
-    Interactive
+    Interactive,
+    RightHandComponentFactory
 ) {
 
     var hasBreakpointChanged = detect.hasCrossedBreakpoint();
@@ -184,6 +186,13 @@ define([
             ab.run(config, context);
         },
 
+        initRightHandComponent: function(config, context) {
+
+            if(config.switches.rightHandMostPopular && config.page.contentType === 'Article') {
+              var r = new RightHandComponentFactory(mediator);
+           }
+        },
+
         logLiveStats: function (config) {
             liveStats.log(config);
         },
@@ -203,7 +212,6 @@ define([
                         }).init();
                     }
                 });
-
             });
 
             function recordOphanSingleEvent(ophan, viewData) {
@@ -457,6 +465,7 @@ define([
                 modules.cleanupCookies(context);
                 modules.runAbTests(config, context);
                 modules.transcludeRelated(config, context);
+                modules.initRightHandComponent(config, context);
             }
             mediator.emit("page:common:deferred:loaded", config, context);
         });
