@@ -77,22 +77,23 @@ trait FrontPress extends Logging {
     futureSequence
   }
 
-  private def generateCollectionJson(config: Config, collection: Collection): JsValue = {
-    Json.obj(
-      ("apiQuery", config.contentApiQuery),
-      ("displayName", config.displayName),
-      ("tone", config.collectionTone),
-      ("curated", collection.curated.map(generateTrailJson)),
-      ("editorsPicks", collection.editorsPicks.map(generateTrailJson)),
-      ("results", collection.results.map(generateTrailJson)),
-      ("lastModified", collection.lastUpdated),
-      ("updatedBy", collection.updatedBy),
-      ("updatedEmail", collection.updatedEmail),
-      ("groups", config.groups),
-      ("roleName", config.roleName),
-      ("href", config.href)
+  private def generateCollectionJson(config: Config, collection: Collection): JsValue =
+    Json.toJson(
+      CollectionJson(
+        apiQuery      = config.contentApiQuery,
+        displayName   = config.displayName,
+        tone          = config.collectionTone,
+        curated       = collection.curated.map(generateTrailJson),
+        editorsPicks  = collection.editorsPicks.map(generateTrailJson),
+        results       = collection.results.map(generateTrailJson),
+        lastModified  = collection.lastUpdated,
+        updatedBy     = collection.updatedBy,
+        updatedEmail  = collection.updatedEmail,
+        groups        = Option(config.groups).filter(_.nonEmpty),
+        roleName      = config.roleName,
+        href          = config.href
+      )
     )
-  }
 
   private def generateTrailJson(content: Content): JsValue =
     Json.obj(
