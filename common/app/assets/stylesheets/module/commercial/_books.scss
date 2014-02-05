@@ -45,7 +45,7 @@
 		padding: 8px 0 0 30px;
 		color: #333;
 		@include font-size(16, 20);
-		font-family: "EgyptianHeadline",georgia,serif;
+		font-family: $serifheadline;
 		font-weight: normal;
 		-webkit-font-smoothing: antialiased;
 		@include box-sizing(border-box);
@@ -77,7 +77,7 @@
 		top: 2px;
 		left: 0;
 		color: #dcdcdc;
-		font-family: "EgyptianHeadline",georgia,serif;
+		font-family: $serifheadline;
 		font-weight: 200;
 		@include font-size(40);
     }
@@ -89,7 +89,7 @@
 
     .list__title {
 		color: #333;
-		font-family: "EgyptianHeadline",georgia,serif;
+		font-family: $serifheadline;
 		font-weight: normal;
 		@include font-size(16);
 		-webkit-font-smoothing: antialiased;
@@ -100,7 +100,9 @@
 
     .list__author {
     	color: #8F8F8F;
-    	@include font-size(13);
+		font-family: $sans-serif;
+		font-weight: normal;
+		@include font-size(13, 20);
     }
 
     .list__price {
@@ -119,9 +121,9 @@
     }
 
     .commercial__search {
-		margin-bottom: $baseline;
-        overflow: hidden;
         position: relative;
+		margin-bottom: 0;
+        overflow: hidden;
 
     	label {
 			padding: 8px 0 8px 8px;
@@ -165,6 +167,7 @@
     	.list__item {
 		    width: 20%;
 		    padding-left: $baseline;
+		    border-top: none;
 		    float: left;
 
 			img {
