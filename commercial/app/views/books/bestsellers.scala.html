@@ -1,20 +1,42 @@
 @(books: Seq[model.commercial.books.Book])(implicit request: RequestHeader)
 
+<link rel="stylesheet" href="@Static("stylesheets/head.default.css")" />
+<link rel="stylesheet" href="@Static("stylesheets/global.css")" />
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
-<h1>Bestsellers</h1>
+<div class="commercial books-component svg">
 
-<table>
-@books.map { book =>
-    <tr>
-        <td>@book.position</td>
-        <td>@book.jacketUrl.map { url => <img src="@url" />}</td>
-        <td><a href="@book.buyUrl">@book.title</a></td>
-        <td>@book.author</td>
-        <td>@book.isbn</td>
-        <td>@book.price</td>
-        <td>@book.offerPrice</td>
-        <td>@book.description</td>
-    </tr>
-}
-</table>
+    <div class="commercial__head">
+        <h3 class="commercial__title">
+            guardian<span class="em">bookshop</span>
+        </h3>
+    </div>
+
+    <div class="commercial__body">
+        <h3>This week's bestsellers</h3>
+
+        <ul class="unstyled list">
+        @books.map { book =>
+            <li class="list__item">
+                <a href="#" class="list__link" data-link-name="@book.position | text">
+                    <span class="list__count">@book.position</span>
+                    @book.jacketUrl.map { url => <img class="list__img" src="@url" />}
+                    <h4 class="list__title">@book.title</h4>
+                    <p class="list__author">by @book.author</p>
+                </a>
+                <p class="list__price">&pound;@book.price</p>
+            </li>
+        }
+        </ul>
+    </div>
+
+    <div class="commercial__foot">
+        <form action="http://www.guardianbookshop.co.uk/BerteShopWeb/search.do" method="POST" class="commercial__search" name="QuickSearchForm">
+            <label for="bookshop">Search the Guardian bookshop:</label>
+            <input id="bookshop" name="keyword" class="text-input svg-i-search-grey" type="text" placeholder="Search the Guardian bookshop" />
+            <input value="Search" name="go" class="submit-input" type="submit" />
+            <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />
+        </form>
+    </div>
+
+</div>

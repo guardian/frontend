@@ -1,0 +1,198 @@
+/* ==========================================================================
+   Best Buys component
+   ========================================================================== */
+
+.bestbuys-component {
+
+    .commercial__head {
+        background-color: #fff;
+
+        .lineitem__link {
+            float: right;
+
+            .i-single-arrow-right-blue {
+                position: relative;
+                top: 4px;
+                float: none;
+            }
+        }
+    }
+
+    .commercial__title {
+        font-weight: bold;
+
+        .em {
+            color: #C17ED6;
+            font-style: normal;
+        }
+    }
+
+    .commercial__body {
+        padding: 0;
+        background-color: #fff;
+    }
+
+    .tagline {
+        padding: 0 8px 60px 8px;
+        background-color: #edede7;
+    }
+
+    .tabs__container {
+        background: #edede7;
+    }
+
+    .tabs__content {
+        padding: 0;
+        border: 0;
+    }
+
+    .tabs__tab {
+        width: auto;
+        border-bottom: none;
+        border-color: #edede7;
+
+        + .tabs__tab a {
+            border-left: none;
+        }
+
+        a {
+
+            &:active {
+                background-color: transparent;
+            }
+        }
+    }
+
+    .tabs__tab--selected {
+        border-color: #6A1F85;
+
+        &:hover {
+            border-color: #6A1F85;
+        }
+
+        a {
+            background-color: transparent;
+            color: #6A1F85;
+            font-weight: bold;
+        }
+    }
+
+    .tabs__pane {
+
+        .tagline {
+            background-position: right bottom;
+            background-repeat: no-repeat;
+        }
+
+        &.mortgages .tagline {
+            background-image: url('http://static.guim.co.uk/sys-images/Money/Pix/pictures/2007/10/19/mortgage1_192x78.jpg');
+        }
+
+        &.credit-cards .tagline {
+            background-image: url('http://static.guim.co.uk/sys-images/Money/Pix/pictures/2007/10/19/creditCard_192x78.jpg');
+        }
+    }
+
+    .main-link {
+        font-weight: bold;
+        @include font-size(18, 24);
+    }
+
+    .legal {
+        color: #767676;
+        @include font-size(11, 14);
+    }
+
+    table {
+        border-bottom: 1px solid #E4E4E4;
+        margin-bottom: 10px;
+    }
+
+    thead {
+        color: #767676;
+
+        td {
+            max-width: 55px;
+
+            span:last-child {
+                display: none;
+            }
+        }
+    }
+
+    tbody {
+
+        tr {
+            border-top: 1px solid #E4E4E4;
+        }
+    }
+
+    td {
+        padding: 4px 4px 12px 4px;
+        vertical-align: top;
+    }
+
+    .commercial__link {
+        margin-bottom: 10px;
+        display: block;
+        font-weight: bold;
+    }
+
+    .lineitem__meta {
+        color: #A3A3A3;
+        @include font-size(11, 14);
+    }
+
+    .js-hidden {
+        display: none;
+    }
+
+    @include mq($to: tablet) {
+        .tagline {
+            display: none;
+        }
+
+        .commercial__title {
+            padding: $baseline;
+            .i {
+                margin-top: $baseline;
+            }
+        }
+
+        .commercial__subtitle {
+            padding: $baseline;
+        }
+
+        .commercial__title a {
+            color: #fff;
+        }
+
+        .commercial__body {
+            display: block;
+        }
+
+        .tabs__tab span {
+            display: none;
+        }
+
+        .hide-cell-on-mobile {
+            display: none;
+        }
+
+        .lineitem__meta {
+            display: none;
+        }
+
+        thead td {
+
+            span:first-child {
+                display: none;
+            }
+
+            span:last-child {
+                display: block;
+            }
+        }
+    }
+
+}

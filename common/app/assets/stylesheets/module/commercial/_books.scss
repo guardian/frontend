@@ -1,0 +1,216 @@
+/* ==========================================================================
+   Books component
+   ========================================================================== */
+
+.commercial.books-component {
+	background-color: #FFF;
+}
+
+.books-component {
+
+	.commercial__head {
+		background-color: #FFF;
+		border-top: 1px solid #DCDCDC;
+		@include rem((
+	        height: 40px
+	    ))
+	}
+
+    .commercial__title {
+        font-weight: bold;
+
+        .em {
+            color: #C17ED6;
+            font-style: normal;
+        }
+    }
+
+    .commercial__body {
+    	padding: 0;
+
+    	h3 {
+    		background-color: #EDEDE7;
+    		padding: $baseline*2 $baseline*2 $baseline*4 $baseline*2;
+    		margin-bottom: 0;
+    		@include font-size(18);
+    	}
+    }
+
+    .list {
+    	padding: 0 $baseline;
+    }
+
+    .list__item {
+    	position: relative;
+		padding: 8px 0 0 30px;
+		color: #333;
+		@include font-size(16, 20);
+		font-family: "EgyptianHeadline",georgia,serif;
+		font-weight: normal;
+		-webkit-font-smoothing: antialiased;
+		@include box-sizing(border-box);
+
+		img {
+			width: auto;
+			height: 90px;
+			display: none;
+		}
+
+		&:first-child img {
+			display: block;
+		}
+
+		+ .list__item {
+			border-top: 1px solid #DCDCDC;
+		}
+    }
+
+    .list__link {
+    	width: 80%;
+    	display: inline-block;
+    	color: #333;
+    	overflow: hidden;
+    }
+
+    .list__count {
+    	position: absolute;
+		top: 2px;
+		left: 0;
+		color: #dcdcdc;
+		font-family: "EgyptianHeadline",georgia,serif;
+		font-weight: 200;
+		@include font-size(40);
+    }
+
+    .list__img {
+    	margin-right: $baseline * 2;
+    	float: left;
+    }
+
+    .list__title {
+		color: #333;
+		font-family: "EgyptianHeadline",georgia,serif;
+		font-weight: normal;
+		@include font-size(16);
+		-webkit-font-smoothing: antialiased;
+		text-overflow: ellipsis;
+		white-space: pre;
+		overflow: hidden;
+    }
+
+    .list__author {
+    	color: #8F8F8F;
+    	@include font-size(13);
+    }
+
+    .list__price {
+    	width: 18%;
+    	display: inline-block;
+    	vertical-align: top;
+    	@include font-size(14, 18);
+    	text-align: right;
+    }
+
+    .commercial__foot {
+    	background-color: #EDEDE7;
+    	padding: $baseline;
+    	border: 0;
+    	margin: 0;
+    }
+
+    .commercial__search {
+		margin-bottom: $baseline;
+        overflow: hidden;
+        position: relative;
+
+    	label {
+			padding: 8px 0 8px 8px;
+			@include font-size(15);
+	    	@include box-sizing(border-box);
+	    	float: left;
+    		display: none;
+    	}
+
+        .text-input {
+            width: 78%;
+            height: 32px;
+			background-position: 6px center;
+            padding: $baseline;
+            padding-left: 1.8em;
+			@include font-size(14);
+            float: left;
+            overflow: hidden;
+        }
+
+        .submit-input {
+            width: 22%;
+            min-width: 0;
+            background-color: #791052;
+            padding: rem(7.5px) 0;
+            margin: 0;
+            font-weight: bold;
+            float: left;
+        }
+    }
+
+    @include mq($to: tablet) {
+        .commercial__body,
+        .commercial__foot {
+            display: block;
+        }
+    }
+
+    @include mq($from: tablet) {
+    	
+    	.list__item {
+		    width: 20%;
+		    padding-left: $baseline;
+		    float: left;
+
+			img {
+				height: 100px;
+			    margin-bottom: 10px;
+			    display: block;
+			    float: right;
+			}
+		}
+
+		.list__link {
+		    height: 200px;
+		}
+
+		.list__title {
+		    white-space: normal;
+		    clear: both;
+		}
+
+		.list__price {
+		    position: absolute;
+		    left: $baseline;
+		    bottom: 0;
+		    margin-top: 20px;
+		}
+
+	    .commercial__search {
+
+	    	@include placeholder {
+	    		color: #FFF;
+	    	}
+
+	    	label {
+	    		width: 30%;
+	    		display: block;
+	    	}
+
+	        .text-input {
+	            width: 50%;
+	            @include font-size(15);
+	        }
+
+	        .submit-input {
+	            width: 20%;
+	            @include font-size(15);
+	        }
+	    }
+   }
+}
