@@ -4,12 +4,14 @@ define([
     'knockout',
     'modules/vars',
     'models/group',
+    'models/config/collection',
     'utils/as-observable-props'
 ], function(
     config,
     ko,
     vars,
     Group,
+    Collection,
     asObservableProps
 ) {
     function Front(opts) {
@@ -22,12 +24,17 @@ define([
         this.state  = asObservableProps([
             'open']);
 
-        this.group = new Group({});
+        this.group = new Group({
+            parent: self,
+            parentType: 'Front'
+        });
 
         this.group.items(
-            _.map(opts.collections, function(id) { return {id: id}; })
+            _.map(opts.collections, function(id) { return new Collection({id: id}); })
         );
     }
+
+    Front.prototype.underDrag = function() {};
 
     Front.prototype.toggleOpen = function() {
         this.state.open(!this.state.open());

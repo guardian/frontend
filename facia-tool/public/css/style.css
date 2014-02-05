@@ -709,7 +709,13 @@ button {
 .cnf-collection {
     padding: 0 0 0 5px;
     color: #666666;
+    background: #ffffff;
     font-style: italic;
+    border-top: 3px solid #ffffff;
+}
+
+.cnf-collection.underDrag {
+    border-top-color: #f89406;
 }
 
 /*****************************************/

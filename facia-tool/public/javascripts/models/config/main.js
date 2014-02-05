@@ -3,16 +3,20 @@ define([
     'config',
     'knockout',
     'modules/vars',
+    'bindings/droppable',
     'utils/fetch-settings',
     'utils/update-scrollables',
-    'models/config/front'
+    'models/config/front',
+    'models/config/collection'
 ], function(
     config,
     ko,
     vars,
+    droppable,
     fetchSettings,
     updateScrollables,
-    Front
+    Front,
+    Collection
 ) {
     return function() {
 
@@ -22,6 +26,8 @@ define([
             };
 
         this.init = function() {
+            droppable.init();
+
             fetchSettings(function (config, switches) {
                 vars.state.switches = switches || {};
                 if (!_.isEqual(config, vars.state.config)) {
@@ -29,7 +35,7 @@ define([
 
                     model.collections(
                        _.chain(config.collections)
-                        .map(function(val, key) { return {id: key, meta: val}; })
+                        .map(function(val, key) { return new Collection({id: key, meta: val}); })
                         .sortBy(function (obj) { return obj.id; })
                         .value()
                     );

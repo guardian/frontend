@@ -19,7 +19,13 @@
     </div>
 
     <script type="text/html" id="template_collection">
-        <div class="cnf-collection" data-bind="text: id"></div>
+        <div class="cnf-collection" data-bind="
+            css: {underDrag: state.underDrag}">
+
+            <a data-bind="
+                attr: {href: id},
+                text: id"></a>
+        </div>
     </script>
 
     <script type="text/html" id="template_front">
@@ -28,8 +34,12 @@
                 click: toggleOpen,
                 text: id"></div>
             <!-- ko if: state.open -->
-            <div data-bind="
-                template: {name: 'template_collection', foreach: group.items}"></div>
+                <div data-bind="with: group">
+                    <div class="droppable" data-bind="
+                        makeDropabble: true,
+                        css: {underDrag: underDrag},
+                        template: {name: 'template_collection', foreach: items}"></div>
+                </div>
             <!-- /ko -->
         </div>
     </script>
