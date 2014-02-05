@@ -33,8 +33,6 @@ define([
     return function() {
 
         var model = {
-                config: ko.observable(),
-
                 collections: ko.observableArray(),
                 fronts: ko.observableArray(),
                 front:  ko.observable(),
@@ -77,11 +75,11 @@ define([
         function renderFront(id) {
             history.pushState({}, "", window.location.pathname + '?' + ammendedQueryStr('front', id));
             model.collections(
-                ((model.config().fronts[getFront()] || {}).collections || [])
-                .filter(function(id){ return !!model.config().collections[id]; })
+                ((vars.state.config.fronts[getFront()] || {}).collections || [])
+                .filter(function(id){ return !!vars.state.config.collections[id]; })
                 .map(function(id){
                     return new Collection(
-                        _.extend(model.config().collections[id], {id: id})
+                        _.extend(vars.state.config.collections[id], {id: id})
                     );
                 })
             );
@@ -135,9 +133,9 @@ define([
             droppable.init();
 
             fetchSettings(function (config, switches) {
-                model.config(config);
-                model.fronts(_.keys(config.fronts));
+                vars.state.config = config || {};
                 vars.state.switches = switches || {};
+                model.fronts(_.keys(config.fronts));
             }, vars.CONST.configSettingsPollMs)
             .done(function() {
                 setfront();

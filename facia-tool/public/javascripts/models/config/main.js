@@ -15,6 +15,7 @@ define([
     Front
 ) {
     return function() {
+
         var model = {
                 collections: ko.observableArray(),
                 fronts: ko.observableArray()
@@ -22,19 +23,23 @@ define([
 
         this.init = function() {
             fetchSettings(function (config, switches) {
-
-                model.collections(
-                   _.chain(config.collections)
-                    .map(function(val, key) { return {id: key, meta: val}; })
-                    .sortBy(function (obj) { return obj.id; })
-                    .value()
-                );
-
-                model.fronts(_.map(config.fronts, function(val, key) {
-                    return new Front({id: key, collections: val.collections});
-                }));
-
                 vars.state.switches = switches || {};
+                if (!_.isEqual(config, vars.state.config)) {
+                    vars.state.config = config || {};
+
+                    model.collections(
+                       _.chain(config.collections)
+                        .map(function(val, key) { return {id: key, meta: val}; })
+                        .sortBy(function (obj) { return obj.id; })
+                        .value()
+                    );
+
+                    model.fronts(
+                       _.chain(config.fronts)
+                        .map(function(val, key) { return new Front({id: key, collections: val.collections}); })
+                        .value()
+                    );
+                }
             }, vars.CONST.configSettingsPollMs)
             .done(function() {
                 ko.applyBindings(model);

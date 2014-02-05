@@ -47,8 +47,9 @@ define(['knockout'], function(ko) {
         sparksBase:      sparksBaseUrl(CONST.sparksParams),
         sparksBaseFront: sparksBaseUrl(CONST.sparksFrontParams),
         state: {
-            switches:        {},
-            liveMode:        ko.observable(false)
+            config: {},
+            switches: {},
+            liveMode: ko.observable(false)
         }
     };
 });
