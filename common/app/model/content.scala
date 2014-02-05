@@ -167,7 +167,7 @@ object Content {
           sectionId = (json \ "sectionId").asOpt[String],
           sectionName = (json \ "sectionName").asOpt[String],
           webPublicationDate = (json \ "webPublicationDate").asOpt[Long].map(new DateTime(_)).get,
-          webTitle = (json \ "webTitle").as[String],
+          webTitle = (json \ "safeFields" \ "headline").as[String],
           webUrl = (json \ "webUrl").as[String],
           apiUrl = "",
           elements = Option(parseElements(json)),
