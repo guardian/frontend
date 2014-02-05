@@ -265,15 +265,10 @@
 
         .item__timestamp {
             display: inline-block;
-            height: $gs-baseline;
-            width: 1px;
             padding-left: 0;
 
             &:after {
-                position: absolute;
                 display: inline-block;
-                top: 1px;
-                left: 14px;
                 content: 'LIVE';
                 color: $c-live;
                 @include fs-data(1);
@@ -281,9 +276,11 @@
             }
 
             &:before {
+                position: relative;
                 display: inline-block;
                 content: ' ';
                 @include rem((
+                    top: 1px,
                     width: $gs-gutter/2,
                     height: $gs-gutter/2
                 ));
@@ -319,10 +316,6 @@
         }
     }
 
-    .item__timestamp {
-        @include box-sizing(border-box);
-    }
-
     .item__media-wrapper {
         position: relative;
     }
@@ -339,10 +332,6 @@
     .i-quote-orange,
     .item__byline {
         display: none;
-    }
-
-    .item__timestamp {
-        padding-right: 0;
     }
 
     .gallerythumbs { margin: 0; }

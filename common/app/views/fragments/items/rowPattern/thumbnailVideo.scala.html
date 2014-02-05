@@ -26,7 +26,7 @@
                 <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border" data-link-name="article">
                     <h@if(isFirstContainer && index == 0){1}else{2} class="item__title">
                         @if(trail.isBreaking){
-                            <span class="item__live-indicator">Breaking News</span>
+                            <span class="item__live-indicator">Breaking</span>
                         }
                         @if(trail.isLive && !trail.isBreaking){
                             <span class="item__live-indicator">Live</span>
@@ -35,7 +35,6 @@
                     </h@if(isFirstContainer && index == 0){1}else{2}>
                     <div class="item__media-wrapper">
                         <div class="item__cta item__cta--video">
-                            <p>Play</p>
                             <i class="i i-play-black"></i>
                         </div>
                         @trail.trailPicture(5,3).map{ imageContainer =>

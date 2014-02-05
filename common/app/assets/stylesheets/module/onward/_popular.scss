@@ -2,7 +2,7 @@
 
     @include guss-columns('.headline-column', $column-min-width: 190px, $column-rule: none);
 
-    .article__popular {
+    .container--popular {
 
         .page-sub-header {
             display: none;
@@ -98,7 +98,7 @@
 
 @include mq(leftCol, wide) {
 
-    .article__popular {
+    .container--popular {
 
         .tabs { position: relative; }
 
@@ -117,7 +117,7 @@
 
 @include mq(leftCol) {
 
-    .article__popular {
+    .container--popular {
 
         .tabs__container {
             width: $a-leftCol-width;
@@ -133,7 +133,7 @@
 
 @include mq(wide) {
 
-    .article__popular {
+    .container--popular {
 
         .tabs__container {
             position: static;
