@@ -18,7 +18,21 @@
     .collection__item {
         padding-bottom: 0;
     }
-    .l-row--items-2 {
+    .l-row--items-3 {
+        @include mq(tablet) {
+            // Vertical space is after the row instead of after the items
+            // So that items have the same height as the ad
+            @include rem((
+                // Actually using a gutter for vertical spacing
+                // this follows the idea behind this design decision
+                margin-bottom: $gs-gutter
+            ));
+            .collection__item {
+                @include mq(tablet) {
+                    margin-bottom: 0;
+                }
+            }
+        }
         .collection__item {
             background-color: $c-features-primary;
 
@@ -80,15 +94,12 @@
                 ));
             }
             background-color: $c-features-primary;
-            @include mq(tablet) { background-color: rgba($c-features-primary, .8); }
         }
         .collection__item:nth-child(2n) .item__title {
             background-color: $c-features-secondary;
-            @include mq(tablet) { background-color: rgba($c-features-secondary, .8); }
         }
         .collection__item:nth-child(3n) .item__title {
             background-color: $c-features-tertiary;
-            @include mq(tablet) { background-color: rgba($c-features-tertiary, .8); }
         }
         .item__link:hover,
         .item__link:focus {
@@ -98,10 +109,11 @@
             }
         }
         .item--has-image {
-            @include mq(tablet) {
+            @include mq(desktop) {
                 .item__title {
                     position: absolute;
                     bottom: 0;
+
                     @include rem((
                         left: $gs-gutter/2,
                         right: $gs-gutter/2,
@@ -110,6 +122,9 @@
                 }
             }
         }
+    }
+    .l-row__item--mpu-300 {
+        min-width: gs-span(4) + $gs-gutter;
     }
     .linkslist-container:before {
         background: $c-featureAccent; // Change color of border on top of the links list container

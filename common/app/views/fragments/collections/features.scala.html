@@ -1,12 +1,20 @@
 @(config: Config, items: Seq[Trail], style: Container, containerIndex: Int)(implicit request: RequestHeader)
 
 <div class="collection-wrapper">
-    <ul class="unstyled l-row l-row--items-2 collection">
+    <ul class="unstyled l-row l-row--items-3 collection">
         @items.slice(0, 2).zipWithIndex.map{ case (trail, index) =>
             @fragments.items.rowPattern.standard(trail, index, 0)
         }
+        <li class="l-row__item l-row__item--mpu-300 hide-on-mobile">
+            <div class="ad-slot ad-slot--mpu-banner-ad hide-on-mobile" data-link-name="ad slot mpu-banner-ad" data-base="Middle" data-median="Middle">
+                <div class="ad-container"></div>
+            </div>
+        </li>
     </ul>
 </div>
+
+<div class="ad-slot ad-slot--inline mobile-only" data-base="x49" data-median="x49"><div class="ad-container"></div></div>
+
 @defining(items.slice(2, 6)) { items =>
     @if(items.nonEmpty) {
         <div class="collection-wrapper">

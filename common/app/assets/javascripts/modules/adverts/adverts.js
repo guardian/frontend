@@ -46,18 +46,25 @@ function (
 
             for (var c in contexts) {
                 var els = contexts[c].querySelectorAll('.ad-slot');
-                for(var i = 0, l = els.length; i < l; i += 1) {
-                    var container = els[i].querySelector('.ad-container'),
-                        name,
-                        slot;
-                    // Empty all ads in the dom
-                    container.innerHTML = '';
-                    // Load the currContext ads only
-                    if (contexts[c] === currContext ) {
-                        name = els[i].getAttribute('data-' + size);
-                        slot = new DocumentWriteSlot(name, container);
-                        slot.setDimensions(dimensionMap[name]);
-                        slots.push(slot);
+
+                for(var i = 0, l = els.length; i < l; i++) {
+                    var el = els[i];
+
+                    if($(el).css('display') !== 'none') {
+                        var container = el.querySelector('.ad-container'),
+                            name,
+                            slot;
+
+                        // Empty all ads in the DOM
+                        container.innerHTML = '';
+
+                        // Load the currContext ads only
+                        if (contexts[c] === currContext) {
+                            name = el.getAttribute('data-' + size);
+                            slot = new DocumentWriteSlot(name, container);
+                            slot.setDimensions(dimensionMap[name]);
+                            slots.push(slot);
+                        }
                     }
                 }
             }
