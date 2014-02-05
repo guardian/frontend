@@ -2,11 +2,13 @@
 define([
     'common/utils/mediator',
     'bonzo',
-    'postscribe'
+    'postscribe',
+    'bean'
 ], function (
     mediator,
     bonzo,
-    postscribe
+    postscribe,
+    bean
 ) {
 
     var DocWriteAdSlot = function(name, el) {
@@ -24,6 +26,7 @@ define([
             var slot = this.el;
             postscribe(slot, '<script>OAS_RICH("'+this.name+'")</script>');
             this.loaded = true;
+            bean.fire(slot, "ad-load");
          } catch(e) {
              //Hide slot to prevent layout bugs
              var node = (this.name === 'Top2') ? this.el.parentNode.parentNode : this.el.parentNode;
