@@ -1,9 +1,10 @@
 .container--people {
     .container__body {
-        @include mq(wide) {
-            @include rem((
-                padding-top: $gs-baseline/3
-            ));
+        @include rem((
+            padding-top: $gs-baseline/3
+        ));
+        @include mq(tablet, wide) {
+            padding-top: 0;
         }
     }
     .l-row--items-3 {
