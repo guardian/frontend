@@ -16,7 +16,7 @@ define([
         this.id = 'GravityRecommendations';
         this.expiry = '2014-02-18';
         this.audience = 0.2;
-        this.offset = 0.8;
+        this.audienceOffset = 0.8;
         this.description = 'Dropping Gravity\'s beacon javascript on the site';
         this.canRun = function(config) {
             return true;
