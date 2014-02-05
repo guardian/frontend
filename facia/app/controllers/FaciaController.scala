@@ -92,15 +92,9 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
 
     FrontPage(path).map { frontPage =>
       FrontJson.get(path).map(_.map{ faciaPage =>
-
         Cached(frontPage) {
           if (request.isJson) {
-            val html = views.html.fragments.frontBody(frontPage, faciaPage)
-            JsonComponent(
-              "html" -> html,
-              "trails" -> JsArray(faciaPage.collections.filter(_._1.contentApiQuery.isDefined).take(1).flatMap(_._2.items.map(TrailToJson(_)))),
-              "config" -> Json.parse(views.html.fragments.javaScriptConfig(frontPage).body)
-            )
+            JsonFront(frontPage, faciaPage)
           }
           else
             Ok(views.html.front(frontPage, faciaPage))
