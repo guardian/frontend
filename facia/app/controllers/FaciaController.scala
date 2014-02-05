@@ -46,9 +46,8 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
   private def getPathForUkAlpha(path: String, request: RequestHeader): String =
     Seq("uk", "us", "au").find { page =>
       path == page &&
-        Option(Edition(request)) == Edition.byId(page) &&
         Switches.byName(s"network-front-${page}-alpha").exists(_.isSwitchedOn) &&
-        request.headers.get(s"X-Gu-${page.capitalize}-Alpha").exists(_.toLowerCase == "true")
+        request.headers.get(s"X-Gu-Front-Alphas").exists(_.toLowerCase == "true")
     }.map{ page =>
       s"$page-alpha"
     }.getOrElse(path)

@@ -97,33 +97,14 @@ define([
         },
 
         displayAlphaMessage: function(config) {
-            if (config.page.contentType === 'Network Front') {
+            if (config.page.contentType === 'Network Front' && /^.*-alpha$/.test(config.page.pageId)) {
                 var page = window.location.pathname.replace('-alpha', ''),
-                    preferenceUrl = '/preference' + page + 'alpha/[OPT]?page=' + page + '%3Ftime=' + (new Date().getTime()),
-                    msg,
-                    messageId = 'facia-alpha';
-                if (config.page.pageId === "") {
-                    // only run on 5% of (mobile) users
-                    var isAChosenOne = parseInt(mvtCookie.getMvtValue(), 10) < (mvtCookie.MAX_INT * 0.05) && detect.getMobileOS(),
-                        alphaSwitch = {
-                            '/uk': 'networkFrontUkAlpha',
-                            '/us': 'networkFrontUsAlpha',
-                            '/au': 'networkFrontAuAlpha'
-                        }[page];
-                    if ((isAChosenOne && config.switches[alphaSwitch] === true) || window.location.hash === '#show-alpha-opt-in') {
-                        msg =
-                            '<p class="site-message__message">' +
-                                'We’re trying out some new things on our website and would love your feedback. <a href="' +
-                                    preferenceUrl.replace('[OPT]', 'optin') + '">Click here</a> to explore a test version of the site.' +
-                            '</p>';
-                        new Message(messageId).show(msg);
-                    }
-                } else {
-                    var userZoomSurvey = {
+                    preferenceUrl = '/preference/front-alphas/opt-out?page=' + page + '%3Ftime=' + (new Date().getTime()),
+                    userZoomSurvey = {
                         '/us': 'MSBDMTBTMTE1',
                         '/au': 'MSBDMTBTMTE2',
                         '/uk': 'MSBDMTBTMTE3'
-                    }[page];
+                    }[page],
                     msg =
                         '<p class="site-message__message">' +
                             'You’re viewing a test version of the Guardian website.' +
@@ -138,15 +119,13 @@ define([
                             ) +
                             '<li class="site-message__actions__item">' +
                                 '<i class="i i-back"></i>' +
-                                '<a class="js-main-site-link" rel="nofollow" href="' + preferenceUrl.replace('[OPT]', 'optout') + '"' +
+                                '<a class="js-main-site-link" rel="nofollow" href="' + preferenceUrl + '"' +
                                     'data-link-name="opt-out">Opt-out and return to the standard site</a>' +
                             '</li>' +
                         '</ul>';
-                    var opts = {
-                        permanent: true
-                    };
-                    new Message(messageId, opts).show(msg);
-                }
+                new Message('facia-alpha', {
+                    permanent: true
+                }).show(msg);
             }
         }
     };
