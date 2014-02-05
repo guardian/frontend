@@ -8,6 +8,7 @@
         background-color: #fff;
 
         .lineitem__link {
+            font-weight: bold;
             float: right;
 
             .i-single-arrow-right-blue {
@@ -56,6 +57,8 @@
         }
 
         a {
+            font-family: $sans-serif;
+            @include font-size(14);
 
             &:active {
                 background-color: transparent;
@@ -129,6 +132,7 @@
     td {
         padding: 4px 4px 12px 4px;
         vertical-align: top;
+        line-height: 1;
     }
 
     .commercial__link {
@@ -147,6 +151,7 @@
     }
 
     @include mq($to: tablet) {
+        .lineitem__link,
         .tagline {
             display: none;
         }
@@ -168,6 +173,15 @@
 
         .commercial__body {
             display: block;
+        }
+
+        .tabs__tab {
+
+            a {
+                min-height: 32px;
+                font-family: $sans-serif;
+                @include font-size(13);
+            }
         }
 
         .tabs__tab span {
