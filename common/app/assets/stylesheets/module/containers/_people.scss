@@ -70,11 +70,11 @@
                 }
             }
             .collection__item + .collection__item {
-                .item__image-container {
-                    padding-bottom: 204px;
+                .item__media-wrapper {
                     overflow: hidden;
                 }
-                .responsive-img {
+                .item__image-container {
+                    padding-bottom: 204px;
                     left: 50%;
                     margin-left: -100%;
                     width: auto;
