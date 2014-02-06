@@ -167,40 +167,56 @@ CommentBox.prototype.ready = function() {
  * @param {Event}
  */
 CommentBox.prototype.postComment = function(e) {
-    var body = this.getElem('body'),
+    var self = this,
+        body = this.getElem('body'),
         comment = {
             body: this.getElem('body').value
         };
 
     e.preventDefault();
-    this.clearErrors();
+    self.clearErrors();
 
-    this.emailVerified = true;
+    // debugger
 
-    if (!this.emailVerified) {
-        this.error('EMAIL_NOT_VERIFIED');
-        ValidationEmail.init(this.context);
-    }
+    var validEmailCommentSubmission = function () {
+        if (comment.body === '') {
+            self.error('EMPTY_COMMENT_BODY');
+        }
 
-    else if (comment.body === '') {
-        this.error('EMPTY_COMMENT_BODY');
-    }
+        if (comment.body.length > self.options.maxLength) {
+            self.error('COMMENT_TOO_LONG', '<b>Comments must be shorter than '+ self.options.maxLength +' characters.</b>'+
+                'Yours is currently '+ (comment.body.length-self.options.maxLength) +' characters too long.');
+        }
 
-    else if (comment.body.length > this.options.maxLength) {
-        this.error('COMMENT_TOO_LONG', '<b>Comments must be shorter than '+ this.options.maxLength +' characters.</b>'+
-            'Yours is currently '+ (comment.body.length-this.options.maxLength) +' characters too long.');
-    }
+        if (self.options.replyTo) {
+            comment.replyTo = self.options.replyTo;
+        }
 
-    if (this.options.replyTo) {
-        comment.replyTo = this.options.replyTo;
-    }
+        if (self.errors.length === 0) {
+            self.setFormState(true);
+            DiscussionApi
+                .postComment(self.getDiscussionId(), comment)
+                .then(self.success.bind(self, comment), self.fail.bind(self));
+        }
+    };
 
-    if (this.errors.length === 0) {
-        this.setFormState(true);
-        DiscussionApi
-            .postComment(this.getDiscussionId(), comment)
-            .then(this.success.bind(this, comment), this.fail.bind(this));
-    }
+    var  invalidEmailError = function () {
+        self.error('EMAIL_NOT_VERIFIED');
+        ValidationEmail.init(self.context);
+    };
+
+    // if (!self.getUserData().emailVerified) {
+    //     IdentityApi.refreshStaleCookie()
+    //                     .then(function success () {
+    //                         if (!IdentityApi.getUserFromCookie().emailVerified) {
+    //                             invalidEmailError();
+    //                         } else {
+    //                             validEmailCommentSubmission();
+    //                         }
+    //                     }, invalidEmailError);
+    // }
+
+    validEmailCommentSubmission(); // remove me
 };
 
 /**

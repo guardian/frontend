@@ -41,8 +41,19 @@ define([
     };
 
     /**
-     * The array returned from the cookie is in the format
-     * [ id, email, displayname, userGroupBitmask ]
+     * The array returned from the cookie is in the format;
+     *
+     * [
+     *    id,
+     *    email,
+     *    displayname,
+     *    userGroupBitmask,
+     *    expiryDate,
+     *    persist,
+     *    accountCreatedDate,
+     *    emailVerified
+     * ];
+     *
      * @return {?Object} the user information
      */
     Id.getUserFromCookie = function() {
@@ -54,12 +65,28 @@ define([
                     id: userData[0],
                     primaryEmailAddress: userData[1],
                     displayName: userData[2],
+                    emailVerified: userData[7],
                     rawResponse: cookieData
                 };
             }
         }
 
         return userFromCookieCache;
+    };
+
+    Id.refreshStaleCookie = function () {
+        var endpoint = '/cookie/refresh',
+            request = ajax({
+                url: Id.idApiRoot + endpoint,
+                type: 'jsonp',
+                crossOrigin: true,
+                async: false,
+                data: {
+                    method: 'post'
+                }
+            });
+
+        return request;
     };
 
     /**
