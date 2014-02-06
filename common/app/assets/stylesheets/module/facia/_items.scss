@@ -351,6 +351,7 @@ $video-cta-icon: (
     width: 12px,
     height: 16px,
 );
+$cta-icon-gap: 2px;
 .item__media-wrapper--has-icon {
     .item__cta {
         position: absolute;
@@ -358,15 +359,16 @@ $video-cta-icon: (
         left: 8px;
     }
     .i {
-        margin-bottom: 2px;
+        margin-bottom: $cta-icon-gap;
+        position: relative;
     }
     &:hover,
     &:focus {
         .item__cta--gallery {
             background-color: $c-neutral1;
-        }
-        .i {
-            margin-bottom: -1 * map-get($gallery-cta-icon, height);
+            .i {
+                top: -1 * (map-get($gallery-cta-icon, height) + $cta-icon-gap);
+            }
         }
     }
 }
@@ -381,25 +383,19 @@ $video-cta-icon: (
     top: 50%;
     left: 50%;
     overflow: hidden;
-}
-.item__cta__icon {
+    font-size: 0;
+
     .item__cta--gallery & {
         width: map-get($gallery-cta-icon, width);
         height: map-get($gallery-cta-icon, height);
-
-        @include rem((
-            margin-left: -1 * (map-get($gallery-cta-icon, width) / 2),
-            margin-top: -1 * (map-get($gallery-cta-icon, height) / 2)
-        ));
+        margin-left: -1 * (map-get($gallery-cta-icon, width) / 2);
+        margin-top: -1 * (map-get($gallery-cta-icon, height) / 2);
     }
     .item__cta--video & {
         width: map-get($video-cta-icon, width);
         height: map-get($video-cta-icon, height);
-
-        @include rem((
-            margin-left: -1 * (map-get($video-cta-icon, width) / 2),
-            margin-top: -1 * (map-get($video-cta-icon, height) / 2)
-        ));
+        margin-left: -1 * (map-get($video-cta-icon, width) / 2);
+        margin-top: -1 * (map-get($video-cta-icon, height) / 2);
     }
 }
 
@@ -462,7 +458,7 @@ $show-more-icon: (
     }
     .i {
         display: block;
-        margin-bottom: map-get($show-more-icon, space-between); // a bit of space between icons to avoid 
+        margin-bottom: map-get($show-more-icon, space-between); // a bit of space between icons to avoid
     }
 }
 .collection__show-more__icon {
