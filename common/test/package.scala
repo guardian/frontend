@@ -121,8 +121,8 @@ object WithHost {
   def US(path: String): String = s"http://127.0.0.1:9000$path"
 }
 
-object DesktopVersionLink {
-  def apply(path: String) = s"http://localhost:9000/preference/platform/desktop?page=${URLEncoder.encode(s"$path?view=desktop", "UTF-8")}"
+object ClassicVersionLink {
+  def apply(path: String) = s"http://localhost:9000/preference/platform/classic?page=${URLEncoder.encode(s"$path?view=classic", "UTF-8")}"
 }
 
 /**

@@ -2,10 +2,10 @@
 @import common._
 @import model.MetaData
 @import java.net.URLEncoder.encode
-@import common.DesktopLink
+@import common.ClassicLink
 
 <a class="js-main-site-link" rel="nofollow"
-    href="@DesktopLink(item)"
-    data-link-name="desktop version @Edition(request).id">
+    href="@ClassicLink(item)"
+    data-link-name="classic version @Edition(request).id">
     @label
 </a>

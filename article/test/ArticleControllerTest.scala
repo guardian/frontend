@@ -73,13 +73,13 @@ class ArticleControllerTest extends FlatSpec with Matchers  with UsesElasticSear
     contentAsString(result) should startWith("{\"config\"")
   }
 
-  it should "redirect to desktop when content type is not supported in app" in Fake {
+  it should "redirect to classic when content type is not supported in app" in Fake {
     val result = controllers.ArticleController.renderArticle("world/interactive/2013/mar/04/choose-a-pope-interactive-guide")(TestRequest("/world/interactive/2013/mar/04/choose-a-pope-interactive-guide"))
     status(result) should be(303)
-    header("Location", result).get should be("http://www.theguardian.com/world/interactive/2013/mar/04/choose-a-pope-interactive-guide?view=desktop")
+    header("Location", result).get should be("http://www.theguardian.com/world/interactive/2013/mar/04/choose-a-pope-interactive-guide?view=classic")
   }
 
-  it should "internal redirect unsupported content to desktop" in Fake {
+  it should "internal redirect unsupported content to classic" in Fake {
     val result = controllers.ArticleController.renderArticle("world/video/2012/feb/10/inside-tibet-heart-protest-video")(TestRequest("world/video/2012/feb/10/inside-tibet-heart-protest-video"))
     status(result) should be(200)
     header("X-Accel-Redirect", result).get should be("/type/video/world/video/2012/feb/10/inside-tibet-heart-protest-video")
