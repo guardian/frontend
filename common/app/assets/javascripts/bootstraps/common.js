@@ -338,7 +338,7 @@ define([
                     '<li class="site-message__actions__item">' +
                     '<i class="i i-back-white"></i>' +
                     '<a class="js-main-site-link" rel="nofollow" href="' + exitLink + '"' +
-                    'data-link-name="R2 alpha opt out">Opt-out and return to the classic site </a>' +
+                    'data-link-name="R2 alpha opt out">Opt-out and return to the current site </a>' +
                     '</li>' +
                     '</ul>';
                 message.show(msg);
