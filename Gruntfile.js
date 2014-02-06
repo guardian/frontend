@@ -479,7 +479,7 @@ module.exports = function (grunt) {
         env: {
             casperjs: {
                 ENVIRONMENT : (process.env.ENVIRONMENT) ? process.env.ENVIRONMENT : (isDev) ? "dev" : "code",
-                PHANTOMJS_EXECUTABLE : "node_modules/phantomjs/bin/phantomjs",
+                PHANTOMJS_EXECUTABLE : "node_modules/.bin/phantomjs",
                 extend: {
                     PATH: {
                         value: 'node_modules/.bin',
