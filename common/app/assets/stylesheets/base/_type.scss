@@ -8,15 +8,13 @@
 html {
     font-family: $serif;
 
-    // font-size: 62.5%; // Set baseline font size to 10px
-    //                   // This is used as a baseline for rem (root ems) values
+    // Set baseline font size to 10px
+    // This is used as a baseline for rem (root ems) values
+    font-size: 62.5%;
 
-    // @Kaelig on 05/02/2014:
-    // IE11 appears to have maths issues and sets the root font size to 9.93px
-    // instead of 10px. This has deep layout implications.
-    // Reverting to a px value until we find a fix for IE11,
-    // which means we are discarding any text size user preference.
-    font-size: 10px;
+    // For IE11 to do the math properly
+    // See http://bit.ly/1g4X0bX — thanks @7studio and @dawitti
+    font-size: calc(1em * .625);
 }
 body {
     color: #545454;
