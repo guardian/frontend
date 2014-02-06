@@ -450,12 +450,6 @@ video {
         margin-top: $gs-baseline,
         margin-bottom: $gs-baseline
     ));
-
-    .paragraph-spacing--indents & {
-        @include rem((
-            margin-top: $baseline*5
-        ));
-    }
 }
 
 /* Layout changes across devices
