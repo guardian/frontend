@@ -1,7 +1,0 @@
-{
-  "name": "frontend-screenshots",
-  "version": "0.1.0",
-  "dependencies": {
-    "moment": "~2.4.0"
-  }
-}
