@@ -17,7 +17,7 @@ define([
     }
 
     ScrollDepth.prototype.config = {
-        changeThreshold :10,
+        changeThreshold: 10,
         isContent: false,
         pageEl: document.body
     };
