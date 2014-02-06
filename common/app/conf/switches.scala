@@ -205,11 +205,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
   )
   
-  val ParagraphIndentsSwitch = Switch("Feature Switches", "paragraph-indents",
-    "If switched on whitespace between paragraphs will be reduced.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
-  )
-
   val ReleaseMessageSwitch = Switch("Feature Switches", "release-message",
     "If this is switched on users will be messaged that they are inside the alpha/beta/whatever release",
     safeState = Off, sellByDate = endOfQ4
@@ -454,7 +449,6 @@ object Switches extends Collections {
     NetworkFrontOptIn,
     DogpileSwitch,
     ShowAllArticleEmbedsSwitch,
-    ParagraphIndentsSwitch,
     ImageServerSwitch
   )
 
