@@ -288,6 +288,11 @@
 .today__dayofweek {
     color: $c-newsDefault;
 }
+@include mq(wide) {
+    .today__sub {
+        display: block;
+    }
+}
 
 
 /**
