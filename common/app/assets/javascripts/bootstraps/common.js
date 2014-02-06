@@ -282,7 +282,7 @@ define([
         optIn: function () {
             var countMeIn = /#countmein/.test(window.location.hash);
             if (countMeIn) {
-                Cookies.add("GU_VIEW", "mobile", 365);
+                Cookies.add("GU_VIEW", "responsive", 365);
             }
         },
 
@@ -307,7 +307,7 @@ define([
 
             if (config.switches.releaseMessage && !alreadyOptedIn && (detect.getBreakpoint() !== 'mobile')) {
                 // force the visitor in to the alpha release for subsequent visits
-                Cookies.add("GU_VIEW", "mobile", 365);
+                Cookies.add("GU_VIEW", "responsive", 365);
                 releaseMessage.show(msg);
             }
         },
@@ -315,11 +315,11 @@ define([
         displayOnboardMessage: function (config) {
             if(window.location.hash === '#opt-in-message' && config.switches.networkFrontOptIn) {
                 bean.on(document, 'click', '.js-site-message-close', function() {
-                    Cookies.add("GU_VIEW", "mobile", 365);
+                    Cookies.add("GU_VIEW", "responsive", 365);
                     Cookies.add("GU_ALPHA", "2", 365);
                 });
                 bean.on(document, 'click', '.js-site-message', function() {
-                    Cookies.add("GU_VIEW", "mobile", 365);
+                    Cookies.add("GU_VIEW", "responsive", 365);
                     Cookies.add("GU_ALPHA", "2", 365);
                 });
                 var message = new Message('onboard', { type: 'modal' }),

@@ -9,17 +9,17 @@ class ChangeViewControllerTest extends FlatSpec with Matchers {
   val callbackName = "aFunction"
 
   "ChangeViewController" should "redirect to correct page" in Fake {
-    val result = controllers.ChangeViewController.render("mobile", "/foo/bar?view=mobile")(TestRequest())
+    val result = controllers.ChangeViewController.render("responsive", "/foo/bar")(TestRequest())
     status(result) should be(302)
-    header("Location", result) should be (Some("/foo/bar?view=mobile"))
+    header("Location", result) should be (Some("/foo/bar"))
   }
 
   it should "set a preference cookie" in Fake {
-    val result = controllers.ChangeViewController.render("desktop", "/foo/bar?view=mobile")(TestRequest())
+    val result = controllers.ChangeViewController.render("classic", "/foo/bar?view=mobile")(TestRequest())
     val GU_VIEW = cookies(result).apply("GU_VIEW")
 
     GU_VIEW.maxAge should be (Some(5184000))  // 60 days, this is seconds
-    GU_VIEW.value should be ("desktop")
+    GU_VIEW.value should be ("classic")
   }
 
   it should "not cache" in Fake {
