@@ -105,6 +105,9 @@ object Switches extends Collections {
     "Enable the AMAA audience segment tracking.",
     safeState = Off, sellByDate = endOfQ4)
 
+  val EffectiveMeasureSwitch = Switch("Commercial Tags", "effective-measure",
+    "Enable the Effective Measure audience segment tracking.",
+    safeState = Off, sellByDate = endOfQ4)
 
   // Commercial Feeds
 
@@ -436,6 +439,7 @@ object Switches extends Collections {
     OphanSwitch,
     ContentApiPutSwitch,
     AmaaSwitch,
+    EffectiveMeasureSwitch,
     ImrWorldwideSwitch,
     DiagnosticsRequestLogging,
     DiagnosticsJavascriptErrorLogging,
