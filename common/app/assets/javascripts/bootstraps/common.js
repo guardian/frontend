@@ -219,11 +219,14 @@ define([
             if (config.switches.ophan) {
                 require('ophan/ng', function (ophan) {
                     ophan.record({'ab': ab.getParticipations()});
-                    mediator.on('scrolldepth:data', ophan.record);
 
-                    var sd = new ScrollDepth({
-                        isContent: config.page.contentType === "Article"
-                    });
+                    if(config.switches.scrollDepth) {
+                        mediator.on('scrolldepth:data', ophan.record);
+
+                        var sd = new ScrollDepth({
+                            isContent: config.page.contentType === "Article"
+                        });
+                    }
                 });
             }
         },
