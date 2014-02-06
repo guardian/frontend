@@ -11,8 +11,6 @@ import views.support.{Naked, ImgSrc}
 import views.support.StripHtmlTagsAndUnescapeEntities
 import com.gu.openplatform.contentapi.model.{Content => ApiContent,Element =>ApiElement}
 import play.api.libs.json.JsValue
-import play.api.templates.Html
-import java.net.URI
 
 class Content protected (val apiContent: ApiContentWithMeta) extends Trail with MetaData {
 
@@ -230,6 +228,15 @@ class Video(content: ApiContentWithMeta) extends Content(content) {
 
   lazy val contentType = "Video"
   lazy val source: Option[String] = videoAssets.headOption.flatMap(_.source)
+
+  // I know its not too pretty
+  lazy val bylineWithSource: Option[String] = Some(Seq(
+    byline,
+    source.map{
+      case "guardian.co.uk" => "theguardian.com"
+      case other => s"Source: $other"
+    }
+  ).flatten.mkString(", ")).filter(_.nonEmpty)
 
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData +("content-type" -> contentType, "blockVideoAds" -> blockVideoAds, "source" -> source.getOrElse(""))
