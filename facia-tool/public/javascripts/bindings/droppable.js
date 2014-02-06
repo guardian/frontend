@@ -138,14 +138,19 @@ define([
                     insertAt = targetList.items().indexOf(targetItem) + isAfter;
                     insertAt = insertAt === -1 ? targetList.items().length : insertAt;
 
-                    newItem = new opts.newItemConstructor(id, sourceItem, targetList);
+                    newItem = opts.newItemConstructor(id, sourceItem, targetList);
+
+                    if (!newItem) {
+                        alertBadContent(id);
+                        return;
+                    }
 
                     targetList.items.splice(insertAt, 0, newItem);
 
                     opts.newItemValidator(newItem)
                     .fail(function() {
                         removeById(targetList.items, id);
-                        alertBadContent();
+                        alertBadContent(id);
                     })
                     .done(function() {
                         if (_.isFunction(targetList.reflow)) {
@@ -163,8 +168,8 @@ define([
         };
     }
 
-    function alertBadContent() {
-        window.alert('Sorry, that isn\'t a Guardian article!');
+    function alertBadContent(id) {
+        window.alert('Sorry, but you can\'t add' + (id ? ': ' + id : ' that'));
     }
 
     return droppable;

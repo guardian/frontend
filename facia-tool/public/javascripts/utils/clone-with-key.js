@@ -5,7 +5,7 @@ define([
     cleanClone
 ) {
     return function (obj, id) {
-        var nuObj = cleanClone(obj);
+        var nuObj = obj ? cleanClone(obj) : {};
         nuObj.id = id;
         return nuObj;
     };

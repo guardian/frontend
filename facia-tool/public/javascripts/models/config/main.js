@@ -5,8 +5,7 @@ define([
     'modules/vars',
     'utils/fetch-settings',
     'utils/update-scrollables',
-    'utils/clean-clone',
-    'utils/kv-2-obj',
+    'utils/clone-with-key',
     'models/config/droppable',
     'models/config/front',
     'models/config/collection'
@@ -16,24 +15,29 @@ define([
     vars,
     fetchSettings,
     updateScrollables,
-    cleanClone,
-    kv2obj,
+    cloneWithKey,
     droppable,
     Front,
     Collection
 ) {
     return function() {
 
-        function pack(obj, id) {
-            var nuObj = cleanClone(obj);
-            nuObj.id = id;
-            return nuObj;
-        }
-
         var model = {
                 collections: ko.observableArray(),
-                fronts: ko.observableArray()
+
+                fronts: ko.observableArray(),
+
+                createCollection: function () {
+                    var collection = new Collection({
+                        id: 'collection/' + Math.random(),
+                        roleName: 'Untitled collection'
+                    });
+                    collection.toggleOpen();
+                    model.collections.unshift(collection);
+                }
             };
+
+        vars.model = model;
 
         this.init = function() {
             droppable.init();
@@ -45,14 +49,14 @@ define([
 
                     model.collections(
                        _.chain(config.collections)
-                        .map(function(obj, id) { return new Collection(kv2obj(obj, id)); })
+                        .map(function(obj, id) { return new Collection(cloneWithKey(obj, id)); })
                         .sortBy(function (obj) { return obj.id; })
                         .value()
                     );
 
                     model.fronts(
                        _.chain(config.fronts)
-                        .map(function(obj, id) { return new Front(kv2obj(obj, id)); })
+                        .map(function(obj, id) { return new Front(cloneWithKey(obj, id)); })
                         .value()
                     );
                 }

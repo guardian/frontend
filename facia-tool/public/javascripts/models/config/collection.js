@@ -1,31 +1,42 @@
 /* global _: true, humanized_time_span: true */
 define([
+    'modules/vars',
     'utils/as-observable-props',
     'utils/populate-observables'
 ], function(
+    vars,
     asObservableProps,
     populateObservables
-    ) {
+) {
     function Collection(opts) {
         if (!opts || !opts.id) { return; }
 
         this.id = opts.id;
 
-        // properties from the config, about this collection
-        this.configMeta   = asObservableProps([
-            'displayName',
+        this.meta   = asObservableProps([
             'roleName',
-            'uneditable',
+            'displayName',
+            'href',
             'groups',
-            'tone']);
-        populateObservables(this.configMeta, opts);
+            'tone',
+            'uneditable']);
+
+        populateObservables(this.meta, opts);
 
         this.state = asObservableProps([
+            'open',
             'underDrag']);
     }
 
-    Collection.prototype.open = function(e) {
-        e.preventDefault();
+    Collection.prototype.toggleOpen = function() {
+        this.state.open(!this.state.open());
+    };
+
+    Collection.prototype.save = function() {
+        if (vars.model.collections.indexOf(this) < 0) {
+            vars.model.collections.unshift(this);
+        }
+        this.state.open(false);
     };
 
     return Collection;
