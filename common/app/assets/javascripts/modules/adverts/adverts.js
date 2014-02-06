@@ -39,7 +39,7 @@ function (
             currContext = context;
             slots = [];
 
-            var size = /mobile/.test(detect.getBreakpoint()) ? 'base' : 'median';
+            var size = (/mobile/).test(detect.getBreakpoint()) ? 'base' : 'median';
 
             // Run through slots and create documentWrite for each.
             // Other ad types such as iframes and custom can be plugged in here later
