@@ -496,7 +496,7 @@ module.exports = function (grunt) {
                     '--log-level=warning',
                     '--ignore-ssl-errors=yes',
                     '--includes=integration-tests/casper/tests/shared.js',
-                    '--xunit=integration-tests/target/casper/<%= casperjsLogFile %>'
+                    '--xunit=integration-tests/<%= casperjsLogFile %>'
                 ]
             },
             screenshot: {
