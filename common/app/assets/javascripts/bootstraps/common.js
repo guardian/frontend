@@ -219,10 +219,8 @@ define([
             if (config.switches.ophan) {
                 require('ophan/ng', function (ophan) {
                     ophan.record({'ab': ab.getParticipations()});
-                    //mediator.on('scrolldepth:data', ophan.record);
-                    mediator.on('scrolldepth:data', function(data) {
+                    mediator.on('scrolldepth:data', ophan.record);
 
-                    });
                     var sd = new ScrollDepth({
                         isContent: config.page.contentType === "Article"
                     });

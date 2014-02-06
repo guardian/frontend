@@ -6,8 +6,9 @@ define([
     var sd;
 
     beforeEach(function() {
-        document.body.style.height = '2000px';
+        document.body.style.height = '10000px';
         dataCallback = sinon.spy();
+
         mediator.on('scrolldepth:data', dataCallback);
 
         sd = new ScrollDepth();
@@ -17,14 +18,15 @@ define([
         delete sd;
     });
 
-    describe('Scroll depth', function() {
+    xdescribe('Scroll depth', function() {
 
         it('should log page depth on scroll.', function() {
+            window.scrollTo(0, 4000);
             mediator.emit('window:scroll');
 
             waitsFor(function () {
                 return dataCallback.called === true;
-            }, 'scroll data callback never called', 1500);
+            }, 'scroll data callback to have been called', 4000);
 
             runs(function(){
                 expect(dataCallback.args[0][0].page.depth).toEqual(100);

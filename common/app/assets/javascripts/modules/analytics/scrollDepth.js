@@ -93,7 +93,7 @@ define([
     ScrollDepth.prototype.init = function() {
         mediator.on('window:scroll', this.assertScrolling.bind(this));
         mediator.on('scrolldepth:inactive', this.hasDataChanged.bind(this));
-        mediator.on('module:clickstream:click', this.log.bind(this));
+        mediator.on('module:clickstream:click', this.hasDataChanged.bind(this));
     };
 
     return ScrollDepth;
