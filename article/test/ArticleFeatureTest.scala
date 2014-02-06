@@ -25,7 +25,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
     // Metrics
 
     info("Page views should *not* decrease.")
-    info("Retain people on mobile (by reducing % of mobile traffic to www and clicks to the desktop site)")
+    info("Retain people on mobile (by reducing % of mobile traffic to www and clicks to the classic site)")
 
     // Scenarios
 
@@ -326,26 +326,26 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
       }
     }
 
-    scenario("Navigate to the desktop site (UK edition - www.guardian.co.uk)") {
+    scenario("Navigate to the classic site (UK edition - www.guardian.co.uk)") {
       Given("I'm on article entitled 'We must capitalise on a low-carbon future'")
       And("I am using the UK edition")
       HtmlUnit("/environment/2012/feb/22/capitalise-low-carbon-future") { browser =>
         import browser._
 
-        Then("I should see a link to the corresponding desktop article")
-        findFirst(".js-main-site-link").getAttribute("href") should be(DesktopVersionLink("/environment/2012/feb/22/capitalise-low-carbon-future"))
+        Then("I should see a link to the corresponding classic article")
+        findFirst(".js-main-site-link").getAttribute("href") should be(ClassicVersionLink("/environment/2012/feb/22/capitalise-low-carbon-future"))
       }
     }
 
-    scenario("Navigate to the desktop site (US edition - www.guardiannews.com)") {
+    scenario("Navigate to the classic site (US edition - www.guardiannews.com)") {
       Given("I'm on article entitled 'We must capitalise on a low-carbon future'")
       And("I am using the US edition")
       HtmlUnit.US("/environment/2012/feb/22/capitalise-low-carbon-future") { browser =>
         import browser._
 
-        Then("I should see a link to the corresponding desktop article")
+        Then("I should see a link to the corresponding classic article")
         findFirst(".js-main-site-link").getAttribute("href") should
-          be(DesktopVersionLink("/environment/2012/feb/22/capitalise-low-carbon-future"))
+          be(ClassicVersionLink("/environment/2012/feb/22/capitalise-low-carbon-future"))
       }
     }
 
@@ -363,7 +363,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
 
     scenario("Primary image upgrades to high resolution") {
 
-      Given("I am on an aricle")
+      Given("I am on an article")
       HtmlUnit("/film/2012/nov/11/margin-call-cosmopolis-friends-with-kids-dvd-review") { browser =>
         import browser._
 

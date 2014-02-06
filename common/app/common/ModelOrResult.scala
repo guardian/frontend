@@ -21,7 +21,7 @@ object ModelOrResult extends Results with Logging {
 private object ItemOrRedirect extends ItemResponses with Logging{
 
   def apply[T](item: T, response: ItemResponse)(implicit request: RequestHeader) = {
-    def itemPath = response.webUrl.map(new URI(_)).map(_.getPath)
+    val itemPath = response.webUrl.map(new URI(_)).map(_.getPath)
     itemPath match {
       case Some(itemPath) if needsRedirect(itemPath) => Right(Found(itemPath))
       case _ => Left(item)
@@ -50,7 +50,7 @@ private object InternalRedirect{
       case a if a.isArticle || a.isLiveBlog => internalRedirect("type/article", a.id)
       case v if v.isVideo => internalRedirect("type/video", v.id)
       case g if g.isGallery => internalRedirect("type/gallery", g.id)
-      case unsupportedContent => Right(Redirect(unsupportedContent.webUrl, Map("view" -> Seq("desktop"))))
+      case unsupportedContent => Right(Redirect(unsupportedContent.webUrl, Map("view" -> Seq("classic"))))
     }
   }
 
