@@ -15,7 +15,9 @@ define([
         this.configMeta   = asObservableProps([
             'displayName',
             'roleName',
-            'uneditable']);
+            'uneditable',
+            'groups',
+            'tone']);
         populateObservables(this.configMeta, opts);
 
         this.state = asObservableProps([

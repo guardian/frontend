@@ -34,8 +34,6 @@ define([
         );
     }
 
-    Front.prototype.underDrag = function() {};
-
     Front.prototype.toggleOpen = function() {
         this.state.open(!this.state.open());
     };

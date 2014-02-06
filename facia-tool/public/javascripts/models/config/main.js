@@ -5,6 +5,8 @@ define([
     'modules/vars',
     'utils/fetch-settings',
     'utils/update-scrollables',
+    'utils/clean-clone',
+    'utils/kv-2-obj',
     'models/config/droppable',
     'models/config/front',
     'models/config/collection'
@@ -14,11 +16,19 @@ define([
     vars,
     fetchSettings,
     updateScrollables,
+    cleanClone,
+    kv2obj,
     droppable,
     Front,
     Collection
 ) {
     return function() {
+
+        function pack(obj, id) {
+            var nuObj = cleanClone(obj);
+            nuObj.id = id;
+            return nuObj;
+        }
 
         var model = {
                 collections: ko.observableArray(),
@@ -35,14 +45,14 @@ define([
 
                     model.collections(
                        _.chain(config.collections)
-                        .map(function(val, key) { return new Collection({id: key, meta: val}); })
+                        .map(function(obj, id) { return new Collection(kv2obj(obj, id)); })
                         .sortBy(function (obj) { return obj.id; })
                         .value()
                     );
 
                     model.fronts(
                        _.chain(config.fronts)
-                        .map(function(val, key) { return new Front({id: key, collections: val.collections}); })
+                        .map(function(obj, id) { return new Front(kv2obj(obj, id)); })
                         .value()
                     );
                 }
