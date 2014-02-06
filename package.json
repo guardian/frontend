@@ -7,7 +7,6 @@
     "grunt-css-metrics": "~0.1.1",
     "grunt-asset-monitor": "~0.1.5",
     "grunt-env": "smlgbl/grunt-env",
-    "grunt-casperjs": "guardian/grunt-casperjs#upgrade",
     "grunt-s3": "~0.2.0-alpha.3",
     "grunt-mkdir": "~0.1.1",
     "grunt-hash": "~0.5.0",
@@ -31,12 +30,13 @@
     "karma": "~0.10.4",
     "phantomjs": "~1.9.1",
     "svgo": "~0.4.1",
-    "casperjs": "git://github.com/smlgbl/casperjs.git#feature/makeUsableByNPM",
     "moment": "~2.4",
     "mkdirp": "~0.3.5",
     "esprima": "~1.0.4",
     "glob": "~3.2.8",
-    "grunt-contrib-imagemin": "~0.5.0"
+    "grunt-contrib-imagemin": "~0.5.0",
+    "casperjs": "~1.1.0-beta3",
+    "grunt-casperjs": "~1.4.0"
   },
   "scripts": {
     "postinstall": "grunt hookmeup"
