@@ -1,0 +1,60 @@
+@(trail: model.Trail, index: Int)(implicit request: RequestHeader)
+
+@defining(VisualTone(trail)) { tone =>
+    <div
+        class="@RenderClasses(
+            "baguette",
+            s"tone-$tone",
+            "tone-accent-border")"
+        @trail.discussionId.map{ id => data-discussion-id="@id" }
+        data-discussion-closed="@trail.isClosedForComments"
+        data-link-name="trail | @{index + 1}">
+
+        <div class="baguette__container">
+            <a href="@LinkTo{@trail.url}" class="important__link" data-link-name="article">
+                @defining(if (index == 0) { "1" } else { "2" }) { headerLevel =>
+                    <h@headerLevel class="baguette__title">
+                        @RemoveOuterParaHtml(trail.headline)
+                    </h@headerLevel>
+                }
+                @trail.trailPicture(5,3).map{ imageContainer =>
+                    @ImgSrc.imager(imageContainer, Item940).map { imgSrc =>
+                        <div class="baguette__media-wrapper">
+                            <div class="baguette__image-container js-image-upgrade inlined-image" data-src="@Html(imgSrc)" data-force-upgrade="desktop wide">
+                                @Item300.bestFor(imageContainer).map{ url => <img src="@Html(url)" class="responsive-img" alt="" /> }
+                            </div>
+                        </div>
+                    }
+                }
+            </a>
+            <div class="baguette__meta js-append-commentcount">
+                <time
+                    class="baguette__timestamp js-item__timestamp"
+                    itemprop="datePublished"
+                    datetime="@trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
+                    data-timestamp="@trail.webPublicationDate.getMillis"
+                    data-relativeformat="short">
+                    <i class="i i-clock-light-grey"></i>
+                    <span class="timestamp__text"><span class="u-h">Published: </span>@Format(trail.webPublicationDate, "d MMM y")</span>
+                </time>
+            </div>
+        </div>
+        @if(trail.supporting.nonEmpty){
+            <div class="baguette__support">
+                <h2 class="baguette__support__title u-h">More on this story:</h2>
+
+                <ul class="baguette__support-list">
+                    @trail.supporting.zipWithIndex.map{ case (supporting, index) =>
+                        @supporting match {
+                            case l: LiveBlog if l.isLive => { @fragments.items.supporting.live(l, index) }
+                            case g: Gallery              => { @fragments.items.supporting.gallery(g, index) }
+                            case v: Video                => { @fragments.items.supporting.video(v, index) }
+                            case c if tone == "comment"  => { @fragments.items.supporting.comment(c, index) }
+                            case s                       => { @fragments.items.supporting.standard(s, index) }
+                        }
+                    }
+                </ul>
+            </div>
+        }
+    </div>
+}
