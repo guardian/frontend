@@ -1,36 +1,30 @@
 /* global _: true */
 define([
     'knockout',
-    'modules/vars',
     'utils/parse-query-params',
     'utils/url-abs-path',
-    'modules/authed-ajax',
-    'models/group',
-    'models/collections/article',
-    'modules/content-api'
+    'utils/remove-by-id',
+    'models/group'
 ], function(
     ko,
-    vars,
     parseQueryParams,
     urlAbsPath,
-    authedAjax,
-    Group,
-    Article,
-    contentApi
+    removeById,
+    Group
 ) {
     var storage = window.localStorage,
         storageKey ='gu.fronts-tool.drag-source';
 
-    function Droppable(opts) {
+    window.addEventListener("dragover", function(event) {
+        event.preventDefault();
+    },false);
+
+    window.addEventListener("drop", function(event) {
+        event.preventDefault();
+    },false);
+
+    function droppable(opts) {
         var sourceList;
-
-        window.addEventListener("dragover", function(event) {
-            event.preventDefault();
-        },false);
-
-        window.addEventListener("drop", function(event) {
-            event.preventDefault();
-        },false);
 
         ko.bindingHandlers.makeDropabble = {
             init: function(element) {
@@ -38,7 +32,7 @@ define([
                 element.addEventListener('dragstart', function(event) {
                     var sourceItem = ko.dataFor(event.target);
 
-                    if (sourceItem.constructor === Article) {
+                    if (_.isFunction(sourceItem.get)) {
                         storage.setItem(storageKey, JSON.stringify(sourceItem.get()));
                     }
                     sourceList = ko.dataFor(element);
@@ -139,25 +133,21 @@ define([
                         sourceList = undefined;
                     }
 
-                    removeMatchingItems(targetList, id);
+                    removeById(targetList.items, id);
 
                     insertAt = targetList.items().indexOf(targetItem) + isAfter;
                     insertAt = insertAt === -1 ? targetList.items().length : insertAt;
 
-                    newItem = new opts.itemConstructor(id, sourceItem, targetList);
+                    newItem = new opts.newItemConstructor(id, sourceItem, targetList);
 
                     targetList.items.splice(insertAt, 0, newItem);
 
-                    contentApi.validateItem(newItem)
+                    opts.newItemValidator(newItem)
                     .fail(function() {
-                        removeMatchingItems(targetList, id);
+                        removeById(targetList.items, id);
                         alertBadContent();
                     })
                     .done(function() {
-                        var itemMeta,
-                            timestamp,
-                            edits = {};
-
                         if (_.isFunction(targetList.reflow)) {
                             targetList.reflow();
                         }
@@ -166,71 +156,16 @@ define([
                             return;
                         }
 
-                        if (targetList.parentType === 'Article') {
-                            targetList.parent.save();
-                            return;
-                        }
-
-                        if (targetList.parentType !== 'Collection') {
-                            return;
-                        }
-
-                        targetList.parent.closeAllArticles();
-
-                        itemMeta = sourceItem && sourceItem.meta ? sourceItem.meta : {};
-
-                        if (targetList.parent.groups && targetList.parent.groups.length > 1) {
-                            itemMeta.group = targetList.group + '';
-                        } else {
-                            delete itemMeta.group;
-                        }
-
-                        timestamp = Math.floor(new Date().getTime()/1000);
-                        itemMeta.updatedAt = itemMeta.updatedAt ? itemMeta.updatedAt + ',' + timestamp : timestamp + ':f90'; // orange for the initial flag
-
-                        edits.update = {
-                            collection: targetList.parent,
-                            item:     id,
-                            position: position,
-                            after:    isAfter,
-                            live:     vars.state.liveMode(),
-                            draft:   !vars.state.liveMode(),
-                            itemMeta: _.isEmpty(itemMeta) ? undefined : itemMeta
-                        };
-
-                        // Is a delete also required?
-                        if (sourceList &&
-                            sourceList.parentType === 'Collection' &&
-                            sourceList.parent.id !== targetList.parent.id  &&
-                           !sourceList.keepCopy) {
-
-                            removeMatchingItems(sourceList, id);
-
-                            edits.remove = {
-                                collection: sourceList.parent,
-                                id:     sourceList.parent.id,
-                                item:   id,
-                                live:   vars.state.liveMode(),
-                                draft: !vars.state.liveMode()
-                            };
-                        }
-
-                        authedAjax.updateCollections(edits);
+                        opts.newItemPersister(sourceItem, sourceList, targetList, id, position, isAfter);
                     });
                 }, false);
             }
         };
     }
 
-    function removeMatchingItems(list, id) {
-        list.items.remove(function(item) {
-            return item.id === id;
-        });
-    }
-
     function alertBadContent() {
         window.alert('Sorry, that isn\'t a Guardian article!');
     }
 
-    return Droppable;
+    return droppable;
 });
