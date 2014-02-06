@@ -111,14 +111,14 @@
     .container__border {
         display: none;
 
-        @include mq(wide) {
+        @include mq(faciaLeftCol) {
             display: block;
         }
     }
     .collection-wrapper:first-child .fromage {
         border-top-width: 0;
 
-        @include mq(tablet, wide) {
+        @include mq(tablet, faciaLeftCol) {
             border-top-width: 2px;
         }
     }

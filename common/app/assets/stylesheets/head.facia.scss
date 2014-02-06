@@ -25,29 +25,37 @@
     @include mq(desktop) {
         @include rem((width: gs-span(12)));
     }
-    @include mq(wide) {
-        @include rem((width: gs-span(16)));
+    @include mq(faciaLeftCol) {
+        @include rem((width: gs-span(14)));
 
         .container__title {
-            float: left;
-            @include rem((
-                width: gs-span(3) + $gs-gutter,
-                margin-right: gs-span(1) + $gs-gutter
-            ));
+            margin-bottom: 0;
         }
         .container__body {
             overflow: hidden;
-        }
-        .container__toggle {
             @include rem((
-                right: gs-span(12) + $gs-gutter,
-                min-width: 40px
+                margin-left: gs-span(2) + $gs-gutter
             ));
         }
         .container--news {
             .container__title {
                 display: block;
             }
+        }
+    }
+    @include mq(wide) {
+        @include rem((width: gs-span(16)));
+
+        .container__title {
+            float: left;
+            @include rem((
+                width: gs-span(3),
+                margin-right: $gs-gutter
+            ));
+        }
+        .container__body {
+            margin-left: 0;
+            @include rem((width: gs-span(12)));
         }
     }
 }

@@ -102,7 +102,7 @@ $c-live: #e81818;
         }
     }
     @include mq(tablet) {
-        @include rem((top: $gs-baseline/2));
+        top: 0;
         text-align: right;
         color: $c-neutral2;
 
