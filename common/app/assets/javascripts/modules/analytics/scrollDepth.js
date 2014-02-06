@@ -9,14 +9,17 @@ define([
     function ScrollDepth(config) {
         this.config = extend(this.config, config);
 
+        if(this.config.isContent) {
+            this.config.contentEl = this.contentEl || document.getElementById('article');
+        }
+
         this.init();
     }
 
     ScrollDepth.prototype.config = {
         changeThreshold :10,
         isContent: false,
-        pageEl: document.body,
-        contentEl: document.getElementById('article')
+        pageEl: document.body
     };
 
     ScrollDepth.prototype.data = {
@@ -68,7 +71,8 @@ define([
     };
 
     ScrollDepth.prototype.hasDataChanged = function() {
-        var page = this.setData('page'), content = this.setData('content');
+        var page = this.setData('page'),
+            content = (this.config.isContent) ? this.setData('content') : false;
         if(page || content) {
             this.log();
         }
@@ -79,7 +83,7 @@ define([
             mediator.emit('scrolldepth:inactive');
         }
         if(typeof this.timeoutId === 'number') { window.clearTimeout(this.timeoutId); }
-        this.timeoutId = window.setTimeout(timeout.bind(this), 2000);
+        this.timeoutId = window.setTimeout(timeout.bind(this), 1000);
     };
 
     ScrollDepth.prototype.log = function() {
