@@ -327,7 +327,7 @@ define([
                     exitLink = '/preference/platform/classic?page=' + encodeURIComponent(path + '?view=classic'),
                     msg = '<h2 class="site-message__header">Thanks for joining us.</h2>' +
                     '<div class="site-message__message" id="site-message__message">' +
-                    '<p>You’re looking at a prototype of our new website. Opt-out any time by clicking "Classic version" at the bottom of the page.</p>' +
+                    '<p>You’re looking at a prototype of our new website. Opt-out any time by clicking "Current version" at the bottom of the page.</p>' +
                     '<ul class="site-message__list">' +
                     '<li class="site-message__list__item">Our new front pages and content pages are a work in progress.</li>' +
                     '<li class="site-message__list__item">We\'ll be launching our product site and feedback form later this week.</li>' +
