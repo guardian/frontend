@@ -111,18 +111,58 @@
             }
         }
     }
-    .linkslist-container:before {
-        background: $c-featureAccent; // Change color of border on top of the links list container
-    }
-    .l-row--items-4 {
-        // Compensate lost space caused by loss of meta
+    .l-row--items-3 {
+        .collection__item,
+        .item {
+            margin-bottom: 0;
+        }
         @include mq($to: tablet) {
-            .collection__item {
+            .item__title {
                 @include rem((
-                    min-height: nth(nth($fs-headlines, 1), 2)*2 + $gs-baseline/3,
-                    margin-bottom: $gs-baseline
+                    min-height: nth(nth($fs-headlines, 1), 2) + 1,
+                    padding-bottom: ($gs-baseline*5)/3
                 ));
+                @include mq(tablet) {
+                    @include rem((
+                        // Twice the line height of the action
+                        min-height: nth(nth($fs-headlines, 1), 2) * 2 + 1,
+                        padding-bottom: $gs-baseline + $gs-baseline / 6
+                    ));
+                }
             }
+        }
+        .item__media-wrapper,
+        .item__image-container {
+            display: none;
+        }
+        .item--imageadjust-highlight {
+            .item__media-wrapper,
+            .item__image-container {
+                display: block;
+            }
+        }
+        @include mq(tablet) {
+            .item--has-image .item__media-wrapper,
+            .item--has-image .item__image-container,
+            .item--has-no-image .item__standfirst {
+                display: block;
+            }
+        }
+        @include mq(desktop) {
+            .item__title {
+                @include fs-headline(2, true);
+            }
+        }
+    }
+    .linkslist-container {
+        @include rem((margin-top: $gs-baseline));
+
+        @include mq(tablet) {
+            @include rem((margin-top: $gs-baseline*2));
+        }
+
+        &:before {
+            background: $c-featureAccent; // Change color of border on top of the links list container
         }
     }
 }

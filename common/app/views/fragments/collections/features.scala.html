@@ -7,10 +7,13 @@
         }
     </ul>
 </div>
-@defining(items.slice(2, 6)) { items =>
+
+<div class="ad-slot ad-slot--inline mobile-only" data-base="x49" data-median="x49"><div class="ad-container"></div></div>
+
+@defining(items.slice(2, 4)) { items =>
     @if(items.nonEmpty) {
         <div class="collection-wrapper">
-            <ul class="unstyled l-row l-row--items-4 collection">
+            <ul class="unstyled l-row l-row--items-3 collection">
                 @items.zipWithIndex.map{ case (trail, index) =>
                     @trail match {
                         case g: Gallery                      => { @fragments.items.rowPattern.standardGallery(g, index + 2, 0) }
@@ -19,11 +22,17 @@
                         case t                               => { @fragments.items.rowPattern.standard(t, index + 2, 0) }
                     }
                 }
+                <li class="l-row__item l-row__item--mpu-300 hide-on-mobile">
+                    <div class="ad-slot ad-slot--mpu-banner-ad hide-on-mobile" data-link-name="ad slot mpu-banner-ad" data-base="Middle" data-median="Middle">
+                        <div class="ad-container"></div>
+                    </div>
+                </li>
             </ul>
         </div>
     }
 }
-@defining(items.slice(6, 22)) { items =>
+
+@defining(items.slice(4, 18)) { items =>
     @if(items.nonEmpty) {
         <div class="linkslist-container js-container--show-more">
             <ul class="l-columns linkslist">

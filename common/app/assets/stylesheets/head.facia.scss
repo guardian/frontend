@@ -37,9 +37,6 @@
         }
         .container__body {
             overflow: hidden;
-            display: table-cell;
-            width: 100000px;
-            max-width: 100%;
         }
         .container__toggle {
             @include rem((
@@ -59,6 +56,7 @@
 @import "module/facia/_mixins";
 @import "module/facia/_items";
 @import "module/facia/_fromage";
+@import "module/facia/_linkslist";
 
 @import "module/containers/_news";
 @import "module/containers/_sport";
@@ -68,4 +66,3 @@
 @import "module/containers/_commentanddebate";
 @import "module/containers/_people";
 
-@import "module/facia/_linkslist";
