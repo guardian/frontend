@@ -292,7 +292,7 @@ define([
             var path = (document.location.pathname) ? document.location.pathname : '/',
                 exitLink = '/preference/platform/desktop?page=' + encodeURIComponent(path + '?view=desktop'),
                 msg = '<p class="site-message__message" id="site-message__message">' +
-                            'You’re viewing an alpha release of the Guardian’s responsive website. <a href="/help/2013/oct/04/alpha-testing-and-evolution-of-our-mobile-site">Find out more</a>' +
+                            'You’re viewing an beta release of the Guardian’s responsive website. <a href="/help/2013/oct/04/alpha-testing-and-evolution-of-our-mobile-site">Find out more</a>' +
                       '</p>' +
                       '<ul class="site-message__actions unstyled">' +
                            '<li class="site-message__actions__item">' +
@@ -338,7 +338,7 @@ define([
                     '<li class="site-message__actions__item">' +
                     '<i class="i i-back-white"></i>' +
                     '<a class="js-main-site-link" rel="nofollow" href="' + exitLink + '"' +
-                    'data-link-name="R2 alpha opt out">Opt-out and return to the old site </a>' +
+                    'data-link-name="R2 alpha opt out">Opt-out and return to the current site </a>' +
                     '</li>' +
                     '</ul>';
                 message.show(msg);
