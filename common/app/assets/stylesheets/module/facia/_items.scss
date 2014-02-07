@@ -439,6 +439,7 @@ $show-more-icon: (
     space-between: 2px // to avoid overlaps/bleeding on zoom
 );
 .collection__show-more {
+    display: block;
     border: none;
     width: map-get($show-more-icon, width);
     height: map-get($show-more-icon, height);
