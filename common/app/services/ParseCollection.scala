@@ -137,7 +137,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
           lazy val supportingLinks: List[CollectionItem] = retrieveSupportingLinks(collectionItem)
           if (!hasParent) getArticles(supportingLinks, edition, hasParent=true) else Future.successful(Nil)
         }
-        val response = ContentApi.item(collectionItem.id, edition).showFields("trailText,headline,shortUrl").response
+        val response = ContentApi.item(collectionItem.id, edition).showFields(showFieldsQuery).response
 
         response.onFailure{case t: Throwable => log.warn("%s: %s".format(collectionItem.id, t.toString))}
         supportingAsContent.onFailure{case t: Throwable => log.warn("Supporting links: %s: %s".format(collectionItem.id, t.toString))}
@@ -171,7 +171,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
           .pageSize(20)
         val newSearch = queryParamsWithEdition.foldLeft(search){
           case (query, (key, value)) => query.stringParam(key, value)
-        }.showFields("trailText,headline,shortUrl")
+        }.showFields(showFieldsQuery)
         newSearch.response map { r =>
           Result(Nil, Nil, Nil, r.results.map(Content(_)))
         }
@@ -183,7 +183,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
           .pageSize(20)
         val newSearch = queryParamsWithEdition.foldLeft(search){
           case (query, (key, value)) => query.stringParam(key, value)
-        }.showFields("trailText,headline,shortUrl")
+        }.showFields(showFieldsQuery)
         newSearch.response map { r =>
           Result(Nil, r.editorsPicks.map(Content(_)), r.mostViewed.map(Content(_)), r.results.map(Content(_)))
         }
