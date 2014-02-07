@@ -19,7 +19,7 @@ define([
         this.audienceOffset = 0.8;
         this.description = 'Dropping Gravity\'s beacon javascript on the site';
         this.canRun = function(config) {
-            return true;
+            return config.page.contentType === 'Article';
         };
         this.variants = [
             {
