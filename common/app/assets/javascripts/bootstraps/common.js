@@ -25,6 +25,7 @@ define([
     'common/modules/ui/relativedates',
     'common/modules/analytics/clickstream',
     'common/modules/analytics/omniture',
+    'common/modules/analytics/scrollDepth',
     'common/modules/adverts/adverts',
     'common/utils/cookies',
     'common/modules/analytics/omnitureMedia',
@@ -68,6 +69,7 @@ define([
     RelativeDates,
     Clickstream,
     Omniture,
+    ScrollDepth,
     Adverts,
     Cookies,
     OmnitureMedia,
@@ -185,7 +187,10 @@ define([
         initRightHandComponent: function(config, context) {
 
             if(config.switches.rightHandMostPopular && config.page.contentType === 'Article') {
-              var r = new RightHandComponentFactory(mediator);
+              var r = new RightHandComponentFactory({
+                  mediator: mediator,
+                  wordCount: config.page.wordCount
+              });
            }
         },
 
@@ -213,6 +218,14 @@ define([
             if (config.switches.ophan) {
                 require('ophan/ng', function (ophan) {
                     ophan.record({'ab': ab.getParticipations()});
+
+                    if(config.switches.scrollDepth) {
+                        mediator.on('scrolldepth:data', ophan.record);
+
+                        var sd = new ScrollDepth({
+                            isContent: config.page.contentType === "Article"
+                        });
+                    }
                 });
             }
         },
@@ -288,7 +301,8 @@ define([
             var path = (document.location.pathname) ? document.location.pathname : '/',
                 exitLink = '/preference/platform/classic?page=' + encodeURIComponent(path + '?view=classic'),
                 msg = '<p class="site-message__message" id="site-message__message">' +
-                            'You’re viewing a beta release of the Guardian’s responsive website. <a href="/help/2013/oct/04/alpha-testing-and-evolution-of-our-mobile-site">Find out more</a>' +
+                            'You’re viewing a beta release of the Guardian’s responsive website.' +
+                            ' We’d love to hear your <a href="https://s.userzoom.com/m/MSBDMTBTMTE5" data-link-name="feedback">feedback</a>' +
                       '</p>' +
                       '<ul class="site-message__actions unstyled">' +
                            '<li class="site-message__actions__item">' +

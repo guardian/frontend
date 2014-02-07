@@ -102,7 +102,7 @@ $c-live: #e81818;
         }
     }
     @include mq(tablet) {
-        @include rem((top: $gs-baseline/2));
+        top: 0;
         text-align: right;
         color: $c-neutral2;
 
@@ -439,6 +439,7 @@ $show-more-icon: (
     space-between: 2px // to avoid overlaps/bleeding on zoom
 );
 .collection__show-more {
+    display: block;
     border: none;
     width: map-get($show-more-icon, width);
     height: map-get($show-more-icon, height);
