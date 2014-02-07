@@ -24,6 +24,8 @@ object Seg {
 
 trait ParseCollection extends ExecutionContexts with Logging {
 
+  val showFieldsQuery: String = "trailText,headline,shortUrl,liveBloggingNow,commentCloseDate,shouldHideAdverts,lastModified"
+
   case class CollectionMeta(lastUpdated: Option[String], updatedBy: Option[String], updatedEmail: Option[String])
   object CollectionMeta {
     def empty: CollectionMeta = CollectionMeta(None, None, None)
