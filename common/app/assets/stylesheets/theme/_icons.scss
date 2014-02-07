@@ -10,16 +10,6 @@
     vertical-align: top;
 }
 
-.is-active .i-menu {
-    @extend .i-menu-active;
-
-    @if ($svg-support) {
-        .svg & {
-            @extend .svg-i-menu-active;
-        }
-    }
-}
-
 .is-signed-in .i-profile {
     @extend .i-profile-signed-in;
 

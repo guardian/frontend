@@ -11,54 +11,46 @@
    ========================================================================== */
 
 #header {
-    min-height: $headerHeight;
     position: relative;
     z-index: 1050; // On top of Google "Adchoices" label which has z-index: 1040…
-
-    /* These styles extend the top bars to the screen edges */
-    @include mq(tablet) {
-        &:before,
-        &:after {
-            content: "";
-            display: block;
-            position: absolute;
-            width: 100%;
-            z-index: -10;
-        }
-
-        &:before {
-            top: 0;
-            height: $headerHeight;
-            background-color: $c-brandBlue;
-        }
-
-        &.has-nav {
-            min-height: $headerHeight + 40px;
-            &:after {
-                top: $headerHeight;
-                height: 40px;
-                background-color: $c-neutral7;
-                border-bottom: 1px solid $c-neutral5;
-            }
-        }
-    }
+    background: $c-neutral8;
 }
     .header__inner {
-        background-color: $c-brandBlue;
-        height: $headerHeight;
+        border-bottom: 2px solid $c-newsAccent;
+
+        @include mq(tablet) {
+            border-bottom: none;
+        }
     }
 
 .guardian-logo-wrapper {
-    float: left;
-    margin: 20px 0 18px $gs-gutter/2;
-    margin-left: rem($gs-gutter/2); // Only horizontal space is scalable
+    float: right;
+    @include rem((
+        margin: $gs-baseline/4 $gs-gutter/2 $gs-baseline 0
+    ));
 
     i {
         display: block;
     }
 
     @include mq(mobileLandscape) {
-        @include rem((margin-left: $gs-gutter));
+        @include rem((margin-right: $gs-gutter));
+    }
+}
+
+
+/* Pre-header
+   ========================================================================== */
+
+.pre-header {
+    float: left;
+    min-width: gs-span(2);
+    padding-top: $gs-baseline/2;
+    z-index: 1;
+    position: relative;
+
+    @include mq(tablet) {
+        float: none;
     }
 }
 

@@ -68,7 +68,17 @@
         height: auto;
         background-color: transparent;
         -webkit-font-smoothing: antialiased;
-        @include font-size(14, 20);
+        @include fs-header(1);
+        text-decoration: none;
+
+        &:link,
+        &:visited {
+            color: $c-neutral1;
+        }
+        &:hover,
+        &:focus {
+            color: $c-newsAccent;
+        }
     }
 }
 
@@ -91,8 +101,6 @@
 
 .nav-container {
     display: none;
-    background-color: $c-neutral7;
-    border-bottom: 1px solid $c-neutral5;
 
     @include mq(tablet) {
         display: block;
@@ -104,7 +112,7 @@
     display: none;
     height: 40px;
     overflow: hidden;
-    @include rem((padding: 0 $gs-gutter));
+    @include rem((padding: 0 $gs-gutter*3 0 $gs-gutter));
 
     @include mq(tablet) { display: block; }
 
@@ -126,13 +134,13 @@
     }
 
     .nav__link {
-        color: $c-neutral1;
+        color: $c-brandBlue;
         display: block;
         @include rem((
             margin: 10px 0 $baseline*3,
-            padding: 2px 9px 0 9px
+            padding: 2px $gs-gutter/2 0
         ));
-        @include font-size(14, 19);
+        @include fs-header(1);
     }
 
     .nav__link,
@@ -144,8 +152,6 @@
 
     .is-active .nav__link {
         color: $c-neutral1;
-        font-weight: bold;
-        border-color: $c-neutral1;
     }
 
     .nav__item:first-child .nav__link { padding-left: 0; }
@@ -188,8 +194,6 @@
             padding: 2px 9px 0,
             font-size: 14px
         ));
-        font-family: $serif !important;
-        font-weight: bold;
 
         &,
         &:focus,
@@ -199,7 +203,6 @@
         }
     }
     .is-active .nav__link {
-        font-family: $serifheadline !important;
         line-height: 18px !important;
         line-height: rem(18px) !important;
         font-weight: bold;
@@ -305,10 +308,14 @@
    ========================================================================== */
 
 .nav .nav__item .nav__link--faded {
-    color: $c-neutral2;
-}
-.nav .nav__item .nav__link--faded-footer {
-    color: #9DBBD4;
+    &:link,
+    &:visited {
+        color: $c-neutral2;
+    }
+    &:hover,
+    &:focus {
+        color: $c-newsAccent;
+    }
 }
 
 
