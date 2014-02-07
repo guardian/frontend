@@ -177,6 +177,11 @@ object Switches extends Collections {
     safeState = Off, endOfQ4
   )
 
+  val ScrollDepthSwitch = Switch("Analytics", "scroll-depth",
+    "Enables tracking and measurement of scroll depth",
+    safeState = Off, never
+  )
+
   // Discussion Switches
 
   val DiscussionSwitch = Switch("Discussion", "discussion",
@@ -434,6 +439,7 @@ object Switches extends Collections {
     TagLinking,
     SponsoredContentSwitch,
     OphanSwitch,
+    ScrollDepthSwitch,
     ContentApiPutSwitch,
     AmaaSwitch,
     EffectiveMeasureSwitch,

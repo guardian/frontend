@@ -26,6 +26,7 @@ define([
     'common/modules/ui/relativedates',
     'common/modules/analytics/clickstream',
     'common/modules/analytics/omniture',
+    'common/modules/analytics/scrollDepth',
     'common/modules/adverts/adverts',
     'common/utils/cookies',
     'common/modules/analytics/omnitureMedia',
@@ -70,6 +71,7 @@ define([
     RelativeDates,
     Clickstream,
     Omniture,
+    ScrollDepth,
     Adverts,
     Cookies,
     OmnitureMedia,
@@ -217,6 +219,14 @@ define([
             if (config.switches.ophan) {
                 require('ophan/ng', function (ophan) {
                     ophan.record({'ab': ab.getParticipations()});
+
+                    if(config.switches.scrollDepth) {
+                        mediator.on('scrolldepth:data', ophan.record);
+
+                        var sd = new ScrollDepth({
+                            isContent: config.page.contentType === "Article"
+                        });
+                    }
                 });
             }
         },
