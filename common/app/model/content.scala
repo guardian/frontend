@@ -11,6 +11,7 @@ import views.support.{Naked, ImgSrc}
 import views.support.StripHtmlTagsAndUnescapeEntities
 import com.gu.openplatform.contentapi.model.{Content => ApiContent,Element =>ApiElement}
 import play.api.libs.json.JsValue
+import conf.Configuration.facebook
 
 class Content protected (val apiContent: ApiContentWithMeta) extends Trail with MetaData {
 
@@ -30,7 +31,18 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val isExpired = delegate.isExpired.getOrElse(false)
   lazy val blockVideoAds: Boolean = videoAssets.exists(_.blockVideoAds)
   lazy val isLiveBlog: Boolean = delegate.isLiveBlog
-  lazy val openGraphImage: String = mainPicture.flatMap(_.largestImage.flatMap(_.url)).getOrElse(conf.Configuration.facebook.imageFallback)
+
+  // read this before modifying
+  // https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
+  lazy val openGraphImage: String = {
+
+    def largest(i: ImageContainer) = i.largestImage.flatMap(_.url)
+
+    mainPicture.flatMap(largest)
+      .orElse(trailPicture.flatMap(largest))
+      .getOrElse(facebook.imageFallback)
+  }
+
   lazy val isSponsored: Boolean = tags.exists(_.id == "tone/sponsoredfeatures")
   lazy val sponsor: Option[Sponsor] = {
     if (isSponsored) {
