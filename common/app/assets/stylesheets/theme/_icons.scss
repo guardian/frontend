@@ -30,32 +30,12 @@
     }
 }
 
-.is-active .i-top-stories {
-    @extend .i-top-stories-active;
-
-    @if ($svg-support) {
-        .svg & {
-            @extend .svg-i-top-stories-active;
-        }
-    }
-}
-
 .is-signed-in .i-profile {
     @extend .i-profile-signed-in;
 
     @if ($svg-support) {
         .svg & {
             @extend .svg-i-profile-signed-in;
-        }
-    }
-}
-
-.is-active .i-profile {
-    @extend .i-profile-active;
-
-    @if ($svg-support) {
-        .svg & {
-            @extend .svg-i-profile-active;
         }
     }
 }
