@@ -20,16 +20,6 @@
     }
 }
 
-.is-active .i-search {
-    @extend .i-search-blue;
-
-    @if ($svg-support) {
-        .svg & {
-            @extend .svg-i-search-blue;
-        }
-    }
-}
-
 .is-signed-in .i-profile {
     @extend .i-profile-signed-in;
 

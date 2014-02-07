@@ -145,8 +145,6 @@ span.control__menu.i-menu {
 /* Search control
    ========================================================================== */
 
-.control--search {
-    padding-right: 14px;
 
     @include mq(tablet) {
         padding-right: 16px;

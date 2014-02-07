@@ -33,9 +33,21 @@
     padding: 0;
     max-width: none;
 }
-
+.search-placeholder {
+    min-height: 50px;
+    padding-top: $gs-baseline/2;
+}
 .search-box {
-    margin: 0 $gs-gutter;
+    @include rem((
+        margin: 0 $gs-gutter/2
+    ));
+
+    @include mq(mobileLandscape) {
+        @include rem((
+            margin-left: $gs-gutter,
+            margin-right: $gs-gutter
+        ));
+    }
 }
 
 .gsc-search-box .gsib_a {
@@ -63,6 +75,13 @@ input.gsc-search-button-v2 {
     padding: 7px 8px !important;
     width: 14px !important;
     height: 14px !important;
+}
+
+input.gsc-search-button,
+input.gsc-search-button:hover,
+input.gsc-search-button:focus {
+    border-color: $c-newsAccent;
+    background-color: $c-newsAccent;
 }
 
 .gs-result {
