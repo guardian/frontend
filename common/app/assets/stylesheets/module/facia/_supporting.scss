@@ -22,6 +22,7 @@
 
         & + & {
             border-left: 1px solid $c-neutral5;
+            
             @include rem((
                 padding-left: $gs-gutter/4
             ));

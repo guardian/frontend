@@ -90,5 +90,12 @@ object ImgSrc {
     }
   }
 
+  def imager(imageContainer: ImageContainer, maxWidth: Int): Option[String] = {
+    // get largest profile closest to the width
+    Profile.all.filter(_.height == None).sortBy(_.width).headOption.flatMap{ profile =>
+      imager(imageContainer, profile)
+    }
+  }
+
 }
 

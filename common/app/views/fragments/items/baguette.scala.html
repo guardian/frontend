@@ -1,33 +1,23 @@
 @(trail: Trail, index: Int)(implicit request: RequestHeader)
 
-@defining(VisualTone(trail)) { tone =>
-    <div
-        class="@RenderClasses(
-            "baguette",
-            s"tone-$tone")"
-        @trail.discussionId.map{ id => data-discussion-id="@id" }
-        data-discussion-closed="@trail.isClosedForComments"
-        data-link-name="trail | @{index + 1}">
+<div
+    class="@RenderClasses(
+        "baguette",
+        s"tone-${VisualTone(trail)}",
+        "tone-accent-border")"
+    @trail.discussionId.map{ id => data-discussion-id="@id" }
+    data-discussion-closed="@trail.isClosedForComments"
+    data-link-name="trail | @{index + 1}">
 
-        <div class="baguette__container">
-            <a href="@LinkTo{@trail.url}" class="baguette__link" data-link-name="article">
-                @defining(if (index == 0) { "1" } else { "2" }) { headerLevel =>
-                    <h@headerLevel class="baguette__title">
-                        @RemoveOuterParaHtml(trail.headline)
-                    </h@headerLevel>
-                }
-                @trail.trailPicture(5,3).map{ imageContainer =>
-                    @ImgSrc.imager(imageContainer, Item940).map { imgSrc =>
-                        <div class="baguette__media-wrapper">
-                            <div class="baguette__image-container js-image-upgrade inlined-image" data-src="@Html(imgSrc)" data-force-upgrade="desktop wide">
-                                @Item940.bestFor(imageContainer).map{ url => <img src="@Html(url)" class="responsive-img" alt="" /> }
-                            </div>
-                        </div>
-                    }
-                }
-            </a>
-        </div>
-
-        @fragments.items.elements.supporting(trail.supporting)
+    <div class="baguette__container">
+        <a href="@LinkTo{@trail.url}" class="baguette__link" data-link-name="article">
+            @defining(if (index == 0) { "1" } else { "2" }) { headerLevel =>
+                <h@headerLevel class="baguette__title">
+                    @RemoveOuterParaHtml(trail.headline)
+                </h@headerLevel>
+            }
+            @fragments.items.elements.image(trail, isImportant = true, maxWidth = 940)
+        </a>
     </div>
-}
+    @fragments.items.elements.supporting(trail.supporting, hasBackground = true)
+</div>

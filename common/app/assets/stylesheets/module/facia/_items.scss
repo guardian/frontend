@@ -553,7 +553,7 @@ $show-more-icon: (
         }
     }
 }
-.action--tone-comment .i.i-quote-orange { // Chained selector to overrule icon code from global.css
+.svg .action--tone-comment .i { // Chained selector to overrule icon code from global.css
     margin-top: 3px; // Align icon with text
     width: 1.45em;
     background-size: contain;

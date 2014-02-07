@@ -1,0 +1,18 @@
+@(trail: Trail, isImportant: Boolean = false, maxWidth: Int = 620)(implicit request: RequestHeader)
+
+@trail.trailPicture(5,3).map{ imageContainer =>
+    @ImgSrc.imager(imageContainer, maxWidth).map { imgSrc =>
+        <div class="media-wrapper">
+            <div
+                class="image-container js-image-upgrade @if(isImportant){inlined-image}"
+                data-src="@Html(imgSrc)"
+                @if(isImportant){data-force-upgrade="desktop wide"}>
+                @if(isImportant){
+                    @Item300.bestFor(imageContainer).map{ url =>
+                        <img src="@Html(url)" class="responsive-img" alt="" />
+                    }
+                }
+            </div>
+        </div>
+    }
+}
