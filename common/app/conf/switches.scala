@@ -177,6 +177,11 @@ object Switches extends Collections {
     safeState = Off, endOfQ4
   )
 
+  val ScrollDepthSwitch = Switch("Analytics", "scroll-depth",
+    "Enables tracking and measurement of scroll depth",
+    safeState = Off, never
+  )
+
   // Discussion Switches
 
   val DiscussionSwitch = Switch("Discussion", "discussion",
@@ -207,6 +212,11 @@ object Switches extends Collections {
   
   val ReleaseMessageSwitch = Switch("Feature Switches", "release-message",
     "If this is switched on users will be messaged that they are inside the alpha/beta/whatever release",
+    safeState = Off, sellByDate = endOfQ4
+  )
+
+  val RainbowLogo = Switch("Feature Switches", "rainbow-logo",
+    "If this is switched on the guardian logo will be replaced with a rainbow version",
     safeState = Off, sellByDate = endOfQ4
   )
 
@@ -434,6 +444,7 @@ object Switches extends Collections {
     TagLinking,
     SponsoredContentSwitch,
     OphanSwitch,
+    ScrollDepthSwitch,
     ContentApiPutSwitch,
     AmaaSwitch,
     EffectiveMeasureSwitch,
@@ -453,7 +464,8 @@ object Switches extends Collections {
     FaciaToolPressSwitch,
     DogpileSwitch,
     ShowAllArticleEmbedsSwitch,
-    ImageServerSwitch
+    ImageServerSwitch,
+    RainbowLogo
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
