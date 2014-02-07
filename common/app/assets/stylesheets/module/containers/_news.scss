@@ -24,6 +24,9 @@
             border-top-style: solid;
         }
     }
+    & .collection-wrapper:first-child .collection__item:first-child .item__link {
+        border-top-width: 0;
+    }
     .item__media-wrapper,
     .item__image-container {
         display: none;
@@ -271,13 +274,13 @@
         height: 2px;
         width: 100%;
         background: $c-newsAccent;
+    }
 
-        .tone-features & {
-            background: $c-featuresAccent;
-        }
-        .tone-comments & {
-            background: $c-commentAccent;
-        }
+    &.tone-feature:before {
+        background: $c-featureAccent;
+    }
+    &.tone-comment:before {
+        background: $c-commentAccent;
     }
 
     &.show-more--hidden {
