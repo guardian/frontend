@@ -15,6 +15,28 @@
     iframe {
         margin: 0 auto;
     }
+
+    .ad-label {
+        height: 34px;
+        background-color: #F8F8F8;
+        padding-left: 4px;
+        border-top: 1px solid #E4E4E4;
+        @include box-sizing(border-box);
+
+        color: $c-neutral2;
+        font-family: $sans-serif;
+        @include font-size(12, 20);
+        text-align: left;
+        -webkit-font-smoothing: antialiased;
+        display: none;
+    }
+
+    &.ad-slot__show-label {
+
+        .ad-label {
+            display: block;
+        }
+    }
 }
 .ad-container {
     display: inline-block;
@@ -48,8 +70,30 @@
 }
 
 .ad-slot--inline {
+    padding: 0;
+
     .ad-container {
         line-height: 0;
+    }
+
+    .ad-label {
+        max-width: 300px;
+        margin: 0 auto;
+
+        @include mq(mobileLandscape, tablet) {
+            position: absolute;
+            width: 100%;
+            height: 50px;
+            margin: 0 !important;
+            z-index: -1;
+        }
+    }
+
+    &.ad-slot__show-label {
+
+        @include mq(mobileLandscape, tablet) {
+            text-align: right;
+        }
     }
 
     @include mq(tablet) {
