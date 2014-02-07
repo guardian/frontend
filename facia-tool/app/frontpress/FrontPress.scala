@@ -102,10 +102,22 @@ trait FrontPress extends Logging {
       ("sectionId", content.section),
       ("id", content.url),
       ("webUrl", content.webUrl),
+      ("tags", generateTags(content.tags)),
       ("safeFields", content.delegate.safeFields),
       ("elements", content.elements.map(generateElement)),
       ("meta", generateItemMeta(content))
     )
+
+  private def generateTags(tags: Seq[Tag]): Seq[JsValue] =
+    tags.map{ tag =>
+      Json.obj(
+        ("id", tag.id),
+        ("type", tag.tagType),
+        ("webTitle", tag.webTitle),
+        ("webUrl", tag.webUrl),
+        ("section", tag.section)
+      )
+    }
 
   private def generateInnerTrailJson(content: Content): JsValue =
     Json.obj(
