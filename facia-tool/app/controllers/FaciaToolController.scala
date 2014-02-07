@@ -67,7 +67,12 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
   def publishCollection(id: String) = AjaxExpiringAuthentication { request =>
     val identity = Identity(request).get
     FaciaToolMetrics.DraftPublishCount.increment()
-    FaciaApi.publishBlock(id, identity)
+    val block = FaciaApi.publishBlock(id, identity)
+    block.foreach{ b =>
+      if (Switches.FaciaToolPressSwitch.isSwitchedOn) {
+        FrontPressJob.pressByCollectionIds(b.id)
+      }
+    }
     notifyContentApi(id)
     Ok
   }
