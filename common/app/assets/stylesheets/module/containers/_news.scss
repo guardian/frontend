@@ -24,8 +24,15 @@
             border-top-style: solid;
         }
     }
-    & .collection-wrapper:first-child .collection__item:first-child .item__link {
-        border-top-width: 0;
+    & .collection-wrapper:first-child .collection__item {
+        &:first-child .item__link {
+            border-top-width: 0;
+        }
+        @include mq(tablet) {
+            .item__link {
+                border-top-width: 0;
+            }
+        }
     }
     .item__media-wrapper,
     .item__image-container {
