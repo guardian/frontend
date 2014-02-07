@@ -302,7 +302,8 @@ define([
             var path = (document.location.pathname) ? document.location.pathname : '/',
                 exitLink = '/preference/platform/classic?page=' + encodeURIComponent(path + '?view=classic'),
                 msg = '<p class="site-message__message" id="site-message__message">' +
-                            'You’re viewing a beta release of the Guardian’s responsive website. <a href="/help/2013/oct/04/alpha-testing-and-evolution-of-our-mobile-site">Find out more</a>' +
+                            'You’re viewing a beta release of the Guardian’s responsive website. <a href="/help/2013/oct/04/alpha-testing-and-evolution-of-our-mobile-site">Find out more</a>.' +
+                            ' We’d love to hear your <a href="https://s.userzoom.com/m/MSBDMTBTMTE5" data-link-name="feedback">feedback</a>' +
                       '</p>' +
                       '<ul class="site-message__actions unstyled">' +
                            '<li class="site-message__actions__item">' +
