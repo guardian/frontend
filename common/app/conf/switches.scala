@@ -360,7 +360,7 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 13)
   )
 
-  // Facia Tool
+  // Facia Tool Switches
 
   val ToolDisable = Switch("Facia Tool", "facia-tool-disable",
     "If this is switched on then the fronts tool is disabled",
@@ -372,20 +372,22 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val ContentApiPutSwitch = Switch("Facia Tool", "facia-tool-contentapi-put",
+    "If this switch is on facia tool will PUT all collection changes to content api",
+    safeState = Off, sellByDate = never
+  )
+
+  val FaciaToolPressSwitch = Switch("Facia Tool", "facia-tool-press-front",
+    "If this switch is on facia tool will press fronts on each change",
+    safeState = Off, sellByDate = never
+  )
+
   // Image Switch
 
   val ImageServerSwitch = Switch("Image Server", "image-server",
     "If this switch is on images will be served off i.guim.co.uk (dynamic image host).",
     safeState = On, sellByDate = never // this is a performance related switch, not a feature switch
   )
-
-  // Facia Tool Switches
-
-  val ContentApiPutSwitch = Switch("Facia Tool", "facia-tool-contentapi-put",
-    "If this switch is on facia tool will PUT all collection changes to content api",
-    safeState = Off, sellByDate = never
-  )
-
 
   val all: List[Switch] = List(
     AutoRefreshSwitch,
@@ -447,6 +449,8 @@ object Switches extends Collections {
     LCMortgageFeedSwitch,
     GuBookshopFeedsSwitch,
     NetworkFrontOptIn,
+    ImageServerSwitch,
+    FaciaToolPressSwitch,
     DogpileSwitch,
     ShowAllArticleEmbedsSwitch,
     ImageServerSwitch

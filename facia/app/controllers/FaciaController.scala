@@ -11,6 +11,7 @@ import views.support.{TemplateDeduping, NewsContainer}
 import scala.concurrent.Future
 import play.api.templates.Html
 
+
 class FaciaController extends Controller with Logging with ExecutionContexts {
 
   val front: Front = Front
@@ -84,6 +85,23 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
         }
       }.getOrElse(Cached(60)(NotFound))
     }
+  }
+
+  def renderFaciaPress(path: String) = Action.async { implicit request =>
+
+    FrontPage(path).map { frontPage =>
+      FrontJson.get(path).map(_.map{ faciaPage =>
+        Cached(frontPage) {
+          if (request.isJson) {
+            JsonFront(frontPage, faciaPage)
+          }
+          else
+            Ok(views.html.front(frontPage, faciaPage))
+        }
+
+      }.getOrElse(Cached(60)(NotFound("No Facia Page"))))
+    }.getOrElse(Future.successful(Cached(60)(NotFound("No Front Page"))))
+
   }
 
   def renderCollection(id: String) = DogpileAction { implicit request =>

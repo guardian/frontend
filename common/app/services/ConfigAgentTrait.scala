@@ -1,18 +1,30 @@
 package services
 
-import common.ExecutionContexts
-import play.api.libs.json.{Json, JsValue}
+import common.{AkkaAgent, ExecutionContexts}
+import play.api.libs.json.{JsNull, Json, JsValue}
 import model.Config
-import akka.agent.Agent
 
 trait ConfigAgentTrait extends ExecutionContexts {
-  val configAgent: Agent[JsValue]
+  private val configAgent = AkkaAgent[JsValue](JsNull)
 
   def refresh() = S3FrontsApi.getMasterConfig map {s => configAgent.send(Json.parse(s))}
 
   def getPathIds: List[String] = {
     val json = configAgent.get()
     (json \ "fronts").asOpt[Map[String, JsValue]].map { _.keys.toList } getOrElse Nil
+  }
+
+  def getConfigCollectionMap: Map[String, Seq[String]] = {
+    val json = configAgent.get()
+    (json \ "fronts").asOpt[Map[String, JsValue]].map { m =>
+      m.mapValues{j => (j \ "collections").asOpt[Seq[String]].getOrElse(Nil)}
+    } getOrElse Map.empty
+  }
+
+  def getConfigsUsingCollectionId(id: String): Seq[String] = {
+    getConfigCollectionMap.collect{
+      case (configId, collectionIds) if collectionIds.contains(id) => configId
+    }.toSeq
   }
 
   def getConfigForId(id: String): Option[List[Config]] = {
