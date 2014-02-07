@@ -35,7 +35,8 @@ trait PreferenceController extends Results {
         Cookie( name,
                 value,
                 maxAge = if (value.nonEmpty) { Some(5184000) } else { Some(-1) },
-                domain = getShortenedDomain(request.domain))
+                domain = getShortenedDomain(request.domain),
+                httpOnly = false)
       }.toSeq:_*)
     )
   } else Forbidden("will not redirect there")
