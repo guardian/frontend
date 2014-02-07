@@ -91,7 +91,7 @@
 		color: #333;
 		font-family: $serifheadline;
 		font-weight: normal;
-		@include font-size(16);
+		@include font-size(15);
 		-webkit-font-smoothing: antialiased;
 		text-overflow: ellipsis;
 		white-space: pre;
@@ -127,7 +127,7 @@
 
     	label {
 			padding: 8px 0 8px 8px;
-			@include font-size(15);
+			@include font-size(14, 16);
 	    	@include box-sizing(border-box);
 	    	float: left;
     		display: none;
@@ -163,7 +163,7 @@
     }
 
     @include mq($from: tablet) {
-    	
+
     	.list__item {
 		    width: 20%;
 		    padding-left: $baseline;
@@ -191,7 +191,9 @@
 		    position: absolute;
 		    left: $baseline;
 		    bottom: 0;
+            width: 100%;
 		    margin-top: 20px;
+            text-align: left;
 		}
 
 	    .commercial__search {
@@ -201,12 +203,12 @@
 	    	}
 
 	    	label {
-	    		width: 30%;
+	    		width: 37%;
 	    		display: block;
 	    	}
 
 	        .text-input {
-	            width: 50%;
+	            width: 43%;
 	            @include font-size(15);
 	        }
 
