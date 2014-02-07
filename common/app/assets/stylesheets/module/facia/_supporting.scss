@@ -1,0 +1,35 @@
+.supporting {
+    clear: both;
+}
+.supporting-list {
+    margin: 0;
+    list-style-type: none;
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+.supporting__item {
+    border-top: 1px solid $c-neutral5;
+
+    @include rem((
+        padding-top: $gs-baseline/3,
+        padding-bottom: nth(nth($fs-headlines, 1), 2),
+    padding-right: $gs-gutter/4
+    ));
+    @include mq(tablet) {
+        display: table-cell;
+
+        & + & {
+            border-left: 1px solid $c-neutral5;
+            @include rem((
+                padding-left: $gs-gutter/4
+            ));
+        }
+    }
+}
+.supporting__action {
+    display: block;
+    margin: 0;
+    @include fs-headline(1);
+}
