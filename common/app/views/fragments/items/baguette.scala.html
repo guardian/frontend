@@ -1,4 +1,4 @@
-@(trail: model.Trail, index: Int)(implicit request: RequestHeader)
+@(trail: Trail, index: Int)(implicit request: RequestHeader)
 
 @defining(VisualTone(trail)) { tone =>
     <div
@@ -20,7 +20,7 @@
                     @ImgSrc.imager(imageContainer, Item940).map { imgSrc =>
                         <div class="baguette__media-wrapper">
                             <div class="baguette__image-container js-image-upgrade inlined-image" data-src="@Html(imgSrc)" data-force-upgrade="desktop wide">
-                                @Item300.bestFor(imageContainer).map{ url => <img src="@Html(url)" class="responsive-img" alt="" /> }
+                                @Item940.bestFor(imageContainer).map{ url => <img src="@Html(url)" class="responsive-img" alt="" /> }
                             </div>
                         </div>
                     }

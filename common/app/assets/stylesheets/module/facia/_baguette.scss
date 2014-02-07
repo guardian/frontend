@@ -1,7 +1,7 @@
 .baguette {
     background-color: $c-newsDefault;
     @include rem((
-        margin: 0 $gs-gutter/2 $gs-baseline/2
+        margin: 0 $gs-gutter/2 $gs-baseline*2
     ));
 
     .supporting {
@@ -12,7 +12,10 @@
     }
     .supporting__action {
         color: #ffffff;
-        @include rem((padding-bottom: 4px));
+        @include rem((
+            padding-bottom: 4px,
+            padding-left: 5px
+        ));
     }
 }
 .baguette__link {
