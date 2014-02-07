@@ -175,7 +175,7 @@ object Switches extends Collections {
   )
 
   val ScrollDepthSwitch = Switch("Analytics", "scroll-depth",
-    "Enables tracking of scroll depth measurement",
+    "Enables tracking and measurement of scroll depth",
     safeState = Off, never
   )
 
