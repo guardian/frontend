@@ -58,7 +58,6 @@ object FrontPressJob extends ExecutionContexts with Logging with implicits.Colle
     }
   }
 
-  def pressByCollectionIds(id: String): Unit = pressByCollectionIds(Set(id))
   def pressByCollectionIds(ids: Set[String]): Unit = {
     val paths: Set[String] = for {
       id <- ids

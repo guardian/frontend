@@ -68,11 +68,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     val identity = Identity(request).get
     FaciaToolMetrics.DraftPublishCount.increment()
     val block = FaciaApi.publishBlock(id, identity)
-    block.foreach{ b =>
-      if (Switches.FaciaToolPressSwitch.isSwitchedOn) {
-        FrontPressJob.pressByCollectionIds(b.id)
-      }
-    }
+    block.foreach(b => pressCollectionId(b.id))
     notifyContentApi(id)
     Ok
   }
@@ -106,9 +102,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
           case (verb, updateList) if verb == "remove" => UpdateActions.updateCollectionFilter(updateList.id, updateList, identity)
         }.flatten.map(b => (b.id, b)).toMap
 
-        if (Switches.FaciaToolPressSwitch.isSwitchedOn) {
-          FrontPressJob.pressByCollectionIds(updatedCollections.keySet)
-        }
+        pressCollectionIds(updatedCollections.keySet)
 
         if (updatedCollections.nonEmpty)
           Ok(Json.toJson(updatedCollections)).as("application/json")
@@ -124,5 +118,11 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
       ConfigAgent.getConfig(id)
         .map {config => ContentApiWrite.writeToContentapi(config)}
     else None
+
+  def pressCollectionId(id: String): Unit = pressCollectionIds(Set(id))
+  def pressCollectionIds(ids: Set[String]): Unit =
+    if (Switches.FaciaToolPressSwitch.isSwitchedOn) {
+      FrontPressJob.pressByCollectionIds(ids)
+    }
 
 }
