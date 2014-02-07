@@ -1,4 +1,4 @@
-@(items: Seq[Trail], containerIndex: Int)(implicit request: RequestHeader)
+@(items: Seq[Trail], style: Container, containerIndex: Int)(implicit request: RequestHeader)
 
 <div class="collection-wrapper">
     @items.slice(0, 1).zipWithIndex.map{ case (trail, index) =>
@@ -57,7 +57,7 @@
 }
 @defining(items.slice(8, 24)) { items =>
     @if(items.nonEmpty) {
-        <div class="linkslist-container js-container--show-more">
+        <div class="linkslist-container js-container--show-more tone-@{style.tone}" data-tone="@style.tone">
             <ul class="l-columns linkslist">
                 @items.zipWithIndex.map{ case (trail, index) =>
                     @trail match {

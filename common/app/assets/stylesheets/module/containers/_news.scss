@@ -271,6 +271,13 @@
         height: 2px;
         width: 100%;
         background: $c-newsAccent;
+
+        .tone-features & {
+            background: $c-featuresAccent;
+        }
+        .tone-comments & {
+            background: $c-commentAccent;
+        }
     }
 
     &.show-more--hidden {

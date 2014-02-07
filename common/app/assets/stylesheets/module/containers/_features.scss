@@ -160,9 +160,5 @@
         @include mq(tablet) {
             @include rem((margin-top: $gs-baseline*2));
         }
-
-        &:before {
-            background: $c-featureAccent; // Change color of border on top of the links list container
-        }
     }
 }
