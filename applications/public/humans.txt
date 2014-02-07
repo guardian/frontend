@@ -111,3 +111,25 @@ From: Manchester, UK
 Software Architect/Hacker: Phil Wills
 Twitter: @philwills
 
+Developer (Tech Lead): Jenny Sivapalan
+Twitter: @jenny_sivapalan
+From: London, UK
+
+Developer: Mariot Chauvin
+Twitter: @mchv
+
+Developer: Nicolas Long
+Twitter: @room271
+Website: http://room271.net
+From: London, UK
+
+Developer: Justin Pinner
+Twitter: @_JustinPinner
+
+QA: Troy Harris
+LinkedIn: troyharris
+Twitter: @troyharrisoz
+From: Wollongong, Australia
+
+Agile Project Manager: Huma Islam
+From: London, UK

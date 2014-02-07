@@ -25,26 +25,16 @@
     @include mq(desktop) {
         @include rem((width: gs-span(12)));
     }
-    @include mq(wide) {
-        @include rem((width: gs-span(16)));
+    @include mq(faciaLeftCol) {
+        @include rem((width: gs-span(14)));
 
         .container__title {
-            float: left;
-            @include rem((
-                width: gs-span(3) + $gs-gutter,
-                margin-right: gs-span(1) + $gs-gutter
-            ));
+            margin-bottom: 0;
         }
         .container__body {
             overflow: hidden;
-            display: table-cell;
-            width: 100000px;
-            max-width: 100%;
-        }
-        .container__toggle {
             @include rem((
-                right: gs-span(12) + $gs-gutter,
-                min-width: 40px
+                margin-left: gs-span(2) + $gs-gutter
             ));
         }
         .container--news {
@@ -53,12 +43,28 @@
             }
         }
     }
+    @include mq(wide) {
+        @include rem((width: gs-span(16)));
+
+        .container__title {
+            float: left;
+            @include rem((
+                width: gs-span(3),
+                margin-right: $gs-gutter
+            ));
+        }
+        .container__body {
+            margin-left: 0;
+            @include rem((width: gs-span(12)));
+        }
+    }
 }
 
 @import "module/facia/_extends";
 @import "module/facia/_mixins";
 @import "module/facia/_items";
 @import "module/facia/_fromage";
+@import "module/facia/_linkslist";
 
 @import "module/containers/_news";
 @import "module/containers/_sport";
@@ -68,4 +74,3 @@
 @import "module/containers/_commentanddebate";
 @import "module/containers/_people";
 
-@import "module/facia/_linkslist";

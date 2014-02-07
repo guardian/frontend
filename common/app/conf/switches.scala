@@ -105,6 +105,9 @@ object Switches extends Collections {
     "Enable the AMAA audience segment tracking.",
     safeState = Off, sellByDate = endOfQ4)
 
+  val EffectiveMeasureSwitch = Switch("Commercial Tags", "effective-measure",
+    "Enable the Effective Measure audience segment tracking.",
+    safeState = Off, sellByDate = endOfQ4)
 
   // Commercial Feeds
 
@@ -202,11 +205,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
   )
   
-  val ParagraphIndentsSwitch = Switch("Feature Switches", "paragraph-indents",
-    "If switched on whitespace between paragraphs will be reduced.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
-  )
-
   val ReleaseMessageSwitch = Switch("Feature Switches", "release-message",
     "If this is switched on users will be messaged that they are inside the alpha/beta/whatever release",
     safeState = Off, sellByDate = endOfQ4
@@ -438,6 +436,7 @@ object Switches extends Collections {
     OphanSwitch,
     ContentApiPutSwitch,
     AmaaSwitch,
+    EffectiveMeasureSwitch,
     ImrWorldwideSwitch,
     DiagnosticsRequestLogging,
     DiagnosticsJavascriptErrorLogging,
@@ -454,7 +453,6 @@ object Switches extends Collections {
     FaciaToolPressSwitch,
     DogpileSwitch,
     ShowAllArticleEmbedsSwitch,
-    ParagraphIndentsSwitch,
     ImageServerSwitch
   )
 
