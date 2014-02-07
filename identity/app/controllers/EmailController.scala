@@ -65,7 +65,7 @@ class EmailController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
               }
 
             case Right((user, subscriber)) =>
-              if (!(List("HTML", "TEXT") contains subscriber.htmlPreference)) logger.error(s"Invalid Subscriber htmlPreference: ${subscriber.htmlPreference}")
+              if (!(Set("HTML", "TEXT") contains subscriber.htmlPreference)) logger.error(s"Invalid Subscriber htmlPreference: ${subscriber.htmlPreference}")
               emailPrefsForm.fill((user.statusFields.isReceiveGnmMarketing, user.statusFields.isReceive3rdPartyMarketing, subscriber.htmlPreference))
           }
         }
