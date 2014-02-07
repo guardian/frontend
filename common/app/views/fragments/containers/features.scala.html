@@ -6,10 +6,11 @@
         @if(items.nonEmpty) {
             <section
                 class="@RenderClasses(Map(
-                    "container container--row-pattern" -> true,
+                    "container" -> true,
+                    "container--row-pattern" -> true,
                     s"container--${style.containerType}" -> true,
                     "js-container--toggle" -> (containerIndex > 0 && title.nonEmpty),
-                    "js-container-add-show-more" -> true))"
+                    "js-container-show-more" -> true))"
                 data-link-name="block | @config.id"
                 data-id="@config.id"
                 data-tone="@style.tone"
@@ -27,7 +28,7 @@
                     </h2>
                 }
                 <div class="container__body container--rolled-up-hide js-container-append-button">
-                    @fragments.collections.features(config, items, style, containerIndex)
+                    @fragments.collections.features(items, containerIndex)
                 </div>
             </section>
         }

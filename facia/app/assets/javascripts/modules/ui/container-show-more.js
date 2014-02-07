@@ -78,7 +78,8 @@ define([
         };
 
         this.addShowMore = function() {
-            this._$collection = $('.js-container--show-more', this._container)
+            this._$collection = $('.container__body > *', this._container)
+                .last()
                 .addClass(this._className);
             if (this._$collection.length === 0) {
                 return false;
