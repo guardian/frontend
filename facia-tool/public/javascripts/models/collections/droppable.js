@@ -30,7 +30,7 @@ define([
 
             newItemValidator: contentApi.validateItem,
 
-            newItemPersister: function(sourceItem, sourceList, targetList, id, position, isAfter) {
+            newItemPersister: function(newItem, sourceItem, sourceList, targetList, id, position, isAfter) {
                 var itemMeta,
                     timestamp,
                     edits = {};

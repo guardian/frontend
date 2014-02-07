@@ -1,9 +1,11 @@
 /* global _: true, humanized_time_span: true */
 define([
+    'knockout',
     'modules/vars',
     'utils/as-observable-props',
     'utils/populate-observables'
 ], function(
+    ko,
     vars,
     asObservableProps,
     populateObservables
@@ -12,6 +14,7 @@ define([
         if (!opts || !opts.id) { return; }
 
         this.id = opts.id;
+        this.parents = ko.observableArray();
 
         this.meta   = asObservableProps([
             'roleName',

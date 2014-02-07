@@ -35,6 +35,10 @@ define([
                 return findFirstById(vars.model.collections, id);
             })
             .filter(function(collection) { return !!collection; })
+            .map(function(collection) {
+                collection.parents.push(self);
+                return collection;
+             })
             .value()
         );
     }
@@ -49,6 +53,7 @@ define([
             roleName: 'Untitled collection'
         });
         collection.toggleOpen();
+        collection.parents.push(this);
         this.group.items.push(collection);
     };
 

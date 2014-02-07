@@ -161,7 +161,7 @@ define([
                             return;
                         }
 
-                        opts.newItemPersister(sourceItem, sourceList, targetList, id, position, isAfter);
+                        opts.newItemPersister(newItem, sourceItem, sourceList, targetList, id, position, isAfter);
                     });
                 }, false);
             }

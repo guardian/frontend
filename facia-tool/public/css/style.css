@@ -732,8 +732,45 @@ button {
     padding-bottom: 5px;
 }
 
-.cnf-collection .id {
-    font-size: 12px;
+.cnf-collection .placements {
+    color: #999999;
+}
+
+.is-parent {
+    display: none;
+}
+
+.left-col .also {
+    display: none;
+}
+
+.cnf-front .cnf-collection .placements.is-single {
+    display: none;
+}
+
+.cnf-collection .placements a {
+    color: #333333;
+}
+
+.cnf-collection .placements a:not(:first-child) {
+    border-left: 1px solid #CCCCCC;
+    padding-left: 5px;
+}
+
+.cnf-collection .edit-collection {
+    overflow: auto;
+}
+
+.cnf-collection .edit-collection label {
+    color: #999999;
+    width: 100px;
+    float: left;
+    clear: left;
+}
+
+.cnf-collection .edit-collection input {
+    float: left;
+    clear: right;
 }
 
 /*****************************************/

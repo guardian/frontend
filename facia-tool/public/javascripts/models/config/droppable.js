@@ -17,22 +17,22 @@ define([
             newItemValidator: function(newItem) {
                 var defer = $.Deferred();
 
-                if(newItem) {
-                    defer.resolve();
-                } else {
-                    defer.reject();
-                }
+                defer[newItem? 'resolve' : 'reject']();
 
                 return defer.promise();
             },
 
-            newItemPersister: function(sourceItem, sourceList, targetList, id, position, isAfter) {
+            newItemPersister: function(newItem, sourceItem, sourceList, targetList, id, position, isAfter) {
+
+                if (newItem.parents.indexOf(targetList.parent) < 0) {
+                    newItem.parents.push(targetList.parent);
+                }
+
                 var data = {
                     id: this.id,
                     collections: _.map(targetList.items(), function(item) { return item.id; })
                 };
                 // requires API endpoint
-                //console.log(data);
             }
         });
     }
