@@ -171,10 +171,14 @@ $c-live: #e81818;
         }
     }
 }
+
+.item__media-wrapper {
+    border-top: 4px solid #ffffff;
+}
+
 .item__image-container {
     display: none;
     position: relative;
-    margin-top: 4px;
     padding-bottom: 60%;
 
     &.inlined-image {
