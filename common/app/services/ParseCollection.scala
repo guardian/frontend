@@ -9,6 +9,7 @@ import play.api.libs.json.{JsObject, JsValue}
 import play.api.libs.ws.Response
 import scala.concurrent.Future
 import scala.Some
+import contentapi.QueryDefaults
 
 object Path {
   def unapply[T](uri: String) = Some(uri.split('?')(0))
@@ -22,9 +23,9 @@ object Seg {
   }
 }
 
-trait ParseCollection extends ExecutionContexts with Logging {
+trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging {
 
-  val showFieldsQuery: String = "trailText,headline,shortUrl,liveBloggingNow,commentCloseDate,shouldHideAdverts,lastModified"
+  val showFieldsQuery: String = FaciaDefaults.showElements
 
   case class CollectionMeta(lastUpdated: Option[String], updatedBy: Option[String], updatedEmail: Option[String])
   object CollectionMeta {
