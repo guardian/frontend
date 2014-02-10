@@ -19,7 +19,7 @@
     .ad-slot__label {
         height: 34px;
         background-color: #F8F8F8;
-        padding: 0 4px;
+        padding: 0 $baseline*2;
         border-top: 1px solid #E4E4E4;
         @include box-sizing(border-box);
 
