@@ -1,13 +1,13 @@
 define([
     'lodash/objects/assign',
     'lodash/collections/toArray',
-    'lodash/arrays/first',
+    'lodash/collections/find',
     'qwery',
     'bonzo'
 ], function(
     extend,
     toArray,
-    first,
+    find,
     qwery,
     bonzo
 ) {
@@ -18,7 +18,7 @@ define([
     };
 
     Truncator.prototype.config = {
-        contentEl: document.getElementById('article'),
+        contentEl: qwery('.js-article__container'),
         percentageCap: 40
     };
 
@@ -32,7 +32,7 @@ define([
 
     Truncator.prototype.findParagraphAtPercentage = function(paras) {
         var count = 0;
-        return first(paras, function(el) {
+        return find(paras, function(el) {
             count += this.getWordCount(el);
             return count > parseInt(this.config.wordCount/100*this.config.percentageCap, 10);
         }, this);
