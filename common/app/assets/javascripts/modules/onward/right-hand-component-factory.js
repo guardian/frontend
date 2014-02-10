@@ -10,9 +10,10 @@ define( [
     RightRecommendedForYou
 ){
 
-    function RightHandComponentFactory(config, mediator) {
-        this.mediator = mediator;
-        if(parseInt(config.wordCount, 10) > 500) {
+    function RightHandComponentFactory(config) {
+        this.config = config;
+        this.mediator = this.config.mediator;
+        if(parseInt(this.config.wordCount, 10) > 500) {
             this.renderRightHandComponent();
         }
     }
