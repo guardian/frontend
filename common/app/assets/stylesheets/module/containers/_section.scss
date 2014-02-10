@@ -9,9 +9,11 @@
         @include mq(tablet) {
             margin-top: 4px;
 
-            .item__link,
-            .item__media-wrapper {
+            .item__link {
                 border-top-width: 0;
+            }
+            .item__image-container {
+                margin-top: 0;
             }
         }
     }
