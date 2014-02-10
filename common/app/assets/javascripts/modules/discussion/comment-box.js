@@ -72,7 +72,7 @@ CommentBox.prototype.errorMessages = {
     USER_BANNED: 'Commenting has been disabled for this account (<a href="/community-faqs#321a">why?</a>).',
     API_ERROR: 'Sorry, there was a problem posting your comment.',
     EMAIL_VERIFIED: '<span class="d-comment-box__error-meta">Sent. Please check your email to verify '+
-        (IdentityApi.getUserFromCookie() ? IdentityApi.getUserFromCookie().primaryEmailAddress : ' your email address') +'</span>.',
+        (IdentityApi.getUserFromCookie() ? IdentityApi.getUserFromCookie().primaryEmailAddress : ' your email address') +'. Once verified post your comment.</span>.',
     EMAIL_VERIFIED_FAIL: 'We are having technical difficulties. Please try again later or '+
         '<a href="/send/email" class="js-id-send-validation-email"><strong>resend the verification</strong></a>.',
     EMAIL_NOT_VERIFIED: 'Please confirm your email address to post your first comment.<br />'+
@@ -90,7 +90,9 @@ CommentBox.prototype.defaultOptions = {
     premod: false,
     focus: false,
     state: 'top-level',
-    replyTo: null
+    replyTo: null,
+    switches: {},
+    priorToVerificationDate: new Date(1391904001337) // Sun Feb 09 2014 00:00:01 GMT+0000 (GMT)
 };
 
 /**
@@ -176,8 +178,6 @@ CommentBox.prototype.postComment = function(e) {
     e.preventDefault();
     self.clearErrors();
 
-    // debugger
-
     var validEmailCommentSubmission = function () {
         if (comment.body === '') {
             self.error('EMPTY_COMMENT_BODY');
@@ -205,18 +205,28 @@ CommentBox.prototype.postComment = function(e) {
         ValidationEmail.init(self.context);
     };
 
-    // if (!self.getUserData().emailVerified) {
-    //     IdentityApi.refreshStaleCookie()
-    //                     .then(function success () {
-    //                         if (!IdentityApi.getUserFromCookie().emailVerified) {
-    //                             invalidEmailError();
-    //                         } else {
-    //                             validEmailCommentSubmission();
-    //                         }
-    //                     }, invalidEmailError);
-    // }
+    if (self.options.switches.discussionVerifiedEmailPosting && !self.getUserData().emailVerified) { // Cookie could be stale so lets refresh and check from the api
 
-    validEmailCommentSubmission(); // remove me
+        var createdDate = new Date(self.getUserData().accountCreatedDate);
+
+        if (createdDate > self.options.priorToVerificationDate) {
+            IdentityApi.getUserFromApiWithRefreshedCookie(function (user) {
+                if (user.statusFields.userEmailValidated === true) {
+                    validEmailCommentSubmission();
+                } else {
+                    invalidEmailError();
+                }
+            },
+            {
+                refreshCookie: true
+            });
+        } else {
+            validEmailCommentSubmission();
+        }
+
+    } else {
+        validEmailCommentSubmission();
+    }
 };
 
 /**

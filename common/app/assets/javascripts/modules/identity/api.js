@@ -65,6 +65,7 @@ define([
                     id: userData[0],
                     primaryEmailAddress: userData[1],
                     displayName: userData[2],
+                    accountCreatedDate: userData[6],
                     emailVerified: userData[7],
                     rawResponse: cookieData
                 };
@@ -72,21 +73,6 @@ define([
         }
 
         return userFromCookieCache;
-    };
-
-    Id.refreshStaleCookie = function () {
-        var endpoint = '/cookie/refresh',
-            request = ajax({
-                url: Id.idApiRoot + endpoint,
-                type: 'jsonp',
-                crossOrigin: true,
-                async: false,
-                data: {
-                    method: 'post'
-                }
-            });
-
-        return request;
     };
 
     /**
@@ -121,6 +107,36 @@ define([
                     url: Id.idApiRoot + '/user/me',
                     type: 'jsonp',
                     crossOrigin: true
+                }).then(
+                    function(response) {
+                        if(response.status === 'ok') {
+                            mergingCallback(response.user);
+                        } else {
+                            mergingCallback(null);
+                        }
+                    }
+                );
+            } else {
+                mergingCallback(null);
+            }
+        }
+    );
+
+    /**
+     * Gets the currently logged in user data from the identity api
+     * @param {function} callback
+     * @param {?Object} data optional flags eg: { refreshCookie: true }
+     */
+    Id.getUserFromApiWithRefreshedCookie = asyncCallMerger.mergeCalls(
+        function(mergingCallback) {
+            if(Id.isUserLoggedIn()) {
+                ajax({
+                    url: Id.idApiRoot + '/user/me',
+                    type: 'jsonp',
+                    crossOrigin: true,
+                    data: {
+                        refreshCookie:true
+                    }
                 }).then(
                     function(response) {
                         if(response.status === 'ok') {

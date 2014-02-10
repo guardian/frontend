@@ -181,6 +181,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val DiscussionVerifiedEmailPosting = Switch("Discussion", "discussion-verified-email-posting",
+    "If this switch is on, posters to discussions must have a verified email address.",
+    safeState = Off, sellByDate = endOfQ4
+  )
+
   // Identity Switches
 
   val IdentityEmailVerificationSwitch = Switch("Identity Email verification", "id-email-verification",
@@ -201,7 +206,7 @@ object Switches extends Collections {
     "If switched on then all embeds will be shown inside article bodies",
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
   )
-  
+
   val ParagraphIndentsSwitch = Switch("Feature Switches", "paragraph-indents",
     "If switched on whitespace between paragraphs will be reduced.",
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
@@ -397,6 +402,7 @@ object Switches extends Collections {
     VideoAdvertSwitch,
     AudienceScienceSwitch,
     DiscussionSwitch,
+    DiscussionVerifiedEmailPosting,
     IdentityEmailVerificationSwitch,
     OpenCtaSwitch,
     FontSwitch,
