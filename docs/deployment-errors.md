@@ -11,14 +11,14 @@ Show exception details
 ```
 
 - The deployment process is attempting to scale down, but this would leave the autoscaling group empty.
-- You need to re-deploy this project.
+- You need to re-deploy this project, Eg. `gu deploy --code -n <project>`
 
 ```
 java.lang.RuntimeException Autoscaling group does not have the capacity
 to deploy current max = 2 - desired max = 4 Show exception details
 ```
 
-- A previous deployment has failed to scale down the infrastructure.
+- A previous deployment or autoscale action has failed to scale down the infrastructure.
 - You need to scale down the autoscale group so it's got room to add your servers, Eg, `gu groups update <group> 3 3 6`
 
 ```
@@ -43,10 +43,11 @@ java.lang.RuntimeException Check failed to pass within 1200000
 milliseconds (tried 41 times) - aborting Show exception details
 ```
 
-- A box (or several boxes) has failed to launch and pass it's healthcheck.
+- A box (or several boxes) has failed to launch and pass it's healthcheck meaning the healthcheck URL is not passing.
 - Potentially you've released something that means the box can't be
   started or added to the load balancers. 
-- Log on to the box and have a look in the boot-up logs.
+- Does the healthcheck look like it is working? Eg, find the server, `gu ec2 list` then curl it's heathcheck, `<host>:18080/management/healthcheck` 
+- Log on to the box and have a look in the boot-up logs for errors and warnings.
 - Ultimately, you'll probably need to check the size of the autoscale group and
   redeploy, but don't do this without understanding why it failed.
 
@@ -56,7 +57,7 @@ Chadburn Show exception details
 ```
 
 - Someone (me in this case!) stopped your build manually.
-- If that person isn't you then go and talk to them about why they stopped it.
+- If that person isn't you then go and talk to them about why they stopped it as there may be a problem.
 
 ```
 com.amazonaws.services.s3.model.AmazonS3Exception Status Code: 400, AWS
