@@ -62,6 +62,14 @@ $c-live: #e81818;
         }
     }
 }
+.container__updated {
+    @include fs-headline(1);
+    margin-top: ($gs-baseline/3)*5;
+    border-top: 1px solid $c-neutral5;
+    @include rem((
+        width: 140px
+    ));
+}
 
 .container__toggle,
 .item__live-indicator,

@@ -18,16 +18,27 @@
 
                 <div class="container__border tone-@style.tone tone-accent-border"></div>
 
-                <h2 class="container__title">
-                    <span class="container__title__label today u-text-hyphenate">
-                        <b class="today__dayofweek js-dayofweek">@Format(DateTime.now(), "EEEE")</b>
-                        <span class="u-nobr today__sub">
-                            <span class="today__dayofmonth js-dayofmonth">@Format(DateTime.now(), "d")</span>
-                            <span class="today__month">@Format(DateTime.now(), "MMMM")</span>
-                            <span class="today__year">@Format(DateTime.now(), "yyyy")</span>
+                <div class="container__label">
+                    <h2 class="container__title">
+                        <span class="container__title__label today u-text-hyphenate">
+                            <b class="today__dayofweek js-dayofweek">@Format(DateTime.now(), "EEEE")</b>
+                            <span class="u-nobr today__sub">
+                                <span class="today__dayofmonth js-dayofmonth">@Format(DateTime.now(), "d")</span>
+                                <span class="today__month">@Format(DateTime.now(), "MMMM")</span>
+                                <span class="today__year">@Format(DateTime.now(), "yyyy")</span>
+                            </span>
                         </span>
-                    </span>
-                </h2>
+                    </h2>
+                    <h3 class="container__updated">
+                        @items.map(_.webPublicationDate).sortBy(-_.getMillis).headOption.map { latestDateTime =>
+                            Last updated:
+                            <time
+                                itemprop="datePublished"
+                                datetime="@latestDateTime.toString("yyyy-MM-dd'T'HH:mm:ssZ")
+                                data-timestamp="@latestDateTime.getMillis"">@Format(latestDateTime, "E, h:ma")</time>
+                        }
+                    </h3>
+                </div>
                 <div class="container__body container--rolled-up-hide js-container-append-button">
                     @fragments.collections.rowPattern(items, style, containerIndex)
                 </div>

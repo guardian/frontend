@@ -46,7 +46,7 @@
     @include mq(wide) {
         @include rem((width: gs-span(16)));
 
-        .container__title {
+        .container__label {
             float: left;
             @include rem((
                 width: gs-span(3),
