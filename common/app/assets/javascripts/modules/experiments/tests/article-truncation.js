@@ -22,7 +22,7 @@ define([
             {
                 id: 'twenty',
                 test: function (context, config) {
-                    new Truncator({
+                    var t = new Truncator({
                         percentageCap: 20,
                         wordCount: config.page.wordCount
                     });
@@ -31,7 +31,7 @@ define([
             {
                 id: 'thirty',
                 test: function (context, config) {
-                    new Truncator({
+                    var t = new Truncator({
                         percentageCap: 30,
                         wordCount: config.page.wordCount
                     });
@@ -40,7 +40,7 @@ define([
             {
                 id: 'forty',
                 test: function (context, config) {
-                    new Truncator({
+                    var t = new Truncator({
                         percentageCap: 40,
                         wordCount: config.page.wordCount
                     });
