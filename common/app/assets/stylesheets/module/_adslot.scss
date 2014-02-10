@@ -16,28 +16,34 @@
         margin: 0 auto;
     }
 
-    .ad-label {
+    .ad-slot__label {
         height: 34px;
         background-color: #F8F8F8;
-        padding-left: 4px;
+        padding: 0 4px;
         border-top: 1px solid #E4E4E4;
         @include box-sizing(border-box);
 
         color: $c-neutral2;
         font-family: $sans-serif;
         @include font-size(12, 20);
-        text-align: left;
+        text-align: right;
         -webkit-font-smoothing: antialiased;
         display: none;
     }
 
     &.ad-slot__show-label {
 
-        .ad-label {
+        .ad-slot__label {
             display: block;
         }
     }
 }
+
+.ad-slot__wrapper {
+    max-width: 100%;
+    display: inline-block;
+}
+
 .ad-container {
     display: inline-block;
     width: auto;
@@ -59,6 +65,13 @@
     @include mq(tablet) {
         background-color: #ffffff;
     }
+
+    @include mq($to: tablet) {
+        .ad-slot__label {
+            height: auto;
+            border: none;
+        }
+    }
 }
 
 .parts__head {
@@ -76,7 +89,7 @@
         line-height: 0;
     }
 
-    .ad-label {
+    .ad-slot__label {
         max-width: 300px;
         margin: 0 auto;
 
@@ -86,6 +99,7 @@
             height: 50px;
             margin: 0 !important;
             z-index: -1;
+            text-align: left;
         }
     }
 

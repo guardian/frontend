@@ -28,8 +28,8 @@ define([
         inlineAdLimit: null,
         wordsPerAd: 350,
         minWordsInParagraph: 120,
-        inlineAdTemplate: '<div class="ad-slot ad-slot--inline" data-base="%slot%" data-median="%slot%"><div class="ad-label">Advertisement</div><div class="ad-container"></div></div>',
-        mpuAdTemplate: '<div class="ad-slot ad-slot--mpu-banner-ad" data-link-name="ad slot mpu-banner-ad" data-base="%slot%" data-median="%slot%"><div class="ad-label">Advertisement</div><div class="ad-container"></div></div>'
+        inlineAdTemplate: '<div class="ad-slot ad-slot--inline" data-base="%slot%" data-median="%slot%"><div class="ad-slot__label">Advertisement</div><div class="ad-container"></div></div>',
+        mpuAdTemplate: '<div class="ad-slot ad-slot--mpu-banner-ad" data-link-name="ad slot mpu-banner-ad" data-base="%slot%" data-median="%slot%"><div class="ad-slot__label">Advertisement</div><div class="ad-container"></div></div>'
     };
 
     ArticleBodyAdverts.prototype.inlineAdsPlaced = 0;
