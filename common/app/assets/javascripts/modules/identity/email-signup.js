@@ -50,6 +50,9 @@ define([
 
     };
 
+    /*
+     *  Determines if the component should run.
+     */
     EmailSignup.prototype.canRun = function () {
         return  this.DOM.container && // container exists
                 (
@@ -60,6 +63,9 @@ define([
                 !this.checkStorage(this.listId); // user not already signed up to email
     };
 
+    /*
+     *  Accessor/creator for the classname config
+     */
     EmailSignup.prototype.getClass = function (className) {
         this.config = this.config || {};
         this.config.classes = this.config.classes || {
