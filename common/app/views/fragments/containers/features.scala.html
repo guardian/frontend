@@ -1,8 +1,8 @@
-@(config: Config, collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
+@(config: Config, collection: Collection, style: FeaturesContainer, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
 
 @defining(config.displayName.orElse(collection.displayName)) { title =>
 
-    @defining(templateDeduping(5, collection.items)) { items =>
+    @defining(templateDeduping(4, collection.items)) { items =>
         @if(items.nonEmpty) {
             <section
                 class="@RenderClasses(Map(
