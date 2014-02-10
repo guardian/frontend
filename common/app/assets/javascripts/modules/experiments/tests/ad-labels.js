@@ -10,7 +10,7 @@ define([
 
         this.id = 'AdLabels';
         this.expiry = '2014-02-24';
-        this.audience = 0.1;
+        this.audience = 0.3;
         this.audienceOffset = 0.4;
         this.description = 'Testing if putting labels next to ads impacts the CTR';
         this.canRun = function(config) {
