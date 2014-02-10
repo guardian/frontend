@@ -188,8 +188,8 @@ define([
 
             if(config.switches.rightHandMostPopular && config.page.contentType === 'Article') {
               var r = new RightHandComponentFactory({
-                  mediator: mediator,
-                  wordCount: config.page.wordCount
+                  wordCount: config.page.wordCount,
+                  mediator: mediator
               });
            }
         },

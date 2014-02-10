@@ -11,7 +11,7 @@ define( [
 ){
 
     function RightHandComponentFactory(config) {
-        this.config = extend(this.config, config);
+        this.config = config;
         this.mediator = this.config.mediator;
         if(parseInt(this.config.wordCount, 10) > 500) {
             this.renderRightHandComponent();
