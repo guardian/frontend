@@ -99,13 +99,18 @@ sealed trait AdSlot {
   val baseName: String
   val medianName: String
 }
-object FirstAdSlot extends AdSlot {
-  val baseName = "x49"
-  val medianName = "Middle1"
-}
-object SecondAdSlot extends AdSlot {
-  val baseName = "Bottom2"
-  val medianName = "Middle"
+object AdSlot {
+
+  object First extends AdSlot {
+    val baseName = "x49"
+    val medianName = "Middle1"
+  }
+
+  object Second extends AdSlot {
+    val baseName = "Bottom2"
+    val medianName = "Middle"
+  }
+
 }
 
 
