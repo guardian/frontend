@@ -191,7 +191,10 @@ define([
         initRightHandComponent: function(config, context) {
 
             if(config.switches.rightHandMostPopular && config.page.contentType === 'Article') {
-              var r = new RightHandComponentFactory(mediator);
+              var r = new RightHandComponentFactory({
+                  wordCount: config.page.wordCount,
+                  mediator: mediator
+              });
            }
         },
 
