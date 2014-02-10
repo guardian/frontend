@@ -1,9 +1,9 @@
-@(config: Config, items: Seq[Trail], style: Container, containerIndex: Int)(implicit request: RequestHeader)
+@(items: Seq[Trail], style: Container, containerIndex: Int)(implicit request: RequestHeader)
 
 <div class="collection-wrapper">
     <ul class="unstyled l-row l-row--items-2 collection">
         @items.slice(0, 2).zipWithIndex.map{ case (trail, index) =>
-            @fragments.items.rowPattern.standard(trail, index, 0)
+            @fragments.items.rowPattern.standard(trail, index, containerIndex)
         }
     </ul>
 </div>
@@ -16,10 +16,10 @@
             <ul class="unstyled l-row l-row--items-3 collection">
                 @items.zipWithIndex.map{ case (trail, index) =>
                     @trail match {
-                        case g: Gallery                      => { @fragments.items.rowPattern.standardGallery(g, index + 2, 0) }
-                        case v: Video                        => { @fragments.items.rowPattern.standardVideo(v, index + 2, 0) }
-                        case c if VisualTone(c) == "comment" => { @fragments.items.rowPattern.standardComment(c, index + 2, 0) }
-                        case t                               => { @fragments.items.rowPattern.standard(t, index + 2, 0) }
+                        case g: Gallery                      => { @fragments.items.rowPattern.standardGallery(g, index + 2, containerIndex) }
+                        case v: Video                        => { @fragments.items.rowPattern.standardVideo(v, index + 2, containerIndex) }
+                        case c if VisualTone(c) == "comment" => { @fragments.items.rowPattern.standardComment(c, index + 2, containerIndex) }
+                        case t                               => { @fragments.items.rowPattern.standard(t, index + 2, containerIndex) }
                     }
                 }
                 <li class="l-row__item l-row__item--mpu-300 hide-on-mobile">
@@ -34,7 +34,7 @@
 
 @defining(items.slice(4, 18)) { items =>
     @if(items.nonEmpty) {
-        <div class="linkslist-container js-container--show-more">
+        <div class="linkslist-container js-container--show-more tone-@{style.tone}" data-tone="@style.tone">
             <ul class="l-columns linkslist">
                 @items.zipWithIndex.map{ case (trail, index) =>
                     @trail match {

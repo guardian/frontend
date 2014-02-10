@@ -273,6 +273,13 @@
         background: $c-newsAccent;
     }
 
+    &.tone-feature:before {
+        background: $c-featureAccent;
+    }
+    &.tone-comment:before {
+        background: $c-commentAccent;
+    }
+
     &.show-more--hidden {
         &,
         &:before {
