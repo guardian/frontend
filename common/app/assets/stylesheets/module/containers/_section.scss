@@ -1,42 +1,19 @@
 .container--section {
-    @include mq($to: tablet) {
-        @include first-row(2);
-        .item:nth-child(-n+2) {
-            @include card-half-width($with-image: true);
+    .collection-wrapper:first-child .collection__item {
+        .gallerythumbs {
+            margin-top: 0;
         }
-        .item:nth-child(n+3) {
-            @extend %item-show-more;
+        &:first-child .item__link {
+            border-top-width: 0;
         }
-        .js-collection--show-more {
-            .item:nth-child(n+3) {
-                display: none;
+        @include mq(tablet) {
+            margin-top: 4px;
+
+            .item__link {
+                border-top-width: 0;
             }
-        }
-    }
-    @include mq(tablet) {
-        .item {
-            @include card;
-        }
-    }
-    @include mq(tablet, desktop) {
-        @include first-row(3);
-        .item:nth-child(-n+3) {
-            @include card-image;
-        }
-        .js-collection--show-more {
-            .item:nth-child(n+4) {
-                display: none;
-            }
-        }
-    }
-    @include mq(desktop) {
-        @include first-row(4);
-        .item:nth-child(-n+4) {
-            @include card-image;
-        }
-        .js-collection--show-more {
-            .item:nth-child(n+5) {
-                display: none;
+            .item__image-container {
+                margin-top: 0;
             }
         }
     }

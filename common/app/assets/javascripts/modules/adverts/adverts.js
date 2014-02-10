@@ -88,9 +88,11 @@ function (
     }
 
     function destroy() {
-        for (var i = 0, j = slots.length; i<j; ++i) {
-            slots[i].el.innerHTML = '';
-            slots[i].loaded = false;
+        if (slots.length) {
+            for (var i = 0, j = slots.length; i<j; ++i) {
+                slots[i].el.innerHTML = '';
+                slots[i].loaded = false;
+            }
         }
     }
 

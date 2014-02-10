@@ -4,11 +4,15 @@
 
     @defining(templateDeduping(5, collection.items)) { items =>
         @if(items.nonEmpty) {
-            <section class="container container--row-pattern container--@style.containerType @if(containerIndex > 0 && title.nonEmpty){js-container--toggle} js-container-add-show-more"
-                     data-link-name="block | @config.id"
-                     data-id="@config.id"
-                     data-tone="@style.tone"
-                     data-type="@style.containerType">
+            <section
+                class="@RenderClasses(Map(
+                    "container" -> true,
+                    "container--row-pattern" -> true,
+                    s"container--${style.containerType}" -> true,
+                    "js-container--toggle" -> (containerIndex > 0 && title.nonEmpty)))"
+                 data-link-name="block | @config.id"
+                 data-id="@config.id"
+                 data-type="@style.containerType">
 
                 <div class="container__border tone-@style.tone tone-accent-border"></div>
 
@@ -22,7 +26,7 @@
                     </h2>
                 }
                 <div class="container__body container--rolled-up-hide js-container-append-button">
-                    @fragments.collections.people(config, items, style, containerIndex)
+                    @fragments.collections.people(items, style, containerIndex)
                 </div>
             </section>
         }
