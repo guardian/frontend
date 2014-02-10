@@ -6,7 +6,10 @@
     float: left;
 }
 .top--footer {
-    color: $c-neutral2;
+    &,
+    &:active {
+        color: $c-neutral2;
+    }
     @include mq(tablet) {
         float: right;
         @include rem((

@@ -25,7 +25,7 @@
         <li class="nav__item"><a class="nav__link nav__link--faded" href="http://jobs.theguardian.com/" target="_blank" data-link-name="Jobs">Jobs</a></li>
     </ul>
     <div class="navigation-aside@if(isFooter){ navigation-aside--footer}">
-        <div class="switcher u-cf @if(isFooter){switcher--columns }switcher--edition">
+        <div class="switcher u-cf @if(isFooter){switcher--columns }switcher--edition mobile-only">
             <h2 class="switcher__label">Edition:</h2>
             <ul class="unstyled switcher__options">
                 <li class="switcher__option switcher__option--active">
@@ -33,7 +33,7 @@
                 </li>
                 @Edition.others(request).map{ edition =>
                     <li class="switcher__option">
-                        <a class="edition" data-edition="@edition.id"
+                        <a data-edition="@edition.id"
                             data-link-name="switch to @edition.id edition"
                             href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")">
                             @edition.id <span class="u-h">edition</span>

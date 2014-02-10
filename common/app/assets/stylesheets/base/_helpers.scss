@@ -122,6 +122,23 @@
 
 
 /**
+ * Reset input styles
+ */
+
+.u-input-reset {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    @include rounded-corners(0);
+    background: transparent;
+
+    &:focus {
+        outline: 0;
+    }
+}
+
+
+/**
  * underlines text
  */
 

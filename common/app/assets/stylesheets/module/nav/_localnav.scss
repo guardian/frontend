@@ -31,8 +31,11 @@
    ========================================================================== */
 
 .nav-popup-localnav {
-    top: 168px;
+    top: 156px;
     border-color: $c-neutral5;
+    @include rem((
+        padding-bottom: $gs-baseline
+    ));
 
     .is-active .nav__link {
         font-family: $serifheadline;

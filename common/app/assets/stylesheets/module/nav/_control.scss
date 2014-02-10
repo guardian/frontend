@@ -10,10 +10,10 @@
     float: left;
     width: 28px;
     height: 28px;
-    margin-left: $gs-gutter/2;
     border: 1px solid $c-neutral1;
     padding: 0;
     @include rounded-corners(50%);
+    @include box-sizing(content-box); // Force proper sizing on button elements
     text-align: center;
     background-color: transparent;
     vertical-align: top;
@@ -44,12 +44,15 @@
    ========================================================================== */
 
 .control--sections {
+    @include rem((
+        margin-top: $gs-baseline/2
+    ));
     @include mq(tablet) {
         position: absolute;
         z-index: 1;
         @include rem((
             right: $gs-gutter,
-            margin-top: 2px
+            margin-top: $gs-baseline*4
         ));
     }
 }
@@ -58,13 +61,24 @@
 /* Search control
    ========================================================================== */
 
-.control--search {
+.control--search-submit {
+    
 }
 
 
 /* Profile control
    ========================================================================== */
 
+.control--profile {
+    @include rem((
+        margin-left: $gs-gutter/2,
+        margin-top: $gs-baseline/2
+    ));
+
+    @include mq(tablet) {
+        float: left;
+    }
+}
 
 .control__info {
     display: none;
@@ -99,15 +113,15 @@
     padding-top: 4px;
 
     .i {
-        vertical-align: middle;
         display: none;
+        margin: 0 auto;
 
         &:first-child {
-            display: inline-block;
+            display: block;
         }
 
         .is-active & {
-            display: inline-block;
+            display: block;
 
             &:first-child {
                 display: none;

@@ -169,10 +169,10 @@ define([
                         localNavCtaHtml = '<div class="localnav--small tone-' + currentSection.sectionTone + ' tone-accent-border">' +
                                           '  <div class="localnav__inner u-cf">' +
                                           '    <h1 class="localnav__title tone-colour">'+localNavTitle+'</h1>' +
-                                          '      <button class="cta localnav__cta control" ' +
+                                          '      <button class="localnav__cta tone-background tone-border control" ' +
                                           '          data-link-name="Popup Localnav" ' +
                                           '          data-toggle="nav-popup-localnav">' +
-                                          '        <i class="i i-local-nav-arrow tone-background"></i>' +
+                                          '        <i class="i i-local-nav-arrow"></i>' +
                                           '      </button></div>' +
                                           '  </div>' +
                                           '</div>';
@@ -188,11 +188,12 @@ define([
                     common.$g('.js-localnav-placeholder', headerNode).html('<div class="localnav-container gs-container u-cf">' + localNavHtml + '</div>');
 
                     common.$g('#preloads').addClass('has-localnav');
+                    common.$g('#header').addClass('has-localnav');
 
                     // Highlight the section that we're in
                     // Try to match the against pageId first (covers sport pseudo-sections, eg Cricket, Rugby...)
                     var activeNodes = common.$g('.nav__link[href="/'+config.page.pageId+'"]', headerNode)
-                                            .parent().addClass('is-active');
+                                            .parent().addClass('is-active').parent().addClass('has-active-link');
 
                     // ...otherwise fallback to matching real sections (eg Books, Arts)
                     if (activeNodes.length === 0) {
