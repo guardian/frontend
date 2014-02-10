@@ -2,10 +2,12 @@
 define([
     'bindings/droppable',
     'modules/vars',
+    'utils/remove-by-id',
     'utils/find-first-by-id'
 ], function(
     droppable,
     vars,
+    removeById,
     findFirstById
 ) {
     function init() {
@@ -24,12 +26,14 @@ define([
 
             newItemPersister: function(newItem, sourceItem, sourceList, targetList, id, position, isAfter) {
 
+                // Move the collection with same id as the front itself to the TOP of list.
+                targetList.items.unshift(removeById(targetList.items, targetList.parent.id));
+
                 if (newItem.parents.indexOf(targetList.parent) < 0) {
                     newItem.parents.push(targetList.parent);
                 }
 
                 var data = {
-                    id: this.id,
                     collections: _.map(targetList.items(), function(item) { return item.id; })
                 };
                 // requires API endpoint

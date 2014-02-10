@@ -6,6 +6,7 @@ define([
     'utils/fetch-settings',
     'utils/update-scrollables',
     'utils/clone-with-key',
+    'utils/find-first-by-id',
     'models/config/droppable',
     'models/config/front',
     'models/config/collection'
@@ -16,6 +17,7 @@ define([
     fetchSettings,
     updateScrollables,
     cloneWithKey,
+    findFirstById,
     droppable,
     Front,
     Collection
@@ -45,19 +47,33 @@ define([
             fetchSettings(function (config, switches) {
                 vars.state.switches = switches || {};
                 if (!_.isEqual(config, vars.state.config)) {
-                    vars.state.config = config || {};
+                    vars.state.config = config;
 
-                    model.collections(
-                       _.chain(config.collections)
-                        .map(function(obj, id) { return new Collection(cloneWithKey(obj, id)); })
-                        .sortBy(function (obj) { return obj.id; })
-                        .value()
-                    );
+                    model.collections.removeAll();
+                    model.fronts.removeAll();
 
-                    model.fronts(
-                       _.chain(config.fronts)
-                        .map(function(obj, id) { return new Front(cloneWithKey(obj, id)); })
-                        .value()
+                    _.each(config.fronts, function(f, fid) {
+                        var front =  new Front(cloneWithKey(f, fid));
+
+                        _.each(f.collections, function(cid) {
+                            var collection = findFirstById(model.collections, cid);
+                            if (!collection) {
+                                collection = new Collection(cloneWithKey(config.collections[cid], cid));
+                                model.collections.push(collection);
+                            }
+                            collection.parents.push(front);
+                        });
+
+                        front.populate(f.collections, model.collections);
+                        model.fronts.push(front);
+                    });
+
+                    model.collections().concat(
+                        _.map(config.collections, function(obj, cid) {
+                            if (!findFirstById(model.collections, cid)) {
+                                model.collections.push(new Collection(cloneWithKey(obj, cid)));
+                            }
+                        })
                     );
                 }
             }, vars.CONST.configSettingsPollMs)

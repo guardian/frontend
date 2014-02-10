@@ -29,7 +29,7 @@
             <a data-bind="
                 click: toggleOpen,
                 attr: {href: id},
-                text: meta.roleName"></a>
+                text: meta.roleName() || '[no description]'"></a>
 
             <span class="placements" data-bind="
                 css: {'is-single': parents().length < 2}">
@@ -44,6 +44,8 @@
             </span>
 
             <div class="edit-collection" data-bind="if: state.open">
+                <span class="collection-id" data-bind="text: id"></span>
+
                 <label>Description</label>
                 <input type="text" data-bind="
                     value: meta.roleName"/>

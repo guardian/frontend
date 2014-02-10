@@ -4,6 +4,7 @@ define([
     'modules/vars',
     'models/group',
     'models/config/collection',
+    'utils/guid',
     'utils/as-observable-props',
     'utils/find-first-by-id'
 ], function(
@@ -11,6 +12,7 @@ define([
     vars,
     Group,
     Collection,
+    guid,
     asObservableProps,
     findFirstById
 ) {
@@ -28,20 +30,18 @@ define([
             parent: self,
             parentType: 'Front'
         });
+    }
 
+    Front.prototype.populate = function(collectionIds, collections) {
         this.group.items(
-           _.chain(opts.collections)
+           _.chain(collectionIds)
             .map(function(id) {
-                return findFirstById(vars.model.collections, id);
+                return findFirstById(collections, id);
             })
-            .filter(function(collection) { return !!collection; })
-            .map(function(collection) {
-                collection.parents.push(self);
-                return collection;
-             })
+            .filter(function(c) { return !!c; })
             .value()
         );
-    }
+    };
 
     Front.prototype.toggleOpen = function() {
         this.state.open(!this.state.open());
@@ -49,8 +49,7 @@ define([
 
     Front.prototype.createCollection = function() {
         var collection = new Collection({
-            id: this.id + '/' + this.group.items().length,
-            roleName: 'Untitled collection'
+            id: this.id + '/' + guid()
         });
         collection.toggleOpen();
         collection.parents.push(this);
