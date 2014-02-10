@@ -7,7 +7,8 @@ define([
     //Current tests
     'common/modules/experiments/tests/aa',
     'common/modules/experiments/tests/gravity-recommendations',
-    'common/modules/experiments/tests/identity-email-signup'
+    'common/modules/experiments/tests/identity-email-signup',
+    'common/modules/experiments/tests/article-truncation'
 ], function (
     common,
     store,
@@ -16,13 +17,15 @@ define([
 
     Aa,
     GravityRecommendations,
-    EmailSignup
+    EmailSignup,
+    ArticleTruncation
     ) {
 
     var TESTS = [
             new Aa(),
             new GravityRecommendations(),
-            new EmailSignup()
+            new EmailSignup(),
+            new ArticleTruncation()
        ],
        participationsKey = 'gu.ab.participations';
 
