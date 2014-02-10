@@ -2,7 +2,7 @@
 
 @defining(config.displayName.orElse(collection.displayName)) { title =>
 
-    @defining(templateDeduping(5, collection.items)) { items =>
+    @defining(templateDeduping(4, collection.items)) { items =>
         @if(items.nonEmpty) {
             <section
                 class="@RenderClasses(Map(
