@@ -87,7 +87,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
     }
   }
 
-  def renderFaciaPress(path: String) = Action.async { implicit request =>
+  def renderFaciaPress(path: String) = DogpileAction { implicit request =>
 
     FrontPage(path).map { frontPage =>
       FrontJson.get(path).map(_.map{ faciaPage =>
