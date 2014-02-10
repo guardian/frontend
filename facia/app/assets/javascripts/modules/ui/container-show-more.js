@@ -16,13 +16,7 @@ define([
 
     return function(container) {
 
-        this._container = container;
-
         this._$container = bonzo(container);
-
-        this._$appendButtonTo = $('.js-container-append-button', this._$container);
-
-        this._$collection = null;
 
         this._items = [];
 
@@ -41,8 +35,9 @@ define([
         ));
 
         this._renderButton = function() {
-            this._$button.addClass('tone-' + (this._$container.attr('data-tone') || 'news'));
-            this._$appendButtonTo.append(this._$button);
+            this._$button
+                .addClass('tone-' + (this._$container.attr('data-tone') || 'news'))
+                .insertAfter(this._$container);
             bean.on(this._$button[0], 'click', this.showMore.bind(this));
             mediator.emit('modules:containerShowMore:renderButton', this);
         };
@@ -66,7 +61,7 @@ define([
 
         this.showMore = function(e) {
             this._$button.attr('disabled', true);
-            this._$collection.removeClass(this._className);
+            this._$container.removeClass(this._className);
             bonzo(this._items.splice(0, this._showCount))
                 .removeClass(this._className);
             this._incrementButtonCounter();
@@ -78,12 +73,8 @@ define([
         };
 
         this.addShowMore = function() {
-            this._$collection = $('.js-container--show-more', this._container)
-                .addClass(this._className);
-            if (this._$collection.length === 0) {
-                return false;
-            }
-            this._items = $('.linkslist > .linkslist__item', this._$collection)
+            this._$container.addClass(this._className);
+            this._items = $('.linkslist > .linkslist__item', this._$container)
                 .addClass(this._className)
                 .map(function(item) { return item; });
             this._renderButton();
