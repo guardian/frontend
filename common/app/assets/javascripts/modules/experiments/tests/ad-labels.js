@@ -1,3 +1,4 @@
+/*global guardian */
 define([
     'common/$',
     'common/utils/mediator'
@@ -19,11 +20,15 @@ define([
         this.variants = [
             {
                 id: 'control',
-                test: function(context, config) {}
+                test: function(context, config) {
+                    guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha1.com';
+                }
             },
             {
                 id: 'ShowAdLabels',
                 test: function (context, config) {
+                    guardian.config.page.oasSiteIdHost = 'www.theguardian-alpha2.com';
+
                     $('.ad-slot').addClass('ad-slot__show-label');
 
                     // Re-apply the class when ads are reloaded on window resize
