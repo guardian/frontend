@@ -12,6 +12,38 @@ import com.gu.openplatform.contentapi.model.Asset
 
 trait FrontPress extends Logging {
 
+  //The ONLY reason I am using case classes with a Writes instance is to
+  //never have {"field": null} in the json, which inflates it
+  //E.g. Get out of this: Json.obj(("field", None))
+  case class CollectionJson
+  (
+    apiQuery:     Option[String],
+    displayName:  Option[String],
+    tone:         Option[String],
+    curated:      Seq[JsValue],
+    editorsPicks: Seq[JsValue],
+    results:      Seq[JsValue],
+    lastModified: Option[String],
+    updatedBy:    Option[String],
+    updatedEmail: Option[String],
+    groups:       Option[Seq[String]],
+    roleName:     Option[String],
+    href:         Option[String]
+  )
+  case class ItemMeta
+  (
+    headline:     Option[JsValue],
+    trailText:    Option[JsValue],
+    group:        Option[JsValue],
+    imageAdjust:  Option[JsValue],
+    isBreaking:   Option[Boolean],
+    supporting:   Option[Seq[JsValue]]
+  )
+
+  implicit val collectionJsonWrites = Json.writes[CollectionJson]
+  implicit val itemMetaJsonWrites = Json.writes[ItemMeta]
+
+
   import play.api.Play.current
   private lazy implicit val frontPressContext = Akka.system.dispatchers.lookup("play.akka.actor.front-press")
 
@@ -45,65 +77,58 @@ trait FrontPress extends Logging {
     futureSequence
   }
 
-  private def generateCollectionJson(config: Config, collection: Collection): JsValue = {
-    Json.obj(
-      ("apiQuery", config.contentApiQuery),
-      ("displayName", config.displayName),
-      ("tone", config.collectionTone),
-      ("curated", collection.curated.map(generateTrailJson)),
-      ("editorsPicks", collection.editorsPicks.map(generateTrailJson)),
-      ("results", collection.results.map(generateTrailJson)),
-      ("lastModified", collection.lastUpdated),
-      ("updatedBy", collection.updatedBy),
-      ("updatedEmail", collection.updatedEmail),
-      ("groups", config.groups),
-      ("roleName", config.roleName),
-      ("href", config.href)
+  private def generateCollectionJson(config: Config, collection: Collection): JsValue =
+    Json.toJson(
+      CollectionJson(
+        apiQuery      = config.contentApiQuery,
+        displayName   = config.displayName,
+        tone          = config.collectionTone,
+        curated       = collection.curated.map(generateTrailJson),
+        editorsPicks  = collection.editorsPicks.map(generateTrailJson),
+        results       = collection.results.map(generateTrailJson),
+        lastModified  = collection.lastUpdated,
+        updatedBy     = collection.updatedBy,
+        updatedEmail  = collection.updatedEmail,
+        groups        = Option(config.groups).filter(_.nonEmpty),
+        roleName      = config.roleName,
+        href          = config.href
+      )
     )
-  }
 
   private def generateTrailJson(content: Content): JsValue =
     Json.obj(
-      ("webTitle", content.webTitle),
       ("webPublicationDate", content.webPublicationDate),
       ("sectionName", content.sectionName),
       ("sectionId", content.section),
       ("id", content.url),
       ("webUrl", content.webUrl),
+      ("tags", generateTags(content.tags)),
       ("safeFields", content.delegate.safeFields),
       ("elements", content.elements.map(generateElement)),
-      ("linkText", content.linkText),
-      ("meta", Json.obj
-        (
-          ("headline", content.headline),
-          ("trailText", content.trailText),
-          ("group", content.group),
-          ("imageAdjust", content.imageAdjust),
-          ("isBreaking", content.isBreaking),
-          ("supporting", content.supporting.map(generateInnerTrailJson))
-        )
-        )
+      ("meta", generateItemMeta(content))
     )
 
-  private def generateInnerTrailJson(trail: Trail): JsValue =
-    Json.obj(
-      ("webTitle", trail.headline),
-      ("webPublicationDate", trail.webPublicationDate),
-      ("sectionName", trail.sectionName),
-      ("sectionId", trail.section),
-      ("id", trail.url),
-      ("webUrl", trail.webUrl),
-      ("trailText", trail.trailText),
-      ("linkText", trail.linkText),
-      ("meta", Json.obj
-        (
-          ("headline", trail.headline),
-          ("trailText", trail.trailText),
-          ("group", trail.group),
-          ("imageAdjust", trail.imageAdjust),
-          ("isBreaking", trail.isBreaking)
-        )
+  private def generateTags(tags: Seq[Tag]): Seq[JsValue] =
+    tags.map{ tag =>
+      Json.obj(
+        ("id", tag.id),
+        ("type", tag.tagType),
+        ("webTitle", tag.webTitle),
+        ("webUrl", tag.webUrl),
+        ("section", tag.section)
       )
+    }
+
+  private def generateInnerTrailJson(content: Content): JsValue =
+    Json.obj(
+      ("webPublicationDate", content.webPublicationDate),
+      ("sectionName", content.sectionName),
+      ("sectionId", content.section),
+      ("id", content.url),
+      ("webUrl", content.webUrl),
+      ("trailText", content.trailText),
+      ("safeFields", content.delegate.safeFields),
+      ("meta", generateItemMeta(content))
     )
 
   private def generateElement(element: Element): JsValue =
@@ -126,6 +151,18 @@ trait FrontPress extends Logging {
         //("credit", a.typeData.get("credit")),
         //("caption", a.typeData.get("caption")),
         ("width", asset.typeData.get("width"))
+      )
+    )
+
+  private def generateItemMeta(content: Content): JsValue =
+    Json.toJson(
+      ItemMeta(
+        headline =    content.apiContent.metaData.get("headline"),
+        trailText =   content.apiContent.metaData.get("trailText"),
+        group =       content.apiContent.metaData.get("group"),
+        imageAdjust = content.apiContent.metaData.get("imageAdjust"),
+        isBreaking =  content.apiContent.metaData.get("isBreaking").flatMap(_.asOpt[Boolean]),
+        supporting =  Option(content.supporting.map(generateInnerTrailJson)).filter(_.nonEmpty)
       )
     )
 
