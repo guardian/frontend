@@ -17,18 +17,18 @@
     }
 
     .ad-slot__label {
-        height: 34px;
-        background-color: #F8F8F8;
-        padding: 0 $baseline*2;
-        border-top: 1px solid #E4E4E4;
+        display: none;
         @include box-sizing(border-box);
+        height: 34px;
+        background-color: $c-neutral8;
+        padding: 0 $baseline*2;
+        border-top: 1px solid $c-neutral5;
 
         color: $c-neutral2;
         font-family: $sans-serif;
         @include font-size(12, 20);
         text-align: right;
         -webkit-font-smoothing: antialiased;
-        display: none;
     }
 
     &.ad-slot__show-label {
@@ -97,7 +97,6 @@
             position: absolute;
             width: 100%;
             height: 50px;
-            margin: 0 !important;
             z-index: -1;
             text-align: left;
         }
