@@ -26,10 +26,6 @@ define([
 
     var containers = _.mapValues(rules, function() { return []; });
 
-    var validSlots = _.mapValues(emptySelectors, function(selector) {
-        return qwery(selector, ".article-body");
-    });
-
     function detachAll() {
         _.forOwn(containers, function(cs){
             cs.forEach(function(c) {
