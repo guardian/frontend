@@ -71,6 +71,7 @@ Here are the browsers and devices we currently regularly test on:-
 
 ### Desktop
 
+-  IE 11
 -  IE 10
 -  IE 9
 -  Firefox (latest stable)
