@@ -7,23 +7,22 @@ import com.amazonaws.services.sqs.model._
 import com.amazonaws.regions.{Regions, Region}
 import scala.collection.JavaConversions._
 import services.S3FrontsApi
-import play.api.libs.json.Json
-import scala.util.Success
+import play.api.libs.json.{JsObject, Json}
 import scala.concurrent.duration._
-import scala.concurrent.Await
+import scala.concurrent.{Future, Await}
 import frontpress.{FaciaToolConfigAgent, FrontPress}
 
 object FrontPressJob extends ExecutionContexts with Logging with implicits.Collections {
 
   val queueUrl: Option[String] = None
 
-  def newClient = {
+  def newClient: AmazonSQSAsyncClient = {
     val c = new AmazonSQSAsyncClient(Configuration.aws.credentials)
     c.setRegion(Region.getRegion(Regions.EU_WEST_1))
     c
   }
 
-  def run() {
+  def run(): Unit = {
     val client = newClient
     for(queueUrl <- queueUrl) {
       try {
