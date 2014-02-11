@@ -72,7 +72,7 @@ CommentBox.prototype.errorMessages = {
     USER_BANNED: 'Commenting has been disabled for this account (<a href="/community-faqs#321a">why?</a>).',
     API_ERROR: 'Sorry, there was a problem posting your comment.',
     EMAIL_VERIFIED: '<span class="d-comment-box__error-meta">Sent. Please check your email to verify '+
-        (IdentityApi.getUserFromCookie() ? IdentityApi.getUserFromCookie().primaryEmailAddress : ' your email address') +'. Once verified post your comment.</span>.',
+        (IdentityApi.getUserFromCookie() ? IdentityApi.getUserFromCookie().primaryEmailAddress : ' your email address') +'. Once verified post your comment.</span>',
     EMAIL_VERIFIED_FAIL: 'We are having technical difficulties. Please try again later or '+
         '<a href="/send/email" class="js-id-send-validation-email"><strong>resend the verification</strong></a>.',
     EMAIL_NOT_VERIFIED: 'Please confirm your email address to post your first comment.<br />'+
@@ -208,7 +208,6 @@ CommentBox.prototype.postComment = function(e) {
     if (self.options.switches.discussionVerifiedEmailPosting && !self.getUserData().emailVerified) { // Cookie could be stale so lets refresh and check from the api
 
         var createdDate = new Date(self.getUserData().accountCreatedDate);
-
         if (createdDate > self.options.priorToVerificationDate) {
             IdentityApi.getUserFromApiWithRefreshedCookie(function (user) {
                 if (user.statusFields.userEmailValidated === true) {
