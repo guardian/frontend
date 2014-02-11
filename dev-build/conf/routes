@@ -148,6 +148,8 @@ GET         /commercial/masterclasses.json                                      
 GET         /commercial/soulmates/mixed.json                                                                         controllers.commercial.SoulmateAds.mixed
 GET         /commercial/money/bestbuys.json                                                                          controllers.commercial.MoneyOffers.bestBuys(format="json")
 GET         /commercial/books/bestsellers.json                                                                       controllers.commercial.BookOffers.bestsellers(format="json")
+GET         /commercial/books/book/*pageId.json                                                                      controllers.commercial.BookOffers.singleBook(pageId, format="json")
+GET         /commercial/books/book/*pageId                                                                           controllers.commercial.BookOffers.singleBook(pageId, format="html")
 
 # Onward journeys
 GET         /onward/card/*path.json                                                                                  controllers.OnwardCardController.renderCard(path)
