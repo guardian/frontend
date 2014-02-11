@@ -442,7 +442,6 @@ module.exports = function (grunt) {
 
         karma: {
             options: {
-                configFile: testConfDir + 'common.js',
                 reporters: isDev ? ['dots'] : ['progress'],
                 singleRun: singleRun
             },
