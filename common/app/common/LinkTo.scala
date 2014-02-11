@@ -68,7 +68,8 @@ object ClassicLink {
   import java.net.URLEncoder.encode
 
   def apply(page: MetaData)(implicit request: RequestHeader) = {
-    val targetUrl = encode(s"${LinkTo(s"/${page.id}")}?view=classic", "UTF-8")
+    // NOTE: temp, remove -alpha
+    val targetUrl = encode(s"${LinkTo(s"/${"^(.+)-alpha$".r.replaceFirstIn(page.id, "")}")}?view=classic", "UTF-8")
     s"${LinkTo{"/preference/platform/classic"}}?page=$targetUrl"
   }
 }
