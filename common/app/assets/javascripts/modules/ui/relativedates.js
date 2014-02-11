@@ -9,15 +9,15 @@ define([
     function dayOfWeek(day) {
         return ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][day];
     }
-    
+
     function monthAbbr(month) {
         return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][month];
     }
-    
+
     function pad(n) {
         return n < 10 ? '0' + n : n;
     }
-    
+
     function ampm(n) {
         return n < 12 ? 'am' : 'pm';
     }
@@ -55,6 +55,40 @@ define([
         return !isNaN(date.getTime());
     }
 
+    function getSuffix(type, format, value) {
+        var units = {
+            s: {
+                'short': 's',
+                'long':  ' second ago',
+                plural:  ' seconds ago'
+            },
+            m: {
+                'short': 'm',
+                'long':  ' minute ago',
+                plural: ' minutes ago'
+            },
+            h: {
+                'short': 'h',
+                'long':  ' hour ago',
+                plural:  ' hours ago'
+            },
+            d: {
+                'short': 'd',
+                'long':  ' day ago',
+                plural:  ' days ago'
+            }
+        };
+        if (units[type]) {
+            if (value === 1 || format === 'short') {
+                return units[type][format];
+            } else {
+                return units[type].plural;
+            }
+        } else {
+            return '';
+        }
+    }
+
     function makeRelativeDate(epoch, opts) {
         var then = new Date(Number(epoch)),
             now = new Date(),
@@ -72,16 +106,19 @@ define([
             return false;
 
         } else if (delta < 55) {
-            return delta + 's';
+            return delta + getSuffix('s', opts.format || 'short', delta);
 
         } else if (delta < (55 * 60)) {
-            return (Math.round(delta / 60, 10)) + 'm';
+            var minutes = Math.round(delta / 60, 10);
+            return minutes + getSuffix('m', opts.format || 'short', minutes);
 
         } else if (isToday(then) || (isWithin24Hours(then) && opts.format === 'short')) {
-            return (Math.round(delta / 3600)) + 'h';
+            var hours = Math.round(delta / 3600);
+            return hours + getSuffix('h', opts.format || 'short', hours);
 
         } else if (isWithinPastWeek(then) && opts.format === 'short') {
-            return (Math.round(delta / 3600 / 24)) + 'd';
+            var days = Math.round(delta / 3600 / 24);
+            return days + getSuffix('d', opts.format || 'short', days);
 
         } else if (isYesterday(then)) { // yesterday
             return 'Yesterday' + withTime(then);
@@ -96,7 +133,7 @@ define([
 
         }
     }
-    
+
     function withTime(date) {
         return ', ' + twelveHourClock(date.getHours()) + ':' + pad(date.getMinutes()) + ampm(date.getHours());
     }
@@ -135,7 +172,7 @@ define([
     ['related', 'autoupdate'].forEach(function(module) {
         common.mediator.on('modules:' + module + ':render', replaceValidTimestamps);
     });
-   
+
     function init(context) {
         replaceValidTimestamps(context);
     }
