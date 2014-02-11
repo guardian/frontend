@@ -209,7 +209,7 @@ object Switches extends Collections {
     "If switched on then all embeds will be shown inside article bodies",
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
   )
-  
+
   val ReleaseMessageSwitch = Switch("Feature Switches", "release-message",
     "If this is switched on users will be messaged that they are inside the alpha/beta/whatever release",
     safeState = Off, sellByDate = endOfQ4
@@ -324,6 +324,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 24)
   )
 
+  val ABAdLabels = Switch("A/B Tests", "ab-ad-labels",
+    "Testing if putting labels next to ads impacts the CTR",
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 27)
+  )
+
   val TagLinking = Switch("Feature Switches", "tag-linking",
     "If this is switched on articles that have no in body links will auto link to their tags where possible",
     safeState = Off, sellByDate = endOfQ4
@@ -436,6 +441,7 @@ object Switches extends Collections {
     ABAa,
     ABGravityRecommendations,
     ABEmailSignup,
+    ABAdLabels,
     NetworkFrontUkAlpha,
     NetworkFrontUsAlpha,
     NetworkFrontAuAlpha,
