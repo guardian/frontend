@@ -10,7 +10,7 @@
 
 	.commercial__head {
 		background-color: #FFF;
-		border-top: 1px solid #DCDCDC;
+		border-top: 1px solid $c-neutral4;
 		@include rem((
 	        height: 40px
 	    ))
@@ -29,7 +29,7 @@
     	padding: 0;
 
     	h3 {
-    		background-color: #EDEDE7;
+    		background-color: $c-neutral6;
     		padding: $baseline*2 $baseline*2 $baseline*4 $baseline*2;
     		margin-bottom: 0;
     		@include font-size(18);
@@ -41,14 +41,15 @@
     }
 
     .list__item {
+        @include box-sizing(border-box);
     	position: relative;
 		padding: 8px 0 0 30px;
-		color: #333;
+
+		color: $c-neutral1;
 		@include font-size(16, 20);
 		font-family: $serifheadline;
 		font-weight: normal;
 		-webkit-font-smoothing: antialiased;
-		@include box-sizing(border-box);
 
 		img {
 			width: auto;
@@ -61,14 +62,14 @@
 		}
 
 		+ .list__item {
-			border-top: 1px solid #DCDCDC;
+			border-top: 1px solid $c-neutral4;
 		}
     }
 
     .list__link {
     	width: 80%;
     	display: inline-block;
-    	color: #333;
+    	color: $c-neutral1;
     	overflow: hidden;
     }
 
@@ -76,7 +77,7 @@
     	position: absolute;
 		top: 2px;
 		left: 0;
-		color: #dcdcdc;
+		color: $c-neutral4;
 		font-family: $serifheadline;
 		font-weight: 200;
 		@include font-size(40);
@@ -90,7 +91,7 @@
     .list__title {
         margin-bottom: $baseline;
 
-		color: #333;
+		color: $c-neutral1;
 		font-family: $serifheadline;
 		font-weight: normal;
 		@include font-size(15);
@@ -111,12 +112,12 @@
     	width: 18%;
     	display: inline-block;
     	vertical-align: top;
-    	@include font-size(14, 18);
     	text-align: right;
+        @include font-size(14, 18);
     }
 
     .commercial__foot {
-    	background-color: #EDEDE7;
+    	background-color: $c-neutral6;
     	padding: $baseline;
     	border: 0;
     	margin: 0;
@@ -128,11 +129,11 @@
         overflow: hidden;
 
     	label {
-			padding: 8px 0 8px 8px;
-			@include font-size(14, 16);
-	    	@include box-sizing(border-box);
-	    	float: left;
     		display: none;
+            @include box-sizing(border-box);
+            padding: 8px 0 8px 8px;
+            float: left;
+            @include font-size(14, 16);
     	}
 
         .text-input {

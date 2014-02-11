@@ -35,12 +35,12 @@
 
     .tagline {
         min-height: 78px;
-        background-color: #edede7;
+        background-color: $c-neutral6;
         padding: 0 8px;
     }
 
     .tabs__container {
-        background: #edede7;
+        background: $c-neutral6;
     }
 
     .tabs__content {
@@ -51,7 +51,7 @@
     .tabs__tab {
         width: auto;
         border-bottom: none;
-        border-color: #edede7;
+        border-color: $c-neutral6;
 
         + .tabs__tab a {
             border-left: none;
@@ -160,10 +160,6 @@
         @include font-size(11, 14);
     }
 
-    .js-hidden {
-        display: none;
-    }
-
     @include mq($to: tablet) {
         .lineitem__link,
         .tagline {
@@ -172,6 +168,7 @@
 
         .commercial__title {
             padding: $baseline;
+
             .i {
                 margin-top: $baseline;
             }
