@@ -19,7 +19,9 @@ define([
     var Truncator = function(config) {
         this.config = extend(this.config, config);
         this.el = this.findParagraphAtPercentage(this.getParagraphs());
-        this.truncate();
+        if(this.getPercentage() > this.config.minWordCount) {
+            this.truncate();
+        }
     };
 
     Truncator.prototype.classes =  {
@@ -31,6 +33,7 @@ define([
     Truncator.prototype.config = {
         contentEl: qwery('.js-article__body')[0],
         percentageCap: 40,
+        minWordCount: 300,
         template: '<button class="continue-reading js-continue-reading">continue reading</button>'
     };
 
