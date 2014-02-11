@@ -29,18 +29,13 @@ private object Client extends Client {
 
   override def GET(urlString: String): Future[pa.Response] = {
     WS.url(urlString).get().map { response =>
-      pa.Response(response.status, response.body/*.dropWhile(_ != '<')*/, response.statusText)
+      pa.Response(response.status, response.body, response.statusText)
     }
   }
 
 }
 private object TestClient extends Client {
   override def GET(urlString: String): Future[Response] = ???
-
-//  println(getClass.getClassLoader.getResource("testdata"))
-//  println(play.api.Play.current.path)
-//  play.api.Play.current.getExistingFile("test/testdata")
-//  private val basePath = s"${getClass.getClassLoader.getResource("testdata").getFile}/"
 
   override def get(suffix: String)(implicit context: ExecutionContext): Future[String] = {
 
@@ -55,7 +50,7 @@ private object TestClient extends Client {
         .replace("KEY", Client.apiKey)
     }
 
-    current.getExistingFile(s"test/testdata/$filename.xml") match {
+    current.getExistingFile(s"/admin/test/football/testdata/$filename.xml") match {
       case Some(file) => {
         val xml = scala.io.Source.fromFile(file, "UTF-8").getLines().mkString
         Future(xml)(context)
@@ -66,7 +61,7 @@ private object TestClient extends Client {
         response.onComplete {
           case Success(str) => {
             Logger.info(s"writing response to testdata, $filename.xml, $str")
-            writeToFile(s"${current.path}/test/testdata/$filename.xml", str)
+            writeToFile(s"${current.path}/admin/test/football/testdata/$filename.xml", str)
           }
           case Failure(writeError) => throw writeError
         }(context)
