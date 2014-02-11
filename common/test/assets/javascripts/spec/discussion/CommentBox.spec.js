@@ -1,6 +1,5 @@
 define([
     'common/common',
-    'common/utils/cookies',
     'common/modules/identity/api',
     'common/utils/ajax',
     'common/utils/context',
@@ -12,7 +11,6 @@ define([
     'common/modules/discussion/comment-box'
 ], function(
     common,
-    Cookies,
     Id,
     ajax,
     context,
@@ -62,7 +60,7 @@ define([
                     '</form>'
                 ]
             },
-            config = {
+            idConfig = {
                 'page' : {
                     'idApiUrl' : "https://idapi.theguardian.com",
                     'idUrl' : "https://profile.theguardian.com",
@@ -70,7 +68,6 @@ define([
                     edition: 'UK'
                 }
             },
-            cookieData = 'WyIyMzEwOTU5IiwiamdvcnJpZUBnbWFpbC5jb20iLCJqYW1lc2dvcnJpZSIsIjUzNCIsMTM4Mjk1MzAzMTU5MSwxXQ.MC0CFBsFwIEITO91EGONK4puyO2ZgGQcAhUAqRa7PVDCoAjrbnJNYYvMFec4fAY',
             reqwestReturn = {
                 'then': function() {}
             };
@@ -102,7 +99,7 @@ define([
 
             commentBox.attachTo(document.querySelector('.d-comment-box'));
 
-            Id.init(config);
+            Id.init(idConfig);
             Id.reset();
 
             // Stub out this method as async merging stuff doesn't work great
