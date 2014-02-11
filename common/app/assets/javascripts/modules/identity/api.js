@@ -102,7 +102,6 @@ define([
      */
     Id.getUserFromApi = asyncCallMerger.mergeCalls(
         function(mergingCallback) {
-
             if(Id.isUserLoggedIn()) {
                 ajax({
                     url: Id.idApiRoot + '/user/me',

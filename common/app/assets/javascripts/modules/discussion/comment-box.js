@@ -207,8 +207,8 @@ CommentBox.prototype.postComment = function(e) {
         ValidationEmail.init(self.context);
     };
 
-    if (self.options.switches.discussionVerifiedEmailPosting && !self.getUserData().emailVerified) { // Cookie could be stale so lets refresh and check from the api
-
+    if (self.options.switches.discussionVerifiedEmailPosting && !self.getUserData().emailVerified) {
+        // Cookie could be stale so lets refresh and check from the api
         var createdDate = new Date(self.getUserData().accountCreatedDate);
         if (createdDate > self.options.priorToVerificationDate) {
             IdentityApi.getUserFromApiWithRefreshedCookie().then(function (response) {
@@ -221,7 +221,6 @@ CommentBox.prototype.postComment = function(e) {
         } else {
             validEmailCommentSubmission();
         }
-
     } else {
         validEmailCommentSubmission();
     }
