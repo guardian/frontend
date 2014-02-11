@@ -28,9 +28,13 @@ object GetContainer {
     )),
     ("au-alpha", Map(
       ("au-alpha/news/regular-stories", NewsContainer()),
+      ("au-alpha/special-1/special-story", SpecialContainer()),
       ("au-alpha/features/feature-stories", FeaturesContainer(adSlot = Some(AdSlot.First))),
+      ("au-alpha/special/special-story", SpecialContainer()),
       ("au-alpha/contributors/feature-stories", CommentAndDebateContainer()),
+      ("au-alpha/special-2/special-story", SpecialContainer()),
       ("au-alpha/people-in-the-news/feature-stories", PeopleContainer(adSlot = Some(AdSlot.Second))),
+      ("au-alpha/special-other/special-story", SpecialContainer()),
       ("au/most-viewed/regular-stories", PopularContainer())
     )),
     ("au/business", Map(
@@ -64,9 +68,13 @@ object GetContainer {
     )),
     ("uk-alpha", Map(
       ("uk-alpha/news/regular-stories", NewsContainer()),
+      ("uk-alpha/special-1/special-story", SpecialContainer()),
       ("uk-alpha/features/feature-stories", FeaturesContainer(adSlot = Some(AdSlot.First))),
+      ("uk-alpha/special/special-story", SpecialContainer()),
       ("uk-alpha/contributors/feature-stories", CommentAndDebateContainer()),
+      ("uk-alpha/special-2/special-story", SpecialContainer()),
       ("uk-alpha/people-in-the-news/feature-stories", PeopleContainer(adSlot = Some(AdSlot.Second))),
+      ("uk-alpha/special-other/special-story", SpecialContainer()),
       ("uk/most-viewed/regular-stories", PopularContainer())
     )),
     ("uk/business", Map(
@@ -100,9 +108,13 @@ object GetContainer {
     )),
     ("us-alpha", Map(
       ("us-alpha/news/regular-stories", NewsContainer()),
+      ("us-alpha/special-1/special-story", SpecialContainer()),
       ("us-alpha/features/feature-stories", FeaturesContainer(adSlot = Some(AdSlot.First))),
+      ("us-alpha/special/special-story", SpecialContainer()),
       ("us-alpha/contributors/feature-stories", CommentAndDebateContainer()),
+      ("uk-alpha/special-2/special-story", SpecialContainer()),
       ("us-alpha/people-in-the-news/feature-stories", PeopleContainer(adSlot = Some(AdSlot.Second))),
+      ("us-alpha/special-other/special-story", SpecialContainer()),
       ("us/most-viewed/regular-stories", PopularContainer())
     )),
     ("us/business", Map(
