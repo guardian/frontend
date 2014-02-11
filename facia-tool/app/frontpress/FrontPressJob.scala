@@ -29,14 +29,9 @@ object FrontPressJob extends ExecutionContexts with Logging with implicits.Colle
         val receiveMessageResult = client.receiveMessage(new ReceiveMessageRequest(queueUrl).withMaxNumberOfMessages(10))
         receiveMessageResult.getMessages
           .map(getConfigFromMessage)
-          .flatten
           .distinct
           .map { config =>
-            val f = FrontPress.generateJson(config).andThen {
-              case Success(json) => {
-                (json \ "id").asOpt[String].foreach(S3FrontsApi.putPressedJson(_, Json.stringify(json)))
-              }
-            }
+            val f = pressByPathId(config)
             f.onSuccess {
               case _ =>
                 client.deleteMessageBatch(
@@ -57,24 +52,23 @@ object FrontPressJob extends ExecutionContexts with Logging with implicits.Colle
     }
   }
 
-  def pressByCollectionIds(ids: Set[String]): Unit = {
+  def pressByCollectionIds(ids: Set[String]): Future[Set[JsObject]] = {
     val paths: Set[String] = for {
       id <- ids
       path <- FaciaToolConfigAgent.getConfigsUsingCollectionId(id)
-
     } yield path
-    for {
-      p <- paths
-      json <- FrontPress.generateJson(p)
-    } {
+    val setOfFutureJson: Set[Future[JsObject]] = paths.map(pressByPathId)
+    Future.sequence(setOfFutureJson) //To a Future of Set Json
+  }
+
+  def pressByPathId(path: String): Future[JsObject] = {
+    FrontPress.generateJson(path).map { json =>
       (json \ "id").asOpt[String].foreach(S3FrontsApi.putPressedJson(_, Json.stringify(json)))
+      json
     }
   }
 
-  def getConfigFromMessage(message: Message): List[String] = {
-    val id = (Json.parse(message.getBody) \ "Message").as[String]
-    val configIds: Seq[String] = FaciaToolConfigAgent.getConfigsUsingCollectionId(id)
-    configIds.toList
-  }
+  def getConfigFromMessage(message: Message): String =
+    (Json.parse(message.getBody) \ "Message").as[String]
 
 }
