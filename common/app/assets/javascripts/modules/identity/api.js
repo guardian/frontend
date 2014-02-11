@@ -102,6 +102,7 @@ define([
      */
     Id.getUserFromApi = asyncCallMerger.mergeCalls(
         function(mergingCallback) {
+
             if(Id.isUserLoggedIn()) {
                 ajax({
                     url: Id.idApiRoot + '/user/me',
@@ -123,34 +124,22 @@ define([
     );
 
     /**
-     * Gets the currently logged in user data from the identity api
-     * @param {function} callback
-     * @param {?Object} data optional flags eg: { refreshCookie: true }
+     * Gets the currently logged in user data from the identity api and
+     * refreshes the users cookie at the same time.
      */
-    Id.getUserFromApiWithRefreshedCookie = asyncCallMerger.mergeCalls(
-        function(mergingCallback) {
-            if(Id.isUserLoggedIn()) {
-                ajax({
-                    url: Id.idApiRoot + '/user/me',
-                    type: 'jsonp',
-                    crossOrigin: true,
-                    data: {
-                        refreshCookie:true
-                    }
-                }).then(
-                    function(response) {
-                        if(response.status === 'ok') {
-                            mergingCallback(response.user);
-                        } else {
-                            mergingCallback(null);
-                        }
-                    }
-                );
-            } else {
-                mergingCallback(null);
-            }
-        }
-    );
+    Id.getUserFromApiWithRefreshedCookie = function () {
+        var endpoint = '/user/me',
+            request = ajax({
+                url: Id.idApiRoot + endpoint,
+                type: 'jsonp',
+                crossOrigin: true,
+                data: {
+                    refreshCookie:true
+                }
+            });
+
+        return request;
+    };
 
     /**
      * Returns user object when signed in, otherwise redirects to sign in with configurable absolute returnUrl

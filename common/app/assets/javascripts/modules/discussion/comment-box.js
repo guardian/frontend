@@ -211,15 +211,12 @@ CommentBox.prototype.postComment = function(e) {
 
         var createdDate = new Date(self.getUserData().accountCreatedDate);
         if (createdDate > self.options.priorToVerificationDate) {
-            IdentityApi.getUserFromApiWithRefreshedCookie(function (user) {
-                if (user.statusFields.userEmailValidated === true) {
+            IdentityApi.getUserFromApiWithRefreshedCookie().then(function (response) {
+                if (response.user.statusFields.userEmailValidated === true) {
                     validEmailCommentSubmission();
                 } else {
                     invalidEmailError();
                 }
-            },
-            {
-                refreshCookie: true
             });
         } else {
             validEmailCommentSubmission();

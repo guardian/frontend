@@ -106,12 +106,12 @@ define([
             Id.reset();
 
             // Stub out this method as async merging stuff doesn't work great
-            Id.getUserFromApiWithRefreshedCookie = function (callback) {
-                callback({
-                    statusFields: {
-                        userEmailValidated: true
-                    }
-                });
+            Id.getUserFromApiWithRefreshedCookie = function () {
+                this.then = function (callback) {
+                    callback({
+                        user: { statusFields: { userEmailValidated: true } } });
+                };
+                return this;
             };
         });
 
@@ -159,12 +159,12 @@ define([
                 expect(commentBox.getElem('error')).toBeUndefined();
                 commentBox.getElem('body').value = validCommentText;
 
-                Id.getUserFromApiWithRefreshedCookie = function (callback) {
-                    callback({
-                        statusFields: {
-                            userEmailValidated: false
-                        }
-                    });
+                Id.getUserFromApiWithRefreshedCookie = function () {
+                    this.then = function (callback) {
+                        callback({
+                            user: { statusFields: { userEmailValidated: false } } });
+                    };
+                    return this;
                 };
 
                 bean.fire(commentBox.elem, 'submit');
