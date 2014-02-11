@@ -81,7 +81,7 @@ trait FrontPress extends Logging {
     Json.toJson(
       CollectionJson(
         apiQuery      = config.contentApiQuery,
-        displayName   = config.displayName,
+        displayName   = collection.displayName orElse config.displayName,
         tone          = config.collectionTone,
         curated       = collection.curated.map(generateTrailJson),
         editorsPicks  = collection.editorsPicks.map(generateTrailJson),
