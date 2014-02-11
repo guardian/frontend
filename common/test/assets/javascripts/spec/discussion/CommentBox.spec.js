@@ -183,7 +183,7 @@ define([
                 waitsFor(function() {
                     server.respond();
                     return callback.calls.length > 0;
-                }, 5000);
+                }, 1000);
 
                 // This id comes from api-post-comment-valid
                 runs(function() {
