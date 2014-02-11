@@ -1,7 +1,7 @@
 package views.support
 
 import common._
-import conf.Switches.TagLinking
+import conf.Switches.{ TagLinking, ShowAllArticleEmbedsSwitch }
 import model._
 
 import java.net.URLEncoder._
@@ -18,7 +18,6 @@ import play.api.mvc.RequestHeader
 import play.api.mvc.SimpleResult
 import play.api.templates.Html
 import scala.collection.JavaConversions._
-import conf.Switches.ShowAllArticleEmbedsSwitch
 
 sealed trait Style {
   val className: String
@@ -339,71 +338,56 @@ object TweetCleaner extends HtmlCleaner {
   }
 }
 
-object InlineSlotGenerator extends HtmlCleaner {
+case class InlineSlotGenerator(article: Article) extends HtmlCleaner {
 
-  def processDocument(document: Document): Document = {
+  private def insertSlot(paragraph: Element, document: Document) {
+    val prev = paragraph.previousElementSibling
+    val slot = document.createElement("div")
+    paragraph.before(slot)
 
-    var lastInline = -200
-    var lastBlock = 0
-    var offset = 0
-    val spacing = 850
-    val minFollowingText = 750
-    val children = document.select("body > *")
-
-    def insertSlot(paragraph: Element) {
-      val prev = paragraph.previousElementSibling
-      val slot = document.createElement("div")
-      paragraph.before(slot)
-
-      if ((prev.hasClass("img") && !prev.hasClass("img--inline")) || prev.hasClass("media-proportional-container")) {
-        slot.attr("class", "slot slot--block")
-      } else if (prev.tagName == "h2") {
-        slot.attr("class", "slot slot--posth2")
-        val mobileSlot = document.createElement("div")
-        mobileSlot.attr("class", "slot slot--preh2")
-        prev.before(mobileSlot)
-      } else {
-        slot.attr("class", "slot slot--text")
-      }
-
+    if ((prev.hasClass("img") && !prev.hasClass("img--inline")) || prev.hasClass("media-proportional-container")) {
+      slot.attr("class", "slot slot--block")
+    } else if (prev.tagName == "h2") {
+      slot.attr("class", "slot slot--posth2")
+      val mobileSlot = document.createElement("div")
+      mobileSlot.attr("class", "slot slot--preh2")
+      prev.before(mobileSlot)
+    } else {
+      slot.attr("class", "slot slot--text")
     }
-
-    children.zipWithIndex.foreach { case (element, index) =>
-
-      if (element.hasClass("img--inline")) {
-        lastInline = offset
-      }
-      else if (element.hasClass("img")) {
-        lastBlock = offset
-      }
-      else if (element.tagName == "p" && lastInline + spacing < offset) {
-
-        val followingTextLen = children.slice(index, children.length).takeWhile(_.tagName == "p").map(_.text.length).reduce(_ + _)
-
-        if (followingTextLen > minFollowingText) {
-          insertSlot(element)
-          lastInline = offset
-        }
-      }
-
-      if (element.tagName.in(Set("p","h2"))) offset += element.text.length
-    }
-
-    document
-
   }
 
-  def clean(document: Document): Document = { processDocument(document) }
-}
+  override def clean(document: Document): Document = {
 
-class InlineSlotGenerator(article: Article) extends HtmlCleaner {
+    if (article.wordCount > 350) {
 
-  def clean(document: Document): Document = {
+      var lastInline = -200
 
-    if (article.wordCount > 350) return InlineSlotGenerator.processDocument(document)
+      var offset = 0
+      val spacing = 850
+      val minFollowingText = 750
+      val children = document.select("body > *")
+
+      children.zipWithIndex.foreach { case (element, index) =>
+
+        if (element.hasClass("img--inline")) {
+          lastInline = offset
+        }
+        else if (element.tagName == "p" && lastInline + spacing < offset && !element.hasClass("img")) {
+
+          val followingTextLen = children.slice(index, children.length).takeWhile(_.tagName == "p").map(_.text.length).reduce(_ + _)
+
+          if (followingTextLen > minFollowingText) {
+            insertSlot(element, document)
+            lastInline = offset
+          }
+        }
+
+        if (element.tagName.in(Set("p","h2"))) offset += element.text.length
+      }
+    }
 
     document
-
   }
 }
 
