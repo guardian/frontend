@@ -11,6 +11,7 @@ import play.api.libs.json.{JsObject, Json}
 import scala.concurrent.duration._
 import scala.concurrent.{Future, Await}
 import frontpress.{FaciaToolConfigAgent, FrontPress}
+import common.FaciaToolMetrics.{FrontPressCronFailure, FrontPressCronSuccess}
 
 object FrontPressJob extends ExecutionContexts with Logging with implicits.Collections {
 
@@ -33,21 +34,29 @@ object FrontPressJob extends ExecutionContexts with Logging with implicits.Colle
           .map { config =>
             val f = pressByPathId(config)
             f.onSuccess {
-              case _ =>
+              case _ => {
                 client.deleteMessageBatch(
                   new DeleteMessageBatchRequest(
                     queueUrl,
                     receiveMessageResult.getMessages.map { msg => new DeleteMessageBatchRequestEntry(msg.getMessageId, msg.getReceiptHandle)}
                   )
                 )
+                FrontPressCronSuccess.increment()
+              }
             }
             f.onFailure {
-              case t: Throwable => log.warn(t.toString)
+              case t: Throwable => {
+                log.warn(t.toString)
+                FrontPressCronFailure.increment()
+              }
             }
             Await.ready(f, 20.seconds) //Block until ready!
         }
       } catch {
-        case t: Throwable => log.warn(t.toString)
+        case t: Throwable => {
+          log.warn(t.toString)
+          FrontPressCronFailure.increment()
+        }
       }
     }
   }
