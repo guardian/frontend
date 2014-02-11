@@ -1,6 +1,6 @@
 define([
     'common/utils/detect',
-    "common/modules/experiments/inline-elements",
+    "common/modules/experiments/inline-elements"
 ], function(
     detect,
     inlineElements

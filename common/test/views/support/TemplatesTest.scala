@@ -7,6 +7,8 @@ import org.scalatest.FlatSpec
 import xml.XML
 import common.editions.Uk
 import com.gu.openplatform.contentapi.model.Asset
+import conf.Configuration
+import org.jsoup.Jsoup
 
 class TemplatesTest extends FlatSpec with Matchers {
 
@@ -102,7 +104,7 @@ class TemplatesTest extends FlatSpec with Matchers {
 
     val link = (body \\ "a").head
 
-    (link \ "@href").text should be("/section/2011/jan/01/words-for-url")
+    (link \ "@href").text should be (s"${Configuration.site.host}/section/2011/jan/01/words-for-url")
 
   }
 
@@ -116,6 +118,11 @@ class TemplatesTest extends FlatSpec with Matchers {
 
   "BulletCleaner" should "format all bullets by wrapping in a span" in {
     BulletCleaner("<p>Foo bar • foo</p>") should be("<p>Foo bar <span class=\"bullet\">•</span> foo</p>")
+  }
+
+  "InlineSlotGenerator" should "insert slots" in {
+    //val body = InlineSlotGenerator.processDocument(Jsoup.parseBodyFragment(realBody))
+    //body.select(".inline-slot").size should be > 0
   }
 
   "RowInfo" should "add row info to a sequence" in {

@@ -6,6 +6,7 @@ import views.support._
 import common.Edition
 import views.support.PictureCleaner
 import views.support.InBodyLinkCleaner
+import views.support.InlineSlotGenerator
 
 
 object BodyCleaner {
@@ -18,6 +19,7 @@ object BodyCleaner {
     TweetCleaner,
     WitnessCleaner,
     VideoEmbedCleaner(article.bodyVideos),
-    new TagLinker(article)
+    new TagLinker(article),
+    new InlineSlotGenerator(article)
   )
 }
