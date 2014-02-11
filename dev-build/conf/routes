@@ -2,7 +2,7 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-GET        /humans.txt                                                                                               controllers.Assets.at(path="/public", file="humans.txt")
+GET         /humans.txt                                                                                              controllers.Assets.at(path="/public", file="humans.txt")
 
 # For dev machines
 GET         /assets/internal/*file                                                                                   controllers.Assets.at(path="/public", file)
@@ -45,7 +45,7 @@ GET         /related/*path                                                      
 
 GET         /preference/platform/:platform                                                                           controllers.ChangeViewController.render(platform, page)
 GET         /preference/edition/:edition                                                                             controllers.ChangeEditionController.render(edition)
-GET         /preference/$networkFront<uk|au|us>alpha/:optaction                                                      controllers.ChangeAlphaController.render(networkFront, optaction, page)
+GET         /preference/front-alphas/:optAction                                                                      controllers.ChangeAlphaController.render(optAction, page)
 
 GET         /cards/opengraph/*path.json                                                                              controllers.CardController.opengraph(path)
 
@@ -148,7 +148,6 @@ GET         /commercial/money/bestbuys.json                                     
 GET         /commercial/books/bestsellers.json                                                                       controllers.commercial.BookOffers.bestsellers(format="json")
 
 # Onward journeys
-GET         /onward/popular-onward/*path.json                                                                        controllers.MostPopularOnwardController.popularOnward(path)
 GET         /onward/most-read.json                                                                                   controllers.MostPopularOnwardController.mostRead()
 GET         /onward/latest.json                                                                                      controllers.LatestContentController.renderLatest()
 GET         /onward/recently-published                                                                               controllers.LatestContentController.recentlyPublished()

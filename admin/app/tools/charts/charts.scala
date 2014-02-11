@@ -79,7 +79,7 @@ object PageviewsByDayGraph extends Chart with implicits.Tuples with implicits.Da
   val name = "Pageviews"
   lazy val labels = Seq("Date", "pageviews")
 
-  def dataset = Analytics.getPageviewsByDay().toList sortBy { _.first } map {
+  override def dataset = Analytics.getPageviewsByDay().toList sortBy { _.first } map {
     case (date, total) => ChartRow(date.toString("dd/MM"), Seq(total))
   }
 }
@@ -88,7 +88,7 @@ object NewPageviewsByDayGraph extends Chart with implicits.Tuples with implicits
   val name = "Pageviews (new users)"
   lazy val labels = Seq("Date", "pageviews")
 
-  def dataset = Analytics.getNewPageviewsByDay().toList sortBy { _.first } map {
+  override def dataset = Analytics.getNewPageviewsByDay().toList sortBy { _.first } map {
     case (date, total) => ChartRow(date.toString("dd/MM"), Seq(total))
   }
 }
@@ -99,7 +99,7 @@ object PageviewsByCountryGeoGraph extends Chart {
 
   override lazy val form: String = "GeoChart"
 
-  def dataset = Analytics.getPageviewsByCountry().toList map {
+  override def dataset = Analytics.getPageviewsByCountry().toList map {
     case (country, total) => ChartRow(country, Seq(total))
   }
 }
@@ -110,7 +110,7 @@ object PageviewsByOperatingSystemTreeMapGraph extends Chart {
   override lazy val form: String = "TreeMap"
 
   lazy val labels = Seq("OS", "pageviews")
-  def dataset = Analytics.getPageviewsByOperatingSystem().toList map {
+  override def dataset = Analytics.getPageviewsByOperatingSystem().toList map {
     case (os, total) => ChartRow(os, Seq(total))
   }
 
@@ -131,7 +131,7 @@ object PageviewsByBrowserTreeMapGraph extends Chart {
   override lazy val form: String = "TreeMap"
 
   lazy val labels = Seq("Browsers", "pageviews")
-  def dataset = Analytics.getPageviewsByBrowser().toList map {
+  override def dataset = Analytics.getPageviewsByBrowser().toList map {
     case (browser, total) => ChartRow(browser, Seq(total))
   }
 
@@ -150,7 +150,7 @@ object PageviewsPerUserGraph extends Chart with implicits.Tuples with implicits.
   val name = "Average pageviews per user (daily/weekly/4 weekly)"
   lazy val labels = Seq("Date", "day", "week", "4 week")
 
-  def dataset = {
+  override def dataset = {
     val day = Analytics.getPageviewsPerUserByDay() withDefaultValue 0.0
     val week = Analytics.getWeeklyPageviewsPerUserByDay() withDefaultValue 0.0
     val month = Analytics.getFourWeeklyPageviewsPerUserByDay() withDefaultValue 0.0
@@ -166,7 +166,7 @@ object ReturnUsersPercentageByDayGraph extends Chart with implicits.Tuples with 
   val name = "Return users % (daily/weekly/4 weekly)"
   lazy val labels = Seq("Date", "day", "week", "4 week")
 
-  def dataset = {
+  override def dataset = {
     val users = Analytics.getUsersByDay() mapValues { _ max 1L }
 
     val day = Analytics.getReturnUsersByDay() withDefaultValue 0L
@@ -185,7 +185,7 @@ object DaysSeenPerUserGraph extends Chart with implicits.Tuples with implicits.D
   val name = "Average days seen per user  (weekly/4 weekly)"
   lazy val labels = Seq("Date", "week", "4 week")
 
-  def dataset = {
+  override def dataset = {
     val week = Analytics.getWeeklyDaysSeenPerUserByDay() withDefaultValue 0.0
     val month = Analytics.getFourWeeklyDaysSeenPerUserByDay() withDefaultValue 0.0
 
@@ -200,7 +200,7 @@ object ActiveUsersFourDaysFromSevenOrMoreGraph extends Chart with implicits.Tupl
   val name = "Users active 4 or more days (weekly/4 weekly)"
   lazy val labels = Seq("Date", "week", "4 week")
 
-  def dataset = {
+  override def dataset = {
     val week = {
       val users = Analytics.getWeeklyDaysSeenByDay()
       val counts = (users filterKeys { _ >= 4 }).values flatMap { _.toList }
@@ -227,7 +227,7 @@ object ActiveUserProportionGraph extends Chart with implicits.Tuples with implic
   val name = "Active users as a percentage of monthly active users (daily/weekly)"
   lazy val labels = Seq("Date", "day", "week")
 
-  def dataset = {
+  override def dataset = {
     val day = Analytics.getUsersByDay() withDefaultValue 0L
     val week = Analytics.getWeeklyUsersByDay() withDefaultValue 0L
     val month = Analytics.getFourWeeklyUsersByDay() mapValues { _ max 1L }
@@ -257,7 +257,7 @@ object ChartFormat {
 
 class LineChart(val name: String, val labels: Seq[String], val charts: Future[GetMetricStatisticsResult]*) extends Chart {
 
-  override lazy val dataset: Seq[ChartRow] = {
+  override def dataset: Seq[ChartRow] = {
     val dataColumns = labels.tail
     val table = new ChartTable(dataColumns)
 
@@ -289,4 +289,30 @@ class AssetChart(name: String, labels: Seq[String], charts: Future[GetMetricStat
   override def withFormat(f: ChartFormat) = new AssetChart(name, labels, charts:_*) {
     override lazy val format = f
   }
+}
+
+class ABDataChart(name: String, ablabels: Seq[String], f: ChartFormat, charts: Future[GetMetricStatisticsResult]*) extends LineChart(name, ablabels, charts:_*) {
+
+  private val dataColumns: Seq[(String, ChartColumn)] = {
+
+    // Do not consider any metrics that have less than three data points.
+    (ablabels.tail, charts.toList).zipped.map( (column, chart) =>
+      (column, ChartColumn(chart.get().getDatapoints))
+    ).filter{ case (label, column)  => column.values.length > 3 }
+  }
+
+  override def dataset: Seq[ChartRow] = {
+
+    val filteredTable = new ChartTable(dataColumns.map(_._1))
+
+    for (column <- dataColumns) {
+      filteredTable.addColumn(column._1, column._2)
+    }
+
+    filteredTable.asChartRow(toLabel, toValue)
+  }
+
+  override val labels: Seq[String] = Seq(ablabels.headOption.getOrElse("X axis")) ++ dataColumns.map(_._1)
+
+  override lazy val format: ChartFormat = f
 }

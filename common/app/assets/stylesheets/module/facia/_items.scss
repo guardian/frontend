@@ -4,6 +4,7 @@ $c-live: #e81818;
     position: relative;
     overflow: hidden;
     @include rem((margin-top: $gs-baseline));
+
     @include mq(tablet) {
         @include rem((margin-top: $gs-baseline*2));
     }
@@ -11,34 +12,32 @@ $c-live: #e81818;
 .container:first-child {
     margin-top: 0;
 }
-.container--rolled-up {
-    .collection,
-    .collection__show-more {
-        display: none;
+.container__border {
+    border-top-style: solid;
+    border-top-width: 4px;
+
+    @include mq(tablet) {
+        border-top-width: 2px;
     }
 }
 .container__title {
     @include fs-header(5);
-    border-top-style: solid;
-    border-top-color: $c-newsAccent;
-    border-top-width: $gs-baseline/3;
     @include rem((
         padding: $gs-baseline/3 $gs-gutter/5,
         min-height: gs-height(1) - $gs-baseline*(2/3)
-    ));;
+    ));
     background-color: $c-newsDefault;
     color: #ffffff;
 
     @include mq(tablet) {
+        @include fs-header(3, true);
         min-height: 0;
         padding-left: 0;
         padding-right: 0;
+        background-color: transparent !important;
         @include rem((
-            padding-top: $gs-baseline/6,
             margin-bottom: $gs-baseline
         ));
-        border-top-width: $item-top-border-height;
-        background-color: transparent !important;
         line-height: 1;
 
         &.tone-news {
@@ -51,13 +50,51 @@ $c-live: #e81818;
             color: $c-featureDefault;
         }
     }
+
+    .today__sub {
+        @include mq(faciaLeftCol) {
+            @include fs-headline(1);
+        }
+        @include mq(wide) {
+            @include fs-headline(2, $size-only: true);
+        }
+    }
 }
 .container__title a {
     color: inherit;
 }
 @include mq($to: tablet) {
-    .has-localnav .container:first-child .container__title {
-        display: none;
+    .has-localnav .container:first-child {
+        .container__title,
+        .container__border {
+            display: none;
+        }
+    }
+}
+.container__updated {
+    display: block;
+    @include fs-headline(1);
+    margin-top: ($gs-baseline/3)*5;
+    padding-top: $gs-baseline/3;
+    border-top: 1px solid $c-neutral5;
+    position: relative;
+    @include box-sizing(border-box);
+    @include mq(faciaLeftCol) {
+        @include rem((
+            width: gs-span(2) + $gs-gutter
+        ));
+        .i--clock {
+            display: none;
+        }
+    }
+    @include mq(wide) {
+        .i--clock {
+            display: block;
+        }
+        padding-left: 40px;
+    }
+    time {
+        display: block;
     }
 }
 
@@ -100,7 +137,7 @@ $c-live: #e81818;
         }
     }
     @include mq(tablet) {
-        @include rem((top: $gs-baseline/2));
+        top: 0;
         text-align: right;
         color: $c-neutral2;
 
@@ -216,6 +253,10 @@ $c-live: #e81818;
         width: 1.45em;
         height: 1em;
         background-size: contain;
+
+        // This is a scalable icon,
+        // it will only work if SVG is active
+        @include show-only-if-svg-is-supported;
     }
 }
 .item__byline {
@@ -258,7 +299,7 @@ $c-live: #e81818;
     }
     .item__timestamp {
         @include rem((
-            min-width: gs-span(1) - 16,
+            min-width: 50px - $gs-gutter/2 - 14px,
             padding-right: $gs-gutter/2,
             padding-left: 14px
         ));
@@ -277,7 +318,7 @@ $c-live: #e81818;
     }
     .trail__count {
         @include rem((
-            padding-left: 28px
+            padding-left: 18px
         ));
         top: 0;
 
@@ -288,7 +329,7 @@ $c-live: #e81818;
         i {
             @include rem((
                 top: 3px,
-                left: $gs-gutter/2 - 1
+                left: 0
             ));
         }
     }
@@ -337,34 +378,59 @@ $c-live: #e81818;
         text-indent: -999em;
     }
 }
+$gallery-cta-icon: (
+    width: 18px,
+    height: 13px,
+);
+$video-cta-icon: (
+    width: 12px,
+    height: 16px,
+);
+$cta-icon-gap: 2px;
+.item__media-wrapper--has-icon {
+    .item__cta {
+        position: absolute;
+        top: 8px;
+        left: 8px;
+    }
+    .i {
+        margin-bottom: $cta-icon-gap;
+        position: relative;
+    }
+    &:hover,
+    &:focus {
+        .item__cta--gallery {
+            background-color: $c-neutral1;
+            .i {
+                top: -1 * (map-get($gallery-cta-icon, height) + $cta-icon-gap);
+            }
+        }
+    }
+}
 .item__cta--gallery,
 .item__cta--video {
     width: 36px;
     height: 36px;
     background-color: $c-media-icon;
+}
+.item__cta__icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    overflow: hidden;
+    font-size: 0;
 
-    .i {
-        top: 50%;
-        left: 50%;
+    .item__cta--gallery & {
+        width: map-get($gallery-cta-icon, width);
+        height: map-get($gallery-cta-icon, height);
+        margin-left: -1 * (map-get($gallery-cta-icon, width) / 2);
+        margin-top: -1 * (map-get($gallery-cta-icon, height) / 2);
     }
-}
-.item__cta--gallery {
-    .i {
-        @include rem((
-            margin-left: -9px,
-            margin-top: -7px
-        ));
-    }
-    .i--hover {
-        display: none
-    }
-}
-.item__cta--video {
-    .i {
-        @include rem((
-            margin-left: -5px,
-            margin-top: -7px
-        ));
+    .item__cta--video & {
+        width: map-get($video-cta-icon, width);
+        height: map-get($video-cta-icon, height);
+        margin-left: -1 * (map-get($video-cta-icon, width) / 2);
+        margin-top: -1 * (map-get($video-cta-icon, height) / 2);
     }
 }
 
@@ -402,27 +468,39 @@ $c-live: #e81818;
         color: #9c9c9c; //Darkest we can go to pass accessiblity
     }
 }
+$show-more-icon: (
+    width: 32px,
+    height: 32px,
+    space-between: 2px // to avoid overlaps/bleeding on zoom
+);
 .collection__show-more {
-    border-style: none;
-    width: 30px;
-    height: 30px;
+    display: block;
+    border: none;
+    width: map-get($show-more-icon, width);
+    height: map-get($show-more-icon, height);
     @include rounded-corners(50%);
-    color: #ffffff;
-    @include fs-data(4, $size-only: true);
     position: relative;
     left: 50%;
     margin-top: $gs-baseline;
-    margin-left: -15px;
+    margin-left: -1 * map-get($show-more-icon, width) / 2;
     padding: 0;
+    overflow: hidden;
 
-    .i {
-        position: absolute;
-        text-indent: -9999px;
-        top: 50%;
-        left: 50%;
-        margin-top: -5px;
-        margin-left: -12px;
+    &:hover,
+    &:focus {
+        .collection__show-more__icon {
+            margin-top: -1 * (map-get($show-more-icon, height) + map-get($show-more-icon, space-between));
+        }
     }
+    .i {
+        display: block;
+        margin-bottom: map-get($show-more-icon, space-between); // a bit of space between icons to avoid
+    }
+}
+.collection__show-more__icon {
+    display: block;
+    height: (map-get($show-more-icon, height) + map-get($show-more-icon, space-between)) * 2;
+    width: map-get($show-more-icon, width);
 }
 
 
@@ -440,15 +518,22 @@ $c-live: #e81818;
 }
 
 .action--has-icon {
-    @include rem((
-        padding-left: $action-icon-width + $action-icon-rightspace
-    ));
-
     .i {
-        float: left;
+        // This is a scalable icon,
+        // it will only work if SVG is active
+        @include show-only-if-svg-is-supported;
+    }
+    .svg & {
         @include rem((
-            margin-left: ($action-icon-width + $action-icon-rightspace) * -1
+            padding-left: $action-icon-width + $action-icon-rightspace
         ));
+
+        .i {
+            float: left;
+            @include rem((
+                margin-left: ($action-icon-width + $action-icon-rightspace) * -1
+            ));
+        }
     }
 }
 .action--tone-comment .i.i-quote-orange { // Chained selector to overrule icon code from global.css
@@ -500,48 +585,29 @@ $c-live: #e81818;
     }
 
     &.collection__item--content-type-gallery,
-    &.collection__item--content-type-video{
+    &.collection__item--content-type-video {
         &,
         .item__meta {
             background: $c-neutral1;
         }
-        .item__container {
-            border-top-width: 2px;
-            border-top-style: solid;
-        }
-        .item__link {
-            border-top: 0;
-
-            &:first-child {
-                @include rem((margin-top: $gs-baseline/3));
-            }
-        }
-        .item__image-container {
-            margin: 0;
-        }
     }
 }
 
-.item__gallery-lightbox {
+.i--circle {
+    @include rounded-corners(50%);
+    display: block;
+    position: relative;
+}
+.i--clock {
+    width: 31px;
+    height: 31px;
+    background-color: $c-newsDefault;
     position: absolute;
-    width: 100%;
-    top: 0;
     left: 0;
 
-    &:before {
-        content: "";
-        display: block;
-        padding-top: 60%;
-    }
-    .item__cta {
+    .i {
         position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        @include rem((
-            padding-top: 8px,
-            padding-left: 8px
-        ));
+        left: 14px;
+        top: 6px;
     }
 }

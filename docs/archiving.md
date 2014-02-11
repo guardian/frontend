@@ -1,4 +1,3 @@
-
 # Archiving
 
 The Guardian has not typically not made a clean break from the past when upgrading its CMSs or redesigning the website. Each new

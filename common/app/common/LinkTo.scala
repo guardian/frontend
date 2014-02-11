@@ -63,13 +63,22 @@ object LinkTo extends LinkTo {
 
 }
 
-object DesktopLink {
+object ClassicLink {
 
   import java.net.URLEncoder.encode
 
   def apply(page: MetaData)(implicit request: RequestHeader) = {
-    val targetUrl = encode(s"${LinkTo(s"/${page.id}")}?view=desktop", "UTF-8")
-    s"${LinkTo{"/preference/platform/desktop"}}?page=$targetUrl"
+
+    // quick fix for xx-alpha bug
+    val fixedId = page.id match {
+      case "uk-alpha" => "uk"
+      case "au-alpha" => "au"
+      case "us-alpha" => "us"
+      case id => id
+    }
+
+    val targetUrl = encode(s"${LinkTo(s"/$fixedId")}?view=classic", "UTF-8")
+    s"${LinkTo{"/preference/platform/classic"}}?page=$targetUrl"
   }
 }
 

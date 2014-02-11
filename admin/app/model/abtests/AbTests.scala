@@ -1,6 +1,6 @@
 package model.abtests
 
-import tools.{ChartFormat, CloudWatch, LineChart}
+import tools.{ChartFormat, CloudWatch, ABDataChart}
 import com.amazonaws.services.cloudwatch.model.GetMetricStatisticsRequest
 import org.joda.time.DateTime
 
@@ -18,11 +18,10 @@ object AbTests {
 
   case class AbChart(testId: String, variants: Seq[String])
 
-  def getAbCharts(): Seq[LineChart] = {
-    val abTests = getTests()
+  def getAbCharts(): Seq[ABDataChart] = {
 
-    abTests.keys.map { abTest =>
-        val variants = abTests(abTest)
+    getTests().keys.map { abTest =>
+        val variants: Seq[String] = getTests()(abTest)
 
         val cloudwatchResults = variants.map { variant =>
           CloudWatch.euWestClient.getMetricStatisticsAsync( new GetMetricStatisticsRequest()
@@ -36,8 +35,8 @@ object AbTests {
             CloudWatch.asyncHandler)
         }
 
-        // Make a list of line charts
-        new LineChart(abTest, Seq("Time") ++ variants, cloudwatchResults:_*).withFormat(ChartFormat.MultiLine)
+        // Make a list of ab charts
+        new ABDataChart(abTest, Seq("Time") ++ variants, ChartFormat.MultiLine, cloudwatchResults:_*)
     }.toSeq
   }
 } 

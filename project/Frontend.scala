@@ -47,13 +47,8 @@ object Frontend extends Build with Prototypes {
     )
   )
 
-  val image = application("image").dependsOn(commonWithTests).aggregate(common).settings(
-    libraryDependencies ++= Seq(
-      "org.imgscalr" % "imgscalr-lib" % "4.2",
-      "org.im4java" % "im4java" % "1.4.0",
-      "commons-lang" % "commons-lang" % "2.5"
-    )
-  )
+  val image = application("image")
+
   val discussion = application("discussion").dependsOn(commonWithTests).aggregate(common).settings(
     templatesImport ++= Seq("discussion._", "discussion.model._")
   )

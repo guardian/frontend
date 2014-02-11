@@ -7,6 +7,8 @@ define([
     //Current tests
     'common/modules/experiments/tests/aa',
     'common/modules/experiments/tests/gravity-recommendations',
+    'common/modules/experiments/tests/identity-email-signup',
+    'common/modules/experiments/tests/ad-labels',
     'common/modules/experiments/tests/onward-inline-elements'
 ], function (
     common,
@@ -16,15 +18,19 @@ define([
 
     Aa,
     GravityRecommendations,
+    EmailSignup,
+    AdLabels,
     InlineElements
     ) {
 
     var TESTS = [
             new Aa(),
             new GravityRecommendations(),
+            new EmailSignup(),
+            new AdLabels(),
             new InlineElements()
        ],
-        participationsKey = 'gu.ab.participations';
+       participationsKey = 'gu.ab.participations';
 
     function getParticipations() {
         return store.local.get(participationsKey) || {};

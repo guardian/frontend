@@ -1,9 +1,10 @@
 package controllers
 
-import play.api.mvc.{Results, Cookie, RequestHeader}
+import play.api.mvc.{SimpleResult, Results, Cookie, RequestHeader}
 import common.LinkTo
 import conf.Configuration.site
 import model.NoCache
+import scala.util.matching.Regex
 
 trait PreferenceController extends Results {
 
@@ -13,9 +14,30 @@ trait PreferenceController extends Results {
     case host => LinkTo(url) startsWith host
   }
 
-  def switchTo(cookie: (String, String), url: String)(implicit request: RequestHeader) = if (allowedUrl(url)){
-    NoCache(Found(url)
-      .withCookies(Cookie(cookie._1, cookie._2, maxAge = Some(5184000))) // 60 days, this is seconds
+  private def getShortenedDomain(domain: String) = {
+    val regex = "^(www|dev)\\.".r
+    val shortDomain = regex.replaceFirstIn(domain, ".")
+
+    if (shortDomain == domain) {
+      None
+    } else {
+      Some(shortDomain)
+    }
+  }
+
+  def switchTo(cookie: (String, String), url: String)(implicit request: RequestHeader): SimpleResult = switchTo(Seq(cookie), url)
+
+  def switchTo(cookies: Seq[(String, String)], url: String)(implicit request: RequestHeader): SimpleResult = if (allowedUrl(url)){
+    NoCache(
+      Found(url)
+      .withCookies(cookies.map{ case (name, value) =>
+        // 60 days expiration, or expire if value is empty
+        Cookie( name,
+                value,
+                maxAge = if (value.nonEmpty) { Some(5184000) } else { Some(-1) },
+                domain = getShortenedDomain(request.domain),
+                httpOnly = false)
+      }.toSeq:_*)
     )
   } else Forbidden("will not redirect there")
 }

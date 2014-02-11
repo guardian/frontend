@@ -21,7 +21,7 @@ var environment = require('system').env.ENVIRONMENT,
         tablet: 740,
         mobile: 320
     },
-    timestampDir = require('moment')().format('YYYY/MM/DD/HHmm.X'),
+    timestampDir = require('./node_modules/moment/moment.js')().format('YYYY/MM/DD/HHmm.X'),
     screenshotsDir = './screenshots',
     casper = require('casper').create();
 

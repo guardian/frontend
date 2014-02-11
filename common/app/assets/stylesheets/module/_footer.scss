@@ -37,7 +37,10 @@
    ========================================================================== */
 
 .footer {
-    @include rem((padding: 0 0 $baseline*4));
+    @include rem((
+        padding: 0 0 $baseline*4,
+        margin-top: $gs-baseline*2
+    ));
     background: $c-neutral7;
 
     .hide-in-footer {

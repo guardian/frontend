@@ -91,7 +91,7 @@ define([
     /**
      * @param {Element} parent
      */
-    Component.prototype.fetch = function(parent) {
+    Component.prototype.fetch = function(parent, key) {
         this.checkAttached();
         var self = this,
             endpoint = this.endpoint,
@@ -108,7 +108,7 @@ define([
             crossOrigin: true
         }).then(
             function render(resp) {
-                self.elem = bonzo.create(resp.html)[0];
+                self.elem = bonzo.create(resp[(key) ? key : 'html'])[0];
                 self._prerender();
 
                 if (!self.destroyed) {
