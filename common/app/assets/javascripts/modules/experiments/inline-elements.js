@@ -3,7 +3,7 @@ define([
     'common/$',
     'qwery',
     'bonzo',
-    'common/modules/slot-controller'
+    'common/modules/onward/slot-controller'
 ], function (
     common,
     $,
