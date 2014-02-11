@@ -3,10 +3,13 @@ define([
     'config',
     'knockout',
     'modules/vars',
+    'bindings/hoverable',
     'utils/fetch-settings',
     'utils/update-scrollables',
+    'utils/clean-clone',
     'utils/clone-with-key',
     'utils/find-first-by-id',
+    'models/group',
     'models/config/droppable',
     'models/config/front',
     'models/config/collection'
@@ -14,10 +17,13 @@ define([
     config,
     ko,
     vars,
+    hoverable,
     fetchSettings,
     updateScrollables,
+    cleanClone,
     cloneWithKey,
     findFirstById,
+    Group,
     droppable,
     Front,
     Collection
@@ -39,10 +45,36 @@ define([
                 }
             };
 
+        model.save = function() {
+            var obj = {
+                fronts: _.reduce(model.fronts(), function(fronts, front) {
+                    fronts[front.id] = {
+                        collections: _.map(front.group.items(), function(collection) {
+                            return collection.id;
+                        })
+                    };
+                    return fronts;
+                }, {}),
+
+                collections: _.reduce(model.collections(), function(collections, collection) {
+                    collections[collection.id] =
+                       _.reduce(collection.meta, function(acc, val, key) {
+                            acc[key] = _.isFunction(val) ? val() : val;
+                            return acc;
+                        }, {});
+
+                    return collections;
+                }, {})
+           };
+
+           window.console.log(JSON.stringify(obj, null, 4));
+        };
+
         vars.model = model;
 
         this.init = function() {
             droppable.init();
+            hoverable.init();
 
             fetchSettings(function (config, switches) {
                 vars.state.switches = switches || {};
@@ -68,12 +100,14 @@ define([
                         model.fronts.push(front);
                     });
 
-                    model.collections().concat(
-                        _.map(config.collections, function(obj, cid) {
-                            if (!findFirstById(model.collections, cid)) {
-                                model.collections.push(new Collection(cloneWithKey(obj, cid)));
-                            }
+                    ko.utils.arrayPushAll(
+                        model.collections,
+                       _.chain(config.collections)
+                        .map(function(obj, cid) {
+                            return findFirstById(model.collections, cid) ? false : new Collection(cloneWithKey(obj, cid));
                         })
+                        .filter(function(collection) { return collection; })
+                        .value()
                     );
                 }
             }, vars.CONST.configSettingsPollMs)

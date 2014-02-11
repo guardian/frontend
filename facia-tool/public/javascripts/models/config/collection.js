@@ -22,12 +22,14 @@ define([
             'href',
             'groups',
             'tone',
-            'uneditable']);
+            'uneditable',
+            'apiQuery']);
 
         populateObservables(this.meta, opts);
 
         this.state = asObservableProps([
             'open',
+            'underHover',
             'underDrag']);
     }
 
@@ -40,6 +42,7 @@ define([
             vars.model.collections.unshift(this);
         }
         this.state.open(false);
+        vars.model.save();
     };
 
     return Collection;

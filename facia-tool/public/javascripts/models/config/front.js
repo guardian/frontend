@@ -35,10 +35,8 @@ define([
     Front.prototype.populate = function(collectionIds, collections) {
         this.group.items(
            _.chain(collectionIds)
-            .map(function(id) {
-                return findFirstById(collections, id);
-            })
-            .filter(function(c) { return !!c; })
+            .map(function(id) {return findFirstById(collections, id); })
+            .filter(function(collection) { return collection; })
             .value()
         );
     };

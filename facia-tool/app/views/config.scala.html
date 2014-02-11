@@ -22,17 +22,23 @@
 
     <script type="text/html" id="template_collection">
         <div class="cnf-collection" data-bind="
+            makeHoverable: true,
             css: {
+                isDefault: $parents[1] && $parents[1].id === id,
                 underDrag: state.underDrag,
+                isElsewhere: state.underHover(),
                 open: state.open}">
 
-            <a data-bind="
+            <span class="collection-id" data-bind="text: id"></span>
+
+            <a class="cnf-collection__name" data-bind="
                 click: toggleOpen,
                 attr: {href: id},
                 text: meta.roleName() || '[no description]'"></a>
 
             <span class="placements" data-bind="
-                css: {'is-single': parents().length < 2}">
+                if: parents().length,
+                css: {'is-single': parents().length === 1}">
                 <span class="also">also</span> on
                 <span data-bind="foreach: parents">
                     <!-- ko if: $parents[2] ? id !== $parents[2].id : true -->
@@ -44,8 +50,6 @@
             </span>
 
             <div class="edit-collection" data-bind="if: state.open">
-                <span class="collection-id" data-bind="text: id"></span>
-
                 <label>Description</label>
                 <input type="text" data-bind="
                     value: meta.roleName"/>

@@ -216,7 +216,7 @@ a, a:hover {
 }
 
 .article.open {
-    background: #CCCCCC;
+    background: #CCCCCC !important;
 }
 
 .article.underDrag {
@@ -724,6 +724,28 @@ button {
     border-top-color: #f89406;
 }
 
+.cnf-collection.isElsewhere {
+    background: #FFEECC;
+}
+
+.cnf-collection .collection-id {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 5px;
+    font-size: 10px;
+    color: #999999;
+}
+
+.cnf-collection:hover .collection-id,
+.cnf-collection.isElsewhere .collection-id {
+    display: block;
+}
+
+.cnf-collection.isDefault .cnf-collection__name {
+    font-weight: bold;
+}
+
 .cnf-collection.open {
     background: #EEEEEE;
     padding-bottom: 5px;
@@ -772,14 +794,6 @@ button {
 
 .cnf-collection .edit-collection .tools{
     clear: left;
-}
-
-.cnf-collection .collection-id {
-    position: absolute;
-    top: 0;
-    right: 5px;
-    font-size: 10px;
-    color: #999999;
 }
 
 /*****************************************/
