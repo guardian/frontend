@@ -1,29 +1,5 @@
 @(bestBuys: model.commercial.money.BestBuys)(implicit request: RequestHeader)
 
-<!--
-var el = document.querySelector(".ad-slot__commercial-component");
-
-el.innerHTML = '';
-el.classList.remove('lazyloaded');
-
-require(["common/modules/commercial/loader", 'common/modules/ui/tabs', 'common/utils/mediator'],
-    function(CommercialComponent, Tabs, mediator) {
-        var c = new CommercialComponent({
-            config: guardian.config,
-            oastoken:"http://oas.theguardian.com/5c/www.theguardian.com/business/economics-blog/2014/feb/06/current-economic-malaise-flawed-policies/oas.html/L28/538233481/Middle1/Guardian/RH_nextgen_component_testing2_masterclasses/masterclasses_matt_v6.html/5550366558464c5652644d4142344676?",
-            inlineMicCode:"mic_231968",
-            mpuMicCode:"mic_231969"
-        }).bestbuy(el);
-
-        mediator.on('modules:commercial/loader:loaded', function() {
-            console.log('initialising commercial tabs');
-            var tabs = new Tabs();
-            tabs.init(document.querySelector('.ad-slot__commercial-component'));
-        });
-    }
-);
--->
-
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
 <div class="commercial bestbuys-component svg">
