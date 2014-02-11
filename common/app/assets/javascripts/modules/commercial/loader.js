@@ -21,15 +21,15 @@ define([
     /**
      * Loads commercial components.
      *
-     * BEWARE that this code is depended upon by the ad server. 
-     * 
+     * BEWARE that this code is depended upon by the ad server.
+     *
      * ```
      * require(['common/modules/commercial/loader'], function (CommercialComponent) {
      *   var slot = document.querySelector('[class="js-sticky-upper"]');
      *    var c = new CommercialComponent({config: guardian, oastoken: '%%C%%?'}).travel(slot);
      * })
      * ```
-     * 
+     *
      * @constructor
      * @extends Component
      * @param {Object=} options

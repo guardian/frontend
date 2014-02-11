@@ -1,5 +1,29 @@
 @(bestBuys: model.commercial.money.BestBuys)(implicit request: RequestHeader)
 
+<!--
+var el = document.querySelector(".ad-slot__commercial-component");
+
+el.innerHTML = '';
+el.classList.remove('lazyloaded');
+
+require(["common/modules/commercial/loader", 'common/modules/ui/tabs', 'common/utils/mediator'],
+    function(CommercialComponent, Tabs, mediator) {
+        var c = new CommercialComponent({
+            config: guardian.config,
+            oastoken:"http://oas.theguardian.com/5c/www.theguardian.com/business/economics-blog/2014/feb/06/current-economic-malaise-flawed-policies/oas.html/L28/538233481/Middle1/Guardian/RH_nextgen_component_testing2_masterclasses/masterclasses_matt_v6.html/5550366558464c5652644d4142344676?",
+            inlineMicCode:"mic_231968",
+            mpuMicCode:"mic_231969"
+        }).bestbuy(el);
+
+        mediator.on('modules:commercial/loader:loaded', function() {
+            console.log('initialising commercial tabs');
+            var tabs = new Tabs();
+            tabs.init(document.querySelector('.ad-slot__commercial-component'));
+        });
+    }
+);
+-->
+
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
 <div class="commercial bestbuys-component svg">
@@ -53,7 +77,7 @@
                     <p class="lineitem__meta">Data provided by London &amp; Country Mortgages Ltd</p>
                  </div>
 
-                 <div class="tabs__pane credit-cards" id="credit-cards" role="tabpanel" aria-labelledby="credit-cards-tab">
+                 <div class="tabs__pane credit-cards js-hidden" id="credit-cards" role="tabpanel" aria-labelledby="credit-cards-tab">
                     <h1 class="tagline">Featured offers on credit cards</h1>
 
                     <table>
@@ -81,7 +105,7 @@
                     <p class="lineitem__meta">Data provided by Moneysupermarket.com. Moneysupermarket.com Limited is an appointed representative of Moneysupermarket.com Financial Group Limited &copy;, which is authorised and regulated by the Financial Services Authority (FSA FRN 303190). Moneysupermarket.com Financial group Limited, registered in England No. 3157344. Registered Office: Moneysupermarket House, St. David's Park, Ewloe, CH5 3UZ. Telephone 01244 665700.</p>
                 </div>
 
-                 <div class="tabs__pane loans" id="loans" role="tabpanel" aria-labelledby="loans-tab">
+                 <div class="tabs__pane loans js-hidden" id="loans" role="tabpanel" aria-labelledby="loans-tab">
                     <h1 class="tagline">Medium-term solutions to finance</h1>
 
                     <table>
@@ -107,7 +131,7 @@
                     <p class="lineitem__meta">Data provided by Moneysupermarket.com. Moneysupermarket.com Limited is an appointed representative of Moneysupermarket.com Financial Group Limited &copy;, which is authorised and regulated by the Financial Services Authority (FSA FRN 303190). Moneysupermarket.com Financial group Limited, registered in England No. 3157344. Registered Office: Moneysupermarket House, St. David's Park, Ewloe, CH5 3UZ. Telephone 01244 665700.</p>
                 </div>
 
-                 <div class="tabs__pane current-accounts" id="current-accounts" role="tabpanel" aria-labelledby="current-accounts-tab">
+                 <div class="tabs__pane current-accounts js-hidden" id="current-accounts" role="tabpanel" aria-labelledby="current-accounts-tab">
                     <h1 class="tagline">Looking after your day-to-day finances</h1>
 
                     <table>
@@ -133,7 +157,7 @@
                     <p class="lineitem__meta">Data provided by Moneysupermarket.com. Moneysupermarket.com Limited is an appointed representative of Moneysupermarket.com Financial Group Limited &copy;, which is authorised and regulated by the Financial Services Authority (FSA FRN 303190). Moneysupermarket.com Financial group Limited, registered in England No. 3157344. Registered Office: Moneysupermarket House, St. David's Park, Ewloe, CH5 3UZ. Telephone 01244 665700.</p>
                 </div>
 
-                 <div class="tabs__pane savings-account" id="savings-account" role="tabpanel" aria-labelledby="savings-account-tab">
+                 <div class="tabs__pane savings-account js-hidden" id="savings-account" role="tabpanel" aria-labelledby="savings-account-tab">
                     <h1 class="tagline">A safe home for your nest egg</h1>
 
                     <table>
