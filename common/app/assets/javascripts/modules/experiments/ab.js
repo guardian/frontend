@@ -6,7 +6,9 @@ define([
 
     //Current tests
     'common/modules/experiments/tests/aa',
-    'common/modules/experiments/tests/gravity-recommendations'
+    'common/modules/experiments/tests/gravity-recommendations',
+    'common/modules/experiments/tests/identity-email-signup',
+    'common/modules/experiments/tests/ad-labels'
 ], function (
     common,
     store,
@@ -14,14 +16,18 @@ define([
     mvtCookie,
 
     Aa,
-    GravityRecommendations
+    GravityRecommendations,
+    EmailSignup,
+    AdLabels
     ) {
 
     var TESTS = [
             new Aa(),
-            new GravityRecommendations()
+            new GravityRecommendations(),
+            new EmailSignup(),
+            new AdLabels()
        ],
-        participationsKey = 'gu.ab.participations';
+       participationsKey = 'gu.ab.participations';
 
     function getParticipations() {
         return store.local.get(participationsKey) || {};

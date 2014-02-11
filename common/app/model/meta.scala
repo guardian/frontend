@@ -2,6 +2,8 @@ package model
 
 import common.ManifestData
 import conf.Configuration
+import play.api.templates.Html
+import java.net.URI
 
 trait MetaData extends Tags {
   def id: String

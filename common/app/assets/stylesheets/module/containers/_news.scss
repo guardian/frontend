@@ -1,8 +1,5 @@
-.container--rolled-up {
-    .collection-wrapper,
-    .linkslist-container {
-        display: none;
-    }
+.container--rolled-up .container--rolled-up-hide {
+    display: none;
 }
 
 .container--row-pattern {
@@ -101,9 +98,30 @@
                 display: block;
             }
         }
+        .item--has-no-image {
+            .item__title {
+                @include mq(desktop) {
+                    @include fs-headline(2, true);
+                }
+            }
+        }
     }
 }
 .container--news {
+    .container__border {
+        display: none;
+
+        @include mq(faciaLeftCol) {
+            display: block;
+        }
+    }
+    .collection-wrapper:first-child .fromage {
+        border-top-width: 0;
+
+        @include mq(tablet, faciaLeftCol) {
+            border-top-width: 2px;
+        }
+    }
     .container__title {
         display: none;
         color: $c-neutral1;
@@ -255,9 +273,15 @@
         background: $c-newsAccent;
     }
 
-    &.show-more--hidden {
-        display: none;
+    &.tone-feature:before {
+        background: $c-featureAccent;
+    }
+    &.tone-comment:before {
+        background: $c-commentAccent;
+    }
 
+    &.show-more--hidden {
+        &,
         &:before {
             display: none;
         }
@@ -265,8 +289,32 @@
 }
 
 .today {
-    color: $c-neutral2;
+    color: $c-neutral1;
+    font-weight: normal;
 }
 .today__dayofweek {
-    color: $c-neutral1;
+    color: $c-newsDefault;
+}
+@include mq(wide) {
+    .today__sub {
+        display: block;
+    }
+}
+
+
+/**
+ * Ads in containers / row patterns
+ */
+
+.container {
+    .ad-slot {
+        padding: 0;
+        margin: 0 auto;
+    }
+}
+@include mq(tablet) {
+    .l-row__item--mpu-300 {
+        min-width: gs-span(4) + $gs-gutter;
+        max-width: gs-span(4) + $gs-gutter;
+    }
 }

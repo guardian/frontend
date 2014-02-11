@@ -25,60 +25,37 @@
     @include mq(desktop) {
         @include rem((width: gs-span(12)));
     }
-    @include mq(wide) {
-        @include rem((width: gs-span(16)));
-        .container {
-            @include rem((padding-left: gs-span(4) + $gs-gutter));
-        }
+    @include mq(faciaLeftCol) {
+        @include rem((width: gs-span(14)));
+
         .container__title {
-            @include rem((margin-left: (gs-span(4) + $gs-gutter) * -1));
+            margin-bottom: 0;
         }
-        .container__title__label {
-            display: block;
-            @include rem((max-width: gs-span(3) + $gs-gutter));
-        }
-        .container__toggle {
+        .container__body {
+            overflow: hidden;
             @include rem((
-                right: gs-span(12) + $gs-gutter,
-                min-width: 40px
+                margin-left: gs-span(2) + $gs-gutter
             ));
-        }
-        .collection {
-            @include rem((margin-top: -42px));
         }
         .container--news {
             .container__title {
                 display: block;
             }
-            .container__title:first-child + .collection-wrapper {
-                .fromage,
-                .fromage__container {
-                    border-top-width: 0;
-                }
-            }
         }
-        // Containers with multiple collections should only have a negative
-        // top margin on the first collection
-        .container--news,
-        .container--features,
-        .container--commentanddebate {
-            .collection {
-                margin-top: 0;
-            }
-            .collection-wrapper:first-of-type {
-                @include rem((margin-top: -50px));
-            }
-        }
-        .container--features .collection-wrapper:first-of-type {
-            @include rem((margin-top: -38px));
+    }
+    @include mq(wide) {
+        @include rem((width: gs-span(16)));
 
-            // Hide tone border on items from the first row
-            .item__link {
-                border-top: none;
-            }
-            .item__image-container {
-                margin-top: 0;
-            }
+        .container__title {
+            float: left;
+            @include rem((
+                width: gs-span(3),
+                margin-right: $gs-gutter
+            ));
+        }
+        .container__body {
+            margin-left: 0;
+            @include rem((width: gs-span(12)));
         }
     }
 }
@@ -87,6 +64,7 @@
 @import "module/facia/_mixins";
 @import "module/facia/_items";
 @import "module/facia/_fromage";
+@import "module/facia/_linkslist";
 
 @import "module/containers/_news";
 @import "module/containers/_sport";
@@ -94,5 +72,5 @@
 @import "module/containers/_comment";
 @import "module/containers/_section";
 @import "module/containers/_commentanddebate";
+@import "module/containers/_people";
 
-@import "module/facia/_linkslist";

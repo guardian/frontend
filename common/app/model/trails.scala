@@ -1,15 +1,6 @@
 package model
 
-import conf.{Configuration, ContentApi}
-import common._
-import contentapi.QueryDefaults
 import org.joda.time.DateTime
-import play.api.libs.ws.{ WS, Response }
-import play.api.libs.json.Json._
-import play.api.libs.json.JsObject
-import scala.concurrent.Future
-import services.S3FrontsApi
-import views.support.Style
 
 
 trait Trail extends Elements with Tags with FaciaFields {

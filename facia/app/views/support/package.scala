@@ -20,18 +20,18 @@ object GetContainer {
     ("au", Map(
       ("au/news/regular-stories", NewsContainer()),
       ("au/sport/regular-stories", SportContainer()),
-      ("au/tone/features/feature-stories", FeaturesContainer()),
+      ("au/tone/features/feature-stories", FeaturesContainer(adSlot = Some(AdSlot.First))),
       ("au/commentisfree/regular-stories", CommentContainer()),
-      ("au/culture/regular-stories", FeaturesContainer()),
+      ("au/culture/regular-stories", FeaturesContainer(adSlot = Some(AdSlot.Second))),
       ("au/contributors/feature-stories", CommentContainer()),
       ("au/most-viewed/regular-stories", PopularContainer())
     )),
     ("au-alpha", Map(
       ("au-alpha/news/regular-stories", NewsContainer()),
-      ("au-alpha/features/feature-stories", FeaturesContainer()),
+      ("au-alpha/features/feature-stories", FeaturesContainer(adSlot = Some(AdSlot.First))),
       ("au-alpha/special/special-story", SportContainer()),
       ("au-alpha/contributors/feature-stories", CommentAndDebateContainer()),
-      ("au-alpha/people-in-the-news/feature-stories", SportContainer()),
+      ("au-alpha/people-in-the-news/feature-stories", PeopleContainer(adSlot = Some(AdSlot.Second))),
       ("au-alpha/special-other/special-story", SportContainer()),
       ("au/most-viewed/regular-stories", PopularContainer())
     )),
@@ -58,18 +58,18 @@ object GetContainer {
     ("uk", Map(
       ("uk/news/regular-stories", NewsContainer()),
       ("uk/sport/regular-stories", SportContainer()),
-      ("uk/tone/features/feature-stories", FeaturesContainer()),
+      ("uk/tone/features/feature-stories", FeaturesContainer(adSlot = Some(AdSlot.First))),
       ("uk/commentisfree/regular-stories", CommentContainer()),
-      ("uk/culture/regular-stories", FeaturesContainer()),
+      ("uk/culture/regular-stories", FeaturesContainer(adSlot = Some(AdSlot.Second))),
       ("uk/contributors/feature-stories", CommentContainer()),
       ("uk/most-viewed/regular-stories", PopularContainer())
     )),
     ("uk-alpha", Map(
       ("uk-alpha/news/regular-stories", NewsContainer()),
-      ("uk-alpha/features/feature-stories", FeaturesContainer()),
+      ("uk-alpha/features/feature-stories", FeaturesContainer(adSlot = Some(AdSlot.First))),
       ("uk-alpha/special/special-story", SportContainer()),
       ("uk-alpha/contributors/feature-stories", CommentAndDebateContainer()),
-      ("uk-alpha/people-in-the-news/feature-stories", SportContainer()),
+      ("uk-alpha/people-in-the-news/feature-stories", PeopleContainer(adSlot = Some(AdSlot.Second))),
       ("uk-alpha/special-other/special-story", SportContainer()),
       ("uk/most-viewed/regular-stories", PopularContainer())
     )),
@@ -96,18 +96,18 @@ object GetContainer {
     ("us", Map(
       ("us/news/regular-stories", NewsContainer()),
       ("us/sport/regular-stories", SportContainer()),
-      ("us/tone/features/feature-stories", FeaturesContainer()),
+      ("us/tone/features/feature-stories", FeaturesContainer(adSlot = Some(AdSlot.First))),
       ("us/commentisfree/regular-stories", CommentContainer()),
-      ("us/culture/regular-stories", FeaturesContainer()),
+      ("us/culture/regular-stories", FeaturesContainer(adSlot = Some(AdSlot.Second))),
       ("us/contributors/feature-stories", CommentContainer()),
       ("us/most-viewed/regular-stories", PopularContainer())
     )),
     ("us-alpha", Map(
       ("us-alpha/news/regular-stories", NewsContainer()),
-      ("us-alpha/features/feature-stories", FeaturesContainer()),
+      ("us-alpha/features/feature-stories", FeaturesContainer(adSlot = Some(AdSlot.First))),
       ("us-alpha/special/special-story", SportContainer()),
       ("us-alpha/contributors/feature-stories", CommentAndDebateContainer()),
-      ("us-alpha/people-in-the-news/feature-stories", SportContainer()),
+      ("us-alpha/people-in-the-news/feature-stories", PeopleContainer(adSlot = Some(AdSlot.Second))),
       ("us-alpha/special-other/special-story", SportContainer()),
       ("us/most-viewed/regular-stories", PopularContainer())
     )),

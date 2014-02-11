@@ -5,7 +5,6 @@
 # For dev machines
 GET        /assets/*path                            dev.DevAssetsController.at(path)
 
-GET        /onward/popular-onward/*path.json        controllers.MostPopularOnwardController.popularOnward(path)
 GET        /onward/card/*path.json                  controllers.OnwardCardController.renderCard(path)
 GET        /onward/trail/*path.json                 controllers.OnwardCardController.renderTrail(path)
 GET        /onward/most-read.json                   controllers.MostPopularOnwardController.mostRead()
@@ -30,7 +29,7 @@ GET        /recent/card.json                                      controllers.Re
 
 GET        /preference/platform/:platform                         controllers.ChangeViewController.render(platform, page)
 GET        /preference/edition/:edition                           controllers.ChangeEditionController.render(edition)
-GET        /preference/$networkFront<uk|au|us>alpha/:optaction    controllers.ChangeAlphaController.render(networkFront, optaction, page)
+GET        /preference/front-alphas/:optAction                    controllers.ChangeAlphaController.render(optAction, page)
 
 # Experimental
 GET        /cards/opengraph/*path.json                            controllers.CardController.opengraph(path)

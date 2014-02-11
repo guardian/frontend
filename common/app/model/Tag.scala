@@ -3,6 +3,8 @@ package model
 import com.gu.openplatform.contentapi.model.{ Tag => ApiTag }
 import common.Reference
 import views.support.{Contributor, ImgSrc}
+import play.api.templates.Html
+import java.net.URI
 
 case class Tag(private val delegate: ApiTag) extends MetaData {
   lazy val name: String = webTitle
