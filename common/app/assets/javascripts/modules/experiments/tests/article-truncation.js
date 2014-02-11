@@ -1,6 +1,18 @@
 define([
+    'qwery',
+    'bonzo',
     'common/modules/experiments/truncator'
-], function (Truncator) {
+], function (
+    qwery,
+    bonzo,
+    Truncator
+) {
+
+    function switchComments(config) {
+        if(config.page.commentable && qwery('.js-comments').length) {
+            bonzo(qwery('.related')).insertBefore(qwery('.js-comments'));
+        }
+    }
 
     var ArticleTruncationTest = function () {
 
@@ -16,12 +28,14 @@ define([
             {
                 id: 'control',
                 test: function (context, config) {
+                    switchComments(config);
                     return true;
                 }
             },
             {
                 id: 'twenty',
                 test: function (context, config) {
+                    switchComments(config);
                     var t = new Truncator({
                         percentageCap: 20,
                         wordCount: config.page.wordCount
@@ -31,6 +45,7 @@ define([
             {
                 id: 'thirty',
                 test: function (context, config) {
+                    switchComments(config);
                     var t = new Truncator({
                         percentageCap: 30,
                         wordCount: config.page.wordCount
@@ -40,6 +55,7 @@ define([
             {
                 id: 'forty',
                 test: function (context, config) {
+                    switchComments(config);
                     var t = new Truncator({
                         percentageCap: 40,
                         wordCount: config.page.wordCount
