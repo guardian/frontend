@@ -1,0 +1,30 @@
+@(league: pa.Season, tableEntries: List[pa.LeagueTableEntry], selectedTeam: String = "0")
+
+@views.html.football.main(s"${league.name} table") {
+    <hgroup class="page-header">
+        <h1>@league.name table</h1>
+    </hgroup>
+
+    <table data-embed-type="data" class="table data data--embedded">
+        <thead>
+            <tr>
+                <th>Position</th>
+                <th>Team name</th>
+                <th>Pld</th>
+                <th>GD</th>
+                <th>Pts</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for((tableEntry, index) <- tableEntries.zipWithIndex) {
+            <tr@if(tableEntry.team.id == selectedTeam){ class="table-row--selected"}>
+                <td>@tableEntry.team.rank</td>
+                <td>@tableEntry.team.name</td>
+                <td>@tableEntry.team.total.played</td>
+                <td>@tableEntry.team.goalDifference</td>
+                <td>@tableEntry.team.points</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
