@@ -76,10 +76,10 @@ define([
             };
 
         // setup
-        // ajax.init({page: {
-        //     ajaxUrl: '',
-        //     edition: 'UK'
-        // }});
+        ajax.init({page: {
+            ajaxUrl: '',
+            edition: 'UK'
+        }});
 
         // rerender the button each time
         beforeEach(function() {
@@ -88,37 +88,36 @@ define([
             context.set(document.getElementById(fixturesId));
             commentBox = new CommentBox({
                 discussionId: discussionId,
-                maxLength: maxCommentLength
-            });
-
-            spyOn(commentBox, 'getUserData').andReturn({ displayName: "testy", id: 1 });
-            spyOn(Id, 'getUserFromApiWithRefreshedCookie').andReturn({
-                statusFields: {
-                    userEmailValidated: true
+                maxLength: maxCommentLength,
+                switches: {
+                    discussionVerifiedEmailPosting: true
                 }
             });
+
+            spyOn(commentBox, 'getUserData').andReturn({
+                displayName: "testy",
+                id: 1,
+                accountCreatedDate: new Date(1391904001338)
+            });
+
             commentBox.attachTo(document.querySelector('.d-comment-box'));
-
-            sinon.stub(ajax, 'reqwest');
-            sinon.stub(reqwestReturn, 'then');
-            sinon.stub(Cookies, 'get');
-
-            ajax.reqwest.returns(reqwestReturn);
-            ajax.init(config);
 
             Id.init(config);
             Id.reset();
 
-            Cookies.get.withArgs("GU_U").returns(cookieData);
+            // Stub out this method as async merging stuff doesn't work great
+            Id.getUserFromApiWithRefreshedCookie = function (callback) {
+                callback({
+                    statusFields: {
+                        userEmailValidated: true
+                    }
+                });
+            };
         });
 
         afterEach(function() {
             server.restore();
             fixtures.clean(fixturesId);
-
-            ajax.reqwest.restore();
-            Cookies.get.restore();
-            reqwestReturn.then.restore();
         });
 
         describe('Post comment', function() {
@@ -156,27 +155,41 @@ define([
                 expect(commentBox.getElem('error')).not.toBeUndefined();
             });
 
-            // ToDo: Update test to work with email verification
+            it('should error on invalid email address', function() {
+                expect(commentBox.getElem('error')).toBeUndefined();
+                commentBox.getElem('body').value = validCommentText;
 
-            // it('should send a success message to the user when comment is valid', function() {
-            //     var callback = jasmine.createSpy();
-            //     runs(function() {
-            //         commentBox.on('post:success', callback);
-            //         server.respondWith([200, {}, apiPostValidCommentResp]);
-            //         commentBox.getElem('body').value = validCommentText;
-            //         bean.fire(commentBox.elem, 'submit');
-            //     });
+                Id.getUserFromApiWithRefreshedCookie = function (callback) {
+                    callback({
+                        statusFields: {
+                            userEmailValidated: false
+                        }
+                    });
+                };
 
-            //     waitsFor(function() {
-            //         server.respond();
-            //         return callback.calls.length > 0;
-            //     }, 1000);
+                bean.fire(commentBox.elem, 'submit');
+                expect(commentBox.getElem('error')).not.toBeUndefined();
+            });
 
-            //     // This id comes from api-post-comment-valid
-            //     runs(function() {
-            //         expect(JSON.stringify(callback.calls[0].args[0].id)).toEqual(JSON.parse(apiPostValidCommentResp).message);
-            //     });
-            // });
+            it('should send a success message to the user when comment is valid', function() {
+                var callback = jasmine.createSpy();
+                runs(function() {
+                    commentBox.on('post:success', callback);
+                    server.respondWith([200, {}, apiPostValidCommentResp]);
+                    commentBox.getElem('body').value = validCommentText;
+                    bean.fire(commentBox.elem, 'submit');
+                });
+
+                waitsFor(function() {
+                    server.respond();
+                    return callback.calls.length > 0;
+                }, 5000);
+
+                // This id comes from api-post-comment-valid
+                runs(function() {
+                    expect(JSON.stringify(callback.calls[0].args[0].id)).toEqual(JSON.parse(apiPostValidCommentResp).message);
+                });
+            });
 
             xdescribe('fail', function() {
                 xit('should send a failure message to the user');
