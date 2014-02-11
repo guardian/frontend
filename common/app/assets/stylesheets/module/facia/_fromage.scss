@@ -340,7 +340,7 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
     .fromage__standfirst {
         @include mq(desktop) {
             @include rem((
-                max-width: gs-span(7)
+                max-width: gs-span(8)
             ));
         }
     }

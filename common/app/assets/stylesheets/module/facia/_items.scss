@@ -50,6 +50,15 @@ $c-live: #e81818;
             color: $c-featureDefault;
         }
     }
+
+    .today__sub {
+        @include mq(faciaLeftCol) {
+            @include fs-headline(1);
+        }
+        @include mq(wide) {
+            @include fs-headline(2, $size-only: true);
+        }
+    }
 }
 .container__title a {
     color: inherit;
@@ -60,6 +69,32 @@ $c-live: #e81818;
         .container__border {
             display: none;
         }
+    }
+}
+.container__updated {
+    display: block;
+    @include fs-headline(1);
+    margin-top: ($gs-baseline/3)*5;
+    padding-top: $gs-baseline/3;
+    border-top: 1px solid $c-neutral5;
+    position: relative;
+    @include box-sizing(border-box);
+    @include mq(faciaLeftCol) {
+        @include rem((
+            width: gs-span(2) + $gs-gutter
+        ));
+        .i--clock {
+            display: none;
+        }
+    }
+    @include mq(wide) {
+        .i--clock {
+            display: block;
+        }
+        padding-left: 40px;
+    }
+    time {
+        display: block;
     }
 }
 
@@ -102,7 +137,7 @@ $c-live: #e81818;
         }
     }
     @include mq(tablet) {
-        @include rem((top: $gs-baseline/2));
+        top: 0;
         text-align: right;
         color: $c-neutral2;
 
@@ -343,34 +378,59 @@ $c-live: #e81818;
         text-indent: -999em;
     }
 }
+$gallery-cta-icon: (
+    width: 18px,
+    height: 13px,
+);
+$video-cta-icon: (
+    width: 12px,
+    height: 16px,
+);
+$cta-icon-gap: 2px;
+.item__media-wrapper--has-icon {
+    .item__cta {
+        position: absolute;
+        top: 8px;
+        left: 8px;
+    }
+    .i {
+        margin-bottom: $cta-icon-gap;
+        position: relative;
+    }
+    &:hover,
+    &:focus {
+        .item__cta--gallery {
+            background-color: $c-neutral1;
+            .i {
+                top: -1 * (map-get($gallery-cta-icon, height) + $cta-icon-gap);
+            }
+        }
+    }
+}
 .item__cta--gallery,
 .item__cta--video {
     width: 36px;
     height: 36px;
     background-color: $c-media-icon;
+}
+.item__cta__icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    overflow: hidden;
+    font-size: 0;
 
-    .i {
-        top: 50%;
-        left: 50%;
+    .item__cta--gallery & {
+        width: map-get($gallery-cta-icon, width);
+        height: map-get($gallery-cta-icon, height);
+        margin-left: -1 * (map-get($gallery-cta-icon, width) / 2);
+        margin-top: -1 * (map-get($gallery-cta-icon, height) / 2);
     }
-}
-.item__cta--gallery {
-    .i {
-        @include rem((
-            margin-left: -9px,
-            margin-top: -7px
-        ));
-    }
-    .i--hover {
-        display: none
-    }
-}
-.item__cta--video {
-    .i {
-        @include rem((
-            margin-left: -5px,
-            margin-top: -7px
-        ));
+    .item__cta--video & {
+        width: map-get($video-cta-icon, width);
+        height: map-get($video-cta-icon, height);
+        margin-left: -1 * (map-get($video-cta-icon, width) / 2);
+        margin-top: -1 * (map-get($video-cta-icon, height) / 2);
     }
 }
 
@@ -414,7 +474,8 @@ $show-more-icon: (
     space-between: 2px // to avoid overlaps/bleeding on zoom
 );
 .collection__show-more {
-    border-style: none;
+    display: block;
+    border: none;
     width: map-get($show-more-icon, width);
     height: map-get($show-more-icon, height);
     @include rounded-corners(50%);
@@ -433,7 +494,7 @@ $show-more-icon: (
     }
     .i {
         display: block;
-        margin-bottom: map-get($show-more-icon, space-between); // a bit of space between icons to avoid 
+        margin-bottom: map-get($show-more-icon, space-between); // a bit of space between icons to avoid
     }
 }
 .collection__show-more__icon {
@@ -532,24 +593,21 @@ $show-more-icon: (
     }
 }
 
-.item__media-wrapper--has-icon {
-    .item__cta {
-        position: absolute;
-        @include rem((
-            top: 8px,
-            left: 8px
-        ));
-    }
-    &:hover {
-        .item__cta--gallery {
-            background-color: $c-neutral1;
+.i--circle {
+    @include rounded-corners(50%);
+    display: block;
+    position: relative;
+}
+.i--clock {
+    width: 31px;
+    height: 31px;
+    background-color: $c-newsDefault;
+    position: absolute;
+    left: 0;
 
-            .i {
-                display: none;
-            }
-            .i--hover {
-                display: block;
-            }
-        }
+    .i {
+        position: absolute;
+        left: 14px;
+        top: 6px;
     }
 }

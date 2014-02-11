@@ -79,20 +79,38 @@ case class CommentAndDebateContainer(showMore: Boolean = true) extends Container
   val containerType = "commentanddebate"
   val tone = "comment"
 }
-case class FeaturesContainer(showMore: Boolean = true) extends Container {
+case class FeaturesContainer(showMore: Boolean = true, adSlot: Option[AdSlot] = None) extends Container {
   val containerType = "features"
-  val tone: String = "feature"
+  val tone = "feature"
 }
 case class PopularContainer(showMore: Boolean = true) extends Container {
   val containerType = "popular"
-  val tone: String = "news"
+  val tone = "news"
 }
-case class PeopleContainer(showMore: Boolean = true) extends Container {
+case class PeopleContainer(showMore: Boolean = true, adSlot: Option[AdSlot] = None) extends Container {
   val containerType = "people"
-  val tone: String = "feature"
+  val tone = "feature"
 }
 case class SectionContainer(showMore: Boolean = true, tone: String = "news") extends Container {
   val containerType = "section"
+}
+
+sealed trait AdSlot {
+  val baseName: String
+  val medianName: String
+}
+object AdSlot {
+
+  object First extends AdSlot {
+    val baseName = "x49"
+    val medianName = "Middle1"
+  }
+
+  object Second extends AdSlot {
+    val baseName = "Bottom2"
+    val medianName = "Middle"
+  }
+
 }
 
 

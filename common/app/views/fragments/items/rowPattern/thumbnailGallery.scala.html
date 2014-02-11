@@ -36,8 +36,10 @@
                     <div class="item__media-wrapper item__media-wrapper--has-icon gallerythumbs" data-gallery-url="@LinkTo{@trail.url}">
                         <div class="item__cta item__cta--gallery">
                             <p>Expand</p>
-                            <i class="i i-camera-black-large i--default"></i>
-                            <i class="i i-camera-yellow-large i--hover"></i>
+                            <span class="item__cta__icon">
+                                <span class="i i-camera-black-large"></span>
+                                <span class="i i-camera-yellow-large"></span>
+                            </span>
                         </div>
                         @trail.trailPicture(5,3).map{ imageContainer =>
                             @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>

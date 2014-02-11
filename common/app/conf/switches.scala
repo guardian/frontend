@@ -105,6 +105,9 @@ object Switches extends Collections {
     "Enable the AMAA audience segment tracking.",
     safeState = Off, sellByDate = endOfQ4)
 
+  val EffectiveMeasureSwitch = Switch("Commercial Tags", "effective-measure",
+    "Enable the Effective Measure audience segment tracking.",
+    safeState = Off, sellByDate = endOfQ4)
 
   // Commercial Feeds
 
@@ -174,6 +177,11 @@ object Switches extends Collections {
     safeState = Off, endOfQ4
   )
 
+  val ScrollDepthSwitch = Switch("Analytics", "scroll-depth",
+    "Enables tracking and measurement of scroll depth",
+    safeState = Off, never
+  )
+
   // Discussion Switches
 
   val DiscussionSwitch = Switch("Discussion", "discussion",
@@ -207,13 +215,13 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
   )
 
-  val ParagraphIndentsSwitch = Switch("Feature Switches", "paragraph-indents",
-    "If switched on whitespace between paragraphs will be reduced.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
-  )
-
   val ReleaseMessageSwitch = Switch("Feature Switches", "release-message",
     "If this is switched on users will be messaged that they are inside the alpha/beta/whatever release",
+    safeState = Off, sellByDate = endOfQ4
+  )
+
+  val RainbowLogo = Switch("Feature Switches", "rainbow-logo",
+    "If this is switched on the guardian logo will be replaced with a rainbow version",
     safeState = Off, sellByDate = endOfQ4
   )
 
@@ -321,6 +329,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 24)
   )
 
+  val ABAdLabels = Switch("A/B Tests", "ab-ad-labels",
+    "Testing if putting labels next to ads impacts the CTR",
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 27)
+  )
+
   val TagLinking = Switch("Feature Switches", "tag-linking",
     "If this is switched on articles that have no in body links will auto link to their tags where possible",
     safeState = Off, sellByDate = endOfQ4
@@ -367,7 +380,7 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 13)
   )
 
-  // Facia Tool
+  // Facia Tool Switches
 
   val ToolDisable = Switch("Facia Tool", "facia-tool-disable",
     "If this is switched on then the fronts tool is disabled",
@@ -379,20 +392,22 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val ContentApiPutSwitch = Switch("Facia Tool", "facia-tool-contentapi-put",
+    "If this switch is on facia tool will PUT all collection changes to content api",
+    safeState = Off, sellByDate = never
+  )
+
+  val FaciaToolPressSwitch = Switch("Facia Tool", "facia-tool-press-front",
+    "If this switch is on facia tool will press fronts on each change",
+    safeState = Off, sellByDate = never
+  )
+
   // Image Switch
 
   val ImageServerSwitch = Switch("Image Server", "image-server",
     "If this switch is on images will be served off i.guim.co.uk (dynamic image host).",
     safeState = On, sellByDate = never // this is a performance related switch, not a feature switch
   )
-
-  // Facia Tool Switches
-
-  val ContentApiPutSwitch = Switch("Facia Tool", "facia-tool-contentapi-put",
-    "If this switch is on facia tool will PUT all collection changes to content api",
-    safeState = Off, sellByDate = never
-  )
-
 
   val all: List[Switch] = List(
     AutoRefreshSwitch,
@@ -432,6 +447,7 @@ object Switches extends Collections {
     ABAa,
     ABGravityRecommendations,
     ABEmailSignup,
+    ABAdLabels,
     NetworkFrontUkAlpha,
     NetworkFrontUsAlpha,
     NetworkFrontAuAlpha,
@@ -440,8 +456,10 @@ object Switches extends Collections {
     TagLinking,
     SponsoredContentSwitch,
     OphanSwitch,
+    ScrollDepthSwitch,
     ContentApiPutSwitch,
     AmaaSwitch,
+    EffectiveMeasureSwitch,
     ImrWorldwideSwitch,
     DiagnosticsRequestLogging,
     DiagnosticsJavascriptErrorLogging,
@@ -454,10 +472,12 @@ object Switches extends Collections {
     LCMortgageFeedSwitch,
     GuBookshopFeedsSwitch,
     NetworkFrontOptIn,
+    ImageServerSwitch,
+    FaciaToolPressSwitch,
     DogpileSwitch,
     ShowAllArticleEmbedsSwitch,
-    ParagraphIndentsSwitch,
-    ImageServerSwitch
+    ImageServerSwitch,
+    RainbowLogo
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

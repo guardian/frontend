@@ -42,21 +42,6 @@ When the page is delivered to the user the frontend code scans the DOM for inter
 
 Currently any URL with the `ng-interactive` will be routed to the interactive server.
 
-The interactive code and boot.js must be housed in a corresponding location. This is a temporary limitation that will be
-resolve when the Composer team deliver a means to embed interactives in articles.
-
-For example, if the page lives here,
-
-```
-http://www.theguardian.com/world/australia-election-2013-interactive?view=mobile
-```
-
-Then the interactive boot.js must be hosted here,
-
-```
-http://interactive.guim.co.uk/next-gen/world/australia-election-2013-interactive/boot.js
-```
-
 ## Examples
 
 - [Media 100](http://www.theguardian.com/media/ng-interactive/2013/sep/02/media-100-2013-full-list?view=mobile)
@@ -75,33 +60,11 @@ Note, also how, in your web inspector network panel, the boot.js file is loaded,
 
 ## Previewing interactives on a localhost
 
-All of the frontend applications are packaged as standalone JARs, so we can download and execute them like so,
+The simplest way of previewing the interactive content on non-production environments is to run the `applications` server locallly.
 
-```
-wget -O applications.zip "http://guest:@teamcity.gudev.gnl:8111/httpAuth/repository/download/bt1193/.lastSuccessful/artifacts.zip" 
-unzip applications.zip
-java -DAPP_SECRET="" -jar packages/frontend-applications/frontend-applications.jar 
-```
-
-Nb. `bt1144` is the project identifier in Team City.  
-
-The frontend applications will run on port 9000, so visit that port in a browser...
-
-Eg, [http://localhost:9000/world/australia-election-2013-interactive](http://localhost:9000/world/australia-election-2013-interactive)
-
-You can point them at different environments using ~/.gu/frontend.properties file
-
-```
-content.api.key=xxx
-content.api.host=xxx
-```
-
-And you can preview and test on various devices using the techniques explained in
-[testing externally on localhost](testing-externally-on-localhost.md).
+Follow instructions on the project [README](https://github.com/guardian/frontend/tree/master/README.md).
 
 ## Composer 
-
-_Nb. This section an outline of a proposal. Composer will not deliver this until Q4._
 
 Composer is used to write (i) a basic accessible description of the interactive from within an article, (ii) define the URL to an
 interactive application associated with that block.
