@@ -56,7 +56,7 @@ $c-live: #e81818;
             @include fs-headline(1);
         }
         @include mq(wide) {
-            @include fs-headline(2);
+            @include fs-headline(2, $size-only: true);
         }
     }
 }
