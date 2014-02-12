@@ -12,10 +12,14 @@ import scala.concurrent.duration._
 import scala.concurrent.{Future, Await}
 import frontpress.{FaciaToolConfigAgent, FrontPress}
 import common.FaciaToolMetrics.{FrontPressCronFailure, FrontPressCronSuccess}
+import play.api.libs.concurrent.Akka
 
-object FrontPressJob extends ExecutionContexts with Logging with implicits.Collections {
+object FrontPressJob extends Logging with implicits.Collections {
 
   val queueUrl: Option[String] = None
+
+  import play.api.Play.current
+  private lazy implicit val frontPressContext = Akka.system.dispatchers.lookup("play.akka.actor.front-press")
 
   def newClient: AmazonSQSAsyncClient = {
     val c = new AmazonSQSAsyncClient(Configuration.aws.credentials)
