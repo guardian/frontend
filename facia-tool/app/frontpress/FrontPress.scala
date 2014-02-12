@@ -115,7 +115,8 @@ trait FrontPress extends Logging {
         ("type", tag.tagType),
         ("webTitle", tag.webTitle),
         ("webUrl", tag.webUrl),
-        ("section", tag.section)
+        ("section", tag.section),
+        ("bylineImageUrl", tag.contributorImagePath)
       )
     }
 
