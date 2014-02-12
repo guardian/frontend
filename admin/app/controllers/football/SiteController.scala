@@ -7,12 +7,13 @@ import org.joda.time.DateMidnight
 import java.net.URLDecoder
 import scala.concurrent.Future
 import common.ExecutionContexts
+import model.Cached
 
 
 object SiteController extends Controller with ExecutionContexts {
 
   def index = Authenticated { implicit request =>
-    Ok(views.html.football.index())
+    Cached(60)(Ok(views.html.football.index()))
   }
 
 }

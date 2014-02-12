@@ -9,6 +9,7 @@ import org.joda.time.DateMidnight
 import java.net.URLDecoder
 import scala.concurrent.Future
 import scala.language.postfixOps
+import model.{NoCache, Cached}
 
 
 object PaBrowserController extends Controller with ExecutionContexts with GetPaClient {
@@ -28,19 +29,19 @@ object PaBrowserController extends Controller with ExecutionContexts with GetPaC
         replacingQuery.replace(replacement, getOneOrFail(submission, fieldName))
       }
     }
-    SeeOther("/admin/football/browser/%s".format(replacedQuery.dropWhile('/' ==)))
+    NoCache(SeeOther("/admin/football/browser/%s".format(replacedQuery.dropWhile('/' ==))))
   }
 
   def browse = Authenticated { implicit request =>
-    Ok(views.html.football.browse())
+    Cached(60)(Ok(views.html.football.browse()))
   }
 
   def browser(query: String) = Authenticated.async { implicit request =>
     val replacedQuery = URLDecoder.decode(query, "UTF-8").replace("{apiKey}", client.apiKey)
     client.get("/" + replacedQuery).map{ content =>
       val response = Ok(content)
-      if (replacedQuery.contains("/image/")) response.as("image/png")
-      else response.as("application/xml")
+      if (replacedQuery.contains("/image/")) NoCache(response.as("image/png"))
+      else NoCache(response.as("application/xml"))
     }
   }
 

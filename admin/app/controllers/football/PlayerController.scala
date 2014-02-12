@@ -12,6 +12,7 @@ import java.net.URLDecoder
 import model.football.{PrevResult, PA}
 import play.api.templates.Html
 import scala.concurrent.Future
+import model.{NoCache, Cached}
 
 
 object PlayerController extends Controller with ExecutionContexts with GetPaClient {
@@ -21,14 +22,14 @@ object PlayerController extends Controller with ExecutionContexts with GetPaClie
       client.squad(teamId)
     }).map { teamSquads =>
       val players = teamSquads.flatten.sortBy(_.name)
-      Ok(views.html.football.player.playerIndex(players))
+      Cached(60)(Ok(views.html.football.player.playerIndex(players)))
     }
   }
 
   def redirectToCard = Authenticated { request =>
     val submission = request.body.asFormUrlEncoded.get
     val playerId = submission.get("player").get.head
-    SeeOther(s"/admin/football/player/card/$playerId")
+    NoCache(SeeOther(s"/admin/football/player/card/$playerId"))
   }
 
   def playerCard(playerId: String) = Authenticated.async { request =>
@@ -37,11 +38,12 @@ object PlayerController extends Controller with ExecutionContexts with GetPaClie
       client.playerStats(playerId, new DateMidnight(2013, 7, 1), DateMidnight.now()),
       client.appearances(playerId, new DateMidnight(2013, 7, 1), DateMidnight.now())
     ).map { case (playerProfile, playerStats, playerAppearances) =>
-      playerProfile.position match {
+      val result = playerProfile.position match {
         case Some("Goal Keeper") => Ok(views.html.football.player.cards.goalkeeper(playerStats, playerAppearances))
         case Some("Defender") => Ok(views.html.football.player.cards.defensive(playerStats, playerAppearances))
         case _ => Ok(views.html.football.player.cards.offensive(playerStats, playerAppearances))
       }
+      Cached(60)(result)
     }
   }
 
@@ -49,7 +51,7 @@ object PlayerController extends Controller with ExecutionContexts with GetPaClie
     val submission = request.body.asFormUrlEncoded.get
     val player1Id = submission.get("player1").get.head
     val player2Id = submission.get("player2").get.head
-    SeeOther(s"/admin/football/player/head2head/$player1Id/$player2Id")
+    NoCache(SeeOther(s"/admin/football/player/head2head/$player1Id/$player2Id"))
   }
 
   def head2Head(player1Id: String, player2Id: String) = Authenticated.async { request =>
@@ -58,7 +60,7 @@ object PlayerController extends Controller with ExecutionContexts with GetPaClie
       client.appearances(player1Id, new DateMidnight(2013, 7, 1), DateMidnight.now()),
       client.appearances(player2Id, new DateMidnight(2013, 7, 1), DateMidnight.now())
     ).map { case ((player1h2h, player2h2h), player1Appearances, player2Appearances) =>
-      Ok(views.html.football.player.playerHead2Head(player1h2h, player2h2h, player1Appearances, player2Appearances))
+      Cached(60)(Ok(views.html.football.player.playerHead2Head(player1h2h, player2h2h, player1Appearances, player2Appearances)))
     }
   }
 }

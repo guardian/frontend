@@ -12,18 +12,19 @@ import model.football.{PrevResult, PA}
 import play.api.templates.Html
 import scala.concurrent.Future
 import services.football.GetPaClient
+import model.{NoCache, Cached}
 
 
 object TablesController extends Controller with ExecutionContexts with GetPaClient {
 
   def tablesIndex = Authenticated { request =>
-    Ok(views.html.football.leagueTables.tablesIndex(PA.competitions, PA.teams.all))
+    Cached(60)(Ok(views.html.football.leagueTables.tablesIndex(PA.competitions, PA.teams.all)))
   }
 
   def redirectToTable = Authenticated { implicit request =>
     val submission = request.body.asFormUrlEncoded.get
     val competitionId = submission.get("competitionId").get.head
-    submission.get("focus").get.head match {
+    val result = submission.get("focus").get.head match {
       case "top" => SeeOther(s"/admin/football/tables/league/$competitionId/top")
       case "bottom" => SeeOther(s"/admin/football/tables/league/$competitionId/bottom")
       case "team" =>
@@ -31,6 +32,7 @@ object TablesController extends Controller with ExecutionContexts with GetPaClie
         SeeOther(s"/admin/football/tables/league/$competitionId/$teamId")
       case _ => SeeOther(s"/admin/football/tables/league/$competitionId")
     }
+    NoCache(result)
   }
 
   def leagueTableFragment(competitionId: String, focus: String) = Authenticated.async { request =>
@@ -46,16 +48,16 @@ object TablesController extends Controller with ExecutionContexts with GetPaClie
             val team = tableEntries.find(_.team.id == teamId).get
             before.reverse.take(2).reverse ++ List(team) ++ after.take(2)
         }
-        Ok(views.html.football.leagueTables.leagueTable(league, entries, focus))
+        Cached(60)(Ok(views.html.football.leagueTables.leagueTable(league, entries, focus)))
       }
-    } getOrElse Future.successful(InternalServerError(views.html.football.error("Please provide a valid league")))
+    } getOrElse Future.successful(NoCache(InternalServerError(views.html.football.error("Please provide a valid league"))))
   }
 
   def leagueTable(competitionId: String) = Authenticated.async { request =>
     PA.competitions.find(_.competitionId == competitionId).map { league =>
       client.leagueTable(league.competitionId, DateMidnight.now()).map { tableEntries =>
-        Ok(views.html.football.leagueTables.leagueTable(league, tableEntries))
+        Cached(60)(Ok(views.html.football.leagueTables.leagueTable(league, tableEntries)))
       }
-    } getOrElse Future.successful(InternalServerError(views.html.football.error("Please provide a valid league")))
+    } getOrElse Future.successful(NoCache(InternalServerError(views.html.football.error("Please provide a valid league"))))
   }
 }
