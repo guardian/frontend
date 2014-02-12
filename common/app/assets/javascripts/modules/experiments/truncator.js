@@ -35,9 +35,11 @@ define([
         contentEl: qwery('.js-article__body')[0],
         wordCap: 500,
         minWordCount: 500,
-        template: '<button class="truncation-cta truncation-cta--continue js-continue-reading" data-link-name="continue reading">Continue reading</button>' +
+        template: '<button class="truncation-cta truncation-cta--continue js-continue-reading" data-link-name="continue reading">' +
+            '<i class="i i-arrow-down-double-blue"></i> Continue reading</button>' +
             '<a href="/" class="truncation-cta truncation-cta--back-home" data-link-name="back to home">' +
-            '<i class="i i-back-double"></i> Back to home<a/>'
+            '<span class="truncation-cta__icon"><span class="i i-home-white-mask"></span><span class="i i-home-white"></span></span>' +
+            '<span class="truncation-cta__text"><span class="mobile-only">Home</span><span class="hide-on-mobile-inline">Back to homepage</span></span></a>'
     };
 
     Truncator.prototype.getParagraphs = function() {
@@ -68,7 +70,7 @@ define([
     };
 
     Truncator.prototype.showCta = function() {
-        bonzo(qwery('.' + this.classes.actions)).prepend(this.config.template);
+        bonzo(qwery('.' + this.classes.actions)).addClass('is-truncated').prepend(this.config.template);
         bean.on(qwery('.' + this.classes.btn)[0], 'click', this.toggleContent.bind(this));
         bean.on(qwery('.' + this.classes.btn)[0], 'click', this.hideCta.bind(this));
     };
