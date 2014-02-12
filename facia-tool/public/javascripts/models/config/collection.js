@@ -17,7 +17,6 @@ define([
         this.parents = ko.observableArray();
 
         this.meta   = asObservableProps([
-            'roleName',
             'displayName',
             'href',
             'groups',

@@ -20,7 +20,6 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
                    )
 
   case class ContentApiPut(
-                            `type`: String,
                             displayName: Option[String],
                             groups: Seq[String],
                             curated: Seq[Item],
@@ -69,7 +68,6 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
     FaciaApi.getBlock(config.id) map { block =>
 
       ContentApiPut(
-        config.roleName.getOrElse("Default"),
         config.displayName,
         config.groups,
         generateItems(block.live),

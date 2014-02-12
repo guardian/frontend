@@ -38,7 +38,7 @@ define([
                 createCollection: function () {
                     var collection = new Collection({
                         id: 'collection/' + Math.random(),
-                        roleName: 'Untitled collection'
+                        displayName: 'Untitled collection'
                     });
                     collection.toggleOpen();
                     model.collections.unshift(collection);

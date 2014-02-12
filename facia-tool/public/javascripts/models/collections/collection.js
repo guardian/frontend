@@ -33,7 +33,6 @@ define([
         // properties from the config, about this collection
         this.configMeta   = asObservableProps([
             'displayName',
-            'roleName',
             'uneditable']);
         populateObservables(this.configMeta, opts);
 
