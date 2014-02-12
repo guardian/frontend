@@ -35,8 +35,8 @@ object FrontPressJob extends Logging with implicits.Collections {
         receiveMessageResult.getMessages
           .map(getConfigFromMessage)
           .distinct
-          .map { config =>
-            val f = pressByPathId(config)
+          .map { path =>
+            val f = pressByPathId(path)
             f.onSuccess {
               case _ => {
                 client.deleteMessageBatch(
