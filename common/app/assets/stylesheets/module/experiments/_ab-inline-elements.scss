@@ -141,3 +141,21 @@
 .inline-story__container {
     background-color: #333;
 }
+
+.inline-story--test .inline-story__container {
+    height: 340px;
+}
+
+.inline-ad-test {
+    overflow-x: hidden;
+    text-align: center;
+    position: relative;
+    z-index: 1000;
+    margin: 0;
+    width: 300px;
+    height: 250px;
+    margin-top: 4px;
+    margin-left: 20px;
+    float: right;
+    background-color: #777712;
+}

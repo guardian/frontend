@@ -349,7 +349,8 @@ case class InlineSlotGenerator(articleWordCount: Int) extends HtmlCleaner {
     val slot = document.createElement("div")
     paragraph.before(slot)
 
-    if ((prev.hasClass("img") && !prev.hasClass("img--inline")) || prev.hasClass("media-proportional-container")) {
+    if ((prev.hasClass("img") && !prev.hasClass("img--inline")) ||
+        prev.hasClass("media-proportional-container") || prev.tagName == "video") {
       slot.attr("class", "slot slot--block")
     } else if (prev.tagName == "h2") {
       slot.attr("class", "slot slot--posth2")

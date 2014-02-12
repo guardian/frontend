@@ -14,40 +14,40 @@ define([
 
     var prefix = "slot";
 
+    function slotTypeToCssSelector(type){
+        return '.' + prefix + '--' + type;
+    }
+
     var rules = { // contentType: [validSlotType1,validSlotType2,...]
         left: ['text'],
         right: ['posth2','block','text'],
         block: ['preh2', 'block','text']
     };
 
-    var emptySelectors = _.mapValues(rules, function(classes) {
-        return classes.map(function(c){ return '.'+prefix+'--'+c+":empty"; }).join(', ');
-    });
-
     var containers = _.mapValues(rules, function() { return []; });
 
     function detachAll() {
-        _.forOwn(containers, function(cs){
-            cs.forEach(function(c) {
-                bonzo(c).detach();
-            });
-        });
+        _(containers).values().flatten().forEach(function(c){ bonzo(c).detach(); });
     }
 
-    function insertContainer(container) { // inserts a container in the first valid slot
-        var validSlots = qwery(emptySelectors[container.slotContainerType], '.article-body');
-        if (validSlots.length > 0) {
-            bonzo(validSlots[0]).append(container);
+    function insertContainer(container) {
+
+        var buckets = _(rules[container.slotContainerType]).map(function(type){ return qwery(slotTypeToCssSelector(type)+":empty"); });
+        var largestBucket = buckets.max(function(slotcount) { return slotcount.length; }).valueOf();
+
+        if (largestBucket.length > 0) {
+            bonzo(largestBucket[0]).append(container);
         }
     }
-
     function reorderContent(){
         detachAll();
-        _(_.zip(containers.left, containers.right)).flatten().compact().forEach(insertContainer);
+        _(containers).values().zip().flatten().compact().forEach(insertContainer);
     }
 
     return {
         getSlot: function(type){
+            if (!rules.hasOwnProperty(type)) { return null; }
+
             var container = document.createElement('div');
             container.classList.add(prefix+'__container');
             container.slotContainerType = type;
@@ -55,14 +55,18 @@ define([
             reorderContent();
             return container;
         },
-        getLeftSlot: function() {
-            return this.getSlot('left');
+        swapSlot: function(oldContainer, newType){
+            this.releaseSlot(oldContainer, true);
+            return this.getSlot(newType);
         },
-        getRightSlot: function() {
-            return this.getSlot('right');
-        },
-        getBlockSlot: function() {
-            return this.getSlot('block');
+        releaseSlot: function(oldContainer, noRefresh) {
+            _(containers).values().forEach( function(c) {
+                var index = c.indexOf(oldContainer);
+                if (index !== -1) { c.splice(index, 1); }
+            });
+            bonzo(oldContainer).remove();
+
+            if (!noRefresh) { reorderContent(); }
         }
     };
 
