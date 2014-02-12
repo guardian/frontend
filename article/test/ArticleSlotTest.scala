@@ -14,6 +14,7 @@ class ArticleSlotTest extends FlatSpec with Matchers  with UsesElasticSearch {
 
   val slotTest1 = "media/2014/jan/29/blog-turns-twenty-conversation-internet-pioneers"
   val slotTest2 = "travel/2014/jan/09/bargain-beach-houses-around-world"
+  val slotTest3 = "film/filmblog/2013/dec/18/hobbit-desolation-of-smaug-frozen-hunger-games"
 
   "Slot generation" should "create slots in an article body" in Fake {
     val result = controllers.ArticleController.renderArticle(slotTest1)(TestRequest(slotTest1))
@@ -21,7 +22,7 @@ class ArticleSlotTest extends FlatSpec with Matchers  with UsesElasticSearch {
     document.select(".article-body .slot") should have size 10
   }
 
-  "Slot generation" should "only create pre-header slots before h2 elements" in Fake {
+  it should "only create pre-header slots before h2 elements" in Fake {
     val result = controllers.ArticleController.renderArticle(slotTest1)(TestRequest(slotTest1))
     val document = Jsoup.parse(contentAsString(result))
     val elements = document.select(".article-body .slot--preh2").asScala
@@ -35,7 +36,7 @@ class ArticleSlotTest extends FlatSpec with Matchers  with UsesElasticSearch {
     }
   }
 
-  "Slot generation" should "only create post-header slots after h2 elements" in Fake {
+  it should "only create post-header slots after h2 elements" in Fake {
     val result = controllers.ArticleController.renderArticle(slotTest1)(TestRequest(slotTest1))
     val document = Jsoup.parse(contentAsString(result))
     val elements = document.select(".article-body .slot--posth2").asScala
@@ -49,7 +50,7 @@ class ArticleSlotTest extends FlatSpec with Matchers  with UsesElasticSearch {
     }
   }
 
-  "Slot generation" should "create block slots after block image elements" in Fake {
+  it should "create block slots after block image elements" in Fake {
     val result = controllers.ArticleController.renderArticle(slotTest2)(TestRequest(slotTest2))
     val document = Jsoup.parse(contentAsString(result))
     val elements = document.select(".article-body .slot--block").asScala
@@ -61,6 +62,20 @@ class ArticleSlotTest extends FlatSpec with Matchers  with UsesElasticSearch {
       sibling should not be (null)
       sibling.classNames.asScala should contain ("img")
       sibling.classNames.asScala should not contain ("img--inline")
+    }
+  }
+
+  it should "create block slots after video elements" in Fake {
+    val result = controllers.ArticleController.renderArticle(slotTest3)(TestRequest(slotTest3))
+    val document = Jsoup.parse(contentAsString(result))
+    val elements = document.select(".article-body .slot--block").asScala
+
+    elements should have size 1
+
+    for (element <- elements) {
+      val sibling = element.previousElementSibling()
+      sibling should not be (null)
+      sibling.classNames.asScala should contain ("gu-video")
     }
   }
 }
