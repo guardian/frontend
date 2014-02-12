@@ -12,8 +12,8 @@ define([
         }, pollingMs);
     });
 
-    function fetchSettings(callback, pollingMs) {
-        return $.when(fetchConfig(), fetchSwitches())
+    function fetchSettings(callback, pollingMs, terminateOnFail) {
+        return $.when(fetchConfig(terminateOnFail), fetchSwitches(terminateOnFail))
         .done(function(config, switches) {
             callback(config, switches);
             if (pollingMs) {

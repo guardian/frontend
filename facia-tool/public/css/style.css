@@ -433,7 +433,6 @@ textarea.trailtext {
 }
 
 button {
-    height: 30px;
     padding: 0 10px;
 }
 
@@ -742,6 +741,10 @@ button {
     display: block;
 }
 
+.cnf-collection .cnf-collection__name {
+    color: #000000;
+}
+
 .cnf-collection.isDefault .cnf-collection__name {
     font-weight: bold;
 }
@@ -782,14 +785,20 @@ button {
 
 .cnf-collection .edit-collection label {
     color: #999999;
-    width: 100px;
+    width: 80px;
     float: left;
     clear: left;
 }
 
-.cnf-collection .edit-collection input {
+.cnf-collection .edit-collection input,
+.cnf-collection .edit-collection select{
     float: left;
     clear: right;
+}
+
+.cnf-collection .edit-collection .advanced-options {
+    clear: both;
+    font-size: 10px;
 }
 
 .cnf-collection .edit-collection .tools{

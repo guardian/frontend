@@ -136,7 +136,7 @@ define([
                 vars.state.config = config || {};
                 vars.state.switches = switches || {};
                 model.fronts(_.keys(config.fronts));
-            }, vars.CONST.configSettingsPollMs)
+            }, vars.CONST.configSettingsPollMs, true)
             .done(function() {
                 setfront();
                 window.onpopstate = setfront;

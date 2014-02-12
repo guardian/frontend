@@ -9,7 +9,9 @@
     <div class="left-col">
         <div class="title">Collections</div>
         <div class="instructions">
-            <span data-bind="click: createCollection" class="linky">create</span> a collection
+            create
+            <span data-bind="click: createCollection" class="linky">collection</span> or
+            <span data-bind="click: createFront" class="linky">front</span>
         </div>
         <div class="scrollable" data-bind="
             template: {name: 'template_collection', foreach: collections}"></div>
@@ -34,7 +36,7 @@
             <a class="cnf-collection__name" data-bind="
                 click: toggleOpen,
                 attr: {href: id},
-                text: meta.displayName() || '[un-named]'"></a>
+                text: meta.displayName() || '(untitled)'"></a>
 
             <span class="placements" data-bind="
                 if: parents().length,
@@ -50,7 +52,7 @@
             </span>
 
             <div class="edit-collection" data-bind="if: state.open">
-                <label>Name</label>
+                <label>Title</label>
                 <input type="text" data-bind="
                     value: meta.displayName"/>
 
@@ -58,20 +60,32 @@
                 <input type="text" data-bind="
                     value: meta.href"/>
 
-                <label>Groups</label>
-                <input type="text" data-bind="
-                    value: meta.groups"/>
-
                 <label>Tone</label>
-                <input type="text" data-bind="
-                    value: meta.tone"/>
+                <select data-bind="
+                    options: $root.tones,
+                    value: meta.tone"></select>
 
-                <label>Is editable?</label>
-                <input type="text" data-bind="
-                    value: meta.uneditable"/>
+                <div class="linky advanced-options" data-bind="
+                    click: toggleOpenAdvanced">Advanced settings</div>
+
+                <!-- ko if: state.openAdvanced -->
+                    <label>Groups</label>
+                    <select data-bind="
+                        options: $root.groups,
+                        value: meta.groups"></select>
+
+                    <label>ContentApi</label>
+                    <input type="text" data-bind="
+                        value: meta.apiQuery"/>
+
+                    <label>No curation</label>
+                    <input type="checkbox" data-bind="
+                        checked: meta.uneditable" />
+                <!-- /ko -->
 
                 <div class="tools">
-                    <a class="tool" data-bind="click: save">Save</a>
+                    <button class="tool" data-bind="
+                        click: save">Save</button>
                 </div>
             </div>
         </div>

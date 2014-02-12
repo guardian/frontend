@@ -16,7 +16,7 @@ define([
         })
         .fail(function () {
             if(terminateOnFail) {
-                terminate("the config was not available");
+                terminate("the config is invalid or unvailable");
             }
             deferred.reject();
         })

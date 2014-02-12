@@ -33,10 +33,7 @@ define([
                     newItem.parents.push(targetList.parent);
                 }
 
-                var data = {
-                    collections: _.map(targetList.items(), function(item) { return item.id; })
-                };
-                // requires API endpoint
+                vars.model.save();
             }
         });
     }

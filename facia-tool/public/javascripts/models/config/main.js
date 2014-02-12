@@ -9,6 +9,7 @@ define([
     'utils/clean-clone',
     'utils/clone-with-key',
     'utils/find-first-by-id',
+    'utils/guid',
     'models/group',
     'models/config/droppable',
     'models/config/front',
@@ -23,6 +24,7 @@ define([
     cleanClone,
     cloneWithKey,
     findFirstById,
+    guid,
     Group,
     droppable,
     Front,
@@ -35,17 +37,56 @@ define([
 
                 fronts: ko.observableArray(),
 
-                createCollection: function () {
+                createFront: function() {
+                    var path = 'foo',
+                        front =  new Front({id: path}),
+                        collection = findFirstById(model.collections, path);
+
+                    if (!collection) {
+                        collection = new Collection({
+                            id: path,
+                            displayName: 'Top Stories'
+                        });
+                        model.collections.unshift(collection);
+                    }
+
+                    front.group.items.push(collection);
+                    model.fronts.push(front);
+
+                    front.toggleOpen();
+                    collection.toggleOpen();
+                },
+
+                createCollection: function() {
                     var collection = new Collection({
-                        id: 'collection/' + Math.random(),
-                        displayName: 'Untitled collection'
+                        id: guid()
                     });
                     collection.toggleOpen();
                     model.collections.unshift(collection);
-                }
+                },
+
+                tones:  [''].concat(vars.CONST.tones),
+                groups: [''].concat(vars.CONST.groups)
             };
 
         model.save = function() {
+
+            // tidy up
+            _.each(model.fronts(), function(front) {
+                front.group.items.remove(function(collection) {
+                    return !collection.meta.displayName();
+                });
+            });
+
+            model.fronts.remove(function(front) {
+                return front.group.items().length === 0;
+            });
+
+            model.collections.remove(function(collection) {
+                return !collection.meta.displayName();
+            });
+
+            // serialize
             var obj = {
                 fronts: _.reduce(model.fronts(), function(fronts, front) {
                     fronts[front.id] = {
@@ -59,7 +100,11 @@ define([
                 collections: _.reduce(model.collections(), function(collections, collection) {
                     collections[collection.id] =
                        _.reduce(collection.meta, function(acc, val, key) {
-                            acc[key] = _.isFunction(val) ? val() : val;
+                            var v = _.isFunction(val) ? val() : val;
+                             // keep only the truthy values:
+                            if(v) {
+                                acc[key] = (key === 'groups' ? v.split(',') : v);
+                            }
                             return acc;
                         }, {});
 
@@ -110,7 +155,7 @@ define([
                         .value()
                     );
                 }
-            }, vars.CONST.configSettingsPollMs)
+            }, vars.CONST.configSettingsPollMs, true)
             .done(function() {
                 ko.applyBindings(model);
 

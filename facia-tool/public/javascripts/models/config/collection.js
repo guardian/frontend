@@ -3,12 +3,14 @@ define([
     'knockout',
     'modules/vars',
     'utils/as-observable-props',
-    'utils/populate-observables'
+    'utils/populate-observables',
+    'utils/remove-by-id'
 ], function(
     ko,
     vars,
     asObservableProps,
-    populateObservables
+    populateObservables,
+    removeById
 ) {
     function Collection(opts) {
         if (!opts || !opts.id) { return; }
@@ -26,21 +28,34 @@ define([
 
         populateObservables(this.meta, opts);
 
+        if (_.isArray(this.meta.groups())) {
+            this.meta.groups(this.meta.groups().join(','));
+        }
+
         this.state = asObservableProps([
             'open',
+            'openAdvanced',
             'underHover',
             'underDrag']);
     }
 
     Collection.prototype.toggleOpen = function() {
         this.state.open(!this.state.open());
+        this.state.openAdvanced(this.state.open() && this.state.openAdvanced());
+    };
+
+    Collection.prototype.toggleOpenAdvanced = function() {
+        this.state.openAdvanced(!this.state.openAdvanced());
     };
 
     Collection.prototype.save = function() {
-        if (vars.model.collections.indexOf(this) < 0) {
-            vars.model.collections.unshift(this);
+        if (this.meta.displayName() && this.meta.displayName().trim()) {
+            if (vars.model.collections.indexOf(this) < 0) {
+                vars.model.collections.unshift(this);
+            }
         }
         this.state.open(false);
+        this.state.openAdvanced(false);
         vars.model.save();
     };
 

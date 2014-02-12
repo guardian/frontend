@@ -1,16 +1,15 @@
 /* global _: true */
 define(['knockout'], function(ko) {
     var CONST = {
+        tones: ['news', 'feature', 'comment'],
+        "groups": ["standard,big,very big", "standard,big,very big,huge"],
+
         viewer: 'http://s3-eu-west-1.amazonaws.com/facia/responsive-viewer.html',
         filterTypes: {
             section: { display: 'in section:', param: "section", path: "sections", placeholder: "e.g. news" },
             tag:     { display: 'with tag:',   param: "tag",     path: "tags",     placeholder: "e.g. sport/triathlon" }
         },
         searchPageSize:        50,
-
-        pvmHot:                50,    // pageviews-per-min to qualify as 'hot'
-        pvmWarm:               25,    // pageviews-per-min to qualify as 'warm'
-        pvmPeriod:             5,     // num of recent datapoints over which to calc pageviews
 
         collectionsPollMs:     10000,
         latestArticlesPollMs:  20000,
