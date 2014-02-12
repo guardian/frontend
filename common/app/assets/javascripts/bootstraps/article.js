@@ -88,7 +88,7 @@ define([
 
             common.mediator.on('page:article:ready', function(config, context) {
                 if (config.page.commentable && config.switches.discussion) {
-                    var discussionLoader = new DiscussionLoader(context, common.mediator);
+                    var discussionLoader = new DiscussionLoader(context, common.mediator, { 'switches': config.switches });
                     discussionLoader.attachTo($('.discussion')[0]);
                 }
             });
