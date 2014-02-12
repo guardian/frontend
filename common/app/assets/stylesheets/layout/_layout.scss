@@ -13,7 +13,7 @@
 #header {
     min-height: $headerHeight;
     position: relative;
-    z-index: 1050; // On top of Google "Adchoices" label which has z-index: 1040…
+    z-index: 1051; // On top of Google "Adchoices" label which has z-index: 1050…
 
     /* These styles extend the top bars to the screen edges */
     @include mq(tablet) {

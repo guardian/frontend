@@ -1,19 +1,17 @@
 @(items: Seq[Trail], style: Container, containerIndex: Int)(implicit request: RequestHeader)
 
-@defining(items.slice(0, 4)) { items =>
-    <div class="collection-wrapper">
-        <ul class="unstyled l-row l-row--items-4 collection">
-            @items.zipWithIndex.map{ case (trail, index) =>
-                @trail match {
-                    case g: Gallery                      => { @fragments.items.rowPattern.standardGallery(g, index, containerIndex) }
-                    case v: Video                        => { @fragments.items.rowPattern.standardVideo(v, index, containerIndex) }
-                    case c if VisualTone(c) == "comment" => { @fragments.items.rowPattern.standardComment(c, index, containerIndex) }
-                    case t                               => { @fragments.items.rowPattern.standard(t, index, containerIndex) }
-                }
+<div class="collection-wrapper">
+    <ul class="unstyled l-row l-row--items-4 collection">
+        @items.slice(0, 4).zipWithIndex.map{ case (trail, index) =>
+            @trail match {
+                case g: Gallery                      => { @fragments.items.rowPattern.standardGallery(g, index, containerIndex) }
+                case v: Video                        => { @fragments.items.rowPattern.standardVideo(v, index, containerIndex) }
+                case c if VisualTone(c) == "comment" => { @fragments.items.rowPattern.standardComment(c, index, containerIndex) }
+                case t                               => { @fragments.items.rowPattern.standard(t, index, containerIndex) }
             }
-        </ul>
-    </div>
-}
+        }
+    </ul>
+</div>
 @defining(items.slice(4, 24)) { items =>
     @if(items.nonEmpty) {
         <div class="linkslist-container js-container--show-more tone-@{style.tone}" data-tone="@style.tone">

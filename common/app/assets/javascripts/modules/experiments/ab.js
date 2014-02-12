@@ -8,7 +8,8 @@ define([
     'common/modules/experiments/tests/aa',
     'common/modules/experiments/tests/gravity-recommendations',
     'common/modules/experiments/tests/identity-email-signup',
-    'common/modules/experiments/tests/article-truncation'
+    'common/modules/experiments/tests/article-truncation',
+    'common/modules/experiments/tests/ad-labels'
 ], function (
     common,
     store,
@@ -18,14 +19,16 @@ define([
     Aa,
     GravityRecommendations,
     EmailSignup,
-    ArticleTruncation
+    ArticleTruncation,
+    AdLabels
     ) {
 
     var TESTS = [
             new Aa(),
             new GravityRecommendations(),
             new EmailSignup(),
-            new ArticleTruncation()
+            new ArticleTruncation(),
+            new AdLabels()
        ],
        participationsKey = 'gu.ab.participations';
 

@@ -14,37 +14,68 @@ define([
 
     var EmailSignup = function (context) {
 
-        var container = context.querySelector(".email-signup");
+        var container = context.querySelector(this.getClass("ES_ROOT"));
 
-        this.DOM = {
-            container: container,
-            button: container.querySelector(".email-signup__link"),
-            loader: container.querySelector(".is-updating"),
-            title: container.querySelector(".email-signup__title")
+        if (container && container.querySelector(this.getClass("ES_INNER"))) {
+
+            this.DOM = {
+                container: container,
+                button: container.querySelector(this.getClass("ES_LINK")),
+                loader: container.querySelector(this.getClass("ES_LOADER")),
+                title: container.querySelector(this.getClass("ES_TITLE"))
+            };
+
+            this.emailHash = "#email-subscribe";
+            this.storageKey = "gu.emails.subsriptions";
+            this.storageData = Storage.local.get(this.storageKey) || {listIds: []};
+            this.listId = this.DOM.button ? this.DOM.button.getAttribute("data-list-id") : null;
+
+            for (var key in this.DOM) {
+                if (this.DOM.hasOwnProperty(key)) {
+                    this.DOM["$" + key] = bonzo(this.DOM[key]);
+                }
+            }
+
+            if (this.canRun()) {
+                this.DOM.$container.removeClass("is-hidden");
+                if (!this.checkHash(window.location.hash)) {
+                    var click = function (event) {
+                        event.preventDefault();
+                        this.requestEmailSignup();
+                    };
+                    bean.on(this.DOM.button, "click", click.bind(this));
+                }
+            }
+        }
+
+    };
+
+    /*
+     *  Determines if the component should run.
+     */
+    EmailSignup.prototype.canRun = function () {
+        return  this.DOM.container && // container exists
+                (
+                    this.DOM.container.children && // container has children prop
+                    this.DOM.container.children.length > 0 // children prop has elements
+                ) &&
+                this.listId && // List id exists
+                !this.checkStorage(this.listId); // user not already signed up to email
+    };
+
+    /*
+     *  Accessor/creator for the classname config
+     */
+    EmailSignup.prototype.getClass = function (className) {
+        this.config = this.config || {};
+        this.config.classes = this.config.classes || {
+            "ES_ROOT": ".email-signup",
+            "ES_INNER": ".email-signup__inner",
+            "ES_LINK": ".email-signup__link",
+            "ES_LOADER": ".is-updating",
+            "ES_TITLE": ".email-signup__title"
         };
-
-        this.emailHash = "#email-subscribe";
-        this.storageKey = "gu.emails.subsriptions";
-        this.storageData = Storage.local.get(this.storageKey) || {listIds: []};
-        this.listId = this.DOM.button.getAttribute("data-list-id");
-
-        for (var key in this.DOM) {
-            if (this.DOM.hasOwnProperty(key)) {
-                this.DOM["$" + key] = bonzo(this.DOM[key]);
-            }
-        }
-
-        if (this.DOM.container && (this.DOM.container.children && this.DOM.container.children.length > 0) && !this.checkStorage(this.listId)) {
-            this.DOM.$container.removeClass("is-hidden");
-            if (!this.checkHash(window.location.hash)) {
-                var click = function (event) {
-                    event.preventDefault();
-                    this.requestEmailSignup();
-                };
-                bean.on(this.DOM.button, "click", click.bind(this));
-            }
-        }
-
+        return this.config.classes[className];
     };
 
     /*

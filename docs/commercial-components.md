@@ -40,4 +40,4 @@ The next-gen project will :-
 - Render that component in a standard template (Ie. manage the html/css/js)
 - Target that component at an audience.
 
-This allows the commercial teams to specialise in the data that drives the component and the frontend team to specialise in the delivery of that to the user.
+This allows the commercial teams to specialise in the data that drives the performance of component and the frontend team to specialise in the delivery of that to the user.

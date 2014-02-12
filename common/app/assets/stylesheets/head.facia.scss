@@ -29,13 +29,14 @@
         @include rem((width: gs-span(14)));
 
         .container__title {
-            margin-bottom: 0;
+            float: left;
+            @include rem((
+                width: gs-span(2) + $gs-gutter,
+                margin-right: $gs-gutter
+            ));
         }
         .container__body {
             overflow: hidden;
-            @include rem((
-                margin-left: gs-span(2) + $gs-gutter
-            ));
         }
         .container--news {
             .container__title {
@@ -47,14 +48,11 @@
         @include rem((width: gs-span(16)));
 
         .container__title {
-            float: left;
             @include rem((
                 width: gs-span(3),
-                margin-right: $gs-gutter
             ));
         }
         .container__body {
-            margin-left: 0;
             @include rem((width: gs-span(12)));
         }
     }
@@ -70,6 +68,7 @@
 @import "module/containers/_sport";
 @import "module/containers/_features";
 @import "module/containers/_comment";
+@import "module/containers/_special";
 @import "module/containers/_section";
 @import "module/containers/_commentanddebate";
 @import "module/containers/_people";
