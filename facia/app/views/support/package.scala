@@ -136,39 +136,6 @@ object GetContainer {
     ("us/sport", Map(
       ("us/sport/regular-stories", SportContainer()),
       ("us/sport/most-viewed/regular-stories", PopularContainer())
-    )),
-
-    ("football", Map(
-      ("football/latest-news/regular-stories", SportContainer(showMore = false)),
-      ("football/most-viewed/regular-stories", PopularContainer())
-    )),
-    ("technology", Map(
-      ("technology/latest-news/regular-stories", SportContainer(showMore = false)),
-      ("technology/most-viewed/regular-stories", PopularContainer())
-    )),
-    ("travel", Map(
-      ("travel/latest-news/regular-stories", SectionContainer(showMore = false)),
-      ("travel/most-viewed/regular-stories", PopularContainer())
-    )),
-    ("film", Map(
-      ("film/latest-news/regular-stories", SectionContainer(showMore = false)),
-      ("film/most-viewed/regular-stories", PopularContainer())
-    )),
-    ("world/nsa", Map(
-      ("world/nsa/latest-news/regular-stories", SportContainer(showMore = false)),
-      ("world/nsa/most-viewed/regular-stories", PopularContainer())
-    )),
-    ("world/edward-snowden", Map(
-      ("world/edward-snowden/latest-news/regular-stories", SportContainer(showMore = false)),
-      ("world/edward-snowden/most-viewed/regular-stories", PopularContainer())
-    )),
-    ("football/arsenal", Map(
-      ("football/arsenal/latest-news/regular-stories", SportContainer(showMore = false)),
-      ("football/arsenal/most-viewed/regular-stories", PopularContainer())
-    )),
-    ("artanddesign/photography", Map(
-      ("artanddesign/photography/latest-news/regular-stories", SectionContainer(showMore = false)),
-      ("artanddesign/photography/most-viewed/regular-stories", PopularContainer())
     ))
   )
 
