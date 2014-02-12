@@ -90,6 +90,10 @@ case class PeopleContainer(showMore: Boolean = true, adSlot: Option[AdSlot] = No
   val containerType = "people"
   val tone = "feature"
 }
+case class SpecialContainer(showMore: Boolean = true) extends Container {
+  val containerType = "special"
+  val tone = "news"
+}
 case class SectionContainer(showMore: Boolean = true, tone: String = "news") extends Container {
   val containerType = "section"
 }
