@@ -12,7 +12,8 @@ class ArticleSlotTest extends FlatSpec with Matchers  with UsesElasticSearch {
   // These tests check the InlineSlotGenerator behaviour. Placing them in article's
   // tests allows us to use the test http recorder rather than stub data.
 
-  val slotTest1= "media/2014/jan/29/blog-turns-twenty-conversation-internet-pioneers"
+  val slotTest1 = "media/2014/jan/29/blog-turns-twenty-conversation-internet-pioneers"
+  val slotTest2 = "travel/2014/jan/09/bargain-beach-houses-around-world"
 
   "Slot generation" should "create slots in an article body" in Fake {
     val result = controllers.ArticleController.renderArticle(slotTest1)(TestRequest(slotTest1))
@@ -45,6 +46,21 @@ class ArticleSlotTest extends FlatSpec with Matchers  with UsesElasticSearch {
       val sibling = element.previousElementSibling()
       sibling should not be (null)
       sibling.tagName should be ("h2")
+    }
+  }
+
+  "Slot generation" should "create block slots after block image elements" in Fake {
+    val result = controllers.ArticleController.renderArticle(slotTest2)(TestRequest(slotTest2))
+    val document = Jsoup.parse(contentAsString(result))
+    val elements = document.select(".article-body .slot--block").asScala
+
+    elements should have size 1
+
+    for (element <- elements) {
+      val sibling = element.previousElementSibling()
+      sibling should not be (null)
+      sibling.classNames.asScala should contain ("img")
+      sibling.classNames.asScala should not contain ("img--inline")
     }
   }
 }
