@@ -30,7 +30,6 @@
                     @trail match {
                         case g: Gallery                                  => { @fragments.items.rowPattern.thumbnailGallery(g, index + 2, containerIndex) }
                         case v: Video                                    => { @fragments.items.rowPattern.thumbnailVideo(v, index + 2, containerIndex) }
-                        case c if VisualTone(c) == "comment"             => { @fragments.items.rowPattern.thumbnailComment(c, index + 2, containerIndex) }
                         case t if trail.imageAdjust == Some("highlight") => { @fragments.items.rowPattern.standard(t, index + 2, containerIndex) }
                         case t                                           => { @fragments.items.rowPattern.thumbnail(t, index + 2, containerIndex) }
                     }
@@ -47,7 +46,6 @@
                     @trail match {
                         case g: Gallery                      => { @fragments.items.rowPattern.standardGallery(g, index + 4, containerIndex) }
                         case v: Video                        => { @fragments.items.rowPattern.standardVideo(v, index + 4, containerIndex) }
-                        case c if VisualTone(c) == "comment" => { @fragments.items.rowPattern.standardComment(c, index + 4, containerIndex) }
                         case t                               => { @fragments.items.rowPattern.standard(t, index + 4, containerIndex) }
                     }
                 }
