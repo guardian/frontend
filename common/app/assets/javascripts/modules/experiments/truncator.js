@@ -77,6 +77,7 @@ define([
 
     Truncator.prototype.hideCta = function() {
         qwery('.' + this.classes.btn)[0].remove();
+        bonzo(qwery('.' + this.classes.actions)).addClass('is-not-truncated');
     };
 
     Truncator.prototype.truncate = function() {

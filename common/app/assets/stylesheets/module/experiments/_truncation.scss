@@ -23,16 +23,16 @@
             }
         }
 
-        @include mq(tablet) {
-            padding-top: -24px;
-        }
-
-        @include mq(leftCol) {
-            padding-top: 0;
-        }
-
         @include mq(rightCol) {
             margin-top: -1 * ($gs-row-height/2);
+        }
+    }
+
+    &.is-not-truncated {
+        .social-wrapper {
+            @include mq(leftCol) {
+                margin-top: 0;
+            }
         }
     }
 }
