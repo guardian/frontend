@@ -7,7 +7,7 @@ import conf.Configuration
 
 object Notification extends Logging {
 
-  lazy val topic = Configuration.aws.sns
+  lazy val topic = Configuration.aws.notificationSns
 
   def sns = {
     val client = new AmazonSNSAsyncClient(Configuration.aws.credentials)
