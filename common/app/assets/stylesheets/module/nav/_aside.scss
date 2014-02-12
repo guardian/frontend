@@ -69,6 +69,11 @@
     &:last-child {
         padding-right: 0;
     }
+    @include mq(tablet) {
+        .hide-on-mobile {
+            display: inline-block !important;
+        }
+    }
 }
 
 .switcher__option--active {
