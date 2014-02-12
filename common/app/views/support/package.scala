@@ -344,13 +344,18 @@ object TweetCleaner extends HtmlCleaner {
 
 case class InlineSlotGenerator(articleWordCount: Int) extends HtmlCleaner {
 
+  private def isBlock(element: Element): Boolean = {
+      (element.hasClass("img") && !element.hasClass("img--inline")) ||
+      element.hasClass("media-proportional-container") ||
+      element.tagName == "video"
+  }
+
   private def insertSlot(paragraph: Element, document: Document) {
     val prev = paragraph.previousElementSibling
     val slot = document.createElement("div")
     paragraph.before(slot)
 
-    if ((prev.hasClass("img") && !prev.hasClass("img--inline")) ||
-        prev.hasClass("media-proportional-container") || prev.tagName == "video") {
+    if (isBlock(prev)) {
       slot.attr("class", "slot slot--block")
     } else if (prev.tagName == "h2") {
       slot.attr("class", "slot slot--posth2")
