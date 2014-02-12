@@ -79,10 +79,8 @@ $c-live: #e81818;
     border-top: 1px solid $c-neutral5;
     position: relative;
     @include box-sizing(border-box);
+    width: 100%;
     @include mq(faciaLeftCol) {
-        @include rem((
-            width: gs-span(2) + $gs-gutter
-        ));
         .i--clock {
             display: none;
         }
