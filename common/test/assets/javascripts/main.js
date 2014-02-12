@@ -1,7 +1,10 @@
 var tests = [],
-    specUrl = '/base/common/test/assets/javascripts',
+    // app we're testing
+    app = window.__karma__.config.args._[0].split(':').pop(),
+    specUrl = '/base/' + app + '/test/assets/javascripts/spec',
     specRegExp = new RegExp(specUrl.replace(/\//g, '\\/') + '\/.*\\.spec\\.js');
 
+console.log(window.__karma__.exclude);
 for (var file in window.__karma__.files) {
     if (file.match(specRegExp)) {
         tests.push(file);
@@ -10,7 +13,7 @@ for (var file in window.__karma__.files) {
 
 requirejs.config({
     // Karma serves files from '/base'
-    baseUrl: '/base/common/app/assets/javascripts',
+    baseUrl: '/base/' + app + '/app/assets/javascripts',
     paths: {
         common:       '/base/common/app/assets/javascripts',
         fixtures:     '/base/common/test/assets/javascripts/fixtures',
@@ -30,12 +33,12 @@ requirejs.config({
         '*': {
             // mock out omniture script
             // TODO - better way of mocking dependencies?
-            omniture: '/base/common/test/assets/javascripts/spies/omniture'
+            omniture: '/base/common/test/assets/javascripts/spies/omniture.js'
         }
     },
     shim: {
         imager: {
-            deps: ['/base/common/app/assets/javascripts/components/imager.js/src/imager'],
+            deps: ['/base/common/app/assets/javascripts/components/imager.js/src/imager.js'],
             exports: 'Imager'
         }
     }

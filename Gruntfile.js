@@ -753,7 +753,7 @@ module.exports = function (grunt) {
         }
         grunt.config.set('karma.options.singleRun', (singleRun === false) ? false : true);
         apps.forEach(function(app) {
-            grunt.task.run(['clean:static', 'copy:testUtils', 'copy:commonModules', 'copy:javascript-' + app, 'copy:javascript-' + app + '-tests', 'karma:' + app]);
+            grunt.task.run(['karma:' + app]);
         });
     });
     // TODO - don't have common as default?

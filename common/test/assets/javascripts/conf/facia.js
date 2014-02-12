@@ -4,5 +4,6 @@ module.exports = function(config) {
         { pattern: 'facia/app/assets/javascripts/**/*.js', included: false },
         { pattern: 'facia/test/assets/javascripts/spec/**/*.spec.js', included: false }
     );
+    settings.app = 'facia';
     config.set(settings);
 }

@@ -3,5 +3,6 @@ module.exports = function(config) {
     settings.files.push(
         { pattern: 'common/test/assets/javascripts/spec/**/*.spec.js', included: false }
     );
+    settings.app = 'common';
     config.set(settings);
 }
