@@ -25,7 +25,7 @@ object Seg {
 
 trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging {
 
-  val showFieldsQuery: String = FaciaDefaults.showElements
+  val showFieldsQuery: String = FaciaDefaults.showFields
 
   case class CollectionMeta(lastUpdated: Option[String], updatedBy: Option[String], updatedEmail: Option[String])
   object CollectionMeta {
