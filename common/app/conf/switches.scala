@@ -189,6 +189,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val DiscussionVerifiedEmailPosting = Switch("Discussion", "discussion-verified-email-posting",
+    "If this switch is on, posters to discussions must have a verified email address.",
+    safeState = Off, sellByDate = endOfQ4
+  )
+
   // Identity Switches
 
   val IdentityEmailVerificationSwitch = Switch("Identity Email verification", "id-email-verification",
@@ -412,6 +417,7 @@ object Switches extends Collections {
     VideoAdvertSwitch,
     AudienceScienceSwitch,
     DiscussionSwitch,
+    DiscussionVerifiedEmailPosting,
     IdentityEmailVerificationSwitch,
     OpenCtaSwitch,
     FontSwitch,
