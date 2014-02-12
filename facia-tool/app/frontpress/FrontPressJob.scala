@@ -16,7 +16,7 @@ import play.api.libs.concurrent.Akka
 
 object FrontPressJob extends Logging with implicits.Collections {
 
-  val queueUrl: Option[String] = None
+  val queueUrl: Option[String] = Configuration.faciatool.frontPressQueueUrl
 
   import play.api.Play.current
   private lazy implicit val frontPressContext = Akka.system.dispatchers.lookup("play.akka.actor.front-press")
