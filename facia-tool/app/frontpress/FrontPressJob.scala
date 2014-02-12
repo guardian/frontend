@@ -13,6 +13,7 @@ import scala.concurrent.{Future, Await}
 import frontpress.{FaciaToolConfigAgent, FrontPress}
 import common.FaciaToolMetrics.{FrontPressCronFailure, FrontPressCronSuccess}
 import play.api.libs.concurrent.Akka
+import scala.util.{Failure, Success}
 
 object FrontPressJob extends Logging with implicits.Collections {
 
@@ -37,22 +38,14 @@ object FrontPressJob extends Logging with implicits.Collections {
           .distinct
           .map { path =>
             val f = pressByPathId(path)
-            f.onSuccess {
-              case _ => {
-                client.deleteMessageBatch(
-                  new DeleteMessageBatchRequest(
-                    queueUrl,
-                    receiveMessageResult.getMessages.map { msg => new DeleteMessageBatchRequestEntry(msg.getMessageId, msg.getReceiptHandle)}
-                  )
-                )
+            f.onComplete {
+              case Success(_) =>
+                deleteMessage(receiveMessageResult, queueUrl)
                 FrontPressCronSuccess.increment()
-              }
-            }
-            f.onFailure {
-              case t: Throwable => {
+              case Failure(t) =>
+                deleteMessage(receiveMessageResult, queueUrl)
                 log.warn(t.toString)
                 FrontPressCronFailure.increment()
-              }
             }
             Await.ready(f, 20.seconds) //Block until ready!
         }
@@ -63,6 +56,16 @@ object FrontPressJob extends Logging with implicits.Collections {
         }
       }
     }
+  }
+
+  def deleteMessage(receiveMessageResult: ReceiveMessageResult, queueUrl: String): DeleteMessageBatchResult = {
+    val client = newClient
+    client.deleteMessageBatch(
+      new DeleteMessageBatchRequest(
+        queueUrl,
+        receiveMessageResult.getMessages.map { msg => new DeleteMessageBatchRequestEntry(msg.getMessageId, msg.getReceiptHandle)}
+      )
+    )
   }
 
   def pressByCollectionIds(ids: Set[String]): Future[Set[JsObject]] = {
