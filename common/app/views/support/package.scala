@@ -338,7 +338,7 @@ object TweetCleaner extends HtmlCleaner {
   }
 }
 
-case class InlineSlotGenerator(article: Article) extends HtmlCleaner {
+case class InlineSlotGenerator(articleWordCount: Int) extends HtmlCleaner {
 
   private def insertSlot(paragraph: Element, document: Document) {
     val prev = paragraph.previousElementSibling
@@ -359,7 +359,7 @@ case class InlineSlotGenerator(article: Article) extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
 
-    if (article.wordCount > 350) {
+    if (articleWordCount > 350) {
 
       var lastInline = -200
 

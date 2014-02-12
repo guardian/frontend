@@ -16,6 +16,6 @@ object BodyCleaner {
     WitnessCleaner,
     VideoEmbedCleaner(article.bodyVideos),
     new TagLinker(article),
-    InlineSlotGenerator(article)
+    InlineSlotGenerator(article.wordCount)
   )
 }
