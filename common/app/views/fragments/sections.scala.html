@@ -44,12 +44,20 @@
         </div>
         <div class="switcher u-cf @if(isFooter){switcher--columns }switcher--version">
             <h2 class="switcher__label">View:</h2>
-            <ul class="unstyled switcher__options">
+            <ul class="unstyled switcher__options mobile-only">
                 <li class="switcher__option switcher__option--active">
                     Beta
                 </li>
                 <li class="switcher__option">
                     @fragments.mainSiteLink(page, "Current version")
+                </li>
+            </ul>
+            <ul class="unstyled switcher__options hide-on-mobile">
+                <li class="switcher__option switcher__option--active">
+                    Mobile
+                </li>
+                <li class="switcher__option">
+                    @fragments.mainSiteLink(page, "Desktop")
                 </li>
             </div>
         </div>
