@@ -9,15 +9,19 @@
     <div class="left-col">
         <div class="title">Collections</div>
         <div class="instructions">
-            create
-            <span data-bind="click: createCollection" class="linky">collection</span> or
-            <span data-bind="click: createFront" class="linky">front</span>
+            create a
+            <span data-bind="click: createCollection" class="linky">collection</span>
         </div>
         <div class="scrollable" data-bind="
             template: {name: 'template_collection', foreach: collections}"></div>
     </div>
 
     <div class="right-col">
+        <div class="title">Fronts</div>
+        <div class="instructions">
+            create a
+            <span data-bind="click: createFront" class="linky">front</span>
+        </div>
         <div class="scrollable" data-bind="
             template: {name: 'template_front', foreach: fronts}"></div>
     </div>
@@ -105,7 +109,7 @@
                             template: {name: 'template_collection', foreach: items}"></div>
                     </div>
                     <div class="instructions">
-                        drag in or <span data-bind="click: createCollection" class="linky">create</span> a collection
+                        drop a collection here or <span data-bind="click: createCollection" class="linky">create</span> one
                     </div>
                 </div>
             <!-- /ko -->

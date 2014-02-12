@@ -51,7 +51,7 @@ define([
                     }
 
                     front.group.items.push(collection);
-                    model.fronts.push(front);
+                    model.fronts.unshift(front);
 
                     front.toggleOpen();
                     collection.toggleOpen();
