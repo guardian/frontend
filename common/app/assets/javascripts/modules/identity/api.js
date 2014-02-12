@@ -131,7 +131,6 @@ define([
             request = ajax({
                 url: Id.idApiRoot + endpoint,
                 type: 'jsonp',
-                crossOrigin: true,
                 data: {
                     refreshCookie:true
                 }
