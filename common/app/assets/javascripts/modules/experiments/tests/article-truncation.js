@@ -12,6 +12,7 @@ define([
         if(config.page.commentable && qwery('.js-comments').length) {
             bonzo(qwery('.related')).insertBefore(qwery('.js-comments'));
         }
+        bonzo(qwery('.article__keywords')).hide();
     }
 
     var ArticleTruncationTest = function () {
@@ -33,31 +34,31 @@ define([
                 }
             },
             {
-                id: 'twenty',
+                id: 'three',
                 test: function (context, config) {
                     switchComments(config);
                     var t = new Truncator({
-                        percentageCap: 20,
+                        wordCap: 300,
                         wordCount: config.page.wordCount
                     });
                 }
             },
             {
-                id: 'thirty',
+                id: 'four',
                 test: function (context, config) {
                     switchComments(config);
                     var t = new Truncator({
-                        percentageCap: 30,
+                        wordCap: 400,
                         wordCount: config.page.wordCount
                     });
                 }
             },
             {
-                id: 'forty',
+                id: 'five',
                 test: function (context, config) {
                     switchComments(config);
                     var t = new Truncator({
-                        percentageCap: 40,
+                        wordCap: 500,
                         wordCount: config.page.wordCount
                     });
                 }

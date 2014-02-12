@@ -18,8 +18,8 @@ define([
 
     var Truncator = function(config) {
         this.config = extend(this.config, config);
-        this.el = this.findParagraphAtPercentage(this.getParagraphs());
-        if(this.getPercentage() > this.config.minWordCount) {
+        this.el = this.findParagraphAtCap(this.getParagraphs());
+        if(this.config.wordCount > this.config.minWordCount) {
             this.truncate();
         }
     };
@@ -27,14 +27,17 @@ define([
     Truncator.prototype.classes =  {
         el: 'js-truncate',
         btn: 'js-continue-reading',
+        actions: 'js-article-actions',
         hidden: 'u-h'
     };
 
     Truncator.prototype.config = {
         contentEl: qwery('.js-article__body')[0],
-        percentageCap: 40,
-        minWordCount: 300,
-        template: '<button class="continue-reading js-continue-reading">continue reading</button>'
+        wordCap: 500,
+        minWordCount: 500,
+        template: '<button class="truncation-cta truncation-cta--continue js-continue-reading" data-link-name="continue reading">Continue reading</button>' +
+            '<a href="/" class="truncation-cta truncation-cta--back-home" data-link-name="back to home">' +
+            '<i class="i i-back-double"></i> Back to home<a/>'
     };
 
     Truncator.prototype.getParagraphs = function() {
@@ -45,15 +48,11 @@ define([
         return el.innerHTML.split(/\s+/).length;
     };
 
-    Truncator.prototype.getPercentage = function() {
-        return parseInt(this.config.wordCount/100*this.config.percentageCap, 10);
-    };
-
-    Truncator.prototype.findParagraphAtPercentage = function(paras) {
+    Truncator.prototype.findParagraphAtCap = function(paras) {
         var count = 0;
         return find(paras, function(el) {
             count += this.getWordCount(el);
-            return count > this.getPercentage();
+            return count > this.config.wordCap;
         }, this);
     };
 
@@ -69,21 +68,17 @@ define([
     };
 
     Truncator.prototype.showCta = function() {
-        bonzo(this.el).append(this.config.template);
+        bonzo(qwery('.' + this.classes.actions)).prepend(this.config.template);
+        bean.on(qwery('.' + this.classes.btn)[0], 'click', this.toggleContent.bind(this));
+        bean.on(qwery('.' + this.classes.btn)[0], 'click', this.hideCta.bind(this));
     };
 
     Truncator.prototype.hideCta = function() {
         qwery('.' + this.classes.btn)[0].remove();
     };
 
-    Truncator.prototype.bindListeners = function() {
-        bean.on(this.el, 'click', '.' + this.classes.btn, this.toggleContent.bind(this));
-        bean.on(this.el, 'click', '.' + this.classes.btn, this.hideCta.bind(this));
-    };
-
     Truncator.prototype.truncate = function() {
         this.showCta();
-        this.bindListeners();
         this.toggleContent();
     };
 
