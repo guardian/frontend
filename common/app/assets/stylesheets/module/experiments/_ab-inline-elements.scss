@@ -35,8 +35,8 @@
     .inline-story__timestamp {
 	padding-right: $gs-gutter/2;
 	float: left;
-    }
-    .trail__count--commentcount {
+	}
+	.trail__count--commentcount {
 	float: left;
 	position: relative;
 	padding-left: $gs-gutter;
@@ -140,10 +140,4 @@
 
 .inline-story__container {
     background-color: #333;
-}
-
-
-
-.inline-story--video {
-
 }
