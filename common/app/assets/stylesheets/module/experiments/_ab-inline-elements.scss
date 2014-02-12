@@ -32,6 +32,25 @@
         @include fs-data(3);
     }
 
+    .inline-story__timestamp {
+	padding-right: $gs-gutter/2;
+	float: left;
+    }
+    .trail__count--commentcount {
+	float: left;
+	position: relative;
+	padding-left: $gs-gutter;
+	.i {
+	    position: absolute;
+	    left: 0;
+	    margin-top: -1px;
+	}
+	a {
+	    @include fs-data(3);
+	    color: #9c9c9c;
+	}
+    }
+
     .inline-story__cta {
         background-color: #fbba0f;
         @include rounded-corners(50%);
@@ -112,6 +131,7 @@
             position: absolute;
         }
     }
+
 }
 
 .inline-story__standfirst {

@@ -20,10 +20,11 @@ define([
     }
 
     function moveItem(item) {
-        var leftSlot = SlotController.getLeftSlot();
-        bonzo(leftSlot).append(item);
+	item.getElementsByClassName('item__meta')[0].classList.add('js-append-commentcount');
         replaceClasses(item);
         qwery('*', item).forEach(replaceClasses);
+	var leftSlot = SlotController.getLeftSlot();
+	bonzo(leftSlot).append(item);
     }
 
     return {
