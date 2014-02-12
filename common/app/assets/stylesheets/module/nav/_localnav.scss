@@ -30,9 +30,9 @@
 /* Local navigation popup
    ========================================================================== */
 
-.nav-popup-localnav {
+.nav-popup--localnav {
     top: 156px;
-    border-color: $c-neutral5;
+    border-color: $c-neutral4;
     @include rem((
         padding-bottom: $gs-baseline
     ));

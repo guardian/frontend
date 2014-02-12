@@ -8,8 +8,8 @@
 .control {
     position: relative;
     float: left;
-    width: 28px;
-    height: 28px;
+    width: 30px;
+    height: 30px;
     border: 1px solid $c-neutral1;
     padding: 0;
     @include rounded-corners(50%);
@@ -22,10 +22,6 @@
         font-size: 13px
     ));
 
-    @include mq(tablet) {
-        margin-left: $gs-gutter;
-    }
-
     &,
     &:active,
     &:focus,
@@ -33,72 +29,53 @@
         text-decoration: none;
         color: #000000;
     }
-
-    &.is-active {
+    .is-signed-in & {
         color: $c-brandBlue;
-        border-color: $c-newsAccent;
+        border-color: $c-brandBlue;
+    }
+    &.is-active {
+        border-color: $c-brandLightBlue;
     }
 }
+
 
 /* Sections control - (Hamburger icon)
    ========================================================================== */
 
 .control--sections {
-    @include rem((
-        margin-top: $gs-baseline/2
-    ));
     @include mq(tablet) {
         position: absolute;
         z-index: 1;
         @include rem((
             right: $gs-gutter,
-            margin-top: $gs-baseline*4
+            top: 130px
         ));
     }
 }
 
 
-/* Search control
+/* Control info (text label next to it)
    ========================================================================== */
-
-.control--search-submit {
-    
-}
-
-
-/* Profile control
-   ========================================================================== */
-
-.control--profile {
-    @include rem((
-        margin-left: $gs-gutter/2,
-        margin-top: $gs-baseline/2
-    ));
-
-    @include mq(tablet) {
-        float: left;
-    }
-}
 
 .control__info {
     display: none;
-    height: 28px;
+    height: 30px;
     vertical-align: top;
-    line-height: 28px;
+    line-height: 30px;
+    white-space: nowrap;
 
-//    @include mq(544px) {
-//        display: inline-block;
-//        max-width: 110px;
-//        overflow: hidden;
-//        text-overflow: ellipsis;
-//    }
-    @include mq(tablet) {
+    @include mq(544px) {
         position: absolute;
         display: block;
-        top: 2px;
-        left: 36px;
-        width: 200px;
+        overflow: hidden;
+        top: 1px;
+        left: 42px;
+        @include rem((max-width: 200px));
+        text-overflow: ellipsis;
         text-align: left;
+    }
+    .is-active & {
+        color: $c-brandLightBlue;
     }
 }
 
@@ -110,7 +87,7 @@
     display: block;
     text-align: center;
     height: 24px;
-    padding-top: 4px;
+    padding-top: 5px;
 
     .i {
         display: none;

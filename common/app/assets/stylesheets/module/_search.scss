@@ -2,9 +2,6 @@
    Site wide search
    ========================================================================== */
 
-/* Mobile: Google™ Custom Search
-   ========================================================================== */
-
 .gsc-search-box {
     padding: 0;
     max-width: none;
@@ -53,15 +50,8 @@ input.gsc-search-button-v2 {
     height: 14px !important;
 }
 
-input.gsc-search-button,
-input.gsc-search-button:hover,
-input.gsc-search-button:focus {
-    border-color: $c-newsAccent;
-    background-color: $c-newsAccent;
-}
-
 .gs-result {
-    font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+    font-family: $sans-serif;
 }
 
 .gsc-control-cse {
@@ -97,39 +87,3 @@ input.gsc-search-button:focus {
     margin-right: 22px !important;
 }
 
-
-/* Desktop: fully customized search field
-   ========================================================================== */
-
-.preheader__search {
-    float: left;
-    border-right: 1px solid $c-neutral4;
-    @include rem((
-        padding-top: $gs-baseline/2,
-        padding-bottom: $gs-baseline/2,
-        width: gs-span(4)
-    ));
-    @include mq(desktop) {
-        @include rem((
-            width: gs-span(6)
-        ));
-    }
-}
-.preheader__search-field {
-    float: left;
-    @include rem((
-        margin-top: 7px,
-        width: gs-span(3)
-    ));
-    @include mq(desktop) {
-        @include rem((
-            width: gs-span(4)
-        ));
-    }
-}
-.preheader__search-submit {
-    float: right;
-    @include rem((
-        margin-right: $gs-gutter/2
-    ));
-}

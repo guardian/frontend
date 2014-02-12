@@ -46,12 +46,22 @@
             <h2 class="switcher__label">View:</h2>
             <ul class="unstyled switcher__options">
                 <li class="switcher__option switcher__option--active">
-                    Beta
+                    <span class="hide-on-mobile-inline">
+                        Beta
+                    </span>
+                    <span class="mobile-only">
+                        Mobile
+                    </span>
                 </li>
                 <li class="switcher__option">
-                    @fragments.mainSiteLink(page, "Current version")
+                    <span class="hide-on-mobile-inline">
+                        @fragments.mainSiteLink(page, "Current version")
+                    </span>
+                    <span class="mobile-only">
+                        @fragments.mainSiteLink(page, "Desktop")
+                    </span>
                 </li>
-            </div>
+            </ul>
         </div>
     </div>
 </nav>

@@ -30,6 +30,14 @@
     }
 }
 
+.hide-on-mobile-inline {
+    display: none !important;
+
+    @include mq(tablet) {
+        display: inline !important;
+    }
+}
+
 .is-invisible {
     visibility: hidden;
 }
@@ -113,23 +121,6 @@
     padding: 0;
     border: 0;
     width: 100%;
-    background: transparent;
-
-    &:focus {
-        outline: 0;
-    }
-}
-
-
-/**
- * Reset input styles
- */
-
-.u-input-reset {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    @include rounded-corners(0);
     background: transparent;
 
     &:focus {

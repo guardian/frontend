@@ -1,5 +1,5 @@
 .site-message {
-    background: $c-neutral6;
+    background: darken($c-neutral8, 3%);
     display: block;
 }
 
@@ -106,7 +106,7 @@
 }
 
 .site-message__inner {
-    padding: $baseline*3 $gs-gutter/2;
+    padding: $gs-baseline $gs-gutter/2;
     @include box-sizing(border-box);
 
     @include mq(mobileLandscape) {
@@ -133,7 +133,7 @@
 .site-message__actions {
     width: 100%;
     border-top: 1px dotted $c-neutral2;
-    margin-top: $baseline*6;
+    margin-top: $gs-baseline*2;
     overflow: hidden;
 }
 

@@ -11,6 +11,7 @@
     }
 }
 .switcher {
+    color: darken($c-neutral2, 3%); // Enhance contrast on non-white background
     clear: both;
     @include rem((
         padding-top: $baseline*3,
@@ -27,6 +28,10 @@
 
     & + & {
         border-top: 1px solid $c-neutral5;
+
+        @include mq(tablet) {
+            border-top: 0;
+        }
     }
 }
 .navigation-aside--footer {
@@ -45,7 +50,6 @@
 .switcher__label {
     margin: 0;
     width: 25%;
-    color: darken($c-neutral2, 3%); // Enhance contrast on non-white background
     @include fs-data(4);
     font-weight: normal;
 }
@@ -54,6 +58,7 @@
     width: 75%;
 }
 .switcher__option {
+    @include fs-header(1);
     @include box-sizing(border-box);
     width: 33.333333333%; // of 75% = 25%
     @include rem((
@@ -63,7 +68,12 @@
 
     &,
     a {
-        color: $c-neutral1;
+        color: darken($c-neutral2, 3%); // Enhance contrast on non-white background
+    }
+    a:hover,
+    a:focus {
+        color: $c-brandLightBlue;
+        text-decoration: none;
     }
 
     &:last-child {
@@ -72,6 +82,8 @@
 }
 
 .switcher__option--active {
+    color: $c-brandLightBlue;
+
     &:before {
         content: '';
         display: inline-block;

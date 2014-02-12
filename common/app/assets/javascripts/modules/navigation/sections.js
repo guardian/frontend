@@ -71,7 +71,7 @@ define([
                 }
                 contexts[id] = true;
 
-                var sectionsHeader = context.querySelector('.nav-popup-sections'),
+                var sectionsHeader = context.querySelector('.nav-popup--sections'),
                     sectionsNav    = context.querySelector('.nav--global');
 
                 if (!sectionsHeader || !sectionsNav) {
@@ -87,7 +87,7 @@ define([
                             that.view.hideColumns(sectionsHeader, sectionsNav);
 
                             // Hide popup localnav if visible
-                            common.$g('.nav-popup-localnav').addClass('is-off');
+                            common.$g('.nav-popup--localnav').addClass('is-off');
                         } else {
                             that.view.showColumns(sectionsHeader, sectionsNav);
                         }
@@ -151,7 +151,7 @@ define([
                     });
 
                     // Insert the popup local nav
-                    var localNavPopupHtml = '<div class="nav-popup-localnav nav-popup nav-popup--small is-off">' +
+                    var localNavPopupHtml = '<div class="nav-popup--localnav nav-popup nav-popup--small is-off">' +
                                             '  <ul class="nav nav--columns nav--top-border-off u-cf" data-link-name="Sub Sections">' +
                                                  localNavItems.join('') +
                                             '  </ul>' +
@@ -171,7 +171,7 @@ define([
                                           '    <h1 class="localnav__title tone-colour">'+localNavTitle+'</h1>' +
                                           '      <button class="localnav__cta tone-background tone-border control" ' +
                                           '          data-link-name="Popup Localnav" ' +
-                                          '          data-toggle="nav-popup-localnav">' +
+                                          '          data-toggle="nav-popup--localnav">' +
                                           '        <i class="i i-local-nav-arrow"></i>' +
                                           '      </button></div>' +
                                           '  </div>' +
@@ -185,7 +185,7 @@ define([
                     var localNavHtml = '<ul class="nav nav--local" data-link-name="Local Navigation">' +
                                          localNavItems.splice(1).join('') + // Skip the first link to the top section for desktop
                                        '</ul>';
-                    common.$g('.js-localnav-placeholder', headerNode).html('<div class="localnav-container gs-container u-cf">' + localNavHtml + '</div>');
+                    common.$g('.js-localnav-placeholder', headerNode).html('<div class="localnav-container u-cf"><div class="gs-container">' + localNavHtml + '</div></div>');
 
                     common.$g('#preloads').addClass('has-localnav');
                     common.$g('#header').addClass('has-localnav');
@@ -193,7 +193,7 @@ define([
                     // Highlight the section that we're in
                     // Try to match the against pageId first (covers sport pseudo-sections, eg Cricket, Rugby...)
                     var activeNodes = common.$g('.nav__link[href="/'+config.page.pageId+'"]', headerNode)
-                                            .parent().addClass('is-active').parent().addClass('has-active-link');
+                                            .parent().addClass('is-active');
 
                     // ...otherwise fallback to matching real sections (eg Books, Arts)
                     if (activeNodes.length === 0) {

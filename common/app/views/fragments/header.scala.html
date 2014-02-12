@@ -9,64 +9,77 @@ to apply any necessary changes to non-shared code there too.
 <header id="header" class="has-nav" role="banner" data-link-name="global navigation: header" itemscope itemtype="http://schema.org/Organization">
     <div class="pre-header">
         <div class="pre-header__inner gs-container u-cf">
-            <form name="search" target="_blank" class="preheader__search u-cf hide-on-mobile" method="get" action="http://www.google.com/search">
-                <div>
-                    <label for="preheader__q" class="u-h">Search</label>
-                    <input type="hidden" name="sitesearch" value="theguardian.com" />
-                    <input type="text" id="preheader__q" name="q" class="u-input-reset preheader__search-field" placeholder="Search the Guardian" />
-                    <button class="control control--search-submit preheader__search-submit" type="submit">
+            <div class="top-nav">
+                <div class="top-nav__item top-nav__item--mobile-only">
+                    <a href="#footer-nav" data-link-name="Sections" data-toggle="nav-popup--sections"
+                       class="control control--sections">
+                        <span class="u-h">Sections</span>
                         <span class="control__icon">
-                            <i class="i i-search"></i>
+                            <i class="i i-menu"></i>
+                            <i class="i i-menu-active"></i>
                         </span>
-                    </button>
-                </div>
-            </form>
-
-            <a href="#footer-nav" data-link-name="Sections" data-toggle="nav-popup-sections"
-               class="control control--sections js-search-toggle">
-                <span class="u-h">Sections</span>
-                <span class="control__icon">
-                    <i class=" i i-menu"></i>
-                    <i class="i i-menu-active"></i>
-                </span>
-            </a>
-
-            @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
-                <div class="js-profile-nav js-hidden">
-                    <a href="@Configuration.id.url/signin" data-link-name="User profile" data-toggle="nav-popup-profile"
-                       class="control control--profile">
-                        <span class="control__icon">
-                            <i class=" i i-profile control--active__hide"></i>
-                            <i class="i i-profile-active control--active__show"></i>
-                        </span>
-                        <span class="js-profile-info control__info">Sign in</span>
                     </a>
                 </div>
-            }
-            <div class="preheader__editions hide-on-mobile">
-                <dl class="editions">
-                    <dt class="editions__title">
-                        Edition:
-                    </dt>
-                    <dd class="edition__item">
-                        <span class="edition">@Edition(request).id</span>
-                    </dd>
-                    @Edition.others(request).map{ edition =>
-                        <dd class="edition__item">
-                            <a class="edition" data-edition="@edition.id"
-                                data-link-name="switch to @edition.id edition"
-                                href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")">
-                                @edition.id
+                @if(SearchSwitch.isSwitchedOn) {
+                    <div class="top-nav__item">
+                        <a href="https://www.google.co.uk/advanced_search?q=site:www.theguardian.com" data-is-ajax data-link-name="Search icon" 
+                           class="control control--search js-search-toggle" data-toggle="nav-popup--search">
+                           <span class="u-h">Search</span>
+                           <span class="control__icon">
+                               <i class="i i-search"></i>
+                               <i class="i i-search-active"></i>
+                           </span>
+                        </a>
+                    </div>
+                }
+                <div class="top-nav__item hide-on-mobile">
+                    <div class="preheader__editions">
+                        <dl class="editions">
+                            <dt class="editions__title">
+                                Edition:
+                            </dt>
+                            <dd class="edition__item">
+                                <span class="edition">@Edition(request).id</span>
+                            </dd>
+                            @Edition.others(request).map{ edition =>
+                                <dd class="edition__item">
+                                    <a class="edition" data-edition="@edition.id"
+                                        data-link-name="switch to @edition.id edition"
+                                        href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")">
+                                        @edition.id
+                                    </a>
+                                </dd>
+                            }
+                        </dl>
+                    </div>
+                </div>
+                @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
+                    <div class="top-nav__item">
+                        <div class="js-profile-nav js-hidden">
+                            <a href="@Configuration.id.url/signin" data-link-name="User profile" data-toggle="nav-popup--profile"
+                               class="control control--profile">
+                                <span class="control__icon">
+                                    <i class="i i-profile control--active__hide"></i>
+                                    <i class="i i-profile-active control--active__show"></i>
+                                </span>
+                                <span class="js-profile-info control__info">Sign in</span>
                             </a>
-                        </dd>
-                    }
-                </dl>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     </div>
 
     <div class="header__inner u-cf">
         <div class="gs-container">
+            <meta itemprop="logo" content="http://static-secure.guim.co.uk/icons/social/og/gu-logo-fallback.png" />
+            <a href="@LinkTo{/}" data-link-name="site logo" id="logo" class="guardian-logo-wrapper" itemprop="url">
+                <span class="u-h">The Guardian</span>
+                <i class="i i-guardian-logo-160 mobile-only"></i>
+                <i class="i i-guardian-logo-big hide-on-mobile"></i>
+            </a>
+
             <div class="nav-container u-cf">
                 <ul class="nav nav--global" data-link-name="Sections">
                 @Edition(request).navigation(page).map{ nav =>
@@ -78,21 +91,14 @@ to apply any necessary changes to non-shared code there too.
                 </ul>
             </div>
 
-            <meta itemprop="logo" content="http://static-secure.guim.co.uk/icons/social/og/gu-logo-fallback.png" />
-            <a href="@LinkTo{/}" data-link-name="site logo" id="logo" class="guardian-logo-wrapper" itemprop="url">
-                <span class="u-h">The Guardian</span>
-                <i class="i i-guardian-logo-160 mobile-only"></i>
-                <i class="i i-guardian-logo-big hide-on-mobile"></i>
-            </a>
-
-            <!-- <span class="release">Beta</span> -->
-
             @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
-                <div class="nav-popup-profile js-profile-nav-popup nav-popup nav-popup--box is-off"></div>
+                <div class="nav-popup--profile nav-popup--small js-profile-nav-popup nav-popup is-off"></div>
+            }
+            @if(SearchSwitch.isSwitchedOn) {
+                <div class="nav-popup--search nav-popup--small nav-popup is-off"><div class="js-search-placeholder"></div></div>
             }
 
-            <div class="nav-popup-sections nav-popup nav-popup--small is-off">
-                <div class="search-placeholder js-search-placeholder mobile-only"></div>
+            <div class="nav-popup--sections nav-popup nav-popup--small is-off">
                 @fragments.sections(page, false)
             </div>
         </div>
@@ -100,4 +106,4 @@ to apply any necessary changes to non-shared code there too.
 
     <div class="js-localnav-placeholder"></div>
 
- </header>
+</header>

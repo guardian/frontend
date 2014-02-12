@@ -12,7 +12,7 @@ define([ 'common/common',
                                 '<div id="preloads"></div>',
                                 '<div id="header">' +
                                 '  <div class="nav-container"><ul class="nav nav--global"><li class="nav__item"><a href="/culture" class="nav__link">Culture</a></li></ul></div>' +
-                                '  <div class="nav-popup-sections">foo</div>' +
+                                '  <div class="nav-popup--sections">foo</div>' +
                                 '  <div class="js-localnav-placeholder"></div>' +
                                 '</div>',
                                 '<div id="footer-nav">' +
@@ -90,7 +90,7 @@ define([ 'common/common',
               sections = new Sections(config);
               sections.view.insertLocalNav(document);
 
-              expect(document.querySelectorAll('.nav-popup-localnav .is-active').length).toBe(1);
+              expect(document.querySelectorAll('.nav-popup--localnav .is-active').length).toBe(1);
             });
 
 
@@ -109,7 +109,7 @@ define([ 'common/common',
               sections = new Sections(config);
               sections.view.insertLocalNav(document);
 
-              expect(document.querySelectorAll('.nav-popup-localnav .nav__link')[0].href).toContain('/culture');
+              expect(document.querySelectorAll('.nav-popup--localnav .nav__link')[0].href).toContain('/culture');
               expect(document.querySelectorAll('.nav--local .nav__link')[0].href).not.toContain('/culture');
             });
 

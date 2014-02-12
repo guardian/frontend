@@ -41,7 +41,7 @@
     background: #ffffff;
 }
 .footer__banner {
-    border-top: 2px solid $c-newsAccent;;
+    border-top: 2px solid $c-brandBlue;
     @include rem((margin-bottom: $baseline*2));
 }
 @include mq(tablet) {

@@ -1,11 +1,13 @@
 define([
     'common/$',
     'common/common',
-    'bean'
+    'bean',
+    'common/utils/detect'
 ], function (
     $,
     common,
-    bean
+    bean,
+    detect
 ) {
 
     var Search = function (config) {
@@ -27,6 +29,7 @@ define([
 
             bean.on(document, 'click touchstart', '.js-search-toggle', function(e) {
                 searchLoader();
+                self.focusSearchField();
                 e.preventDefault();
             });
 
@@ -38,11 +41,23 @@ define([
             });
         }
 
+        this.focusSearchField = function() {
+            var $input = $('input.gsc-input');
+            if ($input.length > 0) {
+                $input.focus();
+            }
+        };
+
         this.load = function() {
             var s,
                 x;
 
             container = currentContext.querySelector('.js-search-placeholder');
+
+            // Set so Google know what to do
+            window.__gcse = {
+                callback: self.focusSearchField
+            };
 
             // Unload any search placeholders elsewhere in the DOM
             Array.prototype.forEach.call(document.querySelectorAll('.js-search-placeholder'), function(c){

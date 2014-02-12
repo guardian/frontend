@@ -67,8 +67,8 @@
         border-top: 1px solid $c-neutral7;
         height: auto;
         background-color: transparent;
-        -webkit-font-smoothing: antialiased;
         @include fs-header(1);
+        -webkit-font-smoothing: subpixel-antialiased;
         text-decoration: none;
 
         &:link,
@@ -77,7 +77,7 @@
         }
         &:hover,
         &:focus {
-            color: $c-newsAccent;
+            color: $c-brandLightBlue;
         }
     }
 }
@@ -101,6 +101,7 @@
 
 .nav-container {
     display: none;
+    clear: both;
 
     @include mq(tablet) {
         display: block;
@@ -111,34 +112,47 @@
 .nav--local {
     @include box-sizing(border-box);
     display: none;
-    height: 40px;
     overflow: hidden;
-    @include rem((padding: 0 $gs-gutter*3 0 $gs-gutter));
+    @include rem((
+        padding: 0 $gs-gutter*3 0 $gs-gutter,
+        height: 45px
+    ));
     text-transform: lowercase;
 
     @include mq(tablet) { display: block; }
 
     .nav__item {
+        position: relative;
         float: left;
+
+        &.is-active:after {
+            bottom: 0;
+            left: 50%;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+            border-color: rgba(163, 219, 255, 0);
+            border-bottom-color: $c-brandBlue;
+            border-width: 9px;
+            margin-left: -9px;
+        }
     }
     .nav__link {
         color: $c-brandBlue;
         display: block;
         @include rem((
-            margin: 10px 0 $baseline*3,
-            padding: 2px $gs-gutter/2 0
+            margin: 10px 0 11px,
+            padding: 0 $gs-gutter/2
         ));
-        @include fs-header(1);
+        @include fs-header(2);
+        -webkit-font-smoothing: subpixel-antialiased; // Make links look fatter
     }
-    .has-localnav & {
-        .nav__link {
-            color: $c-neutral2;
-        }
-        .is-active .nav__link {
-            color: $c-brandBlue;
-        }
+    .is-active .nav__link {
+        color: $c-brandLightBlue;
     }
-
     .nav__link,
     .nav__link:active,
     .nav__link:focus,
@@ -147,7 +161,7 @@
     }
     .nav__link:focus,
     .nav__link:hover {
-        color: $c-newsAccent !important;
+        color: $c-brandLightBlue !important;
     }
 
     .nav__item:first-child .nav__link { padding-left: 0; }
@@ -160,7 +174,7 @@
 
 .localnav-container {
     display: none;
-    background-color: #ffffff;
+    background-color: $c-brandBlue;
 
     @include mq(tablet) {
         display: block;
@@ -168,23 +182,23 @@
 }
 
 .nav--local {
+    overflow: visible;
     display: none;
+    margin-top: -2px; // Compensate for the 2px border of header__inner
 
     @include mq(tablet) {
         display: block;
     }
-    .has-localnav & {
-        .nav__link {
-            color: $c-brandBlue;
-        }
-        .has-active-link {
-            .nav__link {
-                color: $c-neutral2;
-            }
-            .is-active .nav__link {
-                color: $c-brandBlue;
-            }
-        }
+    .nav__link {
+        -webkit-font-smoothing: antialiased; // White text on dark background:
+                                             // text looks cleaner that way
+        color: #ffffff;
+    }
+    .nav__item.is-active:after {
+        border-bottom-color: transparent;
+        border-top-color: $c-brandBlue;
+        top: 100%;
+        bottom: auto;
     }
 }
 
@@ -197,10 +211,16 @@
 
     .localnav__cta {
         overflow: hidden;
-        margin: $gs-baseline/3 0;
+        margin: $gs-baseline/4 0;
         position: absolute;
         right: 0;
         top: 0;
+
+        i {
+            position: relative;
+            top: -1px;
+            left: -1px;
+        }
 
         &.is-active i {
             @include rotate(180deg);
@@ -251,7 +271,7 @@
             padding: $baseline $gs-gutter/2
         ));
         color: #ffffff;
-        border-right: 1px solid #94B1CA;
+        border-right: 1px solid $c-brandLightBlue;
 
         &:last-child { border-right: none; }
         &.is-active { text-decoration: underline; }
@@ -276,7 +296,7 @@
     }
     &:hover,
     &:focus {
-        color: $c-newsAccent;
+        color: $c-brandLightBlue;
     }
 }
 
@@ -295,6 +315,7 @@
 
 @include mq(tablet) {
     .nav--additional-sections {
+        text-transform: lowercase;
         @include rem((
             padding-left: $gs-gutter/2,
             padding-right: $gs-gutter/2
@@ -317,43 +338,39 @@
 }
 
 
-/* Identity Menu
+/* Top navigation
    ========================================================================== */
 
-.is-signed-in {
-    position: relative;
+.top-nav,
+.top-nav__item {
+    @include rem((height: 44px));
 }
+.top-nav__item {
+    @include box-sizing(border-box);
+    float: left;
 
-.nav-popup.nav-popup-profile {
-    right: 0;
-    width: 100%;
-    @include mq(desktop) {
-        width: auto;
-    }
+    @include rem((
+        padding-top: $gs-baseline/2,
+        margin-right: $gs-gutter/2
+    ));
 
-    > .nav {
+    @include mq(tablet) {
+        & + .top-nav__item {
+            border-left: 1px solid $c-neutral4;
+        }
         @include rem((
-            padding-left: $gs-gutter/5,
-            padding-right: $gs-gutter/5
+            padding-left: $gs-gutter/2
         ));
+    }
+}
+.top-nav__item--mobile-only {
+    @include mq(tablet) {
+        margin-right: 0;
+        padding-left: 0;
 
-        > .nav__item {
-            float: none;
-            display: block;
-            width: auto;
-            @include rem((padding: 0 $gs-gutter/2));
-
-            @include mq(tablet) {
-                @include rem((
-                    padding-left: $gs-gutter,
-                    padding-right: $gs-gutter
-                ));
-            }
-
-            .nav__link {
-                @include rem((padding: 10px 0));
-                border: none;
-            }
+        + .top-nav__item {
+            border-left: 0;
+            padding-left: 0;
         }
     }
 }
