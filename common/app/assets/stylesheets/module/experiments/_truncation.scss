@@ -1,6 +1,6 @@
 .article__actions {
     &.is-truncated {
-        margin-top: -1 * ($gs-row-height/2);
+        margin: 0;
 
         .social__item {
             width: 50px;
@@ -14,10 +14,21 @@
         .social-wrapper {
             float: right;
 
+            @include mq(tablet) {
+                margin-top: $gs-baseline*2;
+            }
+
             @include mq(leftCol) {
                 margin-top: -1 * ($gs-row-height + $gs-baseline);
-                margin-right: -1 * (240px + gs-span(1));
             }
+        }
+
+        @include mq(tablet) {
+            padding-top: -24px;
+        }
+
+        @include mq(leftCol) {
+            padding-top: 0;
         }
 
         @include mq(rightCol) {
@@ -29,7 +40,7 @@
 .truncation-cta {
     display: block;
     height:  $gs-row-height;
-    margin: $gs-baseline 0;
+    margin: 0;
     background-color: #ffffff;
     color: $c-newsDefault;
     text-align: left;
@@ -43,8 +54,12 @@
     padding-left: 0;
 
     i {
+        background-size: 90%;
         margin-bottom: -3px;
-        margin-right: 6px;
+    }
+
+    &:hover {
+        text-decoration: underline;
     }
 
     @include mq(rightCol) {
@@ -61,11 +76,12 @@ $home-icon: (
 .truncation-cta--back-home {
     position: relative;
     float: left;
-    overflow: hidden;
-    width: gs-span(3);
+    overflow-y: hidden;
+    width: $gs-column-width + $gs-gutter;
     height: map-get($home-icon, height);
+    margin-top: $gs-baseline;
     @include rem((font-size: 13px));
-
+    @include box-sizing(border-box);
 
     &:hover,
     &:focus {
@@ -108,12 +124,13 @@ $home-icon: (
     }
 
     .truncation-cta__text {
-        position: relative;
+        position: absolute;
         top: $gs-baseline/2;
-        left: (map-get($home-icon, width) + 4px);
+        left: (map-get($home-icon, width) + 6px);
     }
 
     @include mq(tablet) {
+        margin-top: $gs-baseline*2;
         width: gs-span(3);
     }
 
@@ -121,7 +138,7 @@ $home-icon: (
         width: gs-span(2);
         position: absolute;
         left: 0;
-        bottom: 0;
+        bottom: 2px;
     }
 
     @include mq(wide) {
