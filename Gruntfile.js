@@ -56,7 +56,7 @@ module.exports = function (grunt) {
                     EventEmitter: 'common/components/eventEmitter/EventEmitter',
                     qwery:        'common/components/qwery/mobile/qwery-mobile',
                     reqwest:      'common/components/reqwest/src/reqwest',
-                    postscribe:   'common/components/postscribe/dist/postscribe',
+                    postscribe:   'common/com   ponents/postscribe/dist/postscribe',
                     lodash:       'common/components/lodash-amd/modern',
                     imager:       'common/components/imager.js/src/strategies/container',
                     omniture:     'common/components/omniture/omniture',
