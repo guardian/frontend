@@ -19,7 +19,7 @@ object Global extends FaciaToolLifecycle with GlobalSettings {
       FaciaToolConfigAgent.refresh()
     }
 
-    Jobs.schedule("FaciaToolPressJob", "0/5 * * * * ?") {
+    Jobs.schedule("FaciaToolPressJob", "0/10 * * * * ?") {
       FrontPressJob.run()
     }
   }
