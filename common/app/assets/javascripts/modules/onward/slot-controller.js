@@ -59,7 +59,7 @@ define([
             if (!rules.hasOwnProperty(type)) { return null; }
 
             var container = document.createElement('div');
-            container.classList.add(prefix+'__container');
+            bonzo(container).addClass(prefix+'__container');
             container.slotContainerType = type;
             containers[type].push(container);
             reorderContent();
