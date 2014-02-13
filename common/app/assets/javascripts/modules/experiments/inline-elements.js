@@ -23,26 +23,12 @@ define([
         item.getElementsByClassName('item__meta')[0].classList.add('js-append-commentcount');
         replaceClasses(item);
         qwery('*', item).forEach(replaceClasses);
-        var leftSlot = SlotController.getSlot('left');
-        bonzo(leftSlot).append(item);
+	var storySlot = SlotController.getSlot('story');
+	bonzo(storySlot).append(item);
     }
 
     return {
-        test: function() {
-            var slot = SlotController.getSlot('left');
-            slot.innerHTML = '<div class="inline-story inline-story--test"><div class="inline-story__container"></div></div>';
-            slot = SlotController.getSlot('left');
-            slot.innerHTML = '<div class="inline-story inline-story--test"><div class="inline-story__container"></div></div>';
-            slot = SlotController.getSlot('right');
-            slot.innerHTML = '<div class="inline-ad-test"></div>';
-            slot = SlotController.getSlot('right');
-            slot.innerHTML = '<div class="inline-ad-test"></div>';
-
-        },
         init: function() {
-
-            //this.test();
-            //return;
 
             if (!window.guardian.config.page.hasStoryPackage) { return false; }
 

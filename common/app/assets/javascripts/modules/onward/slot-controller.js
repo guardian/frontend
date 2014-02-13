@@ -12,36 +12,46 @@ define([
     _
     ) {
 
-    var prefix = "slot";
+    // overview:
+    // slot - div element in the article body (created serverside). has a slot type describing where it lies in the article (e.g. text, posth2,  etc)
+    // container - div element created in response to a slot request and passed back to the requester for them to inject content
+    // rules - defines the valid slot types for each content type
+    // reorder - happens every time a slot is requested/released. reorders containers with a maximum of 1 per slot
 
-    function slotTypeToCssSelector(type){
-        return '.' + prefix + '--' + type;
+    var prefix = "slot",
+	rules = { // contentType: [validSlotType1,validSlotType2,...]
+	    story: ['text'],
+	    adRight: ['posth2','block','text'],
+	    adBlock: ['preh2', 'block','text'],
+	    commercialRight: ['posth2','block','text'],
+	    commercialLeft: ['text']
+	},
+	priority = ['adRight','adBlock','commercialLeft','commercialRight','story'],
+	containers = _.mapValues(rules, function() { return []; });
+
+    function getSlotsOfType(type, empty) {
+	return qwery('.' + prefix + '--' + type + (empty ? ":empty" : ""), '.article-body');
     }
-
-    var rules = { // contentType: [validSlotType1,validSlotType2,...]
-        left: ['text'],
-        right: ['posth2','block','text'],
-        block: ['preh2', 'block','text']
-    };
-
-    var containers = _.mapValues(rules, function() { return []; });
 
     function detachAll() {
         _(containers).values().flatten().forEach(function(c){ bonzo(c).detach(); });
     }
 
     function insertContainer(container) {
+	// inserts the container in the type bucket with most empty slots
 
-        var buckets = _(rules[container.slotContainerType]).map(function(type){ return qwery(slotTypeToCssSelector(type)+":empty"); });
-        var largestBucket = buckets.max(function(slotcount) { return slotcount.length; }).valueOf();
+	var buckets = _(rules[container.slotContainerType]).map(function(type){ return getSlotsOfType(type, true); });
+	var selectedBucket = buckets.max('length').valueOf();
 
-        if (largestBucket.length > 0) {
-            bonzo(largestBucket[0]).append(container);
+	if (selectedBucket.length > 0) {
+	    bonzo(selectedBucket[0]).append(container);
         }
     }
-    function reorderContent(){
+
+    function reorderContent() {
         detachAll();
-        _(containers).values().zip().flatten().compact().forEach(insertContainer);
+	_(containers).pairs().sortBy(function(p){ return priority.indexOf(p[0]); })
+	    .pluck(1).zip().flatten().compact().forEach(insertContainer);
     }
 
     return {
@@ -59,14 +69,14 @@ define([
             this.releaseSlot(oldContainer, true);
             return this.getSlot(newType);
         },
-        releaseSlot: function(oldContainer, noRefresh) {
+	releaseSlot: function(oldContainer, dontRefresh) {
             _(containers).values().forEach( function(c) {
                 var index = c.indexOf(oldContainer);
                 if (index !== -1) { c.splice(index, 1); }
             });
             bonzo(oldContainer).remove();
 
-            if (!noRefresh) { reorderContent(); }
+	    if (!dontRefresh) { reorderContent(); }
         }
     };
 

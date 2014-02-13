@@ -25,9 +25,11 @@
     }
 
     .inline-story__meta {
-        position: absolute;
+	@include box-sizing(border-box);
+	width: 100%;
+	overflow: hidden;
+	background-color: $c-neutral1;
         padding: $gs-baseline/2;
-        bottom: 0;
         color: #9c9c9c;
         @include fs-data(3);
     }
@@ -35,8 +37,8 @@
     .inline-story__timestamp {
 	padding-right: $gs-gutter/2;
 	float: left;
-	}
-	.trail__count--commentcount {
+    }
+    .trail__count--commentcount {
 	float: left;
 	position: relative;
 	padding-left: $gs-gutter;
@@ -63,7 +65,7 @@
         p { display: none; }
     }
     .inline-story__media-wrapper:hover .inline-story__cta.inline-story__cta--gallery {
-        background-color: #333;
+	background-color: $c-neutral1;
         .inline-story__cta__icon {
             .i-camera-yellow-large { display: block; }
             .i-camera-black-large { display: none; }
@@ -100,11 +102,15 @@
         display: block;
     }
 
+    .gallerythumbs {
+	margin: 0;
+    }
+
     .inline-story__title {
         color: #ffffff;
-        min-height: $gs-row-height*3 + $baseline*2;
-        padding: $gs-baseline/2;
-        padding-bottom: $gs-baseline*2;
+	min-height: $gs-row-height*3 + $baseline*2 - 5;
+	margin: 0;
+	padding: 5px $gs-baseline/2 0 $gs-baseline/2;
         font-family: "EgyptianHeadline",georgia,serif;
         font-weight: normal;
         -webkit-font-smoothing: antialiased;
@@ -139,23 +145,5 @@
 }
 
 .inline-story__container {
-    background-color: #333;
-}
-
-.inline-story--test .inline-story__container {
-    height: 340px;
-}
-
-.inline-ad-test {
-    overflow-x: hidden;
-    text-align: center;
-    position: relative;
-    z-index: 1000;
-    margin: 0;
-    width: 300px;
-    height: 250px;
-    margin-top: 4px;
-    margin-left: 20px;
-    float: right;
-    background-color: #777712;
+    background-color: $c-neutral1;
 }
