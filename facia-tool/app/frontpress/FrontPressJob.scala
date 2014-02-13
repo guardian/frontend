@@ -14,6 +14,7 @@ import frontpress.{FaciaToolConfigAgent, FrontPress}
 import common.FaciaToolMetrics.{FrontPressCronFailure, FrontPressCronSuccess}
 import play.api.libs.concurrent.Akka
 import scala.util.{Failure, Success}
+import conf.Switches.{FrontPressJobSwitch}
 
 object FrontPressJob extends Logging with implicits.Collections {
 
@@ -29,30 +30,32 @@ object FrontPressJob extends Logging with implicits.Collections {
   }
 
   def run(): Unit = {
-    val client = newClient
-    for(queueUrl <- queueUrl) {
-      try {
-        val receiveMessageResult = client.receiveMessage(new ReceiveMessageRequest(queueUrl).withMaxNumberOfMessages(10))
-        receiveMessageResult.getMessages
-          .map(getConfigFromMessage)
-          .distinct
-          .map { path =>
-            val f = pressByPathId(path)
-            f.onComplete {
-              case Success(_) =>
-                deleteMessage(receiveMessageResult, queueUrl)
-                FrontPressCronSuccess.increment()
-              case Failure(t) =>
-                deleteMessage(receiveMessageResult, queueUrl)
-                log.warn(t.toString)
-                FrontPressCronFailure.increment()
-            }
-            Await.ready(f, 20.seconds) //Block until ready!
-        }
-      } catch {
-        case t: Throwable => {
-          log.warn(t.toString)
-          FrontPressCronFailure.increment()
+    if (FrontPressJobSwitch.isSwitchedOn) {
+      val client = newClient
+      for (queueUrl <- queueUrl) {
+        try {
+          val receiveMessageResult = client.receiveMessage(new ReceiveMessageRequest(queueUrl).withMaxNumberOfMessages(10))
+          receiveMessageResult.getMessages
+            .map(getConfigFromMessage)
+            .distinct
+            .map { path =>
+              val f = pressByPathId(path)
+              f.onComplete {
+                case Success(_) =>
+                  deleteMessage(receiveMessageResult, queueUrl)
+                  FrontPressCronSuccess.increment()
+                case Failure(t) =>
+                  deleteMessage(receiveMessageResult, queueUrl)
+                  log.warn(t.toString)
+                  FrontPressCronFailure.increment()
+              }
+              Await.ready(f, 20.seconds) //Block until ready!
+          }
+        } catch {
+          case t: Throwable => {
+            log.warn(t.toString)
+            FrontPressCronFailure.increment()
+          }
         }
       }
     }
