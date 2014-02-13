@@ -541,24 +541,30 @@ $show-more-icon: (
 }
 
 .collection__item--media {
+    .item__title .i {
+        display: inline-block;
+        margin-right: 7px;
+        position: relative;
+        top: 2px;
+    }
     @include mq(tablet) {
         @include hide-background-on-item-sides;
+        background: $c-neutral1;
 
+        .item__link,
         .item__title,
-        .item__standfirst,
-        .item__byline {
+        .item__standfirst {
+            color: #FFFFFF;
+        }
+        .item__title,
+        .item__standfirst {
             @include rem((
                 padding-left: 7px,
                 padding-right: 7px
             ));
         }
-        &.collection__item--content-type-gallery,
-        &.collection__item--content-type-video {
-            background: $c-neutral1;
-
-            .item__link {
-                color: #FFFFFF;
-            }
+        .item__title .i {
+            display: none;
         }
     }
 }
