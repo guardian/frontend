@@ -78,6 +78,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
+  // Front Press Switches
+  val FrontPressJobSwitch = Switch("Front Press Switches", "front-press-job-switch",
+    "If this switch is on then the jobs to push and pull from SQS will run",
+    safeState = Off, sellByDate = never
+  )
 
   // Advertising Switches
 
@@ -471,7 +476,8 @@ object Switches extends Collections {
     DogpileSwitch,
     ShowAllArticleEmbedsSwitch,
     ImageServerSwitch,
-    RainbowLogo
+    RainbowLogo,
+    FrontPressJobSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
