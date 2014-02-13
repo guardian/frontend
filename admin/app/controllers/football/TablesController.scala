@@ -29,7 +29,10 @@ object TablesController extends Controller with ExecutionContexts with GetPaClie
       case "bottom" => SeeOther(s"/admin/football/tables/league/$competitionId/bottom")
       case "team" =>
         val teamId = submission.get("teamId").get.head
-        SeeOther(s"/admin/football/tables/league/$competitionId/$teamId")
+        submission.get("team2Id") match {
+          case Some(team2Id :: Nil) if !team2Id.startsWith("Choose") => SeeOther(s"/admin/football/tables/league/$competitionId/$teamId/$team2Id")
+          case _ => SeeOther(s"/admin/football/tables/league/$competitionId/$teamId")
+        }
       case _ => SeeOther(s"/admin/football/tables/league/$competitionId")
     }
     NoCache(result)
@@ -42,13 +45,25 @@ object TablesController extends Controller with ExecutionContexts with GetPaClie
           case "top" => tableEntries.take(5)
           case "bottom" => tableEntries.reverse.take(5).reverse
           case "none" => tableEntries
-          case teamId =>
-            val before = tableEntries.takeWhile(_.team.id != teamId)
-            val after = tableEntries.reverse.takeWhile(_.team.id != teamId).reverse
-            val team = tableEntries.find(_.team.id == teamId).get
-            before.reverse.take(2).reverse ++ List(team) ++ after.take(2)
+          case teamId => surroundingItems[LeagueTableEntry](2, tableEntries, _.team.id == teamId)
         }
-        Cached(60)(Ok(views.html.football.leagueTables.leagueTable(league, entries, focus)))
+        Cached(60)(Ok(views.html.football.leagueTables.leagueTable(league, entries, List(focus))))
+      }
+    } getOrElse Future.successful(NoCache(InternalServerError(views.html.football.error("Please provide a valid league"))))
+  }
+
+  def leagueTable2Teams(competitionId: String, team1Id: String, team2Id: String) = Authenticated.async { request =>
+    PA.competitions.find(_.competitionId == competitionId).map { league =>
+      client.leagueTable(league.competitionId, DateMidnight.now()).map { tableEntries =>
+        val aroundTeam1 = surroundingItems[LeagueTableEntry](1, tableEntries, _.team.id == team1Id)
+        val aroundTeam2 = surroundingItems[LeagueTableEntry](1, tableEntries, _.team.id == team2Id)
+        val entries = {
+          if (aroundTeam1(0).team.rank < aroundTeam2(0).team.rank)
+            (aroundTeam1 ++ aroundTeam2).distinct
+          else
+            (aroundTeam2 ++ aroundTeam1).distinct
+        }
+        Cached(60)(Ok(views.html.football.leagueTables.leagueTable(league, entries, List(team1Id, team2Id))))
       }
     } getOrElse Future.successful(NoCache(InternalServerError(views.html.football.error("Please provide a valid league"))))
   }
@@ -59,5 +74,12 @@ object TablesController extends Controller with ExecutionContexts with GetPaClie
         Cached(60)(Ok(views.html.football.leagueTables.leagueTable(league, tableEntries)))
       }
     } getOrElse Future.successful(NoCache(InternalServerError(views.html.football.error("Please provide a valid league"))))
+  }
+
+  def surroundingItems[T](surroundingNumber: Int, items: List[T], equal: (T) => Boolean): List[T] = {
+    val before = items.takeWhile(!equal(_))
+    val after = items.reverse.takeWhile(!equal(_)).reverse
+    val item = items.find(equal).get
+    before.reverse.take(surroundingNumber).reverse ++ List(item) ++ after.take(surroundingNumber)
   }
 }

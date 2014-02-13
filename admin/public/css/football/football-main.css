@@ -65,3 +65,6 @@ label[for] {
   background: #4bc6df;
   color: #fff;
 }
+.table tbody .table-row--break-before td {
+  border-top: 1px solid #666;
+}

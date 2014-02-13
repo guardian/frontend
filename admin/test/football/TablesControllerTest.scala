@@ -1,4 +1,5 @@
 import common.ExecutionContexts
+import controllers.admin.TablesController
 import model.football.PA
 import org.scalatest.{ShouldMatchers, FreeSpec}
 import play.api.mvc.{AnyContentAsFormUrlEncoded, MultipartFormData}
@@ -9,6 +10,7 @@ import scala.concurrent.{Await, Future}
 import scala.concurrent.duration._
 import services.football.GetPaClient
 import test.Fake
+import scala.language.postfixOps
 
 
 class TablesControllerTest extends FreeSpec with GetPaClient with ExecutionContexts with ShouldMatchers {
@@ -35,9 +37,15 @@ class TablesControllerTest extends FreeSpec with GetPaClient with ExecutionConte
     status(resultBottom) should equal(SEE_OTHER)
     redirectLocation(resultBottom) should equal(Some("/admin/football/tables/league/100/bottom"))
 
-    val Some(resultTeam) = route(FakeRequest(POST, "/admin/football/tables/league", FakeHeaders(), AnyContentAsFormUrlEncoded(Map("competitionId" -> List("100"), "focus" -> List("team"), "teamId" -> List("19")))))
+    val Some(resultTeam) = route(FakeRequest(POST, "/admin/football/tables/league", FakeHeaders(), AnyContentAsFormUrlEncoded(Map("competitionId" -> List("100"), "focus" -> List("team"), ("teamId", List("19"))))))
     status(resultTeam) should equal(SEE_OTHER)
     redirectLocation(resultTeam) should equal(Some("/admin/football/tables/league/100/19"))
+
+    val Some(resultTeams) = route(FakeRequest(POST, "/admin/football/tables/league", FakeHeaders(), AnyContentAsFormUrlEncoded(
+      Map("competitionId" -> List("100"), "focus" -> List("team"), ("teamId", List("19")), ("team2Id", List("1006")))
+    )))
+    status(resultTeams) should equal(SEE_OTHER)
+    redirectLocation(resultTeams) should equal(Some("/admin/football/tables/league/100/19/1006"))
   }
 
   "can show full table for selected league" in Fake {
@@ -55,5 +63,11 @@ class TablesControllerTest extends FreeSpec with GetPaClient with ExecutionConte
       if(idx == -1) c else count(idx+str2.size, c+1)
     }
     count(0,0)
+  }
+
+  "the internal surroundingItems function should work OK" in {
+    TablesController.surroundingItems[Int](1, List(1, 2, 3, 4, 5, 6), 4 ==) should equal(List(3, 4, 5))
+    TablesController.surroundingItems[Int](2, List(1, 2, 3, 4, 5, 6), 4 ==) should equal(List(2, 3, 4, 5, 6))
+    TablesController.surroundingItems[Int](3, List(1, 2, 3, 4, 5, 6), 4 ==) should equal(List(1, 2, 3, 4, 5, 6))
   }
 }
