@@ -543,9 +543,9 @@ $show-more-icon: (
 .collection__item--media {
     .item__title .i {
         display: inline-block;
-        margin-right: 7px;
+        margin-right: 4px;
         position: relative;
-        top: 2px;
+        top: 4px;
     }
     @include mq(tablet) {
         @include hide-background-on-item-sides;
