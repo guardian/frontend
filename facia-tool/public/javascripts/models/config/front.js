@@ -23,26 +23,32 @@ define([
 
         this.id = ko.observable(opts.id);
 
+        this.id.subscribe(function(id) {
+            id = id || '';
+            id = id.toLowerCase();
+            id = id.replace(/^\/|\/$/g, '');
+            id = id.replace(/[^a-z0-9\/\-]*/g, '');
+            self.id(id);
+        });
+
         this.state  = asObservableProps([
             'open']);
 
         this.group = new Group({
             parent: self,
-            parentType: 'Front'
+            parentType: 'Front',
+            items:
+               _.chain(opts.collections)
+                .map(function(id) {return findFirstById(vars.model.collections, id); })
+                .filter(function(collection) { return !!collection; })
+                .map(function(collection) {
+                    collection.parents.push(self);
+                    return collection;
+                })
+                .value()
         });
 
-        this.group.items(
-           _.chain(opts.collections)
-            .map(function(id) {return findFirstById(vars.model.collections, id); })
-            .filter(function(collection) { return !!collection; })
-            .map(function(collection) {
-                collection.parents.push(self);
-                return collection;
-            })
-            .value()
-        );
-
-        this.depopulateCollection = self._depopulateCollection.bind(self);
+        this.depopulateCollection = this._depopulateCollection.bind(this);
     }
 
     Front.prototype.toggleOpen = function() {
@@ -60,12 +66,6 @@ define([
     Front.prototype._depopulateCollection = function(collection) {
         collection.parents.remove(this);
         this.group.items.remove(collection);
-        vars.model.save();
-    };
-
-    Front.prototype.save = function() {
-        this.id(this.id().toLowercase());
-        this.id(this.id().replace(/[^a-z0-9\-\/]*/, ''));
         vars.model.save();
     };
 

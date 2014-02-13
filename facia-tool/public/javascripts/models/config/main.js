@@ -98,7 +98,7 @@ define([
 
         function sanitize() {
             model.fronts.remove(function(front) {
-                return front.group.items().length === 0;
+                return !front.id() || front.group.items().length === 0;
             });
 
             _.each(model.fronts(), function(front) {
