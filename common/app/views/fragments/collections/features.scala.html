@@ -18,7 +18,6 @@
                     @trail match {
                         case g: Gallery                      => { @fragments.items.rowPattern.standardGallery(g, index + 2, containerIndex) }
                         case v: Video                        => { @fragments.items.rowPattern.standardVideo(v, index + 2, containerIndex) }
-                        case c if VisualTone(c) == "comment" => { @fragments.items.rowPattern.standardComment(c, index + 2, containerIndex) }
                         case t                               => { @fragments.items.rowPattern.standard(t, index + 2, containerIndex) }
                     }
                 }

@@ -19,10 +19,6 @@
         .item__title,
         .item__byline {
             @include fs-headline(2, true);
-
-            @include mq(desktop) {
-                @include fs-headline(3, true);
-            }
         }
         @include mq($to: tablet) {
             .collection__item:first-child {
@@ -38,14 +34,6 @@
                 .item__title,
                 .item__byline {
                     @include fs-headline(3, true);
-                }
-            }
-        }
-        @include mq(desktop) {
-            .collection__item:first-child {
-                .item__title,
-                .item__byline {
-                    @include fs-headline(4, true);
                 }
             }
         }
