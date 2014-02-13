@@ -1,8 +1,10 @@
+$c-darkText: #9c9c9c;
+
 .inline-story {
 
     display: none;
     list-style: none;
-    margin: 7px $gs-gutter 10px 0;
+    margin: 7px $gs-gutter $gs-gutter/2 0;
     width: gs-span(3);
     float: left;
     position: relative;
@@ -16,8 +18,6 @@
         margin-left: - gs-span(2) - $gs-gutter;
 
     }
-    @include mq(desktop) {
-    }
 
     @include mq(wide) {
         margin-left: - gs-span(3) - $gs-gutter;
@@ -29,7 +29,7 @@
         overflow: hidden;
         background-color: $c-neutral1;
         padding: $gs-baseline/2;
-        color: #9c9c9c;
+        color: $c-darkText;
         @include fs-data(3);
     }
 
@@ -48,7 +48,7 @@
         }
         a {
             @include fs-data(3);
-            color: #9c9c9c;
+            color: $c-darkText;
         }
     }
 
@@ -111,17 +111,15 @@
         min-height: $gs-row-height*3 + $baseline*2 - 5;
         margin: 0;
         padding: 5px $gs-baseline/2 0 $gs-baseline/2;
-        font-family: "EgyptianHeadline",georgia,serif;
         font-weight: normal;
-        -webkit-font-smoothing: antialiased;
         @include fs-data(5, true);
 
         &:visited {
-            color: #9c9c9c;
+            color: $c-darkText;
         }
 
         @include mq(leftCol) {
-            min-height: $gs-row-height*2 + $baseline;
+            min-height: $gs-row-height*2 + $gs-baseline/3;
         }
     }
 
