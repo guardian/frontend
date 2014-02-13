@@ -40,6 +40,15 @@
         .container--news {
             .container__title {
                 display: block;
+                float: left;
+                @include rem((
+                    width: gs-span(2),
+                    margin-right: $gs-gutter
+                ));
+            }
+            .container__body {
+                margin-left: 0;
+                @include rem((width: gs-span(12)));
             }
         }
     }
@@ -49,7 +58,7 @@
         .container__title {
             float: left;
             @include rem((
-                width: gs-span(3),
+                width: gs-span(3) !important,
                 margin-right: $gs-gutter
             ));
         }
@@ -70,6 +79,7 @@
 @import "module/containers/_sport";
 @import "module/containers/_features";
 @import "module/containers/_comment";
+@import "module/containers/_special";
 @import "module/containers/_section";
 @import "module/containers/_commentanddebate";
 @import "module/containers/_people";

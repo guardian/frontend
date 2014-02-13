@@ -2,8 +2,7 @@ This explains how to run an A/B test in frontend.
 
 We have a homebrewed AB testing framework running in the application. The data it collects is logged with both Ophan and Omniture.
 
-For the moment we write tests in JavaScript, which limits their usefulness. With Varnish, and the ability to serve variants from
-our CDN, then we can start to release server-generated variations at segments of our audience.
+Most tests can be written in JavaScript, although we can serve variants via Varnish. 
 
 # Guide
 
@@ -57,6 +56,7 @@ define(['bonzo'], function (bonzo) {
         this.id = 'RelatedContentV2';
         this.expiry = "2013-01-01";
         this.audience = 0.2;
+        this.audienceOffset = 0.6;
         this.description = 'Hides related content block on article to see if increases click through on most popular';
         this.canRun = function(config) {
           return (config.page && config.page.contentType === "Article") ? true : false;
@@ -87,8 +87,10 @@ The AMD module must return an object with the following properties,
 - id: The unique name of the test.
 - expiry: The date on which this test is due to stop running. Expressed as a string parsable by the JavaScript Date object.
 - audience: The ratio of people who you want in the test (Eg, 0.2 = 20%), who will then be split 50/50 between the control and variant.
+- audienceOffset: All users are given a permanent, unique hash that is a number between 0 and 1. `audienceOffset` allows you to specify the range of
+  users you want to test. For example, an `audienceOffset` value of `0.5` and an `audience` of `0.1` means user with a hash between 0.5 and 0.6 will
+  be opted in to the test. This helps to avoid overlapping tests. 
 - description: A plain English summary of the test.
-- events: Values of data-link-name attributes whose elements should listen for events to record for the test.
 - canRun: A function to determine if the test is allowed to run (Eg, so you can target individual pages, segments etc.)
 - variants: An array of two functions - the first representing the _control_ group, the second the variant.
 
@@ -134,12 +136,13 @@ The data is logged under the Omniture property _p51_.
 
 ### Ophan
 
+We have an [AB test dashbord](https://frontend.gutools.co.uk/analytics/abtests) within the frontend tools project.
+
 For inspection of the raw test data you can query the RedShift instance created by the data team.
 
 ## Share your findings
 
-At the very least summarize your findings by email or add a
-[write-up](https://github.com/guardian/frontend/blob/master/docs/web-font-rendering-tests.md) to the frontend repository in markdown format.
+At the very least summarize your findings by email.
 
 # Designing a test
 

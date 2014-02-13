@@ -81,7 +81,7 @@ trait FrontPress extends Logging {
     Json.toJson(
       CollectionJson(
         apiQuery      = config.contentApiQuery,
-        displayName   = config.displayName,
+        displayName   = collection.displayName orElse config.displayName,
         tone          = config.collectionTone,
         curated       = collection.curated.map(generateTrailJson),
         editorsPicks  = collection.editorsPicks.map(generateTrailJson),
@@ -115,7 +115,8 @@ trait FrontPress extends Logging {
         ("type", tag.tagType),
         ("webTitle", tag.webTitle),
         ("webUrl", tag.webUrl),
-        ("section", tag.section)
+        ("section", tag.section),
+        ("bylineImageUrl", tag.contributorImagePath)
       )
     }
 
@@ -124,7 +125,7 @@ trait FrontPress extends Logging {
       ("webPublicationDate", content.webPublicationDate),
       ("sectionName", content.sectionName),
       ("sectionId", content.section),
-      ("id", content.url),
+      ("id", content.id),
       ("webUrl", content.webUrl),
       ("trailText", content.trailText),
       ("safeFields", content.delegate.safeFields),
