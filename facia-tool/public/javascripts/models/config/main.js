@@ -57,6 +57,7 @@ define([
 
                 save: function() {
                     sanitize();
+                    // This is where persistence will happen:
                     window.console.log(JSON.stringify(serialize(), null, 4));
                 }
             };
@@ -71,28 +72,35 @@ define([
 
         function serialize() {
             return {
-                fronts: _.reduce(model.fronts(), function(fronts, front) {
-                    fronts[front.id()] = {
-                        collections: _.map(front.group.items(), function(collection) {
-                            return collection.id;
-                        })
-                    };
-                    return fronts;
-                }, {}),
+                fronts:
+                   _.chain(model.fronts())
+                    .filter(function(front) { return front.id(); })
+                    .reduce(function(fronts, front) {
+                        fronts[front.id()] = {
+                            collections: _.map(front.group.items(), function(collection) {
+                                return collection.id;
+                            })
+                        };
+                        return fronts;
+                    }, {})
+                    .value(),
 
-                collections: _.reduce(model.collections(), function(collections, collection) {
-                    collections[collection.id] =
-                       _.reduce(collection.meta, function(acc, val, key) {
-                            var v = _.isFunction(val) ? val() : val;
-                             // keep only the truthy values:
-                            if(v) {
-                                acc[key] = (key === 'groups' ? v.split(',') : v);
-                            }
-                            return acc;
-                        }, {});
-
-                    return collections;
-                }, {})
+                collections:
+                   _.chain(model.collections())
+                    .filter(function(collection) { return collection.id; })
+                    .reduce(function(collections, collection) {
+                        collections[collection.id] =
+                           _.reduce(collection.meta, function(acc, val, key) {
+                                var v = _.isFunction(val) ? val() : val;
+                                 // keep only the truthy values:
+                                if(v) {
+                                    acc[key] = (key === 'groups' ? v.split(',') : v);
+                                }
+                                return acc;
+                            }, {});
+                        return collections;
+                    }, {})
+                    .value()
             };
         }
 
