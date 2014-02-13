@@ -23,7 +23,7 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
                             `type`: String,
                             displayName: Option[String],
                             groups: Seq[String],
-                            curated: Seq[Item],
+                            curatedContent: Seq[Item],
                             backfill: Option[String],
                             lastModified: String,
                             modifiedBy: String
