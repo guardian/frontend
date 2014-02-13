@@ -6,6 +6,7 @@ import org.scalatest.{ Matchers, FlatSpec }
 import play.api.test.Helpers._
 import scala.collection.JavaConverters._
 import test.{ Fake, TestRequest }
+import model.`package`._
 
 class ArticleSlotTest extends FlatSpec with Matchers  with UsesElasticSearch {
 
@@ -76,6 +77,27 @@ class ArticleSlotTest extends FlatSpec with Matchers  with UsesElasticSearch {
       val sibling = element.previousElementSibling()
       sibling should not be (null)
       sibling.classNames.asScala should contain ("gu-video")
+    }
+  }
+
+  it should "create spacing inbetween slots with a minimum length of 850" in Fake {
+    val result = controllers.ArticleController.renderArticle(slotTest1)(TestRequest(slotTest1))
+    val document = Jsoup.parse(contentAsString(result))
+    val elements = document.select(".slot--posth2, .slot--block").asScala
+    val elementSiblings = document.select(".article-body").first.children.asScala
+
+    elements should not be (empty)
+
+    // Count the characters between slots.
+    for { pair <- elements.sliding(2)
+    } {
+      val start = pair.head.elementSiblingIndex() + 1
+      val end = pair.last.elementSiblingIndex()
+      val els = elementSiblings.view(start, end).filter(_.tagName().in(Set("h2", "p")))
+
+      val characterCount = els.foldLeft(0){_ + _.text.length}
+
+      characterCount should be > 850
     }
   }
 }
