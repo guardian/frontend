@@ -125,7 +125,7 @@ trait FrontPress extends Logging {
       ("webPublicationDate", content.webPublicationDate),
       ("sectionName", content.sectionName),
       ("sectionId", content.section),
-      ("id", content.url),
+      ("id", content.id),
       ("webUrl", content.webUrl),
       ("trailText", content.trailText),
       ("safeFields", content.delegate.safeFields),
