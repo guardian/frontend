@@ -32,7 +32,7 @@
             <a class="cnf-collection__name" data-bind="
                 click: toggleOpen,
                 attr: {href: id},
-                text: meta.displayName() || 'Untitled collection: ' + id"></a>
+                text: meta.displayName() || 'Untitled collection'"></a>
 
             <!-- ko if: $parents[1] -->
                 <a class="cnf-collection__remove" data-bind="click: $parents[1].depopulateCollection">
