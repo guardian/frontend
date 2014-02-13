@@ -229,12 +229,12 @@ define([
 
                         localNavCtaHtml = '<div class="localnav--small tone-' + currentSection.sectionTone + ' tone-accent-border">' +
                                           '  <div class="localnav__inner u-cf">' +
+                                          '    <button class="localnav__cta u-button-reset" ' +
+                                          '        data-link-name="Popup Localnav" ' +
+                                          '        data-toggle="nav-popup--localnav">' +
+                                          '      <span class="control tone-background tone-border"><i class="i i-local-nav-arrow"></i></span>' +
+                                          '    </button>' +
                                           '    <h1 class="localnav__title tone-colour">'+localNavTitle+'</h1>' +
-                                          '      <button class="localnav__cta tone-background tone-border control" ' +
-                                          '          data-link-name="Popup Localnav" ' +
-                                          '          data-toggle="nav-popup--localnav">' +
-                                          '        <i class="i i-local-nav-arrow"></i>' +
-                                          '      </button></div>' +
                                           '  </div>' +
                                           '</div>';
 
