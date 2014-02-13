@@ -142,7 +142,7 @@ define([
 
         initFence: function() {
             common.mediator.on('page:article:ready', function(config, context) {
-                $('.fenced').forEach(function(el) {
+                $('.fenced').each(function(el) {
                     fence.render(el);
                 });
             });
