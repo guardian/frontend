@@ -63,12 +63,15 @@
     }
     .collection__item {
         position: relative; // Replace .item as a relative context
-
         @include rem((
-            padding-bottom: 20px,
             margin-bottom: $gs-baseline
         ));
 
+        &.collection__item--has-meta {
+            @include rem((
+                padding-bottom: 20px,
+            ));
+        }
         & + .collection__item {
             @include vertical-item-separator; // Restore inter-item separator
         }
