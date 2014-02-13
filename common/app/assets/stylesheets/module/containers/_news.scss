@@ -63,9 +63,10 @@
     }
     .collection__item {
         position: relative; // Replace .item as a relative context
+
         @include rem((
-            margin-bottom: $gs-baseline,
-            padding-bottom: 20px
+            padding-bottom: 20px,
+            margin-bottom: $gs-baseline
         ));
 
         &.collection__item--media {
