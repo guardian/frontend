@@ -16,7 +16,7 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
 
   case class Item(
                    id: String,
-                   meta: Option[Map[String, JsValue]]
+                   metadata: Option[Map[String, JsValue]]
                    )
 
   case class ContentApiPut(
