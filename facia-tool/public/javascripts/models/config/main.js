@@ -77,7 +77,7 @@ define([
                     .filter(function(front) { return front.id(); })
                     .reduce(function(fronts, front) {
                         fronts[front.id()] = {
-                            collections: _.map(front.group.items(), function(collection) {
+                            collections: _.map(front.collections.items(), function(collection) {
                                 return collection.id;
                             })
                         };
@@ -106,11 +106,11 @@ define([
 
         function sanitize() {
             model.fronts.remove(function(front) {
-                return !front.id() || front.group.items().length === 0;
+                return !front.id() || front.collections.items().length === 0;
             });
 
             _.each(model.fronts(), function(front) {
-                front.group.items.remove(function(collection) {
+                front.collections.items.remove(function(collection) {
                     return model.collections.indexOf(collection) < 0;
                 });
             });

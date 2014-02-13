@@ -120,7 +120,7 @@
 
             <div data-bind="if: id() && state.open()">
                 <div class="cnf-front__inner">
-                    <div data-bind="with: group">
+                    <div data-bind="with: collections">
                         <div class="droppable" data-bind="
                             makeDropabble: true,
                             css: {underDrag: underDrag},
@@ -128,7 +128,7 @@
                     </div>
                     <div class="instructions">
                         Drop a collection above, or <span data-bind="click: createCollection" class="linky">create</span> one.
-                        <div data-bind="if: !group.items().length">Note: empty fronts will be discarded</div>
+                        <div data-bind="if: !collections.items().length">Note: empty fronts will be discarded</div>
                     </div>
                 </div>
             </div>

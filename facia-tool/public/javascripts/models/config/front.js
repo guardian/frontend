@@ -34,7 +34,7 @@ define([
         this.state  = asObservableProps([
             'open']);
 
-        this.group = new Group({
+        this.collections = new Group({
             parent: self,
             parentType: 'Front',
             items:
@@ -59,13 +59,13 @@ define([
         var collection = new Collection({idPrefix: this.id()});
         collection.toggleOpen();
         collection.parents.push(this);
-        this.group.items.push(collection);
+        this.collections.items.push(collection);
         vars.model.collections.unshift(collection);
     };
 
     Front.prototype._depopulateCollection = function(collection) {
         collection.parents.remove(this);
-        this.group.items.remove(collection);
+        this.collections.items.remove(collection);
         vars.model.save();
     };
 
