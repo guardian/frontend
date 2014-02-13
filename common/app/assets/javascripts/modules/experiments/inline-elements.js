@@ -23,8 +23,8 @@ define([
         item.getElementsByClassName('item__meta')[0].classList.add('js-append-commentcount');
         replaceClasses(item);
         qwery('*', item).forEach(replaceClasses);
-	var storySlot = SlotController.getSlot('story');
-	bonzo(storySlot).append(item);
+        var storySlot = SlotController.getSlot('story');
+        bonzo(storySlot).append(item);
     }
 
     return {
@@ -34,7 +34,7 @@ define([
 
             var inlineables = $('.item--gallery, .item--video', '.more-on-this-story');
 
-            if (inlineables.length > 0 && $('.article-body .img').length === 0) {
+            if (inlineables.length > 0 && qwery('.img, video', '.article-body').length === 0) {
                 for (var i = 0; i < Math.min(2, inlineables.length); i++) {
                     moveItem(inlineables[i]);
                 }
