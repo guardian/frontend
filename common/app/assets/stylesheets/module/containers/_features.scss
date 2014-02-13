@@ -4,13 +4,6 @@
         + .collection-wrapper {
             margin-top: 0;
         }
-        @include mq(tablet) {
-            @include rem((margin-top: $gs-baseline/3));
-
-            + .collection-wrapper {
-                @include rem((margin-top: ($gs-baseline/3)*2));
-            }
-        }
     }
     .item__meta {
         display: none;
@@ -159,10 +152,6 @@
 
         @include mq(tablet) {
             @include rem((margin-top: $gs-baseline*2));
-        }
-
-        &:before {
-            background: $c-featureAccent; // Change color of border on top of the links list container
         }
     }
 }

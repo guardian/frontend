@@ -1,6 +1,6 @@
 package model
 
-import com.gu.openplatform.contentapi.model.{Content => ApiContent, Element => ApiElement, Asset}
+import com.gu.openplatform.contentapi.model.{Content => ApiContent, Element => ApiElement, Asset, Tag => ApiTag}
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import common.{Sponsor, Sponsors}
@@ -179,11 +179,12 @@ object Content {
           sectionId = (json \ "sectionId").asOpt[String],
           sectionName = (json \ "sectionName").asOpt[String],
           webPublicationDate = (json \ "webPublicationDate").asOpt[Long].map(new DateTime(_)).get,
-          webTitle = (json \ "webTitle").as[String],
+          webTitle = (json \ "safeFields" \ "headline").as[String],
           webUrl = (json \ "webUrl").as[String],
           apiUrl = "",
           elements = Option(parseElements(json)),
-          fields = contentFields
+          fields = contentFields,
+          tags = (json \ "tags").asOpt[List[JsValue]].map(parseTags).getOrElse(Nil)
         ),
         supporting = (json \ "meta" \ "supporting").asOpt[List[JsValue]].getOrElse(Nil)
           .flatMap(Content.fromPressedJson),
@@ -204,6 +205,22 @@ object Content {
        )
     }).getOrElse(Nil)
   }
+
+  private def parseTags(tagsJson: List[JsValue]): List[ApiTag] =
+    tagsJson.map { tagJson =>
+        ApiTag(
+          id              = (tagJson \ "id").as[String],
+          `type`          = (tagJson \ "type").as[String],
+          sectionId       = (tagJson \ "section").asOpt[String],
+          sectionName     = None,
+          webTitle        = (tagJson \ "webTitle").as[String],
+          webUrl          = (tagJson \ "webUrl").as[String],
+          apiUrl          = "",
+          references      = Nil,
+          bio             = None,
+          bylineImageUrl  = (tagJson \ "bylineImageUrl").asOpt[String]
+      )
+    }
 
   private def parseAssets(json: JsValue): List[Asset] = {
     (json \ "assets").asOpt[List[JsValue]].map(_.map{ assetJson =>

@@ -9,6 +9,7 @@ import play.api.libs.json.{JsObject, JsValue}
 import play.api.libs.ws.Response
 import scala.concurrent.Future
 import scala.Some
+import contentapi.QueryDefaults
 
 object Path {
   def unapply[T](uri: String) = Some(uri.split('?')(0))
@@ -22,7 +23,9 @@ object Seg {
   }
 }
 
-trait ParseCollection extends ExecutionContexts with Logging {
+trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging {
+
+  val showFieldsQuery: String = FaciaDefaults.showFields
 
   case class CollectionMeta(lastUpdated: Option[String], updatedBy: Option[String], updatedEmail: Option[String])
   object CollectionMeta {
@@ -135,7 +138,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
           lazy val supportingLinks: List[CollectionItem] = retrieveSupportingLinks(collectionItem)
           if (!hasParent) getArticles(supportingLinks, edition, hasParent=true) else Future.successful(Nil)
         }
-        val response = ContentApi.item(collectionItem.id, edition).showFields("all").response
+        val response = ContentApi.item(collectionItem.id, edition).showFields(showFieldsQuery).response
 
         response.onFailure{case t: Throwable => log.warn("%s: %s".format(collectionItem.id, t.toString))}
         supportingAsContent.onFailure{case t: Throwable => log.warn("Supporting links: %s: %s".format(collectionItem.id, t.toString))}
@@ -169,7 +172,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
           .pageSize(20)
         val newSearch = queryParamsWithEdition.foldLeft(search){
           case (query, (key, value)) => query.stringParam(key, value)
-        }.showFields("all")
+        }.showFields(showFieldsQuery)
         newSearch.response map { r =>
           Result(Nil, Nil, Nil, r.results.map(Content(_)))
         }
@@ -181,7 +184,7 @@ trait ParseCollection extends ExecutionContexts with Logging {
           .pageSize(20)
         val newSearch = queryParamsWithEdition.foldLeft(search){
           case (query, (key, value)) => query.stringParam(key, value)
-        }.showFields("all")
+        }.showFields(showFieldsQuery)
         newSearch.response map { r =>
           Result(Nil, r.editorsPicks.map(Content(_)), r.mostViewed.map(Content(_)), r.results.map(Content(_)))
         }

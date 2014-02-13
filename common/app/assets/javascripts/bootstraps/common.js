@@ -191,7 +191,10 @@ define([
         initRightHandComponent: function(config, context) {
 
             if(config.switches.rightHandMostPopular && config.page.contentType === 'Article') {
-              var r = new RightHandComponentFactory(mediator);
+              var r = new RightHandComponentFactory({
+                  wordCount: config.page.wordCount,
+                  mediator: mediator
+              });
            }
         },
 
@@ -232,8 +235,7 @@ define([
         },
 
         loadAdverts: function (config) {
-            if(!userPrefs.isOff('adverts') && config.switches && config.switches.adverts
-                && !config.page.blockVideoAds && !config.page.shouldHideAdverts) {
+            if(!userPrefs.isOff('adverts') && config.switches.adverts && !config.page.blockVideoAds && !config.page.shouldHideAdverts) {
                 var resizeCallback = function() {
                     hasBreakpointChanged(Adverts.reload);
                 };
@@ -253,6 +255,7 @@ define([
                         hasBreakpointChanged(function() {
                             articleBodyAdverts.reload();
                             Adverts.reload();
+                            mediator.emit('modules:adverts:reloaded');
                         });
                     };
                 }
@@ -286,6 +289,7 @@ define([
 
         cleanupCookies: function() {
             Cookies.cleanUp(["mmcore.pd", "mmcore.srv", "mmid", 'GU_ABFACIA', 'GU_FACIA']);
+            Cookies.cleanUpDuplicates(['GU_ALPHA','GU_VIEW']);
         },
 
         // opt-in to the responsive alpha
@@ -302,7 +306,8 @@ define([
             var path = (document.location.pathname) ? document.location.pathname : '/',
                 exitLink = '/preference/platform/classic?page=' + encodeURIComponent(path + '?view=classic'),
                 msg = '<p class="site-message__message" id="site-message__message">' +
-                            'You’re viewing a beta release of the Guardian’s responsive website. <a href="/help/2013/oct/04/alpha-testing-and-evolution-of-our-mobile-site">Find out more</a>' +
+                            'You’re viewing a beta release of the Guardian’s responsive website.' +
+                            ' We’d love to hear your <a href="https://s.userzoom.com/m/MSBDMTBTMTE5" data-link-name="feedback">feedback</a>' +
                       '</p>' +
                       '<ul class="site-message__actions unstyled">' +
                            '<li class="site-message__actions__item">' +

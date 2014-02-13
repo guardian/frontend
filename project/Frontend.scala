@@ -47,7 +47,8 @@ object Frontend extends Build with Prototypes {
     )
   )
 
-  val image = application("image").dependsOn(commonWithTests).aggregate(common)
+  val image = application("image")
+
   val discussion = application("discussion").dependsOn(commonWithTests).aggregate(common).settings(
     templatesImport ++= Seq("discussion._", "discussion.model._")
   )

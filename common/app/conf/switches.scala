@@ -189,6 +189,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val DiscussionVerifiedEmailPosting = Switch("Discussion", "discussion-verified-email-posting",
+    "If this switch is on, posters to discussions must have a verified email address.",
+    safeState = Off, sellByDate = endOfQ4
+  )
+
   // Identity Switches
 
   val IdentityEmailVerificationSwitch = Switch("Identity Email verification", "id-email-verification",
@@ -209,7 +214,7 @@ object Switches extends Collections {
     "If switched on then all embeds will be shown inside article bodies",
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
   )
-  
+
   val ReleaseMessageSwitch = Switch("Feature Switches", "release-message",
     "If this is switched on users will be messaged that they are inside the alpha/beta/whatever release",
     safeState = Off, sellByDate = endOfQ4
@@ -324,6 +329,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 24)
   )
 
+  val ABAdLabels = Switch("A/B Tests", "ab-ad-labels",
+    "Testing if putting labels next to ads impacts the CTR",
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 27)
+  )
+
   val TagLinking = Switch("Feature Switches", "tag-linking",
     "If this is switched on articles that have no in body links will auto link to their tags where possible",
     safeState = Off, sellByDate = endOfQ4
@@ -357,17 +367,17 @@ object Switches extends Collections {
 
   val NetworkFrontUkAlpha = Switch("Facia", "network-front-uk-alpha",
     "If this is switched on then the uk alpha network fronts will be served if a GU_UK_ALPHA cookie has been dropped",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 13)
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 17)
   )
 
   val NetworkFrontUsAlpha = Switch("Facia", "network-front-us-alpha",
     "If this is switched on then the us alpha network fronts will be served if a GU_US_ALPHA cookie has been dropped",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 13)
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 17)
   )
 
   val NetworkFrontAuAlpha = Switch("Facia", "network-front-au-alpha",
     "If this is switched on then the au alpha network fronts will be served if a GU_AU_ALPHA cookie has been dropped",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 13)
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 17)
   )
 
   // Facia Tool Switches
@@ -407,6 +417,7 @@ object Switches extends Collections {
     VideoAdvertSwitch,
     AudienceScienceSwitch,
     DiscussionSwitch,
+    DiscussionVerifiedEmailPosting,
     IdentityEmailVerificationSwitch,
     OpenCtaSwitch,
     FontSwitch,
@@ -436,6 +447,7 @@ object Switches extends Collections {
     ABAa,
     ABGravityRecommendations,
     ABEmailSignup,
+    ABAdLabels,
     NetworkFrontUkAlpha,
     NetworkFrontUsAlpha,
     NetworkFrontAuAlpha,

@@ -41,7 +41,7 @@ define([
                         new CollectionShowMore(collection).addShowMore();
                     });
                 });
-                $('.js-container-add-show-more', context).each(function(container) {
+                $('.js-container--show-more', context).each(function(container) {
                     new ContainerShowMore(container).addShowMore();
                 });
             });
@@ -94,39 +94,6 @@ define([
             mediator.on('page:front:ready', function(config, context) {
                 cricket.cricketTrail(config, context);
             });
-        },
-
-        displayAlphaMessage: function(config) {
-            if (config.page.contentType === 'Network Front' && /^.*-alpha$/.test(config.page.pageId)) {
-                var page = window.location.pathname.replace('-alpha', ''),
-                    preferenceUrl = '/preference/front-alphas/opt-out?page=' + page + '%3Ftime=' + (new Date().getTime()),
-                    userZoomSurvey = {
-                        '/us': 'MSBDMTBTMTE1',
-                        '/au': 'MSBDMTBTMTE2',
-                        '/uk': 'MSBDMTBTMTE3'
-                    }[page],
-                    msg =
-                        '<p class="site-message__message">' +
-                            'You’re viewing a test version of the Guardian website.' +
-                        '</p>' +
-                        '<ul class="site-message__actions unstyled">' +
-                            (
-                                (userZoomSurvey) ?
-                                    '<li class="site-message__actions__item">' +
-                                        '<i class="i i-comment-grey"></i>' +
-                                        '<a href="https://s.userzoom.com/m/' + userZoomSurvey + '" data-link-name="feedback" target="_blank">We’d love to hear your feedback</a>' +
-                                    '</li>' : ''
-                            ) +
-                            '<li class="site-message__actions__item">' +
-                                '<i class="i i-back"></i>' +
-                                '<a class="js-main-site-link" rel="nofollow" href="' + preferenceUrl + '"' +
-                                    'data-link-name="opt-out">Opt-out and return to the standard site</a>' +
-                            '</li>' +
-                        '</ul>';
-                new Message('facia-alpha', {
-                    permanent: true
-                }).show(msg);
-            }
         }
     };
 
@@ -136,7 +103,6 @@ define([
             modules.showCollectionShowMore();
             modules.showContainerToggle();
             modules.showFootballFixtures();
-            modules.displayAlphaMessage(config);
         }
         mediator.emit("page:front:ready", config, context);
     };
