@@ -64,6 +64,8 @@ define([
     };
 
     Front.prototype.save = function() {
+        this.id(this.id().toLowercase());
+        this.id(this.id().replace(/[^a-z0-9\-\/]*/, ''));
         vars.model.save();
     };
 
