@@ -1,18 +1,8 @@
-@(trail: model.Trail, index: Int, containerIndex: Int, element: String = "li")(implicit request: RequestHeader)
+@(trail: Trail, index: Int, containerIndex: Int, element: String = "li")(implicit request: RequestHeader)
 
 @defining((VisualTone(trail), containerIndex == 0, containerIndex == 0 && index < 3)) { case (tone, isFirstContainer, inlineImages) =>
     <@element
-        class="item
-               item--thumbnail
-               @if(trail.trailPicture(5,3).isEmpty || trail.imageAdjust == Some("hide")){
-                   item--has-no-image
-               }else{
-                   item--has-image
-                   @trail.imageAdjust.map{adjustValue =>
-                       item--imageadjust-@adjustValue
-                   }
-               }
-               tone-@tone"
+        class="@GetClasses.forItem(trail, isFirstContainer)"
         data-link-name="trail | @{index + 1}"
         @trail.discussionId.map{ id => data-discussion-id="@id" }
         data-discussion-closed="@trail.isClosedForComments">

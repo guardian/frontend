@@ -28,10 +28,8 @@
             <ul class="unstyled l-row l-row--items-2 collection">
                 @items.zipWithIndex.map{ case (trail, index) =>
                     @trail match {
-                        case g: Gallery                                  => { @fragments.items.rowPattern.thumbnailGallery(g, index + 2, containerIndex) }
-                        case v: Video                                    => { @fragments.items.rowPattern.thumbnailVideo(v, index + 2, containerIndex) }
-                        case t if trail.imageAdjust == Some("highlight") => { @fragments.items.rowPattern.standard(t, index + 2, containerIndex) }
-                        case t                                           => { @fragments.items.rowPattern.thumbnail(t, index + 2, containerIndex) }
+                        case t if trail.imageAdjust == Some("highlight") => { @fragments.collections.items.standard(t, index + 2, containerIndex) }
+                        case t                                           => { @fragments.collections.items.thumbnail(t, index + 2, containerIndex) }
                     }
                 }
             </ul>
@@ -43,11 +41,7 @@
         <div class="collection-wrapper">
             <ul class="unstyled l-row l-row--items-4 collection">
                 @items.zipWithIndex.map{ case (trail, index) =>
-                    @trail match {
-                        case g: Gallery                      => { @fragments.items.rowPattern.standardGallery(g, index + 4, containerIndex) }
-                        case v: Video                        => { @fragments.items.rowPattern.standardVideo(v, index + 4, containerIndex) }
-                        case t                               => { @fragments.items.rowPattern.standard(t, index + 4, containerIndex) }
-                    }
+                    @fragments.collections.items.standard(trail, index + 3, containerIndex)
                 }
             </ul>
         </div>

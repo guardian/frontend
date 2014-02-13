@@ -1,0 +1,11 @@
+.item--video,
+.item--gallery {
+    @include mq(tablet) {
+        .item__title .i {
+            display: none;
+            position: relative;
+            top: 4px;
+            margin-right: 5px;
+        }
+    }
+}
