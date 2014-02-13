@@ -114,7 +114,7 @@
     display: none;
     overflow: hidden;
     @include rem((
-        padding: 0 $gs-gutter*3 0 $gs-gutter,
+        padding: $gs-baseline/2 $gs-gutter*3 $gs-baseline/2 $gs-gutter,
         height: 45px
     ));
     text-transform: lowercase;
@@ -122,30 +122,29 @@
     @include mq(tablet) { display: block; }
 
     .nav__item {
-        position: relative;
         float: left;
-
-        &.is-active:after {
-            bottom: 0;
-            left: 50%;
-            border: solid transparent;
-            content: " ";
-            height: 0;
-            width: 0;
-            position: absolute;
-            pointer-events: none;
-            border-color: rgba(163, 219, 255, 0);
-            border-bottom-color: $c-brandBlue;
-            border-width: 9px;
-            margin-left: -9px;
-        }
+    }
+    .is-active .nav__link:after {
+        bottom: -6px;
+        left: 50%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+        border-color: rgba(163, 219, 255, 0);
+        border-bottom-color: $c-brandBlue;
+        border-width: 9px;
+        margin-left: -9px;
     }
     .nav__link {
+        position: relative;
         color: $c-brandBlue;
         display: block;
         @include rem((
-            margin: 10px 0 11px,
-            padding: 0 $gs-gutter/2
+            margin: 0 $gs-gutter 0 0,
+            padding: 5px 0 4px
         ));
         @include fs-header(2);
         -webkit-font-smoothing: subpixel-antialiased; // Make links look fatter
@@ -163,9 +162,6 @@
     .nav__link:hover {
         color: $c-brandLightBlue !important;
     }
-
-    .nav__item:first-child .nav__link { padding-left: 0; }
-    .nav__item:last-child .nav__link { border-right: none; }
 }
 
 
@@ -182,9 +178,13 @@
 }
 
 .nav--local {
-    overflow: visible;
     display: none;
     margin-top: -2px; // Compensate for the 2px border of header__inner
+    height: auto;
+    overflow: visible;
+    @include rem((
+        min-height: 45px
+    ));
 
     @include mq(tablet) {
         display: block;
@@ -194,11 +194,10 @@
                                              // text looks cleaner that way
         color: #ffffff;
     }
-    .nav__item.is-active:after {
+    .is-active .nav__link:after {
         border-bottom-color: transparent;
         border-top-color: $c-brandBlue;
-        top: 100%;
-        bottom: auto;
+        bottom: -24px;
     }
 }
 
