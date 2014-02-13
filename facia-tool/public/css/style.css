@@ -720,6 +720,10 @@ button {
     padding: 0 10px 0 10px;
 }
 
+.cnf-collections {
+    margin: 10px 0 0 0;
+}
+
 .cnf-collection {
     position: relative;
     background: #ffffff;
@@ -746,10 +750,6 @@ button {
 
 .cnf-collection__name {
     color: #000000;
-}
-
-.cnf-collection.isOrphan .cnf-collection__name {
-    color: #ff9900;
 }
 
 .cnf-collection__id {

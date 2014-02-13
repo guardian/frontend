@@ -61,6 +61,12 @@ define([
                 }
             };
 
+        model.orphans = ko.computed(function() {
+            return _.filter(model.collections(), function(collection) {
+                return collection.parents().length === 0;
+            });
+        }, this);
+
         vars.model = model;
 
         function serialize() {

@@ -7,9 +7,9 @@
     <div class="toolbar" data-bind="visible: true" style=""></div>
 
     <div class="left-col">
-        <div class="title">Collections</div>
-        <div class="scrollable" data-bind="
-            template: {name: 'template_collection', foreach: collections}"></div>
+        <div class="title">Unused collections</div>
+        <div class="scrollable cnf-collections" data-bind="
+            template: {name: 'template_collection', foreach: orphans}"></div>
     </div>
 
     <div class="right-col">
@@ -25,7 +25,6 @@
         <div class="cnf-collection" data-bind="
             makeHoverable: true,
             css: {
-                isOrphan: parents().length === 0,
                 underDrag: state.underDrag,
                 isElsewhere: state.underHover(),
                 open: state.open}">
