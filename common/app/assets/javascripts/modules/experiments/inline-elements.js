@@ -34,7 +34,7 @@ define([
 
             var inlineables = $('.item--gallery, .item--video', '.more-on-this-story');
 
-            if (inlineables.length > 0 && qwery('.img, video', '.article-body').length === 0) {
+            if (inlineables.length > 0 && qwery('.img video', '.article-body').length < 2) {
                 for (var i = 0; i < Math.min(2, inlineables.length); i++) {
                     moveItem(inlineables[i]);
                 }
