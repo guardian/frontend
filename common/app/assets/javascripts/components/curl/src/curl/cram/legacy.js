@@ -11,26 +11,26 @@ define(function (require) {
 	return {
 
 		compile: function (pluginId, resId, req, io, config) {
-			var moduleId, filename, exports, requires, dontWrap;
+			var url, exports, requires, dontWrap;
 
-			moduleId = filename = resId;
+			url = req.toUrl(resId);
 			exports = config.exports;
 			requires = config.requires;
 			dontWrap = config.dontWrapLegacy;
 
-			if (filename.substr(filename.length - 3) !== ".js") {
-				filename += ".js";
+			if (url.substr(url.length - 3) !== ".js") {
+				url += ".js";
 			}
 
-			io.read(filename, function (text) {
+			io.read(url, function (text) {
 				var moduleText;
 
 				if (dontWrap) {
 					moduleText = text + ';\n'
-						+ _define(moduleId, requires, '', '', exports);
+						+ _define(resId, requires, '', '', exports);
 				}
 				else {
-					moduleText = _define(moduleId, requires, '', text, exports);
+					moduleText = _define(resId, requires, '', text, exports);
 				}
 
 				io.write(moduleText);
