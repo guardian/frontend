@@ -4,7 +4,6 @@
     <@element
         class="@RenderClasses(
             "item",
-            "item--dark",
             "item--video",
             "item--has-image",
             s"tone-$tone",
@@ -37,7 +36,7 @@
                     }
                 </div>
                 <h@if(isFirstContainer && index == 0){1}else{2} class="item__title">
-                    <span class="item__title-type">Video </span>
+                    <span class="i i-video-yellow-small"></span>
                     @RemoveOuterParaHtml(trail.headline)
                 </h@if(isFirstContainer && index == 0){1}else{2}>
             </a>
@@ -46,18 +45,7 @@
                 <div class="item__standfirst">@Html(text)</div>
             }
 
-            <div class="item__meta">
-                <time
-                    class="item__timestamp js-item__timestamp"
-                    itemprop="datePublished"
-                    datetime="@trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
-                    data-timestamp="@trail.webPublicationDate.getMillis"
-                    data-relativeformat="short">
-                    <i class="i i-clock-grey"></i>
-                    <span class="timestamp__text"><span class="u-h">Published: </span>@Format(trail.webPublicationDate, "d MMM y")</span>
-                </time>
-            </div>
-
         </div>
+
     </@element>
 }
