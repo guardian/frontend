@@ -65,6 +65,36 @@ define([ 'common/common',
               expect(document.querySelector('#preloads').className).toContain('has-localnav');
             });
 
+            it("Should insert a local nav when in Life and Style", function() {
+              config.page.section = 'lifeandstyle';
+              config.page.pageId = 'lifeandstyle';
+              sections = new Sections(config);
+              sections.view.insertLocalNav(document);
+
+              expect(document.querySelectorAll('.nav--local').length).toBe(1);
+              expect(document.querySelector('#preloads').className).toContain('has-localnav');
+            });
+
+            it("Should insert a local nav when in Business", function() {
+              config.page.section = 'business';
+              config.page.pageId = 'business';
+              sections = new Sections(config);
+              sections.view.insertLocalNav(document);
+
+              expect(document.querySelectorAll('.nav--local').length).toBe(1);
+              expect(document.querySelector('#preloads').className).toContain('has-localnav');
+            });
+
+            it("Should insert a local nav when in Travel", function() {
+              config.page.section = 'travel';
+              config.page.pageId = 'travel';
+              sections = new Sections(config);
+              sections.view.insertLocalNav(document);
+
+              expect(document.querySelectorAll('.nav--local').length).toBe(1);
+              expect(document.querySelector('#preloads').className).toContain('has-localnav');
+            });
+
             it("Should show the local nav when on a content page", function() {
                 config.page.section = 'football';
                 config.page.pageId = 'football/2013/oct/29/arsene-wenger-arsenal-chelsea-capital-one-cup';
@@ -74,9 +104,9 @@ define([ 'common/common',
                 expect(document.querySelectorAll('.nav--local').length).toBe(1);
             });
 
-            it("Should not insert a local nav when in Business", function() {
-              config.page.section = 'business';
-              config.page.pageId = 'business';
+            it("Should not insert a local nav when in Comment", function() {
+              config.page.section = 'commentisfree';
+              config.page.pageId = 'commentisfree';
               sections = new Sections(config);
               sections.view.insertLocalNav(document);
 
