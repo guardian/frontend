@@ -26,9 +26,6 @@ define([
 
             newItemPersister: function(newItem, sourceItem, sourceList, targetList, id, position, isAfter) {
 
-                // Move the collection with same id as the front itself to the TOP of list.
-                targetList.items.unshift(removeById(targetList.items, targetList.parent.id));
-
                 if (newItem.parents.indexOf(targetList.parent) < 0) {
                     newItem.parents.push(targetList.parent);
                 }

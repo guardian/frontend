@@ -4,18 +4,19 @@ define([
     'modules/vars',
     'utils/as-observable-props',
     'utils/populate-observables',
-    'utils/remove-by-id'
+    'utils/guid'
 ], function(
     ko,
     vars,
     asObservableProps,
     populateObservables,
-    removeById
+    guid
 ) {
     function Collection(opts) {
-        if (!opts || !opts.id) { return; }
+        opts = opts || {};
 
-        this.id = opts.id;
+        this.id = opts.id || guid();
+
         this.parents = ko.observableArray();
 
         this.meta   = asObservableProps([
@@ -49,13 +50,16 @@ define([
     };
 
     Collection.prototype.save = function() {
-        if (this.meta.displayName() && this.meta.displayName().trim()) {
-            if (vars.model.collections.indexOf(this) < 0) {
-                vars.model.collections.unshift(this);
-            }
+        if (vars.model.collections.indexOf(this) < 0) {
+            vars.model.collections.unshift(this);
         }
         this.state.open(false);
         this.state.openAdvanced(false);
+        vars.model.save();
+    };
+
+    Collection.prototype.discard = function() {
+        vars.model.collections.remove(this);
         vars.model.save();
     };
 

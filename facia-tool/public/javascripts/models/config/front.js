@@ -1,27 +1,27 @@
 /* global _: true, humanized_time_span: true */
 define([
+    'knockout',
     'config',
     'modules/vars',
     'models/group',
     'models/config/collection',
-    'utils/guid',
     'utils/as-observable-props',
     'utils/find-first-by-id'
 ], function(
+    ko,
     config,
     vars,
     Group,
     Collection,
-    guid,
     asObservableProps,
     findFirstById
 ) {
     function Front(opts) {
         var self = this;
 
-        if (!opts || !opts.id) { return; }
+        opts = opts || {};
 
-        this.id = opts.id;
+        this.id = ko.observable(opts.id);
 
         this.state  = asObservableProps([
             'open']);
@@ -30,28 +30,41 @@ define([
             parent: self,
             parentType: 'Front'
         });
-    }
 
-    Front.prototype.populate = function(collectionIds, collections) {
         this.group.items(
-           _.chain(collectionIds)
-            .map(function(id) {return findFirstById(collections, id); })
-            .filter(function(collection) { return collection; })
+           _.chain(opts.collections)
+            .map(function(id) {return findFirstById(vars.model.collections, id); })
+            .filter(function(collection) { return !!collection; })
+            .map(function(collection) {
+                collection.parents.push(self);
+                return collection;
+            })
             .value()
         );
-    };
+
+        this.depopulateCollection = self._depopulateCollection.bind(self);
+    }
 
     Front.prototype.toggleOpen = function() {
         this.state.open(!this.state.open());
     };
 
     Front.prototype.createCollection = function() {
-        var collection = new Collection({
-            id: this.id + '/' + guid()
-        });
+        var collection = new Collection();
         collection.toggleOpen();
         collection.parents.push(this);
         this.group.items.push(collection);
+        vars.model.collections.unshift(collection);
+    };
+
+    Front.prototype._depopulateCollection = function(collection) {
+        collection.parents.remove(this);
+        this.group.items.remove(collection);
+        vars.model.save();
+    };
+
+    Front.prototype.save = function() {
+        vars.model.save();
     };
 
     return Front;

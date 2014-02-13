@@ -703,9 +703,17 @@ button {
 /* CONFIG EDITOR */
 /*****************************************/
 
+.cnf-fronts {
+    border-top: 1px solid #CCCCCC;
+}
+
 .cnf-front {
     padding: 4px 0 4px 4px;
     border-bottom: 1px solid #CCCCCC;
+}
+
+.cnf-front.isProvisional {
+    background: #CCCCCC;
 }
 
 .cnf-front__inner {
@@ -719,6 +727,15 @@ button {
     border-top: 3px solid #ffffff;
 }
 
+.cnf-collection:hover {
+    background: #EEEEEE;
+}
+
+.cnf-collection.open {
+    background: #EEEEEE;
+    padding-bottom: 5px;
+}
+
 .cnf-collection.underDrag {
     border-top-color: #f89406;
 }
@@ -727,31 +744,35 @@ button {
     background: #FFEECC;
 }
 
-.cnf-collection .collection-id {
-    display: none;
-    position: absolute;
-    top: 0;
-    right: 5px;
-    font-size: 10px;
-    color: #999999;
-}
-
-.cnf-collection:hover .collection-id,
-.cnf-collection.isElsewhere .collection-id {
-    display: block;
-}
-
-.cnf-collection .cnf-collection__name {
+.cnf-collection__name {
     color: #000000;
 }
 
-.cnf-collection.isDefault .cnf-collection__name {
-    font-weight: bold;
+.cnf-collection.isOrphan .cnf-collection__name {
+    color: #ff9900;
 }
 
-.cnf-collection.open {
-    background: #EEEEEE;
-    padding-bottom: 5px;
+.cnf-collection__id {
+    display: none;
+    color: #999999;
+    font-size: 10px;
+    float: right;
+    margin: 0 5px 0 0;
+}
+
+.cnf-collection.open .cnf-collection__id,
+.cnf-collection:hover .cnf-collection__id {
+    display: block;
+}
+
+.cnf-collection__remove {
+    opacity: 0.2;
+    float: right;
+    margin: 0 4px 0 0;
+}
+
+.cnf-collection__remove:hover {
+    opacity: 1;
 }
 
 .cnf-collection .placements {
@@ -779,29 +800,29 @@ button {
     display: none;
 }
 
-.cnf-collection .edit-collection {
+.cnf-form {
     overflow: auto;
 }
 
-.cnf-collection .edit-collection label {
+.cnf-form label {
     color: #999999;
     width: 80px;
     float: left;
     clear: left;
 }
 
-.cnf-collection .edit-collection input,
-.cnf-collection .edit-collection select{
+.cnf-form input,
+.cnf-form select{
     float: left;
     clear: right;
 }
 
-.cnf-collection .edit-collection .advanced-options {
+.cnf-form .advanced-options {
     clear: both;
     font-size: 10px;
 }
 
-.cnf-collection .edit-collection .tools{
+.cnf-form .tools {
     clear: left;
 }
 

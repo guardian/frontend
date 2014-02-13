@@ -38,23 +38,10 @@ define([
                 fronts: ko.observableArray(),
 
                 createFront: function() {
-                    var path = 'foo',
-                        front =  new Front({id: path}),
-                        collection = findFirstById(model.collections, path);
+                    var front =  new Front();
 
-                    if (!collection) {
-                        collection = new Collection({
-                            id: path,
-                            displayName: 'Top Stories'
-                        });
-                        model.collections.unshift(collection);
-                    }
-
-                    front.group.items.push(collection);
                     model.fronts.unshift(front);
-
                     front.toggleOpen();
-                    collection.toggleOpen();
                 },
 
                 createCollection: function() {
@@ -66,30 +53,20 @@ define([
                 },
 
                 tones:  [''].concat(vars.CONST.tones),
-                groups: [''].concat(vars.CONST.groups)
+                groups: [''].concat(vars.CONST.groups),
+
+                save: function() {
+                    sanitize();
+                    window.console.log(JSON.stringify(serialize(), null, 4));
+                }
             };
 
-        model.save = function() {
+        vars.model = model;
 
-            // tidy up
-            _.each(model.fronts(), function(front) {
-                front.group.items.remove(function(collection) {
-                    return !collection.meta.displayName();
-                });
-            });
-
-            model.fronts.remove(function(front) {
-                return front.group.items().length === 0;
-            });
-
-            model.collections.remove(function(collection) {
-                return !collection.meta.displayName();
-            });
-
-            // serialize
-            var obj = {
+        function serialize() {
+            return {
                 fronts: _.reduce(model.fronts(), function(fronts, front) {
-                    fronts[front.id] = {
+                    fronts[front.id()] = {
                         collections: _.map(front.group.items(), function(collection) {
                             return collection.id;
                         })
@@ -110,49 +87,41 @@ define([
 
                     return collections;
                 }, {})
-           };
+            };
+        }
 
-           window.console.log(JSON.stringify(obj, null, 4));
-        };
+        function sanitize() {
+            model.fronts.remove(function(front) {
+                return front.group.items().length === 0;
+            });
 
-        vars.model = model;
+            _.each(model.fronts(), function(front) {
+                front.group.items.remove(function(collection) {
+                    return model.collections.indexOf(collection) < 0;
+                });
+            });
+        }
 
         this.init = function() {
             droppable.init();
-            hoverable.init();
+            //hoverable.init();
 
             fetchSettings(function (config, switches) {
                 vars.state.switches = switches || {};
+
                 if (!_.isEqual(config, vars.state.config)) {
                     vars.state.config = config;
 
-                    model.collections.removeAll();
-                    model.fronts.removeAll();
-
-                    _.each(config.fronts, function(f, fid) {
-                        var front =  new Front(cloneWithKey(f, fid));
-
-                        _.each(f.collections, function(cid) {
-                            var collection = findFirstById(model.collections, cid);
-                            if (!collection) {
-                                collection = new Collection(cloneWithKey(config.collections[cid], cid));
-                                model.collections.push(collection);
-                            }
-                            collection.parents.push(front);
-                        });
-
-                        front.populate(f.collections, model.collections);
-                        model.fronts.push(front);
-                    });
-
-                    ko.utils.arrayPushAll(
-                        model.collections,
-                       _.chain(config.collections)
-                        .map(function(obj, cid) {
-                            return findFirstById(model.collections, cid) ? false : new Collection(cloneWithKey(obj, cid));
+                    model.collections(
+                       _.map(config.collections, function(obj, cid) {
+                            return new Collection(cloneWithKey(obj, cid));
                         })
-                        .filter(function(collection) { return collection; })
-                        .value()
+                    );
+
+                    model.fronts(
+                      _.map(config.fronts, function(obj, fid) {
+                            return new Front(cloneWithKey(obj, fid));
+                       })
                     );
                 }
             }, vars.CONST.configSettingsPollMs, true)

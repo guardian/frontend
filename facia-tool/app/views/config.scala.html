@@ -8,10 +8,6 @@
 
     <div class="left-col">
         <div class="title">Collections</div>
-        <div class="instructions">
-            create a
-            <span data-bind="click: createCollection" class="linky">collection</span>
-        </div>
         <div class="scrollable" data-bind="
             template: {name: 'template_collection', foreach: collections}"></div>
     </div>
@@ -19,10 +15,9 @@
     <div class="right-col">
         <div class="title">Fronts</div>
         <div class="instructions">
-            create a
-            <span data-bind="click: createFront" class="linky">front</span>
+            Create a <span data-bind="click: createFront" class="linky">front</span>
         </div>
-        <div class="scrollable" data-bind="
+        <div class="scrollable cnf-fronts" data-bind="
             template: {name: 'template_front', foreach: fronts}"></div>
     </div>
 
@@ -30,17 +25,23 @@
         <div class="cnf-collection" data-bind="
             makeHoverable: true,
             css: {
-                isDefault: $parents[1] && $parents[1].id === id,
+                isOrphan: parents().length === 0,
                 underDrag: state.underDrag,
                 isElsewhere: state.underHover(),
                 open: state.open}">
 
-            <span class="collection-id" data-bind="text: id"></span>
-
             <a class="cnf-collection__name" data-bind="
                 click: toggleOpen,
                 attr: {href: id},
-                text: meta.displayName() || '(untitled)'"></a>
+                text: meta.displayName() || 'Untitled collection: ' + id"></a>
+
+            <!-- ko if: $parents[1] -->
+                <a class="cnf-collection__remove" data-bind="click: $parents[1].depopulateCollection">
+                    <i class="icon-trash"></i>
+                </a>
+            <!-- /ko -->
+
+            <span class="cnf-collection__id" data-bind="text: id"></span>
 
             <span class="placements" data-bind="
                 if: parents().length,
@@ -55,7 +56,7 @@
                 </span>
             </span>
 
-            <div class="edit-collection" data-bind="if: state.open">
+            <div class="cnf-form" data-bind="if: state.open">
                 <label>Title</label>
                 <input type="text" data-bind="
                     value: meta.displayName"/>
@@ -90,17 +91,36 @@
                 <div class="tools">
                     <button class="tool" data-bind="
                         click: save">Save</button>
+                    <!-- ko if: parents().length === 0 -->
+                        <button class="tool" data-bind="
+                            click: discard">Discard</button>
+                    <!-- /ko -->
                 </div>
             </div>
         </div>
     </script>
 
     <script type="text/html" id="template_front">
-        <div class="cnf-front">
+        <div class="cnf-front" data-bind="
+                css: { isProvisional: !id() }">
+
             <div class="title" data-bind="
                 click: toggleOpen,
                 text: id"></div>
-            <!-- ko if: state.open -->
+
+            <div class="cnf-form" data-bind="if: !id()">
+                <div class="title">New Front</div>
+                <label>Path</label>
+                <input type="text" data-bind="
+                    value: id"/>
+
+                <div class="tools">
+                    <button class="tool" data-bind="
+                        click: save">Save</button>
+                </div>
+            </div>
+
+            <div data-bind="if: id() && state.open()">
                 <div class="cnf-front__inner">
                     <div data-bind="with: group">
                         <div class="droppable" data-bind="
@@ -109,10 +129,12 @@
                             template: {name: 'template_collection', foreach: items}"></div>
                     </div>
                     <div class="instructions">
-                        drop a collection here or <span data-bind="click: createCollection" class="linky">create</span> one
+                        Drop a collection above, or <span data-bind="click: createCollection" class="linky">create</span> one.
+                        <div data-bind="if: !group.items().length">Note: empty fronts will be discarded</div>
                     </div>
                 </div>
-            <!-- /ko -->
+            </div>
+
         </div>
     </script>
 
