@@ -12,6 +12,7 @@
     "imager.js": "oncletom/Imager.js#feature-separation",
     "lodash-amd": "~2.4.1",
     "reqwest": "~0.9.7",
-    "omniture": "guardian/omniture"
+    "omniture": "guardian/omniture",
+    "fence" : "~0.2.11"
   }
 }
