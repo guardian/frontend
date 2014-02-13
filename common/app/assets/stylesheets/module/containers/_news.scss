@@ -69,6 +69,9 @@
             margin-bottom: $gs-baseline
         ));
 
+        &.collection__item--content-type-media {
+            padding-bottom: 0;
+        }
         & + .collection__item {
             @include vertical-item-separator; // Restore inter-item separator
         }
