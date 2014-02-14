@@ -146,6 +146,11 @@
                     <input type="text" data-bind="
                         value: collectionMeta.displayName,
                         hasFocus: true" placeholder="Title"/>
+
+                    <input type="text" data-bind="
+                        value: collectionMeta.href,
+                        hasFocus: true" placeholder="Link, e.g. /sport/cricket"/>
+
                     <span>
                         <a class="tool" data-bind="click: saveMeta">Save</a>
                         <a class="tool" data-bind="click: reset">Cancel</a>
