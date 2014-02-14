@@ -20,7 +20,7 @@ define([
     }
 
     function moveItem(item) {
-        item.getElementsByClassName('item__meta')[0].classList.add('js-append-commentcount');
+        bonzo(item.getElementsByClassName('item__meta')[0]).addClass('js-append-commentcount');
         replaceClasses(item);
         qwery('*', item).forEach(replaceClasses);
         var storySlot = SlotController.getSlot('story');
