@@ -76,11 +76,11 @@ object ImgSrc {
     else
       url
   }
-  
+
   object Imager extends Profile(None, None) {
     override val resizeString = s"width={width}&height=-&quality=$compression"
   }
-  
+
   // always, and I mean ALWAYS think carefully about the size image you use
   def imager(imageContainer: ImageContainer, profile: Profile): Option[String] = {
     profile.elementFor(imageContainer).flatMap(_.url).map{ largestImage =>

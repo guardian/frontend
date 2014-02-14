@@ -27,9 +27,23 @@
                             <span class="today__year">@Format(DateTime.now(), "yyyy")</span>
                         </span>
                     </span>
+                    @items.map(_.webPublicationDate).sortBy(-_.getMillis).headOption.map { latestDateTime =>
+                        <span class="container__updated">
+                            <span class="i--circle i--clock">
+                                <span class="i i-clock-hands-white"></span>
+                            </span>
+                            Last updated:
+                            <time
+                                class="js-timestamp"
+                                itemprop="datePublished"
+                                datetime="@latestDateTime.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
+                                data-relativeformat="long"
+                                data-timestamp="@latestDateTime.getMillis"><span class="timestamp__text">@Format(latestDateTime, "E, h:ma")</span></time>
+                        </span>
+                    }
                 </h2>
                 <div class="container__body container--rolled-up-hide js-container-append-button">
-                    @fragments.collections.rowPattern(items, style, containerIndex)
+                    @fragments.collections.news(items, style, containerIndex)
                 </div>
             </section>
         }

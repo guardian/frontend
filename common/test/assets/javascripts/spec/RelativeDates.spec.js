@@ -28,80 +28,98 @@ define(['common/modules/ui/relativedates',
 
         var epochBug = '2038-01-19T03:14:07';
 
-        it('Show relative dates for timestamps formatted as YYYY-MM-DD HH:MM:SS', function(){
-
             var datesToTest = {
                 'lessThanAMinuteAgo': {
                     'date'           :      '2012-08-13T11:59:50+01:00',
                     'expectedOutput' :      '10s',
-                    'expectedShortOutput' : '10s'
+                    'expectedShortOutput' : '10s',
+                    'expectedLongOutput' : '10 seconds ago'
                 },
                 'oneMinuteAgo': {  // singular
                     'date'           :      '2012-08-13T11:58:40+01:00',
                     'expectedOutput' :      '1m',
-                    'expectedShortOutput' : '1m'
+                    'expectedShortOutput' : '1m',
+                    'expectedLongOutput' :  '1 minute ago'
                 },
                 'upToEightMinutesAgo': { // plural
                     'date'           :      '2012-08-13T11:52:30+01:00',
                     'expectedOutput' :      '8m',
-                    'expectedShortOutput' : '8m'
+                    'expectedShortOutput' : '8m',
+                    'expectedLongOutput' :  '8 minutes ago'
                 },
                 'oneHourAgo': { // singular
                     'date'           :      '2012-08-13T11:00:00+01:00',
                     'expectedOutput' :      '1h',
-                    'expectedShortOutput' : '1h'
+                    'expectedShortOutput' : '1h',
+                    'expectedLongOutput' :  '1 hour ago'
                 },
                 'betweenNinetyMinutesAndOneHour': {  // bug GFE-38
                     'date'           :      '2012-08-13T10:25:00+01:00',
                     'expectedOutput' :      '2h',
-                    'expectedShortOutput' : '2h'
+                    'expectedShortOutput' : '2h',
+                    'expectedLongOutput' :  '2 hours ago'
                 },
                 'lessThanFiveHoursAgo': { // plural
                     'date'           :      '2012-08-13T08:30:00+01:00',
                     'expectedOutput' :      '4h',
-                    'expectedShortOutput' : '4h'
+                    'expectedShortOutput' : '4h',
+                    'expectedLongOutput' :  '4 hours ago'
                 },
                 'moreThanFiveHoursAgo': { // ... but still today
                     'date'           :      '2012-08-13T02:03:00+01:00',
                     'expectedOutput' :      '10h',
-                    'expectedShortOutput' : '10h'
+                    'expectedShortOutput' : '10h',
+                    'expectedLongOutput' :  '10 hours ago'
                 },
                 'yesterday': {
                     'date'           :      '2012-08-12T08:45:00+01:00',
                     'expectedOutput' :      'Yesterday, 8:45am',
-                    'expectedShortOutput' : '1d'
+                    'expectedShortOutput' : '1d',
+                    'expectedLongOutput' :  'Yesterday, 8:45am'
                 },
                 'yesterdayButWithinTwentyFourHours': {
                     'date'           :      '2012-08-12T20:00:00+01:00',
                     'expectedOutput' :      'Yesterday, 8:00pm',
-                    'expectedShortOutput' : '16h'
+                    'expectedShortOutput' : '16h',
+                    'expectedLongOutput' :  'Yesterday, 8:00pm'
                 },
                 'moreThanTwoDaysAgo': {
                     'date'           :      '2012-08-09T08:34:00+01:00',
                     'expectedOutput' :      'Thursday 9 Aug 2012',
-                    'expectedShortOutput' : '4d'
+                    'expectedShortOutput' : '4d',
+                    'expectedLongOutput' :  'Thursday 9 Aug 2012'
                 },
                 'moreThanFiveDaysAgo': {
                     'date'           :      '2012-08-05T21:30:00+01:00',
                     'expectedOutput' :      '5 Aug 2012',
-                    'expectedShortOutput' : '5 Aug 2012'
+                    'expectedShortOutput' : '5 Aug 2012',
+                    'expectedLongOutput' :  '5 Aug 2012'
                 },
                 'oneMinuteAgoInAnotherTimeZone': {
                     'date'           :      '2012-08-13T12:58:40+02:00',
                     'expectedOutput' :      '1m',
-                    'expectedShortOutput' : '1m'
+                    'expectedShortOutput' : '1m',
+                    'expectedLongOutput' :  '1 minute ago'
                 }
             };
 
             for (var category in datesToTest) {
-                var d = datesToTest[category];
-                var epoch = Date.parse(d.date);
-                expect(RelativeDates.makeRelativeDate(epoch)).toBe(d.expectedOutput);
-
-                // Do the same but in short format
-                expect(RelativeDates.makeRelativeDate(epoch, { format: 'short' })).toBe(d.expectedShortOutput);
+                describe('Show relative dates for timestamps formatted as YYYY-MM-DD HH:MM:SS [' + category + ']', function(){
+                    var d     = datesToTest[category],
+                        epoch = Date.parse(d.date);
+                    it('standard', function() {
+                        expect(RelativeDates.makeRelativeDate(epoch)).toBe(d.expectedOutput);
+                    });
+                    it('short', function() {
+                        // Do the same but in short format
+                        expect(RelativeDates.makeRelativeDate(epoch, { format: 'short' })).toBe(d.expectedShortOutput);
+                    });
+                    it('long', function() {
+                        // and long format
+                        expect(RelativeDates.makeRelativeDate(epoch, { format: 'long' })).toBe(d.expectedLongOutput);
+                    });
+                });
             }
-        });
 
         it("Return the input date if said date is in the future", function(){
             expect(RelativeDates.makeRelativeDate(Date.parse(epochBug))).toBeFalsy();

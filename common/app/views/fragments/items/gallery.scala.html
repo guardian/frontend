@@ -2,16 +2,8 @@
 
 @defining((VisualTone(trail), containerIndex == 0, containerIndex == 0 && index < 3)) { case (tone, isFirstContainer, inlineImages) =>
     <@element
-        class="@RenderClasses(
-            "item",
-            "item--dark",
-            "item--gallery",
-            "item--has-image",
-            s"tone-$tone",
-            "item--force-image-upgrade")"
-        data-link-name="trail | @{index + 1}"
-        @trail.discussionId.map{ id => data-discussion-id="@id" }
-        data-discussion-closed="@trail.isClosedForComments">
+        class="@GetClasses.forItem(trail, isFirstContainer)"
+        data-link-name="trail | @{index + 1}">
 
         <div class="item__container">
 
@@ -28,7 +20,7 @@
                         @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
                             <div class="item__image-container js-image-upgrade @if(inlineImages){ inlined-image}" data-src="@imgSrc" @if(isFirstContainer){ data-force-upgrade="desktop wide"}>
                                 @if(inlineImages){
-                                    @Item300.bestFor(imageContainer).map{ url => <img src="@Html(url)" class="responsive-img" alt="" /> }
+                                    @Item300.bestFor(imageContainer).map{ url => <img src="@url" class="responsive-img" alt="" /> }
                                 }
                             </div>
                         }
@@ -39,7 +31,7 @@
                     }
                 </div>
                 <h@if(isFirstContainer && index == 0){1}else{2} class="item__title">
-                    <span class="item__title-type">Gallery </span>
+                    <span class="i i-gallery-yellow-small"></span>
                     @RemoveOuterParaHtml(trail.headline)
                 </h@if(isFirstContainer && index == 0){1}else{2}>
             </a>
@@ -47,18 +39,6 @@
             @trail.trailText.map { text =>
                 <div class="item__standfirst">@Html(text)</div>
             }
-
-            <div class="item__meta">
-                <time
-                    class="item__timestamp js-item__timestamp"
-                    itemprop="datePublished"
-                    datetime="@trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
-                    data-timestamp="@trail.webPublicationDate.getMillis"
-                    data-relativeformat="short">
-                    <i class="i i-clock-grey"></i>
-                    <span class="timestamp__text"><span class="u-h">Published: </span>@Format(trail.webPublicationDate, "d MMM y")</span>
-                </time>
-            </div>
 
         </div>
 

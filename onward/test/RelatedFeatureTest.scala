@@ -51,14 +51,14 @@ class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       }
     }
 
-    scenario("Show the published dates for all trails") { // GFE-37
+    scenario("Show the published dates for non-media trails") { // GFE-37
 
       Given("Shell spending millions of dollars on security in Nigeria, leaked data shows")
       HtmlUnit("/related/business/2012/aug/19/shell-spending-security-nigeria-leak") { browser =>
         import browser._
         Then("I see each trail block displays the published date of the corresponding article")
 
-        $(".item__timestamp") should have length 5
+        $(".item__timestamp") should have length 3
 
       }
     }
