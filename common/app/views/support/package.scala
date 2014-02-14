@@ -587,13 +587,21 @@ object RenderClasses {
 object GetClasses {
 
   def forCollectionItem(trail: Trail): String = {
+    val f: Seq[(Trail) => String] = Seq(
+      (trail: Trail) => trail match {
+        case _: Gallery => "collection__item--content-type-gallery"
+        case _: Video   => "collection__item--content-type-video"
+        case _          => ""
+      }
+    )
     val baseClasses: Seq[String] = Seq(
       "l-row__item",
       "collection__item",
       s"collection__item--volume-${trail.group.getOrElse("0")}",
       s"collection__item--tone-${VisualTone(trail)}"
     )
-    RenderClasses(baseClasses:_*)
+    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail)}
+    RenderClasses(classes:_*)
   }
 
   def forItem(trail: Trail, firstContainer: Boolean): String = {
