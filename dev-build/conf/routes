@@ -165,6 +165,9 @@ GET         /$path<(us|uk|au|us-alpha|uk-alpha|au-alpha)?>.json                 
 GET         /$path<((uk|us|au)/)?(culture|sport|australia|commentisfree|business|money)>                             controllers.FaciaController.renderEditionSectionFront(path)
 GET         /$path<((uk|us|au)/)?(culture|sport|australia|commentisfree|business|money)>.json                        controllers.FaciaController.renderEditionSectionFrontJson(path)
 
+#Facia Press
+GET         /pressed/*path                                                                                           controllers.FaciaController.renderFaciaPress(path)
+
 GET         /collection/$id<[\w\d-/]*>/rss                                                                           controllers.FaciaController.renderCollectionRss(id)
 GET         /collection/$id<[\w\d-/]*>                                                                               controllers.FaciaController.renderEditionCollection(id)
 GET         /collection/$id<[\w\d-/]*>.json                                                                          controllers.FaciaController.renderEditionCollectionJson(id)
