@@ -243,7 +243,8 @@ module.exports = function (grunt) {
             spriteGeneration: {
                 command: [
                     'cd tools/sprites/',
-                    'node spricon.js global-icon-config.json'
+                    'node spricon.js global-icon-config.json',
+                    'node spricon.js commercial-icon-config.json'
                 ].join('&&'),
                 options: {
                     stdout: true,
