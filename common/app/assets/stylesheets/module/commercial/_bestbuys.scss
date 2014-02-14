@@ -66,15 +66,11 @@
     }
 
     .tabs__tab--selected {
-        border-color: #6A1F85;
-
-        &:hover {
-            border-color: #6A1F85;
-        }
+        border-color: $c-newsDefault;
 
         a {
             background-color: transparent;
-            color: #6A1F85;
+            color: $c-newsDefault;
             font-weight: bold;
         }
     }
