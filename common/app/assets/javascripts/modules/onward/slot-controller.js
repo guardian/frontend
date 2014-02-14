@@ -3,7 +3,7 @@ define([
     'common/$',
     'qwery',
     'bonzo',
-    'lodash/main'
+    'common/_'
 ], function (
     common,
     $,
