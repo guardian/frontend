@@ -9,11 +9,11 @@
 .books-component {
 
 	.commercial__head {
-		background-color: #FFF;
-		border-top: 1px solid $c-neutral4;
-		@include rem((
-	        height: 40px
-	    ))
+        background-color: #FFF;
+        border-top: 1px solid $c-neutral4;
+        @include rem((
+            height: 40px
+        ));
 	}
 
     .commercial__title {
@@ -42,98 +42,98 @@
 
     .list__item {
         @include box-sizing(border-box);
-    	position: relative;
-		padding: 8px 0 0 30px;
+        position: relative;
+        padding: 8px 0 0 30px;
 
-		color: $c-neutral1;
-		@include fs-headline(1);
+        color: $c-neutral1;
+        @include fs-headline(1);
 
-		img {
-			width: auto;
-			height: 90px;
-			display: none;
-		}
+        img {
+             width: auto;
+             height: 90px;
+             display: none;
+         }
 
-		&:first-child img {
-			display: block;
-		}
+         &:first-child img {
+             display: block;
+         }
 
-		+ .list__item {
-			border-top: 1px solid $c-neutral4;
-		}
-    }
+         + .list__item {
+             border-top: 1px solid $c-neutral4;
+         }
+     }
 
     .list__link {
-    	width: 80%;
-    	display: inline-block;
-    	color: $c-neutral1;
-    	overflow: hidden;
+        width: 80%;
+        display: inline-block;
+        color: $c-neutral1;
+        overflow: hidden;
     }
 
     .list__count {
-    	position: absolute;
-		top: 2px;
-		left: 0;
-		color: $c-neutral4;
-		@include fs-headline(7);
+        position: absolute;
+        top: 2px;
+        left: 0;
+        color: $c-neutral4;
+        @include fs-headline(7);
     }
 
     .list__img {
-    	margin-right: $baseline * 2;
-    	float: left;
+        margin-right: $baseline * 2;
+        float: left;
     }
 
     .list__title {
         margin-bottom: $baseline;
 
-		color: $c-neutral1;
-		@include fs-bodyCopy(1);
+        color: $c-neutral1;
+        @include fs-bodyCopy(1);
         font-weight: normal;
-		text-overflow: ellipsis;
-		white-space: pre;
-		overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: pre;
+        overflow: hidden;
     }
 
     .list__author {
-    	color: #8F8F8F;
-		@include fs-data(3);
+        color: #8F8F8F;
+        @include fs-data(3);
     }
 
     .list__price {
-    	width: 18%;
-    	display: inline-block;
-    	vertical-align: top;
-    	text-align: right;
+        width: 18%;
+        display: inline-block;
+        vertical-align: top;
+        text-align: right;
         @include fs-bodyCopy(1);
     }
 
     .commercial__foot {
-    	background-color: $c-neutral6;
-    	padding: $baseline;
-    	border: 0;
-    	margin: 0;
+        background-color: $c-neutral6;
+        padding: $baseline;
+        border: 0;
+        margin: 0;
     }
 
     .commercial__search {
         position: relative;
-		margin-bottom: 0;
+        margin-bottom: 0;
         overflow: hidden;
 
-    	label {
-    		display: none;
+        label {
+            display: none;
             @include box-sizing(border-box);
             padding: 8px 0 8px 8px;
             float: left;
             @include fs-bodyCopy(1);
-    	}
+        }
 
         .text-input {
             width: 78%;
             height: 32px;
-			background-position: 6px center;
+            background-position: 6px center;
             padding: $baseline;
             padding-left: 1.8em;
-			@include fs-bodyCopy(1);
+            @include fs-bodyCopy(1);
             float: left;
             overflow: hidden;
         }
@@ -158,46 +158,46 @@
 
     @include mq($from: tablet) {
 
-    	.list__item {
-		    width: 20%;
-		    padding-left: 8px;
-		    float: left;
+        .list__item {
+            width: 20%;
+            padding-left: 8px;
+            float: left;
 
-			img {
-				height: 100px;
+            img {
+                height: 100px;
                 margin-right: 0;
-			    margin-bottom: 10px;
-			    display: block;
-			    float: right;
-			}
+                margin-bottom: 10px;
+                display: block;
+                float: right;
+            }
 
             + .list__item {
                 border-top: none;
             }
-		}
+        }
 
-		.list__link {
+        .list__link {
             width: 100%;
-		    height: 200px;
-		}
+            height: 200px;
+        }
 
-		.list__title {
-		    white-space: nowrap;
-		    clear: both;
-		}
+        .list__title {
+            white-space: nowrap;
+            clear: both;
+        }
 
         .list__count {
             left: 8px;
         }
 
-		.list__price {
-		    position: absolute;
-		    left: 8px;
-		    bottom: 0;
+        .list__price {
+            position: absolute;
+            left: 8px;
+            bottom: 0;
             width: 100%;
-		    margin-top: 20px;
+            margin-top: 20px;
             text-align: left;
-		}
+        }
     }
 
     @include mq($from: desktop) {
