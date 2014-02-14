@@ -456,7 +456,8 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
     }
     .fromage__title,
     .fromage__meta,
-    .fromage__standfirst {
+    .fromage__standfirst,
+    .fromage__byline {
         // Add some breathing space to children since they're in a box
         // that has a background color
         @include rem((
@@ -465,7 +466,8 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
         ));
     }
     .fromage__standfirst,
-    .fromage__meta {
+    .fromage__meta,
+    .fromage__byline {
         @include mq(tablet) {
             @include rem((
                 padding-left: 0
