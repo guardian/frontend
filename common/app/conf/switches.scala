@@ -329,6 +329,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
+  val ArticleTruncation = Switch("A/B Tests", "ab-article-truncation",
+    "If this is switched on an A/B test runs to prove the effectiveness of truncatiung articles.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
+  )
+
   // Sport Switch
 
   val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
@@ -435,6 +440,7 @@ object Switches extends Collections {
     IdentityFilmAwardsSwitch,
     ABAa,
     ABGravityRecommendations,
+    ArticleTruncation,
     ABAdLabels,
     NetworkFrontUkAlpha,
     NetworkFrontUsAlpha,

@@ -257,6 +257,24 @@ $c-live: #e81818;
         @include show-only-if-svg-is-supported;
     }
 }
+@include mq($to: tablet) {
+    .item__title--has-icon-mobile {
+        padding-left: 25px;
+    }
+}
+.item--video,
+.item--gallery {
+    .item__title .i {
+        position: absolute;
+        top: 4px;
+        left: 10px;
+    }
+    @include mq(tablet) {
+        .item__title .i {
+            display: none;
+        }
+    }
+}
 .item__byline {
     @include fs-headline(2);
     @include rem((
@@ -388,8 +406,8 @@ $cta-icon-gap: 2px;
 .item__media-wrapper--has-icon {
     .item__cta {
         position: absolute;
-        top: 8px;
-        left: 8px;
+        top: $gs-baseline/3;
+        left: $gs-baseline/3;
     }
     .i {
         margin-bottom: $cta-icon-gap;
@@ -540,19 +558,6 @@ $show-more-icon: (
     background-size: contain;
 }
 
-.item--video,
-.item--gallery {
-    .item__title .i {
-        position: relative;
-        top: 4px;
-    }
-    @include mq(tablet) {
-        .item__title .i {
-            display: none;
-        }
-    }
-}
-
 .i--circle {
     @include rounded-corners(50%);
     display: block;
@@ -570,5 +575,58 @@ $show-more-icon: (
         position: absolute;
         left: 15px;
         top: 5px;
+    }
+}
+
+.item--thumbnail {
+    .item__standfirst {
+        display: block;
+
+        @include rem((
+            margin-top: 2px
+        ));
+    }
+    .item__media-wrapper {
+        float: left;
+        clear: both;
+
+        @include rem((
+            margin-right: $gs-gutter/2
+        ));
+    }
+}
+
+.container--rolled-up .container--rolled-up-hide {
+    display: none;
+}
+
+.today {
+    color: $c-neutral1;
+    font-weight: normal;
+}
+.today__dayofweek {
+    color: $c-newsDefault;
+}
+@include mq(wide) {
+    .today__sub {
+        display: block;
+    }
+}
+
+
+/**
+ * Ads in containers / row patterns
+ */
+
+.container {
+    .ad-slot {
+        padding: 0;
+        margin: 0 auto;
+    }
+}
+@include mq(tablet) {
+    .l-row__item--mpu-300 {
+        min-width: gs-span(4) + $gs-gutter;
+        max-width: gs-span(4) + $gs-gutter;
     }
 }
