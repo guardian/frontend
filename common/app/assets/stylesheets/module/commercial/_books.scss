@@ -28,10 +28,10 @@
     	padding: 0;
 
     	h3 {
-    		background-color: $c-neutral6;
-    		padding: $baseline*2 $baseline*2 $baseline*4 $baseline*2;
-    		margin-bottom: 0;
-    		@include fs-headline(2);
+            background-color: $c-neutral6;
+            padding: $baseline*2 $baseline*2 $baseline*4 $baseline*2;
+            margin-bottom: 0;
+            @include fs-headline(2);
     	}
     }
 
