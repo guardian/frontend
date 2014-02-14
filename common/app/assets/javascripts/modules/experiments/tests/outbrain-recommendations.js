@@ -18,21 +18,17 @@ define([
        this.audienceOffset = 0.0;
        this.description = 'Embeds the outbrain library on the page and for the tests uses their api to populate the right-hand menu';
        this.canRun = function(config) {
-           console.log("Can I ask outbrain?");
-           return true;
+          return true;
        };
 
        this.variants = [
            {
                id: 'control',
-               test: function(context, config) {
-                    console.log("+++ Control them");
-               }
+               test: function(context, config) {}
            },
            {
                id: 'show-outbrain-recommendations',
                test: function(context, config) {
-                   console.log("+++ Show them");
                    RightHandComponentFactory.setRecommenedForYou("outbrain");
                }
            }

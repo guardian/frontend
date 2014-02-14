@@ -1,14 +1,7 @@
-/**
- * Created with IntelliJ IDEA.
- * User: nbennett
- * Date: 14/02/14
- * Time: 10:55
- * To change this template use File | Settings | File Templates.
- */
 define([
     'common/modules/component'
-], function( 
-    Component        
+], function (
+    Component
 ) {
  
     function RightOutbrainRecommendation(data, index) {
@@ -34,9 +27,7 @@ define([
         + '</h3></a></li>';
 
     RightOutbrainRecommendation.prototype.prerender = function() {
-        console.log("++ So fuckin what");
         if( this.data.thumbnail ) {
-            console.log("Image: " + this.data.thumbnail.url + "Url: " + this.data.url + " f: " + this.data.content);
             var container = this.getElem(this.classes.image);
             container.setAttribute("data-src", this.data.thumbnail.url);
         }

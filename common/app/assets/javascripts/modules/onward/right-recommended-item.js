@@ -1,8 +1,3 @@
-/*
-  Module: RightGravityRecommendation.js
-  Description: I've ripped off the most-popular-image-iten Item for right next read next panel - as recommended by gravity. Allegedly
-*/
-
 define([
     'common/modules/component'
 ], function (
