@@ -3,28 +3,28 @@ define([
     'config',
     'knockout',
     'modules/vars',
-    'utils/fetch-config',
-    'utils/fetch-switches',
+    'utils/fetch-settings',
     'utils/query-params',
     'utils/ammended-query-str',
-    'bindings/droppable',
+    'utils/update-scrollables',
     'modules/authed-ajax',
-    'models/collection',
     'models/group',
-    'models/article',
-    'models/latest-articles'
+    'models/collections/droppable',
+    'models/collections/collection',
+    'models/collections/article',
+    'models/collections/latest-articles'
 ], function(
     config,
     ko,
     vars,
-    fetchConfig,
-    fetchSwitches,
+    fetchSettings,
     queryParams,
     ammendedQueryStr,
-    droppable,
+    updateScrollables,
     authedAjax,
-    Collection,
     Group,
+    droppable,
+    Collection,
     Article,
     LatestArticles
 ) {
@@ -32,16 +32,7 @@ define([
 
     return function() {
 
-        function updateLayout() {
-            var height = $(window).height();
-            $('.scrollable').each(function() {
-                $(this).height(Math.max(100, height - $(this).offset().top) - 2);
-            });
-        }
-
         var model = {
-                config: ko.observable(),
-
                 collections: ko.observableArray(),
                 fronts: ko.observableArray(),
                 front:  ko.observable(),
@@ -52,7 +43,7 @@ define([
 
                 clipboard: new Group({
                     parentType: 'Clipboard',
-                    reflow: updateLayout,
+                    reflow: updateScrollables,
                     keepCopy:  true
                 }),
 
@@ -84,11 +75,11 @@ define([
         function renderFront(id) {
             history.pushState({}, "", window.location.pathname + '?' + ammendedQueryStr('front', id));
             model.collections(
-                ((model.config().fronts[getFront()] || {}).collections || [])
-                .filter(function(id){ return !!model.config().collections[id]; })
+                ((vars.state.config.fronts[getFront()] || {}).collections || [])
+                .filter(function(id){ return !!vars.state.config.collections[id]; })
                 .map(function(id){
                     return new Collection(
-                        _.extend(model.config().collections[id], {id: id})
+                        _.extend(vars.state.config.collections[id], {id: id})
                     );
                 })
             );
@@ -127,13 +118,6 @@ define([
             }, period);
         });
 
-        var startConfigAndSwitchesPoller = _.once(function() {
-            setInterval(function(){
-                fetchConfig(model);
-                fetchSwitches();
-            }, vars.CONST.configSwitchesPollMs || 60000);
-        });
-
         model.front.subscribe(function(front) {
             renderFront(front);
         });
@@ -148,19 +132,22 @@ define([
         this.init = function() {
             droppable.init();
 
-            $.when(fetchConfig(model, true), fetchSwitches(true))
-            .done(function(config, switches) {
+            fetchSettings(function (config, switches) {
+                vars.state.config = config || {};
+                vars.state.switches = switches || {};
+                model.fronts(_.keys(config.fronts));
+            }, vars.CONST.configSettingsPollMs, true)
+            .done(function() {
                 setfront();
                 window.onpopstate = setfront;
 
                 ko.applyBindings(model);
 
-                updateLayout();
-                window.onresize = updateLayout;
+                updateScrollables();
+                window.onresize = updateScrollables;
 
                 startCollectionsPoller();
                 startSparksPoller();
-                startConfigAndSwitchesPoller();
 
                 model.latestArticles.search();
                 model.latestArticles.startPoller();
