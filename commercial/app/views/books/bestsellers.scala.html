@@ -18,7 +18,9 @@
                     <span class="list__count">@book.position</span>
                     @book.jacketUrl.map { url => <img class="list__img" src="@url" alt="">}
                     <h4 class="list__title">@book.title</h4>
-                    <p class="list__author">by @book.author</p>
+                    @if(book.author) {
+                        <p class="list__author">by @book.author</p>
+                    }
                 </a>
                 <p class="list__price">&pound;@book.price</p>
             </li>
