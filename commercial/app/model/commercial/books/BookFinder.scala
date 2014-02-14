@@ -13,7 +13,7 @@ object BookFinder extends ExecutionContexts with Logging {
     } yield {
       for {
         content <- capiResponse.content
-        factbox = content.factboxes.head
+        factbox <- content.factboxes.headOption
         fields <- factbox.fields
         title <- fields.get("title")
         author <- fields.get("author")
