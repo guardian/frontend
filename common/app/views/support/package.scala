@@ -580,7 +580,7 @@ object RenderClasses {
 
   def apply(classes: Map[String, Boolean]): String = apply(classes.filter(_._2).keys.toSeq:_*)
 
-  def apply(classes: String*): String = classes.sorted.mkString(" ")
+  def apply(classes: String*): String = classes.filter(_.nonEmpty).sorted.mkString(" ")
 
 }
 
@@ -601,7 +601,7 @@ object GetClasses {
       "item",
       s"tone-${VisualTone(trail)}"
     )
-    val f = Seq(
+    val f: Seq[(Trail, Boolean) => String] = Seq(
       (trail: Trail, firstContainer: Boolean) => trail match {
         case _: Gallery => "item--gallery"
         case _: Video   => "item--video"
