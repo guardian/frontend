@@ -578,8 +578,56 @@ object RenderOtherStatus {
 
 object RenderClasses {
 
-  def apply(classes: Map[String, Boolean]): String = classes.filter(_._2).keys.toSeq.sorted.mkString(" ")
+  def apply(classes: Map[String, Boolean]): String = apply(classes.filter(_._2).keys.toSeq:_*)
 
-  def apply(classes: String*): String = classes.sorted.mkString(" ")
+  def apply(classes: String*): String = classes.filter(_.nonEmpty).sorted.mkString(" ")
+
+}
+
+object GetClasses {
+
+  def forCollectionItem(trail: Trail): String = {
+    val f: Seq[(Trail) => String] = Seq(
+      (trail: Trail) => trail match {
+        case _: Gallery => "collection__item--content-type-gallery"
+        case _: Video   => "collection__item--content-type-video"
+        case _          => ""
+      }
+    )
+    val baseClasses: Seq[String] = Seq(
+      "l-row__item",
+      "collection__item",
+      s"collection__item--volume-${trail.group.getOrElse("0")}",
+      s"collection__item--tone-${VisualTone(trail)}"
+    )
+    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail)}
+    RenderClasses(classes:_*)
+  }
+
+  def forItem(trail: Trail, firstContainer: Boolean): String = {
+    val baseClasses: Seq[String] = Seq(
+      "item",
+      s"tone-${VisualTone(trail)}"
+    )
+    val f: Seq[(Trail, Boolean) => String] = Seq(
+      (trail: Trail, firstContainer: Boolean) => trail match {
+        case _: Gallery => "item--gallery"
+        case _: Video   => "item--video"
+        case _          => ""
+      },
+      (trail: Trail, firstContainer: Boolean) => if (firstContainer) {"item--force-image-upgrade"} else {""},
+      (trail: Trail, firstContainer: Boolean) => if (trail.isLive) {"item--live"} else {""},
+      (trail: Trail, firstContainer: Boolean) => if(trail.trailPicture(5,3).isEmpty || trail.imageAdjust == Some("hide")){
+        "item--has-no-image"
+      }else{
+        "item--has-image"
+      },
+      (trail: Trail, firstContainer: Boolean) => trail.imageAdjust.map{ adjustValue =>
+        s"item--imageadjust-$adjustValue"
+      }.getOrElse("")
+    )
+    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, firstContainer)}
+    RenderClasses(classes:_*)
+  }
 
 }

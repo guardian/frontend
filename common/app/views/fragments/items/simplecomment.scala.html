@@ -1,7 +1,7 @@
 @(trail: model.Trail, index: Int, containerIndex: Int, element: String = "li", classes: String = "")(implicit request: RequestHeader)
 
 <@element
-    class="item tone-comment @classes"
+    class="@GetClasses.forItem(trail, containerIndex == 0)"
     data-link-name="trail | @{index + 1}"
     @trail.discussionId.map{ id => data-discussion-id="@id" }
     data-discussion-closed="@trail.isClosedForComments">

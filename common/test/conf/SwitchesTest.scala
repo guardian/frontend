@@ -24,7 +24,7 @@ class SwitchesTest extends FlatSpec with Matchers {
   // If you are wondering why this test has failed then read, https://github.com/guardian/frontend/pull/2711
   they should "be deleted once expired" in {
     Switches.all foreach {
-      case Switch(_, id, _, _, sellByDate) => assert(sellByDate.isAfter(new DateMidnight()))
+      case Switch(_, id, _, _, sellByDate) => assert(sellByDate.isAfter(new DateMidnight()), id)
     }
   }
 
