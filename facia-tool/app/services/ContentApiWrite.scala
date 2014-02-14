@@ -83,11 +83,11 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
   private def generateItems(items: List[Trail]): List[Item] =
     items.map { trail =>
       Item(trail.id, trail.meta.map(_.map {
-            case (id, jsValue) if id == "group" => (id, jsValue.asOpt[BigDecimal].map(JsNumber.apply).getOrElse(jsValue))
+            case ("group", jsValue) => ("group", jsValue.asOpt[BigDecimal].map(JsNumber.apply).getOrElse(jsValue))
             //TODO: These are in transition and will be removed
-            case ("imageAdjust", jsValue) => ("imageAdjustment", jsValue)
-            case ("meta", jsValue) => ("metadata", jsValue)
-            case ("supporting", jsValue) => ("supportingContent", jsValue)
+            case json@("imageAdjust", jsValue) => json
+            case json@("meta", jsValue) => json
+            case json@("supporting", jsValue) => json
             case j  => j
           }
         )
