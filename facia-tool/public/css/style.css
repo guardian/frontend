@@ -789,11 +789,13 @@ button {
 
 .cnf-collection .placements a {
     color: #333333;
-}
-
-.cnf-collection .placements a:not(:first-child) {
     border-left: 1px solid #CCCCCC;
     padding-left: 5px;
+}
+
+.cnf-collection .placements a:first-child {
+    border-left: inherit;
+    padding-left: inherit;
 }
 
 .left-col .also {
