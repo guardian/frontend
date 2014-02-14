@@ -28,11 +28,13 @@ class EmailController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
 
   val page = IdentityPage("/email-prefs", "Email preferences", "email-prefs")
 
+  private def isValidHtmlPreference(pref: String): Boolean =  Set("HTML", "Text") contains pref
+
   val emailPrefsForm = Form(
     Forms.tuple(
       "statusFields.receiveGnmMarketing" -> Forms.boolean,
       "statusFields.receive3rdPartyMarketing" -> Forms.boolean,
-      "htmlPreference" -> Forms.text().verifying(List("HTML", "Text").contains(_))
+      "htmlPreference" -> Forms.text().verifying(pref => isValidHtmlPreference(pref))
     )
   )
 
@@ -42,9 +44,19 @@ class EmailController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
         val idRequest = idRequestParser(request)
         populateForm(request.user.getId(), request.auth, idRequest.trackingData) map {
           form =>
-            Ok(views.html.profile.email_prefs(page, idRequest, idUrlBuilder, form))
+            checkForm(form)
+            val template = views.html.profile.email_prefs(page, idRequest, idUrlBuilder, form)
+            if(!template.body.contains("checked"))
+              logger.error("Email prefs page not rendered correctly! Form data: " + form.data)
+            Ok(template)
         }
     }
+  }
+
+  private def checkForm[T](form: Form[T]){
+    if(form.hasErrors) logger.error("Email prefs form has errors: " + form.errors)
+    val pref = form.data get "htmlPreference"
+    if(!pref.exists(isValidHtmlPreference)) logger.error("Email prefs form invalid htmlPreference: " + pref)
   }
 
   private def populateForm(userId: String, auth: Auth, trackingData: TrackingData): Future[Form[(Boolean, Boolean, String)]] = {
@@ -65,7 +77,7 @@ class EmailController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
               }
 
             case Right((user, subscriber)) =>
-              if (!(Set("HTML", "TEXT") contains subscriber.htmlPreference)) logger.error(s"Invalid Subscriber htmlPreference: ${subscriber.htmlPreference}")
+              if (!isValidHtmlPreference(subscriber.htmlPreference)) logger.error(s"Invalid Subscriber htmlPreference: ${subscriber.htmlPreference}")
               emailPrefsForm.fill((user.statusFields.isReceiveGnmMarketing, user.statusFields.isReceive3rdPartyMarketing, subscriber.htmlPreference))
           }
         }
