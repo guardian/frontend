@@ -20,7 +20,7 @@ define([
         this.id = 'ArticleTruncation';
         this.expiry = '2014-02-28';
         this.audience = 0.2;
-        this.audienceOffset = 0;
+        this.audienceOffset = 0.2;
         this.description = 'Test the effectiveness of truncating articles to increase onward journey CTR';
         this.canRun = function (config) {
             return config.page.contentType === 'Article' && !config.page.isLiveBlog;
