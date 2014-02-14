@@ -82,8 +82,8 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   }
 
   lazy val wordCount: Int = {
-    +    Jsoup.clean(delegate.safeFields.getOrElse("body",""), Whitelist.none()).split("\\s+").size
-    +  }
+    Jsoup.clean(delegate.safeFields.getOrElse("body",""), Whitelist.none()).split("\\s+").size
+  }
 
   override lazy val byline: Option[String] = fields.get("byline")
   override lazy val trailType: Option[String] = {
@@ -95,6 +95,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       Option("news")
     }
   }
+
 
   // Inherited from Tags
   override lazy val tags: Seq[Tag] = delegate.tags map { Tag }
