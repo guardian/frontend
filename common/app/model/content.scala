@@ -96,7 +96,6 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     }
   }
 
-
   // Inherited from Tags
   override lazy val tags: Seq[Tag] = delegate.tags map { Tag }
 
