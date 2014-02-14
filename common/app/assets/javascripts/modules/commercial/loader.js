@@ -36,6 +36,7 @@ define([
      */
     var Loader = function(options) {
         var conf = options.config.page || {};
+        this.pageId         = conf.pageId;
         this.keywords       = conf.keywords || '';
         this.section        = conf.section;
         this.host           = conf.ajaxUrl + '/commercial/';
@@ -50,7 +51,8 @@ define([
           masterclasses: this.host + 'masterclasses.json?' + this.userSegments + '&s=' + this.section,
           travel:        this.host + 'travel/offers.json?' + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
           jobs:          this.host + 'jobs.json?' + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
-          soulmates:     this.host + 'soulmates/mixed.json?' + this.userSegments + '&s=' + this.section
+          soulmates:     this.host + 'soulmates/mixed.json?' + this.userSegments + '&s=' + this.section,
+          book:          this.host + 'books/book/' + this.pageId + '.json'
         };
         return this;
     };
