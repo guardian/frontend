@@ -21,15 +21,15 @@ define([
     /**
      * Loads commercial components.
      *
-     * BEWARE that this code is depended upon by the ad server. 
-     * 
+     * BEWARE that this code is depended upon by the ad server.
+     *
      * ```
      * require(['common/modules/commercial/loader'], function (CommercialComponent) {
      *   var slot = document.querySelector('[class="js-sticky-upper"]');
      *    var c = new CommercialComponent({config: guardian, oastoken: '%%C%%?'}).travel(slot);
      * })
      * ```
-     * 
+     *
      * @constructor
      * @extends Component
      * @param {Object=} options
@@ -47,10 +47,12 @@ define([
         this.adType         = options.adType || 'desktop';
         this.userSegments   = 'seg=' + (new History().getSize() <= 1 ? 'new' : 'repeat');
         this.components     = {
-          masterclasses: this.host + 'masterclasses.json?' + this.userSegments + '&s=' + this.section,
-          travel:        this.host + 'travel/offers.json?' + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
-          jobs:          this.host + 'jobs.json?' + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
-          soulmates:     this.host + 'soulmates/mixed.json?' + this.userSegments + '&s=' + this.section
+            bestbuy:       this.host + 'money/bestbuys.json?'    + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
+            books:         this.host + 'books/bestsellers.json?' + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
+            jobs:          this.host + 'jobs.json?'              + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
+            masterclasses: this.host + 'masterclasses.json?'     + this.userSegments + '&s=' + this.section,
+            soulmates:     this.host + 'soulmates/mixed.json?'   + this.userSegments + '&s=' + this.section,
+            travel:        this.host + 'travel/offers.json?'     + this.userSegments + '&s=' + this.section + '&' + this.getKeywords()
         };
         return this;
     };
@@ -108,21 +110,29 @@ define([
         }).load();
         return this;
     };
-    
-    Loader.prototype.travel = function(el) {
-        return this.load(this.components.travel, el);
+
+    Loader.prototype.bestbuy = function(el) {
+        return this.load(this.components.bestbuy, el);
     };
-    
-    Loader.prototype.masterclasses = function(el) {
-        return this.load(this.components.masterclasses, el);
+
+    Loader.prototype.books = function(el) {
+        return this.load(this.components.books, el);
     };
-    
+
     Loader.prototype.jobs = function(el) {
         return this.load(this.components.jobs, el);
     };
-    
+
+    Loader.prototype.masterclasses = function(el) {
+        return this.load(this.components.masterclasses, el);
+    };
+
     Loader.prototype.soulmates = function(el) {
         return this.load(this.components.soulmates, el);
+    };
+
+    Loader.prototype.travel = function(el) {
+        return this.load(this.components.travel, el);
     };
 
     return Loader;
