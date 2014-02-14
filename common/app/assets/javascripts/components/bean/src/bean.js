@@ -701,16 +701,16 @@
       }
 
     , bean = {
-          on                : on
-        , add               : add
-        , one               : one
-        , off               : off
-        , remove            : off
-        , clone             : clone
-        , fire              : fire
-        , Event             : Event
-        , setSelectorEngine : setSelectorEngine
-        , noConflict        : function () {
+          'on'                : on
+        , 'add'               : add
+        , 'one'               : one
+        , 'off'               : off
+        , 'remove'            : off
+        , 'clone'             : clone
+        , 'fire'              : fire
+        , 'Event'             : Event
+        , 'setSelectorEngine' : setSelectorEngine
+        , 'noConflict'        : function () {
             context[name] = old
             return this
           }

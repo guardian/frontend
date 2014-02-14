@@ -230,6 +230,9 @@ define([
                 }
                 storage.session.remove('gu.analytics.referrerVars');
             }
+
+            s.prop75 = config.page.wordCount || 0;
+            s.eVar75 = config.page.wordCount || 0;
         };
 
         this.loaded = function(callback) {

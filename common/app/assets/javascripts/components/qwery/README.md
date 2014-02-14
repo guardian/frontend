@@ -1,8 +1,8 @@
-Qwery - The Tiny Selector Engine
------
+## Qwery - The Tiny Selector Engine
+
 Qwery is a small *blazing fast* query selector engine allowing you to select elements with CSS1|2|3 queries
 
-##Acceptable selectors
+### Acceptable selectors
 
 ``` css
 /* basic */
@@ -36,8 +36,8 @@ div#baz.thunk a[-data-info*="hello world"] span + strong {}
 #thunk[title$='huzza'] {}
 ```
 
-Contexts
--------
+## Contexts
+
 Each query can optionally pass in a context
 
 ``` js
@@ -45,8 +45,7 @@ qwery('div', node); // existing DOM node or...
 qwery('div', '#foo'); // another query
 ```
 
-pseudo selector API
--------------------
+## pseudo selector API
 
 Optionally, Qwery provides a [pseudo selector interface](https://github.com/ded/qwery/blob/master/src/pseudos.js) allowing you to extend into advanced CSS3 matchers. It looks like this:
 
@@ -102,7 +101,7 @@ Qwery uses <code>querySelectorAll</code> when available. All <code>querySelector
 
 Ender support
 -------------
-Qwery is the recommended selector engine for [Ender](http://ender.no.de). If you don't have Ender, install it, and don't ever look back.
+Qwery is the recommended selector engine for [Ender](http://enderjs.com). If you don't have Ender, install it, and don't ever look back.
 
     $ npm install ender -g
 
@@ -127,20 +126,18 @@ $('div').and('p')
 
 // test nodes against selectors
 $('#foo').is('div.bar'); // => true if any nodes match
-
-// element creation
-$('<p>hello world</p>'); // => [HTMLParagraphElement "hello world"]
 ```
+
 Recommended sibling modules
 ----------
 In most cases, if you're hunting for a selector engine, you probably want to pair Qwery with a DOM module. In that case qwery pairs quite nicely with [Bonzo](https://github.com/ded/bonzo) (a DOM util) and [Bean](https://github.com/fat/bean) (an event util). Add them to your Ender installation as such:
 
-    $ ender -b qwery bonzo bean
+    $ ender build qwery bonzo bean
 
 Then write code like a boss:
 
 ``` js
-$('a.boosh')
+$('<p>hello world</p>')
   .css({
     color: 'red',
     background: 'white'
@@ -151,6 +148,7 @@ $('a.boosh')
       $(this).hide().unbind('click.button')
     }
   })
+  .appendTo('body')
 ```
 
 Qwery Mobile!
@@ -165,3 +163,6 @@ Contributors
   * [Rod Vagg](https://github.com/ded/qwery/commits/master?author=rvagg)
   * [Jacob Thornton](https://github.com/ded/qwery/commits/master?author=fat)
   * [Andrew McCollum](https://github.com/ded/qwery/commits/master?author=amccollum)
+
+### Giving back
+Are you using this library in production? Consider [leaving a tip](https://www.gittip.com/ded) to show your appreciation.

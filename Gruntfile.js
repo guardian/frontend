@@ -60,6 +60,7 @@ module.exports = function (grunt) {
                     lodash:       'common/components/lodash-amd/modern',
                     imager:       'common/components/imager.js/src/strategies/container',
                     omniture:     'common/components/omniture/omniture',
+                    fence:        'common/components/fence/fence',
                     'ophan/ng':   'empty:'
                 },
                 optimize: (isDev) ? 'none' : 'uglify2',
@@ -243,7 +244,8 @@ module.exports = function (grunt) {
             spriteGeneration: {
                 command: [
                     'cd tools/sprites/',
-                    'node spricon.js global-icon-config.json'
+                    'node spricon.js global-icon-config.json',
+                    'node spricon.js commercial-icon-config.json'
                 ].join('&&'),
                 options: {
                     stdout: true,

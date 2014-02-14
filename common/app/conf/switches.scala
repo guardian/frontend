@@ -152,11 +152,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val UserzoomSwitch = Switch("Analytics", "userzoom",
-    "Turns on userzoom survey popups",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 15)
-  )
-
   val OphanSwitch = Switch("Analytics", "ophan",
     "Enables the new Ophan tracking javascript",
     safeState = On, never
@@ -286,7 +281,7 @@ object Switches extends Collections {
 
   val FacebookAutoSigninSwitch = Switch("Feature Switches", "facebook-autosignin",
     "If this switch is on then users who have previously authorized the guardian app in facebook and who have not recently signed out are automatically signed in.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 15)
+    safeState = Off, sellByDate = endOfQ4
   )
 
   val IdentityFormstackSwitch = Switch("Feature Switches", "id-formstack",
@@ -319,11 +314,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val ABEmailSignup = Switch("A/B Tests", "ab-email-signup",
-    "If this is switched on an AB test runs to test article page email signups",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 14)
-  )
-
   val ABGravityRecommendations = Switch("A/B Tests", "ab-gravity-recommendations",
     "Enables gravity beacon code on the site",
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 24)
@@ -337,6 +327,11 @@ object Switches extends Collections {
   val TagLinking = Switch("Feature Switches", "tag-linking",
     "If this is switched on articles that have no in body links will auto link to their tags where possible",
     safeState = Off, sellByDate = endOfQ4
+  )
+
+  val ArticleTruncation = Switch("A/B Tests", "ab-article-truncation",
+    "If this is switched on an A/B test runs to prove the effectiveness of truncatiung articles.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
   )
 
   // Sport Switch
@@ -434,7 +429,6 @@ object Switches extends Collections {
     LiveCricketSwitch,
     LiveStatsSwitch,
     LiveAbTestStatsSwitch,
-    UserzoomSwitch,
     CssFromStorageSwitch,
     ElasticSearchSwitch,
     ArticleKeywordsSwitch,
@@ -446,7 +440,7 @@ object Switches extends Collections {
     IdentityFilmAwardsSwitch,
     ABAa,
     ABGravityRecommendations,
-    ABEmailSignup,
+    ArticleTruncation,
     ABAdLabels,
     NetworkFrontUkAlpha,
     NetworkFrontUsAlpha,
