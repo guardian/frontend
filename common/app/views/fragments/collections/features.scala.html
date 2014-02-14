@@ -3,7 +3,7 @@
 <div class="collection-wrapper">
     <ul class="unstyled l-row l-row--items-2 collection">
         @items.slice(0, 2).zipWithIndex.map{ case (trail, index) =>
-            @fragments.items.rowPattern.standard(trail, index, containerIndex)
+            @fragments.collections.items.standard(trail, index, containerIndex)
         }
     </ul>
 </div>
@@ -15,11 +15,7 @@
         <div class="collection-wrapper">
             <ul class="unstyled l-row l-row--items-3 collection">
                 @items.zipWithIndex.map{ case (trail, index) =>
-                    @trail match {
-                        case g: Gallery                      => { @fragments.items.rowPattern.standardGallery(g, index + 2, containerIndex) }
-                        case v: Video                        => { @fragments.items.rowPattern.standardVideo(v, index + 2, containerIndex) }
-                        case t                               => { @fragments.items.rowPattern.standard(t, index + 2, containerIndex) }
-                    }
+                    @fragments.collections.items.standard(trail, index + 3, containerIndex)
                 }
                 @style.adSlot.map { adSlot =>
                     <li class="l-row__item l-row__item--mpu-300 hide-on-mobile">
