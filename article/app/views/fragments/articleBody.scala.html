@@ -73,6 +73,8 @@
                         <div class="article-body u-cf from-content-api"
                         itemprop="@if(article.isReview){reviewBody} else {articleBody}">
                             @BodyCleaner(article, article.body)
+
+                            <div class="ad-slot ad-slot__commercial-component" data-median="Bottom3"></div>
                         </div>
 
                         @if(ArticleKeywordsSwitch.isSwitchedOn){
