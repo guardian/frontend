@@ -31,7 +31,7 @@
     		background-color: $c-neutral6;
     		padding: $baseline*2 $baseline*2 $baseline*4 $baseline*2;
     		margin-bottom: 0;
-    		@include font-size(18);
+    		@include fs-headline(2);
     	}
     }
 
@@ -46,10 +46,7 @@
 		padding: 8px 0 0 30px;
 
 		color: $c-neutral1;
-		@include font-size(16, 20);
-		font-family: $serifheadline;
-		font-weight: normal;
-		-webkit-font-smoothing: antialiased;
+		@include fs-headline(1);
 
 		img {
 			width: auto;
@@ -78,9 +75,7 @@
 		top: 2px;
 		left: 0;
 		color: $c-neutral4;
-		font-family: $serifheadline;
-		font-weight: 200;
-		@include font-size(40);
+		@include fs-headline(7);
     }
 
     .list__img {
@@ -92,10 +87,8 @@
         margin-bottom: $baseline;
 
 		color: $c-neutral1;
-		font-family: $serifheadline;
-		font-weight: normal;
-		@include font-size(15);
-		-webkit-font-smoothing: antialiased;
+		@include fs-bodyCopy(1);
+        font-weight: normal;
 		text-overflow: ellipsis;
 		white-space: pre;
 		overflow: hidden;
@@ -103,9 +96,7 @@
 
     .list__author {
     	color: #8F8F8F;
-		font-family: $sans-serif;
-		font-weight: normal;
-		@include font-size(13, 15);
+		@include fs-data(3);
     }
 
     .list__price {
@@ -113,7 +104,7 @@
     	display: inline-block;
     	vertical-align: top;
     	text-align: right;
-        @include font-size(14, 18);
+        @include fs-bodyCopy(1);
     }
 
     .commercial__foot {
@@ -133,7 +124,7 @@
             @include box-sizing(border-box);
             padding: 8px 0 8px 8px;
             float: left;
-            @include font-size(14, 16);
+            @include fs-bodyCopy(1);
     	}
 
         .text-input {
@@ -142,7 +133,7 @@
 			background-position: 6px center;
             padding: $baseline;
             padding-left: 1.8em;
-			@include font-size(14);
+			@include fs-bodyCopy(1);
             float: left;
             overflow: hidden;
         }
@@ -151,8 +142,8 @@
             width: 22%;
             min-width: 0;
             background-color: #791052;
-            padding: rem(7.5px) 0;
-            margin: 0;
+            padding: rem(8px) 0;
+            margin: 1px 0 0 0;
             font-weight: bold;
             float: left;
         }
@@ -207,35 +198,32 @@
 		    margin-top: 20px;
             text-align: left;
 		}
-
-	    .commercial__search {
-
-	    	@include placeholder {
-	    		color: #FFF;
-	    	}
-
-	    	label {
-	    		width: 37%;
-	    		display: block;
-                @include font-size(12, 16);
-	    	}
-
-	        .text-input {
-	            width: 43%;
-	            @include font-size(15);
-	        }
-
-	        .submit-input {
-	            width: 20%;
-	            @include font-size(15);
-	        }
-	    }
     }
 
     @include mq($from: desktop) {
 
         .list__title {
             white-space: normal;
+        }
+
+        .commercial__search {
+
+            @include placeholder {
+                color: #FFF;
+            }
+
+            label {
+                width: 37%;
+                display: block;
+            }
+
+            .text-input {
+                width: 43%;
+            }
+
+            .submit-input {
+                width: 20%;
+            }
         }
     }
 }
