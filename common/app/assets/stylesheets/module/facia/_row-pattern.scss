@@ -148,12 +148,14 @@
                 .item__media-wrapper {
                     width: 50%;
                     float: left;
-                    margin-top: 0;
+                    margin-top: $gs-baseline/3;
                     padding-right: $gs-gutter/4;
                     margin-right: $gs-gutter/4;
                     @include box-sizing(border-box);
                 }
-
+                .item__image-container {
+                    margin-top: 0;
+                }
             }
         }
         @include mq(tablet) {

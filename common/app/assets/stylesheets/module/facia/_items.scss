@@ -406,8 +406,8 @@ $cta-icon-gap: 2px;
 .item__media-wrapper--has-icon {
     .item__cta {
         position: absolute;
-        top: 8px;
-        left: 8px;
+        top: $gs-baseline/3;
+        left: $gs-baseline/3;
     }
     .i {
         margin-bottom: $cta-icon-gap;
