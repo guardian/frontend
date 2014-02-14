@@ -13,7 +13,8 @@ object Global extends AdminLifecycle with CloudWatchApplicationMetrics with Resu
   ))
 
   def scheduleJobs() {
-    Jobs.schedule("FrontPressJob", "0 * * * * ?") {
+    //Every 3 minutes
+    Jobs.schedule("FrontPressJob", "0 0/3 * 1/1 * ? *") {
       RefreshFrontsJob.run()
     }
   }
