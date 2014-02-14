@@ -1,4 +1,4 @@
-@(trail: model.Trail, index: Int, containerIndex: Int, element: String = "li", classes: String = "")(implicit request: RequestHeader)
+@(trail: Trail, index: Int, containerIndex: Int, element: String = "li", classes: String = "")(implicit request: RequestHeader)
 
 <@element
     class="@GetClasses.forItem(trail, containerIndex == 0)"
