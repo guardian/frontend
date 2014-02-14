@@ -559,15 +559,16 @@ $show-more-icon: (
     position: relative;
 }
 .i--clock {
-    width: 31px;
-    height: 31px;
+    width: 32px;
+    height: 32px;
     background-color: $c-newsDefault;
     position: absolute;
     left: 0;
+    margin-top: 3px;
 
     .i {
         position: absolute;
-        left: 14px;
-        top: 6px;
+        left: 15px;
+        top: 5px;
     }
 }
