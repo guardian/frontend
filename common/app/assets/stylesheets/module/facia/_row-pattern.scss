@@ -142,18 +142,30 @@
                 display: block;
             }
         }
+        @include mq($to: tablet) {
+            .item--gallery,
+            .item--video {
+                .item__media-wrapper {
+                    width: 50%;
+                    float: left;
+                    margin-top: 0;
+                    padding-right: $gs-gutter/4;
+                    margin-right: $gs-gutter/4;
+                    @include box-sizing(border-box);
+                }
+
+            }
+        }
         @include mq(tablet) {
-            .item--has-image .item__media-wrapper,
-            .item--has-image .item__image-container,
+            .item__media-wrapper,
+            .item__image-container,
             .item--has-no-image .item__standfirst {
                 display: block;
             }
         }
-        .item--has-no-image {
-            .item__title {
-                @include mq(desktop) {
-                    @include fs-headline(2, true);
-                }
+        @include mq(desktop) {
+            .item--has-no-image .item__title {
+                @include fs-headline(2, true);
             }
         }
     }

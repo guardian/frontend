@@ -597,8 +597,7 @@ object GetClasses {
     val baseClasses: Seq[String] = Seq(
       "l-row__item",
       "collection__item",
-      s"collection__item--volume-${trail.group.getOrElse("0")}",
-      s"collection__item--tone-${VisualTone(trail)}"
+      s"collection__item--volume-${trail.group.getOrElse("0")}"
     )
     val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail)}
     RenderClasses(classes:_*)

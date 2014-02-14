@@ -126,7 +126,7 @@
         }
 
         @* we want this to happen ASAP to avoid FOUC *@
-        var connectionClass = 'connection--' + (isConnectionLow() ? '' : 'not-') + 'low';
+        var connectionClass = 'connection--' + (isConnectionLow() ? 'not-' : 'not-') + 'low';
         var htmlClassNames = connectionClass;
 
         @* http://modernizr.com/download/#-svg *@
