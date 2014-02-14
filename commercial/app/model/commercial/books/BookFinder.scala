@@ -23,14 +23,7 @@ object BookFinder extends ExecutionContexts with Logging {
           title = title,
           author = Some(author),
           isbn = isbn,
-          jacketUrl = factbox.picture,
-          price = 0,
-          offerPrice = None,
-          description = None,
-          buyUrl = "",
-          position = 0,
-          category = "",
-          keywords = Nil
+          jacketUrl = factbox.picture
         )
       }
     }).recover {
