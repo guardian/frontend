@@ -73,8 +73,6 @@
                         <div class="article-body u-cf from-content-api"
                         itemprop="@if(article.isReview){reviewBody} else {articleBody}">
                             @BodyCleaner(article, article.body)
-
-                            <div class="ad-slot ad-slot__commercial-component" data-median="Bottom3"><div class="ad-container"></div></div>
                         </div>
 
                         @if(ArticleKeywordsSwitch.isSwitchedOn){
@@ -82,6 +80,8 @@
                                 @fragments.keywordList(article.keywords)
                             </div>
                         }
+
+                        <div class="ad-slot ad-slot__commercial-component" data-median="Bottom3"><div class="ad-container"></div></div>
                     </div>
 
                     <div class="social-wrapper">
