@@ -1,18 +1,85 @@
 @(model: TablesPage)(implicit request: RequestHeader)
 @import support._
 @import org.joda.time.DateTime
+<h2 class="article-zone left-col-deport tone-news tone-accent-border">
+    <span class="left-col-deport__body">
+        <a class="tone-colour" data-link-name="article section" href="http://www.theguardian.com/football/tables">football tables</a>
+    </span>
+</h2>
 
-<div class="monocolumn-wrapper tone-news">
-    <h2 class="article-zone hide-on-mobile-if-localnav sport-header">
-        <a class="tone-colour" data-link-name="article section" href="@LinkTo{/football}">football</a>
-    </h2>
+
+<div class="article-wrapper monocolumn-wrapper tone-news">
+    <article id="article" class="article" itemprop="mainContentOfPage" itemscope="" itemtype="http://schema.org/Article" role="main">
+        <div class="article__inner article__inner--head">
+            <header class="article__head">
+                @filterBar(model.page.webTitle)
+                @filters(model.filters, model.page, "tables")
+            </header>
+
+            <div class="after-header"></div>
+        </div>
+
+        <div class="article__columning-wrapper">
+            <div class="article__main-column">
+                @model.tables.map { table =>
+
+                <div class="article__meta-container">
+                    <h2 class="article__meta-heading"><a href="@table.competition.url">@table.competition.fullName</a></h2>
+                    @if(model.singleCompetition) {
+                        <p class="article__dateline" aria-hidden="true">
+                            <i class="i i-clock-grey relative-timestamp__icon"></i>
+                            <time itemprop="datePublished" datetime="2014-02-14T09:39:55+0000" data-timestamp="1392370795000">
+                                Last updated: a minute ago
+                            </time>
+                        </p>
+                    }
+                </div>
+
+                <div class="article__container u-cf">
+                    <table class="table-football">
+                        @if(!table.multiGroup) {
+                            <thead class="table-football-header">
+                                @tableColumnHeaders()
+                            </thead>
+                        }
+
+                        @table.groups.map{ group =>
+                            <tbody class="table-football-body">
+                                @if(table.multiGroup) {
+                                    @group.round.map { round =>
+                                        @round.name.map { name =>
+                                        <tr>
+                                            <th colspan="20" class="table-football-leftaligned">@name</th>
+                                        </tr>
+                                        <!-- we repeat this nav for group tables -->
+                                        @tableColumnHeaders()
+                                    }
+                                }
+                            }
+
+                            @group.entries.zipWithRowInfo.map{ case (entry, row) => @tableRow(entry, row) }
+                            </tbody>
+                        }
+                    </table>
+                </div>
+                }
+
+                @footballCompetitionNav(model.comp)
+            </div>
+
+            <div class="article__secondary-column" aria-hidden="true">
+                <div class="article__secondary-column__inner article__secondary-column__inner--fill-vertically">
+                    PLAYERS AND EVERYTHING YOU COULDTHIONK OF!
+                </div>
+            </div>
+        </div>
+    </article>
+</div>
+
+@********************************
     <div class="live-matches-dateline">
         <p class="dateline"><i class="i i-date"></i> <span>Last updated: a minute ago</span></p>
     </div>
-
-    @filterBar(model.page.webTitle)
-
-    @filters(model.filters, model.page, "tables")
 
     <ol class="competitions unstyled football-table-container component" data-link-name="tables" role="main">
 
@@ -40,7 +107,7 @@
                                 <tr>
                                     <th colspan="20" class="table-football-leftaligned">@name</th>
                                 </tr>
-                                @* we repeat this nav for group tables *@
+                                <!-- we repeat this nav for group tables -->
                                 @tableColumnHeaders()
                             }
                         }
@@ -64,3 +131,4 @@
 <div class="article-wrapper monocolumn-wrapper tone-news">
     @fragments.mostPopularPlaceholder("sport")
 </div>
+*********************@
