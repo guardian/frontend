@@ -1,12 +1,12 @@
 import common.ExecutionContexts
-import model.football.PA
+import football.model.PA
 import org.scalatest.{ShouldMatchers, FreeSpec}
 import play.api.mvc.{AnyContentAsFormUrlEncoded, MultipartFormData}
 import play.api.test._
 import play.api.test.Helpers._
 import scala.concurrent.{Await, Future}
 import scala.concurrent.duration._
-import services.football.GetPaClient
+import football.services.GetPaClient
 import test.Fake
 import xml.Utility.escape
 

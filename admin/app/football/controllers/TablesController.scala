@@ -8,10 +8,10 @@ import util.FutureZippers
 import common.ExecutionContexts
 import org.joda.time.DateMidnight
 import java.net.URLDecoder
-import model.football.{PrevResult, PA}
+import football.model.{PrevResult, PA}
 import play.api.templates.Html
 import scala.concurrent.Future
-import services.football.GetPaClient
+import football.services.GetPaClient
 import model.{NoCache, Cached}
 
 

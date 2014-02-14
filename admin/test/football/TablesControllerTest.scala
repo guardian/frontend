@@ -1,6 +1,6 @@
 import common.ExecutionContexts
 import controllers.admin.TablesController
-import model.football.PA
+import football.model.PA
 import org.scalatest.{ShouldMatchers, FreeSpec}
 import play.api.mvc.{AnyContentAsFormUrlEncoded, MultipartFormData}
 import play.api.test._
@@ -8,7 +8,7 @@ import play.api.test.Helpers._
 import scala.annotation.tailrec
 import scala.concurrent.{Await, Future}
 import scala.concurrent.duration._
-import services.football.GetPaClient
+import football.services.GetPaClient
 import test.Fake
 import scala.language.postfixOps
 
@@ -53,7 +53,7 @@ class TablesControllerTest extends FreeSpec with GetPaClient with ExecutionConte
     status(result) should equal(OK)
     val content = contentAsString(result)
     content should include("Spurs")
-    countSubstring(content, "<tr>") should equal(21)
+    countSubstring(content, "<tr") should equal(21)
   }
 
   def countSubstring(str1:String, str2:String):Int={

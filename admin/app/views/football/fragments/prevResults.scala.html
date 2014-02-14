@@ -1,4 +1,4 @@
-@(teamResults: List[model.football.PrevResult])
+@(teamResults: List[_root_.football.model.PrevResult])
 
 @teamResults.filter(_.hasResult).take(5).map { result =>
   @if(result.won) {

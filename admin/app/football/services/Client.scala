@@ -1,4 +1,4 @@
-package services.football
+package football.services
 
 import scala.concurrent.{ExecutionContext, Future}
 import play.api.libs.ws.WS

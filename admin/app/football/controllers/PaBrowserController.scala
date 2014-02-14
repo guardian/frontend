@@ -3,7 +3,7 @@ package controllers.admin
 import play.api._
 import play.api.mvc._
 import play.api.Play.current
-import services.football.{GetPaClient, Client}
+import football.services.{GetPaClient, Client}
 import common.{Logging, ExecutionContexts}
 import org.joda.time.DateMidnight
 import java.net.URLDecoder

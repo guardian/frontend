@@ -1,4 +1,4 @@
-package model.football
+package football.model
 
 import org.joda.time.DateTime
 import pa.{Result, MatchDayTeam}

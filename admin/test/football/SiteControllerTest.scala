@@ -4,7 +4,7 @@ import play.api.test._
 import play.api.test.Helpers._
 import scala.concurrent.{Await, Future}
 import scala.Some
-import services.football.GetPaClient
+import football.services.GetPaClient
 import test.Fake
 
 

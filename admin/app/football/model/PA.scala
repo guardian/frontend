@@ -1,4 +1,4 @@
-package model.football
+package football.model
 
 import pa.{Team, Season}
 import org.joda.time.DateMidnight

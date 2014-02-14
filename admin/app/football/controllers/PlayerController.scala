@@ -3,13 +3,13 @@ package controllers.admin
 import play.api._
 import play.api.mvc._
 import play.api.Play.current
-import services.football.{GetPaClient, Client}
+import football.services.{GetPaClient, Client}
 import pa.{Player, TeamEventMatch}
 import util.FutureZippers
 import common.ExecutionContexts
 import org.joda.time.DateMidnight
 import java.net.URLDecoder
-import model.football.{PrevResult, PA}
+import football.model.{PrevResult, PA}
 import play.api.templates.Html
 import scala.concurrent.Future
 import model.{NoCache, Cached}
