@@ -540,6 +540,19 @@ $show-more-icon: (
     background-size: contain;
 }
 
+.item--video,
+.item--gallery {
+    .item__title .i {
+        position: relative;
+        top: 4px;
+    }
+    @include mq(tablet) {
+        .item__title .i {
+            display: none;
+        }
+    }
+}
+
 .i--circle {
     @include rounded-corners(50%);
     display: block;
