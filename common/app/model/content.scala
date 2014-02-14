@@ -222,7 +222,7 @@ object Content {
           apiUrl          = "",
           references      = Nil,
           bio             = None,
-          bylineImageUrl  = None
+          bylineImageUrl  = (tagJson \ "bylineImageUrl").asOpt[String]
       )
     }
 

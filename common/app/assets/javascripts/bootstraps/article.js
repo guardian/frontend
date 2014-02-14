@@ -3,6 +3,7 @@ define([
     "common/utils/mediator",
     "common/utils/detect",
     "common/$",
+    "fence",
     "common/modules/ui/autoupdate",
     "common/modules/live/filter",
     "common/modules/live/summary",
@@ -18,6 +19,7 @@ define([
     mediator,
     detect,
     $,
+    fence,
     AutoUpdate,
     LiveFilter,
     LiveSummary,
@@ -88,7 +90,7 @@ define([
 
             common.mediator.on('page:article:ready', function(config, context) {
                 if (config.page.commentable && config.switches.discussion) {
-                    var discussionLoader = new DiscussionLoader(context, common.mediator);
+                    var discussionLoader = new DiscussionLoader(context, common.mediator, { 'switches': config.switches });
                     discussionLoader.attachTo($('.discussion')[0]);
                 }
             });
@@ -136,6 +138,14 @@ define([
                     }
                 }
             });
+        },
+
+        initFence: function() {
+            common.mediator.on('page:article:ready', function(config, context) {
+                $('.fenced').each(function(el) {
+                    fence.render(el);
+                });
+            });
         }
     };
 
@@ -148,6 +158,7 @@ define([
             modules.initCricket();
             modules.externalLinksCards();
             modules.initOpen(config);
+            modules.initFence();
         }
         common.mediator.emit("page:article:ready", config, context);
     };
