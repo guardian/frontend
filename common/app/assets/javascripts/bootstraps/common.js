@@ -190,10 +190,13 @@ define([
 
         initRightHandComponent: function(config, context) {
 
+            console.log("Init: " + config.page.pageId);
+
             if(config.switches.rightHandMostPopular && config.page.contentType === 'Article') {
               var r = new RightHandComponentFactory({
                   wordCount: config.page.wordCount,
-                  mediator: mediator
+                  mediator: mediator,
+                  pageId: config.page.pageId
               });
            }
         },

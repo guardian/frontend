@@ -152,6 +152,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
+  val UserzoomSwitch = Switch("Analytics", "userzoom",
+    "Turns on userzoom survey popups",
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 15)
+  )
+
   val OphanSwitch = Switch("Analytics", "ophan",
     "Enables the new Ophan tracking javascript",
     safeState = On, never
@@ -182,11 +187,6 @@ object Switches extends Collections {
   val DiscussionSwitch = Switch("Discussion", "discussion",
     "If this switch is on, comments are displayed on articles. Turn this off if the Discussion API is blowing up.",
     safeState = Off, sellByDate = never
-  )
-
-  val DiscussionVerifiedEmailPosting = Switch("Discussion", "discussion-verified-email-posting",
-    "If this switch is on, posters to discussions must have a verified email address.",
-    safeState = Off, sellByDate = endOfQ4
   )
 
   // Identity Switches
@@ -281,7 +281,7 @@ object Switches extends Collections {
 
   val FacebookAutoSigninSwitch = Switch("Feature Switches", "facebook-autosignin",
     "If this switch is on then users who have previously authorized the guardian app in facebook and who have not recently signed out are automatically signed in.",
-    safeState = Off, sellByDate = endOfQ4
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 15)
   )
 
   val IdentityFormstackSwitch = Switch("Feature Switches", "id-formstack",
@@ -314,9 +314,20 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
+  val ABEmailSignup = Switch("A/B Tests", "ab-email-signup",
+    "If this is switched on an AB test runs to test article page email signups",
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 14)
+  )
+
   val ABGravityRecommendations = Switch("A/B Tests", "ab-gravity-recommendations",
     "Enables gravity beacon code on the site",
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 24)
+  )
+
+  val ABOutbrainRecommendations = Switch("A/B Tests", "ab-outbrain-recommendations",
+    "Enables outbrain tracking code and populates the right-hand component with a list of their recommendations",
+    //TODO - do not commit this!
+    safeState = On, sellByDate = new DateMidnight(2014, 2, 28)
   )
 
   val ABAdLabels = Switch("A/B Tests", "ab-ad-labels",
@@ -357,17 +368,17 @@ object Switches extends Collections {
 
   val NetworkFrontUkAlpha = Switch("Facia", "network-front-uk-alpha",
     "If this is switched on then the uk alpha network fronts will be served if a GU_UK_ALPHA cookie has been dropped",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 17)
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 13)
   )
 
   val NetworkFrontUsAlpha = Switch("Facia", "network-front-us-alpha",
     "If this is switched on then the us alpha network fronts will be served if a GU_US_ALPHA cookie has been dropped",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 17)
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 13)
   )
 
   val NetworkFrontAuAlpha = Switch("Facia", "network-front-au-alpha",
     "If this is switched on then the au alpha network fronts will be served if a GU_AU_ALPHA cookie has been dropped",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 17)
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 13)
   )
 
   // Facia Tool Switches
@@ -407,7 +418,6 @@ object Switches extends Collections {
     VideoAdvertSwitch,
     AudienceScienceSwitch,
     DiscussionSwitch,
-    DiscussionVerifiedEmailPosting,
     IdentityEmailVerificationSwitch,
     OpenCtaSwitch,
     FontSwitch,
@@ -424,6 +434,7 @@ object Switches extends Collections {
     LiveCricketSwitch,
     LiveStatsSwitch,
     LiveAbTestStatsSwitch,
+    UserzoomSwitch,
     CssFromStorageSwitch,
     ElasticSearchSwitch,
     ArticleKeywordsSwitch,
@@ -435,6 +446,8 @@ object Switches extends Collections {
     IdentityFilmAwardsSwitch,
     ABAa,
     ABGravityRecommendations,
+    ABOutbrainRecommendations,
+    ABEmailSignup,
     ABAdLabels,
     NetworkFrontUkAlpha,
     NetworkFrontUsAlpha,

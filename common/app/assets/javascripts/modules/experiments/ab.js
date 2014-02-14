@@ -7,6 +7,7 @@ define([
     //Current tests
     'common/modules/experiments/tests/aa',
     'common/modules/experiments/tests/gravity-recommendations',
+    'common/modules/experiments/tests/outbrain-recommendations',
     'common/modules/experiments/tests/ad-labels'
 ], function (
     common,
@@ -16,12 +17,14 @@ define([
 
     Aa,
     GravityRecommendations,
+    OutbrainRecommendations,
     AdLabels
     ) {
 
     var TESTS = [
             new Aa(),
             new GravityRecommendations(),
+            new OutbrainRecommendations(),
             new AdLabels()
        ],
        participationsKey = 'gu.ab.participations';
