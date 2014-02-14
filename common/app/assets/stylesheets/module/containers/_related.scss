@@ -180,25 +180,6 @@
 
     }
 
-    .item--dark,
-    .item--live {
-
-        @include mq(tablet, rightCol) {
-            &:first-child {
-                .item__title {
-                    @include rem((
-                        padding-left: $gs-gutter*0.4,
-                        padding-right: $gs-gutter*0.4
-                    ));
-                }
-            }
-        }
-
-        .item__meta {
-            border-bottom: none;
-        }
-    }
-
     .item__title {
         @include box-sizing(border-box);
         margin-top: 0;
@@ -219,6 +200,9 @@
 
         @include mq(rightCol) {
             @include rem((min-height: $gs-row-height*3 - $gs-baseline)); //96px
+        }
+        .i {
+            display: none;
         }
     }
 
