@@ -3,7 +3,7 @@
 <div class="collection-wrapper">
     <ul class="unstyled l-row l-row--items-3 collection">
         @items.slice(0, 3).zipWithIndex.map{ case (trail, index) =>
-            @fragments.items.rowPattern.simplecomment(trail, index, containerIndex, "item--hide-tone-border")
+            @fragments.collections.items.simplecomment(trail, index, containerIndex, "item--hide-tone-border")
         }
     </ul>
 </div>
@@ -12,11 +12,7 @@
         <div class="collection-wrapper">
             <ul class="unstyled l-row l-row--items-4 collection">
                 @items.zipWithIndex.map{ case (trail, index) =>
-                    @trail match {
-                        case g: Gallery                      => { @fragments.items.rowPattern.standardGallery(g, index + 3, containerIndex) }
-                        case v: Video                        => { @fragments.items.rowPattern.standardVideo(v, index + 3, containerIndex) }
-                        case t                               => { @fragments.items.rowPattern.standard(t, index + 3, containerIndex) }
-                    }
+                    @fragments.collections.items.standard(trail, index + 3, containerIndex)
                 }
             </ul>
         </div>

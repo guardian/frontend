@@ -15,7 +15,7 @@ define(function (require) {
 
 			absId = pluginId + '!' + resId;
 
-			io.read(resId, function (text) {
+			io.read(req.toUrl(resId), function (text) {
 				io.write(_define(absId, '', '', '', '"' + jsEncode(text) + '"'));
 			}, io.error);
 		}

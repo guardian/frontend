@@ -1,0 +1,13 @@
+{
+  "name": "fence",
+  "version": "0.2.11",
+  "main": "fence.js",
+  "ignore": [
+    "**/.*",
+    "TODO",
+    "NOTES",
+    "node_modules",
+    "examples",
+    "tests"
+  ]
+}

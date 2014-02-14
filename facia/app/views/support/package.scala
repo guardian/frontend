@@ -61,6 +61,7 @@ object GetContainer {
       ("uk/news/regular-stories", NewsContainer()),
       ("uk/sport/regular-stories", SportContainer()),
       ("uk/tone/features/feature-stories", FeaturesContainer(adSlot = Some(AdSlot.First))),
+      ("uk-alpha/features/feature-stories", FeaturesContainer(adSlot = Some(AdSlot.First))),
       ("uk/commentisfree/regular-stories", CommentContainer()),
       ("uk/culture/regular-stories", FeaturesContainer(adSlot = Some(AdSlot.Second))),
       ("uk/contributors/feature-stories", CommentContainer()),

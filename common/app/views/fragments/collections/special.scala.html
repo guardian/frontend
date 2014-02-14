@@ -3,11 +3,7 @@
 <div class="collection-wrapper">
     <ul class="unstyled l-row l-row--items-4 collection">
         @items.slice(0, 4).zipWithIndex.map{ case (trail, index) =>
-            @trail match {
-                case g: Gallery                      => { @fragments.items.rowPattern.standardGallery(g, index, containerIndex) }
-                case v: Video                        => { @fragments.items.rowPattern.standardVideo(v, index, containerIndex) }
-                case t                               => { @fragments.items.rowPattern.standard(t, index, containerIndex) }
-            }
+            @fragments.collections.items.standard(trail, index + 3, containerIndex)
         }
     </ul>
 </div>

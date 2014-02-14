@@ -152,11 +152,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val UserzoomSwitch = Switch("Analytics", "userzoom",
-    "Turns on userzoom survey popups",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 15)
-  )
-
   val OphanSwitch = Switch("Analytics", "ophan",
     "Enables the new Ophan tracking javascript",
     safeState = On, never
@@ -286,7 +281,7 @@ object Switches extends Collections {
 
   val FacebookAutoSigninSwitch = Switch("Feature Switches", "facebook-autosignin",
     "If this switch is on then users who have previously authorized the guardian app in facebook and who have not recently signed out are automatically signed in.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 15)
+    safeState = Off, sellByDate = endOfQ4
   )
 
   val IdentityFormstackSwitch = Switch("Feature Switches", "id-formstack",
@@ -317,11 +312,6 @@ object Switches extends Collections {
   val ABAa = Switch("A/B Tests", "ab-abcd",
     "If this is switched on an AA test runs to prove the assignment of users in to segments is working reliably.",
     safeState = Off, sellByDate = endOfQ4
-  )
-
-  val ABEmailSignup = Switch("A/B Tests", "ab-email-signup",
-    "If this is switched on an AB test runs to test article page email signups",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 14)
   )
 
   val ABGravityRecommendations = Switch("A/B Tests", "ab-gravity-recommendations",
@@ -434,7 +424,6 @@ object Switches extends Collections {
     LiveCricketSwitch,
     LiveStatsSwitch,
     LiveAbTestStatsSwitch,
-    UserzoomSwitch,
     CssFromStorageSwitch,
     ElasticSearchSwitch,
     ArticleKeywordsSwitch,
@@ -446,7 +435,6 @@ object Switches extends Collections {
     IdentityFilmAwardsSwitch,
     ABAa,
     ABGravityRecommendations,
-    ABEmailSignup,
     ABAdLabels,
     NetworkFrontUkAlpha,
     NetworkFrontUsAlpha,

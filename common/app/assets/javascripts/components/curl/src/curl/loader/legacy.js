@@ -51,7 +51,7 @@
  * curl.config({
  *     paths: {
  *         backbone: {
- *             location: 'common/modules/backbone-1.3.1/backbone.js',
+ *             location: 'modules/backbone-1.3.1/backbone.js',
  *             config: {
  *                 loader: 'curl/loader/legacy',
  *                 exports: 'Backbone.noConflict()',
@@ -70,7 +70,7 @@
  * curl.config({
  *     packages: {
  *         jqueryui: {
- *             location: 'common/modules/jquery-1.6.3/jqueryui.js#',
+ *             location: 'modules/jquery-1.6.3/jqueryui.js#',
  *             config: {
  *                 loader: 'curl/loader/legacy',
  *                 factory: function (fullId) {
@@ -174,7 +174,8 @@ define(/*=='curl/loader/legacy',==*/ ['curl/_privileged'], function (priv) {
 					}
 				}
 				// define the module as if it were a regular module.
-				define(resId, exported);
+				// Note: the parens hide the "define signature" from cram.js
+				(define)(resId, exported);
 				// also return the plugin-syntax module ("legacy!foo").
 				callback(exported);
 			}
@@ -190,8 +191,9 @@ define(/*=='curl/loader/legacy',==*/ ['curl/_privileged'], function (priv) {
 	};
 
 	function nameWithExt (name, defaultExt) {
-		return name.lastIndexOf('.') <= name.lastIndexOf('/') ?
-			name + '.' + defaultExt : name;
+		return name.substr(name.length - 3) !== '.' + defaultExt
+			? name + '.' + defaultExt
+			: name;
 	}
 
 });

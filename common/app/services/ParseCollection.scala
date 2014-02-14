@@ -2,7 +2,7 @@ package services
 
 import common.FaciaMetrics.S3AuthorizationError
 import common._
-import conf.{ContentApi, Configuration}
+import conf.{SwitchingContentApi => ContentApi, Configuration}
 import model.{Collection, Config, Content}
 import play.api.libs.json.Json._
 import play.api.libs.json.{JsObject, JsValue}
@@ -138,7 +138,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
           lazy val supportingLinks: List[CollectionItem] = retrieveSupportingLinks(collectionItem)
           if (!hasParent) getArticles(supportingLinks, edition, hasParent=true) else Future.successful(Nil)
         }
-        val response = ContentApi.item(collectionItem.id, edition).showFields(showFieldsQuery).response
+        val response = ContentApi().item(collectionItem.id, edition).showFields(showFieldsQuery).response
 
         response.onFailure{case t: Throwable => log.warn("%s: %s".format(collectionItem.id, t.toString))}
         supportingAsContent.onFailure{case t: Throwable => log.warn("Supporting links: %s: %s".format(collectionItem.id, t.toString))}
@@ -167,7 +167,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
 
     val newSearch = queryString match {
       case Path(Seg("search" ::  Nil)) => {
-        val search = ContentApi.search(edition)
+        val search = ContentApi().search(edition)
           .showElements("all")
           .pageSize(20)
         val newSearch = queryParamsWithEdition.foldLeft(search){
@@ -178,7 +178,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
         }
       }
       case Path(id)  => {
-        val search = ContentApi.item(id, edition)
+        val search = ContentApi().item(id, edition)
           .showElements("all")
           .showEditorsPicks(true)
           .pageSize(20)
