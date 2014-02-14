@@ -14,8 +14,9 @@
 
             <div class="col-xs-6">
                 <input type="radio" name="focus" value="team" id="focus-on-team" />
-                <label for="focus-on-team">Focus on team</label>
+                <label for="focus-on-team">Focus on team(s)</label>
                 @views.html.football.fragments.chooseTeam("teamId", teams)
+                @views.html.football.fragments.chooseTeam("team2Id", teams)
             </div>
         </div>
 

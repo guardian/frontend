@@ -161,6 +161,7 @@ GET         /admin/football/tables                                              
 POST        /admin/football/tables/league                                                                            controllers.admin.TablesController.redirectToTable
 GET         /admin/football/tables/league/:competitionId                                                             controllers.admin.TablesController.leagueTable(competitionId: String)
 GET         /admin/football/tables/league/:competitionId/:focus                                                      controllers.admin.TablesController.leagueTableFragment(competitionId: String, focus: String)
+GET         /admin/football/tables/league/:competitionId/:team1Id/:team2Id                                           controllers.admin.TablesController.leagueTable2Teams(competitionId: String, team1Id: String, team2Id: String)
 
 # Commercial
 GET         /commercial/travel/offers.json                                                                           controllers.commercial.TravelOffers.listOffers
