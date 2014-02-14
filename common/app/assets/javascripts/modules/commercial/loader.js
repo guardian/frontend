@@ -21,15 +21,15 @@ define([
     /**
      * Loads commercial components.
      *
-     * BEWARE that this code is depended upon by the ad server. 
-     * 
+     * BEWARE that this code is depended upon by the ad server.
+     *
      * ```
      * require(['common/modules/commercial/loader'], function (CommercialComponent) {
      *   var slot = document.querySelector('[class="js-sticky-upper"]');
      *    var c = new CommercialComponent({config: guardian, oastoken: '%%C%%?'}).travel(slot);
      * })
      * ```
-     * 
+     *
      * @constructor
      * @extends Component
      * @param {Object=} options
@@ -49,12 +49,12 @@ define([
         this.userSegments   = 'seg=' + (new History().getSize() <= 1 ? 'new' : 'repeat');
         this.components     = {
             bestbuy:       this.host + 'money/bestbuys.json?'    + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
-          	book:          this.host + 'books/book/' + this.pageId + '.json',
+            book:          this.host + 'books/book/' + this.pageId + '.json',
             books:         this.host + 'books/bestsellers.json?' + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
-          	masterclasses: this.host + 'masterclasses.json?' + this.userSegments + '&s=' + this.section,
-          	travel:        this.host + 'travel/offers.json?' + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
-          	jobs:          this.host + 'jobs.json?' + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
-          	soulmates:     this.host + 'soulmates/mixed.json?' + this.userSegments + '&s=' + this.section
+            jobs:          this.host + 'jobs.json?'              + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
+            masterclasses: this.host + 'masterclasses.json?'     + this.userSegments + '&s=' + this.section,
+            soulmates:     this.host + 'soulmates/mixed.json?'   + this.userSegments + '&s=' + this.section,
+            travel:        this.host + 'travel/offers.json?'     + this.userSegments + '&s=' + this.section + '&' + this.getKeywords()
         };
         return this;
     };
