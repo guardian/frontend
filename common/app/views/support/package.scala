@@ -645,9 +645,11 @@ object GetClasses {
           "fromage--has-image"
         },
       (trail: Trail, volumeOverride: Int, imageAdjustOverride: String) =>
-        trail.imageAdjust.map{ adjustValue =>
-          s"fromage--imageadjust-$adjustValue"
-        }.getOrElse(""),
+        if (imageAdjustOverride != "none") {
+          s"fromage--imageadjust-${imageAdjustOverride}"
+        } else {
+          s"fromage--imageadjust-${trail.imageAdjust.getOrElse("default")}"
+        },
       (trail: Trail, volumeOverride: Int, imageAdjustOverride: String) =>
         if (volumeOverride != 0) {
           s"fromage--volume-${volumeOverride}"
