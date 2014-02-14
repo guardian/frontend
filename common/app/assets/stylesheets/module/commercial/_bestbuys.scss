@@ -164,6 +164,12 @@
             display: none;
         }
 
+        .commercial__head {
+            @include rem((
+                height: 36px
+            ))
+        }
+
         .commercial__title {
             padding: $baseline;
 
