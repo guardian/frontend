@@ -2,18 +2,7 @@
 
 @defining((VisualTone(trail), containerIndex == 0, containerIndex == 0 && index < 3)) { case (tone, isFirstContainer, inlineImages) =>
     <@element
-        class="item
-               @if(trail.trailPicture(5,3).isEmpty || trail.imageAdjust == Some("hide")){
-                   item--has-no-image
-               }else{
-                   item--has-image
-                   @trail.imageAdjust.map{adjustValue =>
-                       item--imageadjust-@adjustValue
-                   }
-               }
-               @if(trail.isLive){item--live}
-               tone-@tone
-               @if(isFirstContainer){item--force-image-upgrade}"
+        class="@GetClasses.forItem(trail, isFirstContainer)"
         data-link-name="trail | @{index + 1}"
         @trail.discussionId.map{ id => data-discussion-id="@id" }
         data-discussion-closed="@trail.isClosedForComments">

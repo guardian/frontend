@@ -1,8 +1,6 @@
 @(trail: Trail, index: Int, containerIndex: Int, classes: String = "")(implicit request: RequestHeader)
 
-<li class="@RenderClasses(
-    "l-row__item",
-    "collection__item")">
+<li class="@GetClasses.forCollectionItem(trail)">
 
     @fragments.items.simplecomment(trail, index, containerIndex, "div", classes)
 

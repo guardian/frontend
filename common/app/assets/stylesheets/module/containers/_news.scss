@@ -69,7 +69,8 @@
             margin-bottom: $gs-baseline
         ));
 
-        &.collection__item--content-type-media {
+        &.collection__item--content-type-gallery,
+        &.collection__item--content-type-video {
             padding-bottom: 0;
         }
         & + .collection__item {

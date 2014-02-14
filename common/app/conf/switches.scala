@@ -319,11 +319,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val ABEmailSignup = Switch("A/B Tests", "ab-email-signup",
-    "If this is switched on an AB test runs to test article page email signups",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 14)
-  )
-
   val ABGravityRecommendations = Switch("A/B Tests", "ab-gravity-recommendations",
     "Enables gravity beacon code on the site",
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 24)
@@ -446,7 +441,6 @@ object Switches extends Collections {
     IdentityFilmAwardsSwitch,
     ABAa,
     ABGravityRecommendations,
-    ABEmailSignup,
     ABAdLabels,
     NetworkFrontUkAlpha,
     NetworkFrontUsAlpha,

@@ -540,29 +540,13 @@ $show-more-icon: (
     background-size: contain;
 }
 
-.collection__item--content-type-media {
+.item--video,
+.item--gallery {
     .item__title .i {
-        display: inline-block;
-        margin-right: 4px;
         position: relative;
         top: 4px;
     }
     @include mq(tablet) {
-        @include hide-background-on-item-sides;
-        background: $c-neutral1;
-
-        .item__link,
-        .item__title,
-        .item__standfirst {
-            color: #FFFFFF;
-        }
-        .item__title,
-        .item__standfirst {
-            @include rem((
-                padding-left: 7px,
-                padding-right: 7px
-            ));
-        }
         .item__title .i {
             display: none;
         }

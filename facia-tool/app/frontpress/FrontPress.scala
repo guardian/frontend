@@ -127,6 +127,7 @@ trait FrontPress extends Logging {
       ("sectionId", content.section),
       ("id", content.id),
       ("webUrl", content.webUrl),
+      ("tags", generateTags(content.tags)),
       ("trailText", content.trailText),
       ("safeFields", content.delegate.safeFields),
       ("meta", generateItemMeta(content))
