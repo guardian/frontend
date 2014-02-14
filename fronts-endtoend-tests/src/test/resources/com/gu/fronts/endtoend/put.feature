@@ -7,7 +7,6 @@ Feature: As an editor I want to put storyA in the position of storyB in trailblo
     When an editor puts storyA into trailblockX to the position of storyB
     Then storyA should be above storyB
 
-
   Scenario: modify order
     Given trailblockX is an existing trailblock
     And storyB is part of it
@@ -15,3 +14,4 @@ Feature: As an editor I want to put storyA in the position of storyB in trailblo
     And storyA is positioned below storyB
     When an editor puts storyA into trailblockX to the position of storyB
     Then storyA should be above storyB
+

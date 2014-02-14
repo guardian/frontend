@@ -41,4 +41,16 @@ public class Configuration {
 	public String cookieString() {
 		return config.get("userCookie");
 	}
+
+    public String getUsename() {
+        return config.get("username");
+    }
+
+    public String getPassword() {
+        return config.get("password");
+    }
+
+    public String getGASecret() {
+        return config.get("GASecret");
+    }
 }
