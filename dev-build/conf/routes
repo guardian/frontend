@@ -2,7 +2,7 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-GET        /humans.txt                                                                                               controllers.Assets.at(path="/public", file="humans.txt")
+GET         /humans.txt                                                                                              controllers.Assets.at(path="/public", file="humans.txt")
 
 # For dev machines
 GET         /assets/internal/*file                                                                                   controllers.Assets.at(path="/public", file)
@@ -47,7 +47,7 @@ GET         /recent/card.json                                                   
 
 GET         /preference/platform/:platform                                                                           controllers.ChangeViewController.render(platform, page)
 GET         /preference/edition/:edition                                                                             controllers.ChangeEditionController.render(edition)
-GET         /preference/$networkFront<uk|au|us>alpha/:optaction                                                      controllers.ChangeAlphaController.render(networkFront, optaction, page)
+GET         /preference/front-alphas/:optAction                                                                      controllers.ChangeAlphaController.render(optAction, page)
 
 GET         /cards/opengraph/*path.json                                                                              controllers.CardController.opengraph(path)
 
@@ -150,7 +150,6 @@ GET         /commercial/money/bestbuys.json                                     
 GET         /commercial/books/bestsellers.json                                                                       controllers.commercial.BookOffers.bestsellers(format="json")
 
 # Onward journeys
-GET         /onward/popular-onward/*path.json                                                                        controllers.MostPopularOnwardController.popularOnward(path)
 GET         /onward/card/*path.json                                                                                  controllers.OnwardCardController.renderCard(path)
 GET         /onward/trail/*path.json                                                                                 controllers.OnwardCardController.renderTrail(path)
 GET         /onward/most-read.json                                                                                   controllers.MostPopularOnwardController.mostRead()
@@ -163,9 +162,8 @@ GET         /                                                                   
 GET         /$path<(culture|sport|australia|commentisfree|business|money)>                                           controllers.FaciaController.editionRedirect(path)
 GET         /$path<(us|uk|au|us-alpha|uk-alpha|au-alpha)?>                                                           controllers.FaciaController.renderEditionFront(path)
 GET         /$path<(us|uk|au|us-alpha|uk-alpha|au-alpha)?>.json                                                      controllers.FaciaController.renderEditionFrontJson(path)
-GET         /$path<((uk|us|au)/)?(film|travel|football|culture|sport|australia|commentisfree|business|money)>        controllers.FaciaController.renderEditionSectionFront(path)
+GET         /$path<((uk|us|au)/)?(culture|sport|australia|commentisfree|business|money)>                             controllers.FaciaController.renderEditionSectionFront(path)
 GET         /$path<((uk|us|au)/)?(culture|sport|australia|commentisfree|business|money)>.json                        controllers.FaciaController.renderEditionSectionFrontJson(path)
-GET         /$path<(football/arsenal|world/nsa|world/edward-snowden|artanddesign/photography)>                       controllers.FaciaController.renderArbitraryFront(path)
 
 GET         /collection/$id<[\w\d-/]*>/rss                                                                           controllers.FaciaController.renderCollectionRss(id)
 GET         /collection/$id<[\w\d-/]*>                                                                               controllers.FaciaController.renderEditionCollection(id)

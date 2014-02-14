@@ -60,6 +60,7 @@ module.exports = function (grunt) {
                     lodash:       'common/components/lodash-amd/modern',
                     imager:       'common/components/imager.js/src/strategies/container',
                     omniture:     'common/components/omniture/omniture',
+                    fence:        'common/components/fence/fence',
                     'ophan/ng':   'empty:'
                 },
                 optimize: (isDev) ? 'none' : 'uglify2',
@@ -92,6 +93,18 @@ module.exports = function (grunt) {
                 options: {
                     name: 'bootstraps/admin',
                     out: staticTargetDir + 'javascripts/bootstraps/admin.js',
+                    shim: {
+                        postscribe: {
+                            exports: 'postscribe'
+                        },
+                        imager: {
+                            deps: ['common/components/imager.js/src/imager'],
+                            exports: 'Imager'
+                        },
+                        omniture: {
+                            exports: 's'
+                        }
+                    },
                     wrap: {
                         startFile: 'common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js'
                     }
@@ -586,7 +599,10 @@ module.exports = function (grunt) {
             'static': [staticDir],
             staticTarget: [staticTargetDir],
             js: [staticTargetDir + 'javascripts', staticRequireDir],
-            css: [staticTargetDir + 'stylesheets'],
+            css: [
+                staticTargetDir + 'stylesheets',
+                '.sass-cache'
+            ],
             images: [staticTargetDir + 'images'],
             flash: [staticTargetDir + 'flash'],
             fonts: [staticTargetDir + 'fonts'],

@@ -1,4 +1,5 @@
 @(gallery: Gallery, showCta: Boolean = false)(implicit request: RequestHeader)
+@import views.support.ImgSrc
 
 
 <div class="gallerythumbs js-visible u-cf gallerythumbs--@if(gallery.landscapes.length >= 3) {landscapes} else {portraits}" data-link-name="Gallery thumbnail sheet">
@@ -23,7 +24,7 @@
             <a href="@LinkTo{@gallery.url?index=@image.index}"
                class="js-image-upgrade"
                data-link-name="@info.rowNum | gallery thumb"
-               data-src="@ImgSrc(url, Profile("item-{width}"))">
+               data-src="@Html(ImgSrc(url, ImgSrc.Imager))">
                 <img class="gallerythumbs__img responsive-img" alt="@image.altText.getOrElse("")" />
             </a>
         </li>

@@ -38,12 +38,12 @@ object LoadBalancer {
   def refresh() {
     val client = new AmazonElasticLoadBalancingClient(credentials)
     client.setEndpoint("elasticloadbalancing.eu-west-1.amazonaws.com")
-    val foo = client.describeLoadBalancers().getLoadBalancerDescriptions
+    val elbs = client.describeLoadBalancers().getLoadBalancerDescriptions
     client.shutdown()
-    val newLoadBalncers = loadBalancers.map{ lb =>
-      lb.copy(url = foo.find(_.getLoadBalancerName == lb.id).map(_.getDNSName))
+    val newLoadBalancers = loadBalancers.map{ lb =>
+      lb.copy(url = elbs.find(_.getLoadBalancerName == lb.id).map(_.getDNSName))
     }
-    agent.send(newLoadBalncers)
+    agent.send(newLoadBalancers)
   }
 
   def all: Seq[LoadBalancer] = agent()

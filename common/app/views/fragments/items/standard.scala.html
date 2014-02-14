@@ -19,6 +19,7 @@
         data-discussion-closed="@trail.isClosedForComments">
 
         <div class="item__container">
+
             <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border" data-link-name="article">
                 @if(trail.imageAdjust != Some("hide")) {
                     @trail.trailPicture(5,3).map{ imageContainer =>
@@ -46,6 +47,7 @@
                     @RemoveOuterParaHtml(trail.headline)
                 </h@if(isFirstContainer && index == 0){1}else{2}>
             </a>
+
             @if(tone == "comment") {
                 @trail.byline.map { byLine =>
                     <p class="item__byline tone-colour">@Html(byLine)</p>

@@ -16,11 +16,7 @@ define([
 
     return function(container) {
 
-        this._container = container;
-
         this._$container = bonzo(container);
-
-        this._$collection = null;
 
         this._items = [];
 
@@ -29,13 +25,19 @@ define([
         this._className = 'show-more--hidden';
 
         this._$button = bonzo(bonzo.create(
-            '<button class="collection__show-more tone-background tone-news" data-link-name="Show more | 0">' +
-                '<span class="i i-arrow-white-large">Show more</span>' +
+            '<button class="collection__show-more tone-background" data-link-name="Show more | 0">' +
+                '<span class="collection__show-more__icon">' +
+                    '<span class="i i-plus-white-mask"></span>' +
+                    '<span class="i i-plus-white"></span>' +
+                '</span>' +
+                '<span class="u-h">Show more</span>' +
             '</button>'
         ));
 
         this._renderButton = function() {
-            this._$container.append(this._$button);
+            this._$button
+                .addClass('tone-' + (this._$container.attr('data-tone') || 'news'))
+                .insertAfter(this._$container);
             bean.on(this._$button[0], 'click', this.showMore.bind(this));
             mediator.emit('modules:containerShowMore:renderButton', this);
         };
@@ -59,7 +61,7 @@ define([
 
         this.showMore = function(e) {
             this._$button.attr('disabled', true);
-            this._$collection.removeClass(this._className);
+            this._$container.removeClass(this._className);
             bonzo(this._items.splice(0, this._showCount))
                 .removeClass(this._className);
             this._incrementButtonCounter();
@@ -71,12 +73,8 @@ define([
         };
 
         this.addShowMore = function() {
-            this._$collection = $('.js-container--show-more', this._container)
-                .addClass(this._className);
-            if (this._$collection.length === 0) {
-                return false;
-            }
-            this._items = $('.linkslist > .linkslist__item', this._$collection)
+            this._$container.addClass(this._className);
+            this._items = $('.linkslist > .linkslist__item', this._$container)
                 .addClass(this._className)
                 .map(function(item) { return item; });
             this._renderButton();

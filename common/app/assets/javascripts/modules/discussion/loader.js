@@ -48,6 +48,10 @@ Component.define(Loader);
 /** @type {Element} */
 Loader.prototype.context = null;
 
+Loader.prototype.defaultOptions = {
+    switches: {}
+};
+
 /**
  * @type {Object.<string.string>}
  * @override
@@ -138,7 +142,7 @@ Loader.prototype.loadComments = function(args) {
         loadingElem = bonzo.create('<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>')[0],
         commentId = this.getCommentIdFromHash(),
         showComments = args.showLoader || commentId || window.location.hash === '#comments';
-        
+
 
     if (args.showLoader) {
         // Comments are being loaded in the no-top-comments-available context
@@ -265,7 +269,8 @@ Loader.prototype.renderCommentBox = function() {
     } else {
         this.commentBox = new CommentBox({
             discussionId: this.getDiscussionId(),
-            premod: this.user.privateFields.isPremoderated
+            premod: this.user.privateFields.isPremoderated,
+            switches: this.options.switches
         });
         this.commentBox.render(this.getElem('commentBox'));
         this.commentBox.on('post:success', this.commentPosted.bind(this));

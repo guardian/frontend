@@ -12,7 +12,7 @@ class FaciaFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  wit
 
     // Scenarios
 
-    scenario("Display the news container") {
+    ignore("Display the news container") {
 
       Given("I am on the UK network front")
       HtmlUnit("/uk") { browser =>

@@ -25,7 +25,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
     // Metrics
 
     info("Page views should *not* decrease.")
-    info("Retain people on mobile (by reducing % of mobile traffic to www and clicks to the desktop site)")
+    info("Retain people on mobile (by reducing % of mobile traffic to www and clicks to the classic site)")
 
     // Scenarios
 
@@ -113,7 +113,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
 
         Then("I should see the article's image")
         findFirst("[itemprop='associatedMedia primaryImageOfPage'] img[itemprop=contentURL]").getAttribute("src") should
-          endWith("sys-images/Guardian/Pix/pictures/2012/8/6/1344274679326/Gunnerside-village-Swaled-005.jpg")
+          endWith("Pix/pictures/2012/8/6/1344274679326/Gunnerside-village-Swaled-005.jpg?width=220&height=-&quality=95")
 
         And("I should see the image caption")
         findFirst("[itemprop='associatedMedia primaryImageOfPage'] [itemprop=description]").getText should
@@ -124,7 +124,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
     scenario("Poster image on embedded video", ArticleComponents) {
       HtmlUnit("/world/2013/sep/25/kenya-mall-attack-bodies") { browser =>
         import browser._
-        findFirst("video").getAttribute("poster") should endWith ("Westgate-shopping-centre--015.jpg")
+        findFirst("video").getAttribute("poster") should endWith ("Westgate-shopping-centre--015.jpg?width=620&height=-&quality=95")
       }
     }
 
@@ -202,7 +202,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
         ImageServerSwitch.switchOn()
         inBodyImage.getAttribute("class") should include("img--extended")
         inBodyImage.findFirst("[itemprop=contentURL]").getAttribute("src") should
-          endWith("sys-images/Travel/Late_offers/pictures/2012/10/11/1349951383662/Shops-in-Rainbow-Row-Char-001.jpg")
+          endWith("sys-images/Travel/Late_offers/pictures/2012/10/11/1349951383662/Shops-in-Rainbow-Row-Char-001.jpg?width=-&height=-&quality=95")
 
         And("I should see the image caption")
         inBodyImage.findFirst("[itemprop=description]").getText should
@@ -326,26 +326,26 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
       }
     }
 
-    scenario("Navigate to the desktop site (UK edition - www.guardian.co.uk)") {
+    scenario("Navigate to the classic site (UK edition - www.guardian.co.uk)") {
       Given("I'm on article entitled 'We must capitalise on a low-carbon future'")
       And("I am using the UK edition")
       HtmlUnit("/environment/2012/feb/22/capitalise-low-carbon-future") { browser =>
         import browser._
 
-        Then("I should see a link to the corresponding desktop article")
-        findFirst(".js-main-site-link").getAttribute("href") should be(DesktopVersionLink("/environment/2012/feb/22/capitalise-low-carbon-future"))
+        Then("I should see a link to the corresponding classic article")
+        findFirst(".js-main-site-link").getAttribute("href") should be(ClassicVersionLink("/environment/2012/feb/22/capitalise-low-carbon-future"))
       }
     }
 
-    scenario("Navigate to the desktop site (US edition - www.guardiannews.com)") {
+    scenario("Navigate to the classic site (US edition - www.guardiannews.com)") {
       Given("I'm on article entitled 'We must capitalise on a low-carbon future'")
       And("I am using the US edition")
       HtmlUnit.US("/environment/2012/feb/22/capitalise-low-carbon-future") { browser =>
         import browser._
 
-        Then("I should see a link to the corresponding desktop article")
+        Then("I should see a link to the corresponding classic article")
         findFirst(".js-main-site-link").getAttribute("href") should
-          be(DesktopVersionLink("/environment/2012/feb/22/capitalise-low-carbon-future"))
+          be(ClassicVersionLink("/environment/2012/feb/22/capitalise-low-carbon-future"))
       }
     }
 
@@ -363,7 +363,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
 
     scenario("Primary image upgrades to high resolution") {
 
-      Given("I am on an aricle")
+      Given("I am on an article")
       HtmlUnit("/film/2012/nov/11/margin-call-cosmopolis-friends-with-kids-dvd-review") { browser =>
         import browser._
 
@@ -379,7 +379,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
         Then("the main picture should be hidden")
         $("[itemprop='associatedMedia primaryImageOfPage']") should have size 0
 
-        findFirst("video").getAttribute("poster") should endWith("/2013/3/26/1364309868130/Jeremy-Hunt-announcing-ch-015.jpg")
+        findFirst("video").getAttribute("poster") should endWith("/2013/3/26/1364309868130/Jeremy-Hunt-announcing-ch-015.jpg?width=620&height=-&quality=95")
       }
     }
 
@@ -546,7 +546,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
         $("meta[property='twitter:site']").getAttributes("content").head  should be ("@guardian")
         $("meta[property='twitter:card']").getAttributes("content").head  should be ("summary_large_image")
         $("meta[property='twitter:app:url:googleplay']").getAttributes("content").head should startWith ("guardian://www.theguardian.com/world")
-        $("meta[property='twitter:image:src']").getAttributes("content").head should startWith ("http://i.gucode.co.uk/n/")
+        $("meta[property='twitter:image:src']").getAttributes("content").head should endWith ("/Irans-President-Hassan-Ro-011.jpg?width=-&height=-&quality=95")
       }
     }
 

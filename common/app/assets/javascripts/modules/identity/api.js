@@ -41,8 +41,19 @@ define([
     };
 
     /**
-     * The array returned from the cookie is in the format
-     * [ id, email, displayname, userGroupBitmask ]
+     * The array returned from the cookie is in the format;
+     *
+     * [
+     *    id,
+     *    email,
+     *    displayname,
+     *    userGroupBitmask,
+     *    expiryDate,
+     *    persist,
+     *    accountCreatedDate,
+     *    emailVerified
+     * ];
+     *
      * @return {?Object} the user information
      */
     Id.getUserFromCookie = function() {
@@ -54,6 +65,8 @@ define([
                     id: userData[0],
                     primaryEmailAddress: userData[1],
                     displayName: userData[2],
+                    accountCreatedDate: userData[6],
+                    emailVerified: userData[7],
                     rawResponse: cookieData
                 };
             }
@@ -110,6 +123,23 @@ define([
     );
 
     /**
+     * Gets the currently logged in user data from the identity api and
+     * refreshes the users cookie at the same time.
+     */
+    Id.getUserFromApiWithRefreshedCookie = function () {
+        var endpoint = '/user/me',
+            request = ajax({
+                url: Id.idApiRoot + endpoint,
+                type: 'jsonp',
+                data: {
+                    refreshCookie:true
+                }
+            });
+
+        return request;
+    };
+
+    /**
      * Returns user object when signed in, otherwise redirects to sign in with configurable absolute returnUrl
      */
     Id.getUserOrSignIn = function(returnUrl) {
@@ -161,6 +191,22 @@ define([
 
     Id.setNextFbCheckTime = function(nextFbCheckDue) {
         storage.local.set(Id.fbCheckKey, {}, { expires: nextFbCheckDue });
+    };
+
+    Id.emailSignup = function (listId) {
+        var endpoint = '/useremails/'+ Id.getUserFromCookie().id +'/subscriptions',
+            data = { 'listId': listId },
+            request = ajax({
+                url: Id.idApiRoot + endpoint,
+                type: 'jsonp',
+                crossOrigin: true,
+                data: {
+                    body: JSON.stringify(data),
+                    method: 'post'
+                }
+            });
+
+        return request;
     };
 
     Id.sendValidationEmail = function() {

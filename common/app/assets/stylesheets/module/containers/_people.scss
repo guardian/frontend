@@ -1,0 +1,92 @@
+.container--people {
+    .container__body {
+        @include rem((
+            padding-top: $gs-baseline/3
+        ));
+        @include mq(tablet, wide) {
+            padding-top: 0;
+        }
+    }
+    .collection-wrapper:first-child .l-row--items-3 {
+        .item__title,
+        .item__byline {
+            @include fs-headline(1, true);
+        }
+        @include mq(tablet) {
+            .item--has-no-image {
+                .item__title,
+                .item__byline {
+                    @include fs-headline(3, true);
+                }
+                .item__standfirst {
+                    display: block;
+                }
+            }
+        }
+        .collection__item + .collection__item {
+            .item__media-wrapper,
+            .item__image-container {
+                display: none;
+
+                @include mq(tablet) {
+                    display: block;
+                }
+            }
+        }
+        .collection__item:first-child {
+            .item__title,
+            .item__byline {
+                @include fs-headline(2, true);
+
+                @include mq(desktop) {
+                    @include fs-headline(3, true);
+                }
+            }
+            .item--has-no-image {
+                .item__title,
+                .item__byline {
+                    @include fs-headline(3, true);
+
+                    @include mq(desktop) {
+                        @include fs-headline(4, true);
+                    }
+                }
+            }
+        }
+        @include mq($to: tablet) {
+            .collection__item:first-child {
+                @include item--hide-tone-border;
+            }
+        }
+        @include mq(tablet) {
+            @include item--hide-tone-border;
+
+            .collection__item:first-child {
+                @include flex-grow(2);
+
+                .item__title,
+                .item__byline {
+                    @include fs-headline(2, true);
+                }
+            }
+            .collection__item + .collection__item {
+                .item__media-wrapper {
+                    overflow: hidden;
+                }
+                .item__image-container {
+                    padding-bottom: 204px;
+                    left: 50%;
+                    margin-left: -100%;
+                    width: auto;
+                }
+            }
+        }
+        @include mq(desktop) {
+            .collection__item + .collection__item {
+                .item__image-container {
+                    padding-bottom: 276px;
+                }
+            }
+        }
+    }
+}

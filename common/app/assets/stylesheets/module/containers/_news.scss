@@ -1,4 +1,4 @@
-.container--rolled-up .collection-wrapper {
+.container--rolled-up .container--rolled-up-hide {
     display: none;
 }
 
@@ -69,6 +69,9 @@
             margin-bottom: $gs-baseline
         ));
 
+        &.collection__item--content-type-media {
+            padding-bottom: 0;
+        }
         & + .collection__item {
             @include vertical-item-separator; // Restore inter-item separator
         }
@@ -98,9 +101,30 @@
                 display: block;
             }
         }
+        .item--has-no-image {
+            .item__title {
+                @include mq(desktop) {
+                    @include fs-headline(2, true);
+                }
+            }
+        }
     }
 }
 .container--news {
+    .container__border {
+        display: none;
+
+        @include mq(faciaLeftCol) {
+            display: block;
+        }
+    }
+    .collection-wrapper:first-child .fromage {
+        border-top-width: 0;
+
+        @include mq(tablet, faciaLeftCol) {
+            border-top-width: 2px;
+        }
+    }
     .container__title {
         display: none;
         color: $c-neutral1;
@@ -199,8 +223,6 @@
             .item__media-wrapper {
                 -webkit-order: -1;
                 order: -1;
-                -webkit-flex: 1 1 0;
-                flex: 1 1 0;
                 margin-right: 0;
             }
         }
@@ -224,7 +246,8 @@
             .item__meta {
                 position: static;
                 @include rem((
-                    margin-top: $gs-baseline
+                    margin-top: $gs-baseline,
+                    margin-bottom: $gs-baseline
                 ));
             }
         }
@@ -251,9 +274,15 @@
         background: $c-newsAccent;
     }
 
-    &.show-more--hidden {
-        display: none;
+    &.tone-feature:before {
+        background: $c-featureAccent;
+    }
+    &.tone-comment:before {
+        background: $c-commentAccent;
+    }
 
+    &.show-more--hidden {
+        &,
         &:before {
             display: none;
         }
@@ -261,8 +290,32 @@
 }
 
 .today {
-    color: $c-neutral2;
+    color: $c-neutral1;
+    font-weight: normal;
 }
 .today__dayofweek {
-    color: $c-neutral1;
+    color: $c-newsDefault;
+}
+@include mq(wide) {
+    .today__sub {
+        display: block;
+    }
+}
+
+
+/**
+ * Ads in containers / row patterns
+ */
+
+.container {
+    .ad-slot {
+        padding: 0;
+        margin: 0 auto;
+    }
+}
+@include mq(tablet) {
+    .l-row__item--mpu-300 {
+        min-width: gs-span(4) + $gs-gutter;
+        max-width: gs-span(4) + $gs-gutter;
+    }
 }

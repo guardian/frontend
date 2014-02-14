@@ -1,0 +1,41 @@
+@(items: Seq[Trail], style: Container, containerIndex: Int)(implicit request: RequestHeader)
+
+<div class="collection-wrapper">
+    <ul class="unstyled l-row l-row--items-3 collection">
+        @items.slice(0, 3).zipWithIndex.map{ case (trail, index) =>
+            @fragments.items.rowPattern.simplecomment(trail, index, containerIndex, "item--hide-tone-border")
+        }
+    </ul>
+</div>
+@defining(items.slice(3, 7)) { items =>
+    @if(items.nonEmpty) {
+        <div class="collection-wrapper">
+            <ul class="unstyled l-row l-row--items-4 collection">
+                @items.zipWithIndex.map{ case (trail, index) =>
+                    @trail match {
+                        case g: Gallery                      => { @fragments.items.rowPattern.standardGallery(g, index + 3, containerIndex) }
+                        case v: Video                        => { @fragments.items.rowPattern.standardVideo(v, index + 3, containerIndex) }
+                        case t                               => { @fragments.items.rowPattern.standard(t, index + 3, containerIndex) }
+                    }
+                }
+            </ul>
+        </div>
+    }
+}
+@defining(items.slice(7, 23)) { items =>
+    @if(items.nonEmpty) {
+        <div class="linkslist-container js-container--show-more tone-@{style.tone}" data-tone="@style.tone">
+            <ul class="l-columns linkslist">
+                @items.zipWithIndex.map{ case (trail, index) =>
+                    @trail match {
+                        case l: LiveBlog if l.isLive         => { @fragments.items.linksList.live(l, index + 7) }
+                        case g: Gallery                      => { @fragments.items.linksList.gallery(g, index + 7) }
+                        case v: Video                        => { @fragments.items.linksList.video(v, index + 7) }
+                        case c if VisualTone(c) == "comment" => { @fragments.items.linksList.comment(c, index + 7) }
+                        case t                               => { @fragments.items.linksList.standard(t, index + 7) }
+                    }
+                }
+            </ul>
+        </div>
+    }
+}

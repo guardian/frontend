@@ -21,7 +21,7 @@ define(function (require) {
 		},
 
 		compile: function (pluginId, resId, req, io /*, config*/) {
-			var absId, exportsPos, bangPos, exports;
+			var absId, exportsPos, bangPos, exports, url;
 
 			absId = pluginId + '!' + resId;
 			exportsPos = resId.indexOf('!exports=');
@@ -29,7 +29,12 @@ define(function (require) {
 			bangPos = resId.indexOf('!');
 			if (bangPos >= 0) resId = resId.slice(0, bangPos);
 
-			io.read(resId, function (text) {
+			url = req.toUrl(resId);
+			if (url.substr(url.length - 3) !== ".js") {
+				url += ".js";
+			}
+
+			io.read(url, function (text) {
 				var moduleText;
 
 				moduleText = text + ';\n'
