@@ -41,17 +41,6 @@ object MostPopularController extends Controller with Logging with ExecutionConte
     }
   }
 
-  def renderCard() = Action { implicit request =>
-    val edition = Edition(request)
-    val trails = Random.shuffle(MostPopularAgent.mostPopular(edition))
-    if(trails.nonEmpty) {
-      val jsonResponse = () => views.html.fragments.cards.card(trails.head, "right", "Most read", "Story pack card | most read")
-      renderFormat(jsonResponse, 60)
-    } else {
-      NotFound
-    }
-  }
-
   private def lookup(edition: Edition, path: String)(implicit request: RequestHeader) = {
     log.info(s"Fetching most popular: $path for edition $edition")
     ContentApi.item(path, edition)

@@ -65,7 +65,7 @@
                     </div>
 
                     <div class="js-article__container article__container u-cf">
-                        <div class="article-body u-cf from-content-api"
+                        <div class="article-body u-cf from-content-api js-article__body"
                         itemprop="@if(article.isReview){reviewBody} else {articleBody}">
                             @BodyCleaner(article, article.body)
                         </div>
@@ -77,9 +77,17 @@
                         }
                     </div>
 
-                    <div class="social-wrapper">
-                        @fragments.social(article)
-                    </div>
+                    @if(ArticleTruncation.isSwitchedOn){
+                        <div class="u-cf article__actions js-article-actions">
+                            <div class="social-wrapper">
+                            @fragments.social(article)
+                            </div>
+                        </div>
+                    } else {
+                        <div class="social-wrapper">
+                            @fragments.social(article)
+                        </div>
+                    }
                 </div>
                 <div class="article__secondary-column" aria-hidden="true">
                     <div class="article__secondary-column__inner@if(storyPackage.nonEmpty) { article__secondary-column__inner--fill-vertically}">
@@ -98,16 +106,6 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="u-table__row">
-                                <div class="u-table__cell u-table__cell--collapse u-table__cell--bottom">
-                                    <div class="js-sticky-lower" data-id="mpu-ad-slot"></div>
-                                    @if(storyPackage.nonEmpty) {
-                                        @fragments.cards.card(storyPackage.head, "right", "Read next", "Story package card", "visible")
-                                    }
-                                </div>
-                            </div>
-
                         </div>
                     </div>
                 </div>
@@ -115,7 +113,7 @@
         </article>
 
         @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
-            <div class="article__inner">
+            <div class="article__inner js-comments">
                 @fragments.discussion(article.isClosedForComments, article.shortUrlId)
             </div>
         }

@@ -5,8 +5,6 @@
 # For dev machines
 GET        /assets/*path                            dev.DevAssetsController.at(path)
 
-GET        /onward/card/*path.json                  controllers.OnwardCardController.renderCard(path)
-GET        /onward/trail/*path.json                 controllers.OnwardCardController.renderTrail(path)
 GET        /onward/most-read.json                   controllers.MostPopularOnwardController.mostRead()
 GET        /onward/latest.json                      controllers.LatestContentController.renderLatest()
 
@@ -15,7 +13,6 @@ GET        /onward/recently-published               controllers.LatestContentCon
 
 GET        /most-read                                             controllers.MostPopularController.render(path = "")
 GET        /most-read.json                                        controllers.MostPopularController.render(path = "")
-GET        /most-read/card.json                                   controllers.MostPopularController.renderCard()
 GET        /most-read/*path.json                                  controllers.MostPopularController.renderJson(path)
 GET        /most-read/*path                                       controllers.MostPopularController.render(path)
 
@@ -25,7 +22,6 @@ GET        /top-stories/trails                                    controllers.To
 GET        /top-stories/trails.json                               controllers.TopStoriesController.renderJsonTrails()
 GET        /related/*path.json                                    controllers.RelatedController.renderJson(path)
 GET        /related/*path                                         controllers.RelatedController.render(path)
-GET        /recent/card.json                                      controllers.RecentController.renderRecent()
 
 GET        /preference/platform/:platform                         controllers.ChangeViewController.render(platform, page)
 GET        /preference/edition/:edition                           controllers.ChangeEditionController.render(edition)
