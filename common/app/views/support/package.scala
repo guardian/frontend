@@ -597,8 +597,7 @@ object GetClasses {
     val baseClasses: Seq[String] = Seq(
       "l-row__item",
       "collection__item",
-      s"collection__item--volume-${trail.group.getOrElse("0")}",
-      s"collection__item--tone-${VisualTone(trail)}"
+      s"collection__item--volume-${trail.group.getOrElse("0")}"
     )
     val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail)}
     RenderClasses(classes:_*)
@@ -617,7 +616,7 @@ object GetClasses {
       },
       (trail: Trail, firstContainer: Boolean) => if (firstContainer) {"item--force-image-upgrade"} else {""},
       (trail: Trail, firstContainer: Boolean) => if (trail.isLive) {"item--live"} else {""},
-      (trail: Trail, firstContainer: Boolean) => if(trail.trailPicture(5,3).isEmpty || trail.imageAdjust == Some("hide")){
+      (trail: Trail, firstContainer: Boolean) => if (trail.trailPicture(5,3).isEmpty || trail.imageAdjust == Some("hide")){
         "item--has-no-image"
       }else{
         "item--has-image"
@@ -627,6 +626,36 @@ object GetClasses {
       }.getOrElse("")
     )
     val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, firstContainer)}
+    RenderClasses(classes:_*)
+  }
+
+  def forFromage(trail: Trail, volumeOverride: Int, imageAdjustOverride: String): String = {
+    val baseClasses: Seq[String] = Seq(
+      "fromage",
+      s"tone-${VisualTone(trail)}",
+      "tone-accent-border"
+    )
+    val f: Seq[(Trail, Int, String) => String] = Seq(
+      (trail: Trail, volumeOverride: Int, imageAdjustOverride: String) =>
+        if (trail.isLive) {"item--live"} else {""},
+      (trail: Trail, volumeOverride: Int, imageAdjustOverride: String) =>
+        if (trail.trailPicture(5,3).isEmpty || trail.imageAdjust == Some("hide") || imageAdjustOverride == "hide"){
+          "fromage--has-no-image"
+        }else{
+          "fromage--has-image"
+        },
+      (trail: Trail, volumeOverride: Int, imageAdjustOverride: String) =>
+        trail.imageAdjust.map{ adjustValue =>
+          s"fromage--imageadjust-$adjustValue"
+        }.getOrElse(""),
+      (trail: Trail, volumeOverride: Int, imageAdjustOverride: String) =>
+        if (volumeOverride != 0) {
+          s"fromage--volume-${volumeOverride}"
+        } else {
+          s"fromage--volume-${trail.group.getOrElse("0")}"
+        }
+    )
+    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, volumeOverride, imageAdjustOverride)}
     RenderClasses(classes:_*)
   }
 
