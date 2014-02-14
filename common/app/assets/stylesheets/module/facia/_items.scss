@@ -576,3 +576,56 @@ $show-more-icon: (
         top: 6px;
     }
 }
+
+.item--thumbnail {
+    .item__standfirst {
+        display: block;
+
+        @include rem((
+            margin-top: 2px
+        ));
+    }
+    .item__media-wrapper {
+        float: left;
+        clear: both;
+
+        @include rem((
+            margin-right: $gs-gutter/2
+        ));
+    }
+}
+
+.container--rolled-up .container--rolled-up-hide {
+    display: none;
+}
+
+.today {
+    color: $c-neutral1;
+    font-weight: normal;
+}
+.today__dayofweek {
+    color: $c-newsDefault;
+}
+@include mq(wide) {
+    .today__sub {
+        display: block;
+    }
+}
+
+
+/**
+ * Ads in containers / row patterns
+ */
+
+.container {
+    .ad-slot {
+        padding: 0;
+        margin: 0 auto;
+    }
+}
+@include mq(tablet) {
+    .l-row__item--mpu-300 {
+        min-width: gs-span(4) + $gs-gutter;
+        max-width: gs-span(4) + $gs-gutter;
+    }
+}
