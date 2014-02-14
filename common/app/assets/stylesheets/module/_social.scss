@@ -1,46 +1,73 @@
-@mixin socialOnPageLoad {
-    .social-wrapper {
-        @include rem((
-            padding-top: $gs-baseline,
-            max-width: gs-span(4)
-        ));
-        overflow: hidden;
-    }
-    .social-wrapper--aside {
-        padding-top: 0;
-        @include rem((margin-bottom: $baseline*4));
-    }
-    .social__item {
-        float: left;
-        width: 60px;
-        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    }
-    .social__action {
-        &,
-        i {
-            display: block;
+.social-wrapper {
+    @include rem((
+        padding-top: $gs-baseline,
+        max-width: gs-span(4)
+    ));
+    overflow: hidden;
+}
+.social-wrapper--aside {
+    padding-top: 0;
+    @include rem((margin-bottom: $baseline*4));
+}
+.social__item {
+    float: left;
+    width: 60px;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.social__action {
+    display: block;
+}
+.sticky-upper--social {
+    position: relative;
+    top: $baseline * -4;
+}
+
+/**
+ * Social icons
+ * Usage:
+ * <element class="social-icon-wrapper">
+ *     <span class="social-icon">
+ *         <i class="i share-icon-xxx"></i>
+ *         <i class="i share-icon-xxx-hover"></i>
+ *     </span>
+ * </element>
+ */
+
+$social-icon: (
+    width: 32px,
+    height: 32px,
+    color: #767676,
+    space-in-between: 2px
+);
+
+.social-icon-wrapper {
+    &:hover,
+    &:focus {
+        .social-icon {
+            background: map-get($social-icon, color);
+
+            i:first-child {
+                // Swap pictograms in the icon holder
+                // Space in between + height
+                margin-top: (map-get($social-icon, height) + map-get($social-icon, space-in-between)) * -1;
+            }
         }
     }
-    .sticky-upper--social {
-        position: relative;
-        top: $baseline * -4;
-    }
 }
-@mixin socialDelayed {
-    .social__action--email:hover i,
-    .social__action--email:focus i {
-        @extend .i-share-email-hover;
-    }
-    .social__action--facebook:hover i,
-    .social__action--facebook:focus i {
-        @extend .i-share-facebook-hover;
-    }
-    .social__action--gplus:hover i,
-    .social__action--gplus:focus i {
-        @extend .i-share-gplus-hover;
-    }
-    .social__action--twitter:hover i,
-    .social__action--twitter:focus i {
-        @extend .i-share-twitter-hover;
+.social-icon {
+    @include box-sizing(border-box);
+    display: block;
+    overflow: hidden;
+    width: map-get($social-icon, width);
+    height: map-get($social-icon, height);
+    border: 1px solid map-get($social-icon, color);
+    @include rounded-corners(50%);
+    background: #ffffff;
+
+    i {
+        display: block;
+        margin-bottom: 2px;
+        margin-top: -1px;
+        margin-left: -1px;
     }
 }

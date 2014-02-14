@@ -60,6 +60,7 @@ module.exports = function (grunt) {
                     lodash:       'common/components/lodash-amd/modern',
                     imager:       'common/components/imager.js/src/strategies/container',
                     omniture:     'common/components/omniture/omniture',
+                    fence:        'common/components/fence/fence',
                     'ophan/ng':   'empty:'
                 },
                 optimize: (isDev) ? 'none' : 'uglify2',
