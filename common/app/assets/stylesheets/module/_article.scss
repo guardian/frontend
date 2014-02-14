@@ -348,6 +348,20 @@
     }
 }
 
+.byline-img {
+    width: gs-span(1);
+    height: 60px;
+    margin: 0;
+    overflow: hidden;
+    @include rounded-corners(50%);
+    margin-bottom: $gs-baseline;
+    
+    @include mq(leftCol) {
+        width: gs-span(2);
+        height: 140px;
+    }
+}
+
 .article__meta-container {
     @include mq(leftCol) {
         float: left;
