@@ -1,5 +1,7 @@
 package views.support
 
+import conf.Switches.ArticleSlotsSwitch
+
 import com.gu.openplatform.contentapi.model.{Tag => ApiTag, Element => ApiElement, Asset => ApiAsset}
 import model._
 import org.scalatest.{ Matchers, FlatSpec }
@@ -119,8 +121,10 @@ class TemplatesTest extends FlatSpec with Matchers {
   }
 
   "InlineSlotGenerator" should "insert slots" in {
+    ArticleSlotsSwitch.switchOn()
     val body = Jsoup.parseBodyFragment(withJsoup(bodyWithoutInlines)(InlineSlotGenerator(351)).body)
     body.select(".slot").size should be > 0
+    ArticleSlotsSwitch.switchOff()
   }
 
   "RowInfo" should "add row info to a sequence" in {

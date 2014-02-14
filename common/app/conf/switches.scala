@@ -307,6 +307,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
   )
 
+  val ArticleSlotsSwitch = Switch("Feature Switches", "article-slots",
+    "If this switch is on, inline content slots (for stories, ads, etc) will be generated in article bodies",
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
+  )
+
   // A/B Test Switches
 
   val ABAa = Switch("A/B Tests", "ab-abcd",

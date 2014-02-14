@@ -1,7 +1,7 @@
 package views.support
 
 import common._
-import conf.Switches.{ TagLinking, ShowAllArticleEmbedsSwitch }
+import conf.Switches.{ TagLinking, ShowAllArticleEmbedsSwitch, ArticleSlotsSwitch }
 import model._
 
 import java.net.URLEncoder._
@@ -369,7 +369,7 @@ case class InlineSlotGenerator(articleWordCount: Int) extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
 
-    if (articleWordCount > 350) {
+    if (ArticleSlotsSwitch.isSwitchedOn && articleWordCount > 350) {
 
       var lastInline = -200
 
