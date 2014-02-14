@@ -106,15 +106,14 @@ Best Buys component
     }
 
     table {
-        border-bottom: 1px solid #E4E4E4;
+        border-bottom: 1px solid $c-neutral5;
         margin-bottom: 10px;
     }
 
     thead {
-        color: #767676;
+        color: $c-neutral2;
 
         td {
-
             span:last-child {
                 display: none;
             }
@@ -124,12 +123,12 @@ Best Buys component
     tbody {
 
         tr {
-            border-top: 1px solid #E4E4E4;
+            border-top: 1px solid $c-neutral5;
         }
     }
 
     td {
-        padding: 4px 4px 12px 4px;
+        padding: $gs-baseline/3 $gs-gutter/5 $gs-baseline;
         vertical-align: top;
         line-height: 1;
     }
@@ -153,20 +152,20 @@ Best Buys component
 
         .commercial__head {
             @include rem((
-                height: 36px
+                height: $gs-row-height
             ));
         }
 
         .commercial__title {
-            padding: $baseline;
+            padding: $gs-baseline/4;
 
             .i {
-                margin-top: $baseline;
+                margin-top: $gs-baseline/4;
             }
         }
 
         .commercial__subtitle {
-            padding: $baseline;
+            padding: $gs-baseline/4;
         }
 
         .commercial__title a {

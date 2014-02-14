@@ -3,13 +3,13 @@
    ========================================================================== */
 
 .commercial.books-component {
-	background-color: #FFF;
+	background-color: #ffffff;
 }
 
 .books-component {
 
 	.commercial__head {
-        background-color: #FFF;
+        background-color: #ffffff;
         border-top: 1px solid $c-neutral4;
         @include rem((
             height: 40px
@@ -19,7 +19,7 @@
     .commercial__title {
         width: 80%;
         height: 26px;
-        background-position: 6px 12px;
+        background-position: 6px $gs-baseline;
         background-repeat: no-repeat;
         color: transparent;
         font-weight: bold;
@@ -30,7 +30,7 @@
 
     	h3 {
             background-color: $c-neutral6;
-            padding: $baseline*2 $baseline*2 $baseline*4 $baseline*2;
+            padding: $baseline*2 8px $baseline*4 8px;
             margin-bottom: 0;
             @include fs-headline(2);
     	}
