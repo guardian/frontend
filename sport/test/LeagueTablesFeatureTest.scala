@@ -4,9 +4,8 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{ FeatureSpec, GivenWhenThen }
 import org.scalatest.Matchers
-import common.UsesElasticSearch
 
-class LeagueTablesFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with UsesElasticSearch {
+class LeagueTablesFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
   feature("League Tables") {
 
