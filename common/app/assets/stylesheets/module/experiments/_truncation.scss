@@ -147,12 +147,12 @@ $home-icon: (
 
     @include mq(leftCol) {
         width: gs-span(2);
-        position: absolute;
-        left: 0;
-        bottom: $gs-row-height;
+        margin-left: -1 * (gs-span(2) + $gs-gutter);
+        margin-top: -1 * $gs-row-height;
     }
 
     @include mq(wide) {
         width: gs-span(3);
+        margin-left: -1 * (gs-span(3) + $gs-gutter);
     }
 }
