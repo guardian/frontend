@@ -52,19 +52,31 @@
 
 .top-banner-ad-container {
     min-height: 70px;
+
+    @include mq(faciaLeftCol) {
+        @include rem((width: gs-span(14)));
+        margin: 0 auto;
+    }
 }
 
 .ad-slot--top-banner-ad {
     background-color: #f0f0f0;
 
-    .ad-slot__label {
-        background-color: #f0f0f0;
-        height: auto;
-        border: none;
+    @include mq($to: tablet) {
+        .ad-slot__label {
+            background-color: #f0f0f0;
+            height: auto;
+            border: none;
+        }
     }
 
     @include mq(tablet) {
         background-color: #ffffff;
+    }
+
+    @include mq(faciaLeftCol) {
+        margin-left: gs-span(2) + $gs-gutter;
+        text-align: left;
     }
 }
 
