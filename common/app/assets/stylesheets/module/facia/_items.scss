@@ -350,25 +350,6 @@ $c-live: #e81818;
         }
     }
 }
-.item__support {
-    display: none;
-    @include rem((
-        margin-top: $gs-baseline*2
-    ));
-    .item--support-show & {
-        display: block;
-    }
-}
-.item__support__title {
-    color: $c-neutral2;
-    @include fs-data(3);
-
-    @include mq(tablet) {
-        @include fs-data(4, true);
-    }
-}
-.item__support__item {}
-.item__support__action {}
 
 .item__cta {
     position: absolute;

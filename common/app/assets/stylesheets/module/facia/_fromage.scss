@@ -23,6 +23,85 @@
             margin-bottom: $gs-baseline*2
         ));
     }
+    .item__title {
+        @include fs-headline(2);
+        @include rem((
+        margin-bottom: $gs-baseline + 2px
+        ));
+        @include mq(tablet) {
+            display: table-cell;
+            vertical-align: top;
+            width: 100000px;
+            max-width: 100%;
+            margin-bottom: 0;
+            @include fs-headline(4, true);
+        }
+        @include mq(desktop) {
+            @include fs-headline(5, true);
+        }
+    }
+    /* Meta
+   ===========================================================================*/
+
+    .item__meta {
+        position: absolute;
+        bottom: -1px;
+        overflow: hidden;
+        @include fs-data(1);
+        color: $c-neutral2;
+        @include rem((
+        margin-bottom: $gs-baseline/2
+        ));
+
+        @include mq(tablet) {
+            position: static;
+            @include fs-data(3, true);
+        }
+    }
+
+    .item__timestamp,
+    .trail__count {
+        position: relative;
+        float: left;
+
+        i {
+            position: absolute;
+            left: 0;
+            top: 2px;
+            margin: 0;
+        }
+    }
+    .item__timestamp {
+        position: relative;
+        float: left;
+
+        @include rem((
+        min-width: 50px - $gs-gutter/2 - 14px,
+        padding-right: $gs-gutter/2,
+        padding-left: 14px
+        ));
+
+        i {
+            left: 0;
+            @include mq(tablet) {
+                top: 2px;
+            }
+        }
+    }
+    .trail__count {
+        @include rem((
+        padding-left: 18px
+        ));
+        top: 0;
+
+        a {
+            line-height: inherit;
+            color: inherit;
+        }
+        i {
+            left: 0;
+        }
+    }
 }
 .fromage,
 .fromage__container {
@@ -55,13 +134,13 @@
 .fromage__link {
     &:hover,
     &:focus {
-        .fromage__title {
+        .item__title {
             text-decoration: underline;
         }
     }
 }
 .fromage__link:visited,
-.fromage__link:visited .fromage__title,
+.fromage__link:visited .item__title,
 .fromage__support__action:visited {
     color: $c-neutral2;
 }
@@ -94,23 +173,6 @@
         left: 0;
     }
 }
-.fromage__title {
-    @include fs-headline(2);
-    @include rem((
-        margin-bottom: $gs-baseline + 2px
-    ));
-    @include mq(tablet) {
-        display: table-cell;
-        vertical-align: top;
-        width: 100000px;
-        max-width: 100%;
-        margin-bottom: 0;
-        @include fs-headline(4, true);
-    }
-    @include mq(desktop) {
-        @include fs-headline(5, true);
-    }
-}
 .fromage__standfirst {
     @include fs-headline(1);
     color: $c-neutral2;
@@ -125,70 +187,6 @@
             margin-bottom: $gs-baseline,
             max-width: gs-span(5)
         ));
-    }
-}
-
-
-/* Meta
-   ===========================================================================*/
-
-.fromage__meta {
-    position: absolute;
-    bottom: -1px;
-    overflow: hidden;
-    @include fs-data(1);
-    color: $c-neutral2;
-    @include rem((
-        margin-bottom: $gs-baseline/2
-    ));
-
-    @include mq(tablet) {
-        position: static;
-        @include fs-data(3, true);
-    }
-}
-
-.fromage__timestamp,
-.trail__count {
-    position: relative;
-    float: left;
-
-    i {
-        position: absolute;
-        left: 0;
-        top: 2px;
-        margin: 0;
-    }
-}
-.fromage__timestamp {
-    position: relative;
-    float: left;
-
-    @include rem((
-        min-width: 50px - $gs-gutter/2 - 14px,
-        padding-right: $gs-gutter/2,
-        padding-left: 14px
-    ));
-
-    i {
-        left: 0;
-        @include mq(tablet) {
-            top: 2px;
-        }
-    }
-}
-.trail__count {
-    @include rem((
-        padding-left: 18px
-    ));
-    top: 0;
-
-    a {
-        line-height: inherit;
-        color: inherit;
-    }
-    i {
-        left: 0;
     }
 }
 
@@ -258,7 +256,7 @@
             ));
         }
     }
-    .fromage__title {
+    .item__title {
         @include fs-headline(3, true);
 
         @include mq(tablet) {
@@ -278,7 +276,7 @@
     }
 }
 .fromage--has-image {
-    .fromage__title,
+    .item__title,
     .fromage__standfirst {
         @include mq(desktop) {
             @include rem((
@@ -314,7 +312,7 @@
     }
 }
 .fromage--imageadjust-highlight {
-    .fromage__title {
+    .item__title {
         @include rem((
             margin-top: $gs-baseline/3
         ));
@@ -399,8 +397,8 @@
             }
         }
     }
-    .fromage__title,
-    .fromage__meta,
+    .item__title,
+    .item__meta,
     .fromage__standfirst,
     .fromage__byline {
         // Add some breathing space to children since they're in a box
@@ -411,7 +409,7 @@
         ));
     }
     .fromage__standfirst,
-    .fromage__meta,
+    .item__meta,
     .fromage__byline {
         @include mq(tablet) {
             @include rem((
@@ -420,7 +418,7 @@
         }
     }
     &.fromage--has-image {
-        .fromage__title {
+        .item__title {
             @include mq(tablet) {
                 @include rem((
                     padding-left: 0
@@ -451,8 +449,7 @@
     .supporting {
         background: $c-neutral7;
     }
-    .fromage__standfirst,
-    .supporting__action {
+    .fromage__standfirst {
         color: $c-neutral2-contrasted;
     }
 }
@@ -465,9 +462,9 @@
     }
     &,
     .fromage__container,
-    .fromage__title,
+    .item__title,
     .fromage__standfirst,
-    .fromage__meta,
+    .item__meta,
     .supporting__action,
     .fromage__link {
         color: #ffffff;

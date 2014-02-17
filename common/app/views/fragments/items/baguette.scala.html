@@ -1,23 +1,18 @@
-@(trail: Trail, index: Int)(implicit request: RequestHeader)
+@(trail: Trail, index: Int, element: String = "li")(implicit request: RequestHeader)
 
-<div
-    class="@RenderClasses(
-        "baguette",
-        s"tone-${VisualTone(trail)}",
-        "tone-accent-border")"
+<@element
+    class="@GetClasses.forItem(trail, true) baguette"
     @trail.discussionId.map{ id => data-discussion-id="@id" }
     data-discussion-closed="@trail.isClosedForComments"
     data-link-name="trail | @{index + 1}">
 
-    <div class="baguette__container">
-        <a href="@LinkTo{@trail.url}" class="baguette__link" data-link-name="article">
-            @defining(if (index == 0) { "1" } else { "2" }) { headerLevel =>
-                <h@headerLevel class="baguette__title">
-                    @RemoveOuterParaHtml(trail.headline)
-                </h@headerLevel>
-            }
-            @fragments.items.elements.image(trail, isImportant = true, maxWidth = 940)
+    <div class="item__container">
+        <a href="@LinkTo{@trail.url}" class="item__link" data-link-name="article">
+            @fragments.items.elements.title(trail, index, 0)
+            @fragments.items.elements.image(trail, forceUpgrade = true, inlineImage = true, maxWidth = 940)
         </a>
     </div>
+
     @fragments.items.elements.supporting(trail.supporting, hasBackground = true)
-</div>
+
+</@element>

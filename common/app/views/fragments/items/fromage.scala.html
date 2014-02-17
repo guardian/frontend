@@ -24,18 +24,7 @@
                         }
                     }
                 }
-                <h1 class="fromage__title">
-                    @if(trail.isBreaking){
-                        <span class="item__live-indicator">Breaking News</span>
-                    }
-                    @if(trail.isLive && !trail.isBreaking){
-                        <span class="item__live-indicator">Live</span>
-                    }
-                    @if(tone == "comment") {
-                        <span class="i i-quote-orange"></span>
-                    }
-                    @RemoveOuterParaHtml(trail.headline)
-                </h1>
+                @fragments.items.elements.title(trail, index, 0)
             </a>
             @if(tone == "comment") {
                 @trail.byline.map { byLine =>
@@ -58,16 +47,8 @@
             @trail.trailText.map { text =>
                 <div class="fromage__standfirst">@Html(text)</div>
             }
-            <div class="fromage__meta js-append-commentcount">
-                <time class="fromage__timestamp js-item__timestamp"
-                      itemprop="datePublished"
-                      datetime="@trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
-                      data-timestamp="@trail.webPublicationDate.getMillis"
-                      data-relativeformat="short">
-                    <i class="i i-clock-light-grey"></i>
-                    <span class="timestamp__text"><span class="u-h">Published: </span>@Format(trail.webPublicationDate, "d MMM y")</span>
-                </time>
-            </div>
+
+            @fragments.items.elements.meta(trail)
         </div>
 
         @fragments.items.elements.supporting(trail.supporting)

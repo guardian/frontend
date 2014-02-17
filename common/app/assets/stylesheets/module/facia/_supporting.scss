@@ -22,7 +22,7 @@
 
         & + & {
             border-left: 1px solid $c-neutral5;
-            
+
             @include rem((
                 padding-left: $gs-gutter/4
             ));
@@ -33,4 +33,8 @@
     display: block;
     margin: 0;
     @include fs-headline(1);
+    color: $c-neutral1;
+}
+.supporting__action:visited {
+    color: $c-neutral2;
 }
