@@ -8,10 +8,8 @@ import services.S3
 import services.DynamoDB
 import play.api.templates.Html
 
-//import play.api.libs.ws._
 
 // looks for an archived file in S3 bucket
-
 object S3Archive extends S3 {
  override lazy val bucket = "aws-frontend-archive"
  def getHtml(path: String) = get(path) 

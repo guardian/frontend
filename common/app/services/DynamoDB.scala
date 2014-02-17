@@ -20,7 +20,7 @@ trait DynamoDB extends Logging {
 
   def destinationFor(source: String) = {
     
-    val url = new AttributeValue().withS(s"""http://$source""")
+    val url = new AttributeValue().withS(s"http://$source")
 
     val getItemRequest = new GetItemRequest()
           .withTableName(tableName)
