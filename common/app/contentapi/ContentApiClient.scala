@@ -8,6 +8,7 @@ import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
 import conf.Configuration.contentApi
 import com.gu.openplatform.contentapi.model.ItemResponse
+import conf.Configuration
 
 trait QueryDefaults extends implicits.Collections with ExecutionContexts {
 
@@ -103,14 +104,17 @@ with Logging {
   private def isTagQuery(url: String) = url.endsWith("/tags")
 }
 
-class SolrContentApiClient extends ContentApiClient {
+class SolrContentApiClient(apiKey: Option[String] = Configuration.contentApi.key) extends ContentApiClient {
   lazy val httpTimingMetric = ContentApiMetrics.HttpTimingMetric
   lazy val httpTimeoutMetric= ContentApiMetrics.HttpTimeoutCountMetric
   override val targetUrl = contentApi.host
 }
 
-class ElasticSearchContentApiClient extends ContentApiClient {
+class ElasticSearchContentApiClient(apiKey: Option[String] = Configuration.contentApi.key) extends ContentApiClient {
   lazy val httpTimingMetric = ContentApiMetrics.ElasticHttpTimingMetric
   lazy val httpTimeoutMetric = ContentApiMetrics.ElasticHttpTimeoutCountMetric
   override val targetUrl = contentApi.elasticSearchHost
 }
+
+class FaciaSolrContentApiClient extends SolrContentApiClient(Option(Configuration.facia.contentApiKey))
+class FaciaElasticSearchContentApiClient extends ElasticSearchContentApiClient(Option(Configuration.facia.contentApiKey))
