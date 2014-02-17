@@ -2,7 +2,7 @@
 
 @defining((VisualTone(trail), containerIndex == 0, containerIndex == 0 && index < 3)) { case (tone, isFirstContainer, inlineImages) =>
     <@element
-        class="@GetClasses.forItem(trail, isFirstContainer) item--thumbnail"
+        class="@GetClasses.forItem(trail, isFirstContainer, true) item--thumbnail"
         data-link-name="trail | @{index + 1}">
 
         <div class="item__container">

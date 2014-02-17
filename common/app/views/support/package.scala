@@ -603,29 +603,29 @@ object GetClasses {
     RenderClasses(classes:_*)
   }
 
-  def forItem(trail: Trail, firstContainer: Boolean): String = {
+  def forItem(trail: Trail, firstContainer: Boolean, forceHasImage: Boolean = false): String = {
     val baseClasses: Seq[String] = Seq(
       "item",
       s"tone-${VisualTone(trail)}"
     )
-    val f: Seq[(Trail, Boolean) => String] = Seq(
-      (trail: Trail, firstContainer: Boolean) => trail match {
+    val f: Seq[(Trail, Boolean, Boolean) => String] = Seq(
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) => trail match {
         case _: Gallery => "item--gallery"
         case _: Video   => "item--video"
         case _          => ""
       },
-      (trail: Trail, firstContainer: Boolean) => if (firstContainer) {"item--force-image-upgrade"} else {""},
-      (trail: Trail, firstContainer: Boolean) => if (trail.isLive) {"item--live"} else {""},
-      (trail: Trail, firstContainer: Boolean) => if (trail.trailPicture(5,3).isEmpty || trail.imageAdjust == Some("hide")){
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) => if (firstContainer) {"item--force-image-upgrade"} else {""},
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) => if (trail.isLive) {"item--live"} else {""},
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) => if (forceHasImage == false && (trail.trailPicture(5,3).isEmpty || trail.imageAdjust == Some("hide"))){
         "item--has-no-image"
       }else{
         "item--has-image"
       },
-      (trail: Trail, firstContainer: Boolean) => trail.imageAdjust.map{ adjustValue =>
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) => trail.imageAdjust.map{ adjustValue =>
         s"item--imageadjust-$adjustValue"
       }.getOrElse("")
     )
-    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, firstContainer)}
+    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, firstContainer, forceHasImage)}
     RenderClasses(classes:_*)
   }
 
