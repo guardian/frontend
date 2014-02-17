@@ -1,7 +1,7 @@
 package views.support
 
 import common._
-import conf.Switches.TagLinking
+import conf.Switches.{ TagLinking, ShowAllArticleEmbedsSwitch, ArticleSlotsSwitch }
 import model._
 
 import java.net.URLEncoder._
@@ -18,7 +18,6 @@ import play.api.mvc.RequestHeader
 import play.api.mvc.SimpleResult
 import play.api.templates.Html
 import scala.collection.JavaConversions._
-import conf.Switches.ShowAllArticleEmbedsSwitch
 
 sealed trait Style {
   val className: String
@@ -339,6 +338,65 @@ object TweetCleaner extends HtmlCleaner {
         element.appendChild(userEl).appendChild(date).appendChild(body)
       }
     }
+    document
+  }
+}
+
+case class InlineSlotGenerator(articleWordCount: Int) extends HtmlCleaner {
+
+  private def isBlock(element: Element): Boolean = {
+      (element.hasClass("img") && !element.hasClass("img--inline")) ||
+      element.hasClass("media-proportional-container") ||
+      element.tagName == "video"
+  }
+
+  private def insertSlot(paragraph: Element, document: Document) {
+    val prev = paragraph.previousElementSibling
+    val slot = document.createElement("div")
+    paragraph.before(slot)
+
+    if (isBlock(prev)) {
+      slot.attr("class", "slot slot--block")
+    } else if (prev.tagName == "h2") {
+      slot.attr("class", "slot slot--posth2")
+      val mobileSlot = document.createElement("div")
+      mobileSlot.attr("class", "slot slot--preh2")
+      prev.before(mobileSlot)
+    } else {
+      slot.attr("class", "slot slot--text")
+    }
+  }
+
+  override def clean(document: Document): Document = {
+
+    if (ArticleSlotsSwitch.isSwitchedOn && articleWordCount > 350) {
+
+      var lastInline = -200
+
+      var offset = 0
+      val spacing = 850
+      val minFollowingText = 750
+      val children = document.select("body > *")
+
+      children.zipWithIndex.foreach { case (element, index) =>
+
+        if (element.hasClass("img--inline")) {
+          lastInline = offset
+        }
+        else if (element.tagName == "p" && lastInline + spacing < offset && !element.hasClass("img")) {
+
+          val followingTextLen = children.slice(index, children.length).takeWhile(_.tagName == "p").map(_.text.length).reduce(_ + _)
+
+          if (followingTextLen > minFollowingText) {
+            insertSlot(element, document)
+            lastInline = offset
+          }
+        }
+
+        if (element.tagName.in(Set("p","h2"))) offset += element.text.length
+      }
+    }
+
     document
   }
 }
