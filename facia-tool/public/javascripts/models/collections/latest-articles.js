@@ -3,8 +3,8 @@ define([
     'modules/vars',
     'utils/query-params',
     'utils/url-abs-path',
+    'models/collections/article',
     'modules/auto-complete',
-    'models/article',
     'modules/cache',
     'modules/authed-ajax',
     'knockout'
@@ -12,8 +12,8 @@ define([
     vars,
     queryParams,
     urlAbsPath,
-    autoComplete,
     Article,
+    autoComplete,
     cache,
     authedAjax,
     ko

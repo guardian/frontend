@@ -25,13 +25,13 @@ define([
 
             opts = opts || {};
 
+            this.id = opts.id;
             this.parent = opts.parent;
             this.parentType = opts.parentType;
 
             this.uneditable = opts.uneditable;
 
             this.props = asObservableProps([
-                'id',
                 'webPublicationDate']);
 
             this.fields = asObservableProps([
@@ -125,7 +125,7 @@ define([
         Article.prototype.sparkline = function() {
             this.state.sparkUrl(undefined);
             if (vars.state.switches['facia-tool-sparklines']) {
-                this.state.sparkUrl(vars.sparksBase + this.props.id() + (this.meta.updatedAt() ? '&markers=' + this.meta.updatedAt() : ''));
+                this.state.sparkUrl(vars.sparksBase + this.id + (this.meta.updatedAt() ? '&markers=' + this.meta.updatedAt() : ''));
             }
         };
 
@@ -158,7 +158,7 @@ define([
 
         Article.prototype.get = function() {
             return {
-                id:   this.props.id(),
+                id:   this.id,
                 meta: this.getMeta()
             };
         };
@@ -224,8 +224,8 @@ define([
                 authedAjax.updateCollections({
                     update: {
                         collection: this.parent,
-                        item:       this.props.id(),
-                        position:   this.props.id(),
+                        item:       this.id,
+                        position:   this.id,
                         itemMeta:   itemMeta,
                         live:       vars.state.liveMode(),
                         draft:     !vars.state.liveMode()

@@ -35,6 +35,9 @@ define([
                     mediator.on('modules:adverts:reloaded', function() {
                         $('.ad-slot').addClass('ad-slot__show-label');
                     });
+
+                    // Add class to bottom to fix local nav layout bug
+                    $('html').addClass('ab__ad-labels');
                 }
             }
         ];

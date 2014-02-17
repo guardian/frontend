@@ -7,7 +7,7 @@ define([
     'utils/populate-observables',
     'modules/authed-ajax',
     'models/group',
-    'models/article',
+    'models/collections/article',
     'modules/content-api',
     'js!humanized-time-span'
 ], function(
@@ -33,7 +33,6 @@ define([
         // properties from the config, about this collection
         this.configMeta   = asObservableProps([
             'displayName',
-            'roleName',
             'uneditable']);
         populateObservables(this.configMeta, opts);
 
@@ -125,7 +124,7 @@ define([
         authedAjax.updateCollections({
             remove: {
                 collection: this,
-                item:       item.props.id(),
+                item:       item.id,
                 live:       vars.state.liveMode(),
                 draft:     !vars.state.liveMode()
             }
