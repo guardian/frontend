@@ -1,0 +1,47 @@
+@(leagues: List[pa.Season], teams: List[pa.Team])
+
+@views.html.football.main("League tables") {
+    <hgroup class="page-header">
+        <h1>League Tables</h1>
+    </hgroup>
+
+    <form class="form" role="form" action="/admin/football/tables/league" method="post">
+        <div class="row">
+            <div class="col-xs-6">
+                <label for="id-competitionId">League</label>
+                @views.html.football.fragments.chooseLeague("competitionId", leagues)
+            </div>
+
+            <div class="col-xs-6">
+                <input type="radio" name="focus" value="team" id="focus-on-team" />
+                <label for="focus-on-team">Focus on team(s)</label>
+                @views.html.football.fragments.chooseTeam("teamId", teams)
+                @views.html.football.fragments.chooseTeam("team2Id", teams)
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="radio">
+                <label>
+                    <input type="radio" name="focus" value="none" checked />
+                    Show full league
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="focus" value="top" />
+                    Top of league
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="focus" value="bottom" />
+                    Bottom of league
+                </label>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-success">View</button>
+    </form>
+}

@@ -312,6 +312,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
   )
 
+  val ArticleSlotsSwitch = Switch("Feature Switches", "article-slots",
+    "If this switch is on, inline content slots (for stories, ads, etc) will be generated in article bodies",
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
+  )
+
   // A/B Test Switches
 
   val ABAa = Switch("A/B Tests", "ab-abcd",
@@ -329,9 +334,19 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 27)
   )
 
+  val ABInlineElements = Switch("A/B Tests", "ab-onward-inline-elements",
+    "If this switch is on the ab inline elements test is run",
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
+  )
+
   val TagLinking = Switch("Feature Switches", "tag-linking",
     "If this is switched on articles that have no in body links will auto link to their tags where possible",
     safeState = Off, sellByDate = endOfQ4
+  )
+
+  val ArticleTruncation = Switch("A/B Tests", "ab-article-truncation",
+    "If this is switched on an A/B test runs to prove the effectiveness of truncatiung articles.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
   )
 
   // Sport Switch
@@ -362,17 +377,17 @@ object Switches extends Collections {
 
   val NetworkFrontUkAlpha = Switch("Facia", "network-front-uk-alpha",
     "If this is switched on then the uk alpha network fronts will be served if a GU_UK_ALPHA cookie has been dropped",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 17)
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 18)
   )
 
   val NetworkFrontUsAlpha = Switch("Facia", "network-front-us-alpha",
     "If this is switched on then the us alpha network fronts will be served if a GU_US_ALPHA cookie has been dropped",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 17)
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 18)
   )
 
   val NetworkFrontAuAlpha = Switch("Facia", "network-front-au-alpha",
     "If this is switched on then the au alpha network fronts will be served if a GU_AU_ALPHA cookie has been dropped",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 17)
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 18)
   )
 
   // Facia Tool Switches
@@ -440,7 +455,9 @@ object Switches extends Collections {
     IdentityFilmAwardsSwitch,
     ABAa,
     ABGravityRecommendations,
+    ArticleTruncation,
     ABAdLabels,
+    ABInlineElements,
     NetworkFrontUkAlpha,
     NetworkFrontUsAlpha,
     NetworkFrontAuAlpha,
@@ -465,6 +482,7 @@ object Switches extends Collections {
     LCMortgageFeedSwitch,
     GuBookshopFeedsSwitch,
     NetworkFrontOptIn,
+    ArticleSlotsSwitch,
     ImageServerSwitch,
     FaciaToolPressSwitch,
     DogpileSwitch,

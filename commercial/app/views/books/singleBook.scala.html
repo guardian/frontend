@@ -1,0 +1,15 @@
+@(book: model.commercial.books.Book)(implicit request: RequestHeader)
+@import model.commercial.books.Book
+
+@url(book: Book) = {%OASToken%http://www.guardianbookshop.co.uk/BerteShopWeb/viewProduct.do%OmnitureToken%&ISBN=@book.isbn}
+<div>
+    <p>@book.title @book.author.map { author => <span>by @author</span>}</p>
+    <p>
+        <a href="@url(book)">
+            @book.jacketUrl.map { url => <img src="http://static.guim.co.uk@url" />}
+        </a>
+    </p>
+    <p>
+        <a href="@url(book)">Buy the book</a>
+    </p>
+</div>
