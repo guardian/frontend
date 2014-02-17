@@ -3,7 +3,139 @@
 @admin_main("Fronts editor", env, isAuthed = true, identity) {
 
 <div style="display: none;" data-bind="visible: true">
-    <pre style="margin: 50px 0 0 0" data-bind="text: splat"></pre>
+
+    <div class="toolbar" data-bind="visible: true" style=""></div>
+
+    <div class="left-col">
+        <div class="title">Unused collections</div>
+        <div class="scrollable cnf-collections" data-bind="
+            template: {name: 'template_collection', foreach: orphans}"></div>
+    </div>
+
+    <div class="right-col">
+        <div class="title">Fronts</div>
+        <div class="instructions">
+            Create a <span data-bind="click: createFront" class="linky">front</span>
+        </div>
+        <div class="scrollable cnf-fronts" data-bind="
+            template: {name: 'template_front', foreach: fronts}"></div>
+    </div>
+
+    <script type="text/html" id="template_collection">
+        <div class="cnf-collection" data-bind="
+            makeHoverable: true,
+            css: {
+                underDrag: state.underDrag,
+                isElsewhere: state.underHover(),
+                open: state.open}">
+
+            <a class="cnf-collection__name" data-bind="
+                click: toggleOpen,
+                attr: {href: id},
+                text: meta.displayName() || 'Untitled collection'"></a>
+
+            <!-- ko if: $parents[1] -->
+                <a class="cnf-collection__remove" data-bind="click: $parents[1].depopulateCollection">
+                    <i class="icon-trash"></i>
+                </a>
+            <!-- /ko -->
+
+            <span class="cnf-collection__id" data-bind="text: id"></span>
+
+            <span class="placements" data-bind="
+                if: parents().length,
+                css: {'is-single': parents().length === 1}">
+                <span class="also">also</span> on
+                <span data-bind="foreach: parents">
+                    <!-- ko if: $parents[2] ? id !== $parents[2].id : true -->
+                        <a target="edit-collections" data-bind="
+                            attr: {href: '/?front=' + id},
+                            text: id "></a>
+                    <!-- /ko -->
+                </span>
+            </span>
+
+            <div class="cnf-form" data-bind="if: state.open">
+                <label>Title</label>
+                <input type="text" data-bind="
+                    value: meta.displayName"/>
+
+                <label>Link url</label>
+                <input type="text" data-bind="
+                    value: meta.href"/>
+
+                <label>Tone</label>
+                <select data-bind="
+                    options: $root.tones,
+                    value: meta.tone"></select>
+
+                <div class="linky advanced-options" data-bind="
+                    click: toggleOpenAdvanced">Advanced settings</div>
+
+                <!-- ko if: state.openAdvanced -->
+                    <label>Groups</label>
+                    <select data-bind="
+                        options: $root.groups,
+                        value: meta.groups"></select>
+
+                    <label>ContentApi</label>
+                    <input type="text" data-bind="
+                        value: meta.apiQuery"/>
+
+                    <label>No curation</label>
+                    <input type="checkbox" data-bind="
+                        checked: meta.uneditable" />
+                <!-- /ko -->
+
+                <div class="tools">
+                    <button class="tool" data-bind="
+                        click: save">Save</button>
+                    <!-- ko if: parents().length === 0 -->
+                        <button class="tool" data-bind="
+                            click: discard">Discard</button>
+                    <!-- /ko -->
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/html" id="template_front">
+        <div class="cnf-front" data-bind="
+                css: {isProvisional: !id()}">
+
+            <div class="title" data-bind="
+                click: toggleOpen,
+                text: id"></div>
+
+            <div class="cnf-form" data-bind="if: !id()">
+                <div class="title">New Front</div>
+                <label>Path</label>
+                <input type="text" data-bind="
+                    value: id"/>
+
+                <div class="tools">
+                    <button class="tool">OK</button>
+                </div>
+            </div>
+
+            <div data-bind="if: id() && state.open()">
+                <div class="cnf-front__inner">
+                    <div data-bind="with: collections">
+                        <div class="droppable" data-bind="
+                            makeDropabble: true,
+                            css: {underDrag: underDrag},
+                            template: {name: 'template_collection', foreach: items}"></div>
+                    </div>
+                    <div class="instructions">
+                        Drop a collection above, or <span data-bind="click: createCollection" class="linky">create</span> one.
+                        <div data-bind="if: !collections.items().length">Note: empty fronts will be discarded</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </script>
+
 </div>
 
 <script src="@routes.Assets.at("javascripts/app-config.js")"></script>

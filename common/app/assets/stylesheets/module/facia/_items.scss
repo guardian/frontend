@@ -440,12 +440,13 @@ $cta-icon-gap: 2px;
         width: map-get($gallery-cta-icon, width);
         height: map-get($gallery-cta-icon, height);
         margin-left: -1 * (map-get($gallery-cta-icon, width) / 2);
-        margin-top: -1 * (map-get($gallery-cta-icon, height) / 2);
+        margin-top: -1 * ceil(map-get($gallery-cta-icon, height) / 2);
     }
     .item__cta--video & {
         width: map-get($video-cta-icon, width);
         height: map-get($video-cta-icon, height);
-        margin-left: -1 * (map-get($video-cta-icon, width) / 2);
+        // don't want icon to be exactly in the middle
+        margin-left: -1 * (map-get($video-cta-icon, width) / 3);
         margin-top: -1 * (map-get($video-cta-icon, height) / 2);
     }
 }

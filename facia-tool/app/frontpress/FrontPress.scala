@@ -91,7 +91,7 @@ trait FrontPress extends Logging {
         updatedEmail  = collection.updatedEmail,
         groups        = Option(config.groups).filter(_.nonEmpty),
         roleName      = config.roleName,
-        href          = config.href
+        href          = collection.href.orElse(config.href)
       )
     )
 
