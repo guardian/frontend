@@ -4,8 +4,11 @@
 
 <div style="display: none;" data-bind="visible: true">
     <div class="toolbar" data-bind="visible: true" style="display: none">
-        <span class="tool-label">Front</span>
-        <select class="tool-select" data-bind="options: fronts, value: front, optionsCaption: 'choose...'"></select>
+
+        <span data-bind="if: fronts().length > 1">
+            <span class="tool-label">Front</span>
+            <select class="tool-select" data-bind="options: fronts, value: front, optionsCaption: 'choose...'"></select>
+        </span>
 
         <a class="spark" target="ophan" title="Dark blue: Guardian. Green: Google. Light blue: Other." data-bind="
             visible: frontSparkUrl,

@@ -68,14 +68,9 @@ define([
             return queryParams().front;
         }
 
-        function setfront() {
-            model.front(getFront());
-        }
-
         function renderFront(id) {
-            history.pushState({}, "", window.location.pathname + '?' + ammendedQueryStr('front', id));
             model.collections(
-                ((vars.state.config.fronts[getFront()] || {}).collections || [])
+                ((vars.state.config.fronts[id] || {}).collections || [])
                 .filter(function(id){ return !!vars.state.config.collections[id]; })
                 .map(function(id){
                     return new Collection(
@@ -118,30 +113,43 @@ define([
             }, period);
         });
 
-        model.front.subscribe(function(front) {
-            renderFront(front);
-        });
-
-        model.liveMode.subscribe(function() {
-            _.each(model.collections(), function(collection) {
-                collection.closeAllArticles();
-                collection.populate();
-            });
-        });
-
         this.init = function() {
             droppable.init();
 
             fetchSettings(function (config, switches) {
                 vars.state.config = config || {};
                 vars.state.switches = switches || {};
-                model.fronts(_.keys(config.fronts));
+                model.fronts(
+                    getFront() === 'testcard' ? ['testcard'] : _.without(_.keys(config.fronts), 'testcard')
+                );
             }, vars.CONST.configSettingsPollMs, true)
             .done(function() {
-                setfront();
-                window.onpopstate = setfront;
+                var wasPopstate = false;
+
+                model.front(getFront());
+                renderFront(getFront());
+
+                window.onpopstate = function() {
+                    wasPopstate = true;
+                    model.front(getFront());
+                };
 
                 ko.applyBindings(model);
+
+                model.front.subscribe(function(front) {
+                    if (!wasPopstate) {
+                        history.pushState({}, "", window.location.pathname + '?' + ammendedQueryStr('front', front));
+                    }
+                    wasPopstate = false;
+                    renderFront(front);
+                });
+
+                model.liveMode.subscribe(function() {
+                    _.each(model.collections(), function(collection) {
+                        collection.closeAllArticles();
+                        collection.populate();
+                    });
+                });
 
                 updateScrollables();
                 window.onresize = updateScrollables;
