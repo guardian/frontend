@@ -7,7 +7,7 @@ define([
     'utils/populate-observables',
     'modules/authed-ajax',
     'models/group',
-    'models/article',
+    'models/collections/article',
     'modules/content-api',
     'js!humanized-time-span'
 ], function(
@@ -33,13 +33,13 @@ define([
         // properties from the config, about this collection
         this.configMeta   = asObservableProps([
             'displayName',
-            'roleName',
             'uneditable']);
         populateObservables(this.configMeta, opts);
 
         // properties from the collection itself
         this.collectionMeta = asObservableProps([
             'displayName',
+            'href',
             'lastUpdated',
             'updatedBy',
             'updatedEmail']);
@@ -125,7 +125,7 @@ define([
         authedAjax.updateCollections({
             remove: {
                 collection: this,
-                item:       item.props.id(),
+                item:       item.id,
                 live:       vars.state.liveMode(),
                 draft:     !vars.state.liveMode()
             }
@@ -254,7 +254,10 @@ define([
         authedAjax.request({
             url: vars.CONST.apiBase + '/collectionmeta/' + this.id,
             type: 'post',
-            data: JSON.stringify({ displayName: this.collectionMeta.displayName() })
+            data: JSON.stringify({
+                displayName: this.collectionMeta.displayName(),
+                href: this.collectionMeta.href()
+            })
         })
         .then(function(){
             self.load();

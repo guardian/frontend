@@ -94,7 +94,7 @@ CommentBox.prototype.defaultOptions = {
     switches: {
         discussionVerifiedEmailPosting: false // Off by default here and in backend
     },
-    priorToVerificationDate: new Date(1391904001337) // Sun Feb 09 2014 00:00:01 GMT+0000 (GMT)
+    priorToVerificationDate: new Date(1392719401337) // Tue Feb 18 2014 10:30:01 GMT
 };
 
 /**
