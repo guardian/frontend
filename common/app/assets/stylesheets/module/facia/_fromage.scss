@@ -448,6 +448,11 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
                 border-left-color: #ffffff;
             }
         }
+        .svg & .action--has-icon {
+            @include rem((
+                padding-left: $action-icon-width + ($action-icon-rightspace * 2)
+            ));
+        }
     }
     .fromage__title,
     .fromage__meta,
