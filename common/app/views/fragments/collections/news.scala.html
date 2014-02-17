@@ -10,7 +10,7 @@
             </div>
         }
 
-        @defining(items.drop(baguetteCount)) { items =>
+        @defining(items.diff(baguetteItems)) { items =>
 
             @items.headOption.map{ trail =>
                 <div class="collection-wrapper">
