@@ -20,22 +20,17 @@
         color: #ffffff;
         @include fs-headline(6);
     }
-    .media-wrapper {
+    .item__media-wrapper {
         margin-top: $gs-baseline*3;
         overflow: hidden;
         position: relative;
     }
-    .image-container {
-        &:before{
-            content: "";
-            display: block;
-            padding-top: 40%;
-        }
+    .item__image-container {
+        padding-bottom: 40%;
+
         .responsive-img {
-            position: absolute;
-            display: block;
-            width: 100%;
             top: -25%;
+            height: auto;
         }
     }
     .supporting__item {
