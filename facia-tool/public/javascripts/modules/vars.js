@@ -2,7 +2,7 @@
 define(['knockout'], function(ko) {
     var CONST = {
         tones: ['news', 'feature', 'comment'],
-        "groups": ["standard,big,very big,huge"],
+        groups: ["standard,big,very big,huge"],
 
         viewer: 'http://s3-eu-west-1.amazonaws.com/facia/responsive-viewer.html',
         filterTypes: {

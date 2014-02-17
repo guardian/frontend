@@ -138,7 +138,7 @@ define([
 
                 model.front.subscribe(function(front) {
                     if (!wasPopstate) {
-                        history.pushState({}, "", window.location.pathname + '?' + ammendedQueryStr('front', front));
+                        history.pushState({}, '', window.location.pathname + '?' + ammendedQueryStr('front', front));
                     }
                     wasPopstate = false;
                     renderFront(front);
