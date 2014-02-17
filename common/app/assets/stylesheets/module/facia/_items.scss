@@ -257,21 +257,30 @@ $c-live: #e81818;
         @include show-only-if-svg-is-supported;
     }
 }
-@include mq($to: tablet) {
-    .item__title--has-icon-mobile {
-        padding-left: 25px;
-    }
-}
 .item--video,
 .item--gallery {
     .item__title .i {
-        position: absolute;
-        top: 4px;
-        left: 10px;
+        display: none;
     }
-    @include mq(tablet) {
+}
+.l-row--items-4 {
+    @include mq($to: tablet) {
+         .item__title--has-icon-mobile {
+            padding-left: 25px;
+        }
+    }
+    .item--video,
+    .item--gallery {
         .item__title .i {
-            display: none;
+            display: block;
+            position: absolute;
+            top: 4px;
+            left: 10px;
+        }
+        @include mq(tablet) {
+            .item__title .i {
+                display: none;
+            }
         }
     }
 }

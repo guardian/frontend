@@ -30,7 +30,8 @@
                         </div>
                     }
                 </div>
-                <h@if(isFirstContainer && index == 0){1}else{2} class="item__title">
+                <h@if(isFirstContainer && index == 0){1}else{2} class="item__title item__title--has-icon-mobile">
+                    <span class="i i-gallery-yellow-small"></span>
                     @RemoveOuterParaHtml(trail.headline)
                 </h@if(isFirstContainer && index == 0){1}else{2}>
             </a>

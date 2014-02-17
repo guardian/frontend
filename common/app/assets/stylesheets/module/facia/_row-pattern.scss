@@ -49,23 +49,6 @@
             border-top-style: solid;
         }
     }
-    .item__media-wrapper,
-    .item__image-container {
-        display: none;
-    }
-    .item__media-wrapper {
-        position: relative;
-    }
-    .item--has-image {
-        .item__media-wrapper,
-        .item__image-container {
-            display: block;
-
-            .js-off & {
-                display: none !important;
-            }
-        }
-    }
     .collection {
         margin-left: auto;
         margin-right: auto;
@@ -77,83 +60,98 @@
     .item__title {
         @include fs-headline(1, true);
     }
-    .l-row--items-2{
-        .item--thumbnail {
-            .item__standfirst {
-                display: none;
+}
+.item__media-wrapper,
+.item__image-container {
+    display: none;
+}
+.item__media-wrapper {
+    position: relative;
+}
+.item--has-image {
+    .item__media-wrapper,
+    .item__image-container {
+        display: block;
 
-                @include mq(tablet) {
-                    display: block;
-                }
-            }
-            @include mq(mobile, tablet) {
-                .item__link {
-                    display: -webkit-flex;
-                    display: flex;
-                    -webkit-flex-direction: column;
-                    flex-direction: column;
-                }
-                .item__media-wrapper {
-                    -webkit-order: -1;
-                    order: -1;
-                    margin-right: 0;
-                }
-            }
-            .item__media-wrapper {
-                @include mq(tablet) {
-                    @include rem((
-                        width: 122px,
-                        margin-right: $gs-gutter/2
-                    ));
-                }
-                @include mq(desktop) {
-                    @include rem((
-                        width: gs-span(3),
-                        margin-right: $gs-gutter
-                    ));
-                }
-            }
-            @include mq(desktop) {
-                padding-bottom: 0;
-
-                .item__meta {
-                    position: static;
-                    @include rem((
-                        margin-top: $gs-baseline,
-                        margin-bottom: $gs-baseline
-                    ));
-                }
-            }
+        .js-off & {
+            display: none !important;
         }
     }
-    .l-row--items-4 {
-        .item__byline {
-            @include fs-headline(1, true);
-        }
-        .item__standfirst,
-        .item__media-wrapper,
-        .item__image-container {
+}
+.l-row--items-2 {
+    .item--thumbnail {
+        .item__standfirst {
             display: none;
-        }
-        .item--gallery,
-        .item--video,
-        .item--imageadjust-highlight {
-            .item__media-wrapper,
-            .item__image-container {
+
+            @include mq(tablet) {
                 display: block;
             }
         }
-        @include mq(tablet) {
-            .item__media-wrapper,
-            .item__image-container,
-            .item--has-no-image .item__standfirst {
-                display: block;
+        @include mq(mobile, tablet) {
+            .item__link {
+                display: -webkit-flex;
+                display: flex;
+                -webkit-flex-direction: column;
+                flex-direction: column;
+            }
+            .item__media-wrapper {
+                -webkit-order: -1;
+                order: -1;
+                margin-right: 0;
+            }
+        }
+        .item__media-wrapper {
+            @include mq(tablet) {
+                @include rem((
+                    width: 122px,
+                    margin-right: $gs-gutter/2
+                ));
+            }
+            @include mq(desktop) {
+                @include rem((
+                    width: gs-span(3),
+                    margin-right: $gs-gutter
+                ));
             }
         }
         @include mq(desktop) {
-            .item--has-no-image .item__title {
-                @include fs-headline(2, true);
+            padding-bottom: 0;
+
+            .item__meta {
+                position: static;
+                @include rem((
+                    margin-top: $gs-baseline,
+                    margin-bottom: $gs-baseline
+                ));
             }
+        }
+    }
+}
+.l-row--items-4 {
+    .item__byline {
+        @include fs-headline(1, true);
+    }
+    .item__standfirst,
+    .item__media-wrapper,
+    .item__image-container {
+        display: none;
+    }
+    .item--imageadjust-highlight {
+        .item__media-wrapper,
+        .item__image-container {
+            display: block;
+        }
+    }
+    @include mq(tablet) {
+        .item__media-wrapper,
+        .item__image-container,
+        .item--has-no-image .item__standfirst {
+            display: block;
+        }
+    }
+    @include mq(desktop) {
+        .item--has-no-image .item__title {
+            @include fs-headline(2, true);
         }
     }
 }
