@@ -1,4 +1,4 @@
-@(trail: model.Trail, index: Int, containerIndex: Int, element: String = "li", classes: String = "")(implicit request: RequestHeader)
+@(trail: Trail, index: Int, containerIndex: Int, element: String = "li", classes: String = "")(implicit request: RequestHeader)
 
 <@element
     class="@GetClasses.forItem(trail, containerIndex == 0)"
@@ -7,7 +7,7 @@
     data-discussion-closed="@trail.isClosedForComments">
 
     <div class="item__container">
-        <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border" data-link-name="article">
+        <a href="@LinkTo{@trail.url}" class="item__link" data-link-name="article">
             @trail.contributorAvatar.map{ url =>
                 <div class="item__avatar">
                     <img src="@url" alt="" class="item__avatar__media" />
@@ -19,7 +19,7 @@
             </h2>
         </a>
         @trail.byline.map { byLine =>
-            <p class="item__byline tone-colour">@Html(byLine)</p>
+            <p class="item__byline">@Html(byLine)</p>
         }
         <div class="item__meta"></div>
     </div>

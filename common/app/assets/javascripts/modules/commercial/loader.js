@@ -37,6 +37,7 @@ define([
     var Loader = function(options) {
         var conf = options.config.page || {};
 
+        this.pageId         = conf.pageId;
         this.keywords       = conf.keywords || '';
         this.section        = conf.section;
         this.host           = conf.ajaxUrl + '/commercial/';
@@ -49,6 +50,7 @@ define([
         this.userSegments   = 'seg=' + (new History().getSize() <= 1 ? 'new' : 'repeat');
         this.components     = {
             bestbuy:       this.host + 'money/bestbuys.json?'    + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
+            book:          this.host + 'books/book/' + this.pageId + '.json',
             books:         this.host + 'books/bestsellers.json?' + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
             jobs:          this.host + 'jobs.json?'              + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
             masterclasses: this.host + 'masterclasses.json?'     + this.userSegments + '&s=' + this.section,

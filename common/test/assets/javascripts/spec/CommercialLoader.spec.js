@@ -51,7 +51,7 @@
             adSlot = document.getElementById('ad-slot');
 
             // a new user
-            localStorage.removeItem('gu.history')
+            localStorage.removeItem('gu.history');
         });
 
         afterEach(function() {
@@ -103,7 +103,6 @@
             runs(function(){
                 expect(callback).toHaveBeenCalledOnce();
             });
-
         });
 
         // OAS can inject a url in to the advert code to track clicks on the component

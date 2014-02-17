@@ -146,6 +146,8 @@ GET         /commercial/masterclasses.json                                      
 GET         /commercial/soulmates/mixed.json                                                                         controllers.commercial.SoulmateAds.mixed
 GET         /commercial/money/bestbuys.json                                                                          controllers.commercial.MoneyOffers.bestBuys(format="json")
 GET         /commercial/books/bestsellers.json                                                                       controllers.commercial.BookOffers.bestsellers(format="json")
+GET         /commercial/books/book/*pageId.json                                                                      controllers.commercial.BookOffers.singleBook(pageId, format="json")
+GET         /commercial/books/book/*pageId                                                                           controllers.commercial.BookOffers.singleBook(pageId, format="html")
 
 # Onward journeys
 GET         /onward/most-read.json                                                                                   controllers.MostPopularOnwardController.mostRead()
@@ -159,6 +161,9 @@ GET         /$path<(us|uk|au|us-alpha|uk-alpha|au-alpha)?>                      
 GET         /$path<(us|uk|au|us-alpha|uk-alpha|au-alpha)?>.json                                                      controllers.FaciaController.renderEditionFrontJson(path)
 GET         /$path<((uk|us|au)/)?(culture|sport|australia|commentisfree|business|money)>                             controllers.FaciaController.renderEditionSectionFront(path)
 GET         /$path<((uk|us|au)/)?(culture|sport|australia|commentisfree|business|money)>.json                        controllers.FaciaController.renderEditionSectionFrontJson(path)
+
+#Facia Press
+GET         /pressed/*path                                                                                           controllers.FaciaController.renderFaciaPress(path)
 
 GET         /collection/$id<[\w\d-/]*>/rss                                                                           controllers.FaciaController.renderCollectionRss(id)
 GET         /collection/$id<[\w\d-/]*>                                                                               controllers.FaciaController.renderEditionCollection(id)
