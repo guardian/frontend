@@ -31,7 +31,7 @@ trait DynamoDB extends Logging {
     val result = Option(client.getItem(getItemRequest).getItem)
 
     // given we search on the key we shouldn't expect more than one record
-    result.map(_.get("destination").getS)
+    result.map(_.get("destination").getS).headOption
 
   }
 
