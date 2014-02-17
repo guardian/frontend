@@ -18,7 +18,7 @@
 
                 @title.map { title =>
                     <h2 class="container__title tone-@style.tone tone-background">
-                        @config.href.map { href =>
+                        @collection.href.map { href =>
                             <a data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
                         }.getOrElse{
                             @Html(title)
