@@ -1,0 +1,31 @@
+@(league: pa.Season, tableEntries: List[pa.LeagueTableEntry], selectedTeams: List[String] = Nil)
+
+@views.html.football.main(s"${league.name} table") {
+    <hgroup class="page-header">
+        <h1>@league.name table</h1>
+    </hgroup>
+
+    <table data-embed-type="data" class="table data data--embedded">
+        <thead>
+            <tr>
+                <th>Position</th>
+                <th>Team name</th>
+                <th>Pld</th>
+                <th>GD</th>
+                <th>Pts</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for((tableEntry, prevTableEntry) <- tableEntries.zip(None :: tableEntries.init.map(Option(_)))) {
+            <tr class='@if(selectedTeams.contains(tableEntry.team.id)){table-row--selected}
+            @prevTableEntry.map { prev => @if(prev.team.rank + 1 != tableEntry.team.rank) {table-row--break-before} else {}}.getOrElse("")'>
+                <td>@tableEntry.team.rank</td>
+                <td>@tableEntry.team.name</td>
+                <td>@tableEntry.team.total.played</td>
+                <td>@tableEntry.team.goalDifference</td>
+                <td>@tableEntry.team.points</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}

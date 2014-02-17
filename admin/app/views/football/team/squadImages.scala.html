@@ -1,0 +1,20 @@
+@(currentTeamId: String, players: List[pa.Player], teams: List[pa.Team])
+
+@views.html.football.main(s"Squad images") {
+
+    <form id="team-change">
+        <select name="team">
+        @for(team <- teams) {
+            <option value="@team.id"@if(team.id == currentTeamId){ selected="selected"}>@team.name</option>
+        }
+        </select>
+    </form>
+    @for(player <- players) {
+        <a href="/admin/football/player/card/@player.id">
+            <div class='player-image'>
+                <p>@player.name</p>
+                <img src="http://pads6.pa-sport.com/api/football/player/image/<key>/@player.id" alt="@player.name" />
+            </div>
+        </a>
+    }
+}

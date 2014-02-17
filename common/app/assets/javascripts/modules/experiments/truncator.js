@@ -39,7 +39,7 @@ define([
             '<i class="i i-arrow-down-double-blue"></i> Continue reading</button>' +
             '<a href="/" class="truncation-cta truncation-cta--back-home" data-link-name="back to home">' +
             '<span class="truncation-cta__icon"><span class="i i-home-white-mask"></span><span class="i i-home-white"></span></span>' +
-            '<span class="truncation-cta__text"><span class="mobile-only">Home</span><span class="hide-on-mobile-inline">Back to homepage</span></span></a>'
+            '<span class="truncation-cta__text"><span class="truncation-cta__short-label">Home</span><span class="truncation-cta__long-label">Back to homepage</span></span></a>'
     };
 
     Truncator.prototype.getParagraphs = function() {
@@ -59,7 +59,9 @@ define([
     };
 
     Truncator.prototype.getContentAfterEl = function() {
-        var contentChildren = toArray(this.config.contentEl.children);
+        //Having to use '> *' instead of .children for x-browser compatibility
+        var contentChildren = toArray(qwery('.js-article__body > *'));
+
         return contentChildren.slice(contentChildren.indexOf(this.el) + 1, contentChildren.length);
     };
 
@@ -76,7 +78,7 @@ define([
     };
 
     Truncator.prototype.hideCta = function() {
-        qwery('.' + this.classes.btn)[0].remove();
+        bonzo(qwery('.' + this.classes.btn)[0]).hide();
         bonzo(qwery('.' + this.classes.actions)).addClass('is-not-truncated');
     };
 
