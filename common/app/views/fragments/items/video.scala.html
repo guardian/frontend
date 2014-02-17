@@ -1,6 +1,6 @@
-@(trail: model.Trail, index: Int, containerIndex: Int, element: String = "li")(implicit request: RequestHeader)
+@(trail: Trail, index: Int, containerIndex: Int, element: String = "li")(implicit request: RequestHeader)
 
-@defining((VisualTone(trail), containerIndex == 0, containerIndex == 0 && index < 3)) { case (tone, isFirstContainer, inlineImages) =>
+@defining((VisualTone(trail), containerIndex == 0, containerIndex == 0 && index < 4)) { case (tone, isFirstContainer, inlineImages) =>
     <@element
         class="@GetClasses.forItem(trail, isFirstContainer)"
         data-link-name="trail | @{index + 1}">
@@ -29,7 +29,6 @@
                     }
                 </div>
                 <h@if(isFirstContainer && index == 0){1}else{2} class="item__title">
-                    <span class="i i-video-yellow-small"></span>
                     @RemoveOuterParaHtml(trail.headline)
                 </h@if(isFirstContainer && index == 0){1}else{2}>
             </a>

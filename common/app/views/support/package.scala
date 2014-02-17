@@ -597,8 +597,7 @@ object GetClasses {
     val baseClasses: Seq[String] = Seq(
       "l-row__item",
       "collection__item",
-      s"collection__item--volume-${trail.group.getOrElse("0")}",
-      s"collection__item--tone-${VisualTone(trail)}"
+      s"collection__item--volume-${trail.group.getOrElse("0")}"
     )
     val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail)}
     RenderClasses(classes:_*)
@@ -617,7 +616,7 @@ object GetClasses {
       },
       (trail: Trail, firstContainer: Boolean) => if (firstContainer) {"item--force-image-upgrade"} else {""},
       (trail: Trail, firstContainer: Boolean) => if (trail.isLive) {"item--live"} else {""},
-      (trail: Trail, firstContainer: Boolean) => if(trail.trailPicture(5,3).isEmpty || trail.imageAdjust == Some("hide")){
+      (trail: Trail, firstContainer: Boolean) => if (trail.trailPicture(5,3).isEmpty || trail.imageAdjust == Some("hide")){
         "item--has-no-image"
       }else{
         "item--has-image"
@@ -627,6 +626,29 @@ object GetClasses {
       }.getOrElse("")
     )
     val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, firstContainer)}
+    RenderClasses(classes:_*)
+  }
+
+  def forFromage(trail: Trail, imageAdjust: Option[String]): String = {
+    val baseClasses: Seq[String] = Seq(
+      "fromage",
+      s"fromage--volume-${trail.group.getOrElse("0")}",
+      s"tone-${VisualTone(trail)}",
+      "tone-accent-border"
+    )
+    val f: Seq[(Trail, Option[String]) => String] = Seq(
+      (trail: Trail, imageAdjust: Option[String]) => if (trail.isLive) {"item--live"} else {""},
+      (trail: Trail, imageAdjust: Option[String]) =>
+        if (trail.trailPicture(5,3).isEmpty || imageAdjust == Some("hide")){
+          "fromage--has-no-image"
+        }else{
+          "fromage--has-image"
+        },
+      (trail: Trail, imageAdjust: Option[String]) => imageAdjust.map{ adjustValue =>
+        s"fromage--imageadjust-$adjustValue"
+      }.getOrElse("")
+    )
+    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, imageAdjust)}
     RenderClasses(classes:_*)
   }
 

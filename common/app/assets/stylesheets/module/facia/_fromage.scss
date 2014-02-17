@@ -125,13 +125,7 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
     @include mq(tablet) {
         @include rem((
             margin-top: $gs-baseline/2,
-            margin-bottom: $gs-baseline
-        ));
-    }
-}
-.fromage__standfirst {
-    @include mq(tablet) {
-        @include rem((
+            margin-bottom: $gs-baseline,
             max-width: gs-span(5)
         ));
     }
@@ -219,24 +213,19 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
 .fromage__support__item {
     border-top: 1px solid $c-neutral5;
 
+    @include rem((
+        padding-top: $gs-baseline/3,
+        padding-bottom: nth(nth($fs-headlines, 1), 2),
+        padding-right: $gs-gutter/4
+    ));
     @include mq(tablet) {
         display: table-cell;
 
         & + & {
             border-left: 1px solid $c-neutral5;
-
-            .svg & {
-                .fromage__support__action {
-                    @include rem((
-                        padding-left: $gs-gutter/4
-                    ));
-                }
-                .action--has-icon {
-                    @include rem((
-                        padding-left: $action-icon-width + ($action-icon-rightspace * 2)
-                    ));
-                }
-            }
+            @include rem((
+                padding-left: $gs-gutter/4
+            ));
         }
     }
 }
@@ -244,11 +233,6 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
     display: block;
     margin: 0;
     @include fs-headline(1);
-    @include rem((
-        padding-top: $gs-baseline/3,
-        padding-bottom: nth(nth($fs-headlines, 1), 2),
-        padding-right: $gs-gutter/4
-    ));
 }
 
 
@@ -327,7 +311,8 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
             @include fs-headline(6, true);
         }
     }
-    .fromage__standfirst {
+    .fromage__standfirst,
+    .fromage__byline {
         @include mq(tablet) {
             @include rem((
                 padding-right: $gs-gutter/4
@@ -448,6 +433,9 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
     .fromage__support__item {
         border-top-color: #ffffff;
 
+        @include rem((
+            padding-left: $gs-gutter/4
+        ));
         @include mq(tablet) {
             + .fromage__support__item {
                 border-left-color: #ffffff;
@@ -498,12 +486,6 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
                 ));
             }
         }
-    }
-    .fromage__support__action {
-        @include rem((
-            padding-left: $gs-gutter/4,
-            padding-right: $gs-gutter/4
-        ));
     }
 }
 .fromage--volume-1 {

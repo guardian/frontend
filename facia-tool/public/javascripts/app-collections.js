@@ -1,6 +1,6 @@
 /* global curl: true */
 curl([
-    'models/main-collections'
+    'models/collections/main'
 ]).then(function(
     CollectionsEditor
 ){
