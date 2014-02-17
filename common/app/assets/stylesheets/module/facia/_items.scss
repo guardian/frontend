@@ -239,6 +239,7 @@ $c-live: #e81818;
     @include f-headline;
 }
 .item__title {
+    position: relative;
     @include rem((padding-top: $gs-baseline/6));
     @include fs-headline(2, $size-only: true);
     word-wrap: break-word;
@@ -266,7 +267,7 @@ $c-live: #e81818;
 .l-row--items-4 {
     @include mq($to: tablet) {
          .item__title--has-icon-mobile {
-            padding-left: 25px;
+            @include rem((padding-left: 30px));
         }
     }
     .item--video,
@@ -275,7 +276,7 @@ $c-live: #e81818;
             display: block;
             position: absolute;
             top: 4px;
-            left: 10px;
+            left: 0;
         }
         @include mq(tablet) {
             .item__title .i {

@@ -117,7 +117,7 @@
         }
     }
     .collection__item {
-        background-color: $c-features-primary;
+        background-color: $c-features-secondary;
 
         .collection-wrapper--position-1 & {
             background-color: $c-features-tertiary;
@@ -153,8 +153,8 @@
             ));
         }
 
-        background-color: $c-features-primary;
-        @include mq(tablet) { background-color: rgba($c-features-primary, .8); }
+        background-color: $c-features-secondary;
+        @include mq(tablet) { background-color: rgba($c-features-secondary, .8); }
     }
     .collection-wrapper--position-1 & .item__title {
         background-color: $c-features-tertiary;
