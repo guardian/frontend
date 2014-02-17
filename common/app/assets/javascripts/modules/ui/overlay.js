@@ -36,11 +36,15 @@ define([
         // Setup events
         bean.on(this.node, 'click', '.js-overlay-close', function(e) {
             e.preventDefault();
-            self.hide();
-            common.mediator.emit('modules:overlay:close', self);
+            self.close();
         });
 
     }
+
+    Overlay.prototype.close = function() {
+        this.hide();
+        common.mediator.emit('modules:overlay:close', this);
+    };
 
     Overlay.prototype.showLoading = function() {
         this.setBody(this.loadingHtml);
