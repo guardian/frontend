@@ -39,7 +39,7 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
         val s3content = existsInS3(path)
         s3content match {
           case Some(_) => Ok(s3content.get).as("text/html")
-          case _ => Ok("404") 
+          case _ => NotFound
         }
 
       } 
