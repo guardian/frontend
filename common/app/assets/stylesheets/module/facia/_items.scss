@@ -257,6 +257,24 @@ $c-live: #e81818;
         @include show-only-if-svg-is-supported;
     }
 }
+@include mq($to: tablet) {
+    .item__title--has-icon-mobile {
+        padding-left: 25px;
+    }
+}
+.item--video,
+.item--gallery {
+    .item__title .i {
+        position: absolute;
+        top: 4px;
+        left: 10px;
+    }
+    @include mq(tablet) {
+        .item__title .i {
+            display: none;
+        }
+    }
+}
 .item__byline {
     @include fs-headline(2);
     @include rem((
@@ -388,8 +406,8 @@ $cta-icon-gap: 2px;
 .item__media-wrapper--has-icon {
     .item__cta {
         position: absolute;
-        top: 8px;
-        left: 8px;
+        top: $gs-baseline/3;
+        left: $gs-baseline/3;
     }
     .i {
         margin-bottom: $cta-icon-gap;
@@ -422,12 +440,13 @@ $cta-icon-gap: 2px;
         width: map-get($gallery-cta-icon, width);
         height: map-get($gallery-cta-icon, height);
         margin-left: -1 * (map-get($gallery-cta-icon, width) / 2);
-        margin-top: -1 * (map-get($gallery-cta-icon, height) / 2);
+        margin-top: -1 * ceil(map-get($gallery-cta-icon, height) / 2);
     }
     .item__cta--video & {
         width: map-get($video-cta-icon, width);
         height: map-get($video-cta-icon, height);
-        margin-left: -1 * (map-get($video-cta-icon, width) / 2);
+        // don't want icon to be exactly in the middle
+        margin-left: -1 * (map-get($video-cta-icon, width) / 3);
         margin-top: -1 * (map-get($video-cta-icon, height) / 2);
     }
 }
@@ -540,57 +559,6 @@ $show-more-icon: (
     background-size: contain;
 }
 
-.collection__item--has-background {
-    @include hide-background-on-item-sides;
-
-    .item__title,
-    .item__standfirst,
-    .item__byline,
-    .item__meta {
-        @include rem((
-            padding-left: 7px,
-            padding-right: 7px
-        ));
-    }
-    .item__meta {
-        @include box-sizing(border-box);
-
-        @include rem((
-            left: $gs-gutter/2,
-            right: $gs-gutter/2,
-            padding-bottom: $gs-baseline / 2,
-            margin-bottom: -$gs-baseline / 2
-        ));
-    }
-    @include mq(tablet) {
-        .item__meta {
-            width: auto;
-            @include rem((
-                left: $gs-gutter/2,
-                right: $gs-gutter/2,
-                padding-left: 7px,
-                padding-bottom: $gs-baseline,
-                margin-bottom: -$gs-baseline
-            ));
-        }
-    }
-
-    &.collection__item--tone-comment {
-        &,
-        .item__meta {
-            background: $c-neutral7;
-        }
-    }
-
-    &.collection__item--content-type-gallery,
-    &.collection__item--content-type-video {
-        &,
-        .item__meta {
-            background: $c-neutral1;
-        }
-    }
-}
-
 .i--circle {
     @include rounded-corners(50%);
     display: block;
@@ -607,5 +575,58 @@ $show-more-icon: (
         position: absolute;
         left: 14px;
         top: 6px;
+    }
+}
+
+.item--thumbnail {
+    .item__standfirst {
+        display: block;
+
+        @include rem((
+            margin-top: 2px
+        ));
+    }
+    .item__media-wrapper {
+        float: left;
+        clear: both;
+
+        @include rem((
+            margin-right: $gs-gutter/2
+        ));
+    }
+}
+
+.container--rolled-up .container--rolled-up-hide {
+    display: none;
+}
+
+.today {
+    color: $c-neutral1;
+    font-weight: normal;
+}
+.today__dayofweek {
+    color: $c-newsDefault;
+}
+@include mq(wide) {
+    .today__sub {
+        display: block;
+    }
+}
+
+
+/**
+ * Ads in containers / row patterns
+ */
+
+.container {
+    .ad-slot {
+        padding: 0;
+        margin: 0 auto;
+    }
+}
+@include mq(tablet) {
+    .l-row__item--mpu-300 {
+        min-width: gs-span(4) + $gs-gutter;
+        max-width: gs-span(4) + $gs-gutter;
     }
 }

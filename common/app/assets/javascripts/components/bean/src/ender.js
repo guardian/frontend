@@ -21,33 +21,33 @@
 
     , hover = function (enter, leave, i) { // i for internal
         for (i = this.length; i--;) {
-          b.on.call(this, this[i], 'mouseenter', enter)
-          b.on.call(this, this[i], 'mouseleave', leave)
+          b['on'].call(this, this[i], 'mouseenter', enter)
+          b['on'].call(this, this[i], 'mouseleave', leave)
         }
         return this
       }
 
     , methods = {
-          on             : on
-        , addListener    : on
-        , bind           : on
-        , listen         : on
-        , delegate       : add // jQuery compat, same arg order as add()
+          'on'             : on
+        , 'addListener'    : on
+        , 'bind'           : on
+        , 'listen'         : on
+        , 'delegate'       : add // jQuery compat, same arg order as add()
 
-        , one            : one
+        , 'one'            : one
 
-        , off            : off
-        , unbind         : off
-        , unlisten       : off
-        , removeListener : off
-        , undelegate     : off
+        , 'off'            : off
+        , 'unbind'         : off
+        , 'unlisten'       : off
+        , 'removeListener' : off
+        , 'undelegate'     : off
 
-        , emit           : fire
-        , trigger        : fire
+        , 'emit'           : fire
+        , 'trigger'        : fire
 
-        , cloneEvents    : clone
+        , 'cloneEvents'    : clone
 
-        , hover          : hover
+        , 'hover'          : hover
       }
 
     , shortcuts =
@@ -59,7 +59,7 @@
     methods[shortcuts[i]] = integrate('on', shortcuts[i])
   }
 
-  b.setSelectorEngine($)
+  b['setSelectorEngine']($)
 
   $.ender(methods, true)
 }(ender);

@@ -16,13 +16,15 @@
 }
 
 .commercial__title {
+    padding: $baseline*2;
+    margin: 0;
+    float: left;
+
     color: $c-brandBlue;
     text-transform: lowercase;
     word-spacing: -0.25em;
     @include fs-headline(2);
-    margin: 0;
-    padding: $baseline*2;
-    float: left;
+
     .em {
         font-style: italic;
     }

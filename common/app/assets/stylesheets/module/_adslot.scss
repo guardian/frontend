@@ -50,11 +50,6 @@
     margin: 0 auto !important;
 }
 
-[data-link-name*="bottom-banner-ad"] {
-    padding: $baseline*2 0;
-    background-color: #ffffff;
-}
-
 .top-banner-ad-container {
     min-height: 70px;
 }
@@ -83,6 +78,8 @@
 }
 
 .ad-slot--inline {
+    min-width: 300px;
+    max-width: 100%;
     padding: 0;
 
     .ad-container {
@@ -129,4 +126,10 @@
     width: 300px;
     height: 250px;
     overflow: hidden;
+}
+
+.ad-slot__commercial-component {
+    width: 100%;
+    min-height: initial;
+    padding: 0 0 $gs-baseline 0;
 }

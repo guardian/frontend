@@ -1,8 +1,5 @@
 .container--special {
     .collection-wrapper:first-child .collection__item {
-        .gallerythumbs {
-            margin-top: 0;
-        }
         &:first-child .item__link {
             border-top-width: 0;
         }
@@ -12,6 +9,7 @@
             .item__link {
                 border-top-width: 0;
             }
+            .gallerythumbs,
             .item__image-container {
                 margin-top: 0;
             }

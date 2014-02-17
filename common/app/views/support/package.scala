@@ -1,7 +1,7 @@
 package views.support
 
 import common._
-import conf.Switches.TagLinking
+import conf.Switches.{ TagLinking, ShowAllArticleEmbedsSwitch, ArticleSlotsSwitch }
 import model._
 
 import java.net.URLEncoder._
@@ -18,7 +18,6 @@ import play.api.mvc.RequestHeader
 import play.api.mvc.SimpleResult
 import play.api.templates.Html
 import scala.collection.JavaConversions._
-import conf.Switches.ShowAllArticleEmbedsSwitch
 
 sealed trait Style {
   val className: String
@@ -343,6 +342,65 @@ object TweetCleaner extends HtmlCleaner {
   }
 }
 
+case class InlineSlotGenerator(articleWordCount: Int) extends HtmlCleaner {
+
+  private def isBlock(element: Element): Boolean = {
+      (element.hasClass("img") && !element.hasClass("img--inline")) ||
+      element.hasClass("media-proportional-container") ||
+      element.tagName == "video"
+  }
+
+  private def insertSlot(paragraph: Element, document: Document) {
+    val prev = paragraph.previousElementSibling
+    val slot = document.createElement("div")
+    paragraph.before(slot)
+
+    if (isBlock(prev)) {
+      slot.attr("class", "slot slot--block")
+    } else if (prev.tagName == "h2") {
+      slot.attr("class", "slot slot--posth2")
+      val mobileSlot = document.createElement("div")
+      mobileSlot.attr("class", "slot slot--preh2")
+      prev.before(mobileSlot)
+    } else {
+      slot.attr("class", "slot slot--text")
+    }
+  }
+
+  override def clean(document: Document): Document = {
+
+    if (ArticleSlotsSwitch.isSwitchedOn && articleWordCount > 350) {
+
+      var lastInline = -200
+
+      var offset = 0
+      val spacing = 850
+      val minFollowingText = 750
+      val children = document.select("body > *")
+
+      children.zipWithIndex.foreach { case (element, index) =>
+
+        if (element.hasClass("img--inline")) {
+          lastInline = offset
+        }
+        else if (element.tagName == "p" && lastInline + spacing < offset && !element.hasClass("img")) {
+
+          val followingTextLen = children.slice(index, children.length).takeWhile(_.tagName == "p").map(_.text.length).reduce(_ + _)
+
+          if (followingTextLen > minFollowingText) {
+            insertSlot(element, document)
+            lastInline = offset
+          }
+        }
+
+        if (element.tagName.in(Set("p","h2"))) offset += element.text.length
+      }
+    }
+
+    document
+  }
+}
+
 class TagLinker(article: Article)(implicit val edition: Edition) extends HtmlCleaner{
   def clean(d: Document): Document = {
     if (TagLinking.isSwitchedOn && article.linkCounts.noLinks) {
@@ -578,8 +636,78 @@ object RenderOtherStatus {
 
 object RenderClasses {
 
-  def apply(classes: Map[String, Boolean]): String = classes.filter(_._2).keys.toSeq.sorted.mkString(" ")
+  def apply(classes: Map[String, Boolean]): String = apply(classes.filter(_._2).keys.toSeq:_*)
 
-  def apply(classes: String*): String = classes.sorted.mkString(" ")
+  def apply(classes: String*): String = classes.filter(_.nonEmpty).sorted.mkString(" ")
+
+}
+
+object GetClasses {
+
+  def forCollectionItem(trail: Trail): String = {
+    val f: Seq[(Trail) => String] = Seq(
+      (trail: Trail) => trail match {
+        case _: Gallery => "collection__item--content-type-gallery"
+        case _: Video   => "collection__item--content-type-video"
+        case _          => ""
+      }
+    )
+    val baseClasses: Seq[String] = Seq(
+      "l-row__item",
+      "collection__item",
+      s"collection__item--volume-${trail.group.getOrElse("0")}"
+    )
+    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail)}
+    RenderClasses(classes:_*)
+  }
+
+  def forItem(trail: Trail, firstContainer: Boolean): String = {
+    val baseClasses: Seq[String] = Seq(
+      "item",
+      s"tone-${VisualTone(trail)}"
+    )
+    val f: Seq[(Trail, Boolean) => String] = Seq(
+      (trail: Trail, firstContainer: Boolean) => trail match {
+        case _: Gallery => "item--gallery"
+        case _: Video   => "item--video"
+        case _          => ""
+      },
+      (trail: Trail, firstContainer: Boolean) => if (firstContainer) {"item--force-image-upgrade"} else {""},
+      (trail: Trail, firstContainer: Boolean) => if (trail.isLive) {"item--live"} else {""},
+      (trail: Trail, firstContainer: Boolean) => if (trail.trailPicture(5,3).isEmpty || trail.imageAdjust == Some("hide")){
+        "item--has-no-image"
+      }else{
+        "item--has-image"
+      },
+      (trail: Trail, firstContainer: Boolean) => trail.imageAdjust.map{ adjustValue =>
+        s"item--imageadjust-$adjustValue"
+      }.getOrElse("")
+    )
+    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, firstContainer)}
+    RenderClasses(classes:_*)
+  }
+
+  def forFromage(trail: Trail, imageAdjust: Option[String]): String = {
+    val baseClasses: Seq[String] = Seq(
+      "fromage",
+      s"fromage--volume-${trail.group.getOrElse("0")}",
+      s"tone-${VisualTone(trail)}",
+      "tone-accent-border"
+    )
+    val f: Seq[(Trail, Option[String]) => String] = Seq(
+      (trail: Trail, imageAdjust: Option[String]) => if (trail.isLive) {"item--live"} else {""},
+      (trail: Trail, imageAdjust: Option[String]) =>
+        if (trail.trailPicture(5,3).isEmpty || imageAdjust == Some("hide")){
+          "fromage--has-no-image"
+        }else{
+          "fromage--has-image"
+        },
+      (trail: Trail, imageAdjust: Option[String]) => imageAdjust.map{ adjustValue =>
+        s"fromage--imageadjust-$adjustValue"
+      }.getOrElse("")
+    )
+    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, imageAdjust)}
+    RenderClasses(classes:_*)
+  }
 
 }

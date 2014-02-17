@@ -152,11 +152,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val UserzoomSwitch = Switch("Analytics", "userzoom",
-    "Turns on userzoom survey popups",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 15)
-  )
-
   val OphanSwitch = Switch("Analytics", "ophan",
     "Enables the new Ophan tracking javascript",
     safeState = On, never
@@ -286,7 +281,7 @@ object Switches extends Collections {
 
   val FacebookAutoSigninSwitch = Switch("Feature Switches", "facebook-autosignin",
     "If this switch is on then users who have previously authorized the guardian app in facebook and who have not recently signed out are automatically signed in.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 15)
+    safeState = Off, sellByDate = endOfQ4
   )
 
   val IdentityFormstackSwitch = Switch("Feature Switches", "id-formstack",
@@ -312,16 +307,16 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
   )
 
+  val ArticleSlotsSwitch = Switch("Feature Switches", "article-slots",
+    "If this switch is on, inline content slots (for stories, ads, etc) will be generated in article bodies",
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
+  )
+
   // A/B Test Switches
 
   val ABAa = Switch("A/B Tests", "ab-abcd",
     "If this is switched on an AA test runs to prove the assignment of users in to segments is working reliably.",
     safeState = Off, sellByDate = endOfQ4
-  )
-
-  val ABEmailSignup = Switch("A/B Tests", "ab-email-signup",
-    "If this is switched on an AB test runs to test article page email signups",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 14)
   )
 
   val ABGravityRecommendations = Switch("A/B Tests", "ab-gravity-recommendations",
@@ -334,9 +329,19 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 27)
   )
 
+  val ABInlineElements = Switch("A/B Tests", "ab-onward-inline-elements",
+    "If this switch is on the ab inline elements test is run",
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
+  )
+
   val TagLinking = Switch("Feature Switches", "tag-linking",
     "If this is switched on articles that have no in body links will auto link to their tags where possible",
     safeState = Off, sellByDate = endOfQ4
+  )
+
+  val ArticleTruncation = Switch("A/B Tests", "ab-article-truncation",
+    "If this is switched on an A/B test runs to prove the effectiveness of truncatiung articles.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
   )
 
   // Sport Switch
@@ -367,17 +372,17 @@ object Switches extends Collections {
 
   val NetworkFrontUkAlpha = Switch("Facia", "network-front-uk-alpha",
     "If this is switched on then the uk alpha network fronts will be served if a GU_UK_ALPHA cookie has been dropped",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 17)
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 18)
   )
 
   val NetworkFrontUsAlpha = Switch("Facia", "network-front-us-alpha",
     "If this is switched on then the us alpha network fronts will be served if a GU_US_ALPHA cookie has been dropped",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 17)
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 18)
   )
 
   val NetworkFrontAuAlpha = Switch("Facia", "network-front-au-alpha",
     "If this is switched on then the au alpha network fronts will be served if a GU_AU_ALPHA cookie has been dropped",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 17)
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 18)
   )
 
   // Facia Tool Switches
@@ -434,7 +439,6 @@ object Switches extends Collections {
     LiveCricketSwitch,
     LiveStatsSwitch,
     LiveAbTestStatsSwitch,
-    UserzoomSwitch,
     CssFromStorageSwitch,
     ElasticSearchSwitch,
     ArticleKeywordsSwitch,
@@ -446,8 +450,9 @@ object Switches extends Collections {
     IdentityFilmAwardsSwitch,
     ABAa,
     ABGravityRecommendations,
-    ABEmailSignup,
+    ArticleTruncation,
     ABAdLabels,
+    ABInlineElements,
     NetworkFrontUkAlpha,
     NetworkFrontUsAlpha,
     NetworkFrontAuAlpha,
