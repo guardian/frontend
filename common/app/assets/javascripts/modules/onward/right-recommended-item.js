@@ -4,12 +4,21 @@
 */
 
 define([
-    'common/modules/component'
+    'common/modules/component',
+    'common/common',
+    'bonzo',
+    'bean'
 ], function (
-    Component
+    Component,
+    common,
+    bonzo,
+    bean
     ) {
 
-    function RightGravityRecommendation(data, index) {
+    var that = this;
+
+    function RightGravityRecommendation(data, index, context) {
+       this.context = context;
        this.index = index + 1;
        this.data = data;
     }
@@ -39,6 +48,16 @@ define([
         this.elem.setAttribute('data-link-name', 'trail | ' + this.index );
         this.getElem(this.classes.link).href = this.data.url;
         this.getElem(this.classes.headline).innerHTML = this.data.title;
+        common.mediator.on('module:clickstream:click', function(clickSpec) {
+            s.events="event37";
+            s.eVar7 = s.pageName;
+
+            s.eVar37 = "right-popular-contentrec";
+
+            s.linkTrackVars="events,eVar37,eVar37";
+            s.linkTrackEvents="event37";
+            s.tl(this,"o","right-popular-contentrec");
+        });
     };
 
     return RightGravityRecommendation;
