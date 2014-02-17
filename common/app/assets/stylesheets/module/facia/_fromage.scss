@@ -26,7 +26,7 @@
     .item__title {
         @include fs-headline(2);
         @include rem((
-        margin-bottom: $gs-baseline + 2px
+            margin-bottom: $gs-baseline + 2px
         ));
         @include mq(tablet) {
             display: table-cell;
@@ -50,7 +50,7 @@
         @include fs-data(1);
         color: $c-neutral2;
         @include rem((
-        margin-bottom: $gs-baseline/2
+            margin-bottom: $gs-baseline/2
         ));
 
         @include mq(tablet) {
@@ -470,7 +470,7 @@
         color: #ffffff;
     }
     .fromage__link:visited,
-    .fromage__link:visited .fromage__title,
+    .fromage__link:visited .item__title,
     .fromage__support__action:visited {
         color: rgba(#ffffff, .9);
     }
