@@ -239,7 +239,7 @@ $c-live: #e81818;
     @include f-headline;
 }
 .item__title {
-    margin-top: 2px;
+    @include rem((padding-top: $gs-baseline/6));
     @include fs-headline(2, $size-only: true);
     word-wrap: break-word;
 

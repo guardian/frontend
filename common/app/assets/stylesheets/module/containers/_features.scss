@@ -68,7 +68,7 @@
     }
     .item--has-no-image {
         .item__title {
-            @include rem((padding-top: 1px));
+            @include rem((padding-top: 3px));
         }
     }
     .collection__item {
