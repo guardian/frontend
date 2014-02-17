@@ -129,6 +129,17 @@ $home-icon: (
         left: (map-get($home-icon, width) + 6px);
     }
 
+    .truncation-cta__short-label {
+        @include mq(tablet, leftCol) { display: none; }
+        @include mq(wide) { display: none; }
+    }
+    .truncation-cta__long-label {
+        display: none;
+        @include mq(tablet, leftCol) { display: block; }
+        @include mq(leftCol, wide) { display: none; }
+        @include mq(wide) { display: block; }
+    }
+
     @include mq(tablet) {
         margin-top: $gs-baseline*2;
         width: gs-span(3);
@@ -136,12 +147,12 @@ $home-icon: (
 
     @include mq(leftCol) {
         width: gs-span(2);
-        position: absolute;
-        left: 0;
-        bottom: 2px;
+        margin-left: -1 * (gs-span(2) + $gs-gutter);
+        margin-top: -1 * $gs-row-height;
     }
 
     @include mq(wide) {
         width: gs-span(3);
+        margin-left: -1 * (gs-span(3) + $gs-gutter);
     }
 }
