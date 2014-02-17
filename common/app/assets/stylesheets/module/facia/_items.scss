@@ -265,14 +265,7 @@ $c-live: #e81818;
 .item--video,
 .item--gallery {
     .item__title .i {
-        position: absolute;
-        top: 4px;
-        left: 10px;
-    }
-    @include mq(tablet) {
-        .item__title .i {
-            display: none;
-        }
+        display: none;
     }
 }
 .item__byline {
