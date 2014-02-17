@@ -4,7 +4,6 @@ import play.api.libs.json.{Json, JsValue}
 import tools.FaciaApi
 import controllers.Identity
 import org.joda.time.DateTime
-import play.api.templates.HtmlFormat
 
 case class Block(
                   id: String,
@@ -31,6 +30,8 @@ trait UpdateActions {
   lazy val defaultMinimumTrailblocks = 0
   lazy val defaultMaximumTrailblocks = 20
   val itemMetaWhitelistFields: Seq[String] = Seq("headline", "trailText", "group", "supporting", "imageAdjust", "isBreaking", "updatedAt")
+  implicit val collectionMetaWrites = Json.writes[CollectionMetaUpdate]
+  implicit val updateListWrite = Json.writes[UpdateList]
 
   def getBlock(id: String): Option[Block] = FaciaApi.getBlock(id)
 
@@ -68,28 +69,36 @@ trait UpdateActions {
   def updateCollectionMeta(block: Block, update: CollectionMetaUpdate, identity: Identity): Block =
     block.copy(displayName=update.displayName)
 
-  def putBlock(id: String, block: Block, identity: Identity): Option[Block] = {
-    FaciaApi.archive(id, block)
+  def putBlock(id: String, block: Block, identity: Identity, updateJson: JsValue): Option[Block] =
     FaciaApi.putBlock(id, block, identity)
+
+  def archiveBlock(id: String, block: Block, update: JsValue): Unit =
+    FaciaApi.archive(id, block, update)
+
+  def updateCollectionList(id: String, update: UpdateList, identity: Identity): Option[Block] = {
+    lazy val updateJson = Json.toJson(update)
+    getBlock(id)
+    .map(insertIntoLive(update, _))
+    .map(insertIntoDraft(update, _))
+    .flatMap(putBlock(id, _, identity, updateJson))
+    .map{block => archiveBlock(id, block, updateJson);block}
+    .orElse(createBlock(id, identity, update))
   }
 
-  def updateCollectionList(id: String, update: UpdateList, identity: Identity): Option[Block] =
-    getBlock(id)
-      .map(insertIntoLive(update, _))
-      .map(insertIntoDraft(update, _))
-      .flatMap(putBlock(id, _, identity))
-      .orElse(createBlock(id, identity, update))
-
-  def updateCollectionFilter(id: String, update: UpdateList, identity: Identity): Option[Block] =
+  def updateCollectionFilter(id: String, update: UpdateList, identity: Identity): Option[Block] = {
+    lazy val updateJson = Json.toJson(update)
     getBlock(id)
       .map(deleteFromLive(update, _))
       .map(deleteFromDraft(update, _))
-      .flatMap(putBlock(id, _, identity))
+      .flatMap(putBlock(id, _, identity, updateJson))
+      .map{block => archiveBlock(id, block, updateJson);block}
+  }
+
 
   def updateCollectionMeta(id: String, update: CollectionMetaUpdate, identity: Identity): Option[Block] =
     getBlock(id)
       .map(updateCollectionMeta(_, update, identity))
-      .flatMap(putBlock(id, _, identity))
+      .flatMap(putBlock(id, _, identity, Json.toJson(update)))
 
   private def updateList(update: UpdateList, blocks: List[Trail]): List[Trail] = {
     val listWithoutItem = blocks.filterNot(_.id == update.item)
