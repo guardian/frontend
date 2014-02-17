@@ -39,6 +39,7 @@ define([
         // properties from the collection itself
         this.collectionMeta = asObservableProps([
             'displayName',
+            'href',
             'lastUpdated',
             'updatedBy',
             'updatedEmail']);
@@ -253,7 +254,10 @@ define([
         authedAjax.request({
             url: vars.CONST.apiBase + '/collectionmeta/' + this.id,
             type: 'post',
-            data: JSON.stringify({ displayName: this.collectionMeta.displayName() })
+            data: JSON.stringify({
+                displayName: this.collectionMeta.displayName(),
+                href: this.collectionMeta.href()
+            })
         })
         .then(function(){
             self.load();
