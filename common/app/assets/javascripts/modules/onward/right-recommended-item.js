@@ -48,16 +48,6 @@ define([
         this.elem.setAttribute('data-link-name', 'trail | ' + this.index );
         this.getElem(this.classes.link).href = this.data.url;
         this.getElem(this.classes.headline).innerHTML = this.data.title;
-        common.mediator.on('module:clickstream:click', function(clickSpec) {
-            s.events="event37";
-            s.eVar7 = s.pageName;
-
-            s.eVar37 = "right-popular-contentrec";
-
-            s.linkTrackVars="events,eVar37,eVar37";
-            s.linkTrackEvents="event37";
-            s.tl(this,"o","right-popular-contentrec");
-        });
     };
 
     return RightGravityRecommendation;
