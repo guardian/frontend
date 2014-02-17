@@ -57,15 +57,14 @@
 .ad-slot--top-banner-ad {
     background-color: #f0f0f0;
 
-    @include mq(tablet) {
-        background-color: #ffffff;
+    .ad-slot__label {
+        background-color: #f0f0f0;
+        height: auto;
+        border: none;
     }
 
-    @include mq($to: tablet) {
-        .ad-slot__label {
-            height: auto;
-            border: none;
-        }
+    @include mq(tablet) {
+        background-color: #ffffff;
     }
 }
 
