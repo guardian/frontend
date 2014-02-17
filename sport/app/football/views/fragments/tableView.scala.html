@@ -8,7 +8,7 @@
         }
 
         @table.groups.map{ group =>
-            <tbody>
+            <tbody class="table-football-body">
                 @if(table.multiGroup) {
                     @group.round.map { round =>
                         @round.name.map { name =>

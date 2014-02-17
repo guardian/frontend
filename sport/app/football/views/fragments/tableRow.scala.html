@@ -1,4 +1,4 @@
-@(entry: pa.LeagueTableEntry, row: RowInfo, highlight: Boolean = false)
+@(entry: model.LeagueTableEntryWithForm, row: RowInfo, highlight: Boolean = false)
 <tr@if(highlight){ class="highlight"}>
     <td class="table-column--sub">@entry.team.rank</td>
     <td class="table-column--main"><a href="@TeamUrl(entry.team)" data-link-name="View team">@entry.team.name</a></td>
@@ -10,4 +10,17 @@
     <td>@entry.team.total.goalsAgainst</td>
     <td>@entry.team.goalDifference</td>
     <td>@entry.team.points</td>
+    <td>
+      @entry.prevResults.takeRight(5).map { result =>
+          @if(result.won) {
+              <span class="result won" data-foe="@result.foe.name" data-score="@result.self.score.get" data-score-foe="@result.foe.score.get">&#10004;</span>
+          }
+          @if(result.drew) {
+              <span class="result drew" data-foe="@result.foe.name" data-score="@result.self.score.get" data-score-foe="@result.foe.score.get">-</span>
+          }
+          @if(result.lost) {
+              <span class="result lost" data-foe="@result.foe.name" data-score="@result.self.score.get" data-score-foe="@result.foe.score.get">&#x2718;</span>
+          }
+      }
+    </td>
 </tr>
