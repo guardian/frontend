@@ -19,3 +19,42 @@ td {
 [rowspan="1"] {
     vertical-align: top;
 }
+
+/** Tables V1 **/
+.table {
+    background: $c-neutral8;
+    border-bottom: 2px solid $c-neutral2;
+    border-top: 2px solid $c-newsAccent;
+
+    thead th,
+    thead td {
+        @include fs-data(5);
+        color: $c-neutral1;
+        font-weight: 800;
+        padding: $gs-baseline/2 ($gs-gutter+4)/2;
+    }
+
+    td {
+        @include fs-data(5);
+        padding: $gs-baseline ($gs-gutter+4)/2;
+    }
+}
+
+.table--striped {
+    tr:nth-child(odd) td {
+        background-color: $c-neutral6;
+    }
+}
+
+.table-row--selected td {
+    font-weight: 800;
+}
+
+.table-column--sub {
+    color: $c-neutral3;
+}
+
+.table-column--main {
+    width: 100%;
+}
+
