@@ -212,6 +212,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object facia {
     lazy val stage = configuration.getStringProperty("facia.stage").getOrElse(Configuration.environment.stage)
+    lazy val contentApiKey = configuration.getMandatoryStringProperty("content.api.key.facia")
   }
 
   object faciatool {
