@@ -4,7 +4,6 @@ var tests = [],
     specUrl = '/base/' + app + '/test/assets/javascripts/spec',
     specRegExp = new RegExp(specUrl.replace(/\//g, '\\/') + '\/.*\\.spec\\.js');
 
-console.log(window.__karma__.exclude);
 for (var file in window.__karma__.files) {
     if (file.match(specRegExp)) {
         tests.push(file);

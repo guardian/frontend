@@ -301,14 +301,6 @@ module.exports = function (grunt) {
                     dest: staticRequireDir + 'javascripts/common'
                 }]
             },
-            'javascript-common-tests': {
-                files: [{
-                    expand: true,
-                    cwd: 'common/test/assets/javascripts/spec',
-                    src: ['**/*.js'],
-                    dest: staticRequireDir + 'tests/specs'
-                }]
-            },
             'javascript-admin': {
                 files: [{
                     expand: true,
@@ -329,22 +321,6 @@ module.exports = function (grunt) {
                     cwd: 'facia/app/assets/javascripts',
                     src: ['**/*.js'],
                     dest: staticRequireDir + 'javascripts'
-                }]
-            },
-            'javascript-facia-tests': {
-                files: [{
-                    expand: true,
-                    cwd: 'facia/test/assets/javascripts/spec',
-                    src: ['**/*.js'],
-                    dest: staticRequireDir + 'tests/specs'
-                }]
-            },
-            testUtils: {
-                files: [{
-                    expand: true,
-                    cwd: 'common/test/assets/javascripts',
-                    src: ['**/*', '!spec/**'],
-                    dest: staticRequireDir + 'tests'
                 }]
             },
             commonModules: {
