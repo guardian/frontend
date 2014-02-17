@@ -1,0 +1,24 @@
+@(players: List[pa.SquadMember])
+
+@views.html.football.main("Players") {
+    <hgroup class="page-header">
+        <h1>Players</h1>
+    </hgroup>
+
+    <form class="form-inline" role="form" action="/admin/football/player/head2head" method="post">
+        <h2>Player head to head</h2>
+
+        @views.html.football.fragments.choosePlayer("player1", players)
+        vs
+        @views.html.football.fragments.choosePlayer("player2", players)
+
+        <button type="submit" class="btn btn-success">Fight!</button>
+    </form>
+
+    <form class="form-inline" role="form" action="/admin/football/player/card" method="post">
+        <h2>Card</h2>
+
+        @views.html.football.fragments.choosePlayer("player", players)
+        <button type="submit" class="btn btn-success">View</button>
+    </form>
+}
