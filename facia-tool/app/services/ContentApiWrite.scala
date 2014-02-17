@@ -16,14 +16,14 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
 
   case class Item(
                    id: String,
-                   meta: Option[Map[String, JsValue]]
+                   metadata: Option[Map[String, JsValue]]
                    )
 
   case class ContentApiPut(
                             `type`: String,
                             displayName: Option[String],
                             groups: Seq[String],
-                            curated: Seq[Item],
+                            curatedContent: Seq[Item],
                             backfill: Option[String],
                             lastModified: String,
                             modifiedBy: String
@@ -83,7 +83,11 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
   private def generateItems(items: List[Trail]): List[Item] =
     items.map { trail =>
       Item(trail.id, trail.meta.map(_.map {
-            case (id, jsValue) if id == "group" => (id, jsValue.asOpt[BigDecimal].map(JsNumber.apply).getOrElse(jsValue))
+            case ("group", jsValue) => ("group", jsValue.asOpt[BigDecimal].map(JsNumber.apply).getOrElse(jsValue))
+            //TODO: These are in transition and will be removed
+            case json@("imageAdjust", jsValue) => json
+            case json@("meta", jsValue) => json
+            case json@("supporting", jsValue) => json
             case j  => j
           }
         )
