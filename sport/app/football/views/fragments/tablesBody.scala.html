@@ -32,11 +32,21 @@
                         </p>
                         }
                     </div>
-                    @if(table.multiGroup){
 
+                    <div class="article__container u-cf">
+                    @if(table.multiGroup){
+                        @table.groups.map{ group =>
+                            @group.round.map { round =>
+                                @round.name.map { name =>
+                                    <h1>@name</h1>
+                                    @tableView(table, model.singleCompetition)
+                                }
+                            }
+                        }
                     }else{
                         @tableView(table, model.singleCompetition)
                     }
+                    </div>
                 }
             </div>
 

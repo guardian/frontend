@@ -1,11 +1,11 @@
 @(table: Table, isSingleTable: Boolean = false)(implicit request: RequestHeader)
-<div class="article__container u-cf">
+
     <table class="table table--striped">
-        @if(!table.multiGroup) {
+        @*if(!table.multiGroup) {*@
             <thead>
                 @tableColumnHeaders()
             </thead>
-        }
+        @*}*@
 
         @table.groups.map{ group =>
             <tbody class="table-football-body">
@@ -28,4 +28,3 @@
     @if(!isSingleTable){
         <a href='@{table.competition.url + "/table"}' data-link-name="full table" class="cta-small type-8 tone-colour">View full @table.competition.fullName table<i class="i i-sport-arrow i-sport-arrow--small"></i></a>
     }
-</div>
