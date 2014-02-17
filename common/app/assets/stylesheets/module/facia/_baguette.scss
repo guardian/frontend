@@ -18,7 +18,7 @@
             margin: 0 $gs-gutter/4
         ));
         color: #ffffff;
-        @include fs-headline(6);
+        @include fs-headline(6, $size-only: true);
     }
     .item__media-wrapper {
         margin-top: $gs-baseline*3;
