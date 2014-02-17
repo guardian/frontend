@@ -477,6 +477,7 @@ object Switches extends Collections {
     LCMortgageFeedSwitch,
     GuBookshopFeedsSwitch,
     NetworkFrontOptIn,
+    ArticleSlotsSwitch,
     ImageServerSwitch,
     FaciaToolPressSwitch,
     DogpileSwitch,
