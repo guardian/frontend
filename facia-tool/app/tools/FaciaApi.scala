@@ -2,7 +2,7 @@ package tools
 
 import frontsapi.model.{Trail, Block}
 import org.joda.time.DateTime
-import play.api.libs.json.Json
+import play.api.libs.json.{JsValue, Json}
 import services.S3FrontsApi
 import controllers.Identity
 import scala.util.Try
@@ -18,7 +18,7 @@ trait FaciaApiWrite {
   def putBlock(id: String, block: Block, identity: Identity): Option[Block]
   def publishBlock(id: String, identity: Identity): Option[Block]
   def discardBlock(id: String, identity: Identity): Option[Block]
-  def archive(id: String, block: Block): Unit
+  def archive(id: String, block: Block, update: JsValue) : Unit
 }
 
 object FaciaApi extends FaciaApiRead with FaciaApiWrite {
@@ -42,7 +42,13 @@ object FaciaApi extends FaciaApiRead with FaciaApiWrite {
   }
   def publishBlock(id: String, identity: Identity): Option[Block] = getBlock(id) map (updateIdentity(_, identity)) flatMap { block => putBlock(id, block.copy(live = block.draft.getOrElse(Nil), draft = None), identity)}
   def discardBlock(id: String, identity: Identity): Option[Block] = getBlock(id) map (updateIdentity(_, identity)) flatMap { block => putBlock(id, block.copy(draft = None), identity)}
-  def archive(id: String, block: Block): Unit = S3FrontsApi.archive(id, Json.prettyPrint(Json.toJson(block)))
+  def archive(id: String, block: Block, update: JsValue): Unit = {
+    val json = Json.obj(
+      ("collection", block),
+      ("update", update)
+    )
+    S3FrontsApi.archive(id, Json.prettyPrint(Json.toJson(json)))
+  }
 
   def updateIdentity(block: Block, identity: Identity): Block = block.copy(lastUpdated = DateTime.now.toString, updatedBy = identity.fullName, updatedEmail = identity.email)
 }
