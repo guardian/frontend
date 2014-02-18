@@ -82,20 +82,20 @@ object S3FrontsApi extends S3 {
   override lazy val bucket = Configuration.aws.bucket
   lazy val stage = if (Play.isTest) "TEST" else Configuration.facia.stage.toUpperCase
   val namespace = "frontsapi"
-  lazy val location = s"${stage}/${namespace}"
+  lazy val location = s"$stage/$namespace"
 
-  def getSchema = get(s"${location}/schema.json")
-  def getConfig(id: String) = get(s"${location}/config/${id}/config.json")
+  def getSchema = get(s"$location/schema.json")
+  def getConfig(id: String) = get(s"$location/config/$id/config.json")
   def getMasterConfig: Option[String] = get(s"$location/config/config.json")
-  def getBlock(id: String) = get(s"${location}/collection/${id}/collection.json")
+  def getBlock(id: String) = get(s"$location/collection/$id/collection.json")
   def listConfigsIds: List[String] = getConfigIds(s"$location/config/")
   def listCollectionIds: List[String] = getCollectionIds(s"$location/collection/")
   def putBlock(id: String, json: String) =
-    putPublic(s"${location}/collection/${id}/collection.json", json, "application/json")
+    putPublic(s"$location/collection/$id/collection.json", json, "application/json")
 
   def archive(id: String, json: String) = {
     val now = DateTime.now
-    putPrivate(s"${location}/history/collection/${id}/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/${now}.json", json, "application/json")
+    putPrivate(s"$location/history/collection/$id/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/$now.json", json, "application/json")
   }
 
   private def getListing(prefix: String, dropText: String): List[String] = {
