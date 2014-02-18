@@ -14,7 +14,9 @@ case class Competition(
     startDate: Option[DateMidnight] = None,
     matches: Seq[FootballMatch] = Nil,
     leagueTable: Seq[LeagueTableEntry] = Nil,
-    showInTeamsList: Boolean = false) extends implicits.Collections with implicits.Football {
+    showInTeamsList: Boolean = false,
+    tableDividers: List[Int] = Nil
+) extends implicits.Collections with implicits.Football {
 
   lazy val hasMatches = matches.nonEmpty
   lazy val hasLiveMatches = matches.exists(_.isLive)

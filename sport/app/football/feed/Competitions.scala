@@ -93,12 +93,12 @@ trait Competitions extends LiveMatches with Logging with implicits.Collections w
   )
 
   val competitionDefinitions = Seq(
-    Competition("100", "/football/premierleague", "Premier League", "Premier League", "English", showInTeamsList = true),
+    Competition("100", "/football/premierleague", "Premier League", "Premier League", "English", showInTeamsList = true, tableDividers = List(4, 5, 17)),
     Competition("500", "/football/championsleague", "Champions League", "Champions League", "European"),
     Competition("510", "/football/uefa-europa-league", "Europa League", "Europa League", "European"),
     Competition("300", "/football/fa-cup", "FA Cup", "FA Cup", "English"),
     Competition("301", "/football/capital-one-cup", "Capital One Cup", "Capital One Cup", "English"),
-    Competition("101", "/football/championship", "Championship", "Championship", "English", showInTeamsList = true),
+    Competition("101", "/football/championship", "Championship", "Championship", "English", showInTeamsList = true, tableDividers = List(2, 6, 21)),
     Competition("102", "/football/leagueonefootball", "League One", "League One", "English", showInTeamsList = true),
     Competition("103", "/football/leaguetwofootball", "League Two", "League Two", "English", showInTeamsList = true),
     Competition("400", "/football/community-shield", "Community Shield", "Community Shield", "English", showInTeamsList = true),
