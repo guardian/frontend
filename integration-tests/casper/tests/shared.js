@@ -1,8 +1,5 @@
 system = require('system');
 environment = system.env.ENVIRONMENT;
-
-console.log('phantomjs location:' + system.env.PHANTOMJS_EXECUTABLE);
-
 host = {
     marc:   'http://marcjones.int.gnl:9000/',
     dev:    'http://localhost:9000/',
