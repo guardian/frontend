@@ -172,8 +172,6 @@ GET         /commercial/books/book/*pageId.json                                 
 GET         /commercial/books/book/*pageId                                                                           controllers.commercial.BookOffers.singleBook(pageId, format="html")
 
 # Onward journeys
-GET         /onward/most-read.json                                                                                   controllers.MostPopularOnwardController.mostRead()
-GET         /onward/latest.json                                                                                      controllers.LatestContentController.renderLatest()
 GET         /onward/recently-published                                                                               controllers.LatestContentController.recentlyPublished()
 
 # Facia

@@ -26,6 +26,10 @@ object MostPopularAgent extends Logging with ExecutionContexts {
         old + (edition.id -> mostViewed)
       }(Timeout(5.seconds))
     }
+
+  def stop() {
+    agent.close()
+  }
 }
 
 
@@ -48,5 +52,9 @@ object MostPopularExpandableAgent extends Logging with ExecutionContexts {
         }
       }
     }
+  }
+
+  def stop() {
+    agent.close()
   }
 }
