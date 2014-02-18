@@ -35,7 +35,6 @@
     "esprima": "~1.0.4",
     "glob": "~3.2.8",
     "grunt-contrib-imagemin": "~0.5.0",
-    "casperjs": "~1.1.0-beta3",
     "grunt-casperjs": "~1.4.0"
   },
   "scripts": {
