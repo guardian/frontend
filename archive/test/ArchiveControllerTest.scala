@@ -20,7 +20,7 @@ class ArchiveControllerTest extends FlatSpec with Matchers with UsesElasticSearc
     val url = "travel.theguardian.com/askatraveller/0,,345059,00.html"
     val result = controllers.ArchiveController.lookup(url)(TestRequest())
     status(result) should be(200)
-    contentType(result) should be("text/html")
+    contentType(result) should be(Some("text/html"))
   }
 
   it should "return a HTTP 404 when it can not find a resource" in Fake {
