@@ -506,9 +506,6 @@ module.exports = function (grunt) {
             all: {
                 src: ['integration-tests/casper/tests/**/*.spec.js']
             },
-            allexceptadmin: {
-                src: ['integration-tests/casper/tests/!(*admin)/*.spec.js']
-            },
             admin: {
                 src: ['integration-tests/casper/tests/admin/*.spec.js']
             },
