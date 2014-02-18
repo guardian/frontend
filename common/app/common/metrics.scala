@@ -7,6 +7,7 @@ import java.lang.management.ManagementFactory
 import model.diagnostics.CloudWatch
 import java.io.File
 import java.util.concurrent.atomic.AtomicLong
+import com.amazonaws.services.cloudwatch.model.Dimension
 
 trait TimingMetricLogging extends Logging { self: TimingMetric =>
   override def measure[T](block: => T): T = {
@@ -362,29 +363,36 @@ trait CloudWatchApplicationMetrics extends GlobalSettings {
 
   def applicationName: String
 
+  def applicationMetrics: Map[String, Double] = Map.empty
+
+  def systemMetrics: Map[String, Double] = Map(
+    (s"$applicationName-max-heap-memory", SystemMetrics.MaxHeapMemoryMetric.getValue().toDouble),
+    (s"$applicationName-used-heap-memory", SystemMetrics.UsedHeapMemoryMetric.getValue().toDouble),
+
+    (s"$applicationName-total-physical-memory", SystemMetrics.TotalPhysicalMemoryMetric.getValue().toDouble),
+    (s"$applicationName-free-physical-memory", SystemMetrics.FreePhysicalMemoryMetric.getValue().toDouble),
+
+    (s"$applicationName-available-processors", SystemMetrics.AvailableProcessorsMetric.getValue().toDouble),
+
+    (s"$applicationName-load-average", SystemMetrics.LoadAverageMetric.getValue()),
+
+    (s"$applicationName-build-number", SystemMetrics.BuildNumberMetric.getValue().toDouble),
+
+    (s"$applicationName-free-disk-space", SystemMetrics.FreeDiskSpaceMetric.getValue()),
+    (s"$applicationName-total-disk-space", SystemMetrics.TotalDiskSpaceMetric.getValue()),
+
+    (s"$applicationName-dogpile-hits", PerformanceMetrics.dogPileHitMetric.count.getAndSet(0).toDouble),
+    (s"$applicationName-dogpile-miss", PerformanceMetrics.dogPileMissMetric.count.getAndSet(0).toDouble)
+  )
+
   def report() {
-
-    val metrics = Map(
-      (s"$applicationName-max-heap-memory", SystemMetrics.MaxHeapMemoryMetric.getValue().toDouble),
-      (s"$applicationName-used-heap-memory", SystemMetrics.UsedHeapMemoryMetric.getValue().toDouble),
-
-      (s"$applicationName-total-physical-memory", SystemMetrics.TotalPhysicalMemoryMetric.getValue().toDouble),
-      (s"$applicationName-free-physical-memory", SystemMetrics.FreePhysicalMemoryMetric.getValue().toDouble),
-
-      (s"$applicationName-available-processors", SystemMetrics.AvailableProcessorsMetric.getValue().toDouble),
-
-      (s"$applicationName-load-average", SystemMetrics.LoadAverageMetric.getValue()),
-
-      (s"$applicationName-build-number", SystemMetrics.BuildNumberMetric.getValue().toDouble),
-
-      (s"$applicationName-free-disk-space", SystemMetrics.FreeDiskSpaceMetric.getValue()),
-      (s"$applicationName-total-disk-space", SystemMetrics.TotalDiskSpaceMetric.getValue()),
-
-      (s"$applicationName-dogpile-hits", PerformanceMetrics.dogPileHitMetric.count.getAndSet(0).toDouble),
-      (s"$applicationName-dogpile-miss", PerformanceMetrics.dogPileMissMetric.count.getAndSet(0).toDouble)
-    )
-
-    CloudWatch.put("ApplicationSystemMetrics", metrics)
+    val systemMetrics: Map[String, Double] = this.systemMetrics
+    val applicationMetrics: Map[String, Double] = this.applicationMetrics
+    CloudWatch.put("ApplicationSystemMetrics", systemMetrics)
+    if (applicationMetrics.nonEmpty) {
+      val applicationDimension: Dimension = new Dimension().withName("ApplicationName").withValue(applicationName)
+      CloudWatch.putWithStage("Application", applicationMetrics, Seq(applicationDimension))
+    }
   }
 
   override def onStart(app: PlayApp) {
