@@ -135,28 +135,25 @@ trait SecureS3Request extends implicits.Dates with Logging {
     }
 
     val date = DateTime.now.toHttpDateTimeString
-    val signedString = signAndBase64Encode(generateStringToSign(httpVerb, id, date), credentials.getAWSSecretKey)
+    val signedString = signAndBase64Encode(generateStringToSign(httpVerb, id, date, sessionTokenHeaders), credentials.getAWSSecretKey)
 
     val headers = Seq(
       "Date" -> date,
       "Authorization" -> s"AWS ${credentials.getAWSAccessKeyId}:$signedString"
     ) ++ sessionTokenHeaders
 
-    val request = WS.url(s"$frontendStore/$id").withHeaders(headers:_*)
-
-    log.info("request headers...")
-    request.headers.foreach{ h =>
-      log.info(h._1 + " : " + h._2.toString())
-    }
-
-    request
+    WS.url(s"$frontendStore/$id").withHeaders(headers:_*)
   }
 
   //Other HTTP verbs may need other information such as Content-MD5 and Content-Type
   //If we move to AWS Security Token Service, we will need x-amz-security-token
-  private def generateStringToSign(httpVerb: String, id: String, date: String): String =
-  //http://docs.aws.amazon.com/AmazonS3/latest/dev/RESTAuthentication.html
-    s"$httpVerb\n\n\n$date\n/$frontendBucket/$id"
+  private def generateStringToSign(httpVerb: String, id: String, date: String, headers: Seq[(String, String)]): String = {
+    //http://docs.aws.amazon.com/AmazonS3/latest/dev/RESTAuthentication.html#RESTAuthenticationConstructingCanonicalizedAmzHeaders
+    val headerString = headers.map{ case (name, value) => s"${name.trim.toLowerCase}:${value.trim}\n" }.mkString
+    //http://docs.aws.amazon.com/AmazonS3/latest/dev/RESTAuthentication.html
+    s"$httpVerb\n\n\n$date\n$headerString/$frontendBucket/$id"
+  }
+
 
   private def signAndBase64Encode(stringToSign: String, secretKey: String): String = {
     try {
