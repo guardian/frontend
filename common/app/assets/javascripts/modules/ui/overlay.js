@@ -37,7 +37,7 @@ define([
         bean.on(this.node, 'click', '.js-overlay-close', function(e) {
             e.preventDefault();
             self.hide();
-            common.mediator.emit('modules:overlay:close', this);
+            common.mediator.emit('modules:overlay:close', self);
         });
 
     }
