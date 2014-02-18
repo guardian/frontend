@@ -65,27 +65,27 @@ class TemplatesTest extends FlatSpec with Matchers {
     val baseImg = figures(0)
     (baseImg \ "@class").text should include("img--base img--inline")
     (baseImg \ "img" \ "@class").text should be("gu-image")
-    (baseImg \ "img" \ "@width").text should be("140")
+    (baseImg \ "img" \ "@width").text should be("140px")
 
     val medianImg = figures(1)
     (medianImg \ "@class").text should include("img--median")
     (medianImg \ "img" \ "@class").text should be("gu-image")
-    (medianImg \ "img" \ "@width").text should be("250")
+    (medianImg \ "img" \ "@width").text should be("250px")
 
     val extendedImg = figures(2)
     (extendedImg \ "@class").text should include("img--extended")
     (extendedImg \ "img" \ "@class").text should be("gu-image")
-    (extendedImg \ "img" \ "@width").text should be("600")
+    (extendedImg \ "img" \ "@width").text should be("600px")
 
     val landscapeImg = figures(3)
     (landscapeImg \ "@class").text should include("img--landscape")
     (landscapeImg \ "img" \ "@class").text should be("gu-image")
-    (landscapeImg \ "img" \ "@width").text should be("500")
+    (landscapeImg \ "img" \ "@width").text should be("500px")
 
     val portaitImg = figures(4)
     (portaitImg \ "@class").text should include("img--portrait")
     (portaitImg \ "img" \ "@class").text should be("gu-image")
-    (portaitImg \ "img" \ "@height").text should be("700")
+    (portaitImg \ "img" \ "@height").text should be("")
 
     (body \\ "figure").foreach { fig =>
       (fig \ "@itemprop").text should be("associatedMedia")
