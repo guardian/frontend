@@ -740,7 +740,7 @@ $replyIndent: 26px;
         @include rem((padding: $baseline*2 $gs-gutter/2 $baseline*3));
         position: relative;
         width: 100%;
-        word-break: break-all;
+        max-width: $a-rightCol-width;
 
         &:before { // Pointer (equilateral triangle)
             top: 100%;
