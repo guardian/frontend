@@ -10,7 +10,8 @@ object Global extends WithFilters(RequestMeasurementMetrics.asFilters: _*) with 
   override lazy val applicationName = Management.applicationName
 
   override def applicationMetrics: Map[String, Double] = Map(
-    ("s3-authorization-error", FaciaMetrics.S3AuthorizationError.getValue().toDouble)
+    ("s3-authorization-error", FaciaMetrics.S3AuthorizationError.getValue().toDouble),
+    ("json-parsing-error", FaciaMetrics.JsonParsingErrorCount.getValue().toDouble)
   )
 
 }
