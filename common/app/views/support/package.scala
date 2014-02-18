@@ -257,16 +257,17 @@ case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner 
         fig.attr("itemprop", "associatedMedia")
         fig.attr("itemscope", "")
         fig.attr("itemtype", "http://schema.org/ImageObject")
-        val mediaId = fig.attr("data-media-id")
-        val asset = findImageFromId(mediaId)
+        val asset = findImageFromId(fig.attr("data-media-id"))
 
         fig.getElementsByTag("img").foreach { img =>
           fig.addClass("img")
           img.attr("itemprop", "contentURL")
-          val src = img.attr("src")
-          img.attr("src", ImgSrc(src, Naked).toString())
 
           asset.foreach { image =>
+            image.url.map(url => img.attr("src", ImgSrc(url, Item620).toString))
+            img.attr("width", s"${image.width}px")
+            img.attr("height", "")
+
             fig.addClass(image.width match {
               case width if width <= 220 => "img--base img--inline"
               case width if width < 460 => "img--median"
@@ -294,7 +295,7 @@ case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner 
   }
 
   def findImageFromId(id:String): Option[ImageAsset] = {
-    contentImages.find(_.id == id).flatMap(_.largestImage)
+    contentImages.find(_.id == id).flatMap(Item620.elementFor)
   }
 }
 
