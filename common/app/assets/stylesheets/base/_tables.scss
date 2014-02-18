@@ -42,7 +42,7 @@ td {
 
 .table--striped {
     tr:nth-child(odd) td {
-        background-color: $c-neutral6;
+        background-color: $c-neutralHighlight;
     }
 }
 
@@ -51,10 +51,19 @@ td {
 }
 
 .table-column--sub {
-    color: $c-neutral3;
+    color: $c-statusNeutral;
 }
 
 .table-column--main {
     width: 100%;
 }
 
+.table-row--highlight td {
+    font-weight: bold;
+}
+
+.table__headline {
+    @include fs-bodyHeading(2);
+    border-top: 1px dotted $c-neutral5;
+    padding: $gs-baseline/2 0 $gs-baseline 0;
+}
