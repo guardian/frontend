@@ -58,3 +58,8 @@ td {
     width: 100%;
 }
 
+.table__headline {
+    @include fs-bodyHeading(2);
+    border-top: 1px dotted $c-neutral5;
+    padding: $gs-baseline/2 0 $gs-baseline 0;
+}
