@@ -295,6 +295,7 @@ a.competition-title {
         text-decoration: none;
     }
 }
+
 .football-filter__label {
     @include fs-bodyCopy(1);
     margin: 0;
@@ -310,7 +311,6 @@ a.competition-title {
     right: -1px;
     top: -1px;
 }
-
 
 .live-matches-dateline {
     display: block;
