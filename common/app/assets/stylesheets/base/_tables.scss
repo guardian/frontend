@@ -62,6 +62,10 @@ td {
     font-weight: bold;
 }
 
+.table-row--divider td {
+    border-bottom: 1px dashed $c-neutral1;
+}
+
 .table__headline {
     @include fs-bodyHeading(2);
     border-top: 1px dotted $c-neutral5;
