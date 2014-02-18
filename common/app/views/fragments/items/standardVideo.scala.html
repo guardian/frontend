@@ -28,9 +28,7 @@
                         </div>
                     }
                 </div>
-                <h@if(isFirstContainer && index == 0){1}else{2} class="item__title">
-                    @RemoveOuterParaHtml(trail.headline)
-                </h@if(isFirstContainer && index == 0){1}else{2}>
+                @fragments.items.elements.title(trail, index, containerIndex)
             </a>
 
             @trail.trailText.map { text =>

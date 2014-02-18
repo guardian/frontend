@@ -201,7 +201,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         ImageServerSwitch.switchOn()
         inBodyImage.getAttribute("class") should include("img--extended")
         inBodyImage.findFirst("[itemprop=contentURL]").getAttribute("src") should
-          endWith("sys-images/Travel/Late_offers/pictures/2012/10/11/1349951383662/Shops-in-Rainbow-Row-Char-001.jpg?width=-&height=-&quality=95")
+          endWith("sys-images/Travel/Late_offers/pictures/2012/10/11/1349951383662/Shops-in-Rainbow-Row-Char-001.jpg?width=620&height=-&quality=95")
 
         And("I should see the image caption")
         inBodyImage.findFirst("[itemprop=description]").getText should

@@ -4,12 +4,21 @@
 */
 
 define([
-    'common/modules/component'
+    'common/modules/component',
+    'common/common',
+    'bonzo',
+    'bean'
 ], function (
-    Component
+    Component,
+    common,
+    bonzo,
+    bean
     ) {
 
-    function RightGravityRecommendation(data, index) {
+    var that = this;
+
+    function RightGravityRecommendation(data, index, context) {
+       this.context = context;
        this.index = index + 1;
        this.data = data;
     }
