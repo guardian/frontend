@@ -391,7 +391,7 @@ trait CloudWatchApplicationMetrics extends GlobalSettings {
     CloudWatch.put("ApplicationSystemMetrics", systemMetrics)
     if (applicationMetrics.nonEmpty) {
       val applicationDimension: Dimension = new Dimension().withName("ApplicationName").withValue(applicationName)
-      CloudWatch.putWithStage("Application", applicationMetrics, Seq(applicationDimension))
+      CloudWatch.putWithDimensions("Application", applicationMetrics, Seq(applicationDimension))
     }
   }
 
