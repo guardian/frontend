@@ -7,11 +7,6 @@
             padding-top: 0;
         }
     }
-    .item__title {
-        @include mq(desktop) {
-            @include fs-headline(2, true);
-        }
-    }
     .collection-wrapper--position-1 {
         .item__title {
             @include fs-headline(2, true);
@@ -148,11 +143,6 @@
             padding-bottom: $gs-baseline,
             min-height: nth(nth($fs-headlines, 1), 2)*2
         ));
-        @include mq(desktop) {
-            @include rem((
-                min-height: nth(nth($fs-headlines, 2), 2)*2
-            ));
-        }
 
         background-color: $c-features-secondary;
         @include mq(tablet) { background-color: rgba($c-features-secondary, .8); }
