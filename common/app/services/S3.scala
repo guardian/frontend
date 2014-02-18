@@ -130,7 +130,7 @@ trait SecureS3Request extends implicits.Dates with Logging {
     val credentials = Configuration.aws.credentials.getCredentials
 
     val sessionTokenHeaders: Seq[(String, String)] = credentials match {
-      case sessionCredentials : AWSSessionCredentials => Seq("x-amz-security-token" -> sessionCredentials.getSessionToken)
+      case sessionCredentials: AWSSessionCredentials => Seq("x-amz-security-token" -> sessionCredentials.getSessionToken)
       case _ => Nil
     }
 
@@ -142,7 +142,14 @@ trait SecureS3Request extends implicits.Dates with Logging {
       "Authorization" -> s"AWS ${credentials.getAWSAccessKeyId}:$signedString"
     ) ++ sessionTokenHeaders
 
-    WS.url(s"$frontendStore/$id").withHeaders(headers:_*)
+    val request = WS.url(s"$frontendStore/$id").withHeaders(headers:_*)
+
+    log.info("request headers...")
+    request.headers.foreach{ h =>
+      log.info(h._1 + " : " + h._2.toString())
+    }
+
+    request
   }
 
   //Other HTTP verbs may need other information such as Content-MD5 and Content-Type
