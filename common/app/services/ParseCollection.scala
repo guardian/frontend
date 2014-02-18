@@ -151,6 +151,10 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
             log.warn(s"Content API Error: 404 for ${collectionItem.id}")
             None
           }
+          case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 410 => {
+            log.warn(s"Content API Error: 410 for ${collectionItem.id}")
+            None
+          }
           case t: Throwable => {
             log.warn("%s: %s".format(collectionItem.id, t.toString))
             throw t
