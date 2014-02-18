@@ -41,7 +41,7 @@ td {
 
 .table--striped {
     tr:nth-child(odd) td {
-        background-color: $c-neutralHighlight;
+        background-color: darken($c-neutral8, 4%);
     }
 }
 
