@@ -1,5 +1,5 @@
 @(table: Table, group: Group, isSingleTable: Boolean = false)(implicit request: RequestHeader)
-<table class="table table--football table--striped">
+<table class="table table--football table--striped football-competition--@table.competition.id">
     <thead>
         @tableColumnHeaders()
     </thead>
@@ -8,7 +8,3 @@
         @group.entries.zipWithRowInfo.map{ case (entry, row) => @tableRow(entry, row) }
     </tbody>
 </table>
-
-@if(!isSingleTable){
-    <a href='@{table.competition.url + "/table"}' data-link-name="full table" class="cta-small type-8 tone-colour">View full @table.competition.fullName table<i class="i i-sport-arrow i-sport-arrow--small"></i></a>
-}

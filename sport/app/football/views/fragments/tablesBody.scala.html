@@ -37,14 +37,22 @@
                         @table.groups.map{ group =>
                             @group.round.map { round =>
                                 @round.name.map { name =>
-                                    <div class="table__headline">@name</div>
-                                    @tableView(table, group, model.singleCompetition)
+                                    <div class="football__group">
+                                        <div class="table__headline">@name</div>
+                                        @tableView(table, group, model.singleCompetition)
+                                    </div>
                                 }
                             }
+                        }
+                        @if(!model.singleCompetition){
+                            <a href='@{table.competition.url + "/table"}' data-link-name="full table" class="cta-small type-8 tone-colour">View full @table.competition.fullName table<i class="i i-sport-arrow i-sport-arrow--small"></i></a>
                         }
                     }else{
                         @table.groups.map{ group =>
                             @tableView(table, group, model.singleCompetition)
+                            @if(!model.singleCompetition){
+                                <a href='@{table.competition.url + "/table"}' data-link-name="full table" class="cta-small type-8 tone-colour">View full @table.competition.fullName table<i class="i i-sport-arrow i-sport-arrow--small"></i></a>
+                            }
                         }
                     }
                     </div>
@@ -53,7 +61,7 @@
 
             <div class="article__secondary-column" aria-hidden="true">
                 <div class="article__secondary-column__inner article__secondary-column__inner--fill-vertically">
-                    PLAYERS AND EVERYTHING YOU COULD THINK OF!
+                    <!--PLAYERS AND EVERYTHING YOU COULD THINK OF!-->
                 </div>
             </div>
         </div>

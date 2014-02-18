@@ -56,17 +56,11 @@
 }
 
 .table-football-body tr {
-    border-bottom: 1px solid #DEDEDD;
     background-color: transparent;
 
     &:last-child {
         border-bottom: none;
     }
-}
-
-.table-football-body a {
-    color: #000;
-    font-weight: bold;
 }
 
 @include mq(641px) {
@@ -157,6 +151,14 @@
         display: none;
     }
 
+    .football-stat--points {
+        font-weight: bold;
+    }
+
+    .football-stat--team a {
+        color: inherit;
+    }
+
     // This makes sure that all table columns are equally spaced
     @include mq($from: desktop) {
         td {
@@ -191,9 +193,9 @@
         .football-stat--points { display: table-cell; }
         .football-stat--previous {}
     }
+}
 
-    .football-stat--played {
-        border-left: 1px dotted $c-neutral5;
-        border-right: 1px dotted $c-neutral5;
-    }
+.football__group {
+    margin-top: $gs-baseline;
+    &:first-child { margin-top: 0; }
 }
