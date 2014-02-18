@@ -33,28 +33,25 @@
                     </div>
 
                     <div class="article__container u-cf">
-                    @if(table.multiGroup){
-                        @table.groups.map{ group =>
-                            @group.round.map { round =>
-                                @round.name.map { name =>
-                                    <div class="football__group">
-                                        <div class="table__headline">@name</div>
-                                        @tableView(table, group, model.singleCompetition)
-                                    </div>
+                        @if(table.multiGroup){
+                            @table.groups.map{ group =>
+                                @group.round.map { round =>
+                                    @round.name.map { name =>
+                                        <div class="football__group">
+                                            <div class="table__headline">@name</div>
+                                            @tableView(table, group, model.singleCompetition)
+                                        </div>
+                                    }
                                 }
+                            }
+                        }else{
+                            @table.groups.map{ group =>
+                                @tableView(table, group, model.singleCompetition)
                             }
                         }
                         @if(!model.singleCompetition){
                             <a href='@{table.competition.url + "/table"}' data-link-name="full table" class="cta-small type-8 tone-colour">View full @table.competition.fullName table<i class="i i-sport-arrow i-sport-arrow--small"></i></a>
                         }
-                    }else{
-                        @table.groups.map{ group =>
-                            @tableView(table, group, model.singleCompetition)
-                            @if(!model.singleCompetition){
-                                <a href='@{table.competition.url + "/table"}' data-link-name="full table" class="cta-small type-8 tone-colour">View full @table.competition.fullName table<i class="i i-sport-arrow i-sport-arrow--small"></i></a>
-                            }
-                        }
-                    }
                     </div>
                 }
             </div>
