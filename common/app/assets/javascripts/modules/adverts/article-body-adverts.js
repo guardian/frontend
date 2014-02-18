@@ -107,7 +107,7 @@ define([
     };
 
     ArticleBodyAdverts.prototype.getTopOfArticleSlotWordLimit = function() {
-        return (/mobile/).test(detect.getBreakpoint()) ? Math.floor(this.config.wordsPerAd / 2) : 0;
+        return (/mobile|tablet/).test(detect.getBreakpoint()) ? Math.floor(this.config.wordsPerAd / 2) : 0;
     };
 
     ArticleBodyAdverts.prototype.destroy = function() {

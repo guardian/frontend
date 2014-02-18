@@ -265,14 +265,7 @@ $c-live: #e81818;
 .item--video,
 .item--gallery {
     .item__title .i {
-        position: absolute;
-        top: 4px;
-        left: 10px;
-    }
-    @include mq(tablet) {
-        .item__title .i {
-            display: none;
-        }
+        display: none;
     }
 }
 .item__byline {
@@ -350,25 +343,6 @@ $c-live: #e81818;
         }
     }
 }
-.item__support {
-    display: none;
-    @include rem((
-        margin-top: $gs-baseline*2
-    ));
-    .item--support-show & {
-        display: block;
-    }
-}
-.item__support__title {
-    color: $c-neutral2;
-    @include fs-data(3);
-
-    @include mq(tablet) {
-        @include fs-data(4, true);
-    }
-}
-.item__support__item {}
-.item__support__action {}
 
 .item__cta {
     position: absolute;
@@ -553,7 +527,7 @@ $show-more-icon: (
         }
     }
 }
-.action--tone-comment .i.i-quote-orange { // Chained selector to overrule icon code from global.css
+.svg .action--tone-comment .i { // Chained selector to overrule icon code from global.css
     margin-top: 3px; // Align icon with text
     width: 1.45em;
     background-size: contain;

@@ -51,6 +51,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       collectionList <- getCuratedList(response, edition, id, isWarmedUp)
       collectionMeta <- getCollectionMeta(response).fallbackTo(Future.successful(CollectionMeta.empty))
       displayName    <- parseDisplayName(response).fallbackTo(Future.successful(None))
+      href           <- parseHref(response).fallbackTo(Future.successful(None))
       contentApiList <- executeContentApiQuery(config.contentApiQuery, edition)
     } yield Collection(
       collectionList,
@@ -58,6 +59,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       contentApiList.mostViewed,
       contentApiList.contentApiResults,
       displayName,
+      href,
       collectionMeta.lastUpdated,
       collectionMeta.updatedBy,
       collectionMeta.updatedEmail
@@ -86,6 +88,10 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
 
   private def parseDisplayName(response: Future[Response]): Future[Option[String]] = response.map {r =>
     (parse(r.body) \ "displayName").asOpt[String].filter(_.nonEmpty)
+  }
+
+  private def parseHref(response: Future[Response]): Future[Option[String]] = response.map {r =>
+    (parse(r.body) \ "href").asOpt[String].filter(_.nonEmpty)
   }
 
   private def parseResponse(response: Future[Response], edition: Edition, id: String): Future[List[Content]] = {
