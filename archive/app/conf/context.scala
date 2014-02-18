@@ -11,7 +11,7 @@ object Management extends GuManagement {
   lazy val pages = List(
     new ManifestPage,
     new UrlPagesHealthcheckManagementPage(
-      "/www.theguardian.com/media/emailservices/article/0,,1694396,.html"
+      "/404/www.theguardian.com/Adzip/adzip-fb.html"
     ),
     StatusPage(applicationName, metrics),
     new PropertiesPage(Configuration.toString),
