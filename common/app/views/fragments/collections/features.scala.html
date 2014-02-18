@@ -7,9 +7,6 @@
         }
     </ul>
 </div>
-@style.adSlot.map { adSlot =>
-    <div class="ad-slot ad-slot--inline mobile-only" data-base="@adSlot.baseName"><div class="ad-container"></div></div>
-}
 @defining(items.slice(3, 11)) { items =>
     @if(items.nonEmpty) {
         <div class="collection-wrapper collection-wrapper--position-2">
@@ -37,6 +34,9 @@
             </ul>
         </div>
     }
+}
+@style.adSlot.map { adSlot =>
+    <div class="ad-slot ad-slot--inline mobile-only" data-base="@adSlot.baseName"><div class="ad-container"></div></div>
 }
 @defining(items.slice(11, 31)) { items =>
     @if(items.nonEmpty) {
