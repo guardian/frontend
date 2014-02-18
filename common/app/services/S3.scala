@@ -68,7 +68,6 @@ trait S3 extends Logging {
     val metadata = new ObjectMetadata()
     metadata.setCacheControl("no-cache,no-store")
     metadata.setContentType(contentType)
-    metadata.setContentLength(value.size)
 
     val request = new PutObjectRequest(bucket, key, new StringInputStream(value), metadata).withCannedAcl(accessControlList)
 
