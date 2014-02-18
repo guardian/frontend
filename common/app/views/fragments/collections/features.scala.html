@@ -1,39 +1,28 @@
 @(items: Seq[Trail], style: FeaturesContainer, containerIndex: Int)(implicit request: RequestHeader)
 
 <div class="collection-wrapper collection-wrapper--spacing-thin collection-wrapper--position-1">
-    <ul class="unstyled l-row l-row--items-2 collection l-row--background-features">
-        @items.slice(0, 2).zipWithIndex.map{ case (trail, index) =>
+    <ul class="unstyled l-row l-row--items-3 collection l-row--background-features">
+        @items.slice(0, 3).zipWithIndex.map{ case (trail, index) =>
             @fragments.collections.items.standard(trail, index, containerIndex)
         }
     </ul>
 </div>
-@defining(items.slice(2, 6)) { items =>
-    @if(items.nonEmpty) {
-        <div class="collection-wrapper collection-wrapper--spacing-thin collection-wrapper--position-2">
-            <ul class="unstyled l-row l-row--items-4 collection l-row--background-features">
-                @items.zipWithIndex.map{ case (trail, index) =>
-                    @fragments.collections.items.standard(trail, index + 2, containerIndex)
-                }
-            </ul>
-        </div>
-    }
-}
 @style.adSlot.map { adSlot =>
     <div class="ad-slot ad-slot--inline mobile-only" data-base="@adSlot.baseName"><div class="ad-container"></div></div>
 }
-@defining(items.slice(6, 14)) { items =>
+@defining(items.slice(3, 11)) { items =>
     @if(items.nonEmpty) {
-        <div class="collection-wrapper collection-wrapper--position-3">
+        <div class="collection-wrapper collection-wrapper--position-2">
             <ul class="unstyled l-row l-row--items-3 collection">
-                <li class="l-row__item l-row__item--flex-2 collection__item">
-                    <ul class="l-columns linkslist in-row-item">
+                <li class="l-row__item collection__item">
+                    <ul class="l-columns linkslist container--features__linkslist">
                         @items.zipWithIndex.map{ case (trail, index) =>
                             @trail match {
-                                case l: LiveBlog if l.isLive         => { @fragments.items.linksList.live(l, index + 6) }
-                                case g: Gallery                      => { @fragments.items.linksList.gallery(g, index + 6) }
-                                case v: Video                        => { @fragments.items.linksList.video(v, index + 6) }
-                                case c if VisualTone(c) == "comment" => { @fragments.items.linksList.comment(c, index + 6) }
-                                case t                               => { @fragments.items.linksList.standard(t, index + 6  ) }
+                                case l: LiveBlog if l.isLive         => { @fragments.items.linksList.live(l, index + 3) }
+                                case g: Gallery                      => { @fragments.items.linksList.gallery(g, index + 3) }
+                                case v: Video                        => { @fragments.items.linksList.video(v, index + 3) }
+                                case c if VisualTone(c) == "comment" => { @fragments.items.linksList.comment(c, index + 3) }
+                                case t                               => { @fragments.items.linksList.standard(t, index + 3) }
                             }
                         }
                     </ul>
@@ -49,17 +38,17 @@
         </div>
     }
 }
-@defining(items.slice(14, 34)) { items =>
+@defining(items.slice(11, 31)) { items =>
     @if(items.nonEmpty) {
         <div class="linkslist-container js-container--show-more tone-@{style.tone}" data-tone="@style.tone">
             <ul class="l-columns linkslist">
                 @items.zipWithIndex.map{ case (trail, index) =>
                     @trail match {
-                        case l: LiveBlog if l.isLive         => { @fragments.items.linksList.live(l, index + 14) }
-                        case g: Gallery                      => { @fragments.items.linksList.gallery(g, index + 14) }
-                        case v: Video                        => { @fragments.items.linksList.video(v, index + 14) }
-                        case c if VisualTone(c) == "comment" => { @fragments.items.linksList.comment(c, index + 14) }
-                        case t                               => { @fragments.items.linksList.standard(t, index + 14) }
+                        case l: LiveBlog if l.isLive         => { @fragments.items.linksList.live(l, index + 11) }
+                        case g: Gallery                      => { @fragments.items.linksList.gallery(g, index + 11) }
+                        case v: Video                        => { @fragments.items.linksList.video(v, index + 11) }
+                        case c if VisualTone(c) == "comment" => { @fragments.items.linksList.comment(c, index + 11) }
+                        case t                               => { @fragments.items.linksList.standard(t, index + 11) }
                     }
                 }
             </ul>

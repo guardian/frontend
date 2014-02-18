@@ -7,37 +7,43 @@
             padding-top: 0;
         }
     }
-    .collection-wrapper--position-1 {
-        .item__title {
-            @include fs-headline(2, true);
-            @include rem((
-                min-height: nth(nth($fs-headlines, 2), 2)*2
-            ));
-
-            @include mq(desktop) {
-                @include fs-headline(3, true);
-                @include rem((
-                    min-height: nth(nth($fs-headlines, 3), 2)*2 + $gs-baseline/3
-                ));
-            }
-        }
-    }
-
     .linkslist-container {
-        @include rem((margin-top: $gs-baseline));
-
-        @include mq(tablet) {
-            @include rem((margin-top: $gs-baseline*2));
-        }
+        margin-top: 0;
     }
     .ad-slot--inline {
         margin-top: $gs-baseline/2;
         margin-bottom: $gs-baseline/2;
     }
 }
-.collection-wrapper--position-3 { // Very specific and robust because there is an ad before
+.collection-wrapper--position-1 {
+    @include mq($to: tablet) {
+        background-color: $c-features-secondary;
+
+        .collection__item {
+            border-bottom: 1px solid #ffffff;
+        }
+
+        .collection__item + .collection__item {
+            float: left;
+            width: 50%;
+            border-bottom: 0;
+        }
+        .collection__item:first-child .item__title {
+            @include fs-headline(2, true);
+            @include rem((
+                margin-bottom: $gs-baseline
+            ));
+        }
+        .item--has-image .item__media-wrapper,
+        .item--has-image .item__image-container {
+            display: block;
+        }
+    }
+}
+.collection-wrapper--position-2 { // Very specific and robust because there is an ad before
     .collection__item {
         padding-bottom: 0;
+        margin-bottom: 0;
     }
     @include mq(tablet) {
         @include rem((margin-top: $gs-baseline));
@@ -49,14 +55,6 @@
 .collection-wrapper--spacing-thin {
     margin-left: 0;
     margin-right: 0;
-
-    & + .collection-wrapper--spacing-thin {
-        margin-top: 0;
-
-        @include mq(tablet) {
-            margin-top: 1px;
-        }
-    }
 
     .item {
         padding-left: 0;
@@ -94,15 +92,6 @@
             margin-right: -7px
         ));
     }
-    @include mq($to: tablet) {
-       .l-row--items-4 .item__title--has-icon-mobile {
-            padding-left: 21px;
-
-            .i {
-                left: 4px;
-            }
-        }
-    }
     .item__byline,
     .item__meta {
         display: none;
@@ -115,9 +104,6 @@
     .collection__item {
         background-color: $c-features-secondary;
 
-        .collection-wrapper--position-1 & {
-            background-color: $c-features-tertiary;
-        }
         + .collection__item {
             &:before {
                 border-left-width: 0;
@@ -145,11 +131,6 @@
         ));
 
         background-color: $c-features-secondary;
-        @include mq(tablet) { background-color: rgba($c-features-secondary, .8); }
-    }
-    .collection-wrapper--position-1 & .item__title {
-        background-color: $c-features-tertiary;
-        @include mq(tablet) { background-color: rgba($c-features-tertiary, .8); }
     }
     .item__link:hover,
     .item__link:focus {
@@ -174,22 +155,18 @@
         }
     }
 }
-.l-row--items-3 {
-    @include mq(tablet) {
-        .l-row__item--flex-2 {
-            @include flex-grow(2);
 
-            @if false == $browser-supports-flexbox {
-                width: 66.66666666%; // Take two thirds of the available space
-            }
-        }
-    }
-}
-
-/* In a row item you need half a gutter on each side of the element */
-.in-row-item {
+.container--features__linkslist {
     @include rem((
         margin-left: $gs-gutter/2,
         margin-right: $gs-gutter/2
     ));
+
+    @include mq(tablet, desktop) {
+        @include rem((
+            // Width of a column in l-columns on tablet
+            // in that particular context
+            max-width: gs-span(4) + $gs-gutter
+        ));
+    }
 }
