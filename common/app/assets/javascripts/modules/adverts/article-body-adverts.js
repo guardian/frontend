@@ -36,12 +36,7 @@ define([
         return bonzo(bonzo.create(template.replace(/%slot%/g, id)));
     };
 
-    ArticleBodyAdverts.prototype.destroy = function() {
-        $('.ad-slot--inline, .ad-slot--mpu-banner-ad').remove();
-    };
-
     ArticleBodyAdverts.prototype.reload = function() {
-        // this.destroy();
         this.init();
     };
 

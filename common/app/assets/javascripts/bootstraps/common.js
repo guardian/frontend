@@ -244,13 +244,8 @@ define([
                 };
 
                 if(config.page.contentType === 'Article' && !config.page.isLiveBlog) {
-                    // Limiting inline ads to 1 until support for different inline
-                    // ads is enabled
-                    var articleBodyAdverts = new ArticleBodyAdverts({
-                        wordCount: config.page.wordCount
-                    });
+                    var articleBodyAdverts = new ArticleBodyAdverts();
 
-                    // Add the body adverts to the article page
                     articleBodyAdverts.init();
 
                     resizeCallback = function(e) {
