@@ -21,21 +21,23 @@ define([
     /**
      * Loads commercial components.
      *
-     * BEWARE that this code is depended upon by the ad server. 
-     * 
+     * BEWARE that this code is depended upon by the ad server.
+     *
      * ```
      * require(['common/modules/commercial/loader'], function (CommercialComponent) {
-     *   var slot = document.querySelector('[class="js-sticky-upper"]');
-     *    var c = new CommercialComponent({config: guardian, oastoken: '%%C%%?'}).travel(slot);
+     *     var slot = document.querySelector('data-base="SLOT_NAME"');
+     *     var c = new CommercialComponent({config: guardian, oastoken: '%%C%%?'}).init('COMPONENT_NAME', slot);
      * })
      * ```
-     * 
+     *
      * @constructor
      * @extends Component
      * @param {Object=} options
      */
     var Loader = function(options) {
         var conf = options.config.page || {};
+
+        this.pageId         = conf.pageId;
         this.keywords       = conf.keywords || '';
         this.section        = conf.section;
         this.host           = conf.ajaxUrl + '/commercial/';
@@ -47,11 +49,15 @@ define([
         this.adType         = options.adType || 'desktop';
         this.userSegments   = 'seg=' + (new History().getSize() <= 1 ? 'new' : 'repeat');
         this.components     = {
-          masterclasses: this.host + 'masterclasses.json?' + this.userSegments + '&s=' + this.section,
-          travel:        this.host + 'travel/offers.json?' + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
-          jobs:          this.host + 'jobs.json?' + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
-          soulmates:     this.host + 'soulmates/mixed.json?' + this.userSegments + '&s=' + this.section
+            bestbuy:       this.host + 'money/bestbuys.json?'    + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
+            book:          this.host + 'books/book/' + this.pageId + '.json',
+            books:         this.host + 'books/bestsellers.json?' + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
+            jobs:          this.host + 'jobs.json?'              + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
+            masterclasses: this.host + 'masterclasses.json?'     + this.userSegments + '&s=' + this.section,
+            soulmates:     this.host + 'soulmates/mixed.json?'   + this.userSegments + '&s=' + this.section,
+            travel:        this.host + 'travel/offers.json?'     + this.userSegments + '&s=' + this.section + '&' + this.getKeywords()
         };
+
         return this;
     };
 
@@ -68,6 +74,7 @@ define([
      */
     Loader.prototype.load = function(url, target) {
         var self = this;
+
         new LazyLoad({
             url: url,
             container: target,
@@ -106,23 +113,18 @@ define([
                 mediator.emit('module:error', 'Failed to load related: ' + req.statusText, 'common/modules/commercial/loader.js');
             }
         }).load();
+
         return this;
     };
-    
-    Loader.prototype.travel = function(el) {
-        return this.load(this.components.travel, el);
-    };
-    
-    Loader.prototype.masterclasses = function(el) {
-        return this.load(this.components.masterclasses, el);
-    };
-    
-    Loader.prototype.jobs = function(el) {
-        return this.load(this.components.jobs, el);
-    };
-    
-    Loader.prototype.soulmates = function(el) {
-        return this.load(this.components.soulmates, el);
+
+    Loader.prototype.init = function(name, el) {
+
+        if(this.components[name] === undefined) {
+            mediator.emit('module:error', 'Unknown commercial component: ' + name, 'common/modules/commercial/loader.js');
+            return false;
+        }
+
+        return this.load(this.components[name], el);
     };
 
     return Loader;

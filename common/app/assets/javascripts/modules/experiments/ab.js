@@ -8,24 +8,29 @@ define([
     'common/modules/experiments/tests/aa',
     'common/modules/experiments/tests/gravity-recommendations',
     'common/modules/experiments/tests/outbrain-recommendations',
-    'common/modules/experiments/tests/ad-labels'
+    'common/modules/experiments/tests/ad-labels',
+    'common/modules/experiments/tests/onward-inline-elements',
+    'common/modules/experiments/tests/article-truncation'
 ], function (
     common,
     store,
     mediator,
     mvtCookie,
-
     Aa,
     GravityRecommendations,
     OutbrainRecommendations,
-    AdLabels
-    ) {
+    AdLabels,
+    InlineElements,
+    ArticleTruncation
+) {
 
     var TESTS = [
             new Aa(),
             new GravityRecommendations(),
             new OutbrainRecommendations(),
-            new AdLabels()
+            new AdLabels(),
+            new InlineElements(),
+            new ArticleTruncation()
        ],
        participationsKey = 'gu.ab.participations';
 

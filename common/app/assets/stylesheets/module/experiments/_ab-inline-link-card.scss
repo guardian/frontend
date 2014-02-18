@@ -28,12 +28,6 @@
         ));
     }
 }
-.furniture--right {
-    @include mq($a-rightCol-trigger) {
-        display: block;
-    }
-}
-
 
 /* Card
    ========================================================================== */
@@ -148,27 +142,4 @@
 }
 .card--left {
     padding-top: 6px; // Aligns border with top of text
-}
-.card--right {
-    @include rem((margin-top: $baseline*4));
-
-    .card__title {
-        @include fs-header(2);
-    }
-    .card__body {
-        @include rem((
-            min-height: gs-height(2),
-            margin-bottom: $gs-baseline
-        ));
-        padding-bottom: 0;
-        @include fs-header(2);
-    }
-}
-
-.card-wrapper--right {
-    display: none;
-
-    &.is-visible {
-        display: block;
-    }
 }

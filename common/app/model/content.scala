@@ -6,6 +6,7 @@ import org.scala_tools.time.Imports._
 import common.{Sponsor, Sponsors}
 import common.{LinkCounts, LinkTo, Reference}
 import org.jsoup.Jsoup
+import org.jsoup.safety.Whitelist
 import collection.JavaConversions._
 import views.support.{Naked, ImgSrc}
 import views.support.StripHtmlTagsAndUnescapeEntities
@@ -21,7 +22,6 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val shortUrl: String = delegate.safeFields("shortUrl")
   lazy val shortUrlId: String = delegate.safeFields("shortUrl").replace("http://gu.com", "")
   lazy val webUrl: String = delegate.webUrl
-  lazy val wordCount: String = fields.get("wordcount").getOrElse("")
   lazy val standfirst: Option[String] = fields.get("standfirst")
   lazy val starRating: Option[String] = fields.get("starRating")
   lazy val shortUrlPath: String = shortUrl.replace("http://gu.com", "")
@@ -79,6 +79,10 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     }
 
     souped getOrElse Nil
+  }
+
+  lazy val wordCount: Int = {
+    Jsoup.clean(delegate.safeFields.getOrElse("body",""), Whitelist.none()).split("\\s+").size
   }
 
   override lazy val byline: Option[String] = fields.get("byline")
@@ -246,7 +250,7 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
   override def schemaType = if (isReview) Some("http://schema.org/Review") else Some("http://schema.org/Article")
 
   // if you change these rules make sure you update IMAGES.md (in this project)
-  override def trailPicture: Option[ImageContainer] = thumbnail.find(_.imageCrops.exists(_.width >= 620))
+  override def trailPicture: Option[ImageContainer] = thumbnail.find(_.imageCrops.exists(_.width >= 940))
       .orElse(mainPicture).orElse(videos.headOption)
 
 

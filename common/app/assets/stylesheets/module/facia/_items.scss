@@ -257,6 +257,17 @@ $c-live: #e81818;
         @include show-only-if-svg-is-supported;
     }
 }
+@include mq($to: tablet) {
+    .item__title--has-icon-mobile {
+        padding-left: 25px;
+    }
+}
+.item--video,
+.item--gallery {
+    .item__title .i {
+        display: none;
+    }
+}
 .item__byline {
     @include fs-headline(2);
     @include rem((
@@ -332,25 +343,6 @@ $c-live: #e81818;
         }
     }
 }
-.item__support {
-    display: none;
-    @include rem((
-        margin-top: $gs-baseline*2
-    ));
-    .item--support-show & {
-        display: block;
-    }
-}
-.item__support__title {
-    color: $c-neutral2;
-    @include fs-data(3);
-
-    @include mq(tablet) {
-        @include fs-data(4, true);
-    }
-}
-.item__support__item {}
-.item__support__action {}
 
 .item__cta {
     position: absolute;
@@ -388,8 +380,8 @@ $cta-icon-gap: 2px;
 .item__media-wrapper--has-icon {
     .item__cta {
         position: absolute;
-        top: 8px;
-        left: 8px;
+        top: $gs-baseline/3;
+        left: $gs-baseline/3;
     }
     .i {
         margin-bottom: $cta-icon-gap;
@@ -422,12 +414,13 @@ $cta-icon-gap: 2px;
         width: map-get($gallery-cta-icon, width);
         height: map-get($gallery-cta-icon, height);
         margin-left: -1 * (map-get($gallery-cta-icon, width) / 2);
-        margin-top: -1 * (map-get($gallery-cta-icon, height) / 2);
+        margin-top: -1 * ceil(map-get($gallery-cta-icon, height) / 2);
     }
     .item__cta--video & {
         width: map-get($video-cta-icon, width);
         height: map-get($video-cta-icon, height);
-        margin-left: -1 * (map-get($video-cta-icon, width) / 2);
+        // don't want icon to be exactly in the middle
+        margin-left: -1 * (map-get($video-cta-icon, width) / 3);
         margin-top: -1 * (map-get($video-cta-icon, height) / 2);
     }
 }
@@ -534,23 +527,10 @@ $show-more-icon: (
         }
     }
 }
-.action--tone-comment .i.i-quote-orange { // Chained selector to overrule icon code from global.css
+.svg .action--tone-comment .i { // Chained selector to overrule icon code from global.css
     margin-top: 3px; // Align icon with text
     width: 1.45em;
     background-size: contain;
-}
-
-.item--video,
-.item--gallery {
-    .item__title .i {
-        position: relative;
-        top: 4px;
-    }
-    @include mq(tablet) {
-        .item__title .i {
-            display: none;
-        }
-    }
 }
 
 .i--circle {
@@ -569,5 +549,58 @@ $show-more-icon: (
         position: absolute;
         left: 14px;
         top: 6px;
+    }
+}
+
+.item--thumbnail {
+    .item__standfirst {
+        display: block;
+
+        @include rem((
+            margin-top: 2px
+        ));
+    }
+    .item__media-wrapper {
+        float: left;
+        clear: both;
+
+        @include rem((
+            margin-right: $gs-gutter/2
+        ));
+    }
+}
+
+.container--rolled-up .container--rolled-up-hide {
+    display: none;
+}
+
+.today {
+    color: $c-neutral1;
+    font-weight: normal;
+}
+.today__dayofweek {
+    color: $c-newsDefault;
+}
+@include mq(wide) {
+    .today__sub {
+        display: block;
+    }
+}
+
+
+/**
+ * Ads in containers / row patterns
+ */
+
+.container {
+    .ad-slot {
+        padding: 0;
+        margin: 0 auto;
+    }
+}
+@include mq(tablet) {
+    .l-row__item--mpu-300 {
+        min-width: gs-span(4) + $gs-gutter;
+        max-width: gs-span(4) + $gs-gutter;
     }
 }

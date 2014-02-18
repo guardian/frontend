@@ -8,14 +8,14 @@ import model.commercial.intersects
 case class Book(title: String,
                 author: Option[String],
                 isbn: String,
-                price: Double,
-                offerPrice: Option[Double],
-                description: Option[String],
+                price: Option[Double] = None,
+                offerPrice: Option[Double] = None,
+                description: Option[String] = None,
                 jacketUrl: Option[String],
-                buyUrl: String,
-                position: Int,
-                category: String,
-                keywords: Seq[String])
+                buyUrl: Option[String] = None,
+                position: Option[Int] = None,
+                category: Option[String] = None,
+                keywords: Seq[String] = Nil)
   extends Ad {
 
   def isTargetedAt(segment: Segment): Boolean = intersects(keywords, segment.context.keywords)
@@ -40,7 +40,7 @@ object BestsellersAgent extends AdAgent[Book] with ExecutionContexts {
 
   override def adsTargetedAt(segment: Segment): Seq[Book] = super.adsTargetedAt(segment).sortBy(_.position)
 
-  override def defaultAds: Seq[Book] = currentAds filter (_.category == "General")
+  override def defaultAds: Seq[Book] = currentAds filter (_.category.exists(_ == "General"))
 
   def refresh() {
 
