@@ -265,7 +265,7 @@ case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner 
 
           asset.foreach { image =>
             image.url.map(url => img.attr("src", ImgSrc(url, Item620).toString))
-            img.attr("width", s"${image.width}px")
+            img.attr("width", s"${image.width}")
 
             //otherwsie we mess with aspect ratio
             img.removeAttr("height")
