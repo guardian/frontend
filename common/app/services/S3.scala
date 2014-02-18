@@ -13,6 +13,7 @@ import play.api.libs.ws.WS
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 import sun.misc.BASE64Encoder
+import com.amazonaws.auth.AWSSessionCredentials
 
 trait S3 extends Logging {
 
@@ -120,18 +121,28 @@ trait SecureS3Request extends implicits.Dates with Logging {
   val frontendBucket: String = Configuration.aws.bucket
   val frontendStore: String = Configuration.frontend.store
 
-  //Defs because credentials expire
-  def accessKey: String = Configuration.aws.credentials.getCredentials.getAWSAccessKeyId
-  def secretKey: String = Configuration.aws.credentials.getCredentials.getAWSSecretKey
-
   def urlGet(id: String): WS.WSRequestHolder = url("GET", id)
 
   private def url(httpVerb: String, id: String): WS.WSRequestHolder = {
-    val date: String = DateTime.now.toHttpDateTimeString
-    val signedString: String = signAndBase64Encode(generateStringToSign(httpVerb, id, date))
-    WS.url(s"$frontendStore/$id")
-      .withHeaders("Date" -> date)
-      .withHeaders("Authorization" -> s"AWS $accessKey:$signedString")
+
+    // we are working with a credentials provider here - this needs to be scoped inside the function
+    // i.e. we need a new one each request
+    val credentials = Configuration.aws.credentials.getCredentials
+
+    val sessionTokenHeaders: Seq[(String, String)] = credentials match {
+      case sessionCredentials : AWSSessionCredentials => Seq("x-amz-security-token" -> sessionCredentials.getSessionToken)
+      case _ => Nil
+    }
+
+    val date = DateTime.now.toHttpDateTimeString
+    val signedString = signAndBase64Encode(generateStringToSign(httpVerb, id, date), credentials.getAWSSecretKey)
+
+    val headers = Seq(
+      "Date" -> date,
+      "Authorization" -> s"AWS ${credentials.getAWSAccessKeyId}:$signedString"
+    ) ++ sessionTokenHeaders
+
+    WS.url(s"$frontendStore/$id").withHeaders(headers:_*)
   }
 
   //Other HTTP verbs may need other information such as Content-MD5 and Content-Type
@@ -140,7 +151,7 @@ trait SecureS3Request extends implicits.Dates with Logging {
   //http://docs.aws.amazon.com/AmazonS3/latest/dev/RESTAuthentication.html
     s"$httpVerb\n\n\n$date\n/$frontendBucket/$id"
 
-  private def signAndBase64Encode(stringToSign: String): String = {
+  private def signAndBase64Encode(stringToSign: String, secretKey: String): String = {
     try {
       val mac: Mac = Mac.getInstance(algorithm)
       mac.init(new SecretKeySpec(secretKey.getBytes("UTF-8"), algorithm))
