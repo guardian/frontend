@@ -235,12 +235,9 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
     lazy val credentials: AWSCredentialsProvider = new AWSCredentialsProviderChain(
       // the first 3 are a copy n paste job from the constructor of DefaultAWSCredentialsProviderChain
-      // once we are done migrating we will fall back to that.
       LoggingAWSCredentialsProvider(new EnvironmentVariableCredentialsProvider()),
       LoggingAWSCredentialsProvider(new SystemPropertiesCredentialsProvider()),
-
-      // TODO - we uncomment this AFTER we have proven that all the correct roles are on the boxes
-      //LoggingAWSCredentialsProvider(new InstanceProfileCredentialsProvider()),
+      LoggingAWSCredentialsProvider(new InstanceProfileCredentialsProvider()),
 
       LoggingAWSCredentialsProvider(new StaticCredentialsProvider(new NullableAWSCredentials(accessKey, secretKey)))
     )
