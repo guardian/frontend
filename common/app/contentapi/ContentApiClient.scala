@@ -89,6 +89,8 @@ trait ApiQueryDefaults extends QueryDefaults with implicits.Collections with Log
 trait ContentApiClient extends FutureAsyncApi with ApiQueryDefaults with DelegateHttp
 with Logging {
 
+  apiKey = Some(contentApi.key)
+
   override def fetch(url: String, parameters: Map[String, String]) = {
     checkQueryIsEditionalized(url, parameters)
     super.fetch(url, parameters + ("user-tier" -> "internal"))
@@ -104,19 +106,26 @@ with Logging {
   private def isTagQuery(url: String) = url.endsWith("/tags")
 }
 
-class SolrContentApiClient(key: Option[String] = Option(Configuration.contentApi.key)) extends ContentApiClient {
+class SolrContentApiClient extends ContentApiClient {
   lazy val httpTimingMetric = ContentApiMetrics.HttpTimingMetric
   lazy val httpTimeoutMetric= ContentApiMetrics.HttpTimeoutCountMetric
   override val targetUrl = contentApi.host
-  apiKey = key
 }
 
-class ElasticSearchContentApiClient(key: Option[String] = Option(Configuration.contentApi.key)) extends ContentApiClient {
+class ElasticSearchContentApiClient extends ContentApiClient {
   lazy val httpTimingMetric = ContentApiMetrics.ElasticHttpTimingMetric
   lazy val httpTimeoutMetric = ContentApiMetrics.ElasticHttpTimeoutCountMetric
   override val targetUrl = contentApi.elasticSearchHost
-  apiKey = key
 }
 
-class FaciaSolrContentApiClient extends SolrContentApiClient(Option(Configuration.facia.contentApiKey))
-class FaciaElasticSearchContentApiClient extends ElasticSearchContentApiClient(Option(Configuration.facia.contentApiKey))
+class FaciaSolrContentApiClient extends SolrContentApiClient() {
+  override def fetch(url: String, parameters: Map[String, String]) = {
+    super.fetch(url, parameters + ("application-name" -> "facia"))
+  }
+}
+
+class FaciaElasticSearchContentApiClient extends ElasticSearchContentApiClient() {
+  override def fetch(url: String, parameters: Map[String, String]) = {
+    super.fetch(url, parameters + ("application-name" -> "facia"))
+  }
+}
