@@ -3,9 +3,9 @@
 @import org.joda.time.DateTime
 
 <div class="article-zone left-col-deport tone-news tone-accent-border">
-    <span class="left-col-deport__body">
-        <a class="tone-colour" data-link-name="article section" href="/football">football</a>
-    </span>
+    <h2 class="page-sub-header left-col-deport__body">
+        tables
+    </h2>
 </div>
 <div class="article-wrapper monocolumn-wrapper tone-news">
     <article id="article" class="article" itemprop="mainContentOfPage" itemscope="" itemtype="http://schema.org/Article" role="main">
@@ -21,7 +21,7 @@
             <div class="article__main-column">
                 @model.tables.map { table =>
                     <div class="article__meta-container">
-                        <h2 class="article__meta-heading"><a href="@table.competition.url">@table.competition.fullName</a></h2>
+                        <h3 class="article__meta-heading"><a href="@table.competition.url">@table.competition.fullName</a></h3>
                         @if(model.singleCompetition){
                         <p class="article__dateline" aria-hidden="true">
                             <i class="i i-clock-grey relative-timestamp__icon"></i>
@@ -38,7 +38,7 @@
                                 @group.round.map { round =>
                                     @round.name.map { name =>
                                         <div class="football__group">
-                                            <h3 class="table__headline">@name</h3>
+                                            <h4 class="table__headline">@name</h4>
                                             @tableView(table, group, model.singleCompetition)
                                         </div>
                                     }
