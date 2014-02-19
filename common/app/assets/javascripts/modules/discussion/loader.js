@@ -99,9 +99,9 @@ Loader.prototype.ready = function() {
     var self = this,
         topCommentsElem = this.getElem('topComments');
 
-    this.topLoadingElem = bonzo.create('<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>')[0];
+    this.topLoadingElem = bonzo.create('<div class="preload-msg">Loading comments… <a href="/discussion'+ this.getDiscussionId() +'" class="accessible-link">Trouble loading?</a><div class="is-updating"></div></div>')[0];
     bonzo(this.topLoadingElem).insertAfter(topCommentsElem);
-
+    
     this.on('user:loaded', function(user) {
         this.topComments = new TopComments(self.context, self.mediator, {
             discussionId: this.getDiscussionId(),

@@ -56,17 +56,11 @@
 }
 
 .table-football-body tr {
-    border-bottom: 1px solid #DEDEDD;
     background-color: transparent;
 
     &:last-child {
         border-bottom: none;
     }
-}
-
-.table-football-body a {
-    color: #000;
-    font-weight: bold;
 }
 
 @include mq(641px) {
@@ -136,4 +130,68 @@
     .stats-3 {
         display: table-cell;
     }
+}
+
+.table--football {
+    abbr {
+        border-bottom: 1px dotted $c-neutral8;
+    }
+
+    .table-column--main {
+        a {
+            display: block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 100%;
+        }
+    }
+
+    .football-stat--points {
+        font-weight: bold;
+    }
+
+    .football-stat--team a {
+        color: inherit;
+    }
+
+    .table-column--main {
+        max-width: 90px;
+    }
+
+    // This makes sure that all table columns are equally spaced
+    @include mq($from: desktop) {
+        td {
+            min-width: 12px;
+        }
+
+        .football-stat--form {
+            display: table-cell;
+        }
+
+        .table-column--status {
+            min-width: 75px; // 15(width of status)*5
+        }
+    }
+
+    // Leave blank ones for easy modification
+    @include mq($to: tablet) {
+        th, td { display: none; }
+        .football-stat--postition { display: table-cell; }
+        .football-stat--team { display: table-cell; }
+        .football-stat--played { display: table-cell; }
+        .football-stat--won {}
+        .football-stat--drawn {}
+        .football-stat--lost {}
+        .football-stat--for {}
+        .football-stat--against {}
+        .football-stat--difference { display: table-cell; }
+        .football-stat--points { display: table-cell; }
+        .football-stat--form { display: table-cell; }
+    }
+}
+
+.football__group {
+    margin-top: $gs-baseline;
+    &:first-child { margin-top: 0; }
 }
