@@ -12,7 +12,7 @@ import football.model.{PrevResult, PA}
 import play.api.templates.Html
 import scala.concurrent.Future
 import football.services.GetPaClient
-import model.{NoCache, Cached}
+import model.{Cors, NoCache, Cached}
 
 
 object TablesController extends Controller with ExecutionContexts with GetPaClient {
@@ -38,7 +38,7 @@ object TablesController extends Controller with ExecutionContexts with GetPaClie
     NoCache(result)
   }
 
-  def leagueTableFragment(competitionId: String, focus: String) = Authenticated.async { request =>
+  def leagueTableFragment(competitionId: String, focus: String) = Authenticated.async { implicit request =>
     PA.competitions.find(_.competitionId == competitionId).map { league =>
       client.leagueTable(league.competitionId, DateMidnight.now()).map { tableEntries =>
         val entries = focus match {
@@ -47,9 +47,9 @@ object TablesController extends Controller with ExecutionContexts with GetPaClie
           case "none" => tableEntries
           case teamId => surroundingItems[LeagueTableEntry](2, tableEntries, _.team.id == teamId)
         }
-        Cached(60)(Ok(views.html.football.leagueTables.leagueTable(league, entries, List(focus))))
+        Cors(Cached(60)(Ok(views.html.football.leagueTables.leagueTable(league, entries, List(focus)))))
       }
-    } getOrElse Future.successful(NoCache(InternalServerError(views.html.football.error("Please provide a valid league"))))
+    } getOrElse Future.successful(Cors(NoCache(InternalServerError(views.html.football.error("Please provide a valid league")))))
   }
 
   def leagueTable2Teams(competitionId: String, team1Id: String, team2Id: String) = Authenticated.async { request =>
