@@ -2,9 +2,8 @@ package test
 
 import org.scalatest.Matchers
 import org.scalatest.{ GivenWhenThen, FeatureSpec }
-import common.UsesElasticSearch
 
-class VideoFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with UsesElasticSearch {
+class VideoFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
   feature("Video") {
 
     info("In order to experience all the wonderful videos the Guardian publish")

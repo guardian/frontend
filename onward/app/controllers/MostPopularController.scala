@@ -5,9 +5,7 @@ import conf._
 import feed.MostPopularAgent
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
-import play.api.libs.json._
 import scala.concurrent.Future
-import scala.util.Random
 import views.support.PopularContainer
 
 
@@ -43,7 +41,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
 
   private def lookup(edition: Edition, path: String)(implicit request: RequestHeader) = {
     log.info(s"Fetching most popular: $path for edition $edition")
-    ContentApi.item(path, edition)
+    SwitchingContentApi().item(path, edition)
       .tag(None)
       .showMostViewed(true)
       .response.map{response =>

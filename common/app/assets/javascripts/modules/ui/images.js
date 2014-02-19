@@ -6,7 +6,7 @@ define(['common/$', 'common/utils/to-array', 'bonzo', 'common/utils/mediator', '
             context = context || document;
             var breakpoint = detect.getBreakpoint(),
                 options = {
-                    availableWidths: [ 140, 220, 300, 460, 620, 700 ],
+                    availableWidths: [ 140, 220, 300, 460, 620, 700, 940 ],
                     strategy: 'container',
                     replacementDelay: 0
                 };
