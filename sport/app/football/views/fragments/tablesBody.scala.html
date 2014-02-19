@@ -2,65 +2,69 @@
 @import support._
 @import org.joda.time.DateTime
 
-<div class="monocolumn-wrapper tone-news">
-    <h2 class="article-zone hide-on-mobile-if-localnav sport-header">
-        <a class="tone-colour" data-link-name="article section" href="@LinkTo{/football}">football</a>
-    </h2>
-    <div class="live-matches-dateline">
-        <p class="dateline"><i class="i i-date"></i> <span>Last updated: a minute ago</span></p>
-    </div>
+<div class="article-zone left-col-deport tone-news tone-accent-border">
+    <span class="left-col-deport__body">
+        <a class="tone-colour" data-link-name="article section" href="/football">football</a>
+    </span>
+</div>
+<div class="article-wrapper monocolumn-wrapper tone-news">
+    <article id="article" class="article" itemprop="mainContentOfPage" itemscope="" itemtype="http://schema.org/Article" role="main">
+        <div class="article__inner article__inner--head">
+            <header class="article__head">
+                @filterBar(model.page.webTitle)
+                @filters(model.filters, model.page, "tables")
+            </header>
+            <div class="after-header"></div>
+        </div>
 
-    @filterBar(model.page.webTitle)
+        <div class="article__columning-wrapper">
+            <div class="article__main-column">
+                @model.tables.map { table =>
+                    <div class="article__meta-container">
+                        <h2 class="article__meta-heading"><a href="@table.competition.url">@table.competition.fullName</a></h2>
+                        @if(model.singleCompetition){
+                        <p class="article__dateline" aria-hidden="true">
+                            <i class="i i-clock-grey relative-timestamp__icon"></i>
+                            <time itemprop="datePublished" datetime="2014-02-14T09:39:55+0000" data-timestamp="1392370795000">
+                                Last updated: a minute ago
+                            </time>
+                        </p>
+                        }
+                    </div>
 
-    @filters(model.filters, model.page, "tables")
-
-    <ol class="competitions unstyled football-table-container component" data-link-name="tables" role="main">
-
-        @model.tables.map{ table =>
-
-        <li class="league-table">
-
-            <a class="competition-title football-table-header football-table-link type-7 tone-colour" href="@table.competition.url" data-link-name="competition">
-                @table.competition.fullName<i class="i i-sport-arrow"></i>
-            </a>
-
-            <table class="table-football">
-                @if(!table.multiGroup) {
-                    <thead class="table-football-header">
-                        @tableColumnHeaders()
-                    </thead>
-                }
-
-
-                @table.groups.map{ group =>
-                <tbody class="table-football-body">
-                    @if(table.multiGroup) {
-                        @group.round.map { round =>
-                            @round.name.map { name =>
-                                <tr>
-                                    <th colspan="20" class="table-football-leftaligned">@name</th>
-                                </tr>
-                                @* we repeat this nav for group tables *@
-                                @tableColumnHeaders()
+                    <div class="article__container u-cf">
+                        @if(table.multiGroup){
+                            @table.groups.map{ group =>
+                                @group.round.map { round =>
+                                    @round.name.map { name =>
+                                        <div class="football__group">
+                                            <h3 class="table__headline">@name</h3>
+                                            @tableView(table, group, model.singleCompetition)
+                                        </div>
+                                    }
+                                }
+                            }
+                        }else{
+                            @table.groups.map{ group =>
+                                @tableView(table, group, model.singleCompetition)
                             }
                         }
-                    }
-                    @group.entries.zipWithRowInfo.map{ case (entry, row) => @tableRow(entry, row) }
-                </tbody>
+                        @if(!model.singleCompetition){
+                            <a href='@{table.competition.url + "/table"}' data-link-name="full table" class="cta-small type-8 tone-colour">View full @table.competition.fullName table<i class="i i-sport-arrow i-sport-arrow--small"></i></a>
+                        }
+                    </div>
                 }
-            </table>
+            </div>
 
-            @if(!model.singleCompetition) {
-                <a href='@{table.competition.url + "/table"}' data-link-name="full table" class="cta-small type-8 tone-colour">View full @table.competition.fullName table<i class="i i-sport-arrow i-sport-arrow--small"></i></a>
-            }
-
-        </li>
-        }
-    </ol>
+            <div class="article__secondary-column" aria-hidden="true">
+                <div class="article__secondary-column__inner article__secondary-column__inner--fill-vertically">
+                    @* Watch this space *@
+                </div>
+            </div>
+        </div>
+    </article>
 
     @footballCompetitionNav(model.comp)
-</div>
 
-<div class="article-wrapper monocolumn-wrapper tone-news">
     @fragments.mostPopularPlaceholder("sport")
 </div>

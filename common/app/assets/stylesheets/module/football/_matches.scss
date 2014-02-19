@@ -277,11 +277,14 @@ a.competition-title {
 // football-filter is the dropdown link item
 
 .football-filter {
+    @include user-select;
+    @include box-sizing(border-box);
+    background: #ffffff;
+    border: 1px solid $c-neutral5;
     display: block;
-    background: $c-sportBright;
     margin-bottom: $baseline*4;
     padding: $baseline*3 48px 10px 8px;
-    @include user-select;
+    position: relative;
 
     &,
     &:hover,
@@ -291,6 +294,7 @@ a.competition-title {
         text-decoration: none;
     }
 }
+
 .football-filter__label {
     @include fs-bodyCopy(1);
     margin: 0;
@@ -299,13 +303,13 @@ a.competition-title {
 .football-filter__trigger {
     display: block;
     background: $c-sportMid;
+    border: 1px solid $c-sportMid;
     height: 100%;
     width: 48px;
     position: absolute;
-    right: 0;
-    top: 0;
+    right: -1px;
+    top: -1px;
 }
-
 
 .live-matches-dateline {
     display: block;

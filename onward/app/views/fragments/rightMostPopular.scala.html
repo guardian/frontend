@@ -7,8 +7,8 @@
             <li class="right-most-popular-item" data-discussion-id="@trail.discussionId" data-link-name="trail | @row.rowNum">
                 <a class="right-most-popular-item__url media u-cf" href="@LinkTo{@trail.url}">
                     @trail.trailPicture(5, 3).map{ image =>
-                        <div class="right-most-popular-item__img media__img js-image-upgrade">
-                            <img class="responsiveimg" src="@Item140.bestFor(image)" alt="" />
+                        <div class="right-most-popular-item__img media__img">
+                            <img class="responsiveimg" src="@Item120.bestFor(image)" alt="" />
                         </div>
                     }
                     <h3 class="right-most-popular-item__headline media__body">@trail.linkText</h3>
