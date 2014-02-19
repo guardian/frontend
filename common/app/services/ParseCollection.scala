@@ -26,6 +26,7 @@ object Seg {
 trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging {
 
   val showFieldsQuery: String = FaciaDefaults.showFields
+  val queryMessage: Option[String] = Option("facia")
 
   case class CollectionMeta(lastUpdated: Option[String], updatedBy: Option[String], updatedEmail: Option[String])
   object CollectionMeta {
@@ -144,7 +145,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
           lazy val supportingLinks: List[CollectionItem] = retrieveSupportingLinks(collectionItem)
           if (!hasParent) getArticles(supportingLinks, edition, hasParent=true) else Future.successful(Nil)
         }
-        val response = ContentApi.facia().item(collectionItem.id, edition).showFields(showFieldsQuery).response
+        val response = ContentApi().item(collectionItem.id, edition, queryMessage).showFields(showFieldsQuery).response
 
         val content = response.map(_.content).recover {
           case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 404 => {
@@ -186,7 +187,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
 
     val newSearch = queryString match {
       case Path(Seg("search" ::  Nil)) => {
-        val search = ContentApi.facia().search(edition)
+        val search = ContentApi().search(edition, queryMessage)
           .showElements("all")
           .pageSize(20)
         val newSearch = queryParamsWithEdition.foldLeft(search){
@@ -197,7 +198,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
         }
       }
       case Path(id)  => {
-        val search = ContentApi.facia().item(id, edition)
+        val search = ContentApi().item(id, edition, queryMessage)
           .showElements("all")
           .showEditorsPicks(true)
           .pageSize(20)
