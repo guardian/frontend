@@ -149,7 +149,7 @@ define([
                 self.layout();
             });
 
-            mediator.on('modules:overlay:close', function() {
+            mediator.on('modules:overlay:hide', function() {
                 // Remove events
                 bean.off(overlay.toolbarNode, 'click');
                 bean.off(overlay.bodyNode, 'click touchmove touchend');
