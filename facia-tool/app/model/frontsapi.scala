@@ -79,7 +79,7 @@ trait UpdateActions extends Logging {
     Try(FaciaApi.archive(id, block, update)) match {
       case Failure(t: Throwable) => {
         log.warn(t.toString)
-        None
+        Some(block)
       }
       case Success(_) => Some(block)
     }
