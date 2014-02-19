@@ -5,6 +5,8 @@ import hu.meza.tools.HttpClientWrapper;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.cookie.BasicClientCookie2;
 
+import java.util.Date;
+
 public class TrailBlockEditor extends RestfulActor {
 
     private final String baseUrl;
@@ -28,9 +30,15 @@ public class TrailBlockEditor extends RestfulActor {
         authCookie.setDomain(cookie.getDomain());
         authCookie.setPath(cookie.getPath());
         authCookie.setSecure(cookie.isSecure());
-        authCookie.setExpiryDate(cookie.getExpiry());
+        setExpiry(authCookie);
 
         return authCookie;
+    }
+
+    private void setExpiry(BasicClientCookie2 authCookie) {
+        Date expiry = cookie.getExpiry();
+        if(expiry==null) return;
+        authCookie.setExpiryDate(expiry);
     }
 
     public void execute(TrailBlockAction action) {

@@ -105,6 +105,7 @@ object Frontend extends Build with Prototypes {
       "commons-codec" % "commons-codec" % "1.6",
       "info.cukes" % "cucumber-java" % "1.1.5",
       "info.cukes" % "cucumber-junit" % "1.1.5",
+      "org.apache.velocity" % "velocity" % "1.7",
       "info.cukes" % "cucumber-picocontainer" % "1.1.5",
       "org.seleniumhq.selenium" % "selenium-java" % "2.39.0",
       "org.seleniumhq.selenium" % "selenium-server" % "2.39.0",
