@@ -2,11 +2,11 @@
 @import support._
 @import org.joda.time.DateTime
 
-<h2 class="article-zone left-col-deport tone-news tone-accent-border">
+<div class="article-zone left-col-deport tone-news tone-accent-border">
     <span class="left-col-deport__body">
         <a class="tone-colour" data-link-name="article section" href="/football">football</a>
     </span>
-</h2>
+</div>
 <div class="article-wrapper monocolumn-wrapper tone-news">
     <article id="article" class="article" itemprop="mainContentOfPage" itemscope="" itemtype="http://schema.org/Article" role="main">
         <div class="article__inner article__inner--head">
@@ -38,7 +38,7 @@
                                 @group.round.map { round =>
                                     @round.name.map { name =>
                                         <div class="football__group">
-                                            <div class="table__headline">@name</div>
+                                            <h3 class="table__headline">@name</h3>
                                             @tableView(table, group, model.singleCompetition)
                                         </div>
                                     }
