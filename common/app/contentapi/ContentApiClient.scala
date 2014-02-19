@@ -8,7 +8,6 @@ import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
 import conf.Configuration.contentApi
 import com.gu.openplatform.contentapi.model.ItemResponse
-import conf.Configuration
 
 trait QueryDefaults extends implicits.Collections with ExecutionContexts {
 
@@ -116,16 +115,4 @@ class ElasticSearchContentApiClient extends ContentApiClient {
   lazy val httpTimingMetric = ContentApiMetrics.ElasticHttpTimingMetric
   lazy val httpTimeoutMetric = ContentApiMetrics.ElasticHttpTimeoutCountMetric
   override val targetUrl = contentApi.elasticSearchHost
-}
-
-class FaciaSolrContentApiClient extends SolrContentApiClient() {
-  override def fetch(url: String, parameters: Map[String, String]) = {
-    super.fetch(url, parameters + ("application-name" -> "facia"))
-  }
-}
-
-class FaciaElasticSearchContentApiClient extends ElasticSearchContentApiClient() {
-  override def fetch(url: String, parameters: Map[String, String]) = {
-    super.fetch(url, parameters + ("application-name" -> "facia"))
-  }
 }
