@@ -1,6 +1,6 @@
 package feed
 
-import conf.ContentApi
+import conf.SwitchingContentApi
 import common._
 import model.Content
 import scala.concurrent.duration._
@@ -18,7 +18,7 @@ object MostPopularAgent extends Logging with ExecutionContexts {
     Edition.all foreach refresh
   }
 
-  def refresh(edition: Edition) = ContentApi.item("/", edition)
+  def refresh(edition: Edition) = SwitchingContentApi().item("/", edition)
     .showMostViewed(true)
     .response.map{ response =>
       val mostViewed = response.mostViewed map { Content(_) } take 10
@@ -38,7 +38,7 @@ object MostPopularExpandableAgent extends Logging with ExecutionContexts {
   def refresh() {
     log.info("Refreshing most popular.")
     Edition.all foreach { edition =>
-      ContentApi.item("/", edition)
+      SwitchingContentApi().item("/", edition)
         .showMostViewed(true)
         .showFields("headline,trail-text,liveBloggingNow,thumbnail,hasStoryPackage,wordcount,shortUrl,body")
         .response.foreach{ response =>

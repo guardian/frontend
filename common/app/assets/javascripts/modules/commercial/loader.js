@@ -25,8 +25,8 @@ define([
      *
      * ```
      * require(['common/modules/commercial/loader'], function (CommercialComponent) {
-     *   var slot = document.querySelector('[class="js-sticky-upper"]');
-     *    var c = new CommercialComponent({config: guardian, oastoken: '%%C%%?'}).travel(slot);
+     *     var slot = document.querySelector('data-base="SLOT_NAME"');
+     *     var c = new CommercialComponent({config: guardian, oastoken: '%%C%%?'}).init('COMPONENT_NAME', slot);
      * })
      * ```
      *
@@ -36,18 +36,17 @@ define([
      */
     var Loader = function(options) {
         var conf = options.config.page || {};
-        this.pageId         = conf.pageId;
-        this.keywords       = conf.keywords || '';
-        this.section        = conf.section;
-        this.host           = conf.ajaxUrl + '/commercial/';
-        this.desktopUserVariant    = conf.ab_commercialInArticleDesktop || '';
+
+        this.pageId             = conf.pageId;
+        this.keywords           = conf.keywords || '';
+        this.section            = conf.section;
+        this.host               = conf.ajaxUrl + '/commercial/';
+        this.desktopUserVariant = conf.ab_commercialInArticleDesktop || '';
         this.mobileUserVariant  = conf.ab_commercialInArticleMobile || '';
-        this.oastoken       = options.oastoken || '';
-        this.inlineMicCode  = options.inlineMicCode || '';
-        this.mpuMicCode     = options.mpuMicCode || '';
-        this.adType         = options.adType || 'desktop';
-        this.userSegments   = 'seg=' + (new History().getSize() <= 1 ? 'new' : 'repeat');
-        this.components     = {
+        this.oastoken           = options.oastoken || '';
+        this.adType             = options.adType || 'desktop';
+        this.userSegments       = 'seg=' + (new History().getSize() <= 1 ? 'new' : 'repeat');
+        this.components         = {
             bestbuy:       this.host + 'money/bestbuys.json?'    + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
             book:          this.host + 'books/book/' + this.pageId + '.json',
             books:         this.host + 'books/bestsellers.json?' + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
@@ -56,6 +55,7 @@ define([
             soulmates:     this.host + 'soulmates/mixed.json?'   + this.userSegments + '&s=' + this.section,
             travel:        this.host + 'travel/offers.json?'     + this.userSegments + '&s=' + this.section + '&' + this.getKeywords()
         };
+
         return this;
     };
 
@@ -63,45 +63,23 @@ define([
 
     Loader.prototype.getKeywords = function() {
         return this.keywords.split(',').map(function(keyword){
-           return 'k=' + encodeURIComponent(keyword.replace(/\s/g, "-").toLowerCase());
+           return 'k=' + encodeURIComponent(keyword.replace(/\s/g, '-').toLowerCase());
         }).join('&');
     };
 
     /**
-     * @param {Element}  target
+     * @param {Element} target
      */
     Loader.prototype.load = function(url, target) {
         var self = this;
+
         new LazyLoad({
             url: url,
             container: target,
             beforeInsert: function (html) {
-                var result = html;
-                if (self.adType === "mobile") {
-                    if (self.mobileUserVariant === "inline") {
-                        result = result.replace(/%OmnitureToken%/g, "?INTCMP=" + self.inlineMicCode);
-                        result = result.replace(/%JustOmnitureToken%/g, self.inlineMicCode);
-                    } else if (self.mobileUserVariant === "top") {
-                        result = result.replace(/%OmnitureToken%/g, "?INTCMP=" + self.mpuMicCode);
-                        result = result.replace(/%JustOmnitureToken%/g, self.mpuMicCode);
-                    } else {
-                        result = result.replace(/%OmnitureToken%/g, "");
-                        result = result.replace(/%JustOmnitureToken%/g, "");
-                    }
-                } else {
-                    if (self.desktopUserVariant === "inline") {
-                        result = result.replace(/%OmnitureToken%/g, "?INTCMP=" + self.inlineMicCode);
-                        result = result.replace(/%JustOmnitureToken%/g, self.inlineMicCode);
-                    } else if (self.desktopUserVariant === "mpu") {
-                        result = result.replace(/%OmnitureToken%/g, "?INTCMP=" + self.mpuMicCode);
-                        result = result.replace(/%JustOmnitureToken%/g, self.mpuMicCode);
-                    } else {
-                        result = result.replace(/%OmnitureToken%/g, "");
-                        result = result.replace(/%JustOmnitureToken%/g, "");
-                    }
-                }
-
-                return result.replace(/%OASToken%/g, self.oastoken);
+                // Currently we are replacing the OmnitureToken with nothing. This will change once
+                // commercial components have properly been setup in the lovely mess that is Omniture!
+                return html.replace(/%OASToken%/g, self.oastoken).replace(/%OmnitureToken%/g, '');
             },
             success: function () {
                 mediator.emit('modules:commercial/loader:loaded');
@@ -110,35 +88,22 @@ define([
                 mediator.emit('module:error', 'Failed to load related: ' + req.statusText, 'common/modules/commercial/loader.js');
             }
         }).load();
+
         return this;
     };
 
-    Loader.prototype.bestbuy = function(el) {
-        return this.load(this.components.bestbuy, el);
-    };
+    /**
+     * @param {String}  name
+     * @param {Element} el
+     */
+    Loader.prototype.init = function(name, el) {
 
-    Loader.prototype.books = function(el) {
-        return this.load(this.components.books, el);
-    };
+        if(this.components[name] === undefined) {
+            mediator.emit('module:error', 'Unknown commercial component: ' + name, 'common/modules/commercial/loader.js');
+            return false;
+        }
 
-    Loader.prototype.book = function(el) {
-        return this.load(this.components.book, el);
-    };
-
-    Loader.prototype.jobs = function(el) {
-        return this.load(this.components.jobs, el);
-    };
-
-    Loader.prototype.masterclasses = function(el) {
-        return this.load(this.components.masterclasses, el);
-    };
-
-    Loader.prototype.soulmates = function(el) {
-        return this.load(this.components.soulmates, el);
-    };
-
-    Loader.prototype.travel = function(el) {
-        return this.load(this.components.travel, el);
+        return this.load(this.components[name], el);
     };
 
     return Loader;

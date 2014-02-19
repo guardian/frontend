@@ -3,9 +3,8 @@ package test
 import play.api.test.Helpers._
 import org.scalatest.Matchers
 import org.scalatest.FlatSpec
-import common.UsesElasticSearch
 
-class VideoControllerTest extends FlatSpec with Matchers with UsesElasticSearch {
+class VideoControllerTest extends FlatSpec with Matchers {
 
   val videoUrl = "uk/video/2012/jun/26/queen-enniskillen-northern-ireland-video"
   val callbackName = "aFunction"
