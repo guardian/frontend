@@ -39,6 +39,14 @@
                     @include fs-headline(1, true);
                 }
             }
+            .collection__item:nth-child(2) {
+                // Hairline takes the full height of the 2nd row
+                &:after {
+                    left: auto;
+                    right: 0;
+                    background: #ffffff;
+                }
+            }
             .item--has-image .item__media-wrapper,
             .item--has-image .item__image-container {
                 display: block;
