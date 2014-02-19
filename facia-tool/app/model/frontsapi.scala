@@ -6,6 +6,24 @@ import controllers.Identity
 import org.joda.time.DateTime
 import play.api.templates.HtmlFormat
 
+case class Config(
+                  fronts: Map[String, Front],
+                  collections: Map[String, Collection]
+                  )
+
+case class Front(
+                  collections: List[String]
+                  )
+
+case class Collection(
+                  displayName: Option[String],
+                  apiQuery: Option[String],
+                  tone: Option[String],
+                  href: Option[String],
+                  groups: Option[List[String]],
+                  uneditable: Option[Boolean]
+                  )
+
 case class Block(
                   id: String,
                   name: Option[String],
@@ -75,6 +93,10 @@ trait UpdateActions {
   def putBlock(id: String, block: Block, identity: Identity): Option[Block] = {
     FaciaApi.archive(id, block)
     FaciaApi.putBlock(id, block, identity)
+  }
+
+  def putMasterConfig(config: Config, identity: Identity): Option[Config] = {
+    FaciaApi.putMasterConfig(config, identity)
   }
 
   def updateCollectionList(id: String, update: UpdateList, identity: Identity): Option[Block] =

@@ -91,6 +91,8 @@ object S3FrontsApi extends S3 {
   def listCollectionIds: List[String] = getCollectionIds(s"$location/collection/")
   def putBlock(id: String, json: String) =
     putPublic(s"${location}/collection/${id}/collection.json", json, "application/json")
+  def putMasterConfig(json: String) =
+    putPublic(s"$location/config/config.json", json, "application/json")
 
   def archive(id: String, json: String) = {
     val now = DateTime.now

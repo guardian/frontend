@@ -26,6 +26,7 @@ GET           /collection/*id            controllers.FaciaToolController.readBlo
 POST          /edits                     controllers.FaciaToolController.collectionEdits
 GET           /collection                controllers.FaciaToolController.listCollections
 GET           /config                    controllers.FaciaToolController.getConfig
+POST          /config                    controllers.FaciaToolController.updateConfig
 
 POST          /collectionmeta/*id        controllers.FaciaToolController.updateCollectionMeta(id)
 

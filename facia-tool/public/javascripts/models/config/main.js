@@ -3,6 +3,7 @@ define([
     'config',
     'knockout',
     'modules/vars',
+    'modules/authed-ajax',
     'bindings/hoverable',
     'utils/fetch-settings',
     'utils/update-scrollables',
@@ -18,6 +19,7 @@ define([
     config,
     ko,
     vars,
+    authedAjax,
     hoverable,
     fetchSettings,
     updateScrollables,
@@ -57,8 +59,14 @@ define([
 
                 save: function() {
                     sanitize();
-                    // This is where persistence will happen:
-                    window.console.log(JSON.stringify(serialize(), null, 4));
+                    authedAjax.request({
+                        url: vars.CONST.apiBase + '/config',
+                        type: 'post',
+                        data: JSON.stringify(serialize())
+                    })
+                    .then(function(){
+                        bootstrap();
+                    });
                 }
             };
 
@@ -116,11 +124,8 @@ define([
             });
         }
 
-        this.init = function() {
-            droppable.init();
-            //hoverable.init();
-
-            fetchSettings(function (config, switches) {
+        function bootstrap(pollingMs, terminateOnFail) {
+            return fetchSettings(function (config, switches) {
                 vars.state.switches = switches || {};
 
                 if (!_.isEqual(config, vars.state.config)) {
@@ -133,13 +138,22 @@ define([
                     );
 
                     model.fronts(
-                      _.map(config.fronts, function(obj, fid) {
-                            return new Front(cloneWithKey(obj, fid));
-                       })
+                       _.chain(_.keys(config.fronts))
+                        .sort(function(id) { return id; })
+                        .map(function(id) {
+                              return new Front(cloneWithKey(config.fronts[id], id));
+                        })
+                       .value()
                     );
                 }
-            }, vars.CONST.configSettingsPollMs, true)
-            .done(function() {
+            }, pollingMs, terminateOnFail);
+        }
+
+        this.init = function() {
+            droppable.init();
+            //hoverable.init();
+
+            bootstrap(vars.CONST.configSettingsPollMs, true).done(function() {
                 ko.applyBindings(model);
 
                 updateScrollables();
