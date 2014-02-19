@@ -33,11 +33,11 @@ public class PublishDraftAction implements TrailBlockAction {
 
 	@Override
 	public void execute() {
-		String data = "{\"publish\":true}";
+        String data = "";
 
-		final String requestUrl = String.format("/fronts/api/%s", trailBlock.uri());
-		httpCall = client.postJsonTo(requestUrl, data);
-	}
+        final String requestUrl = String.format("/collection/publish/%s", trailBlock.uri());
+        httpCall = client.postTo(requestUrl, data);
+    }
 
 	@Override
 	public PublishDraftAction copyOf() {

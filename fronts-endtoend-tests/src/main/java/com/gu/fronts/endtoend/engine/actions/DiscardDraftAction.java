@@ -35,7 +35,7 @@ public class DiscardDraftAction implements TrailBlockAction {
 	public void execute() {
         String data = "";
 
-        final String requestUrl = String.format("/discard/%s", trailBlock.uri());
+        final String requestUrl = String.format("/collection/discard/%s", trailBlock.uri());
         httpCall = client.postTo(requestUrl, data);
     }
 

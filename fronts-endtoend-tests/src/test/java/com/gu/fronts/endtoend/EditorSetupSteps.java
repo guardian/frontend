@@ -15,6 +15,7 @@ public class EditorSetupSteps {
 
     private final TrailBlockEditors editors;
     private Configuration config;
+    private static Cookie cookie;
 
     public EditorSetupSteps(
             TrailBlockEditors editors, Configuration config
@@ -36,7 +37,12 @@ public class EditorSetupSteps {
     }
 
     private TrailBlockEditor createEditor() {
-        Cookie cookie = null;
+
+        if (cookie != null) {
+            return new TrailBlockEditor(config.baseUrl(), cookie);
+
+        }
+
         int tries = 0;
         try {
             WebDriver driver = new FirefoxDriver();
