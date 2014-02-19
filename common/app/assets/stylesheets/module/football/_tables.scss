@@ -147,16 +147,16 @@
         }
     }
 
-    .football-stat--form {
-        display: none;
-    }
-
     .football-stat--points {
         font-weight: bold;
     }
 
     .football-stat--team a {
         color: inherit;
+    }
+
+    .table-column--main {
+        max-width: 90px;
     }
 
     // This makes sure that all table columns are equally spaced
@@ -167,10 +167,6 @@
 
         .football-stat--form {
             display: table-cell;
-        }
-
-        .table-column--main {
-            max-width: 100px;
         }
 
         .table-column--status {
