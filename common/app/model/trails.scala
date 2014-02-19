@@ -25,6 +25,6 @@ trait Trail extends Elements with Tags with FaciaFields {
 trait FaciaFields {
   def group: Option[String] = None
   def supporting: List[Trail] = Nil
-  def imageAdjust: Option[String] = None
+  def imageAdjust: String = "default"
   def isBreaking: Boolean = false
 }
