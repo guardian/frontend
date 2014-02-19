@@ -38,6 +38,7 @@ object Frontend extends Build with Prototypes {
   val facia = application("facia").dependsOn(commonWithTests).aggregate(common)
   val article = application("article").dependsOn(commonWithTests).aggregate(common)
   val applications = application("applications").dependsOn(commonWithTests).aggregate(common)
+  val archive = application("archive").dependsOn(commonWithTests).aggregate(common)
   val sport = application("sport").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies += "com.gu" %% "pa-client" % "4.1",
     templatesImport ++= Seq(
@@ -131,6 +132,7 @@ object Frontend extends Build with Prototypes {
     ).dependsOn(
       facia,
       applications,
+      archive,
       sport,
       discussion,
       router,
@@ -154,6 +156,7 @@ object Frontend extends Build with Prototypes {
     admin,
     identity,
     commercial,
-    onward
+    onward,
+    archive
   )
 }

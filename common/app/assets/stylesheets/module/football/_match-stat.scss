@@ -16,3 +16,27 @@
         text-align: right;
     }
 }
+
+.match-result {
+    border-radius: 4px;
+    display: inline-block;
+    height: 8px;
+    margin-left: $gs-gutter/4;
+    width: 8px;
+
+    &:first-child {
+        margin-left: 0;
+    }
+}
+
+.match-result--won {
+    background-color: $c-statusPositive;
+}
+
+.match-result--drew {
+    background-color: $c-statusNeutral;
+}
+
+.match-result--lost {
+    background-color: $c-statusNegative;
+}

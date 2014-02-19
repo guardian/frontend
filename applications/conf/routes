@@ -35,4 +35,4 @@ GET        /$leftSide<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>+$rightSide<[\w\d-]*(/[\w
 
 # Interactive paths 
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>.json  controllers.InteractiveController.renderInteractiveJson(path) 
-GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>       controllers.InteractiveController.renderInteractive(path) 
+GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>       controllers.InteractiveController.renderInteractive(path)
