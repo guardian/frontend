@@ -58,7 +58,7 @@ define([
                 groups: [''].concat(vars.CONST.groups),
 
                 save: function() {
-                    var serialized = serialize();
+                    var serialized = serialize(model);
 
                     if(!_.isEqual(serialized, vars.state.config)) {
                         authedAjax.request({
@@ -66,8 +66,13 @@ define([
                             type: 'post',
                             data: JSON.stringify(serialized)
                         })
-                        .then(function(){
-                            bootstrap();
+                        .then(function() {
+                            bootstrap({
+                                openFronts: _.reduce(model.fronts(), function(openFronts, front) {
+                                    openFronts[front.id()] = front.state.open();
+                                    return openFronts;
+                                }, {})
+                            });
                         });
                     }
                 }
@@ -81,7 +86,7 @@ define([
 
         vars.model = model;
 
-        function serialize() {
+        function serialize(model) {
             return {
                 fronts:
                    _.chain(model.fronts())
@@ -110,7 +115,6 @@ define([
                         collections[collection.id] =
                            _.reduce(collection.meta, function(acc, val, key) {
                                 var v = _.isFunction(val) ? val() : val;
-                                 // keep only the truthy values:
                                 if(v) {
                                     acc[key] = (key === 'groups' ? v.split(',') : v);
                                 }
@@ -122,7 +126,9 @@ define([
             };
         }
 
-        function bootstrap(pollingMs, terminateOnFail) {
+        function bootstrap(opts) {
+            opts.openFronts = opts.openFronts|| {};
+
             return fetchSettings(function (config, switches) {
                 vars.state.switches = switches || {};
 
@@ -137,21 +143,28 @@ define([
 
                     model.fronts(
                        _.chain(_.keys(config.fronts))
-                        .sort(function(id) { return id; })
+                        .sortBy(function(id) { return id; })
                         .map(function(id) {
-                              return new Front(cloneWithKey(config.fronts[id], id));
+                            var front = new Front(cloneWithKey(config.fronts[id], id));
+
+                            front.state.open(opts.openFronts[id]);
+                            return front;
                         })
                        .value()
                     );
                 }
-            }, pollingMs, terminateOnFail);
+            }, opts.pollingMs, opts.terminateOnFail);
         }
 
         this.init = function() {
             droppable.init();
             //hoverable.init();
 
-            bootstrap(vars.CONST.configSettingsPollMs, true).done(function() {
+            bootstrap({
+                pollingMs: vars.CONST.configSettingsPollMs,
+                terminateOnFail: true
+
+            }).done(function() {
                 ko.applyBindings(model);
 
                 updateScrollables();

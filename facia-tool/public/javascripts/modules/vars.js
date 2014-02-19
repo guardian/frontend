@@ -48,7 +48,8 @@ define(['knockout'], function(ko) {
         state: {
             config: {},
             switches: {},
-            liveMode: ko.observable(false)
+            liveMode: ko.observable(false),
+            openFronts: {}
         }
     };
 });
