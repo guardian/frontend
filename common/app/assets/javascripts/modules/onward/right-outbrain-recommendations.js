@@ -3,6 +3,7 @@ define([
     'qwery',
     'lodash/objects/assign',
     'common/modules/component',
+    'bean',
 
     'common/modules/onward/right-outbrain-recommended-item',
     'common/modules/ui/images'
@@ -10,6 +11,7 @@ define([
     qwery,
     extend,
     Component,
+    bean,
     RecommendedItem,
     Images
     ){
@@ -62,6 +64,17 @@ define([
             new RecommendedItem(item, index).render(container);
         });
         Images.upgrade(container);
+        bean.on(document, 'click', '.right-recommended-item__url', function() {
+            console.log("++ I so want to see you");
+            s.events = "events37";
+            s.evar7 = "s.pageName";
+
+            s.evar37 = "right-popular-contrentrec";
+
+            s.linkTrackVars="events,eVar37,eVar37";
+            s.linkTrackEvents="event37";
+            s.tl(this,"o","right-popular-contentrec")
+        });
     };
 
     return RightOutbrainRecommendations;
