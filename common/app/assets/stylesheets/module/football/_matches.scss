@@ -278,10 +278,9 @@ a.competition-title {
 
 .football-filter {
     @include user-select;
-
+    @include box-sizing(border-box);
     background: #ffffff;
     border: 1px solid $c-neutral5;
-    box-sizing: border-box;
     display: block;
     margin-bottom: $baseline*4;
     padding: $baseline*3 48px 10px 8px;
