@@ -25,17 +25,22 @@ td {
     border-bottom: 2px solid $c-neutral2;
     border-top: 2px solid $c-newsAccent;
 
-    thead th,
-    thead td {
-        @include fs-data(5);
-        color: $c-neutral1;
-        font-weight: 800;
-        padding: $gs-baseline/2 ($gs-gutter+4)/2;
-    }
-
+    th,
     td {
         @include fs-data(5);
         padding: $gs-baseline ($gs-gutter+4)/2;
+
+        @include mq($to: tablet) {
+            @include fs-data(4);
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+    }
+
+    th,
+    thead td {
+        color: $c-neutral1;
+        font-weight: 800;
     }
 }
 

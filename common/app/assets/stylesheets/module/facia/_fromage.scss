@@ -9,7 +9,7 @@
 
 
 /* Wrapper
-   ===========================================================================*/
+   ========================================================================== */
 
 .fromage {
     @include rem((
@@ -25,6 +25,8 @@
     }
     .item__title {
         @include fs-headline(2, $size-only: true);
+        padding-top: 0;
+
         @include rem((
             margin-bottom: $gs-baseline + 2px
         ));
@@ -40,8 +42,10 @@
             @include fs-headline(5, true);
         }
     }
+
+
     /* Meta
-   ===========================================================================*/
+       ====================================================================== */
 
     .item__meta {
         position: absolute;
@@ -125,13 +129,15 @@
 
 
 /* Main elements
-   ===========================================================================*/
+   ========================================================================== */
 
 .fromage__link,
 .fromage__support__action {
     color: $c-neutral1;
 }
 .fromage__link {
+    display: block;
+
     &:hover,
     &:focus {
         .item__title {
@@ -192,7 +198,7 @@
 
 
 /* Modifier: image hide/default/highlight
-   ===========================================================================*/
+   ========================================================================== */
 
 .fromage__media-wrapper--first {
     &,
@@ -314,10 +320,11 @@
 .fromage--imageadjust-highlight {
     .item__title {
         @include rem((
-            margin-top: $gs-baseline/3
+            padding-top: $gs-baseline/3
         ));
         @include mq(tablet) {
             @include fs-headline(5, true);
+            padding-top: 0;
         }
         @include mq(desktop) {
             @include fs-headline(6, true);
@@ -381,7 +388,7 @@
 
 
 /* Modifier: Volume 0, 1, 2
-   ===========================================================================*/
+   ========================================================================== */
 
 .fromage--volume-1,
 .fromage--volume-2 {

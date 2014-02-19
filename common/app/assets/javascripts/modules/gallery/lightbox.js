@@ -41,7 +41,7 @@ define([
             $navArrows,
             $images;
 
-        this.selector = '.gallerythumbs';
+        this.selector = '.js-gallerythumbs';
         this.galleryEndpoint = ''; // Hook for tests
 
         this.init = function(opts) {

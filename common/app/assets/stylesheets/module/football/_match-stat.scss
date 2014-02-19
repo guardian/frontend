@@ -18,14 +18,22 @@
 }
 
 .match-result {
-    border-radius: 4px;
     display: inline-block;
-    height: 8px;
-    margin-left: $gs-gutter/4;
-    width: 8px;
+    height: 14px;
+    position: relative;
+    top: 2px;
+    width: 2px;
 
     &:first-child {
         margin-left: 0;
+    }
+
+    @include mq($from: desktop) {
+        border-radius: 4px;
+        height: 8px;
+        margin-left: $gs-gutter/4;
+        top: 0;
+        width: 8px;
     }
 }
 
