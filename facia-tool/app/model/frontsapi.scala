@@ -76,16 +76,16 @@ trait UpdateActions extends Logging {
   def updateCollectionMeta(block: Block, update: CollectionMetaUpdate, identity: Identity): Block =
     block.copy(displayName=update.displayName, href=update.href)
 
-  def putBlock(id: String, block: Block, identity: Identity, updateJson: JsValue): Option[Block] =
+  def putBlock(id: String, block: Block, identity: Identity, updateJson: JsValue): Block =
     FaciaApi.putBlock(id, block, identity)
 
-  def archiveBlock(id: String, block: Block, update: JsValue): Option[Block] =
+  def archiveBlock(id: String, block: Block, update: JsValue): Block =
     Try(FaciaApi.archive(id, block, update)) match {
       case Failure(t: Throwable) => {
         log.warn(t.toString)
-        Some(block)
+        block
       }
-      case Success(_) => Some(block)
+      case Success(_) => block
     }
 
   def updateCollectionList(id: String, update: UpdateList, identity: Identity): Option[Block] = {
@@ -93,8 +93,8 @@ trait UpdateActions extends Logging {
     getBlock(id)
     .map(insertIntoLive(update, _))
     .map(insertIntoDraft(update, _))
-    .flatMap(putBlock(id, _, identity, updateJson))
-    .flatMap(archiveBlock(id, _, updateJson))
+    .map(putBlock(id, _, identity, updateJson))
+    .map(archiveBlock(id, _, updateJson))
     .orElse(createBlock(id, identity, update))
   }
 
@@ -103,15 +103,14 @@ trait UpdateActions extends Logging {
     getBlock(id)
       .map(deleteFromLive(update, _))
       .map(deleteFromDraft(update, _))
-      .flatMap(putBlock(id, _, identity, updateJson))
-      .flatMap(archiveBlock(id, _, updateJson))
+      .map(putBlock(id, _, identity, updateJson))
+      .map(archiveBlock(id, _, updateJson))
   }
-
 
   def updateCollectionMeta(id: String, update: CollectionMetaUpdate, identity: Identity): Option[Block] =
     getBlock(id)
       .map(updateCollectionMeta(_, update, identity))
-      .flatMap(putBlock(id, _, identity, Json.toJson(update)))
+      .map(putBlock(id, _, identity, Json.toJson(update)))
 
   private def updateList(update: UpdateList, blocks: List[Trail]): List[Trail] = {
     val listWithoutItem = blocks.filterNot(_.id == update.item)
@@ -138,9 +137,9 @@ trait UpdateActions extends Logging {
 
   def createBlock(id: String, identity: Identity, update: UpdateList): Option[Block] = {
     if (update.live)
-      FaciaApi.putBlock(id, Block(id, None, List(Trail(update.item, update.itemMeta)), None, DateTime.now.toString, identity.fullName, identity.email, None, None), identity)
+      Option(FaciaApi.putBlock(id, Block(id, None, List(Trail(update.item, update.itemMeta)), None, DateTime.now.toString, identity.fullName, identity.email, None, None), identity))
     else
-      FaciaApi.putBlock(id, Block(id, None, Nil, Some(List(Trail(update.item, update.itemMeta))), DateTime.now.toString, identity.fullName, identity.email, None, None), identity)
+      Option(FaciaApi.putBlock(id, Block(id, None, Nil, Some(List(Trail(update.item, update.itemMeta))), DateTime.now.toString, identity.fullName, identity.email, None, None), identity))
   }
 
 }
