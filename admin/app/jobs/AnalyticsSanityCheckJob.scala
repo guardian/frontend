@@ -18,12 +18,16 @@ object AnalyticsSanityCheckJob extends ExecutionContexts with implicits.Futures 
       _.getDatapoints.headOption.map(_.getSum.doubleValue()).getOrElse(0.0)
     )
 
+    def sensible(what :Double) : Double = {
+      if (what > 200) 200.0 else what
+    }
+
     val omniture = sequence(Seq(rawPageViews, analyticsPageViews)).map{
-      case (raw :: analytics:: Nil) => analytics / raw * 100
+      case (raw :: analytics:: Nil) => sensible(analytics / raw * 100)
     }
 
     val ophan = sequence(Seq(rawPageViews, ophanViews)).map{
-      case (raw :: analytics:: Nil) => analytics / raw * 100
+      case (raw :: analytics:: Nil) => sensible(analytics / raw * 100)
     }
 
     sequence(Seq(omniture, ophan)).foreach{ case (omniture :: ophan :: Nil) =>

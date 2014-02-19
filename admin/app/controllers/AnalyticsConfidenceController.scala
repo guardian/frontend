@@ -13,8 +13,8 @@ object AnalyticsConfidenceController extends Controller with Logging with AuthLo
     val ratio = CloudWatch.ratioConfidence
 
     val omnitureAverage = omniture.dataset.flatMap(_.values.headOption).sum / omniture.dataset.length
-    val ophanAverage = ophan.dataset.flatMap(_.values.headOption).sum / omniture.dataset.length
-    val ratioAverage = ratio.dataset.flatMap(_.values.headOption).sum / omniture.dataset.length
+    val ophanAverage = ophan.dataset.flatMap(_.values.headOption).sum / ophan.dataset.length
+    val ratioAverage = ratio.dataset.flatMap(_.values.headOption).sum / ratio.dataset.length
 
     val omnitureGraph = new LineChart("Omniture confidence", Seq("Time", "%", "avg.")) {
       override lazy val dataset = omniture.dataset.map{ point =>
