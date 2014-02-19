@@ -8,7 +8,6 @@ import play.api.Play.current
 import java.io.{FileInputStream, File}
 import org.apache.commons.io.IOUtils
 import conf.Configuration
-import com.amazonaws.internal.StaticCredentialsProvider
 
 class BadConfigurationException(property: String) extends RuntimeException(s"Property $property not configured")
 
@@ -232,14 +231,15 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val bucket = configuration.getMandatoryStringProperty("aws.bucket")
     lazy val sns: String = configuration.getMandatoryStringProperty("sns.notification.topic.arn")
 
-    lazy val credentials: AWSCredentialsProvider = new AWSCredentialsProviderChain(
-      // the first 3 are a copy n paste job from the constructor of DefaultAWSCredentialsProviderChain
-      LoggingAWSCredentialsProvider(new EnvironmentVariableCredentialsProvider()),
-      LoggingAWSCredentialsProvider(new SystemPropertiesCredentialsProvider()),
-      LoggingAWSCredentialsProvider(new InstanceProfileCredentialsProvider()),
+    lazy val credentials: AWSCredentialsProvider = {
+      new AWSCredentialsProviderChain(
+        //this is what instances running on EC2 use.
+        LoggingAWSCredentialsProvider(new InstanceProfileCredentialsProvider()),
 
-      LoggingAWSCredentialsProvider(new StaticCredentialsProvider(new NullableAWSCredentials(accessKey, secretKey)))
-    )
+        //this is what local machines (non EC2 use)
+        LoggingAWSCredentialsProvider(new STSSessionCredentialsProvider(new NullableAWSCredentials(accessKey, secretKey)))
+      )
+    }
   }
 
   object pingdom {
@@ -271,6 +271,7 @@ private class NullableAWSCredentials(accessKeyId: Option[String], secretKey: Opt
 }
 
 // I want to see which provider we are using
+// TODO have a think about removing me in the future
 private class LoggingAWSCredentialsProvider(delegate: AWSCredentialsProvider) extends AWSCredentialsProvider with Logging {
   val className = delegate.getClass.getSimpleName
 
