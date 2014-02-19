@@ -5,12 +5,11 @@ import conf.Switches._
 import org.scalatest.Matchers
 import org.scalatest.{ GivenWhenThen, FeatureSpec }
 import collection.JavaConversions._
-import common.UsesElasticSearch
 import play.api.libs.ws.WS
 import scala.concurrent.duration._
 import scala.concurrent.Await
 
-class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  with UsesElasticSearch {
+class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
   implicit val config = Configuration
 
