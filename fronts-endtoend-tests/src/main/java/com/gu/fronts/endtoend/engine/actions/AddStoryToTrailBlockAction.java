@@ -58,9 +58,10 @@ public class AddStoryToTrailBlockAction implements TrailBlockAction {
 	@Override
 	public void execute() {
 		final String requestBody = requestBody();
-		final String requestUrl = String.format("/fronts/api/%s", trailblock.uri());
-		httpCall = client.postJsonTo(requestUrl, requestBody);
-	}
+        final String requestUrl = String.format("/edits");
+        httpCall = client.postJsonTo(requestUrl, requestBody);
+        return;
+    }
 
 	@Override
 	public AddStoryToTrailBlockAction copyOf() {
@@ -76,27 +77,33 @@ public class AddStoryToTrailBlockAction implements TrailBlockAction {
 	}
 
 	private String positionRequestBody() {
-		String data = "{" +
-					  "\"item\":\"%s\"" +
-					  ",\"draft\":true" +
-					  ",\"live\":" + isLive() +
-					  ",\"position\":\"%s\"" +
-					  "}";
+        String data = "{\"update\":{" +
+                "\"item\":\"%s\"" +
+                ",\"draft\":%s" +
+                ",\"live\":%s" +
+                ",\"position\":\"%s\"" +
+                ",\"id\":\"%s\"" +
+                "}}";
 
-		return String.format(data, story.getName(), positionOf.getName());
-	}
+        return String.format(data, story.getName(), isDraft(), isLive(), positionOf.getName(), trailblock.uri());
+    }
 
 	private String isLive() {
 		return mode == TrailBlockMode.LIVE ? "true" : "false";
 	}
 
-	private String noPositionRequestBody() {
-		String data = "{" +
-					  "\"item\":\"%s\"" +
-					  ",\"draft\":true" +
-					  ",\"live\":" + isLive() +
-					  "}";
+    private String isDraft() {
+        return mode == TrailBlockMode.DRAFT ? "true" : "false";
+    }
 
-		return String.format(data, story.getName());
-	}
+    private String noPositionRequestBody() {
+        String data = "{\"update\":{" +
+                "\"item\":\"%s\"" +
+                ",\"draft\":%s" +
+                ",\"live\":%s" +
+                ",\"id\":\"%s\"" +
+                "}}";
+
+        return String.format(data, story.getName(), isDraft(), isLive(), trailblock.uri());
+    }
 }
