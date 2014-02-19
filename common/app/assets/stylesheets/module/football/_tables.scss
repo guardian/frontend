@@ -147,10 +147,6 @@
         }
     }
 
-    .football-stat--previous {
-        display: none;
-    }
-
     .football-stat--points {
         font-weight: bold;
     }
@@ -159,18 +155,18 @@
         color: inherit;
     }
 
+    .table-column--main {
+        max-width: 90px;
+    }
+
     // This makes sure that all table columns are equally spaced
     @include mq($from: desktop) {
         td {
             min-width: 12px;
         }
 
-        .football-stat--previous {
+        .football-stat--form {
             display: table-cell;
-        }
-
-        .table-column--main {
-            max-width: 100px;
         }
 
         .table-column--status {
@@ -191,7 +187,7 @@
         .football-stat--against {}
         .football-stat--difference { display: table-cell; }
         .football-stat--points { display: table-cell; }
-        .football-stat--previous {}
+        .football-stat--form { display: table-cell; }
     }
 }
 
