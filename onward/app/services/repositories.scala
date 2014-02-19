@@ -1,13 +1,15 @@
 package services
 
 import common.Edition
-import conf.ContentApi
 import model.{Trail, Content}
 import scala.concurrent.Future
+import conf.{ContentApiDoNotUseForNewQueries, SwitchingContentApi}
 
 trait Related extends ConciergeRepository {
   def related(edition: Edition, path: String): Future[Seq[Trail]] = {
-    val response = ContentApi.item(path, edition)
+
+    //TODO sticking with old content api for performance reasons
+    val response = ContentApiDoNotUseForNewQueries.item(path, edition)
       .showRelated(true)
       .response
 
