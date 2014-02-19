@@ -4,6 +4,8 @@ import play.api.libs.json.{Json, JsValue}
 import tools.FaciaApi
 import controllers.Identity
 import org.joda.time.DateTime
+import scala.util.{Success, Failure, Try}
+import common.Logging
 
 case class Block(
                   id: String,
@@ -25,11 +27,12 @@ case class Trail(
 case class UpdateList(id: String, item: String, position: Option[String], after: Option[Boolean], itemMeta: Option[Map[String, JsValue]], live: Boolean, draft: Boolean)
 case class CollectionMetaUpdate(displayName: Option[String])
 
-trait UpdateActions {
+trait UpdateActions extends Logging {
 
   lazy val defaultMinimumTrailblocks = 0
   lazy val defaultMaximumTrailblocks = 20
   val itemMetaWhitelistFields: Seq[String] = Seq("headline", "trailText", "group", "supporting", "imageAdjust", "isBreaking", "updatedAt")
+  
   implicit val collectionMetaWrites = Json.writes[CollectionMetaUpdate]
   implicit val updateListWrite = Json.writes[UpdateList]
 
@@ -72,8 +75,14 @@ trait UpdateActions {
   def putBlock(id: String, block: Block, identity: Identity, updateJson: JsValue): Option[Block] =
     FaciaApi.putBlock(id, block, identity)
 
-  def archiveBlock(id: String, block: Block, update: JsValue): Unit =
-    FaciaApi.archive(id, block, update)
+  def archiveBlock(id: String, block: Block, update: JsValue): Option[Block] =
+    Try(FaciaApi.archive(id, block, update)) match {
+      case Failure(t: Throwable) => {
+        log.warn(t.toString)
+        None
+      }
+      case Success(_) => Some(block)
+    }
 
   def updateCollectionList(id: String, update: UpdateList, identity: Identity): Option[Block] = {
     lazy val updateJson = Json.toJson(update)
@@ -81,7 +90,7 @@ trait UpdateActions {
     .map(insertIntoLive(update, _))
     .map(insertIntoDraft(update, _))
     .flatMap(putBlock(id, _, identity, updateJson))
-    .map{block => archiveBlock(id, block, updateJson);block}
+    .flatMap(archiveBlock(id, _, updateJson))
     .orElse(createBlock(id, identity, update))
   }
 
@@ -91,7 +100,7 @@ trait UpdateActions {
       .map(deleteFromLive(update, _))
       .map(deleteFromDraft(update, _))
       .flatMap(putBlock(id, _, identity, updateJson))
-      .map{block => archiveBlock(id, block, updateJson);block}
+      .flatMap(archiveBlock(id, _, updateJson))
   }
 
 
