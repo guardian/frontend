@@ -24,6 +24,7 @@ define([
             'href',
             'groups',
             'tone',
+            'type',
             'uneditable',
             'apiQuery']);
 

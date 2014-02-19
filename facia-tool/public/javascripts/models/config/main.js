@@ -58,15 +58,18 @@ define([
                 groups: [''].concat(vars.CONST.groups),
 
                 save: function() {
-                    sanitize();
-                    authedAjax.request({
-                        url: vars.CONST.apiBase + '/config',
-                        type: 'post',
-                        data: JSON.stringify(serialize())
-                    })
-                    .then(function(){
-                        bootstrap();
-                    });
+                    var serialized = serialize();
+
+                    if(!_.isEqual(serialized, vars.state.config)) {
+                        authedAjax.request({
+                            url: vars.CONST.apiBase + '/config',
+                            type: 'post',
+                            data: JSON.stringify(serialized)
+                        })
+                        .then(function(){
+                            bootstrap();
+                        });
+                    }
                 }
             };
 
@@ -82,13 +85,20 @@ define([
             return {
                 fronts:
                    _.chain(model.fronts())
-                    .filter(function(front) { return front.id(); })
+                    .filter(function(front) { return front.id() && front.collections.items().length > 0; })
                     .reduce(function(fronts, front) {
-                        fronts[front.id()] = {
-                            collections: _.map(front.collections.items(), function(collection) {
+                        var collections = _.chain(front.collections.items())
+                             .filter(function(collection) {
+                                return model.collections.indexOf(collection) > -1;
+                             })
+                             .map(function(collection) {
                                 return collection.id;
-                            })
-                        };
+                             })
+                             .value();
+
+                        if (collections.length > 0) {
+                            fronts[front.id()] = { collections: collections };
+                        }
                         return fronts;
                     }, {})
                     .value(),
@@ -110,18 +120,6 @@ define([
                     }, {})
                     .value()
             };
-        }
-
-        function sanitize() {
-            model.fronts.remove(function(front) {
-                return !front.id() || front.collections.items().length === 0;
-            });
-
-            _.each(model.fronts(), function(front) {
-                front.collections.items.remove(function(collection) {
-                    return model.collections.indexOf(collection) < 0;
-                });
-            });
         }
 
         function bootstrap(pollingMs, terminateOnFail) {
