@@ -132,7 +132,7 @@ define([
             return fetchSettings(function (config, switches) {
                 vars.state.switches = switches || {};
 
-                if (!_.isEqual(config, vars.state.config)) {
+                if (1 || !_.isEqual(config, vars.state.config)) {
                     vars.state.config = config;
 
                     model.collections(

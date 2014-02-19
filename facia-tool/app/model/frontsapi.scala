@@ -7,9 +7,17 @@ import org.joda.time.DateTime
 import play.api.templates.HtmlFormat
 
 case class Config(
-                  fronts: Map[String, Front],
-                  collections: Map[String, Collection]
-                  )
+  fronts: Map[String, Front],
+  collections: Map[String, Collection]
+) {
+  def isValid: Boolean =
+    fronts("uk").collections.head == "uk/news/regular-stories" &&
+    fronts("uk").collections.length >= 5 &&
+    fronts("us").collections.head == "us/news/regular-stories" &&
+    fronts("us").collections.length >= 5 &&
+    fronts("au").collections.head == "au/news/regular-stories" &&
+    fronts("au").collections.length >= 5
+}
 
 case class Front(
                   collections: List[String]
@@ -95,8 +103,9 @@ trait UpdateActions {
     FaciaApi.putBlock(id, block, identity)
   }
 
-  def putMasterConfig(config: Config, identity: Identity): Option[Config] = {
-    FaciaApi.putMasterConfig(config, identity)
+  def putMasterConfig(config: Config, identity: Identity): Any = {
+    if (config.isValid)
+      FaciaApi.putMasterConfig(config, identity)
   }
 
   def updateCollectionList(id: String, update: UpdateList, identity: Identity): Option[Block] =
