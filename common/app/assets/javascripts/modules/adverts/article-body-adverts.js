@@ -26,6 +26,8 @@ define([
 
     Component.define(ArticleBodyAdverts);
 
+    ArticleBodyAdverts.prototype.inlineSlots = [];
+
     ArticleBodyAdverts.prototype.config = {
         inlineAdTemplate: '<div class="ad-slot ad-slot--inline" data-base="%slot%" data-median="%slot%"><div class="ad-slot__label">Advertisement</div><div class="ad-container"></div></div>'
     };
@@ -36,43 +38,42 @@ define([
         return bonzo(bonzo.create(template.replace(/%slot%/g, id)));
     };
 
+    ArticleBodyAdverts.prototype.getNewSlot = function(type) {
+        var slot = SlotController.getSlot(type);
+
+        this.inlineSlots.push(slot);
+
+        return slot;
+    };
+
+    ArticleBodyAdverts.prototype.destroy = function() {
+        this.inlineSlots.forEach(function(slot) {
+            SlotController.releaseSlot(slot);
+        });
+
+        this.inlineSlots = [];
+    };
+
     ArticleBodyAdverts.prototype.reload = function() {
+        this.destroy();
         this.init();
     };
 
     ArticleBodyAdverts.prototype.init = function() {
         var breakpoint  = detect.getBreakpoint();
 
-        // Check if we already have slots assigned
-        if(this.inlineSlot1 === undefined) {
-            this.inlineSlot1 = SlotController.getSlot('adRight');
-        }
-
         if((/wide|desktop/).test(breakpoint)) {
-            bonzo(this.inlineSlot1).html(this.generateInlineAdSlot('Middle1'));
-
-            // Release slot2 if it exists
-            if(this.inlineSlot2) {
-                SlotController.releaseSlot(this.inlineSlot2);
-            }
+            bonzo(this.getNewSlot('adRight')).html(this.generateInlineAdSlot('Middle1'));
         }
 
         if((/tablet/).test(breakpoint)) {
-            if(this.inlineSlot2 === undefined) {
-                this.inlineSlot2 = SlotController.getSlot('adRight');
-            }
-
-            bonzo(this.inlineSlot1).html(this.generateInlineAdSlot('Middle'));
-            bonzo(this.inlineSlot2).html(this.generateInlineAdSlot('Middle1'));
+            bonzo(this.getNewSlot('adRight')).html(this.generateInlineAdSlot('Middle'));
+            bonzo(this.getNewSlot('adRight')).html(this.generateInlineAdSlot('Middle1'));
         }
 
         if((/mobile/).test(breakpoint)) {
-            if(this.inlineSlot2 === undefined) {
-                this.inlineSlot2 = SlotController.getSlot('adRight');
-            }
-
-            bonzo(this.inlineSlot1).html(this.generateInlineAdSlot('x49'));
-            bonzo(this.inlineSlot2).html(this.generateInlineAdSlot('Bottom2'));
+            bonzo(this.getNewSlot('adBlock')).html(this.generateInlineAdSlot('x49'));
+            bonzo(this.getNewSlot('adBlock')).html(this.generateInlineAdSlot('Bottom2'));
         }
     };
 
