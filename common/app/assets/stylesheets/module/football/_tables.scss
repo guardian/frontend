@@ -147,7 +147,7 @@
         }
     }
 
-    .football-stat--previous {
+    .football-stat--form {
         display: none;
     }
 
@@ -165,7 +165,7 @@
             min-width: 12px;
         }
 
-        .football-stat--previous {
+        .football-stat--form {
             display: table-cell;
         }
 
@@ -191,7 +191,7 @@
         .football-stat--against {}
         .football-stat--difference { display: table-cell; }
         .football-stat--points { display: table-cell; }
-        .football-stat--previous {}
+        .football-stat--form { display: table-cell; }
     }
 }
 
