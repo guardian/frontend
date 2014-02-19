@@ -2,9 +2,8 @@ package test
 
 import org.scalatest.Matchers
 import org.scalatest.{ GivenWhenThen, FeatureSpec }
-import common.UsesElasticSearch
 
-class VideoFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with UsesElasticSearch {
+class VideoFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
   feature("Video") {
 
     info("In order to experience all the wonderful videos the Guardian publish")
@@ -31,7 +30,19 @@ class VideoFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with
         $(".player object") should have size (1)
 
         And("the ultimate fallback should be an image")
-        findFirst(".player object img").getAttribute("src") should endWith ("/sys-images/Guardian/Pix/audio/video/2013/8/13/1376401939039/Chloe-Grace-Moretz-talks--027.jpg")
+        findFirst(".player object img").getAttribute("src") should endWith ("/Chloe-Grace-Moretz-talks--027.jpg?width=620&height=-&quality=95")
+      }
+    }
+
+    scenario("Include Guardian byline") {
+      HtmlUnit("/film/video/2013/aug/14/chloe-grace-moretz-kick-ass-2-video") { browser =>
+        browser.findFirst(".byline").getText should be ("Ben Child and Henry Barnes, theguardian.com")
+      }
+    }
+
+    scenario("Include non Guardian byline") {
+      HtmlUnit("/lifeandstyle/australia-food-blog/video/2014/feb/03/chia-mango-sorbet-video-recipe") { browser =>
+        browser.findFirst(".byline").getText should be ("Guy Turland and Mark Alston, Source: Bondi Harvest Pty Ltd")
       }
     }
   }

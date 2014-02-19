@@ -244,6 +244,14 @@
     user-select: none;
 }
 
+// Set the properties of placeholder text
+@mixin placeholder {
+    ::-webkit-input-placeholder {@content}
+    :-moz-placeholder           {@content}
+    ::-moz-placeholder          {@content}
+    :-ms-input-placeholder      {@content}
+}
+
 // Vertical linear gradient with a plain fallback for older browsers
 @mixin simple-gradient($from, $to) {
     // Fix for browsers not understanding transparent
@@ -296,6 +304,18 @@
     }
 }
 
+// Hide content visually, still readable by screen readers
+@mixin u-h {
+    border: 0 !important;
+    clip: rect(0 0 0 0) !important;
+    height: 1px !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    position: absolute !important;
+    width: 1px !important;
+}
+
 // Clamps a block of text to a certain number of lines,
 // followed by an ellipsis in Webkit and Blink based browsers
 // Reference: http://dropshado.ws/post/1015351370/webkit-line-clamp
@@ -305,8 +325,8 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: $lines;
 
-// Fallback for non-Webkit browsers
-// (won't show `…` at the end of the block)
+    // Fallback for non-Webkit browsers
+    // (won't show `…` at the end of the block)
     @if $line-height {
         @include rem((max-height: $line-height * $lines));
     }
@@ -325,10 +345,10 @@
         top: 50%;
         left: 50%;
         margin-top: $iconOffsetX;
-        @if $iconOffsetY == "" { 
-            margin-left: $iconOffsetX; 
-        } @else { 
-            margin-left: $iconOffsetY; 
+        @if $iconOffsetY == "" {
+            margin-left: $iconOffsetX;
+        } @else {
+            margin-left: $iconOffsetY;
         }
     }
 }

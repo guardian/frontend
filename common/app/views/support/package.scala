@@ -1,27 +1,23 @@
 package views.support
 
 import common._
-import java.net.URLEncoder._
+import conf.Switches.{ TagLinking, ShowAllArticleEmbedsSwitch, ArticleSlotsSwitch }
 import model._
-import org.jsoup.nodes.{ Element, Document }
-import org.jsoup.Jsoup
-import org.jsoup.safety.{ Whitelist, Cleaner }
+
+import java.net.URLEncoder._
+import org.apache.commons.lang.StringEscapeUtils
 import org.jboss.dna.common.text.Inflector
-import play.api.libs.json.Writes
-import play.api.libs.json.Json._
-import play.api.templates.Html
-import scala.collection.JavaConversions._
-import play.api.mvc.RequestHeader
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
-import org.apache.commons.lang.StringEscapeUtils
-import conf.Switches.ShowUnsupportedEmbedsSwitch
-import model.ImageAsset
-import scala.Some
+import org.jsoup.Jsoup
+import org.jsoup.nodes.{ Element, Document }
+import org.jsoup.safety.{ Whitelist, Cleaner }
+import play.api.libs.json.Json._
+import play.api.libs.json.Writes
+import play.api.mvc.RequestHeader
 import play.api.mvc.SimpleResult
-import model.Tag
-import model.VideoAsset
-import conf.Switches.{TagLinking}
+import play.api.templates.Html
+import scala.collection.JavaConversions._
 
 sealed trait Style {
   val className: String
@@ -78,20 +74,46 @@ case class CommentContainer(showMore: Boolean = true) extends Container {
   val containerType = "comment"
   val tone = "comment"
 }
-case class FeaturesContainer(showMore: Boolean = true) extends Container {
+case class CommentAndDebateContainer(showMore: Boolean = true) extends Container {
+  val containerType = "commentanddebate"
+  val tone = "comment"
+}
+case class FeaturesContainer(showMore: Boolean = true, adSlot: Option[AdSlot] = None) extends Container {
   val containerType = "features"
-  val tone: String = "feature"
+  val tone = "feature"
 }
 case class PopularContainer(showMore: Boolean = true) extends Container {
   val containerType = "popular"
-  val tone: String = "news"
+  val tone = "news"
 }
-case class TopStoriesContainer(showMore: Boolean = true) extends Container {
-  val containerType = "top-stories"
+case class PeopleContainer(showMore: Boolean = true, adSlot: Option[AdSlot] = None) extends Container {
+  val containerType = "people"
+  val tone = "feature"
+}
+case class SpecialContainer(showMore: Boolean = true) extends Container {
+  val containerType = "special"
   val tone = "news"
 }
 case class SectionContainer(showMore: Boolean = true, tone: String = "news") extends Container {
   val containerType = "section"
+}
+
+sealed trait AdSlot {
+  val baseName: String
+  val medianName: String
+}
+object AdSlot {
+
+  object First extends AdSlot {
+    val baseName = "x49"
+    val medianName = "Middle1"
+  }
+
+  object Second extends AdSlot {
+    val baseName = "Bottom2"
+    val medianName = "Middle"
+  }
+
 }
 
 
@@ -203,7 +225,7 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
       val asset = findVideoFromId(mediaId)
 
       // add the poster url
-      asset.flatMap(_.image).flatMap(Item620.bestFor).foreach{ url =>
+      asset.flatMap(_.image).flatMap(Item620.bestFor).map(_.toString()).foreach{ url =>
         element.attr("poster", url)
       }
 
@@ -235,16 +257,19 @@ case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner 
         fig.attr("itemprop", "associatedMedia")
         fig.attr("itemscope", "")
         fig.attr("itemtype", "http://schema.org/ImageObject")
-        val mediaId = fig.attr("data-media-id")
-        val asset = findImageFromId(mediaId)
+        val asset = findImageFromId(fig.attr("data-media-id"))
 
         fig.getElementsByTag("img").foreach { img =>
           fig.addClass("img")
           img.attr("itemprop", "contentURL")
-          val src = img.attr("src")
-          img.attr("src", ImgSrc(src, Naked))
 
           asset.foreach { image =>
+            image.url.map(url => img.attr("src", ImgSrc(url, Item620).toString))
+            img.attr("width", s"${image.width}")
+
+            //otherwsie we mess with aspect ratio
+            img.removeAttr("height")
+
             fig.addClass(image.width match {
               case width if width <= 220 => "img--base img--inline"
               case width if width < 460 => "img--median"
@@ -272,7 +297,7 @@ case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner 
   }
 
   def findImageFromId(id:String): Option[ImageAsset] = {
-    contentImages.find(_.id == id).flatMap(_.largestImage)
+    contentImages.find(_.id == id).flatMap(Item620.elementFor)
   }
 }
 
@@ -320,6 +345,65 @@ object TweetCleaner extends HtmlCleaner {
   }
 }
 
+case class InlineSlotGenerator(articleWordCount: Int) extends HtmlCleaner {
+
+  private def isBlock(element: Element): Boolean = {
+      (element.hasClass("img") && !element.hasClass("img--inline")) ||
+      element.hasClass("media-proportional-container") ||
+      element.tagName == "video"
+  }
+
+  private def insertSlot(paragraph: Element, document: Document) {
+    val prev = paragraph.previousElementSibling
+    val slot = document.createElement("div")
+    paragraph.before(slot)
+
+    if (isBlock(prev)) {
+      slot.attr("class", "slot slot--block")
+    } else if (prev.tagName == "h2") {
+      slot.attr("class", "slot slot--posth2")
+      val mobileSlot = document.createElement("div")
+      mobileSlot.attr("class", "slot slot--preh2")
+      prev.before(mobileSlot)
+    } else {
+      slot.attr("class", "slot slot--text")
+    }
+  }
+
+  override def clean(document: Document): Document = {
+
+    if (ArticleSlotsSwitch.isSwitchedOn && articleWordCount > 350) {
+
+      var lastInline = -200
+
+      var offset = 0
+      val spacing = 850
+      val minFollowingText = 750
+      val children = document.select("body > *")
+
+      children.zipWithIndex.foreach { case (element, index) =>
+
+        if (element.hasClass("img--inline")) {
+          lastInline = offset
+        }
+        else if (element.tagName == "p" && lastInline + spacing < offset && !element.hasClass("img")) {
+
+          val followingTextLen = children.slice(index, children.length).takeWhile(_.tagName == "p").map(_.text.length).reduce(_ + _)
+
+          if (followingTextLen > minFollowingText) {
+            insertSlot(element, document)
+            lastInline = offset
+          }
+        }
+
+        if (element.tagName.in(Set("p","h2"))) offset += element.text.length
+      }
+    }
+
+    document
+  }
+}
+
 class TagLinker(article: Article)(implicit val edition: Edition) extends HtmlCleaner{
   def clean(d: Document): Document = {
     if (TagLinking.isSwitchedOn && article.linkCounts.noLinks) {
@@ -330,12 +414,13 @@ class TagLinker(article: Article)(implicit val edition: Edition) extends HtmlCle
       article.keywords.filterNot(_.isSectionTag).sortBy(_.name.length).reverse.foreach{ keyword =>
         // don't link again in paragraphs we have already upgraded
         val unlinkedParas = paragraphs.filterNot(_.html.contains("<a"))
-        unlinkedParas.find(_.text().contains(keyword.name)).foreach{ p =>
+        unlinkedParas.find(_.text().contains(" " + keyword.name + " ")).foreach{ p =>
 
           val tagLink = d.createElement("a")
           tagLink.attr("href", LinkTo(keyword.url, edition))
           tagLink.text(keyword.name)
           tagLink.attr("data-link-name", "auto-linked-tag")
+          tagLink.addClass("u-underline")
 
           p.html(p.html().replaceFirst(keyword.name, tagLink.toString))
         }
@@ -347,17 +432,18 @@ class TagLinker(article: Article)(implicit val edition: Edition) extends HtmlCle
 
 object InBodyElementCleaner extends HtmlCleaner {
 
-  private val supportedElements = Seq(
+  private val supportedElements = Set(
     "element-tweet",
     "element-video",
     "element-image",
     "element-witness",
-    "element-comment"
+    "element-comment",
+    "element-interactive"
   )
 
   override def clean(document: Document): Document = {
-    if (ShowUnsupportedEmbedsSwitch.isSwitchedOff) {
-      // this code removes unsupported embeds
+    // this code REMOVES unsupported embeds
+    if(ShowAllArticleEmbedsSwitch.isSwitchedOff) {
       val embeddedElements = document.getElementsByTag("figure").filter(_.hasClass("element"))
       val unsupportedElements = embeddedElements.filterNot(e => supportedElements.exists(e.hasClass))
       unsupportedElements.foreach(_.remove())
@@ -542,11 +628,89 @@ object VisualTone {
 }
 
 object RenderOtherStatus {
-  def gonePage(implicit request: RequestHeader) = model.Page(request.path, "news", "Gone", "GFE:Gone")
+  def gonePage(implicit request: RequestHeader) = model.Page(request.path, "news", "This page has been removed", "GFE:Gone")
   def apply(result: SimpleResult)(implicit request: RequestHeader) = result.header.status match {
     case 404 => NoCache(NotFound)
     case 410 if request.isJson => Cached(60)(JsonComponent(gonePage, "status" -> "GONE"))
     case 410 => Cached(60)(Gone(views.html.expired(gonePage)))
     case _ => result
   }
+}
+
+object RenderClasses {
+
+  def apply(classes: Map[String, Boolean]): String = apply(classes.filter(_._2).keys.toSeq:_*)
+
+  def apply(classes: String*): String = classes.filter(_.nonEmpty).sorted.mkString(" ")
+
+}
+
+object GetClasses {
+
+  def forCollectionItem(trail: Trail): String = {
+    val f: Seq[(Trail) => String] = Seq(
+      (trail: Trail) => trail match {
+        case _: Gallery => "collection__item--content-type-gallery"
+        case _: Video   => "collection__item--content-type-video"
+        case _          => ""
+      }
+    )
+    val baseClasses: Seq[String] = Seq(
+      "l-row__item",
+      "collection__item",
+      s"collection__item--volume-${trail.group.getOrElse("0")}"
+    )
+    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail)}
+    RenderClasses(classes:_*)
+  }
+
+  def forItem(trail: Trail, firstContainer: Boolean, forceHasImage: Boolean = false): String = {
+    val baseClasses: Seq[String] = Seq(
+      "item",
+      s"tone-${VisualTone(trail)}"
+    )
+    val f: Seq[(Trail, Boolean, Boolean) => String] = Seq(
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) => trail match {
+        case _: Gallery => "item--gallery"
+        case _: Video   => "item--video"
+        case _          => ""
+      },
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) => if (firstContainer) {"item--force-image-upgrade"} else {""},
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) => if (trail.isLive) {"item--live"} else {""},
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) => if (forceHasImage == false && (trail.trailPicture(5,3).isEmpty || trail.imageAdjust == Some("hide"))){
+        "item--has-no-image"
+      }else{
+        "item--has-image"
+      },
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) => trail.imageAdjust.map{ adjustValue =>
+        s"item--imageadjust-$adjustValue"
+      }.getOrElse("")
+    )
+    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, firstContainer, forceHasImage)}
+    RenderClasses(classes:_*)
+  }
+
+  def forFromage(trail: Trail, imageAdjust: Option[String]): String = {
+    val baseClasses: Seq[String] = Seq(
+      "fromage",
+      s"fromage--volume-${trail.group.getOrElse("0")}",
+      s"tone-${VisualTone(trail)}",
+      "tone-accent-border"
+    )
+    val f: Seq[(Trail, Option[String]) => String] = Seq(
+      (trail: Trail, imageAdjust: Option[String]) => if (trail.isLive) {"item--live"} else {""},
+      (trail: Trail, imageAdjust: Option[String]) =>
+        if (trail.trailPicture(5,3).isEmpty || imageAdjust == Some("hide")){
+          "fromage--has-no-image"
+        }else{
+          "fromage--has-image"
+        },
+      (trail: Trail, imageAdjust: Option[String]) => imageAdjust.map{ adjustValue =>
+        s"fromage--imageadjust-$adjustValue"
+      }.getOrElse("")
+    )
+    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, imageAdjust)}
+    RenderClasses(classes:_*)
+  }
+
 }

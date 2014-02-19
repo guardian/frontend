@@ -1,5 +1,5 @@
 var tests = [],
-    specUrl = '/base/common-test/spec',
+    specUrl = '/base/tests/specs',
     specRegExp = new RegExp(specUrl.replace(/\//g, '\\/') + '\/.*\\.spec\\.js'),
     spec;
 
@@ -11,11 +11,11 @@ for (var file in window.__karma__.files) {
 
 requirejs.config({
     // Karma serves files from '/base'
-    baseUrl: '/base',
+    baseUrl: '/base/javascripts',
     paths: {
         spec:         specUrl,
-        fixtures:     'common-test/fixtures',
-        helpers:      'common-test/helpers',
+        fixtures:     '../tests/fixtures',
+        helpers:      '../tests/helpers',
         analytics:    'common/modules/analytics',
         bean:         'common/components/bean/bean',
         bonzo:        'common/components/bonzo/src/bonzo',
@@ -24,7 +24,6 @@ requirejs.config({
         qwery:        'common/components/qwery/mobile/qwery-mobile',
         reqwest:      'common/components/reqwest/src/reqwest',
         postscribe:   'common/components/postscribe/dist/postscribe',
-        swipe:        'common/components/swipe/swipe',
         lodash:       'common/components/lodash-amd/modern',
         imager:       'common/components/imager.js/src/strategies/container'
     },
@@ -32,7 +31,7 @@ requirejs.config({
         '*': {
             // mock out omniture script
             // TODO - better way of mocking dependencies?
-            omniture: 'common-test/spies/omniture'
+            omniture: '../tests/spies/omniture'
         }
     },
     shim: {

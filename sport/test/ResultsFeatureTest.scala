@@ -3,9 +3,8 @@ package test
 import org.scalatest.{ FeatureSpec, GivenWhenThen }
 import org.scalatest.Matchers
 import collection.JavaConversions._
-import common.UsesElasticSearch
 
-class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with UsesElasticSearch {
+class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
   feature("Football Results") {
 
@@ -71,15 +70,15 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with Matchers wi
       }
     }
 
-    scenario("The 'Desktop version' link points to the correct, equivalent desktop page") {
+    scenario("The 'Classic version' link points to the correct, equivalent classic page") {
 
       Given("I visit the results page")
       And("I am on the 'UK' edition")
       HtmlUnit("/football/results") { browser =>
         import browser._
 
-        Then("the 'Desktop version' link should point to '/football/results?view=desktop'")
-        findFirst(".js-main-site-link").getAttribute("href") should be(DesktopVersionLink("/football/results"))
+        Then("the 'Classic version' link should point to '/football/results?view=classic'")
+        findFirst(".js-main-site-link").getAttribute("href") should be(ClassicVersionLink("/football/results"))
       }
 
       Given("I visit the results page")
@@ -87,8 +86,8 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with Matchers wi
       HtmlUnit.US("/football/results") { browser =>
         import browser._
 
-        Then("the 'Desktop version' link should point to '/football/results?view=desktop'")
-        findFirst(".js-main-site-link").getAttribute("href") should be(DesktopVersionLink("/football/results"))
+        Then("the 'Classic version' link should point to '/football/results?view=classic'")
+        findFirst(".js-main-site-link").getAttribute("href") should be(ClassicVersionLink("/football/results"))
       }
 
     }

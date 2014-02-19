@@ -11,6 +11,7 @@ import org.scalatest.time.{Millis, Seconds, Span}
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito._
 import play.api.libs.ws.Response
+import services.ParseCollection
 
 class CustomException(message: String) extends Exception(message)
 

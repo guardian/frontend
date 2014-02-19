@@ -10,7 +10,8 @@
   "JSHINT_OPTS": {
     "predef": [
       "define",
-      "ActiveXObject"
+      "ActiveXObject",
+      "XDomainRequest"
     ],
     "bitwise": true,
     "camelcase": false,
@@ -35,7 +36,6 @@
     "boss": true,
     "debug": true,
     "eqnull": true,
-    "es5": true,
     "esnext": true,
     "evil": true,
     "expr": true,

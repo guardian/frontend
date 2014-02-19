@@ -3,10 +3,8 @@ package test
 import play.api.test.Helpers._
 import org.scalatest.Matchers
 import org.scalatest.FlatSpec
-import common.UsesElasticSearch
 
-
-class GalleryControllerTest extends FlatSpec with Matchers with UsesElasticSearch {
+class GalleryControllerTest extends FlatSpec with Matchers {
 
   val galleryUrl = "news/gallery/2012/may/02/picture-desk-live-kabul-burma"
   val callbackName = "aFunction"
@@ -42,7 +40,7 @@ class GalleryControllerTest extends FlatSpec with Matchers with UsesElasticSearc
   it should "display an expired message for expired content" in Fake {
     val result = controllers.GalleryController.render("theobserver/gallery/2012/jul/29/1")(TestRequest("/theobserver/gallery/2012/jul/29/1"))
     status(result) should be(410)
-    contentAsString(result) should include("Sorry - the page you are looking for has been removed")
+    contentAsString(result) should include("Sorry - this page has been removed.")
   }
 
   it should "return the lightbox JSON when /lightbox.json endpoint is hit" in Fake {

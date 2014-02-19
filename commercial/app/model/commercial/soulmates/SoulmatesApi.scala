@@ -1,17 +1,18 @@
 package model.commercial.soulmates
 
-import scala.concurrent.Future
-import conf.CommercialConfiguration
+import conf.{Switches, CommercialConfiguration}
 import play.api.libs.json.{JsArray, JsValue}
 import model.commercial.JsonAdsApi
 
-object SoulmatesApi extends JsonAdsApi[Member] {
+trait SoulmatesApi extends JsonAdsApi[Member] {
 
-  protected val adTypeName = "Soulmates"
+  protected val switch = Switches.SoulmatesFeedSwitch
 
-  private lazy val apiUrl: Option[String] = CommercialConfiguration.getProperty("soulmates.api.url")
-  private lazy val menUrl = apiUrl map (url => s"$url/popular/men")
-  private lazy val womenUrl = apiUrl map (url => s"$url/popular/women")
+  protected val path: String
+
+  protected val url: Option[String] = {
+    CommercialConfiguration.getProperty("soulmates.api.url") map (url => s"$url/$path")
+  }
 
   override protected val loadTimeout = 10000
 
@@ -30,8 +31,16 @@ object SoulmatesApi extends JsonAdsApi[Member] {
       case other => Nil
     }
   }
+}
 
-  def getMenMembers: Future[Seq[Member]] = loadAds(menUrl)
 
-  def getWomenMembers: Future[Seq[Member]] = loadAds(womenUrl)
+object MaleSoulmatesApi extends SoulmatesApi {
+  protected val adTypeName = "Male Soulmates"
+  protected lazy val path = "popular/men"
+}
+
+
+object FemaleSoulmatesApi extends SoulmatesApi {
+  protected val adTypeName = "Female Soulmates"
+  protected lazy val path = "popular/women"
 }

@@ -34,7 +34,7 @@
                                         <param name="allowFullScreen" value="true" />
                                         <param name="movie" value="@Static("flash/flashmediaelement.swf")" />
                                         <param name="flashvars" value="controls=true&amp;file=@encoding.url" />
-                                        <img @video.mainPicture.map{ img =>  src="@Item620.bestFor(img)" } alt="" width="620" height="350" />
+                                        <img @video.mainPicture.map{ img =>  src="@Item620.bestFor(img).map(Html(_))" } alt="" width="620" height="350" />
                                         Sorry, your browser is unable to play this video.
                                     </object>
                                 }
@@ -44,7 +44,7 @@
                     </div>
 
                     <div class="article__meta-container">
-                        @fragments.byline(video.byline, video)
+                        @fragments.byline(video.bylineWithSource, video)
                         @fragments.article.dateline(video.webPublicationDate, secondary=true)
                         <div class="js-comment-count"></div>
                     </div>
@@ -65,7 +65,7 @@
                     </div>
                 </div>
                 <div class="article__secondary-column" aria-hidden="true">
-                    <h2 class="article__meta-heading tone-colour">Share this video</h2>
+                    <h2 class="article__meta-heading">Share this video</h2>
                     @fragments.social(video, "next to content")
                 </div>
             </div>

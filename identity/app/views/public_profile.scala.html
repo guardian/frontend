@@ -13,6 +13,7 @@
 @import views.html.fragments.socialSignin
 @import form.IdFormHelpers._
 @import form.Input
+@import Switches.IdentityEmailVerificationSwitch
 @import helper._
 
 @identityMain(page, conf.Switches.all){
@@ -30,10 +31,10 @@
                 <a href="#tabs-popular-2" data-link-name="tab 2 The Guardian">Account details</a>
             </li>
         </ol>
-        
+
         <div class="tabs__content">
             <div id="tabs-popular-1" class="tabs__pane u-cf" role="tabpanel" aria-labelledby="tabs-popular-1-tab" data-link-name="Public Profile" data-link-context="Identity/profile" style="">
-            
+
                 <form class="form" novalidate action="@idUrlBuilder.buildUrl("/profile/public", idRequest)" role="main" method="post">
                     @views.html.helper.CSRF.formField
 
@@ -62,6 +63,22 @@
 
                         <div class="fieldset__fields">
                             <ul class="unstyled">
+
+                                @if(IdentityEmailVerificationSwitch.isSwitchedOn){
+                                    <li class="form-field form-field--email-validation">
+                                        @if(user.statusFields.userEmailValidated.getOrElse(false)){
+                                            <i class="i i-id-ok"></i>
+                                            <p class="form__note">Your email address has been validated.</p>
+                                        }else{
+                                            <i class="i i-id-alert"></i>
+                                            <p class="form__note">
+                                                Please confirm your email address to post comments.<br />
+                                                <a class="js-id-send-validation-email" data-link-name="Resend verification email">Send validation email</a>
+                                            </p>
+                                        }
+                                    </li>
+                                }
+
                                 @inputField(Input(publicProfileForm("publicFields.location"), ('_label, "Location")))
                                 @select(
                                     publicProfileForm("privateFields.gender"),
@@ -77,14 +94,14 @@
                                 <li>
                                     <button type="submit" class="submit-input" data-link-name="Create account">Save changes</button>
                                 </li>
-                            </ul>                    
-                        </div> 
+                            </ul>
+                        </div>
 
                     </fieldset>
-
                 </form>
 
             </div>
+
             <div id="tabs-popular-2" class="tabs__pane u-cf" role="tabpanel" aria-labelledby="tabs-popular-2-tab" data-link-name="Account" data-link-context="Identity/profile" style="display: none;">
 
                 <form class="form" novalidate action="@idUrlBuilder.buildUrl("/profile/public", idRequest)" role="main" method="post">
@@ -100,7 +117,7 @@
                             <h2 class="form__heading">Contact information.</h2>
                             <div class="form__note">These details will only be visible to yourself and the Guardian.</div>
                         </div>
-                        
+
                         <div class="fieldset__fields">
                             <ul class="unstyled">
                                 @inputField(Input(accountDetailsForm("primaryEmailAddress"), ('_label, "Email address")))
@@ -108,16 +125,16 @@
                                 <li>
                                     <button type="submit" class="submit-input" data-link-name="Create account">Save changes</button>
                                 </li>
-                            </ul>                    
-                        </div> 
+                            </ul>
+                        </div>
 
                     </fieldset>
-
                 </form>
 
             </div>
         </div>
     </div>
+
 
     @registrationFooter(page, idRequest, idUrlBuilder)
 </div>

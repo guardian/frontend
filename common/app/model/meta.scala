@@ -2,6 +2,8 @@ package model
 
 import common.ManifestData
 import conf.Configuration
+import play.api.templates.Html
+import java.net.URI
 
 trait MetaData extends Tags {
   def id: String
@@ -25,14 +27,14 @@ trait MetaData extends Tags {
     "web-title" -> webTitle,
     "build-number" -> buildNumber,
     "analytics-name" -> analyticsName,
-    "blockAds" -> false
+    "blockVideoAds" -> false
   )
 
   def openGraph: List[(String, Any)] = List(
     "og:site_name" -> "the Guardian",
     "fb:app_id"    -> Configuration.facebook.appId
   )
-  
+
   def cards: List[(String, Any)] = List(
     "twitter:site" -> "@guardian",
     "twitter:app:name:iphone" -> "The Guardian",
@@ -67,7 +69,7 @@ trait Elements {
   }
 
   // trail picture is used on index pages (i.e. Fronts and tag pages)
-  def trailPicture: Option[ImageContainer] = thumbnail.find(_.imageCrops.exists(_.width >= 620))
+  def trailPicture: Option[ImageContainer] = thumbnail.find(_.imageCrops.exists(_.width >= 940))
     .orElse(mainPicture)
     .orElse(thumbnail)
 
@@ -109,6 +111,7 @@ trait Elements {
 
 trait Tags {
   def tags: Seq[Tag] = Nil
+  def contributorAvatar: Option[String] = tags.flatMap(_.contributorImagePath).headOption
 
   private def tagsOfType(tagType: String): Seq[Tag] = tags.filter(_.tagType == tagType)
 

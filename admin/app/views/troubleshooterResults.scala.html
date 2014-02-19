@@ -1,0 +1,40 @@
+@(loadbalancer: tools.LoadBalancer, results: Seq[controllers.admin.EndpointStatus])
+
+@admin_main("Troubleshooting results", "PROD", isAuthed = true) {
+
+    <div class="row-fluid">
+        <h4>@loadbalancer.name (@loadbalancer.project)</h4>
+        <p>Failures are in order - the cause of the error will most likely be at the level of the first failure</p>
+    </div>
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Status</th><th>Test</th><th>Debug</th>
+            </tr>
+        </thead>
+        <tbody>
+            @results.map{ result =>
+                <tr>
+                    <td>
+                        @if(result.isOk){
+                            <span class="label label-success">OK</span>
+                        } else {
+                            <span class="label label-important">FAILED</span>
+                        }
+                    </td>
+                    <td>@result.name</td>
+                    <td>
+                        @if(result.messages.nonEmpty) {
+                            <ul>
+                                @result.messages.map{ msg =>
+                                    <li>@msg</li>
+                                }
+                            </ul>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a href="@controllers.admin.routes.TroubleshooterController.index()">Troubleshoot something else</a>
+}

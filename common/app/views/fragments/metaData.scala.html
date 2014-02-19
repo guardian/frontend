@@ -22,7 +22,6 @@
     <link rel="dns-prefetch" href="@Configuration.images.path" />
     <link rel="dns-prefetch" href="@Configuration.ajax.url" />
     <link rel="dns-prefetch" href="//hits.theguardian.com" />
-    <link rel="dns-prefetch" href="//s.ophan.co.uk" />
     <link rel="dns-prefetch" href="//j.ophan.co.uk" />
     <link rel="dns-prefetch" href="//ophan.theguardian.com" />
     <link rel="dns-prefetch" href="//oas.theguardian.com" />
@@ -57,12 +56,6 @@
 
     @item.cards.map{ case (key, value) =>
         <meta property="@key" content="@value" />
-    }
-
-    @if(Switches.iPhoneAppSwitch.isSwitchedOn){
-        @defining(if(Edition(request).id == "US") conf.Configuration.ios.usAppId else conf.Configuration.ios.ukAppId) { id =>
-            <meta name="apple-itunes-app" content="app-id=@id, app-argument=@item.id" />
-        }
     }
 
 @*

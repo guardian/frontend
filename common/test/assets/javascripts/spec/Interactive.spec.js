@@ -5,34 +5,35 @@ define([ 'common/common',
 
         describe("Interactive", function() {
             
-            var i, conf = {
+            var conf = {
                     id: 'interactive',
                     fixtures: [
-                                '<figure class="interactive" data-interactive="path/to/interactive">' +
+                                '<figure class="interactive" data-interactive="http://interactive.guim.co.uk/embed/path/to/interactive/boot.js">' +
                                 '  <caption>Description of the interactive</caption>' +
                                 '</figure>'
                               ]
             };
 
-            var config = {
-                page: {
-                  interactiveUrl: 'http://foo/'
-                }
-            };
+            var config = {};
 
             beforeEach(function() {
                 fixtures.render(conf);
+            });
+
+            var i;
+
+            beforeEach(function() {
                 i = new Interactive(document.querySelector('figure.interactive'), document, config);
             });
 
             it("Should exist", function() {
                 expect(i).toBeDefined();
             });
-            
+
             it("Should load the interactive resource defined in the data-attribute", function() {
                 require = jasmine.createSpy();
                 i.init();
-                expect(require.mostRecentCall.args[0]).toBe('http://foo/path/to/interactive/boot.js');
+                expect(require.mostRecentCall.args[0]).toBe('http://interactive.guim.co.uk/embed/path/to/interactive/boot.js');
             });
 
         });

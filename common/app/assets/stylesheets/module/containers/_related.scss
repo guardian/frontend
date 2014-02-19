@@ -1,12 +1,12 @@
 .related {
     position: relative;
-    margin-bottom: $gs-baseline*6;
+    @include rem((margin-bottom: $gs-baseline*6));
 
     @include mq(rightCol) {
 
-        .page-sub-header {
+        .related__header {
             border-top: 1px solid $c-neutral4;
-            padding-top: 5px;
+            @include rem((padding-top: $baseline/2));
             padding-bottom: 0;
             margin-bottom: 0;
         }
@@ -18,26 +18,8 @@
                 }
             }
 
-            &:last-child {
+            &:nth-child(n+5) {
                 display: none;
-            }
-        }
-
-        &.more-on-this-story {
-            .item{
-                &:first-child {
-                    display: none;
-                }
-
-                &:last-child {
-                    display: block;
-                }
-
-                &:nth-child(2) {
-                    &:before {
-                        border-left: none;
-                    }
-                }
             }
         }
 
@@ -52,50 +34,58 @@
         position: absolute;
         top: 0;
         left: 0;
-        width: $a-leftCol-width;
-        padding-right: $gs-gutter;
+        @include rem((
+            width: $a-leftCol-width,
+            padding-right: $gs-gutter
+        ));
     }
 
     @include mq(wide) {
-        width: $a-leftColWide-width;
+        @include rem((width: $a-leftColWide-width));
     }
 }
 
 .related__container {
-    margin-bottom: $gs-baseline;
+    @include rem((margin-bottom: $gs-baseline));
 
     @include mq(rightCol) {
-        margin-left: -1*($gs-gutter/2);
+        @include rem((margin-left: -1*($gs-gutter/2)));
+
+        > ul {
+            @include rem((margin-right: - $gs-gutter/2));
+        }
     }
 
     @include mq(leftCol) {
-        padding-top: $gs-baseline/1.5;
         border-top: 1px solid $c-neutral4;
-        margin-left: $a-leftCol-width + $gs-gutter/2;
-        margin-right: - $gs-gutter/2;
+        @include rem((
+            padding-top: $gs-baseline/1.5,
+            margin-left: $a-leftCol-width + $gs-gutter/2
+        ));
     }
 
     @include mq(wide) {
-        margin-left: $a-leftColWide-width + $gs-gutter/2;
-        width:  gs-span(12) + $gs-gutter*1;
+        @include rem((
+            margin-left: $a-leftColWide-width + $gs-gutter/2,
+            width:  gs-span(12) + $gs-gutter*1
+        ));
     }
-    
+
     .item__container {
         position: relative;
-        min-height: gs-height(5);
+        @include rem((min-height: gs-height(5)));
 
         @include mq(mobileLandscape) {
-            min-height: gs-height(6);
+            @include rem((min-height: gs-height(6)));
         }
 
         @include mq(tablet, rightCol) {
-            min-height: gs-height(7) - $gs-baseline;
+            @include rem((min-height: gs-height(7) - $gs-baseline));
         }
 
         @include mq(rightCol) {
-            min-height: gs-height(5) + $gs-baseline;
+            @include rem((min-height: gs-height(5) + $gs-baseline));
         }
-
     }
 
     .item {
@@ -103,7 +93,7 @@
         position: relative;
         width: 50%;
         padding-bottom: 0;
-        margin-top: $gs-baseline*2;
+        @include rem((margin-top: $gs-baseline*2));
 
         @include mq($to: rightCol) {
 
@@ -130,8 +120,11 @@
 
                 .item__title {
                     min-height: 0;
-                    padding-bottom: $gs-baseline*3;
-                    @include fs-headline(3, true);
+                    @include rem((
+                        padding-top: $gs-baseline/2,
+                        padding-bottom: $gs-baseline*3
+                    ));
+                    @include fs-headline(2, true);
                 }
 
                 .item__meta {
@@ -142,15 +135,18 @@
 
         @include mq(tablet, rightCol) {
             &:first-child {
-                margin-bottom: 20px;
+                @include rem((
+                    margin-bottom: 20px
+                ));
 
                 .item__title {
+                    @include fs-headline(3, true);
                     min-height: 0;
-                    padding-bottom: $gs-row-height;
+                    @include rem((padding-bottom: $gs-row-height));
                 }
 
                 .item__container {
-                    min-height: gs-height(10) + $gs-baseline;
+                    @include rem((min-height: gs-height(10) + $gs-baseline));
                 }
             }
         }
@@ -166,41 +162,29 @@
 
     }
 
-    .item--dark,
-    .item--live {
+    .item__title {
+        @include box-sizing(border-box);
+        margin-top: 0;
+        @include rem((
+            padding-top: 2px, // Same as other similar patterns
+            padding-bottom: $gs-baseline,
+            min-height: $gs-row-height*3 - $gs-baseline //96px
+        ));
+        @include fs-headline(1, true);
 
         @include mq(tablet, rightCol) {
-            &:first-child {
-                .item__title {
-                    padding-left: $gs-gutter*0.4;
-                    padding-right: $gs-gutter*0.4;
-                }
-            }
-        }
-
-        .item__meta {
-            border-bottom: none;
-        }
-    }
-
-    .item__title {
-        margin-top: 0;
-        padding-top: 6px; //Magic
-        padding-bottom: $gs-baseline;
-        min-height: $gs-row-height*3 - $gs-baseline; //96px
-        @include fs-headline(1, true);
-        @include box-sizing(border-box);
-
-        @include mq(mobileLandscape, rightCol) {
             @include fs-headline(2, true);
         }
 
         @include mq(tablet) {
-            min-height: $gs-row-height*4 - $baseline*2; //136px
+            @include rem((min-height: $gs-row-height*4 - $baseline*2)); //136px
         }
 
         @include mq(rightCol) {
-            min-height: $gs-row-height*3 - $gs-baseline; //96px
+            @include rem((min-height: $gs-row-height*3 - $gs-baseline)); //96px
+        }
+        .i {
+            display: none;
         }
     }
 
@@ -208,10 +192,11 @@
 
         &:first-child {
             @include mq($to: rightCol) {
-                @include fs-headline(3, true);
-
+                .item__title {
+                    @include fs-headline(3, true);
+                }
                 .item__container {
-                    min-height: gs-height(2);
+                    @include rem((min-height: gs-height(2)));
                 }
             }
         }
@@ -246,15 +231,10 @@
 
         .item__timestamp {
             display: inline-block;
-            height: $gs-baseline;
-            width: 1px;
             padding-left: 0;
 
             &:after {
-                position: absolute;
                 display: inline-block;
-                top: 1px;
-                left: 14px;
                 content: 'LIVE';
                 color: $c-live;
                 @include fs-data(1);
@@ -262,46 +242,50 @@
             }
 
             &:before {
+                position: relative;
                 display: inline-block;
                 content: ' ';
-                width: $gs-gutter/2;
-                height: $gs-gutter/2;
+                @include rem((
+                    top: 1px,
+                    width: $gs-gutter/2,
+                    height: $gs-gutter/2
+                ));
                 background-color: $c-live;
-                @include rounded-corners($gs-gutter/2);
+                @include rounded-corners(50%);
             }
         }
 
         .item__title {
-            padding-left: 7px;
-            padding-right: 7px;
+            @include rem((
+                padding-left: 7px,
+                padding-right: 7px
+            ));
         }
 
         .item__meta {
-            padding-left: 7px;
+            @include rem((padding-left: 7px));
         }
     }
 
     .item__meta {
-        width: 100%;
-        padding-bottom: $gs-baseline;
-        margin-bottom: - $gs-baseline;
-        border-bottom: 1px solid $c-neutral5;
         @include box-sizing(border-box);
+        width: 100%;
+        @include rem((
+            padding-bottom: $gs-baseline,
+            margin-bottom: - $gs-baseline
+        ));
+        border-bottom: 1px solid $c-neutral5;
 
         @include mq(rightCol) {
             border-bottom: none;
-            padding-right: $gs-gutter;
+            @include rem((padding-right: $gs-gutter));
         }
     }
 
-    .item__timestamp {
-        @include box-sizing(border-box);
+    .item__media-wrapper {
+        position: relative;
     }
 
-    .item__media-wrapper {
-        position: relative;    
-    }
-    
     .item__image-container {
         margin-top: 0;
         display: block;
@@ -311,13 +295,9 @@
         border-top: none;
     }
 
-    .i-quote-light-grey,
+    .i-quote-orange,
     .item__byline {
         display: none;
-    }
-
-    .item__timestamp {
-        padding-right: 0;
     }
 
     .gallerythumbs { margin: 0; }

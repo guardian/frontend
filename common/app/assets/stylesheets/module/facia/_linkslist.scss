@@ -1,20 +1,59 @@
+.linkslist-container {
+    position: relative;
+    padding-top: 1px;
+    @include mq(tablet) {
+        @include rem((
+            margin-top: $gs-baseline
+        ));
+    }
+
+    &:before {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        width: 100%;
+        background: $c-newsAccent;
+    }
+
+    &.tone-feature:before {
+        background: $c-featureAccent;
+    }
+    &.tone-comment:before {
+        background: $c-commentAccent;
+    }
+
+    &.show-more--hidden {
+        &,
+        &:before {
+            display: none;
+        }
+    }
+}
 .linkslist {
     @extend .unstyled;
 }
 .linkslist__item {
     border-top: 1px solid $c-neutral5;
     @include rem((
-        min-height: nth(nth($fs-headlines, 1), 2) + 1, // Line height of the action
-        padding-top: $gs-baseline/3,
-        padding-bottom: $gs-baseline*1.5 // Simulates margins and don't create
-                                         // extra space at the beginning of a
-                                         // new column break as margins do
+        min-height: nth(nth($fs-headlines, 1), 2) + 1,
+        padding-top: $gs-baseline/6,
+        padding-bottom: ($gs-baseline*5)/3 // Simulates margins and don't create
+                                           // extra space at the beginning of a
+                                           // new column break as margins do
     ));
-
-    @include mq($to: tablet) {
-        &.show-more--hidden {
-            display: none;
-        }
+    @include mq(tablet) {
+        @include rem((
+            // Twice the line height of the action
+            min-height: nth(nth($fs-headlines, 1), 2) * 2 + 1,
+            padding-bottom: $gs-baseline + $gs-baseline / 6
+        ));
+    }
+    &.show-more--hidden {
+        display: none;
     }
 }
 .linkslist__action {

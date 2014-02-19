@@ -9,11 +9,9 @@
         & + & .item__link {
             border-top: 1px dotted $c-neutral5;
         }
-        .item__title {
-            @include fs-headline(1, $size-only: true);
-        }
+        .item__title,
         .item__byline {
-            @include fs-header(2, $size-only: true);
+            @include fs-headline(1, $size-only: true);
         }
         .item__title .i,
         .item__meta {
@@ -21,7 +19,7 @@
         }
         .item__live-indicator {
             @include fs-data(1, true);
-            top: -3px;
+            @include rem((top: -3px));
         }
     }
 }

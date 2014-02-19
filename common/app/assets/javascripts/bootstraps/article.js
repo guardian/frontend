@@ -3,35 +3,33 @@ define([
     "common/utils/mediator",
     "common/utils/detect",
     "common/$",
+    "fence",
     "common/modules/ui/autoupdate",
     "common/modules/live/filter",
     "common/modules/live/summary",
     "common/modules/sport/football/matchnav",
-    "common/modules/analytics/reading",
     "common/modules/discussion/loader",
     "common/modules/sport/cricket",
     "common/modules/ui/notification-counter",
     "common/modules/experiments/left-hand-card",
     "common/modules/open/cta",
-    "common/modules/commercial/loader",
-    "common/modules/onward/right-most-popular"
+    "common/modules/commercial/loader"
 ], function (
     common,
     mediator,
     detect,
     $,
+    fence,
     AutoUpdate,
     LiveFilter,
     LiveSummary,
     MatchNav,
-    Reading,
     DiscussionLoader,
     Cricket,
     NotificationCounter,
     LeftHandCard,
     OpenCta,
-    CommercialLoader,
-    RightMostPopular
+    CommercialLoader
 ) {
 
     var modules = {
@@ -92,25 +90,8 @@ define([
 
             common.mediator.on('page:article:ready', function(config, context) {
                 if (config.page.commentable && config.switches.discussion) {
-                    var discussionLoader = new DiscussionLoader(context, common.mediator);
+                    var discussionLoader = new DiscussionLoader(context, common.mediator, { 'switches': config.switches });
                     discussionLoader.attachTo($('.discussion')[0]);
-                }
-            });
-        },
-
-        logReading: function() {
-            common.mediator.on('page:article:ready', function(config, context) {
-                var wordCount = config.page.wordCount;
-                if(wordCount !== "") {
-
-                    var reader = new Reading({
-                        id: config.page.pageId,
-                        wordCount: parseInt(config.page.wordCount, 10),
-                        el: context.querySelector('.article-body'),
-                        ophanUrl: config.page.ophanUrl
-                    });
-
-                    reader.init();
                 }
             });
         },
@@ -159,10 +140,12 @@ define([
             });
         },
 
-        initRightMostPopular : function(config) {
-            if(config.switches.rightHandMostPopular) {
-                var r = new RightMostPopular(mediator, { type: 'image', maxTrails: 5 });
-            }
+        initFence: function() {
+            common.mediator.on('page:article:ready', function(config, context) {
+                $('.fenced').each(function(el) {
+                    fence.render(el);
+                });
+            });
         }
     };
 
@@ -171,12 +154,11 @@ define([
             this.initialised = true;
             modules.matchNav();
             modules.initLiveBlogging();
-            modules.logReading();
-            modules.initRightMostPopular(config);
             modules.initDiscussion();
             modules.initCricket();
             modules.externalLinksCards();
             modules.initOpen(config);
+            modules.initFence();
         }
         common.mediator.emit("page:article:ready", config, context);
     };

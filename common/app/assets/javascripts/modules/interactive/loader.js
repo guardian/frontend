@@ -6,15 +6,15 @@ define([
 
     function Interactive(el, context, config) {
 
-        var url = config.page.interactiveUrl + el.getAttribute('data-interactive'),
+        var bootUrl = el.getAttribute('data-interactive'),
             element = el;
-        
+
         this.init = function () {
 
             // The contract here is that the interactive module MUST return an object
             // with a method called 'boot'.
 
-            require(url + '/boot.js', function (interactive) {
+            require(bootUrl, function (interactive) {
 
                 // We pass the standard context and config here, but also inject the
                 // mediator so the external interactive can respond to our events.

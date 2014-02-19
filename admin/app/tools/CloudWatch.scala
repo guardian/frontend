@@ -7,9 +7,6 @@ import org.joda.time.DateTime
 import com.amazonaws.handlers.AsyncHandler
 import common.Logging
 import Configuration._
-import java.util.concurrent.Executors
-
-case class LoadBalancer(id: String, name: String, project: String)
 
 object CloudWatch extends implicits.Futures{
 
@@ -30,24 +27,23 @@ object CloudWatch extends implicits.Futures{
   // some metrics are only available in the 'default' region
   lazy val defaultClient = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials)
 
-  val primaryLoadBalancers = Seq(
-    LoadBalancer("frontend-RouterLo-1HHMP4C9L33QJ", "Router", "frontend-router"),
-    LoadBalancer("frontend-ArticleL-T0BUR121RZIG", "Article", "frontend-article"),
-    LoadBalancer("frontend-FaciaLoa-I92TZ7OEAX7W", "Front", "frontend-facia"),
-    LoadBalancer("frontend-Applicat-V36EHVHAEI15", "Applications", "frontend-applications")
-  )
+  val primaryLoadBalancers: Seq[LoadBalancer] = Seq(
+    LoadBalancer("frontend-router"),
+    LoadBalancer("frontend-article"),
+    LoadBalancer("frontend-facia"),
+    LoadBalancer("frontend-applications")
+  ).flatten
 
   val secondaryLoadBalancers = Seq(
-    LoadBalancer("frontend-CoreNavi-19L03IVT6RTL5", "CoreNav", "frontend-core-navigation"),
-    LoadBalancer("frontend-Discussi-KC65SADEVHIE", "Discussion", "frontend-discussion"),
-    LoadBalancer("frontend-Identity-1ITBJ706CLQIC", "Identity", "frontend-identity"),
-    LoadBalancer("frontend-ImageLoa-Y3FM3W6ZRJC1", "Image", "frontend-image"),
-    LoadBalancer("frontend-SportLoa-GLJK02HUD48W", "Sport", "frontend-sport"),
-    LoadBalancer("frontend-Commerci-12ZQ79RIOLIYE", "Commercial", "frontend-commercial"),
-    LoadBalancer("frontend-OnwardLo-14YIUHL6HIW63", "Onward", "frontend-onward"),
-    LoadBalancer("frontend-R2Footba-9BHU0R3R3DHV", "R2 Football", "frontend-r2football"),
-    LoadBalancer("frontend-Diagnost-1SCNCG3BR1RFE", "Diagnostics", "frontend-diagnostics" )
-  )
+    LoadBalancer( "frontend-discussion"),
+    LoadBalancer( "frontend-identity"),
+    LoadBalancer( "frontend-image"),
+    LoadBalancer( "frontend-sport"),
+    LoadBalancer( "frontend-commercial"),
+    LoadBalancer( "frontend-onward"),
+    LoadBalancer( "frontend-r2football"),
+    LoadBalancer( "frontend-diagnostics" )
+  ).flatten
 
   val loadBalancers = primaryLoadBalancers ++ secondaryLoadBalancers
 
@@ -71,9 +67,11 @@ object CloudWatch extends implicits.Futures{
 
   val assetsFiles = Seq(
     "app.js",
+    "facia.js",
     "global.css",
     "head.default.css",
-    "head.facia.css"
+    "head.facia.css",
+    "head.identity.css"
   )
 
   def shortStackLatency = latency(primaryLoadBalancers)
@@ -136,8 +134,8 @@ object CloudWatch extends implicits.Futures{
       )
     }.toSeq
   }
-  
-  def jsErrors = { 
+
+  def jsErrors = {
     val metrics = jsErrorMetrics.map{ case (graphTitle, metric) =>
         euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
           .withStartTime(new DateTime().minusHours(6).toDate)
@@ -151,7 +149,7 @@ object CloudWatch extends implicits.Futures{
         }
     new LineChart("JavaScript Errors", Seq("Time") ++ jsErrorMetrics.map{ case(title, name) => name}.toSeq, metrics:_*)
   }
-  
+
   def fastlyErrors = fastlyMetrics.map{ case (graphTitle, metric, region, service) =>
     new LineChart(graphTitle, Seq("Time", metric),
       euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
@@ -166,7 +164,7 @@ object CloudWatch extends implicits.Futures{
         asyncHandler)
     )
   }.toSeq
-  
+
   def liveStats(statistic: String) = new LineChart(statistic, Seq("Time", statistic),
     euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
       .withStartTime(new DateTime().minusHours(6).toDate)
@@ -235,6 +233,18 @@ object CloudWatch extends implicits.Futures{
       .withMetricName("ophan-percent-conversion")
       .withDimensions(stage),
       asyncHandler))
+
+  def ratioConfidence = new LineChart("omniture-ophan-correlation", Seq("Time", "%"),
+    euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
+      .withStartTime(new DateTime().minusWeeks(2).toDate)
+      .withEndTime(new DateTime().toDate)
+      .withPeriod(900)
+      .withStatistics("Average")
+      .withNamespace("Analytics")
+      .withMetricName("omniture-ophan-correlation")
+      .withDimensions(stage),
+      asyncHandler))
+
 
   def AbMetricNames() = {
     euWestClient.listMetricsAsync( new ListMetricsRequest()

@@ -1,70 +1,87 @@
 .ad-slot {
     width: 100%;
-    padding: 10px 0 6px 0;
+    overflow-x: hidden;
+    padding: 10px 0 4px 0;
     text-align: center;
-    height: 54px;
+    min-height: 56px;
 
     //For expandables
     position: relative;
     z-index: 1000;
     @include mq(desktopAd) {
-        height: auto;
         min-height: 96px;
     }
 
     iframe {
         margin: 0 auto;
     }
+
+    .ad-slot__label {
+        display: none;
+        @include box-sizing(border-box);
+        height: 34px;
+        background-color: $c-neutral8;
+        padding: 0 $baseline*2;
+        border-top: 1px solid $c-neutral5;
+        color: $c-neutral2;
+        font-family: $sans-serif;
+        @include font-size(12, 20);
+        text-align: right;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    &.ad-slot__show-label {
+        .ad-slot__label {
+            display: block;
+        }
+    }
 }
+
+.ad-slot__wrapper {
+    max-width: 100%;
+    display: inline-block;
+}
+
 .ad-container {
     display: inline-block;
     width: auto;
     margin: 0 auto !important;
 }
 
-[data-link-name*="bottom-banner-ad"] {
-    padding: $baseline*2 0;
-    background-color: #ffffff;
-}
-
 .top-banner-ad-container {
-    height: 70px;
-    @include mq(desktopAd) {
-        height: auto;
+    min-height: 70px;
+
+    @include mq(faciaLeftCol) {
+        @include rem((width: gs-span(14)));
+        margin: 0 auto;
     }
 }
 
 .ad-slot--top-banner-ad {
     background-color: #f0f0f0;
 
+    @include mq($to: tablet) {
+        .ad-slot__label {
+            background-color: #f0f0f0;
+            height: auto;
+            border: none;
+        }
+    }
+
     @include mq(tablet) {
         background-color: #ffffff;
     }
 
-    @include mq($to: desktop) {
-        &.is-affixed {
-            z-index: 1001;
-            position: fixed;
-            top: 0;
-            padding: 10px 0;
-        }
-    }
-
-    @include mq($from: tablet, $to: desktop) {
-        &.is-affixed {
-            .ad-container {
-                width: 100%;
-                height: 54px;
-                max-width: gs-span(8);
-                margin: 0 auto;
-                border-bottom: 1px solid $c-neutral5;
-            }
-        }
+    @include mq(faciaLeftCol) {
+        width: auto;
+        margin-left: gs-span(2) + $gs-gutter;
+        text-align: left;
     }
 }
 
 .parts__head {
     z-index: 1002;
+
     &.is-sticky {
         top: 0;
         @include sticky;
@@ -72,67 +89,57 @@
 }
 
 .ad-slot--inline {
+    min-width: 300px;
+    max-width: 100%;
+    padding: 0;
+
     .ad-container {
         line-height: 0;
     }
 
+    .ad-slot__label {
+        max-width: 300px;
+        margin: 0 auto;
+
+        @include mq(mobileLandscape, tablet) {
+            position: absolute;
+            width: 100%;
+            height: 50px;
+            z-index: -1;
+            text-align: left;
+        }
+    }
+
+    &.ad-slot__show-label {
+        @include mq(mobileLandscape, tablet) {
+            text-align: right;
+        }
+    }
+
     @include mq(tablet) {
         width: auto;
-        float: right;
+        height: auto;
         padding-top: $baseline;
         padding-left: $gs-gutter;
+        float: right;
     }
 }
-
-.ad-slot--inline.is-even,
-.test-inline-adverts--on .ad-slot--inline {
-    @include mq(tablet) {
-        float: left;
-        padding-right: $gs-gutter;
-        padding-left: 0;
-    }
-}
-
 
 .mpu-context {
     // Provides context to sticky positioned blocks
     height: 100%;
 }
 
-.mpu-container {
-    &.is-affixed {
-        width: 300px; // Needed as it doesn't respect the container width when fixed
-        position: fixed;
-    }
-    &.is-sticky {
-        top: $baseline*3;
-        @include sticky;
-    }
-}
-
-.mpu-container--sticky {
-    @include sticky;
-    background: #ffffff;
-    margin-top: -$baseline*4;
-    padding-top: $baseline*4;
-    top: 0;
-}
-
-.ad-slot--middle-banner-ad {
-    background-color: #ffffff;
-    min-height: 0;
-    border-bottom: 1px solid $c-neutral6;
-}
-
-.ad-slot--middle-banner-ad .ad-container {
-    max-height: 50px;
-    padding: 5px 0 10px 0;
-}
-
 .ad-slot--mpu-banner-ad {
-    padding-top: 25px;
+    padding-top: 29px; // Align with bottom of image
     padding-bottom: 37px;
     width: 300px;
     height: 250px;
     overflow: hidden;
+}
+
+.ad-slot__commercial-component {
+    width: 100%;
+    min-height: initial;
+    padding: 0 0 $gs-baseline 0;
 }

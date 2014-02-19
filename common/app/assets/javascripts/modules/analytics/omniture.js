@@ -5,7 +5,6 @@ define([
     'common/modules/experiments/ab',
     'common/utils/storage',
     'common/modules/identity/api',
-    'common/modules/analytics/errors',
     'common/utils/cookies',
     'omniture',
     'common/modules/analytics/mvt-cookie',
@@ -16,11 +15,10 @@ define([
     ab,
     storage,
     id,
-    Errors,
     Cookies,
     s,
     mvtCookie,
-    Beacon
+    beacon
     ) {
 
     // https://developer.omniture.com/en_US/content_page/sitecatalyst-tagging/c-tagging-overview
@@ -138,25 +136,36 @@ define([
             s.prop47    = config.page.edition || '';
 
             var mvt = ab.makeOmnitureTag(config, document);
-            if (mvt.length > 0) {
 
-                s.prop51  = mvt;
-                s.eVar51  = mvt;
+            s.prop51  = mvt;
+            s.eVar51  = mvt;
 
-                // prefix all the MVT tests with the alpha user tag if present
-                if (Cookies.get('GU_ALPHA') === "true") {
-                    var alphaTag = 'r2alpha,';
-                    s.prop51  = alphaTag + s.prop51;
-                    s.eVar51  = alphaTag + s.eVar51;
-                }
+            var alphaTag = 'notAlpha,';
 
-                // is user is viewing an alpha front
-                if (/^.+-alpha$/.test(config.page.pageId)) {
-                    var frontAlphaTag = config.page.pageId + ',';
-                    s.prop51  = frontAlphaTag + s.prop51;
-                    s.eVar51  = frontAlphaTag + s.eVar51;
-                }
+            // prefix all the MVT tests with the alpha user tag if present
+            if (Cookies.get('GU_ALPHA') === "2") {
+                // This tag allows us to easily segment phase one, phase two, or phase one and two.
+                alphaTag = 'r2alph2,';
 
+                s.prop51  = alphaTag + s.prop51;
+                s.eVar51  = alphaTag + s.eVar51;
+
+            } else if (Cookies.get('GU_ALPHA') === "true") {
+                // A value of true means phase one.
+                alphaTag = 'r2alpha,';
+
+                s.prop51  = alphaTag + s.prop51;
+                s.eVar51  = alphaTag + s.eVar51;
+            }
+
+            // is user is viewing an alpha front
+            if (/^.+-alpha$/.test(config.page.pageId)) {
+                var frontAlphaTag = config.page.pageId + ',';
+                s.prop51  = frontAlphaTag + s.prop51;
+                s.eVar51  = frontAlphaTag + s.eVar51;
+            }
+
+            if (s.prop51) {
                 s.events = s.apl(s.events,'event58',',');
             }
 
@@ -221,6 +230,9 @@ define([
                 }
                 storage.session.remove('gu.analytics.referrerVars');
             }
+
+            s.prop75 = config.page.wordCount || 0;
+            s.eVar75 = config.page.wordCount || 0;
         };
 
         this.loaded = function(callback) {
@@ -276,12 +288,9 @@ define([
         });
 
         common.mediator.on('module:analytics:omniture:pageview:sent', function(){
-            // there is currently no SSL version of the beacon
-            if(!config.page.isSSL){
-                // independently log this page view
-                // used for checking we have not broken analytics
-                new Beacon("/count/pva.gif").fire();
-            }
+            // independently log this page view
+            // used for checking we have not broken analytics
+            beacon.fire("/count/pva.gif");
         });
 
     }

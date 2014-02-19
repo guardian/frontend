@@ -51,9 +51,8 @@
 @import "module/facia/_mixins";
 @import "module/containers/_popular";
 @import "module/onward/_right-hand-most-popular";
+@import "module/onward/_right-recommended";
 @import "module/onward/_popular";
-@import "module/_social";
-    @include socialDelayed;
 @import "module/_clamp";
 
 
@@ -73,6 +72,8 @@
    ========================================================================== */
 
 @import "module/experiments/_ab-inline-link-card";
+@import "module/experiments/_ab-inline-elements";
+@import "module/experiments/_truncation";
 
 /* ==========================================================================
    Icons

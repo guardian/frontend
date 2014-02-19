@@ -1,5 +1,6 @@
 define([
     'common/common',
+    'common/modules/identity/api',
     'common/utils/ajax',
     'common/utils/context',
     'bean',
@@ -10,6 +11,7 @@ define([
     'common/modules/discussion/comment-box'
 ], function(
     common,
+    Id,
     ajax,
     context,
     bean,
@@ -57,6 +59,17 @@ define([
                         '</div>'+
                     '</form>'
                 ]
+            },
+            idConfig = {
+                'page' : {
+                    'idApiUrl' : "https://idapi.theguardian.com",
+                    'idUrl' : "https://profile.theguardian.com",
+                    ajaxUrl: '',
+                    edition: 'UK'
+                }
+            },
+            reqwestReturn = {
+                'then': function() {}
             };
 
         // setup
@@ -72,11 +85,31 @@ define([
             context.set(document.getElementById(fixturesId));
             commentBox = new CommentBox({
                 discussionId: discussionId,
-                maxLength: maxCommentLength
+                maxLength: maxCommentLength,
+                switches: {
+                    discussionVerifiedEmailPosting: true
+                }
             });
 
-            spyOn(commentBox, 'getUserData').andReturn({ displayName: "testy", id: 1 });
+            spyOn(commentBox, 'getUserData').andReturn({
+                displayName: "testy",
+                id: 1,
+                accountCreatedDate: new Date(1392719401338)
+            });
+
             commentBox.attachTo(document.querySelector('.d-comment-box'));
+
+            Id.init(idConfig);
+            Id.reset();
+
+            // Stub out this method as async merging stuff doesn't work great
+            Id.getUserFromApiWithRefreshedCookie = function () {
+                this.then = function (callback) {
+                    callback({
+                        user: { statusFields: { userEmailValidated: true } } });
+                };
+                return this;
+            };
         });
 
         afterEach(function() {
@@ -115,6 +148,22 @@ define([
                 for (var i = 0, len = maxCommentLength; i <= len; i++) {
                     commentBody.value = commentBody.value+'j';
                 }
+                bean.fire(commentBox.elem, 'submit');
+                expect(commentBox.getElem('error')).not.toBeUndefined();
+            });
+
+            it('should error on invalid email address', function() {
+                expect(commentBox.getElem('error')).toBeUndefined();
+                commentBox.getElem('body').value = validCommentText;
+
+                Id.getUserFromApiWithRefreshedCookie = function () {
+                    this.then = function (callback) {
+                        callback({
+                            user: { statusFields: { userEmailValidated: false } } });
+                    };
+                    return this;
+                };
+
                 bean.fire(commentBox.elem, 'submit');
                 expect(commentBox.getElem('error')).not.toBeUndefined();
             });

@@ -1,45 +1,56 @@
 .article {
     position: relative;
-    margin-bottom: $gs-baseline*3.5;
+    @include rem((
+        margin-bottom: $gs-baseline*3.5
+    ));
 }
 
 .article-zone,
 .article__zone {
     @include fs-header(3);
     @include box-sizing(border-box);
-    min-height: $gs-row-height;
-    padding: 0 $gs-gutter/2;
-    border-top-width: $baseline/2;
+    @include rem((
+        min-height: $gs-row-height,
+        padding: 0 $gs-gutter/2,
+        border-top-width: $baseline/2
+    ));
     border-top-style: solid;
 
     @include mq(mobileLandscape) {
-        padding-left: $gs-gutter;
-        padding-right: $gs-gutter;
+        @include rem((
+            padding-left: $gs-gutter,
+            padding-right: $gs-gutter
+        ))
     }
 
     @include mq(tablet) {
         min-height: 0;
-        padding: $baseline*3 0;
+        @include rem((
+            padding: $baseline*3 0,
+            max-width: gs-span(8)
+        ));
         border-top: 1px dotted $c-neutral5 !important; // Disable tone colour
-
-        max-width: gs-span(8);
         margin-left: auto;
         margin-right: auto;
     }
 
     @include mq(rightCol) {
-        margin-left: $gs-gutter;
-        margin-right: $gs-gutter;
+        @include rem((
+            margin-left: $gs-gutter,
+            margin-right: $gs-gutter
+        ));
         max-width: none;
     }
 
     @include mq(leftCol) {
-        padding-left: $a-leftCol-width + $gs-gutter;
+        @include rem((padding-left: $a-leftCol-width + $gs-gutter));
     }
 
     @include mq(wide) {
-        padding-left:  gs-span(3) + $gs-gutter;
-        padding-right: $a-rightCol-width + gs-span(1) + $gs-gutter*2;
+        @include rem((
+            padding-left:  gs-span(3) + $gs-gutter,
+            padding-right: $a-rightCol-width + gs-span(1) + $gs-gutter*2
+        ));
     }
 
     > a {
@@ -56,16 +67,20 @@
 }
 
 .article-zone--bleed-out {
-    margin-left: -$gs-gutter/2;
-    margin-right: -$gs-gutter/2;
-    padding-left: $gs-gutter/2;
-    padding-right: $gs-gutter/2;
+    @include rem((
+        margin-left: -$gs-gutter/2,
+        margin-right: -$gs-gutter/2,
+        padding-left: $gs-gutter/2,
+        padding-right: $gs-gutter/2
+    ));
 
     @include mq(mobileLandscape) {
-        margin-left: -$gs-gutter;
-        margin-right: -$gs-gutter;
-        padding-left: $gs-gutter;
-        padding-right: $gs-gutter;
+        @include rem((
+            margin-left: -$gs-gutter,
+            margin-right: -$gs-gutter,
+            padding-left: $gs-gutter,
+            padding-right: $gs-gutter
+        ));
     }
     @include mq(tablet) {
         padding-left: 0;
@@ -77,15 +92,19 @@
 
 .left-col-deport {
     @include mq(leftCol) {
-        padding: 0 0 $baseline;
+        @include rem((
+            padding: 0 0 $baseline
+        ));
     }
 }
 .left-col-deport__body {
     @include mq(leftCol) {
         float: left;
-        padding-top: $baseline*4;
+        @include rem((
+            padding-top: $baseline*4,
+            width: $a-leftCol-width
+        ));
         margin-left: 0;
-        width: $a-leftCol-width;
 
         // Makes the block actionable
         // when out of the flow
@@ -93,18 +112,20 @@
         z-index: 1;
     }
     @include mq(wide) {
-        width: $a-leftColWide-width;
+        @include rem((width: $a-leftColWide-width));
     }
 }
 
 .article__head {
-    padding-top: $baseline;
+    @include rem((padding-top: $baseline));
 }
 
 .article__headline {
     @include fs-headline(4);
-    margin-bottom: $baseline*6;
-    padding-top: 8px;
+    @include rem((
+        margin-bottom: $baseline*6,
+        padding-top: $baseline*2
+    ));
     border-top: 1px dotted $c-neutral5;
 
     @include mq(mobileLandscape) {
@@ -113,11 +134,10 @@
     @include mq(tablet) {
         -webkit-font-smoothing: antialiased;
         @include fs-headline(8, true);
-        margin-bottom: $gs-row-height;
+        @include rem((margin-bottom: $gs-row-height));
         padding-top: 0;
         border-top: none;
     }
-
     a {
         &,
         &:hover,
@@ -126,11 +146,9 @@
             color: $c-neutral1;
         }
     }
-
     em {
         font-style: normal;
     }
-
     strong {
         font-weight: normal;
     }
@@ -140,10 +158,12 @@
     @include box-sizing(border-box);
     @include fs-data(2);
     position: relative;
-    min-height: $gs-row-height;
-    padding-top: $baseline;
-    padding-right: gs-span(1);
-    margin-bottom: $baseline*3;
+    @include rem((
+        min-height: $gs-row-height,
+        padding-top: $baseline,
+        padding-right: gs-span(1),
+        margin-bottom: $baseline*3
+    ));
     border-top: 1px dotted $c-neutral5;
     color: $c-neutral2;
 
@@ -161,7 +181,7 @@
     }
     .relative-timestamp__icon {
         vertical-align: top;
-        top: 3px;
+        @include rem((top: 3px));
     }
 
     @include mq(tablet) {
@@ -174,7 +194,7 @@
 
         .article__meta-container & {
             display: block;
-            margin-bottom: $baseline*3;
+            @include rem((margin-bottom: $baseline*3));
 
             time {
                 display: inline-block;
@@ -192,13 +212,15 @@
 
 .article__standfirst {
     @include fs-headline(1);
-    margin-bottom: $baseline*3;
+    @include rem((
+        margin-bottom: $gs-baseline
+    ));
     color: $c-neutral2;
 
     @include mq(tablet) {
         @include fs-headline(2, true);
         -webkit-font-smoothing: antialiased;
-        margin-bottom: $baseline*4;
+        @include rem((margin-bottom: $baseline*4));
     }
 
     > ul,
@@ -283,7 +305,7 @@
 }
 .article-body {
     @include mq(tablet) {
-        margin-bottom: $baseline*4;
+        @include rem((margin-bottom: $baseline*4));
     }
 }
 
@@ -329,14 +351,18 @@
 .article__meta-container {
     @include mq(leftCol) {
         float: left;
-        margin-left: ($a-leftCol-width + $gs-gutter)*-1;
-        margin-bottom: $baseline*4;
-        width: $a-leftCol-width;
+        @include rem((
+            margin-left: ($a-leftCol-width + $gs-gutter)*-1,
+            margin-bottom: $baseline*4,
+            width: $a-leftCol-width
+        ));
     }
 
     @include mq(wide) {
-        margin-left: (gs-span(3) + $gs-gutter)*-1;
-        width: gs-span(3);
+        @include rem((
+            margin-left: (gs-span(3) + $gs-gutter)*-1,
+            width: gs-span(3)
+        ));
     }
 }
 
@@ -351,11 +377,15 @@
 }
 
 .media-primary {
-    margin-left: $gs-gutter / -2;
-    margin-right: $gs-gutter / -2;
+    @include rem((
+        margin-left: $gs-gutter / -2,
+        margin-right: $gs-gutter / -2
+    ));
     @include mq(mobileLandscape) {
-        margin-left: $gs-gutter / -1;
-        margin-right: $gs-gutter / -1;
+        @include rem((
+            margin-left: $gs-gutter / -1,
+            margin-right: $gs-gutter / -1
+        ));
     }
 }
 .main-image {
@@ -364,7 +394,9 @@
 
 .gu-video {
     width: 100%;
-    margin-bottom: $baseline*2;
+    @include rem((
+        margin-bottom: $baseline*2
+    ));
 }
 
 video {
@@ -379,7 +411,7 @@ video {
 
     i {
         vertical-align: bottom;
-        margin-right: 3px;
+        @include rem((margin-right: 3px));
     }
 
     .article__head & {
@@ -388,9 +420,11 @@ video {
         position: absolute;
         right: 0;
         top: 0;
-        width: $gs-column-width - 1px;
-        height: $gs-row-height - 1px;
-        padding: $baseline - 1px 0 0 $gutter/4;
+        @include rem((
+            width: $gs-column-width - 1px,
+            height: $gs-row-height - 1px,
+            padding: $baseline - 1px 0 0 $gutter/4
+        ));
         border-left: 1px dotted $c-neutral5;
     }
 }
@@ -403,19 +437,19 @@ video {
 
 .article__meta-heading {
     @include fs-header(2);
-    padding-top: $baseline;
-    padding-bottom: $baseline*4;
+    @include rem((
+        padding-top: $baseline,
+        padding-bottom: $baseline*4
+    ));
     border-top: 1px dotted $c-neutral5;
 }
 
 .article__keywords {
     @include fs-data(4);
-    margin-top: $baseline*3;
-    margin-bottom: $baseline*3;
-
-    .paragraph-spacing--indents & {
-        margin-top: $baseline*5;
-    }
+    @include rem((
+        margin-top: $gs-baseline,
+        margin-bottom: $gs-baseline
+    ));
 }
 
 /* Layout changes across devices
@@ -424,7 +458,7 @@ video {
 .article__container,
 .article__meta-container,
 .article__inner {
-    max-width: gs-span(7);
+    @include rem((max-width: gs-span(7)));
 
     @include mq(rightCol) {
         max-width: none;
@@ -434,15 +468,17 @@ video {
     max-width: none;
 
     @include mq(tablet) {
-        max-width: gs-span(7);
+        @include rem((max-width: gs-span(7)));
     }
 }
 .main-caption {
-    min-height: $baseline*7;
-    max-width: gs-span(7);
+    @include rem((
+        min-height: $baseline*7,
+        max-width: gs-span(7)
+    ));
 
     @include mq(tablet) {
-        max-width: gs-span(7);
+        @include rem((max-width: gs-span(7)));
     }
     @include mq(rightCol) {
         max-width: none;
@@ -461,11 +497,12 @@ video {
         margin-right: 0 !important;
     }
     .article__columning-wrapper {
-        padding-right: gs-span(1) + $gs-gutter;
+        @include rem((padding-right: gs-span(1) + $gs-gutter));
     }
     .article__head,
     .article__columning-wrapper .media-primary {
         margin-right: (gs-span(1) + $gs-gutter) * -1 !important;
+        margin-right: rem((gs-span(1) + $gs-gutter) * -1) !important;
     }
 
     .article__head .commentcount {
@@ -479,8 +516,10 @@ video {
         max-width: none;
     }
     .article__inner {
-        max-width: gs-span(8);
-        padding-right: $a-rightCol-width + $gs-gutter;
+        @include rem((
+            max-width: gs-span(8),
+            padding-right: $a-rightCol-width + $gs-gutter
+        ));
     }
     .article__columning-wrapper {
         width: 100%;
@@ -496,13 +535,15 @@ video {
     .article__main-column {
         display: table-cell;
         vertical-align: top;
-        max-width: gs-span(8);
-        padding-right: $gs-gutter;
+        @include rem((
+            max-width: gs-span(8),
+            padding-right: $gs-gutter
+        ));
     }
     .article__secondary-column {
         position: relative;
         display: table-cell;
-        width: $a-rightCol-width;
+        @include rem((width: $a-rightCol-width));
     }
     .article__secondary-column__inner--fill-vertically {
         top: 0;
@@ -517,33 +558,35 @@ video {
 
 @include mq(gs-span(12) + $gs-gutter * 2) {
     .article__main-column {
-        padding-right: gs-span(1) + $gs-gutter * 2;
+        @include rem((padding-right: gs-span(1) + $gs-gutter * 2));
     }
     .article__inner {
-        padding-right: $a-rightCol-width + gs-span(1) + $gs-gutter*2;
+        @include rem((padding-right: $a-rightCol-width + gs-span(1) + $gs-gutter*2));
     }
 }
 
 @include mq(leftCol) {
     .article-wrapper {
-        padding-left: $gs-gutter;
-        padding-right: $gs-gutter;
+        @include rem((
+            padding-left: $gs-gutter,
+            padding-right: $gs-gutter
+        ));
     }
     .article__inner,
     .article__main-column {
-        padding-left: $a-leftCol-width + $gs-gutter;
+        @include rem((padding-left: $a-leftCol-width + $gs-gutter));
     }
 
     .article__inner {
-        padding-right: $a-rightCol-width + $gs-gutter;
+        @include rem((padding-right: $a-rightCol-width + $gs-gutter));
     }
 
     .article__main-column {
-        padding-right: $gs-gutter;
+        @include rem((padding-right: $gs-gutter));
     }
 
     .article__head {
-        padding-top: $baseline*2;
+        @include rem((padding-top: $baseline*2));
     }
 
     .commentcount {
@@ -553,8 +596,10 @@ video {
 
         .article__meta-container & {
             display: block;
-            padding-top: $baseline;
-            margin-bottom: $baseline*3;
+            @include rem((
+                padding-top: $baseline,
+                margin-bottom: $baseline*3
+            ));
             border-top: 1px dotted $c-neutral5;
         }
     }
@@ -563,13 +608,13 @@ video {
 @include mq(wide) {
     .article__inner,
     .article__main-column {
-        padding-left: gs-span(3) + $gs-gutter;
+        @include rem((padding-left: gs-span(3) + $gs-gutter));
     }
     .article__main-column {
-        padding-right: gs-span(1) + $gs-gutter*2;
+        @include rem((padding-right: gs-span(1) + $gs-gutter*2));
     }
     .article__inner {
-        padding-right: $a-rightCol-width + gs-span(1) + $gs-gutter*2;
+        @include rem((padding-right: $a-rightCol-width + gs-span(1) + $gs-gutter*2));
     }
 }
 
@@ -583,121 +628,7 @@ video {
 
     i {
         @include rotate(-90deg);
-        margin-top: 10px;
-    }
-}
-
-/* Email Signup AB test
-   ========================================================================== */
-
-.email-signup {
-    background-color: $c-neutral7;
-    padding: 10px;
-    margin-bottom: 16px;
-    position: relative;
-    .is-updating {
-        margin: 0 auto;
-    }
-
-    .i-share-email {
-        display: none;
-    }
-
-    @include mq($to: wide) {
-        .email-signup__title {
-            @include fs-header(1);            
-        }
-        .email-signup__copy {
-            @include fs-bodyCopy(1);
-        }
-    }
-
-}
-
-.email-signup___left-body, { // Left-body AB variant
-    top: 0;
-    @include mq(leftCol) {
-        position: absolute;
-        left: ($a-leftCol-width + $gs-gutter)*-1;
-        width: $a-leftCol-width - 20;
-    }
-
-    @include mq(wide) {
-        position: absolute;
-        width: gs-span(3) - 20;
-        left: -240px;
-    }
-}
-
-.email-signup.loading {
-    .email-signup__title, .email-signup__copy {
-        display: none;
-    }
-    .email-signup__inner {
-        position: relative;
-        height: 100%;
-        width: 100%;
-    }
-    .is-updating {
-        display: block;
-        position: relative;
-        top: 50%;
-        margin-top: -10px;
-    }
-}
-
-.email-signup.done {
-    
-    .email-signup__inner {
-        display: table;
-        height: 100%;
-        width: 100%;
-    }
-    .email-signup__copy {
-        display: none;
-    }
-    .email-signup__title {
-        text-align: center;
-        display: table-cell;
-        vertical-align: middle;
-    }
-}
-
-// Alt styling variants
-.email-signup.alt {
-    background-color: #fff;
-    border-top: 1px solid $c-neutral3;
-    padding: 4px 0 10px 0;
-    .i-share-email {
-        display: block;
-        position: absolute;
-        left: 0;
-        top: 4px;
-    }
-
-    .email-signup__title {
-        padding: 8px 0 0 44px;
-    }
-
-    .email-signup__title:hover a {
-        text-decoration: underline;
-    }
-
-    .email-signup__copy {
-        padding: 6px 0 0 0;
-    }
-
-    // Left body and meta ALT variants
-
-    &.email-signup___left-meta,
-    &.email-signup___left-body {
-        .email-signup__title {
-            @include mq(leftCol) {
-                @include font($sans-serif, normal, 13, 16);
-                padding-top: 4px;
-                min-height: 32px;
-            }
-        }
+        @include rem((margin-top: 10px));
     }
 }
 
@@ -708,34 +639,41 @@ video {
  */
 .article__sponsor {
     min-height: $gs-row-height;
-    padding: 0 $gs-gutter/2;
-    
+    @include rem((padding: 0 $gs-gutter/2));
+
     @include mq(mobileLandscape) {
-        padding-left: $gs-gutter;
-        padding-right: $gs-gutter;
+        @include rem((
+            padding-left: $gs-gutter,
+            padding-right: $gs-gutter
+        ));
     }
 
     @include mq(tablet) {
         min-height: 0;
-        padding: $baseline*3 0;
-
-        max-width: gs-span(8);
+        @include rem((
+            padding: $baseline*3 0,
+            max-width: gs-span(8)
+        ));
         margin-left: auto;
         margin-right: auto;
     }
 
     @include mq(rightCol) {
-        margin-left: $gs-gutter;
-        margin-right: $gs-gutter;
+        @include rem((
+            margin-left: $gs-gutter,
+            margin-right: $gs-gutter
+        ));
         max-width: none;
     }
 
     @include mq(leftCol) {
-        padding-left: $a-leftCol-width + $gs-gutter;
+        @include rem((padding-left: $a-leftCol-width + $gs-gutter));
     }
 
     @include mq(wide) {
-        padding-left:  gs-span(3) + $gs-gutter;
-        padding-right: $a-rightCol-width + gs-span(1) + $gs-gutter*2;
+        @include rem((
+            padding-left:  gs-span(3) + $gs-gutter,
+            padding-right: $a-rightCol-width + gs-span(1) + $gs-gutter*2
+        ));
     }
 }

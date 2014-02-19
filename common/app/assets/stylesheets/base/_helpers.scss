@@ -1,17 +1,6 @@
 /* Accessible hidden content.
    ========================================================================== */
 
-@mixin u-h {
-    border: 0 !important;
-    clip: rect(0 0 0 0) !important;
-    height: 1px !important;
-    margin: -1px !important;
-    overflow: hidden !important;
-    padding: 0 !important;
-    position: absolute !important;
-    width: 1px !important;
-}
-
 .u-h {
     @include u-h;
 }
@@ -40,11 +29,17 @@
         display: block !important;
     }
 }
+.hide-on-mobile-inline {
+    display: none !important;
+
+    @include mq(tablet) {
+        display: inline !important;
+    }
+}
 
 .is-invisible {
     visibility: hidden;
 }
-
 
 
 /* Micro clearfix (http://nicolasgallagher.com/micro-clearfix-hack/)
@@ -126,15 +121,26 @@
     border: 0;
     width: 100%;
     background: transparent;
-    
+
     &:focus {
         outline: 0;
     }
 }
 
+
 /**
- * underlines text 
+ * underlines text
  */
+
 .u-underline {
     text-decoration: underline;
+}
+
+
+/**
+ * Prevent line breaks
+ */
+
+.u-nobr {
+    white-space: nowrap;
 }

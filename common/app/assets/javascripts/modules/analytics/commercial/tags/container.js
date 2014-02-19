@@ -4,11 +4,13 @@
 define([
     'common/modules/analytics/commercial/tags/common/audience-science',
     'common/modules/analytics/commercial/tags/common/imrworldwide',
-    'common/modules/analytics/commercial/tags/au/amaa'
+    'common/modules/analytics/commercial/tags/au/amaa',
+    'common/modules/analytics/commercial/tags/au/effective-measure'
 ], function(
     AudienceScience,
     IMRWorldwide,
-    Amaa
+    Amaa,
+    EffectiveMeasure
 ) {
 
     function init(config) {
@@ -19,6 +21,10 @@ define([
 
                 if (config.switches.amaa) {
                     Amaa.load();
+                }
+                
+                if (config.switches.effectiveMeasure) {
+                    EffectiveMeasure.load();
                 }
 
                 break;

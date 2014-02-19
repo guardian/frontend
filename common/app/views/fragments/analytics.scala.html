@@ -3,12 +3,18 @@
 @import conf.Switches.OmnitureVerificationSwitch
 
 @*<!-- TODO temporary till after dotcom switch -->*@
-@defining("hits.theguardian.com"){ analyticsHost =>
+@defining(
+    if (Configuration.environment.secure) {
+        "https://hits-secure.theguardian.com"
+    } else {
+        "http://hits.theguardian.com"
+    }
+){ analyticsHost =>
 
     @defining(request.host + request.path) { path =>
 
         @defining(
-        (s"http://$analyticsHost/b/ss/${Configuration.javascript.pageData("guardian.page.omnitureAccount")}/1/H.25.3/?${OmnitureAnalyticsData(page, "No Javascript", path)}",
+        (s"$analyticsHost/b/ss/${Configuration.javascript.pageData("guardian.page.omnitureAccount")}/1/H.25.3/?${OmnitureAnalyticsData(page, "No Javascript", path)}",
         Configuration.javascript.pageData("guardian.page.omnitureAccount"))
         ){ case (omnitureCall, omnitureAccount) =>
                 <noscript id="omnitureNoScript">
@@ -20,7 +26,7 @@
         }
 
         @defining(
-            s"http://$analyticsHost/b/ss/${Configuration.javascript.pageData("guardian.page.omnitureAccount")}/1/H.25.3/?${OmnitureAnalyticsData(page, "Partial Javascript", path)}"
+            s"$analyticsHost/b/ss/${Configuration.javascript.pageData("guardian.page.omnitureAccount")}/1/H.25.3/?${OmnitureAnalyticsData(page, "Partial Javascript", path)}"
         ){ omnitureCall =>
                 <script>
                     @*
@@ -48,7 +54,7 @@
 
         @if(OmnitureVerificationSwitch.isSwitchedOn) {
             @defining(
-                s"http://$analyticsHost/b/ss/guardiangu-mobileverify/1/H.25.3/?${OmnitureAnalyticsData(page, "Partial Javascript", path)}"
+                s"$analyticsHost/b/ss/guardiangu-mobileverify/1/H.25.3/?${OmnitureAnalyticsData(page, "Partial Javascript", path)}"
             ){ omnitureCall =>
                 <script>
                     var verificationImage = new Image(1, 1);
@@ -56,7 +62,7 @@
                 </script>
             }
             @defining(
-                s"http://$analyticsHost/b/ss/guardiangu-mobileverify/1/H.25.3/?${OmnitureAnalyticsData(page, "No Javascript", path)}"
+                s"$analyticsHost/b/ss/guardiangu-mobileverify/1/H.25.3/?${OmnitureAnalyticsData(page, "No Javascript", path)}"
             ){ omnitureCall =>
                 <noscript id="omnitureVerificationNoScript">
                     <div>

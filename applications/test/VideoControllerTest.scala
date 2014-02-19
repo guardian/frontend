@@ -3,9 +3,8 @@ package test
 import play.api.test.Helpers._
 import org.scalatest.Matchers
 import org.scalatest.FlatSpec
-import common.UsesElasticSearch
 
-class VideoControllerTest extends FlatSpec with Matchers with UsesElasticSearch {
+class VideoControllerTest extends FlatSpec with Matchers {
 
   val videoUrl = "uk/video/2012/jun/26/queen-enniskillen-northern-ireland-video"
   val callbackName = "aFunction"
@@ -45,7 +44,7 @@ class VideoControllerTest extends FlatSpec with Matchers with UsesElasticSearch 
   it should "display an expired message for expired content" in Fake {
     val result = controllers.VideoController.render("world/video/2008/dec/11/guantanamo-bay")(TestRequest("/world/video/2008/dec/11/guantanamo-bay"))
     status(result) should be(410)
-    contentAsString(result) should include("Sorry - the page you are looking for has been removed")
+    contentAsString(result) should include("Sorry - this page has been removed.")
   }
 
 }

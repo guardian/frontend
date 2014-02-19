@@ -3,6 +3,8 @@ package model
 import com.gu.openplatform.contentapi.model.Asset
 import org.apache.commons.math3.fraction.Fraction
 import views.support.{Naked, ImgSrc}
+import play.api.templates.Html
+import java.net.URI
 
 case class ImageAsset(private val delegate: Asset, index: Int) {
 
@@ -49,7 +51,7 @@ case class VideoAsset(private val delegate: Asset, image: Option[ImageContainer]
   // The video duration in seconds
   lazy val duration: Int = fields.get("durationSeconds").getOrElse("0").toInt +
                            (fields.get("durationMinutes").getOrElse("0").toInt * 60)
-  lazy val blockAds: Boolean = fields.get("blockAds").exists(_.toBoolean)
+  lazy val blockVideoAds: Boolean = fields.get("blockAds").exists(_.toBoolean)
 
   lazy val source: Option[String] = fields.get("source")
 }

@@ -2,24 +2,19 @@ package controllers.commercial
 
 import play.api.mvc._
 import model.Cached
-import model.commercial.moneysupermarket.EasyAccessAgent
 import common.JsonComponent
+import model.commercial.money.BestBuysAgent
 
 object MoneyOffers extends Controller {
 
-  def easyAccessProductsHtml = Action {
+  def bestBuys(format: String) = Action {
     implicit request =>
-      EasyAccessAgent.adsTargetedAt(segment) match {
-        case Nil => NotFound
-        case products => Cached(60)(Ok(views.html.moneysupermarket.easyAccess(products take 3)))
-      }
-  }
-
-  def easyAccessProductsJson = Action {
-    implicit request =>
-      EasyAccessAgent.adsTargetedAt(segment) match {
-        case Nil => NotFound
-        case products => Cached(60)(JsonComponent(views.html.moneysupermarket.easyAccess(products take 3)))
+      (BestBuysAgent.adsTargetedAt(segment), format) match {
+        case (Some(products), "json") =>
+          Cached(60)(JsonComponent(views.html.moneysupermarket.bestBuys(products)))
+        case (Some(products), "html") =>
+          Cached(60)(Ok(views.html.moneysupermarket.bestBuys(products)))
+        case _ => NotFound
       }
   }
 }

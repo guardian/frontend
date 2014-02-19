@@ -15,7 +15,7 @@ define([
             player = "HTML5 Video",
             mediaName = config.page.webTitle,
             provider = config.page.source || "",
-            restricted = config.page.blockAds || "",
+            restricted = config.page.blockVideoAds || "",
             deBounced,
             initialPlay =  {
                 advert: true,

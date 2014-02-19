@@ -2,19 +2,6 @@
 ========================================================================== */
 
 #preloads.has-localnav {
-    @include mq(tablet) {
-        margin-top: 156px;
-    }
-    .parts__head {
-        @include mq(tablet) {
-            padding-top: $baseline*12;
-        }
-    }
-    .parts__body {
-        @include mq(tablet) {
-            margin-top: 0;
-        }
-    }
     .ad-slot-top-banner-ad {
         padding-top: 5px;
         background-color: #eee;
@@ -46,6 +33,10 @@
 .nav-popup-localnav {
     top: 168px;
     border-color: $c-neutral5;
+
+    .ab__ad-labels & {
+        top: 188px;
+    }
 
     .is-active .nav__link {
         font-family: $serifheadline;

@@ -14,7 +14,8 @@ case class Block(
                   lastUpdated: String,
                   updatedBy: String,
                   updatedEmail: String,
-                  displayName: Option[String]
+                  displayName: Option[String],
+                  href: Option[String]
                   )
 
 case class Trail(
@@ -23,20 +24,25 @@ case class Trail(
                   )
 
 
-case class UpdateList(item: String, position: Option[String], after: Option[Boolean], itemMeta: Option[Map[String, JsValue]], live: Boolean, draft: Boolean)
-case class CollectionMetaUpdate(displayName: Option[String])
+case class UpdateList(id: String, item: String, position: Option[String], after: Option[Boolean], itemMeta: Option[Map[String, JsValue]], live: Boolean, draft: Boolean)
+case class CollectionMetaUpdate(
+  displayName: Option[String],
+  href: Option[String]
+)
 
 trait UpdateActions {
 
   lazy val defaultMinimumTrailblocks = 0
   lazy val defaultMaximumTrailblocks = 20
-  val itemMetaWhitelistFields: Seq[String] = Seq("headline", "trailText", "group", "supporting", "imageAdjust")
+  val itemMetaWhitelistFields: Seq[String] = Seq("headline", "trailText", "group", "supporting", "imageAdjust", "isBreaking", "updatedAt")
 
   def getBlock(id: String): Option[Block] = FaciaApi.getBlock(id)
 
   def insertIntoLive(update: UpdateList, block: Block): Block =
-    if (update.live)
-      block.copy(live=updateList(update, block.live))
+    if (update.live) {
+      val live = updateList(update, block.live)
+      block.copy(live=live, draft=block.draft.filter(_ != live))
+    }
     else
       block
 
@@ -64,7 +70,7 @@ trait UpdateActions {
       block
 
   def updateCollectionMeta(block: Block, update: CollectionMetaUpdate, identity: Identity): Block =
-    block.copy(displayName=update.displayName)
+    block.copy(displayName=update.displayName, href=update.href)
 
   def putBlock(id: String, block: Block, identity: Identity): Option[Block] = {
     FaciaApi.archive(id, block)
@@ -114,9 +120,9 @@ trait UpdateActions {
 
   def createBlock(id: String, identity: Identity, update: UpdateList): Option[Block] = {
     if (update.live)
-      FaciaApi.putBlock(id, Block(id, None, List(Trail(update.item, update.itemMeta)), None, DateTime.now.toString, identity.fullName, identity.email, None), identity)
+      FaciaApi.putBlock(id, Block(id, None, List(Trail(update.item, update.itemMeta)), None, DateTime.now.toString, identity.fullName, identity.email, None, None), identity)
     else
-      FaciaApi.putBlock(id, Block(id, None, Nil, Some(List(Trail(update.item, update.itemMeta))), DateTime.now.toString, identity.fullName, identity.email, None), identity)
+      FaciaApi.putBlock(id, Block(id, None, Nil, Some(List(Trail(update.item, update.itemMeta))), DateTime.now.toString, identity.fullName, identity.email, None, None), identity)
   }
 
 }

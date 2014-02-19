@@ -4,16 +4,16 @@ module.exports = function(config) {
         frameworks: ['jasmine', 'requirejs'],
 
         files: [
-            { pattern: 'common-test/components/sinonjs/sinon.js', included: true },
-            { pattern: 'common-test/components/jasmine-sinon/lib/jasmine-sinon.js', included: true },
-            { pattern: 'common-test/components/seedrandom/index.js', included: true },
-            { pattern: 'common-test/setup.js', included: true },
-            { pattern: 'common-test/main.js', included: true },
-            { pattern: 'common-test/components/**/*', included: false },
-            { pattern: 'common-test/fixtures/**/*', included: false },
-            { pattern: 'common-test/helpers/**/*.js', included: false },
-            { pattern: 'common-test/spies/**/*.js', included: false },
-            { pattern: 'common/**/*.js', included: false }
+            { pattern: 'tests/components/sinonjs/sinon.js', included: true },
+            { pattern: 'tests/components/jasmine-sinon/lib/jasmine-sinon.js', included: true },
+            { pattern: 'tests/components/seedrandom/index.js', included: true },
+            { pattern: 'tests/setup.js', included: true },
+            { pattern: 'tests/main.js', included: true },
+            { pattern: 'tests/components/**/*', included: false },
+            { pattern: 'tests/fixtures/**/*', included: false },
+            { pattern: 'tests/helpers/**/*.js', included: false },
+            { pattern: 'tests/spies/**/*.js', included: false },
+            { pattern: 'javascripts/**/*.js', included: false }
         ],
 
         exclude: [],

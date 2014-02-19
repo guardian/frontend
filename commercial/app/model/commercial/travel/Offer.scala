@@ -1,13 +1,12 @@
 package model.commercial.travel
 
 import org.joda.time.DateTime
-import model.commercial.Utils._
 import model.commercial.{Ad, Keyword, Segment}
 import common.{Logging, ExecutionContexts, AkkaAgent}
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import akka.util.Timeout
-import conf.ContentApi
+import model.commercial.intersects
 
 case class Offer(id: Int, title: Option[String], offerUrl: String, imageUrl: String, fromPrice: String,
                  earliestDeparture: DateTime, keywords: List[Keyword], countries: List[String], duration: String)
@@ -19,8 +18,8 @@ case class Offer(id: Int, title: Option[String], offerUrl: String, imageUrl: Str
   }
 
   def durationInWords: String = duration match {
-    case "1" => return "1 night"
-    case x => return s"$x nights"
+    case "1" => "1 night"
+    case x => s"$x nights"
   }
 
 }
@@ -97,12 +96,6 @@ object Countries extends ExecutionContexts with Logging {
     "Uzbekistan",
     "Vietnam"
   )
-
-  /*
-   * Known bug in elastic search implementation means that section will be ignored,
-   * so using Solr implementation until there's a fix.
-   */
-  private implicit val contentApi = ContentApi
 
   private implicit val timeout: Timeout = 10.seconds
 

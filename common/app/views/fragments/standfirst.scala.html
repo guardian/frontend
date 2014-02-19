@@ -7,7 +7,11 @@
             InBodyLinkCleaner("in standfirst link")(Edition(request))
         )
         @content.starRating.map { s =>
-            <span class="stars s-@s"><meta itemprop="reviewRating" content="@s">@s</meta> / 5 stars</span>
+            <span class="stars s-@s" itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating">
+                <meta itemprop="worstRating" content="1" />
+                <span itemprop="ratingValue">@s</span> /
+                <span itemprop="bestRating">5</span> stars
+            </span>
         }
     }
 </div>

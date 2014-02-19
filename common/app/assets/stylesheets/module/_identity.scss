@@ -194,6 +194,11 @@
 .formstack-count {
     position: absolute;
     color: #545454;
+    font-family: $sans-serif;
+    font-size: 13px;
+    font-size: 1.3rem;
+    margin-left: 6px;
+    padding-top: $baseline*9;
 }
 
 .film-awards-banner {
@@ -213,4 +218,17 @@
     display: block;
     margin: 0 auto;
     width: 480px;
+}
+
+/* Email Validation
+   ========================================================================== */
+
+.form-field.form-field--email-validation {
+    position: relative;
+    padding-left: 24px;
+    i {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
 }

@@ -45,7 +45,7 @@ We do this by evaluating the client's capability, like so :-
 
 ```
 var isModern = function() { 
-     return ('querySelector' in document && 'addEventListener' in window && 'localStorage' in window)
+     return ('querySelector' in document && 'addEventListener' in window && 'localStorage' in window && 'sessionStorage' in window)
 })
 ```
 
@@ -71,6 +71,7 @@ Here are the browsers and devices we currently regularly test on:-
 
 ### Desktop
 
+-  IE 11
 -  IE 10
 -  IE 9
 -  Firefox (latest stable)

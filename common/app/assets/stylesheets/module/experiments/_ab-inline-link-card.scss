@@ -9,9 +9,11 @@
 .furniture--left {
     float: left;
     clear: left;
-    width: $a-leftCol-width;
-    margin-left: ($a-leftCol-width + $gs-gutter) * -1;
-    margin-bottom: $baseline*2;
+    @include rem((
+        width: $a-leftCol-width,
+        margin-left: ($a-leftCol-width + $gs-gutter) * -1,
+        margin-bottom: $baseline*2
+    ));
 
     @include mq($a-leftCol-trigger) {
         .test-link-card--on & {
@@ -20,16 +22,12 @@
     }
 
     @include mq(wide) {
-        margin-left: (gs-span(3) + $gs-gutter) * -1;
-        width: gs-span(3);
+        @include rem((
+            margin-left: (gs-span(3) + $gs-gutter) * -1,
+            width: gs-span(3)
+        ));
     }
 }
-.furniture--right {
-    @include mq($a-rightCol-trigger) {
-        display: block;
-    }
-}
-
 
 /* Card
    ========================================================================== */
@@ -62,23 +60,24 @@
     }
 }
 .card__title {
-    min-height: gs-height(1);
-    margin-bottom: $baseline*2;
-
+    @include box-sizing(border-box);
+    @include rem((
+        min-height: gs-height(1),
+        margin-bottom: $baseline*2
+    ));
     font-family: $serifheadline !important;
     font-size: 18px !important;
     font-size: 1.8rem !important;
     line-height: 26px !important;
     line-height: 2.6rem !important;
-    @include box-sizing(border-box);
 }
 .card__body {
-    padding: $baseline*1.5 0 $baseline*6;
-    position: relative;
     @include box-sizing(border-box);
+    @include rem((padding: $baseline*1.5 0 $baseline*6));
+    position: relative;
 }
 .card__meta {
-    padding-bottom: $baseline*2;
+    @include rem((padding-bottom: $baseline*2));
     border-bottom: 1px solid $c-neutral4;
     overflow: auto;
     @include fs-data(3);
@@ -87,12 +86,14 @@
     .dateline {
         float: left;
         position: relative;
-        padding: 0 $gs-gutter/2 0 14px;
-        min-width: gs-span(1) - 16;
+        @include rem((
+            padding: 0 $gs-gutter/2 0 14px,
+            min-width: gs-span(1) - 16
+        ));
 
         i {
             position: absolute;
-            top: 3px;
+            @include rem((top: 3px));
             left: 0;
         }
     }
@@ -101,12 +102,14 @@
         top: 0;
 
         a {
-            margin-left: $gs-gutter/2 - 1;
+            @include rem((margin-left: $gs-gutter/2 - 1));
             color: inherit;
         }
         i {
-            margin-right: 3px;
-            margin-bottom: -3px;
+            @include rem((
+                margin-right: 3px,
+                margin-bottom: -3px
+            ));
             @extend .i-comment-light-grey;
         }
     }
@@ -135,30 +138,8 @@
 }
 .card__appendix {
     color: #8c8c8c;
-    padding-top: $baseline;
+    @include rem((padding-top: $baseline));
 }
 .card--left {
     padding-top: 6px; // Aligns border with top of text
-}
-.card--right {
-
-    margin-top: $baseline*4;
-
-    .card__title {
-        @include fs-header(2);
-    }
-    .card__body {
-        min-height: gs-height(2);
-        padding-bottom: 0;
-        margin-bottom: $gs-baseline;
-        @include fs-header(2);
-    }
-}
-
-.card-wrapper--right {
-    display: none;
-
-    &.is-visible {
-        display: block;
-    }
 }

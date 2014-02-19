@@ -1,7 +1,7 @@
 package services
 
 import model._
-import conf.{SwitchingContentApi, ElasticSearchContentApi}
+import conf.SwitchingContentApi
 import model.Section
 import common._
 import com.gu.openplatform.contentapi.model.ItemResponse
@@ -12,7 +12,7 @@ import controllers.ImageContentPage
 import scala.concurrent.Future
 import play.api.mvc.{RequestHeader, SimpleResult}
 
-case class IndexPage(page: MetaData, trails: Seq[Trail])
+case class IndexPage(page: MetaData, trails: Seq[Content])
 
 trait Index extends ConciergeRepository with QueryDefaults {
 
@@ -49,7 +49,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
             val page = Page(s"$leftSide+$rightSide", tag1.section, pageName, s"GFE:${tag1.section}:$pageName")
             Left(IndexPage(page, trails))
         }
-    }.recover(suppressApiNotFound)
+    }.recover(convertApiExceptions)
   }
 
   def index(edition: Edition, path: String)(implicit request: RequestHeader) = {
@@ -59,7 +59,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
       .response.map {response =>
       val page = response.tag.flatMap(t => tag(response)).orElse(response.section.flatMap(t => section(response)))
       ModelOrResult(page, response)
-    }.recover(suppressApiNotFound)
+    }.recover(convertApiExceptions)
   }
 
   private def section(response: ItemResponse) = {
@@ -95,7 +95,7 @@ trait ImageQuery extends ConciergeRepository with QueryDefaults {
 
   def image(edition: Edition, path: String): Future[Either[ImageContentPage, SimpleResult]]= {
     log.info(s"Fetching image content: $path for edition ${edition.id}")
-    val response = ElasticSearchContentApi.item(path, edition)
+    val response = SwitchingContentApi().item(path, edition)
       .showExpired(true)
       .showFields("all")
       .response.map { response =>
@@ -104,6 +104,6 @@ trait ImageQuery extends ConciergeRepository with QueryDefaults {
       mainContent.map { content => Left(ImageContentPage(content,storyPackage)) }.getOrElse(Right(NotFound))
     }
 
-    response recover suppressApiNotFound
+    response recover convertApiExceptions
   }
 }

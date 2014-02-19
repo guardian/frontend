@@ -15,6 +15,7 @@ GET     /email-prefs                                    @controllers.EmailContro
 POST    /email-prefs                                    @controllers.EmailController.savePreferences
 GET     /profile/public                                 @controllers.PublicProfileController.displayForm
 POST    /profile/public                                 @controllers.PublicProfileController.submitForm
+GET     /verify-email/:token                            @controllers.EmailVerificationController.verify(token: String)
 
 GET     /ethical-awards/complete                        @controllers.EthicalAwardsController.complete
 GET     /ethical-awards/:formReference                  @controllers.EthicalAwardsController.ethicalAwardsForm(formReference: String)
@@ -22,3 +23,4 @@ GET     /film-awards/complete                           @controllers.FilmAwardsC
 GET     /film-awards/:formReference                     @controllers.FilmAwardsController.filmAwardsForm(formReference: String)
 GET     /form/complete                                  @controllers.FormstackController.complete
 GET     /form/:formReference                            @controllers.FormstackController.formstackForm(formReference: String)
+

@@ -15,7 +15,6 @@ function (
     qwery,
     bonzo,
     ajax,
-
     userPrefs,
     detect,
     documentWrite,
@@ -46,18 +45,25 @@ function (
 
             for (var c in contexts) {
                 var els = contexts[c].querySelectorAll('.ad-slot');
-                for(var i = 0, l = els.length; i < l; i += 1) {
-                    var container = els[i].querySelector('.ad-container'),
-                        name,
-                        slot;
-                    // Empty all ads in the dom
-                    container.innerHTML = '';
-                    // Load the currContext ads only
-                    if (contexts[c] === currContext ) {
-                        name = els[i].getAttribute('data-' + size);
-                        slot = new DocumentWriteSlot(name, container);
-                        slot.setDimensions(dimensionMap[name]);
-                        slots.push(slot);
+
+                for(var i = 0, l = els.length; i < l; i++) {
+                    var el = els[i];
+
+                    if($(el).css('display') !== 'none') {
+                        var container = el.querySelector('.ad-container'),
+                            name,
+                            slot;
+
+                        // Empty all ads in the DOM
+                        container.innerHTML = '';
+
+                        // Load the currContext ads only
+                        if (contexts[c] === currContext) {
+                            name = el.getAttribute('data-' + size);
+                            slot = new DocumentWriteSlot(name, container);
+                            slot.setDimensions(dimensionMap[name]);
+                            slots.push(slot);
+                        }
                     }
                 }
             }
@@ -79,22 +85,14 @@ function (
                 slots[i].render();
             }
         }
-
-        //This is a horrible hack to hide slot if no creative is returned from oas
-        //Check existence of empty tracking pixel
-        if(currConfig.page.pageId === "") {
-            var middleSlot = currContext.querySelector('.ad-slot-middle-banner-ad');
-
-            if(middleSlot && middleSlot.innerHTML.indexOf("x55/default/empty.gif")  !== -1) {
-                bonzo(middleSlot).hide();
-            }
-        }
     }
 
     function destroy() {
-        for (var i = 0, j = slots.length; i<j; ++i) {
-            slots[i].el.innerHTML = '';
-            slots[i].loaded = false;
+        if (slots.length) {
+            for (var i = 0, j = slots.length; i<j; ++i) {
+                slots[i].el.innerHTML = '';
+                slots[i].loaded = false;
+            }
         }
     }
 
@@ -112,25 +110,6 @@ function (
 
     function hide() {
         $('.ad-slot').addClass('is-invisible');
-    }
-
-    //Temporary middle slot needs better implementation in the future
-    function generateMiddleSlot() {
-        var slot,
-            prependTo;
-
-        if(currConfig.page.pageId === "") {
-            prependTo = currContext.querySelector('.front-trailblock-commentisfree li');
-
-            if(!bonzo(prependTo).hasClass('middleslot-loaded')) {
-                bonzo(prependTo).addClass('middleslot-loaded');
-
-                slot = '<div class="ad-slot-middle-banner-ad ad-slot" data-link-name="ad slot middle-banner-ad"';
-                slot+= ' data-base="x55" data-median="x55"><div class="ad-container"></div></div>';
-
-                bonzo(prependTo).after(slot);
-            }
-        }
     }
 
     return {

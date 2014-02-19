@@ -4,30 +4,16 @@
 #preloads {
     @include gs-container;
     clear: both;
-    margin-top: $headerHeight;
-}
-
-@include mq(tablet) {
-    #header.has-nav + #preloads {
-        margin-top: 104px;
-    }
 }
 
 
 /* Global header and navigation
    ========================================================================== */
 
-#header.js-site-message {
-    top: auto
-}
-
 #header {
     min-height: $headerHeight;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1050; // On top of Google "Adchoices" label which has z-index: 1040…
+    position: relative;
+    z-index: 1051; // On top of Google "Adchoices" label which has z-index: 1050…
 
     /* These styles extend the top bars to the screen edges */
     @include mq(tablet) {
@@ -47,6 +33,7 @@
         }
 
         &.has-nav {
+            min-height: $headerHeight + 40px;
             &:after {
                 top: $headerHeight;
                 height: 40px;
@@ -64,13 +51,14 @@
 .guardian-logo-wrapper {
     float: left;
     margin: 20px 0 18px $gs-gutter/2;
+    margin-left: rem($gs-gutter/2); // Only horizontal space is scalable
 
     i {
         display: block;
     }
 
     @include mq(mobileLandscape) {
-        margin-left: $gs-gutter;
+        @include rem((margin-left: $gs-gutter));
     }
 }
 
@@ -79,12 +67,16 @@
    ========================================================================== */
 
 .monocolumn-wrapper {
-    padding-left: $gs-gutter / 2;
-    padding-right: $gs-gutter / 2;
+    @include rem((
+        padding-left: $gs-gutter / 2,
+        padding-right: $gs-gutter / 2
+    ));
 
     @include mq(mobileLandscape) {
-        padding-left: $gs-gutter;
-        padding-right: $gs-gutter;
+        @include rem((
+            padding-left: $gs-gutter,
+            padding-right: $gs-gutter
+        ));
     }
 
     .page-header,
@@ -96,7 +88,7 @@
 
 @include mq(tablet) {
     .monocolumn-wrapper {
-        max-width: gs-span(8);
+        @include rem((max-width: gs-span(8)));
         margin-left: auto;
         margin-right: auto;
     }
@@ -114,49 +106,45 @@
  */
 
 .component {
-    margin-bottom: 20px;
+    @include rem((margin-bottom: 20px));
 }
 
 .box-indent {
-    padding: 0 $gs-gutter/2 $baseline;
+    @include rem((padding: 0 $gs-gutter/2 $baseline));
 
     @include mq(mobileLandscape) {
-        padding-left: $gs-gutter;
-        padding-right: $gs-gutter;
+        @include rem((
+            padding-left: $gs-gutter,
+            padding-right: $gs-gutter
+        ));
     }
 }
 
 
+/* Inline images: included here for faster painting
+   ========================================================================== */
+
 .img--inline {
-    width: $inArticleInlineImgWidth;
     float: left;
     clear: left;
-    margin: 3px $gs-gutter 0 0;
+    @include rem((
+        width: $inArticleInlineImgWidth,
+        margin: 3px $gs-gutter 0 0
+    ));
 
     @include mq(mobileLandscape) {
-        width: gs-span(2);
+        @include rem((width: gs-span(2)));
     }
 
     figcaption {
-        padding-top: $baseline;
+        @include rem((padding-top: $baseline));
         word-wrap: break-word;
     }
 }
 
 .img-tiny.img--inline {
     width: auto;
-    max-width: $inArticleInlineImgWidth;
-}
-
-
-/* Preloads
-   ========================================================================== */
-
-#preloads-inner {
-    position: relative;
-    top: 0;
-    height: 100%;
-    width: 100%;
+    @include rem((max-width: $inArticleInlineImgWidth));
 }
 
 
@@ -164,11 +152,11 @@
    ========================================================================== */
 
 .preload-msg {
-    padding: 50px 50px 250px 50px;
+    @include rem((padding: 50px 50px 250px 50px));
     text-align: center;
 }
 
 .preload-msg .is-updating {
     display: block;
-    margin: 10px auto;
+    @include rem((margin: 10px auto));
 }

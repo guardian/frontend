@@ -1,40 +1,30 @@
 /* global _: true */
 define([
     'knockout',
-    'modules/vars',
     'utils/parse-query-params',
     'utils/url-abs-path',
-    'utils/clean-clone',
-    'modules/authed-ajax',
-    'models/group',
-    'models/article',
-    'modules/content-api',
-    'modules/ophan-api'
+    'utils/remove-by-id',
+    'models/group'
 ], function(
     ko,
-    vars,
     parseQueryParams,
     urlAbsPath,
-    cleanClone,
-    authedAjax,
-    Group,
-    Article,
-    contentApi,
-    ophanApi
+    removeById,
+    Group
 ) {
-    var sourceList,
-        storage = window.localStorage,
+    var storage = window.localStorage,
         storageKey ='gu.fronts-tool.drag-source';
 
-    function init() {
+    window.addEventListener("dragover", function(event) {
+        event.preventDefault();
+    },false);
 
-        window.addEventListener("dragover", function(event) {
-            event.preventDefault();
-        },false);
+    window.addEventListener("drop", function(event) {
+        event.preventDefault();
+    },false);
 
-        window.addEventListener("drop", function(event) {
-            event.preventDefault();
-        },false);
+    function droppable(opts) {
+        var sourceList;
 
         ko.bindingHandlers.makeDropabble = {
             init: function(element) {
@@ -42,7 +32,7 @@ define([
                 element.addEventListener('dragstart', function(event) {
                     var sourceItem = ko.dataFor(event.target);
 
-                    if (sourceItem.constructor === Article) {
+                    if (_.isFunction(sourceItem.get)) {
                         storage.setItem(storageKey, JSON.stringify(sourceItem.get()));
                     }
                     sourceList = ko.dataFor(element);
@@ -84,7 +74,7 @@ define([
                         id = event.testData ? event.testData : event.dataTransfer.getData('Text'),
                         sourceItem,
                         position,
-                        article,
+                        newItem,
                         groups,
                         insertAt,
                         isAfter = false;
@@ -99,7 +89,7 @@ define([
                         item.state.underDrag(false);
                     });
 
-                    // If the item isn't dropped onto an article, asssume it's to be appended *after* the other items in this group,
+                    // If the item isn't dropped onto an item, assume it's to be appended *after* the other items in this group,
                     if (targetItem.constructor === Group) {
                         targetItem = _.last(targetList.items());
                         if (targetItem) {
@@ -117,7 +107,7 @@ define([
                         }
                     }
 
-                    position = targetItem && targetItem.props ? targetItem.props.id() : undefined;
+                    position = targetItem && targetItem.id ? targetItem.id : undefined;
 
                     _.each(parseQueryParams(id), function(url){
                         if (url && url.match(/^http:\/\/www.theguardian.com/)) {
@@ -143,104 +133,44 @@ define([
                         sourceList = undefined;
                     }
 
-                    removeMatchingItems(targetList, id);
+                    removeById(targetList.items, id);
 
                     insertAt = targetList.items().indexOf(targetItem) + isAfter;
                     insertAt = insertAt === -1 ? targetList.items().length : insertAt;
- 
-                    article = new Article({
-                        id: id,
-                        meta: sourceItem ? cleanClone(sourceItem.meta) : undefined,
-                        parent: targetList.parent,
-                        parentType: targetList.parentType
-                    });
 
-                    targetList.items.splice(insertAt, 0, article);
+                    newItem = opts.newItemConstructor(id, sourceItem, targetList);
 
-                    contentApi.validateItem(article)
+                    if (!newItem) {
+                        alertBadContent(id);
+                        return;
+                    }
+
+                    targetList.items.splice(insertAt, 0, newItem);
+
+                    opts.newItemValidator(newItem)
                     .fail(function() {
-                        removeMatchingItems(targetList, id);
-                        alertBadContent();
+                        removeById(targetList.items, id);
+                        alertBadContent(id);
                     })
                     .done(function() {
-                        var itemMeta;
-
-                        ophanApi.decorateItems([article]);
-
                         if (_.isFunction(targetList.reflow)) {
                             targetList.reflow();
                         }
 
-                        if (!targetList.parent) { // no need for persistence
+                        if (!targetList.parent) {
                             return;
                         }
 
-                        if (targetList.parentType === 'Article') {
-                            targetList.parent.save();
-                            return;
-                        }
-                        
-                        if (targetList.parentType !== 'Collection') {
-                            return;
-                        }
-
-                        itemMeta = sourceItem && sourceItem.meta ? sourceItem.meta : {};
-
-                        if (targetList.parent.groups && targetList.parent.groups.length > 1) {
-                            itemMeta.group = targetList.group + '';
-                        } else {
-                            delete itemMeta.group;
-                        }
-
-                        authedAjax.updateCollection(
-                            'post',
-                            targetList.parent,
-                            {
-                                item:     id,
-                                position: position,
-                                after:    isAfter,
-                                live:     vars.state.liveMode(),
-                                draft:   !vars.state.liveMode(),
-                                itemMeta: _.isEmpty(itemMeta) ? undefined : itemMeta
-                            }
-                        );
-
-                        if (!sourceList || sourceList.keepCopy || sourceList.parentType !== 'Collection') {
-                            return;
-                        }
-
-                        if (sourceList.parent.id === targetList.parent.id) {
-                            return;
-                        }
-
-                        removeMatchingItems(sourceList, id);
-
-                        authedAjax.updateCollection(
-                            'delete',
-                            sourceList.parent,
-                            {
-                                item:   id,
-                                live:   vars.state.liveMode(),
-                                draft: !vars.state.liveMode()
-                            }
-                        );
+                        opts.newItemPersister(newItem, sourceItem, sourceList, targetList, id, position, isAfter);
                     });
                 }, false);
             }
         };
     }
 
-    function removeMatchingItems(list, id) {
-        list.items.remove(function(item) {
-            return item.props.id() === id;
-        });
+    function alertBadContent(id) {
+        window.alert('Sorry, but you can\'t add' + (id ? ': ' + id : ' that'));
     }
 
-    function alertBadContent() {
-        window.alert('Sorry, that isn\'t a Guardian article!');
-    }
-
-    return {
-        init: _.once(init)
-    };
+    return droppable;
 });

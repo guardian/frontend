@@ -56,9 +56,8 @@ Local Install Requirements
 * Installed Open JDK `sudo apt-get install openjdk-7-jdk`
 * Installed Node.js (https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager)
 * Installed npm (Node package manager - you quite possibly already have this)
-* Installed GraphicsMagick
 * Installed Grunt (build tool) `sudo npm -g install grunt-cli`
-* Installed Ruby >= v1.9.x & [bundler](http://gembundler.com/) (You may already have this installed, but run `ruby -v` to check version number)
+* Installed Ruby >= v1.9.x (on Ubuntu: `sudo apt-get install ruby ruby-dev`) & [bundler](http://gembundler.com/) (You may already have this installed, but run `ruby -v` to check version number)
 
 
 NPM ownership

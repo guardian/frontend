@@ -6,7 +6,8 @@ define([
     'common/modules/discussion/api',
     'common/modules/identity/api',
     'common/modules/component',
-    'common/modules/discussion/user-avatars'
+    'common/modules/discussion/user-avatars',
+    'common/modules/identity/validation-email'
 ], function(
     bean,
     bonzo,
@@ -15,7 +16,8 @@ define([
     DiscussionApi,
     IdentityApi,
     Component,
-    UserAvatars
+    UserAvatars,
+    ValidationEmail
 ) {
 
 /**
@@ -70,7 +72,7 @@ CommentBox.prototype.errorMessages = {
     USER_BANNED: 'Commenting has been disabled for this account (<a href="/community-faqs#321a">why?</a>).',
     API_ERROR: 'Sorry, there was a problem posting your comment.',
     EMAIL_VERIFIED: '<span class="d-comment-box__error-meta">Sent. Please check your email to verify '+
-        (IdentityApi.getUserFromCookie() ? IdentityApi.getUserFromCookie().primaryEmailAddress : ' your email address') +'</span>.',
+        (IdentityApi.getUserFromCookie() ? IdentityApi.getUserFromCookie().primaryEmailAddress : ' your email address') +'. Once verified post your comment.</span>',
     EMAIL_VERIFIED_FAIL: 'We are having technical difficulties. Please try again later or '+
         '<a href="/send/email" class="js-id-send-validation-email"><strong>resend the verification</strong></a>.',
     EMAIL_NOT_VERIFIED: 'Please confirm your email address to post your first comment.<br />'+
@@ -88,7 +90,11 @@ CommentBox.prototype.defaultOptions = {
     premod: false,
     focus: false,
     state: 'top-level',
-    replyTo: null
+    replyTo: null,
+    switches: {
+        discussionVerifiedEmailPosting: false // Off by default here and in backend
+    },
+    priorToVerificationDate: new Date(1392719401337) // Tue Feb 18 2014 10:30:01 GMT
 };
 
 /**
@@ -165,32 +171,58 @@ CommentBox.prototype.ready = function() {
  * @param {Event}
  */
 CommentBox.prototype.postComment = function(e) {
-    var body = this.getElem('body'),
+    var self = this,
+        body = this.getElem('body'),
         comment = {
             body: this.getElem('body').value
         };
 
     e.preventDefault();
-    this.clearErrors();
+    self.clearErrors();
 
-    if (comment.body === '') {
-        this.error('EMPTY_COMMENT_BODY');
-    }
+    var validEmailCommentSubmission = function () {
+        if (comment.body === '') {
+            self.error('EMPTY_COMMENT_BODY');
+        }
 
-    else if (comment.body.length > this.options.maxLength) {
-        this.error('COMMENT_TOO_LONG', '<b>Comments must be shorter than '+ this.options.maxLength +' characters.</b>'+
-            'Yours is currently '+ (comment.body.length-this.options.maxLength) +' characters too long.');
-    }
+        if (comment.body.length > self.options.maxLength) {
+            self.error('COMMENT_TOO_LONG', '<b>Comments must be shorter than '+ self.options.maxLength +' characters.</b>'+
+                'Yours is currently '+ (comment.body.length-self.options.maxLength) +' characters too long.');
+        }
 
-    if (this.options.replyTo) {
-        comment.replyTo = this.options.replyTo;
-    }
+        if (self.options.replyTo) {
+            comment.replyTo = self.options.replyTo;
+        }
 
-    if (this.errors.length === 0) {
-        this.setFormState(true);
-        DiscussionApi
-            .postComment(this.getDiscussionId(), comment)
-            .then(this.success.bind(this, comment), this.fail.bind(this));
+        if (self.errors.length === 0) {
+            self.setFormState(true);
+            DiscussionApi
+                .postComment(self.getDiscussionId(), comment)
+                .then(self.success.bind(self, comment), self.fail.bind(self));
+        }
+    };
+
+    var  invalidEmailError = function () {
+        self.error('EMAIL_NOT_VERIFIED');
+        ValidationEmail.init(self.context);
+    };
+
+    if (self.options.switches.discussionVerifiedEmailPosting && !self.getUserData().emailVerified) {
+        // Cookie could be stale so lets refresh and check from the api
+        var createdDate = new Date(self.getUserData().accountCreatedDate);
+        if (createdDate > self.options.priorToVerificationDate) {
+            IdentityApi.getUserFromApiWithRefreshedCookie().then(function (response) {
+                if (response.user.statusFields.userEmailValidated === true) {
+                    validEmailCommentSubmission();
+                } else {
+                    invalidEmailError();
+                }
+            });
+        } else {
+            validEmailCommentSubmission();
+        }
+    } else {
+        validEmailCommentSubmission();
     }
 };
 

@@ -9,7 +9,7 @@
     float: right;
     width: auto;
     height: 28px;
-    padding: 16px $gutter 15px 0;
+    padding: 16px $gutter 14px 0;
     background-color: transparent;
     vertical-align: top;
     font-family: $serif;
@@ -50,12 +50,13 @@
 
 .control--sections {
     @include mq(tablet) {
-        padding: 0 $gutter 13px 0;
+        padding: 0 $gutter $gs-baseline + 1 0;
         background-color: transparent;
         color: #444444;
         position: absolute;
         right: 0;
         top: $headerHeight;
+        z-index: 1;
     }
     &.is-active {
         @include mq(1157px, 1299px) {
@@ -110,7 +111,7 @@ span.control__menu.i-menu {
    ========================================================================== */
 
 .control--topstories {
-    padding: 18px 0 13px 0;
+    padding: 18px 0 $gs-baseline 0;
 
     span {
         display: none;
@@ -162,7 +163,7 @@ span.control__menu.i-menu {
    ========================================================================== */
 
 .control--profile {
-    padding: 18px 0 13px;
+    padding: 18px 0 $gs-baseline;
     width: auto;
     white-space: nowrap;
 

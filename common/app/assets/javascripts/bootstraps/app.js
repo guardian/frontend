@@ -17,13 +17,11 @@ define([
     'common/bootstraps/tag',
     'common/bootstraps/section',
     'common/bootstraps/imagecontent',
-    
-    'common/bootstraps/facia',
+
     'common/bootstraps/football',
     'common/bootstraps/article',
     'common/bootstraps/video',
     'common/bootstraps/gallery',
-    'common/bootstraps/interactive',
     'common/bootstraps/identity'
 ], function (
     domReady,
@@ -43,12 +41,11 @@ define([
     Tag,
     Section,
     ImageContent,
-    Facia,
+
     Football,
     Article,
     Video,
     Gallery,
-    Interactive,
     Identity
 ) {
 
@@ -67,9 +64,8 @@ define([
                 return false;
             }
             var e = new Errors({
-                window: window,
                 isDev: config.page.isDev,
-                beaconUrl: config.page.beaconUrl
+                buildNumber: config.page.buildNumber
             });
             e.init();
             mediator.on('module:error', e.log);
@@ -115,7 +111,9 @@ define([
 
                 // Front
                 if (config.page.isFront) {
-                    Facia.init(config, context);
+                    require('bootstraps/facia', function(facia) {
+                        facia.init(config, context);
+                    });
                 }
 
                 //Football
@@ -135,10 +133,6 @@ define([
 
                 if (config.page.contentType === 'Gallery') {
                     Gallery.init(config, context);
-                }
-
-                if (config.page.contentType === 'Interactive') {
-                    Interactive.init(config, context);
                 }
 
                 if (config.page.contentType === 'Tag') {

@@ -1,42 +1,43 @@
 define([
     'common/modules/experiments/ab',
     'qwery',
+    'bean',
     'modules/abtests/participation',
-    'modules/abtests/breakdown'
+    'modules/abtests/abtest-item'
 ], function(
     abTests,
     qwery,
+    bean,
     Participation,
-    Breakdown
+    Item
 ) {
-    function renderParticipations() {
-        var elem = qwery('.participation-section');
-
-        if (elem) {
-            var active = abTests.getActiveTests();
-
-            active.forEach(function(test) {
-                var participation = new Participation({ test: test});
-                participation.render(elem);
-            });
-        }
-    }
-
-    function renderBreakdown() {
-        var elem = qwery('.breakdown-section');
-
-        if (elem) {
-            var expired = abTests.getExpiredTests();
-            var active = abTests.getActiveTests();
-
-            var breakdown = new Breakdown({ active: active, expired: expired});
-            breakdown.render(elem);
-        }
+    function renderTests(tests, active, elem){
+        var items = tests.map(function(test){ return new Item({test: test, active: active}); });
+        items.forEach(function(i) { i.render(elem); });
+        return items;
     }
 
     function initialise() {
-        renderBreakdown();
-        renderParticipations();
+
+        renderTests(abTests.getActiveTests(), true, qwery('.abtests-active'));
+        var expiredTests = renderTests(abTests.getExpiredTests(), false, qwery('.abtests-expired'));
+
+        var $expired = qwery('.abtests-expired')[0];
+
+        bean.on(qwery('.abtests-expired-title a')[0], 'click', function(e) {
+            e.preventDefault();
+            if (e.currentTarget.textContent == "show") {
+                e.currentTarget.textContent = "hide";
+                $expired.style.display = "block";
+                expiredTests.forEach(function(t){t.renderChart();});
+            } else {
+                e.currentTarget.textContent = "show";
+                $expired.style.display = "none";
+            }
+        });
+
+        // timeout on this to allow google charts to render before hiding the container
+        setTimeout(function() { $expired.style.display = 'none'; }, 0);
     }
 
     return {

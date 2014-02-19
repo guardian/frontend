@@ -41,7 +41,7 @@ define([
             $navArrows,
             $images;
 
-        this.selector = '.gallerythumbs';
+        this.selector = '.js-gallerythumbs';
         this.galleryEndpoint = ''; // Hook for tests
 
         this.init = function(opts) {
@@ -54,8 +54,12 @@ define([
                 bean.on(context, 'click', self.selector, function(e) {
                     e.preventDefault();
 
-                    var el = (e.currentTarget.nodeName === "A") ? e.currentTarget : e.currentTarget.querySelector('a');
-                    var galleryUrl = el.getAttribute('href');
+                    var currentTarget = e.currentTarget,
+                        galleryUrl = $(currentTarget).attr('data-gallery-url');
+                    if (!galleryUrl) {
+                        var el = (currentTarget.nodeName === "A") ? currentTarget : currentTarget.querySelector('a');
+                        galleryUrl = el.getAttribute('href');
+                    }
 
                     // Go to a specific image if it's in the query string. eg: index=3
                     if (galleryUrl.indexOf('index=') !== -1) {
@@ -145,7 +149,7 @@ define([
                 self.layout();
             });
 
-            mediator.on('modules:overlay:close', function() {
+            mediator.on('modules:overlay:hide', function() {
                 // Remove events
                 bean.off(overlay.toolbarNode, 'click');
                 bean.off(overlay.bodyNode, 'click touchmove touchend');

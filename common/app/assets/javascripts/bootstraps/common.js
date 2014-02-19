@@ -26,6 +26,7 @@ define([
     'common/modules/ui/relativedates',
     'common/modules/analytics/clickstream',
     'common/modules/analytics/omniture',
+    'common/modules/analytics/scrollDepth',
     'common/modules/adverts/adverts',
     'common/utils/cookies',
     'common/modules/analytics/omnitureMedia',
@@ -39,7 +40,9 @@ define([
     "common/modules/ui/message",
     "common/modules/identity/autosignin",
     'common/modules/adverts/article-body-adverts',
-    "common/modules/analytics/commercial/tags/container"
+    "common/modules/analytics/commercial/tags/container",
+    "common/modules/interactive/loader",
+    "common/modules/onward/right-hand-component-factory"
 ], function (
     $,
     mediator,
@@ -68,6 +71,7 @@ define([
     RelativeDates,
     Clickstream,
     Omniture,
+    ScrollDepth,
     Adverts,
     Cookies,
     OmnitureMedia,
@@ -81,7 +85,9 @@ define([
     Message,
     AutoSignin,
     ArticleBodyAdverts,
-    TagContainer
+    TagContainer,
+    Interactive,
+    RightHandComponentFactory
 ) {
 
     var hasBreakpointChanged = detect.hasCrossedBreakpoint();
@@ -182,8 +188,18 @@ define([
             ab.run(config, context);
         },
 
+        initRightHandComponent: function(config, context) {
+
+            if(config.switches.rightHandMostPopular && config.page.contentType === 'Article') {
+              var r = new RightHandComponentFactory({
+                  wordCount: config.page.wordCount,
+                  mediator: mediator
+              });
+           }
+        },
+
         logLiveStats: function (config) {
-            liveStats.log({ beaconUrl: config.page.beaconUrl }, config);
+            liveStats.log(config);
         },
 
         loadAnalytics: function (config, context) {
@@ -201,57 +217,36 @@ define([
                         }).init();
                     }
                 });
-
             });
 
-            if (config.switches.ophanMultiEvent) {
+            if (config.switches.ophan) {
                 require('ophan/ng', function (ophan) {
                     ophan.record({'ab': ab.getParticipations()});
+
+                    if(config.switches.scrollDepth) {
+                        mediator.on('scrolldepth:data', ophan.record);
+
+                        var sd = new ScrollDepth({
+                            isContent: config.page.contentType === "Article"
+                        });
+                    }
                 });
             }
-
-            require(config.page.ophanUrl, function (Ophan) {
-
-                if (!Ophan.isInitialised) {
-                    Ophan.isInitialised = true;
-                    Ophan.initLog();
-                }
-
-                Ophan.additionalViewData(function() {
-
-                    var viewData = {};
-
-                    var audsci = storage.local.get('gu.ads.audsci');
-                    if (audsci) {
-                        viewData.audsci_json = JSON.stringify(audsci);
-                    }
-
-                    var participations = ab.getParticipations(),
-                        participationsKeys = Object.keys(participations);
-
-                    if (participationsKeys.length > 0) {
-                        var testData = participationsKeys.map(function(k) {
-                            return { id: k, variant: participations[k].variant };
-                        });
-                        viewData.experiments_json = JSON.stringify(testData);
-                    }
-
-                    return viewData;
-                });
-
-                Ophan.sendLog(undefined, true);
-            });
         },
 
         loadAdverts: function (config) {
-            if(!userPrefs.isOff('adverts') && config.switches && config.switches.adverts && !config.page.blockAds) {
-
+            if(!userPrefs.isOff('adverts') && config.switches.adverts && !config.page.blockVideoAds && !config.page.shouldHideAdverts) {
                 var resizeCallback = function() {
                     hasBreakpointChanged(Adverts.reload);
                 };
 
                 if(config.page.contentType === 'Article' && !config.page.isLiveBlog) {
-                    var articleBodyAdverts = new ArticleBodyAdverts();
+                    // Limiting inline ads to 1 until support for different inline
+                    // ads is enabled
+                    var articleBodyAdverts = new ArticleBodyAdverts({
+                        inlineAdLimit: 1,
+                        wordCount: config.page.wordCount
+                    });
 
                     // Add the body adverts to the article page
                     articleBodyAdverts.init();
@@ -260,6 +255,7 @@ define([
                         hasBreakpointChanged(function() {
                             articleBodyAdverts.reload();
                             Adverts.reload();
+                            mediator.emit('modules:adverts:reloaded');
                         });
                     };
                 }
@@ -275,7 +271,7 @@ define([
 
         loadVideoAdverts: function(config) {
             mediator.on('page:common:ready', function(config, context) {
-                if(config.switches.videoAdverts && !config.page.blockAds) {
+                if(config.switches.videoAdverts && !config.page.blockVideoAds) {
                     Array.prototype.forEach.call(context.querySelectorAll('video'), function(el) {
                         var support = detect.getVideoFormatSupport();
                         var a = new VideoAdvert({
@@ -293,13 +289,14 @@ define([
 
         cleanupCookies: function() {
             Cookies.cleanUp(["mmcore.pd", "mmcore.srv", "mmid", 'GU_ABFACIA', 'GU_FACIA']);
+            Cookies.cleanUpDuplicates(['GU_ALPHA','GU_VIEW']);
         },
 
         // opt-in to the responsive alpha
         optIn: function () {
             var countMeIn = /#countmein/.test(window.location.hash);
             if (countMeIn) {
-                Cookies.add("GU_VIEW", "mobile", 365);
+                Cookies.add("GU_VIEW", "responsive", 365);
             }
         },
 
@@ -307,15 +304,16 @@ define([
         displayReleaseMessage: function (config) {
 
             var path = (document.location.pathname) ? document.location.pathname : '/',
-                exitLink = '/preference/platform/desktop?page=' + encodeURIComponent(path + '?view=desktop'),
-                msg = '<p class="site-message__message">' +
-                            'You’re viewing an alpha release of the Guardian’s responsive website. <a href="/help/2013/oct/04/alpha-testing-and-evolution-of-our-mobile-site">Find out more</a>' +
+                exitLink = '/preference/platform/classic?page=' + encodeURIComponent(path + '?view=classic'),
+                msg = '<p class="site-message__message" id="site-message__message">' +
+                            'You’re viewing a beta release of the Guardian’s responsive website.' +
+                            ' We’d love to hear your <a href="https://s.userzoom.com/m/MSBDMTBTMTE5" data-link-name="feedback">feedback</a>' +
                       '</p>' +
                       '<ul class="site-message__actions unstyled">' +
                            '<li class="site-message__actions__item">' +
                                '<i class="i i-back"></i>' +
                                    '<a class="js-main-site-link" rel="nofollow" href="' + exitLink + '"' +
-                                       'data-link-name="opt-out">Opt-out and return to standard desktop site </a>' +
+                                       'data-link-name="opt-out">Opt-out and return to our current site </a>' +
                            '</li>' +
                       '</ul>';
 
@@ -324,8 +322,41 @@ define([
 
             if (config.switches.releaseMessage && !alreadyOptedIn && (detect.getBreakpoint() !== 'mobile')) {
                 // force the visitor in to the alpha release for subsequent visits
-                Cookies.add("GU_VIEW", "mobile", 365);
+                Cookies.add("GU_VIEW", "responsive", 365);
                 releaseMessage.show(msg);
+            }
+        },
+
+        displayOnboardMessage: function (config) {
+            if(window.location.hash === '#opt-in-message' && config.switches.networkFrontOptIn) {
+                bean.on(document, 'click', '.js-site-message-close', function() {
+                    Cookies.add("GU_VIEW", "responsive", 365);
+                    Cookies.add("GU_ALPHA", "2", 365);
+                });
+                bean.on(document, 'click', '.js-site-message', function() {
+                    Cookies.add("GU_VIEW", "responsive", 365);
+                    Cookies.add("GU_ALPHA", "2", 365);
+                });
+                var message = new Message('onboard', { type: 'modal' }),
+                    path = (document.location.pathname) ? document.location.pathname : '/',
+                    exitLink = '/preference/platform/classic?page=' + encodeURIComponent(path + '?view=classic'),
+                    msg = '<h2 class="site-message__header">Thanks for joining us.</h2>' +
+                    '<div class="site-message__message" id="site-message__message">' +
+                    '<p>You’re looking at a prototype of our new website. Opt-out any time by clicking "Current version" at the bottom of the page.</p>' +
+                    '<ul class="site-message__list">' +
+                    '<li class="site-message__list__item">Our new front pages and content pages are a work in progress.</li>' +
+                    '<li class="site-message__list__item">We\'ll be launching our product site and feedback form later this week.</li>' +
+                    '</ul>' +
+                    '<ul class="site-message__actions unstyled">' +
+                    '<li class="site-message__actions__item"><i class="i i-arrow-white-circle"></i>  '+
+                    '<a class="js-site-message-close" data-link-name="R2 alpha opt in" href="#" tabindex=1>Got it</a>' +
+                    '<li class="site-message__actions__item">' +
+                    '<i class="i i-back-white"></i>' +
+                    '<a class="js-main-site-link" rel="nofollow" href="' + exitLink + '"' +
+                    'data-link-name="R2 alpha opt out">Opt-out and return to the current site </a>' +
+                    '</li>' +
+                    '</ul>';
+                message.show(msg);
             }
         },
 
@@ -346,7 +377,9 @@ define([
                         }
                     });
                 }
-                sequence.init('/' + config.page.pageId);
+                if (config.page.section !== 'identity') {
+                    sequence.init('/' + config.page.pageId);
+                }
             });
         },
 
@@ -384,6 +417,17 @@ define([
             if (window.self !== window.top) {
                 $('html').addClass('iframed');
             }
+        },
+
+        augmentInteractive: function () {
+            mediator.on('page:common:ready', function(config, context) {
+                if (/Article|Interactive/.test(config.page.contentType)) {
+                    var interactives = context.querySelectorAll('figure.interactive');
+                    Array.prototype.forEach.call(interactives, function (i) {
+                        new Interactive(i, context, config).init();
+                    });
+                }
+            });
         }
     };
 
@@ -399,6 +443,7 @@ define([
                 modules.cleanupCookies(context);
                 modules.runAbTests(config, context);
                 modules.transcludeRelated(config, context);
+                modules.initRightHandComponent(config, context);
             }
             mediator.emit("page:common:deferred:loaded", config, context);
         });
@@ -407,6 +452,7 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
+            modules.displayOnboardMessage(config);
             modules.windowEventListeners();
             modules.checkIframe();
             modules.upgradeImages();
@@ -425,6 +471,7 @@ define([
             modules.unshackleParagraphs(config, context);
             modules.initAutoSignin(config);
             modules.loadTags(config);
+            modules.augmentInteractive();
         }
         mediator.emit("page:common:ready", config, context);
     };

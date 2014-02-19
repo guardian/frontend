@@ -1,26 +1,31 @@
 define([
     'common/utils/cookies',
+    'common/utils/storage',
+    'common/modules/analytics/beacon',
     'common/modules/experiments/ab'
 ], function (
     Cookies,
+    storage,
+    beacon,
     ab
 ) {
+    var newSession;
+
     function isNewSession() {
         var key = 'gu.session';
-        if (window.sessionStorage && !!window.sessionStorage.getItem(key)) {
-            return false;
-        } else {
-            window.sessionStorage.setItem(key, "true");
-            return true;
-        }
-    }
 
-    function createImage(url, id) {
-        var image = new Image();
-        image.id = id;
-        image.className = 'u-h';
-        image.src = url;
-        document.body.appendChild(image);
+        if (typeof(newSession) !== 'undefined') {
+            return newSession;
+        }
+
+        if (storage.session.get(key)) {
+            newSession = false;
+        } else {
+            storage.session.set(key, "true");
+            newSession = true;
+        }
+
+        return newSession;
     }
 
     function makeUrl(properties, path) {
@@ -33,7 +38,7 @@ define([
 
     var liveStats = {
 
-        log : function (beacon, config) {
+        log : function (config) {
 
             if (config.switches.liveStats) {
                 var inAlphaTest = !!Cookies.get('GU_ALPHA');
@@ -46,8 +51,7 @@ define([
                     } else {
                         liveStatsView.type = 'view';
                     }
-                    var url = beacon.beaconUrl + makeUrl(liveStatsView, '/px.gif');
-                    createImage(url, 'js-livestats-px');
+                    beacon.fire(makeUrl(liveStatsView, '/px.gif'));
                 }
             }
 
@@ -60,9 +64,7 @@ define([
                 } else {
                     abValues.type = 'view';
                 }
-
-                var abUrl = beacon.beaconUrl + makeUrl(abValues, '/ab.gif');
-                createImage(abUrl, 'js-livestats-ab');
+                beacon.fire(makeUrl(abValues, '/ab.gif'));
             }
         }
     };

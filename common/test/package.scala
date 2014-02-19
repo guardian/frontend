@@ -1,6 +1,6 @@
 package test
 
-import conf.{ElasticSearchContentApi, Configuration, ContentApi}
+import conf.{ContentApiDoNotUseForNewQueries, ElasticSearchContentApi, Configuration}
 import java.net.URLEncoder
 import play.api.test._
 import play.api.test.Helpers._
@@ -68,7 +68,7 @@ trait TestSettings {
     }
   }
 
-  ContentApi.http = toRecorderHttp(ContentApi.http)
+  ContentApiDoNotUseForNewQueries.http = toRecorderHttp(ContentApiDoNotUseForNewQueries.http)
   ElasticSearchContentApi.http = toRecorderHttp(ElasticSearchContentApi.http)
 }
 
@@ -121,8 +121,8 @@ object WithHost {
   def US(path: String): String = s"http://127.0.0.1:9000$path"
 }
 
-object DesktopVersionLink {
-  def apply(path: String) = s"http://localhost:9000/preference/platform/desktop?page=${URLEncoder.encode(s"$path?view=desktop", "UTF-8")}"
+object ClassicVersionLink {
+  def apply(path: String) = s"http://localhost:9000/preference/platform/classic?page=${URLEncoder.encode(s"$path?view=classic", "UTF-8")}"
 }
 
 /**

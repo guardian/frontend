@@ -3,9 +3,8 @@ package test
 import org.scalatest.Matchers
 import org.scalatest.FlatSpec
 import scala.collection.JavaConversions._
-import common.UsesElasticSearch
 
-class GalleryTemplateTest extends FlatSpec with Matchers with UsesElasticSearch {
+class GalleryTemplateTest extends FlatSpec with Matchers {
 
   it should "render gallery headline" in HtmlUnit("/news/gallery/2012/may/02/picture-desk-live-kabul-burma") {
     browser =>
@@ -58,7 +57,7 @@ class GalleryTemplateTest extends FlatSpec with Matchers with UsesElasticSearch 
     import browser._
     $("meta[property='twitter:card']").getAttributes("content").head should be ("gallery")
     $("meta[property='twitter:title']").getAttributes("content").head should be ("Southbank Centre's Sounds Venezuela festival - in pictures")
-    $("meta[property='twitter:image3:src']").getAttributes("content").head should endWith ("1340461447987/Bassoons-in-the-Symphony--003.jpg")
+    $("meta[property='twitter:image3:src']").getAttributes("content").head should endWith ("/Bassoons-in-the-Symphony--003.jpg?width=-&height=-&quality=95")
   }
   
 }

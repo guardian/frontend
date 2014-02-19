@@ -38,22 +38,18 @@ object Frontend extends Build with Prototypes {
   val facia = application("facia").dependsOn(commonWithTests).aggregate(common)
   val article = application("article").dependsOn(commonWithTests).aggregate(common)
   val applications = application("applications").dependsOn(commonWithTests).aggregate(common)
+  val archive = application("archive").dependsOn(commonWithTests).aggregate(common)
   val sport = application("sport").dependsOn(commonWithTests).aggregate(common).settings(
-    libraryDependencies += "com.gu" %% "pa-client" % "4.0",
+    libraryDependencies += "com.gu" %% "pa-client" % "4.1",
     templatesImport ++= Seq(
       "pa._",
       "feed._",
       "football.controllers._"
     )
   )
-  val coreNavigation = application("core-navigation").dependsOn(commonWithTests).aggregate(common)
-  val image = application("image").dependsOn(commonWithTests).aggregate(common).settings(
-    libraryDependencies ++= Seq(
-      "org.imgscalr" % "imgscalr-lib" % "4.2",
-      "org.im4java" % "im4java" % "1.4.0",
-      "commons-lang" % "commons-lang" % "2.5"
-    )
-  )
+
+  val image = application("image")
+
   val discussion = application("discussion").dependsOn(commonWithTests).aggregate(common).settings(
     templatesImport ++= Seq("discussion._", "discussion.model._")
   )
@@ -67,14 +63,14 @@ object Frontend extends Build with Prototypes {
     )
   )
 
-  val admin = application("admin").dependsOn(commonWithTests).aggregate(common)
-  val faciaTool = application("facia-tool").dependsOn(commonWithTests)
-  val porter = application("porter").dependsOn(commonWithTests).aggregate(common).settings(
+  val admin = application("admin").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
       "com.typesafe.slick" %% "slick" % "1.0.0",
-      "postgresql" % "postgresql" % "8.4-703.jdbc4" from "http://jdbc.postgresql.org/download/postgresql-8.4-703.jdbc4.jar"
+      "postgresql" % "postgresql" % "8.4-703.jdbc4" from "http://jdbc.postgresql.org/download/postgresql-8.4-703.jdbc4.jar",
+      "com.gu" %% "pa-client" % "4.1"
     )
   )
+  val faciaTool = application("facia-tool").dependsOn(commonWithTests)
 
   val identityLibVersion = "3.21"
   val identity = application("identity").dependsOn(commonWithTests).aggregate(common).settings(
@@ -131,8 +127,8 @@ object Frontend extends Build with Prototypes {
     ).dependsOn(
       facia,
       applications,
+      archive,
       sport,
-      coreNavigation,
       discussion,
       router,
       diagnostics,
@@ -148,15 +144,14 @@ object Frontend extends Build with Prototypes {
     article,
     applications,
     sport,
-    coreNavigation,
     image,
     discussion,
     router,
     diagnostics,
     admin,
-    porter,
     identity,
     commercial,
-    onward
+    onward,
+    archive
   )
 }

@@ -1,0 +1,73 @@
+@(team1: pa.Head2Head, team2: pa.Head2Head, team1Results: List[_root_.football.model.PrevResult], team2Results: List[_root_.football.model.PrevResult])
+
+@views.html.football.main("Team head to head") {
+    <hgroup class="page-header">
+        <h1>Teams <small>Head to Head</small></h1>
+    </hgroup>
+
+    <table data-embed-type="table" class="table data data--embedded">
+        <thead>
+            <tr>
+                <th rowspan="2">Team</th>
+                <th colspan="3">Goals</th>
+                <th colspan="3">Dismissals</th>
+                <th colspan="3">Bookings</th>
+                <th colspan="2">Previous 5</th>
+            </tr>
+            <tr>
+                <th>Home</th>
+                <th>Away</th>
+                <th>Total</th>
+
+                <th>Home</th>
+                <th>Away</th>
+                <th>Total</th>
+
+                <th>Home</th>
+                <th>Away</th>
+                <th>Total</th>
+
+                <th>Home</th>
+                <th>Away</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@team1.name</td>
+
+                <td>@team1.goals.homeCount</td>
+                <td>@team1.goals.awayCount</td>
+                <td>@team1.totalGoals</td>
+
+                <td>@team1.dismissals.homeCount</td>
+                <td>@team1.dismissals.awayCount</td>
+                <td>@team1.totalDismissals</td>
+
+                <td>@team1.bookings.homeCount</td>
+                <td>@team1.bookings.awayCount</td>
+                <td>@team1.totalBookings</td>
+
+                <td>@views.html.football.fragments.prevResults(team1Results.filter(_.wasHome))</td>
+                <td>@views.html.football.fragments.prevResults(team1Results.filterNot(_.wasHome))</td>
+            </tr>
+            <tr>
+                <td>@team2.name</td>
+
+                <td>@team2.goals.homeCount</td>
+                <td>@team2.goals.awayCount</td>
+                <td>@team2.totalGoals</td>
+
+                <td>@team2.dismissals.homeCount</td>
+                <td>@team2.dismissals.awayCount</td>
+                <td>@team2.totalDismissals</td>
+
+                <td>@team2.bookings.homeCount</td>
+                <td>@team2.bookings.awayCount</td>
+                <td>@team2.totalBookings</td>
+
+                <td>@views.html.football.fragments.prevResults(team2Results.filter(_.wasHome))</td>
+                <td>@views.html.football.fragments.prevResults(team2Results.filterNot(_.wasHome))</td>
+            </tr>
+        </tbody>
+    </table>
+}

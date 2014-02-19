@@ -49,6 +49,9 @@ $a-leftCol-width:     gs-span(2); // Grows to 3 columns on wide viewports
 $a-leftCol-trigger:   gs-span(13) + $gs-gutter*2; // 1060px
 $a-leftColWide-width: gs-span(3); // Grows to 3 columns on wide viewports
 
+// Facia breakpoints
+$facia-leftCol-trigger: gs-span(14) + $gs-gutter*2; // 1140px
+
 $mq-breakpoints: (
     mobile:  gs-span(4)  + $gs-gutter,   // 320px
     tablet:  gs-span(9)  + $gs-gutter*2, // 740px
@@ -61,7 +64,10 @@ $mq-breakpoints: (
 
     // Article layout
     rightCol: $a-rightCol-trigger,
-    leftCol: $a-leftCol-trigger
+    leftCol: $a-leftCol-trigger,
+
+    // Facia layout
+    faciaLeftCol: $facia-leftCol-trigger
 );
 
 
@@ -129,6 +135,8 @@ $c-error: #d61d00;
 
 $c-neutral1: #333333;
 $c-neutral2: #767676;
+// Enhance contrast of grey text on light grey background
+$c-neutral2-contrasted: darken($c-neutral2, 3%);
 $c-neutral3: #bdbdbd;
 $c-neutral4: #dcdcdc;
 $c-neutral5: #e3e3db;
@@ -137,6 +145,7 @@ $c-neutral7: #f4f4ee;
 $c-neutral8: #f6f6f6;
 
 $c-live: #F23B54;
+$c-media-icon: #FBBA0F;
 
 
 // Tones
@@ -150,6 +159,10 @@ $c-featureAccent: #F66980;
 
 $c-commentDefault: #E6711B;
 $c-commentAccent: #FFBB00;
+
+$c-features-primary: #4e0375;
+$c-features-secondary: #7d0068;
+$c-features-tertiary: #951c55;
 
 
 // Zones
@@ -178,3 +191,17 @@ $c-sportDark: #003f64;
 
 $c-sportHome: $c-sportBright;
 $c-sportAway: $c-sportDark;
+
+
+// Stati
+// =============================================================================
+$c-statusPositive: #6ca843;
+$c-statusNeutral: #999999;
+$c-statusNegative: #da1d1d;
+
+
+// Dimensions
+// =============================================================================
+
+$action-icon-width: 23px;
+$action-icon-rightspace: 7px;
