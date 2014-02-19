@@ -1,6 +1,6 @@
 .baguette {
     @include clearfix;
-    background-color: $c-newsDefault;
+    background-color: $c-brandBlue;
 
     @include rem((
         margin-bottom: $gs-baseline*2 !important,
