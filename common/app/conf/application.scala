@@ -10,20 +10,8 @@ object Configuration extends GuardianConfiguration("frontend", webappConfDirecto
 object ContentApi extends SolrContentApiClient()
 object ElasticSearchContentApi extends ElasticSearchContentApiClient()
 
-object FaciaContentApi extends SolrContentApiClient() {
-  override def fetch(url: String, parameters: Map[String, String]) = {
-    super.fetch(url, parameters + ("application-name" -> "facia"))
-  }
-}
-object FaciaElasticSearchContentApi extends ElasticSearchContentApiClient() {
-  override def fetch(url: String, parameters: Map[String, String]) = {
-    super.fetch(url, parameters + ("application-name" -> "facia"))
-  }
-}
-
 object SwitchingContentApi {
   def apply() = if (Switches.ElasticSearchSwitch.isSwitchedOn) ElasticSearchContentApi else ContentApi
-  def facia() = if (Switches.ElasticSearchSwitch.isSwitchedOn) FaciaElasticSearchContentApi else FaciaContentApi
 }
 
 object Static extends Assets(Configuration.assets.path)
