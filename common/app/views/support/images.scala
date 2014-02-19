@@ -35,6 +35,7 @@ object Contributor extends Profile(Some(140), Some(140))
 object GalleryLargeImage extends Profile(Some(1024), None)
 object GalleryLargeTrail extends Profile(Some(480), Some(288))
 object GallerySmallTrail extends Profile(Some(280), Some(168))
+object Item120 extends Profile(Some(120), None)
 object Item140 extends Profile(Some(140), None)
 object Item220 extends Profile(Some(220), None)
 object Item300 extends Profile(Some(300), None)
@@ -92,7 +93,8 @@ object ImgSrc {
 
   def imager(imageContainer: ImageContainer, maxWidth: Int): Option[String] = {
     // get largest profile closest to the width
-    Profile.all.filter(_.height == None).sortBy(_.width).headOption.flatMap{ profile =>
+    val sortedProfiles: Seq[Profile] = Profile.all.filter(_.height == None).sortBy(_.width)
+    sortedProfiles.filter(_.width.getOrElse(0) >= maxWidth).headOption.orElse(sortedProfiles.reverse.headOption).flatMap{ profile =>
       imager(imageContainer, profile)
     }
   }

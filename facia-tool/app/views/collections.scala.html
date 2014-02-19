@@ -4,8 +4,11 @@
 
 <div style="display: none;" data-bind="visible: true">
     <div class="toolbar" data-bind="visible: true" style="display: none">
-        <span class="tool-label">Front</span>
-        <select class="tool-select" data-bind="options: fronts, value: front, optionsCaption: 'choose...'"></select>
+
+        <span data-bind="if: fronts().length > 1">
+            <span class="tool-label">Front</span>
+            <select class="tool-select" data-bind="options: fronts, value: front, optionsCaption: 'choose...'"></select>
+        </span>
 
         <a class="spark" target="ophan" title="Dark blue: Guardian. Green: Google. Light blue: Other." data-bind="
             visible: frontSparkUrl,
@@ -149,7 +152,7 @@
 
                     <input type="text" data-bind="
                         value: collectionMeta.href,
-                        hasFocus: true" placeholder="Link, e.g. /sport/cricket"/>
+                        hasFocus: true" placeholder="Link, e.g. sport/cricket"/>
 
                     <span class="tools">
                         <a class="tool" data-bind="click: saveMeta">Save</a>

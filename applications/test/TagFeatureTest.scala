@@ -4,9 +4,8 @@ import org.scalatest.{ FeatureSpec, GivenWhenThen }
 import org.scalatest.Matchers
 import collection.JavaConversions._
 import conf.{Switches, Configuration}
-import common.UsesElasticSearch
 
-class TagFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with UsesElasticSearch {
+class TagFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
   feature("Tag Pages trail size") {
 
