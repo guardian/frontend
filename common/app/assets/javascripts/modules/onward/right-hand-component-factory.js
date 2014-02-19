@@ -1,14 +1,14 @@
 define( [
     'lodash/objects/assign',
+    'common/utils/detect',
 
     'common/modules/onward/right-most-popular',
-    'common/modules/onward/right-recommended',
     'common/modules/onward/right-outbrain-recommendations'
 ], function (
     extend,
+    detect,
 
     RightMostPopular,
-    RightRecommendedForYou,
     RightOutbrainRecommendations
 ){
 
@@ -16,31 +16,24 @@ define( [
         this.config = config;
         this.mediator = this.config.mediator;
         this.pageId = this.config.pageId;
-        if(parseInt(this.config.wordCount, 10) > 500) {
+        if( detect.getBreakpoint() !== 'mobile' && parseInt(this.config.wordCount, 10) > 500  ) {
             this.renderRightHandComponent();
         }
     }
 
-
-    RightHandComponentFactory.rightHandDataSource = 'default';
-    RightHandComponentFactory.setRecommenedForYou = function(dataSourceName) {
-        RightHandComponentFactory.rightHandDataSource = dataSourceName;
+    RightHandComponentFactory.recommended = false;
+    RightHandComponentFactory.setRecommendedForYou = function() {
+        RightHandComponentFactory.recommended = true;
     };
 
     RightHandComponentFactory.prototype.renderRightHandComponent = function() {
 
-        var components = {
-            'gravity' :  function(pageId) { var rf = new RightRecommendedForYou(this.mediator,  {type: 'image', maxTrails: 5}); },
-            'outbrain' : function(pageId) {
-                 var ro = new RightOutbrainRecommendations(this.mediator, {type: 'image', maxTrails: 5, pageId: pageId});
-            },
-            'default' : function(pageId) { var rp = new RightMostPopular(this.mediator, {type: 'image', maxTrails: 5}); }
-        };
-
-        var mp = components[RightHandComponentFactory.rightHandDataSource](this.pageId);
+        if (RightHandComponentFactory.recommended) {
+            var rf = new RightOutbrainRecommendations(this.mediator,  {type: 'image', maxTrails: 5});
+        } else {
+            var rp = new RightMostPopular(this.mediator, {type: 'image', maxTrails: 5})
+        }
     };
 
-
     return RightHandComponentFactory;
-
 });

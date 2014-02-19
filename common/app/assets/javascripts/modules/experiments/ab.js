@@ -6,7 +6,6 @@ define([
 
     //Current tests
     'common/modules/experiments/tests/aa',
-    'common/modules/experiments/tests/gravity-recommendations',
     'common/modules/experiments/tests/outbrain-recommendations',
     'common/modules/experiments/tests/ad-labels',
     'common/modules/experiments/tests/onward-inline-elements',
@@ -17,7 +16,6 @@ define([
     mediator,
     mvtCookie,
     Aa,
-    GravityRecommendations,
     OutbrainRecommendations,
     AdLabels,
     InlineElements,
@@ -26,7 +24,6 @@ define([
 
     var TESTS = [
             new Aa(),
-            new GravityRecommendations(),
             new OutbrainRecommendations(),
             new AdLabels(),
             new InlineElements(),

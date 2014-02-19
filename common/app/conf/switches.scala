@@ -324,15 +324,9 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 14)
   )
 
-  val ABGravityRecommendations = Switch("A/B Tests", "ab-gravity-recommendations",
-    "Enables gravity beacon code on the site",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 24)
-  )
-
   val ABOutbrainRecommendations = Switch("A/B Tests", "ab-outbrain-recommendations",
     "Enables outbrain tracking code and populates the right-hand component with a list of their recommendations",
-    //TODO - do not commit this!
-    safeState = On, sellByDate = new DateMidnight(2014, 2, 28)
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
   )
 
   val ABAdLabels = Switch("A/B Tests", "ab-ad-labels",
@@ -460,7 +454,6 @@ object Switches extends Collections {
     IdentityEthicalAwardsSwitch,
     IdentityFilmAwardsSwitch,
     ABAa,
-    ABGravityRecommendations,
     ABOutbrainRecommendations,
     ArticleTruncation,
     ABAdLabels,

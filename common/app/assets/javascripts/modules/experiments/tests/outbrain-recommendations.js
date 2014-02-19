@@ -15,7 +15,7 @@ define([
        this.id = 'OutbrainRecommendations';
        this.expiry = '2014-02-28';
        this.audience = 0.2;
-       this.audienceOffset = 0.0;
+       this.audienceOffset = 0.8;
        this.description = 'Embeds the outbrain library on the page and for the tests uses their api to populate the right-hand menu';
        this.canRun = function(config) {
           return true;
@@ -29,7 +29,7 @@ define([
            {
                id: 'show-outbrain-recommendations',
                test: function(context, config) {
-                   RightHandComponentFactory.setRecommenedForYou("outbrain");
+                   RightHandComponentFactory.setRecommendedForYou();
                }
            }
        ];

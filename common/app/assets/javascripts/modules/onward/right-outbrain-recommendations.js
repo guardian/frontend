@@ -33,7 +33,7 @@ define([
     RightOutbrainRecommendations.prototype.classes = { items: 'items' };
     RightOutbrainRecommendations.prototype.useBem = true;
 
-    RightOutbrainRecommendations.prototype.template = '<div class="right-recommended"><h3 class="right-recommended__title">Recommended by outbrain</h3>' +
+    RightOutbrainRecommendations.prototype.template = '<div class="right-recommended"><h3 class="right-recommended__title">Recommended for you</h3>' +
         '<ul class="right-recommended__items u-unstyled"></ul></div></div>';
 
     RightOutbrainRecommendations.prototype.fetch = function(config) {
@@ -65,7 +65,7 @@ define([
         });
         Images.upgrade(container);
         bean.on(document, 'click', '.right-recommended-item__url', function() {
-            console.log("++ I so want to see you");
+            console.log("++ I so want to see you, Lolly red");
             s.events = "events37";
             s.evar7 = "s.pageName";
 
