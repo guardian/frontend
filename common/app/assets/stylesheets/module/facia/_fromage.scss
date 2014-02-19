@@ -134,6 +134,8 @@
     color: $c-neutral1;
 }
 .fromage__link {
+    display: block;
+
     &:hover,
     &:focus {
         .item__title {
