@@ -21,18 +21,20 @@ define( [
         }
     }
 
-    RightHandComponentFactory.recommended = false;
-    RightHandComponentFactory.setRecommendedForYou = function() {
-        RightHandComponentFactory.recommended = true;
+    RightHandComponentFactory.rightHandDataSource = 'default';
+    RightHandComponentFactory.setRecommendedationsSource = function(dataSourceName) {
+        RightHandComponentFactory.rightHandDataSource = dataSourceName;
     };
 
     RightHandComponentFactory.prototype.renderRightHandComponent = function() {
 
-        if (RightHandComponentFactory.recommended) {
-            var rf = new RightOutbrainRecommendations(this.mediator,  {type: 'image', maxTrails: 5});
-        } else {
-            var rp = new RightMostPopular(this.mediator, {type: 'image', maxTrails: 5})
-        }
+        var components = {
+            'gravity' :  function(pageId) { new RightRecommendedForYou(this.mediator,  {type: 'image', maxTrails: 5}); },
+            'outbrain' : function(pageId) { new RightOutbrainRecommendations(this.mediator, {type: 'image', maxTrails: 5, pageId: pageId});            },
+            'default' : function(pageId) { new RightMostPopular(this.mediator, {type: 'image', maxTrails: 5}); }
+        };
+
+        var mp = components[RightHandComponentFactory.rightHandDataSource](this.pageId);
     };
 
     return RightHandComponentFactory;

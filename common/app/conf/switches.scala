@@ -319,13 +319,9 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val ABEmailSignup = Switch("A/B Tests", "ab-email-signup",
-    "If this is switched on an AB test runs to test article page email signups",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 14)
-  )
 
-  val ABOutbrainRecommendations = Switch("A/B Tests", "ab-outbrain-recommendations",
-    "Enables outbrain tracking code and populates the right-hand component with a list of their recommendations",
+  val ABRightHandRecommendations = Switch("A/B Tests", "ab-right-hand-recommendations",
+    "Sets different recommendation providers against each other for the right hand component",
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
   )
 
@@ -454,7 +450,7 @@ object Switches extends Collections {
     IdentityEthicalAwardsSwitch,
     IdentityFilmAwardsSwitch,
     ABAa,
-    ABOutbrainRecommendations,
+    ABRightHandRecommendations,
     ArticleTruncation,
     ABAdLabels,
     ABInlineElements,

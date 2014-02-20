@@ -6,7 +6,7 @@ define([
 
     //Current tests
     'common/modules/experiments/tests/aa',
-    'common/modules/experiments/tests/outbrain-recommendations',
+    'common/modules/experiments/tests/right-hand-recommendations',
     'common/modules/experiments/tests/ad-labels',
     'common/modules/experiments/tests/onward-inline-elements',
     'common/modules/experiments/tests/article-truncation'
@@ -16,7 +16,7 @@ define([
     mediator,
     mvtCookie,
     Aa,
-    OutbrainRecommendations,
+    RightHandRecommendations,
     AdLabels,
     InlineElements,
     ArticleTruncation
@@ -24,7 +24,7 @@ define([
 
     var TESTS = [
             new Aa(),
-            new OutbrainRecommendations(),
+            new RightHandRecommendations(),
             new AdLabels(),
             new InlineElements(),
             new ArticleTruncation()
