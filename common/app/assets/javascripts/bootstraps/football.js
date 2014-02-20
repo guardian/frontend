@@ -1,25 +1,28 @@
 /*global guardian:false */
 define([
     //Common libraries
-    "common/$",
-    "common/utils/mediator",
-    "common/utils/lazy-load-css",
-    "bonzo",
+    'common/$',
+    'common/utils/config',
+    'common/utils/context',
+    'common/utils/mediator',
+    'common/utils/lazy-load-css',
+    'bonzo',
+
     //Modules
-    "common/modules/router",
-    "common/modules/ui/togglepanel",
-    "common/modules/ui/expandable",
-    "common/modules/sport/football/fixtures",
-    "common/modules/sport/football/tables",
-    "common/modules/sport/football/more-matches",
-    "common/modules/ui/autoupdate",
-    "common/modules/sport/football/matchnav"
+    'common/modules/ui/togglepanel',
+    'common/modules/ui/expandable',
+    'common/modules/sport/football/fixtures',
+    'common/modules/sport/football/tables',
+    'common/modules/sport/football/more-matches',
+    'common/modules/ui/autoupdate',
+    'common/modules/sport/football/matchnav'
 ], function (
     $,
+    config,
+    context,
     mediator,
     lazyLoadCss,
     bonzo,
-    Router,
     TogglePanel,
     Expandable,
     FootballFixtures,
@@ -28,9 +31,9 @@ define([
     AutoUpdate,
     MatchNav
 ) {
-
+    context = context();
     var modules = {
-        matchNav: function(config, context){
+        matchNav: function(){
             if (config.page.footballMatch) {
                 var url =  "/football/api/match-nav/" + config.page.footballMatch.id;
                     url += ".json?page=" + encodeURIComponent(config.page.pageId);
@@ -38,7 +41,7 @@ define([
             }
         },
 
-        showFrontFixtures: function(context) {
+        showFrontFixtures: function() {
             // wrap the return sports stats component in an 'item'
             var prependTo = bonzo.create('<div class="fromage tone-accent-border tone-news unstyled item--sport-stats"></div>');
             mediator.on('modules:footballfixtures:render', function() {
@@ -54,12 +57,12 @@ define([
             }).init();
         },
 
-        showMoreMatches: function(context) {
+        showMoreMatches: function() {
             MoreMatches.init(context.querySelector('.js-matches-nav'));
             TogglePanel.init(context);
         },
 
-        showCompetitionData: function(competition, context) {
+        showCompetitionData: function(competition) {
             // wrap the return sports stats component in an 'item'
             var fixtures = bonzo.create('<li class="item item--sport-stats item--sport-stats-tall"></li>'),
                 table = bonzo.create('<li class="item item--sport-stats item--sport-table"></li>');
@@ -85,7 +88,7 @@ define([
             }).init();
         },
 
-        showTeamData: function(team, context) {
+        showTeamData: function(team) {
             // wrap the return sports stats component in an 'item'
             var fixtures = bonzo.create('<div></div>'),
                 table = bonzo.create('<li class="item item--sport-stats item--sport-table"></li>');
@@ -134,33 +137,29 @@ define([
         });
     };
 
-    var ready = function(req, config, context) {
+    var ready = function() {
+        var action = window.location.pathname.split('/')[2]; // removing router for now
         lazyLoadCss('football', config);
 
-        var page = req.params.action;
-
-        switch(page) {
-            case undefined :
-                modules.showFrontFixtures(context);
+        switch(action) {
+            case 'fixtures':
+            case 'results':
+            case 'table':
+            case 'tables':
+                modules.showMoreMatches();
                 break;
+
+            case undefined:
+                modules.showFrontFixtures();
+                break;
+
             case 'live':
-                modules.showMoreMatches(context);
+                modules.showMoreMatches();
                 if (context.querySelector('.match.live-match')) {
                     modules.initAutoUpdate(context.querySelector('.matches-container'), config.switches, '.matches-container > *');
                 }
                 break;
-            case 'fixtures':
-                modules.showMoreMatches(context);
-                break;
-            case 'results':
-                modules.showMoreMatches(context);
-                break;
-            case 'table':
-                modules.showMoreMatches(context);
-                break;
-            case 'tables':
-                modules.showMoreMatches(context);
-                break;
+
             default:
                 if(config.page.contentType === 'Article') { return false; } //Prevent loading of fixtures in story packages
 
@@ -168,15 +167,15 @@ define([
                     team = config.referenceOfType('paFootballTeam');
 
                 if(comp) {
-                    modules.showCompetitionData(comp, context);
+                    modules.showCompetitionData(comp);
                 }
                 if(team) {
-                    modules.showTeamData(team, context);
+                    modules.showTeamData(team);
                 }
                 if(config.page.footballMatch){
                     var match = config.page.footballMatch;
 
-                    modules.matchNav(config, context);
+                    modules.matchNav(config);
 
                     if(match.isLive) {
                         modules.initAutoUpdate(
