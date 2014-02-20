@@ -46,6 +46,8 @@ define([
                     front.toggleOpen();
                 },
 
+                pending: ko.observable(),
+
                 createCollection: function() {
                     var collection = new Collection({
                         id: guid()
@@ -61,6 +63,7 @@ define([
                     var serialized = serialize(model);
 
                     if(!_.isEqual(serialized, vars.state.config)) {
+                        model.pending(true);
                         authedAjax.request({
                             url: vars.CONST.apiBase + '/config',
                             type: 'post',
@@ -68,10 +71,14 @@ define([
                         })
                         .then(function() {
                             bootstrap({
+                                force: true,
                                 openFronts: _.reduce(model.fronts(), function(openFronts, front) {
                                     openFronts[front.id()] = front.state.open();
                                     return openFronts;
                                 }, {})
+                            })
+                            .done(function() {
+                                model.pending(false);
                             });
                         });
                     }
@@ -132,7 +139,7 @@ define([
             return fetchSettings(function (config, switches) {
                 vars.state.switches = switches || {};
 
-                if (1 || !_.isEqual(config, vars.state.config)) {
+                if (opts.force || !_.isEqual(config, vars.state.config)) {
                     vars.state.config = config;
 
                     model.collections(

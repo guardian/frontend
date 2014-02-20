@@ -10,13 +10,20 @@ case class Config(
   fronts: Map[String, Front],
   collections: Map[String, Collection]
 ) {
-  def isValid: Boolean =
-    fronts("uk").collections.head == "uk/news/regular-stories" &&
-    fronts("uk").collections.length >= 5 &&
-    fronts("us").collections.head == "us/news/regular-stories" &&
-    fronts("us").collections.length >= 5 &&
-    fronts("au").collections.head == "au/news/regular-stories" &&
-    fronts("au").collections.length >= 5
+  def isValid: Boolean = {
+    val constraints: Seq[(String, String, Int)] = Seq(
+      ("uk", "uk/news/regular-stories", 5),
+      ("us", "us/news/regular-stories", 5),
+      ("au", "au/news/regular-stories", 5)
+    )
+
+    constraints.forall{ case (path, collection, minimum) =>
+      fronts.get(path).exists { front =>
+        front.collections.headOption.exists(_ == collection) &&
+        front.collections.length >= minimum
+      }
+    }
+  }
 }
 
 case class Front(

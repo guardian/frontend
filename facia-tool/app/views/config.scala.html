@@ -2,12 +2,16 @@
 
 @admin_main("Fronts editor", env, isAuthed = true, identity) {
 
-<div style="display: none;" data-bind="visible: true">
+<div style="display: none;" data-bind="
+    visible: true,
+    css: {pending: pending}">
 
-    <div class="toolbar" data-bind="visible: true" style=""></div>
+    <div class="toolbar" data-bind="visible: true"></div>
+
+    <div class="updating">Updating</div>
 
     <div class="left-col">
-        <div class="title">Unused collections</div>
+        <div class="title">Detached collections</div>
         <div class="scrollable cnf-collections" data-bind="
             template: {name: 'template_collection', foreach: orphans}"></div>
     </div>
@@ -33,12 +37,6 @@
                 click: toggleOpen,
                 attr: {href: id},
                 text: meta.displayName() || 'Untitled collection'"></a>
-
-            <!-- ko if: $parents[1] -->
-                <a class="cnf-collection__remove" data-bind="click: $parents[1].depopulateCollection">
-                    <i class="icon-trash"></i>
-                </a>
-            <!-- /ko -->
 
             <span class="cnf-collection__id" data-bind="text: id"></span>
 
@@ -93,6 +91,10 @@
                     <!-- ko if: parents().length === 0 -->
                         <button class="tool" data-bind="
                             click: discard">Discard</button>
+                    <!-- /ko -->
+                    <!-- ko if: $parents[1] -->
+                        <button class="tool" data-bind="
+                            click: $parents[1].depopulateCollection">Detach</button>
                     <!-- /ko -->
                 </div>
             </div>
