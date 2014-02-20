@@ -46,7 +46,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
 
     val countryPopular = MostPopular("The Guardian", "", GeoMostPopularAgent.mostPopular(countryCode))
 
-    PrivateCached(900) {
+    Cached(900) {
       JsonComponent(
         "html" -> views.html.fragments.collections.popular(Seq(countryPopular)),
         "rightHtml" -> views.html.fragments.rightMostPopular(countryPopular)

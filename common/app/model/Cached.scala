@@ -33,13 +33,6 @@ object Cached extends implicits.Dates {
   }
 }
 
-object PrivateCached {
-
-  def apply(seconds: Int)(result: SimpleResult): SimpleResult = {
-    Cached(seconds)(result).withHeaders("Cache-Control" -> "private")
-  }
-}
-
 object NoCache {
   def apply(result: SimpleResult): SimpleResult = result.withHeaders("Cache-Control" -> "no-cache", "Pragma" -> "no-cache")
 }
