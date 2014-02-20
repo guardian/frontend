@@ -126,6 +126,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       else configuration.getStringProperty("ajax.url").getOrElse("")
     lazy val corsOrigins: Seq[String] = configuration.getStringProperty("ajax.cors.origin").map(_.split(",")
       .map(_.trim).toSeq).getOrElse(Nil)
+    lazy val spdyUrl = configuration.getStringProperty("ajax.spdyUrl").getOrElse("")
   }
 
   object id {
