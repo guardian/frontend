@@ -831,6 +831,14 @@ button {
     clear: left;
 }
 
+.cnf-form .tools-deleter {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    font-size: 10px;
+    color: #CCCCCC;
+}
+
 /*****************************************/
 /* MEDIA QUERIES */
 /*****************************************/

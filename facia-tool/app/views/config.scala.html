@@ -67,9 +67,6 @@
                     options: $root.tones,
                     value: meta.tone"></select>
 
-                <div class="linky advanced-options" data-bind="
-                    click: toggleOpenAdvanced">Advanced settings</div>
-
                 <!-- ko if: state.openAdvanced -->
                     <label>Groups</label>
                     <select data-bind="
@@ -88,13 +85,23 @@
                 <div class="tools">
                     <button class="tool" data-bind="
                         click: save">Save</button>
-                    <!-- ko if: parents().length === 0 -->
+                </div>
+
+                <div class="tools tools-deleter">
+                    <span class="linky" data-bind="
+                        click: toggleOpenAdvanced">Advanced settings</span> |
+
+                    <!-- ko if: !state.enableDiscard() -->
+                        <span class="linky" type="checkbox" data-bind="
+                            click: enableDiscard">Start removal</span>
+                   <!-- /ko -->
+                    <!-- ko if: state.enableDiscard() && $parents[1] -->
                         <button class="tool" data-bind="
-                            click: discard">Discard</button>
+                            click: $parents[1].depopulateCollection">Remove</button>
                     <!-- /ko -->
-                    <!-- ko if: $parents[1] -->
+                    <!-- ko if: state.enableDiscard() && parents().length === 0 -->
                         <button class="tool" data-bind="
-                            click: $parents[1].depopulateCollection">Detach</button>
+                            click: discard">Remove completely</button>
                     <!-- /ko -->
                 </div>
             </div>

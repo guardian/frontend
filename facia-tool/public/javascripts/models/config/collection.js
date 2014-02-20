@@ -35,6 +35,7 @@ define([
         }
 
         this.state = asObservableProps([
+            'enableDiscard',
             'open',
             'openAdvanced',
             'underHover',
@@ -44,6 +45,10 @@ define([
     Collection.prototype.toggleOpen = function() {
         this.state.open(!this.state.open());
         this.state.openAdvanced(this.state.open() && this.state.openAdvanced());
+    };
+
+    Collection.prototype.enableDiscard = function() {
+        this.state.enableDiscard(true);
     };
 
     Collection.prototype.toggleOpenAdvanced = function() {
@@ -60,8 +65,10 @@ define([
     };
 
     Collection.prototype.discard = function() {
-        vars.model.collections.remove(this);
-        vars.model.save();
+        if (this.state.enableDiscard()) {
+            vars.model.collections.remove(this);
+            vars.model.save();
+        }
     };
 
     return Collection;
