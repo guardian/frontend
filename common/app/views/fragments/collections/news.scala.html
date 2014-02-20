@@ -36,8 +36,8 @@
                         <ul class="unstyled l-row l-row--items-2 collection">
                             @items.zipWithIndex.map{ case (trail, index) =>
                                 @trail match {
-                                    case t if trail.imageAdjust == Some("highlight") => { @fragments.collections.items.standard(t, baguetteCount + index + 2, containerIndex) }
-                                    case t                                           => { @fragments.collections.items.thumbnail(t, baguetteCount + index + 2, containerIndex) }
+                                    case t if trail.imageAdjust == "highlight" => { @fragments.collections.items.standard(t, baguetteCount + index + 2, containerIndex) }
+                                    case t                                     => { @fragments.collections.items.thumbnail(t, baguetteCount + index + 2, containerIndex) }
                                 }
                             }
                         </ul>
