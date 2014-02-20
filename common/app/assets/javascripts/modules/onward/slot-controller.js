@@ -25,27 +25,27 @@ define([
         rules = { // contentType: [validSlotType1,validSlotType2,...]
             story: ['text'],
             adRight: ['posth2','block','text'],
-	    adBlock: ['preh2', 'block','text']
-	},
-	insertionMethods = {
-	    story: "largestBucket",
-	    adRight: "firstAvailable",
-	    adBlock: "firstAvailable"
+            adBlock: ['preh2', 'block','text']
+        },
+        insertionMethods = {
+            story: "largestBucket",
+            adRight: "firstAvailable",
+            adBlock: "firstAvailable"
         },
         priority = ['adRight','adBlock','commercialLeft','commercialRight','story'],
         containers = _.mapValues(rules, function() { return []; });
 
     function slotTypeToCssSelector(type, empty) {
-	return '.' + prefix + '--' + type + (empty ? ":empty" : "");
+        return '.' + prefix + '--' + type + (empty ? ":empty" : "");
     }
 
     function getSlotsOfTypes(types, empty) {
-	var cssSelector = types.map(function(t){ return slotTypeToCssSelector(t, empty); }).join(', ');
-	return qwery(cssSelector, '.article-body');
+        var cssSelector = types.map(function(t){ return slotTypeToCssSelector(t, empty); }).join(', ');
+        return qwery(cssSelector, '.article-body');
     }
 
     function getSlotsOfType(type, empty) {
-	return getSlotsOfTypes([type], empty);
+        return getSlotsOfTypes([type], empty);
     }
 
     function detachAll() {
@@ -53,28 +53,28 @@ define([
     }
 
     var insertFuncs = {
-	largestBucket: function (container) {
-	    // inserts the container in the type bucket with most empty slots
-	    // this could be made more intelligent to space content out more
+        largestBucket: function (container) {
+            // inserts the container in the type bucket with most empty slots
+            // this could be made more intelligent to space content out more
 
-	    var buckets = _(rules[container.slotContainerType]).map(function(type){ return getSlotsOfType(type, true); });
-	    var selectedBucket = buckets.max('length').valueOf();
+            var buckets = _(rules[container.slotContainerType]).map(function(type){ return getSlotsOfType(type, true); });
+            var selectedBucket = buckets.max('length').valueOf();
 
-	    if (selectedBucket.length > 0) {
-		bonzo(selectedBucket[0]).append(container);
-	    }
-	},
-	firstAvailable: function (container) {
-	    var possibleSlots = getSlotsOfTypes(rules[container.slotContainerType], true);
-	    if (possibleSlots.length > 0) {
-		bonzo(possibleSlots[0]).append(container);
-	    }
+            if (selectedBucket.length > 0) {
+                bonzo(selectedBucket[0]).append(container);
+            }
+        },
+        firstAvailable: function (container) {
+            var possibleSlots = getSlotsOfTypes(rules[container.slotContainerType], true);
+            if (possibleSlots.length > 0) {
+                bonzo(possibleSlots[0]).append(container);
+            }
         }
     };
 
     function insertContainer(container) {
-	var funcName = insertionMethods[container.slotContainerType];
-	insertFuncs[funcName](container);
+        var funcName = insertionMethods[container.slotContainerType];
+        insertFuncs[funcName](container);
     }
 
     // reorder happens every time a slot is requested/released

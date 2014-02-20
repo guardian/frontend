@@ -383,7 +383,7 @@ case class InlineSlotGenerator(articleWordCount: Int) extends HtmlCleaner {
 
       children.zipWithIndex.foreach { case (element, index) =>
 
-	if (element.attr("class").split(" ").contains("img--inline")) {
+        if (element.attr("class").split(" ").contains("img--inline")) {
           lastInline = offset
         }
         else if (element.tagName == "p" && lastInline + spacing < offset && !element.hasClass("img")) {
@@ -400,7 +400,7 @@ case class InlineSlotGenerator(articleWordCount: Int) extends HtmlCleaner {
       }
 
       document.select("body .slot").zipWithIndex.foreach { case (slot, index) =>
-	slot.attr("data-link-name", s"inline slot | $index")
+        slot.attr("data-link-name", s"inline slot | $index")
       }
     }
 
