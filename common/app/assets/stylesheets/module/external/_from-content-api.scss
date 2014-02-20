@@ -316,7 +316,7 @@ p + video {
     }
 
     tbody tr:nth-child(odd) td {
-        background-color: #F9F9F7;
+        background-color: darken($c-neutral8, 4%);
     }
 }
 
