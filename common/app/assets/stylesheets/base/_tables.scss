@@ -41,6 +41,11 @@ td {
         color: $c-neutral1;
         font-weight: 800;
     }
+
+
+    abbr {
+        border-bottom: 1px dotted $c-neutral8;
+    }
 }
 
 .table--striped {
