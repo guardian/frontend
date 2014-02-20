@@ -123,6 +123,8 @@
     $action-image-width: 88px;
     .action--has-image {
         @include rem((
+            // Min height of 3 baselines
+            min-height: nth(nth($fs-headlines, 1), 2) * 3,
             // Override .svg .action--has-icon
             padding-left: $action-image-width + $gs-gutter/2 !important
         ));

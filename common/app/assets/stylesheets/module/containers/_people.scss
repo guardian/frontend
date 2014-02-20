@@ -3,9 +3,18 @@
         @include rem((
             padding-top: $gs-baseline/3
         ));
-        @include mq(tablet, wide) {
+        @include mq(tablet, desktop) {
             padding-top: 0;
         }
+    }
+    .linkslist-container {
+        @include mq($to: desktop) {
+            margin-top: 0;
+        }
+    }
+    .ad-slot--inline {
+        margin-top: $gs-baseline/2;
+        margin-bottom: $gs-baseline/2;
     }
     .collection-wrapper--position-1 .l-row--items-3 {
         .item__title,
