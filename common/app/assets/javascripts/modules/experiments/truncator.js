@@ -80,14 +80,14 @@ define([
     };
 
     Truncator.prototype.showCta = function() {
-        this.el.innerHTML = this.addElipsis(this.el.innerHTML);
+        this.el.innerHTML = this.addElipsis(bonzo(this.el).text());
         bonzo(qwery('.' + this.classes.actions)).addClass('is-truncated').prepend(this.config.template);
         bean.on(qwery('.' + this.classes.btn)[0], 'click', this.toggleContent.bind(this));
         bean.on(qwery('.' + this.classes.btn)[0], 'click', this.hideCta.bind(this));
     };
 
     Truncator.prototype.hideCta = function() {
-        this.el.innerHTML = this.removeElipsis(this.el.innerHTML);
+        this.el.innerHTML = this.removeElipsis(bonzo(this.el).text());
         bonzo(qwery('.' + this.classes.btn)[0]).hide();
         bonzo(qwery('.' + this.classes.actions)).addClass('is-not-truncated');
     };
