@@ -50,10 +50,6 @@ td {
     }
 }
 
-.table-row--selected td {
-    font-weight: 800;
-}
-
 .table-column--sub {
     color: $c-statusNeutral;
 }
@@ -68,6 +64,10 @@ td {
 
 .table-row--divider td {
     border-bottom: 1px dashed $c-neutral1;
+}
+
+.table-row--break td {
+    border-top: 1px solid $c-neutral1;
 }
 
 .table__headline {
