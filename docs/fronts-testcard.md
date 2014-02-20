@@ -15,6 +15,10 @@ Howto: TODO
 - imageAdjust hide
 - imageAdjust default
 - imageAdjust highlight
+    - Supporting: standard
+    - Supporting: video
+    - Supporting: comment
+    - Supporting: gallery
 
 ## Fromage
 
@@ -22,16 +26,28 @@ Howto: TODO
 - imageAdjust hide
 - imageAdjust default
 - imageAdjust highlight
+    - Supporting: standard
+    - Supporting: video
+    - Supporting: comment
+    - Supporting: gallery
 
 ### Volume 1
 - imageAdjust hide
 - imageAdjust default
 - imageAdjust highlight
+    - Supporting: standard
+    - Supporting: video
+    - Supporting: comment
+    - Supporting: gallery
 
 ### Volume 2
 - imageAdjust hide
 - imageAdjust default
 - imageAdjust highlight
+    - Supporting: standard
+    - Supporting: video
+    - Supporting: comment
+    - Supporting: gallery
 
 ### Row of 2:
 - Video
