@@ -234,11 +234,11 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
     lazy val credentials: AWSCredentialsProvider = new AWSCredentialsProviderChain(
       // the first 3 are a copy n paste job from the constructor of DefaultAWSCredentialsProviderChain
-      LoggingAWSCredentialsProvider(new EnvironmentVariableCredentialsProvider()),
-      LoggingAWSCredentialsProvider(new SystemPropertiesCredentialsProvider()),
-      LoggingAWSCredentialsProvider(new InstanceProfileCredentialsProvider()),
+      new EnvironmentVariableCredentialsProvider(),
+      new SystemPropertiesCredentialsProvider(),
+      new InstanceProfileCredentialsProvider(),
 
-      LoggingAWSCredentialsProvider(new StaticCredentialsProvider(new NullableAWSCredentials(accessKey, secretKey)))
+      new StaticCredentialsProvider(new NullableAWSCredentials(accessKey, secretKey))
     )
   }
 
@@ -268,28 +268,5 @@ object ManifestData {
 private class NullableAWSCredentials(accessKeyId: Option[String], secretKey: Option[String]) extends AWSCredentials{
   def getAWSAccessKeyId: String = accessKeyId.getOrElse(null)
   def getAWSSecretKey: String = secretKey.getOrElse(null)
-}
-
-// I want to see which provider we are using
-private class LoggingAWSCredentialsProvider(delegate: AWSCredentialsProvider) extends AWSCredentialsProvider with Logging {
-  val className = delegate.getClass.getSimpleName
-
-  def refresh() {
-    log.info(s"$className.refresh")
-    delegate.refresh()
-  }
-
-  def getCredentials: AWSCredentials = {
-    val credentials = delegate.getCredentials
-    // this is how the AWSCredentialsProviderChain works
-    if (credentials.getAWSAccessKeyId == null && credentials.getAWSSecretKey == null) {
-      log.warn(s"AWS Credentials AWSAccessKeyId and AWSSecetKey are null in $className")
-    }
-    credentials
-  }
-}
-
-private object LoggingAWSCredentialsProvider{
-  def apply(delegate: AWSCredentialsProvider) = new LoggingAWSCredentialsProvider(delegate)
 }
 
