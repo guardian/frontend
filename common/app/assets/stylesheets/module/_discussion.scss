@@ -567,7 +567,7 @@ $replyIndent: 26px;
         @include rem((margin-left: $a-leftColWide-width + $gs-gutter + $replyIndent));
     }
 }
-.shame-show-more-replies {
+.d-show-more-replies {
     @include rem((margin-left: $replyIndent));
 
     @include mq($comment-meta-breakpoint) {
