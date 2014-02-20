@@ -425,7 +425,6 @@ object Switches extends Collections {
     DoubleCacheTimesSwitch,
     RelatedContentSwitch,
     SpdyServicesSwitch,
-    SpdyServicesSwitch,
     AdvertSwitch,
     VideoAdvertSwitch,
     AudienceScienceSwitch,
