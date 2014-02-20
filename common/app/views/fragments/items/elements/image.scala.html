@@ -1,6 +1,6 @@
 @(trail: Trail, inlineImage: Boolean = false, forceUpgrade: Boolean = false, maxWidth: Int = 620)(implicit request: RequestHeader)
 
-@if(trail.imageAdjust != Some("hide")) {
+@if(trail.imageAdjust != "hide") {
     @trail.trailPicture(5,3).map{ imageContainer =>
         @ImgSrc.imager(imageContainer, maxWidth).map { imgSrc =>
             <div class="item__media-wrapper">
