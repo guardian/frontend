@@ -93,7 +93,7 @@ define([
             new RecommendedItem(item, index).render(container);
         });
         images.upgrade(container);
-        bean.on(document, 'click', '.right-recommended-item__url', function() {
+        bean.on(document.body, 'click', '.right-recommended-item__url', function() {
             s.events="event37";
             s.eVar7 = s.pageName;
 

@@ -60,7 +60,8 @@ trait ParseConfig extends ExecutionContexts with Logging {
       (json \ "tone").asOpt[String],
       (json \ "href").asOpt[String],
       (json \ "groups").asOpt[Seq[String]] getOrElse Nil,
-      (json \ "roleName").asOpt[String]
+      (json \ "roleName").asOpt[String],
+      (json \ "type").asOpt[String]
     )
 
 }

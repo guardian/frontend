@@ -66,7 +66,8 @@ trait FrontJson extends ExecutionContexts {
       collectionTone  = (json \ "tone").asOpt[String],
       href            = (json \ "href").asOpt[String],
       groups          = (json \ "groups").asOpt[List[String]].getOrElse(Nil),
-      roleName        = (json \ "roleName").asOpt[String]
+      roleName        = (json \ "roleName").asOpt[String],
+      collectionType  = (json \ "collectionType").asOpt[String]
     )
   }
 
