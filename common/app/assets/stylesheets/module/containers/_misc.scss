@@ -8,7 +8,7 @@
         @if $browser-supports-flexbox == false {
             &:first-child {
                 @include mq(desktop) {
-                    @include rem((width: 620px));
+                    @include rem((width: gs-span(8)));
                 }
             }
         }
@@ -44,7 +44,7 @@
             @include rem((
                 // Width of a column in l-columns on tablet
                 // in that particular context
-                max-width: gs-span(4) + $gs-gutter * 2
+                max-width: gs-span(4) + ($gs-gutter * 2)
             ));
         }
     }
