@@ -2,8 +2,6 @@
 
 <div
     class="@GetClasses.forItem(trail, true) baguette"
-    @trail.discussionId.map{ id => data-discussion-id="@id" }
-    data-discussion-closed="@trail.isClosedForComments"
     data-link-name="trail | @{index + 1}">
 
     <div class="item__container">
