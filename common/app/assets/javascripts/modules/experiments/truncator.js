@@ -65,11 +65,11 @@ define([
         return contentChildren.slice(contentChildren.indexOf(this.el) + 1, contentChildren.length);
     };
 
-    Truncator.prototype.addElipsis = function(text) {
+    Truncator.prototype.addEllipsis = function(text) {
         return (/\.$/g.test(text)) ?  + '…' : text + '…';
     };
 
-    Truncator.prototype.removeElipsis = function(text) {
+    Truncator.prototype.removeEllipsis = function(text) {
        return text.slice(0, -1) + '.';
     };
 
@@ -80,14 +80,14 @@ define([
     };
 
     Truncator.prototype.showCta = function() {
-        this.el.innerHTML = this.addElipsis(bonzo(this.el).text());
+        this.el.innerHTML = this.addEllipsis(bonzo(this.el).text());
         bonzo(qwery('.' + this.classes.actions)).addClass('is-truncated').prepend(this.config.template);
         bean.on(qwery('.' + this.classes.btn)[0], 'click', this.toggleContent.bind(this));
         bean.on(qwery('.' + this.classes.btn)[0], 'click', this.hideCta.bind(this));
     };
 
     Truncator.prototype.hideCta = function() {
-        this.el.innerHTML = this.removeElipsis(bonzo(this.el).text());
+        this.el.innerHTML = this.removeEllipsis(bonzo(this.el).text());
         bonzo(qwery('.' + this.classes.btn)[0]).hide();
         bonzo(qwery('.' + this.classes.actions)).addClass('is-not-truncated');
     };
