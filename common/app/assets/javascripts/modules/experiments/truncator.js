@@ -66,7 +66,7 @@ define([
     };
 
     Truncator.prototype.addEllipsis = function(text) {
-        return (/\.$/g.test(text)) ?  text.slice(0, -1) + '…' : text + '…';
+        return (/[^\w]$/g.test(text)) ?  text.slice(0, -1) + '…' : text + '…';
     };
 
     Truncator.prototype.removeEllipsis = function(text) {
