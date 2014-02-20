@@ -34,6 +34,10 @@
     top: 168px;
     border-color: $c-neutral5;
 
+    .ab__ad-labels & {
+        top: 188px;
+    }
+
     .is-active .nav__link {
         font-family: $serifheadline;
     }

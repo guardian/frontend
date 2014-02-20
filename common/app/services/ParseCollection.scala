@@ -51,6 +51,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       collectionList <- getCuratedList(response, edition, id, isWarmedUp)
       collectionMeta <- getCollectionMeta(response).fallbackTo(Future.successful(CollectionMeta.empty))
       displayName    <- parseDisplayName(response).fallbackTo(Future.successful(None))
+      href           <- parseHref(response).fallbackTo(Future.successful(None))
       contentApiList <- executeContentApiQuery(config.contentApiQuery, edition)
     } yield Collection(
       collectionList,
@@ -58,6 +59,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       contentApiList.mostViewed,
       contentApiList.contentApiResults,
       displayName,
+      href,
       collectionMeta.lastUpdated,
       collectionMeta.updatedBy,
       collectionMeta.updatedEmail
@@ -86,6 +88,10 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
 
   private def parseDisplayName(response: Future[Response]): Future[Option[String]] = response.map {r =>
     (parse(r.body) \ "displayName").asOpt[String].filter(_.nonEmpty)
+  }
+
+  private def parseHref(response: Future[Response]): Future[Option[String]] = response.map {r =>
+    (parse(r.body) \ "href").asOpt[String].filter(_.nonEmpty)
   }
 
   private def parseResponse(response: Future[Response], edition: Edition, id: String): Future[List[Content]] = {
@@ -140,15 +146,28 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
         }
         val response = ContentApi().item(collectionItem.id, edition).showFields(showFieldsQuery).response
 
-        response.onFailure{case t: Throwable => log.warn("%s: %s".format(collectionItem.id, t.toString))}
+        val content = response.map(_.content).recover {
+          case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 404 => {
+            log.warn(s"Content API Error: 404 for ${collectionItem.id}")
+            None
+          }
+          case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 410 => {
+            log.warn(s"Content API Error: 410 for ${collectionItem.id}")
+            None
+          }
+          case t: Throwable => {
+            log.warn("%s: %s".format(collectionItem.id, t.toString))
+            throw t
+          }
+        }
         supportingAsContent.onFailure{case t: Throwable => log.warn("Supporting links: %s: %s".format(collectionItem.id, t.toString))}
 
         for {
           contentList <- foldListFuture
-          itemResponse <- response
+          itemResponse <- content
           supporting <- supportingAsContent
         } yield {
-          itemResponse.content.map(Content(_, supporting, collectionItem.metaData)).map(_ +: contentList).getOrElse(contentList)
+          itemResponse.map(Content(_, supporting, collectionItem.metaData)).map(_ +: contentList).getOrElse(contentList)
         }
       }
       val sorted = results map { _.sortBy(t => collectionItems.indexWhere(_.id == t.id))}

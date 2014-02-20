@@ -14,7 +14,8 @@ case class Block(
                   lastUpdated: String,
                   updatedBy: String,
                   updatedEmail: String,
-                  displayName: Option[String]
+                  displayName: Option[String],
+                  href: Option[String]
                   )
 
 case class Trail(
@@ -24,7 +25,10 @@ case class Trail(
 
 
 case class UpdateList(id: String, item: String, position: Option[String], after: Option[Boolean], itemMeta: Option[Map[String, JsValue]], live: Boolean, draft: Boolean)
-case class CollectionMetaUpdate(displayName: Option[String])
+case class CollectionMetaUpdate(
+  displayName: Option[String],
+  href: Option[String]
+)
 
 trait UpdateActions {
 
@@ -66,7 +70,7 @@ trait UpdateActions {
       block
 
   def updateCollectionMeta(block: Block, update: CollectionMetaUpdate, identity: Identity): Block =
-    block.copy(displayName=update.displayName)
+    block.copy(displayName=update.displayName, href=update.href)
 
   def putBlock(id: String, block: Block, identity: Identity): Option[Block] = {
     FaciaApi.archive(id, block)
@@ -116,9 +120,9 @@ trait UpdateActions {
 
   def createBlock(id: String, identity: Identity, update: UpdateList): Option[Block] = {
     if (update.live)
-      FaciaApi.putBlock(id, Block(id, None, List(Trail(update.item, update.itemMeta)), None, DateTime.now.toString, identity.fullName, identity.email, None), identity)
+      FaciaApi.putBlock(id, Block(id, None, List(Trail(update.item, update.itemMeta)), None, DateTime.now.toString, identity.fullName, identity.email, None, None), identity)
     else
-      FaciaApi.putBlock(id, Block(id, None, Nil, Some(List(Trail(update.item, update.itemMeta))), DateTime.now.toString, identity.fullName, identity.email, None), identity)
+      FaciaApi.putBlock(id, Block(id, None, Nil, Some(List(Trail(update.item, update.itemMeta))), DateTime.now.toString, identity.fullName, identity.email, None, None), identity)
   }
 
 }

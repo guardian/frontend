@@ -7,8 +7,9 @@ define([
     //Current tests
     'common/modules/experiments/tests/aa',
     'common/modules/experiments/tests/gravity-recommendations',
-    'common/modules/experiments/tests/article-truncation',
-    'common/modules/experiments/tests/ad-labels'
+    'common/modules/experiments/tests/ad-labels',
+    'common/modules/experiments/tests/onward-inline-elements',
+    'common/modules/experiments/tests/article-truncation'
 ], function (
     common,
     store,
@@ -17,15 +18,17 @@ define([
 
     Aa,
     GravityRecommendations,
-    ArticleTruncation,
-    AdLabels
+    AdLabels,
+    InlineElements,
+    ArticleTruncation
     ) {
 
     var TESTS = [
             new Aa(),
             new GravityRecommendations(),
-            new ArticleTruncation(),
-            new AdLabels()
+            new AdLabels(),
+            new InlineElements(),
+            new ArticleTruncation()
        ],
        participationsKey = 'gu.ab.participations';
 

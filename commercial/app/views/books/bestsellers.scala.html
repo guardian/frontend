@@ -2,19 +2,41 @@
 
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
-<h1>Bestsellers</h1>
+<div class="commercial books-component">
 
-<table>
-@books.map { book =>
-    <tr>
-        <td>@book.position</td>
-        <td>@book.jacketUrl.map { url => <img src="@url" />}</td>
-        <td><a href="@book.buyUrl">@book.title</a></td>
-        <td>@book.author</td>
-        <td>@book.isbn</td>
-        <td>@book.price</td>
-        <td>@book.offerPrice</td>
-        <td>@book.description</td>
-    </tr>
-}
-</table>
+    <div class="commercial__head">
+        <span class="commercial__title svg-i-guardian-bookshop-logo"></span>
+    </div>
+
+    <div class="commercial__body">
+        <h3>This week's bestsellers</h3>
+
+        <ul class="unstyled list">
+        @books.map { book =>
+            <li class="list__item">
+                <a href="@book.buyUrl" class="list__link" data-link-name="@book.position | text">
+                    <span class="list__count">@book.position</span>
+                    @book.jacketUrl.map { url => <img class="list__img" src="@url" alt="">}
+                    <h4 class="list__title">@book.title</h4>
+                    @if(book.author) {
+                        <p class="list__author">by @book.author</p>
+                    }
+                </a>
+                @book.offerPrice.map { price =>
+                    <p class="list__price">&pound;@("%.2f".format(price))</p>
+                }
+            </li>
+        }
+        </ul>
+    </div>
+
+    <div class="commercial__foot">
+        <form action="http://www.guardianbookshop.co.uk/BerteShopWeb/search.do" method="POST" class="commercial__search" name="QuickSearchForm">
+            <label for="bookshop">Search the Guardian bookshop:</label>
+            <input id="bookshop" name="keyword" class="text-input svg-i-search-grey" type="text" placeholder="Search the Guardian bookshop" />
+            <input value="Search" name="go" class="submit-input" type="submit" />
+            <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />
+        </form>
+    </div>
+
+</div>

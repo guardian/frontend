@@ -1,6 +1,9 @@
 /* global _: true */
 define(['knockout'], function(ko) {
     var CONST = {
+        tones: ['news', 'feature', 'comment'],
+        groups: ["standard,big,very big,huge"],
+
         viewer: 'http://s3-eu-west-1.amazonaws.com/facia/responsive-viewer.html',
         filterTypes: {
             section: { display: 'in section:', param: "section", path: "sections", placeholder: "e.g. news" },
@@ -8,13 +11,9 @@ define(['knockout'], function(ko) {
         },
         searchPageSize:        50,
 
-        pvmHot:                50,    // pageviews-per-min to qualify as 'hot'
-        pvmWarm:               25,    // pageviews-per-min to qualify as 'warm'
-        pvmPeriod:             5,     // num of recent datapoints over which to calc pageviews
-
         collectionsPollMs:     10000,
         latestArticlesPollMs:  20000,
-        configSwitchesPollMs:  30000,
+        configSettingsPollMs:  30000,
         cacheExpiryMs:         60000,
         sparksRefreshMs:       300000,
 
@@ -47,8 +46,9 @@ define(['knockout'], function(ko) {
         sparksBase:      sparksBaseUrl(CONST.sparksParams),
         sparksBaseFront: sparksBaseUrl(CONST.sparksFrontParams),
         state: {
-            switches:        {},
-            liveMode:        ko.observable(false)
+            config: {},
+            switches: {},
+            liveMode: ko.observable(false)
         }
     };
 });

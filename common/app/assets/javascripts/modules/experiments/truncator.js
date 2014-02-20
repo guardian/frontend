@@ -39,11 +39,11 @@ define([
             '<i class="i i-arrow-down-double-blue"></i> Continue reading</button>' +
             '<a href="/" class="truncation-cta truncation-cta--back-home" data-link-name="back to home">' +
             '<span class="truncation-cta__icon"><span class="i i-home-white-mask"></span><span class="i i-home-white"></span></span>' +
-            '<span class="truncation-cta__text"><span class="mobile-only">Home</span><span class="hide-on-mobile-inline">Back to homepage</span></span></a>'
+            '<span class="truncation-cta__text"><span class="truncation-cta__short-label">Home</span><span class="truncation-cta__long-label">Back to homepage</span></span></a>'
     };
 
     Truncator.prototype.getParagraphs = function() {
-        return toArray(qwery('p', this.config.contentEl));
+        return toArray(qwery('.js-article__body > p'));
     };
 
     Truncator.prototype.getWordCount = function(el) {
@@ -59,8 +59,18 @@ define([
     };
 
     Truncator.prototype.getContentAfterEl = function() {
-        var contentChildren = toArray(this.config.contentEl.children);
+        //Having to use '> *' instead of .children for x-browser compatibility
+        var contentChildren = toArray(qwery('.js-article__body > *'));
+
         return contentChildren.slice(contentChildren.indexOf(this.el) + 1, contentChildren.length);
+    };
+
+    Truncator.prototype.addEllipsis = function(text) {
+        return (/[^\w]$/g.test(text)) ?  text.slice(0, -1) + '…' : text + '…';
+    };
+
+    Truncator.prototype.removeEllipsis = function(text) {
+       return (/…$/g.test(text)) ? text.slice(0, -1) + '.' : text;
     };
 
     Truncator.prototype.toggleContent = function() {
@@ -70,13 +80,15 @@ define([
     };
 
     Truncator.prototype.showCta = function() {
+        this.el.innerHTML = this.addEllipsis(bonzo(this.el).text());
         bonzo(qwery('.' + this.classes.actions)).addClass('is-truncated').prepend(this.config.template);
         bean.on(qwery('.' + this.classes.btn)[0], 'click', this.toggleContent.bind(this));
         bean.on(qwery('.' + this.classes.btn)[0], 'click', this.hideCta.bind(this));
     };
 
     Truncator.prototype.hideCta = function() {
-        qwery('.' + this.classes.btn)[0].remove();
+        this.el.innerHTML = this.removeEllipsis(bonzo(this.el).text());
+        bonzo(qwery('.' + this.classes.btn)[0]).hide();
         bonzo(qwery('.' + this.classes.actions)).addClass('is-not-truncated');
     };
 

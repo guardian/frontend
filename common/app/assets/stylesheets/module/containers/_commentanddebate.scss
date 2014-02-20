@@ -8,13 +8,17 @@
         }
     }
     .l-row--items-3 {
+        .item__link {
+            border-color: $c-commentAccent;
+        }
         .item__byline {
+            color: $c-commentDefault;
             @include mq(tablet) {
                 margin-bottom: $gs-baseline*2;
             }
         }
         .item__title {
-            margin-top: 0;
+            padding-top: 0;
         }
         .item__title,
         .item__byline {

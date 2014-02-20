@@ -40,13 +40,10 @@ define([
 
         showFrontFixtures: function(context) {
             // wrap the return sports stats component in an 'item'
-            var prependTo = bonzo.create('<li class="item item--sport-stats item--sport-stats-tall"></li>');
+            var prependTo = bonzo.create('<div class="fromage tone-accent-border tone-news unstyled item--sport-stats"></div>');
             mediator.on('modules:footballfixtures:render', function() {
-                var $collection = $('.container--sport .collection', context);
-                $('.item:first-child', $collection[0])
-                    .after(prependTo);
-                $collection.removeClass('collection--without-sport-stats')
-                    .addClass('collection--with-sport-stats');
+                bonzo($('.collection-wrapper', context).get(1))
+                    .append(prependTo);
             });
             new FootballFixtures({
                 prependTo: prependTo,

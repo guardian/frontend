@@ -244,7 +244,8 @@ module.exports = function (grunt) {
             spriteGeneration: {
                 command: [
                     'cd tools/sprites/',
-                    'node spricon.js global-icon-config.json'
+                    'node spricon.js global-icon-config.json',
+                    'node spricon.js commercial-icon-config.json'
                 ].join('&&'),
                 options: {
                     stdout: true,
@@ -491,21 +492,19 @@ module.exports = function (grunt) {
         casperjsLogFile: 'results.xml',
         casperjs: {
             options: {
-                // Pre-prod environments have self-signed SSL certs
-                ignoreSslErrors: 'yes',
-                includes: ['integration-tests/casper/tests/shared.js'],
-                xunit: 'integration-tests/target/casper/<%= casperjsLogFile %>',
-                loglevel: 'debug',
-                direct: true
+                casperjsOptions: [
+                    '--verbose',
+                    '--log-level=warning',
+                    '--ignore-ssl-errors=yes',
+                    '--includes=integration-tests/casper/tests/shared.js',
+                    '--xunit=integration-tests/target/casper/<%= casperjsLogFile %>'
+                ]
             },
             screenshot: {
                 src: ['tools/screenshots/screenshot.js']
             },
             all: {
                 src: ['integration-tests/casper/tests/**/*.spec.js']
-            },
-            allexceptadmin: {
-                src: ['integration-tests/casper/tests/!(*admin)/*.spec.js']
             },
             admin: {
                 src: ['integration-tests/casper/tests/admin/*.spec.js']

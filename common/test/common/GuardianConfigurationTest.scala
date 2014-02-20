@@ -21,7 +21,7 @@ class GuardianConfigurationTest extends FlatSpec with Matchers {
     // There is a document (that would have been shared with you) that contains all
     // the properties needed to run this project. Make sure you update it if there 
     // are any required changes, update the hash below, and off you go.
-    hash should be ("4aee14107b0ced7aff895c3dc9f48cc6")
+    hash should be ("17da268edd30594f5e2a449edb218037")
 
   }
 }

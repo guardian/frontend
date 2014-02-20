@@ -237,18 +237,15 @@ define([
         loadAdverts: function (config) {
             if(!userPrefs.isOff('adverts') && config.switches.adverts && !config.page.blockVideoAds && !config.page.shouldHideAdverts) {
                 var resizeCallback = function() {
-                    hasBreakpointChanged(Adverts.reload);
+                    hasBreakpointChanged(function() {
+                        Adverts.reload();
+                        mediator.emit('modules:adverts:reloaded');
+                    });
                 };
 
                 if(config.page.contentType === 'Article' && !config.page.isLiveBlog) {
-                    // Limiting inline ads to 1 until support for different inline
-                    // ads is enabled
-                    var articleBodyAdverts = new ArticleBodyAdverts({
-                        inlineAdLimit: 1,
-                        wordCount: config.page.wordCount
-                    });
+                    var articleBodyAdverts = new ArticleBodyAdverts();
 
-                    // Add the body adverts to the article page
                     articleBodyAdverts.init();
 
                     resizeCallback = function(e) {
@@ -328,7 +325,7 @@ define([
         },
 
         displayOnboardMessage: function (config) {
-            if(window.location.hash === '#opt-in-message' && config.switches.networkFrontOptIn) {
+            if(window.location.hash === '#opt-in-message' && config.switches.networkFrontOptIn && detect.getBreakpoint() !== 'mobile') {
                 bean.on(document, 'click', '.js-site-message-close', function() {
                     Cookies.add("GU_VIEW", "responsive", 365);
                     Cookies.add("GU_ALPHA", "2", 365);

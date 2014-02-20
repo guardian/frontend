@@ -23,6 +23,7 @@ trait FrontJson extends ExecutionContexts {
 
   private def parseCollection(json: JsValue): Collection = {
     val displayName: Option[String] = (json \ "displayName").asOpt[String]
+    val href: Option[String] = (json \ "href").asOpt[String]
     val curated =      (json \ "curated").asOpt[List[JsValue]].getOrElse(Nil)
       .flatMap(Content.fromPressedJson)
     val editorsPicks = (json \ "editorsPicks").asOpt[List[JsValue]].getOrElse(Nil)
@@ -42,6 +43,7 @@ trait FrontJson extends ExecutionContexts {
       mostViewed=mostViewed,
       results=results,
       displayName=displayName,
+      href=href,
       lastUpdated=lastUpdated,
       updatedBy=updatedBy,
       updatedEmail=updatedEmail
@@ -64,7 +66,8 @@ trait FrontJson extends ExecutionContexts {
       collectionTone  = (json \ "tone").asOpt[String],
       href            = (json \ "href").asOpt[String],
       groups          = (json \ "groups").asOpt[List[String]].getOrElse(Nil),
-      roleName        = (json \ "roleName").asOpt[String]
+      roleName        = (json \ "roleName").asOpt[String],
+      collectionType  = (json \ "collectionType").asOpt[String]
     )
   }
 
