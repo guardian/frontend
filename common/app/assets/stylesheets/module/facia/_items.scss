@@ -529,6 +529,9 @@ $show-more-icon: (
     height: (map-get($show-more-icon, height) + map-get($show-more-icon, space-between)) * 2;
     width: map-get($show-more-icon, width);
 }
+.container--rolled-up .container--rolled-up-hide {
+    display: none;
+}
 
 
 // Thumbnail element order:
@@ -538,61 +541,7 @@ $show-more-icon: (
 
 .item--thumbnail {
     .item__standfirst {
-        @include rem((
-            margin-top: $gs-baseline
-        ));
-    }
-}
-
-.action--has-icon {
-    .i {
-        // This is a scalable icon,
-        // it will only work if SVG is active
-        @include show-only-if-svg-is-supported;
-    }
-    .svg & {
-        @include rem((
-            padding-left: $action-icon-width + $action-icon-rightspace
-        ));
-
-        .i {
-            float: left;
-            @include rem((
-                margin-left: ($action-icon-width + $action-icon-rightspace) * -1
-            ));
-        }
-    }
-}
-.svg .action--tone-comment .i { // Chained selector to overrule icon code from global.css
-    margin-top: 3px; // Align icon with text
-    width: 1.45em;
-    background-size: contain;
-}
-
-.i--circle {
-    @include rounded-corners(50%);
-    display: block;
-    position: relative;
-}
-.i--clock {
-    width: 32px;
-    height: 32px;
-    background-color: $c-newsDefault;
-    position: absolute;
-    left: 0;
-    margin-top: 3px;
-
-    .i {
-        position: absolute;
-        left: 15px;
-        top: 5px;
-    }
-}
-
-.item--thumbnail {
-    .item__standfirst {
         display: block;
-
         @include rem((
             margin-top: 2px
         ));
@@ -604,23 +553,6 @@ $show-more-icon: (
         @include rem((
             margin-right: $gs-gutter/2
         ));
-    }
-}
-
-.container--rolled-up .container--rolled-up-hide {
-    display: none;
-}
-
-.today {
-    color: $c-neutral1;
-    font-weight: normal;
-}
-.today__dayofweek {
-    color: $c-newsDefault;
-}
-@include mq(wide) {
-    .today__sub {
-        display: block;
     }
 }
 
