@@ -8,7 +8,9 @@
         }
     }
     .linkslist-container {
-        margin-top: 0;
+        @include mq($to: desktop) {
+            margin-top: 0;
+        }
     }
     .ad-slot--inline {
         margin-top: $gs-baseline/2;
@@ -53,15 +55,8 @@
             }
         }
     }
-    .collection-wrapper--position-2 {
-        @include rem((padding-top: $gs-baseline/3));
-
-        .collection__item {
-            padding-bottom: 0;
-            margin-bottom: 0;
-        }
-    }
 }
+
 
 /* Remove spacing between items */
 .collection-wrapper--spacing-thin {

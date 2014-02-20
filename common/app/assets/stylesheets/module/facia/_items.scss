@@ -635,9 +635,15 @@ $show-more-icon: (
         margin: 0 auto;
     }
 }
-@include mq(tablet) {
-    .l-row__item--mpu-300 {
-        min-width: gs-span(4) + $gs-gutter;
-        max-width: gs-span(4) + $gs-gutter;
+.l-row__item--mpu-300 {
+    @if $browser-supports-flexbox {
+        @include mq(tablet) {
+            min-width: gs-span(4) + $gs-gutter;
+            max-width: gs-span(4) + $gs-gutter;
+        }
+    } @else {
+        @include mq(desktop) {
+            width: gs-span(4);
+        }
     }
 }
