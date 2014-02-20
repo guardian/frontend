@@ -15,6 +15,7 @@ define([
         this.audienceOffset = 0.4;
         this.description = 'Testing if putting labels next to ads impacts the CTR';
         this.canRun = function(config) {
+            console.log("Run add labels");
             return config.page.contentType === 'Article' && config.switches.adverts;
         };
         this.variants = [

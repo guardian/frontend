@@ -12,7 +12,7 @@ define([
 
        var self = this;
 
-       this.id = 'RighHandRecommendations';
+       this.id = 'RightHandRecommendations';
        this.expiry = '2014-02-28';
        this.audience = 0.3;
        this.audienceOffset = 0.7;

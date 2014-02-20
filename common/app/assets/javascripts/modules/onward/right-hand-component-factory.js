@@ -3,12 +3,14 @@ define( [
     'common/utils/detect',
 
     'common/modules/onward/right-most-popular',
+    'common/modules/onward/right-recommended',
     'common/modules/onward/right-outbrain-recommendations'
 ], function (
     extend,
     detect,
 
     RightMostPopular,
+    RightRecommended,
     RightOutbrainRecommendations
 ){
 
@@ -29,7 +31,7 @@ define( [
     RightHandComponentFactory.prototype.renderRightHandComponent = function() {
 
         var components = {
-            'gravity' :  function(pageId) { new RightRecommendedForYou(this.mediator,  {type: 'image', maxTrails: 5}); },
+            'gravity' :  function(pageId) { new RightRecommended(this.mediator,  {type: 'image', maxTrails: 5}); },
             'outbrain' : function(pageId) { new RightOutbrainRecommendations(this.mediator, {type: 'image', maxTrails: 5, pageId: pageId});            },
             'default' : function(pageId) { new RightMostPopular(this.mediator, {type: 'image', maxTrails: 5}); }
         };
