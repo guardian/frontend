@@ -142,27 +142,24 @@ define([
         lazyLoadCss('football', config);
 
         switch(action) {
+            case 'fixtures':
+            case 'results':
+            case 'table':
+            case 'tables':
+                modules.showMoreMatches();
+                break;
+
             case undefined:
                 modules.showFrontFixtures();
                 break;
+
             case 'live':
                 modules.showMoreMatches();
                 if (context.querySelector('.match.live-match')) {
                     modules.initAutoUpdate(context.querySelector('.matches-container'), config.switches, '.matches-container > *');
                 }
                 break;
-            case 'fixtures':
-                modules.showMoreMatches();
-                break;
-            case 'results':
-                modules.showMoreMatches();
-                break;
-            case 'table':
-                modules.showMoreMatches();
-                break;
-            case 'tables':
-                modules.showMoreMatches();
-                break;
+
             default:
                 if(config.page.contentType === 'Article') { return false; } //Prevent loading of fixtures in story packages
 
