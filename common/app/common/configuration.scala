@@ -282,8 +282,8 @@ private class LoggingAWSCredentialsProvider(delegate: AWSCredentialsProvider) ex
   def getCredentials: AWSCredentials = {
     val credentials = delegate.getCredentials
     // this is how the AWSCredentialsProviderChain works
-    if (credentials.getAWSAccessKeyId != null && credentials.getAWSSecretKey != null) {
-      log.info(s"using AWS Credentials from $className")
+    if (credentials.getAWSAccessKeyId == null && credentials.getAWSSecretKey == null) {
+      log.warn(s"AWS Credentials AWSAccessKeyId and AWSSecetKey are null in $className")
     }
     credentials
   }
