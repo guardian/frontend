@@ -81,6 +81,10 @@
             ));
         }
     }
+
+    .js-on &.facia-container--ab .container:nth-child(n+2) {
+        display: none;
+    }
 }
 
 @import "module/facia/_extends";

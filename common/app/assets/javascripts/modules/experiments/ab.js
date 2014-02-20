@@ -10,7 +10,8 @@ define([
     'common/modules/experiments/tests/ad-labels',
     'common/modules/experiments/tests/onward-inline-elements',
     'common/modules/experiments/tests/article-truncation',
-    'common/modules/experiments/tests/geo-most-popular'
+    'common/modules/experiments/tests/geo-most-popular',
+    'common/modules/experiments/tests/uk-containers'
 ], function (
     common,
     store,
@@ -21,7 +22,8 @@ define([
     AdLabels,
     InlineElements,
     ArticleTruncation,
-    GeoMostPopular
+    GeoMostPopular,
+    UkContainers
 ) {
 
     var TESTS = [
@@ -30,7 +32,8 @@ define([
             new AdLabels(),
             new InlineElements(),
             new ArticleTruncation(),
-            new GeoMostPopular()
+            new GeoMostPopular(),
+            new UkContainers()
        ],
        participationsKey = 'gu.ab.participations';
 
