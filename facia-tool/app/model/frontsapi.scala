@@ -7,7 +7,6 @@ import org.joda.time.DateTime
 import play.api.templates.HtmlFormat
 
 case class Block(
-                  id: String,
                   name: Option[String],
                   live: List[Trail],
                   draft: Option[List[Trail]],
@@ -120,9 +119,9 @@ trait UpdateActions {
 
   def createBlock(id: String, identity: Identity, update: UpdateList): Option[Block] = {
     if (update.live)
-      FaciaApi.putBlock(id, Block(id, None, List(Trail(update.item, update.itemMeta)), None, DateTime.now.toString, identity.fullName, identity.email, None, None), identity)
+      FaciaApi.putBlock(id, Block(None, List(Trail(update.item, update.itemMeta)), None, DateTime.now.toString, identity.fullName, identity.email, None, None), identity)
     else
-      FaciaApi.putBlock(id, Block(id, None, Nil, Some(List(Trail(update.item, update.itemMeta))), DateTime.now.toString, identity.fullName, identity.email, None, None), identity)
+      FaciaApi.putBlock(id, Block(None, Nil, Some(List(Trail(update.item, update.itemMeta))), DateTime.now.toString, identity.fullName, identity.email, None, None), identity)
   }
 
 }
