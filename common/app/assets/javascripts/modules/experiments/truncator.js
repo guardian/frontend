@@ -66,11 +66,11 @@ define([
     };
 
     Truncator.prototype.addEllipsis = function(text) {
-        return (/\.$/g.test(text)) ?  + '…' : text + '…';
+        return (/\.$/g.test(text)) ?  text.slice(0, -1) + '…' : text + '…';
     };
 
     Truncator.prototype.removeEllipsis = function(text) {
-       return text.slice(0, -1) + '.';
+       return (/…$/g.test(text)) ? text.slice(0, -1) + '.' : text;
     };
 
     Truncator.prototype.toggleContent = function() {
