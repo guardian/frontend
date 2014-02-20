@@ -265,8 +265,10 @@ case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner 
 
           asset.foreach { image =>
             image.url.map(url => img.attr("src", ImgSrc(url, Item620).toString))
-            img.attr("width", s"${image.width}px")
-            img.attr("height", "")
+            img.attr("width", s"${image.width}")
+
+            //otherwsie we mess with aspect ratio
+            img.removeAttr("height")
 
             fig.addClass(image.width match {
               case width if width <= 220 => "img--base img--inline"
@@ -662,50 +664,52 @@ object GetClasses {
     RenderClasses(classes:_*)
   }
 
-  def forItem(trail: Trail, firstContainer: Boolean): String = {
+  def forItem(trail: Trail, firstContainer: Boolean, forceHasImage: Boolean = false): String = {
     val baseClasses: Seq[String] = Seq(
       "item",
       s"tone-${VisualTone(trail)}"
     )
-    val f: Seq[(Trail, Boolean) => String] = Seq(
-      (trail: Trail, firstContainer: Boolean) => trail match {
+    val f: Seq[(Trail, Boolean, Boolean) => String] = Seq(
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) => trail match {
         case _: Gallery => "item--gallery"
         case _: Video   => "item--video"
         case _          => ""
       },
-      (trail: Trail, firstContainer: Boolean) => if (firstContainer) {"item--force-image-upgrade"} else {""},
-      (trail: Trail, firstContainer: Boolean) => if (trail.isLive) {"item--live"} else {""},
-      (trail: Trail, firstContainer: Boolean) => if (trail.trailPicture(5,3).isEmpty || trail.imageAdjust == Some("hide")){
-        "item--has-no-image"
-      }else{
-        "item--has-image"
-      },
-      (trail: Trail, firstContainer: Boolean) => trail.imageAdjust.map{ adjustValue =>
-        s"item--imageadjust-$adjustValue"
-      }.getOrElse("")
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) =>
+        if (firstContainer) "item--force-image-upgrade" else "",
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) =>
+        if (trail.isLive) "item--live" else "",
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) =>
+        if (forceHasImage == false && (trail.trailPicture(5,3).isEmpty || trail.imageAdjust == "hide")){
+          "item--has-no-image"
+        }else{
+          "item--has-image"
+        },
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) =>
+        if (forceHasImage || !trail.trailPicture(5,3).isEmpty) s"item--imageadjust-${trail.imageAdjust}" else ""
     )
-    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, firstContainer)}
+    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, firstContainer, forceHasImage)}
     RenderClasses(classes:_*)
   }
 
-  def forFromage(trail: Trail, imageAdjust: Option[String]): String = {
+  def forFromage(trail: Trail, imageAdjust: String): String = {
     val baseClasses: Seq[String] = Seq(
       "fromage",
       s"fromage--volume-${trail.group.getOrElse("0")}",
       s"tone-${VisualTone(trail)}",
       "tone-accent-border"
     )
-    val f: Seq[(Trail, Option[String]) => String] = Seq(
-      (trail: Trail, imageAdjust: Option[String]) => if (trail.isLive) {"item--live"} else {""},
-      (trail: Trail, imageAdjust: Option[String]) =>
-        if (trail.trailPicture(5,3).isEmpty || imageAdjust == Some("hide")){
+    val f: Seq[(Trail, String) => String] = Seq(
+      (trail: Trail, imageAdjust: String) =>
+        if (trail.isLive) "item--live" else "",
+      (trail: Trail, imageAdjust: String) =>
+        if (trail.trailPicture(5,3).isEmpty || imageAdjust == "hide"){
           "fromage--has-no-image"
         }else{
           "fromage--has-image"
         },
-      (trail: Trail, imageAdjust: Option[String]) => imageAdjust.map{ adjustValue =>
-        s"fromage--imageadjust-$adjustValue"
-      }.getOrElse("")
+      (trail: Trail, imageAdjust: String) =>
+        if (!trail.trailPicture(5,3).isEmpty) s"fromage--imageadjust-$imageAdjust" else ""
     )
     val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, imageAdjust)}
     RenderClasses(classes:_*)

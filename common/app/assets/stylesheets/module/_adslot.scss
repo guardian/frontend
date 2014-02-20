@@ -23,7 +23,6 @@
         background-color: $c-neutral8;
         padding: 0 $baseline*2;
         border-top: 1px solid $c-neutral5;
-
         color: $c-neutral2;
         font-family: $sans-serif;
         @include font-size(12, 20);
@@ -32,7 +31,6 @@
     }
 
     &.ad-slot__show-label {
-
         .ad-slot__label {
             display: block;
         }
@@ -75,6 +73,7 @@
     }
 
     @include mq(faciaLeftCol) {
+        width: auto;
         margin-left: gs-span(2) + $gs-gutter;
         text-align: left;
     }
@@ -82,6 +81,7 @@
 
 .parts__head {
     z-index: 1002;
+
     &.is-sticky {
         top: 0;
         @include sticky;
@@ -111,7 +111,6 @@
     }
 
     &.ad-slot__show-label {
-
         @include mq(mobileLandscape, tablet) {
             text-align: right;
         }
@@ -132,7 +131,7 @@
 }
 
 .ad-slot--mpu-banner-ad {
-    padding-top: 25px;
+    padding-top: 29px; // Align with bottom of image
     padding-bottom: 37px;
     width: 300px;
     height: 250px;

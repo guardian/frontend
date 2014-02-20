@@ -68,6 +68,7 @@ trait S3 extends Logging {
     val metadata = new ObjectMetadata()
     metadata.setCacheControl("no-cache,no-store")
     metadata.setContentType(contentType)
+    metadata.setContentLength(value.getBytes.length)
 
     val request = new PutObjectRequest(bucket, key, new StringInputStream(value), metadata).withCannedAcl(accessControlList)
 
@@ -170,3 +171,8 @@ trait SecureS3Request extends implicits.Dates with Logging {
 }
 
 object SecureS3Request extends SecureS3Request
+
+object S3Archive extends S3 {
+ override lazy val bucket = "aws-frontend-archive"
+ def getHtml(path: String) = get(path) 
+}
