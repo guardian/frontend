@@ -71,3 +71,41 @@
         }
     }
 }
+
+
+/**
+ * Date
+ */
+
+.today {
+    color: $c-neutral1;
+    font-weight: normal;
+}
+.today__dayofweek {
+    color: $c-newsDefault;
+}
+@include mq(wide) {
+    .today__sub {
+        display: block;
+    }
+}
+
+.i--circle {
+    @include rounded-corners(50%);
+    display: block;
+    position: relative;
+}
+.i--clock {
+    width: 32px;
+    height: 32px;
+    background-color: $c-newsDefault;
+    position: absolute;
+    left: 0;
+    margin-top: 3px;
+
+    .i {
+        position: absolute;
+        left: 15px;
+        top: 5px;
+    }
+}
