@@ -9,9 +9,11 @@
 </div>
 @defining(items.slice(3, 9)) { items =>
     @if(items.nonEmpty) {
-        <div class="collection-wrapper collection-wrapper--position-2">
-            <ul class="unstyled l-row l-row--items-3 collection collection--linkslist-and-mpu">
-                <li class="l-row__item collection__item">
+        <div class="collection-wrapper collection-wrapper--position-2@if(style.adSlot.isEmpty){ collection-wrapper--no-outer-margins}">
+            @style.adSlot.map { adSlot =>
+                <ul class="unstyled l-row l-row--items-3 collection collection--linkslist-and-mpu">
+                    <li class="l-row__item collection__item">
+            }
                     <ul class="l-columns linkslist">
                         @items.zipWithIndex.map{ case (trail, index) =>
                             @trail match {
@@ -23,15 +25,15 @@
                             }
                         }
                     </ul>
-                </li>
-                @style.adSlot.map { adSlot =>
+            @style.adSlot.map { adSlot =>
+                    </li>
                     <li class="l-row__item l-row__item--mpu-300 hide-on-mobile">
                         <div class="ad-slot ad-slot--mpu-banner-ad hide-on-mobile" data-link-name="ad slot mpu-banner-ad" data-base="@adSlot.medianName" data-median="@adSlot.medianName">
                             <div class="ad-container"></div>
                         </div>
                     </li>
-                }
-            </ul>
+                </ul>
+            }
         </div>
     }
 }
