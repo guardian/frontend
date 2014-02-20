@@ -18,7 +18,6 @@ define([
        this.audienceOffset = 0.7;
        this.description = 'Embeds the outbrain library on the page and for the tests uses their api to populate the right-hand menu';
        this.canRun = function(config) {
-          console.log("++++++++++++++++++++++++++++++++++ WHERE YA GONE, LOLLY?");
           return true;
        };
 
