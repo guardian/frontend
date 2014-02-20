@@ -111,7 +111,17 @@ trait UpdateActions {
   }
 
   def putMasterConfig(config: Config, identity: Identity): Any = {
-    if (config.isValid)
+    val users: List[String] = List(
+      "chris.mulholland@guardian.co.uk",
+      "darren.hurley@guardian.co.uk",
+      "francis.carr@guardian.co.uk",
+      "kaelig.deloumeau-prigent@guardian.co.uk",
+      "stephan.fowler@guardian.co.uk",
+      "theresa.malone@guardian.co.uk"
+    )
+
+    if (config.isValid && users.contains(identity.email.toLowerCase))
+      FaciaApi.archiveMasterConfig(config)
       FaciaApi.putMasterConfig(config, identity)
   }
 
