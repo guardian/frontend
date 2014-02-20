@@ -84,7 +84,6 @@ object Switches extends Collections {
   )
 
 
-
   // Advertising Switches
 
   val AdvertSwitch = Switch("Advertising", "adverts",
