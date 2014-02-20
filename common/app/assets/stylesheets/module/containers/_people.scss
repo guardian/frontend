@@ -87,25 +87,13 @@
                     padding-bottom: 276px;
                 }
             }
-        }
-    }
-
-    .collection-wrapper:nth-child(n+2) .l-row--items-3 {
-        .item__media-wrapper,
-        .item__image-container {
-            display: none;
-        }
-        .item--imageadjust-highlight {
-            .item__media-wrapper,
-            .item__image-container {
-                display: block;
-            }
-        }
-        @include mq(tablet) {
-            .item--has-image .item__media-wrapper,
-            .item--has-image .item__image-container,
-            .item--has-no-image .item__standfirst {
-                display: block;
+            @if $browser-supports-flexbox == false {
+                .collection__item:first-child {
+                    @include rem((width: gs-span(6)));
+                }
+                .collection__item + .collection__item  {
+                    @include rem((width: gs-span(3) + $gs-gutter));
+                }
             }
         }
     }

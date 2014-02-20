@@ -146,18 +146,3 @@
         }
     }
 }
-
-.container--features__linkslist {
-    @include rem((
-        margin-left: $gs-gutter/2,
-        margin-right: $gs-gutter/2
-    ));
-
-    @include mq(tablet, desktop) {
-        @include rem((
-            // Width of a column in l-columns on tablet
-            // in that particular context
-            max-width: gs-span(4) + $gs-gutter
-        ));
-    }
-}
