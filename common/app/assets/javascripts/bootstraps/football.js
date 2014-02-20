@@ -40,7 +40,7 @@ define([
 
         showFrontFixtures: function(context) {
             // wrap the return sports stats component in an 'item'
-            var prependTo = bonzo.create('<div class="fromage tone-accent-border tone-news unstyled"></div>');
+            var prependTo = bonzo.create('<div class="fromage tone-accent-border tone-news unstyled item--sport-stats"></div>');
             mediator.on('modules:footballfixtures:render', function() {
                 bonzo($('.collection-wrapper', context).get(1))
                     .append(prependTo);
