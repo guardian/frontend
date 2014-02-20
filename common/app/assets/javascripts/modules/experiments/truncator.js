@@ -43,7 +43,7 @@ define([
     };
 
     Truncator.prototype.getParagraphs = function() {
-        return toArray(qwery('p', this.config.contentEl));
+        return toArray(qwery('.js-article__body > p'));
     };
 
     Truncator.prototype.getWordCount = function(el) {
@@ -65,6 +65,14 @@ define([
         return contentChildren.slice(contentChildren.indexOf(this.el) + 1, contentChildren.length);
     };
 
+    Truncator.prototype.addElipsis = function(text) {
+        return (/\.$/g.test(text)) ?  + '…' : text + '…';
+    };
+
+    Truncator.prototype.removeElipsis = function(text) {
+       return text.slice(0, -1) + '.';
+    };
+
     Truncator.prototype.toggleContent = function() {
         this.getContentAfterEl().forEach(function(el){
             bonzo(el).toggleClass(this.classes.hidden);
@@ -72,12 +80,14 @@ define([
     };
 
     Truncator.prototype.showCta = function() {
+        this.el.innerHTML = this.addElipsis(this.el.innerHTML);
         bonzo(qwery('.' + this.classes.actions)).addClass('is-truncated').prepend(this.config.template);
         bean.on(qwery('.' + this.classes.btn)[0], 'click', this.toggleContent.bind(this));
         bean.on(qwery('.' + this.classes.btn)[0], 'click', this.hideCta.bind(this));
     };
 
     Truncator.prototype.hideCta = function() {
+        this.el.innerHTML = this.removeElipsis(this.el.innerHTML);
         bonzo(qwery('.' + this.classes.btn)[0]).hide();
         bonzo(qwery('.' + this.classes.actions)).addClass('is-not-truncated');
     };
