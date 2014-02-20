@@ -15,12 +15,14 @@ trait OnwardJourneyLifecycle extends GlobalSettings {
       LatestContentAgent.update()
       MostPopularAgent.refresh()
       MostPopularExpandableAgent.refresh()
+      GeoMostPopularAgent.refresh()
     }
 
     if (Play.isDev) {
       LatestContentAgent.update()
       MostPopularAgent.refresh()
       MostPopularExpandableAgent.refresh()
+      GeoMostPopularAgent.refresh()
     }
   }
 
@@ -30,6 +32,7 @@ trait OnwardJourneyLifecycle extends GlobalSettings {
     LatestContentAgent.stop()
     MostPopularAgent.stop()
     MostPopularExpandableAgent.stop()
+    GeoMostPopularAgent.stop()
 
     super.onStop(app)
   }

@@ -1,11 +1,14 @@
 package feed
 
-import conf.ContentApi
+import conf.{ContentApi, SwitchingContentApi}
 import common._
+import services.OphanApi
+import play.api.libs.json.{JsArray, JsValue}
+import java.net.URL
 import model.Content
 import scala.concurrent.duration._
+import scala.concurrent.Future
 import akka.util.Timeout
-
 
 object MostPopularAgent extends Logging with ExecutionContexts {
 
@@ -32,6 +35,55 @@ object MostPopularAgent extends Logging with ExecutionContexts {
   }
 }
 
+object GeoMostPopularAgent extends Logging with ExecutionContexts {
+
+  private val ophanPopularAgent = AkkaAgent[Map[String, Seq[Content]]](Map.empty)
+
+  // These are the only country codes passed to us from the fastly service. This allows us
+  // to choose carefully the codes that give us the most impact. The trade-off is caching.
+  private val countries = Seq("GB", "US", "AU", "CA", "IN", "NG", "ROW")
+
+  def mostPopular(country: String): Seq[Content] = ophanPopularAgent().get(country).getOrElse(Nil)
+
+  def refresh() {
+    log.info("Refreshing most popular for countries.")
+    countries foreach update
+  }
+
+  def update(countryCode: String) {
+    val ophanQuery = OphanApi.getMostRead(hours = 3, count = 10, country = countryCode.toLowerCase)
+
+    ophanQuery.map { ophanResults =>
+
+      // Parse ophan results into a sequence of Content objects.
+      val mostRead: Seq[Future[Option[Content]]] = for {
+        item: JsValue <- ophanResults.asOpt[JsArray].map(_.value).getOrElse(Nil)
+        url <- (item \ "url").asOpt[String]
+      } yield {
+        SwitchingContentApi().item(UrlToContentPath(url), Edition.defaultEdition ).response.map( _.content.map( Content(_)))
+      }
+
+      Future.sequence(mostRead).map { contentSeq =>
+        // Add each country code to the map.
+        ophanPopularAgent send ( currentMap => {
+          currentMap + (countryCode -> contentSeq.flatten)
+        })
+      }
+    }
+  }
+
+  def stop() {
+    ophanPopularAgent.close()
+  }
+
+  private def UrlToContentPath(url: String): String = {
+    var contentId = new URL(url).getPath
+    if (contentId.startsWith("/")) {
+      contentId = contentId.substring(1)
+    }
+    contentId
+  }
+}
 
 object MostPopularExpandableAgent extends Logging with ExecutionContexts {
 

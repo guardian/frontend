@@ -35,6 +35,7 @@ GET         /most-read                                                          
 GET         /most-read.json                                                                                          controllers.MostPopularController.render(path = "")
 GET         /most-read/*path.json                                                                                    controllers.MostPopularController.renderJson(path)
 GET         /most-read/*path                                                                                         controllers.MostPopularController.render(path)
+GET         /most-read-geo.json                                                                                      controllers.MostPopularController.renderPopularGeoJson()
 
 GET         /top-stories                                                                                             controllers.TopStoriesController.renderTopStories()
 GET         /top-stories.json                                                                                        controllers.TopStoriesController.renderTopStoriesJson()

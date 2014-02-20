@@ -3,9 +3,9 @@ package model
 import conf.Switches.DoubleCacheTimesSwitch
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
-import play.api.mvc.{ SimpleResult, Results }
+import play.api.mvc.SimpleResult
 
-object Cached extends Results with implicits.Dates {
+object Cached extends implicits.Dates {
 
   private val cacheableStatusCodes = Seq(200, 404)
 
@@ -33,6 +33,13 @@ object Cached extends Results with implicits.Dates {
   }
 }
 
-object NoCache extends Results {
+object PrivateCached {
+
+  def apply(seconds: Int)(result: SimpleResult): SimpleResult = {
+    Cached(seconds)(result).withHeaders("Cache-Control" -> "private")
+  }
+}
+
+object NoCache {
   def apply(result: SimpleResult): SimpleResult = result.withHeaders("Cache-Control" -> "no-cache", "Pragma" -> "no-cache")
 }
