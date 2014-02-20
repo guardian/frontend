@@ -20,15 +20,9 @@ case class Tag(private val delegate: ApiTag) extends MetaData {
 
   override lazy val url: String = SupportedUrl(delegate)
 
-  lazy val contributorImagePath: Option[String] = {
-    (delegate.bylineImageUrl, delegate.bylineLargeImageUrl) match {
-      case (Some(url),None) => Some(ImgSrc(url,Contributor))
-      case (None, Some(url)) => Some(ImgSrc(url,Contributor))
-      case (Some(_),Some(url)) => Some(ImgSrc(url,Contributor))
-      case _ => None
-    }
-  }
+  lazy val contributorImagePath: Option[String] = delegate.bylineImageUrl.map(ImgSrc(_, Contributor))
 
+  lazy val contributorLargeImagePath: Option[String] = delegate.bylineLargeImageUrl.map(ImgSrc(_, Contributor))
 
   lazy val isContributor: Boolean = id.startsWith("profile/")
   lazy val bio: String = delegate.bio.getOrElse("")
