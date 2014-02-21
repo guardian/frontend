@@ -63,9 +63,9 @@ define([
         this.data.forEach(function(item, index) {
             new RecommendedItem(item, index).render(container);
         });
+
         Images.upgrade(container);
         bean.on(document, 'click', '.right-recommended-item__url', function() {
-            console.log("++ I so want to see you, Lolly red");
             s.events = "events37";
             s.evar7 = "s.pageName";
 

@@ -157,11 +157,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val UserzoomSwitch = Switch("Analytics", "userzoom",
-    "Turns on userzoom survey popups",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 15)
-  )
-
   val OphanSwitch = Switch("Analytics", "ophan",
     "Enables the new Ophan tracking javascript",
     safeState = On, never
@@ -192,6 +187,11 @@ object Switches extends Collections {
   val DiscussionSwitch = Switch("Discussion", "discussion",
     "If this switch is on, comments are displayed on articles. Turn this off if the Discussion API is blowing up.",
     safeState = Off, sellByDate = never
+  )
+
+  val DiscussionVerifiedEmailPosting = Switch("Discussion", "discussion-verified-email-posting",
+    "If this switch is on, posters to discussions must have a verified email address.",
+    safeState = Off, sellByDate = endOfQ4
   )
 
   // Identity Switches
@@ -286,7 +286,7 @@ object Switches extends Collections {
 
   val FacebookAutoSigninSwitch = Switch("Feature Switches", "facebook-autosignin",
     "If this switch is on then users who have previously authorized the guardian app in facebook and who have not recently signed out are automatically signed in.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 15)
+    safeState = Off, sellByDate = endOfQ4
   )
 
   val IdentityFormstackSwitch = Switch("Feature Switches", "id-formstack",
@@ -323,7 +323,6 @@ object Switches extends Collections {
     "If this is switched on an AA test runs to prove the assignment of users in to segments is working reliably.",
     safeState = Off, sellByDate = endOfQ4
   )
-
 
   val ABRightHandRecommendations = Switch("A/B Tests", "ab-right-hand-recommendations",
     "Sets different recommendation providers against each other for the right hand component",
@@ -429,6 +428,7 @@ object Switches extends Collections {
     VideoAdvertSwitch,
     AudienceScienceSwitch,
     DiscussionSwitch,
+    DiscussionVerifiedEmailPosting,
     IdentityEmailVerificationSwitch,
     OpenCtaSwitch,
     FontSwitch,
@@ -445,7 +445,6 @@ object Switches extends Collections {
     LiveCricketSwitch,
     LiveStatsSwitch,
     LiveAbTestStatsSwitch,
-    UserzoomSwitch,
     CssFromStorageSwitch,
     ElasticSearchSwitch,
     ArticleKeywordsSwitch,
