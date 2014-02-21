@@ -3,13 +3,13 @@ package model.commercial.books
 import common.{Logging, ExecutionContexts}
 import common.Edition.defaultEdition
 import scala.concurrent.Future
-import conf.ContentApi
+import conf.ContentApiDoNotUseForNewQueries
 
 object BookFinder extends ExecutionContexts with Logging {
 
   def findByPageId(pageId: String): Future[Option[Book]] = {
-    (for {
-      capiResponse <- ContentApi.item(pageId, defaultEdition).showFactboxes("book").response
+    (for {            // TODO using old content api till factboxes are in new content api
+      capiResponse <- ContentApiDoNotUseForNewQueries.item(pageId, defaultEdition).showFactboxes("book").response
     } yield {
       for {
         content <- capiResponse.content

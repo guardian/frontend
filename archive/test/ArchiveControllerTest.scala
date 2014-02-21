@@ -4,9 +4,8 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.Matchers
 import org.scalatest.FlatSpec
-import common.UsesElasticSearch
 
-class ArchiveControllerTest extends FlatSpec with Matchers with UsesElasticSearch {
+class ArchiveControllerTest extends FlatSpec with Matchers {
   
  
   "Archive Controller" should "return a HTTP 303 when it finds a match in DynamoDB" in Fake {

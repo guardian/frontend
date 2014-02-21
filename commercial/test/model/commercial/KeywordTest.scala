@@ -1,14 +1,12 @@
 package model.commercial
 
 import org.scalatest.{Matchers, FlatSpec}
-import common.UsesElasticSearch
 import scala.concurrent.Await
 import scala.concurrent.duration._
-import conf.ContentApi
 import test.Fake
 import model.commercial.masterclasses.MasterClassAgent
 
-class KeywordTest extends FlatSpec with Matchers with UsesElasticSearch {
+class KeywordTest extends FlatSpec with Matchers {
 
   "name" should "be transformed webTitle" in {
     val keyword = Keyword("travel/northandcentralamerica", "North and Central America")
@@ -38,12 +36,4 @@ class KeywordTest extends FlatSpec with Matchers with UsesElasticSearch {
     keywords.size should be >= 2
   }
 
-  "lookup" should "find expected results using Solr content API client" in Fake {
-    MasterClassAgent.stop()
-
-    implicit val contentApi = ContentApi
-    val keywords = Await.result(Keyword.lookup("France", section = Some("travel")), atMost = 10.seconds)
-
-    keywords.map(_.id) should contain allOf("travel/france", "travel/frenchguiana")
-  }
 }

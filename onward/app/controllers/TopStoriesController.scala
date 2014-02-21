@@ -6,7 +6,6 @@ import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
 import scala.concurrent.Future
 import com.gu.openplatform.contentapi.ApiError
-import play.api.libs.json.JsArray
 
 object TopStoriesController extends Controller with Logging with Paging with ExecutionContexts {
 
@@ -32,7 +31,7 @@ object TopStoriesController extends Controller with Logging with Paging with Exe
 
   private def lookup(edition: Edition)(implicit request: RequestHeader): Future[Option[Seq[Content]]] = {
     log.info(s"Fetching top stories for edition ${edition.id}")
-    ContentApi.item("/", edition)
+    SwitchingContentApi().item("/", edition)
       .showEditorsPicks(true)
       .response
       .map { response =>
