@@ -4,13 +4,15 @@ define([
     'qwery',
     'bonzo',
     'common/utils/ajax',
-    'common/utils/mediator'
+    'common/utils/mediator',
+    'common/modules/adverts/adverts'
 ], function(
     $,
     qwery,
     bonzo,
     ajax,
-    mediator
+    mediator,
+    adverts
 ) {
 
     function show() {
@@ -32,8 +34,11 @@ define([
                 // add new containers
                 $('.facia-container > *:nth-child(n+2)', bonzo.create('<div>' + resp.html + '</div>'))
                     .appendTo(qwery('.facia-container')[0]);
-                // upgrade images
+                // upgrades images
                 mediator.emit('ui:images:upgrade');
+                // reload ads
+                adverts.reload();
+                // ui stuff
                 mediator.emit('ui:collection-show-more:add');
                 mediator.emit('ui:container-toggle:add');
             })
