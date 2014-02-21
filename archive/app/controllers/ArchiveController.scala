@@ -11,11 +11,15 @@ import play.api.templates.Html
 object ArchiveController extends Controller with Logging with ExecutionContexts {
  
   def isRedirect(path: String) = {
-    DynamoDB.destinationFor(path)
+    val redirects = DynamoDB.destinationFor(path)
+    log.info(s"Checking '${path}' is a redirect in DynamoDB: ${!redirects.isEmpty}")
+    redirects
   }
 
   def isArchived(path: String) = {
-    services.S3Archive.getHtml(path)
+    val archive = services.S3Archive.getHtml(path)
+    log.info(s"Checking '${path}' is a archived in S3: ${!archive.isEmpty}")
+    archive
   }
 
   // Our redirects are 'normalised' Vignette URLs - @obrienm understands this
