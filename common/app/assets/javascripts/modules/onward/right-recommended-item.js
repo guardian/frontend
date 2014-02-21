@@ -36,7 +36,7 @@ define([
         + '</h3></a></li>';
 
     RightGravityRecommendation.prototype.prerender = function() {
-        if( this.data.image ) {;
+        if( this.data.image ) {
             var container = this.getElem(this.classes.image);
             container.setAttribute("data-src", this.data.image);
         }
