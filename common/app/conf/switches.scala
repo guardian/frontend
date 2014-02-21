@@ -78,6 +78,12 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
+  // Front Press Switches
+  val FrontPressJobSwitch = Switch("Front Press Switches", "front-press-job-switch",
+    "If this switch is on then the jobs to push and pull from SQS will run",
+    safeState = Off, sellByDate = never
+  )
+
   val SpdyAjaxServicesSwitch = Switch("Performance Switches", "spdy-ajax-services",
     "If this switch is on, all ajax api endpoints will route through Akamai's SPDY service.",
     safeState = Off, sellByDate = new DateMidnight(2014,2,28)
@@ -87,7 +93,6 @@ object Switches extends Collections {
     "If this switch is on, all image endpoints will route through Akamai's SPDY service.",
     safeState = Off, sellByDate = new DateMidnight(2014,2,28)
   )
-
 
   // Advertising Switches
 
@@ -495,7 +500,8 @@ object Switches extends Collections {
     DogpileSwitch,
     ShowAllArticleEmbedsSwitch,
     ImageServerSwitch,
-    RainbowLogo
+    RainbowLogo,
+    FrontPressJobSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
