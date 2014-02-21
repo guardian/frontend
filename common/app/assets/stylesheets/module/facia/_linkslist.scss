@@ -49,19 +49,9 @@
 .linkslist__item {
     border-top: 1px solid $c-neutral5;
     @include rem((
-        min-height: nth(nth($fs-headlines, 1), 2) + 1,
-        padding-top: $gs-baseline/6,
-        padding-bottom: ($gs-baseline*5)/3 // Simulates margins and don't create
-                                           // extra space at the beginning of a
-                                           // new column break as margins do
+        padding-top: $gs-baseline/4
     ));
-    @include mq(tablet) {
-        @include rem((
-            // Twice the line height of the action
-            min-height: nth(nth($fs-headlines, 1), 2) * 2 + 1,
-            padding-bottom: $gs-baseline + $gs-baseline / 6
-        ));
-    }
+
     &.show-more--hidden {
         display: none;
     }
@@ -71,6 +61,15 @@
     color: $c-neutral1;
     display: block;
     @include fs-headline(1);
+    @include rem((
+        margin-bottom: get-line-height($fs-headlines, 1)
+    ));
+    @include mq(tablet) {
+        @include rem((
+            min-height: get-line-height($fs-headlines, 1) * 2,
+            margin-bottom: get-font-size($fs-headlines, 1)
+        ));
+    }
 
     &:visited {
         color: $c-neutral2;
@@ -124,7 +123,7 @@
     .action--has-image {
         @include rem((
             // Min height of 3 baselines
-            min-height: nth(nth($fs-headlines, 1), 2) * 3,
+            min-height: get-line-height($fs-headlines, 1) * 3,
             // Override .svg .action--has-icon
             padding-left: $action-image-width + $gs-gutter/2 !important
         ));
