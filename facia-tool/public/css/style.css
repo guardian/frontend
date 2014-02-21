@@ -277,6 +277,15 @@ a, a:hover {
     color: #000000;
 }
 
+.is-breaking {
+    background: #d61d00;
+    color: #ffffff;
+    font-size: 11px;
+    line-height: 11px;
+    padding: 0 2px;
+    border-radius: 2px;
+}
+
 .is-empty {
     font-size: 14px;
     line-height: 16px;
