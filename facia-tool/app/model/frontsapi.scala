@@ -16,7 +16,8 @@ case class Block(
                   updatedBy: String,
                   updatedEmail: String,
                   displayName: Option[String],
-                  href: Option[String]
+                  href: Option[String],
+                  diff: Option[JsValue]
                   )
 
 case class Trail(
@@ -137,9 +138,9 @@ trait UpdateActions extends Logging {
 
   def createBlock(id: String, identity: Identity, update: UpdateList): Option[Block] = {
     if (update.live)
-      Option(FaciaApi.putBlock(id, Block(id, None, List(Trail(update.item, update.itemMeta)), None, DateTime.now.toString, identity.fullName, identity.email, None, None), identity))
+      Option(FaciaApi.putBlock(id, Block(id, None, List(Trail(update.item, update.itemMeta)), None, DateTime.now.toString, identity.fullName, identity.email, None, None, None), identity))
     else
-      Option(FaciaApi.putBlock(id, Block(id, None, Nil, Some(List(Trail(update.item, update.itemMeta))), DateTime.now.toString, identity.fullName, identity.email, None, None), identity))
+      Option(FaciaApi.putBlock(id, Block(id, None, Nil, Some(List(Trail(update.item, update.itemMeta))), DateTime.now.toString, identity.fullName, identity.email, None, None, None), identity))
   }
 
 }
