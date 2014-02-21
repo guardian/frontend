@@ -44,9 +44,20 @@ class ArchiveControllerTest extends FlatSpec with Matchers with UsesElasticSearc
     result should be (Some("http://www.theguardian.com/media/2006/jan/25/1"))
   }
   
-  it should "return Noen for a path that has not been redirected" in Fake {
+  it should "return None for a path that has not been redirected" in Fake {
     val result = controllers.ArchiveController.isRedirect("not/here")
     result should be(None)
+  }
+  
+  it should "return a normalised r1 path" in Fake {
+    val tests = Map[String, Option[String]](
+      "www.theguardian.com/books/reviews/travel/0,,343395,00.html" -> Some("www.theguardian.com/books/reviews/travel/0,,343395,.html"),
+      "www.theguardian.com/books/reviews/travel/0,,343395,.html" -> Some("www.theguardian.com/books/reviews/travel/0,,343395,.html"),
+      "www.theguardian.com/books/reviews/travel/foo" -> None
+    ) 
+    tests foreach {
+      case (key, value) => controllers.ArchiveController.normalise(key) should be (value)
+    }
   }
 
 }
