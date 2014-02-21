@@ -23,7 +23,6 @@ define([
             'displayName',
             'href',
             'groups',
-            'tone',
             'type',
             'uneditable',
             'apiQuery']);

@@ -19,7 +19,7 @@ trait FrontPress extends Logging {
   (
     apiQuery:     Option[String],
     displayName:  Option[String],
-    tone:         Option[String],
+    `type`:       Option[String],
     curated:      Seq[JsValue],
     editorsPicks: Seq[JsValue],
     results:      Seq[JsValue],
@@ -82,7 +82,7 @@ trait FrontPress extends Logging {
       CollectionJson(
         apiQuery      = config.contentApiQuery,
         displayName   = collection.displayName orElse config.displayName,
-        tone          = config.collectionTone,
+        `type`        = config.`type`,
         curated       = collection.curated.map(generateTrailJson),
         editorsPicks  = collection.editorsPicks.map(generateTrailJson),
         results       = collection.results.map(generateTrailJson),

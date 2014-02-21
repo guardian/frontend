@@ -1,7 +1,7 @@
 /* global _: true */
 define(['knockout'], function(ko) {
     var CONST = {
-        tones: [
+        types: [
             'news',
             'news/most-popular',
             'news/people',

@@ -56,7 +56,7 @@ define([
                     model.collections.unshift(collection);
                 },
 
-                tones:  [''].concat(vars.CONST.tones),
+                types:  [''].concat(vars.CONST.types),
                 groups: [''].concat(vars.CONST.groups),
 
                 save: function() {

@@ -33,7 +33,7 @@ case class Front(
 case class Collection(
                   displayName: Option[String],
                   apiQuery: Option[String],
-                  tone: Option[String],
+                 `type`: Option[String],
                   href: Option[String],
                   groups: Option[List[String]],
                   uneditable: Option[Boolean]
