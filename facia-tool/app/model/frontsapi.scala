@@ -9,22 +9,7 @@ import play.api.templates.HtmlFormat
 case class Config(
   fronts: Map[String, Front],
   collections: Map[String, Collection]
-) {
-  def isValid: Boolean = {
-    val constraints: Seq[(String, String, Int)] = Seq(
-      ("uk", "uk/news/regular-stories", 5),
-      ("us", "us/news/regular-stories", 5),
-      ("au", "au/news/regular-stories", 5)
-    )
-
-    constraints.forall{ case (path, collection, minimum) =>
-      fronts.get(path).exists { front =>
-        front.collections.headOption.exists(_ == collection) &&
-        front.collections.length >= minimum
-      }
-    }
-  }
-}
+)
 
 case class Front(
                   collections: List[String]
@@ -111,18 +96,8 @@ trait UpdateActions {
   }
 
   def putMasterConfig(config: Config, identity: Identity): Any = {
-    val users: List[String] = List(
-      "chris.mulholland@guardian.co.uk",
-      "darren.hurley@guardian.co.uk",
-      "francis.carr@guardian.co.uk",
-      "kaelig.deloumeau-prigent@guardian.co.uk",
-      "stephan.fowler@guardian.co.uk",
-      "theresa.malone@guardian.co.uk"
-    )
-
-    if (config.isValid && users.contains(identity.email.toLowerCase))
-      FaciaApi.archiveMasterConfig(config)
-      FaciaApi.putMasterConfig(config, identity)
+    FaciaApi.archiveMasterConfig(config)
+    FaciaApi.putMasterConfig(config, identity)
   }
 
   def updateCollectionList(id: String, update: UpdateList, identity: Identity): Option[Block] =
