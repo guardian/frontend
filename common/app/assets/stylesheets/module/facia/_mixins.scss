@@ -52,7 +52,7 @@ $item-top-border-height: 2px;
     @include image-meta;
     .connection--not-low & .item__title {
         @include rem((
-            margin-top: $gs-baseline/3,
+            padding-top: $gs-baseline/3,
             margin-bottom: $gs-baseline/3
         ));
     }

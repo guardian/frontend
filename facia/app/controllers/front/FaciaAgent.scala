@@ -57,10 +57,9 @@ trait ParseConfig extends ExecutionContexts with Logging {
       (json \ "id").as[String],
       (json \ "contentApiQuery").asOpt[String].filter(_.nonEmpty),
       (json \ "displayName").asOpt[String],
-      (json \ "tone").asOpt[String],
       (json \ "href").asOpt[String],
       (json \ "groups").asOpt[Seq[String]] getOrElse Nil,
-      (json \ "roleName").asOpt[String]
+      (json \ "type").asOpt[String]
     )
 
 }

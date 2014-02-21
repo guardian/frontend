@@ -5,12 +5,11 @@ import conf.Switches._
 import org.scalatest.Matchers
 import org.scalatest.{ GivenWhenThen, FeatureSpec }
 import collection.JavaConversions._
-import common.UsesElasticSearch
 import play.api.libs.ws.WS
 import scala.concurrent.duration._
 import scala.concurrent.Await
 
-class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  with UsesElasticSearch {
+class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
   implicit val config = Configuration
 
@@ -202,7 +201,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
         ImageServerSwitch.switchOn()
         inBodyImage.getAttribute("class") should include("img--extended")
         inBodyImage.findFirst("[itemprop=contentURL]").getAttribute("src") should
-          endWith("sys-images/Travel/Late_offers/pictures/2012/10/11/1349951383662/Shops-in-Rainbow-Row-Char-001.jpg?width=-&height=-&quality=95")
+          endWith("sys-images/Travel/Late_offers/pictures/2012/10/11/1349951383662/Shops-in-Rainbow-Row-Char-001.jpg?width=620&height=-&quality=95")
 
         And("I should see the image caption")
         inBodyImage.findFirst("[itemprop=description]").getText should

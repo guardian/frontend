@@ -2,6 +2,8 @@ package model
 import pa._
 import org.joda.time.DateMidnight
 import pa.LeagueTableEntry
+import pa.{Result, MatchDayTeam}
+
 
 case class Competition(
     id: String,
@@ -12,7 +14,9 @@ case class Competition(
     startDate: Option[DateMidnight] = None,
     matches: Seq[FootballMatch] = Nil,
     leagueTable: Seq[LeagueTableEntry] = Nil,
-    showInTeamsList: Boolean = false) extends implicits.Collections with implicits.Football {
+    showInTeamsList: Boolean = false,
+    tableDividers: List[Int] = Nil
+) extends implicits.Collections with implicits.Football {
 
   lazy val hasMatches = matches.nonEmpty
   lazy val hasLiveMatches = matches.exists(_.isLive)
@@ -28,7 +32,7 @@ case class Competition(
   lazy val descriptionFullyLoaded = startDate.isDefined
 }
 
-case class Group(round: Option[Round], entries: Seq[LeagueTableEntry])
+case class Group(round: Option[Round], entries: Seq[LeagueTableEntryWithForm])
 
 case class Table(competition: Competition, groups: Seq[Group]) {
   lazy val multiGroup = groups.size > 1
@@ -62,7 +66,12 @@ object Table {
   def apply(competition: Competition): Table = {
     val groups = competition.leagueTable
       .groupBy(_.round)
-      .map { case (round, table) => Group(round, table) }
+      .map { case (round, table) =>
+        table.map { leagueTableEntry =>
+
+        }
+        Group(round, table.map(LeagueTableEntryWithForm(competition, _)))
+      }
       .toSeq.sortBy(_.round.map(_.roundNumber).map {
         case IsNumber(num) => num.toInt
         case other => 0
@@ -75,5 +84,31 @@ case class TeamFixture(competition: Competition, fixture: pa.FootballMatch)
 
 case class StatusSummary(description: String, status: String, homeScore: Option[Int], awayScore: Option[Int])
 
+case class LeagueTableEntryWithForm(stageNumber: String, round: Option[Round], team: LeagueTeam, prevResults: List[PrevResult])
+object LeagueTableEntryWithForm {
+  def apply(competition: Competition, leagueTableEntry: LeagueTableEntry): LeagueTableEntryWithForm = {
+    val prevResults = competition.matches
+      .filter(fmatch => fmatch.homeTeam.id == leagueTableEntry.team.id || fmatch.awayTeam.id == leagueTableEntry.team.id)
+      .map(fmatch => PrevResult(fmatch, leagueTableEntry.team.id))
+      .filter(_.hasResult)
+    LeagueTableEntryWithForm(leagueTableEntry.stageNumber, leagueTableEntry.round, leagueTableEntry.team, prevResults)
+  }
+}
 
-
+case class PrevResult(date: DateMidnight, self: MatchDayTeam, foe: MatchDayTeam, wasHome: Boolean) {
+  val scores = self.score.flatMap { selfScore =>
+    foe.score.map { foeScore =>
+      (selfScore, foeScore)
+    }
+  }
+  val hasResult = scores.isDefined
+  val won = scores.exists {  case (selfScore, foeScore) => selfScore > foeScore }
+  val drew = scores.exists { case (selfScore, foeScore) => selfScore == foeScore }
+  val lost = scores.exists { case (selfScore, foeScore) => selfScore < foeScore }
+}
+object PrevResult {
+  def apply(result: FootballMatch, thisTeamId: String): PrevResult = {
+    if (thisTeamId == result.homeTeam.id) PrevResult(result.date, result.homeTeam, result.awayTeam, wasHome = true)
+    else PrevResult(result.date, result.awayTeam, result.homeTeam, wasHome = false)
+  }
+}

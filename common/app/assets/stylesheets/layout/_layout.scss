@@ -154,6 +154,11 @@
 .preload-msg {
     @include rem((padding: 50px 50px 250px 50px));
     text-align: center;
+
+    .accessible-link {
+        display: block;
+        @include fs-data(2);
+    }
 }
 
 .preload-msg .is-updating {

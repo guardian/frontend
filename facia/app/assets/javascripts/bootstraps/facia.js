@@ -58,20 +58,23 @@ define([
         showFootballFixtures: function(path) {
             mediator.on('page:front:ready', function(config, context) {
                 if (config.page.edition === 'UK' && (['', 'sport', 'uk-alpha'].indexOf(config.page.pageId) !== -1)) {
-                    // wrap the return sports stats component in an 'item'
-                    var prependTo = bonzo(bonzo.create('<li class="item item--sport-stats item--sport-stats-tall"></li>'));
+                    // wrap the return sports stats component in an appropriate element
+                    var isNewsContainer = ['uk-alpha', 'sport'].indexOf(config.page.pageId) !== -1,
+                        prependToHtml = isNewsContainer
+                            ? '<div class="fromage tone-accent-border tone-news unstyled item--sport-stats"></div>'
+                            : '<li class="item item--sport-stats item--sport-stats-tall"></li>',
+                        $prependTo = bonzo(bonzo.create(prependToHtml));
                     mediator.on('modules:footballfixtures:render', function() {
-                        var isUkAlpha = config.page.pageId === 'uk-alpha',
-                            $container = $(isUkAlpha ? '.container--news' : '.container--sport', context).first();
+                        var $container = $(isNewsContainer ? '.container--news' : '.container--sport', context).first();
                         if ($container[0]) {
-                            if (isUkAlpha) {
-                                var $collectionWrapper = $('.collection-wrapper', $container[0]).last();
-                                $('.collection', $collectionWrapper[0]).append(prependTo);
+                            if (isNewsContainer) {
+                                bonzo($('.collection-wrapper', $container[0]).get(1))
+                                    .append($prependTo);
                             } else {
                                 var $collection = $('.container--sport .collection', context).first();
                                 $('.item:first-child', $collection[0])
                                     // add empty item
-                                    .after(prependTo);
+                                    .after($prependTo);
                                 $collection
                                     .removeClass('collection--without-sport-stats')
                                     .addClass('collection--with-sport-stats');
@@ -79,7 +82,7 @@ define([
                         }
                     });
                     new FootballFixtures({
-                        prependTo: prependTo,
+                        prependTo: $prependTo,
                         attachMethod: 'append',
                         competitions: ['500', '510', '100', '400'],
                         contextual: false,
