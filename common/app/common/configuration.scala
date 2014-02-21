@@ -145,7 +145,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object images {
     lazy val path = configuration.getMandatoryStringProperty("images.path")
-    lazy val servicePath = configuration.getStringProperty("image.service.path").getOrElse("http://ak.i.guim.co.uk")
+    lazy val spdyPath = configuration.getStringProperty("images.spdyPath").getOrElse("https://services.guardianapps.co.uk/static")
   }
 
   object assets {

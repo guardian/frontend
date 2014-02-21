@@ -23,7 +23,7 @@
                 // Trigger more even distributions of items
                 // across columns in Webkit/Blink
                 // 250px = height of the MPU
-                min-height: 250px;
+                max-height: 250px;
             }
         } @else {
             @include mq(desktop) {

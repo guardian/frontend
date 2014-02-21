@@ -1,6 +1,6 @@
 package tools
 
-import frontsapi.model.{Trail, Block}
+import frontsapi.model.{Config, Collection, Front, Trail, Block}
 import org.joda.time.DateTime
 import play.api.libs.json.{JsValue, Json}
 import services.S3FrontsApi
@@ -22,9 +22,15 @@ trait FaciaApiWrite {
 }
 
 object FaciaApi extends FaciaApiRead with FaciaApiWrite {
+  implicit val collectionRead = Json.reads[Collection]
+  implicit val frontRead = Json.reads[Front]
+  implicit val configRead = Json.reads[Config]
+  implicit val collectionWrite = Json.writes[Collection]
+  implicit val frontWrite= Json.writes[Front]
+  implicit val configWrite = Json.writes[Config]
+
   implicit val trailRead = Json.reads[Trail]
   implicit val blockRead = Json.reads[Block]
-
   implicit val trailWrite = Json.writes[Trail]
   implicit val blockWrite = Json.writes[Block]
 
@@ -48,6 +54,11 @@ object FaciaApi extends FaciaApiRead with FaciaApiWrite {
     val newBlock: Block = block.copy(diff = Some(update))
     S3FrontsApi.archive(id, Json.prettyPrint(Json.toJson(newBlock)))
   }
+
+  def putMasterConfig(config: Config, identity: Identity): Option[Config] = {
+    Try(S3FrontsApi.putMasterConfig(Json.prettyPrint(Json.toJson(config)))).map(_ => config).toOption
+  }
+  def archiveMasterConfig(config: Config): Unit = S3FrontsApi.archiveMasterConfig(Json.prettyPrint(Json.toJson(config)))
 
   def updateIdentity(block: Block, identity: Identity): Block = block.copy(lastUpdated = DateTime.now.toString, updatedBy = identity.fullName, updatedEmail = identity.email)
 }

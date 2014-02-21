@@ -7,6 +7,24 @@ import org.joda.time.DateTime
 import scala.util.{Success, Failure, Try}
 import common.Logging
 
+case class Config(
+  fronts: Map[String, Front],
+  collections: Map[String, Collection]
+)
+
+case class Front(
+                  collections: List[String]
+                  )
+
+case class Collection(
+                  displayName: Option[String],
+                  apiQuery: Option[String],
+                 `type`: Option[String],
+                  href: Option[String],
+                  groups: Option[List[String]],
+                  uneditable: Option[Boolean]
+                  )
+
 case class Block(
                   id: String,
                   name: Option[String],
@@ -88,6 +106,11 @@ trait UpdateActions extends Logging {
       }
       case Success(_) => block
     }
+
+  def putMasterConfig(config: Config, identity: Identity): Option[Config] = {
+    FaciaApi.archiveMasterConfig(config)
+    FaciaApi.putMasterConfig(config, identity)
+  }
 
   def updateCollectionList(id: String, update: UpdateList, identity: Identity): Option[Block] = {
     lazy val updateJson = Json.toJson(update)
