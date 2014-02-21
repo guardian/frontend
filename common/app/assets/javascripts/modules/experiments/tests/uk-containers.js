@@ -13,6 +13,11 @@ define([
     mediator
 ) {
 
+    function show() {
+        // remove hiding class
+        $('.facia-container').removeClass('facia-container--ab');
+    }
+
     return function() {
 
         this.id = 'UkContainers';
@@ -26,35 +31,35 @@ define([
         this.variants = [
             {
                 id: 'control',
-                test: function(context, config) {
-                    // remove hiding class
-                    $('.facia-container').removeClass('facia-container--ab');
-                }
+                test: function(context, config) { }
             },
             {
-                id: 'testOne',
+                id: 'variantOne',
                 test: function (context, config) {
+                    // hide containers
+                    $('.facia-container').addClass('facia-container--ab');
                     ajax({
                         url: '/uk-alpha.json',
                         type: 'json',
                         crossOrigin: true
-                    }).then(
-                        function(response) {
+                    })
+                        .then(function(resp) {
                             // remove old containers
                             $('.container:nth-child(n+2)').remove();
-                            // remove hiding class
-                            $('.facia-container').removeClass('facia-container--ab');
                             // add new containers
-                            $('.facia-container > *', bonzo.create('<div>' + response.html + '</div>'))
+                            $('.facia-container > *:nth-child(n+2)', bonzo.create('<div>' + resp.html + '</div>'))
                                 .appendTo(qwery('.facia-container')[0]);
+                            // upgrade images
                             mediator.emit('ui:images:upgrade');
-                        },
-                        function(req) {
-                            // remove hiding class
-                            $('.facia-container').removeClass('facia-container--ab');
-                            mediator.emit('module:error', 'Failed to get uk front', 'common/modules/autoupdate.js');
-                        }
-                    );
+                            mediator.emit('ui:collection-show-more:add');
+                            mediator.emit('ui:container-toggle:add');
+                        })
+                        .fail(function(req) {
+                            mediator.emit('module:error', 'Failed to get uk front', 'experiments/tests/uk-containers.js');
+                        })
+                        .always(function(req) {
+                            show();
+                        });
                 }
             }
         ];
