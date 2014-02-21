@@ -4,7 +4,6 @@ define([
     'knockout',
     'modules/vars',
     'modules/authed-ajax',
-    'bindings/hoverable',
     'utils/fetch-settings',
     'utils/update-scrollables',
     'utils/clean-clone',
@@ -20,7 +19,6 @@ define([
     ko,
     vars,
     authedAjax,
-    hoverable,
     fetchSettings,
     updateScrollables,
     cleanClone,
@@ -165,7 +163,6 @@ define([
 
         this.init = function() {
             droppable.init();
-            //hoverable.init();
 
             bootstrap({
                 pollingMs: vars.CONST.configSettingsPollMs,
