@@ -3,7 +3,7 @@
 <div class="collection-wrapper">
     <ul class="unstyled l-row l-row--items-3 collection">
         @items.slice(0, 3).zipWithIndex.map{ case (trail, index) =>
-            @fragments.collections.items.simplecomment(trail, index, containerIndex, "item--hide-tone-border")
+            @fragments.collections.items.simplecomment(trail, index, containerIndex)
         }
     </ul>
 </div>

@@ -22,12 +22,12 @@ trait FrontPress extends Logging {
     `type`:       Option[String],
     curated:      Seq[JsValue],
     editorsPicks: Seq[JsValue],
+    mostViewed:   Seq[JsValue],
     results:      Seq[JsValue],
     lastModified: Option[String],
     updatedBy:    Option[String],
     updatedEmail: Option[String],
     groups:       Option[Seq[String]],
-    roleName:     Option[String],
     href:         Option[String]
   )
   case class ItemMeta
@@ -80,18 +80,18 @@ trait FrontPress extends Logging {
   private def generateCollectionJson(config: Config, collection: Collection): JsValue =
     Json.toJson(
       CollectionJson(
-        apiQuery      = config.contentApiQuery,
-        displayName   = collection.displayName orElse config.displayName,
-        `type`        = config.`type`,
-        curated       = collection.curated.map(generateTrailJson),
-        editorsPicks  = collection.editorsPicks.map(generateTrailJson),
-        results       = collection.results.map(generateTrailJson),
-        lastModified  = collection.lastUpdated,
-        updatedBy     = collection.updatedBy,
-        updatedEmail  = collection.updatedEmail,
-        groups        = Option(config.groups).filter(_.nonEmpty),
-        roleName      = config.roleName,
-        href          = collection.href.orElse(config.href)
+        apiQuery       = config.contentApiQuery,
+        displayName    = collection.displayName orElse config.displayName,
+        curated        = collection.curated.map(generateTrailJson),
+        editorsPicks   = collection.editorsPicks.map(generateTrailJson),
+        mostViewed     = collection.mostViewed.map(generateTrailJson),
+        results        = collection.results.map(generateTrailJson),
+        lastModified   = collection.lastUpdated,
+        updatedBy      = collection.updatedBy,
+        updatedEmail   = collection.updatedEmail,
+        groups         = Option(config.groups).filter(_.nonEmpty),
+        href           = collection.href.orElse(config.href),
+        `type`         = config.collectionType
       )
     )
 

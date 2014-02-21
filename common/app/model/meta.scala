@@ -34,7 +34,7 @@ trait MetaData extends Tags {
     "og:site_name" -> "the Guardian",
     "fb:app_id"    -> Configuration.facebook.appId
   )
-  
+
   def cards: List[(String, Any)] = List(
     "twitter:site" -> "@guardian",
     "twitter:app:name:iphone" -> "The Guardian",
@@ -69,7 +69,7 @@ trait Elements {
   }
 
   // trail picture is used on index pages (i.e. Fronts and tag pages)
-  def trailPicture: Option[ImageContainer] = thumbnail.find(_.imageCrops.exists(_.width >= 620))
+  def trailPicture: Option[ImageContainer] = thumbnail.find(_.imageCrops.exists(_.width >= 940))
     .orElse(mainPicture)
     .orElse(thumbnail)
 

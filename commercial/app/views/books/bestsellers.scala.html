@@ -22,7 +22,9 @@
                         <p class="list__author">by @book.author</p>
                     }
                 </a>
-                <p class="list__price">&pound;@book.price</p>
+                @book.offerPrice.map { price =>
+                    <p class="list__price">&pound;@("%.2f".format(price))</p>
+                }
             </li>
         }
         </ul>

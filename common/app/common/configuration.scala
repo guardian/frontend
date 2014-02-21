@@ -126,6 +126,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       else configuration.getStringProperty("ajax.url").getOrElse("")
     lazy val corsOrigins: Seq[String] = configuration.getStringProperty("ajax.cors.origin").map(_.split(",")
       .map(_.trim).toSeq).getOrElse(Nil)
+    lazy val spdyUrl: String = configuration.getStringProperty("ajax.spdyUrl").getOrElse("")
   }
 
   object id {
@@ -234,14 +235,11 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
     lazy val credentials: AWSCredentialsProvider = new AWSCredentialsProviderChain(
       // the first 3 are a copy n paste job from the constructor of DefaultAWSCredentialsProviderChain
-      // once we are done migrating we will fall back to that.
-      LoggingAWSCredentialsProvider(new EnvironmentVariableCredentialsProvider()),
-      LoggingAWSCredentialsProvider(new SystemPropertiesCredentialsProvider()),
+      new EnvironmentVariableCredentialsProvider(),
+      new SystemPropertiesCredentialsProvider(),
+      new InstanceProfileCredentialsProvider(),
 
-      // TODO - we uncomment this AFTER we have proven that all the correct roles are on the boxes
-      //LoggingAWSCredentialsProvider(new InstanceProfileCredentialsProvider()),
-
-      LoggingAWSCredentialsProvider(new StaticCredentialsProvider(new NullableAWSCredentials(accessKey, secretKey)))
+      new StaticCredentialsProvider(new NullableAWSCredentials(accessKey, secretKey))
     )
   }
 
@@ -271,28 +269,5 @@ object ManifestData {
 private class NullableAWSCredentials(accessKeyId: Option[String], secretKey: Option[String]) extends AWSCredentials{
   def getAWSAccessKeyId: String = accessKeyId.getOrElse(null)
   def getAWSSecretKey: String = secretKey.getOrElse(null)
-}
-
-// I want to see which provider we are using
-private class LoggingAWSCredentialsProvider(delegate: AWSCredentialsProvider) extends AWSCredentialsProvider with Logging {
-  val className = delegate.getClass.getSimpleName
-
-  def refresh() {
-    log.info(s"$className.refresh")
-    delegate.refresh()
-  }
-
-  def getCredentials: AWSCredentials = {
-    val credentials = delegate.getCredentials
-    // this is how the AWSCredentialsProviderChain works
-    if (credentials.getAWSAccessKeyId != null && credentials.getAWSSecretKey != null) {
-      log.info(s"using AWS Credentials from $className")
-    }
-    credentials
-  }
-}
-
-private object LoggingAWSCredentialsProvider{
-  def apply(delegate: AWSCredentialsProvider) = new LoggingAWSCredentialsProvider(delegate)
 }
 

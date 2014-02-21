@@ -22,24 +22,25 @@ var environment = require('system').env.ENVIRONMENT,
         mobile: 320
     },
     timestampDir = require('./node_modules/moment/moment.js')().format('YYYY/MM/DD/HHmm.X'),
-    screenshotsDir = './screenshots',
-    casper = require('casper').create();
+    screenshotsDir = './screenshots';
 
-casper.start(host, function() {
-    this.echo('Running tests against `' + environment + '` environment');
-});
+casper.test.begin('Take screenshots', function() {
 
-casper.each(urls, function(casper, url) {
-    this.each(Object.keys(breakpoints), function(casper, breakpoint) {
-        this.then(function() {
-            this.viewport(breakpoints[breakpoint], 1);
-        });
-        this.thenOpen(host + url + '?view=mobile');
-        this.then(function() {
-            this.echo('Capturing ' + host +  url + ' @ ' + breakpoint + ' breakpoint')
-                .capture(screenshotsDir + '/' + encodeURIComponent(url) + '/' + breakpoint + '/' + timestampDir + '.png');
+    casper.start(host);
+
+    casper.each(urls, function(casper, url) {
+        this.each(Object.keys(breakpoints), function(casper, breakpoint) {
+            this.then(function() {
+                this.viewport(breakpoints[breakpoint], 1);
+            });
+            this.thenOpen(host + url + '?view=mobile');
+            this.then(function() {
+                this.echo('Capturing ' + host +  url + ' @ ' + breakpoint + ' breakpoint')
+                    .capture(screenshotsDir + '/' + encodeURIComponent(url) + '/' + breakpoint + '/' + timestampDir + '.png');
+            });
         });
     });
+
 });
 
 casper.run();

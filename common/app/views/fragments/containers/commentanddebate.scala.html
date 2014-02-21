@@ -1,6 +1,6 @@
 @(config: Config, collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
 
-@defining(config.displayName.orElse(collection.displayName)) { title =>
+@defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>
 
     @defining(templateDeduping(5, collection.items)) { items =>
         @if(items.nonEmpty) {
@@ -18,14 +18,14 @@
 
                 @title.map { title =>
                     <h2 class="container__title tone-@style.tone tone-background">
-                        @collection.href.map { href =>
+                        @href.map { href =>
                             <a data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
                         }.getOrElse{
                             @Html(title)
                         }
                     </h2>
                 }
-                <div class="container__body container--rolled-up-hide js-container-append-button">
+                <div class="container__body container--rolled-up-hide">
                     @fragments.collections.commentanddebate(items, style, containerIndex)
                 </div>
 
