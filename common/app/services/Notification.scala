@@ -58,5 +58,5 @@ object Notification extends Notification {
 }
 
 object FrontPressNotification extends Notification {
-  lazy val topic: String = Configuration.aws.frontPressSns
+  lazy val topic: String = Configuration.aws.frontPressSns.getOrElse("arn:aws:sns:eu-west-1:642631414762:front-press")
 }
