@@ -30,10 +30,11 @@ define( [
 
     RightHandComponentFactory.prototype.renderRightHandComponent = function() {
 
-        var components = {
-            'gravity' :  function(pageId) { new RightRecommended(this.mediator,  {type: 'image', maxTrails: 5}); },
-            'outbrain' : function(pageId) { new RightOutbrainRecommendations(this.mediator, {type: 'image', maxTrails: 5, pageId: pageId});            },
-            'default' : function(pageId) { new RightMostPopular(this.mediator, {type: 'image', maxTrails: 5}); }
+        var component,
+            components = {
+            'gravity' :  function(pageId) { component = new RightRecommended(this.mediator,  {type: 'image', maxTrails: 5}); },
+            'outbrain' : function(pageId) { component = new RightOutbrainRecommendations(this.mediator, {type: 'image', maxTrails: 5, pageId: pageId}); },
+            'default' : function(pageId) { component = new RightMostPopular(this.mediator, {type: 'image', maxTrails: 5}); }
         };
 
         var mp = components[RightHandComponentFactory.rightHandDataSource](this.pageId);
