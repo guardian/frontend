@@ -24,6 +24,9 @@ body:after {
     @include mq(desktop) {
         content: "desktop";
     }
+    @include mq(leftCol) {
+        content: "leftCol";
+    }
     @include mq(wide) {
         content: "wide";
     }

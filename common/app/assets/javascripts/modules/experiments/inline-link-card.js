@@ -36,7 +36,7 @@ define([
     InlineLinkCard.prototype.loadCard = function() {
         var breakpoint = detect.getBreakpoint();
 
-        if (breakpoint === 'wide' && !this.link.getAttribute('data-hasbeencardified')) {
+        if (breakpoint === 'leftCol' && !this.link.getAttribute('data-hasbeencardified')) {
             this.link.setAttribute('data-hasbeencardified', true);
             this.fetchData();
         }
