@@ -298,6 +298,11 @@
                 </div>
 
                 <div class="article_content" data-bind="if: !state.isEmpty()">
+
+                    <span class="is-breaking" data-bind="
+                        visible: meta.isBreaking,
+                        click: open">Breaking News</span>
+
                     <a class="headline" target="article" data-bind="
                         text: meta.headline() || fields.headline(),
                         attr: {href: id},
