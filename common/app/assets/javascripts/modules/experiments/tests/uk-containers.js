@@ -63,7 +63,7 @@ define([
             {
                 id: 'variant-one',
                 test: function (context, config) {
-                    renderFront('uk-alpha');
+                    renderFront('uk-variant-one');
                 }
             }
         ];
