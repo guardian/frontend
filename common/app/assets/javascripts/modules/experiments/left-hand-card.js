@@ -1,11 +1,9 @@
 define([
     'common/common',
-    'common/utils/detect',
     'common/modules/experiments/inline-link-card'
 ],
     function (
         common,
-        detect,
         InlineLinkCard
         ) {
 
