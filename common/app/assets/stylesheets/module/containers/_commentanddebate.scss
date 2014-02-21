@@ -84,4 +84,14 @@
             display: block;
         }
     }
+    .collection-wrapper--position-2 {
+        .item--has-no-image .item__title {
+            @include fs-headline(1, true);
+        }
+        .item--has-no-image .item__standfirst,
+        .item__media-wrapper,
+        .item__image-container {
+            display: none;
+        }
+    }
 }
