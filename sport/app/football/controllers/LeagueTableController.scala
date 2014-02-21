@@ -78,8 +78,9 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
       )
     
       val htmlResponse = () => football.views.html.tables(TablesPage(page, Seq(table), table.competition.url, filters, Some(table.competition)))
-      val jsonResponse = () => football.views.html.fragments.tablesBody(TablesPage(page, Seq(table), table.competition.url, filters, Some(table.competition)))
-      renderFormat(htmlResponse, jsonResponse, page, Switches.all)
+      val jsonResponse = () => football.views.html.fragments.tableView(table.groups(0), table.competition.tableDividers)// Groups support not needed as we never show them
+
+      renderFormat(htmlResponse, jsonResponse, page)
     }.getOrElse(Redirect("/football/tables"))
   }
 }
