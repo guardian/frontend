@@ -31,7 +31,6 @@ define([
            {
                id: 'show-gravity-recommendations',
                test: function(context, config) {
-                   console.log("++ GRAVITY");
                    RightHandComponentFactory.setRecommendedationsSource('gravity');
                    require(['js!gravity'], function(){});
                }
@@ -39,7 +38,6 @@ define([
            {
                id: 'show-outbrain-recommendations',
                test: function(context, config) {
-                   console.log("++ OUTBRAIN");
                    RightHandComponentFactory.setRecommendedationsSource('outbrain');
                }
            }
