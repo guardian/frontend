@@ -3,6 +3,7 @@ define([
     'config',
     'knockout',
     'modules/vars',
+    'modules/authed-ajax',
     'bindings/hoverable',
     'utils/fetch-settings',
     'utils/update-scrollables',
@@ -18,6 +19,7 @@ define([
     config,
     ko,
     vars,
+    authedAjax,
     hoverable,
     fetchSettings,
     updateScrollables,
@@ -44,6 +46,8 @@ define([
                     front.toggleOpen();
                 },
 
+                pending: ko.observable(),
+
                 createCollection: function() {
                     var collection = new Collection({
                         id: guid()
@@ -52,13 +56,32 @@ define([
                     model.collections.unshift(collection);
                 },
 
-                tones:  [''].concat(vars.CONST.tones),
+                types:  [''].concat(vars.CONST.types),
                 groups: [''].concat(vars.CONST.groups),
 
                 save: function() {
-                    sanitize();
-                    // This is where persistence will happen:
-                    window.console.log(JSON.stringify(serialize(), null, 4));
+                    var serialized = serialize(model);
+
+                    if(!_.isEqual(serialized, vars.state.config)) {
+                        model.pending(true);
+                        authedAjax.request({
+                            url: vars.CONST.apiBase + '/config',
+                            type: 'post',
+                            data: JSON.stringify(serialized)
+                        })
+                        .then(function() {
+                            bootstrap({
+                                force: true,
+                                openFronts: _.reduce(model.fronts(), function(openFronts, front) {
+                                    openFronts[front.id()] = front.state.open();
+                                    return openFronts;
+                                }, {})
+                            })
+                            .done(function() {
+                                model.pending(false);
+                            });
+                        });
+                    }
                 }
             };
 
@@ -70,17 +93,24 @@ define([
 
         vars.model = model;
 
-        function serialize() {
+        function serialize(model) {
             return {
                 fronts:
                    _.chain(model.fronts())
-                    .filter(function(front) { return front.id(); })
+                    .filter(function(front) { return front.id() && front.collections.items().length > 0; })
                     .reduce(function(fronts, front) {
-                        fronts[front.id()] = {
-                            collections: _.map(front.collections.items(), function(collection) {
+                        var collections = _.chain(front.collections.items())
+                             .filter(function(collection) {
+                                return model.collections.indexOf(collection) > -1;
+                             })
+                             .map(function(collection) {
                                 return collection.id;
-                            })
-                        };
+                             })
+                             .value();
+
+                        if (collections.length > 0) {
+                            fronts[front.id()] = { collections: collections };
+                        }
                         return fronts;
                     }, {})
                     .value(),
@@ -92,7 +122,6 @@ define([
                         collections[collection.id] =
                            _.reduce(collection.meta, function(acc, val, key) {
                                 var v = _.isFunction(val) ? val() : val;
-                                 // keep only the truthy values:
                                 if(v) {
                                     acc[key] = (key === 'groups' ? v.split(',') : v);
                                 }
@@ -104,26 +133,13 @@ define([
             };
         }
 
-        function sanitize() {
-            model.fronts.remove(function(front) {
-                return !front.id() || front.collections.items().length === 0;
-            });
+        function bootstrap(opts) {
+            opts.openFronts = opts.openFronts|| {};
 
-            _.each(model.fronts(), function(front) {
-                front.collections.items.remove(function(collection) {
-                    return model.collections.indexOf(collection) < 0;
-                });
-            });
-        }
-
-        this.init = function() {
-            droppable.init();
-            //hoverable.init();
-
-            fetchSettings(function (config, switches) {
+            return fetchSettings(function (config, switches) {
                 vars.state.switches = switches || {};
 
-                if (!_.isEqual(config, vars.state.config)) {
+                if (opts.force || !_.isEqual(config, vars.state.config)) {
                     vars.state.config = config;
 
                     model.collections(
@@ -133,13 +149,29 @@ define([
                     );
 
                     model.fronts(
-                      _.map(config.fronts, function(obj, fid) {
-                            return new Front(cloneWithKey(obj, fid));
-                       })
+                       _.chain(_.keys(config.fronts))
+                        .sortBy(function(id) { return id; })
+                        .map(function(id) {
+                            var front = new Front(cloneWithKey(config.fronts[id], id));
+
+                            front.state.open(opts.openFronts[id]);
+                            return front;
+                        })
+                       .value()
                     );
                 }
-            }, vars.CONST.configSettingsPollMs, true)
-            .done(function() {
+            }, opts.pollingMs, opts.terminateOnFail);
+        }
+
+        this.init = function() {
+            droppable.init();
+            //hoverable.init();
+
+            bootstrap({
+                pollingMs: vars.CONST.configSettingsPollMs,
+                terminateOnFail: true
+
+            }).done(function() {
                 ko.applyBindings(model);
 
                 updateScrollables();

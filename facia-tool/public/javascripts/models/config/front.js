@@ -64,6 +64,7 @@ define([
     };
 
     Front.prototype._depopulateCollection = function(collection) {
+        collection.state.open(false);
         collection.parents.remove(this);
         this.collections.items.remove(collection);
         vars.model.save();

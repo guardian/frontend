@@ -1,6 +1,6 @@
 /*
- Module: highlights-panel.js
- Description: Display experimental highlights panel
+ Module: right-most-popular.js
+ Description: Shows popular trails in the right column.
  */
 define([
     'qwery',
