@@ -129,12 +129,7 @@
     .item__link:visited .item__title {
         color: mix(#ffffff, $c-features-secondary, 80%);
     }
-    .item__link {
-        border-top: 0;
-    }
-    .item__image-container {
-        margin-top: 0;
-    }
+    @include item--hide-tone-border;
     .item__title {
         background-color: $c-features-secondary;
     }
