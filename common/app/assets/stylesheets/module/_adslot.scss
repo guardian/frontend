@@ -35,6 +35,9 @@
             display: block;
         }
     }
+    .no-js & {
+        display: none;
+    }
 }
 
 .ad-slot__wrapper {
