@@ -85,7 +85,7 @@ object Switches extends Collections {
 
   val SpdyImageServicesSwitch = Switch("Performance Switches", "spdy-image-services",
     "If this switch is on, all image endpoints will route through Akamai's SPDY service.",
-    safeState = On, sellByDate = new DateMidnight(2014,2,28)
+    safeState = Off, sellByDate = new DateMidnight(2014,2,28)
   )
 
 
