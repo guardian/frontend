@@ -35,6 +35,7 @@ GET         /most-read                                                          
 GET         /most-read.json                                                                                          controllers.MostPopularController.render(path = "")
 GET         /most-read/*path.json                                                                                    controllers.MostPopularController.renderJson(path)
 GET         /most-read/*path                                                                                         controllers.MostPopularController.render(path)
+GET         /most-read-geo.json                                                                                      controllers.MostPopularController.renderPopularGeoJson()
 
 GET         /top-stories                                                                                             controllers.TopStoriesController.renderTopStories()
 GET         /top-stories.json                                                                                        controllers.TopStoriesController.renderTopStoriesJson()
@@ -172,8 +173,6 @@ GET         /commercial/books/book/*pageId.json                                 
 GET         /commercial/books/book/*pageId                                                                           controllers.commercial.BookOffers.singleBook(pageId, format="html")
 
 # Onward journeys
-GET         /onward/most-read.json                                                                                   controllers.MostPopularOnwardController.mostRead()
-GET         /onward/latest.json                                                                                      controllers.LatestContentController.renderLatest()
 GET         /onward/recently-published                                                                               controllers.LatestContentController.recentlyPublished()
 
 # Facia

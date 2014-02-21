@@ -22,7 +22,6 @@ td {
 
 .table {
     background: $c-neutral8;
-    border-bottom: 2px solid $c-neutral2;
     border-top: 2px solid $c-newsAccent;
 
     th,
@@ -42,16 +41,16 @@ td {
         color: $c-neutral1;
         font-weight: 800;
     }
+
+    abbr {
+        border-bottom: 1px dotted $c-neutral8;
+    }
 }
 
 .table--striped {
     tr:nth-child(odd) > td {
         background-color: darken($c-neutral8, 4%);
     }
-}
-
-.table-row--selected td {
-    font-weight: 800;
 }
 
 .table-column--sub {
@@ -68,6 +67,10 @@ td {
 
 .table-row--divider td {
     border-bottom: 1px dashed $c-neutral1;
+}
+
+.table-row--break td {
+    border-top: 1px solid $c-neutral1;
 }
 
 .table__headline {

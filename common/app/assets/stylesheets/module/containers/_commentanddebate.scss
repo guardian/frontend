@@ -3,7 +3,7 @@
         @include rem((
             padding-top: $gs-baseline/3
         ));
-        @include mq(tablet, wide) {
+        @include mq(tablet, desktop) {
             padding-top: 0;
         }
     }
