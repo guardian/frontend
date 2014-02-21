@@ -1,4 +1,4 @@
-@(table: Table, group: Group, isSingleTable: Boolean = false, highlightTeamId: Option[String] = None)(implicit request: RequestHeader)
+@(group: Group, dividers: List[Int], highlightTeamId: Option[String] = None)(implicit request: RequestHeader)
 <table class="table table--football table--striped">
     <thead>
         <tr>
@@ -19,7 +19,7 @@
     <tbody class="table-football-body">
         @group.entries.zipWithRowInfo.map{ case (entry, row) =>
             <tr class="@if(highlightTeamId.map(_ == entry.team.id).getOrElse(false)){table-row--highlight}
-                @if(table.competition.tableDividers.contains(entry.team.rank)){ table-row--divider}">
+                @if(dividers.contains(entry.team.rank)){ table-row--divider}">
                 <td class="football-stat--postition table-column--sub">@entry.team.rank</td>
                 <td class="football-stat--team table-column--main"><a href="@TeamUrl(entry.team)" data-link-name="View team">@entry.team.name</a></td>
                 <td class="football-stat--played">@entry.team.total.played</td>

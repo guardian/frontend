@@ -32,7 +32,7 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
 
     val groups = loadTables.map { table =>
       if (table.multiGroup) {
-        table.copy(groups = table.groups.map { group => group.copy(entries = group.entries.take(2)) })
+        table.copy(groups = table.groups.take(2).map { group => group.copy(entries = group.entries.take(2)) })
       } else {
         table.copy(groups = table.groups.map { group => group.copy(entries = group.entries.take(4)) })
       }
