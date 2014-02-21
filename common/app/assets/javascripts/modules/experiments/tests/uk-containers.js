@@ -47,6 +47,7 @@ define([
                             // add new containers
                             $('.facia-container > *', bonzo.create('<div>' + response.html + '</div>'))
                                 .appendTo(qwery('.facia-container')[0]);
+                            mediator.emit('ui:images:upgrade');
                         },
                         function(req) {
                             // remove hiding class
