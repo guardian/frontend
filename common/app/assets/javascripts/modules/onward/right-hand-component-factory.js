@@ -1,37 +1,43 @@
 define( [
     'lodash/objects/assign',
+    'common/utils/detect',
 
     'common/modules/onward/right-most-popular',
-    'common/modules/onward/right-recommended'
+    'common/modules/onward/right-recommended',
+    'common/modules/onward/right-outbrain-recommendations'
 ], function (
     extend,
+    detect,
 
     RightMostPopular,
-    RightRecommendedForYou
+    RightRecommended,
+    RightOutbrainRecommendations
 ){
 
     function RightHandComponentFactory(config) {
         this.config = config;
         this.mediator = this.config.mediator;
-        if(parseInt(this.config.wordCount, 10) > 500) {
+        this.pageId = this.config.pageId;
+        if( detect.getBreakpoint() !== 'mobile' && parseInt(this.config.wordCount, 10) > 500  ) {
             this.renderRightHandComponent();
         }
     }
 
-    RightHandComponentFactory.recommended = false;
-    RightHandComponentFactory.setRecommenedForYou = function() {
-        RightHandComponentFactory.recommended = true;
+    RightHandComponentFactory.rightHandDataSource = 'default';
+    RightHandComponentFactory.setRecommendedationsSource = function(dataSourceName) {
+        RightHandComponentFactory.rightHandDataSource = dataSourceName;
     };
 
     RightHandComponentFactory.prototype.renderRightHandComponent = function() {
 
-        if(RightHandComponentFactory.recommended) {
-            var rmd = new RightRecommendedForYou(this.mediator,  {type: 'image', maxTrails: 5});
-        } else {
-            var rmp = new RightMostPopular(this.mediator, {type: 'image', maxTrails: 5});
-        }
+        var components = {
+            'gravity' :  function(pageId) { new RightRecommended(this.mediator,  {type: 'image', maxTrails: 5}); },
+            'outbrain' : function(pageId) { new RightOutbrainRecommendations(this.mediator, {type: 'image', maxTrails: 5, pageId: pageId});            },
+            'default' : function(pageId) { new RightMostPopular(this.mediator, {type: 'image', maxTrails: 5}); }
+        };
+
+        var mp = components[RightHandComponentFactory.rightHandDataSource](this.pageId);
     };
 
     return RightHandComponentFactory;
-
 });

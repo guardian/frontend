@@ -329,9 +329,9 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val ABGravityRecommendations = Switch("A/B Tests", "ab-gravity-recommendations",
-    "Enables gravity beacon code on the site",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 24)
+  val ABRightHandRecommendations = Switch("A/B Tests", "ab-right-hand-recommendations",
+    "Sets different recommendation providers against each other for the right hand component",
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
   )
 
   val ABAdLabels = Switch("A/B Tests", "ab-ad-labels",
@@ -461,7 +461,7 @@ object Switches extends Collections {
     IdentityEthicalAwardsSwitch,
     IdentityFilmAwardsSwitch,
     ABAa,
-    ABGravityRecommendations,
+    ABRightHandRecommendations,
     ArticleTruncation,
     ABAdLabels,
     ABInlineElements,
