@@ -3,6 +3,7 @@ package jobs
 import services.{S3FrontsApi, FrontPressNotification}
 import play.api.libs.json.{JsValue, Json}
 import conf.Switches._
+import conf.Configuration
 
 object RefreshFrontsJob {
 
@@ -14,7 +15,7 @@ object RefreshFrontsJob {
   }
 
   def run(): Unit = {
-    if (FrontPressJobSwitch.isSwitchedOn) {
+    if (FrontPressJobSwitch.isSwitchedOn && Configuration.aws.frontPressSns.filter(_.nonEmpty).isDefined) {
       getPaths map(_.map(FrontPressNotification.sendWithoutSubject))
     }
   }
