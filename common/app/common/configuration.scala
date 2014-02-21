@@ -217,7 +217,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object faciatool {
     lazy val contentApiPostEndpoint: Option[String] = configuration.getStringProperty("contentapi.post.endpoint")
-    lazy val frontPressQueueUrl: String = configuration.getMandatoryStringProperty("frontpress.sqs.queue")
+    lazy val frontPressQueueUrl: Option[String] = configuration.getStringProperty("frontpress.sqs.queue")
   }
 
   object pa {
@@ -233,7 +233,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val region = configuration.getMandatoryStringProperty("aws.region")
     lazy val bucket = configuration.getMandatoryStringProperty("aws.bucket")
     lazy val notificationSns: String = configuration.getMandatoryStringProperty("sns.notification.topic.arn")
-    lazy val frontPressSns: String = configuration.getMandatoryStringProperty("frontpress.sns.topic")
+    lazy val frontPressSns: Option[String] = configuration.getStringProperty("frontpress.sns.topic")
 
     lazy val credentials: AWSCredentialsProvider = new AWSCredentialsProviderChain(
       // the first 3 are a copy n paste job from the constructor of DefaultAWSCredentialsProviderChain
