@@ -22,9 +22,9 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
     archive
   }
 
-  // Our redirects are 'normalised' Vignette URLs - @obrienm understands this
+  // Our redirects are 'normalised' Vignette URLs, Ie. path/to/0,<n>,123,<n>.html -> path/to/0,,123,.html
   def normalise(path: String) = {
-    val r1ArtifactUrl = """www.theguardian.com/(.*)/[0|1]?,[\d+]?,(-?\d+),[\d+]?(.*)""".r
+    val r1ArtifactUrl = """www.theguardian.com/(.*)/[0|1]?,[\d]*,(-?\d+),[\d]*(.*)""".r
     path match {
       case r1ArtifactUrl(path, artifactOrContextId, extension) => {
         val normalisedUrl = s"www.theguardian.com/${path}/0,,${artifactOrContextId},.html"
