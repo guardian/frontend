@@ -360,7 +360,7 @@ object Switches extends Collections {
 
   val ABUkContainers = Switch("A/B Tests", "ab-uk-containers",
     "If this is switched on an A/B test runs to prove the effectiveness of truncatiung articles.",
-    safeState = On, sellByDate = new DateMidnight(2014, 3, 24)
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 1)
   )
 
   // Sport Switch
