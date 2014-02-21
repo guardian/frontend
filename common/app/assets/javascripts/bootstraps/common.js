@@ -339,7 +339,7 @@ define([
                     '<div class="site-message__message" id="site-message__message">' +
                     '<p>You’re looking at a prototype of our new website. Opt-out any time by clicking "Current version" at the bottom of the page. <a href="http://next.theguardian.com/">Find out more</a>.</p>' +
                     '<ul class="site-message__list">' +
-                    '<li class="site-message__list__item">We love feedback - <a href="http://next.theguardian.com/feedback/">let us know yours</a>.</li>' +
+                    '<li class="site-message__list__item">We love feedback - <a href="https://www.surveymonkey.com/s/theguardian-beta-feedback">let us know yours</a>.</li>' +
                     '<li class="site-message__list__item">Stay up to date with new releases on <a href="http://next.theguardian.com/blog/">our blog</a>.</li>' +
                     '</ul>' +
                     '<ul class="site-message__actions unstyled">' +
