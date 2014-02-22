@@ -52,6 +52,7 @@ class ArchiveControllerTest extends FlatSpec with Matchers {
     val tests = Map[String, Option[String]](
       "www.theguardian.com/books/reviews/travel/0,,343395,00.html" -> Some("www.theguardian.com/books/reviews/travel/0,,343395,.html"),
       "www.theguardian.com/books/reviews/travel/0,,343395,.html" -> Some("www.theguardian.com/books/reviews/travel/0,,343395,.html"),
+      "www.theguardian.com/books/review/story/0,034,908973,00.html" -> Some("www.theguardian.com/books/review/story/0,,908973,.html"),
       "www.theguardian.com/books/reviews/travel/foo" -> None
     ) 
     tests foreach {
