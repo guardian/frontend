@@ -285,16 +285,15 @@
 
             &:before {
                 color: $c-neutral4;
+                top: 0;
                 @include rem((
                     font-size: 50px,
-                    top: -2px,
                     left: -20px
                 ));
 
                 @include mq(tablet) {
                     @include rem((
                         font-size: 61px,
-                        top: -2px,
                         left: -24px
                     ));
                 }
