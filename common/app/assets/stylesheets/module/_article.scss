@@ -275,16 +275,15 @@
 
     > ul {
         > li {
-            @include faux-bullet-point;
+            @include faux-bullet-point($c-neutral4);
 
-            @include mq(mobile, tablet) {
+            @include mq($to: tablet) {
                 @include rem((
                     text-indent: 16px
                 ));
             }
 
             &:before {
-                color: $c-neutral4;
                 top: 0;
                 @include rem((
                     font-size: 50px,

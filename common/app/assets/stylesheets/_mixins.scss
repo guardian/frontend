@@ -288,7 +288,7 @@
     }
 }
 
-@mixin faux-bullet-point {
+@mixin faux-bullet-point($color: $c-neutral3) {
     position: relative;
     @include rem((text-indent: 20px));
 
@@ -300,7 +300,7 @@
             top: 2px,
             font-size: 48px
         ));
-        color: $c-neutral3;
+        color: $color;
     }
 }
 
