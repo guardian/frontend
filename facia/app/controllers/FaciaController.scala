@@ -64,28 +64,32 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
   def renderEditionCollection(id: String) = renderCollection(id)
   def renderEditionCollectionJson(id: String) = renderCollection(id)
 
-  def renderFront(path: String) = DogpileAction { implicit request =>
-    Future{
-      //For UK alpha only
-      val newPath = getPathForUkAlpha(path, request)
+  def renderFront(path: String) =
+    if (Switches.PressedFacia.isSwitchedOn)
+      renderFaciaPress(path)
+    else
+      DogpileAction { implicit request =>
+        Future{
+          //For UK alpha only
+          val newPath = getPathForUkAlpha(path, request)
 
-      val editionalisedPath = editionPath(newPath, Edition(request))
+          val editionalisedPath = editionPath(newPath, Edition(request))
 
-      FrontPage(editionalisedPath).flatMap { frontPage =>
+          FrontPage(editionalisedPath).flatMap { frontPage =>
 
-      // get the trailblocks
-        val faciaPageOption: Option[FaciaPage] = front(editionalisedPath)
-        faciaPageOption map { faciaPage =>
-          Cached(frontPage) {
-            if (request.isJson)
-              JsonFront(frontPage, faciaPage)
-            else
-              Ok(views.html.front(frontPage, faciaPage))
-          }
+          // get the trailblocks
+            val faciaPageOption: Option[FaciaPage] = front(editionalisedPath)
+            faciaPageOption map { faciaPage =>
+              Cached(frontPage) {
+                if (request.isJson)
+                  JsonFront(frontPage, faciaPage)
+                else
+                  Ok(views.html.front(frontPage, faciaPage))
+              }
+            }
+          }.getOrElse(Cached(60)(NotFound))
         }
-      }.getOrElse(Cached(60)(NotFound))
-    }
-  }
+      }
 
   def renderFaciaPress(path: String) = DogpileAction { implicit request =>
 
