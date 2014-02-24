@@ -117,6 +117,7 @@ trait UpdateActions extends Logging {
     getBlock(id)
     .map(insertIntoLive(update, _))
     .map(insertIntoDraft(update, _))
+    .map(capCollection)
     .map(putBlock(id, _, identity, updateJson))
     .map(archiveBlock(id, _, updateJson))
     .orElse(createBlock(id, identity, update))
