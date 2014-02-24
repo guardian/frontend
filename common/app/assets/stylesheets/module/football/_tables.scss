@@ -190,6 +190,6 @@
 
 .article__secondary-column {
     .table__container {
-        margin-bottom: $gs-baseline;
+        @include rem((margin-bottom: $gs-baseline));
     }
 }
