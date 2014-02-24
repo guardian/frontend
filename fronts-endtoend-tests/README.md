@@ -6,7 +6,7 @@ It contains the default settings, which should be overriden for local use.
 To permanently override settings, create a developer.properties file adjacent to the main one.
 For other environments, specifying settings through system properties, also works.
 
-In you frontend.properties or developer.properties, add the following configuration:
+In your frontend.properties or developer.properties, add the following configuration:
 
 ```
 username=
