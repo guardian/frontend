@@ -10,6 +10,10 @@
         ));
     }
 }
+.collection-wrapper--no-outer-margins {
+    margin-left: 0;
+    margin-right: 0;
+}
 .collection__item {
     position: relative; // Replace .item as a relative context
 

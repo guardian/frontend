@@ -120,7 +120,11 @@ define([
                 vars.state.config = config || {};
                 vars.state.switches = switches || {};
                 model.fronts(
-                    getFront() === 'testcard' ? ['testcard'] : _.without(_.keys(config.fronts), 'testcard')
+                    getFront() === 'testcard' ? ['testcard'] :
+                       _.chain(_.keys(config.fronts))
+                        .without('testcard')
+                        .sortBy(function(id) { return id; })
+                        .value()
                 );
             }, vars.CONST.configSettingsPollMs, true)
             .done(function() {
