@@ -37,7 +37,7 @@ define([
         showCollectionShowMore: function () {
             mediator.on('page:front:ready', function(config, context) {
                 $('.container', context).each(function(container) {
-                    $('.shame-collection--show-more', container).each(function(collection) {
+                    $('.js-collection--show-more', container).each(function(collection) {
                         new CollectionShowMore(collection).addShowMore();
                     });
                 });
