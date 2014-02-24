@@ -134,6 +134,7 @@
 
 // Leave blank ones for easy modification
 @mixin table-football--small() {
+    .football-stat--priority { display: table-cell; }
     .football-stat--postition { display: table-cell; }
     .football-stat--team { display: table-cell; }
     .football-stat--played { display: table-cell; }

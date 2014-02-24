@@ -61,7 +61,10 @@ td {
     }
 
     @include mq($to: tablet) { @include table--small; }
-    &.table--small { @include table--small; }
+}
+
+.table--small {
+    @include table--small;
 }
 
 .table--striped {
