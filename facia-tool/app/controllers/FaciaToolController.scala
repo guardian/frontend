@@ -80,14 +80,20 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     val identity = Identity(request).get
     FaciaToolMetrics.DraftPublishCount.increment()
     val block = FaciaApi.publishBlock(id, identity)
-    block.foreach(b => pressCollectionId(b.id))
+    block.foreach{ b =>
+      FaciaApi.archive(id, b, JsString("publish"))
+      pressCollectionId(b.id)
+    }
     notifyContentApi(id)
     NoCache(Ok)
   }
 
   def discardCollection(id: String) = AjaxExpiringAuthentication { request =>
     val identity = Identity(request).get
-    FaciaApi.discardBlock(id, identity)
+    val block = FaciaApi.discardBlock(id, identity)
+    block.foreach { b =>
+      FaciaApi.archive(id, b, JsString("discard"))
+    }
     NoCache(Ok)
   }
 
