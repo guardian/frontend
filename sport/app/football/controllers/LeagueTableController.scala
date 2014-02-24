@@ -76,11 +76,13 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
         s"${table.competition.fullName} table",
         "GFE:Football:automatic:competition tables"
       )
-    
+
+      val smallTableGroup = table.copy(groups = table.groups.map { group => group.copy(entries = group.entries.take(10)) }).groups(0)
       val htmlResponse = () => football.views.html.tables(TablesPage(page, Seq(table), table.competition.url, filters, Some(table.competition)))
-      val jsonResponse = () => football.views.html.fragments.tableView(table.groups(0), table.competition.tableDividers)// Groups support not needed as we never show them
+      val jsonResponse = () => football.views.html.fragments.tableView(table.competition, smallTableGroup, showMeta = true, isSmall = true, multiGroup = table.multiGroup)
 
       renderFormat(htmlResponse, jsonResponse, page)
+
     }.getOrElse(Redirect("/football/tables"))
   }
 }

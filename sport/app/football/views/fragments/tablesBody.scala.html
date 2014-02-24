@@ -6,7 +6,7 @@
         @if(model.singleCompetition){
         <p class="article__dateline" aria-hidden="true">
             <i class="i i-clock-grey relative-timestamp__icon"></i>
-            <time itemprop="datePublished" datetime="2014-02-14T09:39:55+0000" data-timestamp="1392370795000">
+            <time itemprop="datePublished">
                 Last updated: a minute ago
             </time>
         </p>
@@ -20,12 +20,12 @@
                     @round.name.map { name =>
                         <div class="football__group">
                             <h4 class="table__headline">@name</h4>
-                            @tableView(group, table.competition.tableDividers)
+                            @tableView(table.competition, group)
                         </div>
                     }
                 }
             }else{
-                @tableView(group, table.competition.tableDividers)
+                @tableView(table.competition, group)
             }
         }
         @if(!model.singleCompetition){
