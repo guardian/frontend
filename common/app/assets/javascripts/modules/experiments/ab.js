@@ -6,7 +6,7 @@ define([
 
     //Current tests
     'common/modules/experiments/tests/aa',
-    'common/modules/experiments/tests/gravity-recommendations',
+    'common/modules/experiments/tests/right-hand-recommendations',
     'common/modules/experiments/tests/ad-labels',
     'common/modules/experiments/tests/onward-inline-elements',
     'common/modules/experiments/tests/article-truncation'
@@ -15,17 +15,16 @@ define([
     store,
     mediator,
     mvtCookie,
-
     Aa,
-    GravityRecommendations,
+    RightHandRecommendations,
     AdLabels,
     InlineElements,
     ArticleTruncation
-    ) {
+) {
 
     var TESTS = [
             new Aa(),
-            new GravityRecommendations(),
+            new RightHandRecommendations(),
             new AdLabels(),
             new InlineElements(),
             new ArticleTruncation()

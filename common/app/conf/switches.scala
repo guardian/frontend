@@ -78,6 +78,12 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
+  // Front Press Switches
+  val FrontPressJobSwitch = Switch("Front Press Switches", "front-press-job-switch",
+    "If this switch is on then the jobs to push and pull from SQS will run",
+    safeState = Off, sellByDate = never
+  )
+
   val SpdyAjaxServicesSwitch = Switch("Performance Switches", "spdy-ajax-services",
     "If this switch is on, all ajax api endpoints will route through Akamai's SPDY service.",
     safeState = Off, sellByDate = new DateMidnight(2014,2,28)
@@ -87,7 +93,6 @@ object Switches extends Collections {
     "If this switch is on, all image endpoints will route through Akamai's SPDY service.",
     safeState = Off, sellByDate = new DateMidnight(2014,2,28)
   )
-
 
   // Advertising Switches
 
@@ -329,9 +334,9 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val ABGravityRecommendations = Switch("A/B Tests", "ab-gravity-recommendations",
-    "Enables gravity beacon code on the site",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 24)
+  val ABRightHandRecommendations = Switch("A/B Tests", "ab-right-hand-recommendations",
+    "Sets different recommendation providers against each other for the right hand component",
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
   )
 
   val ABAdLabels = Switch("A/B Tests", "ab-ad-labels",
@@ -382,17 +387,17 @@ object Switches extends Collections {
 
   val NetworkFrontUkAlpha = Switch("Facia", "network-front-uk-alpha",
     "If this is switched on then the uk alpha network fronts will be served if a GU_UK_ALPHA cookie has been dropped",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 22)
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 25)
   )
 
   val NetworkFrontUsAlpha = Switch("Facia", "network-front-us-alpha",
     "If this is switched on then the us alpha network fronts will be served if a GU_US_ALPHA cookie has been dropped",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 22)
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 25)
   )
 
   val NetworkFrontAuAlpha = Switch("Facia", "network-front-au-alpha",
     "If this is switched on then the au alpha network fronts will be served if a GU_AU_ALPHA cookie has been dropped",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 22)
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 25)
   )
 
   // Facia Tool Switches
@@ -461,7 +466,7 @@ object Switches extends Collections {
     IdentityEthicalAwardsSwitch,
     IdentityFilmAwardsSwitch,
     ABAa,
-    ABGravityRecommendations,
+    ABRightHandRecommendations,
     ArticleTruncation,
     ABAdLabels,
     ABInlineElements,
@@ -495,7 +500,8 @@ object Switches extends Collections {
     DogpileSwitch,
     ShowAllArticleEmbedsSwitch,
     ImageServerSwitch,
-    RainbowLogo
+    RainbowLogo,
+    FrontPressJobSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

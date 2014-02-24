@@ -203,6 +203,7 @@ a, a:hover {
 .article {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    min-height: 56px;
     overflow: hidden;
     padding: 0 2px 3px 4px;
     position: relative;
@@ -274,6 +275,15 @@ a, a:hover {
 
 .headline:hover {
     color: #000000;
+}
+
+.is-breaking {
+    background: #d61d00;
+    color: #ffffff;
+    font-size: 11px;
+    line-height: 11px;
+    padding: 0 2px;
+    border-radius: 2px;
 }
 
 .is-empty {
@@ -643,36 +653,43 @@ button {
     float: left;
 }
 
-.tool--remove {
-    background: #FFFFFF;
+.tool--small {
+    background: inherit;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     padding: 0 4px;
     margin: 0 1px 0 3px;
 }
 
-.tool--remove i {
+.tool--small i {
     margin: 0;
 }
 
-.latest-articles .tool--remove {
+.article > .closed .tool--small {
     display: none;
-}
-
-.article .closed .tool--remove {
-    opacity: 0.2;
     position: absolute;
     right: 2px;
+}
+
+.article > .closed .tool--small--href {
+    top: 3px;
+}
+
+.article > .closed .tool--small--remove {
     top: 28px;
 }
 
-.article:hover .closed .tool--remove {
-    opacity: 0.6;
+.article:hover > .closed .tool--small {
+    display: block;
+    opacity: 0.8;
 }
 
-.article .closed .tool--remove:hover {
-    background: #CCCCCC;
+.article > .closed .tool--small:hover {
     opacity: 1;
+}
+
+.latest-articles .tool--small--remove {
+    display: none !important;
 }
 
 .preview {
@@ -893,7 +910,7 @@ button {
     .article .article_content {
         margin-right: 25px;
     }
-    .article .closed .tool--remove {
+    .article > .closed .tool--remove {
         top: 0;
     }
     .toolbar .spark,

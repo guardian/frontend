@@ -2,6 +2,10 @@
     position: relative;
     @include rem((margin-bottom: $gs-baseline*6));
 
+    .item:nth-child(n+6) {
+        display: none;
+    }
+
     @include mq(rightCol) {
 
         .related__header {
