@@ -51,14 +51,14 @@ public class ContentAssertionSteps {
 	@Then("^the draft version of ([\\w]*) should be replaced by the live version$")
 	public void theDraftVersionOfTrailBlockShouldBeReplacedByTheLiveVersion(String trailBlockLabel) {
 		TrailBlock trailBlock = trailBlocks.get(trailBlockLabel);
-		context.setSubject(trailBlock);
+        List<String> draftStories = context.getSubject();
 
-		ViewTrailBlockAction action = new ViewTrailBlockAction(trailBlock);
+        ViewTrailBlockAction action = new ViewTrailBlockAction(trailBlock);
 
 		editors.anyone().execute(action);
 
-		Assert.assertArrayEquals(action.liveStories().toArray(), action.draftStories().toArray());
-	}
+        Assert.assertArrayEquals(action.liveStories().toArray(), draftStories.toArray());
+    }
 
 	@Then("^the live version of ([\\w]*) should be replaced by the draft$")
 	public void theLiveVersionShouldBeReplacedByTheDraft(String trailBlockLabel) {

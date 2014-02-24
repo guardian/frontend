@@ -1,6 +1,5 @@
 Feature: As an editor I want to be able to put my draft of trailblockX live
 
-  @ignore
   Scenario: publish draft
     Given trailblockX is an existing trailblock
     When an editor edits the draft of it
