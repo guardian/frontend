@@ -51,7 +51,7 @@ define([
     return function() {
 
         this.id = 'UkContainers';
-        this.expiry = '2014-03-01';
+        this.expiry = '2014-03-08';
         this.audience = 0.1;
         this.audienceOffset = 0.0;
         this.description = 'Testing different combination of containers on the UK network front';
