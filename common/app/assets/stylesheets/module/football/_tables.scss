@@ -134,18 +134,7 @@
 
 // Leave blank ones for easy modification
 @mixin table-football--small() {
-    .football-stat--priority { display: table-cell; }
-    .football-stat--postition { display: table-cell; }
-    .football-stat--team { display: table-cell; }
-    .football-stat--played { display: table-cell; }
-    .football-stat--won {}
-    .football-stat--drawn {}
-    .football-stat--lost {}
-    .football-stat--for {}
-    .football-stat--against {}
-    .football-stat--difference { display: table-cell; }
-    .football-stat--points { display: table-cell; }
-    .football-stat--form { display: table-cell; }
+    .table-column--priority { display: table-cell; }
 
     th,
     td {
@@ -153,7 +142,7 @@
         min-width: 0;
     }
 
-    .table-column--form {
+    .football-stat--form {
         min-width: 0;
     }
 }
@@ -186,7 +175,7 @@
         min-width: 12px;
     }
 
-    .table-column--form {
+    .football-stat--form {
         min-width: 75px; // 15(width of status)*5
     }
 
