@@ -22,8 +22,9 @@
 
         <tbody class="table-football-body">
             @group.entries.zipWithRowInfo.map{ case (entry, row) =>
-                <tr class="@if(highlightTeamId.map(_ == entry.team.id).getOrElse(false)){table-row--highlight}
-                    @if(competition.tableDividers.contains(entry.team.rank)){ table-row--divider}">
+                <tr class="@RenderClasses(Map(
+                        "table-row--highlight" -> highlightTeamId.map(_ == entry.team.id).getOrElse(false),
+                        "table-row--divider" -> competition.tableDividers.contains(entry.team.rank)))">
                     <td class="football-stat--postition table-column--priority table-column--sub">@entry.team.rank</td>
                     <td class="football-stat--team table-column--priority table-column--main"><a href="@TeamUrl(entry.team)" data-link-name="View team">@entry.team.name</a></td>
                     <td class="football-stat--played table-column--priority">@entry.team.total.played</td>
