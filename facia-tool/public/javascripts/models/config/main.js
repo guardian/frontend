@@ -42,6 +42,12 @@ define([
         model.types =  [''].concat(vars.CONST.types);
         model.groups = [''].concat(vars.CONST.groups);
 
+        model.clipboard = new Group({
+            parentType: 'Clipboard',
+            reflow: updateScrollables,
+            keepCopy:  true
+        });
+
         model.orphans = ko.computed(function() {
             return _.filter(model.collections(), function(collection) {
                 return collection.parents().length === 0;
