@@ -5,7 +5,6 @@
     ));
 }
 
-.article-zone,
 .article__zone {
     @include fs-header(3);
     @include box-sizing(border-box);
@@ -57,7 +56,7 @@
         display: block;
     }
 
-    .article-zone-no-indent &,
+    .no-indent-article__zone &,
     &.sport-header {
         padding-left: 0 !important;
         padding-right: 0;
@@ -66,7 +65,7 @@
     }
 }
 
-.article-zone--bleed-out {
+.article__zone--bleed-out {
     @include rem((
         margin-left: -$gs-gutter/2,
         margin-right: -$gs-gutter/2,
@@ -276,26 +275,24 @@
 
     > ul {
         > li {
-            @include faux-bullet-point;
+            @include faux-bullet-point($c-neutral4);
 
-            @include mq(mobile, tablet) {
+            @include mq($to: tablet) {
                 @include rem((
                     text-indent: 16px
                 ));
             }
 
             &:before {
-                color: $c-neutral4;
+                top: 0;
                 @include rem((
                     font-size: 50px,
-                    top: -2px,
                     left: -20px
                 ));
 
                 @include mq(tablet) {
                     @include rem((
                         font-size: 61px,
-                        top: -2px,
                         left: -24px
                     ));
                 }
@@ -622,7 +619,7 @@ video {
 .article__popular {
     clear: left;
 
-    .article-zone {
+    .article__zone {
         border-color: $c-newsAccent; // Acts as a default
     }
 

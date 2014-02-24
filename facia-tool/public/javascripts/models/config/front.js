@@ -29,6 +29,9 @@ define([
             id = id.replace(/^\/|\/$/g, '');
             id = id.replace(/[^a-z0-9\/\-]*/g, '');
             self.id(id);
+            if(_.filter(vars.model.fronts(), function(front) { return front.id() === id; }).length > 1) {
+                self.id(undefined);
+            }
         });
 
         this.state  = asObservableProps([

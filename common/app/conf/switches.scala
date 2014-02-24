@@ -355,8 +355,13 @@ object Switches extends Collections {
   )
 
   val ArticleTruncation = Switch("A/B Tests", "ab-article-truncation",
-    "If this is switched on an A/B test runs to prove the effectiveness of truncatiung articles.",
+    "If this is switched on an A/B test runs to prove the effectiveness of truncating articles.",
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
+  )
+
+  val GeoMostPopular = Switch("A/B Tests", "ab-geo-most-popular",
+    "If this is switched on an A/B test runs to test if locally popular articles yield better click-through.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 14)
   )
 
   // Sport Switch
@@ -468,6 +473,7 @@ object Switches extends Collections {
     ABAa,
     ABRightHandRecommendations,
     ArticleTruncation,
+    GeoMostPopular,
     ABAdLabels,
     ABInlineElements,
     NetworkFrontUkAlpha,

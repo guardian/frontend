@@ -11,7 +11,7 @@ import idapiclient.IdApiClient
 import play.api.i18n.Messages
 import idapiclient.EmailPassword
 import utils.SafeLogging
-import form.Mappings.{idEmail, idPassword}
+import form.Mappings.{idEmail}
 import scala.concurrent.Future
 
 
@@ -29,7 +29,7 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
     Forms.tuple(
       "email" -> idEmail
         .verifying(Constraints.nonEmpty),
-      "password" -> idPassword
+      "password" -> Forms.text
         .verifying(Constraints.nonEmpty),
       "keepMeSignedIn" -> Forms.boolean
     )

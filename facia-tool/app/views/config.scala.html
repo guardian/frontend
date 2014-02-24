@@ -11,7 +11,15 @@
     <div class="updating">Updating</div>
 
     <div class="left-col">
-        <div class="title">Detached collections</div>
+        <div class="title">Clipboard</div>
+        <div class="clipboard__wrapper" data-bind="with: clipboard">
+            <div class="clipboard droppable" data-bind="
+                makeDropabble: true,
+                css: {underDrag: underDrag},
+                template: {name: 'template_collection', foreach: items}"></div>
+        </div>
+
+        <div class="title">Orphaned collections</div>
         <div class="scrollable cnf-collections" data-bind="
             template: {name: 'template_collection', foreach: orphans}"></div>
     </div>
@@ -85,7 +93,7 @@
                         click: save">Save</button>
                 </div>
 
-                <div class="tools tools-deleter">
+                <div class="tools tools-advanced">
                     <span class="linky" data-bind="
                         click: toggleOpenAdvanced">Advanced settings</span> |
 
