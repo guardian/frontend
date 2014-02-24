@@ -774,10 +774,6 @@ button {
     border-top-color: #f89406;
 }
 
-.cnf-collection.isElsewhere {
-    background: #FFEECC;
-}
-
 .cnf-collection__name {
     color: #000000;
 }
