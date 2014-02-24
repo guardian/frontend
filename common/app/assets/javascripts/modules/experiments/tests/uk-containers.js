@@ -72,7 +72,7 @@ define([
                 }
             }
         ];
-        this.always = function() {
+        this.notInTest = function() {
             show();
         };
     };

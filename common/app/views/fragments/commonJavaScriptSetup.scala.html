@@ -132,12 +132,12 @@
                 var front = isFront[2],
                     capitalisedFront = front.slice(0, 1).toUpperCase() + front.slice(1),
                     participations = JSON.parse(localStorage.getItem('gu.ab.participations')),
-                    isNotParticipating =
+                    notInAlphaVariant =
                         participations &&
                         participations.value[capitalisedFront + 'Containers'] &&
-                        participations.value[capitalisedFront + 'Containers'].variant === 'notintest';
-                // only run if we're in the test, and switch is on
-                if (!isNotParticipating && switches['ab' + capitalisedFront + 'Containers']) {
+                        ['notintest', 'control'].indexOf(participations.value[capitalisedFront + 'Containers'].variant) > -1;
+                // only run if we're in the alpha variant, and switch is on
+                if (!notInAlphaVariant && switches['ab' + capitalisedFront + 'Containers']) {
                     document.documentElement.className += (' ab-' + front + '-containers');
                 }
             }

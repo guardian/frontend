@@ -82,12 +82,8 @@
         }
     }
 
-    .ab-uk-containers & {
-        min-height: 500px;
-
-        > * {
-            display: none;
-        }
+    .ab-uk-containers & > * {
+        visibility: hidden;
     }
 }
 

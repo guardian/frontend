@@ -128,22 +128,18 @@ define([
     // Finds variant in specific tests and runs it
     function run(test, config, context) {
 
-
         if (isParticipating(test) && testCanBeRun(test, config)) {
-
             var participations = getParticipations(),
                 variantId = participations[test.id].variant;
-                test.variants.some(function(variant) {
-                    if (variant.id === variantId) {
-                        variant.test(context, config);
-                        return true;
-                    }
+            test.variants.some(function(variant) {
+                if (variant.id === variantId) {
+                    variant.test(context, config);
+                    return true;
+                }
             });
-
-        }
-
-        if (test.always) {
-            test.always();
+            if (variantId === 'notintest' && test.notInTest) {
+                test.notInTest();
+            }
         }
     }
 
