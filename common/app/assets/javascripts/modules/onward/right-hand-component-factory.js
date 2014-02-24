@@ -1,22 +1,25 @@
 define( [
     'lodash/objects/assign',
     'common/utils/detect',
+    'common/utils/mediator',
 
     'common/modules/onward/right-most-popular',
     'common/modules/onward/right-recommended',
-    'common/modules/onward/right-outbrain-recommendations'
+    'common/modules/onward/right-outbrain-recommendations',
+    'common/modules/onward/geo-most-popular'
 ], function (
     extend,
     detect,
+    mediator,
 
     RightMostPopular,
     RightRecommended,
-    RightOutbrainRecommendations
+    RightOutbrainRecommendations,
+    GeoMostPopular
 ){
 
     function RightHandComponentFactory(config) {
         this.config = config;
-        this.mediator = this.config.mediator;
         this.pageId = this.config.pageId;
         if( detect.getBreakpoint() !== 'mobile' && parseInt(this.config.wordCount, 10) > 500  ) {
             this.renderRightHandComponent();
@@ -24,20 +27,34 @@ define( [
     }
 
     RightHandComponentFactory.rightHandDataSource = 'default';
-    RightHandComponentFactory.setRecommendedationsSource = function(dataSourceName) {
+    RightHandComponentFactory.setRecommendationsSource = function(dataSourceName) {
         RightHandComponentFactory.rightHandDataSource = dataSourceName;
     };
 
     RightHandComponentFactory.prototype.renderRightHandComponent = function() {
 
-        var component,
-            components = {
-            'gravity' :  function(pageId) { component = new RightRecommended(this.mediator,  {type: 'image', maxTrails: 5}); },
-            'outbrain' : function(pageId) { component = new RightOutbrainRecommendations(this.mediator, {type: 'image', maxTrails: 5, pageId: pageId}); },
-            'default' : function(pageId) { component = new RightMostPopular(this.mediator, {type: 'image', maxTrails: 5}); }
-        };
+        switch (RightHandComponentFactory.rightHandDataSource) {
 
-        var mp = components[RightHandComponentFactory.rightHandDataSource](this.pageId);
+            case "default":
+                var mostPopular = new RightMostPopular(mediator, {type: 'image', maxTrails: 5});
+                break;
+
+            case "gravity":
+                var recommended = new RightRecommended(mediator, {type: 'image', maxTrails: 5});
+                break;
+
+            case "outbrain":
+                var outbrain = new RightOutbrainRecommendations(mediator, {type: 'image', maxTrails: 5, pageId:this.pageId});
+                break;
+
+            case "geo-popular":
+                var geoPopular = new GeoMostPopular(mediator, {type: 'image', maxTrails: 5});
+                break;
+
+            default:
+                mediator.emit('module:error', 'Unknown Right Hand component defined: ' + RightHandComponentFactory.rightHandDataSource, 'onward/right-hand-component-factory.js');
+                var defaultPopular = new RightMostPopular(mediator, {type: 'image', maxTrails: 5});
+        }
     };
 
     return RightHandComponentFactory;
