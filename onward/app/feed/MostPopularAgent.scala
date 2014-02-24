@@ -64,10 +64,18 @@ object GeoMostPopularAgent extends Logging with ExecutionContexts {
       }
 
       Future.sequence(mostRead).map { contentSeq =>
-        // Add each country code to the map.
-        ophanPopularAgent send ( currentMap => {
-          currentMap + (countryCode -> contentSeq.flatten)
-        })
+        val validContents = contentSeq.flatten
+        if (validContents.size > 0) {
+
+          // Add each country code to the map.
+          ophanPopularAgent send ( currentMap => {
+            currentMap + (countryCode -> contentSeq.flatten)
+          })
+
+        } else {
+
+          log.info(s"Geo popular update for ${countryCode} found nothing.")
+        }
       }
     }
   }

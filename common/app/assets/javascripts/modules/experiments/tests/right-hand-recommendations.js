@@ -31,14 +31,14 @@ define([
            {
                id: 'show-gravity-recommendations',
                test: function(context, config) {
-                   RightHandComponentFactory.setRecommendedationsSource('gravity');
+                   RightHandComponentFactory.setRecommendationsSource('gravity');
                    require(['js!gravity'], function(){});
                }
            },
            {
                id: 'show-outbrain-recommendations',
                test: function(context, config) {
-                   RightHandComponentFactory.setRecommendedationsSource('outbrain');
+                   RightHandComponentFactory.setRecommendationsSource('outbrain');
                }
            }
        ];
