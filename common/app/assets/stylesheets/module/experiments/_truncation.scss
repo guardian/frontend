@@ -80,7 +80,9 @@ $home-icon: (
     width: $gs-column-width + $gs-gutter;
     height: map-get($home-icon, height);
     margin-top: $gs-baseline;
-    @include rem((font-size: 13px));
+    @include rem((
+        font-size: 13px
+    ));
     @include box-sizing(border-box);
 
     &:hover,

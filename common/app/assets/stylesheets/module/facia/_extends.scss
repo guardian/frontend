@@ -19,7 +19,9 @@
         }
         .item__live-indicator {
             @include fs-data(1, true);
-            @include rem((top: -3px));
+            @include rem((
+                top: -3px
+            ));
         }
     }
 }

@@ -125,7 +125,9 @@
             width: 22%;
             min-width: 0;
             background-color: #791052;
-            @include rem((padding: 8px 0));
+            @include rem((
+                padding: 8px 0
+            ));
             margin: 1px 0 0 0;
             font-weight: bold;
             float: left;
