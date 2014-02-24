@@ -3,10 +3,14 @@ $c-live: #e81818;
 .container {
     position: relative;
     overflow: hidden;
-    @include rem((margin-top: $gs-baseline));
+    @include rem((
+        margin-top: $gs-baseline
+    ));
 
     @include mq(tablet) {
-        @include rem((margin-top: $gs-baseline*2));
+        @include rem((
+            margin-top: $gs-baseline*2
+        ));
     }
 }
 .container:first-child {
@@ -118,7 +122,9 @@ $c-live: #e81818;
 
     .container__toggle__text {
         position: relative;
-        @include rem((top: -6px));
+        @include rem((
+            top: -6px
+        ));
     }
     @include mq($to: tablet) {
         border-left: 1px solid #ffffff;
@@ -240,7 +246,9 @@ $c-live: #e81818;
 }
 .item__title {
     position: relative;
-    @include rem((padding-top: $gs-baseline/6));
+    @include rem((
+        padding-top: $gs-baseline/6
+    ));
     @include fs-headline(2, $size-only: true);
     word-wrap: break-word;
 
@@ -267,7 +275,9 @@ $c-live: #e81818;
 .l-row--items-4 {
     @include mq($to: tablet) {
          .item__title--has-icon-mobile {
-            @include rem((padding-left: 30px));
+            @include rem((
+                padding-left: 30px
+            ));
         }
     }
     .item--video,

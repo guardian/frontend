@@ -3,23 +3,31 @@
     word-break: break-word;
 
     @include mq(768px) {
-        @include rem((line-height: 24px));
+        @include rem((
+            line-height: 24px
+        ));
 
         p {
             @include fs-data(5);
-            @include rem((line-height: 24px));
+            @include rem((
+                line-height: 24px
+            ));
         }
     }
 
     p {
-        @include rem((margin-bottom: 12px));
+        @include rem((
+            margin-bottom: $gs-baseline
+        ));
     }
 
     blockquote {
         margin-top: 0;
         margin-left: 0;
         margin-right: 0;
-        @include rem((padding-left: 14px));
+        @include rem((
+            padding-left: 14px
+        ));
         border-left: 2px solid #cfcfcd !important; // To override .block blockquote
 
         &,

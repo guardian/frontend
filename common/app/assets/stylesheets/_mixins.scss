@@ -299,7 +299,9 @@
 
 @mixin faux-bullet-point($color: $c-neutral3) {
     position: relative;
-    @include rem((text-indent: 20px));
+    @include rem((
+        text-indent: 20px
+    ));
 
     &:before {
         position: absolute;
@@ -337,7 +339,9 @@
     // Fallback for non-Webkit browsers
     // (won't show `…` at the end of the block)
     @if $line-height {
-        @include rem((max-height: $line-height * $lines));
+        @include rem((
+            max-height: $line-height * $lines
+        ));
     }
 }
 
