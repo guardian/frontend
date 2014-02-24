@@ -34,7 +34,7 @@
                     <td class="football-stat--against">@entry.team.total.goalsAgainst</td>
                     <td class="football-stat--difference">@entry.team.goalDifference</td>
                     <td class="football-stat--points">@entry.team.points</td>
-                    <td class="football-stat--form table-column--status">
+                    <td class="football-stat--form table-column--form">
                         @entry.prevResults.takeRight(5).map { result =>
                             @if(result.won) {
                               <span class="match-result match-result--won" data-foe="@result.foe.name" data-score="@result.self.score.get" data-score-foe="@result.foe.score.get">
