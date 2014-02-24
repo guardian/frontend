@@ -26,7 +26,11 @@
                         "table-row--highlight" -> highlightTeamId.map(_ == entry.team.id).getOrElse(false),
                         "table-row--divider" -> competition.tableDividers.contains(entry.team.rank)))">
                     <td class="football-stat--postition table-column--priority table-column--sub">@entry.team.rank</td>
-                    <td class="football-stat--team table-column--priority table-column--main"><a href="@TeamUrl(entry.team)" data-link-name="View team">@entry.team.name</a></td>
+                    <td class="football-stat--team table-column--priority table-column--main">
+                        @if(TeamUrl(entry.team).getOrElse("") != ""){<a href="@TeamUrl(entry.team)" data-link-name="View team">}
+                            @entry.team.name
+                        @if(TeamUrl(entry.team).getOrElse("") != ""){</a>}
+                    </td>
                     <td class="football-stat--played table-column--priority">@entry.team.total.played</td>
                     <td class="football-stat--won">@entry.team.total.won</td>
                     <td class="football-stat--drawn">@entry.team.total.drawn</td>
