@@ -163,7 +163,6 @@ define([
                 break;
 
             case 'article':
-                // there are quite a few rules around showing a
                 var competition = ($('.js-football-competition').attr('data-link-name') || '').replace('keyword: ', '');
 
                 if (competition) {
