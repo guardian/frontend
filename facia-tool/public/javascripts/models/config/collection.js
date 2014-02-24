@@ -37,7 +37,6 @@ define([
             'enableDiscard',
             'open',
             'openAdvanced',
-            'underHover',
             'underDrag']);
     }
 

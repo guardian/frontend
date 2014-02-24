@@ -49,6 +49,15 @@
     @include font-size($size, $line-height);
 }
 
+// Usage: font-size: get-line-height($fs-header, 3);
+@function get-font-size($font-scale, $level) {
+    @return nth(nth($font-scale, $level), 1);
+}
+
+@function get-line-height($font-scale, $level) {
+    @return nth(nth($font-scale, $level), 2);
+}
+
 
 // Font Scale
 // =============================================================================
