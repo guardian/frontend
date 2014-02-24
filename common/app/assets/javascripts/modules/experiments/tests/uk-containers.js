@@ -72,5 +72,8 @@ define([
                 }
             }
         ];
+        this.always = function() {
+            show();
+        };
     };
 });

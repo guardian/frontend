@@ -128,18 +128,23 @@ define([
     // Finds variant in specific tests and runs it
     function run(test, config, context) {
 
-        if (!isParticipating(test) || !testCanBeRun(test, config)) {
-            return false;
+
+        if (isParticipating(test) && testCanBeRun(test, config)) {
+
+            var participations = getParticipations(),
+                variantId = participations[test.id].variant;
+                test.variants.some(function(variant) {
+                    if (variant.id === variantId) {
+                        variant.test(context, config);
+                        return true;
+                    }
+            });
+
         }
 
-        var participations = getParticipations(),
-            variantId = participations[test.id].variant;
-            test.variants.some(function(variant) {
-                if (variant.id === variantId) {
-                    variant.test(context, config);
-                    return true;
-                }
-        });
+        if (test.always) {
+            test.always();
+        }
     }
 
     function allocateUserToTest(test, config) {
