@@ -77,7 +77,7 @@ Comments.prototype.classes = {
     showMoreLoading: 'd-discussion__show-more-loading',
     showHidden: 'd-discussion__show-hidden',
     reply: 'd-comment--response',
-    showReplies: 'js-show-more-replies',
+    showReplies: 'd-show-more-replies',
     header: 'd-discussion__header',
     heading: 'discussion__heading',
     newComments: 'js-new-comments',

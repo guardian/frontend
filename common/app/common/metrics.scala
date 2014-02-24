@@ -272,10 +272,25 @@ object FaciaToolMetrics {
     "Number of times facia-tool has has a failure in pressing"
   )
 
+  object FrontPressCronSuccess extends CountMetric(
+    "facia-front-press",
+    "facia-front-press-cron-success",
+    "Facia front press cron success count",
+    "Number of times facia-tool has successfully pressed"
+  )
+
+  object FrontPressCronFailure extends CountMetric(
+    "facia-front-press",
+    "facia-front-press-cron-failure",
+    "Facia front press cron failue count",
+    "Number of times facia-tool has has a failure in pressing"
+  )
+
   val all: Seq[Metric] = Seq(
     ApiUsageCount, ProxyCount, ExpiredRequestCount,
     DraftPublishCount, ContentApiPutSuccess, ContentApiPutFailure,
-    FrontPressSuccess, FrontPressFailure
+    FrontPressSuccess, FrontPressFailure, FrontPressCronSuccess,
+    FrontPressCronFailure
   )
 }
 

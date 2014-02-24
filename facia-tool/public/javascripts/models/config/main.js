@@ -3,7 +3,7 @@ define([
     'config',
     'knockout',
     'modules/vars',
-    'bindings/hoverable',
+    'modules/authed-ajax',
     'utils/fetch-settings',
     'utils/update-scrollables',
     'utils/clean-clone',
@@ -18,7 +18,7 @@ define([
     config,
     ko,
     vars,
-    hoverable,
+    authedAjax,
     fetchSettings,
     updateScrollables,
     cleanClone,
@@ -32,35 +32,15 @@ define([
 ) {
     return function() {
 
-        var model = {
-                collections: ko.observableArray(),
+        var model = vars.model = {};
 
-                fronts: ko.observableArray(),
+        model.collections = ko.observableArray();
+        model.fronts = ko.observableArray();
+        model.newFront = ko.observable();
+        model.pending = ko.observable();
 
-                createFront: function() {
-                    var front =  new Front();
-
-                    model.fronts.unshift(front);
-                    front.toggleOpen();
-                },
-
-                createCollection: function() {
-                    var collection = new Collection({
-                        id: guid()
-                    });
-                    collection.toggleOpen();
-                    model.collections.unshift(collection);
-                },
-
-                tones:  [''].concat(vars.CONST.tones),
-                groups: [''].concat(vars.CONST.groups),
-
-                save: function() {
-                    sanitize();
-                    // This is where persistence will happen:
-                    window.console.log(JSON.stringify(serialize(), null, 4));
-                }
-            };
+        model.types =  [''].concat(vars.CONST.types);
+        model.groups = [''].concat(vars.CONST.groups);
 
         model.orphans = ko.computed(function() {
             return _.filter(model.collections(), function(collection) {
@@ -68,19 +48,65 @@ define([
             });
         }, this);
 
-        vars.model = model;
+        model.createFront = function() {
+            var front =  new Front();
 
-        function serialize() {
+            model.newFront(front);
+            model.fronts.unshift(front);
+            front.toggleOpen();
+        };
+
+        model.createCollection = function() {
+            var collection = new Collection({
+                id: guid()
+            });
+            collection.toggleOpen();
+            model.collections.unshift(collection);
+        };
+
+        model.save = function() {
+            var serialized = serialize(model);
+
+            if(!_.isEqual(serialized, vars.state.config)) {
+                model.pending(true);
+                authedAjax.request({
+                    url: vars.CONST.apiBase + '/config',
+                    type: 'post',
+                    data: JSON.stringify(serialized)
+                })
+                .then(function() {
+                    bootstrap({
+                        force: true,
+                        openFronts: _.reduce(model.fronts(), function(openFronts, front) {
+                            openFronts[front.id()] = front.state.open();
+                            return openFronts;
+                        }, {})
+                    })
+                    .done(function() {
+                        model.pending(false);
+                    });
+                });
+            }
+        };
+
+        function serialize(model) {
             return {
                 fronts:
                    _.chain(model.fronts())
-                    .filter(function(front) { return front.id(); })
+                    .filter(function(front) { return front.id() && front.collections.items().length > 0; })
                     .reduce(function(fronts, front) {
-                        fronts[front.id()] = {
-                            collections: _.map(front.collections.items(), function(collection) {
+                        var collections = _.chain(front.collections.items())
+                             .filter(function(collection) {
+                                return model.collections.indexOf(collection) > -1;
+                             })
+                             .map(function(collection) {
                                 return collection.id;
-                            })
-                        };
+                             })
+                             .value();
+
+                        if (collections.length > 0) {
+                            fronts[front.id()] = { collections: collections };
+                        }
                         return fronts;
                     }, {})
                     .value(),
@@ -92,7 +118,6 @@ define([
                         collections[collection.id] =
                            _.reduce(collection.meta, function(acc, val, key) {
                                 var v = _.isFunction(val) ? val() : val;
-                                 // keep only the truthy values:
                                 if(v) {
                                     acc[key] = (key === 'groups' ? v.split(',') : v);
                                 }
@@ -104,26 +129,13 @@ define([
             };
         }
 
-        function sanitize() {
-            model.fronts.remove(function(front) {
-                return !front.id() || front.collections.items().length === 0;
-            });
+        function bootstrap(opts) {
+            opts.openFronts = opts.openFronts|| {};
 
-            _.each(model.fronts(), function(front) {
-                front.collections.items.remove(function(collection) {
-                    return model.collections.indexOf(collection) < 0;
-                });
-            });
-        }
-
-        this.init = function() {
-            droppable.init();
-            //hoverable.init();
-
-            fetchSettings(function (config, switches) {
+            return fetchSettings(function (config, switches) {
                 vars.state.switches = switches || {};
 
-                if (!_.isEqual(config, vars.state.config)) {
+                if (opts.force || !_.isEqual(config, vars.state.config)) {
                     vars.state.config = config;
 
                     model.collections(
@@ -133,13 +145,31 @@ define([
                     );
 
                     model.fronts(
-                      _.map(config.fronts, function(obj, fid) {
-                            return new Front(cloneWithKey(obj, fid));
-                       })
+                       _.chain(_.keys(config.fronts))
+                        .sortBy(function(id) { return id; })
+                        .without(model.newFront() ? model.newFront().id() : undefined)
+                        .unshift(model.newFront() ? model.newFront().id() : undefined)
+                        .filter(function(id) { return id; })
+                        .map(function(id) {
+                            var front = new Front(cloneWithKey(config.fronts[id], id));
+
+                            front.state.open(opts.openFronts[id]);
+                            return front;
+                        })
+                       .value()
                     );
                 }
-            }, vars.CONST.configSettingsPollMs, true)
-            .done(function() {
+            }, opts.pollingMs, opts.terminateOnFail);
+        }
+
+        this.init = function() {
+            droppable.init();
+
+            bootstrap({
+                pollingMs: vars.CONST.configSettingsPollMs,
+                terminateOnFail: true
+
+            }).done(function() {
                 ko.applyBindings(model);
 
                 updateScrollables();

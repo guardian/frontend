@@ -6,29 +6,31 @@ define([
 
     //Current tests
     'common/modules/experiments/tests/aa',
-    'common/modules/experiments/tests/gravity-recommendations',
+    'common/modules/experiments/tests/right-hand-recommendations',
     'common/modules/experiments/tests/ad-labels',
     'common/modules/experiments/tests/onward-inline-elements',
-    'common/modules/experiments/tests/article-truncation'
+    'common/modules/experiments/tests/article-truncation',
+    'common/modules/experiments/tests/geo-most-popular'
 ], function (
     common,
     store,
     mediator,
     mvtCookie,
-
     Aa,
-    GravityRecommendations,
+    RightHandRecommendations,
     AdLabels,
     InlineElements,
-    ArticleTruncation
-    ) {
+    ArticleTruncation,
+    GeoMostPopular
+) {
 
     var TESTS = [
             new Aa(),
-            new GravityRecommendations(),
+            new RightHandRecommendations(),
             new AdLabels(),
             new InlineElements(),
-            new ArticleTruncation()
+            new ArticleTruncation(),
+            new GeoMostPopular()
        ],
        participationsKey = 'gu.ab.participations';
 
