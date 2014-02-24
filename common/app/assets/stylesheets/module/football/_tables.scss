@@ -147,13 +147,14 @@
     .football-stat--points { display: table-cell; }
     .football-stat--form { display: table-cell; }
 
-    th, td {
+    th,
+    td {
         display: none;
-        min-width: auto;
+        min-width: 0;
     }
 
     .table-column--form {
-        min-width: auto;
+        min-width: 0;
     }
 }
 
