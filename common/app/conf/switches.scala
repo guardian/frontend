@@ -405,6 +405,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 25)
   )
 
+  val PressedFacia = Switch("Facia", "pressed-facia",
+    "If this switch is on then it will use pressed JSON for all requests",
+    safeState = Off, sellByDate = never
+  )
+
   // Facia Tool Switches
 
   val ToolDisable = Switch("Facia Tool", "facia-tool-disable",
@@ -507,7 +512,8 @@ object Switches extends Collections {
     ShowAllArticleEmbedsSwitch,
     ImageServerSwitch,
     RainbowLogo,
-    FrontPressJobSwitch
+    FrontPressJobSwitch,
+    PressedFacia
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
