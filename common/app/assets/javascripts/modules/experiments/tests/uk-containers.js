@@ -39,6 +39,7 @@ define([
                 // ui stuff
                 mediator.emit('ui:collection-show-more:add');
                 mediator.emit('ui:container-toggle:add');
+                mediator.emit('fragment:ready:dates');
             })
             .fail(function(req) {
                 mediator.emit('module:error', 'Failed to get uk front "' + frontId + '"', 'experiments/tests/uk-containers.js');
