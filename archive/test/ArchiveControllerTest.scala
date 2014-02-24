@@ -12,7 +12,7 @@ class ArchiveControllerTest extends FlatSpec with Matchers {
     val url = "www.theguardian.com/media/emailservices/article/0,,1694396,.html"
     val result = controllers.ArchiveController.lookup(url)(TestRequest())
     header("Location", result) should be(Some("http://www.theguardian.com/media/2006/jan/25/1"))
-    status(result) should be(303)
+    status(result) should be(301)
   }
   
   it should "return a HTTP 200 when it finds a resource in S3" in Fake {
