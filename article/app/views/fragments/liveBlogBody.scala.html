@@ -104,10 +104,17 @@
                                             </div>
                                         </div>
                                     }
-                                    @if(Switches.SocialSwitch.isSwitchedOn) {
-                                        <h2 class="article__meta-heading">Share this live blog</h2>
-                                    }
-                                    @fragments.social(article, "next to content")
+
+                                    <div class="mpu-context js-right-hand-component">
+                                        <div class="mpu-container js-mpu-ad-slot">
+                                            <div class="social-wrapper social-wrapper--aside">
+                                                <h2 class="article__meta-heading">Share this live blog</h2>
+                                                @fragments.social(article, "next to content")
+                                            </div>
+                                            <div class="ad-slot ad-slot--mpu-banner-ad" data-link-name="ad slot mpu-banner-ad" data-base="Middle" data-median="Middle"><div class="ad-slot__label">Advertisement</div><div class="ad-container"></div></div>
+                                        </div>
+                                        <div class="open-cta"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
