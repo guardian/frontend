@@ -6,6 +6,7 @@ import controllers.Identity
 import org.joda.time.DateTime
 import scala.util.{Success, Failure, Try}
 import common.Logging
+import conf.Configuration
 
 case class Config(
   fronts: Map[String, Front],
@@ -52,6 +53,7 @@ case class CollectionMetaUpdate(
 
 trait UpdateActions extends Logging {
 
+  val collectionCap: Int = Configuration.facia.collectionCap
   val itemMetaWhitelistFields: Seq[String] = Seq("headline", "trailText", "group", "supporting", "imageAdjust", "isBreaking", "updatedAt")
   
   implicit val collectionMetaWrites = Json.writes[CollectionMetaUpdate]
@@ -163,6 +165,9 @@ trait UpdateActions extends Logging {
     else
       Option(FaciaApi.putBlock(id, Block(id, None, Nil, Some(List(Trail(update.item, update.itemMeta))), DateTime.now.toString, identity.fullName, identity.email, None, None, None), identity))
   }
+
+  def capCollection(block: Block): Block =
+    block.copy(live = block.live.take(collectionCap), draft = block.draft.map(_.take(collectionCap)))
 
 }
 
