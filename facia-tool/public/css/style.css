@@ -844,11 +844,11 @@ button {
     clear: left;
 }
 
-.cnf-form .tools-deleter {
+.cnf-form .tools-advanced {
     position: absolute;
     bottom: 5px;
     right: 5px;
-    font-size: 10px;
+    font-size: 12px;
     color: #CCCCCC;
 }
 

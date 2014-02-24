@@ -32,56 +32,15 @@ define([
 ) {
     return function() {
 
-        var model = {
-                collections: ko.observableArray(),
+        var model = vars.model = {};
 
-                fronts: ko.observableArray(),
+        model.collections = ko.observableArray();
+        model.fronts = ko.observableArray();
+        model.newFront = ko.observable();
+        model.pending = ko.observable();
 
-                createFront: function() {
-                    var front =  new Front();
-
-                    model.fronts.unshift(front);
-                    front.toggleOpen();
-                },
-
-                pending: ko.observable(),
-
-                createCollection: function() {
-                    var collection = new Collection({
-                        id: guid()
-                    });
-                    collection.toggleOpen();
-                    model.collections.unshift(collection);
-                },
-
-                types:  [''].concat(vars.CONST.types),
-                groups: [''].concat(vars.CONST.groups),
-
-                save: function() {
-                    var serialized = serialize(model);
-
-                    if(!_.isEqual(serialized, vars.state.config)) {
-                        model.pending(true);
-                        authedAjax.request({
-                            url: vars.CONST.apiBase + '/config',
-                            type: 'post',
-                            data: JSON.stringify(serialized)
-                        })
-                        .then(function() {
-                            bootstrap({
-                                force: true,
-                                openFronts: _.reduce(model.fronts(), function(openFronts, front) {
-                                    openFronts[front.id()] = front.state.open();
-                                    return openFronts;
-                                }, {})
-                            })
-                            .done(function() {
-                                model.pending(false);
-                            });
-                        });
-                    }
-                }
-            };
+        model.types =  [''].concat(vars.CONST.types);
+        model.groups = [''].concat(vars.CONST.groups);
 
         model.orphans = ko.computed(function() {
             return _.filter(model.collections(), function(collection) {
@@ -89,7 +48,46 @@ define([
             });
         }, this);
 
-        vars.model = model;
+        model.createFront = function() {
+            var front =  new Front();
+
+            model.newFront(front);
+            model.fronts.unshift(front);
+            front.toggleOpen();
+        };
+
+        model.createCollection = function() {
+            var collection = new Collection({
+                id: guid()
+            });
+            collection.toggleOpen();
+            model.collections.unshift(collection);
+        };
+
+        model.save = function() {
+            var serialized = serialize(model);
+
+            if(!_.isEqual(serialized, vars.state.config)) {
+                model.pending(true);
+                authedAjax.request({
+                    url: vars.CONST.apiBase + '/config',
+                    type: 'post',
+                    data: JSON.stringify(serialized)
+                })
+                .then(function() {
+                    bootstrap({
+                        force: true,
+                        openFronts: _.reduce(model.fronts(), function(openFronts, front) {
+                            openFronts[front.id()] = front.state.open();
+                            return openFronts;
+                        }, {})
+                    })
+                    .done(function() {
+                        model.pending(false);
+                    });
+                });
+            }
+        };
 
         function serialize(model) {
             return {
@@ -149,6 +147,9 @@ define([
                     model.fronts(
                        _.chain(_.keys(config.fronts))
                         .sortBy(function(id) { return id; })
+                        .without(model.newFront() ? model.newFront().id() : undefined)
+                        .unshift(model.newFront() ? model.newFront().id() : undefined)
+                        .filter(function(id) { return id; })
                         .map(function(id) {
                             var front = new Front(cloneWithKey(config.fronts[id], id));
 
