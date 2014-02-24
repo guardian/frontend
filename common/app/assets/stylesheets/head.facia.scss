@@ -82,8 +82,12 @@
         }
     }
 
-    .js-on &.facia-container--ab .container:nth-child(n+2) {
-        display: none;
+    .ab-uk-containers & {
+        min-height: 500px;
+
+        > * {
+            display: none;
+        }
     }
 }
 

@@ -17,22 +17,20 @@ define([
 
     function show() {
         // remove hiding class
-        $('.facia-container').removeClass('facia-container--ab');
+        $('html').removeClass('ab-uk-containers');
     }
 
     function renderFront(frontId) {
-        // hide containers
-        $('.facia-container').addClass('facia-container--ab');
         ajax({
             url: '/' + frontId + '.json',
             type: 'json',
             crossOrigin: true
         })
             .then(function(resp) {
-                // remove old containers, leaving the first one
-                $('.container:nth-child(n+2)').remove();
+                // remove old containers
+                $('.facia-container > *').remove();
                 // add new containers
-                $('.facia-container > *:nth-child(n+2)', bonzo.create('<div>' + resp.html + '</div>'))
+                $('.facia-container > *', bonzo.create('<div>' + resp.html + '</div>'))
                     .appendTo(qwery('.facia-container')[0]);
                 // upgrades images
                 mediator.emit('ui:images:upgrade');
@@ -63,7 +61,9 @@ define([
         this.variants = [
             {
                 id: 'control',
-                test: function(context, config) { }
+                test: function(context, config) {
+                    show();
+                }
             },
             {
                 id: 'uk-alpha',
