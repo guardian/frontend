@@ -20,20 +20,34 @@ td {
     vertical-align: top;
 }
 
+@mixin table--small {
+    th,
+    td {
+        @include fs-data(4);
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+}
+
 .table {
     background: $c-neutral8;
     border-top: 2px solid $c-newsAccent;
+
+    caption {
+        @include fs-header(2);
+        @include rem((
+            padding-top: $gs-baseline/4,
+            padding-bottom: $gs-baseline
+        ));
+        border-top: 1px dotted $c-neutral5;
+        color: $c-neutral1;
+        text-align: left;
+    }
 
     th,
     td {
         @include fs-data(5);
         padding: $gs-baseline ($gs-gutter+4)/2;
-
-        @include mq($to: tablet) {
-            @include fs-data(4);
-            padding-left: 8px;
-            padding-right: 8px;
-        }
     }
 
     th,
@@ -45,6 +59,12 @@ td {
     abbr {
         border-bottom: 1px dotted $c-neutral8;
     }
+
+    @include mq($to: tablet) { @include table--small; }
+}
+
+.table--small {
+    @include table--small;
 }
 
 .table--striped {
