@@ -125,6 +125,8 @@
         margin-bottom: $baseline*6,
         padding-top: $baseline*2
     ));
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    color: pink;
     border-top: 1px dotted $c-neutral5;
 
     @include mq(mobileLandscape) {
