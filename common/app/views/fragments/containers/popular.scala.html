@@ -1,6 +1,6 @@
 @(config: Config, collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader)
 
-@defining(config.displayName.orElse(collection.displayName)) { title =>
+@defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>
 
     @if(collection.items.nonEmpty) {
         <section
@@ -13,7 +13,7 @@
 
             @title.map { title =>
                 <h2 class="container__title tone-@style.tone tone-background">
-                    @collection.href.map { href =>
+                    @href.map { href =>
                         <a data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
                     }.getOrElse{
                         @Html(title)

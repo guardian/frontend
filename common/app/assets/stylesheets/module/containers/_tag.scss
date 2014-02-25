@@ -1,0 +1,31 @@
+.container--tag {
+
+    .container__border {
+        display: block;
+    }
+    .container__title {
+        display: block;
+        color: #FFFFFF;
+        @include mq(tablet) {
+            color: $c-newsDefault;
+            @include rem((
+                margin-bottom: 12px
+            ));
+        }
+    }
+    .collection-wrapper:first-child .fromage {
+        border-top-style: none;
+    }
+    @include mq(faciaLeftCol, wide) {
+        .container__title {
+            margin: 0 !important;
+            float: none !important;
+        }
+        .container__body {
+            @include rem((
+                margin-left: 160px !important
+            ));
+        }
+    }
+
+}

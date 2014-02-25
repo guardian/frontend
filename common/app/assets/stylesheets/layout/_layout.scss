@@ -58,7 +58,9 @@
     }
 
     @include mq(mobileLandscape) {
-        @include rem((margin-left: $gs-gutter));
+        @include rem((
+            margin-left: $gs-gutter
+        ));
     }
 }
 
@@ -88,7 +90,9 @@
 
 @include mq(tablet) {
     .monocolumn-wrapper {
-        @include rem((max-width: gs-span(8)));
+        @include rem((
+            max-width: gs-span(8)
+        ));
         margin-left: auto;
         margin-right: auto;
     }
@@ -106,11 +110,15 @@
  */
 
 .component {
-    @include rem((margin-bottom: 20px));
+    @include rem((
+        margin-bottom: 20px
+    ));
 }
 
 .box-indent {
-    @include rem((padding: 0 $gs-gutter/2 $baseline));
+    @include rem((
+        padding: 0 $gs-gutter/2 $baseline
+    ));
 
     @include mq(mobileLandscape) {
         @include rem((
@@ -133,18 +141,24 @@
     ));
 
     @include mq(mobileLandscape) {
-        @include rem((width: gs-span(2)));
+        @include rem((
+            width: gs-span(2)
+        ));
     }
 
     figcaption {
-        @include rem((padding-top: $baseline));
+        @include rem((
+            padding-top: $baseline
+        ));
         word-wrap: break-word;
     }
 }
 
 .img-tiny.img--inline {
     width: auto;
-    @include rem((max-width: $inArticleInlineImgWidth));
+    @include rem((
+        max-width: $inArticleInlineImgWidth
+    ));
 }
 
 
@@ -152,11 +166,20 @@
    ========================================================================== */
 
 .preload-msg {
-    @include rem((padding: 50px 50px 250px 50px));
+    @include rem((
+        padding: 50px 50px 250px 50px
+    ));
     text-align: center;
+
+    .accessible-link {
+        display: block;
+        @include fs-data(2);
+    }
 }
 
 .preload-msg .is-updating {
     display: block;
-    @include rem((margin: 10px auto));
+    @include rem((
+        margin: 10px auto
+    ));
 }

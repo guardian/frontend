@@ -1,0 +1,55 @@
+.collection--linkslist-and-mpu {
+    @include rem((
+        padding-top: $gs-baseline/3
+    ));
+
+    .collection__item {
+        padding-bottom: 0;
+        margin-bottom: 0;
+
+        @if $browser-supports-flexbox == false {
+            &:first-child {
+                @include mq(desktop) {
+                    @include rem((
+                        width: gs-span(8)
+                    ));
+                }
+            }
+        }
+    }
+    .linkslist {
+        @if $browser-supports-columns {
+            @include rem((
+                margin-left: $gs-gutter/2,
+                margin-right: $gs-gutter/2
+            ));
+            @include mq(desktop) {
+                // Trigger more even distributions of items
+                // across columns in Webkit/Blink
+                // 250px = height of the MPU
+                max-height: 250px;
+            }
+        } @else {
+            @include mq(desktop) {
+                width: auto;
+
+                .linkslist__item {
+                    @include rem((
+                        width: gs-span(4)
+                    ));
+                    &:nth-child(2n+1) {
+                        clear: both;
+                    }
+                }
+            }
+        }
+
+        @include mq(tablet, desktop) {
+            @include rem((
+                // Width of a column in l-columns on tablet
+                // in that particular context
+                max-width: gs-span(4) + ($gs-gutter * 2)
+            ));
+        }
+    }
+}

@@ -3,11 +3,15 @@
     background: $c-neutral7;
     border-top: 1px solid $c-neutral5;
     @include font-size(14, 20);
-    @include rem((margin-top: $baseline*2));
+    @include rem((
+        margin-top: $baseline*2
+    ));
 
     @include mq(tablet) {
         border-top: 0;
-        @include rem((margin-top: $baseline));
+        @include rem((
+            margin-top: $baseline
+        ));
     }
 }
 .switcher {

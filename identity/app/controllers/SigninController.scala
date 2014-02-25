@@ -29,7 +29,7 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
     Forms.tuple(
       "email" -> idEmail
         .verifying(Constraints.nonEmpty),
-      "password" -> idPassword
+      "password" -> Forms.text
         .verifying(Constraints.nonEmpty),
       "keepMeSignedIn" -> Forms.boolean
     )

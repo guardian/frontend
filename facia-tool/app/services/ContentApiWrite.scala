@@ -69,7 +69,7 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
     FaciaApi.getBlock(config.id) map { block =>
 
       ContentApiPut(
-        config.collectionTone.getOrElse("news"),
+        config.collectionType.getOrElse("news"),
         config.displayName,
         config.groups,
         generateItems(block.live),

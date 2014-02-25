@@ -293,6 +293,10 @@ a.competition-title {
         color: $c-neutral1;
         text-decoration: none;
     }
+
+    @include mq($to: tablet) {
+        margin-top: $gs-baseline;
+    }
 }
 
 .football-filter__label {

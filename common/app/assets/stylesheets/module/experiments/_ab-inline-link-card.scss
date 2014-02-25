@@ -73,11 +73,15 @@
 }
 .card__body {
     @include box-sizing(border-box);
-    @include rem((padding: $baseline*1.5 0 $baseline*6));
+    @include rem((
+        padding: $baseline*1.5 0 $baseline*6
+    ));
     position: relative;
 }
 .card__meta {
-    @include rem((padding-bottom: $baseline*2));
+    @include rem((
+        padding-bottom: $baseline*2
+    ));
     border-bottom: 1px solid $c-neutral4;
     overflow: auto;
     @include fs-data(3);
@@ -93,7 +97,9 @@
 
         i {
             position: absolute;
-            @include rem((top: 3px));
+            @include rem((
+                top: 3px
+            ));
             left: 0;
         }
     }
@@ -102,7 +108,9 @@
         top: 0;
 
         a {
-            @include rem((margin-left: $gs-gutter/2 - 1));
+            @include rem((
+                margin-left: $gs-gutter/2 - 1
+            ));
             color: inherit;
         }
         i {
@@ -138,7 +146,9 @@
 }
 .card__appendix {
     color: #8c8c8c;
-    @include rem((padding-top: $baseline));
+    @include rem((
+        padding-top: $baseline
+    ));
 }
 .card--left {
     padding-top: 6px; // Aligns border with top of text
