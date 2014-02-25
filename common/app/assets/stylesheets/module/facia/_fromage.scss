@@ -140,6 +140,8 @@
 
     &:hover,
     &:focus {
+       text-decoration: none;
+
         .item__title {
             text-decoration: underline;
         }
