@@ -17,6 +17,13 @@ import model.{NoCache, Cached}
 
 
 object FaciaToolController extends Controller with Logging with ExecutionContexts {
+  implicit val collectionRead = Json.reads[Collection]
+  implicit val frontRead = Json.reads[Front]
+  implicit val configRead = Json.reads[Config]
+  implicit val collectionWrite = Json.writes[Collection]
+  implicit val frontWrite= Json.writes[Front]
+  implicit val configWrite = Json.writes[Config]
+
   implicit val updateListRead = Json.reads[UpdateList]
   implicit val collectionMetaRead = Json.reads[CollectionMetaUpdate]
   implicit val trailWrite = Json.writes[Trail]
@@ -46,6 +53,20 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     }
   }
 
+  def updateConfig(): Action[AnyContent] = AjaxExpiringAuthentication { request =>
+    FaciaToolMetrics.ApiUsageCount.increment()
+    NoCache {
+      request.body.asJson flatMap(_.asOpt[Config]) map {
+        case update: Config => {
+          val identity = Identity(request).get
+          UpdateActions.putMasterConfig(update, identity)
+          Ok
+        }
+        case _ => NotFound
+      } getOrElse NotFound
+    }
+  }
+
   def readBlock(id: String) = AjaxExpiringAuthentication { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
     NoCache {
@@ -55,27 +76,24 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     }
   }
 
-  def getConfig(id: String) = AjaxExpiringAuthentication { request =>
-    FaciaToolMetrics.ApiUsageCount.increment()
-    Cached(60) {
-      S3FrontsApi.getConfig(id) map {json =>
-        Ok(json).as("application/json")
-      } getOrElse NotFound
-    }
-  }
-
   def publishCollection(id: String) = AjaxExpiringAuthentication { request =>
     val identity = Identity(request).get
     FaciaToolMetrics.DraftPublishCount.increment()
     val block = FaciaApi.publishBlock(id, identity)
-    block.foreach(b => pressCollectionId(b.id))
+    block.foreach{ b =>
+      FaciaApi.archive(id, b, JsString("publish"))
+      pressCollectionId(b.id)
+    }
     notifyContentApi(id)
     NoCache(Ok)
   }
 
   def discardCollection(id: String) = AjaxExpiringAuthentication { request =>
     val identity = Identity(request).get
-    FaciaApi.discardBlock(id, identity)
+    val block = FaciaApi.discardBlock(id, identity)
+    block.foreach { b =>
+      FaciaApi.archive(id, b, JsString("discard"))
+    }
     NoCache(Ok)
   }
 

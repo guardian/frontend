@@ -7,7 +7,9 @@
     top: $headerHeight;
     clear: both;
     z-index: 100;
-    @include rem((padding: $baseline*2 0));
+    @include rem((
+        padding: $baseline*2 0
+    ));
     list-style: none;
     margin-bottom: -4px;
     border-bottom: $baseline solid $c-brandBlue;
@@ -22,7 +24,9 @@
    ========================================================================== */
 
 .nav-popup--small {
-    @include rem((padding-top: $baseline*3));
+    @include rem((
+        padding-top: $baseline*3
+    ));
     padding-bottom: 0;
 
     .nav__link {
@@ -35,7 +39,9 @@
         right: 0;
         width: auto;
         padding-top: $baseline;
-        @include rem((width: gs-span(4) + $gs-gutter));
+        @include rem((
+            width: gs-span(4) + $gs-gutter
+        ));
         @include box-sizing(border-box);
         background-color: #ffffff;
         border-bottom: 1px solid $c-neutral5;

@@ -307,7 +307,6 @@ p + video {
     td {
         @include fs-data(3);
         padding: $baseline*2;
-        color: $c-neutral2;
     }
 
     th {
@@ -316,7 +315,7 @@ p + video {
     }
 
     tbody tr:nth-child(odd) td {
-        background-color: #F9F9F7;
+        background-color: darken($c-neutral8, 4%);
     }
 }
 

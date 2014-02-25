@@ -1,7 +1,7 @@
 @(trails: Seq[Trail])(implicit request: RequestHeader)
 
 <main itemprop="mainContentOfPage" role="main" class="monocolumn-wrapper">
-    <h1 class="article-zone article-zone--bleed-out tone-news tone-border">Top stories</h1>
+    <h1 class="article__zone article__zone--bleed-out tone-news tone-border">Top stories</h1>
     <div class="headline-list" data-link-name="top-stories">
         @fragments.trailblocks.link(trails, trails.size)
     </div>

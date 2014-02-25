@@ -15,7 +15,6 @@ define([
     'common/utils/detect',
     'common/modules/onward/popular',
     'common/modules/onward/related',
-    'common/modules/router',
     'common/modules/ui/images',
     'common/modules/navigation/top-stories',
     'common/modules/navigation/profile',
@@ -59,7 +58,6 @@ define([
     detect,
     popular,
     related,
-    Router,
     images,
     TopStories,
     Profile,
@@ -193,7 +191,7 @@ define([
             if(config.switches.rightHandMostPopular && config.page.contentType === 'Article') {
               var r = new RightHandComponentFactory({
                   wordCount: config.page.wordCount,
-                  mediator: mediator
+                  pageId: config.page.pageId
               });
            }
         },
@@ -304,7 +302,7 @@ define([
                 exitLink = '/preference/platform/classic?page=' + encodeURIComponent(path + '?view=classic'),
                 msg = '<p class="site-message__message" id="site-message__message">' +
                             'You’re viewing a beta release of the Guardian’s responsive website.' +
-                            ' We’d love to hear your <a href="https://s.userzoom.com/m/MSBDMTBTMTE5" data-link-name="feedback">feedback</a>' +
+                            ' We’d love to hear your <a href="https://www.surveymonkey.com/s/theguardian-beta-feedback" data-link-name="feedback">feedback</a>' +
                       '</p>' +
                       '<ul class="site-message__actions unstyled">' +
                            '<li class="site-message__actions__item">' +
@@ -339,10 +337,10 @@ define([
                     exitLink = '/preference/platform/classic?page=' + encodeURIComponent(path + '?view=classic'),
                     msg = '<h2 class="site-message__header">Thanks for joining us.</h2>' +
                     '<div class="site-message__message" id="site-message__message">' +
-                    '<p>You’re looking at a prototype of our new website. Opt-out any time by clicking "Current version" at the bottom of the page.</p>' +
+                    '<p>You’re looking at a prototype of our new website. Opt-out any time by clicking "Current version" at the bottom of the page. <a href="http://next.theguardian.com/">Find out more</a>.</p>' +
                     '<ul class="site-message__list">' +
-                    '<li class="site-message__list__item">Our new front pages and content pages are a work in progress.</li>' +
-                    '<li class="site-message__list__item">We\'ll be launching our product site and feedback form later this week.</li>' +
+                    '<li class="site-message__list__item">We love feedback - <a href="https://www.surveymonkey.com/s/theguardian-beta-feedback">let us know yours</a>.</li>' +
+                    '<li class="site-message__list__item">Stay up to date with new releases on <a href="http://next.theguardian.com/blog/">our blog</a>.</li>' +
                     '</ul>' +
                     '<ul class="site-message__actions unstyled">' +
                     '<li class="site-message__actions__item"><i class="i i-arrow-white-circle"></i>  '+

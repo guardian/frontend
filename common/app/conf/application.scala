@@ -3,7 +3,7 @@ package conf
 import common.Assets.Assets
 import common.GuardianConfiguration
 import com.gu.management.play.RequestMetrics
-import contentapi.{ ElasticSearchContentApiClient, SolrContentApiClient }
+import contentapi.{ElasticSearchContentApiClient, SolrContentApiClient}
 
 object Configuration extends GuardianConfiguration("frontend", webappConfDirectory = "env")
 

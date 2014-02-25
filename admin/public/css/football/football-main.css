@@ -61,10 +61,9 @@ label[for] {
   border-top: 1px solid #ececec;
   padding: 16px;
 }
-.table-row--selected {
-  background: #4bc6df;
-  color: #fff;
+.table-row--highlight td {
+    font-weight: bold;
 }
-.table tbody .table-row--break-before td {
+.table tbody .table-row--break td {
   border-top: 1px solid #666;
 }

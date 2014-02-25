@@ -99,6 +99,14 @@ object S3FrontsApi extends S3 {
     putPrivate(s"$location/history/collection/$id/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/$now.json", json, "application/json")
   }
 
+  def putMasterConfig(json: String) =
+    putPublic(s"$location/config/config.json", json, "application/json")
+
+  def archiveMasterConfig(json: String) = {
+    val now = DateTime.now
+    putPublic(s"${location}/history/config/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/${now}.json", json, "application/json")
+  }
+
   private def getListing(prefix: String, dropText: String): List[String] = {
     import scala.collection.JavaConversions._
     val summaries = client.listObjects(bucket, prefix).getObjectSummaries.toList
