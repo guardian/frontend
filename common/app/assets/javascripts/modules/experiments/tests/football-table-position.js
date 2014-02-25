@@ -1,4 +1,15 @@
-define(['common/$'], function ($) {
+define([
+    'bonzo',
+    'bean',
+    'common/$',
+    'common/utils/mediator',
+    'common/utils/detect'
+], function (
+    bonzo,
+    bean,
+    $,
+    mediator,
+    detect) {
 
 var FootballTablePosition = function () {
 
@@ -11,7 +22,8 @@ var FootballTablePosition = function () {
         return config.page &&
                config.page.contentType === 'Article' &&
                config.page.section === 'football' &&
-               $('.js-football-competition').length > 0;
+               $('.js-football-competition').length > 0 &&
+               !(detect.getBreakpoint() === 'desktop' || detect.getBreakpoint() === 'wide');
     };
 
     this.variants = [
@@ -22,31 +34,48 @@ var FootballTablePosition = function () {
             }
         },
         {
-            id: 'pre-image',
+            id: 'below-image',
             test: function (context) {
-                var table = $('.js-football-table');
+                mediator.on('bootstrap:football:rhs:table:ready', function() {
+                    var table = $('.js-football-table', context);
+                    $('.media-primary', context).after(table);
+                    scrunchTable(table);
+                });
             }
         },
         {
-            id: 'post-image',
+            id: 'below-article',
             test: function (context) {
-                var table = $('.js-football-table');
-            }
-        },
-        {
-
-            id: 'middle-article',
-            test: function (context) {
-                var table = $('.js-football-table');
-            }
-        },
-        {
-            id: 'post-article',
-            test: function (context) {
-                var table = $('.js-football-table');
+                mediator.on('bootstrap:football:rhs:table:ready', function() {
+                    var table = $('.js-football-table', context);
+                    $('.article-body', context).append(table);
+                    scrunchTable(table);
+                });
             }
         }
     ];
+
+    function scrunchTable(table) {
+        var caption = $('caption', table[0]),
+            t = $('caption a', table[0]).text()+ ' table',
+            showTableElem = bonzo.create('<div class="toggler"><span class="toggler__text">'+ t +'</span><span class="i i-expander"></span></div>')[0],
+            $showTableElem = bonzo(showTableElem);
+
+        caption.remove();
+        table.addClass('u-h');
+        table.before(showTableElem);
+        $showTableElem.append(table);
+
+        bean.on(showTableElem, 'click', function(e) {
+            if ($showTableElem.hasClass('toggler--active')) {
+                table.addClass('u-h');
+                $showTableElem.removeClass('toggler--active');
+            } else {
+                table.removeClass('u-h');
+                $showTableElem.addClass('toggler--active');
+            }
+        });
+    }
 };
 
 return FootballTablePosition;
