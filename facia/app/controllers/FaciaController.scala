@@ -188,10 +188,10 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
         }
       }
 
-  private def getPressedCollection(id: String): Future[Option[Collection]] =
-    ConfigAgent.getConfigsUsingCollectionId(id).headOption.map { path =>
+  private def getPressedCollection(collectionId: String): Future[Option[Collection]] =
+    ConfigAgent.getConfigsUsingCollectionId(collectionId).headOption.map { path =>
       FrontJson.get(path).map(_.flatMap{ faciaPage =>
-        faciaPage.collections.find{ case (c, col) => c.id == id}.map(_._2)
+        faciaPage.collections.find{ case (c, col) => c.id == collectionId}.map(_._2)
       })
     }.getOrElse(Future.successful(None))
 }
