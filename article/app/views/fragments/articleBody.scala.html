@@ -77,17 +77,9 @@
                         }
                     </div>
 
-                    @if(ArticleTruncation.isSwitchedOn){
-                        <div class="u-cf article__actions js-article-actions">
-                            <div class="social-wrapper">
-                            @fragments.social(article)
-                            </div>
-                        </div>
-                    } else {
-                        <div class="social-wrapper">
-                            @fragments.social(article)
-                        </div>
-                    }
+                    <div class="social-wrapper">
+                        @fragments.social(article)
+                    </div>
                 </div>
                 <div class="article__secondary-column" aria-hidden="true">
                     <div class="article__secondary-column__inner@if(storyPackage.nonEmpty) { article__secondary-column__inner--fill-vertically}">

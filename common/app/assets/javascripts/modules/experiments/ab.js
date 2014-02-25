@@ -9,7 +9,6 @@ define([
     'common/modules/experiments/tests/right-hand-recommendations',
     'common/modules/experiments/tests/ad-labels',
     'common/modules/experiments/tests/onward-inline-elements',
-    'common/modules/experiments/tests/article-truncation',
     'common/modules/experiments/tests/geo-most-popular'
 ], function (
     common,
@@ -20,7 +19,6 @@ define([
     RightHandRecommendations,
     AdLabels,
     InlineElements,
-    ArticleTruncation,
     GeoMostPopular
 ) {
 
@@ -29,7 +27,6 @@ define([
             new RightHandRecommendations(),
             new AdLabels(),
             new InlineElements(),
-            new ArticleTruncation(),
             new GeoMostPopular()
        ],
        participationsKey = 'gu.ab.participations';
