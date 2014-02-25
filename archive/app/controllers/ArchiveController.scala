@@ -40,11 +40,11 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
 
     // is it a redirect -> 301, if not is it archived -> 200, if not then 404
     destination match { 
-      case Some(_) => Redirect(destination.get)
+      case Some(_) => Redirect(destination.get, 301)
       case _ => {
         val s3content = isArchived(path)
         s3content match {
-          case Some(_) => Ok(s3content.get).as("text/html")
+          case Some(_) => Ok(views.html.archive(s3content)).as("text/html")
           case _ => NotFound
         }
       } 
