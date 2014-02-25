@@ -72,6 +72,8 @@ object FrontPressJob extends Logging with implicits.Collections {
   }
 
   def pressByCollectionIds(ids: Set[String]): Future[Set[JsObject]] = {
+    //Give it one second to update
+    Await.ready(FaciaToolConfigAgent.refreshAndReturn(), 1.seconds)
     val paths: Set[String] = for {
       id <- ids
       path <- FaciaToolConfigAgent.getConfigsUsingCollectionId(id)
