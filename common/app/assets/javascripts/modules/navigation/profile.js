@@ -52,7 +52,7 @@ define([
     /** */
     Profile.prototype.init = function() {
         var self = this;
-        
+
         this.setFragmentFromCookie();
     };
 
@@ -63,9 +63,9 @@ define([
             $popup = bonzo(this.dom.popup);
 
         $container.removeClass('js-hidden');
-        $content.html(user ? user.displayName : Profile.CONFIG.signinText);
 
         if (user) {
+            $content.text(user.displayName);
             $container.addClass('is-signed-in');
             $popup.html(
                 '<ul class="nav nav--columns nav--top-border-off nav--additional-sections" data-link-name="Sub Sections">'+
