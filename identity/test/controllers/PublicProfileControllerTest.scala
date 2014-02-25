@@ -53,18 +53,18 @@ class PublicProfileControllerTest extends path.FreeSpec with ShouldMatchers with
     "should call api save user with the form info" in Fake {
       val fakeRequest = FakeCSRFRequest(POST, "/email-prefs")
         .withFormUrlEncodedBody(
-        "publicFields.location" -> location,
-        "publicFields.aboutMe" -> aboutMe,
-        "publicFields.interests" -> interests,
-        "publicFields.webPage" -> webPage,
-        "privateFields.gender" -> gender
+        "location" -> location,
+        "aboutMe" -> aboutMe,
+        "interests" -> interests,
+        "webPage" -> webPage,
+        "gender" -> gender
       )
       when(api.saveUser(Matchers.any[String], Matchers.any[UserUpdate], Matchers.any[Auth]))
         .thenReturn(Future.successful(Right(user)))
 
-      controller.submitForm()(fakeRequest)
+      controller.submitProfileForm()(fakeRequest)
 
-      var userUpdateCapture = ArgumentCaptor.forClass((new UserUpdate).getClass)
+      var userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdate])
       verify(api).saveUser(Matchers.eq(userId), userUpdateCapture.capture(), Matchers.eq(testAuth))
       val userUpdate = userUpdateCapture.getValue
       userUpdate.publicFields.value.location.value should equal(location)
@@ -80,7 +80,7 @@ class PublicProfileControllerTest extends path.FreeSpec with ShouldMatchers with
 
       "should throw a CSRF error" in {
         intercept[RuntimeException]{
-          controller.submitForm()(authRequest)
+          controller.submitProfileForm()(authRequest)
         }
       }
     }

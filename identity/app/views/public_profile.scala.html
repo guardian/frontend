@@ -1,8 +1,8 @@
 @(
         page: model.MetaData with tracking.TrackingParams,
         user: com.gu.identity.model.User,
-        publicProfileForm: Form[(Option[String], Option[String], Option[String], Option[String], Option[String])],
-        accountDetailsForm: Form[(Option[String], Option[String], Option[String], Option[String], Option[String])],
+        publicProfileForm: Form[form.ProfileFormData],
+        accountDetailsForm: Form[form.AccountFormData],
         idRequest: services.IdentityRequest,
         idUrlBuilder: services.IdentityUrlBuilder
 )(implicit request: RequestHeader)
@@ -13,7 +13,7 @@
 @import views.html.fragments.socialSignin
 @import form.IdFormHelpers._
 @import form.Input
-@import Switches.IdentityEmailVerificationSwitch
+@import conf.Switches.IdentityEmailVerificationSwitch
 @import helper._
 
 @identityMain(page, conf.Switches.all){
@@ -79,17 +79,17 @@
                                     </li>
                                 }
 
-                                @inputField(Input(publicProfileForm("publicFields.location"), ('_label, "Location")))
+                                @inputField(Input(publicProfileForm("location"), ('_label, "Location")))
                                 @select(
-                                    publicProfileForm("privateFields.gender"),
+                                    publicProfileForm("gender"),
                                     List(("Male", "Male"), ("Female", "Female"), ("unknown", "Prefer not to say")),
                                     ('_label, "Gender"),
                                     ('_default, "")
                                 )
 
-                                @textareaField(Input(publicProfileForm("publicFields.aboutMe"), ('_label, "About me"), ('class, "textarea--long")))
-                                @textareaField(Input(publicProfileForm("publicFields.interests"), ('_label, "Interests")))
-                                @inputField(Input(publicProfileForm("publicFields.webPage"), ('_label, "Website (enter full address)")))
+                                @textareaField(Input(publicProfileForm("aboutMe"), ('_label, "About me"), ('class, "textarea--long")))
+                                @textareaField(Input(publicProfileForm("interests"), ('_label, "Interests")))
+                                @inputField(Input(publicProfileForm("webPage"), ('_label, "Website (enter full address)")))
 
                                 <li>
                                     <button type="submit" class="submit-input" data-link-name="Create account">Save changes</button>
