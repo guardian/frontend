@@ -37,9 +37,9 @@ var FootballTablePosition = function () {
             id: 'below-image',
             test: function (context) {
                 mediator.on('bootstrap:football:rhs:table:ready', function() {
-                    var table = $('.js-football-table', context);
-                    $('.media-primary', context).after(table);
-                    scrunchTable(table);
+                    var $table = $('.js-football-table', context);
+                    $('.media-primary', context).after($table);
+                    scrunchTable($table);
                 });
             }
         },
@@ -47,32 +47,36 @@ var FootballTablePosition = function () {
             id: 'below-article',
             test: function (context) {
                 mediator.on('bootstrap:football:rhs:table:ready', function() {
-                    var table = $('.js-football-table', context);
-                    $('.article-body', context).append(table);
-                    scrunchTable(table);
+                    var $table = $('.js-football-table', context);
+                    $('.article-body', context).append($table);
+                    scrunchTable($table);
                 });
             }
         }
     ];
 
-    function scrunchTable(table) {
-        var caption = $('caption', table[0]),
-            t = $('caption a', table[0]).text()+ ' table',
-            showTableElem = bonzo.create('<div class="toggler"><span class="toggler__text">'+ t +'</span><span class="i i-expander"></span></div>')[0],
+    function scrunchTable($table) {
+        var caption = $('caption', $table[0]),
+            t = $('caption a', $table[0]).text()+ ' table',
+            showTableElem = bonzo.create('<div class="toggler"><span class="toggler__text" aria-role="button">'+ t +'</span><span class="i i-expander"></span></div>')[0],
             $showTableElem = bonzo(showTableElem);
 
         caption.remove();
-        table.addClass('u-h');
-        table.before(showTableElem);
-        $showTableElem.append(table);
+        $table.addClass('u-h');
+        $table.attr('aria-expanded', 'false');
+        $table.before(showTableElem);
+
+        $showTableElem.append($table);
 
         bean.on(showTableElem, 'click', function(e) {
             if ($showTableElem.hasClass('toggler--active')) {
-                table.addClass('u-h');
+                $table.addClass('u-h');
                 $showTableElem.removeClass('toggler--active');
+                $table.attr('aria-expanded', 'false');
             } else {
-                table.removeClass('u-h');
+                $table.removeClass('u-h');
                 $showTableElem.addClass('toggler--active');
+                $table.attr('aria-expanded', 'true');
             }
         });
     }
