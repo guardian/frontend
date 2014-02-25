@@ -265,15 +265,6 @@ object Switches extends Collections {
     safeState = On, sellByDate = endOfQ4
   )
 
-  val ExternalLinksCardsSwitch = Switch("Feature Switches", "external-links-cards",
-    "If this switch is on, external links are turned into cards in body content on wide viewports.",
-    safeState = Off,
-
-    // WARNING - this has had one extension, no more.
-    // if we cannot make a decision next time it goes
-    sellByDate = new DateMidnight(2014, 2, 28)
-  )
-
   val LiveSummarySwitch = Switch("Feature Switches", "live-summary",
     "If this is switched on the live events will show a summary at the beginning of the page on mobile next to the article on wider devices.",
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
@@ -456,7 +447,6 @@ object Switches extends Collections {
     LocalNavSwitch,
     LightboxGalleriesSwitch,
     IdentityProfileNavigationSwitch,
-    ExternalLinksCardsSwitch,
     LiveSummarySwitch,
     LiveCricketSwitch,
     LiveStatsSwitch,

@@ -11,7 +11,6 @@ define([
     "common/modules/discussion/loader",
     "common/modules/sport/cricket",
     "common/modules/ui/notification-counter",
-    "common/modules/experiments/left-hand-card",
     "common/modules/open/cta",
     "common/modules/commercial/loader"
 ], function (
@@ -27,7 +26,6 @@ define([
     DiscussionLoader,
     Cricket,
     NotificationCounter,
-    LeftHandCard,
     OpenCta,
     CommercialLoader
 ) {
@@ -122,17 +120,6 @@ define([
             });
         },
 
-        externalLinksCards: function () {
-            common.mediator.on('page:article:ready', function(config, context) {
-                if (config.switches && config.switches.externalLinksCards) {
-                    var card = new LeftHandCard({
-                            origin: 'internal',
-                            context: context
-                    });
-                }
-            });
-        },
-
         initOpen: function() {
             common.mediator.on('page:article:ready', function(config, context) {
                 if (config.switches.openCta && config.page.commentable) {
@@ -165,7 +152,6 @@ define([
             modules.initDiscussion();
             modules.initDoge();
             modules.initCricket();
-            modules.externalLinksCards();
             modules.initOpen(config);
             modules.initFence();
         }
