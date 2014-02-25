@@ -36,7 +36,7 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
 
   def getCollectionUrlForWrite(id: String): Option[String] = endpoint
     .filter(_.startsWith("https://") || Play.isDev)
-    .map(_ + s"/collections/${id.replace('/', '-')}")
+    .map(_ + s"/collections/$id")
 
   def writeToContentapi(config: Config): Future[Response] = {
     (for {
