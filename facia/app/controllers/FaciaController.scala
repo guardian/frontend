@@ -108,21 +108,39 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
 
   }
 
-  def renderCollection(id: String) = DogpileAction { implicit request =>
-    Future{
-      if (ConfigAgent.getAllCollectionIds.contains(id)) {
-        CollectionAgent.getCollection(id) map { collection =>
-          val html = views.html.fragments.collections.standard(Config(id), collection.items, NewsContainer(showMore = false), 1)
-          Cached(60) {
-            if (request.isJson)
-              JsonCollection(html, collection)
-            else
-              Ok(html)
-          }
-        } getOrElse ServiceUnavailable
+  def renderCollection(id: String) =
+    if (Switches.PressedFacia.isSwitchedOn)
+      renderCollectionPressed(id)
+    else
+    DogpileAction { implicit request =>
+      Future{
+        if (ConfigAgent.getAllCollectionIds.contains(id)) {
+          CollectionAgent.getCollection(id) map { collection =>
+            val html = views.html.fragments.collections.standard(Config(id), collection.items, NewsContainer(showMore = false), 1)
+            Cached(60) {
+              if (request.isJson)
+                JsonCollection(html, collection)
+              else
+                Ok(html)
+            }
+          } getOrElse ServiceUnavailable
+        }
+        else
+          Cached(60)(NotFound)
       }
-      else
-        Cached(60)(NotFound)
+    }
+
+  def renderCollectionPressed(id: String) = DogpileAction { implicit request =>
+    getPressedCollection(id).map { collectionOption =>
+      collectionOption.map { collection =>
+        val html = views.html.fragments.collections.standard(Config(id), collection.items, NewsContainer(showMore = false), 1)
+        Cached(60) {
+          if (request.isJson)
+            JsonCollection(html, collection)
+          else
+            Ok(html)
+        }
+      }.getOrElse(ServiceUnavailable)
     }
   }
 
@@ -140,21 +158,42 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
     )
   }
 
-  def renderCollectionRss(id: String) = DogpileAction { implicit request =>
-    Future{
-      if (ConfigAgent.getAllCollectionIds.contains(id)) {
-        CollectionAgent.getCollection(id) map { collection =>
-          Cached(60) {
-            val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(""))
-            Ok(TrailsToRss(config.displayName, collection.items))
-          }.as("text/xml; charset=utf-8")
-        } getOrElse ServiceUnavailable
-      }
-      else
-        Cached(60)(NotFound)
+  def renderCollectionRssPressed(id: String) = DogpileAction { implicit request =>
+    getPressedCollection(id).map { collectionOption =>
+      collectionOption.map { collection =>
+        Cached(60) {
+          val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(""))
+          Ok(TrailsToRss(config.displayName, collection.items))
+        }.as("text/xml; charset=utf-8")
+      }.getOrElse(NotFound)
     }
   }
 
+  def renderCollectionRss(id: String) =
+    if (Switches.PressedFacia.isSwitchedOn)
+      renderCollectionRssPressed(id)
+    else
+      DogpileAction { implicit request =>
+        Future{
+          if (ConfigAgent.getAllCollectionIds.contains(id)) {
+            CollectionAgent.getCollection(id) map { collection =>
+              Cached(60) {
+                val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(""))
+                Ok(TrailsToRss(config.displayName, collection.items))
+              }.as("text/xml; charset=utf-8")
+            } getOrElse ServiceUnavailable
+          }
+          else
+            Cached(60)(NotFound)
+        }
+      }
+
+  private def getPressedCollection(id: String): Future[Option[Collection]] =
+    ConfigAgent.getConfigsUsingCollectionId(id).headOption.map { path =>
+      FrontJson.get(path).map(_.flatMap{ faciaPage =>
+        faciaPage.collections.find{ case (c, col) => c.id == id}.map(_._2)
+      })
+    }.getOrElse(Future.successful(None))
 }
 
 object FaciaController extends FaciaController
