@@ -29,7 +29,6 @@ define([
 
     /** @type {Object.<string.*>} */
     Profile.CONFIG = {
-        signinText: 'Sign in',
         eventName: 'modules:profilenav',
         classes: {
             container: 'js-profile-nav',
