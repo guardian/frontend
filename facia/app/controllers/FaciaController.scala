@@ -103,8 +103,8 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
             Ok(views.html.front(frontPage, faciaPage))
         }
 
-      }.getOrElse(Cached(60)(NotFound("No Facia Page"))))
-    }.getOrElse(Future.successful(Cached(60)(NotFound("No Front Page"))))
+      }.getOrElse(Cached(60)(NotFound)))
+    }.getOrElse(Future.successful(Cached(60)(NotFound)))
 
   }
 
