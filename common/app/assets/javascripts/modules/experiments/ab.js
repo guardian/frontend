@@ -143,7 +143,7 @@ define([
     function allocateUserToTest(test, config) {
 
         // Skip allocation if the user is already participating, or the test is invalid.
-        if (isParticipating(test) || !testCanBeRun(test, config)) {
+        if (!testCanBeRun(test, config) || isParticipating(test)) {
             return;
         }
 
