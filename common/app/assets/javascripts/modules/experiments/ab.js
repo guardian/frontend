@@ -9,8 +9,8 @@ define([
     'common/modules/experiments/tests/right-hand-recommendations',
     'common/modules/experiments/tests/ad-labels',
     'common/modules/experiments/tests/onward-inline-elements',
-    'common/modules/experiments/tests/article-truncation',
-    'common/modules/experiments/tests/geo-most-popular'
+    'common/modules/experiments/tests/geo-most-popular',
+    'common/modules/experiments/tests/uk-containers'
 ], function (
     common,
     store,
@@ -20,8 +20,8 @@ define([
     RightHandRecommendations,
     AdLabels,
     InlineElements,
-    ArticleTruncation,
-    GeoMostPopular
+    GeoMostPopular,
+    UkContainers
 ) {
 
     var TESTS = [
@@ -29,8 +29,8 @@ define([
             new RightHandRecommendations(),
             new AdLabels(),
             new InlineElements(),
-            new ArticleTruncation(),
-            new GeoMostPopular()
+            new GeoMostPopular(),
+            new UkContainers()
        ],
        participationsKey = 'gu.ab.participations';
 
@@ -125,18 +125,19 @@ define([
     // Finds variant in specific tests and runs it
     function run(test, config, context) {
 
-        if (!isParticipating(test) || !testCanBeRun(test, config)) {
-            return false;
-        }
-
-        var participations = getParticipations(),
-            variantId = participations[test.id].variant;
+        if (isParticipating(test) && testCanBeRun(test, config)) {
+            var participations = getParticipations(),
+                variantId = participations[test.id].variant;
             test.variants.some(function(variant) {
                 if (variant.id === variantId) {
                     variant.test(context, config);
                     return true;
                 }
-        });
+            });
+            if (variantId === 'notintest' && test.notInTest) {
+                test.notInTest();
+            }
+        }
     }
 
     function allocateUserToTest(test, config) {

@@ -7,7 +7,9 @@
 }
 .social-wrapper--aside {
     padding-top: 0;
-    @include rem((margin-bottom: $baseline*4));
+    @include rem((
+        margin-bottom: $baseline*4
+    ));
 }
 .social__item {
     float: left;

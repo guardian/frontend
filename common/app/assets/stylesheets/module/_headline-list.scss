@@ -148,7 +148,9 @@
 
                 .headline-list__count {
                     left: 0;
-                    @include rem((font-size: 65px));
+                    @include rem((
+                        font-size: 65px
+                    ));
                 }
             }
 
