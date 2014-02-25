@@ -10,7 +10,8 @@ define([
     'common/modules/experiments/tests/ad-labels',
     'common/modules/experiments/tests/onward-inline-elements',
     'common/modules/experiments/tests/geo-most-popular',
-    'common/modules/experiments/tests/uk-containers'
+    'common/modules/experiments/tests/uk-containers',
+    'common/modules/experiments/tests/us-containers'
 ], function (
     common,
     store,
@@ -21,7 +22,8 @@ define([
     AdLabels,
     InlineElements,
     GeoMostPopular,
-    UkContainers
+    UkContainers,
+    UsContainers
 ) {
 
     var TESTS = [
@@ -30,7 +32,8 @@ define([
             new AdLabels(),
             new InlineElements(),
             new GeoMostPopular(),
-            new UkContainers()
+            new UkContainers(),
+            new UsContainers()
        ],
        participationsKey = 'gu.ab.participations';
 
