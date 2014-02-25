@@ -4,18 +4,18 @@ define([
     'modules/vars',
     'utils/as-observable-props',
     'utils/populate-observables',
-    'utils/guid'
+    'utils/collection-guid'
 ], function(
     ko,
     vars,
     asObservableProps,
     populateObservables,
-    guid
+    collectionGuid
 ) {
     function Collection(opts) {
         opts = opts || {};
 
-        this.id = opts.id || (opts.idPrefix ? opts.idPrefix + '_' : '') + guid();
+        this.id = opts.id || (opts.idPrefix ? opts.idPrefix + '/' : '') + collectionGuid();
 
         this.parents = ko.observableArray();
 
