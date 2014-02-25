@@ -20,7 +20,6 @@ class LeagueTablesFeatureTest extends FeatureSpec with GivenWhenThen with Matche
         val teams = $("[data-link-name='View team']").getTexts
         teams should contain("Arsenal")
         teams should contain("Man C")
-        teams should contain("Man U")
         teams should contain("Chelsea")
 
         teams should not contain ("Wigan") // 5th in prem league not visible
