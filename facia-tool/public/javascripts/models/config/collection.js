@@ -15,7 +15,7 @@ define([
     function Collection(opts) {
         opts = opts || {};
 
-        this.id = opts.id || (opts.idPrefix ? opts.idPrefix + '/' : '') + collectionGuid();
+        this.id = opts.id || collectionGuid(opts.idPrefix);
 
         this.parents = ko.observableArray();
 
