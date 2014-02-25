@@ -50,7 +50,10 @@ object Switches extends Collections {
 
   val DogpileSwitch = Switch("Performance Switches", "dogpile",
     "If switched on this will enable the anti-dogpile cache, which will help absorb large spikes on single pieces of content e.g. live blogs",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
+    safeState = Off,
+
+    //extended to end of March 2014 we will reevaluate once we see how successful it is with the pressed fronts
+    sellByDate = new DateMidnight(2014, 3, 31)
   )
 
   val DoubleCacheTimesSwitch = Switch("Performance Switches", "double-cache-times",
@@ -172,11 +175,6 @@ object Switches extends Collections {
     safeState = On, never
   )
 
-  val OmnitureVerificationSwitch = Switch("Analytics", "omniture-verification",
-    "Enables the new Ophan tracking javascript which support multiple events per page",
-    safeState = Off, new DateMidnight(2014, 2, 28)
-  )
-
   val DiagnosticsRequestLogging = Switch("Diagnostics", "enable-diagnostics-request-logging",
     "If this switch is on, then requests to the Diagnostics servers will be logged.",
     safeState = Off, endOfQ4
@@ -230,11 +228,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val RainbowLogo = Switch("Feature Switches", "rainbow-logo",
-    "If this is switched on the guardian logo will be replaced with a rainbow version",
-    safeState = Off, sellByDate = endOfQ4
-  )
-
   val FontSwitch = Switch("Feature Switches", "web-fonts",
     "If this is switched on then the custom Guardian web font will load.",
     safeState = Off, sellByDate = endOfQ4
@@ -257,7 +250,9 @@ object Switches extends Collections {
 
   val LocalNavSwitch = Switch("Feature Switches", "local-nav",
     "If this switch is on, a secondary local nav is shown.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
+    safeState = Off,
+    // extend by a week, GK is working on the replacement
+    sellByDate = new DateMidnight(2014, 3, 7)
   )
 
   val LightboxGalleriesSwitch = Switch("Feature Switches", "lightbox-galleries",
@@ -327,6 +322,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
   )
 
+  val DogeSwitch = Switch("Feature Switches", "doge",
+    "Makes article headline Doge style",
+    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
+  )
+
   // A/B Test Switches
 
   val ABAa = Switch("A/B Tests", "ab-abcd",
@@ -354,14 +354,14 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val ArticleTruncation = Switch("A/B Tests", "ab-article-truncation",
-    "If this is switched on an A/B test runs to prove the effectiveness of truncating articles.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
-  )
-
   val GeoMostPopular = Switch("A/B Tests", "ab-geo-most-popular",
     "If this is switched on an A/B test runs to test if locally popular articles yield better click-through.",
     safeState = Off, sellByDate = new DateMidnight(2014, 3, 14)
+  )
+
+  val ABUkContainers = Switch("A/B Tests", "ab-uk-containers",
+    "If this is switched on an A/B test runs that tries a variation of the containers on the UK network front.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 8)
   )
 
   val FootballTablePosition = Switch("A/B Tests", "ab-football-table-position",
@@ -477,7 +477,6 @@ object Switches extends Collections {
     IdentityFilmAwardsSwitch,
     ABAa,
     ABRightHandRecommendations,
-    ArticleTruncation,
     GeoMostPopular,
     FootballTablePosition,
     ABAdLabels,
@@ -497,7 +496,6 @@ object Switches extends Collections {
     ImrWorldwideSwitch,
     DiagnosticsRequestLogging,
     DiagnosticsJavascriptErrorLogging,
-    OmnitureVerificationSwitch,
     TravelOffersFeedSwitch,
     JobFeedSwitch,
     MasterclassFeedSwitch,
@@ -512,8 +510,10 @@ object Switches extends Collections {
     DogpileSwitch,
     ShowAllArticleEmbedsSwitch,
     ImageServerSwitch,
-    RainbowLogo,
-    FrontPressJobSwitch
+    FrontPressJobSwitch,
+    DogeSwitch,
+    FrontPressJobSwitch,
+    ABUkContainers
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

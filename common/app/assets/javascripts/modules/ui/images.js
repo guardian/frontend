@@ -30,6 +30,9 @@ define(['common/$', 'common/utils/to-array', 'bonzo', 'common/utils/mediator', '
                 },
                 'window:orientationchange': function(e) {
                     images.upgrade();
+                },
+                'ui:images:upgrade': function(e) {
+                    images.upgrade();
                 }
             });
         }
