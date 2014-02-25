@@ -97,10 +97,9 @@ define([
         },
 
         initDoge: function() {
-
             common.mediator.on('page:article:ready', function(config, context) {
                 if (config.switches.doge) {
-                    $('.article__headline').css({fontFamily:'"Comic Sans MS", cursive, sans-serif', color:'pink'});
+                    $('.article__headline').css({fontFamily:'"Comic Sans MS", cursive', color:'pink'});
                 }
             });
         },
