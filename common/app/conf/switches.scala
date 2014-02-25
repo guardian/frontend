@@ -230,11 +230,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val RainbowLogo = Switch("Feature Switches", "rainbow-logo",
-    "If this is switched on the guardian logo will be replaced with a rainbow version",
-    safeState = Off, sellByDate = endOfQ4
-  )
-
   val FontSwitch = Switch("Feature Switches", "web-fonts",
     "If this is switched on then the custom Guardian web font will load.",
     safeState = Off, sellByDate = endOfQ4
@@ -506,7 +501,6 @@ object Switches extends Collections {
     DogpileSwitch,
     ShowAllArticleEmbedsSwitch,
     ImageServerSwitch,
-    RainbowLogo,
     FrontPressJobSwitch
   )
 
