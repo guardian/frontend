@@ -32,7 +32,8 @@ define([
             new AdLabels(),
             new InlineElements(),
             new GeoMostPopular(),
-            new UkContainers()
+            new UkContainers(),
+            new UsContainers()
        ],
        participationsKey = 'gu.ab.participations';
 
