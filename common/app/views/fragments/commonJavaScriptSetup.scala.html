@@ -134,7 +134,7 @@
                     participations = JSON.parse(localStorage.getItem('gu.ab.participations')),
                     notInAlphaVariant =
                         participations &&
-                        participations.value &&
+                        participations.value &&a
                         participations.value[capitalisedFront + 'Containers'] &&
                         ['notintest', 'control'].indexOf(participations.value[capitalisedFront + 'Containers'].variant) > -1;
                 // only run if we're in the alpha variant, and switch is on
