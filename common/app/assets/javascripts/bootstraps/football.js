@@ -140,7 +140,8 @@ define([
     };
 
     var ready = function() {
-        var action = config.page.contentType === 'Article' ? 'article' : window.location.pathname.split('/')[2]; // removing router for now
+        var bits = window.location.pathname.split('/'),
+            action = config.page.contentType === 'Article' ? 'article' : (bits.length === 3 ? bits[2] : bits[3]); // removing router for now
         lazyLoadCss('football', config);
 
         switch(action) {
