@@ -63,7 +63,9 @@
 
         &:before {
             top: 0;
-            @include rem((left: -18px));
+            @include rem((
+                left: -18px
+            ));
         }
     }
 

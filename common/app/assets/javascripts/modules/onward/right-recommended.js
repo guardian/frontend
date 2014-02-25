@@ -101,7 +101,7 @@ define([
 
             s.linkTrackVars="events,eVar37,eVar37";
             s.linkTrackEvents="event37";
-            s.tl(this,"o","right-popular-contentrec");
+            s.tl(true,"e","right-popular-contentrec");
         });
     };
 

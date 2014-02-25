@@ -81,7 +81,7 @@ class LeagueTableControllerTest extends FlatSpec with Matchers {
     val result = football.controllers.LeagueTableController.renderCompetition(competitionId)(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/json; charset=utf-8")
-    contentAsString(result) should startWith("{\"config\"")
+    contentAsString(result) should startWith("{\"html\"")
   }
   
 }

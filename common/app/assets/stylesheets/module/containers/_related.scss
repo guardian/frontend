@@ -1,6 +1,8 @@
 .related {
     position: relative;
-    @include rem((margin-bottom: $gs-baseline*6));
+    @include rem((
+        margin-bottom: $gs-baseline*6
+    ));
 
     .item:nth-child(n+6) {
         display: none;
@@ -10,7 +12,9 @@
 
         .related__header {
             border-top: 1px solid $c-neutral4;
-            @include rem((padding-top: $baseline/2));
+            @include rem((
+                padding-top: $baseline/2
+            ));
             padding-bottom: 0;
             margin-bottom: 0;
         }
@@ -45,18 +49,26 @@
     }
 
     @include mq(wide) {
-        @include rem((width: $a-leftColWide-width));
+        @include rem((
+            width: $a-leftColWide-width
+        ));
     }
 }
 
 .related__container {
-    @include rem((margin-bottom: $gs-baseline));
+    @include rem((
+        margin-bottom: $gs-baseline
+    ));
 
     @include mq(rightCol) {
-        @include rem((margin-left: -1*($gs-gutter/2)));
+        @include rem((
+            margin-left: -1*($gs-gutter/2)
+        ));
 
         > ul {
-            @include rem((margin-right: - $gs-gutter/2));
+            @include rem((
+                margin-right: - $gs-gutter/2
+            ));
         }
     }
 
@@ -71,24 +83,32 @@
     @include mq(wide) {
         @include rem((
             margin-left: $a-leftColWide-width + $gs-gutter/2,
-            width:  gs-span(12) + $gs-gutter*1
+            width: gs-span(12) + $gs-gutter*1
         ));
     }
 
     .item__container {
         position: relative;
-        @include rem((min-height: gs-height(5)));
+        @include rem((
+            min-height: gs-height(5)
+        ));
 
         @include mq(mobileLandscape) {
-            @include rem((min-height: gs-height(6)));
+            @include rem((
+                min-height: gs-height(6)
+            ));
         }
 
         @include mq(tablet, rightCol) {
-            @include rem((min-height: gs-height(7) - $gs-baseline));
+            @include rem((
+                min-height: gs-height(7) - $gs-baseline
+            ));
         }
 
         @include mq(rightCol) {
-            @include rem((min-height: gs-height(5) + $gs-baseline));
+            @include rem((
+                min-height: gs-height(5) + $gs-baseline
+            ));
         }
     }
 
@@ -97,7 +117,9 @@
         position: relative;
         width: 50%;
         padding-bottom: 0;
-        @include rem((margin-top: $gs-baseline*2));
+        @include rem((
+            margin-top: $gs-baseline*2
+        ));
 
         @include mq($to: rightCol) {
 
@@ -146,11 +168,15 @@
                 .item__title {
                     @include fs-headline(3, true);
                     min-height: 0;
-                    @include rem((padding-bottom: $gs-row-height));
+                    @include rem((
+                        padding-bottom: $gs-row-height
+                    ));
                 }
 
                 .item__container {
-                    @include rem((min-height: gs-height(10) + $gs-baseline));
+                    @include rem((
+                        min-height: gs-height(10) + $gs-baseline
+                    ));
                 }
             }
         }
@@ -181,11 +207,15 @@
         }
 
         @include mq(tablet) {
-            @include rem((min-height: $gs-row-height*4 - $baseline*2)); //136px
+            @include rem((
+                min-height: $gs-row-height*4 - $baseline*2
+            )); //136px
         }
 
         @include mq(rightCol) {
-            @include rem((min-height: $gs-row-height*3 - $gs-baseline)); //96px
+            @include rem((
+                min-height: $gs-row-height*3 - $gs-baseline
+            )); //96px
         }
         .i {
             display: none;
@@ -200,7 +230,9 @@
                     @include fs-headline(3, true);
                 }
                 .item__container {
-                    @include rem((min-height: gs-height(2)));
+                    @include rem((
+                        min-height: gs-height(2)
+                    ));
                 }
             }
         }
@@ -267,7 +299,9 @@
         }
 
         .item__meta {
-            @include rem((padding-left: 7px));
+            @include rem((
+                padding-left: 7px
+            ));
         }
     }
 
@@ -282,7 +316,9 @@
 
         @include mq(rightCol) {
             border-bottom: none;
-            @include rem((padding-right: $gs-gutter));
+            @include rem((
+                padding-right: $gs-gutter
+            ));
         }
     }
 

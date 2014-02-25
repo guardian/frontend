@@ -13,7 +13,9 @@
 .nav {
     list-style: none;
     margin: 0;
-    @include rem((padding: $baseline*2 0 $baseline));
+    @include rem((
+        padding: $baseline*2 0 $baseline
+    ));
 
     .nav__item--full {
         width: 100%;
@@ -39,7 +41,9 @@
    ========================================================================== */
 
 .nav--columns {
-    @include rem((padding: 0 $gs-gutter/2));
+    @include rem((
+        padding: 0 $gs-gutter/2
+    ));
     @include mq(mobileLandscape) {
         @include rem((
             padding-left: $gs-gutter,
@@ -50,20 +54,26 @@
         float: left;
         width: 50%;
         @include box-sizing(border-box);
-        @include rem((padding-right: $gs-gutter/2));
+        @include rem((
+            padding-right: $gs-gutter/2
+        ));
 
         &:nth-child(odd) {
             clear: left;
         }
         &:nth-child(even) {
             padding-right: 0;
-            @include rem((padding-left: $gs-gutter/2));
+            @include rem((
+                padding-left: $gs-gutter/2
+            ));
         }
     }
 
     .nav__link {
         display: block;
-        @include rem((padding: 3px 0 $baseline*4));
+        @include rem((
+            padding: 3px 0 $baseline*4
+        ));
         border-top: 1px solid $c-neutral7;
         height: auto;
         background-color: transparent;
@@ -104,7 +114,9 @@
     display: none;
     height: 40px;
     overflow: hidden;
-    @include rem((padding: 0 $gs-gutter));
+    @include rem((
+        padding: 0 $gs-gutter
+    ));
 
     @include mq(tablet) { display: block; }
 
@@ -170,7 +182,9 @@
     height: 52px;
     overflow: hidden;
     padding: 0;
-    @include rem((margin: 0 $gs-gutter));
+    @include rem((
+        margin: 0 $gs-gutter
+    ));
     border-bottom: 1px solid $c-neutral6;
 
     @include mq(tablet) {
@@ -245,7 +259,9 @@
 
 .localnav__inner {
     position: relative;
-    @include rem((margin: 0 $gs-gutter/2));
+    @include rem((
+        margin: 0 $gs-gutter/2
+    ));
     border-bottom: 1px solid $c-neutral6;
     border-bottom-color: $c-neutral6 !important;
 
@@ -372,7 +388,9 @@
             float: none;
             display: block;
             width: auto;
-            @include rem((padding: 0 $gs-gutter/2));
+            @include rem((
+                padding: 0 $gs-gutter/2
+            ));
 
             @include mq(tablet) {
                 @include rem((
@@ -382,7 +400,9 @@
             }
 
             .nav__link {
-                @include rem((padding: 10px 0));
+                @include rem((
+                    padding: 10px 0
+                ));
                 border: none;
             }
         }

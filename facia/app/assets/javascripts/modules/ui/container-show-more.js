@@ -78,6 +78,7 @@ define([
                 .addClass(this._className)
                 .map(function(item) { return item; });
             this._renderButton();
+            this._$container.removeClass('js-container--show-more');
         };
 
     };
