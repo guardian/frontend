@@ -6,9 +6,10 @@ import model.Config
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import akka.util.Timeout
+import conf.Configuration
 
 trait ConfigAgentTrait extends ExecutionContexts {
-  implicit val alterTimeout: Timeout = 1.seconds
+  implicit val alterTimeout: Timeout = Configuration.faciatool.configBeforePressTimeout.millis
   private val configAgent = AkkaAgent[JsValue](JsNull)
 
   def refresh() = S3FrontsApi.getMasterConfig map {s => configAgent.send(Json.parse(s))}
