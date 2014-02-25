@@ -13,7 +13,7 @@ $c-live: #e81818;
         ));
     }
 }
-.container:first-child {
+.container:nth-child(2) {
     margin-top: 0;
 }
 .container__border {
