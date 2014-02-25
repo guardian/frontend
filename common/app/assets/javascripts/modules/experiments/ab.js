@@ -31,7 +31,6 @@ define([
             new RightHandRecommendations(),
             new AdLabels(),
             new InlineElements(),
-            new ArticleTruncation(),
             new GeoMostPopular(),
             new UkContainers(),
             new FootballTablePosition()
