@@ -50,7 +50,10 @@ object Switches extends Collections {
 
   val DogpileSwitch = Switch("Performance Switches", "dogpile",
     "If switched on this will enable the anti-dogpile cache, which will help absorb large spikes on single pieces of content e.g. live blogs",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
+    safeState = Off,
+
+    //extended to end of March 2014 we will reevaluate once we see how successful it is with the pressed fronts
+    sellByDate = new DateMidnight(2014, 3, 31)
   )
 
   val DoubleCacheTimesSwitch = Switch("Performance Switches", "double-cache-times",
@@ -172,11 +175,6 @@ object Switches extends Collections {
     safeState = On, never
   )
 
-  val OmnitureVerificationSwitch = Switch("Analytics", "omniture-verification",
-    "Enables the new Ophan tracking javascript which support multiple events per page",
-    safeState = Off, new DateMidnight(2014, 2, 28)
-  )
-
   val DiagnosticsRequestLogging = Switch("Diagnostics", "enable-diagnostics-request-logging",
     "If this switch is on, then requests to the Diagnostics servers will be logged.",
     safeState = Off, endOfQ4
@@ -252,7 +250,9 @@ object Switches extends Collections {
 
   val LocalNavSwitch = Switch("Feature Switches", "local-nav",
     "If this switch is on, a secondary local nav is shown.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
+    safeState = Off,
+    // extend by a week, GK is working on the replacement
+    sellByDate = new DateMidnight(2014, 3, 7)
   )
 
   val LightboxGalleriesSwitch = Switch("Feature Switches", "lightbox-galleries",
@@ -485,7 +485,6 @@ object Switches extends Collections {
     ImrWorldwideSwitch,
     DiagnosticsRequestLogging,
     DiagnosticsJavascriptErrorLogging,
-    OmnitureVerificationSwitch,
     TravelOffersFeedSwitch,
     JobFeedSwitch,
     MasterclassFeedSwitch,
