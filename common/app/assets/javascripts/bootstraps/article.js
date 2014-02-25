@@ -96,6 +96,14 @@ define([
             });
         },
 
+        initDoge: function() {
+            common.mediator.on('page:article:ready', function(config, context) {
+                if (config.switches.doge) {
+                    $('.article__headline').css({fontFamily:'"Comic Sans MS", cursive', color:'pink'});
+                }
+            });
+        },
+
         initCricket: function() {
             common.mediator.on('page:article:ready', function(config, context) {
 
@@ -155,6 +163,7 @@ define([
             modules.matchNav();
             modules.initLiveBlogging();
             modules.initDiscussion();
+            modules.initDoge();
             modules.initCricket();
             modules.externalLinksCards();
             modules.initOpen(config);

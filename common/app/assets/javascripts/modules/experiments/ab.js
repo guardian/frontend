@@ -9,7 +9,6 @@ define([
     'common/modules/experiments/tests/right-hand-recommendations',
     'common/modules/experiments/tests/ad-labels',
     'common/modules/experiments/tests/onward-inline-elements',
-    'common/modules/experiments/tests/article-truncation',
     'common/modules/experiments/tests/geo-most-popular',
     'common/modules/experiments/tests/uk-containers'
 ], function (
@@ -21,7 +20,6 @@ define([
     RightHandRecommendations,
     AdLabels,
     InlineElements,
-    ArticleTruncation,
     GeoMostPopular,
     UkContainers
 ) {
@@ -31,7 +29,6 @@ define([
             new RightHandRecommendations(),
             new AdLabels(),
             new InlineElements(),
-            new ArticleTruncation(),
             new GeoMostPopular(),
             new UkContainers()
        ],
