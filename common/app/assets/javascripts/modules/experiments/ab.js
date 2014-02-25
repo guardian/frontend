@@ -10,7 +10,8 @@ define([
     'common/modules/experiments/tests/ad-labels',
     'common/modules/experiments/tests/onward-inline-elements',
     'common/modules/experiments/tests/article-truncation',
-    'common/modules/experiments/tests/geo-most-popular'
+    'common/modules/experiments/tests/geo-most-popular',
+    'common/modules/experiments/tests/football-table-position'
 ], function (
     common,
     store,
@@ -21,7 +22,8 @@ define([
     AdLabels,
     InlineElements,
     ArticleTruncation,
-    GeoMostPopular
+    GeoMostPopular,
+    FootballTablePosition
 ) {
 
     var TESTS = [
@@ -30,7 +32,8 @@ define([
             new AdLabels(),
             new InlineElements(),
             new ArticleTruncation(),
-            new GeoMostPopular()
+            new GeoMostPopular(),
+            new FootballTablePosition()
        ],
        participationsKey = 'gu.ab.participations';
 
@@ -124,18 +127,18 @@ define([
 
     // Finds variant in specific tests and runs it
     function run(test, config, context) {
-
         if (!isParticipating(test) || !testCanBeRun(test, config)) {
             return false;
         }
 
         var participations = getParticipations(),
             variantId = participations[test.id].variant;
-            test.variants.some(function(variant) {
-                if (variant.id === variantId) {
-                    variant.test(context, config);
-                    return true;
-                }
+
+        test.variants.some(function(variant) {
+            if (variant.id === variantId) {
+                variant.test(context, config);
+                return true;
+            }
         });
     }
 

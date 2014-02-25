@@ -364,6 +364,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 3, 14)
   )
 
+  val FootballTablePosition = Switch("A/B Tests", "ab-football-table-position",
+    "If this swith is on, the football table will vary in position throughout the football tagged pages.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 7)
+  )
+
   // Sport Switch
 
   val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
@@ -474,6 +479,7 @@ object Switches extends Collections {
     ABRightHandRecommendations,
     ArticleTruncation,
     GeoMostPopular,
+    FootballTablePosition,
     ABAdLabels,
     ABInlineElements,
     NetworkFrontUkAlpha,
