@@ -7,7 +7,6 @@ define([
     //Current tests
     'common/modules/experiments/tests/aa',
     'common/modules/experiments/tests/right-hand-recommendations',
-    'common/modules/experiments/tests/ad-labels',
     'common/modules/experiments/tests/onward-inline-elements',
     'common/modules/experiments/tests/geo-most-popular',
     'common/modules/experiments/tests/uk-containers'
@@ -18,7 +17,6 @@ define([
     mvtCookie,
     Aa,
     RightHandRecommendations,
-    AdLabels,
     InlineElements,
     GeoMostPopular,
     UkContainers
@@ -27,7 +25,6 @@ define([
     var TESTS = [
             new Aa(),
             new RightHandRecommendations(),
-            new AdLabels(),
             new InlineElements(),
             new GeoMostPopular(),
             new UkContainers()
