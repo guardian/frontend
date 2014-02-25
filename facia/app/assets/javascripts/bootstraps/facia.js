@@ -12,9 +12,7 @@ define([
     'modules/ui/container-show-more',
     'modules/ui/container-toggle',
     'common/modules/sport/football/fixtures',
-    'common/modules/sport/cricket',
-    'common/modules/ui/message',
-    'common/modules/analytics/mvt-cookie'
+    'common/modules/sport/cricket'
 ], function (
     $,
     mediator,
@@ -27,28 +25,41 @@ define([
     ContainerShowMore,
     ContainerToggle,
     FootballFixtures,
-    cricket,
-    Message,
-    mvtCookie
+    cricket
     ) {
 
     var modules = {
 
         showCollectionShowMore: function () {
-            mediator.on('page:front:ready', function(config, context) {
-                $('.container', context).each(function(container) {
+            var collectionShowMoreAdd = function(config, context) {
+                var c = context || document;
+                $('.container', c).each(function(container) {
                     $('.js-collection--show-more', container).each(function(collection) {
                         new CollectionShowMore(collection).addShowMore();
                     });
                 });
-                $('.js-container--show-more', context).each(function(container) {
+                $('.js-container--show-more', c).each(function(container) {
                     new ContainerShowMore(container).addShowMore();
                 });
+            };
+            mediator.addListeners({
+                'page:front:ready': collectionShowMoreAdd,
+                'ui:collection-show-more:add':  collectionShowMoreAdd
             });
         },
 
         showContainerToggle: function () {
-            mediator.on('page:front:ready', function(config, context) {
+            var containerToggleAdd = function(config, context) {
+                var c = context || document;
+                $('.js-container--toggle', c).each(function(container) {
+                    new ContainerToggle(container).addToggle();
+                });
+            };
+            mediator.addListeners({
+                'page:front:ready': containerToggleAdd,
+                'ui:container-toggle:add':  containerToggleAdd
+            });
+            mediator.on(/page:front:ready|ui:container-toggle:add/, function(config, context) {
                 $('.js-container--toggle', context).each(function(container) {
                     new ContainerToggle(container).addToggle();
                 });
