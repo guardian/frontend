@@ -59,7 +59,8 @@ define([
     };
 
     Front.prototype.createCollection = function() {
-        var collection = new Collection({idPrefix: this.id()});
+        var collection = new Collection();
+
         collection.toggleOpen();
         collection.parents.push(this);
         this.collections.items.push(collection);
