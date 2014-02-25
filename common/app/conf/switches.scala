@@ -506,7 +506,7 @@ object Switches extends Collections {
     DogpileSwitch,
     ShowAllArticleEmbedsSwitch,
     ImageServerSwitch,
-    FrontPressJobSwitch
+    FrontPressJobSwitch,
     ABUkContainers
   )
 
