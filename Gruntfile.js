@@ -63,8 +63,8 @@ module.exports = function (grunt) {
                     fence:        'common/components/fence/fence',
                     'ophan/ng':   'empty:'
                 },
-                optimize: (isDev) ? 'none' : 'uglify2',
-                useSourceUrl: (isDev) ? true : false,
+                optimize: 'uglify2',
+                generateSourceMaps: (isDev) ? true : false,
                 preserveLicenseComments: false
             },
             common: {
@@ -301,6 +301,14 @@ module.exports = function (grunt) {
                     dest: staticRequireDir + 'javascripts/common'
                 }]
             },
+            'javascript-common-target': {
+                files: [{
+                    expand: true,
+                    cwd: 'common/app/assets/javascripts',
+                    src: ['**/*.js', '!bootstraps/**/*'],
+                    dest: staticTargetDir + 'javascripts/common'
+                }]
+            },
             'javascript-common-tests': {
                 files: [{
                     expand: true,
@@ -323,12 +331,28 @@ module.exports = function (grunt) {
                     dest: staticRequireDir + 'javascripts'
                 }]
             },
+            'javascript-admin-target': {
+                files: [{
+                    expand: true,
+                    cwd: 'admin/public/javascripts',
+                    src: ['**/*.js', '!bootstraps/**/*'],
+                    dest: staticTargetDir + 'javascripts'
+                }]
+            },
             'javascript-facia': {
                 files: [{
                     expand: true,
                     cwd: 'facia/app/assets/javascripts',
                     src: ['**/*.js'],
                     dest: staticRequireDir + 'javascripts'
+                }]
+            },
+            'javascript-facia-target': {
+                files: [{
+                    expand: true,
+                    cwd: 'facia/app/assets/javascripts',
+                    src: ['**/*.js', '!bootstraps/**/*'],
+                    dest: staticTargetDir + 'javascripts'
                 }]
             },
             'javascript-facia-tests': {
@@ -692,6 +716,9 @@ module.exports = function (grunt) {
         }
         apps.forEach(function(app) {
             grunt.task.run('copy:javascript-' + app, 'requirejs:' + app);
+            if (isDev) {
+                grunt.task.run('copy:javascript-' + app + '-target');
+            }
         });
         if (!isDev) {
             grunt.task.run('uglify:components');
