@@ -1,6 +1,6 @@
-@(trail: Trail, index: Int, containerIndex: Int)(implicit request: RequestHeader)
+@(trail: Trail, index: Int, containerIndex: Int, additionalClasses: String = "")(implicit request: RequestHeader)
 
-<li class="@GetClasses.forCollectionItem(trail)">
+<li class="@GetClasses.forCollectionItem(trail, additionalClasses)">
 
     @trail match {
         case g: Gallery => { @fragments.items.standardGallery(g, index, containerIndex, "div") }
