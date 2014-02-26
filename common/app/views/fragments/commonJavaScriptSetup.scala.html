@@ -146,7 +146,6 @@
                         document.documentElement.className += (' ab-' + front + '-containers');
                         // set timeout to remove class to be safe
                         setTimeout(function() {
-                            alert('goo');
                             document.documentElement.className = document.documentElement.className.replace(/\bab-\w+-containers\b/g, ' ');
                         }, 2000);
                     }
