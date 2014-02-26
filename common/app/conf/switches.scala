@@ -494,10 +494,8 @@ object Switches extends Collections {
     FaciaToolPressSwitch,
     DogpileSwitch,
     ShowAllArticleEmbedsSwitch,
-    ImageServerSwitch,
     FrontPressJobSwitch,
     DogeSwitch,
-    FrontPressJobSwitch,
     ABUkContainers,
     ABUsContainers
   )
