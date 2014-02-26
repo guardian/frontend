@@ -33,6 +33,18 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
     if (path contains "/gallery/") Some(path.replace("/gallery/", "/pictures/")) else None
   }
 
+  // books/Education/<path> -> education/<path>
+  def isRelativeUrl(path: String): Option[String] = {
+    val relativeUrl = """www.theguardian.com/([\w\d-]+)/([A-Z][a-z]+)/(.*)""".r
+    path match {
+      case relativeUrl(section, site, path) => {
+        val url = s"www.theguardian.com/${site.toLowerCase}/${path}"
+        Some(url.replace(".com/guardian/", ".com/")) // r1 curio: 'guardian' means 'www' (i.e. the root), so we remove it
+      }
+      case _ => None
+    }
+  }
+
   // Our redirects are 'normalised' Vignette URLs, Ie. path/to/0,<n>,123,<n>.html -> path/to/0,,123,.html
   def normalise(path: String, zeros: String = ""): Option[String] = {
     val r1ArtifactUrl = """www.theguardian.com/(.*)/[0|1]?,[\d]*,(-?\d+),[\d]*(.*)""".r
@@ -44,23 +56,42 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
       case _ => None
     }
   }
- 
-  // TODO - 1) fix non-relative URLs, 2) patch gallery URLs, 3)   
 
   def lookup(path: String) = Action { implicit request =>
-   
+  
+    /*
+     * This is a chain of tests that look at the URL path and attempt to figure
+     * out what should happen to the request.
+     *
+     * As much as possible we want to normalise any odd looking URLs before sending
+     * a HTTP 2XX by sending a 3XX response back to the client. 
+     *
+     * Typically we want any redirects to happen first as these are free,
+     * before falling through to a couple of lookups in s3 and dyanmodb.
+     *
+     * If we don't find a record of the given path we ultimately need to serve
+     * a 404.
+     *
+     * Beware of creating redirect loops!
+     */
+
     isEncoded(path)
       .map {
         url => Redirect(s"http://${url}", 301)
       }.orElse {
+        isRelativeUrl(path).map {
+          url => Redirect(s"http://${url}", 301) 
+        }
+      }.orElse { // DynamoDB lookup. This needs to happen *before* we poke around S3 for the file. 
         isRedirect(normalise(path).getOrElse(path)).map {
           url => Redirect(url, 301)
         }
-      }.orElse {
+      }.orElse { // S3 lookup
         isArchived(normalise(path, zeros = "00").getOrElse(path)).map {
           body => Ok(views.html.archive(s"${body}")).as("text/html")
         }
-      }.orElse {
+      }.orElse { // needs to happen *after* s3 lookup as some old galleries
+                 // are still served under the URL 'gallery' 
         isGallery(path).map {
           url => Redirect(s"http://${url}", 301) 
         }
