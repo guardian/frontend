@@ -17,7 +17,7 @@ object PopularInTag extends Controller with Related with Logging with ExecutionC
   }
 
   private def renderRelated(trails: Seq[Trail])(implicit request: RequestHeader) = Cached(900) {
-    val html = views.html.fragments.relatedTrails(trails, "Related content", 5)
+    val html = views.html.fragments.relatedTrails(trails, "Related content", 10)
 
     if (request.isJson)
       JsonComponent(

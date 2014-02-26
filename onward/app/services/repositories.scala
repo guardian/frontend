@@ -6,6 +6,7 @@ import scala.concurrent.Future
 import conf.{ContentApiDoNotUseForNewQueries, SwitchingContentApi}
 import feed.MostReadAgent
 import org.joda.time.DateTime
+import scala.collection.mutable.ListBuffer
 
 trait Related extends ConciergeRepository {
   def related(edition: Edition, path: String): Future[Seq[Trail]] = {
@@ -33,16 +34,24 @@ trait Related extends ConciergeRepository {
     val trails: Future[Seq[Content]] = response.map { response =>
       val trails = response.results.map(Content(_))
 
-      val sevenDaysAgo = DateTime.now().minusDays(7)
-      val twoDaysAgo = DateTime.now().minusDays(2)
+      val popular7Days = trails.filter(_.webPublicationDate.isAfter(DateTime.now().minusDays(7)))
+        .sortBy(content => - MostReadAgent.getViewCount(content.id).getOrElse(0))
 
-      val popularInLast7Days = trails.filter(_.webPublicationDate.isAfter(sevenDaysAgo))
-	.sortBy(content => - MostReadAgent.getViewCount(content.id).getOrElse(0)).take(5)
+      val popular2Days = trails.filter(_.webPublicationDate.isAfter(DateTime.now().minusDays(2)))
+        .sortBy(content => - MostReadAgent.getViewCount(content.id).getOrElse(0))
 
-      val popularInLast2Days = trails.diff(popularInLast7Days).filter(_.webPublicationDate.isAfter(twoDaysAgo))
-	.sortBy(content => - MostReadAgent.getViewCount(content.id).getOrElse(0)).take(5)
-
-      (popularInLast2Days zip popularInLast7Days).flatten
+      val lb = ListBuffer[Content]()
+      for (a <- 0 until 15) {
+        val l = if (a % 2 == 0) popular2Days else popular7Days
+        val unmatched = l.find(lb.indexOf(_) == -1)
+        unmatched match {
+          case Some(content) => lb += content
+          case _ => Nil
+        }
+      }
+      val fin = lb.result()
+      println("fin", fin.map{ c => (c.id, MostReadAgent.getViewCount(c.id)) })
+      fin
     }
 
     trails

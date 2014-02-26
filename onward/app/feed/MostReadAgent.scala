@@ -12,20 +12,22 @@ object MostReadAgent extends Logging with ExecutionContexts {
   def update() {
     log.info("Refreshing most read.")
 
-    // limiting to sport section for popular/related ABTest
-    val ophanQuery = OphanApi.getMostReadInSection("sport", 7, 500)
+    // limiting to sport/football section for popular/related ABTest
+    val ophanQuery = OphanApi.getMostReadInSection("sport,football", 7, 400)
 
     ophanQuery.map{ ophanResults =>
 
       val mostRead: Seq[(String, Int)] = for {
-	item: JsValue <- ophanResults.asOpt[JsArray].map(_.value).getOrElse(Nil)
-	url <- (item \ "url").asOpt[String]
-	count <- (item \ "count").asOpt[Int]
+        item: JsValue <- ophanResults.asOpt[JsArray].map(_.value).getOrElse(Nil)
+        url <- (item \ "url").asOpt[String]
+        count <- (item \ "count").asOpt[Int]
       } yield {
-	(UrlToContentPath(url), count)
+        (UrlToContentPath(url), count)
       }
 
-      agent.update(mostRead.toMap)
+      val mostReadMap = mostRead.toMap
+
+      agent.update(mostReadMap)
 
     }
   }
