@@ -644,6 +644,17 @@ module.exports = function (grunt) {
                 files: ['resources/fonts/**/*'],
                 tasks: ['compile:fonts']
             }
+        },
+
+        replace: {
+            cssSourceMaps: {
+                src: [staticTargetDir + 'stylesheets/*.css.map'],
+                overwrite: true,
+                replacements: [{
+                    from: '../../../common/app/assets/stylesheets/',
+                    to: ''
+                }]
+            }
         }
     });
 
@@ -666,6 +677,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-asset-monitor');
+    grunt.loadNpmTasks('grunt-text-replace');
 
     grunt.registerTask('default', ['compile', 'test', 'analyse']);
 
@@ -682,7 +694,7 @@ module.exports = function (grunt) {
 
     // Compile tasks
     grunt.registerTask('compile:images', ['clean:images', 'copy:images', 'shell:spriteGeneration', 'imagemin']);
-    grunt.registerTask('compile:css', ['clean:css', 'sass:compile', 'copy:css']);
+    grunt.registerTask('compile:css', ['clean:css', 'sass:compile', 'replace:cssSourceMaps', 'copy:css']);
     grunt.registerTask('compile:js', function(app) {
         grunt.task.run(['clean:js']);
         var apps = ['common'];
