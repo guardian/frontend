@@ -359,7 +359,7 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: 'common/app/assets/stylesheets',
-                    src: ['**/_*.scss'],
+                    src: ['**/*.scss'],
                     dest: staticTargetDir + 'stylesheets'
                 }]
             },
