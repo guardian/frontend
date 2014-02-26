@@ -64,7 +64,7 @@ module.exports = function (grunt) {
                     'ophan/ng':   'empty:'
                 },
                 optimize: 'uglify2',
-                generateSourceMaps: (isDev) ? true : false,
+                generateSourceMaps: true,
                 preserveLicenseComments: false
             },
             common: {
@@ -299,10 +299,8 @@ module.exports = function (grunt) {
                     cwd: 'common/app/assets/javascripts',
                     src: ['**/*.js'],
                     dest: staticRequireDir + 'javascripts/common'
-                }]
-            },
-            'javascript-common-target': {
-                files: [{
+                },
+                {
                     expand: true,
                     cwd: 'common/app/assets/javascripts',
                     src: ['**/*.js', '!bootstraps/**/*'],
@@ -329,10 +327,8 @@ module.exports = function (grunt) {
                     cwd: 'admin/public/javascripts',
                     src: ['**/*.js'],
                     dest: staticRequireDir + 'javascripts'
-                }]
-            },
-            'javascript-admin-target': {
-                files: [{
+                },
+                {
                     expand: true,
                     cwd: 'admin/public/javascripts',
                     src: ['**/*.js', '!bootstraps/**/*'],
@@ -345,10 +341,8 @@ module.exports = function (grunt) {
                     cwd: 'facia/app/assets/javascripts',
                     src: ['**/*.js'],
                     dest: staticRequireDir + 'javascripts'
-                }]
-            },
-            'javascript-facia-target': {
-                files: [{
+                },
+                {
                     expand: true,
                     cwd: 'facia/app/assets/javascripts',
                     src: ['**/*.js', '!bootstraps/**/*'],
@@ -716,9 +710,6 @@ module.exports = function (grunt) {
         }
         apps.forEach(function(app) {
             grunt.task.run('copy:javascript-' + app, 'requirejs:' + app);
-            if (isDev) {
-                grunt.task.run('copy:javascript-' + app + '-target');
-            }
         });
         if (!isDev) {
             grunt.task.run('uglify:components');
