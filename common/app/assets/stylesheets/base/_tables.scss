@@ -34,7 +34,7 @@ td {
     }
 
     tr:nth-child(odd) > td {
-        background-color: none;
+        background-color: transparent;
     }
 }
 
@@ -76,8 +76,8 @@ td {
         border-bottom: 1px dotted $c-neutral8;
     }
 
-    @include mq($to: tablet) { @include table--small; }
     @include mq($from: tablet) { @include table--striped; }
+    @include mq($to: tablet) { @include table--small; }
 }
 
 .table--small {
