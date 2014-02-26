@@ -81,12 +81,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  // Front Press Switches
-  val FrontPressJobSwitch = Switch("Front Press Switches", "front-press-job-switch",
-    "If this switch is on then the jobs to push and pull from SQS will run",
-    safeState = Off, sellByDate = never
-  )
-
   val SpdyAjaxServicesSwitch = Switch("Performance Switches", "spdy-ajax-services",
     "If this switch is on, all ajax api endpoints will route through Akamai's SPDY service.",
     safeState = Off, sellByDate = new DateMidnight(2014,2,28)
@@ -415,8 +409,14 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val FaciaToolPressSwitch = Switch("Facia Tool", "facia-tool-press-front",
+  val FaciaToolPressSwitch = Switch("Front Press Switches", "facia-tool-press-front",
     "If this switch is on facia tool will press fronts on each change",
+    safeState = Off, sellByDate = never
+  )
+
+  // Front Press Switches
+  val FrontPressJobSwitch = Switch("Front Press Switches", "front-press-job-switch",
+    "If this switch is on then the jobs to push and pull from SQS will run",
     safeState = Off, sellByDate = never
   )
 
