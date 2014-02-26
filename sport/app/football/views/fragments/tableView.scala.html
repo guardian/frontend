@@ -2,7 +2,7 @@
 @* TODO (jamesgorrie): Support multigroups, remove hack of empty div *@
 @if(!multiGroup) {
 <div class="table__container">
-    <table class="table table--football table--striped@if(isSmall){ table--small}">
+    <table class="table table--football@if(isSmall){ table--small}else{ table--striped}">
         @if(showMeta){<caption><a href="@competition.url">@competition.fullName</a></caption>}
         <thead>
             <tr>
