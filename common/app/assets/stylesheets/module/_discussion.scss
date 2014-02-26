@@ -987,7 +987,7 @@ $replyIndent: 26px;
     ));
     content: ' ';
     display: inline-block;
-    @extend .i-filter-arrow-right;
+    @extend %i-filter-arrow-right;
 }
 .d-show-cta-wrapper {
     @include rem((
