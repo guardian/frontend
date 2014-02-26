@@ -21,11 +21,7 @@ define([
             deferred.reject();
         })
         .done(function(switches) {
-            switches = switches || {};
-            if (switches['facia-tool-disable']) {
-                terminate();
-            }
-            deferred.resolve(switches);
+            deferred.resolve(switches || {});
         });
 
         return deferred.promise();

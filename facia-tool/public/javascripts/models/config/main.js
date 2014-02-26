@@ -9,6 +9,8 @@ define([
     'utils/clean-clone',
     'utils/clone-with-key',
     'utils/find-first-by-id',
+    'utils/terminate',
+    'utils/guid',
     'models/group',
     'models/config/droppable',
     'models/config/front',
@@ -23,6 +25,8 @@ define([
     cleanClone,
     cloneWithKey,
     findFirstById,
+    terminate,
+    guid,
     Group,
     droppable,
     Front,
@@ -136,7 +140,11 @@ define([
             opts.openFronts = opts.openFronts|| {};
 
             return fetchSettings(function (config, switches) {
-                vars.state.switches = switches || {};
+                if (switches['facia-tool-configuration-disable']) {
+                    terminate('The configuration tool has been switched off.', '/');
+                    return;
+                }
+                vars.state.switches = switches;
 
                 if (opts.force || !_.isEqual(config, vars.state.config)) {
                     vars.state.config = config;
