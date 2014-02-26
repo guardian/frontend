@@ -41,9 +41,18 @@
             display: none;
         }
     }
+    // Force showing the images
     .item--has-image .item__image-container,
     .item--has-image .item__media-wrapper {
         display: block !important;
+    }
+    // … and remove the icons that are supposed to be here
+    // when there are no images
+    .item--video .item__title--has-icon-mobile,
+    .item--gallery .item__title--has-icon-mobile {
+        padding-left: 0;
+
+        .i { display: none; }
     }
     @include mq(tablet, rightCol) {
         .collection__item:nth-child(n+4) {
