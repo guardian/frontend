@@ -299,12 +299,6 @@ module.exports = function (grunt) {
                     cwd: 'common/app/assets/javascripts',
                     src: ['**/*.js'],
                     dest: staticRequireDir + 'javascripts/common'
-                },
-                {
-                    expand: true,
-                    cwd: 'common/app/assets/javascripts',
-                    src: ['**/*.js', '!bootstraps/**/*'],
-                    dest: staticTargetDir + 'javascripts/common'
                 }]
             },
             'javascript-common-tests': {
@@ -327,12 +321,6 @@ module.exports = function (grunt) {
                     cwd: 'admin/public/javascripts',
                     src: ['**/*.js'],
                     dest: staticRequireDir + 'javascripts'
-                },
-                {
-                    expand: true,
-                    cwd: 'admin/public/javascripts',
-                    src: ['**/*.js', '!bootstraps/**/*'],
-                    dest: staticTargetDir + 'javascripts'
                 }]
             },
             'javascript-facia': {
@@ -341,12 +329,6 @@ module.exports = function (grunt) {
                     cwd: 'facia/app/assets/javascripts',
                     src: ['**/*.js'],
                     dest: staticRequireDir + 'javascripts'
-                },
-                {
-                    expand: true,
-                    cwd: 'facia/app/assets/javascripts',
-                    src: ['**/*.js', '!bootstraps/**/*'],
-                    dest: staticTargetDir + 'javascripts'
                 }]
             },
             'javascript-facia-tests': {
