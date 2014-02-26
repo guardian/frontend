@@ -4,7 +4,10 @@
 
     @if(collection.items.nonEmpty) {
         <section
-            class="@RenderClasses("container", s"container--${style.containerType}")"
+            class="@RenderClasses(Map(
+                "container" -> true,
+                s"container--${style.containerType}" -> true,
+                "container--first" -> (containerIndex == 0)))"
             data-link-name="block | @config.id"
             data-id="@config.id"
             data-type="@style.containerType">
