@@ -364,6 +364,16 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 3, 8)
   )
 
+  val FootballTablePosition = Switch("A/B Tests", "ab-football-table-position",
+    "If this swith is on, the football table will vary in position throughout the football tagged pages.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 7)
+  )
+
+  val ABUsContainers = Switch("A/B Tests", "ab-us-containers",
+    "If this is switched on an A/B test runs that tries a variation of the containers on the US network front.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 12)
+  )
+
   // Sport Switch
 
   val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
@@ -386,23 +396,6 @@ object Switches extends Collections {
   val AlwaysExpiredSwitch = Switch("Unwired Test Switch", "always-expired",
     "Switch that is only used while running tests. You never need to change this switch.",
     safeState = On, new DateMidnight().minusDays(1)
-  )
-
-  // Facia
-
-  val NetworkFrontUkAlpha = Switch("Facia", "network-front-uk-alpha",
-    "If this is switched on then the uk alpha network fronts will be served if a GU_UK_ALPHA cookie has been dropped",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 26)
-  )
-
-  val NetworkFrontUsAlpha = Switch("Facia", "network-front-us-alpha",
-    "If this is switched on then the us alpha network fronts will be served if a GU_US_ALPHA cookie has been dropped",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 26)
-  )
-
-  val NetworkFrontAuAlpha = Switch("Facia", "network-front-au-alpha",
-    "If this is switched on then the au alpha network fronts will be served if a GU_AU_ALPHA cookie has been dropped",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 26)
   )
 
   // Facia Tool Switches
@@ -473,11 +466,9 @@ object Switches extends Collections {
     ABAa,
     ABRightHandRecommendations,
     GeoMostPopular,
+    FootballTablePosition,
     ABAdLabels,
     ABInlineElements,
-    NetworkFrontUkAlpha,
-    NetworkFrontUsAlpha,
-    NetworkFrontAuAlpha,
     ToolDisable,
     ToolSparklines,
     TagLinking,
@@ -507,7 +498,8 @@ object Switches extends Collections {
     FrontPressJobSwitch,
     DogeSwitch,
     FrontPressJobSwitch,
-    ABUkContainers
+    ABUkContainers,
+    ABUsContainers
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
