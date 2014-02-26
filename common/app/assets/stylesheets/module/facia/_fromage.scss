@@ -146,6 +146,11 @@
             text-decoration: underline;
         }
     }
+    &:active {
+        .item__title {
+            text-decoration: none;
+        }
+    }
 }
 .fromage__link:visited,
 .fromage__link:visited .item__title,
