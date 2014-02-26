@@ -7,6 +7,7 @@ import views.support._
 import services.S3
 import services.DynamoDB
 import play.api.templates.Html
+import java.net.{URLDecoder, URLEncoder}
 
 object ArchiveController extends Controller with Logging with ExecutionContexts {
  
@@ -22,6 +23,11 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
     archive
   }
 
+  def isEncoded(path: String) = {
+    val decodedPath = URLDecoder.decode(path, "UTF-8")
+    if (decodedPath != path) Some(decodedPath) else None
+  } 
+
   // Our redirects are 'normalised' Vignette URLs, Ie. path/to/0,<n>,123,<n>.html -> path/to/0,,123,.html
   def normalise(path: String, zeros: String = "") = {
     val r1ArtifactUrl = """www.theguardian.com/(.*)/[0|1]?,[\d]*,(-?\d+),[\d]*(.*)""".r
@@ -35,19 +41,26 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
   }
   
   def lookup(path: String) = Action { implicit request =>
-  
-    val destination = isRedirect(normalise(path).getOrElse(path))
+   
+    val encoded = isEncoded(path)
 
     // is it a redirect -> 301, if not is it archived -> 200, if not then 404
-    destination match { 
-      case Some(_) => Redirect(destination.get, 301)
+    encoded match {
+      case Some(_) => Redirect(s"http://${encoded.get}", 301)
       case _ => {
-        val s3content = isArchived(normalise(path, zeros = "00").getOrElse(path))
-        s3content match {
-          case Some(_) => Ok(views.html.archive(s3content)).as("text/html")
-          case _ => NotFound
+        val destination = isRedirect(normalise(path).getOrElse(path))
+        destination match { 
+          case Some(_) => Redirect(destination.get, 301)
+          case _ => {
+            val s3content = isArchived(normalise(path, zeros = "00").getOrElse(path))
+            s3content match {
+              case Some(_) => Ok(views.html.archive(s3content)).as("text/html")
+              case _ => NotFound
+            }
+          } 
         }
-      } 
+      }
     }
   }
+
 }
