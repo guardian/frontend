@@ -344,6 +344,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
   )
 
+  val ABRelatedContent = Switch("A/B Tests", "ab-onward-related",
+    "If this switch is on the ab related content test is run",
+    safeState = On, sellByDate = new DateMidnight(2014, 2, 28)
+  )
+
   val TagLinking = Switch("Feature Switches", "tag-linking",
     "If this is switched on articles that have no in body links will auto link to their tags where possible",
     safeState = Off, sellByDate = endOfQ4
@@ -473,6 +478,7 @@ object Switches extends Collections {
     GeoMostPopular,
     FootballTablePosition,
     ABInlineElements,
+    ABRelatedContent,
     ToolDisable,
     ToolConfigurationDisable,
     ToolSparklines,

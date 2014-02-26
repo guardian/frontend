@@ -25,9 +25,7 @@ object MostReadAgent extends Logging with ExecutionContexts {
         (UrlToContentPath(url), count)
       }
 
-      val mostReadMap = mostRead.toMap
-
-      agent.update(mostReadMap)
+      agent.update(mostRead.toMap)
 
     }
   }
