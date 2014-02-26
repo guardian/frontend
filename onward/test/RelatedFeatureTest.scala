@@ -26,7 +26,7 @@ class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       HtmlUnit("/related/uk/2012/aug/07/woman-torture-burglary-waterboard-surrey") { browser =>
         import browser._
         Then("I should see the related links")
-        $("li") should have length 5
+        $(".item") should have length 5
 
       }
     }
