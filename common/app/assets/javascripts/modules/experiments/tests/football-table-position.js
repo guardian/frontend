@@ -82,7 +82,7 @@ var FootballTablePosition = function () {
     function scrunchTable($table, dark) {
         var caption = $('caption', $table[0]),
             t = $('caption a', $table[0]).text()+ ' table',
-            showTableElem = bonzo.create('<div class="toggler"><span class="toggler__text" aria-role="button">'+ t +'</span><span class="i i-expander"></span></div>')[0],
+            showTableElem = bonzo.create('<div class="toggler"><span class="toggler__text" aria-role="button" data-link-name="expand-football-table">'+ t +'</span><span class="i i-expander"></span></div>')[0],
             $showTableElem = bonzo(showTableElem);
 
         caption.remove();
