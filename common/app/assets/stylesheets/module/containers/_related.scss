@@ -27,7 +27,9 @@
         @include item--hide-tone-border;
 
         @include mq($to: tablet) {
-            @include fs-headline(2, true);
+            .item__title {
+                @include fs-headline(2, true);
+            }
         }
     }
     .collection__item:nth-child(n+6) {
