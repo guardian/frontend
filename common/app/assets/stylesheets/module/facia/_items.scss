@@ -13,7 +13,7 @@ $c-live: #e81818;
         ));
     }
 }
-.container:nth-child(2) {
+.container--first {
     margin-top: 0;
 }
 .container__border {
@@ -68,7 +68,7 @@ $c-live: #e81818;
     color: inherit;
 }
 @include mq($to: tablet) {
-    .has-localnav .facia-container--layout-front .container:first-child {
+    .has-localnav .container--first {
         .container__title,
         .container__border {
             display: none;

@@ -7,6 +7,7 @@ define([
     'utils/query-params',
     'utils/ammended-query-str',
     'utils/update-scrollables',
+    'utils/terminate',
     'modules/authed-ajax',
     'models/group',
     'models/collections/droppable',
@@ -21,6 +22,7 @@ define([
     queryParams,
     ammendedQueryStr,
     updateScrollables,
+    terminate,
     authedAjax,
     Group,
     droppable,
@@ -134,8 +136,12 @@ define([
             droppable.init();
 
             fetchSettings(function (config, switches) {
-                vars.state.config = config || {};
-                vars.state.switches = switches || {};
+                if (switches['facia-tool-disable']) {
+                    terminate();
+                    return;
+                }
+                vars.state.switches = switches;
+                vars.state.config = config;
                 model.fronts(
                     getFront() === 'testcard' ? ['testcard'] :
                        _.chain(_.keys(config.fronts))
