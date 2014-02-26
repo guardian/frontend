@@ -68,7 +68,7 @@ $c-live: #e81818;
     color: inherit;
 }
 @include mq($to: tablet) {
-    .has-localnav .container:first-child {
+    .has-localnav .facia-container--layout-front .container:first-child {
         .container__title,
         .container__border {
             display: none;

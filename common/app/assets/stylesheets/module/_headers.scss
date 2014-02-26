@@ -79,7 +79,7 @@
 }
 
 .page-sub-header {
-    @include fs-header(2);
+    @include fs-header(3); // Same as container__title on tablet and up
     padding: $baseline/2 0 $baseline;
     margin-left: $gs-gutter/2;
     margin-right: $gs-gutter/2;

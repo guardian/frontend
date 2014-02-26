@@ -29,6 +29,14 @@
     & + .collection__item {
         @include vertical-item-separator; // Restore inter-item separator
     }
+
+    .l-row--layout-m & {
+        @include mq($to: tablet) {
+            @include rem((
+                margin-bottom: get-line-height($fs-headlines, 1)
+            ));
+        }
+    }
 }
 
 .container--row-pattern {
