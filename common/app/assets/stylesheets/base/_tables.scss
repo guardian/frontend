@@ -27,21 +27,6 @@ td {
         padding-left: 8px;
         padding-right: 8px;
     }
-
-    // un-zebra
-    td {
-        border-top: 1px solid darken($c-neutral8, 4%);
-    }
-
-    tr:nth-child(odd) > td {
-        background-color: transparent;
-    }
-}
-
-@mixin table--striped {
-    tr:nth-child(odd) > td {
-        background-color: darken($c-neutral8, 4%);
-    }
 }
 
 .table {
@@ -72,11 +57,15 @@ td {
         font-weight: 800;
     }
 
+    td {
+        border-top: 1px solid darken($c-neutral8, 4%);
+    }
+
     abbr {
         border-bottom: 1px dotted $c-neutral8;
     }
 
-    @include mq($from: tablet) { @include table--striped; }
+
     @include mq($to: tablet) { @include table--small; }
 }
 
@@ -85,7 +74,13 @@ td {
 }
 
 .table--striped {
-    @include table--striped;
+    td {
+        border-top: none;
+    }
+
+    tr:nth-child(odd) > td {
+        background-color: darken($c-neutral8, 4%);
+    }
 }
 
 .table-column--sub {
