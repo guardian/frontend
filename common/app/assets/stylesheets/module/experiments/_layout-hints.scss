@@ -1,0 +1,30 @@
+.layout-hints {
+
+
+
+
+    .element-interactive {
+        background-color: #000000;
+        overflow: hidden;
+
+        iframe { overflow: hidden; }
+
+        @include mq(leftCol) {
+            margin-left: -1 * (gs-span(3) - $gs-gutter);
+        }
+
+        @include mq(wide) {
+            height: 498px;
+            margin-left: -1 * (gs-span(4) - $gs-gutter);
+            iframe { height: 498px; }
+        }
+    }
+
+    &.fast-ice-rescue-from-antarctica {
+        @include mq(leftCol) {
+            .media-primary {
+                display: none;
+            }
+        }
+    }
+}

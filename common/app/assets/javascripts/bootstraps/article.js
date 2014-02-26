@@ -2,6 +2,7 @@ define([
     "common/common",
     "common/utils/mediator",
     "common/utils/detect",
+    "common/utils/lazy-load-css",
     "common/$",
     "fence",
     "common/modules/ui/autoupdate",
@@ -13,11 +14,14 @@ define([
     "common/modules/ui/notification-counter",
     "common/modules/experiments/left-hand-card",
     "common/modules/open/cta",
-    "common/modules/commercial/loader"
+    "common/modules/commercial/loader",
+    "common/modules/commercial/loader",
+    "common/modules/experiments/layoutHints"
 ], function (
     common,
     mediator,
     detect,
+    loadCss,
     $,
     fence,
     AutoUpdate,
@@ -29,7 +33,8 @@ define([
     NotificationCounter,
     LeftHandCard,
     OpenCta,
-    CommercialLoader
+    CommercialLoader,
+    layoutHints
 ) {
 
     var modules = {
@@ -154,6 +159,12 @@ define([
                     fence.render(el);
                 });
             });
+        },
+
+        initInteractives: function(config) {
+            if(config.switches.layoutHints) {
+                layoutHints.init(config);
+            }
         }
     };
 
@@ -168,6 +179,7 @@ define([
             modules.externalLinksCards();
             modules.initOpen(config);
             modules.initFence();
+            modules.initInteractives(config);
         }
         common.mediator.emit("page:article:ready", config, context);
     };
