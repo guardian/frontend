@@ -29,9 +29,9 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
   } 
 
   // arts/gallery/image/0,,-126 -> arts/pictures/image/0,,-126
-  /*def isGallery(path: String) = {
-    path.replace("/gallery/", "/pictures/") 
-  }*/
+  def isGallery(path: String): Option[String] = {
+    if (path contains "/gallery/") Some(path.replace("/gallery/", "/pictures/")) else None
+  }
 
   // Our redirects are 'normalised' Vignette URLs, Ie. path/to/0,<n>,123,<n>.html -> path/to/0,,123,.html
   def normalise(path: String, zeros: String = ""): Option[String] = {
@@ -59,6 +59,10 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
       }.orElse {
         isArchived(normalise(path, zeros = "00").getOrElse(path)).map {
           body => Ok(views.html.archive(s"${body}")).as("text/html")
+        }
+      }.orElse {
+        isGallery(path).map {
+          url => Redirect(s"http://${url}", 301) 
         }
       }.getOrElse(NotFound)
       

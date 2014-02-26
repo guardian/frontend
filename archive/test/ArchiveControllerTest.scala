@@ -77,4 +77,8 @@ class ArchiveControllerTest extends FlatSpec with Matchers {
     controllers.ArchiveController.isEncoded("foo") should be (None)
   }
 
+  it should "test a string contains an old gallery" in Fake {
+    controllers.ArchiveController.isGallery("arts/gallery/0,") should be (Some("arts/pictures/0,"))
+  }
+
 }
