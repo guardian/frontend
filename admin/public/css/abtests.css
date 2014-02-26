@@ -109,3 +109,25 @@
 .participation__opt-out:hover {
     color: #a55;
 }
+
+.audience-breakdown {
+    width: 60%;
+}
+
+.audience-breakdown__ruler-division {
+    float: left;
+    width: 25%;
+}
+
+.audience-breakdown__ruler {
+    width: 100%;
+    color: #444;
+    background-color: #659ED3;
+    border: 2px solid;
+    margin-bottom: 12px;
+    overflow: auto;
+}
+
+.audience-item__test {
+    background-color: #659ED3;
+}
