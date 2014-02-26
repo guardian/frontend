@@ -61,7 +61,7 @@ define([
                 model.fronts.unshift(front);
                 front.toggleOpen();
             } else {
-                window.alert('The maximum number of fronts (' + vars.CONST.maxFronts + ') has been exceeded. Please delete one first, by removing all it\'s collections.');
+                window.alert('The maximum number of fronts (' + vars.CONST.maxFronts + ') has been exceeded. Please delete one first, by removing all its collections.');
             }
         };
 
