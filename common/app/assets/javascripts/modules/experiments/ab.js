@@ -11,6 +11,7 @@ define([
     'common/modules/experiments/tests/onward-inline-elements',
     'common/modules/experiments/tests/geo-most-popular',
     'common/modules/experiments/tests/uk-containers',
+    'common/modules/experiments/tests/football-table-position',
     'common/modules/experiments/tests/us-containers'
 ], function (
     common,
@@ -23,6 +24,7 @@ define([
     InlineElements,
     GeoMostPopular,
     UkContainers,
+    FootballTablePosition,
     UsContainers
 ) {
 
@@ -33,6 +35,7 @@ define([
             new InlineElements(),
             new GeoMostPopular(),
             new UkContainers(),
+            new FootballTablePosition(),
             new UsContainers()
        ],
        participationsKey = 'gu.ab.participations';
@@ -127,7 +130,6 @@ define([
 
     // Finds variant in specific tests and runs it
     function run(test, config, context) {
-
         if (isParticipating(test) && testCanBeRun(test, config)) {
             var participations = getParticipations(),
                 variantId = participations[test.id].variant;
