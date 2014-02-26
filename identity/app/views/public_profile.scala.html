@@ -104,7 +104,7 @@
 
             <div id="tabs-popular-2" class="tabs__pane u-cf" role="tabpanel" aria-labelledby="tabs-popular-2-tab" data-link-name="Account" data-link-context="Identity/profile" style="display: none;">
 
-                <form class="form" novalidate action="@idUrlBuilder.buildUrl("/profile/public", idRequest)" role="main" method="post">
+                <form class="form" novalidate action="@idUrlBuilder.buildUrl("/profile/account-details", idRequest)" role="main" method="post">
                     @views.html.helper.CSRF.formField
 
                     @if(accountDetailsForm.globalError.isDefined) {

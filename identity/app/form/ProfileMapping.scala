@@ -37,7 +37,7 @@ case class ProfileFormData(
   interests: String,
   webPage: String,
   gender: String
-){
+) extends UserFormData{
 
   lazy val toUserUpdate: UserUpdate = UserUpdate(
     publicFields = Some(PublicFields(

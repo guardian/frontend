@@ -3,17 +3,18 @@ package form
 import play.api.data.Forms._
 import scala.Some
 import play.api.i18n.Messages
-import com.gu.identity.model.User
+import com.gu.identity.model.{PrivateFields, User}
+import idapiclient.UserUpdate
 
 object AccountDetailsMapping extends UserFormMapping[AccountFormData] {
 
   protected lazy val formMapping = {
     val baseMapping = mapping(
       "primaryEmailAddress" -> idEmail,
-      "password1" -> idPassword,
-      "password2" -> idPassword,
-      "privateFields.firstName" -> textField,
-      "privateFields.secondName" -> textField
+      "password" -> idPassword,
+      "confirmPassword" -> idPassword,
+      "firstName" -> textField,
+      "secondName" -> textField
     )(AccountFormData.apply)(AccountFormData.unapply)
     baseMapping verifying (Messages("error.passwordsMustMatch"), { _.validatePassword })
   }
@@ -21,10 +22,9 @@ object AccountDetailsMapping extends UserFormMapping[AccountFormData] {
   protected def fromUser(user: User) = AccountFormData(user)
 
   protected lazy val contextMap = Map(
-    "primaryEmailAddress" -> "primaryEmailAddress",
     "password" -> "password",
-    "publicFields.firstName" -> "secondName",
-    "publicFields.secondName" -> "secondName"
+    "privateFields.firstName" -> "firstName",
+    "privateFields.secondName" -> "secondName"
   )
 }
 
@@ -38,17 +38,15 @@ case class AccountFormData(
   confirmPassword: String,
   firstName: String,
   secondName: String
-){
+) extends UserFormData{
   lazy val validatePassword: Boolean = password == confirmPassword
 
-  def updateUser(user: User): User = {
-    user.copy(primaryEmailAddress = primaryEmailAddress,
-      password = Some(password),
-      privateFields = user.privateFields.copy(firstName = Some(firstName), secondName = Some(secondName))
-    )
-  }
+  lazy val toUserUpdate: UserUpdate = UserUpdate(
+    primaryEmailAddress = Some(primaryEmailAddress),
+    password = Some(password),
+    privateFields = Some(PrivateFields(firstName = Some(firstName), secondName = Some(secondName)))
+  )
 
-  lazy val toUser: User = updateUser(User())
 }
 
 object AccountFormData {
