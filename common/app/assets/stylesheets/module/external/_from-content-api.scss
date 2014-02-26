@@ -234,12 +234,6 @@ figure {
             ));
         }
     }
-    &.img--extended {
-        @include rem((
-            margin-top: $baseline*4,
-            margin-bottom: $baseline*4
-        ));
-    }
     &.img--landscape,
     &.img--portrait {
         figcaption {
@@ -255,6 +249,14 @@ figure {
             }
         }
     }
+}
+
+.figure.img--extended,
+.element-video {
+    @include rem((
+        margin-top: $baseline*4,
+        margin-bottom: $baseline*4
+    ));
 }
 
 p + figure,
