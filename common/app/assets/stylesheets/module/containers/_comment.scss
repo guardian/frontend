@@ -17,7 +17,7 @@
                 @include fs-headline(1, $size-only: true);
             }
         }
-        .js-collection--show-more {
+        .collection--show-more {
             .item:nth-child(n+4) {
                 display: none;
             }
@@ -47,7 +47,7 @@
         .item:nth-child(4) {
             @include card-image;
         }
-        .js-collection--show-more {
+        .collection--show-more {
             .item:nth-child(n+5) {
                 display: none;
             }
@@ -61,7 +61,7 @@
         .item:nth-child(3) {
             @include card-image;
         }
-        .js-collection--show-more {
+        .collection--show-more {
             .item:nth-child(n+6) {
                 display: none;
             }

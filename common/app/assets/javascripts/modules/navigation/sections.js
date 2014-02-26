@@ -160,7 +160,7 @@ define([
 
                     // Insert the CTA for the popup local nav
                     var sectionHeadNode = common.$g('.section-head', context),
-                        sectionLink     = common.$g('.article-zone [data-link-name="article section"]', context).parent().html(),
+                        sectionLink     = common.$g('.article__zone [data-link-name="article section"]', context).parent().html(),
                         localNavTitle   = sectionLink ||
                                           sectionHeadNode.text() ||
                                           currentSection.zones['/'+config.page.section] ||

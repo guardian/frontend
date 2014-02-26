@@ -3,12 +3,14 @@
         @include rem((
             padding-top: $gs-baseline/3
         ));
-        @include mq(tablet, wide) {
+        @include mq(tablet, desktop) {
             padding-top: 0;
         }
     }
     .linkslist-container {
-        margin-top: 0;
+        @include mq($to: desktop) {
+            margin-top: 0;
+        }
     }
     .ad-slot--inline {
         margin-top: $gs-baseline/2;
@@ -53,15 +55,8 @@
             }
         }
     }
-    .collection-wrapper--position-2 {
-        @include rem((padding-top: $gs-baseline/3));
-
-        .collection__item {
-            padding-bottom: 0;
-            margin-bottom: 0;
-        }
-    }
 }
+
 
 /* Remove spacing between items */
 .collection-wrapper--spacing-thin {
@@ -110,7 +105,9 @@
     }
     .item--has-no-image {
         .item__title {
-            @include rem((padding-top: 3px));
+            @include rem((
+                padding-top: 3px
+            ));
         }
     }
     .collection__item {
@@ -134,12 +131,7 @@
     .item__link:visited .item__title {
         color: mix(#ffffff, $c-features-secondary, 80%);
     }
-    .item__link {
-        border-top: 0;
-    }
-    .item__image-container {
-        margin-top: 0;
-    }
+    @include item--hide-tone-border;
     .item__title {
         background-color: $c-features-secondary;
     }
@@ -149,20 +141,5 @@
             // Restore lost underline because of the absolute positioning
             text-decoration: underline;
         }
-    }
-}
-
-.container--features__linkslist {
-    @include rem((
-        margin-left: $gs-gutter/2,
-        margin-right: $gs-gutter/2
-    ));
-
-    @include mq(tablet, desktop) {
-        @include rem((
-            // Width of a column in l-columns on tablet
-            // in that particular context
-            max-width: gs-span(4) + $gs-gutter
-        ));
     }
 }

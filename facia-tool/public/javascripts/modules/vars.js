@@ -1,7 +1,20 @@
 /* global _: true */
 define(['knockout'], function(ko) {
     var CONST = {
-        tones: ['news', 'feature', 'comment'],
+        types: [
+            'news',
+            'news/most-popular',
+            'news/people',
+            'news/section',
+            'news/special',
+            'news/sport',
+            'features',
+            'features/section',
+            'comment',
+            'comment/comment-and-debate',
+            'comment/section'
+        ],
+
         groups: ["standard,big,very big,huge"],
 
         viewer: 'http://s3-eu-west-1.amazonaws.com/facia/responsive-viewer.html',
@@ -48,7 +61,9 @@ define(['knockout'], function(ko) {
         state: {
             config: {},
             switches: {},
-            liveMode: ko.observable(false)
+            liveMode: ko.observable(false),
+            pending: ko.observable(false),
+            openFronts: {}
         }
     };
 });

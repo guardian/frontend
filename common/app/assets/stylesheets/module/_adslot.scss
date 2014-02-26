@@ -35,6 +35,9 @@
             display: block;
         }
     }
+    .no-js & {
+        display: none;
+    }
 }
 
 .ad-slot__wrapper {
@@ -52,7 +55,9 @@
     min-height: 70px;
 
     @include mq(faciaLeftCol) {
-        @include rem((width: gs-span(14)));
+        @include rem((
+            width: gs-span(14)
+        ));
         margin: 0 auto;
     }
 }

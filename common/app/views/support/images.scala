@@ -1,7 +1,7 @@
 package views.support
 
 import model.{ImageContainer, ImageAsset}
-import conf.Switches.ImageServerSwitch
+import conf.Switches.{ImageServerSwitch, SpdyImageServicesSwitch}
 import java.net.URI
 import conf.Configuration
 import play.api.templates.Html
@@ -66,8 +66,7 @@ object Profile {
 
 object ImgSrc {
 
-  val imageHost = Configuration.images.path
-  val imageServiceHost = Configuration.images.servicePath
+  def imageHost = if(SpdyImageServicesSwitch.isSwitchedOn) Configuration.images.spdyPath else Configuration.images.path
 
   def apply(url: String, imageType: Profile): String = {
     val uri = new URI(url.trim)

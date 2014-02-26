@@ -2,7 +2,7 @@ package controllers
 
 import common._
 import conf._
-import feed.MostPopularAgent
+import feed.{MostPopularAgent, GeoMostPopularAgent}
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
 import scala.concurrent.Future
@@ -36,6 +36,27 @@ object MostPopularController extends Controller with Logging with ExecutionConte
           )
         }
       }
+    }
+  }
+
+  private val countryNames = Map(
+    "AU" -> "Australia",
+    "US" -> "US",
+    "IN" -> "India")
+
+  def renderPopularGeoJson() = Action { implicit request =>
+
+    val headers = request.headers.toSimpleMap
+    val countryCode = headers.getOrElse("X-GU-GeoLocation","country:ROW").replace("country:","")
+
+    val countryPopular = MostPopular("The Guardian", "", GeoMostPopularAgent.mostPopular(countryCode))
+
+    Cached(900) {
+      JsonComponent(
+        "html" -> views.html.fragments.collections.popular(Seq(countryPopular)),
+        "rightHtml" -> views.html.fragments.rightMostPopularGeo(countryPopular, countryNames.get(countryCode), countryCode),
+        "country" -> countryCode
+      )
     }
   }
 

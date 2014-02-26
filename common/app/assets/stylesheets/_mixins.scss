@@ -49,6 +49,15 @@
     @include font-size($size, $line-height);
 }
 
+// Usage: font-size: get-line-height($fs-header, 3);
+@function get-font-size($font-scale, $level) {
+    @return nth(nth($font-scale, $level), 1);
+}
+
+@function get-line-height($font-scale, $level) {
+    @return nth(nth($font-scale, $level), 2);
+}
+
 
 // Font Scale
 // =============================================================================
@@ -288,9 +297,11 @@
     }
 }
 
-@mixin faux-bullet-point {
+@mixin faux-bullet-point($color: $c-neutral3) {
     position: relative;
-    @include rem((text-indent: 20px));
+    @include rem((
+        text-indent: 20px
+    ));
 
     &:before {
         position: absolute;
@@ -300,7 +311,7 @@
             top: 2px,
             font-size: 48px
         ));
-        color: $c-neutral3;
+        color: $color;
     }
 }
 
@@ -328,7 +339,9 @@
     // Fallback for non-Webkit browsers
     // (won't show `…` at the end of the block)
     @if $line-height {
-        @include rem((max-height: $line-height * $lines));
+        @include rem((
+            max-height: $line-height * $lines
+        ));
     }
 }
 
