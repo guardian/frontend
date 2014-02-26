@@ -27,6 +27,21 @@ td {
         padding-left: 8px;
         padding-right: 8px;
     }
+
+    // un-zebra
+    td {
+        border-top: 1px solid darken($c-neutral8, 4%);
+    }
+
+    tr:nth-child(odd) > td {
+        background-color: none;
+    }
+}
+
+@mixin table--striped {
+    tr:nth-child(odd) > td {
+        background-color: darken($c-neutral8, 4%);
+    }
 }
 
 .table {
@@ -62,6 +77,7 @@ td {
     }
 
     @include mq($to: tablet) { @include table--small; }
+    @include mq($from: desktop) { @include table--striped; }
 }
 
 .table--small {
@@ -69,9 +85,7 @@ td {
 }
 
 .table--striped {
-    tr:nth-child(odd) > td {
-        background-color: darken($c-neutral8, 4%);
-    }
+    @include table--striped;
 }
 
 .table-column--sub {
