@@ -37,9 +37,7 @@ var FootballTablePosition = function () {
             id: 'below-image',
             test: function (context) {
                 mediator.on('bootstrap:football:rhs:table:ready', function() {
-                    var $table = $('.js-football-table', context);
-                    $('.media-primary', context).after($table);
-                    scrunchTable($table);
+                    tableBelowImage(context);
                 });
             }
         },
@@ -47,15 +45,41 @@ var FootballTablePosition = function () {
             id: 'below-article',
             test: function (context) {
                 mediator.on('bootstrap:football:rhs:table:ready', function() {
-                    var $table = $('.js-football-table', context);
-                    $('.article-body', context).append($table);
-                    scrunchTable($table);
+                    tableBelowArticle(context);
+                });
+            }
+        },
+        {
+            id: 'below-image-dark',
+            test: function (context) {
+                mediator.on('bootstrap:football:rhs:table:ready', function() {
+                    tableBelowImage(context, true);
+                });
+            }
+        },
+        {
+            id: 'below-article-dark',
+            test: function (context) {
+                mediator.on('bootstrap:football:rhs:table:ready', function() {
+                    tableBelowArticle(context, true);
                 });
             }
         }
     ];
 
-    function scrunchTable($table) {
+    function tableBelowImage(context, dark) {
+        var $table = $('.js-football-table', context);
+        $('.media-primary', context).after($table);
+        scrunchTable($table, dark);
+    }
+
+    function tableBelowArticle(context, dark) {
+        var $table = $('.js-football-table', context);
+        $('.article-body', context).append($table);
+        scrunchTable($table, dark);
+    }
+
+    function scrunchTable($table, dark) {
         var caption = $('caption', $table[0]),
             t = $('caption a', $table[0]).text()+ ' table',
             showTableElem = bonzo.create('<div class="toggler"><span class="toggler__text" aria-role="button">'+ t +'</span><span class="i i-expander"></span></div>')[0],
@@ -65,6 +89,10 @@ var FootballTablePosition = function () {
         $table.addClass('u-h');
         $table.attr('aria-expanded', 'false');
         $table.before(showTableElem);
+
+        if (dark) {
+            $showTableElem.addClass('toggler--dark');
+        }
 
         $showTableElem.append($table);
 
