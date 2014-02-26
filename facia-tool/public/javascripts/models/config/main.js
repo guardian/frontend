@@ -53,11 +53,16 @@ define([
         }, this);
 
         model.createFront = function() {
-            var front =  new Front();
+            var front;
 
-            model.newFront(front);
-            model.fronts.unshift(front);
-            front.toggleOpen();
+            if (vars.model.fronts().length <= vars.CONST.maxFronts) {
+                front =  new Front();
+                model.newFront(front);
+                model.fronts.unshift(front);
+                front.toggleOpen();
+            } else {
+                window.alert('The maximum number of fronts (' + vars.CONST.maxFronts + ') has been exceeded. Please delete one first, by removing all it\'s collections.');
+            }
         };
 
         model.createCollection = function() {
