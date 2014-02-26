@@ -34,7 +34,7 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
   }*/
 
   // Our redirects are 'normalised' Vignette URLs, Ie. path/to/0,<n>,123,<n>.html -> path/to/0,,123,.html
-  def normalise(path: String, zeros: String = "") = {
+  def normalise(path: String, zeros: String = ""): Option[String] = {
     val r1ArtifactUrl = """www.theguardian.com/(.*)/[0|1]?,[\d]*,(-?\d+),[\d]*(.*)""".r
     path match {
       case r1ArtifactUrl(path, artifactOrContextId, extension) => {
@@ -45,18 +45,23 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
     }
   }
  
-  // TODO - 1) fix URLs with JSOUP, 2) , 3)
+  // TODO - 1) fix non-relative URLs, 2) patch gallery URLs, 3)   
 
   def lookup(path: String) = Action { implicit request =>
    
     isEncoded(path)
-      .map { url => Redirect(s"http://${url}", 301) }
-      .orElse { isRedirect(normalise(path).getOrElse(path)) }
-      .map { url => Redirect(s"${url}", 301) }
-      .orElse { isArchived(normalise(path, zeros = "00").getOrElse(path)) }
-      .map { body =>  Ok(views.html.archive(body)).as("text/html") }
-      .getOrElse(NotFound)
-  
+      .map {
+        url => Redirect(s"http://${url}", 301)
+      }.orElse {
+        isRedirect(normalise(path).getOrElse(path)).map {
+          url => Redirect(url, 301)
+        }
+      }.orElse {
+        isArchived(normalise(path, zeros = "00").getOrElse(path)).map {
+          body => Ok(views.html.archive(s"${body}")).as("text/html")
+        }
+      }.getOrElse(NotFound)
+      
   }
 
 }
