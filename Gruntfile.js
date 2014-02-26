@@ -33,9 +33,9 @@ module.exports = function (grunt) {
                     }
                 }],
                 options: {
-                    style: (isDev) ? 'expanded' : 'compressed',
-                    sourcemap: false,
-                    noCache: (isDev) ? false : true,
+                    style: 'compressed',
+                    sourcemap: true,
+                    noCache: true,
                     quiet: (isDev) ? false : true,
                     loadPath: [
                         'common/app/assets/stylesheets/components/sass-mq',
@@ -355,6 +355,14 @@ module.exports = function (grunt) {
                     dest: staticRequireDir + 'javascripts/common'
                 }]
             },
+            css: {
+                files: [{
+                    expand: true,
+                    cwd: 'common/app/assets/stylesheets',
+                    src: ['**/_*.scss'],
+                    dest: staticTargetDir + 'stylesheets'
+                }]
+            },
             images: {
                 files: [{
                     expand: true,
@@ -598,10 +606,7 @@ module.exports = function (grunt) {
             'static': [staticDir],
             staticTarget: [staticTargetDir],
             js: [staticTargetDir + 'javascripts', staticRequireDir],
-            css: [
-                staticTargetDir + 'stylesheets',
-                '.sass-cache'
-            ],
+            css: [staticTargetDir + 'stylesheets'],
             images: [staticTargetDir + 'images'],
             flash: [staticTargetDir + 'flash'],
             fonts: [staticTargetDir + 'fonts'],
@@ -677,7 +682,7 @@ module.exports = function (grunt) {
 
     // Compile tasks
     grunt.registerTask('compile:images', ['clean:images', 'copy:images', 'shell:spriteGeneration', 'imagemin']);
-    grunt.registerTask('compile:css', ['clean:css', 'sass:compile']);
+    grunt.registerTask('compile:css', ['clean:css', 'sass:compile', 'copy:css']);
     grunt.registerTask('compile:js', function(app) {
         grunt.task.run(['clean:js']);
         var apps = ['common'];
