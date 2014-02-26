@@ -1,17 +1,7 @@
-@charset "UTF-8";
-
-@import "_head.common";
-
-
-/* ==========================================================================
-   Facia
-   ========================================================================== */
-
-@import "components/guss-layout/_columns";
-@include guss-columns-utility;
-@include guss-row-utility;
-
 .facia-container {
+
+}
+.facia-container--layout-front {
     @include mq(gs-span(7) + $gs-gutter*3, tablet) {
         @include rem((
             width: gs-span(7)
@@ -85,28 +75,57 @@
         display: none;
         margin: 100px auto 0;
     }
-    .ab-uk-containers &,
-    .ab-us-containers & {
-        > {
-            * {
-                visibility: hidden;
-            }
-            .is-updating {
-                display: block;
-                visibility: visible;
-            }
+    .ab-uk-containers & > {
+        * {
+            visibility: hidden;
+        }
+        .is-updating {
+            display: block;
+            visibility: visible;
         }
     }
 }
+.facia-container--layout-article {
+    @include mq(mobileLandscape) {
+        
+    }
+    @include mq(tablet) {
+        @include rem((
+            max-width: gs-span(8)
+        ));
+    }
+    @include mq(rightCol) {
+        @include rem((
+            max-width: gs-span(14) + $gs-gutter*2
+        ));
+    }
+    @include mq(leftCol) {
+        .container__title {
+            margin-bottom: 0;
+            float: left;
+            @include rem((
+                width: $a-leftCol-width !important,
+                margin-right: $gs-gutter
+            ));
+        }
+        .container__body {
+            overflow: hidden;
+            @include rem((
+                margin-left: gs-span(2) + $gs-gutter
+            ));
+        }
+    }
+    @include mq(wide) {
+        @include rem((
+            max-width: gs-span(15),
+            padding-right: gs-span(1) + $gs-gutter*2
+        ));
 
-@import "module/facia/_extends";
+        .container__title {
+            @include rem((
+                width: $a-leftColWide-width !important
+            ));
+        }
+    }
 
-@import "module/facia/_facia-container";
-@import "module/facia/_items";
-@import "module/facia/_supporting";
-@import "module/facia/_linkslist";
-@import "module/facia/_fromage";
-@import "module/facia/_baguette";
-
-@import "module/containers/_news";
-@import "module/containers/_tag";
+}
