@@ -11,7 +11,8 @@ define([
     'common/modules/experiments/tests/onward-inline-elements',
     'common/modules/experiments/tests/geo-most-popular',
     'common/modules/experiments/tests/uk-containers',
-    'common/modules/experiments/tests/football-table-position'
+    'common/modules/experiments/tests/football-table-position',
+    'common/modules/experiments/tests/us-containers'
 ], function (
     common,
     store,
@@ -23,7 +24,8 @@ define([
     InlineElements,
     GeoMostPopular,
     UkContainers,
-    FootballTablePosition
+    FootballTablePosition,
+    UsContainers
 ) {
 
     var TESTS = [
@@ -33,7 +35,8 @@ define([
             new InlineElements(),
             new GeoMostPopular(),
             new UkContainers(),
-            new FootballTablePosition()
+            new FootballTablePosition(),
+            new UsContainers()
        ],
        participationsKey = 'gu.ab.participations';
 
@@ -145,7 +148,7 @@ define([
     function allocateUserToTest(test, config) {
 
         // Skip allocation if the user is already participating, or the test is invalid.
-        if (isParticipating(test) || !testCanBeRun(test, config)) {
+        if (!testCanBeRun(test, config) || isParticipating(test)) {
             return;
         }
 

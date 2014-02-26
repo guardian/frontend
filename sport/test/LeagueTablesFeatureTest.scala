@@ -15,10 +15,11 @@ class LeagueTablesFeatureTest extends FeatureSpec with GivenWhenThen with Matche
       HtmlUnit("/football/tables") { browser =>
         import browser._
 
-        Then("I should see the first 4 entries of each table")
+        Then("I should see the 4 few entries of each table")
 
-        val teams = $("[data-link-name='View team']").getTexts
+        val teams = $(".football-stat--team").getTexts
         teams should contain("Arsenal")
+        teams should contain("Man U")
         teams should contain("Man C")
         teams should contain("Chelsea")
 
