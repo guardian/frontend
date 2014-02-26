@@ -1,6 +1,5 @@
 package form
 
-import play.api.data.Forms
 import play.api.data.Forms._
 import com.gu.identity.model.{PrivateFields, PublicFields, User}
 import idapiclient.UserUpdate
@@ -10,11 +9,11 @@ object ProfileMapping extends UserFormMapping[ProfileFormData] {
   private val genders = List("Male", "Female", "unknown", "")
 
   protected lazy val formMapping = mapping(
-    "location" -> optionalTextField,
-    "aboutMe" -> optional(text(maxLength = 1500)),
-    "interests" -> optionalTextField,
-    "webPage" -> optionalTextField,
-    "gender" -> Forms.optional(Forms.text).verifying{genderOpt => genderOpt map (genders contains _) getOrElse true}
+    "location" -> textField,
+    "aboutMe" -> textArea,
+    "interests" -> textField,
+    "webPage" -> idUrl,
+    "gender" -> comboList(genders)
   )(ProfileFormData.apply)(ProfileFormData.unapply)
 
   protected def fromUser(user: User) = ProfileFormData(user)
@@ -33,31 +32,31 @@ trait ProfileMapping {
 }
 
 case class ProfileFormData(
-  location: Option[String],
-  aboutMe: Option[String],
-  interests: Option[String],
-  webPage: Option[String],
-  gender: Option[String]
+  location: String,
+  aboutMe: String,
+  interests: String,
+  webPage: String,
+  gender: String
 ){
 
   lazy val toUserUpdate: UserUpdate = UserUpdate(
     publicFields = Some(PublicFields(
-      location = location,
-      aboutMe = aboutMe,
-      webPage = webPage,
-      interests = interests
+      location = Some(location),
+      aboutMe = Some(aboutMe),
+      webPage = Some(webPage),
+      interests = Some(interests)
     )),
-    privateFields = Some(PrivateFields(gender = this.gender))
+    privateFields = Some(PrivateFields(gender = Some(gender)))
   )
 
 }
 
 object ProfileFormData {
   def apply(user: User): ProfileFormData = ProfileFormData(
-    location = user.publicFields.location,
-    aboutMe = user.publicFields.aboutMe,
-    interests = user.publicFields.interests,
-    webPage = user.publicFields.webPage,
-    gender = user.privateFields.gender
+    location = user.publicFields.location getOrElse "",
+    aboutMe = user.publicFields.aboutMe getOrElse "",
+    interests = user.publicFields.interests getOrElse "",
+    webPage = user.publicFields.webPage getOrElse "",
+    gender = user.privateFields.gender getOrElse "unknown"
   )
 }

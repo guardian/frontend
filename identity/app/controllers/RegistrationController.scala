@@ -13,7 +13,7 @@ import play.api.mvc.SimpleResult
 import scala.concurrent.Future
 import services._
 import utils.SafeLogging
-import form.Mappings.{idEmail, idPassword}
+import form.Mappings
 
 @Singleton
 class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
@@ -22,7 +22,7 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
                                      idRequestParser : IdRequestParser,
                                      idUrlBuilder : IdentityUrlBuilder,
                                      signinService : PlaySigninService  )
-  extends Controller with ExecutionContexts with SafeLogging {
+  extends Controller with ExecutionContexts with SafeLogging with Mappings{
 
   val page = IdentityPage("/register", "Register", "register")
 
@@ -76,12 +76,11 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
             val verifiedReturnUrl = returnUrlVerifier.getVerifiedReturnUrl(request).getOrElse(returnUrlVerifier.defaultReturnUrl)
             val authResponse = api.authBrowser(EmailPassword(email, password), trackingData)
             val response: Future[SimpleResult] = signinService.getCookies(authResponse, false) map {
-              case Left(errors) => {
+              case Left(errors) =>
                 Ok(views.html.registration_confirmation(page, idRequest, idUrlBuilder, verifiedReturnUrl))
-              }
-              case Right(responseCookies) => {
+
+              case Right(responseCookies) =>
                 Ok(views.html.registration_confirmation(page, idRequest, idUrlBuilder, verifiedReturnUrl)).withCookies(responseCookies:_*)
-              }
             }
 
             response

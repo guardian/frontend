@@ -12,8 +12,8 @@ object AccountDetailsMapping extends UserFormMapping[AccountFormData] {
       "primaryEmailAddress" -> idEmail,
       "password1" -> idPassword,
       "password2" -> idPassword,
-      "privateFields.firstName" -> optionalTextField,
-      "privateFields.secondName" -> optionalTextField
+      "privateFields.firstName" -> textField,
+      "privateFields.secondName" -> textField
     )(AccountFormData.apply)(AccountFormData.unapply)
     baseMapping verifying (Messages("error.passwordsMustMatch"), { _.validatePassword })
   }
@@ -33,18 +33,18 @@ trait AccountDetailsMapping {
 }
 
 case class AccountFormData(
-                            primaryEmailAddress: String,
-                            password: String,
-                            confirmPassword: String,
-                            firstName: Option[String],
-                            secondName: Option[String]
-                            ){
+  primaryEmailAddress: String,
+  password: String,
+  confirmPassword: String,
+  firstName: String,
+  secondName: String
+){
   lazy val validatePassword: Boolean = password == confirmPassword
 
   def updateUser(user: User): User = {
     user.copy(primaryEmailAddress = primaryEmailAddress,
       password = Some(password),
-      privateFields = user.privateFields.copy(firstName = firstName, secondName = secondName)
+      privateFields = user.privateFields.copy(firstName = Some(firstName), secondName = Some(secondName))
     )
   }
 
@@ -57,7 +57,7 @@ object AccountFormData {
     primaryEmailAddress = user.primaryEmailAddress,
     password = user.password getOrElse "",
     confirmPassword = user.password getOrElse "",
-    firstName = user.privateFields.firstName,
-    secondName = user.privateFields.secondName
+    firstName = user.privateFields.firstName getOrElse "",
+    secondName = user.privateFields.secondName getOrElse ""
   )
 }
