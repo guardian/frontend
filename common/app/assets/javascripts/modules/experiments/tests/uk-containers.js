@@ -44,11 +44,10 @@ define([
                 mediator.emit('ui:collection-show-more:add');
                 mediator.emit('ui:container-toggle:add');
                 mediator.emit('fragment:ready:dates');
+                show();
             })
             .fail(function(req) {
                 mediator.emit('module:error', 'Failed to get uk front "' + frontId + '"', 'experiments/tests/uk-containers.js');
-            })
-            .always(function(req) {
                 show();
             });
     }
