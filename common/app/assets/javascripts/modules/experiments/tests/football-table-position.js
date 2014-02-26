@@ -14,9 +14,9 @@ define([
 var FootballTablePosition = function () {
 
     this.id = 'FootballTablePosition';
-    this.expiry = '2014-03-06';
-    this.audience = 0.4;
-    this.audienceOffset = 0.2;
+    this.expiry = '2014-03-12';
+    this.audience = 0.2;
+    this.audienceOffset = 0.5;
     this.description = 'Varies the football tables\'s position and functionality';
     this.canRun = function(config) {
         return config.page &&
