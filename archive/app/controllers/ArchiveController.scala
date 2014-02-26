@@ -7,7 +7,7 @@ import views.support._
 import services.S3
 import services.DynamoDB
 import play.api.templates.Html
-import java.net.{URLDecoder, URLEncoder}
+import java.net.URLDecoder
 
 object ArchiveController extends Controller with Logging with ExecutionContexts {
  
