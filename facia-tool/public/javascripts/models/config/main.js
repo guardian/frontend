@@ -9,7 +9,6 @@ define([
     'utils/clean-clone',
     'utils/clone-with-key',
     'utils/find-first-by-id',
-    'utils/guid',
     'models/group',
     'models/config/droppable',
     'models/config/front',
@@ -24,7 +23,6 @@ define([
     cleanClone,
     cloneWithKey,
     findFirstById,
-    guid,
     Group,
     droppable,
     Front,
@@ -63,9 +61,8 @@ define([
         };
 
         model.createCollection = function() {
-            var collection = new Collection({
-                id: guid()
-            });
+            var collection = new Collection();
+
             collection.toggleOpen();
             model.collections.unshift(collection);
         };

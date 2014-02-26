@@ -61,5 +61,15 @@ class ArchiveControllerTest extends FlatSpec with Matchers {
       case (key, value) => controllers.ArchiveController.normalise(key) should be (value)
     }
   }
+  
+  // r1 curio (all the redirects have their 00's removed, all the s3 archived files don't)
+  it should "return a normalised r1 path with suffixed zeros" in Fake {
+    val tests = Map[String, Option[String]](
+      "www.theguardian.com/books/reviews/travel/0,,343395,00.html" -> Some("www.theguardian.com/books/reviews/travel/0,,343395,00.html")
+    ) 
+    tests foreach {
+      case (key, value) => controllers.ArchiveController.normalise(key, zeros = "00") should be (value)
+    }
+  }
 
 }

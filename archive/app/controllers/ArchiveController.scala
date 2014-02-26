@@ -23,11 +23,11 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
   }
 
   // Our redirects are 'normalised' Vignette URLs, Ie. path/to/0,<n>,123,<n>.html -> path/to/0,,123,.html
-  def normalise(path: String) = {
+  def normalise(path: String, zeros: String = "") = {
     val r1ArtifactUrl = """www.theguardian.com/(.*)/[0|1]?,[\d]*,(-?\d+),[\d]*(.*)""".r
     path match {
       case r1ArtifactUrl(path, artifactOrContextId, extension) => {
-        val normalisedUrl = s"www.theguardian.com/${path}/0,,${artifactOrContextId},.html"
+        val normalisedUrl = s"www.theguardian.com/${path}/0,,${artifactOrContextId},${zeros}.html"
         Some(normalisedUrl)
       }
       case _ => None
@@ -42,7 +42,7 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
     destination match { 
       case Some(_) => Redirect(destination.get, 301)
       case _ => {
-        val s3content = isArchived(path)
+        val s3content = isArchived(normalise(path, zeros = "00").getOrElse(path))
         s3content match {
           case Some(_) => Ok(views.html.archive(s3content)).as("text/html")
           case _ => NotFound
