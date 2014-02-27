@@ -11,7 +11,7 @@
             </div>
 
             <div class="article__container u-cf">
-                <table class="table table--match">
+                <table class="table table--football-match">
                     <thead hidden>
                         <tr>
                             <th>Match status / kick off time</th>
@@ -21,7 +21,7 @@
                     </thead>
                     <tbody>
                         @comp.matches.map{ game =>
-                            <tr class="@RenderClasses(Map(
+                            <tr data-link-to="@LinkTo{@MatchUrl(game)}" class="@RenderClasses(Map(
                                     "football-match--live" -> game.isLive,
                                     "football-match--fixture" -> game.isFixture,
                                     "football-match--result" -> game.isResult
@@ -34,20 +34,22 @@
                                     }
                                 </td>
                                 <td class="football-match__details table-column--main">
-                                    <span class="details__team details__team--home">@game.homeTeam.name</span>
-                                    @if(game.isFixture){
-                                        <abbr class="details__versus" title="versus">v</abbr>
-                                    }else{
-                                        <span class="details__score">@game.homeTeam.score-@game.awayTeam.score</span>
-                                    }
-                                    <span class="details__team details__team--away">@game.awayTeam.name</span>
+                                    <a href="@LinkTo{@MatchUrl(game)}" data-link-name="stats" data-match-id="@game.id">
+                                        <span class="details__team details__team--home">@game.homeTeam.name</span>
+                                        @if(game.isFixture){
+                                            <abbr class="details__versus" title="versus">v</abbr>
+                                        }else{
+                                            <span class="details__score">@game.homeTeam.score-@game.awayTeam.score</span>
+                                        }
+                                        <span class="details__team details__team--away">@game.awayTeam.name</span>
 
 
-                                    @if(game.homeTeam.aggregateScore){
-                                        <p class="match-aggregate type-10"><span>(agg. <span>@game.homeTeam.aggregateScore-@game.awayTeam.aggregateScore</span>)</span></p>
-                                    }
+                                        @if(game.homeTeam.aggregateScore){
+                                            <p class="match-aggregate type-10"><span>(agg. <span>@game.homeTeam.aggregateScore-@game.awayTeam.aggregateScore</span>)</span></p>
+                                        }
 
-                                    @game.comments.map{ comment => <p class="match-comment type-10"><span>@comment</span></p> }
+                                        @game.comments.map{ comment => <p class="match-comment type-10"><span>@comment</span></p> }
+                                    </a>
                                 </td>
                                 <td></td>
                             </tr>

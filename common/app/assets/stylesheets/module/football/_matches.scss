@@ -1,5 +1,9 @@
-.football-matches__day {
+.table--football-match {
     @include rem((margin-bottom: $gs-baseline*2));
+
+    a {
+        color: $c-neutral1;
+    }
 }
 
 .football-match--live {
@@ -36,8 +40,7 @@
 }
 
 .details__versus,
-.details__score
-{
+.details__score {
     display: inline-block;
     width: 15%;
 }
