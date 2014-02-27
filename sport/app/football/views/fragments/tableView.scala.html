@@ -20,7 +20,7 @@
             </tr>
         </thead>
 
-        <tbody class="table-football-body">
+        <tbody>
             @group.entries.zipWithRowInfo.map{ case (entry, row) =>
                 <tr class="@RenderClasses(Map(
                         "table-row--highlight" -> highlightTeamId.map(_ == entry.team.id).getOrElse(false),
