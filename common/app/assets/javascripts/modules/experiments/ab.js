@@ -12,7 +12,8 @@ define([
     'common/modules/experiments/tests/football-table-position',
     'common/modules/experiments/tests/uk-containers',
     'common/modules/experiments/tests/us-containers',
-    'common/modules/experiments/tests/au-containers'
+    'common/modules/experiments/tests/au-containers',
+    'common/modules/experiments/tests/onward-related'
 ], function (
     common,
     store,
@@ -25,8 +26,9 @@ define([
     FootballTablePosition,
     UkContainers,
     UsContainers,
-    AuContainers
-) {
+    AuContainers,
+    OnwardRelated
+    ) {
 
     var TESTS = [
             new Aa(),
@@ -36,7 +38,8 @@ define([
             new FootballTablePosition(),
             new UkContainers(),
             new UsContainers(),
-            new AuContainers()
+            new AuContainers(),
+            new OnwardRelated()
        ],
        participationsKey = 'gu.ab.participations';
 
