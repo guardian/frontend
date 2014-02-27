@@ -54,6 +54,10 @@ define([
         this.depopulateCollection = this._depopulateCollection.bind(this);
     }
 
+    Front.prototype.setOpen = function(isOpen) {
+        this.state.open(isOpen);
+    };
+
     Front.prototype.toggleOpen = function() {
         this.state.open(!this.state.open());
     };

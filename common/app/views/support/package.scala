@@ -666,7 +666,8 @@ object RenderClasses {
 
 object GetClasses {
 
-  def forCollectionItem(trail: Trail): String = {
+  def forCollectionItem(trail: Trail,
+                        additionalClasses: String = ""): String = {
     val f: Seq[(Trail) => String] = Seq(
       (trail: Trail) => trail match {
         case _: Gallery => "collection__item--content-type-gallery"
@@ -675,6 +676,7 @@ object GetClasses {
       }
     )
     val baseClasses: Seq[String] = Seq(
+      additionalClasses,
       "l-row__item",
       "collection__item",
       s"collection__item--volume-${trail.group.getOrElse("0")}"
@@ -683,7 +685,9 @@ object GetClasses {
     RenderClasses(classes:_*)
   }
 
-  def forItem(trail: Trail, firstContainer: Boolean, forceHasImage: Boolean = false): String = {
+  def forItem(trail: Trail,
+              firstContainer: Boolean,
+              forceHasImage: Boolean = false): String = {
     val baseClasses: Seq[String] = Seq(
       "item",
       s"tone-${VisualTone(trail)}"

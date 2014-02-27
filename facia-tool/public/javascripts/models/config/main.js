@@ -36,7 +36,7 @@ define([
 
         model.collections = ko.observableArray();
         model.fronts = ko.observableArray();
-        model.newFront = ko.observable();
+        model.pinnedFront = ko.observable();
         model.pending = ko.observable();
 
         model.types =  [''].concat(vars.CONST.types);
@@ -59,12 +59,18 @@ define([
 
             if (vars.model.fronts().length <= vars.CONST.maxFronts) {
                 front =  new Front();
-                model.newFront(front);
+                model.pinnedFront(front);
                 model.fronts.unshift(front);
-                front.toggleOpen();
+                model.openFront(front);
             } else {
                 window.alert('The maximum number of fronts (' + vars.CONST.maxFronts + ') has been exceeded. Please delete one first, by removing all its collections.');
             }
+        };
+
+        model.openFront = function(front) {
+            _.each(model.fronts(), function(f){
+                f.setOpen(f === front);
+            });
         };
 
         model.createCollection = function() {
@@ -161,8 +167,8 @@ define([
                     model.fronts(
                        _.chain(_.keys(config.fronts))
                         .sortBy(function(id) { return id; })
-                        .without(model.newFront() ? model.newFront().id() : undefined)
-                        .unshift(model.newFront() ? model.newFront().id() : undefined)
+                        .without(model.pinnedFront() ? model.pinnedFront().id() : undefined)
+                        .unshift(model.pinnedFront() ? model.pinnedFront().id() : undefined)
                         .filter(function(id) { return id; })
                         .map(function(id) {
                             var front = new Front(cloneWithKey(config.fronts[id], id));
