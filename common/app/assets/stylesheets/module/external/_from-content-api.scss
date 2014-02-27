@@ -32,7 +32,7 @@
 
         @include mq(tablet) {
             @include rem((
-                margin-bottom: $baseline*4
+                margin-bottom: ($gs-baseline/3)*4
             ));
         }
     }
@@ -95,7 +95,7 @@
         }
         + h3 {
             @include rem((
-                margin-top: $baseline*3
+                margin-top: $gs-baseline
             ));
         }
     }
@@ -200,7 +200,7 @@ figcaption,
 
 .main-caption {
     @include rem((
-        padding: $baseline*2 $gs-gutter/2 $gs-row-height
+        padding: ($gs-baseline/3)*2 $gs-gutter/2 $gs-row-height
     ));
 
     @include mq(mobileLandscape) {
@@ -223,14 +223,14 @@ figure {
     }
     &.img {
         @include rem((
-            margin-top: $baseline*4,
-            margin-bottom: $baseline*5
+            margin-top: ($gs-baseline/3)*4,
+            margin-bottom: ($gs-baseline/3)*5
         ));
 
         @include mq(leftCol) {
             @include rem((
-                margin-top: $baseline*5,
-                margin-bottom: $baseline*6
+                margin-top: ($gs-baseline/3)*5,
+                margin-bottom: $gs-baseline*2
             ));
         }
     }
@@ -239,12 +239,12 @@ figure {
         figcaption {
             background-color: $c-neutral7;
             @include rem((
-                padding: $baseline 6px $baseline*6 6px
+                padding: $gs-baseline/3 6px $gs-baseline*2 6px
             ));
 
             @include mq(wide) {
                 @include rem((
-                    padding: $baseline*1.5 8px $gs-row-height 8px
+                    padding: $gs-baseline/2 8px $gs-row-height 8px
                 ));
             }
         }
@@ -254,15 +254,15 @@ figure {
 .figure.img--extended,
 .element-video {
     @include rem((
-        margin-top: $baseline*4,
-        margin-bottom: $baseline*4
+        margin-top: ($gs-baseline/3)*4,
+        margin-bottom: ($gs-baseline/3)*4
     ));
 }
 
 p + figure,
 p + video {
     @include rem((
-        margin-top: $baseline
+        margin-top: $gs-baseline/3
     ));
 }
 
@@ -276,7 +276,7 @@ p + video {
     padding-top: 25px;
     height: 0;
     @include rem((
-        margin-bottom: $baseline*2
+        margin-bottom: ($gs-baseline/3)*2
     ));
     background-color: #000000;
 
@@ -324,20 +324,20 @@ p + video {
 
 .from-content-api {
     table {
-        margin-bottom: $baseline*4;
+        margin-bottom: ($gs-baseline/3)*4;
     }
 
     // This is a weird xml output from the api
     table caption {
         @include fs-headline(2);
-        padding: $baseline*2 0;
+        padding: ($gs-baseline/3)*2 0;
         text-align: left;
         border-top: 1px solid #B3B3B4;
     }
     th,
     td {
         @include fs-data(3);
-        padding: $baseline*2;
+        padding: ($gs-baseline/3)*2;
     }
     th {
         font-weight: 600;
