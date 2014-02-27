@@ -54,7 +54,9 @@
                 <span class="also">also</span> on
                 <span data-bind="foreach: parents">
                     <!-- ko if: $parents[2] ? id !== $parents[2].id : true -->
-                        <span class="cnf-collection__also-on" data-bind="text: id "></span>
+                        <a class="cnf-collection__also-on" data-bind="
+                            click: $root.openFront,
+                            text: id"></a>
                     <!-- /ko -->
                 </span>
             </span>
