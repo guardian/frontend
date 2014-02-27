@@ -28,7 +28,7 @@ define([
             var allTrails = qwery('li.item', container);
             // remove current page
             allTrails.some(function(trail, i) {
-                if (trail.querySelector('a.item__link').getAttribute('href').slice(1) === config.page.pageId) {
+                if ($('.item__link', trail).attr('href').slice(1) === config.page.pageId) {
                     bonzo(trail).remove();
                     allTrails.splice(i,1);
                     return true;
@@ -37,11 +37,13 @@ define([
             });
 
             var seenTrails = allTrails.filter(function(trail) {
-                var url = trail.querySelector('a.item__link').getAttribute('href');
+                var url = $('.item__link',trail).attr('href');
                 return history.contains(url);
             });
             if (allTrails.length - seenTrails.length >= 4) {
-                seenTrails.forEach(function(trail) { bonzo(trail).remove(); });
+                seenTrails.forEach(function(trail) {
+                    bonzo(trail).remove();
+                });
             }
         }
 
@@ -64,7 +66,9 @@ define([
                     success: function () {
                         if (popularInTag) {
                             removeSeenTrails(container);
-                            if (config.page.hasStoryPackage) { $('.more-on-this-story').addClass('u-h'); }
+                            if (config.page.hasStoryPackage) {
+                                $('.more-on-this-story').addClass('u-h');
+                            }
                         }
 
                         var relatedTrails = container.querySelector('.related-trails');

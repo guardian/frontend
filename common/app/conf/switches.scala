@@ -346,7 +346,7 @@ object Switches extends Collections {
 
   val ABRelatedContent = Switch("A/B Tests", "ab-onward-related",
     "If this switch is on the related content popular-in-tag override A/B test is run",
-    safeState = On, sellByDate = new DateMidnight(2014, 2, 28)
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 10)
   )
 
   val TagLinking = Switch("Feature Switches", "tag-linking",
