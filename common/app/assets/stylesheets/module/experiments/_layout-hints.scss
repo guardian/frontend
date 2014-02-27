@@ -21,6 +21,7 @@
 @mixin pull-quote {
     float: left;
     margin-top: 0;
+    margin-right: 24px;
     @include fs-headline(3);
     font-weight: 200;
     font-style: normal;
@@ -93,6 +94,7 @@ figure {
 
         @include mq(leftCol) {
             blockquote {
+                margin-right: 0;
                 padding-right: $gs-gutter;
                 @include deport-left;
                 @include reduce-left;
