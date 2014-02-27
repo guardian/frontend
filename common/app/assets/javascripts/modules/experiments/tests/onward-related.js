@@ -39,7 +39,7 @@ define([
 
                     var match = _intersection(allWhitelistedTags, tags);
                     if (match.length > 0) {
-                        var url = '/popular-in-tag/' + match[0] + '.json';
+                        var url = '/most-read-in-tag/' + match[0] + '.json';
                         related(config, context, url, true);
                     } else {
                         related(config, context);
