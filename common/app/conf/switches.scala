@@ -338,10 +338,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
   )
 
-  val ABInlineElements = Switch("A/B Tests", "ab-onward-inline-elements",
-    "If this switch is on the ab inline elements test is run",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
-  )
 
   val ABRelatedContent = Switch("A/B Tests", "ab-onward-related",
     "If this switch is on the related content popular-in-tag override A/B test is run",
@@ -482,7 +478,6 @@ object Switches extends Collections {
     ABRightHandRecommendations,
     GeoMostPopular,
     FootballTablePosition,
-    ABInlineElements,
     ABRelatedContent,
     ToolDisable,
     ToolConfigurationDisable,
