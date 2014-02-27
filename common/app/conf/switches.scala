@@ -321,6 +321,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
   )
 
+  val LayoutHintsSwitch = Switch("Feature Switches", "layout-hints",
+    "If this switch is on, javascript will enable the inline-hinting css experiments",
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
+  )
+
   // A/B Test Switches
 
   val ABAa = Switch("A/B Tests", "ab-abcd",
@@ -509,7 +514,7 @@ object Switches extends Collections {
     DogeSwitch,
     ABUkContainers,
     ABUsContainers,
-    ABAuContainers
+    LayoutHintsSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
