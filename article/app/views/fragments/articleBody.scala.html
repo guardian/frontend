@@ -7,7 +7,7 @@
         @fragments.sponsored()
     }
 
-    <h2 class="article-zone left-col-deport tone-@VisualTone(article) tone-accent-border">
+    <h2 class="article__zone left-col-deport tone-@VisualTone(article) tone-accent-border">
         <span class="left-col-deport__body">
             <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
         </span>
@@ -77,17 +77,9 @@
                         }
                     </div>
 
-                    @if(ArticleTruncation.isSwitchedOn){
-                        <div class="u-cf article__actions js-article-actions">
-                            <div class="social-wrapper">
-                            @fragments.social(article)
-                            </div>
-                        </div>
-                    } else {
-                        <div class="social-wrapper">
-                            @fragments.social(article)
-                        </div>
-                    }
+                    <div class="social-wrapper">
+                        @fragments.social(article)
+                    </div>
                 </div>
                 <div class="article__secondary-column" aria-hidden="true">
                     <div class="article__secondary-column__inner@if(storyPackage.nonEmpty) { article__secondary-column__inner--fill-vertically}">
@@ -101,6 +93,7 @@
                                                 <h2 class="article__meta-heading">Share this article</h2>
                                                 @fragments.social(article, "next to content")
                                             </div>
+                                            <div class="ad-slot ad-slot--mpu-banner-ad" data-link-name="ad slot mpu-banner-ad" data-base="" data-median="Middle"><div class="ad-slot__label">Advertisement</div><div class="ad-container"></div></div>
                                         </div>
                                         <div class="open-cta"></div>
                                     </div>

@@ -12,12 +12,13 @@
 
 $old-ie:      false !default;
 $svg-support: true !default;
+$browser-supports-columns: true !default;
+$browser-supports-flexbox: true !default;
 
 
 // Layout dimensions
 // =============================================================================
 
-$baseline: 4px;
 $gutter: 16px;
 $unitHeight: 36px;
 $inArticleInlineImgWidth: 114px;

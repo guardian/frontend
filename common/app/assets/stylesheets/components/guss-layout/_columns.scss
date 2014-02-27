@@ -95,6 +95,8 @@ $guss-columns-fallback-columns: 3 !default;
             box-sizing: border-box;
             position: relative;
             float: left;
+            height: 100%;
+
             @include rem((
                 width: $columns-fallback-width / $columns-fallback-columns - $column-gap,
                 margin-left: $column-gap / 2,

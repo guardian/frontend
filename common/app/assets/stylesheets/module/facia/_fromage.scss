@@ -132,7 +132,7 @@
    ========================================================================== */
 
 .fromage__link,
-.fromage__support__action {
+.supporting__action {
     color: $c-neutral1;
 }
 .fromage__link {
@@ -140,14 +140,21 @@
 
     &:hover,
     &:focus {
+       text-decoration: none;
+
         .item__title {
             text-decoration: underline;
+        }
+    }
+    &:active {
+        .item__title {
+            text-decoration: none;
         }
     }
 }
 .fromage__link:visited,
 .fromage__link:visited .item__title,
-.fromage__support__action:visited {
+.supporting__action:visited {
     color: $c-neutral2;
 }
 .fromage__media-wrapper,
@@ -477,11 +484,13 @@
         color: #ffffff;
     }
     .fromage__link:visited,
-    .fromage__link:visited .item__title,
-    .fromage__support__action:visited {
-        color: rgba(#ffffff, .9);
+    .fromage__link:visited .item__title {
+        color: mix(#ffffff, $c-brandBlue, 80%);
     }
     .supporting {
         background-color: lighten($c-brandBlue, 7%);
+    }
+    .supporting__action:visited {
+        color: mix(#ffffff, lighten($c-brandBlue, 7%), 80%);
     }
 }

@@ -13,7 +13,9 @@
 .nav {
     list-style: none;
     margin: 0;
-    @include rem((padding: $baseline*2 0 $baseline));
+    @include rem((
+        padding: ($gs-baseline/3)*2 0 $gs-baseline/3
+    ));
 
     .nav__item--full {
         width: 100%;
@@ -39,7 +41,9 @@
    ========================================================================== */
 
 .nav--columns {
-    @include rem((padding: 0 $gs-gutter/2));
+    @include rem((
+        padding: 0 $gs-gutter/2
+    ));
     @include mq(mobileLandscape) {
         @include rem((
             padding-left: $gs-gutter,
@@ -50,20 +54,26 @@
         float: left;
         width: 50%;
         @include box-sizing(border-box);
-        @include rem((padding-right: $gs-gutter/2));
+        @include rem((
+            padding-right: $gs-gutter/2
+        ));
 
         &:nth-child(odd) {
             clear: left;
         }
         &:nth-child(even) {
             padding-right: 0;
-            @include rem((padding-left: $gs-gutter/2));
+            @include rem((
+                padding-left: $gs-gutter/2
+            ));
         }
     }
 
     .nav__link {
         display: block;
-        @include rem((padding: 3px 0 $baseline*4));
+        @include rem((
+            padding: 3px 0 ($gs-baseline/3)*4
+        ));
         border-top: 1px solid $c-neutral7;
         height: auto;
         background-color: transparent;
@@ -75,8 +85,8 @@
 .nav--columns-football {
     @extend .nav--no-horizontal-spacing;
     @include rem((
-        padding-top: $baseline*2,
-        padding-bottom: $baseline
+        padding-top: ($gs-baseline/3)*2,
+        padding-bottom: $gs-baseline/3
     ));
 }
 
@@ -104,7 +114,9 @@
     display: none;
     height: 40px;
     overflow: hidden;
-    @include rem((padding: 0 $gs-gutter));
+    @include rem((
+        padding: 0 $gs-gutter
+    ));
 
     @include mq(tablet) { display: block; }
 
@@ -129,7 +141,7 @@
         color: $c-neutral1;
         display: block;
         @include rem((
-            margin: 10px 0 $baseline*3,
+            margin: 10px 0 $gs-baseline,
             padding: 2px 9px 0 9px
         ));
         @include font-size(14, 19);
@@ -170,7 +182,9 @@
     height: 52px;
     overflow: hidden;
     padding: 0;
-    @include rem((margin: 0 $gs-gutter));
+    @include rem((
+        margin: 0 $gs-gutter
+    ));
     border-bottom: 1px solid $c-neutral6;
 
     @include mq(tablet) {
@@ -184,7 +198,7 @@
         color: $c-neutral2;
         display: block;
         @include rem((
-            margin: $baseline*4 0 $baseline*3 0,
+            margin: ($gs-baseline/3)*4 0 $gs-baseline 0,
             padding: 2px 9px 0,
             font-size: 14px
         ));
@@ -211,7 +225,7 @@
 .localnav--small {
     background-color: #fff;
     display: block;
-    border-top: $baseline/2 solid $c-newsAccent;
+    border-top: $gs-baseline/6 solid $c-newsAccent;
 
     @include mq(tablet) { display: none; }
 
@@ -220,7 +234,7 @@
         width: $gs-column-width;
         height: 25px;
         padding: 0;
-        margin: $baseline*1.5 0;
+        margin: $gs-baseline/2 0;
         position: absolute;
         right: 0;
         top: 0;
@@ -245,7 +259,9 @@
 
 .localnav__inner {
     position: relative;
-    @include rem((margin: 0 $gs-gutter/2));
+    @include rem((
+        margin: 0 $gs-gutter/2
+    ));
     border-bottom: 1px solid $c-neutral6;
     border-bottom-color: $c-neutral6 !important;
 
@@ -262,8 +278,8 @@
     width: 100%;
     float: left;
     border: 0 !important;
-    height: $gs-row-height + $baseline - 3 !important;
-    height: rem($gs-row-height + $baseline - 3) !important;
+    height: $gs-row-height + $gs-baseline/3 - 3 !important;
+    height: rem($gs-row-height + $gs-baseline/3 - 3) !important;
     padding-left: 0 !important;
 }
 
@@ -282,8 +298,8 @@
 
     .nav__item {
         @include rem((
-            margin: $baseline 0 0,
-            padding: $baseline $gs-gutter/2
+            margin: $gs-baseline/3 0 0,
+            padding: $gs-baseline/3 $gs-gutter/2
         ));
         color: #ffffff;
         border-right: 1px solid #94B1CA;
@@ -372,7 +388,9 @@
             float: none;
             display: block;
             width: auto;
-            @include rem((padding: 0 $gs-gutter/2));
+            @include rem((
+                padding: 0 $gs-gutter/2
+            ));
 
             @include mq(tablet) {
                 @include rem((
@@ -382,7 +400,9 @@
             }
 
             .nav__link {
-                @include rem((padding: 10px 0));
+                @include rem((
+                    padding: 10px 0
+                ));
                 border: none;
             }
         }

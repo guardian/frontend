@@ -315,16 +315,31 @@ object UnindentBulletParents extends HtmlCleaner with implicits.JSoup {
 
 case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition) extends HtmlCleaner {
   def clean(body: Document): Document = {
-    val links = body.getElementsByTag("a")
+    val links = body.getElementsByAttribute("href")
 
     links.foreach { link =>
-      link.attr("href", LinkTo(link.attr("href"), edition))
-      link.attr("data-link-name", dataLinkName)
-      link.addClass("u-underline")
+      if (link.tagName == "a") {
+        link.attr("href", LinkTo(link.attr("href"), edition))
+        link.attr("data-link-name", dataLinkName)
+        link.addClass("u-underline")
+      }
     }
+
+    // Prevent text in non clickable anchors from looking like links
+    // <a name="foo">bar</a> -> <a name="foo"></a>bar
+    val anchors = body.getElementsByAttribute("name")
+
+    anchors.foreach { anchor =>
+      if (anchor.tagName == "a") {
+        val text = anchor.ownText()
+        anchor.empty().after(text)
+      }
+    }
+
     body
   }
 }
+
 
 object TweetCleaner extends HtmlCleaner {
 
@@ -383,7 +398,7 @@ case class InlineSlotGenerator(articleWordCount: Int) extends HtmlCleaner {
 
       children.zipWithIndex.foreach { case (element, index) =>
 
-        if (element.hasClass("img--inline")) {
+        if (element.attr("class").split(" ").contains("img--inline")) {
           lastInline = offset
         }
         else if (element.tagName == "p" && lastInline + spacing < offset && !element.hasClass("img")) {
@@ -397,6 +412,10 @@ case class InlineSlotGenerator(articleWordCount: Int) extends HtmlCleaner {
         }
 
         if (element.tagName.in(Set("p","h2"))) offset += element.text.length
+      }
+
+      document.select("body .slot").zipWithIndex.foreach { case (slot, index) =>
+        slot.attr("data-link-name", s"inline slot | $index")
       }
     }
 
