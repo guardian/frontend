@@ -10,7 +10,9 @@ define([
     'common/modules/experiments/tests/ad-labels',
     'common/modules/experiments/tests/onward-inline-elements',
     'common/modules/experiments/tests/geo-most-popular',
-    'common/modules/experiments/tests/uk-containers'
+    'common/modules/experiments/tests/uk-containers',
+    'common/modules/experiments/tests/football-table-position',
+    'common/modules/experiments/tests/us-containers'
 ], function (
     common,
     store,
@@ -21,7 +23,9 @@ define([
     AdLabels,
     InlineElements,
     GeoMostPopular,
-    UkContainers
+    UkContainers,
+    FootballTablePosition,
+    UsContainers
 ) {
 
     var TESTS = [
@@ -30,7 +34,9 @@ define([
             new AdLabels(),
             new InlineElements(),
             new GeoMostPopular(),
-            new UkContainers()
+            new UkContainers(),
+            new FootballTablePosition(),
+            new UsContainers()
        ],
        participationsKey = 'gu.ab.participations';
 
@@ -124,7 +130,6 @@ define([
 
     // Finds variant in specific tests and runs it
     function run(test, config, context) {
-
         if (isParticipating(test) && testCanBeRun(test, config)) {
             var participations = getParticipations(),
                 variantId = participations[test.id].variant;
