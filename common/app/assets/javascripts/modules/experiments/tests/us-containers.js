@@ -21,7 +21,7 @@ define([
 
     function show() {
         // remove hiding class
-        $('html').removeClass('ab-uk-containers');
+        $('html').removeClass('ab-us-containers');
     }
 
     function renderFront(frontId) {
@@ -44,32 +44,33 @@ define([
                 mediator.emit('ui:collection-show-more:add');
                 mediator.emit('ui:container-toggle:add');
                 mediator.emit('fragment:ready:dates');
-                show();
             })
             .fail(function(req) {
-                mediator.emit('module:error', 'Failed to get uk front "' + frontId + '"', 'experiments/tests/uk-containers.js');
+                mediator.emit('module:error', 'Failed to get us front "' + frontId + '"', 'experiments/tests/us-containers.js');
+            })
+            .always(function(req) {
                 show();
             });
     }
 
     return function() {
 
-        this.id = 'UkContainers';
+        this.id = 'UsContainers';
         this.expiry = '2014-03-08';
         this.audience = 0.1;
         this.audienceOffset = 0.0;
-        this.description = 'Testing different combination of containers on the UK network front';
+        this.description = 'Testing different combination of containers on the US network front';
         this.canRun = function(config) {
-            var onUkFront = ['/pressed/uk', '/uk'].indexOf(window.location.pathname) > -1;
-            if (onUkFront) {
-                // force user into uk-alpha variant if they've clicked on the Beta link in R2
+            var onUsFront = ['/pressed/us', '/us'].indexOf(window.location.pathname) > -1;
+            if (onUsFront) {
+                // force user into us-alpha variant if they've clicked on the Beta link in R2
                 // NOTE: requiring here to avoid circular dependency
                 var ab = require('common/modules/experiments/ab');
                 if (['responsive', 'mobile'].indexOf(cookies.get('GU_VIEW')) > -1 && !ab.getTestVariant(this.id)) {
-                    ab.forceSegment(this.id, 'uk-alpha');
+                    ab.forceSegment(this.id, 'us-alpha');
                 }
             }
-            return onUkFront;
+            return onUsFront;
         };
         this.variants = [
             {
@@ -79,9 +80,9 @@ define([
                 }
             },
             {
-                id: 'uk-alpha',
+                id: 'us-alpha',
                 test: function (context, config) {
-                    renderFront('uk-alpha');
+                    renderFront('us-alpha');
                 }
             }
         ];

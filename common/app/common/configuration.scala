@@ -213,6 +213,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object facia {
     lazy val stage = configuration.getStringProperty("facia.stage").getOrElse(Configuration.environment.stage)
+    lazy val collectionCap: Int = configuration.getIntegerProperty("facia.collection.cap").getOrElse(25)
   }
 
   object faciatool {

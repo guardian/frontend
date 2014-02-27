@@ -125,6 +125,16 @@
                         (<span class="non-zero">updating...</span>)
                     </span>
 
+                    <span data-bind="if: alsoOn.length">
+                        also on
+                        <span data-bind="foreach: alsoOn"
+                        ><span data-bind="if: $index">, </span
+                        ><a class="list-header__also-on" data-bind="
+                                click: $root.setFront,
+                                text: $data"></a
+                        ></span>
+                    </span>
+
                     <i class="list-header__collapser" data-bind="
                         click: toggleCollapsed,
                         visible: !configMeta.uneditable(),
