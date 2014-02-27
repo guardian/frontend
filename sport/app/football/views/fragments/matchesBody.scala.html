@@ -35,20 +35,24 @@
                                 </td>
                                 <td class="football-match__details table-column--main">
                                     <a href="@LinkTo{@MatchUrl(game)}" data-link-name="stats" data-match-id="@game.id">
-                                        <span class="details__team details__team--home">@game.homeTeam.name</span>
-                                        @if(game.isFixture){
-                                            <abbr class="details__versus" title="versus">v</abbr>
-                                        }else{
-                                            <span class="details__score">@game.homeTeam.score-@game.awayTeam.score</span>
-                                        }
-                                        <span class="details__team details__team--away">@game.awayTeam.name</span>
+                                        <div class="details__match-teams">
+                                            <span class="details__team details__team--home">@game.homeTeam.name</span>
+                                            @if(game.isFixture){
+                                                <abbr class="details__versus" title="versus">v</abbr>
+                                            }else{
+                                                <span class="details__score">@game.homeTeam.score-@game.awayTeam.score</span>
+                                            }
+                                            <span class="details__team details__team--away">@game.awayTeam.name</span>
+                                        </div>
 
-
+                                        <div class="details__meta">
+                                            <div class="details__aggregate">(agg. 9-0)</div>
+                                            <div class="details__comment">Spurs win 8-7 on penalties.</div>
+                                        </div>
                                         @if(game.homeTeam.aggregateScore){
-                                            <p class="match-aggregate type-10"><span>(agg. <span>@game.homeTeam.aggregateScore-@game.awayTeam.aggregateScore</span>)</span></p>
+                                        <span class="details__aggregate">(agg. @game.homeTeam.aggregateScore-@game.awayTeam.aggregateScore)</span>
                                         }
-
-                                        @game.comments.map{ comment => <p class="match-comment type-10"><span>@comment</span></p> }
+                                        @game.comments.map{ comment => <span class="details__comment">@comment</span>}
                                     </a>
                                 </td>
                                 <td></td>

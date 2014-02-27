@@ -1,8 +1,10 @@
 .table--football-match {
     @include rem((margin-bottom: $gs-baseline*2));
 
-    a {
+    a,
+    a:hover{
         color: $c-neutral1;
+        text-decoration: none;
     }
 }
 
@@ -44,3 +46,9 @@
     display: inline-block;
     width: 15%;
 }
+
+.details__meta {
+    @include fs-data(2);
+    @include rem((margin-top: $gs-baseline/2));
+}
+
