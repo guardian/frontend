@@ -796,6 +796,10 @@ button {
     display: block;
 }
 
+.cnf-collection__also-on {
+    font-weight: bold;
+}
+
 .cnf-collection .placements {
     color: #999999;
 }

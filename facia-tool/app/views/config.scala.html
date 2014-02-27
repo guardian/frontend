@@ -52,9 +52,7 @@
                 <span class="also">also</span> on
                 <span data-bind="foreach: parents">
                     <!-- ko if: $parents[2] ? id !== $parents[2].id : true -->
-                        <a target="edit-collections" data-bind="
-                            attr: {href: '/?front=' + id},
-                            text: id "></a>
+                        <span class="cnf-collection__also-on" data-bind="text: id "></span>
                     <!-- /ko -->
                 </span>
             </span>
