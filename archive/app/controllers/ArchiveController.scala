@@ -33,18 +33,6 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
     if (path contains "/gallery/") Some(path.replace("/gallery/", "/pictures/")) else None
   }
 
-  // books/Education/<path> -> education/<path>
-  def isRelativeUrl(path: String): Option[String] = {
-    val relativeUrl = """www.theguardian.com/([\w\d-]+)/([A-Z][a-z]+)/(.*)""".r
-    path match {
-      case relativeUrl(section, site, path) => {
-        val url = s"www.theguardian.com/${site.toLowerCase}/${path}"
-        Some(url.replace(".com/guardian/", ".com/")) // r1 curio: 'guardian' means 'www' (i.e. the root), so we remove it
-      }
-      case _ => None
-    }
-  }
-
   // Our redirects are 'normalised' Vignette URLs, Ie. path/to/0,<n>,123,<n>.html -> path/to/0,,123,.html
   def normalise(path: String, zeros: String = ""): Option[String] = {
     val r1ArtifactUrl = """www.theguardian.com/(.*)/[0|1]?,[\d]*,(-?\d+),[\d]*(.*)""".r
@@ -87,10 +75,6 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
     isEncoded(path)
       .map {
         url => Redirect(s"http://${url}", 301)
-      }.orElse {
-        isRelativeUrl(path).map {
-          url => Redirect(s"http://${url}", 301) 
-        }
       }.orElse { // DynamoDB lookup. This needs to happen *before* we poke around S3 for the file. 
         isRedirect(normalise(path).getOrElse(path)).map {
           url => Redirect(url, 301)
