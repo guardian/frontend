@@ -35,7 +35,8 @@
     "esprima": "~1.0.4",
     "glob": "~3.2.8",
     "grunt-contrib-imagemin": "~0.5.0",
-    "grunt-casperjs": "~1.4.0"
+    "grunt-casperjs": "~1.4.0",
+    "grunt-text-replace": "~0.3.11"
   },
   "scripts": {
     "postinstall": "grunt hookmeup"

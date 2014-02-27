@@ -339,11 +339,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
   )
 
-  val ABAdLabels = Switch("A/B Tests", "ab-ad-labels",
-    "Testing if putting labels next to ads impacts the CTR",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 27)
-  )
-
   val ABInlineElements = Switch("A/B Tests", "ab-onward-inline-elements",
     "If this switch is on the ab inline elements test is run",
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
@@ -402,6 +397,11 @@ object Switches extends Collections {
 
   val ToolDisable = Switch("Facia Tool", "facia-tool-disable",
     "If this is switched on then the fronts tool is disabled",
+    safeState = Off, sellByDate = never
+  )
+
+  val ToolConfigurationDisable = Switch("Facia Tool", "facia-tool-configuration-disable",
+    "If this is switched on then the fronts configuration tool is disabled",
     safeState = Off, sellByDate = never
   )
 
@@ -467,9 +467,9 @@ object Switches extends Collections {
     ABRightHandRecommendations,
     GeoMostPopular,
     FootballTablePosition,
-    ABAdLabels,
     ABInlineElements,
     ToolDisable,
+    ToolConfigurationDisable,
     ToolSparklines,
     TagLinking,
     SponsoredContentSwitch,

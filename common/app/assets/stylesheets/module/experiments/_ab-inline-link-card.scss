@@ -118,7 +118,7 @@
                 margin-right: 3px,
                 margin-bottom: -3px
             ));
-            @extend .i-comment-light-grey;
+            @extend %i-comment-light-grey;
         }
     }
 }
