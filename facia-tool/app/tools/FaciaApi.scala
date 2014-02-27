@@ -58,7 +58,7 @@ object FaciaApi extends FaciaApiRead with FaciaApiWrite {
   def putMasterConfig(config: Config, identity: Identity): Option[Config] = {
     Try(S3FrontsApi.putMasterConfig(Json.prettyPrint(Json.toJson(config)))).map(_ => config).toOption
   }
-  def archiveMasterConfig(config: Config): Unit = S3FrontsApi.archiveMasterConfig(Json.prettyPrint(Json.toJson(config)))
+  def archiveMasterConfig(config: Config, identity: Identity): Unit = S3FrontsApi.archiveMasterConfig(Json.prettyPrint(Json.toJson(config)), identity)
 
   def updateIdentity(block: Block, identity: Identity): Block = block.copy(lastUpdated = DateTime.now.toString, updatedBy = identity.fullName, updatedEmail = identity.email)
 }

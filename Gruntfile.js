@@ -33,9 +33,9 @@ module.exports = function (grunt) {
                     }
                 }],
                 options: {
-                    style: (isDev) ? 'expanded' : 'compressed',
-                    sourcemap: false,
-                    noCache: (isDev) ? false : true,
+                    style: 'compressed',
+                    sourcemap: true,
+                    noCache: true,
                     quiet: (isDev) ? false : true,
                     loadPath: [
                         'common/app/assets/stylesheets/components/sass-mq',
@@ -299,12 +299,6 @@ module.exports = function (grunt) {
                     cwd: 'common/app/assets/javascripts',
                     src: ['**/*.js'],
                     dest: staticRequireDir + 'javascripts/common'
-                },
-                {
-                    expand: true,
-                    cwd: 'common/app/assets/javascripts',
-                    src: ['**/*.js', '!bootstraps/**/*'],
-                    dest: staticTargetDir + 'javascripts/common'
                 }]
             },
             'javascript-common-tests': {
@@ -327,12 +321,6 @@ module.exports = function (grunt) {
                     cwd: 'admin/public/javascripts',
                     src: ['**/*.js'],
                     dest: staticRequireDir + 'javascripts'
-                },
-                {
-                    expand: true,
-                    cwd: 'admin/public/javascripts',
-                    src: ['**/*.js', '!bootstraps/**/*'],
-                    dest: staticTargetDir + 'javascripts'
                 }]
             },
             'javascript-facia': {
@@ -341,12 +329,6 @@ module.exports = function (grunt) {
                     cwd: 'facia/app/assets/javascripts',
                     src: ['**/*.js'],
                     dest: staticRequireDir + 'javascripts'
-                },
-                {
-                    expand: true,
-                    cwd: 'facia/app/assets/javascripts',
-                    src: ['**/*.js', '!bootstraps/**/*'],
-                    dest: staticTargetDir + 'javascripts'
                 }]
             },
             'javascript-facia-tests': {
@@ -371,6 +353,14 @@ module.exports = function (grunt) {
                     cwd: 'common/app/assets/javascripts',
                     src: ['**/*.js'],
                     dest: staticRequireDir + 'javascripts/common'
+                }]
+            },
+            css: {
+                files: [{
+                    expand: true,
+                    cwd: 'common/app/assets/stylesheets',
+                    src: ['**/*.scss'],
+                    dest: staticTargetDir + 'stylesheets'
                 }]
             },
             images: {
@@ -616,10 +606,7 @@ module.exports = function (grunt) {
             'static': [staticDir],
             staticTarget: [staticTargetDir],
             js: [staticTargetDir + 'javascripts', staticRequireDir],
-            css: [
-                staticTargetDir + 'stylesheets',
-                '.sass-cache'
-            ],
+            css: [staticTargetDir + 'stylesheets'],
             images: [staticTargetDir + 'images'],
             flash: [staticTargetDir + 'flash'],
             fonts: [staticTargetDir + 'fonts'],
@@ -657,6 +644,17 @@ module.exports = function (grunt) {
                 files: ['resources/fonts/**/*'],
                 tasks: ['compile:fonts']
             }
+        },
+
+        replace: {
+            cssSourceMaps: {
+                src: [staticTargetDir + 'stylesheets/*.css.map'],
+                overwrite: true,
+                replacements: [{
+                    from: '../../../common/app/assets/stylesheets/',
+                    to: ''
+                }]
+            }
         }
     });
 
@@ -679,6 +677,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-asset-monitor');
+    grunt.loadNpmTasks('grunt-text-replace');
 
     grunt.registerTask('default', ['compile', 'test', 'analyse']);
 
@@ -695,7 +694,7 @@ module.exports = function (grunt) {
 
     // Compile tasks
     grunt.registerTask('compile:images', ['clean:images', 'copy:images', 'shell:spriteGeneration', 'imagemin']);
-    grunt.registerTask('compile:css', ['clean:css', 'sass:compile']);
+    grunt.registerTask('compile:css', ['clean:css', 'sass:compile', 'replace:cssSourceMaps', 'copy:css']);
     grunt.registerTask('compile:js', function(app) {
         grunt.task.run(['clean:js']);
         var apps = ['common'];
