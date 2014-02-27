@@ -63,20 +63,9 @@
     </div>
 }
 
-
-
-
-
-
-
-
-
-
-@* matchesList(model, model.pageType) *@
-
 @if(model.previousPage.isDefined || model.nextPage.isDefined) {
     <div class="js-matches-nav matches-nav u-cf js-not-ajax" data-link-name="@model.pageType nav">
-        @model.previousPage.map{url => <a href="@LinkTo{@url}" class="type-11 match-prev" data-js-title="Show previous day's matches" data-link-name="previous">Previous day</a>}
-        @model.nextPage.map{url => <a href="@LinkTo{@url}" class="type-11 match-next" data-js-title="Show next day's matches" data-link-name="next">Next day</a>}
+        @model.previousPage.map{url => <a href="@LinkTo{@url}" data-link-name="previous"><span class="i i-toggle-collapse-neutral" title="Previous day"></span></a>}
+        @model.nextPage.map{url => <a href="@LinkTo{@url}" data-link-name="next"><span class="i i-toggle-expand-neutral" title="Next few days"></span></a>}
     </div>
 }
