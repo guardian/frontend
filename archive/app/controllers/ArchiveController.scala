@@ -57,6 +57,15 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
     }
   }
 
+  // film/features/featurepages/0,,2291929,00.html -> 'film'
+  def sectionFromR1Path(path: String): Option[String] = {
+    val r1Url = s"""www.theguardian.com/([\\w\\d-]+)/(.*)/[0|1]?,.*""".r
+    path match {
+      case r1Url(section, path) => Option(s"/${section}")
+      case _ => None
+    } 
+  }
+
   def lookup(path: String) = Action { implicit request =>
   
     /*
@@ -89,7 +98,8 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
       }.orElse { // S3 lookup
         isArchived(normalise(path, zeros = "00").getOrElse(path)).map {
           body => {
-            val clean = withJsoup(body)(InBodyLinkCleanerForR1())
+            val section = sectionFromR1Path(path).getOrElse("")
+            val clean = withJsoup(body)(InBodyLinkCleanerForR1(section))
             Ok(views.html.archive(clean)).as("text/html")
           } 
         }

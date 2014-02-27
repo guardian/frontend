@@ -110,15 +110,15 @@ class TemplatesTest extends FlatSpec with Matchers {
   
   "InBodyLinkCleanerForR1" should "clean links" in {
 
-    // i) www
+    // i. www
     val r1BodyText = """
       <p> foo <a href="/Guardian/path/to/article">foo</a> foo</p>
     """
-    val body = XML.loadString(withJsoup(r1BodyText)(InBodyLinkCleanerForR1()).body.trim)
+    val body = XML.loadString(withJsoup(r1BodyText)(InBodyLinkCleanerForR1("")).body.trim)
     val link = (body \\ "a").head
     (link \ "@href").text should be (s"/path/to/article")
 
-    // ii) absolute
+    // ii. old subdomains
     val absoluteUrls = Map(
         "/Arts/path/to/something" -> "/arts/path/to/something",
         "/Education/path/to/something" -> "/education/path/to/something",
@@ -127,10 +127,13 @@ class TemplatesTest extends FlatSpec with Matchers {
     )
 
     for ((key, value) <- absoluteUrls) {
-        val bodyAbsolute = XML.loadString(withJsoup(s"""<a href="${key}">foo</a>""")(InBodyLinkCleanerForR1()).body.trim)
+        val bodyAbsolute = XML.loadString(withJsoup(s"""<a href="${key}">foo</a>""")(InBodyLinkCleanerForR1("")).body.trim)
         (bodyAbsolute \ "@href").text should be (value)
     }
-
+    
+    // iii. relative to the old subdomain 
+    val bodyAbsolute = XML.loadString(withJsoup(s"""<a href="/path/to/foo">foo</a>""")(InBodyLinkCleanerForR1("/arts")).body.trim)
+    (bodyAbsolute \ "@href").text should be ("/arts/path/to/foo")
 
   }
 

@@ -326,31 +326,31 @@ case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition
   }
 }
 
-case class InBodyLinkCleanerForR1() extends HtmlCleaner {
+case class InBodyLinkCleanerForR1(section: String) extends HtmlCleaner {
 
-  /*
-
-    i) www: /Guardian/science/latest/0,,,00.html?gusrc=gpd -> /science/latest/... 
-   ii) edu: /Education/science/latest/0,,,00.html?gusrc=gpd -> /education/science/latest/... 
-  iii) absolute: /summerreading2001/page/ -> <section>/summerreading2001/page/0,,510415,00.html
+  def FixR1Link(href: String, section: String = "") = {
   
-  */
-
-  def FixR1Link(href: String) = {
-    val url = href.replace("/Guardian/", "/")
-    val pattern = "^/(Business|Music|Lifeandhealth|Sport|Books|Media|Society|Travel|Money|Education|Arts|Politics|Observer|Football|Film|Technology|Environment|Shopping|Century)/(.*)".r
-    url match {
-        case pattern(section, path) => { 
+    // i. fix old subdomains
+    val subdomains = "^/(Business|Music|Lifeandhealth|Users|Sport|Books|Media|Society|Travel|Money|Education|Arts|Politics|Observer|Football|Film|Technology|Environment|Shopping|Century)/(.*)".r
+    href match {
+        case subdomains(section, path) => { 
           s"/${section.toLowerCase}/${path}"
         }
-        case _ => url
+        case _ => {
+          (href contains "/Guardian") match {
+            case true => href.replace("/Guardian", "") // ii. root domain 
+            case _ => s"${section}${href}" // iii. relative to the old subdomain 
+          }
+        }
     }
   }
 
   def clean(body: Document): Document = {
     val links = body.getElementsByTag("a")
-    links.foreach { link =>
-      link.attr("href", FixR1Link(link.attr("href")))
+    links.filter{
+      link => link.attr("href") startsWith "/"
+    }.foreach { link =>
+      link.attr("href", FixR1Link(link.attr("href"), section))
     }
     body
   }
