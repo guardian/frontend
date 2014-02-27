@@ -5,15 +5,11 @@
 define([
     'lodash/main',
     'common/modules/component',
-    'bonzo',
-    'qwery',
-    'bean'
+    'bonzo'
 ], function (
     _,
     Component,
-    bonzo,
-    qwery,
-    bean
+    bonzo
     ) {
 
     function AudienceItem(config) {
@@ -31,7 +27,18 @@ define([
     AudienceItem.prototype.useBem = true;
 
     AudienceItem.prototype.prerender = function() {
-        this.getElem('test').textContent = this.config.test.id;
+        bonzo(this.getElem('test-label')).prepend(this.config.test.id);
+
+        // Set the width and absolute position to match the audience size and offset.
+        var audience = this.config.test.audience * 100;
+        var audienceOffset = this.config.test.audienceOffset * 100;
+        var audienceEnd = audience + audienceOffset;
+
+        this.getElem('test').style.width = audience.toString() + "%";
+        this.getElem('test').style.left = audienceOffset.toString() + "%";
+
+        bonzo(this.getElem('caption-test')).append(this.config.test.id);
+        bonzo(this.getElem('caption-range')).append(audienceOffset + "% to " + audienceEnd  + "%");
     };
 
     AudienceItem.prototype.ready = function() {
