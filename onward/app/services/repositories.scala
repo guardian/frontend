@@ -34,14 +34,7 @@ trait Related extends ConciergeRepository {
     val trails: Future[Seq[Content]] = response.map { response =>
       val trails = response.results.map(Content(_))
 
-      val orderedTrails = trails.sortBy(content => - MostReadAgent.getViewCount(content.id).getOrElse(0))
-
-      val lb = ListBuffer[Content]()
-      for (a <- 0 until 15) {
-        val fromDate = DateTime.now().minusDays( if (a % 2 == 0) 2 else 7 ) // alernate content <2 and <7 days old
-        orderedTrails.find(c => c.webPublicationDate.isAfter(fromDate) && lb.indexOf(c) == -1).map(lb += _)
-      }
-      lb.result()
+      trails.sortBy(content => - MostReadAgent.getViewCount(content.id).getOrElse(0)).take(10)
     }
 
     trails
