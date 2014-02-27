@@ -1,7 +1,14 @@
+@mixin deport-left {
+    @include mq(leftCol) {
+        margin-left: -1 * (gs-span(3) - $gs-gutter);
+    }
+
+    @include mq(wide) {
+        margin-left: -1 * (gs-span(4) - $gs-gutter);
+    }
+}
+
 .layout-hints {
-
-
-
 
     .element-interactive {
         background-color: #000000;
@@ -9,15 +16,12 @@
 
         iframe { overflow: hidden; }
 
-        @include mq(leftCol) {
-            margin-left: -1 * (gs-span(3) - $gs-gutter);
-        }
-
         @include mq(wide) {
             height: 498px;
-            margin-left: -1 * (gs-span(4) - $gs-gutter);
             iframe { height: 498px; }
         }
+
+        @include deport-left;
     }
 
     &.fast-ice-rescue-from-antarctica {
