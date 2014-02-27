@@ -1,14 +1,12 @@
-var tests = [],
-    // app we're testing
-    app = window.__karma__.config.args._[0].split(':').pop(),
-    specUrl = '/base/' + app + '/test/assets/javascripts/spec',
-    specRegExp = new RegExp(specUrl.replace(/\//g, '\\/') + '\/.*\\.spec\\.js');
-
+var tests = [];
 for (var file in window.__karma__.files) {
-    if (file.match(specRegExp)) {
+    if (/.*\.spec\.js$/.test(file)) {
         tests.push(file);
     }
 }
+
+// figure the app from the tests location
+var app = /^\/base\/([^/]*)/.exec(tests[0])[1];
 
 requirejs.config({
     // Karma serves files from '/base'

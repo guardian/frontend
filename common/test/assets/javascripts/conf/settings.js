@@ -10,7 +10,7 @@ module.exports = function(config) {
             { pattern: 'common/test/assets/javascripts/components/seedrandom/index.js', included: true },
             { pattern: 'common/test/assets/javascripts/setup.js', included: true },
             { pattern: 'common/test/assets/javascripts/main.js', included: true },
-            { pattern: 'common/test/assets/javascripts/components/**/*', included: false },
+            { pattern: 'common/test/assets/javascripts/components/**/!(*.spec.js)', included: false },
             { pattern: 'common/test/assets/javascripts/fixtures/**/*', included: false },
             { pattern: 'common/test/assets/javascripts/helpers/**/*.js', included: false },
             { pattern: 'common/test/assets/javascripts/spies/**/*.js', included: false },
