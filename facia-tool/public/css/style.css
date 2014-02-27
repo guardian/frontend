@@ -790,7 +790,7 @@ button {
     float: right;
     margin: 0 5px 0 0;
 }
-
+    
 .cnf-collection.open .cnf-collection__id,
 .cnf-collection:hover .cnf-collection__id {
     display: block;
