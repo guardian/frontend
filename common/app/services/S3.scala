@@ -95,9 +95,9 @@ object S3FrontsApi extends S3 {
   def putBlock(id: String, json: String) =
     putPublic(s"$location/collection/$id/collection.json", json, "application/json")
 
-  def archive(id: String, json: String) = {
+  def archive(id: String, json: String, identity: Identity) = {
     val now = DateTime.now
-    putPrivate(s"$location/history/collection/$id/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/$now.json", json, "application/json")
+    putPrivate(s"$location/history/collection/$id/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/${now}.${identity.email}.json", json, "application/json")
   }
 
   def putMasterConfig(json: String) =
