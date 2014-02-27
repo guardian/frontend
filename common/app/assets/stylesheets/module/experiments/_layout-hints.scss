@@ -56,32 +56,37 @@ figure {
 
 .layout-hints {
 
-    .element-interactive,
-    .element-video {
-        position: relative;
-        @include deport-left;
-        figcaption { background: #ffffff; }
-    }
-    
-    .element-image {
-        position: relative;
-        @include deport-left;
-        @include fs-data(3, true);
-        figcaption { background: #ffffff; }
-    }
+    @include mq(leftCol) {
 
-    figcaption {
-        position: absolute;
-        top: 100%;
-        padding-left: 0;
-        padding-top: $gs-baseline;
-        @include reduce-left;
+        .element-interactive,
+        .element-video {
+            position: relative;
+            @include deport-left;
+            figcaption { background: #ffffff; }
+        }
 
-        &:before { display: none; }
+        .element-image {
+            position: relative;
+            @include deport-left;
+            @include fs-data(3, true);
+            figcaption { background: #ffffff; }
+        }
+
+        figcaption {
+            position: absolute;
+            top: 100%;
+            padding-left: 0;
+            padding-top: $gs-baseline;
+            @include reduce-left;
+
+            &:before { display: none; }
+        }
+
     }
 
     &.rescue-from-antarctica {
 
+        .element-video__wrap { padding-top: 0; }
         .media-primary--full-width { display: none; }
 
         blockquote { @include pull-quote; }

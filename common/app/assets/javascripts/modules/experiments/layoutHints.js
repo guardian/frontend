@@ -27,6 +27,7 @@ define([
             videos.each(function(vid) {
                 vid.removeAttribute('controls');
                 vid.setAttribute('loop', 'loop');
+                vid.setAttribute('muted', 'muted');
                 vid.play();
             });
         }

@@ -509,7 +509,6 @@ object Switches extends Collections {
     ABUkContainers,
     ABUsContainers,
     LayoutHintsSwitch
-    ABAuContainers
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
