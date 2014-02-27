@@ -9,10 +9,17 @@ define([
     return function() {
 
         this.id = 'OnwardRelated';
+        this.start = '2014-02-27';
         this.expiry = '2014-3-10';
+        this.author = "Matt Osborn";
         this.audience = 0.3;
         this.audienceOffset = 0.7;
-        this.description = 'Test alternate related stories for sports sections.';
+        this.description = 'Test most-popular-in-tag as an override for story package / related content in various sports sections.';
+        this.successMeasure = 'CTR on this container vs story package / related content containers, and page views per visit';
+        this.audienceCriteria = 'All content pages with one of the whitelisted tags listed in the test (check .js source file)';
+        this.dataLinkNames = 'trail';
+        this.idealOutcome = 'Measurable increase in page view per visit for whitelisted content, and increase in trail CTR over story packages.';
+
         this.canRun = function(config) {
             return config.page.contentType.match(/Gallery|Article|ImageContent|Video/);
         };
