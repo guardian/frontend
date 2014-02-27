@@ -339,11 +339,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
   )
 
-  val ABAdLabels = Switch("A/B Tests", "ab-ad-labels",
-    "Testing if putting labels next to ads impacts the CTR",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 27)
-  )
-
   val ABInlineElements = Switch("A/B Tests", "ab-onward-inline-elements",
     "If this switch is on the ab inline elements test is run",
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
@@ -362,6 +357,21 @@ object Switches extends Collections {
   val ABUkContainers = Switch("A/B Tests", "ab-uk-containers",
     "If this is switched on an A/B test runs that tries a variation of the containers on the UK network front.",
     safeState = Off, sellByDate = new DateMidnight(2014, 3, 8)
+  )
+
+  val ABUsContainers = Switch("A/B Tests", "ab-us-containers",
+    "If this is switched on an A/B test runs that tries a variation of the containers on the US network front.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 12)
+  )
+
+  val ABAuContainers = Switch("A/B Tests", "ab-au-containers",
+    "If this is switched on an A/B test runs that tries a variation of the containers on the AU network front.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 12)
+  )
+
+  val FootballTablePosition = Switch("A/B Tests", "ab-football-table-position",
+    "If this swith is on, the football table will vary in position throughout the football tagged pages.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 7)
   )
 
   // Sport Switch
@@ -388,27 +398,15 @@ object Switches extends Collections {
     safeState = On, new DateMidnight().minusDays(1)
   )
 
-  // Facia
-
-  val NetworkFrontUkAlpha = Switch("Facia", "network-front-uk-alpha",
-    "If this is switched on then the uk alpha network fronts will be served if a GU_UK_ALPHA cookie has been dropped",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 26)
-  )
-
-  val NetworkFrontUsAlpha = Switch("Facia", "network-front-us-alpha",
-    "If this is switched on then the us alpha network fronts will be served if a GU_US_ALPHA cookie has been dropped",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 26)
-  )
-
-  val NetworkFrontAuAlpha = Switch("Facia", "network-front-au-alpha",
-    "If this is switched on then the au alpha network fronts will be served if a GU_AU_ALPHA cookie has been dropped",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 26)
-  )
-
   // Facia Tool Switches
 
   val ToolDisable = Switch("Facia Tool", "facia-tool-disable",
     "If this is switched on then the fronts tool is disabled",
+    safeState = Off, sellByDate = never
+  )
+
+  val ToolConfigurationDisable = Switch("Facia Tool", "facia-tool-configuration-disable",
+    "If this is switched on then the fronts configuration tool is disabled",
     safeState = Off, sellByDate = never
   )
 
@@ -473,12 +471,10 @@ object Switches extends Collections {
     ABAa,
     ABRightHandRecommendations,
     GeoMostPopular,
-    ABAdLabels,
+    FootballTablePosition,
     ABInlineElements,
-    NetworkFrontUkAlpha,
-    NetworkFrontUsAlpha,
-    NetworkFrontAuAlpha,
     ToolDisable,
+    ToolConfigurationDisable,
     ToolSparklines,
     TagLinking,
     SponsoredContentSwitch,
@@ -507,7 +503,9 @@ object Switches extends Collections {
     FrontPressJobSwitch,
     DogeSwitch,
     FrontPressJobSwitch,
-    ABUkContainers
+    ABUkContainers,
+    ABUsContainers,
+    ABAuContainers
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

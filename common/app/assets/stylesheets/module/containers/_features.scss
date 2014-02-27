@@ -142,4 +142,7 @@
             text-decoration: underline;
         }
     }
+    .item__link:active .item__title {
+        text-decoration: none;
+    }
 }

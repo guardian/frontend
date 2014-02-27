@@ -86,13 +86,17 @@
         display: none;
         margin: 100px auto 0;
     }
-    .ab-uk-containers & > {
-        * {
-            visibility: hidden;
-        }
-        .is-updating {
-            display: block;
-            visibility: visible;
+    .ab-uk-containers &,
+    .ab-us-containers &,
+    .ab-au-containers & {
+        > {
+            * {
+                visibility: hidden;
+            }
+            .is-updating {
+                display: block;
+                visibility: visible;
+            }
         }
     }
 }

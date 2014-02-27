@@ -9,7 +9,7 @@ define([
     'utils/clean-clone',
     'utils/clone-with-key',
     'utils/find-first-by-id',
-    'utils/guid',
+    'utils/terminate',
     'models/group',
     'models/config/droppable',
     'models/config/front',
@@ -24,7 +24,7 @@ define([
     cleanClone,
     cloneWithKey,
     findFirstById,
-    guid,
+    terminate,
     Group,
     droppable,
     Front,
@@ -55,17 +55,21 @@ define([
         }, this);
 
         model.createFront = function() {
-            var front =  new Front();
+            var front;
 
-            model.newFront(front);
-            model.fronts.unshift(front);
-            front.toggleOpen();
+            if (vars.model.fronts().length <= vars.CONST.maxFronts) {
+                front =  new Front();
+                model.newFront(front);
+                model.fronts.unshift(front);
+                front.toggleOpen();
+            } else {
+                window.alert('The maximum number of fronts (' + vars.CONST.maxFronts + ') has been exceeded. Please delete one first, by removing all its collections.');
+            }
         };
 
         model.createCollection = function() {
-            var collection = new Collection({
-                id: guid()
-            });
+            var collection = new Collection();
+
             collection.toggleOpen();
             model.collections.unshift(collection);
         };
@@ -139,7 +143,11 @@ define([
             opts.openFronts = opts.openFronts|| {};
 
             return fetchSettings(function (config, switches) {
-                vars.state.switches = switches || {};
+                if (switches['facia-tool-configuration-disable']) {
+                    terminate('The configuration tool has been switched off.', '/');
+                    return;
+                }
+                vars.state.switches = switches;
 
                 if (opts.force || !_.isEqual(config, vars.state.config)) {
                     vars.state.config = config;

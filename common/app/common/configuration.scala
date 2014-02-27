@@ -213,11 +213,13 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object facia {
     lazy val stage = configuration.getStringProperty("facia.stage").getOrElse(Configuration.environment.stage)
+    lazy val collectionCap: Int = configuration.getIntegerProperty("facia.collection.cap").getOrElse(25)
   }
 
   object faciatool {
     lazy val contentApiPostEndpoint: Option[String] = configuration.getStringProperty("contentapi.post.endpoint")
     lazy val frontPressQueueUrl: Option[String] = configuration.getStringProperty("frontpress.sqs.queue")
+    lazy val configBeforePressTimeout: Int = 1000
   }
 
   object pa {
