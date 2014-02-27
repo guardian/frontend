@@ -195,14 +195,14 @@ object AdminMetrics {
 
 object FaciaMetrics {
 
-  object JsonParsingErrorCount extends CountMetric(
+  object JsonParsingErrorCount extends SimpleCountMetric(
     "facia-front",
     "facia-json-error",
     "Facia JSON parsing errors",
     "Number of errors whilst parsing JSON out of S3"
   )
 
-  object S3AuthorizationError extends CountMetric(
+  object S3AuthorizationError extends SimpleCountMetric(
     "facia-front",
     "facia-s3-authorization-403",
     "Facia S3 403 (Unauthorized) error count",
@@ -217,70 +217,70 @@ object FaciaMetrics {
 
 object FaciaToolMetrics {
 
-  object ApiUsageCount extends CountMetric(
+  object ApiUsageCount extends SimpleCountMetric(
     "facia-api",
     "facia-api-usage",
     "Facia API usage count",
     "Number of requests to the Facia API from clients (The tool)"
   )
 
-  object ProxyCount extends CountMetric(
+  object ProxyCount extends SimpleCountMetric(
     "facia-api",
     "facia-proxy-usage",
     "Facia proxy usage count",
     "Number of requests to the Facia proxy endpoints (Ophan and Content API) from clients"
   )
 
-  object ExpiredRequestCount extends CountMetric(
+  object ExpiredRequestCount extends SimpleCountMetric(
     "facia-api",
     "facia-auth-expired",
     "Facia auth endpoints expired requests",
     "Number of expired requests coming into an endpoint using ExpiringAuthAction"
   )
 
-  object DraftPublishCount extends CountMetric(
+  object DraftPublishCount extends SimpleCountMetric(
     "facia-api",
     "facia-draft-publish",
     "Facia draft publish count",
     "Number of drafts that have been published"
   )
 
-  object ContentApiPutSuccess extends CountMetric(
+  object ContentApiPutSuccess extends SimpleCountMetric(
     "facia-api",
     "faciatool-contentapi-put-success",
     "Facia tool contentapi put success count",
     "Number of PUT requests that have been successful to the content api"
   )
 
-  object ContentApiPutFailure extends CountMetric(
+  object ContentApiPutFailure extends SimpleCountMetric(
     "facia-api",
     "faciatool-contentapi-put-failure",
     "Facia tool contentapi put failure count",
     "Number of PUT requests that have failed to the content api"
   )
 
-  object FrontPressSuccess extends CountMetric(
+  object FrontPressSuccess extends SimpleCountMetric(
     "facia-front-press",
     "facia-front-press-success",
     "Facia front press success count",
     "Number of times facia-tool has successfully pressed"
   )
 
-  object FrontPressFailure extends CountMetric(
+  object FrontPressFailure extends SimpleCountMetric(
     "facia-front-press",
     "facia-front-press-failure",
     "Facia front press failue count",
     "Number of times facia-tool has has a failure in pressing"
   )
 
-  object FrontPressCronSuccess extends CountMetric(
+  object FrontPressCronSuccess extends SimpleCountMetric(
     "facia-front-press",
     "facia-front-press-cron-success",
     "Facia front press cron success count",
     "Number of times facia-tool has successfully pressed"
   )
 
-  object FrontPressCronFailure extends CountMetric(
+  object FrontPressCronFailure extends SimpleCountMetric(
     "facia-front-press",
     "facia-front-press-cron-failure",
     "Facia front press cron failue count",
