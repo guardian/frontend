@@ -5,16 +5,10 @@
 define([
     'lodash/main',
     'common/modules/component',
-    'bonzo',
-    'qwery',
-    'bean',
     'modules/abtests/audience-item'
 ], function (
     _,
     Component,
-    bonzo,
-    qwery,
-    bean,
     audienceItem
     ) {
 
