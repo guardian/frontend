@@ -248,13 +248,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val LocalNavSwitch = Switch("Feature Switches", "local-nav",
-    "If this switch is on, a secondary local nav is shown.",
-    safeState = Off,
-    // extend by a week, GK is working on the replacement
-    sellByDate = new DateMidnight(2014, 3, 7)
-  )
-
   val LightboxGalleriesSwitch = Switch("Feature Switches", "lightbox-galleries",
     "If this switch is on, galleries open in a lightbox.",
     safeState = On, sellByDate = endOfQ4
@@ -446,7 +439,6 @@ object Switches extends Collections {
     ReleaseMessageSwitch,
     IntegrationTestSwitch,
     ClientSideErrorSwitch,
-    LocalNavSwitch,
     LightboxGalleriesSwitch,
     IdentityProfileNavigationSwitch,
     ExternalLinksCardsSwitch,
