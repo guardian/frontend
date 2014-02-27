@@ -742,6 +742,10 @@ button {
     border-bottom: 1px solid #CCCCCC;
 }
 
+.cnf-front .title {
+    cursor: pointer;
+}
+
 .cnf-front.isProvisional {
     background: #CCCCCC;
 }
@@ -795,6 +799,10 @@ button {
 .cnf-collection.open .cnf-collection__id,
 .cnf-collection:hover .cnf-collection__id {
     display: block;
+}
+
+.cnf-collection__also-on {
+    font-weight: bold;
 }
 
 .cnf-collection .placements {
