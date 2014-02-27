@@ -26,44 +26,6 @@ object Seg {
   }
 }
 
-trait ParseConfig extends ExecutionContexts with Logging {
-
-  def requestConfig(id: String): Future[Response] = {
-    val configUrl = s"${Configuration.frontend.store}/${S3FrontsApi.location}/config/$id/config.json"
-    WS.url(configUrl).withRequestTimeout(2000).get()
-  }
-
-  def getConfigMap(id: String): Future[Seq[JsValue]] = {
-     requestConfig(id) map { r =>
-      try {
-        val json = parse(r.body)
-        json.asOpt[Seq[JsValue]] getOrElse Nil
-      } catch {
-        case e: Throwable => {
-          log.warn("Could not parse config for %s".format(id))
-          FaciaMetrics.JsonParsingErrorCount.increment()
-          throw e
-        }
-      }
-    }
-  }
-
-  def getConfig(id: String): Future[Seq[Config]] = getConfigMap(id) map { configMap =>
-    configMap.map(parseConfig)
-  }
-
-  def parseConfig(json: JsValue): Config =
-    Config(
-      (json \ "id").as[String],
-      (json \ "contentApiQuery").asOpt[String].filter(_.nonEmpty),
-      (json \ "displayName").asOpt[String],
-      (json \ "href").asOpt[String],
-      (json \ "groups").asOpt[Seq[String]] getOrElse Nil,
-      (json \ "type").asOpt[String]
-    )
-
-}
-
 object CollectionAgent extends ParseCollection {
   private val collectionAgent = AkkaAgent[Map[String, Collection]](Map.empty)
 
