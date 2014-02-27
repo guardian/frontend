@@ -14,6 +14,7 @@ import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 import sun.misc.BASE64Encoder
 import com.amazonaws.auth.AWSSessionCredentials
+import controllers.Identity
 
 trait S3 extends Logging {
 
@@ -102,9 +103,9 @@ object S3FrontsApi extends S3 {
   def putMasterConfig(json: String) =
     putPublic(s"$location/config/config.json", json, "application/json")
 
-  def archiveMasterConfig(json: String) = {
+  def archiveMasterConfig(json: String, identity: Identity) = {
     val now = DateTime.now
-    putPublic(s"${location}/history/config/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/${now}.json", json, "application/json")
+    putPublic(s"${location}/history/config/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/${now}.${identity.email}.json", json, "application/json")
   }
 
   private def getListing(prefix: String, dropText: String): List[String] = {
