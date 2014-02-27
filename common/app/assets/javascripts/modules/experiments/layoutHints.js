@@ -26,6 +26,7 @@ define([
             bonzo(imgs[3]).addClass('img--supporting');
             videos.each(function(vid) {
                 vid.removeAttribute('controls');
+                vid.setAttribute('autoplay', 'autoplay');
                 vid.setAttribute('loop', 'loop');
                 vid.setAttribute('muted', 'muted');
                 vid.play();
