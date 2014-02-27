@@ -140,8 +140,15 @@
 
     &:hover,
     &:focus {
+       text-decoration: none;
+
         .item__title {
             text-decoration: underline;
+        }
+    }
+    &:active {
+        .item__title {
+            text-decoration: none;
         }
     }
 }
