@@ -32,8 +32,8 @@
             display: flex;
 
             .collection__item {
-                flex-basis: 50%;
                 -webkit-flex-basis: 50%;
+                flex-basis: 50%;
             }
         }
         @include mq(tablet) {

@@ -13,7 +13,8 @@ define([
     "common/modules/ui/notification-counter",
     "common/modules/experiments/left-hand-card",
     "common/modules/open/cta",
-    "common/modules/commercial/loader"
+    "common/modules/commercial/loader",
+    "common/modules/experiments/layoutHints"
 ], function (
     common,
     mediator,
@@ -29,7 +30,8 @@ define([
     NotificationCounter,
     LeftHandCard,
     OpenCta,
-    CommercialLoader
+    CommercialLoader,
+    Layout
 ) {
 
     var modules = {
@@ -96,6 +98,14 @@ define([
             });
         },
 
+        initDoge: function() {
+            common.mediator.on('page:article:ready', function(config, context) {
+                if (config.switches.doge) {
+                    $('.article__headline').css({fontFamily:'"Comic Sans MS", cursive', color:'pink'});
+                }
+            });
+        },
+
         initCricket: function() {
             common.mediator.on('page:article:ready', function(config, context) {
 
@@ -146,6 +156,12 @@ define([
                     fence.render(el);
                 });
             });
+        },
+
+        initLayoutHints: function(config) {
+            if(config.switches.layoutHints && /\/-sp-/g.test(config.page.pageId)) {
+                var l = new Layout(config);
+            }
         }
     };
 
@@ -155,10 +171,12 @@ define([
             modules.matchNav();
             modules.initLiveBlogging();
             modules.initDiscussion();
+            modules.initDoge();
             modules.initCricket();
             modules.externalLinksCards();
             modules.initOpen(config);
             modules.initFence();
+            modules.initLayoutHints(config);
         }
         common.mediator.emit("page:article:ready", config, context);
     };

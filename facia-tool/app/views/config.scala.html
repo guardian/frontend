@@ -2,12 +2,24 @@
 
 @admin_main("Fronts editor", env, isAuthed = true, identity) {
 
-<div style="display: none;" data-bind="visible: true">
+<div style="display: none;" data-bind="
+    visible: true,
+    css: {pending: pending}">
 
-    <div class="toolbar" data-bind="visible: true" style=""></div>
+    <div class="toolbar" data-bind="visible: true"></div>
+
+    <div class="updating">Updating</div>
 
     <div class="left-col">
-        <div class="title">Unused collections</div>
+        <div class="title">Clipboard</div>
+        <div class="clipboard__wrapper" data-bind="with: clipboard">
+            <div class="clipboard droppable" data-bind="
+                makeDropabble: true,
+                css: {underDrag: underDrag},
+                template: {name: 'template_collection', foreach: items}"></div>
+        </div>
+
+        <div class="title">Orphaned collections</div>
         <div class="scrollable cnf-collections" data-bind="
             template: {name: 'template_collection', foreach: orphans}"></div>
     </div>
@@ -23,22 +35,16 @@
 
     <script type="text/html" id="template_collection">
         <div class="cnf-collection" data-bind="
-            makeHoverable: true,
             css: {
                 underDrag: state.underDrag,
-                isElsewhere: state.underHover(),
                 open: state.open}">
+
+            <span class="cnf-collection__index" data-bind="text: $index() + 1"></span>
 
             <a class="cnf-collection__name" data-bind="
                 click: toggleOpen,
                 attr: {href: id},
                 text: meta.displayName() || 'Untitled collection'"></a>
-
-            <!-- ko if: $parents[1] -->
-                <a class="cnf-collection__remove" data-bind="click: $parents[1].depopulateCollection">
-                    <i class="icon-trash"></i>
-                </a>
-            <!-- /ko -->
 
             <span class="cnf-collection__id" data-bind="text: id"></span>
 
@@ -48,9 +54,9 @@
                 <span class="also">also</span> on
                 <span data-bind="foreach: parents">
                     <!-- ko if: $parents[2] ? id !== $parents[2].id : true -->
-                        <a target="edit-collections" data-bind="
-                            attr: {href: '/?front=' + id},
-                            text: id "></a>
+                        <a class="cnf-collection__also-on" data-bind="
+                            click: $root.openFront,
+                            text: id"></a>
                     <!-- /ko -->
                 </span>
             </span>
@@ -64,13 +70,10 @@
                 <input type="text" data-bind="
                     value: meta.href"/>
 
-                <label>Tone</label>
+                <label>Type</label>
                 <select data-bind="
-                    options: $root.tones,
-                    value: meta.tone"></select>
-
-                <div class="linky advanced-options" data-bind="
-                    click: toggleOpenAdvanced">Advanced settings</div>
+                    options: $root.types,
+                    value: meta.type"></select>
 
                 <!-- ko if: state.openAdvanced -->
                     <label>Groups</label>
@@ -90,9 +93,23 @@
                 <div class="tools">
                     <button class="tool" data-bind="
                         click: save">Save</button>
-                    <!-- ko if: parents().length === 0 -->
+                </div>
+
+                <div class="tools tools-advanced">
+                    <span class="linky" data-bind="
+                        click: toggleOpenAdvanced">Advanced settings</span> |
+
+                    <!-- ko if: !state.enableDiscard() -->
+                        <span class="linky" type="checkbox" data-bind="
+                            click: enableDiscard">Start removal</span>
+                   <!-- /ko -->
+                    <!-- ko if: state.enableDiscard() && $parents[1] -->
                         <button class="tool" data-bind="
-                            click: discard">Discard</button>
+                            click: $parents[1].depopulateCollection">Remove</button>
+                    <!-- /ko -->
+                    <!-- ko if: state.enableDiscard() && parents().length === 0 -->
+                        <button class="tool" data-bind="
+                            click: discard">Remove completely</button>
                     <!-- /ko -->
                 </div>
             </div>

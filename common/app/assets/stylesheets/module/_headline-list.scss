@@ -3,12 +3,12 @@
 .headline-list__item {
     display: block;
     overflow: auto;
-    padding: $baseline 0 $baseline*5;
+    padding: $gs-baseline/3 0 ($gs-baseline/3)*5;
     @include fs-bodyCopy(2);
 
     @include mq(tablet) {
-        padding-top: $baseline*2;
-        padding-bottom: $baseline*6;
+        padding-top: ($gs-baseline/3)*2;
+        padding-bottom: $gs-baseline*2;
         @include fs-bodyCopy(3);
     }
 
@@ -20,7 +20,7 @@
 .headline-list__body {
     float: left;
     width: 90%;
-    padding-left: $baseline*2;
+    padding-left: ($gs-baseline/3)*2;
 
     a {
         color: $c-neutral1;
@@ -51,7 +51,7 @@
         margin-right: $gs-gutter;
     }
     border-bottom: 1px solid $c-neutral6;
-    padding: $baseline $gutter/4 $baseline*3 0;
+    padding: $gs-baseline/3 $gutter/4 $gs-baseline 0;
 
     @include mq(544px) {
         display: none;
@@ -93,13 +93,13 @@
 
     .headline-list__count {
         position: absolute;
-        top: $baseline/2;
+        top: $gs-baseline/6;
         left: 0;
         color: $c-neutral4;
         @include font($serifheadline, 200, 44px);
 
         @include mq(rightCol) {
-            top: $baseline*2;
+            top: ($gs-baseline/3)*2;
         }
     }
 
@@ -107,7 +107,7 @@
         position: relative;
         min-height: gs-height(1);
         padding-left: gs-span(1) - $gs-gutter/2;
-        padding-bottom: $baseline*7;
+        padding-bottom: ($gs-baseline/3)*7;
         border-top-color: $c-neutral4;
         color: $c-neutral1;
         @include fs-headline(1);
@@ -148,7 +148,9 @@
 
                 .headline-list__count {
                     left: 0;
-                    @include rem((font-size: 65px));
+                    @include rem((
+                        font-size: 65px
+                    ));
                 }
             }
 

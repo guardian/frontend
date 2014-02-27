@@ -4,6 +4,6 @@
 
 #dev-debug.active {
     @extend %type-10;
-    margin-top: $baseline*2;
+    margin-top: ($gs-baseline/3)*2;
     display: block;
 }

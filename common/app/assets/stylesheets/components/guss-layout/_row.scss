@@ -75,6 +75,37 @@ $guss-row-fallback-width: 940px !default;
             #{$base-class}__item--boost-1 { @include flex-grow(1.5); }
             #{$base-class}__item--boost-2 { @include flex-grow(2); }
         }
+
+        // Mobile layout variation:
+        // - Items are aligned horizontally, 50% each
+        // - Should degrade into a vertical list
+        //
+        // Browser support:
+        // - iOS 7+ (-webkit- prefix required)
+        // - Chrome
+        // - IE 11+
+        // - Firefox 28+ (for flex-wrap support)
+        @include mq($to: tablet) {
+            #{$base-class}--layout-m {
+                display: -webkit-flex;
+                display: flex;
+                -webkit-flex-wrap: wrap;
+                flex-wrap: wrap;
+
+                // Items fill half the width of their container
+                #{$base-class}__item {
+                    -webkit-flex-basis: 50%;
+                    flex-basis: 50%;
+                }
+
+                // Break the flow on mobile:
+                // Item will fill the whole width of its container
+                #{$base-class}__item--break-m {
+                    -webkit-flex: 1 100%;
+                    flex: 1 100%;
+                }
+            }
+        }
     } @else {
         #{$base-class} {
             width: $guss-row-fallback-width;

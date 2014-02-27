@@ -80,16 +80,5 @@ class ArchiveControllerTest extends FlatSpec with Matchers {
   it should "test a string contains an old gallery" in Fake {
     controllers.ArchiveController.isGallery("arts/gallery/0,") should be (Some("arts/pictures/0,"))
   }
-  
-  it should "fix broken relative URLs" in Fake {
-    val tests = Map[String, Option[String]](
-      "www.theguardian.com/books/Education/gendergap/0,,413616,.html" -> Some("www.theguardian.com/education/gendergap/0,,413616,.html"),
-      "www.theguardian.com/arts/Guardian/foo/0,,2276975,00.html" -> Some("www.theguardian.com/foo/0,,2276975,00.html"), // special case
-      "www.theguardian.com/film/Film_Page/0,,2276975,00.html" -> None
-    ) 
-    tests foreach {
-      case (key, value) => controllers.ArchiveController.isRelativeUrl(key) should be (value)
-    }
-  }
 
 }

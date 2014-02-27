@@ -4,7 +4,7 @@
 .sub-section-head {
     position: relative;
     overflow: hidden;
-    border-top: $baseline solid $c-newsAccent;
+    border-top: $gs-baseline/3 solid $c-newsAccent;
 
     h1 {
         @include fs-header(3);
@@ -17,7 +17,7 @@
 
     a {
         display: block;
-        padding: $baseline*1.75 $gs-gutter/2 $baseline*2;
+        padding: ($gs-baseline/3)*1.75 $gs-gutter/2 ($gs-baseline/3)*2;
         @include mq(mobileLandscape) {
             padding-left: $gs-gutter;
             padding-right: $gs-gutter;
@@ -27,7 +27,7 @@
 
 .sub-section-head {
     margin: 0 $gs-gutter/2;
-    border-top-width: $baseline/2;
+    border-top-width: $gs-baseline/6;
 
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter;
@@ -42,14 +42,14 @@
 
 .section-head {
     @include fs-header(4);
-    height: $gs-row-height + $baseline*2;
+    height: $gs-row-height + ($gs-baseline/3)*2;
     line-height: 1;
     font-weight: bolder;
     margin: 0;
-    border-top: $baseline/2 solid $c-newsAccent;
+    border-top: $gs-baseline/6 solid $c-newsAccent;
     @include box-sizing(border-box);
 
-    padding: $baseline $gs-gutter/2 0;
+    padding: $gs-baseline/3 $gs-gutter/2 0;
 
     @include mq(mobileLandscape) {
         padding-left: $gs-gutter;
@@ -63,13 +63,14 @@
     }
 }
 
+
 /* Static pages and misc
    ========================================================================== */
 
 .page-header {
     @include fs-headline(2);
-    padding: 0 0 $baseline*4;
-    margin: 0 $gs-gutter/2 $baseline $gs-gutter/2;
+    padding: 0 0 ($gs-baseline/3)*4;
+    margin: 0 $gs-gutter/2 $gs-baseline/3 $gs-gutter/2;
     border-bottom: 1px dotted $c-neutral4;
 
     @include mq(mobileLandscape) {
@@ -80,16 +81,16 @@
 
 .page-sub-header {
     @include fs-header(2);
-    padding: $baseline/2 0 $baseline;
+    padding: $gs-baseline/6 0 $gs-baseline/3;
     margin-left: $gs-gutter/2;
     margin-right: $gs-gutter/2;
-    margin-bottom: $baseline*3;
+    margin-bottom: $gs-baseline;
 
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter;
         margin-right: $gs-gutter;
     }
-    .article-zone-no-indent &,
+    .no-indent-article__zone &,
     .monocolumn-wrapper & {
         margin-left: 0;
         margin-right: 0;

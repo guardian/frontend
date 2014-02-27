@@ -37,7 +37,7 @@
 
                     @inputField(Username(registrationForm("user.publicFields.username"), '_label -> "Username", '_help -> "Between 6 and 20 characters, letters and numbers only", ('tabindex, 2)))
 
-                    @inputField(Password(registrationForm("user.password"), '_label -> "Password", '_help -> "Between 6 and 20 characters", 'class -> "js-register-password js-password-strength", ('tabindex, 3)))
+                    @inputField(Password(registrationForm("user.password"), '_label -> "Password", '_help -> "Between 6 and 20 characters", 'class -> "js-register-password js-password-strength", ('tabindex, 3), ('maxlength, 20)))
 
                     <li class="form-field form-field--no-margin">
                         <label class="check-label" for="@registrationForm("receive_gnm_marketing").id">

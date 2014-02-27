@@ -15,7 +15,8 @@ define([
     'common/modules/sport/football/tables',
     'common/modules/sport/football/more-matches',
     'common/modules/ui/autoupdate',
-    'common/modules/sport/football/matchnav'
+    'common/modules/sport/football/matchnav',
+    'common/modules/sport/football/table'
 ], function (
     $,
     config,
@@ -29,7 +30,8 @@ define([
     FootballTable,
     MoreMatches,
     AutoUpdate,
-    MatchNav
+    MatchNav,
+    Table
 ) {
     context = context();
     var modules = {
@@ -138,7 +140,8 @@ define([
     };
 
     var ready = function() {
-        var action = window.location.pathname.split('/')[2]; // removing router for now
+        var bits = window.location.pathname.split('/'),
+            action = config.page.contentType === 'Article' ? 'article' : (bits.length === 3 ? bits[2] : bits[3]); // removing router for now
         lazyLoadCss('football', config);
 
         switch(action) {
@@ -160,9 +163,22 @@ define([
                 }
                 break;
 
-            default:
-                if(config.page.contentType === 'Article') { return false; } //Prevent loading of fixtures in story packages
+            case 'article':
+                var competition = ($('.js-football-competition').attr('data-link-name') || '').replace('keyword: ', '');
 
+                if (competition) {
+                    var table = new Table(competition),
+                        tableEl = bonzo.create('<div class="js-football-table" data-link-name="football-table-embed"></div>');
+
+                    $('.js-right-hand-component').append(tableEl);
+                    table.fetch(tableEl).then(function() {
+                        mediator.emit('bootstrap:football:rhs:table:ready');
+                    });
+                }
+
+                break;
+
+            default:
                 var comp = config.referenceOfType('paFootballCompetition'),
                     team = config.referenceOfType('paFootballTeam');
 

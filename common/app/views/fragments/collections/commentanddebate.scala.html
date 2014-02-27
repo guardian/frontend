@@ -1,6 +1,6 @@
 @(items: Seq[Trail], style: Container, containerIndex: Int)(implicit request: RequestHeader)
 
-<div class="collection-wrapper">
+<div class="collection-wrapper collection-wrapper--position-1">
     <ul class="unstyled l-row l-row--items-3 collection">
         @items.slice(0, 3).zipWithIndex.map{ case (trail, index) =>
             @fragments.collections.items.simplecomment(trail, index, containerIndex)
@@ -9,7 +9,7 @@
 </div>
 @defining(items.slice(3, 7)) { items =>
     @if(items.nonEmpty) {
-        <div class="collection-wrapper">
+        <div class="collection-wrapper collection-wrapper--position-2">
             <ul class="unstyled l-row l-row--items-4 collection">
                 @items.zipWithIndex.map{ case (trail, index) =>
                     @fragments.collections.items.standard(trail, index + 3, containerIndex)

@@ -18,7 +18,7 @@
         </section>
     }
 
-    <h2 class="article-zone sport-header hide-on-mobile-if-localnav">
+    <h2 class="article__zone sport-header hide-on-mobile-if-localnav">
         <a class="tone-colour" data-link-name="article section" href="@LinkTo{/football}">football</a>
     </h2>
 
@@ -32,6 +32,4 @@
     @fragments.footballNav(pageModel.page)
 </div>
 
-<div class="article-wrapper monocolumn-wrapper tone-news">
-    @fragments.mostPopularPlaceholder("sport")
-</div>
+@fragments.mostPopularPlaceholder("sport")

@@ -118,7 +118,9 @@ define([
         },
 
         transcludeRelated: function (config, context) {
-            related(config, context);
+            if (!config.switches.abOnwardRelated) {
+                related(config, context);
+            }
         },
 
         transcludePopular: function () {
@@ -191,7 +193,7 @@ define([
             if(config.switches.rightHandMostPopular && config.page.contentType === 'Article') {
               var r = new RightHandComponentFactory({
                   wordCount: config.page.wordCount,
-                  mediator: mediator
+                  pageId: config.page.pageId
               });
            }
         },
@@ -302,7 +304,7 @@ define([
                 exitLink = '/preference/platform/classic?page=' + encodeURIComponent(path + '?view=classic'),
                 msg = '<p class="site-message__message" id="site-message__message">' +
                             'You’re viewing a beta release of the Guardian’s responsive website.' +
-                            ' We’d love to hear your <a href="https://s.userzoom.com/m/MSBDMTBTMTE5" data-link-name="feedback">feedback</a>' +
+                            ' We’d love to hear your <a href="https://www.surveymonkey.com/s/theguardian-beta-feedback" data-link-name="feedback">feedback</a>' +
                       '</p>' +
                       '<ul class="site-message__actions unstyled">' +
                            '<li class="site-message__actions__item">' +
@@ -339,8 +341,8 @@ define([
                     '<div class="site-message__message" id="site-message__message">' +
                     '<p>You’re looking at a prototype of our new website. Opt-out any time by clicking "Current version" at the bottom of the page. <a href="http://next.theguardian.com/">Find out more</a>.</p>' +
                     '<ul class="site-message__list">' +
-                    '<li class="site-message__list__item">We love feedback - <a href="http://next.theguardian.com/feedback/">let us know yours</a>.</li>' +
-                    '<li class="site-message__list__item">Stay up to date with new releases on <a href="http://next.theguardian.com/updates/">our blog</a>.</li>' +
+                    '<li class="site-message__list__item">We love feedback - <a href="https://www.surveymonkey.com/s/theguardian-beta-feedback">let us know yours</a>.</li>' +
+                    '<li class="site-message__list__item">Stay up to date with new releases on <a href="http://next.theguardian.com/blog/">our blog</a>.</li>' +
                     '</ul>' +
                     '<ul class="site-message__actions unstyled">' +
                     '<li class="site-message__actions__item"><i class="i i-arrow-white-circle"></i>  '+
