@@ -392,10 +392,10 @@ $c-live: #e81818;
 
 .item__cta {
     position: absolute;
-    width: $baseline*11;  //44px
-    height: $baseline*11;
+    width: ($gs-baseline/3)*11;  //44px
+    height: ($gs-baseline/3)*11;
     @include rem((
-        top: $baseline*2,
+        top: ($gs-baseline/3)*2,
         left: $gs-gutter/2.5
     ));
     background-color: rgba($c-neutral2, 0.7);

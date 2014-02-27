@@ -117,7 +117,7 @@
 
 .box-indent {
     @include rem((
-        padding: 0 $gs-gutter/2 $baseline
+        padding: 0 $gs-gutter/2 ($gs-baseline/3)
     ));
 
     @include mq(mobileLandscape) {
@@ -148,7 +148,7 @@
 
     figcaption {
         @include rem((
-            padding-top: $baseline
+            padding-top: $gs-baseline/3
         ));
         word-wrap: break-word;
     }
