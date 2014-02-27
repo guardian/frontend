@@ -1,6 +1,16 @@
-.table--football-match {
-    @include rem((margin-bottom: $gs-baseline*2));
+.football-table__heading {
+    @include rem((margin: $gs-baseline 0 $gs-baseline));
+    border-top: 1px solid $c-neutral5;
+    display: block;
+}
 
+.football-matches__day {
+    .table--football-match {
+        @include rem((margin-bottom: $gs-baseline*2));
+    }
+}
+
+.table--football-match {
     a,
     a:hover{
         color: $c-neutral1;
