@@ -43,7 +43,7 @@
 
     // remove battle line from last row
     // (only happens in truncated tables)
-    td:last-child {
+    tr:last-child td {
         border-bottom: none;
     }
 
