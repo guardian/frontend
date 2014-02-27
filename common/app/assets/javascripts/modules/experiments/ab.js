@@ -9,9 +9,10 @@ define([
     'common/modules/experiments/tests/right-hand-recommendations',
     'common/modules/experiments/tests/onward-inline-elements',
     'common/modules/experiments/tests/geo-most-popular',
-    'common/modules/experiments/tests/uk-containers',
     'common/modules/experiments/tests/football-table-position',
-    'common/modules/experiments/tests/us-containers'
+    'common/modules/experiments/tests/uk-containers',
+    'common/modules/experiments/tests/us-containers',
+    'common/modules/experiments/tests/au-containers'
 ], function (
     common,
     store,
@@ -21,9 +22,10 @@ define([
     RightHandRecommendations,
     InlineElements,
     GeoMostPopular,
-    UkContainers,
     FootballTablePosition,
-    UsContainers
+    UkContainers,
+    UsContainers,
+    AuContainers
 ) {
 
     var TESTS = [
@@ -31,9 +33,10 @@ define([
             new RightHandRecommendations(),
             new InlineElements(),
             new GeoMostPopular(),
-            new UkContainers(),
             new FootballTablePosition(),
-            new UsContainers()
+            new UkContainers(),
+            new UsContainers(),
+            new AuContainers()
        ],
        participationsKey = 'gu.ab.participations';
 
