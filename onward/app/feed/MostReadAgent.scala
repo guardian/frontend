@@ -26,7 +26,6 @@ object MostReadAgent extends Logging with ExecutionContexts {
       }
 
       agent.update(mostRead.toMap)
-
     }
   }
 

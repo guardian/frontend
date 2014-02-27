@@ -345,7 +345,7 @@ object Switches extends Collections {
   )
 
   val ABRelatedContent = Switch("A/B Tests", "ab-onward-related",
-    "If this switch is on the ab related content test is run",
+    "If this switch is on the related content popular-in-tag override A/B test is run",
     safeState = On, sellByDate = new DateMidnight(2014, 2, 28)
   )
 

@@ -18,7 +18,6 @@ object PopularInTag extends Controller with Related with Logging with ExecutionC
 
   private def renderPopularInTag(trails: Seq[Trail], tagId: String)(implicit request: RequestHeader) = Cached(900) {
 
-
     val containerTitle: String = trails.headOption.flatMap { content =>
       content.tags.find(_.id == tagId).map( tag => s"Popular in ${tag.webTitle}")
     }.getOrElse("Related content")
