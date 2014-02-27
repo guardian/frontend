@@ -2,74 +2,57 @@
 @import org.joda.time.DateTime
 @import implicits.Football._
 
-@if(model.pageType == "live") {
-    <div class="live-matches-dateline">
-        @fragments.dateline(new DateTime, true)
-    </div>
-}
-
-@if(model.pageType == "live") {
-    <div class="is-live">
-        <div class="live-toolbar">
-            <div class="update update-live-matches" data-link-name="autoupdate"></div>
-        </div>
-    </div>
-}
-
-
-
-
-
 @model.days.map { day =>
-    <div class="date-divider">@day.date.toString("EEEE d MMMM yyyy")</div>
-    @day.competitions.zipWithRowInfo.map{ case (comp, row) =>
-        <div class="article__meta-container">
-            <h3 class="article__meta-heading"><a href="@LinkTo{@comp.url}" data-link-name="view competition">@comp.fullName</a></h3>
-        </div>
+    <div class="football-matches__day">
+        <div class="date-divider">@day.date.toString("EEEE d MMMM yyyy")</div>
+        @day.competitions.zipWithRowInfo.map{ case (comp, row) =>
+            <div class="article__meta-container">
+                <h3 class="article__meta-heading"><a href="@LinkTo{@comp.url}" data-link-name="view competition">@comp.fullName</a></h3>
+            </div>
 
-        <div class="article__container u-cf">
-            <table class="table">
-                <thead hidden>
-                    <tr>
-                        <th>Match status / kick off time</th>
-                        <th>Match details</th>
-                        <th>Reports</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @comp.matches.map{ game =>
+            <div class="article__container u-cf">
+                <table class="table table--match">
+                    <thead hidden>
                         <tr>
-                            <td class="football-match--status">
-                                @if(game.isFixture){
-                                    @game.date.toString("HH:mm")
-                                }else{
-                                    @MatchStatus(game.matchStatus)
-                                }
-                            </td>
-                            <td class="football-match--details table-column--main">
-                                @game.homeTeam.name
-                                @if(game.isFixture){
-                                    <abbr title="versus">v</abbr> MAKE THIS A TABLE CELL
-
-                                }else{
-                                    @game.homeTeam.score-@game.awayTeam.score
-                                }
-                                @game.awayTeam.name
-
-
-                                @if(game.homeTeam.aggregateScore){
-                                    <p class="match-aggregate type-10"><span>(agg. <span>@game.homeTeam.aggregateScore-@game.awayTeam.aggregateScore</span>)</span></p>
-                                }
-
-                                @game.comments.map{ comment => <p class="match-comment type-10"><span>@comment</span></p> }
-                            </td>
-                            <td></td>
+                            <th>Match status / kick off time</th>
+                            <th>Match details</th>
+                            <th>Reports</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-    }
+                    </thead>
+                    <tbody>
+                        @comp.matches.map{ game =>
+                            <tr>
+                                <td class="football-match__status">
+                                    @if(game.isFixture){
+                                        @game.date.toString("HH:mm")
+                                    }else{
+                                        @MatchStatus(game.matchStatus)
+                                    }
+                                </td>
+                                <td class="football-match__details table-column--main">
+                                    <span class="details__team details__team--home">@game.homeTeam.name</span>
+                                    @if(game.isFixture){
+                                        <abbr class="details__versus" title="versus">v</abbr>
+                                    }else{
+                                        <span class="details__score">@game.homeTeam.score-@game.awayTeam.score</span>
+                                    }
+                                    <span class="details__team details__team--away">@game.awayTeam.name</span>
+
+
+                                    @if(game.homeTeam.aggregateScore){
+                                        <p class="match-aggregate type-10"><span>(agg. <span>@game.homeTeam.aggregateScore-@game.awayTeam.aggregateScore</span>)</span></p>
+                                    }
+
+                                    @game.comments.map{ comment => <p class="match-comment type-10"><span>@comment</span></p> }
+                                </td>
+                                <td></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
 }
 
 

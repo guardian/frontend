@@ -1,7 +1,18 @@
+.page-heading--football {
+    @include fs-headline(2);
+    font-weight: 900;
+}
+
+.football-filters {
+    @include mq($from: leftCol) {
+        @include rem((margin-top: -$gs-baseline*2));
+    }
+}
+
 .date-divider {
     @include fs-data(4);
     @include rem((
-        margin-bottom: $gs-baseline,
+        margin-bottom: $gs-baseline*3,
         padding-top: $gs-baseline/2
     ));
     border-top: 1px solid $c-neutral5;

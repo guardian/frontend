@@ -55,20 +55,3 @@
     @include mq($to: tablet) { @include table-football--small; }
     &.table--small { @include table-football--small; }
 }
-
-/** Fixtures table **/
-.football-match--details {
-    text-align: center;
-}
-
-
-.football__group {
-    margin-top: $gs-baseline;
-    &:first-child { margin-top: 0; }
-}
-
-.article__secondary-column {
-    .table__container {
-        @include rem((margin-bottom: $gs-baseline));
-    }
-}

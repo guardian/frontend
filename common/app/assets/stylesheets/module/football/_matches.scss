@@ -1,0 +1,33 @@
+.football-matches__day {
+    @include rem((margin-bottom: $gs-baseline*2));
+}
+
+.football-match__details {
+    text-align: center;
+}
+
+.article__secondary-column {
+    .table__container {
+        @include rem((margin-bottom: $gs-baseline));
+    }
+}
+
+.details__team {
+    display: inline-block;
+    width: 39%;
+}
+
+.details__team--home {
+    text-align: right;
+}
+
+.details__team--away {
+    text-align: left;
+}
+
+.details__versus,
+.details__score
+{
+    display: inline-block;
+    width: 20%;
+}
