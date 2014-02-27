@@ -2,6 +2,16 @@
     @include rem((margin-bottom: $gs-baseline*2));
 }
 
+.football-match--live {
+    td {
+        font-weight: bold;
+    }
+
+    .football-match__status {
+        color: $c-newsAccent;
+    }
+}
+
 .football-match__details {
     text-align: center;
 }
@@ -14,7 +24,7 @@
 
 .details__team {
     display: inline-block;
-    width: 39%;
+    width: 40%;
 }
 
 .details__team--home {
@@ -29,5 +39,5 @@
 .details__score
 {
     display: inline-block;
-    width: 20%;
+    width: 15%;
 }

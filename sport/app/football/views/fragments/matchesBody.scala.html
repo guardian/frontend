@@ -21,7 +21,11 @@
                     </thead>
                     <tbody>
                         @comp.matches.map{ game =>
-                            <tr>
+                            <tr class="@RenderClasses(Map(
+                                    "football-match--live" -> game.isLive,
+                                    "football-match--fixture" -> game.isFixture,
+                                    "football-match--result" -> game.isResult
+                                ))">
                                 <td class="football-match__status">
                                     @if(game.isFixture){
                                         @game.date.toString("HH:mm")
