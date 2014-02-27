@@ -6,7 +6,7 @@
     position: relative;
 
     .i-expander {
-        @extend .i-toggle-expand-neutral;
+        @extend %i-toggle-expand-neutral;
         position: absolute;
         right: $gs-gutter/2;
         top: 4px;
@@ -20,7 +20,7 @@
     }
 
     .i-expander {
-        @extend .i-toggle-collapse-neutral;
+        @extend %i-toggle-collapse-neutral;
     }
 }
 
@@ -32,13 +32,13 @@
     }
 
     .i-expander {
-        @extend .i-toggle-expand-white;
+        @extend %i-toggle-expand-white;
     }
 }
 
 .toggler.toggler--dark.toggler--active {
     .i-expander { // sorry, forcing it for now
-        @extend .i-toggle-collapse-white;
+        @extend %i-toggle-collapse-white;
     }
 }
 
