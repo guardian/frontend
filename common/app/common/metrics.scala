@@ -357,20 +357,38 @@ object Metrics {
   lazy val faciaTool = FaciaToolMetrics.all
 }
 
-case class SimpleCountMetric(namespace: String, name: String) {
+case class SimpleCountMetric(
+                              group: String,
+                              name: String,
+                              title: String,
+                              description: String
+                              ) extends AbstractMetric[Long] {
   val count = new AtomicLong(0)
-  def increment() { count.incrementAndGet() }
+  val currentCount = new AtomicLong(0)
+  val `type` = "counter"
+
+  def increment() {
+    count.incrementAndGet()
+    currentCount.incrementAndGet()
+  }
+
+  def getAndReset = currentCount.getAndSet(0)
+  def getValue = count.get
 }
 
 object PerformanceMetrics {
   val dogPileHitMetric = SimpleCountMetric(
     "performance",
-    "dogpile-hits"
+    "dogpile-hits",
+    "Dogpile Hits",
+    "Count of hits through use of DogPile action"
   )
 
   val dogPileMissMetric = SimpleCountMetric(
     "performance",
-    "dogpile-miss"
+    "dogpile-miss",
+    "Dogpile Misses",
+    "Count of misses through use of DogPile action"
   )
 }
 
