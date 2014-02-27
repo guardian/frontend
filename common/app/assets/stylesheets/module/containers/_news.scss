@@ -32,8 +32,8 @@
             display: flex;
 
             .collection__item {
-                flex-basis: 50%;
                 -webkit-flex-basis: 50%;
+                flex-basis: 50%;
             }
         }
         @include mq(tablet) {
@@ -50,11 +50,6 @@
             .item {
                 margin-bottom: 0;
             }
-        }
-    }
-    .l-row--items-2 {
-        .item__standfirst {
-            display: block;
         }
         .item--imageadjust-highlight {
             padding-bottom: 0;
@@ -74,5 +69,43 @@
         .item--sport-stats {
             display: none;
         }
+    }
+}
+
+
+/**
+ * Date
+ */
+
+.today {
+    color: $c-neutral1;
+    font-weight: normal;
+}
+.today__dayofweek {
+    color: $c-newsDefault;
+}
+@include mq(wide) {
+    .today__sub {
+        display: block;
+    }
+}
+
+.i--circle {
+    @include rounded-corners(50%);
+    display: block;
+    position: relative;
+}
+.i--clock {
+    width: 32px;
+    height: 32px;
+    background-color: $c-newsDefault;
+    position: absolute;
+    left: 0;
+    margin-top: 3px;
+
+    .i {
+        position: absolute;
+        left: 15px;
+        top: 5px;
     }
 }

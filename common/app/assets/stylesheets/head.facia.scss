@@ -14,19 +14,27 @@
 
 .facia-container {
     @include mq(gs-span(7) + $gs-gutter*3, tablet) {
-        @include rem((width: gs-span(7)));
+        @include rem((
+            width: gs-span(7)
+        ));
         margin: 0 auto;
     }
     @include mq(tablet) {
-        @include rem((width: gs-span(9)));
+        @include rem((
+            width: gs-span(9)
+        ));
         padding-left: 0;
         padding-right: 0;
     }
     @include mq(desktop) {
-        @include rem((width: gs-span(12)));
+        @include rem((
+            width: gs-span(12)
+        ));
     }
     @include mq(faciaLeftCol) {
-        @include rem((width: gs-span(14)));
+        @include rem((
+            width: gs-span(14)
+        ));
 
         .container__title {
             margin-bottom: 0;
@@ -48,12 +56,16 @@
             }
             .container__body {
                 margin-left: 0;
-                @include rem((width: gs-span(12)));
+                @include rem((
+                    width: gs-span(12)
+                ));
             }
         }
     }
     @include mq(wide) {
-        @include rem((width: gs-span(16)));
+        @include rem((
+            width: gs-span(16)
+        ));
 
         .container__title {
             float: left;
@@ -64,7 +76,26 @@
         }
         .container__body {
             margin-left: 0;
-            @include rem((width: gs-span(12)));
+            @include rem((
+                width: gs-span(12)
+            ));
+        }
+    }
+
+    .is-updating {
+        display: none;
+        margin: 100px auto 0;
+    }
+    .ab-uk-containers &,
+    .ab-us-containers & {
+        > {
+            * {
+                visibility: hidden;
+            }
+            .is-updating {
+                display: block;
+                visibility: visible;
+            }
         }
     }
 }
@@ -79,6 +110,7 @@
 @import "module/facia/_baguette";
 
 @import "module/containers/_news";
+@import "module/containers/_tag";
 @import "module/containers/_sport";
 @import "module/containers/_features";
 @import "module/containers/_comment";
@@ -86,4 +118,5 @@
 @import "module/containers/_section";
 @import "module/containers/_commentanddebate";
 @import "module/containers/_people";
+@import "module/containers/_misc";
 

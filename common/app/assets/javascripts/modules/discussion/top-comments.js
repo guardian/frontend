@@ -43,7 +43,7 @@ TopComments.prototype.classes = {
     comments: 'd-thread--top-level',
     topLevelComment: 'd-comment--top-level',
     reply: 'd-comment--response',
-    showReplies: 'js-show-more-replies',
+    showReplies: 'd-show-more-replies',
 
     topCommentTitle: "page-sub-header",
 

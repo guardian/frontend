@@ -1,13 +1,12 @@
 package services
 
 import org.scalatest.{FlatSpec, Matchers}
-import common.UsesElasticSearch
 import test.EditionalisedHtmlUnit
 import play.api.libs.ws.WS
 import scala.concurrent.duration._
 import scala.concurrent.Await
 
-abstract class HealthcheckTest(warmupUrl: String) extends FlatSpec with Matchers with UsesElasticSearch {
+abstract class HealthcheckTest(warmupUrl: String) extends FlatSpec with Matchers {
 
   def prepareForTest() {}
 

@@ -126,6 +126,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       else configuration.getStringProperty("ajax.url").getOrElse("")
     lazy val corsOrigins: Seq[String] = configuration.getStringProperty("ajax.cors.origin").map(_.split(",")
       .map(_.trim).toSeq).getOrElse(Nil)
+    lazy val spdyUrl: String = configuration.getStringProperty("ajax.spdyUrl").getOrElse("")
   }
 
   object id {
@@ -144,7 +145,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object images {
     lazy val path = configuration.getMandatoryStringProperty("images.path")
-    lazy val servicePath = configuration.getStringProperty("image.service.path").getOrElse("http://ak.i.guim.co.uk")
+    lazy val spdyPath = configuration.getStringProperty("images.spdyPath").getOrElse("https://services.guardianapps.co.uk/static")
   }
 
   object assets {
@@ -212,10 +213,13 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object facia {
     lazy val stage = configuration.getStringProperty("facia.stage").getOrElse(Configuration.environment.stage)
+    lazy val collectionCap: Int = configuration.getIntegerProperty("facia.collection.cap").getOrElse(25)
   }
 
   object faciatool {
     lazy val contentApiPostEndpoint: Option[String] = configuration.getStringProperty("contentapi.post.endpoint")
+    lazy val frontPressQueueUrl: Option[String] = configuration.getStringProperty("frontpress.sqs.queue")
+    lazy val configBeforePressTimeout: Int = 1000
   }
 
   object pa {
@@ -230,15 +234,16 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
     lazy val region = configuration.getMandatoryStringProperty("aws.region")
     lazy val bucket = configuration.getMandatoryStringProperty("aws.bucket")
-    lazy val sns: String = configuration.getMandatoryStringProperty("sns.notification.topic.arn")
+    lazy val notificationSns: String = configuration.getMandatoryStringProperty("sns.notification.topic.arn")
+    lazy val frontPressSns: Option[String] = configuration.getStringProperty("frontpress.sns.topic")
 
     lazy val credentials: AWSCredentialsProvider = new AWSCredentialsProviderChain(
       // the first 3 are a copy n paste job from the constructor of DefaultAWSCredentialsProviderChain
-      LoggingAWSCredentialsProvider(new EnvironmentVariableCredentialsProvider()),
-      LoggingAWSCredentialsProvider(new SystemPropertiesCredentialsProvider()),
-      LoggingAWSCredentialsProvider(new InstanceProfileCredentialsProvider()),
+      new EnvironmentVariableCredentialsProvider(),
+      new SystemPropertiesCredentialsProvider(),
+      new InstanceProfileCredentialsProvider(),
 
-      LoggingAWSCredentialsProvider(new StaticCredentialsProvider(new NullableAWSCredentials(accessKey, secretKey)))
+      new StaticCredentialsProvider(new NullableAWSCredentials(accessKey, secretKey))
     )
   }
 
@@ -268,28 +273,5 @@ object ManifestData {
 private class NullableAWSCredentials(accessKeyId: Option[String], secretKey: Option[String]) extends AWSCredentials{
   def getAWSAccessKeyId: String = accessKeyId.getOrElse(null)
   def getAWSSecretKey: String = secretKey.getOrElse(null)
-}
-
-// I want to see which provider we are using
-private class LoggingAWSCredentialsProvider(delegate: AWSCredentialsProvider) extends AWSCredentialsProvider with Logging {
-  val className = delegate.getClass.getSimpleName
-
-  def refresh() {
-    log.info(s"$className.refresh")
-    delegate.refresh()
-  }
-
-  def getCredentials: AWSCredentials = {
-    val credentials = delegate.getCredentials
-    // this is how the AWSCredentialsProviderChain works
-    if (credentials.getAWSAccessKeyId != null && credentials.getAWSSecretKey != null) {
-      log.info(s"using AWS Credentials from $className")
-    }
-    credentials
-  }
-}
-
-private object LoggingAWSCredentialsProvider{
-  def apply(delegate: AWSCredentialsProvider) = new LoggingAWSCredentialsProvider(delegate)
 }
 

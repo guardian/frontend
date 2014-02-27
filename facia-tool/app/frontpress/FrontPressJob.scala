@@ -1,81 +1,95 @@
 package jobs
 
-import common.{ExecutionContexts, Logging}
+import common.Logging
 import com.amazonaws.services.sqs.AmazonSQSAsyncClient
 import conf.Configuration
 import com.amazonaws.services.sqs.model._
 import com.amazonaws.regions.{Regions, Region}
 import scala.collection.JavaConversions._
 import services.S3FrontsApi
-import play.api.libs.json.Json
-import scala.util.Success
+import play.api.libs.json.{JsObject, Json}
 import scala.concurrent.duration._
-import scala.concurrent.Await
+import scala.concurrent.{Future, Await}
 import frontpress.{FaciaToolConfigAgent, FrontPress}
+import common.FaciaToolMetrics.{FrontPressCronFailure, FrontPressCronSuccess}
+import play.api.libs.concurrent.Akka
+import scala.util.{Failure, Success}
+import conf.Switches.FrontPressJobSwitch
 
-object FrontPressJob extends ExecutionContexts with Logging with implicits.Collections {
+object FrontPressJob extends Logging with implicits.Collections {
 
-  val queueUrl: Option[String] = None
+  val queueUrl: Option[String] = Configuration.faciatool.frontPressQueueUrl
 
-  def newClient = {
+  import play.api.Play.current
+  private lazy implicit val frontPressContext = Akka.system.dispatchers.lookup("play.akka.actor.front-press")
+
+  def newClient: AmazonSQSAsyncClient = {
     val c = new AmazonSQSAsyncClient(Configuration.aws.credentials)
     c.setRegion(Region.getRegion(Regions.EU_WEST_1))
     c
   }
 
-  def run() {
-    val client = newClient
+  def run(): Unit = {
     for(queueUrl <- queueUrl) {
-      try {
-        val receiveMessageResult = client.receiveMessage(new ReceiveMessageRequest(queueUrl).withMaxNumberOfMessages(10))
-        receiveMessageResult.getMessages
-          .map(getConfigFromMessage)
-          .flatten
-          .distinct
-          .map { config =>
-            val f = FrontPress.generateJson(config).andThen {
-              case Success(json) => {
-                (json \ "id").asOpt[String].foreach(S3FrontsApi.putPressedJson(_, Json.stringify(json)))
+      if (FrontPressJobSwitch.isSwitchedOn) {
+        val client = newClient
+        try {
+          val receiveMessageResult = client.receiveMessage(new ReceiveMessageRequest(queueUrl).withMaxNumberOfMessages(10))
+          receiveMessageResult.getMessages
+            .map(getConfigFromMessage)
+            .distinct
+            .map { path =>
+              val f = pressByPathId(path)
+              f.onComplete {
+                case Success(_) =>
+                  deleteMessage(receiveMessageResult, queueUrl)
+                  FrontPressCronSuccess.increment()
+                case Failure(t) =>
+                  deleteMessage(receiveMessageResult, queueUrl)
+                  log.warn(t.toString)
+                  FrontPressCronFailure.increment()
               }
-            }
-            f.onSuccess {
-              case _ =>
-                client.deleteMessageBatch(
-                  new DeleteMessageBatchRequest(
-                    queueUrl,
-                    receiveMessageResult.getMessages.map { msg => new DeleteMessageBatchRequestEntry(msg.getMessageId, msg.getReceiptHandle)}
-                  )
-                )
-            }
-            f.onFailure {
-              case t: Throwable => log.warn(t.toString)
-            }
-            Await.ready(f, 20.seconds) //Block until ready!
+              Await.ready(f, 20.seconds) //Block until ready!
+          }
+        } catch {
+          case t: Throwable => {
+            log.warn(t.toString)
+            FrontPressCronFailure.increment()
+          }
         }
-      } catch {
-        case t: Throwable => log.warn(t.toString)
       }
     }
   }
 
-  def pressByCollectionIds(ids: Set[String]): Unit = {
+  def deleteMessage(receiveMessageResult: ReceiveMessageResult, queueUrl: String): DeleteMessageBatchResult = {
+    val client = newClient
+    client.deleteMessageBatch(
+      new DeleteMessageBatchRequest(
+        queueUrl,
+        receiveMessageResult.getMessages.map { msg => new DeleteMessageBatchRequestEntry(msg.getMessageId, msg.getReceiptHandle)}
+      )
+    )
+  }
+
+  def pressByCollectionIds(ids: Set[String]): Future[Set[JsObject]] = {
+    //Give it one second to update
+    Await.ready(FaciaToolConfigAgent.refreshAndReturn(), Configuration.faciatool.configBeforePressTimeout.millis)
     val paths: Set[String] = for {
       id <- ids
       path <- FaciaToolConfigAgent.getConfigsUsingCollectionId(id)
-
     } yield path
-    for {
-      p <- paths
-      json <- FrontPress.generateJson(p)
-    } {
+    val setOfFutureJson: Set[Future[JsObject]] = paths.map(pressByPathId)
+    Future.sequence(setOfFutureJson) //To a Future of Set Json
+  }
+
+  def pressByPathId(path: String): Future[JsObject] = {
+    FrontPress.generateJson(path).map { json =>
       (json \ "id").asOpt[String].foreach(S3FrontsApi.putPressedJson(_, Json.stringify(json)))
+      json
     }
   }
 
-  def getConfigFromMessage(message: Message): List[String] = {
-    val id = (Json.parse(message.getBody) \ "Message").as[String]
-    val configIds: Seq[String] = FaciaToolConfigAgent.getConfigsUsingCollectionId(id)
-    configIds.toList
-  }
+  def getConfigFromMessage(message: Message): String =
+    (Json.parse(message.getBody) \ "Message").as[String]
 
 }

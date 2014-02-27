@@ -3,9 +3,8 @@ package test
 import org.scalatest.Matchers
 import org.scalatest.FlatSpec
 import scala.collection.JavaConversions._
-import common.UsesElasticSearch
 
-class ImageContentTemplateTest extends FlatSpec with Matchers with UsesElasticSearch {
+class ImageContentTemplateTest extends FlatSpec with Matchers {
 
   it should "render a cartoon" in HtmlUnit("/commentisfree/cartoon/2013/jul/15/iain-duncan-smith-benefits-cap") {
     browser =>

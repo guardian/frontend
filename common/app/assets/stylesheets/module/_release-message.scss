@@ -57,14 +57,15 @@
     }
 
     .site-message__list__item {
-        @include faux-bullet-point;
+        @include faux-bullet-point(#ffffff);
         @include fs-headline(1);
         font-weight: 200;
 
         &:before {
             top: 0;
-            @include rem((left: -18px));
-            color: #ffffff;
+            @include rem((
+                left: -18px
+            ));
         }
     }
 
@@ -145,7 +146,6 @@
     a {
         color: $c-neutral2;
     }
-
     i {
         margin-bottom: -2px;
         margin-right: 5px;
@@ -163,4 +163,3 @@
     background-color: transparent;
     border: none;
 }
-

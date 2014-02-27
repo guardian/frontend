@@ -85,7 +85,7 @@ class TemplatesTest extends FlatSpec with Matchers {
     val portaitImg = figures(4)
     (portaitImg \ "@class").text should include("img--portrait")
     (portaitImg \ "img" \ "@class").text should be("gu-image")
-    (portaitImg \ "img" \ "@height").text should be("700")
+    (portaitImg \ "img" \ "@height").length should be (0) // we remove the height attribute
 
     (body \\ "figure").foreach { fig =>
       (fig \ "@itemprop").text should be("associatedMedia")

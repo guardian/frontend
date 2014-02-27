@@ -7,6 +7,7 @@ define([
     'utils/query-params',
     'utils/ammended-query-str',
     'utils/update-scrollables',
+    'utils/terminate',
     'modules/authed-ajax',
     'models/group',
     'models/collections/droppable',
@@ -21,6 +22,7 @@ define([
     queryParams,
     ammendedQueryStr,
     updateScrollables,
+    terminate,
     authedAjax,
     Group,
     droppable,
@@ -32,25 +34,31 @@ define([
 
     return function() {
 
-        var model = {
-                collections: ko.observableArray(),
-                fronts: ko.observableArray(),
-                front:  ko.observable(),
+        var model = vars.model = {};
 
-                latestArticles: new LatestArticles({
-                    filterTypes: vars.CONST.filterTypes
-                }),
+        model.collections = ko.observableArray();
 
-                clipboard: new Group({
-                    parentType: 'Clipboard',
-                    reflow: updateScrollables,
-                    keepCopy:  true
-                }),
+        model.fronts = ko.observableArray();
 
-                liveMode: vars.state.liveMode,
+        model.front = ko.observable();
 
-                frontSparkUrl: ko.observable()
-            };
+        model.liveMode = vars.state.liveMode;
+
+        model.frontSparkUrl = ko.observable();
+
+        model.latestArticles = new LatestArticles({
+            filterTypes: vars.CONST.filterTypes
+        });
+
+        model.clipboard = new Group({
+            parentType: 'Clipboard',
+            reflow: updateScrollables,
+            keepCopy:  true
+        });
+
+        model.setFront = function(id) {
+            model.front(id);
+        };
 
         model.setModeLive = function() {
             model.liveMode(true);
@@ -68,18 +76,24 @@ define([
             return queryParams().front;
         }
 
-        function setfront() {
-            model.front(getFront());
-        }
-
-        function renderFront(id) {
-            history.pushState({}, "", window.location.pathname + '?' + ammendedQueryStr('front', id));
+        function loadCollections(frontId) {
             model.collections(
-                ((vars.state.config.fronts[getFront()] || {}).collections || [])
-                .filter(function(id){ return !!vars.state.config.collections[id]; })
+                ((vars.state.config.fronts[frontId] || {}).collections || [])
+                .filter(function(id){ return vars.state.config.collections[id]; })
                 .map(function(id){
                     return new Collection(
-                        _.extend(vars.state.config.collections[id], {id: id})
+                        _.extend(
+                            vars.state.config.collections[id],
+                            {
+                                id: id,
+                                alsoOn: _.reduce(vars.state.config.fronts, function(alsoOn, front, fid) {
+                                    if (fid !== frontId && front.collections.indexOf(id) > -1) {
+                                        alsoOn.push(fid);
+                                    }
+                                    return alsoOn;
+                                }, [])
+                            }
+                        )
                     );
                 })
             );
@@ -118,30 +132,51 @@ define([
             }, period);
         });
 
-        model.front.subscribe(function(front) {
-            renderFront(front);
-        });
-
-        model.liveMode.subscribe(function() {
-            _.each(model.collections(), function(collection) {
-                collection.closeAllArticles();
-                collection.populate();
-            });
-        });
-
         this.init = function() {
             droppable.init();
 
             fetchSettings(function (config, switches) {
-                vars.state.config = config || {};
-                vars.state.switches = switches || {};
-                model.fronts(_.keys(config.fronts));
+                if (switches['facia-tool-disable']) {
+                    terminate();
+                    return;
+                }
+                vars.state.switches = switches;
+                vars.state.config = config;
+                model.fronts(
+                    getFront() === 'testcard' ? ['testcard'] :
+                       _.chain(_.keys(config.fronts))
+                        .without('testcard')
+                        .sortBy(function(id) { return id; })
+                        .value()
+                );
             }, vars.CONST.configSettingsPollMs, true)
             .done(function() {
-                setfront();
-                window.onpopstate = setfront;
+                var wasPopstate = false;
+
+                model.setFront(getFront());
+                loadCollections(getFront());
+
+                window.onpopstate = function() {
+                    wasPopstate = true;
+                    model.setFront(getFront());
+                };
 
                 ko.applyBindings(model);
+
+                model.front.subscribe(function(front) {
+                    if (!wasPopstate) {
+                        history.pushState({}, '', window.location.pathname + '?' + ammendedQueryStr('front', front));
+                    }
+                    wasPopstate = false;
+                    loadCollections(front);
+                });
+
+                model.liveMode.subscribe(function() {
+                    _.each(model.collections(), function(collection) {
+                        collection.closeAllArticles();
+                        collection.populate();
+                    });
+                });
 
                 updateScrollables();
                 window.onresize = updateScrollables;

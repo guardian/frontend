@@ -57,10 +57,10 @@ trait QueryDefaults extends implicits.Collections with ExecutionContexts {
 trait ApiQueryDefaults extends QueryDefaults with implicits.Collections with Logging {
   self: Api[Future] =>
 
-  def item (id: String, edition: Edition): ItemQuery = item(id, edition.id)
+  def item (id: String, edition: Edition, queryMessage: Option[String] = None): ItemQuery = item(id, edition.id, queryMessage)
 
   //common fields that we use across most queries.
-  def item(id: String, edition: String): ItemQuery = {
+  def item(id: String, edition: String, queryMessage: Option[String]): ItemQuery = {
     val query = item.itemId(id)
                 .edition(edition)
                 .showTags("all")
@@ -69,11 +69,11 @@ trait ApiQueryDefaults extends QueryDefaults with implicits.Collections with Log
                 .showElements("all")
                 .showReferences(references)
                 .showStoryPackage(true)
-    query
+    queryMessage.map(query.stringParam("application-name", _)).getOrElse(query)
   }
 
   //common fields that we use across most queries.
-  def search(edition: Edition): SearchQuery = {
+  def search(edition: Edition, queryMessage: Option[String] = None): SearchQuery = {
     val query = search
                 .edition(edition.id)
                 .showTags("all")
@@ -81,7 +81,8 @@ trait ApiQueryDefaults extends QueryDefaults with implicits.Collections with Log
                 .showReferences(references)
                 .showFields(trailFields)
                 .showElements("all")
-    query
+    //This is assuming you actually give the application name
+    queryMessage.map(query.stringParam("application-name", _)).getOrElse(query)
   }
 }
 
