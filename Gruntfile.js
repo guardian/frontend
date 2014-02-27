@@ -63,8 +63,8 @@ module.exports = function (grunt) {
                     fence:        'common/components/fence/fence',
                     'ophan/ng':   'empty:'
                 },
-                optimize: (isDev) ? 'none' : 'uglify2',
-                useSourceUrl: (isDev) ? true : false,
+                optimize: 'uglify2',
+                generateSourceMaps: true,
                 preserveLicenseComments: false
             },
             common: {

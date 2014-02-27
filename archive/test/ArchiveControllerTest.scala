@@ -71,5 +71,14 @@ class ArchiveControllerTest extends FlatSpec with Matchers {
       case (key, value) => controllers.ArchiveController.normalise(key, zeros = "00") should be (value)
     }
   }
+  
+  it should "test a string is url encoded" in Fake {
+    controllers.ArchiveController.isEncoded("foo%2Cfoo") should be (Some("foo,foo"))
+    controllers.ArchiveController.isEncoded("foo") should be (None)
+  }
+
+  it should "test a string contains an old gallery" in Fake {
+    controllers.ArchiveController.isGallery("arts/gallery/0,") should be (Some("arts/pictures/0,"))
+  }
 
 }
