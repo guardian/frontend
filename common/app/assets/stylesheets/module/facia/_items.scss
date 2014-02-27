@@ -155,6 +155,32 @@ $c-live: #e81818;
     }
 }
 
+.container__card {
+    position: absolute;
+    bottom: 0;
+    width: gs-span(2);
+    border-top: 1px solid $c-featureAccent;
+    display: none;
+
+    @include mq(desktop) {
+        display: block;
+    }
+}
+.container__card__title {
+    margin-bottom: 0;
+    color: $c-featureDefault;
+    @include fs-header(1);
+}
+.container__card__item {
+    margin-top: $gs-baseline;
+    @include f-headline;
+    @include font-size(14px, 18px);
+
+    a {
+        color: $c-neutral1;
+    }
+}
+
 .collection {
     font-size: 0;
     overflow: hidden;
