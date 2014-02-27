@@ -154,6 +154,11 @@ a, a:hover {
     height: 23px;
 }
 
+.list-header__also-on {
+    color: #000000;
+    font-weight: bold;
+}
+
 .list-header.collapsed {
     opacity: 0.5;
 }

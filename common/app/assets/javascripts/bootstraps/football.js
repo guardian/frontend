@@ -171,7 +171,9 @@ define([
                         tableEl = bonzo.create('<div class="js-football-table" data-link-name="football-table-embed"></div>');
 
                     $('.js-right-hand-component').append(tableEl);
-                    table.fetch(tableEl);
+                    table.fetch(tableEl).then(function() {
+                        mediator.emit('bootstrap:football:rhs:table:ready');
+                    });
                 }
 
                 break;

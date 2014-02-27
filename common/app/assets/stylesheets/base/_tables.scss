@@ -32,6 +32,7 @@ td {
 .table {
     background: $c-neutral8;
     border-top: 2px solid $c-newsAccent;
+    color: $c-neutral1;
 
     caption {
         @include fs-header(2);
@@ -56,9 +57,14 @@ td {
         font-weight: 800;
     }
 
+    td {
+        border-top: 1px solid darken($c-neutral8, 4%);
+    }
+
     abbr {
         border-bottom: 1px dotted $c-neutral8;
     }
+
 
     @include mq($to: tablet) { @include table--small; }
 }
@@ -68,6 +74,10 @@ td {
 }
 
 .table--striped {
+    td {
+        border-top: none;
+    }
+
     tr:nth-child(odd) > td {
         background-color: darken($c-neutral8, 4%);
     }
