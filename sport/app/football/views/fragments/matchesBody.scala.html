@@ -46,13 +46,11 @@
                                         </div>
 
                                         <div class="details__meta">
-                                            <div class="details__aggregate">(agg. 9-0)</div>
-                                            <div class="details__comment">Spurs win 8-7 on penalties.</div>
+                                            @if(game.homeTeam.aggregateScore){
+                                            <span class="details__aggregate">(agg. @game.homeTeam.aggregateScore-@game.awayTeam.aggregateScore)</span>
+                                            }
+                                            @game.comments.map{ comment => <span class="details__comment">@comment</span>}
                                         </div>
-                                        @if(game.homeTeam.aggregateScore){
-                                        <span class="details__aggregate">(agg. @game.homeTeam.aggregateScore-@game.awayTeam.aggregateScore)</span>
-                                        }
-                                        @game.comments.map{ comment => <span class="details__comment">@comment</span>}
                                     </a>
                                 </td>
                                 <td></td>
