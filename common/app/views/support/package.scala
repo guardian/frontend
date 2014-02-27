@@ -326,6 +326,38 @@ case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition
   }
 }
 
+case class InBodyLinkCleanerForR1() extends HtmlCleaner {
+
+  /*
+
+    i) www: /Guardian/science/latest/0,,,00.html?gusrc=gpd -> /science/latest/... 
+   ii) edu: /Education/science/latest/0,,,00.html?gusrc=gpd -> /education/science/latest/... 
+  iii) absolute: /summerreading2001/page/ -> <section>/summerreading2001/page/0,,510415,00.html
+  
+  */
+
+  def FixLink(href: String) = {
+    val url = href.replace("/Guardian/", "/") // case 1
+    val pattern = "^/(Arts|Education)/(.*)".r
+    url match {
+        case pattern(section, path) => { 
+            val foo = s"${section.toLowerCase}/${path}"
+            println(foo)
+            foo
+        }
+        case _ => url
+    }
+  }
+
+  def clean(body: Document): Document = {
+    val links = body.getElementsByTag("a")
+    links.foreach { link =>
+      link.attr("href", FixLink(link.attr("href")))
+    }
+    body
+  }
+}
+
 object TweetCleaner extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
