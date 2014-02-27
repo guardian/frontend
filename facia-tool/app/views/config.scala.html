@@ -39,6 +39,8 @@
                 underDrag: state.underDrag,
                 open: state.open}">
 
+            <span class="cnf-collection__index" data-bind="text: $index() + 1"></span>
+
             <a class="cnf-collection__name" data-bind="
                 click: toggleOpen,
                 attr: {href: id},
