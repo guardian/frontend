@@ -1,0 +1,15 @@
+.date-divider {
+    @include fs-data(4);
+    @include rem((
+        margin-bottom: $gs-baseline,
+        padding-top: $gs-baseline/2
+    ));
+    border-top: 1px solid $c-neutral5;
+    color: $c-neutral1;
+    font-weight: 900;
+}
+
+.nav--football {
+    clear: left;
+    padding-bottom: $baseline*4;
+}

@@ -55,6 +55,13 @@
                                     @game.homeTeam.score-@game.awayTeam.score
                                 }
                                 @game.awayTeam.name
+
+
+                                @if(game.homeTeam.aggregateScore){
+                                    <p class="match-aggregate type-10"><span>(agg. <span>@game.homeTeam.aggregateScore-@game.awayTeam.aggregateScore</span>)</span></p>
+                                }
+
+                                @game.comments.map{ comment => <p class="match-comment type-10"><span>@comment</span></p> }
                             </td>
                             <td></td>
                         </tr>
