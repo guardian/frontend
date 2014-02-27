@@ -32,9 +32,7 @@ trait Related extends ConciergeRepository {
       .response
 
     val trails: Future[Seq[Content]] = response.map { response =>
-      val trails = response.results.map(Content(_))
-
-      trails.sortBy(content => - MostReadAgent.getViewCount(content.id).getOrElse(0)).take(10)
+      response.results.map(Content(_)).sortBy(content => - MostReadAgent.getViewCount(content.id).getOrElse(0)).take(10)
     }
 
     trails
