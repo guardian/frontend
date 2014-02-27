@@ -13,7 +13,7 @@
 
 .live-summary--expandable {
     border-bottom: 1px solid $c-neutral2;
-    margin-bottom: $baseline;
+    margin-bottom: $gs-baseline/3;
 
     .live-summary__expander-cta {
         display: block;
@@ -53,7 +53,7 @@
 }
 
 .live-summary {
-    margin-bottom: $baseline*4;
+    margin-bottom: ($gs-baseline/3)*4;
 }
 
 .live-summary__title {

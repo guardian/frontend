@@ -3,7 +3,7 @@
    ========================================================================== */
 
 .sport-fullscorecard {
-    margin-bottom: $baseline*4;
+    margin-bottom: ($gs-baseline/3)*4;
     width: 100%;
 }
 
@@ -22,14 +22,14 @@
 
 .sport-fullscorecard__container {
     overflow: auto;
-    margin-bottom: $baseline*2;
+    margin-bottom: ($gs-baseline/3)*2;
     width: 100%;
 }
 
 .sport-fullscorecard__secondary {
     .sport-fullscorecard__table {
         @include box-sizing(border-box);
-        border-right: $baseline/2 solid #FFFFFF;
+        border-right: $gs-baseline/6 solid #FFFFFF;
         display: table;
     }
 }
@@ -37,7 +37,7 @@
 .sport-fullscorecard__detail {
     .sport-fullscorecard__table {
         @include box-sizing(border-box);
-        border-left: $baseline/2 solid #FFFFFF;
+        border-left: $gs-baseline/6 solid #FFFFFF;
         display: table;
     }
 }
@@ -48,13 +48,13 @@
     border-bottom: 1px solid #DEDEDD;
     color: $c-sportBright;
     font-weight: 500;
-    margin: $baseline*2 0 0 0;
-    padding: 10px $gutter/2 $baseline*2;
+    margin: ($gs-baseline/3)*2 0 0 0;
+    padding: 10px $gutter/2 ($gs-baseline/3)*2;
 }
 
 .sport-fullscorecard__table {
     background-color: $c-neutral7;
-    margin: 0 0 $baseline;
+    margin: 0 0 $gs-baseline/3;
 }
 
 .sport-fullscorecard__thead {
@@ -64,7 +64,7 @@
         color: $c-sportMid;
         display: table-cell;
         font-weight: 500;
-        padding: $baseline*2 $gutter/4*3;
+        padding: ($gs-baseline/3)*2 $gutter/4*3;
     }
     [colspan] {
         text-align: left;
@@ -80,7 +80,7 @@
         background-color: $c-neutral7;
         border-top: 1px solid #DEDEDD;
         display: table-cell;
-        padding: $baseline*2 $baseline*3;
+        padding: ($gs-baseline/3)*2 $gs-baseline;
     }
     .sport-fullscorecard__additional {
         display: none;
@@ -93,19 +93,19 @@
 
 .sport-fullscorecard__information {
     background-color: $c-neutral7;
-    margin: $baseline*2 0;
+    margin: ($gs-baseline/3)*2 0;
 
     dt {
         @extend %type-10;
         color: $c-sportMid;
         font-weight: 500;
-        padding: $baseline*2 $gutter/4*3 0;
+        padding: ($gs-baseline/3)*2 $gutter/4*3 0;
     }
     dd {
         @extend %type-10;
         border-bottom: 1px solid #DEDEDD;
         margin: 0;
-        padding: $baseline*2 $gutter/4*3;
+        padding: ($gs-baseline/3)*2 $gutter/4*3;
     }
 
     dd:last-child {
