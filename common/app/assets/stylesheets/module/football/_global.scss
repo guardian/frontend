@@ -12,7 +12,7 @@
 .date-divider {
     @include fs-data(4);
     @include rem((
-        margin-bottom: $gs-baseline*3,
+        margin-bottom: $gs-baseline,
         padding-top: $gs-baseline/2
     ));
     border-top: 1px solid $c-neutral5;

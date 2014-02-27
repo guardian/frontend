@@ -15,7 +15,8 @@
 /** League table **/
 .table--football {
     .table-column--main {
-        a {
+        a,
+        span {
             display: block;
             overflow: hidden;
             text-overflow: ellipsis;

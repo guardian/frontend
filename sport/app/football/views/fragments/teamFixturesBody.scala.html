@@ -2,6 +2,22 @@
 @import support._
 @import org.joda.time.DateTime
 
+<div class="article__meta-container">
+    @* How impressive *@
+    <h3 class="article__meta-heading">@page.webTitle.split(" ").take(1).map(_.toLowerCase).mkString</h3>
+</div>
+
+@fixtures.map{ fixture =>
+    <div class="football-matches__day">
+        <div class="date-divider">@fixture.fixture.date.toString("EEEE d MMMM yyyy")</div>
+
+        <div class="article__container u-cf">
+            @tableMatches(List(fixture.fixture))
+        </div>
+    </div>
+}
+
+
 <div class="monocolumn-wrapper tone-news">
 
     <h2 class="article__zone hide-on-mobile-if-localnav sport-header">
