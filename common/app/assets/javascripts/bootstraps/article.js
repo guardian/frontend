@@ -15,7 +15,6 @@ define([
     "common/modules/experiments/left-hand-card",
     "common/modules/open/cta",
     "common/modules/commercial/loader",
-    "common/modules/commercial/loader",
     "common/modules/experiments/layoutHints"
 ], function (
     common,
@@ -34,7 +33,7 @@ define([
     LeftHandCard,
     OpenCta,
     CommercialLoader,
-    layoutHints
+    Layout
 ) {
 
     var modules = {
@@ -161,9 +160,9 @@ define([
             });
         },
 
-        initInteractives: function(config) {
-            if(config.switches.layoutHints) {
-                layoutHints.init(config);
+        initLayoutHints: function(config) {
+            if(config.switches.layoutHints && /\/-sp-/g.test(config.page.pageId)) {
+                var l = new Layout(config);
             }
         }
     };
@@ -179,7 +178,7 @@ define([
             modules.externalLinksCards();
             modules.initOpen(config);
             modules.initFence();
-            modules.initInteractives(config);
+            modules.initLayoutHints(config);
         }
         common.mediator.emit("page:article:ready", config, context);
     };

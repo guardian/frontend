@@ -1,34 +1,99 @@
 @mixin deport-left {
     @include mq(leftCol) {
-        margin-left: -1 * (gs-span(3) - $gs-gutter);
+        margin-left: -1 * (gs-span(2) + $gs-gutter);
     }
 
     @include mq(wide) {
-        margin-left: -1 * (gs-span(4) - $gs-gutter);
+        margin-left: -1 * (gs-span(3) + $gs-gutter);
     }
+}
+
+@mixin reduce-left {
+    @include mq(leftCol) {
+        width: gs-span(2);
+    }
+
+    @include mq(wide) {
+        width: gs-span(3);
+    }
+}
+
+@mixin pull-quote {
+    float: left;
+    margin-top: 0;
+    @include fs-headline(3);
+    font-weight: 200;
+    font-style: normal;
+    color: $c-neutral3;
+
+    &:before {
+        display: block;
+        content: ' ';
+        @extend .i;
+        @extend .i-quote-blue;
+    }
+}
+
+figure {
+    &.img--supporting {
+        @include mq(leftCol) {
+            float:left;
+            width: gs-span(5);
+            margin-top: 0;
+            margin-right: $gs-gutter;
+        }
+
+        @include mq(wide) {
+            width: gs-span(6);
+        }
+    }
+}
+
+.media-primary--full-width {
+    width: 100%;
+    margin-bottom: $gs-baseline*2;
 }
 
 .layout-hints {
 
-    .element-interactive {
-        background-color: #000000;
-        overflow: hidden;
-
-        iframe { overflow: hidden; }
-
-        @include mq(wide) {
-            height: 498px;
-            iframe { height: 498px; }
-        }
-
+    .element-interactive,
+    .element-video {
+        position: relative;
         @include deport-left;
+        figcaption { background: #ffffff; }
+    }
+    
+    .element-image {
+        position: relative;
+        @include deport-left;
+        @include fs-data(3, true);
+        figcaption { background: #ffffff; }
     }
 
-    &.fast-ice-rescue-from-antarctica {
+    figcaption {
+        position: absolute;
+        top: 100%;
+        padding-left: 0;
+        padding-top: $gs-baseline;
+        @include reduce-left;
+
+        &:before { display: none; }
+    }
+
+    &.rescue-from-antarctica {
+
+        .media-primary--full-width { display: none; }
+
+        blockquote { @include pull-quote; }
+
         @include mq(leftCol) {
-            .media-primary {
-                display: none;
+            blockquote {
+                padding-right: $gs-gutter;
+                @include deport-left;
+                @include reduce-left;
             }
+            .media-primary { display: none; }
+            .media-primary--full-width { display: block; }
         }
     }
 }

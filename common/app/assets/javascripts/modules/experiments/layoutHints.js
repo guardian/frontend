@@ -1,27 +1,34 @@
 define([
     'bonzo',
-    'common/$',
-    'common/modules/ui/images'
-], function($, images){
+    'qwery'
+], function(bonzo, qwery){
 
     function Layout(config) {
         var slugs = config.page.pageId.split("/"),
-            slug = slugs[slugs.length -1];
+            slug = slugs[slugs.length -1].replace('-sp-', '');
 
         if(slug in this.content) {
             this.container = document.getElementById('article');
-            $(this.container).addClass('layout-hints ' + slug);
+            bonzo(this.container).addClass('layout-hints ' + slug);
             this.content[slug]();
         }
     }
 
     Layout.prototype.content = {
-        "fast-ice-rescue-from-antarctica" : function() {
+        "rescue-from-antarctica" : function() {
             var img = new Image();
-            img.className = 'responsive-img';
-            img.setAttribute('data-src', 'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/2/26/1393435299650/Antarcticaleadimage.jpg');
-            $('.article__main-column', this.container).before(img);
-            images.upgrade(this.container);
+            var imgs = qwery('.element-image', this.container);
+            var videos = bonzo(qwery('video', this.container));
+            img.className = 'media-primary media-primary--full-width';
+            img.setAttribute('src', 'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/2/26/1393435299650/Antarcticaleadimage.jpg');
+            bonzo(img).insertBefore(qwery('.article__columning-wrapper', this.container));
+            bonzo(imgs[1]).addClass('img--supporting');
+            bonzo(imgs[4]).addClass('img--supporting');
+            videos.each(function(vid) {
+                vid.removeAttribute('controls');
+                vid.setAttribute('loop', 'loop');
+                vid.play();
+            });
         }
     };
 
