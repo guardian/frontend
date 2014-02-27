@@ -336,14 +336,12 @@ case class InBodyLinkCleanerForR1() extends HtmlCleaner {
   
   */
 
-  def FixLink(href: String) = {
-    val url = href.replace("/Guardian/", "/") // case 1
-    val pattern = "^/(Arts|Education)/(.*)".r
+  def FixR1Link(href: String) = {
+    val url = href.replace("/Guardian/", "/")
+    val pattern = "^/(Business|Music|Lifeandhealth|Sport|Books|Media|Society|Travel|Money|Education|Arts|Politics|Observer|Football|Film|Technology|Environment|Shopping|Century)/(.*)".r
     url match {
         case pattern(section, path) => { 
-            val foo = s"${section.toLowerCase}/${path}"
-            println(foo)
-            foo
+          s"/${section.toLowerCase}/${path}"
         }
         case _ => url
     }
@@ -352,7 +350,7 @@ case class InBodyLinkCleanerForR1() extends HtmlCleaner {
   def clean(body: Document): Document = {
     val links = body.getElementsByTag("a")
     links.foreach { link =>
-      link.attr("href", FixLink(link.attr("href")))
+      link.attr("href", FixR1Link(link.attr("href")))
     }
     body
   }

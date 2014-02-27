@@ -88,7 +88,10 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
         }
       }.orElse { // S3 lookup
         isArchived(normalise(path, zeros = "00").getOrElse(path)).map {
-          body => Ok(views.html.archive(s"${body}")).as("text/html")
+          body => {
+            val clean = withJsoup(body)(InBodyLinkCleanerForR1())
+            Ok(views.html.archive(clean)).as("text/html")
+          } 
         }
       }.orElse { // needs to happen *after* s3 lookup as some old galleries
                  // are still served under the URL 'gallery' 

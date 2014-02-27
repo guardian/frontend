@@ -119,14 +119,18 @@ class TemplatesTest extends FlatSpec with Matchers {
     (link \ "@href").text should be (s"/path/to/article")
 
     // ii) absolute
-    val r1BodyTextAbsolute = """
-      <p> foo <a href="/Arts/path/to/article">foo</a> foo
-      foo <a href="/Education/path/to/article">foo</a> foo
-      foo <a href="/Guardian/path/to/article">foo</a> foo
-      foo <a href="/Foo/path/to/article">foo</a> foo</p>
-    """
-    val bodyAbsolute = XML.loadString(withJsoup(r1BodyTextAbsolute)(InBodyLinkCleanerForR1()).body.trim)
-    (bodyAbsolute \ "@href") should be (s"/arts/path/to/article")
+    val absoluteUrls = Map(
+        "/Arts/path/to/something" -> "/arts/path/to/something",
+        "/Education/path/to/something" -> "/education/path/to/something",
+        "/Guardian/path/to/something" -> "/path/to/something",
+        "/Club/path/to/something" -> "/Club/path/to/something" // unchanged
+    )
+
+    for ((key, value) <- absoluteUrls) {
+        val bodyAbsolute = XML.loadString(withJsoup(s"""<a href="${key}">foo</a>""")(InBodyLinkCleanerForR1()).body.trim)
+        (bodyAbsolute \ "@href").text should be (value)
+    }
+
 
   }
 
