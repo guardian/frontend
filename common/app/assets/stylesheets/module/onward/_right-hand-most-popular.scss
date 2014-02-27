@@ -6,7 +6,7 @@
     @include rem((
         height: gs-height(1)
     ));
-    padding-top: $baseline;
+    padding-top: $gs-baseline/3;
     margin-bottom: $gs-baseline/1.5;
     border-top: 1px dotted $c-neutral5;
     @include fs-header(2);
@@ -17,7 +17,7 @@
     clear: left;
     @include rem((
         height: $gs-row-height*2 + 3px,
-        padding-top: $baseline*2,
+        padding-top: ($gs-baseline/3)*2,
         margin-bottom: $gs-baseline*2
     ));
     border-top: 1px dotted $c-neutral5;

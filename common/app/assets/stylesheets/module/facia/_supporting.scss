@@ -34,7 +34,11 @@
     margin: 0;
     @include fs-headline(1);
     color: $c-neutral1;
-}
-.supporting__action:visited {
-    color: $c-neutral2;
+
+    &:visited {
+        color: $c-neutral2;
+    }
+    &:active {
+        color: $c-neutral1;
+    }
 }

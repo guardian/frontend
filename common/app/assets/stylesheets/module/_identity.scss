@@ -6,8 +6,8 @@
     margin-left: auto;
     margin-right: auto;
     max-width: gs-span(6);
-    padding-bottom: $baseline*12;
-    padding-top: $baseline*12;
+    padding-bottom: $gs-baseline*4;
+    padding-top: $gs-baseline*4;
 
     @include mq(desktop) {
         max-width: gs-span(10);
@@ -17,15 +17,15 @@
 .identity-section {
     border-top: 1px solid $c-neutral7;
     @include box-sizing(border-box);
-    margin: $baseline*5 0;
-    padding-top: $baseline*5 - 1;
+    margin: ($gs-baseline/3)*5 0;
+    padding-top: ($gs-baseline/3)*5 - 1;
 
     .identity-section__head {
         @extend %type-5;
     }
 
     .identity-section__text {
-        margin-top: $baseline*2;
+        margin-top: ($gs-baseline/3)*2;
     }
 }
 
@@ -38,7 +38,7 @@
 }
 
 .nav--registration {
-    margin-top: $baseline*8;
+    margin-top: ($gs-baseline/3)*8;
     text-align: center;
     font-size: 14px;
     font-size: 1.4rem;
@@ -57,17 +57,17 @@
 
 .social-signin {
     @include clearfix;
-    margin: $baseline*6 0 $baseline*4;
+    margin: $gs-baseline*2 0 ($gs-baseline/3)*4;
     text-align: center;
 
     @include mq(desktop) {
-        margin: $baseline 0;
+        margin: $gs-baseline/3 0;
     }
 
     .social-signin__item {
         @include box-sizing(border-box);
         display: inline-block;
-        margin-bottom: $baseline*2;
+        margin-bottom: ($gs-baseline/3)*2;
 
         @include mq(tablet) {
             float: left;
@@ -174,11 +174,11 @@
 
 .formstack-heading--first {
     @include fs-header(5);
-    margin-top: $baseline*4;
+    margin-top: ($gs-baseline/3)*4;
 }
 
 .formstack-heading--first + .formstack-section {
-    margin-bottom: $baseline*6;
+    margin-bottom: $gs-baseline*2;
 }
 
 .formstack-required {
@@ -198,19 +198,19 @@
     font-size: 13px;
     font-size: 1.3rem;
     margin-left: 6px;
-    padding-top: $baseline*9;
+    padding-top: ($gs-baseline/3)*9;
 }
 
 .film-awards-banner {
     background-color: #000000;
     height: 90px;
-    margin-bottom: - $baseline*8;
+    margin-bottom: - ($gs-baseline/3)*8;
 }
 
 .ethical-awards-banner {
     background-color: #294100;
     height: 90px;
-    margin-bottom: - $baseline*8;
+    margin-bottom: - ($gs-baseline/3)*8;
 }
 
 .ethical-awards-banner__image,

@@ -352,14 +352,19 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 3, 8)
   )
 
-  val FootballTablePosition = Switch("A/B Tests", "ab-football-table-position",
-    "If this swith is on, the football table will vary in position throughout the football tagged pages.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 7)
-  )
-
   val ABUsContainers = Switch("A/B Tests", "ab-us-containers",
     "If this is switched on an A/B test runs that tries a variation of the containers on the US network front.",
     safeState = Off, sellByDate = new DateMidnight(2014, 3, 12)
+  )
+
+  val ABAuContainers = Switch("A/B Tests", "ab-au-containers",
+    "If this is switched on an A/B test runs that tries a variation of the containers on the AU network front.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 12)
+  )
+
+  val FootballTablePosition = Switch("A/B Tests", "ab-football-table-position",
+    "If this swith is on, the football table will vary in position throughout the football tagged pages.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 7)
   )
 
   // Sport Switch
@@ -491,7 +496,8 @@ object Switches extends Collections {
     DogeSwitch,
     FrontPressJobSwitch,
     ABUkContainers,
-    ABUsContainers
+    ABUsContainers,
+    ABAuContainers
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
