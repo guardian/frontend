@@ -373,7 +373,7 @@ case class SimpleCountMetric(
   }
 
   def getAndReset = currentCount.getAndSet(0)
-  def getValue = count.get
+  val getValue: () => Long = count.get
 }
 
 object PerformanceMetrics {
