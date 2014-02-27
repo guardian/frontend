@@ -76,7 +76,8 @@
         margin: 100px auto 0;
     }
     .ab-uk-containers &,
-    .ab-us-containers & {
+    .ab-us-containers &,
+    .ab-au-containers & {
         > {
             * {
                 visibility: hidden;
@@ -89,9 +90,6 @@
     }
 }
 .facia-container--layout-article {
-    @include mq(mobileLandscape) {
-        
-    }
     @include mq(tablet) {
         @include rem((
             max-width: gs-span(8)
