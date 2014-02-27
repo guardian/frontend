@@ -524,7 +524,8 @@ $show-more-icon: (
     overflow: hidden;
 
     &:hover,
-    &:focus {
+    &:focus,
+    &[disabled] {
         .collection__show-more__icon {
             margin-top: -1 * (map-get($show-more-icon, height) + map-get($show-more-icon, space-between));
         }
