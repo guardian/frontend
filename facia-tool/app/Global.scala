@@ -12,14 +12,14 @@ object Global extends FaciaToolLifecycle with GlobalSettings with CloudWatchAppl
 
   override lazy val applicationName = Management.applicationName
   override def applicationMetrics: Map[String, Double] = Map(
-    ("api-usage", FaciaToolMetrics.ApiUsageCount.getValue().toDouble),
-    ("api-proxy-usage", FaciaToolMetrics.ProxyCount.getValue().toDouble),
-    ("content-api-put-failure", FaciaToolMetrics.ContentApiPutFailure.getValue().toDouble),
-    ("content-api-put-success", FaciaToolMetrics.ContentApiPutSuccess.getValue().toDouble),
-    ("draft-publish", FaciaToolMetrics.DraftPublishCount.getValue().toDouble),
-    ("auth-expired", FaciaToolMetrics.ExpiredRequestCount.getValue().toDouble),
-    ("front-press-failure", FaciaToolMetrics.FrontPressFailure.getValue().toDouble),
-    ("front-press-success", FaciaToolMetrics.FrontPressSuccess.getValue().toDouble)
+    ("api-usage", FaciaToolMetrics.ApiUsageCount.getAndReset.toDouble),
+    ("api-proxy-usage", FaciaToolMetrics.ProxyCount.getAndReset.toDouble),
+    ("content-api-put-failure", FaciaToolMetrics.ContentApiPutFailure.getAndReset.toDouble),
+    ("content-api-put-success", FaciaToolMetrics.ContentApiPutSuccess.getAndReset.toDouble),
+    ("draft-publish", FaciaToolMetrics.DraftPublishCount.getAndReset.toDouble),
+    ("auth-expired", FaciaToolMetrics.ExpiredRequestCount.getAndReset.toDouble),
+    ("front-press-failure", FaciaToolMetrics.FrontPressFailure.getAndReset.toDouble),
+    ("front-press-success", FaciaToolMetrics.FrontPressSuccess.getAndReset.toDouble)
   )
 
   override def onLoadConfig(config: Configuration, path: File, classloader: ClassLoader, mode: Mode.Mode): Configuration = {
